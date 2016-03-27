@@ -7,6 +7,7 @@ If you are creating a development server, read this first: //TODO
 
 ### Prerequisites for a clean Debian 1.8 x86 installation
 //TODO
+```sudo apt-get install nasm build-essential paxctl```
 
 ### Get the CoD4x 1.8 release package
 You can download the Cod4x 1.8 server from http://cod4x.me
