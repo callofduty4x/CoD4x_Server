@@ -5,6 +5,7 @@ branches:
    - master
 
 before_install:
+  - uname -m
   - sudo dpkg --add-architecture i386
   - sudo apt-get update
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
