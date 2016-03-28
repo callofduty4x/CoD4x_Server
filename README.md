@@ -4,11 +4,11 @@
 [![Build Status](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub)
 
 ## Setting up a Call of Duty 4 server with Cod4x 1.8 on Linux
-Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root, because that's a major security threat. This guide has been tested with Debian 1.8 x64
+Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root, because that's a major security threat. This guide has been tested with Debian 8.1 x64
 
 If you are creating a development server, read this first: //TODO
 
-### Prerequisites for a clean Debian 1.8 x86 installation
+### Prerequisites for a clean Debian 8.1 x86 installation
 //TODO none?
 
 ### Get the CoD4x 1.8 release package
