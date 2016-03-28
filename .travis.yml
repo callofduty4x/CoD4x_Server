@@ -7,4 +7,5 @@ branches:
 before_script: ls
 
 script:
+  - chmod +x build_updateable_elf.sh
   - ./build_updateable_elf.sh
