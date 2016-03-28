@@ -9,7 +9,7 @@ before_install:
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
 #  - sudo dpkg --add-architecture i386
-#  - sudo apt-get update
+  - sudo apt-get update
 #  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
 
 script:
