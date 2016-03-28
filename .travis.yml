@@ -4,7 +4,10 @@ branches:
   only:
    - master
 
-before_script: ls
+before_script:
+  - sudo dpkg --add-architecture i386
+  - sudo apt-get update
+  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
 
 script:
   - chmod +x build_updateable_elf.sh
