@@ -1,0 +1,2 @@
+gcc -m32 -Wall -fPIC -g -c pbsv.c
+gcc -m32 -shared -Wl,-soname,pbsv.so -o pbsv.so *.o

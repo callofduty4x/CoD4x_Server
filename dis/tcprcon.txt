@@ -1,0 +1,125 @@
+HL2 rcon interface:
+
+rconaddadmin <username> <password> <powerpoints>        Adds a new admin with an own login
+rcondeladmin <username>                                 Removes an already added admin
+rconlistadmins                                          Returns a list of all registered admins for this rcon interface
+
+
+    username is the name of the admin to login
+    password is the password the admin needs to login
+    powerpoints is a number between 1 and 100 - at the moment this feature is not available. Every admin has 100 powerpoints
+
+
+
+TCP-Rcon commands:
+
+The default interface is the same like used in HalfLife 2. You can find its description at https://developer.valvesoftware.com/wiki/Source_RCON_Protocol
+
+Addtional command types:
+
+Client => Server:
+-------------------------
+
+68  SERVERDATA_GETSTATUS:
+    Request Serverstatus
+        Body of this command is empty
+
+    See also cmd: 69
+
+
+
+63  SERVERDATA_CHANGEPASSWORD:
+    Change Password
+        Body contains only the new password as NULL-Terminated string
+
+64  SERVERDATA_TURNONSTREAM:
+    Activates automatic sending of all data to the client
+        Body contains one Byte which represents the type of requested data
+        0 = No data redirected (default)
+        1 = Redirecting of qconsole.log enabled
+        2 = Redirecting of games_mp.log enabled
+        4 = Redirecting of gamechat enabled
+        8 = Sending of events enabled
+
+        To activate redirecting of games_mp.log and gamechat you would fill this byte with the following value: byte = (4 | 2);
+
+
+    See also cmds: 65, 66, 67, 71
+
+
+
+
+70  SERVERDATA_SAY:
+    First byte is the clientnumber you want to tell some text. If you don't want to tell something to a specific player the 1st byte has to be 0xFF.
+    Second byte is the team number you want to tell some text. If you want to say it to all players this byte has the value 0xFF.
+    Chat follows as NULL-Terminated string.
+
+    If the 1st byte has a value not 0xFF it will override the value of 2nd byte.
+
+    TEAM_FREE = 0
+    TEAM_RED = 1
+    TEAM_BLUE = 2
+    TEAM_SPECTATOR = 3
+
+
+Server => Client:
+-------------------------
+
+
+65  SERVERDATA_GAMELOG:
+    The body contains one line of games_mp.log
+
+    See also cmd: 64
+
+
+
+66  SERVERDATA_CONLOG:
+    The body contains one line of qconsole.log
+
+    See also cmd: 64
+
+
+
+67  SERVERDATA_CHAT:
+    The body contains at first one byte which is the serverclientnumber of the chatting player.
+    After this byte follows the text as NULL-Terminated string as the player has typed it.
+    Exception:
+        If the 1st byte == -1 then the following NULL-Terminated string will be the rcon admins name
+        and the next NULL-Terminated string is the text as the admin has typed it.
+
+        If the 1st byte == -2 same as above but this is our own message
+
+    See also cmd: 64
+
+
+
+69  SERVERDATA_STATUSRESPONSE:
+    The body contains at first one NULL-Terminated InfoString which contains basic gameinfo values.
+    For each client followes now this: 1st Byte is the serverclientnumber which follows one NULL-Terminated InfoString with clientinfo.
+    If the last clientinfo has been written the 1st Byte (serverclientnumber) is -1.
+
+    Layout:
+    ServerInfo_InfoString\0clientnumClientInfo_InfoString\0clientnumClientInfo_InfoString\0clientnumClientInfo_InfoString\0\xff
+
+    See also cmd: 68
+
+
+71  SERVERDATA_EVENT:
+    This messages will send some events which getting listed below. The 1st byte is the eventtype.
+    Eventtypes:
+    0  RCONEVENT_PLAYERENTERGAME:
+        1 byte: Clientnumber
+
+    1  RCONEVENT_PLAYERLEAVE:
+        1 byte: Clientnumber
+
+    2  RCONEVENT_LEVELSTART:
+        empty
+
+    3 RCONEVENT_PLAYERENTERTEAM:
+        1 byte: Clientnumber
+        1 byte: team
+
+    See also cmd: 64
+
+}

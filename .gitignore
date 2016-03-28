@@ -1,0 +1,28 @@
+
+#C file types to ignore
+
+*.o
+
+*.dll
+
+*.so
+
+*.exe
+
+*.lib
+
+*.def
+
+
+#Git files
+
+git-pull.sh
+
+git-push.sh
+
+git-status.sh
+
+
+build_official*
+bin/sys_error.txt
+bin/logs/*
