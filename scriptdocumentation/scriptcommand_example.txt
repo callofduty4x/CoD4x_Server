@@ -1,0 +1,47 @@
+This is a very simple example how to use scriptadded commands in CoD4 scripting
+This example should help to make use of the new added callback: maps\mp\gametypes\_globallogic::Callback_ScriptCommand
+and the new added function: addscriptcommand()
+*******************************************************************************
+
+Add to _callbacksetup:
+
+/*================
+Called by code when a script defined command has been invoked.
+================*/
+CodeCallback_ScriptCommand(command, arguments)
+{
+	[[level.callbackScriptCommand]]( command, arguments );
+}
+//=============================================================================
+
+
+In _callbacksetup::SetDefaultCallbacks
+Add:
+	level.callbackScriptCommand = maps\mp\gametypes\_globallogic::Callback_ScriptCommand;
+
+
+
+
+Add to _globallogic::SetupCallbacks
+
+	level.onScriptCommand = ::blank;
+
+
+Add to _globallogic::Callback_StartGameType
+
+	addscriptcommand("scriptfunctiontest", 1);
+	addscriptcommand("anotherfunction", 1);
+
+
+Add to _globallogic this function
+
+Callback_ScriptCommand(command, arguments)
+{
+
+    waittillframeend;
+
+    if( isDefined( self.name ) )
+        print("Executed by: " + self.name + " Command:" + command + " Args: " + arguments + "\n");
+    else
+        print("Executed by: Rcon Command:" + command + " Args: " + arguments + "\n");
+}
