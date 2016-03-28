@@ -5,6 +5,8 @@ branches:
    - master
 
 before_install:
+  - chmod +x version_make_progress.sh
+  - chmod +x build_updateable_elf.sh
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
@@ -14,5 +16,5 @@ before_install:
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
 
 script:
-  - chmod +x build_updateable_elf.sh
+  
   - ./build_updateable_elf.sh
