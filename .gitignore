@@ -1,28 +1,43 @@
-
-#C file types to ignore
-
+# Object files
 *.o
+*.ko
+*.obj
+*.elf
 
-*.dll
+# Precompiled Headers
+*.gch
+*.pch
 
-*.so
-
-*.exe
-
+# Libraries
 *.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
 
 *.def
 
-
-#Git files
-
-git-pull.sh
-
-git-push.sh
-
-git-status.sh
-
-
+# Cod4 files
 build_official*
 bin/sys_error.txt
 bin/logs/*
+bin/main/iw*
+bin/main/localized*
+bin/zone/*
+bin/cod4x18_dedrun
