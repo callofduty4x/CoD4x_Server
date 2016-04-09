@@ -31,6 +31,10 @@ Ubuntu:
 On 64-bit Ubuntu you will also need to install gcc and g++ for 32-bit:
 `sudo apt install gcc-multilib g++-multilib`
 
+openSUSE:
+`sudo zypper install nasm paxctl gcc-32bit gcc-c++-32bit`
+paxctl doesn't seem to be available on openSUSE. However, compilation works fine and the binary should run fine.
+
 Compiling is as easy as running `./build_updateable_elf.sh`.
 It'll build Cod4X into `main/` from which the server can be run.
 
