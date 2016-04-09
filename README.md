@@ -28,6 +28,9 @@ Arch Linux:
 Ubuntu:
 `sudo apt install nasm paxctl git gcc`
 
+On 64-bit Ubuntu you will also need to install gcc and g++ for 32-bit:
+`sudo apt install gcc-multilib g++-multilib`
+
 Compiling is as easy as running `./build_updateable_elf.sh`.
 It'll build Cod4X into `main/` from which the server can be run.
 
