@@ -58,7 +58,7 @@ If you're not a programmer but still want to help, you can help by testing and r
 
 ## Usage conditions for server hosters
 If you plan on hosting your own servers, please have a look at the usage conditions. https://cod4x.me/index.php?threads/cod4x18-server-usage-conditions.61/
-Those conditions have been 
+Those conditions have been established to keep user created content open to everyone, and also to value the work on CoD4X.
 
-##Everything else
+## Everything else
 Please check out the [forums](https://cod4x.me).
