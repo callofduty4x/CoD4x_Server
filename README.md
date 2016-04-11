@@ -4,10 +4,11 @@ Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes 
 ## The most prominent features are:
 * Administration commands
 * Several anticheat measurements
-* Player identification system for secure banning
+* Reliable player identification
 * Pbss like screenshot feature
 * Automated client update, no manual installation needed
 * Backwards compatibility to 1.7 and 1.7a servers
+* Masterserver, when the official one is down again q.q
 * [More](http://todo)
 
 The Cod4X server can run on Windows and Linux. 
@@ -54,6 +55,10 @@ If you want to contribute to the core project check the issue tracker for todos.
 If you would like to work on a completely new feature, we would appreciate if you contact us first on the forums or on github to discuss the idea.
 
 If you're not a programmer but still want to help, you can help by testing and reporting bugs, but also by writing documentation. Please submit your bug reports to the Github issue tracker.
+
+## Usage conditions for server hosters
+If you plan on hosting your own servers, please have a look at the usage conditions. https://cod4x.me/index.php?threads/cod4x18-server-usage-conditions.61/
+Those conditions have been 
 
 ##Everything else
 Please check out the [forums](https://cod4x.me).
