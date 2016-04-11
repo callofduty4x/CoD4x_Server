@@ -30,7 +30,7 @@ To compile Cod4X from source you require the following tools:
 - nasm
 - paxctl (not needed for Debian or Windows)
 - gcc on Linux or mingw32 on Windows
-- 
+
 Debian/Ubuntu 32-bit:`apt install nasm paxctl build-essential`
 
 Debian/Ubuntu 64-bit:
