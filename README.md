@@ -3,7 +3,7 @@ Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes 
 
 ## The most prominent features are:
 * Administration commands
-* Several anticheat measurements
+* Measurements against hackers
 * Reliable player identification
 * Pbss like screenshot feature
 * Automated client update, no manual installation needed
