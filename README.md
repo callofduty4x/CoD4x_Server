@@ -38,7 +38,7 @@ Debian/Ubuntu 64-bit:
 `apt-get update`
 `apt-get install nasm:i386 build-essential gcc-multilib g++-multilib`
 
-openSUSE: `sudo zypper install nasm gcc-32bit gcc-c++-32bit`
+openSUSE 32-bit: `sudo zypper install nasm gcc-32bit gcc-c++-32bit`
  
 Arch Linux 32-bit: `yaourt -S nasm paxctl build-essential`
 
