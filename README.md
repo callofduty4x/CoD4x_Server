@@ -1,55 +1,59 @@
-# CoD4x_Server_1.8_Public
+# CoD4x_Server_1.8_Public [![Build Status](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub)
+Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke  installation of the proprietary Cod4X client to players joining the server using the Cod4X servers (https://cod4x.me), which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
 
-## Build Status
-[![Build Status](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub)
+## The most prominent features are:
+* Administration commands
+* Several anticheat measurements
+* Player identification system for secure banning
+* Pbss like screenshot feature
+* Automated client update, no manual installation needed
+* Backwards compatibility to 1.7 and 1.7a servers
+* [More](http://todo)
 
-## Setting up a Call of Duty 4 server with Cod4x 1.8 on Linux
-Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root, because that's a major security threat. This guide has been tested with Debian 8.1 x64
+The Cod4X server can run on Windows and Linux. 
+The Cod4X client update is only available for windows.
 
-If you are creating a development server, read this first: //TODO
-
-### Prerequisites for a clean Debian 8.1 x86 installation
-//TODO none?
-
-### Get the CoD4x 1.8 release package
-You can download the Cod4x 1.8 server from http://cod4x.me
+## Setting up a Call of Duty 4 server with Cod4x 1.8
+Get the binary release package from htto://cod4x.me
 
 Directlink: http://cod4x.me/index.php?attachments/serverfiles_15-6-zip.19/
 
-### Make sure you have the minimum file structure below
+You also require the base game to run a server. Copy every .iwd file in `cod4directory/main/` to `serverdirectory/main/`.
+Also copy everything inside `cod4directory/zone` to `serverdirectory/zone`.
 
-| Files / Folders | &nbsp; |
-| ------ | ----- |
-| cod4x18_dedrun | server executable, copy this file from the 1.8x server download package |
-| libsteam_api.so | copy this file from the 1.8x server download package |
-| steamclient.so | copy this file from the 1.8x server download package |
-| libstdc++.so.6 | copy this file from the 1.8x server download package, not needed on some linux distros |
-| zone | game files from the Call of Duty 4 Client, `cod4/zone` folder |
-| main | game files from the Call of Duty 4 Client, `cod4/main` folder |
-| main/xbase_00.iwd | copy this file from the 1.8x server download package to the `main` folder |
+Now you can run the server with `./cod4x18_dedrun +map mp_killhouse`. If you are running a local server on Windows use `cod4x18_dedrun.exe +map mp_killhouse +set dedicated 2 +set net_ip 127.0.0.1`. Join the server with your client via the console (`^`) by typing `/connect 127.0.0.1` (if hosted locally), and see if you can join the server.
 
-### Server Configuration
-To run the server a configuration file is need. Place the configuration file in the `main` folder
+<small>Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root. That would be a major security threat.</small>
 
-server.cfg: //TODO test this config
-```
-set sv_hostname "CoD4x 1.8 Server"
-set sv_mapRotation "gametype dom map mp_backlot gametype koth"
-wait 250
-map_rotate
-```
+## Compiling
+To compile Cod4X from source you require the following tools:
+- nasm
+- paxctl (not needed for Debian or Windows)
+- gcc on Linux or mingw32 on Windows
+- 
+Debian/Ubuntu 32-bit:`apt install nasm paxctl build-essential`
 
-### Run Script
-run.sh: (make it executable with `chmod +x run.sh`)
-```
-./cod4x18_dedrun +exec server.cfg +set fs_homepath . +set sv_maxclients 24 +set net_port 28960
-```
-When running the server for the first time it should start the Autoupdater. When it's done the server will start, and you connect to it with your Call of Duty 4 Client.
+Debian/Ubuntu 64-bit:
+`dpkg --add-architecture i386`
+`apt-get update`
+`apt-get install nasm:i386 build-essential gcc-multilib g++-multilib`
 
-### Advanced Topics
-The server is running, what now?
+openSUSE: `sudo zypper install nasm gcc-32bit gcc-c++-32bit`
+ 
+Arch Linux 32-bit: `yaourt -S nasm paxctl build-essential`
 
-Installing custom serverside scripts: //TODO
-Editing mods: //TODO
-Process screenshots: //TODO
-Write server a server plugin: //TODO
+Compile the server with `./build_updateable_elf.sh`.
+If compilation was successful the binary will be placed in the `bin/` folder.
+
+##Contributing
+Cod4X is licensed under the AGPL3 license. We welcome anybody to fork this project and submit a pull request.
+
+Plugins can be written in C/C++. We also provide language bindings for D. The `/plugins` directory contains some example plugins. You can contribute to the project by developing plugins and create a pull request for them and/or uploading and promoting them on the [forums](https://cod4x.me/).
+
+If you want to contribute to the core project check the issue tracker for todos. We will try our best to keep the issue tracker filled with new bits.
+If you would like to work on a completely new feature, we would appreciate if you contact us first on the forums or on github to discuss the idea.
+
+If you're not a programmer but still want to help, you can help by testing and reporting bugs, but also by writing documentation. Please submit your bug reports to the Github issue tracker.
+
+##Everything else
+Please check out the [forums](https://cod4x.me).
