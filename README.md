@@ -8,7 +8,7 @@ Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes 
 * Pbss like screenshot feature
 * Automated client update, no manual installation needed
 * Backwards compatibility to 1.7 and 1.7a servers
-* Masterserver, when the official one is down again q.q
+* Masterserver, when the official one is down again q.q http://cod4master.cod4x.me/
 * [More](http://todo)
 
 The Cod4X server can run on Windows and Linux. 
