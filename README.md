@@ -15,7 +15,7 @@ The Cod4X server can run on Windows and Linux.
 The Cod4X client update is only available for windows.
 
 ## Setting up a Call of Duty 4 server with Cod4x 1.8
-Get the binary release package from htto://cod4x.me
+Get the binary release package from http://cod4x.me
 
 Directlink: http://cod4x.me/index.php?attachments/serverfiles_15-6-zip.19/
 
