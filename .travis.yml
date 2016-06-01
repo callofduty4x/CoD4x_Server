@@ -10,7 +10,7 @@ before_install:
 
 #  - chmod +x ./plugins/antinamechange/makedll32
 #  - chmod +x ./plugins/antinamesteal/makedll32
-#  - chmod +x ./plugins/antispam/makedll32
+  - chmod +x ./plugins/antispam/makedll32
 #  - chmod +x ./plugins/censor/makedll32
 #  - chmod +x ./plugins/clan-tag-protection/makedll32
 #  - chmod +x ./plugins/cpptest/makedll32
