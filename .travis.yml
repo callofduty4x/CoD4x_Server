@@ -31,7 +31,7 @@ script:
 #  - ./plugins/antinamesteal/makedll32
 
   - cd plugins/antispam
-  - ./plugins/antispam/makedll32
+  - ./makedll32
 #  - ./plugins/censor/makedll32
 #  - ./plugins/clan-tag-protection/makedll32
 #  - ./plugins/cpptest/makedll32
