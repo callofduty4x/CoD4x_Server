@@ -40,7 +40,7 @@ script:
 
 deploy:
   provider: releases
-  api_key: "695b475fead9ee68ab20febbb4e8b6b92863be87"
+  api_key: "5c1219ea0a5b4a1f83fcd6d1cb6bb96427067f1e"
   file: 
     - "bin/cod4x18_dedrun"
     - "plugins/antispam/antispam.so"
