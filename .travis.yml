@@ -27,9 +27,10 @@ script:
   
   - ./build_updateable_elf.sh
   
-   - cd plugins
 #  - ./plugins/antinamechange/makedll32
 #  - ./plugins/antinamesteal/makedll32
+
+  - cd plugins/antispam
   - ./plugins/antispam/makedll32
 #  - ./plugins/censor/makedll32
 #  - ./plugins/clan-tag-protection/makedll32
