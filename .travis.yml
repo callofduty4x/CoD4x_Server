@@ -26,6 +26,8 @@ before_install:
 script:
   
   - ./build_updateable_elf.sh
+  
+   - cd plugins
 #  - ./plugins/antinamechange/makedll32
 #  - ./plugins/antinamesteal/makedll32
   - ./plugins/antispam/makedll32
