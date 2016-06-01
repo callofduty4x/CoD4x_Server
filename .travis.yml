@@ -41,7 +41,9 @@ script:
 deploy:
   provider: releases
   api_key: "695b475fead9ee68ab20febbb4e8b6b92863be87"
-  file: "bin/cod4x18_dedrun"
+  file: 
+    - "bin/cod4x18_dedrun"
+    - "plugins/antispam/antispam.so"
   skip_cleanup: true
   on:
     tags: true
