@@ -36,7 +36,7 @@ script:
 #  - ./plugins/clan-tag-protection/makedll32
 #  - ./plugins/cpptest/makedll32
 
-  - cd ..
+  - cd ../..
 
 deploy:
   provider: releases
