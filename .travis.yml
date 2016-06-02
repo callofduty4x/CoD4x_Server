@@ -37,10 +37,13 @@ script:
 #  - ./plugins/cpptest/makedll32
 
   - cd ..
+env:
+  global:
+    secure: ZpeEWEhwPOMLnOf5IT2qtFZKBjn0QSFH+78AY/u2ZoL9o1B9l42SNwqp5SLIx9CLvQifVkJmpaj9SpNx4Lqs1eYLE/dc1/BU42mCMiThPmxDm68BZ4I8+Ws0Tb/gUpAYdZvle1TPNLwObGrk5mbq4M0bjOHOXyIfGFija10Dna8N+I7r0yJeenxtXJp0bg80YIZbKw/itkFJ1UPFbOVORsk8F0UTmsNFqbmuvjtWFfUnKf+hD0OW3wBiz6HMYzbLxnf3VIlGIFUTnSmEW0CzenewI7Z1iJzG6q15AbTp1AX5f2O5f75pQl0LB/hZKrSX9BlMV8HeV4D84fJSpWHwd69Vnwd9ngDxZrccNz4HUHKnveUk1abMtU533vYQA9cTy/4q59njUrT6eEKFT2B6gjljWkeQrfy5o4spubbeAf4AAX1MUQN7xIGLf8oySWS2yz7oyLJHd4Fw6ODwNInxxQwju0EfK8dM0NAWR80vL209R2gC8LMede5mbkouS0ph2EXT6jsaVbZPqxEIA6jnqeLy9P0GRPiQRfHscilf3uZnrrL22AwhY7VsQcfiQ6n5GPrByen81+nuPNvXOhUGspXi2F4rrmw8tf4mh3lpKfGMj6aKxGWLbniwYrnFKc68CU2+8/+UkdLuHhgiesSas36g0WVHHVyeoaPS5Rh7Y6Q=
 
 deploy:
   provider: releases
-  api_key: "5c1219ea0a5b4a1f83fcd6d1cb6bb96427067f1e"
+  api_key: $GHTOKEN
   file: 
     - "bin/cod4x18_dedrun"
     - "plugins/antispam/antispam.so"
