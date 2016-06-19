@@ -460,17 +460,19 @@ qboolean Sys_LoadImage( ){
 
     if(len != DLLMOD_FILESIZE)
     {/* Nope !*/
-
+#ifdef OFFICIAL
         Sec_Update( qtrue );
         len = FS_FOpenFileRead(BIN_FILENAME, NULL);
         if(len != DLLMOD_FILESIZE)
         {/* Nope !*/
-            Com_PrintError("Failed to load the CoD4 Game. Can not startup the game\n");
-            return qfalse;
+#endif
+			Com_Error(ERR_FATAL, "Failed to load the CoD4 Game. Can not startup the game\n");
+			return qfalse;        
         }
-    }
-    Sec_Update( qfalse );
-
+#ifdef OFFICIAL
+	}
+	Sec_Update( qfalse );
+#endif
     len = FS_ReadFile(BIN_FILENAME, (void**)&fileimage);
 
 

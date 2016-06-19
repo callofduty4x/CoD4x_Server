@@ -3409,7 +3409,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 	mvabuf;
 
 	if ( !com_sv_running->boolean ) {
-		usleep(20000);
+		Sys_Sleep(20000);
 		return qtrue;
 	}
 

@@ -105,7 +105,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 	static qboolean s_timePolarity;
 	int cx, cy;
-	float sx, sy;
+	float sx; //, sy;
 	float x, y, w, h;
 
 	switch ( uMsg )
@@ -121,7 +121,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			cy = SYSCON_DEFAULT_HEIGHT;
 */
 		sx = (float)cx / SYSCON_DEFAULT_WIDTH;
-		sy = (float)cy / SYSCON_DEFAULT_HEIGHT;
+		//sy = (float)cy / SYSCON_DEFAULT_HEIGHT;
 
 		x = 8;
 		y = 6;

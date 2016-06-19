@@ -12,6 +12,8 @@
 #include "sapi.h"
 #include "sys_main.h"
 #include "cmd.h"
+#include "sha.h"
+#include "g_sv_shared.h"
 
 void (*Init)(imports_t* imports, exports_t* exports);
 
@@ -359,6 +361,17 @@ void SV_InitSApi()
 {
 	void* hmodule;
 	imports_t exports;
+	FILE* steam_api;
+
+	steam_api = fopen("steam_api" DLL_EXT, "r");
+	if(!steam_api) // No steam_api exists means no steam functionality
+	{
+		Com_PrintError("steam_api" DLL_EXT " not found. Steam is not going to work.\n");
+		return;
+	}
+	fclose(steam_api);
+	//steam_api lib exists
+
 	exports.Com_Printf = Com_Printf;
 	exports.Com_DPrintf = Com_DPrintf;
 	exports.Com_PrintError = Com_PrintError;
@@ -376,11 +389,11 @@ void SV_InitSApi()
 	exports.Sys_Milliseconds = Sys_Milliseconds;
 
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
-	if(hmodule == NULL)
+	/*if(hmodule == NULL)
 	{
 		Com_PrintError("steam_api.dll not found. Steam is not going to work.\n");
 		return;
-	}
+	}*/
 	Init = Sys_GetProcedure("Init");
 	if(Init == NULL)
 	{

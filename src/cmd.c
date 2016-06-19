@@ -317,12 +317,12 @@ void __cdecl Cbuf_Execute_WrapperIW(int arg1, int arg2)
 
 typedef struct cmd_function_s
 {
-	struct cmd_function_s	*next;
-	const char		*name;
-	const char		*helptext;
-	int			minPower;
-	completionFunc_t	complete;
-	xcommand_t function;
+	struct cmd_function_s *next;
+	const char            *name;
+	const char            *helptext;
+	int                   minPower;
+	completionFunc_t      complete;
+	xcommand_t            function;
 } cmd_function_t;
 
 
@@ -1181,31 +1181,31 @@ static void Cmd_Help_f( void ) {
 	cmd_function_t  *cmd;
 	char            *cmdname;
 
-	if ( Cmd_Argc() > 1 )
+	if(Cmd_Argc() > 1)
+		cmdname = Cmd_Argv(1);
+	else
 	{
-		cmdname = Cmd_Argv( 1 );
-	}else{
 		Com_Printf("Displaying common help here\n\n");
 		return;
 	}
 
-	for ( cmd = cmd_functions ; cmd ; cmd = cmd->next ) {
-		if ( Q_stricmp( cmdname, cmd->name ) != 0)
-		{
+	for(cmd = cmd_functions; cmd; cmd = cmd->next) {
+		if (Q_stricmp(cmdname, cmd->name))
 			continue;
-		}
+
 		if(cmd->helptext == NULL)
 		{
-			Com_Printf("For command %s is no help available\n", cmd->name);
+			Com_Printf("%s: no help available\n", cmd->name);
 			return;
 		}
+
 		Com_Printf("Help for %s:\n", cmd->name);
 		Com_Printf("-------------------------------------\n");
 		Com_Printf("%s\n", cmd->helptext);
 		Com_Printf("-------------------------------------\n");
 		return;
 	}
-	Com_Printf( "Help: Couldn't find command: %s\n", cmdname );
+	Com_Printf("%s: no such command\n", cmdname);
 }
 
 
@@ -1283,14 +1283,14 @@ void Cmd_ResetInvokerInfo()
 		Q_strncpyz(cmdInvoker.name, "System/Rcon", sizeof(cmdInvoker.name));
 }
 
-void Cmd_Init( void ) {
-
+void Cmd_Init()
+{
 	Cmd_AddPCommand( "cmdlist", Cmd_List_f, 1);
 	Cmd_AddPCommand( "AdminListCommands", Cmd_ListPower_f, 95);
 	Cmd_AddPCommand( "exec",Cmd_Exec_f, 98 );
 	Cmd_AddCommand( "vstr",Cmd_Vstr_f );
 	Cmd_AddCommand( "echo",Cmd_Echo_f );
 	Cmd_AddCommand( "wait", Cmd_Wait_f );
-	Cmd_ResetInvokerInfo();
-	//Cmd_AddCommand( "help", Cmd_Help_f ); Not ready yet
+	Cmd_AddCommand("help", Cmd_Help_f); //Not ready yet
+	Cmd_ResetInvokerInfo();	
 }

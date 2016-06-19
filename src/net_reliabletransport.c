@@ -273,7 +273,7 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 {	
 	int sequence, acknowledge;
-	unsigned int numselectiveack, windowsize, fragmentsize, length, startack;
+	unsigned int numselectiveack, /*windowsize,*/ fragmentsize, length, startack;
 	int i, j;
 	int usedfragmentcnt;
 
@@ -330,7 +330,8 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 		}
 	}
 
-	windowsize = MSG_ReadShort(buf);
+	//windowsize = MSG_ReadShort(buf); unused. Just leave it here if needed further. Just call MSG_ReadShort twice.
+	fragmentsize = MSG_ReadShort(buf); 
 	fragmentsize = MSG_ReadShort(buf);
 #ifdef RELIABLE_DEBUG
 	Com_Printf("^5Received ACK %d SEQ: %d\n", acknowledge, sequence);
@@ -369,8 +370,6 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 					chan->rxwindow.fragments[sequence % chan->rxwindow.bufferlen].len);
 	chan->rxwindow.rateInfo.bytes += fragmentsize; //Track the rate
 	chan->rxwindow.fragments[sequence % chan->rxwindow.bufferlen].ack = sequence;
-
-
 }
 
 
