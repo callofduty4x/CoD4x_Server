@@ -32,6 +32,11 @@
 #endif
 #include <string.h>
 #include <stdarg.h>
+#ifdef WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 
 
@@ -267,4 +272,13 @@ qboolean Sys_CreateCallbackThread(void* threadMain,...)
 	if(success == qfalse)
 		tcb->isActive = qtrue;
 	return success;
+}
+
+void Sys_Sleep(int usec) // What about mbedtls_net_usleep?
+{
+#ifdef WIN32
+	Sleep((usec+999) / 1000);
+#else
+	usleep(usec);
+#endif
 }

@@ -77,7 +77,6 @@ qboolean Sys_SetupThreadCallback(void* callbackMain,...);
 qboolean Sys_CreateCallbackThread(void* threadMain,...);
 void Sys_RunThreadCallbacks();
 void Sys_ExitThread(int code);
-
-
+void Sys_Sleep(int usec);
 void Sys_RunDelegatedEvents();
 #endif

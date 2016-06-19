@@ -76,15 +76,15 @@ typedef enum {
 #pragma pack(1)
 
 typedef struct {
-	netadrtype_t	type;
-	int				scope_id;
-	unsigned short port;
-  unsigned short  pad;
-	int				sock;	//Socket FD. 0 = any socket
+	netadrtype_t    type;
+	int             scope_id;
+	unsigned short  port;
+	unsigned short  pad;
+	int             sock;	//Socket FD. 0 = any socket
     union{
-	    byte	ip[4];
-	    byte	ipx[10];
-	    byte	ip6[16];
+		byte ip[4];
+		byte ipx[10];
+		byte ip6[16];
 	};
 }netadr_t;
 

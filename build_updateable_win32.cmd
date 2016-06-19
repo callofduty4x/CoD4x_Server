@@ -7,7 +7,7 @@ gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -I..
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath -c ..\src\win32\win_syscon.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath -c ..\src\win32\sys_cod4linker_win32.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath -c ..\src\win32\pe32_parser.c
-gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -D COD4X18UPDATE -I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath -c ..\src\*.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D OFFICIAL -D COD4X18UPDATE -D WINVER=0x501 -I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath -c ..\src\*.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -D WINVER=0x501 -c ..\src\zlib\*.c
 cd ..\
 
