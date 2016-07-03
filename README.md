@@ -35,9 +35,9 @@ To compile Cod4X from source you require the following tools:
 Debian/Ubuntu 32-bit:`apt install nasm paxctl build-essential`
 
 Debian/Ubuntu 64-bit:
-`dpkg --add-architecture i386`
-`apt-get update`
-`apt-get install nasm:i386 build-essential gcc-multilib g++-multilib`
+```dpkg --add-architecture i386
+apt-get update
+apt-get install nasm:i386 build-essential gcc-multilib g++-multilib```
 
 openSUSE 32-bit: `sudo zypper install nasm gcc-32bit gcc-c++-32bit`
  
