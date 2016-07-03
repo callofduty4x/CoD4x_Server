@@ -29,7 +29,8 @@ nasm -f elf src/msg_hooks.asm        -o bin/msg_hooks.o
 nasm -f elf src/pluginexports.asm    -o bin/pluginexports.o
 
 echo Linking...
-gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ltommath_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
+#gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ltommath_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
+gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
 rm bin/*.o
 
 #cp lib/steamclient.so bin
