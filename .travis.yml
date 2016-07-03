@@ -25,9 +25,9 @@ before_install:
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib libtomcrypt-dev libtommath-dev
 
 script:
-#  - cd src/tomcrypt
-#  - ./compile_linux.sh
-  - cd src/mbedtls
+  - cd src/tomcrypt
+  - ./compile_linux.sh
+  - cd ../mbedtls
   - make
   - cd ../..
   
