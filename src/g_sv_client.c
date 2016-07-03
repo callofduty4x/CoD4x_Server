@@ -377,9 +377,10 @@ __cdecl void ClientUserinfoChanged( int clientNum ) {
 	} else {
 		client->sess.predictItemPickup = qtrue;
 	}
+/*
 	SV_GetUsername(clientNum, name, sizeof(name));
 	ClientSetUsername(clientNum, name);
-
+*/
 }
 
 void ClientSetUsername(int clientNum, const char* username)

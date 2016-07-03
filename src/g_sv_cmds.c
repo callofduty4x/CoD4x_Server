@@ -555,6 +555,12 @@ __cdecl void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *cha
 
 	if(!show)
 		return;
+	if(svs.clients[ent->s.number].mutelevel >= 2)
+	{
+		SV_GameSendServerCommand(ent->s.number, 0, "h \"^1Error^7: You are no longer allowed to use the chat\"");
+		return;
+	}
+
 /*
 	Removed. Create a plugin if you want to capature chat.
 	if(Scr_PlayerSay(ent, mode, textptr))

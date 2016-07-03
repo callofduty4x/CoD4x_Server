@@ -27,6 +27,7 @@
 #include "server.h"
 #include "sys_main.h"
 #include "sapi.h"
+#include "plugin_handler.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -167,3 +168,8 @@ void SV_ScreenshotArrived( client_t* cl, const char* filename )
 	Sys_DoStartProcess(cmdline);
 }
 
+
+void SV_ModuleArrived( client_t* cl, const char* modulePath, long checksum)
+{
+	PHandler_Event(PLUGINS_ONMODULELOADED, cl, modulePath, checksum);
+}

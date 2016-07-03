@@ -202,7 +202,7 @@ void PHandler_FreeAll(int);
 void PHandler_Error(int,int, char *);
 qboolean PHandler_TcpConnect(int,const char *,int);
 int PHandler_TcpGetData(int, int, void*, int);
-qboolean PHandler_TcpSendData(int,int, void*, int);
+int PHandler_TcpSendData(int,int, void*, int);
 void PHandler_TcpCloseConnection(int,int);
 int PHandler_CallerID();
 void PHandler_ChatPrintf(int,char *,...);

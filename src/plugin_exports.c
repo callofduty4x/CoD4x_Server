@@ -141,12 +141,9 @@ P_P_F void Plugin_AddCommand(char *name, xcommand_t xcommand, int power)
 
 }
 
-/*
-P_P_F qboolean Plugin_TcpConnect( int connection, const char* remote)
+
+P_P_F qboolean Plugin_TcpConnectMT( int pID, int connection, const char* remote)
 {
-    int pID;
-    //Identify the calling plugin
-    pID = PHandler_CallerID();
     if(pID<0){
         Com_Printf("Plugins: Error! Tried open a TCP-Connection for unknown plugin!\n");
         return qfalse;
@@ -163,12 +160,18 @@ P_P_F qboolean Plugin_TcpConnect( int connection, const char* remote)
 
 }
 
-P_P_F int Plugin_TcpGetData(int connection, void* buf, int size)
+P_P_F qboolean Plugin_TcpConnect( int connection, const char* remote)
 {
     int pID;
     //Identify the calling plugin
     pID = PHandler_CallerID();
-    if(pID<0){
+    return Plugin_TcpConnectMT(pID, connection, remote);
+}
+
+
+P_P_F int Plugin_TcpGetDataMT(int pID, int connection, void* buf, int size)
+{
+    if(pID<0 || pID >= MAX_PLUGINS){
         Com_Printf("Plugin_TcpGetData: Error! Tried get TCP data for unknown plugin!\n");
         return -1;
     }
@@ -188,15 +191,18 @@ P_P_F int Plugin_TcpGetData(int connection, void* buf, int size)
     return PHandler_TcpGetData(pID, connection, buf, size);
 }
 
-
-P_P_F qboolean Plugin_TcpSendData(int connection, void* data, int len)
+P_P_F int Plugin_TcpGetData(int connection, void* buf, int size)
 {
-
-
     int pID;
     //Identify the calling plugin
     pID = PHandler_CallerID();
-    if(pID<0){
+    return Plugin_TcpGetDataMT(pID, connection, buf, size);
+}
+
+
+P_P_F qboolean Plugin_TcpSendDataMT(int pID, int connection, void* data, int len)
+{
+    if(pID<0 || pID >= MAX_PLUGINS){
         Com_Printf("Plugin_TcpSendData: Error! Tried get TCP data for unknown plugin!\n");
         return qfalse;
     }
@@ -216,12 +222,18 @@ P_P_F qboolean Plugin_TcpSendData(int connection, void* data, int len)
     return PHandler_TcpSendData(pID, connection, data, len);
 }
 
-P_P_F void Plugin_TcpCloseConnection(int connection)
+P_P_F qboolean Plugin_TcpSendData(int connection, void* data, int len)
 {
     int pID;
     //Identify the calling plugin
     pID = PHandler_CallerID();
-    if(pID<0){
+    return Plugin_TcpSendDataMT(pID, connection, data, len);
+}
+
+P_P_F void Plugin_TcpCloseConnectionMT(int pID, int connection)
+{
+    //Identify the calling plugin
+    if(pID<0 || pID >= MAX_PLUGINS){
         Com_Printf("Plugin_TcpCloseConnection: Error! Tried get close a connection for unknown plugin!\n");
         return;
     }
@@ -235,7 +247,15 @@ P_P_F void Plugin_TcpCloseConnection(int connection)
     }
     PHandler_TcpCloseConnection(pID, connection);
 }
-*/
+
+P_P_F void Plugin_TcpCloseConnection(int connection)
+{
+    int pID;
+    //Identify the calling plugin
+    pID = PHandler_CallerID();
+    Plugin_TcpCloseConnectionMT(pID, connection);
+}
+
 
 P_P_F qboolean Plugin_UdpSendData(netadr_t* to, void* data, int len)
 {
@@ -876,4 +896,11 @@ P_P_F qboolean Plugin_CreateCallbackThread(void* threadMain,...)
 	if(success == qfalse)
 		tcb->isActive = qtrue;
 	return success;
+}
+
+
+P_P_F int Plugin_GetPluginID() //Only from mainthread callable
+{
+    int PID = PHandler_CallerID();
+    return PID;
 }

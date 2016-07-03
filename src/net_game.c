@@ -60,7 +60,6 @@ unsigned int NET_TimeGetTime()
         return (unsigned int)com_frameTime;
 }
 
-
 /*
 =================
 NET_ReadTcpPackets
@@ -72,10 +71,9 @@ NET_ReadTcpPackets
 typedef struct
 {
     int serviceId;
-    tcpclientstate_t (*tcpauthevent)(netadr_t* from, msg_t* msg, int *connectionId);
-    qboolean (*tcpevent)(netadr_t* from, msg_t* msg, int connectionId);
+    int (*tcpevent)(netadr_t* from, msg_t* msg, int connectionId);
     void (*tcpconncloseevent)(netadr_t* from, int connectionId);
-
+    qboolean (*tcpidentevent)(netadr_t* from, msg_t* msg, int *connectionId);
 }tcpevent_t;
 
 tcpevent_t tcpevents[MAX_TCPEVENTS];
@@ -98,102 +96,112 @@ void NET_TCPConnectionClosed(netadr_t* adr, int connectionId, int serviceId)
         }
 }
 
-tcpclientstate_t NET_TCPAuthPacketEvent(netadr_t* from, byte* bufData, int len, int* connectionId, int *serviceId)
+
+qboolean NET_TCPPacketEvent(netadr_t* from, byte* bufData, int len, int* connectionId, int* serviceId) //Returns qtrue if it wants to write data to socket
 {
+    int i, r;
+    qboolean ret;
+    msg_t msg;
 
-        int i;
-        msg_t msg;
-        tcpclientstate_t ret;
-
-        msg.data = bufData;
-        msg.cursize = len;
-        msg.maxsize = len;
-        msg.readcount = 0;
-        msg.bit = 0;
-        msg.readonly = qtrue;
-        msg.overflowed = qfalse;
-
-        Com_DPrintf("Auth Packet event from: %s\n", NET_AdrToString(from));
-
+    if(*serviceId == -1)
+    {
+        if(len == 0)
+        {
+            return qfalse;
+        }
+        if(len < 4)
+        {
+            NET_TcpCloseSocket(from->sock);
+            return qfalse; //Close connection
+        }
         for(i = 0; i < MAX_TCPEVENTS; i++)
         {
-
-            if(tcpevents[i].tcpauthevent == NULL)
+            if(tcpevents[i].tcpidentevent == NULL)
+            {
                 continue;
+            }
+            msg.data = bufData;
+            msg.cursize = len;
+            msg.maxsize = len;
+            msg.readcount = 0;
+            msg.bit = 0;
+            msg.readonly = qtrue;
+            msg.overflowed = qfalse;
 
-            ret = tcpevents[i].tcpauthevent(from, &msg, connectionId);
-            if(ret != TCP_AUTHNOTME)
+            ret = tcpevents[i].tcpidentevent(from, &msg, connectionId);
+            if(ret)
             {
                 *serviceId = tcpevents[i].serviceId;
-                return ret;
-            }
-        }
-        Com_DPrintf("^5Bad TCP-Packet from: %s\n", NET_AdrToString(from));
-        return TCP_AUTHBAD; //Close connection
-}
-
-void NET_TCPPacketEvent(netadr_t* from, byte* bufData, int len, int connectionId, int serviceId)
-{
-        int i;
-        msg_t msg;
-
-		Com_DPrintf("Packet event from: %s\n", NET_AdrToString(from));
-
-	
-        for(i = 0; i < MAX_TCPEVENTS; i++)
-        {
-            if(tcpevents[i].serviceId == serviceId)
-            {
-
-                msg.data = bufData;
-                msg.cursize = len;
-                msg.maxsize = len;
-                msg.readcount = 0;
-                msg.bit = 0;
-                msg.readonly = qtrue;
-                msg.overflowed = qfalse;
-
-                if(tcpevents[i].tcpevent(from, &msg, connectionId))
-                {
-                    NET_TcpCloseSocket(from->sock);
-                }
-                return;
+                break;
             }
         }
 
-        Com_PrintError("NET_TCPPacketEvent: Bad serviceId: %x\n", serviceId);
-        NET_TcpCloseSocket(from->sock);
-        return; //Close connection
-}
+    }
 
-void NET_TCPAddEventType(
-        qboolean (*tcpevent)(netadr_t* from, msg_t* msg, int connectionId),
-        tcpclientstate_t (*tcpauthevent)(netadr_t* from, msg_t* msg, int *connectionId),
-        void (*tcpconncloseevent)(netadr_t* from, int connectionId),
-        int serviceId
-){
-
-
-    int i;
-
-    if(tcpevent == NULL || tcpauthevent == NULL)
+    if(*serviceId == -1)
     {
-        Com_Error(ERR_FATAL, "NET_TCPAddEventType: NULL tcpevent handler or NULL tcpauthevent handler");
-        return;
+        return qfalse;
     }
 
     for(i = 0; i < MAX_TCPEVENTS; i++)
     {
-        if(tcpevents[i].tcpevent ==  tcpevent)
+        if(tcpevents[i].serviceId == *serviceId)
+        {
+            msg.data = bufData;
+            msg.cursize = len;
+            msg.maxsize = len;
+            msg.readcount = 0;
+            msg.bit = 0;
+            msg.readonly = qtrue;
+            msg.overflowed = qfalse;
+            r = tcpevents[i].tcpevent(from, &msg, *connectionId);
+            if(r == -1)
+            {
+                NET_TcpCloseSocket(from->sock);
+                return qfalse;
+            }else if(r == 1){
+                return qtrue;
+            }
+            return qfalse;
+        }
+    }
+    Com_PrintError("NET_TCPPacketEvent: Bad serviceId: %x\n", serviceId);
+    NET_TcpCloseSocket(from->sock);
+    return qfalse; //Close connection
+}
+
+
+
+
+void NET_TCPAddEventType(
+        int (*tcpevent)(netadr_t* from, msg_t* msg, int connectionId), //returns -1 to close connection, 0 waiting for more data to read, 1 if it wants to write more data
+        qboolean (*tcpserviceidentevent)(netadr_t* from, msg_t* msg, int *connectionId),
+        void (*tcpconncloseevent)(netadr_t* from, int connectionId),
+        int serviceId
+){
+    int i;
+
+    if(tcpevent == NULL || tcpserviceidentevent == NULL)
+    {
+        Com_Error(ERR_FATAL, "NET_TCPAddEventType: NULL tcpevent or tcpserviceidentevent handler");
+        return;
+    }
+    if(serviceId == 0)
+    {
+        Com_Error(ERR_FATAL, "NET_TCPAddEventType: NULL serviceId");
+        return;
+    }
+    for(i = 0; i < MAX_TCPEVENTS; i++)
+    {
+        if(tcpevents[i].tcpidentevent == tcpserviceidentevent)
         {
             Com_Error(ERR_FATAL, "NET_TCPAddEventType: Attempt to add an already defined redirect function twice.");
             return;
         }
-
         if(tcpevents[i].tcpevent == NULL)
         {
             tcpevents[i].tcpevent = tcpevent;
-            tcpevents[i].tcpauthevent = tcpauthevent;
+            tcpevents[i].tcpidentevent = tcpserviceidentevent;
             tcpevents[i].tcpconncloseevent = tcpconncloseevent;
             tcpevents[i].serviceId = serviceId;
             return;
@@ -202,4 +210,3 @@ void NET_TCPAddEventType(
     Com_Error(ERR_FATAL, "NET_TCPAddEventType: Out of redirect handles. Increase MAX_TCPEVENTS to add more redirect destinations");
 
 }
-

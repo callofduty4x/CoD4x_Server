@@ -25,17 +25,12 @@
 #include "q_shared.h"
 #include "tomcrypt/tomcrypt.h"
 
+extern int SEC_HASH_SHA1;
+extern int SEC_HASH_SHA256;
+extern int SEC_HASH_TIGER;
 
-typedef enum{
-    SEC_HASH_SHA1,
-    SEC_HASH_SHA256,
-    SEC_HASH_TIGER,
-    SEC_HASH_SIZE__
-}sec_hash_e;
-
-qboolean Sec_HashMemory(sec_hash_e algo, void *in, size_t inSize, void *out, long unsigned int *outSize,qboolean binaryOutput);
-qboolean Sec_HashFile(sec_hash_e algo, const char *fname, void *out, long unsigned *outSize,qboolean binaryOutput);
+qboolean Sec_HashMemory(int algo, void *in, size_t inSize, void *out, long unsigned int *outSize,qboolean binaryOutput);
+qboolean Sec_HashFile(int algo, const char *fname, void *out, long unsigned *outSize,qboolean binaryOutput);
 qboolean Sec_BinaryToHex(char *in,unsigned long inSize,char *out,unsigned long *outSize);
-extern struct ltc_hash_descriptor sec_hashes[SEC_HASH_SIZE__];
 
 #endif

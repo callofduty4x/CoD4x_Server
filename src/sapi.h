@@ -18,7 +18,10 @@ uint64_t SV_SApiStringToID(const char* steamidstring);
 qboolean SV_SApiSteamIDIndividual(uint64_t steamid);
 qboolean SV_SApiSteamIDIndividualSteamOnly(uint64_t steamid);
 //void SV_SApiReadModules( client_t* cl, msg_t* msg );
-void SV_SApiRequestModules( client_t* cl, msg_t* msg );
+//void SV_SApiRequestModules( client_t* cl, msg_t* msg );
+void SV_SApiSendModuleRequest(client_t* cl);
+void SV_SApiProcessModules( client_t* cl, msg_t* msg );
+
 uint64_t SV_SApiGUID2PlayerID(const char* guid);
 
 #endif
@@ -40,15 +43,22 @@ typedef struct{
 	void (*SV_SendReliableServerCommand)(client_t* client, msg_t *msg);
 	void (*SV_AddBanForClient)(client_t* cl, int bantime, const char* banreason);
 	void (*SV_ScreenshotArrived)(client_t* cl, const char* filename);
+    void (*SV_ModuleArrived)(client_t* cl, const char* filename, long checksum);
 #else
 	void (*SV_DropClientNoNotify)( void *drop, const char *reason );
 	void (*SV_DropClient)( void *drop, const char *reason );
 	void (*SV_SendReliableServerCommand)(void* client, void *msg);
 	void (*SV_AddBanForClient)(void* cl, int bantime, const char* banreason);
 	void (*SV_ScreenshotArrived)(void* cl, const char* filename);
+    void (*SV_ModuleArrived)(void* cl, const char* filename, long checksum);
 #endif
 	int (*FS_SV_HomeWriteFile)( const char *qpath, const void *buffer, int size);
 	unsigned int (*Sys_Milliseconds)();
+	int (*pkcs_5_alg2)(const unsigned char *password, unsigned long password_len,
+	                const unsigned char *salt,     unsigned long salt_len,
+	                int iteration_count,           int hash_idx,
+	                unsigned char *out,            unsigned long *outlen);
+	int (*find_hash)(const char* name);
 }imports_t;
 
 
@@ -56,6 +66,8 @@ typedef struct{
 typedef struct{
 	void (*TakeSS)(client_t* cl, const char* savename);
 	void (*ReadSS)( client_t* cl, msg_t* msg );
+    void (*SendModuleRequest)(client_t* cl);
+    void (*ProcessModules)(client_t* cl, msg_t* msg);
 	void (*Shutdown)();
 	void (*Data)(client_t* cl, msg_t* msg);
 	int (*Connect)(client_t* client);

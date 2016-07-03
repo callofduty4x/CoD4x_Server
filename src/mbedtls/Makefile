@@ -1,9 +1,9 @@
 
 # Also see "include/mbedtls/config.h"
 
-CFLAGS	?= -O2
+CFLAGS	?= -O2 -m32
 WARNING_CFLAGS ?=  -Wall -W -Wdeclaration-after-statement
-LDFLAGS ?=
+LDFLAGS ?= -m32
 
 LOCAL_CFLAGS = $(WARNING_CFLAGS) -I../ -D_FILE_OFFSET_BITS=64
 LOCAL_LDFLAGS =
@@ -27,7 +27,7 @@ endif
 ifdef SHARED
 # all code is position-indep with mingw, avoid warning about useless flag
 ifndef WINDOWS_BUILD
-LOCAL_CFLAGS += -fPIC -fpic
+LOCAL_CFLAGS += -fPIC -fpic -m32
 endif
 endif
 

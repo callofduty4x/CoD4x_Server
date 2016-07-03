@@ -22,9 +22,6 @@
 #include "sec_crypto.h"
 #include "sec_common.h"
 
-struct ltc_hash_descriptor sec_hashes[SEC_HASH_SIZE__];
-
-
 
 qboolean Sec_BinaryToHex(char *in,unsigned long inSize,char *out, unsigned long *outSize){
     if(*outSize < inSize * 2+1){
@@ -45,50 +42,55 @@ qboolean Sec_BinaryToHex(char *in,unsigned long inSize,char *out, unsigned long 
     return qtrue;
 
 }
-qboolean Sec_HashMemory(sec_hash_e algo, void *in, size_t inSize, void *out, long unsigned int *outSize,qboolean binaryOutput){
+qboolean Sec_HashMemory(int algo, void *in, size_t inSize, void *out, long unsigned int *outSize,qboolean binaryOutput){
     //__asm__("int $3");
-    if(in == NULL || out == NULL || *outSize < 1 || inSize < 1 || algo >= SEC_HASH_SIZE__){
+    if(in == NULL || out == NULL || *outSize < 1 || inSize < 1 || algo >= TAB_SIZE){
 	SecCryptErr = CRYPT_INVALID_ARG;
 	return qfalse;
     }
     if(!Sec_Initialized()){
 	return qfalse;
     }
-    
+
     hash_state md;
     int result;
     long unsigned int size;
     unsigned char *buff = NULL,*buff2 = NULL;
-    struct ltc_hash_descriptor *hs = &sec_hashes[algo];
-    
+    struct ltc_hash_descriptor *hs = &hash_descriptor[algo];
+
+    if(hs->name == NULL){
+    	SecCryptErr = CRYPT_INVALID_ARG;
+    	return qfalse;
+    }
+
     SecCryptErr = CRYPT_OK;
     size = (binaryOutput ? hs->hashsize / 4: hs->hashsize);
-    
+
     if(size > *outSize){
 	SecCryptErr = CRYPT_MEM;
         return qfalse;
     }
-    
+
     if(!binaryOutput) {buff = (unsigned char *)Sec_Malloc(sizeof(unsigned char) * size); buff2 = buff; }
     else {buff2 = NULL; buff = out; }
-    
+
     if((result = hs->init(&md)) != CRYPT_OK)		   { Sec_Free(buff2); SecCryptErr = result; return qfalse; }
     if((result = hs->process(&md, in, inSize)) != CRYPT_OK){ Sec_Free(buff2); SecCryptErr = result; return qfalse; }
     if((result = hs->done(&md,buff)) != CRYPT_OK)	   { Sec_Free(buff2); SecCryptErr = result; return qfalse; }
-    
+
     if(!binaryOutput){
 	Sec_BinaryToHex((char *)buff,hs->hashsize,out,outSize);
     }
     else *outSize = hs->hashsize;
-    
+
     Sec_Free(buff2);
-    
+
     return (SecCryptErr == CRYPT_OK);
 }
 
-qboolean Sec_HashFile(sec_hash_e algo, const char *fname, void *out, long unsigned *outSize,qboolean binaryOutput)
+qboolean Sec_HashFile(int algo, const char *fname, void *out, long unsigned *outSize,qboolean binaryOutput)
 {
-    if(fname == NULL || out == NULL || outSize == NULL || *outSize < 1 || algo < 0 || algo >= SEC_HASH_SIZE__){
+    if(fname == NULL || out == NULL || outSize == NULL || *outSize < 1 || algo < 0 || algo >= TAB_SIZE){
 	SecCryptErr = CRYPT_INVALID_ARG;
 	return qfalse;
     }
@@ -100,15 +102,21 @@ qboolean Sec_HashFile(sec_hash_e algo, const char *fname, void *out, long unsign
     unsigned char buff[1024];
     unsigned char *ptr;
     int x,result,size;
-    struct ltc_hash_descriptor *hs = &sec_hashes[algo];
+    struct ltc_hash_descriptor *hs = &hash_descriptor[algo];
     SecCryptErr = CRYPT_OK;
+
+    if(hs->name == NULL){
+    	SecCryptErr = CRYPT_INVALID_ARG;
+    	return qfalse;
+    }
+
     size = binaryOutput ? hs->hashsize / 4 : hs->hashsize;
     if(size > *outSize){
 	SecCryptErr = CRYPT_MEM;
         return qfalse;
     }
     unsigned long dbg = 0;
-    
+
     if((result = hs->init(&md))!=CRYPT_OK){ SecCryptErr=result; return qfalse; }
     fp = fopen(fname,"rb");
     if(fp==NULL){
@@ -117,7 +125,7 @@ qboolean Sec_HashFile(sec_hash_e algo, const char *fname, void *out, long unsign
     }
     do{
         x = fread(buff, 1, sizeof(buff), fp);
-        
+
         if ((result = hs->process(&md, buff, x)) != CRYPT_OK){
            SecCryptErr = result;
            fclose(fp);

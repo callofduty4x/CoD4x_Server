@@ -4,6 +4,8 @@ gcc $FLAGS hashes/*.c
 gcc $FLAGS misc/crypt/*.c
 gcc $FLAGS misc/base64/*.c
 gcc $FLAGS misc/*.c
+gcc $FLAGS misc/pkcs5/*.c
+gcc $FLAGS mac/hmac/*.c
 gcc $FLAGS pk/asn1/der/sequence/*.c
 gcc $FLAGS pk/asn1/der/bit/*.c
 gcc $FLAGS pk/asn1/der/boolean/*.c

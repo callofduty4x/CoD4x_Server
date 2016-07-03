@@ -183,8 +183,8 @@ qboolean SV_ExecuteRemoteCmd(int clientnum, const char *msg){
               return qfalse;
   	}
   	if(powercmd > power){
-              SV_SendServerCommand(redirectClient, "e \"^5Command^2: %s\n^3Command execution failed - Insufficient power to execute this command.\n^3You need at least ^6%i ^3powerpoints to invoke this command.\n^3Type ^2$cmdlist ^3to get a list of all available commands\"",
-              printPtr, powercmd);
+              SV_SendServerCommand(redirectClient, "e \"^5Command^2: %s\n^3Command execution failed - Insufficient power to execute this command.\n^3Type ^2$cmdlist ^3to get a list of all available commands\"",
+              printPtr);
   	    return qtrue;
   	}
   }

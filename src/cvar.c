@@ -30,6 +30,7 @@
 #include "cmd_completion.h"
 #include "filesystem.h"
 #include "sys_main.h"
+#include "sys_thread.h"
 // nothing outside the Cvar_*() functions should modify these fields!
 
 #include <string.h>
@@ -38,6 +39,7 @@
 #include <math.h>
 #include <limits.h>
 #include <float.h>
+
 
 cvar_t		*cvar_vars;
 cvar_t		*cvar_cheats;
@@ -114,12 +116,16 @@ static long generateHashValue( const char *fname ) {
 
 void Cvar_AddFlags(cvar_t* var, unsigned short flags)
 {
+	Sys_EnterCriticalSection(CRIT_CVAR);
 	var->flags |= flags;
+	Sys_LeaveCriticalSection(CRIT_CVAR);
 }
 
 void Cvar_ClearFlags(cvar_t* var, unsigned short flags)
 {
+	Sys_EnterCriticalSection(CRIT_CVAR);
 	var->flags &= ~flags;
+	Sys_LeaveCriticalSection(CRIT_CVAR);
 }
 
 /*
@@ -168,8 +174,9 @@ cvar_t *Cvar_FindVar( const char *var_name ) {
 Cvar_VariableValue
 ============
 */
-float Cvar_VariableValue( const char *var_name ) {
+float Cvar_VariableValueInternal( const char *var_name ) {
 	cvar_t	*var;
+	Sys_EnterCriticalSection(CRIT_CVAR);
 
 	var = Cvar_FindVar (var_name);
 	if (!var)
@@ -181,14 +188,19 @@ float Cvar_VariableValue( const char *var_name ) {
 	else
 		return 0.0;
 }
-
-
+float Cvar_VariableValue( const char *var_name )
+{
+	Sys_EnterCriticalSection(CRIT_CVAR);
+	float v = Cvar_VariableValueInternal(var_name);
+	Sys_LeaveCriticalSection(CRIT_CVAR);
+	return v;
+}
 /*
 ============
 Cvar_VariableIntegerValue
 ============
 */
-int Cvar_VariableIntegerValue( const char *var_name ) {
+int Cvar_VariableIntegerValueInternal( const char *var_name ) {
 	cvar_t	*var;
 
 	var = Cvar_FindVar (var_name);
@@ -203,13 +215,19 @@ int Cvar_VariableIntegerValue( const char *var_name ) {
 	else
 		return 0;
 }
-
+int Cvar_VariableIntegerValue( const char *var_name )
+{
+	Sys_EnterCriticalSection(CRIT_CVAR);
+	int i = Cvar_VariableIntegerValueInternal(var_name);
+	Sys_LeaveCriticalSection(CRIT_CVAR);
+	return i;
+}
 /*
 ============
 Cvar_VariableBooleanValue
 ============
 */
-qboolean Cvar_VariableBooleanValue( const char *var_name ) {
+qboolean Cvar_VariableBooleanValueInternal( const char *var_name ) {
 	cvar_t	*var;
 
 	var = Cvar_FindVar (var_name);
@@ -234,7 +252,13 @@ qboolean Cvar_VariableBooleanValue( const char *var_name ) {
 	else
 		return 0;
 }
-
+qboolean Cvar_VariableBooleanValue( const char *var_name )
+{
+	Sys_EnterCriticalSection(CRIT_CVAR);
+	qboolean b = Cvar_VariableBooleanValueInternal(var_name);
+	Sys_LeaveCriticalSection(CRIT_CVAR);
+	return b;
+}
 
 
 /*

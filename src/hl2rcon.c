@@ -34,6 +34,8 @@
 #include "net_game.h"
 #include "g_sv_shared.h"
 #include "sv_auth.h"
+#include "q_platform.h"
+#include "sapi.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -45,6 +47,7 @@ Source Rcon facility
 
 ========================================================================
 */
+void HL2Rcon_StatusCommand();
 
 #ifndef MAX_MSGLEN
 #define MAX_MSGLEN 0x20000
@@ -121,76 +124,30 @@ void HL2Rcon_SourceRconDisconnect(netadr_t *from, int connectionId)
 }
 
 
-tcpclientstate_t HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, int *connectionId){
+qboolean HL2Rcon_SourceRconIdentEvent(netadr_t *from, msg_t *msg, int *connectionId){
 
 	int packetlen;
 	int packettype;
-	int packetid;
-	char* loginstring;
-	char* username;
-	char* password;
-	byte msgbuf[32];
-	msg_t sendmsg;
 	rconUser_t* user;
 	int i;
-	char buf[MAX_STRING_CHARS];
-	char stringlinebuf[MAX_STRING_CHARS];
 
 	MSG_BeginReading(msg);
 	packetlen = MSG_ReadLong(msg);
 
 	if(packetlen != msg->cursize - 4){//Not a source rcon packet
 
-		Com_Printf("Not a source rcon packet: len %d size %d\n", packetlen, msg->cursize);
+		//Com_Printf("Not a source rcon packet: len %d size %d\n", packetlen, msg->cursize);
 
-		return TCP_AUTHNOTME;
+		return qfalse;
 	}
-	packetid = MSG_ReadLong(msg);
+	//packetid = 
+	MSG_ReadLong(msg);
 
 	packettype = MSG_ReadLong(msg);
 
 	if(packettype != SERVERDATA_AUTH)//Not a source rcon auth-packet
-		return TCP_AUTHNOTME;
+		return qfalse;
 
-	if(SV_PlayerBannedByip(from, buf, sizeof(buf))){
-		return TCP_AUTHBAD;
-	}
-
-	MSG_Init(&sendmsg, msgbuf, sizeof(msgbuf));
-	MSG_WriteLong(&sendmsg, 10);
-	MSG_WriteLong(&sendmsg, 0);
-	MSG_WriteLong(&sendmsg, SERVERDATA_RESPONSE_VALUE);
-	MSG_WriteShort(&sendmsg, 0);
-	if(NET_SendData(from->sock, &sendmsg) < 1)
-	{
-		return TCP_AUTHBAD;
-	}
-
-	MSG_Init(&sendmsg, msgbuf, sizeof(msgbuf));
-	MSG_WriteLong(&sendmsg, 10);
-
-	loginstring = MSG_ReadStringLine(msg, stringlinebuf, sizeof(stringlinebuf));
-
-	Cmd_TokenizeString(loginstring);
-
-	if(Cmd_Argc() != 2){
-		goto badrcon;
-	}
-	username = Cmd_Argv(0);
-	password = Cmd_Argv(1);
-
-	if(strlen(password) < 6){
-		goto badrcon;
-	}
-
-	if(Auth_Authorize(username, password) < 0)
-	{
-		goto badrcon;
-	}
-
-	Com_Printf("Rcon login from: %s Name: %s\n", NET_AdrToString (from), username);
-
-	Cmd_EndTokenizedString();
 
 	for(i = 0, user = sourceRcon.activeRconUsers; i < MAX_RCONUSERS; i++, user++){
 		if(user->remote.type == NA_BAD)
@@ -198,28 +155,103 @@ tcpclientstate_t HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, int *connect
 	}
 
 	if(i == MAX_RCONUSERS){
-		return TCP_AUTHBAD; //Close connection
+		*connectionId = -1;//need to close that on 1st read event
+		return qtrue;
 	}
 
 
 	user->remote = *from;
-	user->steamid = Auth_GetSteamID(username);
-//	user->rconPower = login->power;
-	Q_strncpyz(user->rconUsername, username, sizeof(user->rconUsername));
+	user->steamid = -1;
+	user->rconUsername[0] = '\0';
 	user->streamchat = 0;
 	user->streamlog = 0;
-	user->lastpacketid = packetid;
+	user->lastpacketid = 0;
 	*connectionId = i;
+
+	return qtrue;
+}
+
+qboolean HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, rconUser_t* user){
+
+	//int packettype;
+	int packetid;
+	char* loginstring;
+	char* username;
+	char* password;
+	byte msgbuf[32];
+	msg_t sendmsg;
+	//int i;
+	char buf[MAX_STRING_CHARS];
+	char stringlinebuf[MAX_STRING_CHARS];
+	int steamid;
+
+	//packetlen =
+	MSG_ReadLong(msg);
+	packetid = MSG_ReadLong(msg);
+	//packettype = 
+	MSG_ReadLong(msg);
+
+	if(SV_PlayerBannedByip(from, buf, sizeof(buf))){
+		return qfalse;
+	}
+
+	MSG_Init(&sendmsg, msgbuf, sizeof(msgbuf));
+	MSG_WriteLong(&sendmsg, 10);
+	MSG_WriteLong(&sendmsg, 0);
+	MSG_WriteLong(&sendmsg, SERVERDATA_RESPONSE_VALUE);
+	MSG_WriteShort(&sendmsg, 0);
+	if(NET_SendData(from->sock, &sendmsg) != sendmsg.cursize)
+	{
+		return qfalse;
+	}
+
+	MSG_Init(&sendmsg, msgbuf, sizeof(msgbuf));
+	MSG_WriteLong(&sendmsg, 10);
+
+	loginstring = MSG_ReadStringLine(msg, stringlinebuf, sizeof(stringlinebuf));
+
+	if(strlen( sv_rconPassword->string) < 8 || strcmp (loginstring, sv_rconPassword->string ))
+	{
+		Cmd_TokenizeString(loginstring);
+
+		if(Cmd_Argc() != 2){
+			goto badrcon;
+		}
+		username = Cmd_Argv(0);
+		password = Cmd_Argv(1);
+
+		if(strlen(password) < 6){
+			goto badrcon;
+		}
+
+		if(Auth_Authorize(username, password) < 0)
+		{
+			goto badrcon;
+		}
+
+		Com_Printf("Rcon login from: %s Name: %s\n", NET_AdrToString (from), username);
+
+		Cmd_EndTokenizedString();
+		steamid = Auth_GetSteamID(username);
+	}else{
+		steamid = 0;
+		username = "console";
+		Com_Printf("Rcon login from: %s with rcon password\n", NET_AdrToString (from));
+	}
+
+	user->steamid = steamid;
+	Q_strncpyz(user->rconUsername, username, sizeof(user->rconUsername));
+	user->lastpacketid = packetid;
 
 	MSG_WriteLong(&sendmsg, user->lastpacketid);
 	MSG_WriteLong(&sendmsg, SERVERDATA_AUTH_RESPONSE);
 	MSG_WriteShort(&sendmsg, 0);
-	if(NET_SendData(from->sock, &sendmsg) < 1)
+	if(NET_SendData(from->sock, &sendmsg) != sendmsg.cursize)
 	{
-		return TCP_AUTHBAD;
+		return qfalse;
 	}
 
-	return TCP_AUTHSUCCESSFULL;
+	return qtrue;
 
 
 badrcon:
@@ -235,7 +267,7 @@ badrcon:
 	MSG_WriteLong(&sendmsg, SERVERDATA_AUTH_RESPONSE);
 	MSG_WriteShort(&sendmsg, 0);
 	NET_SendData(from->sock, &sendmsg);
-	return TCP_AUTHBAD;
+	return qfalse;
 
 }
 
@@ -382,7 +414,10 @@ void HL2Rcon_SourceRconFlushRedirect(char* outputbuf, qboolean lastcommand){
 	updatelen = (int32_t*)msg.data;
 	*updatelen = msg.cursize - 4;
 
-	NET_SendData(user->remote.sock, &msg);
+	if(NET_SendData(user->remote.sock, &msg) != msg.cursize)
+	{
+		sourceRcon.writeerror = 1;
+	}
 }
 
 
@@ -427,11 +462,16 @@ void HL2Rcon_ExecuteConsoleCommand(const char* command, uint64_t steamid)
 	oldinvokersteamid = Cmd_GetInvokerSteamID();
 	Cmd_GetInvokerName(oldinvokername, sizeof(oldinvokername));
 
-	power = Auth_GetClPowerBySteamID(steamid);
-	name = Auth_GetNameBySteamID(steamid);
+	if(steamid != 0)
+	{
 
+		power = Auth_GetClPowerBySteamID(steamid);
+		name = Auth_GetNameBySteamID(steamid);
+	}else{
+		power = 100;
+		name = "console";
+	}
 	Cmd_SetCurrentInvokerInfo(power, -1, steamid, name);
-
 	Com_BeginRedirect (sv_outputbuf, SV_OUTPUTBUF_LENGTH, HL2Rcon_SourceRconFlushRedirect);
 
 	if(power < 100)
@@ -460,16 +500,24 @@ void HL2Rcon_ExecuteConsoleCommand(const char* command, uint64_t steamid)
 			Cmd_ExecuteSingleCommand(0,0, buffer);
 		}
 	}else{
-		Cmd_ExecuteSingleCommand(0,0, command);
+
+		//Special commands for HL2
+		if(!Q_stricmpn(command, "status", 6))
+		{
+			HL2Rcon_StatusCommand();
+		}else{
+			Cmd_ExecuteSingleCommand(0,0, command);
+		}
 	}
 
 	Com_EndRedirect();
 	Cmd_SetCurrentInvokerInfo(oldpower, oldinvokerclnum, oldinvokersteamid, oldinvokername);
+
 }
 
 
 
-qboolean HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
+int HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 
     int packettype;
     int type;
@@ -481,20 +529,30 @@ qboolean HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
     char sv_outputbuf[HL2RCON_SOURCEOUTPUTBUF_LENGTH];
     msg_t msg2;
     byte data[20000];
-	char stringbuf[8 * MAX_STRING_CHARS];
+    char stringbuf[8 * MAX_STRING_CHARS];
 
     MSG_BeginReading(msg);
+
+    if(connectionId < 0 || connectionId >= MAX_RCONUSERS)
+	return -1; //Close it
+
+    rconUser_t* user;
+    user = &sourceRcon.activeRconUsers[connectionId];
+
+    if(user->rconUsername[0] == '\0')
+    {
+        if(HL2Rcon_SourceRconAuth(from, msg, user) == qfalse)
+        {
+            return -1;
+        }else{
+            return 0;
+        }
+    }
 
     while(msg->readcount < msg->cursize)
     {
 	//packetlen =
 	MSG_ReadLong(msg);
-
-	if(connectionId < 0 || connectionId >= MAX_RCONUSERS)
-		return qtrue;
-
-	rconUser_t* user;
-	user = &sourceRcon.activeRconUsers[connectionId];
 
 	user->lastpacketid = MSG_ReadLong(msg);
 
@@ -517,7 +575,10 @@ qboolean HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 		    //Adjust the length
 		    updatelen = (int32_t*)msg2.data;
 		    *updatelen = msg2.cursize - 4;
-		    NET_SendData(from->sock, &msg2);
+		    if(NET_SendData(from->sock, &msg2) != msg2.cursize)
+		    {
+			return -1; //We couldn't send everything. Just error out here. Too lazy to buffer data to send
+                    }
 		    break;
 
 		case SERVERDATA_EXECCOMMAND:
@@ -530,8 +591,17 @@ qboolean HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 		    Com_Printf("Rcon from: %s command: %s\n", NET_AdrToString(from), command);
 
 		    sourceRcon.redirectUser = connectionId+1;
-		    HL2Rcon_ExecuteConsoleCommand(command, user->steamid);
+		    sourceRcon.writeerror = 0;
+
+		    if(user->steamid != 0 || strcmp(user->rconUsername, "console") == 0)
+		    {
+			HL2Rcon_ExecuteConsoleCommand(command, user->steamid);
+		    }
 		    sourceRcon.redirectUser = 0;
+		    if(sourceRcon.writeerror)
+		    {
+			return -1;
+		    }
 		    break;
 
 		case SERVERDATA_TURNONSTREAM:
@@ -542,10 +612,15 @@ qboolean HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 		    MSG_ReadByte(msg);
 
 		    sourceRcon.redirectUser = connectionId+1;
+		    sourceRcon.writeerror = 0;
 		    Com_BeginRedirect (sv_outputbuf, sizeof(sv_outputbuf), HL2Rcon_SourceRconFlushRedirect);
 		    HL2Rcon_SourceRconStreaming_enable( type, user->steamid );
 		    Com_EndRedirect ();
 		    sourceRcon.redirectUser = 0;
+		    if(sourceRcon.writeerror)
+		    {
+			return -1;
+		    }
 		    break;
 
 		case SERVERDATA_SAY:
@@ -564,10 +639,10 @@ qboolean HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 		default:
 		//Not a source rcon packet
 		Com_Printf("Not a valid source rcon packet from: %s received. Type: %d - Closing connection\n", NET_AdrToString(from), packettype);
-		return qtrue;
+		return -1; //Close it
 	}
     }
-    return qfalse;
+    return 0;
 }
 
 
@@ -586,7 +661,7 @@ void HL2Rcon_Init(){
 //	Cmd_AddCommand ("rconaddadmin", HL2Rcon_SetSourceRconAdmin_f);
 //	Cmd_AddCommand ("rconlistadmins", HL2Rcon_ListSourceRconAdmins_f);
 
-	NET_TCPAddEventType(HL2Rcon_SourceRconEvent, HL2Rcon_SourceRconAuth, HL2Rcon_SourceRconDisconnect, 9038723);
+	NET_TCPAddEventType(HL2Rcon_SourceRconEvent, HL2Rcon_SourceRconIdentEvent, HL2Rcon_SourceRconDisconnect, 9038723);
 
 	Com_AddRedirect(HL2Rcon_SourceRconSendConsole);
 	G_PrintAddRedirect(HL2Rcon_SourceRconSendGameLog);
@@ -638,4 +713,91 @@ void HL2Rcon_EventClientEnterTeam(int cid, int team){
 
     HL2Rcon_SourceRconSendDataToEachClient( data, 3, SERVERDATA_EVENT);
 
+}
+
+
+void HL2Rcon_StatusCommand()
+{
+    int bots, humans, i;
+    char psti[128];
+    char timestr[256];
+    char state[256];
+    client_t* cl;
+    char cleanhostname[1024];
+
+    Q_strncpyz(cleanhostname, sv_hostname->string, sizeof(cleanhostname));
+    Q_CleanStr(cleanhostname);
+
+    Com_Printf("hostname: %s\n", cleanhostname);
+    Com_Printf("version : %s\n", com_version->string);
+    netadr_t* outadr = NET_GetDefaultCommunicationSocket();
+    Com_Printf("udp/ip  : %s\n", NET_AdrToString(outadr));
+    Com_Printf("os      : %s\n", OS_STRING);
+    Com_Printf("type    : dedicated server\n");
+    Com_Printf("map     : %s\n", sv_mapname->string);
+
+    // don't count privateclients
+    bots = humans = 0;
+    for ( i = 0 ; i < sv_maxclients->integer ; i++ )
+    {
+	if ( svs.clients[i].state >= CS_CONNECTED ) {
+		
+		if (svs.clients[i].netchan.remoteAddress.type != NA_BOT) {
+			humans++;
+		}else{
+			bots++;
+		}
+	}
+    }
+    Com_Printf("players : %d humans, %d bots (%d/%d)\n\n", humans, bots, sv_maxclients->integer, humans + bots);
+
+    Com_Printf("# userid name uniqueid connected ping loss state rate adr\n");
+    for (i=0,cl=svs.clients; i < sv_maxclients->integer ; i++, cl++)
+    {
+	if (!cl->state)
+		continue;
+
+	SV_SApiSteamIDToString(cl->playerid, psti, sizeof(psti));
+
+	int contime = (svs.time - cl->connectedTime) / 1000;
+
+	if(cl->connectedTime == 0)
+	{
+		contime = 0;
+	}
+
+	int h = contime / (60*60);
+	contime = contime % (60*60);
+	int m = contime / 60;
+	contime = contime % (60);
+	int s = contime;
+
+	if(h > 0)
+	{
+		Com_sprintf(timestr, sizeof(timestr), "%02u:%02u:%02u", h,m,s);
+	}else{
+		Com_sprintf(timestr, sizeof(timestr), "%02u:%02u", m,s);
+	}
+	int ping = cl->ping < 999 ? cl->ping : 999;
+	if(ping == -1)
+	{
+		ping = 0;
+	}
+	switch(cl->state)
+	{
+		case CS_ACTIVE:
+			strcpy(state, "active");
+			break;
+		case CS_PRIMED:
+			strcpy(state, "primed");
+			break;
+		case CS_CONNECTED:
+			strcpy(state, "connected");
+			break;
+		default:
+			strcpy(state, "zombie");
+	}
+	Com_Printf("# %d \"%s\" %s %s %d %d %s %d %s\n", i, cl->name, psti, timestr, ping, 0, state, cl->rate, NET_AdrToString(&cl->netchan.remoteAddress));
+    }
+    Com_Printf("#end\n");
 }

@@ -96,6 +96,7 @@ qboolean	NET_CompareBaseAdrMask(netadr_t *a, netadr_t *b, int netmask);
 qboolean	NET_CompareBaseAdr (netadr_t *a, netadr_t *b);
 qboolean	NET_IsLocalAddress (netadr_t adr);
 const char	*NET_AdrToString (netadr_t *a);
+const char	*NET_AdrToStringMT (netadr_t *a, char*, int);
 const char	*NET_AdrToStringShort (netadr_t *a);
 const char	*NET_AdrToStringwPort (netadr_t *a);
 netadr_t	*NET_SockToAdr(int socket);
@@ -122,10 +123,15 @@ void NET_TcpServerPacketEventLoop();
 void NET_TcpServerRebuildFDList(void);
 void NET_TcpServerInit(void);
 int NET_TcpClientConnect( const char *remoteAdr );
+int NET_TcpClientConnectToAdr( netadr_t* adr );
+int NET_TcpClientConnectFromAdrToAdr( netadr_t* destination, netadr_t* source );
+int NET_TcpClientConnectFromAdrToAdrSilent( netadr_t* destination, netadr_t* source );
 int NET_TcpClientGetData(int sock, void* buf, int buflen, char* errormsg, int maxerrorlen);
 void NET_TcpCloseSocket(int socket);
 const char* NET_GetHostAddress(char* adrstrbuf, int len);
 int NET_GetHostPort();
+netadr_t* NET_GetLocalAddressList(int* count);
+qboolean Sys_IsReservedAddress( netadr_t *adr );
 
 typedef enum {
 	TCP_AUTHWAIT,

@@ -18,28 +18,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
-
-
-
-/*
-#include "qcommon_io.h"
-#include "qcommon.h"
-#include "filesystem.h"
-#include "cvar.h"
-#include "sys_net.h"
-#include "sys_main.h"
-#include "server.h"
-#include "cmd.h"
-#include "plugin_handler.h"
-*/
-#include "../pinc.h"
-#include "q_shared.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include "../pinc.h"
+#include "q_shared.h"
+
 
 #define MAX_NAME_LENGTH 33
 #define UPDATE_INTERVAL 120 //2 minutes
@@ -67,7 +53,7 @@ typedef struct{
 /*** Shared used objects. Access only inside critical sections ****/
 static banList_t cachedBanlist[MAX_CACHED_ENTRIES];
 static permissionList_t cachedPermissionlist[MAX_CACHED_ENTRIES];
-static qboolean cacheupdated;
+static qboolean cacheupdated; //Parsing the cache if true and check players on server against it
 /******************************************************************/
 
 typedef struct
@@ -80,35 +66,192 @@ static cvar_t* identkey;
 static cvar_t *banlisthandlerurl;
 static int serverport;
 
+static void ClearCachedBan(baninfo_t* baninfo);
 static void ListCachedBans_f();
+
 static void SV_DumpBanlist_f()
 {
     Plugin_Printf("%s\n", paramters.showbanlistmessage);
 }
 
-/*
-
-PCL void OnPlayerAddBan(baninfo_t* baninfo)
+void SM_Chat(const char* line, int clnum)
 {
-  time_t aclock;
-  time(&aclock);
-  baninfo->created = aclock;
-  SV_AddBanToInternalList(baninfo->uid, baninfo->adminuid, baninfo->pbguid, baninfo->playername, &baninfo->adr, baninfo->expire, baninfo->message);
-}
+  char chattername[256];
+  char cleanname[256];
+  int i;
 
-
-PCL void OnPlayerRemoveBan(baninfo_t* baninfo)
-{
-  if(baninfo->pbguid[0])
+  if(line[0] == 0)
   {
-    SV_RemoveBanFromInternalList(0, baninfo->pbguid, NULL);
-  }else if(baninfo->uid > 0){
-    SV_RemoveBanFromInternalList(baninfo->uid, NULL, NULL);
+    return;
+  }
+
+  if ( clnum >= 0 )
+  {
+    Q_strncpyz(cleanname, Plugin_GetPlayerName(clnum), sizeof(cleanname));
+    Q_CleanStr(cleanname);
+    if(Plugin_CanPlayerUseCommand(clnum, "sm_chat"))
+    {
+        Com_sprintf(chattername, sizeof(chattername), "^3%s", cleanname);
+    }else{
+        Com_sprintf(chattername, sizeof(chattername), "^2%s", cleanname);
+    }
   }else{
-    SV_RemoveBanFromInternalList(0, NULL, baninfo->playername);
+    Q_strncpyz(chattername, "^1Console", sizeof(chattername));
+  }
+
+  for ( i = 0; i < Plugin_GetSlotCount(); ++i )
+  {
+    if ( Plugin_CanPlayerUseCommand(i, "sm_chat") || i == clnum)
+    {
+      Plugin_ChatPrintf(i, "^3[^0AdminChat^3]^7 (%s^7): %s", chattername, line);
+    }
   }
 }
-*/
+
+void SM_Chat_f()
+{
+  char line[256];
+
+  if ( Plugin_Cmd_Argc() < 2 )
+  {
+    Plugin_Printf("Usage: sm_chat <Message>\nSends your message to all connected admins\n");
+    return;
+  }
+
+  Plugin_Cmd_Args(line, sizeof(line));
+
+  int invoker = Plugin_Cmd_GetInvokerSlot();
+
+  SM_Chat(line, invoker);
+}
+
+//For using chat with @@ prefix
+static void SM_PSay(const char* msg, int source)
+{
+  int i;
+  char message[1024];
+  char cleannames[128];
+  char cleannamed[128];
+
+  Cmd_TokenizeString(msg);
+
+  if(Cmd_Argc() < 2)
+  {
+    Plugin_ChatPrintf(source, "Usage: @@player message");
+    return;
+  }
+
+  client_t* cl = Plugin_SV_Cmd_GetPlayerClByHandle(Cmd_Argv(0));
+
+  if(cl == NULL)
+  {
+    Plugin_ChatPrintf(source, "No player for %s found", Cmd_Argv(0));
+    return;
+  }
+  if(cl->state < CS_ACTIVE)
+  {
+    Plugin_ChatPrintf(source, "Player %s is not in active", cl->name);
+    return;
+  }
+
+  message[0] = '\0';
+  for(i = 1; i < Cmd_Argc(); ++i)
+  {
+    Q_strcat(message, sizeof(message), Cmd_Argv(i));
+    Q_strcat(message, sizeof(message), " ");
+  }
+
+  int destination = NUMFORCLIENT(cl);
+
+  if(source == destination)
+  {
+      Plugin_ChatPrintf(source, "Why would you send a message to yourself?");
+      return;
+  }
+
+  Q_strncpyz(cleannames, Plugin_GetPlayerName(source), sizeof(cleannames));
+  Q_strncpyz(cleannamed, cl->name, sizeof(cleannamed));
+
+  Q_CleanStr(cleannames);
+  Q_CleanStr(cleannamed);
+
+  Plugin_ChatPrintf(source, "^7%s ^1>> ^7%s: %s", cleannames, cleannamed, message);
+  Plugin_ChatPrintf(destination, "^7%s ^1>> ^7%s: %s", cleannames, cleannamed, message);
+}
+
+//For invoking command sm_psay
+static void SM_PSay_f()
+{
+  int i;
+  char message[1024];
+
+  if(Plugin_Cmd_Argc() < 3)
+  {
+    Plugin_Printf("Usage: sm_psay <name> <message>\n");
+    return;
+  }
+
+  const char* name = Plugin_Cmd_Argv(1);
+  message[0] = '\0';
+
+  for(i = 2; i < Plugin_Cmd_Argc(); ++i)
+  {
+    Q_strcat(message, sizeof(message), Plugin_Cmd_Argv(i));
+  }
+
+  for(i = 0; i < Plugin_GetSlotCount(); ++i)
+  {
+    client_t* cl = Plugin_GetClientForClientNum(i);
+    if(cl->state < CS_ACTIVE)
+    {
+      continue;
+    }
+    if(strcmp(cl->name, name) == 0)
+    {
+        Plugin_ChatPrintf(i, "^2Admin{SB} to ^7%s^2: ^7%s", name, message);
+    }
+  }
+
+}
+
+
+
+PCL void OnMessageSent(char* message, int slot, qboolean* show, int mode)
+{
+    const char* rawmsg;
+    int numat = 1;
+
+    if(message[0] != '@' && (message[0] != 0x15 || message[1] != '@') )
+    {
+        return;
+    }
+    *show = qfalse;
+
+    if(message[0] == 0x15)
+        rawmsg = message +2;
+    else
+        rawmsg = message +1;
+
+    if(rawmsg[0] == '@')
+    {
+        ++rawmsg;
+        ++numat;
+    }
+    if(rawmsg[0] == '@')
+    {
+        ++rawmsg;
+        ++numat;
+    }
+
+    if(numat == 1)
+    {
+	SM_Chat(rawmsg, slot);
+    }else if(numat == 2){
+	SM_PSay(rawmsg, slot);
+    }
+}
+
+
 
 /*
  * public domain strtok_r() by Charlie Gordon
@@ -120,7 +263,7 @@ PCL void OnPlayerRemoveBan(baninfo_t* baninfo)
  *     (Declaration that it's public domain):
  *      http://groups.google.com/group/comp.lang.c/msg/7c7b39328fefab9c
  */
-
+#ifndef strtok_r
 static char* strtok_r(char *str, const char *delim, char **nextp)
 {
     char *ret;
@@ -150,7 +293,7 @@ static char* strtok_r(char *str, const char *delim, char **nextp)
 
     return ret;
 }
-
+#endif
 PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain information about the plugin
     // Memory pointed by info is allocated by the server binary, just fill in the fields
 
@@ -161,9 +304,9 @@ PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain informati
     // =====  OPTIONAL  FIELDS  =====
     info->pluginVersion.major = 1;
     info->pluginVersion.minor = 0;	// Plugin version
-    strncpy(info->fullName,"Webserver powered banlist plugin by Fraggy", sizeof(info->fullName)); //Full plugin name
-    strncpy(info->shortDescription,"Plugin to work as banlist.",sizeof(info->shortDescription)); // Short plugin description
-    strncpy(info->longDescription,"This plugin is used to manage a banlist over a webapi so players can be banned from multiple gameservers and ban managed from webservers.",sizeof(info->longDescription));
+    strncpy(info->fullName,"SourceBans plugin by Ninja", sizeof(info->fullName)); //Full plugin name
+    strncpy(info->shortDescription,"Plugin to work as banlist powered by Sourcebans.",sizeof(info->shortDescription)); // Short plugin description
+    strncpy(info->longDescription,"This plugin is used to manage a banlist on a modified version of the Sourcebans backend so players can be banned from multiple gameservers at once and bans can be easy managed from Sourcebans.",sizeof(info->longDescription));
 }
 
 
@@ -210,13 +353,13 @@ PCL int OnInit(){	// Funciton called on server initiation
     int len, code;
     httpPostVals_t values;
 
-    identkey = Plugin_Cvar_RegisterString("webbanapi_identkey", "", 0, "Key used to authenticate on web banlist api interface");
+    identkey = Plugin_Cvar_RegisterString("sourcebans_identkey", "", 0, "Key used to authenticate on sourcebans serverexec script");
     serverport = Plugin_Cvar_VariableIntegerValue("net_port");
-    banlisthandlerurl = Plugin_Cvar_RegisterString("webbanapi_url", "", 0, "URL of the banlist handler");
+    banlisthandlerurl = Plugin_Cvar_RegisterString("sourcebans_url", "", 0, "URL of the Sourcebans serverexec script");
 
-    if(banlisthandlerurl->string[0] == 0)
+    if(banlisthandlerurl->string[0] == 0 || identkey->string[0] == 0)
     {
-      Plugin_PrintError("Init failure. Cvar webbanapi_url is not set\n");
+      Plugin_PrintError("Init failure. Cvar sourcebans_url or sourcebans_identkey is not set\n");
       return -1;
     }
     data[0] = 0;
@@ -224,7 +367,12 @@ PCL int OnInit(){	// Funciton called on server initiation
     Com_sprintf(portstr, sizeof(portstr), "%hu", serverport);
     Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "command", "HELO");
     Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "identkey", identkey->string);
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "adminsteamid", "0");
     Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "serverport", portstr);
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "gamename", "Call of Duty 4 - Modern Warfare X18");
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "gamedir", "cod4");
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "rcon", Plugin_Cvar_VariableString("rcon_password"));
+
     len = sizeof(data);
     code = HTTP_DoBlockingQuery(banlisthandlerurl->string, data, &len);
     if(code != 200)
@@ -236,13 +384,15 @@ PCL int OnInit(){	// Funciton called on server initiation
     const char *status = Plugin_HTTP_GetFormDataItem(&values, "status");
     if(Q_stricmp(status, "okay"))
     {
-      Plugin_PrintError("Init failure. WebAPI backend said: %s\n", status);
+      Plugin_PrintError("Init failure. Sourcebans backend script said: %s\n", status);
       return -1;
     }
     Q_strncpyz(paramters.showbanlistmessage, Plugin_HTTP_GetFormDataItem(&values, "showbanlistmessage"), sizeof(paramters.showbanlistmessage));
-    Plugin_Printf("Web banlist plugin is ready to work\n");
+    Plugin_Printf("Sourcebans plugin is ready to work\n");
     Plugin_AddCommand("dumpbanlist", SV_DumpBanlist_f, 30);
     Plugin_AddCommand("dumpbanlistcache", ListCachedBans_f, 100);
+    Plugin_AddCommand("sm_psay", SM_PSay_f, 100);
+    Plugin_AddCommand("sm_chat", SM_Chat_f, 30);
     return 0;
 }
 
@@ -277,6 +427,22 @@ static void ListCachedBans_f() //Debug function to test banlist cache
   Plugin_LeaveCriticalSection();
 }
 
+static void ClearCachedBan(baninfo_t* baninfo)
+{
+  int i;
+
+  Plugin_EnterCriticalSection();
+
+  for(i = 0; i < MAX_CACHED_ENTRIES; ++i)
+  {
+    if((baninfo->playerid && cachedBanlist[i].playerid == baninfo->playerid) || (baninfo->adr.type >= NA_IP && Plugin_NET_CompareBaseAdr(&baninfo->adr, &cachedBanlist[i].remote)))
+    {
+
+        memset(&cachedBanlist[i], 0, sizeof(cachedBanlist[i]));
+    }
+  }
+  Plugin_LeaveCriticalSection();
+}
 
 
 static banList_t* CheckForCachedBans(baninfo_t* baninfo) //Will also check for just received bans after querying as the ban info does receive in an independed worker thread
@@ -363,6 +529,9 @@ static void* QueryThreadForPlayer(void* q)
     Com_sprintf(tmp, sizeof(tmp), "%llu", baninfo->steamid);
     Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "steamid", tmp);
   }
+
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "adminsteamid", "0");
+
   if(baninfo->playername[0])
   {
     Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "playername", baninfo->playername);
@@ -393,12 +562,47 @@ static void* QueryThreadForPlayer(void* q)
   {
     Plugin_Printf("WebbanlistAPI: server returned code %d\n", code);
   }else{
-  //  Plugin_Printf("WebbanlistAPI: server returned %s\n", querystring);
+    Plugin_Printf("WebbanlistAPI: server returned %s\n", querystring);
 
     Plugin_HTTP_ParseFormDataBody(querystring, &values);
     const char* status = Plugin_HTTP_GetFormDataItem(&values, "status");
-    if(Q_stricmp(status, "active"))
+    if(!Q_stricmpn(status, "Ban Not Found", 13))
     {
+        ClearCachedBan(baninfo);
+        free(baninfo);
+        return NULL;
+    }
+    if(!Q_stricmp(status, "mute"))
+    {
+        for(i = 0; i < MAX_CLIENTS; ++i)
+        {
+            client_t* cl = Plugin_GetClientForClientNum(i);
+            if(cl->state >= CS_CONNECTED && cl->playerid == baninfo->playerid)
+            {
+                cl->mutelevel = 1; //Only voice - !!!Race condition!!!
+            }
+        }
+        ClearCachedBan(baninfo);
+        free(baninfo);
+        return NULL;
+    }
+    if(!Q_stricmp(status, "chat"))
+    {
+        for(i = 0; i < MAX_CLIENTS; ++i)
+        {
+            client_t* cl = Plugin_GetClientForClientNum(i);
+            if(cl->state >= CS_CONNECTED && cl->playerid == baninfo->playerid)
+            {
+                cl->mutelevel = 2; //Voice and chat - !!!Race condition!!!
+            }
+        }
+        ClearCachedBan(baninfo);
+        free(baninfo);
+        return NULL;
+    }
+    if(Q_stricmp(status, "active"))//If full ban active don't return here
+    {
+      free(baninfo);
       return NULL;
     }
     uint64_t playerid = Plugin_StringToSteamID( Plugin_HTTP_GetFormDataItem(&values, "playerid"));
@@ -421,8 +625,6 @@ static void* QueryThreadForPlayer(void* q)
     Q_strncpyz(b.playername, playername, sizeof(b.playername));
     b.lastqueried = Plugin_GetServerTime();
     b.lastupdated = Plugin_GetServerTime();
-
-
 
     Plugin_EnterCriticalSection();
 
@@ -606,7 +808,7 @@ static void* BanUnbanPlayerThread(void* q)
     }
   }
 
-  Plugin_Free(baninfo);
+  free(baninfo);
   return NULL;
 }
 
@@ -647,9 +849,12 @@ static void* GetPlayerPermissionsThread(void* q)
   querystring[0] = 0;
   Com_sprintf(tmp, sizeof(tmp), "%llu", steamid);
   Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "steamid", tmp);
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "adminsteamid", tmp);
   Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "identkey", identkey->string);
   Com_sprintf(tmp, sizeof(tmp), "%u", serverport);
   Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "serverport", tmp);
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "gamename", "Call of Duty 4 - Modern Warfare X18");
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "gamedir", "cod4");
   Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "command", "querypermissions");
 
   //3 attempts to put data
@@ -744,18 +949,13 @@ static void SendPermissionQuery(uint64_t steamid)
 PCL void OnPlayerGetBanStatus(baninfo_t* baninfo, char* message, int len)
 {
   banList_t* l;
+  //Send a query
+  SendQueryForPlayer(baninfo);
 
   l = CheckForCachedBans(baninfo);
   if(l == NULL)
   {
-    //Send a query
-    SendQueryForPlayer(baninfo);
     return;
-  }
-  if(l->lastupdated + UPDATE_INTERVAL < Plugin_GetRealtime())
-  {
-    //Send a query
-    SendQueryForPlayer(baninfo);
   }
   //deal with that player here
   Q_strncpyz(message, baninfo->message, len);

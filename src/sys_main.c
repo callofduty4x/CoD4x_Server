@@ -483,8 +483,6 @@ void Sys_Restart(const char* reason)
 	Sys_SetExitCmdline(commandline);
 
 	Cbuf_ExecuteText(EXEC_NOW, "quit\n");
-	Com_Printf("If you can see this, call 911! Something went terribly wrong...\n");
-	exit(87);
 }
 
 

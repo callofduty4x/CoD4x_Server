@@ -35,10 +35,6 @@ global DB_SetInitializing
 DB_SetInitializing:
 	jmp dword [oDB_SetInitializing]
 
-global DB_FileExists
-DB_FileExists:
-	jmp dword [oDB_FileExists]
-
 global DB_ModFileExists
 DB_ModFileExists:
 	jmp dword [oDB_ModFileExists]
@@ -75,7 +71,6 @@ BG_FillInAllWeaponItems:
 SECTION .rodata
 
 oDB_SetInitializing dd 0x820337c
-oDB_FileExists dd 0x8204424
 oDB_ModFileExists dd 0x8204470
 oDB_LoadXAssets dd 0x8205e86
 oDB_GetXAssetTypeSize dd 0x81da6ce

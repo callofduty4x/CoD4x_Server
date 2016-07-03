@@ -6,7 +6,6 @@
 #define P_P_F __attribute__((__noinline__)) __attribute__((__cdecl__))
 
 pluginWrapper_t pluginFunctions;
-mainFunctions_t mainFunctions;
 
 #include "plugin_com.c"
 
@@ -17,76 +16,6 @@ void Plugin_Init()
     pluginFunctions.loadedPlugins=0;
     pluginFunctions.enabled=qfalse;
 
-    ptr=(void*)&mainFunctions.Com_Printf;
-
-    //    Copy the function pointers to mainFunctions struct
-    mainFunctions.Com_Printf = Com_Printf;
-    mainFunctions.Com_DPrintf = Com_DPrintf;
-    mainFunctions.Com_PrintWarning = Com_PrintWarning;
-    mainFunctions.Com_PrintError = Com_PrintError;
-    mainFunctions.Cmd_Argv = Cmd_Argv;
-    mainFunctions.Cmd_Argc = Cmd_Argc;
-    mainFunctions.FS_SV_FOpenFileRead = FS_SV_FOpenFileRead;
-    mainFunctions.FS_SV_FOpenFileWrite = FS_SV_FOpenFileWrite;
-    mainFunctions.FS_Read = FS_Read;
-    mainFunctions.FS_ReadLine = FS_ReadLine;
-    mainFunctions.FS_Write = FS_Write;
-    mainFunctions.FS_FCloseFile = FS_FCloseFile;
-    mainFunctions.Com_ParseGetToken = Com_ParseGetToken;
-    mainFunctions.Com_ParseTokenLength = Com_ParseTokenLength;
-    mainFunctions.Cvar_VariableValue = Cvar_VariableValue;
-    mainFunctions.Cvar_VariableIntegerValue = Cvar_VariableIntegerValue;
-    mainFunctions.Cvar_VariableString = Cvar_VariableString;
-    mainFunctions.Cvar_VariableStringBuffer = Cvar_VariableStringBuffer;
-    mainFunctions.Sys_Milliseconds = Sys_Milliseconds;
-
-    mainFunctions.Plugin_TcpConnect = Plugin_TcpConnect_p;
-    mainFunctions.Plugin_TcpGetData = Plugin_TcpGetData_p;
-    mainFunctions.Plugin_TcpSendData = Plugin_TcpSendData_p;
-    mainFunctions.Plugin_TcpCloseConnection = Plugin_TcpCloseConnection_p;
-    mainFunctions.Plugin_UdpSendData = Plugin_UdpSendData_p;
-    mainFunctions.Plugin_ServerPacketEvent = Plugin_ServerPacketEvent_p;
-    mainFunctions.NET_StringToAdr = NET_StringToAdr;
-    mainFunctions.Plugin_GetClientScoreboard = Plugin_GetClientScoreboard;
-    mainFunctions.Plugin_Cmd_GetInvokerUid = Plugin_Cmd_GetInvokerUid;
-    mainFunctions.Plugin_GetPlayerUid = Plugin_GetPlayerUid;
-    mainFunctions.Plugin_GetSlotCount = Plugin_GetSlotCount;
-    mainFunctions.Plugin_IsSvRunning = Plugin_IsSvRunning;
-    mainFunctions.Plugin_ChatPrintf = Plugin_ChatPrintf;
-    mainFunctions.Plugin_BoldPrintf = Plugin_BoldPrintf;
-    mainFunctions.Plugin_GetPlayerName = Plugin_GetPlayerName;
-    mainFunctions.Plugin_AddCommand = Plugin_AddCommand;
-    mainFunctions.Plugin_Malloc = Plugin_Malloc_p;
-    mainFunctions.Plugin_Free = Plugin_Free_p;
-    mainFunctions.Plugin_Error = Plugin_Error;
-    mainFunctions.Plugin_GetLevelTime = Plugin_GetLevelTime_p;
-    mainFunctions.Plugin_GetServerTime = Plugin_GetServerTime_p;
-
-    mainFunctions.Plugin_SetPlayerUID = Plugin_SetPlayerUID_p;
-    mainFunctions.Plugin_GetPlayerUID = Plugin_GetPlayerUID_p;
-    mainFunctions.Plugin_GetPlayerGUID = Plugin_GetPlayerGUID_p;
-    mainFunctions.Plugin_SetPlayerGUID = Plugin_SetPlayerGUID_p;
-    mainFunctions.Plugin_SetPlayerNoPB = Plugin_SetPlayerNoPB_p;
-    mainFunctions.Plugin_DoesServerUseUids = Plugin_DoesServerUseUids_p;
-    mainFunctions.Plugin_SetServerToUseUids = Plugin_SetServerToUseUids_p;
-    mainFunctions.Cvar_RegisterString = Cvar_RegisterString;
-    mainFunctions.Cvar_RegisterBool = Cvar_RegisterBool;
-    mainFunctions.Cvar_RegisterInt = Cvar_RegisterInt;
-    mainFunctions.Cvar_RegisterEnum = Cvar_RegisterEnum;
-    mainFunctions.Cvar_RegisterFloat = Cvar_RegisterFloat;
-
-    mainFunctions.Cvar_SetInt = Cvar_SetInt;
-    mainFunctions.Cvar_SetBool = Cvar_SetBool;
-    mainFunctions.Cvar_SetString = Cvar_SetString;
-    mainFunctions.Cvar_SetFloat = Cvar_SetFloat;
-
-    for(i=0;i<sizeof(mainFunctions_t);i+=sizeof(void*)){
-        if(ptr==NULL){
-            Com_Printf("Plugin_Init: Error initializing function pointers.\n");
-            return;
-        }
-        ptr++;
-    }
     Com_Printf("Plugin_Init: Plugins initialization successfull.\n");
     memset(&pluginFunctions,0x00,sizeof(pluginFunctions));    // 0 all data
     pluginFunctions.enabled=qtrue;
@@ -198,7 +127,7 @@ void Plugin_Load(char* name, size_t size)
         Com_Printf("Error loading plugin's OnInit function.\nPlugin load failed.\n");
         return;
     }
-    if((*pluginFunctions.plugins[i].OnInit)(mainFunctions)<0){
+    if((*pluginFunctions.plugins[i].OnInit)()<0){
         Com_Printf("Error in plugin's OnInit function!\nPlugin load failed.\n");
         pluginFunctions.plugins[i].loaded = qfalse;
         pluginFunctions.initializing_plugin = qfalse;

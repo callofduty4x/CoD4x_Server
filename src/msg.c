@@ -77,13 +77,8 @@ void MSG_Init( msg_t *buf, byte *data, int length ) {
 void MSG_InitReadOnly( msg_t *buf, byte *data, int length ) {
 
 	MSG_Init( buf, data, length);
-	buf->data = data;
 	buf->cursize = length;
 	buf->readonly = qtrue;
-	buf->splitdata = NULL;
-	buf->maxsize = length;
-	buf->splitcursize = 0;
-	buf->readcount = 0;
 }
 
 void MSG_InitReadOnlySplit( msg_t *buf, byte *data, int length, byte* arg4, int arg5 ) {
@@ -1890,5 +1885,23 @@ void MSG_WriteReliableCommandToBuffer(const char *source, char *destination, int
 }
 
 
+/* Must not be combined with functions messing with lasrefentity */
+void MSG_BeginWriteMessageLength(msg_t* msg)
+{
+	if ( msg->maxsize - msg->cursize < 1 ) {
+		msg->overflowed = qtrue;
+		return;
+	}
+	msg->lengthoffset = msg->cursize;
+	MSG_WriteLong(msg, 0); //Messagelen needs to be updated later on msg->lengthoffset
+}
 
+void MSG_EndWriteMessageLength(msg_t* msg)
+{
+	int messageend = msg->cursize;
+	msg->cursize = msg->lengthoffset; //Shift the messagewrite pointer to the place where messagelen should be stored
+	int messagestart = msg->lengthoffset + sizeof(uint32_t);
+	MSG_WriteLong(msg, messageend - messagestart); //Messagelen gets updated now
+	msg->cursize = messageend; //Shift it to the end again
+}
 

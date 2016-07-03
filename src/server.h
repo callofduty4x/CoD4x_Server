@@ -176,7 +176,8 @@ typedef struct client_s {//90b4f8c
 	uint64_t		clanidPending;
 	uint64_t		playerid;
 	int			steamstatus;
-	int			free1[3];
+	int			free1[2];
+	int			mutelevel; //1 = voice blocked; 2 = chat and voice blocked
 	int			lastFollowedClient;
 	byte		ssdata[24];
 
@@ -419,6 +420,7 @@ typedef struct {
 	int				changedConfigData[MAX_CONFIGDATACACHE];
 	int				configDataSequence;
 	char			commandWhitelistBuf[1024];
+	char			sysrestartmessage[1024];
 }serverStaticExt_t;
 
 typedef struct {
@@ -427,6 +429,7 @@ typedef struct {
 	translatedCmds_t	translatedCmd[MAX_TRANSCMDS];
 	int			challenge;
 	int			useuids;
+	int			masterserver_messageid;
 	int			masterServer_id;
 	char			masterServer_challengepassword[33];
 	netadr_t		masterServer_adr;
@@ -720,6 +723,7 @@ __cdecl qboolean SV_GameCommand(void);
 
 void SV_GetConfigstring( int index, char *buffer, int bufferSize );
 
+extern cvar_t* sv_rconPassword;
 extern cvar_t* sv_protocol;
 extern cvar_t* sv_padPackets;
 extern cvar_t* sv_demoCompletedCmd;
@@ -831,6 +835,7 @@ void SV_WriteClientConfigInfo( msg_t* msg, client_t* cl, int messageNum );
 void SV_UpdateClientConfigInfo(client_t* cl);
 void SV_ScreenshotClient(client_t* cl, const char* name);
 void SV_ScreenshotArrived(client_t* cl, const char* filename);
+void SV_ModuleArrived(client_t* cl, const char* filename, long checksum);
 void SV_AddBanForSteamIDGUID(uint64_t id, const char* guid, const char* name, int bantime, const char* banreason);
 
 #ifdef COD4X18UPDATE

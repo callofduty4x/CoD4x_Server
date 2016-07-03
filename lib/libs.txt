@@ -1,0 +1,13 @@
+for a linux build this folder needs to contain the following libraries
+the folders for the respective libraries contain build scripts for linux and windows
+
+libmbedcrypto.a  
+libmbedtls_win32.a  
+libtomcrypt_linux.a  
+libtomcrypt_win32.a  
+libtommath_mach.a
+libmbedtls.a     
+libmbedx509.a       
+libtomcrypt_mach.a   
+libtommath_linux.a   
+libtommath_win32.a

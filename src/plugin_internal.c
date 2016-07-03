@@ -39,7 +39,7 @@
  TCP module
 ============
 */
-/*
+
 qboolean PHandler_TcpConnect(int pID, const char* remote, int connection)
 {
     if(pluginFunctions.plugins[pID].sockets[connection].sock < 1){
@@ -87,7 +87,7 @@ int PHandler_TcpGetData(int pID, int connection, void* buf, int size )
 }
 
 
-qboolean PHandler_TcpSendData(int pID, int connection, void* data, int len)
+int PHandler_TcpSendData(int pID, int connection, void* data, int len)
 {
     int state;
 
@@ -95,18 +95,23 @@ qboolean PHandler_TcpSendData(int pID, int connection, void* data, int len)
 
     if(ptcs->sock < 1){
         Com_PrintWarning("Plugin_TcpSendData: called on a non open socket for plugin ID: #%d\n", pID);
-        return qfalse;
+        return -1;
     }
-    state =  NET_TcpSendData(ptcs->sock, data, len);
+    state =  NET_TcpSendData(ptcs->sock, data, len, NULL, 0);
     Com_DPrintf("PHandler_TcpSendData: Sent data from socket %d @ %d\n", ptcs->sock, connection);
 
-    if(state == -1 || state == NET_WANT_WRITE)
+    if(state == NET_WANT_WRITE)
+    {
+      return 0;
+    }
+
+    if(state == -1)
     {
         NET_TcpCloseSocket(ptcs->sock);
         ptcs->sock = -1;
-        return qfalse;
+        return -1;
     }
-    return qtrue;
+    return state;
 }
 
 void PHandler_TcpCloseConnection(int pID, int connection)
@@ -121,7 +126,7 @@ void PHandler_TcpCloseConnection(int pID, int connection)
 	Com_DPrintf("PHandler_TcpCloseConnection: Closed socket %d @ %d\n", ptcs->sock, connection);
     ptcs->sock = -1;
 }
-*/
+
 /*
 =====================================
  Functionality providers for exports

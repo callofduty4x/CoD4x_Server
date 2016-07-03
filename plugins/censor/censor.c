@@ -320,6 +320,93 @@ char* censor_ignoreMultiple(char *output, char *string, size_t size)
 }
 
 
+
+/*****************************************************
+*** Parsing files ***
+*****************************************************/
+static qboolean parse_inquotes = qfalse;
+static char* parse_lastpos;
+
+void Com_ParseReset(){
+
+    parse_inquotes = qfalse;
+    parse_lastpos = NULL;
+}
+
+char* Com_ParseGetToken(char* line){
+
+    if(parse_lastpos == line){
+
+        if(parse_inquotes){//In case we are inside quotes step until the end quote forward
+
+            do{
+                line++;
+            }while(*line != '"' && *line != ';' && *line != '\n' && *line != '\0');
+
+            parse_inquotes = qfalse;
+        }
+
+        while(*line != ' '){
+            if(*line == '\0' || *line == '\n'){
+                parse_inquotes = qfalse;
+                parse_lastpos = NULL;
+                return NULL;
+            }
+            line++;
+        }
+
+
+    }
+
+    while(*line == ' ' || *line == ';'){
+        if(*line == '\0' || *line == '\n'){
+            parse_inquotes = qfalse;
+            parse_lastpos = NULL;
+            return NULL;
+        }
+        line++;
+    }
+
+    if(*line == '"'){ //Check if the next token is the beginning of a quoted string
+        parse_inquotes = qtrue;
+        line++;	//Move over the quotes character to the 1st real character
+    }
+
+
+    if(*line == '\0' || *line == '\n'){
+        parse_inquotes = qfalse;
+        parse_lastpos = NULL;
+        return NULL;
+    }
+
+    parse_lastpos = line;
+    return line;
+}
+
+
+int Com_ParseTokenLength(char* token){
+    if(token == NULL) return 0;
+
+    char* pos = token;
+    int i = 0;
+    if(parse_inquotes){//In case we are inside quotes
+        while(*pos != '"' && *pos != ';' && *pos != '\n' && *pos != '\0'){
+            pos++;
+            i++;
+        }
+
+    }else{//Default case
+
+        while(*pos != ' ' && *pos != ';' && *pos != '\n' && *pos != '\0'){
+            pos++;
+            i++;
+        }
+    }
+    return i;
+}
+
+
+
 char* G_SayCensor(char *msg)
 {
 	char token2[1024];
@@ -327,11 +414,11 @@ char* G_SayCensor(char *msg)
 	badwordsList_t *this;
 	char* ret = msg;
 	while(1){
-		msg = Plugin_ParseGetToken(msg);
+		msg = Com_ParseGetToken(msg);
 		if(msg==NULL)
 			break;
 
-		int size = Plugin_ParseTokenLength(msg);
+		int size = Com_ParseTokenLength(msg);
 		Q_strncpyz(token,msg,size+1);
 
 		removeColors(token2,token,sizeof(token2));

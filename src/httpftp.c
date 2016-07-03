@@ -1421,6 +1421,10 @@ static int FTP_ReceiveData(ftRequest_t* request)
 		newsize = 2 * request->transfermsg.maxsize;
 		if(request->finallen > 0 && newsize > request->finallen)
 		{
+      if(request->finallen < request->transfermsg.cursize)
+      {
+        return -1;
+      }
 			newsize = request->finallen;
 		}
 
@@ -1441,7 +1445,7 @@ static int FTP_ReceiveData(ftRequest_t* request)
 	}
 
 	/* Receive new bytes */
-  int len = request->recvmsg.maxsize - request->recvmsg.cursize;
+  int len = request->transfermsg.maxsize - request->transfermsg.cursize;
   status = NET_TcpClientGetData( request->transfersocket, request->transfermsg.data + request->transfermsg.cursize, len, NULL, 0);
 
   if(status == NET_WANT_READ)
@@ -1451,7 +1455,7 @@ static int FTP_ReceiveData(ftRequest_t* request)
 
   if(status > 0)
   {
-    request->recvmsg.cursize += status;
+    request->transfermsg.cursize += status;
   	request->transfertotalreceivedbytes += status;
     return 1;
   }
@@ -1819,8 +1823,6 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 			break;
 
 		case 10000:
-			request->transferactive = qfalse;
-
 			if(request->socket >= 0)
 			{
 				NET_TcpCloseSocket(request->socket);
@@ -1840,14 +1842,16 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 			{
 				request->stage = -1;
 				Com_PrintError("\nReceived complete message but message buffer is NULL!\n");
-				break;
+				return -1;
 			}
 			request->stage = 10001;
 			request->code = 200;
 			Q_strncpyz(request->status, "OK", sizeof(request->status));
-			break;
-		case 10001:
-			Com_Printf("\n");
+      request->transferactive = qfalse;
+      Com_Printf("FTP File transfer completed\n");
+      return 1;
+
+    case 10001:
 			return 1;
 		default:
 			return 0;
@@ -2076,14 +2080,21 @@ qboolean HTTPServer_WriteMessage( ftRequest_t* request, netadr_t* from)
 	bytes = NET_TcpSendData(from->sock, request->sendmsg.data + request->sentBytes, request->sendmsg.cursize - request->sentBytes, errormsg, sizeof(errormsg));
   if(bytes == NET_WANT_WRITE)
   {
-    return qtrue;
+    return 1;
+//Want write
   }
 	if(bytes < 0 || bytes > (request->sendmsg.cursize - request->sentBytes))
 	{
-		return qtrue;
+		return -1;
+//Error close it
 	}
 	request->sentBytes += bytes;
-	return qfalse;
+
+	if(request->sendmsg.cursize != request->sentBytes)
+	{
+		return 1;//Want write
+	}
+	return -1;//We are done so close it
 }
 
 
@@ -2255,7 +2266,7 @@ void HTTPServer_ClearConnectionId(int id)
 }
 
 
-qboolean HTTPServer_Event(netadr_t* from, msg_t* msg, int connectionId)
+int HTTPServer_Event(netadr_t* from, msg_t* msg, int connectionId)
 {
 	char sessionkey[128];
 	httpPostVals_t values[MAX_POST_VALS];
@@ -2265,16 +2276,16 @@ qboolean HTTPServer_Event(netadr_t* from, msg_t* msg, int connectionId)
 
 	if(request == NULL)
 	{
-		return qtrue;
+		return -1;
 	}
 
 	if (request->finallen == -1 || request->recvmsg.cursize < request->finallen) {
 		ret = HTTPServer_ReadMessage(from, msg, request);
 		if(ret  == -1)
 		{
-			return qtrue;
+			return -1;
 		}else if (ret == 0) {
-			return qfalse;
+			return 0;
 		}
 	}
 	/* Received full message */
@@ -2292,7 +2303,7 @@ qboolean HTTPServer_Event(netadr_t* from, msg_t* msg, int connectionId)
 }
 
 /* Detecting the clientside protocol and process the 1st chunk of data if it is a http client */
-tcpclientstate_t HTTPServer_AuthEvent(netadr_t* from, msg_t* msg, int *connectionId)
+qboolean HTTPServer_IdentEvent(netadr_t* from, msg_t* msg, int *connectionId)
 {
 	ftRequest_t* request;
 	*connectionId = 0;
@@ -2305,32 +2316,27 @@ tcpclientstate_t HTTPServer_AuthEvent(netadr_t* from, msg_t* msg, int *connectio
 	line = MSG_ReadStringLine(msg, protocol, sizeof(protocol));
 	if (line != NULL) {
 		if ( Q_strncmp(line, "GET", 3) && Q_strncmp(line, "POST", 4) && Q_strncmp(line, "HEAD", 4) ) {
-			return TCP_AUTHNOTME;
+			return qfalse;
 		}
 		if( strstr(line, "HTTP/1.0") == NULL && strstr(line, "HTTP/1.1") == NULL )
 		{
 			/* Is not a HTTP client */
-			return TCP_AUTHNOTME;
+			return qfalse;
 		}
 	}
 
 	request = FT_CreateRequest(NULL, NULL);
 
 	if(request == NULL)
-		return TCP_AUTHBAD;
+		return qfalse;
 
 	*connectionId = HTTPServer_NewConnectionId(request);
 	if(*connectionId < 1)
 	{
 		FT_FreeRequest(request);
-		return TCP_AUTHBAD;
+		return qfalse;
 	}
-	if (HTTPServer_Event(from, msg, *connectionId) == qtrue)
-	{
-		return TCP_AUTHBAD;
-	}
-
-	return TCP_AUTHSUCCESSFULL;
+	return qtrue;
 }
 
 
@@ -2350,11 +2356,12 @@ void HTTPServer_Init()
 	char magic[] = { 'h','t','t','p' };
 
 	/* Register the events */
-	NET_TCPAddEventType( HTTPServer_Event, HTTPServer_AuthEvent, HTTPServer_Disconnect, *(int*)magic);
+	NET_TCPAddEventType( HTTPServer_Event, HTTPServer_IdentEvent, HTTPServer_Disconnect, *(int*)magic);
 
 
 
 }
+
 #endif
 /*
  =====================================================================

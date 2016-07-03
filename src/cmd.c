@@ -843,10 +843,10 @@ static void Cmd_TokenizeString2( const char *text_in, qboolean ignore_quotes ) {
 
 		tokenStrings.cmd_argcList[tokenStrings.currentString] = param.cmd_argc - oldargc;
 		tokenStrings.cmd_argc = param.cmd_argc;
+		tokenStrings.currentString++;
 	}else{
 		Com_PrintError("Cmd_TokenizeString(): MAX_TOKENIZE_STRINGS exceeded\n");
 	}
-	tokenStrings.currentString++;
 }
 
 /*
@@ -1081,10 +1081,11 @@ void	Cmd_ExecuteString( const char *text )
 	}else if(!Q_stricmp(arg0, "cmdpowerlist")){
 		Q_strncpyz(arg0, "AdminListCommands", sizeof(arg0));
 		Com_PrintWarning("\"cmdpowerlist\" is deprecated and will be removed soon. Use \"AdminListCommands\" instead\n");
-	}
-	else if(!Q_stricmp(arg0, "setCmdMinPower")){
+	}else if(!Q_stricmp(arg0, "setCmdMinPower")){
 		Q_strncpyz(arg0, "AdminChangeCommandPower", sizeof(arg0));
 		Com_PrintWarning("\"setCmdMinPower\" is deprecated and will be removed soon. Use \"AdminChangeCommandPower\" instead\n");
+	}else if(!Q_stricmp(arg0, "kickid")){
+		Q_strncpyz(arg0, "kick", sizeof(arg0));
 	}
 	// check registered command functions
 	for ( prev = &cmd_functions ; *prev ; prev = &cmd->next ) {

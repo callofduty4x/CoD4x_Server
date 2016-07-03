@@ -51,7 +51,10 @@ typedef struct {
 	int		splitcursize;		//0x18
 	int		readcount;		//0x1c
 	int		bit;			//0x20	// for bitwise reads and writes
-	int		lastRefEntity;		//0x24
+	union{
+		int		lastRefEntity;		//0x24
+		int		lengthoffset;
+	};
 } msg_t; //Size: 0x28
 
 
@@ -103,6 +106,8 @@ void __cdecl MSG_ReadDeltaUsercmdKey( msg_t *msg, int key, struct usercmd_s *fro
 void __cdecl MSG_SetDefaultUserCmd( struct playerState_s *ps, struct usercmd_s *ucmd );
 void MSG_WriteBase64(msg_t* msg, byte* inbuf, int len);
 void MSG_ReadBase64(msg_t* msg, byte* outbuf, int len);
+void MSG_BeginWriteMessageLength(msg_t* msg);
+void MSG_EndWriteMessageLength(msg_t* msg);
 
 #endif
 

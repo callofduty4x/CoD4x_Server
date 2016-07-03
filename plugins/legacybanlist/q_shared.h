@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // A user mod should never modify this file
   #include <math.h>
   #include <stdio.h>
-
+#include <wchar.h>
 #ifdef _MSC_VER
 /*
 #pragma warning(disable : 4018)     // signed/unsigned mismatch

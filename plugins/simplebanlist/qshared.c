@@ -21,13 +21,14 @@
 */
 
 #include "../pinc.h"
-#include "q_shared.h"
-
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+
 #include <wchar.h>
+#include "q_shared.h"
+
 
 short   ShortSwap (short l)
 {
@@ -495,7 +496,11 @@ int QDECL Com_sprintfUni(wchar_t *dest, size_t size, const wchar_t *fmt, ...)
 	numchar = size / sizeof(wchar_t);
 
 	va_start (argptr,fmt);
+#ifdef _WIN32
 	len = vsnwprintf (dest, numchar, fmt, argptr );
+#else
+	len = vswprintf (dest, numchar, fmt, argptr );
+#endif
 	va_end (argptr);
 
 	if(len < 0 || len >= numchar)

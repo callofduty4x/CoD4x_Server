@@ -2,6 +2,7 @@
 echo Compiling C-code...
 
 cd bin
+rm cod4x18_dedrun
 
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/sys_unix.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/sys_linux.c

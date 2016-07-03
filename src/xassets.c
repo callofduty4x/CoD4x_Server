@@ -90,7 +90,7 @@ typedef enum{
         XModelPieces,
         PhysPreset,
         XAnimParts,
-        XModel,	
+        XModel,
         Material,
         TechinqueSet,		// techset
         GfxImage,		// image
@@ -216,7 +216,7 @@ qboolean DB_XAssetNoAlloc(XAssetType_t i)
 		return qtrue;
 	if(i == StringTable)
 		return qtrue;
-		
+
 	return qfalse;
 }
 
@@ -274,33 +274,33 @@ void DB_ParseRequestedXAssetNum()
 
 	Com_Memcpy(XAssetRequestedCount, XAssetStdCount, sizeof(XAssetRequestedCount));
 	Com_sprintf(toparse, sizeof(toparse), " %s", r_xassetnum->string);
-	
+
 	for(i = 0;  i < NumXAssets; ++i)
-	{		
+	{
 
 		if(DB_XAssetNoAlloc(i) || i == menuDef_t || i == WeaponDef || i == StringTable)
 		{
 			continue;
 		}
-		
+
 		typename = DB_GetXAssetTypeName[ i ];
-		
+
 		Com_sprintf(scanstring, sizeof(scanstring), " %s=", typename);
-		
+
 		scanpos = strstr(toparse, scanstring);
 		if(scanpos == NULL)
 		{
 			continue;
 		}
-		
+
 		scanpos += strlen(scanstring);
-		
+
 		count = atoi(scanpos);
 		if(count < 1 || count > 65535)
 		{
 			continue;
 		}
-		
+
 		if(count <= DB_GetXAssetStdCount(i))
 		{
 			continue;
@@ -327,9 +327,9 @@ void DB_CustomAllocOnce(XAssetType_t type)
 void DB_RelocateXAssetMem()
 {
 	int i, typesize, count;
-	
+
 	void* newmem;
-	
+
 	for(i = 0;  i < NumXAssets; ++i)
 	{
 		if(DB_XAssetNoAlloc(i))
@@ -342,12 +342,12 @@ void DB_RelocateXAssetMem()
 			//Only allocate if we need more than what is already allocated
 			continue;
 		}
-		
+
 		count = XAssetRequestedCount[i];
 		typesize = DB_GetXAssetTypeSize(i);
-		
+
 		newmem = Z_Malloc(count * typesize);
-		
+
 		if(newmem == NULL)
 		{
 			continue;
@@ -407,7 +407,7 @@ typedef struct
   unsigned int size;
 }XBlock;
 
-typedef struct 
+typedef struct
 {
   XBlock blocks[9];
   int allocVertexBuffer;
@@ -485,19 +485,19 @@ void DB_UnloadXAssetsMemoryForZone(byte freeflags)
 {
 	byte bitmask;
 	int i;
-	
+
 	for(bitmask = 64; bitmask > 0 ; bitmask >>= 1)
 	{
 		if(bitmask == 2)
 			bitmask >>= 1;
-		
+
 		if(!(freeflags & bitmask))
 			continue;
 
 		//DB_UnloadXAssetsMemory() inlined here
 		for ( i = g_zoneCount - 1; i >= 0; --i )
 		{
-			
+
 			if ( g_zones[g_zoneHandles[i]].zoneinfo.flags & bitmask )
 			{
 				DB_UnloadXAssetsMemoryInternal(&g_zones[g_zoneHandles[i]]);
@@ -539,12 +539,20 @@ void DB_LoadXAssets_Hook(XZoneInfo *zoneinfo, unsigned int assetscount)
 int DB_FileSize(const char *filename, int FF_DIR)
 {
 	char ospath[MAX_OSPATH];
-	
+
 	DB_BuildOSPath(filename, FF_DIR, sizeof(ospath), ospath);
-	
+
 	return FS_filelengthForOSPath(ospath);
 }
 
+qboolean DB_FileExists(const char* filename, int FF_DIR)
+{
+	char ospath[MAX_OSPATH];
+
+	DB_BuildOSPath(filename, FF_DIR, sizeof(ospath), ospath);
+
+	return FS_FileExistsOSPath(ospath);
+}
 
 void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsize)
 {
@@ -563,27 +571,39 @@ void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsi
 		{
 			continue;
 		}
+
+		if ( zone->ff_dir == 1 )
+		{
+			if ( g_zoneNameList[0] )
+			{
+				Q_strcat(g_zoneNameList, maxsize, " ");
+			}
+          Q_strcat(g_zoneNameList, maxsize, fs_gameDirVar->string);
+          Q_strcat(g_zoneNameList, maxsize, "/");
+          Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
 		if ( g_zoneSumList[0] )
 		{
 			Q_strcat(g_zoneSumList, maxsize, " ");
 		}
-		if ( g_zoneNameList[0] )
+		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
+		Q_strcat(g_zoneSumList, maxsize, checkSum);
+
+		  continue;
+		}
+		if ( zone->ff_dir != 2 )
 		{
-			Q_strcat(g_zoneNameList, maxsize, " ");
+			if ( g_zoneNameList[0] )
+			{
+				Q_strcat(g_zoneNameList, maxsize, " ");
+			}
+			Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+		if ( g_zoneSumList[0] )
+		{
+			Q_strcat(g_zoneSumList, maxsize, " ");
 		}
 		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
 		Q_strcat(g_zoneSumList, maxsize, checkSum);
-		
-		if ( zone->ff_dir == 1 )
-		{
-          Q_strcat(g_zoneNameList, maxsize, fs_gameDirVar->string);
-          Q_strcat(g_zoneNameList, maxsize, "/");
-          Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);  
-		  continue;
-		}		
-		if ( zone->ff_dir != 2 )
-		{
-			Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);  
+
 			continue;
 		}
 
@@ -600,18 +620,17 @@ void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsi
 			continue;
 		}
 
-		Q_strcat(g_zoneNameList, maxsize, " ");
-		Q_strcat(g_zoneNameList, maxsize, "usermaps");
-		Q_strcat(g_zoneNameList, maxsize, "/");
+		if ( g_zoneSumList[0] )
+		{
+			Q_strcat(g_zoneSumList, maxsize, " ");
+		}
+		Com_sprintf(checkSum, sizeof(checkSum), "%u %u", zone->zoneSize, filesize);
+		Q_strcat(g_zoneSumList, maxsize, checkSum);
+
+
+		Q_strcat(g_zoneNameList, maxsize, " usermaps/");
 		Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
-
-		Q_strcat(g_zoneSumList, maxsize, " ");
-        Com_sprintf(checkSum, sizeof(checkSum), "%u", filesize);
-        Q_strcat(g_zoneSumList, maxsize, checkSum);
-
-	    Q_strcat(g_zoneNameList, maxsize, " ");
-		Q_strcat(g_zoneNameList, maxsize, "usermaps");
-		Q_strcat(g_zoneNameList, maxsize, "/");
+		Q_strcat(g_zoneNameList, maxsize, " usermaps/");
 		Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
 		Q_strcat(g_zoneNameList, maxsize, "_load");
 
@@ -634,20 +653,20 @@ void DB_EnumXAssets(XAssetType_t type, void (__cdecl *callback)(XAssetHeader_t *
   {
     for(index = db_hashTable[i]; index; index = listselector->nextListIndex)
     {
-	listselector = &g_assetEntryPool[index];
+	     listselector = &g_assetEntryPool[index];
 
-	if ( listselector->this.type != type )
-		continue;
-		
-	callback(listselector->header, cbargs);
-	if ( !a4 )
-		continue;
-	
-	for(sindex = listselector->field_C; sindex; sindex = slistselect->field_C)
-	{
-            slistselect = &g_assetEntryPool[sindex];
-            callback(slistselect->header, cbargs);
-	}
+    	if ( listselector->this.type != type )
+    		continue;
+
+    	callback(listselector->header, cbargs);
+    	if ( !a4 )
+    		continue;
+
+    	for(sindex = listselector->field_C; sindex; sindex = slistselect->field_C)
+    	{
+                slistselect = &g_assetEntryPool[sindex];
+                callback(slistselect->header, cbargs);
+    	}
     }
   }
 /*
@@ -711,7 +730,7 @@ void DB_CountXAssets(int *count, int len ,qboolean a4)
 
 	if ( !a4 )
 		continue;
-	
+
 	for(sindex = listselector->field_C; sindex; sindex = slistselect->field_C)
 	{
             slistselect = &g_assetEntryPool[sindex];

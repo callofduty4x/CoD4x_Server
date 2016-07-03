@@ -45,7 +45,7 @@ typedef struct
 
 void R_Init();
 void __cdecl DB_SetInitializing(qboolean);
-byte __cdecl DB_FileExists(const char* filename, int mode);
+qboolean __cdecl DB_FileExists(const char* filename, int mode);
 qboolean __cdecl DB_ModFileExists(void);
 void __cdecl DB_LoadXAssets(XZoneInfo*, unsigned int assetscount, int);
 int __cdecl DB_GetXAssetTypeSize(int type);

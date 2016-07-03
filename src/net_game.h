@@ -33,14 +33,13 @@ unsigned int NET_TimeGetTime();
 
 void NET_TCPConnectionClosed(netadr_t* adr, int connectionId, int serviceId);
 tcpclientstate_t NET_TCPAuthPacketEvent(netadr_t* remote, byte* bufData, int cursize, int* connectionId, int *serviceId);
-void NET_TCPPacketEvent(netadr_t* remote, byte* bufData, int cursize, int connectionId, int serviceId);
+qboolean NET_TCPPacketEvent(netadr_t* remote, byte* bufData, int cursize, int *connectionId, int *serviceId);
 
 void NET_TCPAddEventType(
-        qboolean (*tcpevent)(netadr_t* from, msg_t* msg, int connectionId),
-        tcpclientstate_t (*tcpauthevent)(netadr_t* from, msg_t* msg, int *connectionId),
+        int (*tcpevent)(netadr_t* from, msg_t* msg, int connectionId),
+        qboolean (*tcpserviceidentevent)(netadr_t* from, msg_t* msg, int *connectionId),
         void (*tcpconncloseevent)(netadr_t* from, int connectionId),
         int serviceId
 );
 
 #endif
-

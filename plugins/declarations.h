@@ -1030,7 +1030,8 @@ typedef struct client_s {//90b4f8c
 	uint64_t		clanidPending;
   uint64_t		playerid;
   int			steamstatus;
-	int			free1[3];
+	int			free1[2];
+	int			mutelevel;
 	int			lastFollowedClient;
 	byte		iidata[24];
 

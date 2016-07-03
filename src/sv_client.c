@@ -1262,8 +1262,9 @@ gentity_t* SV_AddBotClient(){
 
 	Q_strncpyz(cl->name, name, sizeof(cl->name));
 	Q_strncpyz(cl->shortname, name, sizeof(cl->shortname));
+/*
 	ClientSetUsername(i, name);
-
+*/
 	SV_UpdateClientConfigInfo(cl);
 
 	// when we receive the first packet from the client, we will
@@ -2423,6 +2424,10 @@ void SV_GetVoicePacket(netadr_t *from, msg_t *msg)
 	if ( cl && cl->state >= CS_CONNECTED)
 	{
 		cl->lastPacketTime = svs.time;
+		if(cl->mutelevel)
+		{
+			return;
+		}
 		if ( cl->state >= CS_ACTIVE )
 			SV_UserVoice(cl, msg);
 		else
@@ -2490,47 +2495,6 @@ void SV_RelocateReliableMessageProtocolBuffer(msg_t* msg, int newsize)
 	msg->maxsize = newsize;
 }
 
-void SV_ProcessModules( client_t* cl, msg_t* msg )
-{
-	int cmd;
-	int n_modules;
-	long checksum;
-	unsigned modulePathLen;
-	char modulePath[128];
-	unsigned i;
-
-	Com_Printf("SV_SApiReadModules() for %s called\n", cl->name);
-
-	cmd = MSG_ReadByte(msg);
-	Com_Printf("cmd is %d\n", cmd);
-
-	if(cmd == 0)
-	{
-		n_modules = 0;
-		n_modules = MSG_ReadShort(msg);
-
-		for(i=0; i < n_modules; ++i)
-		{
-			//
-			modulePathLen = MSG_ReadShort(msg);
-			checksum = MSG_ReadLong(msg);
-			MSG_ReadData(msg, modulePath, modulePathLen);
-
-			PHandler_Event(PLUGINS_ONMODULELOADED, cl, modulePath, checksum);
-			Com_Printf("Module %d %s %d\n", modulePathLen, modulePath, checksum);
-		}
-
-
-	}else if(cmd == 2){
-		Com_Printf("Client reported error getting modules\n");
-		return;
-	}else {
-
-		//SV_SApiDropWithPenality(cl, 5);
-		return;
-	}
-}
-
 void SV_ExecuteReliableMessage(client_t* client)
 {
 	int command;
@@ -2553,7 +2517,7 @@ void SV_ExecuteReliableMessage(client_t* client)
 			SV_SApiReadSS(client, msg);
 			break;
 		case 0x35448:
-			SV_ProcessModules(client, msg);
+			SV_SApiProcessModules(client, msg);
 			//asdftest();
 			break;
 		default:

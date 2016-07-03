@@ -32,6 +32,7 @@ These commands can only be entered from stdin or by a remote operator datagram
 */
 
 #include "q_shared.h"
+#include "q_platform.h"
 #include "qcommon_io.h"
 #include "qcommon.h"
 #include "cmd.h"
@@ -231,7 +232,7 @@ static void SV_GetPlayerByHandleInternal( const char* s, clanduid_t* cl) {
 
   if(!cl->cl && cl->steamid != 0){ //See whether this player is currently onto server
       for(i = 0, cl->cl=svs.clients; i < sv_maxclients->integer; i++, cl->cl++){
-            if(cl->cl->state && cl->steamid == cl->cl->steamid){
+            if(cl->cl->state && (cl->steamid == cl->cl->steamid || cl->steamid == cl->cl->playerid)){
                   break;
             }
       }
@@ -314,6 +315,18 @@ uint64_t SV_GetPlayerSteamIDByHandle( const char* handle)
 	if(cl.cl)
 	{
 		return cl.cl->steamid;
+	}
+	return 0;
+}
+
+uint64_t SV_GetPlayerIDByHandle( const char* handle)
+{
+	clanduid_t	cl;
+
+	SV_GetPlayerByHandleInternal(handle, &cl);
+	if(cl.cl)
+	{
+		return cl.cl->playerid;
 	}
 	return 0;
 }
@@ -628,6 +641,7 @@ static void SV_MiniStatus_f( void ) {
 }
 
 
+
 /*
 ================
 SV_Status_f
@@ -648,15 +662,24 @@ static void SV_Status_f( void ) {
 		return;
 	}
 
-	Com_Printf ("map: %s\n", sv_mapname->string );
 
   if(sv_legacymode->boolean)
   {
-	  Com_Printf ("num score ping guid                             name            lastmsg address                                              qport rate\n");
-	  Com_Printf ("--- ----- ---- -------------------------------- --------------- ------- ---------------------------------------------------- ----- -----\n");
+	Com_Printf ("map: %s\n", sv_mapname->string );
+	Com_Printf ("num score ping guid                             name            lastmsg address                                              qport rate\n");
+	Com_Printf ("--- ----- ---- -------------------------------- --------------- ------- ---------------------------------------------------- ----- -----\n");
   }else{
-    Com_Printf ("num score ping playerid          steamid           name                             lastmsg address                                              qport rate\n");
-	  Com_Printf ("--- ----- ---- ----------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
+	Com_Printf("hostname: %s\n", sv_hostname->string);
+	Com_Printf("version : %s\n", com_version->string);
+	netadr_t* outadr = NET_GetDefaultCommunicationSocket();
+	Com_Printf("udp/ip  : %s\n", NET_AdrToString(outadr));
+	Com_Printf("os      : %s\n", OS_STRING);
+	Com_Printf("type    : dedicated server\n");
+	Com_Printf("map     : %s\n", sv_mapname->string);
+	Com_Printf("\n");
+
+	Com_Printf ("num score ping playerid          steamid           name                             lastmsg address                                              qport rate\n");
+	Com_Printf ("--- ----- ---- ----------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
   }
 
 	for (i=0,cl=svs.clients, gclient = level.clients; i < sv_maxclients->integer ; i++, cl++, gclient++)
@@ -2140,30 +2163,13 @@ void SV_GetSS_f()
     SV_ScreenshotClient(cl.cl, Cmd_Argv(2));
 }
 
-void sendModuleRequest(client_t* cl)
-{
-	msg_t msg;
-	byte buf[64];
-
-	// Get client HardwareId
-	MSG_Init(&msg, buf, sizeof(buf));
-	//Packet length
-	MSG_WriteLong(&msg, 0);
-	//Screenshot Command
-	MSG_WriteLong(&msg, 0x35448);
-	//Subcommand - only one yet. Reserved for later
-	MSG_WriteLong(&msg, 0);
-
-	SV_SendReliableServerCommand(cl, &msg);
-}
-
 void BuildModuleRequests(client_t* cl)
 {
 	unsigned i;
 
 	if(cl)
 	{
-		sendModuleRequest(cl);
+		SV_SApiSendModuleRequest(cl);
 		return;
 	}
 
@@ -2172,7 +2178,7 @@ void BuildModuleRequests(client_t* cl)
 		if( cl->state != CS_ACTIVE ) {
 			continue;
 		}
-		sendModuleRequest(cl);
+		SV_SApiSendModuleRequest(cl);
 	}
 
 	Com_Printf("Modules for %s requested\n", cl->name);

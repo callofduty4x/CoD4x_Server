@@ -26,3 +26,9 @@ git-status.sh
 build_official*
 bin/sys_error.txt
 bin/logs/*
+
+bin/main/*
+bin/zone/*
+bin/serverstatus.xml
+bin/main_shared/*
+bin/cod4x18_dedrun

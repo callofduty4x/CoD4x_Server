@@ -53,10 +53,6 @@ ralias Plugin_PrintWarning, Com_PrintWarning
 ralias Plugin_PrintError, Com_PrintError
 ralias Plugin_DPrintf, Com_DPrintf
 
-ralias Plugin_ParseGetToken, Com_ParseGetToken
-ralias Plugin_ParseTokenLength, Com_ParseTokenLength
-ralias Plugin_ParseReset, Com_ParseReset
-
 ralias Plugin_RandomBytes, Com_RandomBytes
 
 ralias Plugin_GetRealtime, Com_GetRealtime
@@ -73,6 +69,10 @@ ralias Plugin_StringToSteamID, SV_SApiStringToID
 ralias Plugin_SteamIDIsIndividual, SV_SApiSteamIDIndividual
 ralias Plugin_SteamIDIsIndividualAndSteamAccount, SV_SApiSteamIDIndividualSteamOnly
 ralias Plugin_AddCommandForClientToWhitelist, Auth_AddCommandForClientToWhitelist
+ralias Plugin_CanPlayerUseCommand, Auth_CanPlayerUseCommand
+ralias Plugin_SV_Cmd_GetPlayerClByHandle ,SV_GetPlayerClByHandle
+ralias Plugin_SV_Cmd_GetPlayerNameByHandle, SV_GetPlayerNameByHandle
+ralias Plugin_SV_Cmd_GetPlayerSteamIDByHandle, SV_GetPlayerSteamIDByHandle
 
 pexport Cmd_GetInvokerClnum
 pexport Cmd_GetInvokerPower
@@ -82,6 +82,7 @@ pexport Cmd_GetInvokerName
 pexport Cmd_Argv
 pexport Cmd_Argc
 pexport Cmd_Args
+
 
 pexport Cvar_VariableStringBuffer
 pexport Cvar_VariableValue

@@ -1117,62 +1117,34 @@ void CLC_SourceEngineQuery_ReadRules(msg_t* msg, queryrules_t* query)
 }
 #endif
 
-void SVC_SourceEngineQuery_Info( netadr_t* from, const char* challengeStr, const char* mymastersecret )
+void SVC_SourceEngineQuery_WriteInfo( msg_t* msg, const char* challengeStr, qboolean masterserver)
 {
-
-	msg_t msg;
 	int i, humans, bots;
-	byte buf[MAX_INFO_STRING];
+	char cleanhostname[1024];
 
-	qboolean masterserver = qfalse;
+	MSG_WriteLong(msg, -1);
+	MSG_WriteByte(msg, 'I');
+	MSG_WriteByte(msg, sv_protocol->integer);
 
-	if(mymastersecret[0])
+	if(challengeStr[0] || masterserver)
 	{
-		if(strcmp(mymastersecret, masterServerSecret))
-		{
-			return;
-		}
-		masterserver = qtrue;
-	}
-
-	if(!masterserver)
-	{
-
-		// Prevent using getstatus as an amplifier
-		if ( SVC_RateLimitAddress( from, 4, sv_queryIgnoreTime->integer*1000 )) {
-			//	Com_DPrintf( "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
-			return;
-		}
-
-		// Allow getstatus to be DoSed relatively easily, but prevent
-		// excess outbound bandwidth usage when being flooded inbound
-		if ( SVC_RateLimit( &querylimit.infoBucket, 100, 100000 ) ) {
-			//	Com_DPrintf( "SVC_Info: overall rate limit exceeded, dropping request\n" );
-			return;
-		}
-
-
+		MSG_WriteString(msg, sv_hostname->string);
 	}else{
-		if(NET_GetDefaultCommunicationSocket() == NULL)
-		{
-			NET_RegisterDefaultCommunicationSocket(from);
-		}
+		Q_strncpyz(cleanhostname, sv_hostname->string, sizeof(cleanhostname));
+		Q_CleanStr(cleanhostname);
+		MSG_WriteString(msg, cleanhostname);
 	}
 
-	MSG_Init(&msg, buf, sizeof(buf));
-	MSG_WriteLong(&msg, -1);
-	MSG_WriteByte(&msg, 'I');
-	MSG_WriteByte(&msg, sv_protocol->integer);
-	MSG_WriteString(&msg, sv_hostname->string);
-	MSG_WriteString(&msg, sv_mapname->string);
+	MSG_WriteString(msg, sv_mapname->string);
+
 	if(fs_gameDirVar->string[0] == '\0')
 	{
-		MSG_WriteString(&msg, "main");
+		MSG_WriteString(msg, "main");
 	}else{
-		MSG_WriteString(&msg, fs_gameDirVar->string);
+		MSG_WriteString(msg, fs_gameDirVar->string);
 	}
-	MSG_WriteString(&msg, "Call of Duty 4 - Modern Warfare");
-	MSG_WriteShort(&msg, 7940);
+	MSG_WriteString(msg, "Call of Duty 4 - Modern Warfare");
+	MSG_WriteShort(msg, 7940);
 
 	// don't count privateclients
 	bots = humans = 0;
@@ -1188,53 +1160,81 @@ void SVC_SourceEngineQuery_Info( netadr_t* from, const char* challengeStr, const
 		}
 	}
 
-	MSG_WriteByte(&msg, humans);
-	MSG_WriteByte(&msg, sv_maxclients->integer - sv_privateClients->integer);
-	MSG_WriteByte(&msg, bots);
-	MSG_WriteByte(&msg, 'd');
+	MSG_WriteByte(msg, humans);
+	MSG_WriteByte(msg, sv_maxclients->integer - sv_privateClients->integer);
+	MSG_WriteByte(msg, bots);
+	MSG_WriteByte(msg, 'd');
 
 #ifdef _WIN32
-	MSG_WriteByte(&msg, 'w');
+	MSG_WriteByte(msg, 'w');
 #else
     #ifdef MACOS_X
-	MSG_WriteByte(&msg, 'm');
+	MSG_WriteByte(msg, 'm');
     #else
-	MSG_WriteByte(&msg, 'l');
+	MSG_WriteByte(msg, 'l');
     #endif
 #endif
 
         if(*sv_password->string){
-		MSG_WriteByte(&msg, 1);
+		MSG_WriteByte(msg, 1);
 	}else{
-		MSG_WriteByte(&msg, 0);
+		MSG_WriteByte(msg, 0);
 	}
-	MSG_WriteByte(&msg, 0);
-	MSG_WriteString(&msg, "1.8");
+	MSG_WriteByte(msg, 0);
+	MSG_WriteString(msg, "1.8");
 	/*The extra datafield for port*/
-	MSG_WriteByte(&msg, 0x80);
+	MSG_WriteByte(msg, 0x80);
 
-	MSG_WriteShort(&msg, NET_GetHostPort());
+	MSG_WriteShort(msg, NET_GetHostPort());
 
-	if(challengeStr[0])
+	if(challengeStr[0] || masterserver)
 	{
-		MSG_WriteString( &msg, challengeStr);
-		MSG_WriteString( &msg, sv_g_gametype->string );
+		MSG_WriteString(msg, challengeStr);
+		MSG_WriteString(msg, sv_g_gametype->string );
 
-		MSG_WriteByte( &msg, Cvar_VariableIntegerValue("scr_team_fftype"));
-		MSG_WriteByte( &msg, Cvar_VariableBooleanValue("scr_game_allowkillcam"));
-		MSG_WriteByte( &msg, Cvar_VariableBooleanValue("scr_hardcore"));
-		MSG_WriteByte( &msg, Cvar_VariableBooleanValue("scr_oldschool"));
-		MSG_WriteByte( &msg, sv_voice->boolean);
+		MSG_WriteByte( msg, Cvar_VariableIntegerValue("scr_team_fftype"));
+		MSG_WriteByte( msg, Cvar_VariableBooleanValue("scr_game_allowkillcam"));
+		MSG_WriteByte( msg, Cvar_VariableBooleanValue("scr_hardcore"));
+		MSG_WriteByte( msg, Cvar_VariableBooleanValue("scr_oldschool"));
+		MSG_WriteByte( msg, sv_voice->boolean);
 
 
 		if(masterserver)
 		{
-			MSG_WriteLong( &msg, psvs.masterServer_id);
-			MSG_WriteLong( &msg, BUILD_NUMBER);
-			MSG_WriteString( &msg, masterServerSecret);
+			MSG_WriteLong( msg, psvs.masterServer_id);
+			MSG_WriteLong( msg, BUILD_NUMBER);
+			MSG_WriteString( msg, masterServerSecret);
 
 		}
 	}
+
+}
+
+
+
+void SVC_SourceEngineQuery_Info( netadr_t* from, const char* challengeStr)
+{
+
+	msg_t msg;
+	byte buf[MAX_INFO_STRING];
+
+	// Prevent using getstatus as an amplifier
+	if ( SVC_RateLimitAddress( from, 4, sv_queryIgnoreTime->integer*1000 )) {
+		//	Com_DPrintf( "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
+		return;
+	}
+
+	// Allow getstatus to be DoSed relatively easily, but prevent
+	// excess outbound bandwidth usage when being flooded inbound
+	if ( SVC_RateLimit( &querylimit.infoBucket, 100, 100000 ) ) {
+		//	Com_DPrintf( "SVC_Info: overall rate limit exceeded, dropping request\n" );
+		return;
+	}
+
+	MSG_Init(&msg, buf, sizeof(buf));
+
+	SVC_SourceEngineQuery_WriteInfo( &msg, challengeStr, qfalse);
+
 	NET_SendPacket(NS_SERVER, msg.cursize, msg.data, from);
 
 }
@@ -1317,6 +1317,7 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
 	int i, numClients, challenge;
 	client_t    *cl;
 	gclient_t *gclient;
+	char cleanplayername[128];
 
 
 	/* 1st check the challenge */
@@ -1348,9 +1349,18 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
 		if ( cl->state >= CS_CONNECTED ) {
 
 			MSG_WriteByte(&playermsg, i);
-			MSG_WriteString(&playermsg, cl->name);
+
+			Q_strncpyz(cleanplayername, cl->name, sizeof(cleanplayername));
+			Q_CleanStr(cleanplayername);
+
+			MSG_WriteString(&playermsg, cleanplayername);
 			MSG_WriteLong(&playermsg, gclient->sess.scoreboard.score);
-			MSG_WriteFloat(&playermsg, ((float)(svs.time - cl->connectedTime))/1000);
+			int connectedTime = svs.time - cl->connectedTime;
+			if(cl->connectedTime == 0)
+			{
+				connectedTime = 0;
+			}
+			MSG_WriteFloat(&playermsg, ((float)(connectedTime))/1000);
 			numClients++;
 		}
 	}
@@ -1418,17 +1428,6 @@ void SVC_SourceEngineQuery_Rules( netadr_t* from, msg_t* recvmsg )
 	*(short*)&msg.data[5] = data.num;
 
 	SVC_SourceEngineQuery_SendSplitMessage( from, &msg );
-
-}
-
-void SV_RestartForUpdate(netadr_t* from, char* mymastersecret, char* message)
-{
-	if(!message[0] || strcmp(mymastersecret, masterServerSecret))
-	{
-		return;
-	}
-
-	Sys_Restart(message);
 
 }
 
@@ -1848,10 +1847,6 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
 		SVC_RemoteCommand( from, msg );
 	} else if (!Q_stricmp(c, "connect")) {
 		SV_DirectConnect( from );
-
-	} else if (!Q_stricmp(c, "updaterestartinfo")) {
-		SV_RestartForUpdate(from, SV_Cmd_Argv(1), SV_Cmd_Argv(2));
-
 #ifdef COD4X18UPDATE
 
 	} else if (!Q_stricmp(c, "stats")) {
@@ -1881,7 +1876,7 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
 		SV_GetVoicePacket(from, msg);
 
 	} else if (!Q_strncmp("TSource Engine Query", (char *) &msg->data[4], 20)) {
-		SVC_SourceEngineQuery_Info( from, SV_Cmd_Argv(3), SV_Cmd_Argv(4));
+		SVC_SourceEngineQuery_Info( from, SV_Cmd_Argv(3));
 	} else if(msg->data[4] == 'V'){
 		SVC_SourceEngineQuery_Rules( from, msg );
 	} else if(msg->data[4] == 'U'){
@@ -2049,6 +2044,192 @@ MASTER SERVER FUNCTIONS
 ==============================================================================
 */
 
+#define HEARTBEAT_TIMELIMIT 20000
+
+typedef struct
+{
+	netadr_t adr4;
+	netadr_t adr6;
+	byte message[2000];
+	int messagelen;
+	qboolean locked;
+}masterHeartbeatThreadOptions_t;
+
+
+void SV_HeartBeatMessageLoop(msg_t* msg)
+{
+	byte databuf[8192];
+	char stringline[1024];
+	msg_t singlemsg;
+	int ic;
+	
+	while(msg->readcount < msg->cursize)
+	{
+		int messagelen = MSG_ReadLong(msg);
+		if(messagelen >= sizeof(databuf))
+		{
+			Com_PrintError("Oversizemessage from masterserver\n");
+			return;
+		}
+		MSG_ReadData(msg, databuf, messagelen);
+
+		MSG_InitReadOnly(&singlemsg, databuf, messagelen);
+		singlemsg.cursize = singlemsg.maxsize;
+		MSG_BeginReading(&singlemsg);
+
+		switch(MSG_ReadLong(&singlemsg))
+		{
+			case -1:
+			case 0:
+				return;
+			case 1:
+				//Response about the registering state
+				ic = MSG_ReadLong(&singlemsg);
+				if(ic == 1)
+				{
+					Com_DPrintf("Server is registered on the masterserver\n");
+				}else if(ic == 0){
+					Com_PrintError("Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
+				}else if(ic == 2){
+					Com_PrintError("Failure registering server on masterserver. Server address is banned\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+				}
+				break;
+			case 2:
+				//Remote enforced restart (Usually for protocol mismatch) (Servers which don't respond to this are usually rendered obsolete soon after a new protocol update)
+				ic = MSG_ReadLong(&singlemsg);
+				if(ic == 1)
+				{
+					MSG_ReadString(&singlemsg, stringline, sizeof(stringline));
+					Q_strncpyz(svse.sysrestartmessage, stringline, sizeof(svse.sysrestartmessage));
+				}
+				break;
+			case 3:
+				ic = MSG_ReadLong(&singlemsg);
+				if(ic == 1)
+				{
+					SV_SendServerCommand(NULL, "h \"^5Broadcast^7: %s\"\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+				}
+				break;
+			default:
+				//Unsupported Cmds just ignore
+				break;
+		}
+	}
+}
+
+
+void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen)
+{
+	int l = 0;
+	byte response[16384];
+	char line[256];
+	msg_t msg;
+	int socket;
+	netadr_t bindaddr = *sourceadr;
+	bindaddr.port = 0;
+
+	if(com_developer->integer)
+	{
+		socket = NET_TcpClientConnectFromAdrToAdr( adr, &bindaddr );
+	}else{
+		socket = NET_TcpClientConnectFromAdrToAdrSilent( adr, &bindaddr );
+	}
+	if(socket >= 0)
+	{
+		qboolean error = qtrue;
+		int slen;
+		int rlen;
+		int rlentotal = 0;
+		int timeout = Sys_Milliseconds() + HEARTBEAT_TIMELIMIT;
+
+		do
+		{
+			slen = NET_TcpSendData( socket, message +l, qlen -l, NULL, 0);
+			if(slen >= 0)
+			{
+				l += slen;
+			}
+			usleep(20000);
+		}while(l != qlen && (slen >= 0 || slen == NET_WANT_WRITE) && timeout > Sys_Milliseconds());
+
+		if(l == qlen && slen >= 0)
+		{
+			while (timeout > Sys_Milliseconds())
+			{
+				rlen = NET_TcpClientGetData( socket, response + rlentotal, sizeof(response) - rlentotal, NULL, 0);
+				if(rlen > 0)
+				{
+					rlentotal += rlen;
+				}else if(rlen == 0){
+					//We are done
+					error = qfalse;
+					break;
+				}else if(rlen != NET_WANT_READ){
+					//Error case...
+					break;
+				}
+				usleep(20000);
+			}
+		}
+		if(!error && rlentotal > 4)
+		{
+			MSG_Init(&msg, response, rlentotal);
+			msg.cursize = msg.maxsize;
+			MSG_BeginReading(&msg);
+			if(MSG_ReadLong(&msg) == -1)
+			{
+				MSG_ReadString(&msg, line, sizeof(line));
+				if(Q_stricmp(line, "masterHeartbeatResponse") == 0)
+				{
+					MSG_ReadLong(&msg); //MessageID maybe future use but placeholder here
+					SV_HeartBeatMessageLoop(&msg);
+				}else{
+					Com_Printf("Corrupted Masterserver response\n");
+				}
+			}else{
+				Com_Printf("Corrupted Masterserver response\n");
+			}
+		}else{
+			if(timeout < Sys_Milliseconds())
+			{
+				Com_Printf("Connection to masterserver timeout\n");
+			}else{
+				Com_Printf("Invalid or empty response from masterserver\n");
+			}
+		}
+		NET_TcpCloseSocket(socket);
+	}else{
+	//	Com_Printf("Network error while attempting to register on masterserver \n");
+	}
+}
+
+void* SV_SendHeartbeatThread(void* arg)
+{
+	masterHeartbeatThreadOptions_t* opts = arg;
+
+	int count, i;
+	netadr_t* iplist = NET_GetLocalAddressList(&count);
+	for(i = 0; i < count; ++i)
+	{
+		char adrstr[128];
+		char adrstrdst[128];
+
+		if(iplist[i].type == NA_IP && opts->adr4.type == NA_IP && iplist[i].ip[0] != 127 && iplist[i].ip[0] < 224)
+		{
+			Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
+			NET_AdrToStringMT(&opts->adr4, adrstrdst, sizeof(adrstrdst)));
+			SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen);
+		}else	if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe && iplist[i].ip6[0] > 0){
+			Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
+			NET_AdrToStringMT(&opts->adr6, adrstrdst, sizeof(adrstrdst)));
+			SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen);
+		}
+	}
+	opts->locked = qfalse;
+	return NULL;
+}
+
+
 /*
 ================
 SV_MasterHeartbeat
@@ -2142,17 +2323,45 @@ void SV_MasterHeartbeat(const char *message)
 			}
 		}
 
-
 		Com_Printf ("Sending heartbeat to %s\n", sv_master[i]->string );
 
 		// this command should be changed if the server info / status format
 		// ever incompatably changes
 		if(i == 7)
 		{
-			if(master_adr[i][0].type != NA_BAD)
-				NET_OutOfBandPrint( NS_SERVER, &master_adr[i][0], "heartbeat %s %s\n", message, masterServerSecret);
-			if(master_adr[i][1].type != NA_BAD)
-				NET_OutOfBandPrint( NS_SERVER, &master_adr[i][1], "heartbeat %s %s\n", message, masterServerSecret);
+			msg_t msg;
+			char string[1024];
+			static masterHeartbeatThreadOptions_t opts;
+
+			if(opts.locked)
+			{
+				continue;
+			}
+
+			opts.adr4 = master_adr[i][0];
+			opts.adr6 = master_adr[i][1];
+			Com_sprintf(string, sizeof(string), "\xff\xff\xff\xffheartbeat %s", message);
+
+			MSG_Init(&msg, opts.message, sizeof(opts.message));
+			MSG_WriteString(&msg, string);
+			
+			MSG_WriteShort(&msg, NET_GetHostPort());
+			MSG_WriteLong(&msg, psvs.masterserver_messageid);
+			++psvs.masterserver_messageid;
+			
+			MSG_BeginWriteMessageLength(&msg); //Messagelength
+			MSG_WriteLong(&msg, 1); //Command sourceenginequery
+			SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
+			MSG_EndWriteMessageLength(&msg);
+
+			MSG_BeginWriteMessageLength(&msg); //Messagelength
+			MSG_WriteLong(&msg, 0); //EOF
+			MSG_EndWriteMessageLength(&msg);
+
+			opts.locked = qtrue;
+			opts.messagelen = msg.cursize;
+			threadid_t tinfo;
+			Sys_CreateNewThread(SV_SendHeartbeatThread, &tinfo, &opts);
 			continue;
 		}
 		if(master_adr[i][0].type != NA_BAD)
@@ -3087,7 +3296,7 @@ qboolean SV_Map( const char *levelname ) {
 	char        *map;
 	char mapname[MAX_QPATH];
 	char expanded[MAX_QPATH];
-
+	char mapname_loadff[MAX_QPATH];
 	if(gamebinary_initialized == 0)
 	{
 		if(Com_LoadBinaryImage() == qfalse)
@@ -3123,7 +3332,12 @@ qboolean SV_Map( const char *levelname ) {
 			Com_PrintError("A mod is required to run custom maps\n");
 		return qfalse;
 	}
-
+	Com_sprintf(mapname_loadff, sizeof(mapname_loadff), "%s_load", mapname);
+	if(!DB_FileExists(mapname_loadff, 0) && !DB_FileExists(mapname_loadff, 2))
+	{
+		Com_PrintError("Can't find file %s.ff\n", mapname_loadff);
+		return qfalse;
+	}
 //	Cbuf_ExecuteBuffer(0, 0, "selectStringTableEntryInDvar mp/didyouknow.csv 0 didyouknow");
 
 	SV_LoadLevel(mapname);
@@ -4086,6 +4300,12 @@ void SV_SpawnServer(const char *mapname)
   char outPathNames[8192];
   int i, checksum;
   client_t* cl;
+
+	if(svse.sysrestartmessage[0])
+	{
+		Sys_Restart(svse.sysrestartmessage);
+		return;
+	}
 
   Com_SyncThreads();
   Sys_BeginLoadThreadPriorities();

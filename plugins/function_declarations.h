@@ -36,6 +36,12 @@
     __cdecl int Plugin_Cmd_Argc();                         // Get number of command arguments
     __cdecl char *Plugin_Cmd_Args( char* buff, int bufsize );
 
+	//Retrives the player info
+	__cdecl uint64_t Plugin_SV_Cmd_GetPlayerSteamIDByHandle( const char* handle);
+	__cdecl const char* Plugin_SV_Cmd_GetPlayerNameByHandle( const char* handle);
+	__cdecl client_t* Plugin_SV_Cmd_GetPlayerClByHandle( const char* handle);
+	__cdecl uint64_t Plugin_SV_Cmd_GetPlayerIDByHandle( const char* handle);
+
     //      == Common ==
     __cdecl void Plugin_G_LogPrintf( const char *fmt, ... );
     __cdecl void Plugin_Printf( const char *fmt, ...);                // Print to a correct place (rcon, player console, logs)
@@ -163,8 +169,6 @@
     //      == Plugin Handler's functions ==
 
     __cdecl clientScoreboard_t Plugin_GetClientScoreboard(int clientNum);    // Get the scoreboard of a player
-    __cdecl int Plugin_Cmd_GetInvokerUid();                                  // Get UID of command invoker
-    __cdecl int Plugin_Cmd_GetInvokerSlot();                                 // Get slot number of command invoker
     __cdecl int Plugin_GetPlayerUid(int slot);                               // Get UID of a plyer
     __cdecl int Plugin_GetSlotCount();                                       // Get number of server slots
     __cdecl qboolean Plugin_IsSvRunning();                                   // Is server running?
@@ -183,21 +187,28 @@
 	//	-- Functions for clients --
 
 	__cdecl void Plugin_DropClient( int clientnum, const char *reason );	// Kicks the client from server
-	__cdecl void Plugin_BanClient( unsigned int clientnum, int seconds, int invokerid, char *reason ); //Bans the client for seconds from server. Seconds can be "-1" to create a permanent ban. invokerid can be 0 or the numeric uid. banreason can be NULL or a valid char* pointer.
+	__cdecl void Plugin_BanClient( unsigned int clientnum, int minutes, int invokerid, char *reason ); //Bans the client for minutes from server. minutes can be "-1" to create a permanent ban. invokerid can be 0 or the numeric uid. banreason can be NULL or a valid char* pointer.
 
     //  -- TCP Connection functions --
     /*
     connection is a static constant number. Every plugin can use a connection 0 up to 3. This is not a socket. This is handled internal.
     You can not use the same number for 2 open connections on the same time.
 
+    !!!Attention: Behaviour has changed!!!
     */
     __cdecl qboolean Plugin_TcpConnect(int connection, const char* remote);      // Open a new TCP connection - Returns qfalse if failed, remote can be a domainname
+    __cdecl qboolean Plugin_TcpConnectMT(int pluginID, int connection, const char* remote); //Threadsafe needs plugin ID
     __cdecl int Plugin_TcpGetData(int connection, void *buf, int size);          // Receive TCP data - buf and size is the receiving buffer. It returns -1 if the connection is closed. It returns 0 when no new data is available. All other return values is the number of bytes received.
-    __cdecl qboolean Plugin_TcpSendData(int connection, void *data, int len);    // Send TCP data - buf and len point to the buffer which has the data to send. Len is the amount to bytes to send. Returns qfalse if something has failed.
+    __cdecl int Plugin_TcpGetDataMT(int pluginID, int connection, void *buf, int size); //Threadsafe needs plugin ID
+    __cdecl int Plugin_TcpSendData(int connection, void *data, int len);         // Send TCP data - buf and len point to the buffer which has the data to send. Len is the amount to bytes to send. Returns -1 if connection got closed. Returns 0 if nothing could be sent. All other values are the sent data
+    __cdecl int Plugin_TcpSendDataMT(int pluginID, int connection, void *data, int len);  //Threadsafe needs plugin ID
     __cdecl void Plugin_TcpCloseConnection(int connection);                      // Close an open TCP connection
+    __cdecl void Plugin_TcpCloseConnectionMT(int pluginID, int connection);      //Threadsafe needs plugin ID
     __cdecl qboolean Plugin_UdpSendData(netadr_t* to, void* data, int len);      // Send UDP data
     __cdecl void Plugin_ServerPacketEvent(netadr_t* to, void* data, int len);    // Receive UDP data
 
+    //Plugin ID
+    __cdecl int Plugin_GetPluginID(); //Call this from the mainthread after init and store it in a global/static variable
 
     //  -- UIDS / GUIDs --
     __cdecl uint64_t Plugin_GetPlayerID(unsigned int clientslot);//Get the ID from player
@@ -267,11 +278,14 @@
     __cdecl void Plugin_SV_GetConfigstring( int index, char *buffer, int bufferSize );
 
     /* If someone called a command the following functions return data about who invoked it */
+    __cdecl int Plugin_Cmd_GetInvokerSlot();                              //clientnum of commandinvoker. -1 if undefined
     __cdecl int Plugin_Cmd_GetInvokerUID();                              //UID of commandinvoker. 0 if undefined
     __cdecl int Plugin_Cmd_GetInvokerClnum();                            //Client slot number of invoker. -1 if undefined
     __cdecl int Plugin_Cmd_GetInvokerPower();                            //Power points of command invoker. 100 if undefined or have all permissions
     __cdecl uint64_t Plugin_Cmd_GetInvokerSteamID();                     //Steam ID of invoker. 0 if undefined
     __cdecl const char* Plugin_Cmd_GetInvokerName(char *buf, int len);   //Playername/stored name of command invoker. "" if undefined
+
+    __cdecl qboolean Plugin_CanPlayerUseCommand(int clientnum, const char* commandname);  //Returns if the player is allowed to use this command (power)
 
     /* For converting IDs */
     void Plugin_SteamIDToString(uint64_t steamid, char* string, int length);

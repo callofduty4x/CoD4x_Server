@@ -221,8 +221,8 @@ qboolean Com_SafeMode( void ) {
 			Cmd_EndTokenizedString( );
 			return qtrue;
 		}
+		Cmd_EndTokenizedString( );
 	}
-	Cmd_EndTokenizedString( );
 	return qfalse;
 }
 

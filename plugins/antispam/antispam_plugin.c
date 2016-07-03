@@ -27,7 +27,6 @@ void Antispam_Initialize()
     data.players = (userData_t *)Plugin_Malloc(sizeof(userData_t)*data.maxPlayers);
     memset(data.players,0x00,sizeof(userData_t)*data.maxPlayers);
 }
-void Scr_Test();
 
 PCL int OnInit(){	// Funciton called on server initiation
 
@@ -38,7 +37,6 @@ PCL int OnInit(){	// Funciton called on server initiation
 	data.minMD = Plugin_Cvar_RegisterInt("antispam_minMessageDelay",4,0,60,0,"Ammount of time after sending a message after which the player can chat again. 0 disables the limit.");
 	data.renMD = Plugin_Cvar_RegisterBool("antispam_renewedMessageDelay",qfalse,0,"Do messages sent before minMessageDelay passes make the delay prolonged?");
 	Antispam_Initialize();
-  //Plugin_ScrAddFunction("test", Scr_Test);
 	return 0;
 }
 PCL void OnMessageSent(char *message,int slot, qboolean *show, int type){
@@ -104,8 +102,3 @@ PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain informati
     strncpy(info->longDescription,"This plugin is used to prevent spam in the ingame chat. To personalize the settings, set corresponding cvars. Copyright (c) 2013 IceOps",sizeof(info->longDescription));
 }
 
-void Scr_Test()
-{
-  Plugin_Printf("Exec test--------");
-  Plugin_Scr_AddInt(7);
-}

@@ -1270,9 +1270,9 @@ void XML_Init( xml_t *base, char *s, int size, char* encoding) {
  ==================
  */
 void XML_Escape( char* buffer, size_t size, const char* string){
-	int i;
+	char* basebuf = buffer;
 	
-	for(i = 7; i < size && *string != 0; i++, string++){
+	for(; (buffer - basebuf + 7) < size && *string != 0; string++){
 		
 	    switch(*string){
 				
@@ -1319,11 +1319,16 @@ qboolean QDECL XML_OpenTag( xml_t *base, char* root, int count,... ) {
 	
 	char* key;
 	char* value;
-	char buffer[1024];
-	char smallbuff[128];
+	char buffer[8192];
+	char smallbuff[512];
 	int i;
 	
 	buffer[0] = 0;
+	if(base->parents*6 +1 >= sizeof(smallbuff))
+	{
+		Com_Printf("^3Warning: XML_OpenTag would overflow. Too many open tags\n");
+		return qfalse;
+	}
 	Com_Memset(&smallbuff[1],' ',base->parents*6);
 	smallbuff[0] = '\n';
 	smallbuff[base->parents*6] = 0;

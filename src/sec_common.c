@@ -38,7 +38,7 @@ int SecCryptErr;
 
 char *Sec_CryptErrStr(int code){
     switch(code){
-    
+
     case CRYPT_OK: return "CRYPT_OK";
     case CRYPT_ERROR: return "CRYPT_ERROR";
     case CRYPT_NOP: return "CRYPT_NOP";
@@ -81,7 +81,7 @@ char *Sec_CryptErrStr(int code){
  Hash descriptors from tomcrypt
 ================================
 */
-
+#if 0
 volatile const struct ltc_hash_descriptor sec_sha1_desc =
 {
     "sha1",
@@ -110,7 +110,7 @@ volatile const struct ltc_hash_descriptor sec_sha256_desc =
     /* OID */
    { 2, 16, 840, 1, 101, 3, 4, 2, 1,  },
    9,
-    
+
     &sha256_init,
     &sha256_process,
     &sha256_done,
@@ -135,7 +135,7 @@ volatile const struct ltc_hash_descriptor sec_tiger_desc =
     &tiger_test,
     NULL
 };
-
+#endif
 
 /*
 unsigned long sec_test = sec_tiger_desc.hashsize;

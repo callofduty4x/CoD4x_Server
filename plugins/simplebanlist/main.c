@@ -20,10 +20,12 @@
 */
 
 #include "../pinc.h"
-#include "q_shared.h"
+#include <wchar.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include "q_shared.h"
 
 #define MAX_NAME_LENGTH 33
 #define BANLIST_DEFAULT_SIZE sizeof(banList_t)*128
