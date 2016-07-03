@@ -7,7 +7,8 @@ branches:
 before_install:
   - chmod +x version_make_progress.sh
   - chmod +x build_updateable_elf.sh
-
+  - chmod +x src/tomcrypt/compile_linux.sh
+  
 #  - chmod +x ./plugins/antinamechange/makedll32
 #  - chmod +x ./plugins/antinamesteal/makedll32
 #  - chmod +x ./plugins/antispam/makedll32
@@ -24,6 +25,11 @@ before_install:
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
 
 script:
+  - cd src/tomcrypt
+  - ./compile_linux.sh
+  - cd ../mbedtls
+  - make
+  - cd ../..
   
   - ./build_updateable_elf.sh
   
