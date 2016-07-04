@@ -106,9 +106,10 @@ PrintCvarMatches
 */
 static void PrintCvarMatches( const char *s ) {
 	char value[ TRUNCATE_LENGTH ];
+	char c_str[2048];
 
 	if ( !Q_stricmpn( s, shortestMatch, strlen( shortestMatch ) ) ) {
-		Com_TruncateLongString( value, Cvar_VariableString( s ) );
+		Com_TruncateLongString( value, Cvar_VariableStringBuffer( s , c_str, sizeof(c_str)) );
 		Com_Printf( "    %s = \"%s\"\n", s, value );
 	}
 }
@@ -231,7 +232,7 @@ void Field_CompleteCommand( char *cmd, qboolean doCommands, qboolean doCvars )
 
 		matchCount = 0;
 		shortestMatch[ 0 ] = 0;
-		
+
 		if( strlen( completionString ) == 0 ){
 			Cmd_EndTokenizedString( );
 			return;
@@ -269,4 +270,3 @@ void Field_AutoComplete( field_t *field )
 
 	Field_CompleteCommand( completionField->buffer, qtrue, qtrue );
 }
-

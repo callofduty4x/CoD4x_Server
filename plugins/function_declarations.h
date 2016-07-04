@@ -53,7 +53,7 @@
     __cdecl void Plugin_PrintAdministrativeLog( const char *fmt, ... );
 
     //      == Cvars ==
-
+    /* Direct access to cvar value is never thread safe */
     // All of the Cvars module functions are self explanatory
     __cdecl CONVAR_T* Plugin_Cvar_RegisterString(const char *var_name, const char *var_value, int flags, const char *var_description);
     __cdecl CONVAR_T* Plugin_Cvar_RegisterBool(const char *var_name, qboolean var_value, int flags, const char *var_description);
@@ -64,16 +64,17 @@
     __cdecl void Plugin_Cvar_SetBool(CONVAR_T const* var, qboolean val);
     __cdecl void Plugin_Cvar_SetString(CONVAR_T const* var, char const* string);
     __cdecl void Plugin_Cvar_SetFloat(CONVAR_T const* var, float val);
-    __cdecl int Plugin_Cvar_GetInteger(CONVAR_T const *var);
-    __cdecl qboolean Plugin_Cvar_GetBoolean(CONVAR_T const *var);
-    __cdecl float Plugin_Cvar_GetValue(CONVAR_T const *var);
-    __cdecl const char* Plugin_Cvar_GetString(CONVAR_T const *var);
 
-    __cdecl void Plugin_Cvar_VariableStringBuffer(const char* cvarname, char* buff, size_t size);
-    __cdecl float Plugin_Cvar_VariableValue( const char *var_name );
-    __cdecl int Plugin_Cvar_VariableIntegerValue( const char *var_name );
-    __cdecl int Plugin_Cvar_VariableBooleanValue( const char *var_name );
-    __cdecl const char* Plugin_Cvar_VariableString( const char *var_name );
+    __cdecl int Plugin_Cvar_GetInteger(CONVAR_T const *var); //Thread safe
+    __cdecl qboolean Plugin_Cvar_GetBoolean(CONVAR_T const *var); //Thread safe
+    __cdecl float Plugin_Cvar_GetValue(CONVAR_T const *var); //Thread safe
+    __cdecl const char* Plugin_Cvar_GetString(CONVAR_T const *var, char* buf, int sizebuf); //Thread safe
+
+    __cdecl void Plugin_Cvar_VariableStringBuffer(const char* cvarname, char* buff, size_t size);  //Thread safe
+    __cdecl float Plugin_Cvar_VariableValue( const char *var_name ); //Thread safe
+    __cdecl int Plugin_Cvar_VariableIntegerValue( const char *var_name ); //Thread safe
+    __cdecl int Plugin_Cvar_VariableBooleanValue( const char *var_name ); //Thread safe
+    // __cdecl const char* Plugin_Cvar_VariableString( const char *var_name ); deprecated. Use Plugin_Cvar_VariableStringBuffer
     // Sets a cvar by name and by a string value which gets interpreted correctly depending on the cvar type
     __cdecl void Plugin_Cvar_Set( const char *var_name, const char* value );
 

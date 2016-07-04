@@ -154,7 +154,6 @@ char* Cvar_GetVariantString(const char* name);
 cvar_t* Cvar_FindMalleableVar(const char* name);
 void Cvar_Init(void);
 void Cvar_CommandCompletion( void(*callback)(const char *s) );
-char *Cvar_VariableString( const char *var_name );
 float Cvar_VariableValue( const char *var_name );
 int Cvar_VariableIntegerValue( const char *var_name );
 qboolean Cvar_VariableBooleanValue( const char *var_name );
@@ -171,7 +170,7 @@ cvar_t *Cvar_FindVar( const char *var_name );
 qboolean Cvar_ValidateString( const char *s );
 void Cvar_AddFlags(cvar_t* var, unsigned short flags);
 void Cvar_AddFlagsByName(const char* var_name, unsigned short flags);
-void Cvar_VariableStringBuffer( const char *var_name, char *buffer, int bufsize );
+const char* Cvar_VariableStringBuffer( const char *var_name, char *buffer, int bufsize );
 cvar_t* Cvar_GetNext(cvar_t* cvar, short flags);
 void Cvar_WriteVariables(fileHandle_t fh);
 void Cvar_SetLatched(const char* name, const char* value);
@@ -179,7 +178,6 @@ void Cvar_ClearFlagsForEach(unsigned short flags);
 void Cvar_ClearModified(cvar_t* cvar);
 #define Cvar_GetInt Cvar_VariableIntegerValue
 #define Cvar_GetFloat Cvar_VariableValue
-#define Cvar_GetString Cvar_VariableString
 #define Cvar_GetBool Cvar_VariableBooleanValue
 #define Dvar_InfoString(X,Y) Cvar_InfoString(Y)
 
@@ -233,5 +231,3 @@ void Cvar_Init(void);
 #define	CVAR_USER_CREATED	16384	// created by a set command
 
 #endif
-
-

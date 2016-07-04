@@ -439,15 +439,16 @@ Inserts the current value of a variable as command text
 ===============
 */
 void Cmd_Vstr_f( void ) {
-	char	*v;
+	const char	*v;
 	char	buf[MAX_CMD_LINE];
+	char c_str[1024];
 
 	if (Cmd_Argc () != 2) {
 		Com_Printf ("vstr <variablename> : execute a variable command\n");
 		return;
 	}
 
-	v = Cvar_VariableString( Cmd_Argv( 1 ) );
+	v = Cvar_VariableStringBuffer( Cmd_Argv( 1 ), c_str, sizeof(c_str) );
 	Com_sprintf(buf, sizeof(buf), "%s", v);
 	Cbuf_InsertText( buf );
 }

@@ -36,7 +36,7 @@ typedef struct{
   void (*Com_Quit_f)( );
   void (*Com_Error)( int code, const char *fmt, ... );
 	int (*Cvar_VariableIntegerValue)( const char *var_name );
-	char *(*Cvar_VariableString)( const char *var_name );
+	const char *(*Cvar_VariableStringBuffer)( const char *var_name, char *buf, int sizebuf );
 #ifndef __cplusplus
 	void (*SV_DropClientNoNotify)( client_t *drop, const char *reason );
 	void (*SV_DropClient)( client_t *drop, const char *reason );

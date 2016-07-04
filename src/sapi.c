@@ -495,7 +495,7 @@ void SV_InitSApi()
 	exports.Com_Quit_f = Com_Quit_f;
 	exports.Com_Error = Com_Error;
 	exports.Cvar_VariableIntegerValue = Cvar_VariableIntegerValue;
-	exports.Cvar_VariableString = Cvar_VariableString;
+	exports.Cvar_VariableStringBuffer = Cvar_VariableStringBuffer;
 	exports.SV_DropClientNoNotify = SV_DropClientNoNotify;
 	exports.SV_DropClient = SV_DropClient;
 	exports.SV_SendReliableServerCommand = SV_SendReliableServerCommand;

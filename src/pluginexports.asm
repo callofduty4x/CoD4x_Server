@@ -88,7 +88,6 @@ pexport Cvar_VariableStringBuffer
 pexport Cvar_VariableValue
 pexport Cvar_VariableIntegerValue
 pexport Cvar_VariableBooleanValue
-pexport Cvar_VariableString
 pexport Cvar_RegisterString
 pexport Cvar_RegisterBool
 pexport Cvar_RegisterInt
