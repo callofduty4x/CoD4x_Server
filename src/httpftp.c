@@ -2534,7 +2534,7 @@ const char* FileDownloadGenerateProgress( ftRequest_t* request )
 	do {
 		state = FileDownloadSendReceive(handle);
 		Com_Printf("%s", FileDownloadGenerateProgress( handle ));
-		usleep(20000);
+		Sys_Sleep(20000);
 	} while (state == 0);
 
 	if(state < 0)

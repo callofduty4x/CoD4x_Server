@@ -284,8 +284,8 @@ typedef struct usercmd_s {//Not Known
 	int			angles[3];
 	byte weapon;
 	byte offHandIndex;
-	byte field_16;
-	byte field_17;
+	byte forward_back_buttons;      //This is not buttons but actual player movement
+	byte left_right_buttons;        //This is not buttons but actual player movement
 	int field_18;
 	int field_1C;
 } usercmd_t;
@@ -392,7 +392,7 @@ struct gclient_s {
 	int lastCmdTime;                //0x3084 level.time of last usercmd_t, for EF_CONNECTION
 									// we can't just use pers.lastCommand.time, because
 									// of the g_sycronousclients case
-	//Buttonlogic
+	//Buttonlogic. WASD buttons not catched :( Have to look at client_t lastUserCmd.
 	int buttons;			//0x3088
 	int oldbuttons;	
 	int latched_buttons;

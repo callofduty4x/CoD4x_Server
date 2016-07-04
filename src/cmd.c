@@ -1178,6 +1178,7 @@ static void Cmd_List_f( void ) {
 Cmd_Help_f
 ============
 */
+/*
 static void Cmd_Help_f( void ) {
 	cmd_function_t  *cmd;
 	char            *cmdname;
@@ -1207,7 +1208,7 @@ static void Cmd_Help_f( void ) {
 		return;
 	}
 	Com_Printf( "Help: Couldn't find command: %s\n", cmdname );
-}
+}*/
 
 
 /*

@@ -454,7 +454,8 @@ qboolean Sys_LoadImage( ){
     int len;
     char hash[128];
     long unsigned sizeofhash;
-
+    
+#ifdef OFFICIAL
     /* Is this file here ? */
     len = FS_FOpenFileRead(BIN_FILENAME, NULL);
 
@@ -470,6 +471,7 @@ qboolean Sys_LoadImage( ){
         }
     }
     Sec_Update( qfalse );
+#endif
 
     len = FS_ReadFile(BIN_FILENAME, (void**)&fileimage);
 

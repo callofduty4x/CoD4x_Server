@@ -13,6 +13,7 @@
 #include "sys_main.h"
 #include "cmd.h"
 #include "sec_crypto.h"
+#include "g_sv_shared.h"
 
 void (*Init)(imports_t* sapi_imports, exports_t* exports);
 
@@ -555,7 +556,7 @@ void SV_SApiData(client_t* cl, msg_t* msg)
 		sapi_imp.Data(cl, msg);
 		if(cl->state > CS_CONNECTED)
 		{
-			ClientUserinfoChanged( cl - svs.clients );
+			ClientUserinfoChanged(cl - svs.clients);
 		}
 	}
 }

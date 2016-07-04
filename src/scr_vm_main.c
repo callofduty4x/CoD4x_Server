@@ -1,21 +1,21 @@
 /*
 ===========================================================================
-    Copyright (C) 2010-2013  Ninja and TheKelm
+	Copyright (C) 2010-2013  Ninja and TheKelm
 
-    This file is part of CoD4X18-Server source code.
+	This file is part of CoD4X18-Server source code.
 
-    CoD4X18-Server source code is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+	CoD4X18-Server source code is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as
+	published by the Free Software Foundation, either version 3 of the
+	License, or (at your option) any later version.
 
-    CoD4X18-Server source code is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+	CoD4X18-Server source code is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
 
@@ -33,9 +33,9 @@
 #include <stdarg.h>
 
 typedef struct{
-    char* name;
-    xfunction_t offset;
-    qboolean developer;
+	char* name;
+	xfunction_t offset;
+	qboolean developer;
 }v_function_t;
 
 
@@ -43,7 +43,8 @@ typedef struct{
 
 
 
-void Scr_AddStockFunctions(){
+void Scr_AddStockFunctions()
+{
 	Scr_AddFunction("createprintchannel", (void*)0x80bf832, 0);
 	Scr_AddFunction("setprintchannel", (void*)0x80bf75c, 0);
 	Scr_AddFunction("print", (void*)0x80bf706, 0);
@@ -56,12 +57,11 @@ void Scr_AddStockFunctions(){
 	Scr_AddFunction("getent", (void*)0x80c7c72, 0);
 	Scr_AddFunction("getentarray", (void*)0x80c7b44, 0);
 	Scr_AddFunction("spawn", /* (void*)0x80bf638 */ GScr_Spawn, 0);
-//	Scr_AddFunction("spawnvehicle", GScr_SpawnVehicle, 0);
+//  Scr_AddFunction("spawnvehicle", GScr_SpawnVehicle, 0);
 	Scr_AddFunction("spawnplane", (void*)0x80c0fde, 0);
 	Scr_AddFunction("spawnturret", (void*)0x80c0f52, 0);
 	Scr_AddFunction("precacheturret", (void*)0x80bcd46, 0);
-	Scr_AddFunction("spawnstruct", (void*)0x815f09a, 0);
-	Scr_AddFunction("spawnhelicopter", GScr_SpawnHelicopter, 0);
+	Scr_AddFunction("spawnstruct", (void*)0x815f09a, 0);	
 	Scr_AddFunction("assert", (void*)0x80bb0fc, 1);
 	Scr_AddFunction("assertex", (void*)0x80bb2e0, 1);
 	Scr_AddFunction("assertmsg", (void*)0x80bb2b4, 1);
@@ -205,8 +205,6 @@ void Scr_AddStockFunctions(){
 	Scr_AddFunction("map_restart", (void*)0x80bb6d2, 0);
 	Scr_AddFunction("exitlevel", (void*)0x80bbfe2, 0);
 	Scr_AddFunction("addtestclient", GScr_SpawnBot, 0);
-	Scr_AddFunction("removetestclient", GScr_RemoveBot, 0);
-	Scr_AddFunction("removealltestclients", GScr_RemoveAllBots, 0);
 	Scr_AddFunction("makedvarserverinfo", GScr_MakeCvarServerInfo, 0);
 	Scr_AddFunction("setarchive", (void*)0x80bb034, 0);
 	Scr_AddFunction("allclientsprint", (void*)0x80bbc8c, 0);
@@ -223,7 +221,7 @@ void Scr_AddStockFunctions(){
 	Scr_AddFunction("setvotestring", (void*)0x80bb7e0, 0);
 	Scr_AddFunction("setvotetime", (void*)0x80bb73e, 0);
 	Scr_AddFunction("setvoteyescount", (void*)0x80bb360, 0);
-	Scr_AddFunction("setvotenocount", (void*)0x80bb320, 0);
+	Scr_AddFunction("setvotenocount", (void*)0x80bb320, 0);	
 	Scr_AddFunction("openfile", GScr_FS_FOpen, 0);
 	Scr_AddFunction("closefile", GScr_FS_FClose, 0);
 	Scr_AddFunction("fprintln", GScr_FS_WriteLine, 0);
@@ -252,35 +250,12 @@ void Scr_AddStockFunctions(){
 	Scr_AddFunction("tablelookup", (void*)0x80bb122, 0);
 	Scr_AddFunction("tablelookupistring", (void*)0x80c1b0e, 0);
 	Scr_AddFunction("endlobby", (void*)0x80bb088, 0);
-	Scr_AddFunction("fs_fopen", GScr_FS_FOpen, 0);
-	Scr_AddFunction("fs_fclose", GScr_FS_FClose, 0);
-	Scr_AddFunction("fs_fcloseall", GScr_FS_FCloseAll, 0);
-	Scr_AddFunction("fs_testfile", GScr_FS_TestFile, 0);
-	Scr_AddFunction("fs_readline", GScr_FS_ReadLine, 0);
-	Scr_AddFunction("fs_writeline", GScr_FS_WriteLine, 0);
-	Scr_AddFunction("fs_remove", GScr_FS_Remove, 0);
-	Scr_AddFunction("getrealtime", GScr_GetRealTime, 0);
-	Scr_AddFunction("timetostring", GScr_TimeToString, 0);
-	Scr_AddFunction("strtokbypixlen", GScr_StrTokByPixLen, 0);
-	Scr_AddFunction("strpixlen", GScr_StrPixLen, 0);
-	Scr_AddFunction("strcolorstrip", GScr_StrColorStrip, 0);
-	Scr_AddFunction("copystr", GScr_CopyString, 0);
-	Scr_AddFunction("strrepl", GScr_StrRepl, 0);
-	Scr_AddFunction("strtokbylen", GScr_StrTokByLen, 0);
-	Scr_AddFunction("exec", GScr_CbufAddText, 0);
-	Scr_AddFunction("execex", GScr_CbufAddTextEx, 0);
-	Scr_AddFunction("sha256", GScr_SHA256, 0);
-	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
-
-
 }
 
 
-void Scr_AddStockMethods(){
+void Scr_AddStockMethods()
+{
 	//PlayerCmd
-	Scr_AddMethod("getpower", PlayerCmd_GetPower, 0);
-	Scr_AddMethod("setpower", PlayerCmd_SetPower, 0);
-	Scr_AddMethod("setuid", PlayerCmd_SetUid, 0);
 	Scr_AddMethod("giveweapon", (void*)0x80abc48, 0);
 	Scr_AddMethod("takeweapon", (void*)0x80abbb4, 0);
 	Scr_AddMethod("takeallweapons", (void*)0x80abb0e, 0);
@@ -348,9 +323,6 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("istalking", (void*)0x80a96f8, 0);
 	Scr_AddMethod("allowspectateteam", (void*)0x80a9518, 0);
 	Scr_AddMethod("getguid", (void*)PlayerCmd_GetGuid, 0);
-	Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
-  Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
-  Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
 	Scr_AddMethod("getxuid", (void*)0x80a9418, 0);
 	Scr_AddMethod("allowads", (void*)0x80ab852, 0);
 	Scr_AddMethod("allowjump", (void*)0x80a8932, 0);
@@ -367,8 +339,6 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("updatescores", (void*)0x80a8e50, 0);
 	Scr_AddMethod("updatedmscores", (void*)0x80a8c5e, 0);
 	Scr_AddMethod("setrank", (void*)0x80a8ac4, 0);
-	Scr_AddMethod("getuserinfo", PlayerCmd_GetUserinfo, 0);
-	Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
 	//HUD Functions
 	Scr_AddMethod("settext", HECmd_SetText, 0);
 	Scr_AddMethod("clearalltextafterhudelem", (void*)0x808f768, 0);
@@ -434,11 +404,7 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("showtoplayer", (void*)0x80c4252, 0);
 	Scr_AddMethod("setcontents", (void*)0x80c41e4, 0);
 	Scr_AddMethod("getstance", (void*)0x80c42d2, 0);
-//	Scr_AddMethod("setstance", ScrCmd_SetStance, 0);
-	Scr_AddMethod("setjumpheight", PlayerCmd_SetJumpHeight, 0);
-	Scr_AddMethod("setgravity", PlayerCmd_SetGravity, 0);
-	Scr_AddMethod("setgroundreferenceent", PlayerCmd_SetGroundReferenceEnt, 0);
-	Scr_AddMethod("setmovespeed", PlayerCmd_SetMoveSpeed, 0);
+//  Scr_AddMethod("setstance", ScrCmd_SetStance, 0);
 	Scr_AddMethod("setcursorhint", (void*)0x80c6348, 0);
 	Scr_AddMethod("sethintstring", (void*)0x80c619e, 0);
 	Scr_AddMethod("usetriggerrequirelookat", (void*)0x80c613a, 0);
@@ -468,8 +434,6 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("clientclaimtrigger", (void*)0x80c5246, 0);
 	Scr_AddMethod("clientreleasetrigger", (void*)0x80c515a, 0);
 	Scr_AddMethod("releaseclaimedtrigger", (void*)0x80c50b8, 0);
-	Scr_AddMethod("getstat", PlayerCmd_GetStat, 0);
-	Scr_AddMethod("setstat", PlayerCmd_SetStat, 0);
 	Scr_AddMethod("sendleaderboards", (void*)0x80bb064, 0);
 	Scr_AddMethod("setmovespeedscale", (void*)0x80c4c0e, 0);
 	Scr_AddMethod("logstring", (void*)0x80bac0c, 0);
@@ -525,7 +489,66 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("clearturrettarget", (void*)0x809d0de, 0);
 	Scr_AddMethod("setvehicleteam", (void*)0x809cb72, 0);
 	Scr_AddMethod("setdamagestage", (void*)0x80ba890, 0);
+}
+
+void Scr_AddCustomFunctions()
+{
+	Scr_AddFunction("spawnhelicopter", GScr_SpawnHelicopter, 0);
+	Scr_AddFunction("removetestclient", GScr_RemoveBot, 0);
+	Scr_AddFunction("removealltestclients", GScr_RemoveAllBots, 0);
+	Scr_AddFunction("fs_fopen", GScr_FS_FOpen, 0);
+	Scr_AddFunction("fs_fclose", GScr_FS_FClose, 0);
+	Scr_AddFunction("fs_fcloseall", GScr_FS_FCloseAll, 0);
+	Scr_AddFunction("fs_testfile", GScr_FS_TestFile, 0);
+	Scr_AddFunction("fs_readline", GScr_FS_ReadLine, 0);
+	Scr_AddFunction("fs_writeline", GScr_FS_WriteLine, 0);
+	Scr_AddFunction("fs_remove", GScr_FS_Remove, 0);
+	Scr_AddFunction("getrealtime", GScr_GetRealTime, 0);
+	Scr_AddFunction("timetostring", GScr_TimeToString, 0);
+	Scr_AddFunction("strtokbypixlen", GScr_StrTokByPixLen, 0);
+	Scr_AddFunction("strpixlen", GScr_StrPixLen, 0);
+	Scr_AddFunction("strcolorstrip", GScr_StrColorStrip, 0);
+	Scr_AddFunction("copystr", GScr_CopyString, 0);
+	Scr_AddFunction("strrepl", GScr_StrRepl, 0);
+	Scr_AddFunction("strtokbylen", GScr_StrTokByLen, 0);
+	Scr_AddFunction("exec", GScr_CbufAddText, 0);
+	Scr_AddFunction("execex", GScr_CbufAddTextEx, 0);
+	Scr_AddFunction("sha256", GScr_SHA256, 0);
+	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
+}
+
+void Scr_AddCustomMethods()
+{
+	Scr_AddMethod("getpower", PlayerCmd_GetPower, 0);
+	Scr_AddMethod("setpower", PlayerCmd_SetPower, 0);
+	Scr_AddMethod("setuid", PlayerCmd_SetUid, 0);
+	Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
+	Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
+	Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
+	Scr_AddMethod("getuserinfo", PlayerCmd_GetUserinfo, 0);
+	Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
+	Scr_AddMethod("setjumpheight", PlayerCmd_SetJumpHeight, 0);
+	Scr_AddMethod("setgravity", PlayerCmd_SetGravity, 0);
+	Scr_AddMethod("setgroundreferenceent", PlayerCmd_SetGroundReferenceEnt, 0);
+	Scr_AddMethod("setmovespeed", PlayerCmd_SetMoveSpeed, 0);
+	Scr_AddMethod("getstat", PlayerCmd_GetStat, 0);
+	Scr_AddMethod("setstat", PlayerCmd_SetStat, 0);
 	Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
+	Scr_AddMethod("forwardbuttonpressed", PlayerCmd_ForwardButtonPressed, 0);
+	Scr_AddMethod("backbuttonpressed", PlayerCmd_BackButtonPressed, 0);
+	Scr_AddMethod("moveleftbuttonpressed", PlayerCmd_MoveLeftButtonPressed, 0);
+	Scr_AddMethod("moverightbuttonpressed", PlayerCmd_MoveRightButtonPressed, 0);
+	Scr_AddMethod("sprintbuttonpressed", PlayerCmd_SprintButtonPressed, 0);
+	Scr_AddMethod("reloadbuttonpressed", PlayerCmd_ReloadButtonPressed, 0);
+	Scr_AddMethod("leanleftbuttonpressed", PlayerCmd_LeanLeftButtonPressed, 0);
+	Scr_AddMethod("leanrightbuttonpressed", PlayerCmd_LeanRightButtonPressed, 0);
+	Scr_AddMethod("isproning", PlayerCmd_IsProning, 0);
+	Scr_AddMethod("iscrouching", PlayerCmd_IsCrouching, 0);	
+	Scr_AddMethod("isstanding", PlayerCmd_IsStanding, 0);
+	Scr_AddMethod("jumpbuttonpressed", PlayerCmd_JumpButtonPressed, 0);
+	Scr_AddMethod("isinads", PlayerCmd_IsInADS, 0);
+	Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
+	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
 }
 
 
@@ -533,53 +556,57 @@ void Scr_AddStockMethods(){
 void Scr_InitFunctions()
 {
 
-    static qboolean initialized = qfalse;
+	static qboolean initialized = qfalse;
 
 /*
-    No longer
+	No longer
 
-    //Reset everything 1st
+	//Reset everything 1st
 
-    Scr_ClearFunctions();
-    Scr_ClearMethods();
+	Scr_ClearFunctions();
+	Scr_ClearMethods();
 */
-    //Then add everything again
+	//Then add everything again
 
-    if(!initialized)
-    {
-        Scr_AddStockFunctions();
-        Scr_AddStockMethods();
-        initialized = qtrue;
-    }
+	if(!initialized)
+	{
+		Scr_AddStockFunctions();
+		Scr_AddStockMethods();
+		
+		Scr_AddCustomFunctions();
+		Scr_AddCustomMethods();
+
+		initialized = qtrue;
+	}
 }
 
 int GScr_LoadScriptAndLabel(const char* scriptName, const char* labelName, qboolean mandatory ){
 
-    int fh;
-    PrecacheEntry load_buffer;
+	int fh;
+	PrecacheEntry load_buffer;
 
-    if(!Scr_LoadScript(scriptName, &load_buffer ,0)){
-        if(mandatory){
-            Com_Error(ERR_DROP, "Could not find script '%s'", scriptName);
-        }else{
-            Com_DPrintf("Notice: Could not find script '%s' - this part will be disabled\n", scriptName);
-        }
-        return 0;
-    }
+	if(!Scr_LoadScript(scriptName, &load_buffer ,0)){
+		if(mandatory){
+			Com_Error(ERR_DROP, "Could not find script '%s'", scriptName);
+		}else{
+			Com_DPrintf("Notice: Could not find script '%s' - this part will be disabled\n", scriptName);
+		}
+		return 0;
+	}
 
-    fh = Scr_GetFunctionHandle(scriptName, labelName);
+	fh = Scr_GetFunctionHandle(scriptName, labelName);
 
-    if(!fh){
-        if(mandatory){
-            Com_Error(ERR_DROP, "Could not find label '%s' in script '%s'", labelName, scriptName);
-        }else{
-            Com_DPrintf("Notice: Could not find label '%s' in script '%s' - this part will be disabled\n", labelName, scriptName);
-        }
-        return 0;
+	if(!fh){
+		if(mandatory){
+			Com_Error(ERR_DROP, "Could not find label '%s' in script '%s'", labelName, scriptName);
+		}else{
+			Com_DPrintf("Notice: Could not find label '%s' in script '%s' - this part will be disabled\n", labelName, scriptName);
+		}
+		return 0;
 
-    }
+	}
 
-    return fh;
+	return fh;
 }
 
 
@@ -588,21 +615,21 @@ int GScr_LoadScriptAndLabel(const char* scriptName, const char* labelName, qbool
 #define g_scr_data (*((g_scr_data_t*) (G_SCR_DATA_ADDR)))
 
 typedef struct{
-    int map; //0x8583ba0
-    int unk1;
-    int gametype;
-    int startgametype;
-    int playerconnect;
-    int playerdisconnect;
-    int playerdamage;
-    int playerkilled;
-    int unk2;
-    int unk3;
-    int playerlaststand; //0x8583bc8
-    int unkbig[1057];
-    int delete; //0x8584c50
-    int initstruct;
-    int createstruct;
+	int map; //0x8583ba0
+	int unk1;
+	int gametype;
+	int startgametype;
+	int playerconnect;
+	int playerdisconnect;
+	int playerdamage;
+	int playerkilled;
+	int unk2;
+	int unk3;
+	int playerlaststand; //0x8583bc8
+	int unkbig[1057];
+	int delete; //0x8584c50
+	int initstruct;
+	int createstruct;
 }g_scr_data_t;
 
 
@@ -612,43 +639,43 @@ int script_CallBacks_new[8];
 void GScr_LoadGameTypeScript(void){
 
 /**************** Mandatory *************************/
-    char gametype_path[64];
+	char gametype_path[64];
 
-    Cvar_RegisterString("g_gametype", "dm", CVAR_LATCH | CVAR_SERVERINFO, "Current game type");
+	Cvar_RegisterString("g_gametype", "dm", CVAR_LATCH | CVAR_SERVERINFO, "Current game type");
 
-    Com_sprintf(gametype_path, sizeof(gametype_path), "maps/mp/gametypes/%s", sv_g_gametype->string);
+	Com_sprintf(gametype_path, sizeof(gametype_path), "maps/mp/gametypes/%s", sv_g_gametype->string);
 
-    /* Don't raise a fatal error when we couldn't find this gametype script */
-    g_scr_data.gametype = GScr_LoadScriptAndLabel(gametype_path, "main", 0);
-    if(g_scr_data.gametype == 0)
-    {
-        Com_PrintError("Could not find script: %s\n", gametype_path);
-        Com_Printf("The gametype %s is not available! Will load gametype dm\n", sv_g_gametype->string);
+	/* Don't raise a fatal error when we couldn't find this gametype script */
+	g_scr_data.gametype = GScr_LoadScriptAndLabel(gametype_path, "main", 0);
+	if(g_scr_data.gametype == 0)
+	{
+		Com_PrintError("Could not find script: %s\n", gametype_path);
+		Com_Printf("The gametype %s is not available! Will load gametype dm\n", sv_g_gametype->string);
 
-        Cvar_SetString(sv_g_gametype, "dm");
-        Com_sprintf(gametype_path, sizeof(gametype_path), "maps/mp/gametypes/%s", sv_g_gametype->string);
-        /* If we can not find gametype dm a fatal error gets raised */
-        g_scr_data.gametype = GScr_LoadScriptAndLabel(gametype_path, "main", 1);
-    }
+		Cvar_SetString(sv_g_gametype, "dm");
+		Com_sprintf(gametype_path, sizeof(gametype_path), "maps/mp/gametypes/%s", sv_g_gametype->string);
+		/* If we can not find gametype dm a fatal error gets raised */
+		g_scr_data.gametype = GScr_LoadScriptAndLabel(gametype_path, "main", 1);
+	}
 
-    g_scr_data.startgametype = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_StartGameType", 1);
-    g_scr_data.playerconnect = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerConnect", 1);
-    g_scr_data.playerdisconnect = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerDisconnect", 1);
-    g_scr_data.playerdamage = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerDamage", 1);
-    g_scr_data.playerkilled = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerKilled", 1);
-    g_scr_data.playerlaststand = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerLastStand", 1);
+	g_scr_data.startgametype = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_StartGameType", 1);
+	g_scr_data.playerconnect = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerConnect", 1);
+	g_scr_data.playerdisconnect = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerDisconnect", 1);
+	g_scr_data.playerdamage = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerDamage", 1);
+	g_scr_data.playerkilled = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerKilled", 1);
+	g_scr_data.playerlaststand = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_PlayerLastStand", 1);
 
 
 /**************** Additional *************************/
-    script_CallBacks_new[SCR_CB_SCRIPTCOMMAND] = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_ScriptCommand", 0);
+	script_CallBacks_new[SCR_CB_SCRIPTCOMMAND] = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_ScriptCommand", 0);
 }
 
 typedef struct
 {
-    char* name;
-    int val1;
-    int val2;
-    void *setfun;
+	char* name;
+	int val1;
+	int val2;
+	void *setfun;
 
 }scrEntityFields_t;
 
@@ -656,14 +683,14 @@ typedef struct
 
 void GScr_AddFieldsForEntity()
 {
-    int i;
+	int i;
 
-    scrEntityFields_t *ptr;
+	scrEntityFields_t *ptr;
 
-    for(ptr = (scrEntityFields_t*)0x82202a0, i = 0; ptr->name; ptr++, i++ )
-    {
-        Scr_AddFields( 0, ptr->name, i);
-    }
+	for(ptr = (scrEntityFields_t*)0x82202a0, i = 0; ptr->name; ptr++, i++ )
+	{
+		Scr_AddFields( 0, ptr->name, i);
+	}
 
 
 }
@@ -693,14 +720,14 @@ client_fields_t clientField[] = {
 
 void GScr_AddFieldsForClient()
 {
-    int i;
+	int i;
 
-    client_fields_t *ptr;
+	client_fields_t *ptr;
 
-    for(ptr = (client_fields_t *)0x8215780, i = 0; ptr->name; ptr++, i++ )
-    {
-        Scr_AddFields( 0, ptr->name, 0xc000+i);
-    }
+	for(ptr = (client_fields_t *)0x8215780, i = 0; ptr->name; ptr++, i++ )
+	{
+		Scr_AddFields( 0, ptr->name, 0xc000+i);
+	}
 
 
 }
@@ -711,38 +738,38 @@ Bug in array - don't use!
 void Scr_GetClientField(gclient_t* gcl, int num)
 {
 
-    client_fields_t *field = (client_fields_t *)0x8215780;
+	client_fields_t *field = (client_fields_t *)0x8215780;
 
-    field = &field[num];
+	field = &field[num];
 //    client_fields_t *field = &clientField[num];
 
 
-    if(field->getfun)
+	if(field->getfun)
 
-        field->getfun(gcl, field);
+		field->getfun(gcl, field);
 
-    else
+	else
 
-        Scr_GetGenericField(gcl, field->type, field->val1);
+		Scr_GetGenericField(gcl, field->type, field->val1);
 
 }
 
 
 void Scr_SetClientField(gclient_t* gcl, int num)
 {
-    client_fields_t *field = (client_fields_t *)0x8215780;
+	client_fields_t *field = (client_fields_t *)0x8215780;
 
-    field = &field[num];
+	field = &field[num];
 
 //    client_fields_t *field = &clientField[num];
 
-    if(field->setfun)
+	if(field->setfun)
 
-        field->setfun(gcl, field);
+		field->setfun(gcl, field);
 
-    else
+	else
 
-        Scr_SetGenericField(gcl, field->type, field->val1);
+		Scr_SetGenericField(gcl, field->type, field->val1);
 
 }
 */
@@ -750,33 +777,33 @@ void Scr_SetClientField(gclient_t* gcl, int num)
 
 __cdecl void GScr_LoadScripts(void){
 
-    char mappath[MAX_QPATH];
-    cvar_t* mapname;
-    int i;
+	char mappath[MAX_QPATH];
+	cvar_t* mapname;
+	int i;
 
-    Scr_BeginLoadScripts();
-    Scr_InitFunctions();
+	Scr_BeginLoadScripts();
+	Scr_InitFunctions();
 
-    g_scr_data.delete = GScr_LoadScriptAndLabel("codescripts/delete", "main", 1);
-    g_scr_data.initstruct = GScr_LoadScriptAndLabel("codescripts/struct", "initstructs", 1);
-    g_scr_data.createstruct = GScr_LoadScriptAndLabel("codescripts/struct", "createstruct", 1);
+	g_scr_data.delete = GScr_LoadScriptAndLabel("codescripts/delete", "main", 1);
+	g_scr_data.initstruct = GScr_LoadScriptAndLabel("codescripts/struct", "initstructs", 1);
+	g_scr_data.createstruct = GScr_LoadScriptAndLabel("codescripts/struct", "createstruct", 1);
 
-    GScr_LoadGameTypeScript();
+	GScr_LoadGameTypeScript();
 
-    mapname = Cvar_RegisterString( "mapname", "" ,CVAR_LATCH | CVAR_SYSTEMINFO ,"The current map name");
+	mapname = Cvar_RegisterString( "mapname", "" ,CVAR_LATCH | CVAR_SYSTEMINFO ,"The current map name");
 
-    Com_sprintf(mappath, sizeof(mappath), "maps/mp/%s", mapname->string );
+	Com_sprintf(mappath, sizeof(mappath), "maps/mp/%s", mapname->string );
 
-    g_scr_data.map = GScr_LoadScriptAndLabel(mappath, "main", qfalse);
+	g_scr_data.map = GScr_LoadScriptAndLabel(mappath, "main", qfalse);
 
-    for(i=0; i < 4; i++)
-        Scr_SetClassMap(i);
+	for(i=0; i < 4; i++)
+		Scr_SetClassMap(i);
 
-    GScr_AddFieldsForEntity();
-    GScr_AddFieldsForClient();
-    GScr_AddFieldsForHudElems();
-    GScr_AddFieldsForRadiant();
-    Scr_EndLoadScripts();
+	GScr_AddFieldsForEntity();
+	GScr_AddFieldsForClient();
+	GScr_AddFieldsForHudElems();
+	GScr_AddFieldsForRadiant();
+	Scr_EndLoadScripts();
 
 }
 
@@ -784,20 +811,20 @@ __cdecl void GScr_LoadScripts(void){
 
 
 typedef struct{
-    int var_08; //0x895bf08
-    int unk[397];
-    int var_01; //0x895c540
-    int var_02; //0x895c544
-    unsigned int var_03; //0x895c548
-    unsigned int var_04; //0x895c54c
-    int var_05;
-    int var_06;
-    char arrayunk[0x20000];
-    char* var_10; //0x897c558
-    void* scr_buffer_handle; //0x897c55c
-    int unk2[198039];
-    char* script_filepath; //0x8a3dbbc
-    int var_12; //0x8a3dbc0
+	int var_08; //0x895bf08
+	int unk[397];
+	int var_01; //0x895c540
+	int var_02; //0x895c544
+	unsigned int var_03; //0x895c548
+	unsigned int var_04; //0x895c54c
+	int var_05;
+	int var_06;
+	char arrayunk[0x20000];
+	char* var_10; //0x897c558
+	void* scr_buffer_handle; //0x897c55c
+	int unk2[198039];
+	char* script_filepath; //0x8a3dbbc
+	int var_12; //0x8a3dbc0
 }scrStruct_t;
 
 
@@ -891,7 +918,7 @@ __cdecl unsigned int Scr_LoadScript(const char* scriptname, PrecacheEntry *preca
 		scrStruct.var_10 = "+";
 		scrStruct.scr_buffer_handle = scr_buffer_handle;
 		ScriptParse(&result ,0);
-		object = GetObjectA( GetVariable(scrStruct.var_04, handle) );
+		object = VM_GetObjectA( VM_GetVariable(scrStruct.var_04, handle) );
 
 		ScriptCompile(result, object, variable, precache, iarg_02);
 
@@ -908,7 +935,7 @@ __cdecl unsigned int Scr_LoadScript(const char* scriptname, PrecacheEntry *preca
 
 void Scr_Sys_Error_Wrapper(const char* fmt, ... )
 {
-	va_list		argptr;
+	va_list     argptr;
 	char com_errorMessage[4096];
 
 
@@ -925,17 +952,17 @@ void Scr_Sys_Error_Wrapper(const char* fmt, ... )
 /*
 void GetVirtualFunctionArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    int i;
-    char *funname;
-    xfunction_t funaddr;
-    int funtype;
-    v_function_t *ptr;
+	char buffer[1024*1024];
+	char line[128];
+	int i;
+	char *funname;
+	xfunction_t funaddr;
+	int funtype;
+	v_function_t *ptr;
 
-    Com_Memset(buffer, 0, sizeof(buffer));
+	Com_Memset(buffer, 0, sizeof(buffer));
 
-    for(i = 0, ptr = (v_function_t*)0x821c620; ptr->offset != NULL && i < 25; ptr++, i++){
+	for(i = 0, ptr = (v_function_t*)0x821c620; ptr->offset != NULL && i < 25; ptr++, i++){
 
 	funname = ptr->name;
 	funaddr = ptr->offset;
@@ -944,27 +971,27 @@ void GetVirtualFunctionArray(){
 	Com_sprintf(line, sizeof(line), "\t{\"%s\", (void*)%p, %x},\n", funname, funaddr, funtype);
 	Q_strcat(buffer, sizeof(buffer), line);
 
-    }
+	}
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	Com_Quit_f();
 }
 */
 
 /*
 void GetVirtualFunctionArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    int i;
-    char *funname;
-    xfunction_t funaddr;
-    int funtype;
-    v_function_t *ptr;
+	char buffer[1024*1024];
+	char line[128];
+	int i;
+	char *funname;
+	xfunction_t funaddr;
+	int funtype;
+	v_function_t *ptr;
 
-    Com_Memset(buffer, 0, sizeof(buffer));
+	Com_Memset(buffer, 0, sizeof(buffer));
 
-    for(i = 0, ptr = (v_function_t*)0x826e060; ptr->offset != NULL; ptr++, i++){
+	for(i = 0, ptr = (v_function_t*)0x826e060; ptr->offset != NULL; ptr++, i++){
 
 	funname = ptr->name;
 	funaddr = ptr->offset;
@@ -973,23 +1000,23 @@ void GetVirtualFunctionArray(){
 	Com_sprintf(line, sizeof(line), "\tScr_AddFunction(\"%s\", (void*)%p, %i);\n", funname, funaddr, funtype);
 	Q_strcat(buffer, sizeof(buffer), line);
 
-    }
+	}
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	Com_Quit_f();
 }
 
 typedef struct{
-    char *name;
-    int offset;
-    int bits;
-    int zero;
+	char *name;
+	int offset;
+	int bits;
+	int zero;
 }subnetlist_t;
 
 
 typedef struct{
-    subnetlist_t *sub;
-    int size;
+	subnetlist_t *sub;
+	int size;
 }netlist_t;
 
 
@@ -997,15 +1024,15 @@ typedef struct{
 
 void GetDeltaEntArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    netlist_t *ptr;
-    subnetlist_t *subptr;
-    int i, j;
+	char buffer[1024*1024];
+	char line[128];
+	netlist_t *ptr;
+	subnetlist_t *subptr;
+	int i, j;
 
-    Com_Memset(buffer, 0, sizeof(buffer));
+	Com_Memset(buffer, 0, sizeof(buffer));
 
-    for(j=0, ptr = (netlist_t*)0x82293c0; ptr->sub != NULL ; ptr++, j++){
+	for(j=0, ptr = (netlist_t*)0x82293c0; ptr->sub != NULL ; ptr++, j++){
 
 	subptr = ptr->sub;
 	Com_sprintf(line, sizeof(line), "netField_t entityStateFields_%i[] =\n{\n", j);
@@ -1020,41 +1047,41 @@ void GetDeltaEntArray(){
 	Com_sprintf(line, sizeof(line), "};\n\n\n");
 	Q_strcat(buffer, sizeof(buffer), line);
 
-    }
+	}
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	Com_Quit_f();
 }
 
 
 
 typedef struct{
-    char *name;
-    int offset;
-    int bits;
-    int unknown;
+	char *name;
+	int offset;
+	int bits;
+	int unknown;
 }netlistPlayer_t;
 
 
 void GetDeltaPlayerArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    netlistPlayer_t *ptr;
-    int j;
+	char buffer[1024*1024];
+	char line[128];
+	netlistPlayer_t *ptr;
+	int j;
 
-    Com_Memset(buffer, 0, sizeof(buffer));
+	Com_Memset(buffer, 0, sizeof(buffer));
 
-    for(j=0, ptr = (netlistPlayer_t*)0x82283c0; ptr->name != NULL; ptr++, j++){
+	for(j=0, ptr = (netlistPlayer_t*)0x82283c0; ptr->name != NULL; ptr++, j++){
 
 	Com_sprintf(line, sizeof(line), "\tint\t\t%s; %i\n", ptr->name, ptr->offset);
 	Q_strcat(buffer, sizeof(buffer), line);
 	Com_Printf("%s\n", line);
 
-    }
+	}
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	Com_Quit_f();
 }
 
 
@@ -1077,123 +1104,123 @@ typedef struct __attribute__((packed)){
 
 void StringIndexArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    int j;
-    stringindexcmd_t* ptr;
+	char buffer[1024*1024];
+	char line[128];
+	int j;
+	stringindexcmd_t* ptr;
 
 
-    Com_Memset(buffer, 0, sizeof(buffer));
+	Com_Memset(buffer, 0, sizeof(buffer));
 
-    for(j=0, ptr = (stringindexcmd_t*)0x80a396e; ptr->mov3 != 0x90 ; ptr++, j++){
+	for(j=0, ptr = (stringindexcmd_t*)0x80a396e; ptr->mov3 != 0x90 ; ptr++, j++){
 
 	Com_Printf("String: %s\n", ptr->string);
 	Com_sprintf(line, sizeof(line), "\tshort   %s;\n", ptr->string);
 	Q_strcat(buffer, sizeof(buffer), line);
-    }
+	}
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	Com_Quit_f();
 }
 
 
 void GetPlayerFieldArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    scrClientFields_t *ptr;
-    int j;
+	char buffer[1024*1024];
+	char line[128];
+	scrClientFields_t *ptr;
+	int j;
 
-    Com_Memset(buffer, 0, sizeof(buffer));
+	Com_Memset(buffer, 0, sizeof(buffer));
 
-    for(j=0, ptr = (scrClientFields_t*)0x8215780; ptr->name != NULL; ptr++, j++){
+	for(j=0, ptr = (scrClientFields_t*)0x8215780; ptr->name != NULL; ptr++, j++){
 
 	Com_sprintf(line, sizeof(line), "\tScr_AddPlayerField(%s, %d, %d, %p, %p)\n", ptr->name, ptr->val1, ptr->val1, ptr->setfun, ptr->getfun);
 	Q_strcat(buffer, sizeof(buffer), line);
 	Com_Printf("%s\n", line);
 
-    }
+	}
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	Com_Quit_f();
 }
 */
 #include <string.h>
 void GetEntityFieldArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    scrEntityFields_t *ptr;
-    int j;
+	char buffer[1024*1024];
+	char line[128];
+	scrEntityFields_t *ptr;
+	int j;
 
-    Com_Memset(buffer, 0, sizeof(buffer));
+	Com_Memset(buffer, 0, sizeof(buffer));
 
-    Com_sprintf(line, sizeof(line), "entity_fields_t entityField[]");
-    Q_strcat(buffer, sizeof(buffer), line);
-    Com_Printf("%s\n", line);
+	Com_sprintf(line, sizeof(line), "entity_fields_t entityField[]");
+	Q_strcat(buffer, sizeof(buffer), line);
+	Com_Printf("%s\n", line);
 
 
-    for(j=0, ptr = (scrEntityFields_t*)0x82202a0; ptr->name != NULL; ptr++, j++){
+	for(j=0, ptr = (scrEntityFields_t*)0x82202a0; ptr->name != NULL; ptr++, j++){
 
 	Com_sprintf(line, sizeof(line), "\t{ \"%s\", %d, %d, (void*)%p) },\n", ptr->name, ptr->val1, ptr->val2, ptr->setfun);
 	Q_strcat(buffer, sizeof(buffer), line);
 	Com_Printf("%s\n", line);
-    }
+	}
 
-    Com_sprintf(line, sizeof(line), "};\n");
-    Q_strcat(buffer, sizeof(buffer), line);
-    Com_Printf("%s\n", line);
+	Com_sprintf(line, sizeof(line), "};\n");
+	Q_strcat(buffer, sizeof(buffer), line);
+	Com_Printf("%s\n", line);
 
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	Com_Quit_f();
 }
 
 
 /*
 void GetHuffmanArray(){
 
-    char buffer[1024*1024];
-    char line[128];
-    int j;
-    byte* data;
-    int *number;
+	char buffer[1024*1024];
+	char line[128];
+	int j;
+	byte* data;
+	int *number;
 
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-
-
-    if(0 < FS_ReadFile("cod_mac-bin.iwd", (void**)&data)){
+	Com_Memset(buffer, 0, sizeof(buffer));
 
 
-        data += 0x387080;
 
-        number = (int*)data;
+	if(0 < FS_ReadFile("cod_mac-bin.iwd", (void**)&data)){
 
-        for(j=0; j < 256 ; j++){
+
+		data += 0x387080;
+
+		number = (int*)data;
+
+		for(j=0; j < 256 ; j++){
 
 		Com_sprintf(line, sizeof(line), "\t%d,\t\t\t//%d\n", number[j],j);
 		Q_strcat(buffer, sizeof(buffer), line);
 
-    }
+	}
 
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    }
-    Com_Quit_f();
+	FS_WriteFile("array.txt", buffer, strlen(buffer));
+	}
+	Com_Quit_f();
 }
 */
 
 int GetArraySize(int aHandle)
 {
-    int size = scrVarGlob.variables[aHandle].value.typeSize.size;
-    return size;
+	int size = scrVarGlob.variables[aHandle].value.typeSize.size;
+	return size;
 }
 
 /* only for debug */
 __regparm3 void VM_Notify_Hook(int entid, int constString, variableValue_t* arguments)
 {
-    Com_Printf("^2Notify Entitynum: %d, EventString: %s\n", entid, SL_ConvertToString(constString));
-    VM_Notify(entid, constString, arguments);
+	Com_Printf("^2Notify Entitynum: %d, EventString: %s\n", entid, SL_ConvertToString(constString));
+	VM_Notify(entid, constString, arguments);
 }
 
 void Scr_InitSystem()
@@ -1208,12 +1235,12 @@ void Scr_InitSystem()
 
 void Scr_ClearArguments()
 {
-    while(scrVmPub.numParams)
-    {
-        RemoveRefToValue(scrVmPub.argumentVariables->varType, scrVmPub.argumentVariables->value);
-        --scrVmPub.argumentVariables;
-        --scrVmPub.numParams;
-    }
+	while(scrVmPub.numParams)
+	{
+		RemoveRefToValue(scrVmPub.argumentVariables->varType, scrVmPub.argumentVariables->value);
+		--scrVmPub.argumentVariables;
+		--scrVmPub.numParams;
+	}
 }
 
 void Scr_NotifyInternal(int varNum, int constString, int numArgs)
@@ -1227,16 +1254,16 @@ void Scr_NotifyInternal(int varNum, int constString, int numArgs)
   z = scrVmPub.field_18 - numArgs;
   if ( varNum )
   {
-    ctype = curArg->varType;
-    curArg->varType = 8;
-    scrVmPub.field_18 = 0;
-    VM_Notify(varNum, constString, scrVmPub.argumentVariables);
-    curArg->varType = ctype;
+	ctype = curArg->varType;
+	curArg->varType = 8;
+	scrVmPub.field_18 = 0;
+	VM_Notify(varNum, constString, scrVmPub.argumentVariables);
+	curArg->varType = ctype;
   }
   while( scrVmPub.argumentVariables != curArg )
   {
-    RemoveRefToValue(scrVmPub.argumentVariables->varType, scrVmPub.argumentVariables->value);
-    --scrVmPub.argumentVariables;
+	RemoveRefToValue(scrVmPub.argumentVariables->varType, scrVmPub.argumentVariables->value);
+	--scrVmPub.argumentVariables;
   }
   scrVmPub.field_18 = z;
 }
@@ -1244,24 +1271,24 @@ void Scr_NotifyInternal(int varNum, int constString, int numArgs)
 
 void Scr_NotifyLevel(int constString, unsigned int numArgs)
 {
-    Scr_NotifyInternal(scrVarPub.varLevel, constString, numArgs);
+	Scr_NotifyInternal(scrVarPub.varLevel, constString, numArgs);
 }
 
 
 void Scr_NotifyNum(int entityNum, unsigned int entType, unsigned int constString, unsigned int numArgs)
 {
-    int entVarNum;
+	int entVarNum;
 
 
-    entVarNum = FindEntityId(entityNum, entType);
+	entVarNum = FindEntityId(entityNum, entType);
 
-    Scr_NotifyInternal(entVarNum, constString, numArgs);
+	Scr_NotifyInternal(entVarNum, constString, numArgs);
 
 }
 
 void Scr_Notify(gentity_t* ent, unsigned short constString, unsigned int numArgs)
 {
-    Scr_NotifyNum(ent->s.number, 0, constString, numArgs);
+	Scr_NotifyNum(ent->s.number, 0, constString, numArgs);
 }
 
 
@@ -1273,13 +1300,13 @@ void RuntimeError_Debug(char *msg, char *a3, int a4)
   Scr_PrintPrevCodePos(0, a3, a4);
   if ( scrVmPub.field_8 )
   {
-    for(i = scrVmPub.field_8 - 1; i > 0; --i)
+	for(i = scrVmPub.field_8 - 1; i > 0; --i)
 	{
-        Com_Printf("^1called from:\n");
-        Scr_PrintPrevCodePos(0, scrVmPub.backtrace[i].field_0, scrVmPub.backtrace[i].field_4 == 0);
+		Com_Printf("^1called from:\n");
+		Scr_PrintPrevCodePos(0, scrVmPub.backtrace[i].field_0, scrVmPub.backtrace[i].field_4 == 0);
 	}
-    Com_Printf("^1started from:\n");
-    Scr_PrintPrevCodePos(0, scrVmPub.backtrace[0].field_0, 1);
+	Com_Printf("^1started from:\n");
+	Scr_PrintPrevCodePos(0, scrVmPub.backtrace[0].field_0, 1);
   }
   Com_Printf("^1************************************\n");
 }
@@ -1317,25 +1344,51 @@ void RuntimeError(char *a3, int arg4, char *message, char *a4)
 
 	if ( a4 )
 	{
-	    Com_Error(errtype, "script runtime error\n(see console for details)\n%s\n%s", message, a4);
+		Com_Error(errtype, "script runtime error\n(see console for details)\n%s\n%s", message, a4);
 	}
 	else
 	{
-	    Com_Error(errtype, "script runtime error\n(see console for details)\n%s", message);
+		Com_Error(errtype, "script runtime error\n(see console for details)\n%s", message);
 	}
 }
 
 
 qboolean Scr_ScriptRuntimecheckInfiniteLoop()
 {
-    int now = Sys_Milliseconds();
+	int now = Sys_Milliseconds();
 
-    if(now - g_threadStartingTime > 6000)
-    {
-    	Cbuf_AddText("wait 50;map_rotate\n");
-        return qtrue;
-        //CPU is just busy
-    }
-    return qfalse;
+	if(now - g_threadStartingTime > 6000)
+	{
+		Cbuf_AddText("wait 50;map_rotate\n");
+		return qtrue;
+		//CPU is just busy
+	}
+	return qfalse;
 
+}
+
+gentity_t* VM_GetGEntityForNum(scr_entref_t num)
+{
+	if(HIWORD(num))
+	{
+		Scr_Error("Not an entity");
+		return NULL;
+	}
+
+	return &g_entities[LOWORD(num)];
+}
+
+gclient_t* VM_GetGClientForEntity(gentity_t* ent)
+{
+	return ent->client;
+}
+
+gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num)
+{
+	return VM_GetGClientForEntity(VM_GetGEntityForNum(num));
+}
+
+client_t* VM_GetClientForEntityNumber(scr_entref_t num)
+{
+	return &svs.clients[num];
 }
