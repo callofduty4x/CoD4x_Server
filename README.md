@@ -1,4 +1,4 @@
-# CoD4x_Server [![Build Status](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub)
+# CoD4X Server [![Build Status](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub)
 Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke  installation of the proprietary Cod4X client to players joining the server using the Cod4X servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
 
 ## The most prominent features are:
