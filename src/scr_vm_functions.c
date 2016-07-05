@@ -2592,3 +2592,198 @@ void ScrCmd_SetStance(scr_entref_t arg){
 
 }
 */
+
+void PlayerCmd_ForwardButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> ForwardButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.forward_back_buttons == KEY_MASK_FORWARD ? qtrue : qfalse);
+}
+
+void PlayerCmd_BackButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> BackButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.forward_back_buttons == KEY_MASK_BACK ? qtrue : qfalse);
+}
+
+void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> MoveLeftButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.left_right_buttons == KEY_MASK_MOVELEFT ? qtrue : qfalse);
+}
+
+void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> MoveRightButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.left_right_buttons == KEY_MASK_MOVERIGHT ? qtrue : qfalse);
+}
+
+void PlayerCmd_SprintButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> SprintButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_SPRINT ? qtrue : qfalse);
+}
+
+void PlayerCmd_ReloadButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> ReloadButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_RELOAD ? qtrue : qfalse);
+}
+
+void PlayerCmd_LeanLeftButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> LeanLeftButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_LEANLEFT ? qtrue : qfalse);
+}
+
+void PlayerCmd_LeanRightButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> LeanRightButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_LEANRIGHT ? qtrue : qfalse);
+}
+
+void PlayerCmd_IsProning(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> IsProning()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_PRONE ? qtrue : qfalse);
+}
+
+void PlayerCmd_IsCrouching(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> IsCrouching()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_CROUCH ? qtrue : qfalse);
+}
+
+void PlayerCmd_IsStanding(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> IsStanding()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(!(cl->lastUsercmd.buttons & KEY_MASK_CROUCH) && !(cl->lastUsercmd.buttons & KEY_MASK_PRONE) ? qtrue : qfalse);
+}
+
+void PlayerCmd_JumpButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> JumpButtonPressed()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_JUMP ? qtrue : qfalse);
+}
+
+void PlayerCmd_IsInADS(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> IsInADS()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_ADS_MODE ? qtrue : qfalse);
+}
+
+void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> HoldBreathButtonPressed_M()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_HOLDBREATH ? qtrue : qfalse);
+}
+
+void PlayerCmd_ADSButtonPressed(scr_entref_t object)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <client> ADSButtonPressed_M()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(object);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_ADS ? qtrue : qfalse);
+}
