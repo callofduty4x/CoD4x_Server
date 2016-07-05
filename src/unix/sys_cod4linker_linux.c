@@ -339,7 +339,7 @@ void Sys_CoD4Linker()
      Sys_CoD4LinkObject(LD_read , read );
      Sys_CoD4LinkObject(LD_asinf , asinf );
      Sys_CoD4LinkObject(LD___cxa_pure_virtual , _isdead_dbg );
-     Sys_CoD4LinkObject(LD_usleep , usleep );
+     Sys_CoD4LinkObject(LD_usleep, Sys_Sleep);
      Sys_CoD4LinkObject(LD_readdir , readdir );
      Sys_CoD4LinkObject(LD_gettimeofday , gettimeofday );
      Sys_CoD4LinkObject(LD_free , free );
