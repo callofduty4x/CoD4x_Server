@@ -1365,3 +1365,29 @@ qboolean Scr_ScriptRuntimecheckInfiniteLoop()
     return qfalse;
 
 }
+
+gentity_t* VM_GetGEntityForNum(scr_entref_t num)
+{
+	if(HIWORD(num))
+	{
+		Scr_Error("Not an entity");
+		return NULL;
+	}
+
+	return &g_entities[LOWORD(num)];
+}
+
+gclient_t* VM_GetGClientForEntity(gentity_t* ent)
+{
+	return ent->client;
+}
+
+gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num)
+{
+	return VM_GetGClientForEntity(VM_GetGEntityForNum(num));
+}
+
+client_t* VM_GetClientForEntityNumber(scr_entref_t num)
+{
+	return &svs.clients[num];
+}
