@@ -537,7 +537,21 @@ void Scr_AddCustomFunctions()
 
 void Scr_AddCustomMethods()
 {
-
+	Scr_AddMethod("forwardbuttonpressed", PlayerCmd_ForwardButtonPressed, 0);
+	Scr_AddMethod("backbuttonpressed", PlayerCmd_BackButtonPressed, 0);
+	Scr_AddMethod("moveleftbuttonpressed", PlayerCmd_MoveLeftButtonPressed, 0);
+	Scr_AddMethod("moverightbuttonpressed", PlayerCmd_MoveRightButtonPressed, 0);
+	Scr_AddMethod("sprintbuttonpressed", PlayerCmd_SprintButtonPressed, 0);
+	Scr_AddMethod("reloadbuttonpressed", PlayerCmd_ReloadButtonPressed, 0);
+	Scr_AddMethod("leanleftbuttonpressed", PlayerCmd_LeanLeftButtonPressed, 0);
+	Scr_AddMethod("leanrightbuttonpressed", PlayerCmd_LeanRightButtonPressed, 0);
+	Scr_AddMethod("isproning", PlayerCmd_IsProning, 0);
+	Scr_AddMethod("iscrouching", PlayerCmd_IsCrouching, 0);	
+	Scr_AddMethod("isstanding", PlayerCmd_IsStanding, 0);
+	Scr_AddMethod("jumpbuttonpressed", PlayerCmd_JumpButtonPressed, 0);
+	Scr_AddMethod("isinads", PlayerCmd_IsInADS, 0);
+	Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
+	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
 }
 
 void Scr_InitFunctions()
