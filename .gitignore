@@ -35,4 +35,4 @@ bin/cod4x18_dedrun
 src/steam_api/
 lib/*.a
 
-plugins/*.a
+plugins/libcom_plugin.a
