@@ -39,6 +39,7 @@
 #include "player.h"
 #include "g_hud.h"
 #include "filesystem.h"
+#include "g_sv_shared.h"
 
 #define KEY_MASK_FORWARD        127
 #define KEY_MASK_MOVERIGHT      127
@@ -526,5 +527,12 @@ void GScr_AddScriptCommand();
 void RuntimeError(char *a3, int arg4, char *message, char *a4);
 void ClientScr_GetName(gclient_t* gcl);
 const char* Scr_GetPlayername(gentity_t* gent);
+
+
+// Safe function to get gentity for num passed by script call "ent function()"
+gentity_t* VM_GetGEntityForNum(scr_entref_t num);
+gclient_t* VM_GetGClientForEntity(gentity_t* ent);
+gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
+client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
 
 #endif
