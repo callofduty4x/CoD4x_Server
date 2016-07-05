@@ -191,13 +191,13 @@ global ScriptParse
 ScriptParse:
 	jmp dword [oScriptParse]
 
-global GetObjectA
-GetObjectA:
-	jmp dword [oGetObjectA]
+global VM_GetObjectA
+VM_GetObjectA:
+	jmp dword [oVM_GetObjectA]
 
-global GetVariable
-GetVariable:
-	jmp dword [oGetVariable]
+global VM_GetVariable
+VM_GetVariable:
+	jmp dword [oVM_GetVariable]
 
 global ScriptCompile
 ScriptCompile:
@@ -325,8 +325,8 @@ oFindVariable dd 0x81542d4
 oFindObject dd 0x8152294
 oGetNewVariable dd 0x81545ce
 oScriptParse dd 0x816b5da
-oGetObjectA dd 0x8154046
-oGetVariable dd 0x815540a
+oVM_GetObjectA dd 0x8154046
+oVM_GetVariable dd 0x815540a
 oScriptCompile dd 0x81491d8
 oScr_AddSourceBuffer dd 0x814fbac
 oScr_InitAllocNode dd 0x814fea6

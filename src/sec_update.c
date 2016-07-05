@@ -33,7 +33,7 @@
 #include "cvar.h"
 #include "sys_cod4defs.h"
 #include "httpftp.h"
-//#include <windows.h>
+#include "sys_thread.h"
 #include <unistd.h>
 #include <errno.h>
 
@@ -160,7 +160,7 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 #ifndef _WIN32
 				Com_Printf("%s", FileDownloadGenerateProgress( curfileobj ));
 #endif
-			usleep(20000);
+			Sys_Sleep(20000);
 		} while (transret == 0);
 		
 		Com_Printf("\n");
@@ -555,7 +555,7 @@ void Sec_Update( qboolean getbasefiles ){
 
 	do {
 		transret = FileDownloadSendReceive( filetransferobj );
-		usleep(20000);
+		Sys_Sleep(20000);
 	} while (transret == 0);
 
     if(transret < 0)

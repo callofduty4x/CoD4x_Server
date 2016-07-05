@@ -1,3 +1,6 @@
+#ifndef _PLUGIN_HANDLER_H_
+#define _PLUGIN_HANDLER_H_
+
 #define MAX_PLUGINS 25
 
 typedef void convariable_t; //For plugins
@@ -126,3 +129,5 @@ void Plugin_PluginList_f( void );
 void Plugin_PluginInfo_f( void );
 void Plugin_ChatPrintf(int,char *,...);
 void Plugin_BoldPrintf(int,char *,...);
+
+#endif // _PLUGIN_HANDLER_H_

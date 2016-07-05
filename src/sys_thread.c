@@ -268,3 +268,12 @@ qboolean Sys_CreateCallbackThread(void* threadMain,...)
 		tcb->isActive = qtrue;
 	return success;
 }
+
+void Sys_Sleep(int usec)
+{
+#ifdef _WIN32
+	Sleep((usec + 999) / 1000);
+#else
+	usleep(usec);
+#endif
+}
