@@ -458,8 +458,10 @@ qboolean Scr_ScriptCommand(int clientnum, const char* cmd, const char* args);
 void GScr_LoadGameTypeScript(void);
 unsigned int Scr_LoadScript(const char* scriptname, PrecacheEntry *precache, int iarg_02);
 qboolean Scr_ExecuteMasterResponse(char* s);
-void Scr_AddStockFunctions(void);
-void Scr_AddStockMethods(void);
+void Scr_AddStockFunctions();
+void Scr_AddStockMethods();
+void Scr_AddCustomFunctions();
+void Scr_AddCustomMethods();
 
 qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean developer);
 qboolean Scr_RemoveFunction( const char *cmd_name );

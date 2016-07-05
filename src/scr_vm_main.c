@@ -43,7 +43,8 @@ typedef struct{
 
 
 
-void Scr_AddStockFunctions(){
+void Scr_AddStockFunctions()
+{
 	Scr_AddFunction("createprintchannel", (void*)0x80bf832, 0);
 	Scr_AddFunction("setprintchannel", (void*)0x80bf75c, 0);
 	Scr_AddFunction("print", (void*)0x80bf706, 0);
@@ -276,7 +277,8 @@ void Scr_AddStockFunctions(){
 }
 
 
-void Scr_AddStockMethods(){
+void Scr_AddStockMethods()
+{
 	//PlayerCmd
 	Scr_AddMethod("getpower", PlayerCmd_GetPower, 0);
 	Scr_AddMethod("setpower", PlayerCmd_SetPower, 0);
@@ -528,7 +530,15 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
 }
 
+void Scr_AddCustomFunctions()
+{
 
+}
+
+void Scr_AddCustomMethods()
+{
+
+}
 
 void Scr_InitFunctions()
 {
@@ -548,6 +558,8 @@ void Scr_InitFunctions()
     if(!initialized)
     {
         Scr_AddStockFunctions();
+        Scr_AddStockMethods();
+        Scr_AddCustomFunctions();
         Scr_AddStockMethods();
         initialized = qtrue;
     }
