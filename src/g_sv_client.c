@@ -345,7 +345,7 @@ __cdecl void ClientUserinfoChanged( int clientNum ) {
 
 	gentity_t *ent;
 	char    *s;
-	char name[64];
+	//char name[64];
 
 	gclient_t   *client;
 	char userinfo[MAX_INFO_STRING];
