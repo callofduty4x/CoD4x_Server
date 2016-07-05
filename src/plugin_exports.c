@@ -441,25 +441,29 @@ P_P_F int Plugin_Cvar_GetInteger(void *cvar)
 {
     cvar_t* var = cvar;
     int PID = PHandler_CallerID();
-
+    int v;
     if(var == NULL)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin to get Cvar of NULL-Pointer\n");
         return 0;
     }
-
+    Sys_EnterCriticalSection(CRIT_CVAR);
     if(var->type != CVAR_INT)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
+        Sys_LeaveCriticalSection(CRIT_CVAR);
         return 0;
     }
+    v = var->integer;
+    Sys_LeaveCriticalSection(CRIT_CVAR);
 
-    return var->integer;
+    return v;
 }
 
 P_P_F qboolean Plugin_Cvar_GetBoolean(void *cvar)
 {
     cvar_t* var = cvar;
+    qboolean b;
     int PID = PHandler_CallerID();
 
     if(var == NULL)
@@ -468,17 +472,22 @@ P_P_F qboolean Plugin_Cvar_GetBoolean(void *cvar)
         return 0;
     }
 
+    Sys_EnterCriticalSection(CRIT_CVAR);
     if(var->type != CVAR_BOOL)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
+        Sys_LeaveCriticalSection(CRIT_CVAR);
         return 0;
     }
-    return var->boolean;
+    b = var->boolean;
+    Sys_LeaveCriticalSection(CRIT_CVAR);
+    return b;
 }
 
 P_P_F float Plugin_Cvar_GetValue(void *cvar)
 {
     cvar_t* var = cvar;
+    float v;
     int PID = PHandler_CallerID();
 
     if(var == NULL)
@@ -487,16 +496,20 @@ P_P_F float Plugin_Cvar_GetValue(void *cvar)
         return 0;
     }
 
+    Sys_EnterCriticalSection(CRIT_CVAR);
+
     if(var->type != CVAR_FLOAT)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
+        Sys_LeaveCriticalSection(CRIT_CVAR);
         return 0;
     }
-
-    return var->value;
+    v = var->value;
+    Sys_LeaveCriticalSection(CRIT_CVAR);
+    return v;
 }
 
-P_P_F const char* Plugin_Cvar_GetString(void *cvar)
+P_P_F const char* Plugin_Cvar_GetString(void *cvar, char* buf, int sizebuf)
 {
     cvar_t* var = cvar;
     int PID = PHandler_CallerID();
@@ -507,13 +520,17 @@ P_P_F const char* Plugin_Cvar_GetString(void *cvar)
         return 0;
     }
 
+    Sys_EnterCriticalSection(CRIT_CVAR);
+
     if(var->type != CVAR_STRING)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
+        Sys_LeaveCriticalSection(CRIT_CVAR);
         return 0;
     }
-
-    return var->string;
+    Q_strncpyz(buf, var->string, sizebuf);
+    Sys_LeaveCriticalSection(CRIT_CVAR);
+    return buf;
 }
 
 P_P_F void Plugin_DropClient( unsigned int clientnum, const char *reason )

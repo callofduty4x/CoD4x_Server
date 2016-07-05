@@ -350,7 +350,7 @@ static byte patchblock_DB_LOADXASSETS[] = { 0x8a, 0x64, 0x20, 0x8,
 	SetJump(0x81a3f66, Cvar_Set);
 
 	SetJump(0x819e7c0, Cvar_GetBool);
-	SetJump(0x819e810, Cvar_GetString);
+	SetJump(0x819e810, Cvar_GetVariantString);
 	SetJump(0x819e90a, Cvar_GetInt);
 
 	SetJump(0x819e6d0, Cvar_FindVar);
@@ -375,8 +375,9 @@ static byte patchblock_DB_LOADXASSETS[] = { 0x8a, 0x64, 0x20, 0x8,
 	SetJump(0x8166628 ,Com_StdErrorStub);
 	SetJump(0x81d4bec ,Sys_OutOfMemError);
 
+  char c_val[16];
 
-	if( atoi( Cvar_VariableString("scr_debugnotify")) )
+	if( atoi( Cvar_VariableStringBuffer("scr_debugnotify", c_val, sizeof(c_val))) )
 	{
 		SetCall(0x815e82a, VM_Notify_Hook);
 	}else{
