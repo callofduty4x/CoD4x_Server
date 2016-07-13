@@ -351,8 +351,8 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("allowspectateteam", (void*)0x80a9518, 0);
 	Scr_AddMethod("getguid", (void*)PlayerCmd_GetGuid, 0);
 	Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
-  Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
-  Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
+	Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
+	Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
 	Scr_AddMethod("getxuid", (void*)0x80a9418, 0);
 	Scr_AddMethod("allowads", (void*)0x80ab852, 0);
 	Scr_AddMethod("allowjump", (void*)0x80a8932, 0);
@@ -528,15 +528,8 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("setvehicleteam", (void*)0x809cb72, 0);
 	Scr_AddMethod("setdamagestage", (void*)0x80ba890, 0);
 	Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
-}
 
-void Scr_AddCustomFunctions()
-{
-
-}
-
-void Scr_AddCustomMethods()
-{
+	// Player movement detection.
 	Scr_AddMethod("forwardbuttonpressed", PlayerCmd_ForwardButtonPressed, 0);
 	Scr_AddMethod("backbuttonpressed", PlayerCmd_BackButtonPressed, 0);
 	Scr_AddMethod("moveleftbuttonpressed", PlayerCmd_MoveLeftButtonPressed, 0);
@@ -572,8 +565,6 @@ void Scr_InitFunctions()
     if(!initialized)
     {
         Scr_AddStockFunctions();
-        Scr_AddStockMethods();
-        Scr_AddCustomFunctions();
         Scr_AddStockMethods();
         initialized = qtrue;
     }
