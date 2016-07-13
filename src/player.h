@@ -29,6 +29,23 @@
 #include "q_math.h"
 #include "entity.h"
 
+#define KEY_MASK_FORWARD        127
+#define KEY_MASK_MOVERIGHT      127
+#define KEY_MASK_BACK           129
+#define KEY_MASK_MOVELEFT       129
+
+#define KEY_MASK_SPRINT         2
+#define KEY_MASK_RELOAD         16
+#define KEY_MASK_LEANLEFT       64
+#define KEY_MASK_LEANRIGHT      128
+#define KEY_MASK_PRONE          256
+#define KEY_MASK_CROUCH         512
+#define KEY_MASK_JUMP           1024
+#define KEY_MASK_ADS_MODE       2048
+#define KEY_MASK_HOLDBREATH     8192
+#define KEY_MASK_NIGHTVISION    262144
+#define KEY_MASK_ADS            524288
+
 typedef struct{
     int	score; //0x2f78
     int	deaths; //0x2f7c
