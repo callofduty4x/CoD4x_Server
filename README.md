@@ -1,4 +1,4 @@
-# CoD4X Server [![Build Status](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x1.8_Server_Pub)
+# CoD4X Server [![Build Status](https://travis-ci.org/D4edalus/CoD4x_Server.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x_Server)
 Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke  installation of the proprietary Cod4X client to players joining the server using the Cod4X servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
 
 ## The most prominent features are:
@@ -30,7 +30,7 @@ A more detailed server tutorial is available on [our wiki](https://github.com/D4
 ## Compiling
 To compile Cod4X from source you require the following tools:
 - nasm
-- paxctl (not needed for Debian or Windows)
+- paxctl (not needed for Windows)
 - gcc on Linux or mingw32 on Windows
 
 Debian/Ubuntu 32-bit:
@@ -50,12 +50,14 @@ openSUSE 32-bit:
 sudo zypper install nasm gcc-32bit gcc-c++-32bit
 ```
  
-Arch Linux 32-bit: 
+Arch Linux 32-bit:
 ```
-yaourt -S nasm paxctl build-essential
+yaourt -S nasm paxctl gcc-multilib make
 ```
 
-Compile the server with `./build_updateable_elf.sh`.
+First enter `src/tomcrypt`, and run `./compile_linux.sh`. Then go to `src/mbedtls`, and run `make`.
+
+Now compile the server with `./build_updateable_elf.sh`.
 If compilation was successful the binary will be placed in the `bin/` folder.
 
 ##Contributing
