@@ -127,7 +127,8 @@ pexport NET_CompareBaseAdr
 pexport NET_CompareBaseAdrMask
 pexport NET_CompareAdr
 ralias Plugin_Milliseconds, Sys_Milliseconds
-
+ralias Plugin_SleepSec, Sys_SleepSec
+ralias Plugin_SleepMSec, Sys_SleepMSec
 
 pexport Scr_AddEntity
 pexport Scr_AllocArray

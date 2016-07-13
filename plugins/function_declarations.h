@@ -351,3 +351,5 @@
     __cdecl void Plugin_ExitThread(int code);                                   //Exit the current thread
     __cdecl void Plugin_EnableThreadDebug();                                    //Enables debug info printing
     __cdecl void Plugin_DisableThreadDebug();                                   //Disables debug info printing
+    __cdecl void Plugin_SleepSec(int sec);
+    __cdecl void Plugin_SleepMSec(int msec);

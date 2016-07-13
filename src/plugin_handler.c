@@ -70,7 +70,8 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnPlayerAddBan",
     "OnPlayerGetBanStatus",
     "OnPlayerRemoveBan",
-    "OnModuleLoaded"
+    "OnModuleLoaded",
+    "OnTerminate"
 };
 
 void PHandler_Init() // Initialize the Plugin Handler's data structures and add commands

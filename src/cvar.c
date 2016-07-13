@@ -177,7 +177,6 @@ Cvar_VariableValue
 */
 float Cvar_VariableValueInternal( const char *var_name ) {
 	cvar_t	*var;
-	Sys_EnterCriticalSection(CRIT_CVAR);
 
 	var = Cvar_FindVar (var_name);
 	if (!var)
@@ -797,6 +796,7 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 			var->latchedString = CopyString( value.string );
 	}
 	cvar_modifiedFlags |= var->flags;
+	Sys_LeaveCriticalSection(CRIT_CVAR);
 	return var;
 }
 

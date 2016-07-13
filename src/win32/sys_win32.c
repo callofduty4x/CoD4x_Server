@@ -164,6 +164,11 @@ Sys_SleepSec
 ==================
 */
 
+void Sys_SleepMSec(int msec)
+{
+    Sleep(msec);
+}
+
 void Sys_SleepSec(int seconds)
 {
     Sleep(1000*seconds);

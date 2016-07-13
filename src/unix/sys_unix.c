@@ -519,9 +519,20 @@ Sys_SleepSec
 ==================
 */
 
+void Sys_SleepMSec(int msec)
+{
+		struct timespec ts;
+		ts.tv_sec = msec / 1000;
+		ts.tv_nsec = (msec % 1000) * 1000000;
+		nanosleep(&ts, NULL);
+}
+
 void Sys_SleepSec(int seconds)
 {
-    sleep(seconds);
+	struct timespec ts;
+	ts.tv_sec = seconds;
+	ts.tv_nsec = 0;
+	nanosleep(&ts, NULL);
 }
 
 /*

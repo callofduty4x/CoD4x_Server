@@ -140,7 +140,33 @@ P_P_F void Plugin_AddCommand(char *name, xcommand_t xcommand, int power)
 
 
 }
+#if 0
+P_P_F void Plugin_RemoveCommand(char *name)
+{
+    int i;
+    volatile int pID;
+    pID = PHandler_CallerID();
+    if(pID>=MAX_PLUGINS){
+        Com_PrintError("Tried removing a command for a plugin with non existent pID. pID supplied: %d.\n",pID);
+        return;
+    }else if(pID<0){
+        Com_PrintError("Plugin_RemoveCommand called from not within a plugin or from a disabled plugin!\n");
+        return;
+    }
+    if(!pluginFunctions.plugins[pID].loaded){
+        Com_PrintError("Tried removing a command for not loaded plugin! PID: %d.\n",pID);
+    }
+    Com_DPrintf("Remove a plugin command for plugin %d, command name: %s.\n",pID,name);
+    Cmd_RemoveCommand( name );
+  /*  for(i=0; i < )
+    pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds].xcommand = xcommand;
+    strcpy(pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds++].name,name);
+    */Com_DPrintf("Command removed.\n");
+   // pluginFunctions.plugins[pID].
 
+
+}
+#endif
 
 P_P_F qboolean Plugin_TcpConnectMT( int pID, int connection, const char* remote)
 {
