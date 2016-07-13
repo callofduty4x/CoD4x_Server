@@ -55,3 +55,4 @@
   PCL void OnPlayerAddBan(baninfo_t* baninfo);
   PCL void OnPlayerGetBanStatus(baninfo_t* baninfo, char* message, int len);
   PCL void OnPlayerRemoveBan(baninfo_t* baninfo);
+  PCL void OnTerminate(); //Plugins using threads have to listen to this and terminate all threads without keeping critical sections locked. Plugins are susposed not to return from this functions until all child threads are terminated
