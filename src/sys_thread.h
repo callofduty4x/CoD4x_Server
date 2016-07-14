@@ -24,7 +24,7 @@
 #ifndef __SYS_THREAD_H__
 #define __SYS_THREAD_H__
 
-#define THREAD_DEBUG
+//#define THREAD_DEBUG
 
 #include <stdarg.h>
 
