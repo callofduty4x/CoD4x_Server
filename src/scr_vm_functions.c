@@ -1902,18 +1902,26 @@ void GScr_KickClient()
 {
 
     client_t *cl;
+    int clnum;
+    char reason[128];
 
-    if(Scr_GetNumParam() != 1)
-        Scr_Error("Usage: kick(<clientid>)\n");
+    int paramCount = Scr_GetNumParam();
+    if(paramCount != 1 && paramCount != 2)
+        Scr_Error("Usage: kick(<clientid>, [<reason>])\n");
 
-    int clnum = Scr_GetInt(0);
+    clnum = Scr_GetInt(0);
+    if(paramCount == 2)
+        Com_sprintf(reason, sizeof(reason), "%s\n", Scr_GetString(1));
 
     if(clnum < 0 || clnum >= g_maxclients->integer)
         Scr_Error("kick(): Out of range client id\n");
 
     cl = &svs.clients[clnum];
 
-    SV_DropClient(cl, "Player kicked by scriptadmin\n");
+    if(paramCount == 2)
+        SV_DropClient(cl, reason);
+    else
+        SV_DropClient(cl, "Player kicked by scriptadmin\n");
 }
 
 void GScr_BanClient()
