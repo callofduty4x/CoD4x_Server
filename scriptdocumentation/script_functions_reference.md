@@ -86,7 +86,7 @@ See also: `CodeCallback_ScriptCommand`
 
 ### Player Related Functions
 
-### `GetUserinfo(string <variable_name>)`
+#### `GetUserinfo(string <variable_name>)`
 
 Returns the value of player's `UserCVAR`'s name supplied in the argument.
 CoD4x introduces new type of `CVAR` called `UserCVAR`. It can be used to transfer information from client to server.
@@ -94,36 +94,37 @@ CoD4x introduces new type of `CVAR` called `UserCVAR`. It can be used to transfe
 
 Usage example: `foo = self getuserinfo("foo");`
 
-### `GetPing()`
+#### `GetPing()`
 
 Returns the current measured ping of the targeted player.
 Usage example: `ping = self getPing();`
 
-### `GetPower()`
+#### `GetPower()`
 
 Returns the number of power points of the targeted player. Default is 1.
 Usage example: `power = self getPower();`
 
-### `GetUid()`
+#### `GetUid()`
 
 If `uid` for targeted player exists, it will be returned, otherwise returns `-1`.
+
 Usage example: `uid = self getUid();`
 
-### `SetUid(int <uid>)`
+#### `SetUid(int <uid>)`
 
 Sets the `uid` for targeted player.
+
 Usage example: self setUid(123);
 
-### `SetPower(int <power>)`
+#### `SetPower(int <power>)`
 
 Sets power points for targeted player. Range: 2 to 100.
-#### Disclaimer:
+##### Disclaimer:
 __Not recommended to use. The overall behaviour is not known. Don't set non admins above level 9__
 
 Usage example: `self setPower(2);`
 
-
-### `GetGeoLocation(int <type>)`
+#### `GetGeoLocation(int <type>)`
 
 Returns the country code/name for targeted player. For successful usage the file "GeoIP.dat" has to be placed inside CoD4 directory.
 
@@ -136,37 +137,30 @@ Available types:
 
 Usage example: `loc = self getgeolocation(2);`
 
+### Player movement related
+
+On first call to any of the following three functions, changing the variables: `g_speed`, `g_gravity` and `jump_height` 
+will have no effect. They will have their normal behaviour back after map change.
 
 
-=========================================
+#### `setgravity(int <gravity>)`
 
-Player movement affected functions
+Changes the gravity of targeted player.
 
-=========================================
-
-On first call to any of this 3 functions the variables: g_speed, g_gravity, jump_height
-will no longer control thier behaviour. On next level load they will have their default
-behaviour again until any of this functions getting called.
+Usage example: `self setgravity(200);`
 
 
-setgravity
-============================
-Changes the value of gravity for this player.
-Usage: self setgravity( <int> );
+#### `setjumpheight(int <height>)`
 
+Changes the jump height of targeted player.
 
-setjumpheight
-============================
-Changes the value of jump_height for this player.
-Usage: self setjumpheight( <int> );
+Usage example: `self setjumpheight(64);`
 
+#### `setmovespeed(int <speed>)`
 
-setmovespeed
-============================
-Changes the value of movement speed for this player.
-Usage: self setmovespeed( <int> );
+Changes the movement speed of targeted player.
 
-
+Usage example: `self setmovespeed(300);`
 
 =========================================
 
