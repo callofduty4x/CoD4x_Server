@@ -97,11 +97,13 @@ Usage example: `foo = self getuserinfo("foo");`
 #### `GetPing()`
 
 Returns the current measured ping of the targeted player.
+
 Usage example: `ping = self getPing();`
 
 #### `GetPower()`
 
 Returns the number of power points of the targeted player. Default is 1.
+
 Usage example: `power = self getPower();`
 
 #### `GetUid()`
@@ -114,7 +116,7 @@ Usage example: `uid = self getUid();`
 
 Sets the `uid` for targeted player.
 
-Usage example: self setUid(123);
+Usage example: `self setUid(123);`
 
 #### `SetPower(int <power>)`
 
@@ -162,62 +164,46 @@ Changes the movement speed of targeted player.
 
 Usage example: `self setmovespeed(300);`
 
-=========================================
+### String functions
 
-General purpose functions
-
-=========================================
-
-
-==========================================
-
-Functions on strings
-
-==========================================
-
-
-
-StrTokByLen
-============================
-TokenizeByStringLength
-Returns an array of the string that got sperated in tokens.
+#### `StrTokByLen(string <string>, int <maxcharacter count>)`
+#TODO_NEED_TO_TEST
+Returns an array of the strings which is result of splitting supplied string.
 It will count the number of characters of given string and will tokenize it so that it will never exceed the given limit.
-This function tries to separate the string so that words remains complete
-Usage: array = StrTokByLen(string <string>, maxcharacter count <int>);
+This function tries to separate the string so that words remain complete.
 
+Usage example: `array = StrTokByLen("foo bar qux", 3);`
 
-StrTokByPixLen
-============================
-Returns an array of the string that got sperated in tokens.
-It will count the pixelwidth of given string and will tokenize it so that it will never exceed the given limit.
-The limit applies for 2.5 fontsize.
-This function tries to separate the string so that words remains complete
-Usage: array = StrTokByPixLen(string <string>, float <codPixelCount>);
+#### `StrTokByPixLen(string <string>, float <codPixelCount>)`
+#TODO_NEED_TO_TEST
+Returns an array of the strings which is result of splitting supplied string.
+It will count the width of given string measured in pixels and will tokenize it so that it will never exceed the given limit.
+__The limit applies for *2.5* font size.__
+This function tries to separate the string so that words remain complete.
 
+Usage example: `array = StrTokByPixLen("Foo bar qux.", 20);`
 
+#### `StrPixLen(string <string>)`
 
-StrPixLen
-============================
-This function measures the average length of a given string if it would getting printed
-in 2.5 fontsize.
-Usage: float = StrPixLen(string <string>);
+Measures the average length of a given string if it would printed in *2.5* font size.
 
+Usage example: `len = StrPixLen("Foo bar.");`
 
+#### `StrColorStrip(string <string>)`
 
-StrColorStrip
-============================
-Directly cleans the given string from all colorscodes. The original string will be modified!
-If it is required that the original string remains you need to create a copy of string prior with copystr()
-Usage: void = StrColorStrip(string <string>);
+Cleans the given string from all color codes. __The original string will be modified!__
+If it is required that the original string remains unchanged, you need to create a copy of string with `CopyStr` before.
 
+Usage example: `StrColorStrip("^2Foo^3bar");`
 
+See also: `CopyStr`
 
-StrRepl
-============================
-This functions finds in a given mainstring all occurrences of a given searchstring and replace those with a given replacementstring
-This function returns the resulting string. The mainstring will stay unaffected.
-Usage: string = GScr_StrRepl(mainstring <string>, search <string>, replacement <string>);
+#### `StrRepl(string <source>, string <pattern>, string <replacement>)`
+#TODO_NEED_TO_TEST
+Returns string that has all occurences of `pattern` in `source` replaced with `replacement`.
+`Source` string will not be affected.
 
+Usage example: `string = StrRepl("FooBarFoo", "Foo", "Qux");`
 
 
 CopyStr
