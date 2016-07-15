@@ -47,9 +47,9 @@ now `CodeCallback_ScriptCommand()`.
 now `CodeCallback_ScriptCommand()`.
 
 
-## CoD4x Exclusive Commands
+## CoD4x Exclusive Functions
 
-### General Commands
+### General Functions
 
 #### `CodeCallback_ScriptCommand(string <command>, integer <default power>)`
 
@@ -84,7 +84,13 @@ Usage example:`addScriptCommand("foo", 1);`
 
 See also: `CodeCallback_ScriptCommand`
 
-### Player Related Functions
+#### `GetRealTime()`
+#TODO_NEED_TO_TEST
+Returns current time in seconds since 01/01/2012 UTC
+
+Usage example: `t = getRealTime();`
+
+### Players Related Functions
 
 #### `GetUserinfo(string <variable_name>)`
 
@@ -141,7 +147,7 @@ Usage example: `loc = self getgeolocation(2);`
 
 ### Player movement related
 
-On first call to any of the following three functions, changing the variables: `g_speed`, `g_gravity` and `jump_height` 
+After first call to any of the following three functions, changing the variables: `g_speed`, `g_gravity` and `jump_height` 
 will have no effect. They will have their normal behaviour back after map change.
 
 
@@ -206,42 +212,30 @@ Returns string that has all occurences of `pattern` in `source` replaced with `r
 Usage example: `string = StrRepl("FooBarFoo", "Foo", "Qux");`
 
 
-CopyStr
+#### `CopyStr(string <string>)`
+
+Copies the given string and returns the location of the newly created one.
+
+Usage example: `s = CopyStr("Foo");`
+
+### `TimeToString(int <realtime>, int <UTC/Local>, string <format>)`
 ============================
-Creates a real copy of the given string and returns the location of the newly created copy
-Usage: string = CopyStr(string <string>);
+Returns the given time as readable string. `Realtime` is the time in seconds you can retrive using `getRealTime()`.
 
+`UTC/Local` argument:
+- `0` — time will be displayed in UTC timezone
+- `1` — time will be displayed in Local timezone
+ 
+`Format` is a string to describe how the time will be displayed. It accepts formats from c++ function `strftime()`.
+For it's reference please head to: http://cplusplus.com/reference/ctime/strftime.
 
+Usage exmaple: `date = TimeToString(1468578161, 1, "%c")`
 
+### `sha256(string <string>)`
 
-GetRealTime
-============================
-Returns the current time in seconds since 01/01/2012 UTC
-Usage: int = getRealTime();
+Calculates the SHA256 sum of the given string.
 
-
-
-
-TimeToString
-============================
-Returns the given time as readable string
-
-Usage: string = TimeToString(int <realtime>, int <UTC/Local>, string <format>)
-
-realtime is the value you can retrive with getRealTime()
-UTC/Local: a value of 0 means the time will be displayed in UTC timezone
-UTC/Local: a value of 1 means the time will be displayed in Local timezone
-format: this is a string to describe how the time will be displayed. For more informations see
-for the C function: strftime()
-For example here: http://cplusplus.com/reference/ctime/strftime
-
-
-
-sha256
-============================
-This function calculates the SHA256 sum of the given input textstring
-Usage: string = sha256(string <input>);
-
+Usage example: `hash = sha256("Foo");`
 
 
 
