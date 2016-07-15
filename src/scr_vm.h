@@ -33,14 +33,13 @@
 #define g_script_error_level *(int*)(0x8c0631c)
 #define g_threadStartingTime *(int*)(0x8c0a678)
 
-
-
 #include "q_shared.h"
 #include "q_math.h"
 #include "entity.h"
 #include "player.h"
 #include "g_hud.h"
 #include "filesystem.h"
+#include "g_sv_shared.h"
 
 typedef struct{
 	short   emptystring;
@@ -458,8 +457,8 @@ qboolean Scr_ScriptCommand(int clientnum, const char* cmd, const char* args);
 void GScr_LoadGameTypeScript(void);
 unsigned int Scr_LoadScript(const char* scriptname, PrecacheEntry *precache, int iarg_02);
 qboolean Scr_ExecuteMasterResponse(char* s);
-void Scr_AddStockFunctions(void);
-void Scr_AddStockMethods(void);
+void Scr_AddStockFunctions();
+void Scr_AddStockMethods();
 
 qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean developer);
 qboolean Scr_RemoveFunction( const char *cmd_name );
@@ -509,5 +508,12 @@ void GScr_AddScriptCommand();
 void RuntimeError(char *a3, int arg4, char *message, char *a4);
 void ClientScr_GetName(gclient_t* gcl);
 const char* Scr_GetPlayername(gentity_t* gent);
+
+
+// Safe function to get gentity for num passed by script call "ent function()"
+gentity_t* VM_GetGEntityForNum(scr_entref_t num);
+gclient_t* VM_GetGClientForEntity(gentity_t* ent);
+gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
+client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
 
 #endif

@@ -13,6 +13,7 @@
 #include "sys_main.h"
 #include "cmd.h"
 #include "sec_crypto.h"
+#include "g_sv_shared.h"
 
 void (*Init)(imports_t* sapi_imports, exports_t* exports);
 

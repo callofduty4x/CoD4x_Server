@@ -22,6 +22,7 @@
 
 #include "../sys_patch.h"
 #include "../sys_cod4loader.h"
+#include "../sys_thread.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -390,7 +391,7 @@ qboolean Sys_CoD4Linker()
     Sys_CoD4LinkObject(LD_read , _read );
     Sys_CoD4LinkObject(LD_asinf , asinf );
     Sys_CoD4LinkObject(LD___cxa_pure_virtual , _isdead_dbg );
-    Sys_CoD4LinkObject(LD_usleep , usleep );
+    Sys_CoD4LinkObject(LD_usleep, Sys_Sleep);
     Sys_CoD4LinkObject(LD_readdir , _isdead_dbg );
     Sys_CoD4LinkObject(LD_gettimeofday , _isdead_dbg );
     Sys_CoD4LinkObject(LD_free , free );

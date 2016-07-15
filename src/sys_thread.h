@@ -83,4 +83,6 @@ void Sys_ExitThread(int code);
 
 
 void Sys_RunDelegatedEvents();
+
+void Sys_Sleep(int usec);
 #endif

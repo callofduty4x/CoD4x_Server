@@ -457,6 +457,7 @@ qboolean Sys_LoadImage( ){
     long unsigned sizeofhash;
 
     /* Is this file here ? */
+#ifdef OFFICIAL
     len = FS_FOpenFileRead(BIN_FILENAME, NULL);
 
     if(len != DLLMOD_FILESIZE)
@@ -471,7 +472,7 @@ qboolean Sys_LoadImage( ){
         }
     }
     Sec_Update( qfalse );
-
+#endif
     len = FS_ReadFile(BIN_FILENAME, (void**)&fileimage);
 
 

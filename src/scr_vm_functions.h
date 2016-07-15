@@ -48,6 +48,23 @@ void PlayerCmd_SetGroundReferenceEnt(scr_entref_t arg);
 void PlayerCmd_SetJumpHeight(scr_entref_t arg);
 void PlayerCmd_SetMoveSpeed(scr_entref_t arg);
 void PlayerCmd_GetGeoLocation(scr_entref_t arg);
+
+void PlayerCmd_ForwardButtonPressed(scr_entref_t object);
+void PlayerCmd_BackButtonPressed(scr_entref_t object);
+void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object);
+void PlayerCmd_MoveRightButtonPressed(scr_entref_t object);
+void PlayerCmd_SprintButtonPressed(scr_entref_t object);
+void PlayerCmd_ReloadButtonPressed(scr_entref_t object);
+void PlayerCmd_LeanLeftButtonPressed(scr_entref_t object);
+void PlayerCmd_LeanRightButtonPressed(scr_entref_t object);
+void PlayerCmd_IsProning(scr_entref_t object);
+void PlayerCmd_IsCrouching(scr_entref_t object);
+void PlayerCmd_IsStanding(scr_entref_t object);
+void PlayerCmd_JumpButtonPressed(scr_entref_t object);
+void PlayerCmd_IsInADS(scr_entref_t object);
+void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object);
+void PlayerCmd_ADSButtonPressed(scr_entref_t object);
+
 void GScr_StrTokByPixLen();
 void GScr_StrTokByLen();
 void GScr_StrPixLen();

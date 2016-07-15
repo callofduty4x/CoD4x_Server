@@ -43,7 +43,8 @@ typedef struct{
 
 
 
-void Scr_AddStockFunctions(){
+void Scr_AddStockFunctions()
+{
 	Scr_AddFunction("createprintchannel", (void*)0x80bf832, 0);
 	Scr_AddFunction("setprintchannel", (void*)0x80bf75c, 0);
 	Scr_AddFunction("print", (void*)0x80bf706, 0);
@@ -276,7 +277,8 @@ void Scr_AddStockFunctions(){
 }
 
 
-void Scr_AddStockMethods(){
+void Scr_AddStockMethods()
+{
 	//PlayerCmd
 	Scr_AddMethod("getpower", PlayerCmd_GetPower, 0);
 	Scr_AddMethod("setpower", PlayerCmd_SetPower, 0);
@@ -349,8 +351,8 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("allowspectateteam", (void*)0x80a9518, 0);
 	Scr_AddMethod("getguid", (void*)PlayerCmd_GetGuid, 0);
 	Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
-  Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
-  Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
+	Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
+	Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
 	Scr_AddMethod("getxuid", (void*)0x80a9418, 0);
 	Scr_AddMethod("allowads", (void*)0x80ab852, 0);
 	Scr_AddMethod("allowjump", (void*)0x80a8932, 0);
@@ -526,9 +528,24 @@ void Scr_AddStockMethods(){
 	Scr_AddMethod("setvehicleteam", (void*)0x809cb72, 0);
 	Scr_AddMethod("setdamagestage", (void*)0x80ba890, 0);
 	Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
+
+	// Player movement detection.
+	Scr_AddMethod("forwardbuttonpressed", PlayerCmd_ForwardButtonPressed, 0);
+	Scr_AddMethod("backbuttonpressed", PlayerCmd_BackButtonPressed, 0);
+	Scr_AddMethod("moveleftbuttonpressed", PlayerCmd_MoveLeftButtonPressed, 0);
+	Scr_AddMethod("moverightbuttonpressed", PlayerCmd_MoveRightButtonPressed, 0);
+	Scr_AddMethod("sprintbuttonpressed", PlayerCmd_SprintButtonPressed, 0);
+	Scr_AddMethod("reloadbuttonpressed", PlayerCmd_ReloadButtonPressed, 0);
+	Scr_AddMethod("leanleftbuttonpressed", PlayerCmd_LeanLeftButtonPressed, 0);
+	Scr_AddMethod("leanrightbuttonpressed", PlayerCmd_LeanRightButtonPressed, 0);
+	Scr_AddMethod("isproning", PlayerCmd_IsProning, 0);
+	Scr_AddMethod("iscrouching", PlayerCmd_IsCrouching, 0);	
+	Scr_AddMethod("isstanding", PlayerCmd_IsStanding, 0);
+	Scr_AddMethod("jumpbuttonpressed", PlayerCmd_JumpButtonPressed, 0);
+	Scr_AddMethod("isinads", PlayerCmd_IsInADS, 0);
+	Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
+	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
 }
-
-
 
 void Scr_InitFunctions()
 {
@@ -1338,4 +1355,30 @@ qboolean Scr_ScriptRuntimecheckInfiniteLoop()
     }
     return qfalse;
 
+}
+
+gentity_t* VM_GetGEntityForNum(scr_entref_t num)
+{
+	if(HIWORD(num))
+	{
+		Scr_Error("Not an entity");
+		return NULL;
+	}
+
+	return &g_entities[LOWORD(num)];
+}
+
+gclient_t* VM_GetGClientForEntity(gentity_t* ent)
+{
+	return ent->client;
+}
+
+gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num)
+{
+	return VM_GetGClientForEntity(VM_GetGEntityForNum(num));
+}
+
+client_t* VM_GetClientForEntityNumber(scr_entref_t num)
+{
+	return &svs.clients[num];
 }

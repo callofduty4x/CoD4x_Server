@@ -691,7 +691,7 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
   do
   {
     transret = FileDownloadSendReceive( curfileobj );
-    usleep(20000);
+    Sys_Sleep(20000);
   } while (transret == 0);
 
   if(transret < 0)
