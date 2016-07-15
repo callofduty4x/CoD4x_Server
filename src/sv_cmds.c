@@ -1920,7 +1920,7 @@ qboolean SV_RunDownload(const char* url, const char* filename)
 	do
 	{
 		transret = FileDownloadSendReceive( curfileobj );
-		Sys_Sleep(20000);
+		Sys_SleepUSec(20000);
 
 	} while (transret == 0);
 

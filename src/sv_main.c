@@ -2149,7 +2149,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
 			{
 				l += slen;
 			}
-			Sys_Sleep(20000);
+			Sys_SleepUSec(20000);
 		}while(l != qlen && (slen >= 0 || slen == NET_WANT_WRITE) && timeout > Sys_Milliseconds());
 
 		if(l == qlen && slen >= 0)
@@ -2168,7 +2168,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
 					//Error case...
 					break;
 				}
-				Sys_Sleep(20000);
+				Sys_SleepUSec(20000);
 			}
 		}
 		if(!error && rlentotal > 4)
@@ -3623,7 +3623,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 	mvabuf;
 
 	if ( !com_sv_running->boolean ) {
-		Sys_Sleep(20000);
+		Sys_SleepUSec(20000);
 		return qtrue;
 	}
 

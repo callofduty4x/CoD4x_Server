@@ -535,6 +535,11 @@ void Sys_SleepSec(int seconds)
 	nanosleep(&ts, NULL);
 }
 
+void Sys_SleepUSec(int usec)
+{
+	usleep(usec);
+}
+
 /*
 ==================
 Sys_Backtrace
@@ -709,9 +714,4 @@ int Sys_Chmod(const char* file, int mode)
 {
     return chmod(file, mode);
 
-}
-
-void Sys_Sleep(int usec)
-{
-	usleep(usec);
 }

@@ -646,7 +646,7 @@ void DB_EnumXAssets(XAssetType_t type, void (__cdecl *callback)(XAssetHeader_t *
   InterlockedIncrement(&db_hashCritSect);
   while ( xasset_interlock )
   {
-    Sys_Sleep(0);
+    Sys_SleepUSec(0);
   }
 */
   for(i = 0; i < 32768; ++i)
@@ -703,7 +703,7 @@ void DB_CountXAssets(int *count, int len ,qboolean a4)
   InterlockedIncrement(&db_hashCritSect);
   while ( xasset_interlock )
   {
-    Sys_Sleep(0);
+    Sys_SleepUSec(0);
   }
 */
   if((len / sizeof(int)) < NumXAssets)

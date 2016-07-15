@@ -862,7 +862,7 @@ int Sys_Chmod(const char* filename, int mode)
     return _chmod(filename, mode);
 }
 
-void Sys_Sleep(int usec)
+void Sys_SleepUSec(int usec)
 {
 	Sleep((usec + 999) / 1000);
 }
