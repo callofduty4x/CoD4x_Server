@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include "guid2playerid.h"
 
+
+
 static char *Q_strlwr( char *s1 ) {
     char	*s;
 
@@ -82,9 +84,9 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  uint64_t playerid = GUID2PlayerID(guid);
-  SteamIDToString(playerid, string);
+  uint64_t playerid = SV_SApiGUID2PlayerID(guid);
+  //SteamIDToString(playerid, string);
   printf("%llu\n", playerid);
-  printf("%s\n", string);
+  //printf("%s\n", string);
   return 0;
 }

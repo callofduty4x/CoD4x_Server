@@ -2,135 +2,39 @@
 #include <string.h>
 #include <stdlib.h>
 
-static int    I_LongSwap (int l)
+#include "../tomcrypt/tomcrypt.h"
+
+static const unsigned char playerid_salt[] =
 {
-	uint8_t    b1,b2,b3,b4;
+		0x83, 0xf3, 0x65, 0x90, 0x6c, 0x75, 0x33, 0xe1, 0x81, 0xaf, 0xc1, 0x44, 0xe1, 0x3e, 0xf0, 0x66,
+		0x77, 0xec, 0x0e, 0x62, 0x6a, 0xe2, 0xf3, 0xba, 0x58, 0x1a, 0x72, 0x62, 0x2a, 0xc4, 0xcc, 0x61,
+		0x49, 0x4b, 0xf5, 0xb9, 0x49, 0xea, 0x2b, 0xdf, 0x0f, 0x99, 0xe2, 0x8e, 0xb8, 0x7e, 0x50, 0x63,
+		0xc6, 0xd5, 0x44, 0xdd, 0x0b, 0x56, 0x96, 0x19, 0x94, 0x76, 0x98, 0x90, 0x17, 0xb2, 0x66, 0xfa,
+		0x23, 0x7c, 0xcd, 0x31, 0x49, 0x4b, 0x85, 0x31, 0xc2, 0xfe, 0x86, 0x3d, 0x80, 0xcd, 0xe5, 0x3a,
+		0xe9, 0x43, 0xc3, 0x7c, 0x19, 0xc3, 0x9c, 0xbe, 0x19, 0x33, 0x5c, 0x22, 0x34, 0x16, 0xc9, 0xc2,
+		0xce, 0xd2, 0x25, 0x2d, 0x5f, 0x2e, 0x32, 0x81, 0x97, 0xcf, 0x14, 0x96, 0x6b, 0x15, 0x59, 0xce,
+		0xbd, 0x36, 0xdb, 0xbc, 0x23, 0x16, 0x74, 0x68, 0xa1, 0x4f, 0x0c, 0x46, 0xbc, 0x1e, 0x19, 0x12,
+		0x8a, 0x86, 0x16, 0x2d, 0xe9, 0x3f, 0x22, 0x49, 0x0d, 0xaa, 0x6e, 0x15, 0x47, 0xe8, 0x19, 0x17,
+		0xa2, 0xf1, 0xcc, 0xca, 0x49, 0x38, 0xa0, 0xa7, 0xb3, 0xcc, 0x92, 0xb5, 0x7c, 0x0c, 0xd4, 0x25,
+		0x6a, 0x3e, 0x55, 0xc4, 0x72, 0x39, 0x81, 0x22, 0x0d, 0x1a, 0xc7, 0x1e, 0xf4, 0x96, 0xe4, 0xc6,
+		0x6d, 0x6c, 0x43, 0x81, 0xcf, 0x64, 0x49, 0xa1, 0x10, 0x73, 0x46, 0x7a, 0x05, 0xdb, 0xdb, 0xd4,
+		0x94, 0x3f, 0x04, 0x52, 0xd8, 0x23, 0x9d, 0x85, 0x59, 0x3a, 0x29, 0xfc, 0xfc, 0xd5, 0x06, 0xc9,
+		0xdf, 0x58, 0xc3, 0x7e, 0x49, 0xe4, 0xbe, 0x79, 0x37, 0x97, 0x51, 0xc2, 0xf0, 0x0c, 0x38, 0x6f,
+		0x96, 0x58, 0xaf, 0xb0, 0x43, 0x10, 0x41, 0x57, 0xef, 0xc6, 0xfa, 0x40, 0x6f, 0xa4, 0xc5, 0xc6,
+		0x67, 0x08, 0xd3, 0x65, 0x0f, 0xb0, 0xa4, 0x4d, 0x54, 0xe4, 0x87, 0xc7, 0x0f, 0x52, 0xe2, 0xc6
+};
 
-	b1 = l&255;
-	b2 = (l>>8)&255;
-	b3 = (l>>16)&255;
-	b4 = (l>>24)&255;
-
-	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
-}
-
-#define f1(x,y,z)   (z ^ (x & (y ^ z)))		/* x ? y : z */
-#define f2(x,y,z)   (x ^ y ^ z)			/* XOR */
-#define f3(x,y,z)   ((x & y) + (z & (x ^ y)))	/* majority */
-
-/* The SHA Mysterious Constants */
-
-#define K1  0x5A827999L			/* Rounds  0-19: sqrt(2) * 2^30 */
-#define K2  0x6ED9EBA1L			/* Rounds 20-39: sqrt(3) * 2^30 */
-#define K3  0x8F1BBCDCL			/* Rounds 40-59: sqrt(5) * 2^30 */
-#define K4  0xCA62C1D6L			/* Rounds 60-79: sqrt(10) * 2^30 */
-
-/**
-* ror32 - rotate a 32-bit value right
-* @word: value to rotate
-* @shift: bits to roll
-*/
-static inline uint32_t ror32(uint32_t word, unsigned int shift)
+uint64_t SV_SApiGUID2PlayerID(const char* guid)
 {
-       return (word >> shift) | (word << (32 - shift));
-}
-
-/**
-* rol32 - rotate a 32-bit value left
-* @word: value to rotate
-* @shift: bits to roll
-*/
-static inline uint32_t rol32(uint32_t word, unsigned int shift)
-{
-         return (word << shift) | (word >> (32 - shift));
-}
-/**
- * sha_init - initialize the vectors for a SHA1 digest
- * @buf: vector to initialize
- */
-static void sha_init(uint32_t *buf)
-{
-	buf[0] = 0x67452301;
-	buf[1] = 0xefcdab89;
-	buf[2] = 0x98badcfe;
-	buf[3] = 0x10325476;
-	buf[4] = 0xc3d2e1f0;
-}
-/**
- * sha_transform - single block SHA1 transform
- *
- * @digest: 160 bit digest to update
- * @data:   512 bits of data to hash
- * @W:      80 words of workspace (see note)
- *
- * This function generates a SHA1 digest for a single 512-bit block.
- * Be warned, it does not handle padding and message digest, do not
- * confuse it with the full FIPS 180-1 digest algorithm for variable
- * length messages.
- *
- * Note: If the hash is security sensitive, the caller should be sure
- * to clear the workspace. This is left to the caller to avoid
- * unnecessary clears between chained hashing operations.
- */
-static void sha_transform(uint32_t *digest, const char *in, uint32_t *W)
-{
-	uint32_t a, b, c, d, e, t, i;
-
-	for (i = 0; i < 16; i++)
-		W[i] = I_LongSwap(((const uint32_t *)in)[i]);
-
-	for (i = 0; i < 64; i++)
-		W[i+16] = rol32(W[i+13] ^ W[i+8] ^ W[i+2] ^ W[i], 1);
-
-	a = digest[0];
-	b = digest[1];
-	c = digest[2];
-	d = digest[3];
-	e = digest[4];
-
-	for (i = 0; i < 20; i++) {
-		t = f1(b, c, d) + K1 + rol32(a, 5) + e + W[i];
-		e = d; d = c; c = rol32(b, 30); b = a; a = t;
-	}
-
-	for (; i < 40; i ++) {
-		t = f2(b, c, d) + K2 + rol32(a, 5) + e + W[i];
-		e = d; d = c; c = rol32(b, 30); b = a; a = t;
-	}
-
-	for (; i < 60; i ++) {
-		t = f3(b, c, d) + K3 + rol32(a, 5) + e + W[i];
-		e = d; d = c; c = rol32(b, 30); b = a; a = t;
-	}
-
-	for (; i < 80; i ++) {
-		t = f2(b, c, d) + K4 + rol32(a, 5) + e + W[i];
-		e = d; d = c; c = rol32(b, 30); b = a; a = t;
-	}
-
-	digest[0] += a;
-	digest[1] += b;
-	digest[2] += c;
-	digest[3] += d;
-	digest[4] += e;
-}
-
-static uint64_t GUID2PlayerID(const char* guid)
-{
-	uint32_t digest[5];
-	uint32_t workspace[80];
-	char data[64];
 	uint8_t diggest2[16];
 	char digit2[3];
 	int len = strlen(guid);
-	int i, k;
+	int i;
 
 	if(len != 32)
 	{
 		return 0;
 	}
-
-	sha_init(digest);
 
 	for(i = 0; i < sizeof(diggest2); ++i)
 	{
@@ -139,23 +43,23 @@ static uint64_t GUID2PlayerID(const char* guid)
 		digit2[i+2] = 0;
 		diggest2[i] = strtol(digit2, NULL, 16);;
 	}
-	for(i = 0; i < sizeof(data); ++i)
+
+	//Random account id
+	uint32_t accountid;
+	uint32_t universe = 32; //Custom universe 32 for HW auth players
+	uint32_t accounttype = 1;
+	uint32_t instance = 1;
+
+	unsigned long outlen = sizeof(accountid);
+
+	int hash_idx = find_hash("sha256");
+
+	if(pkcs_5_alg2(diggest2, sizeof(diggest2), playerid_salt, sizeof(playerid_salt), 100, hash_idx, (unsigned char *)&accountid, &outlen) != CRYPT_OK) //This function is special. It sleeps
 	{
-		data[i] = diggest2[i % 16] ^ i;
+		//Com_PrintError("Couldn't create hash for playerid. Player id is invalid\n");
+		accountid = 0;
 	}
-	for(i = 0; i < 200*100; ++i)
-	{
-		sha_transform(digest, data, workspace);
-		for(k = 0; k < 64; ++k)
-		{
-			data[k] = ((uint32_t)data[k] ^ (uint32_t)digest[k % 5]) ;
-		}
-	}
-	uint32_t accountid = *(uint32_t*)&data[15];
-	uint64_t universe = 32;
-	uint64_t accounttype = 1;
-	uint64_t instance = 1;
+
 	uint64_t steamid = ((uint64_t)universe << 56) | ((uint64_t)accounttype << 52) | ((uint64_t)instance << 32) | accountid;
 	return steamid;
-
 }
