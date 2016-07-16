@@ -1248,63 +1248,97 @@ Cmd_KickPlayer_f
 ============
 */
 
-static void Cmd_KickPlayer_f() {
+static void Cmd_KickPlayer_f()
+{
+	clanduid_t cl;
+	char kickreason[256];
+	char dropmsg[MAX_STRING_CHARS];
+	char psti[128];
+	char ssti[128];
+	int i;
 
-    int i;
-    clanduid_t cl;
-    char kickreason[256];
-    char dropmsg[MAX_STRING_CHARS];
-    char ssti[128];
-    char psti[128];
+	if ( Cmd_Argc() < 2)
+	{
+		Com_Printf( "Usage:\n" );
+		Com_Printf( "\tkick <user> <reason>\n" );
+		Com_Printf( "\tkick all <reason>\n" );
+		Com_Printf( "Where user is one of the following: online-playername | online-playerslot\n" );
+		Com_Printf( "Where reason for this ban is contains a description without the characters: \" ; %% / \\ (max. 126 chars)\n" );
+		Com_Printf( "online-playername can be a fraction of the playername.\n\n" );
+		return;
+	}
+	// Generate kick and drop reason messages.
+	kickreason[0] = 0;
 
-    if ( Cmd_Argc() < 2) {
+	if (Cmd_Argc() > 2)
+	{
+		for(i = 2; i < Cmd_Argc(); ++i)
+		{
+			Q_strcat(kickreason, 256, Cmd_Argv(i));
+			Q_strcat(kickreason, 256, " ");
+		}
+	}
+	else
+	{
+		Q_strncpyz(kickreason, "The admin has no reason given", 256);
+	}
 
-  		Com_Printf( "Usage: kick <user> <Reason for this ban (max. 126 chars)>\n" );
-  		Com_Printf( "Where user is one of the following: online-playername | online-playerslot\n" );
-  		Com_Printf( "Where reason for this ban is contains a description without the characters: \" ; %% / \\ \n" );
-  		Com_Printf( "online-playername can be a fraction of the playername.\n" );
-  		return;
-    }
-
-    cl = SV_Cmd_GetPlayerByHandle();
-
-    if(!cl.cl)
-	  {
-      Com_Printf("Error: This player is not online and can not be kicked\n");
-      return;
-    }
-
-    kickreason[0] = 0;
-    if ( Cmd_Argc() > 2) {
-        for(i = 2; Cmd_Argc() > i ;i++){
-            Q_strcat(kickreason,256,Cmd_Argv(i));
-            Q_strcat(kickreason,256," ");
-        }
-    }else{
-        Q_strncpyz(kickreason, "The admin has no reason given", 256);
-    }
-    if(strlen(kickreason) >= 256 ){
-        Com_Printf("Error: You have exceeded the maximum allowed length of 126 for the reason\n");
-        return;
-    }
-
-	if(cl.cl->power > Cmd_GetInvokerPower() && Cmd_GetInvokerPower() > 1){
-		Com_Printf("Error: You cannot kick an admin with higher power!\n");
+	if(strlen(kickreason) >= 256 )
+	{
+		Com_Printf("Error: You have exceeded the maximum allowed length of 126 for the reason\n");
 		return;
 	}
 
-  SV_SApiSteamIDToString(cl.cl->playerid, psti, sizeof(psti));
-
-  Com_Printf( "Player kicked: %s ^7id: %s\nReason: %s\n", cl.cl->name, psti, kickreason);
-  SV_PrintAdministrativeLog( "kicked player: %s^7 id: %s with the following reason: %s", cl.cl->name, psti, kickreason);
-
-	if(Cmd_GetInvokerSteamID() != 0){
-    SV_SApiSteamIDToString(Cmd_GetInvokerSteamID(), ssti, sizeof(ssti));
+	if(Cmd_GetInvokerSteamID() != 0)
+	{
+		SV_SApiSteamIDToString(Cmd_GetInvokerSteamID(), ssti, sizeof(ssti));
 		Com_sprintf(dropmsg, sizeof(dropmsg), "Player kicked:\nAdmin ID is: %s\nReason for this kick:\n%s", ssti, kickreason);
-	}else{
+	}
+	else
+	{
 		Com_sprintf(dropmsg, sizeof(dropmsg), "Player kicked:\nReason for this kick:\n%s", kickreason);
 	}
-	SV_DropClient(cl.cl, dropmsg);
+
+	// Check if its "kick all" command.
+	if(!Q_strncmp(Cmd_Argv(1), "all", 3) && strlen(Cmd_Argv(1)) == 3)
+	{
+		// Kick all players (when player.power < invoker.power)
+		for(i = 0; i < sv_maxclients->integer; ++i)
+		{
+			client_t* c = &svs.clients[i];
+			if(c->state != CS_FREE && c->state != CS_ZOMBIE && c->power < Cmd_GetInvokerPower() && Cmd_GetInvokerPower() > 1)
+			{
+				SV_SApiSteamIDToString(c->playerid, psti, sizeof(psti));
+				Com_Printf( "Player kicked: %s ^7id: %s\nReason: %s\n", c->name, psti, kickreason);
+				SV_PrintAdministrativeLog( "kicked player: %s^7 id: %s with the following reason: %s", c->name, psti, kickreason);
+
+				SV_DropClient(c, dropmsg);
+			}
+
+		}
+	}
+	else // Kick only one player.
+	{		
+		cl = SV_Cmd_GetPlayerByHandle();
+
+		if(!cl.cl)
+		{
+			Com_Printf("Error: This player is not online and can not be kicked\n");
+			return;
+		}
+
+		if(cl.cl->power > Cmd_GetInvokerPower() && Cmd_GetInvokerPower() > 1)
+		{
+			Com_Printf("Error: You cannot kick an admin with higher power!\n");
+			return;
+		}
+
+		SV_SApiSteamIDToString(cl.cl->playerid, psti, sizeof(psti));
+		Com_Printf( "Player kicked: %s ^7id: %s\nReason: %s\n", cl.cl->name, psti, kickreason);
+		SV_PrintAdministrativeLog( "kicked player: %s^7 id: %s with the following reason: %s", cl.cl->name, psti, kickreason);
+
+		SV_DropClient(cl.cl, dropmsg);
+	}
 }
 
 
