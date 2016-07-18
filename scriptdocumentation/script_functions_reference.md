@@ -66,11 +66,13 @@ See also: `addScriptCommand`
 #### `execex(string <command>)`
 
 Executes the given command on the server as console command and returns results.
+
 Usage example: `result = execex("foo");`
 
 #### `exec(string <command>)`
 
 Executes the given command on server as console command.
+
 Usage example: `exec("foo");`
 
 #### `addScriptCommand(string <command>, int <power>)`
@@ -145,18 +147,16 @@ Available types:
 
 Usage example: `loc = self getgeolocation(2);`
 
-### Player movement related
+### Player Movement Related Functions
 
 After first call to any of the following three functions, changing the variables: `g_speed`, `g_gravity` and `jump_height` 
 will have no effect. They will have their normal behaviour back after map change.
-
 
 #### `setgravity(int <gravity>)`
 
 Changes the gravity of targeted player.
 
 Usage example: `self setgravity(200);`
-
 
 #### `setjumpheight(int <height>)`
 
@@ -170,7 +170,7 @@ Changes the movement speed of targeted player.
 
 Usage example: `self setmovespeed(300);`
 
-### String functions
+### String Functions
 
 #### `StrTokByLen(string <string>, int <maxcharacter count>)`
 #TODO_NEED_TO_TEST
@@ -200,7 +200,11 @@ Usage example: `len = StrPixLen("Foo bar.");`
 Cleans the given string from all color codes. __The original string will be modified!__
 If it is required that the original string remains unchanged, you need to create a copy of string with `CopyStr` before.
 
-Usage example: `StrColorStrip("^2Foo^3bar");`
+Usage example:
+```
+s = "^2Foo^3bar"
+StrColorStrip(s);
+```
 
 See also: `CopyStr`
 
@@ -218,8 +222,8 @@ Copies the given string and returns the location of the newly created one.
 
 Usage example: `s = CopyStr("Foo");`
 
-### `TimeToString(int <realtime>, int <UTC/Local>, string <format>)`
-============================
+#### `TimeToString(int <realtime>, int <UTC/Local>, string <format>)`
+
 Returns the given time as readable string. `Realtime` is the time in seconds you can retrive using `getRealTime()`.
 
 `UTC/Local` argument:
@@ -231,33 +235,27 @@ For it's reference please head to: http://cplusplus.com/reference/ctime/strftime
 
 Usage exmaple: `date = TimeToString(1468578161, 1, "%c")`
 
-### `sha256(string <string>)`
+#### `sha256(string <string>)`
 
 Calculates the SHA256 sum of the given string.
 
 Usage example: `hash = sha256("Foo");`
 
+### File Operations
 
+_Disclaimer: 10 files can be opened simultaneously. Unused files should be closed as soon as possible.
 
-============================
+#### `FS_FOpen(string <name>, string <mode>)`
 
-Functions on files
-At a maximum 10 files can be opened simultanly.
-No longer used files have to be closed.
-FS_FCloseAll() function can close everything with one call
+Opens a file that's inside current `FS_GameDir`. Mode is selectable. It can be either "read", "write", "append".
+On success it returns integer greater than `0` – `filehandle`. You have to make sure that the function succeded before operations on the file.
 
-============================
+Possible values of `mode`:
+* `read` – Read only access.
+* `write` – Creates a new empty file or overwrites existing one if it's already there. Gives rights to write.
+* `append` – Appends to the end of an existing file. Behaves like `write` if the file doesn't exist.
 
-
-
-FS_FOpen
-============================
-Opens a file(name) inside current FS_GameDir. Mode is selectable. It can be either "read", "write", "append".
-"read" = Read only
-"write" = Create a new empty file and write. Deletes already existing files with the same name.
-"append" = Appends to the end of an existing file. Behaves like "write" if file doesn't exists.
-It returns on success an integer greater 0. This is the filehandle. You have to check if this functions return value is greater than 0.
-Usage: int = FS_FOpen(string <filename>, string <mode>)
+Usage example: `fh = FS_FOpen("foo.txt", "read")`
 
 
 FS_FClose
