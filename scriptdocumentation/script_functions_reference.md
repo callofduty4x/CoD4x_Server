@@ -202,7 +202,7 @@ If it is required that the original string remains unchanged, you need to create
 
 Usage example:
 ```
-s = "^2Foo^3bar"
+s = "^2Foo^3bar";
 StrColorStrip(s);
 ```
 
@@ -233,105 +233,91 @@ Returns the given time as readable string. `Realtime` is the time in seconds you
 `Format` is a string to describe how the time will be displayed. It accepts formats from c++ function `strftime()`.
 For it's reference please head to: http://cplusplus.com/reference/ctime/strftime.
 
-Usage exmaple: `date = TimeToString(1468578161, 1, "%c")`
+Usage exmaple: `date = TimeToString(1468578161, 1, "%c");`
 
 #### `sha256(string <string>)`
 
-Calculates the SHA256 sum of the given string.
+Calculates and returns SHA256 sum of the given string.
 
 Usage example: `hash = sha256("Foo");`
 
 ### File Operations
 
-_Disclaimer: 10 files can be opened simultaneously. Unused files should be closed as soon as possible.
+Disclaimer: _Up to 10 files can be opened simultaneously. Unused files should be closed as soon as possible._
 
 #### `FS_FOpen(string <name>, string <mode>)`
 
-Opens a file that's inside current `FS_GameDir`. Mode is selectable. It can be either "read", "write", "append".
-On success it returns integer greater than `0` – `filehandle`. You have to make sure that the function succeded before operations on the file.
+Opens a file that's inside current `FS_GameDir`. On success it returns integer greater than `0` – `filehandle`. You have to make sure that the function succeded before operations on the file.
 
 Possible values of `mode`:
 * `read` – Read only access.
 * `write` – Creates a new empty file or overwrites existing one if it's already there. Gives rights to write.
 * `append` – Appends to the end of an existing file. Behaves like `write` if the file doesn't exist.
 
-Usage example: `fh = FS_FOpen("foo.txt", "read")`
+Usage example: `fh = FS_FOpen("foo.txt", "read");`
+
+#### `FS_FClose(int <filehandle>)`
+
+Closes file. Returns nothing.
+
+Usage examlple: `FS_FClose(5);`
+
+#### `FS_FCloseAll()`
+
+Closes all opened files. Returns nothing.
+
+Use case: It can be used after a new level has been loaded — you can't access old variables that stored filehandles before.
+
+Usage example: `FS_FCloseAll();`
+
+#### `FS_TestFile(string <filename>)`
+
+Tests if given file exists. File must be inside the `FS_GameDir`.
+Returns `true` if file exists, otherwise `false`.
+
+Usage example: `file_exists = FS_TestFile("foo.txt");`
 
 
-FS_FClose
-============================
-Closes an already opened file. Opened files needs to be closed if they are no longer in use
-This function returns nothing. It needs a filehandle as argument
-Usage: FS_FClose(int <filehandle>)
+#### `FS_ReadLine(int <filehandle>)`
 
+Reads a next line from opened file and returns it as string. Returned line does not end with `\n` character. This function returns `undefined` when file can not be read (error) or you it reached end of the file. Calling this function is the only way to advance to next line inside a file.
 
-FS_FCloseAll
-============================
-Closes all opened files with one call. Opened files needs to be closed if they are no longer in use
-This function returns nothing. It needs no arguments. When all files got closed you can no longer read/write on open files.
-It can be usefull to call after loading a new level when all variables and handles are purged.
-Usage: FS_FCloseAll()
+`FS_ReadLine` can be used only in `read` mode.
 
+Usage example: `line = FS_ReadLine(5);`
 
-FS_TestFile
-============================
-This function only tests whether a file exists. It must be a file inside the FS_GameDir.
-This function returns true if file exists otherwise false.
-Usage: bool = FS_TestFile(string <filename>)
+#### `FS_WriteLine(int <filehandle>, string <data>)`
 
+Writes a line to an opened file. It does work only in `append` and `write` modes. You can not select number of line to write – it will always append given line to the file. This function returns `true` on success, otherwise it returns `false`.
 
-FS_ReadLine
-============================
-This function reads a line from opened file and returns it as a string.
-This function returns undefined if file can not be read (error) or you tried read from end of file.
-Otherwise it just returns the line with the \n character stripped. Calling this function is the only way to advance to next line inside a file.
-FS_ReadLine can be used only in read-mode.
-Usage: string = FS_ReadLine(int <filehandle>)
+Usage example: `wrote = FS_WriteLine(5, "foo");`
 
+#### `FS_Remove(string <filename>)`
 
-FS_WriteLine
-============================
-This function writes/append a line to an opened file.
-It does work in append/write mode only. You can not select a line. It will always append to last line.
+Deletes file inside current `FS_GameDir`. This function returns `true` on success, otherwise it returns `false`.
 
-This function returns true on success, otherwise it just returns false
-Usage: bool = FS_WriteLine(int <filehandle>, string <data>)
+Usage example: `deleted = FS_Remove("foo.txt");`
 
-FS_Remove
-============================
-This function deletes a file inside the current FS_GameDir.
+### Bot Related Functions
 
-This function returns true on success otherwise it returns false.
-Usage: bool = FS_Remove(string <filename>)
+#### `AddTestClient()`
 
+Adds test client. Returns newly created entity.
 
+Usage example: `ent = AddTestClient()`
 
+#### `removeAllTestClients()`
 
+Removes all added bots.
 
+Usage example: `removeAllTestClients()`
 
-==========================================
+#### `RemoveTestClient()`
 
-Bot related functions
+# TODO_NEED_TO_TEST
+I'm pretty sure it takes ent as an argument.
 
-==========================================
-
-
-
-
-
-AddTestClient
-============================
-Usage: entity = AddTestClient()
-
-
-removeAllTestClients
-============================
-Usage: removeAllTestClients()
-
-
-RemoveTestClient
-============================
-Usage: entity = removeTestClient()
+Usage example: `entity = removeTestClient()`
 
 
 
