@@ -325,21 +325,23 @@ Q_strlcat
 Same like strcat but with an additional copylimit parameter
 =============
 */
-void Q_strlcat( char *dest, size_t size, const char *src, int cpylimit) {
+void Q_strlcat( char *dest, size_t size, const char *src, int cpylimit)
+{
+	int	l1;
 
-	int		l1;
-
-	l1 = strlen( dest );
-	if ( l1 >= size ) {
+	l1 = strlen(dest);
+	if ( l1 >= size )
+	{
 		return;
 //		Com_Error( ERR_FATAL, "Q_strlcat: already overflowed" );
 	}
 
-	if(cpylimit >= (size - l1) || cpylimit < 1){
-		cpylimit = size - l1 -1;
+	if(cpylimit >= (size - l1) || cpylimit < 0)
+	{
+		cpylimit = size - l1 - 1;
 	}
 
-	memcpy( dest + l1, src, cpylimit);
+	memcpy(dest + l1, src, cpylimit);
 	dest[l1 + cpylimit] = 0;
 }
 
@@ -348,19 +350,20 @@ void Q_strlcat( char *dest, size_t size, const char *src, int cpylimit) {
 Q_strrepl
 =============
 */
-void Q_strnrepl( char *dest, size_t size, const char *src, const char* find, const char* replacement) {
-
+void Q_strnrepl( char *dest, size_t size, const char *src, const char* find, const char* replacement)
+{
     char* new;
     *dest = 0;
 
     int findlen = strlen(find);
 
-    while((new = strstr(src, find)) != NULL){
+    while((new = strstr(src, find)) != NULL)
+    {
         Q_strlcat(dest, size, src, new - src);
-        Q_strlcat(dest, size, replacement, 0);
+        Q_strlcat(dest, size, replacement, -1);
         src = &new[findlen];
     }
-    Q_strlcat(dest, size, src, 0);
+    Q_strlcat(dest, size, src, -1);
 }
 
 
