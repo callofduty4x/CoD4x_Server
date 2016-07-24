@@ -98,8 +98,7 @@ Usage example:`addScriptCommand("foo", 1);`
 See also: [`CodeCallback_ScriptCommand()`](#codecallback_scriptcommandstring-command-integer-default-power)
 
 #### `GetRealTime()`
-#TODO_NEED_TO_TEST
-Returns current time in seconds since 01/01/2012 UTC
+Returns current time in seconds since 01/01/_2012_ UTC.
 
 Usage example: `t = getRealTime();`
 
@@ -184,7 +183,7 @@ Usage example: `self setmovespeed(300);`
 ### String Functions
 
 #### `StrTokByLen(string <string>, int <maxcharacter count>)`
-#TODO_NEED_TO_TEST
+
 Returns an array of the strings which is result of splitting supplied string.
 It will count the number of characters of given string and will tokenize it so that it will never exceed the given limit.
 This function tries to separate the string so that words remain complete.
@@ -192,7 +191,7 @@ This function tries to separate the string so that words remain complete.
 Usage example: `array = StrTokByLen("foo bar qux", 3);`
 
 #### `StrTokByPixLen(string <string>, float <codPixelCount>)`
-#TODO_NEED_TO_TEST
+
 Returns an array of the strings which is result of splitting supplied string.
 It will count the width of given string measured in pixels and will tokenize it so that it will never exceed the given limit.
 __The limit applies for *2.5* font size.__
@@ -314,7 +313,7 @@ Usage example: `deleted = FS_Remove("foo.txt");`
 #### `AddTestClient()`
 
 Adds test client. Returns newly created entity.
-
+# TODO_CRASHES_SERVER
 Usage example: `ent = AddTestClient()`
 
 #### `removeAllTestClients()`
