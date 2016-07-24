@@ -13,6 +13,9 @@ We do our best to keep it updated._
    2. [Players Related Functions](#players-related-functions)
    3. [Player Movement Related Functions](#player-movement-related-functions)
    4. [String Functions](#string-functions)
+   5. [File Operations](#file-operations)
+   6. [Bot Related Functions](#bot-related-functions)
+5. [Appendix: All Known Script Functions](#appendix-all-known-script-functions)
 
 ## Introduction
 
@@ -24,7 +27,7 @@ Any feedback on less popular commands is always welcome.
 
 In the past people had to use _tricky_ way to add or override scripts on unmodded servers. CoD4x introduces new, more elegant solution.
 The only thing you have to do is to create `main_shared` directory next to your `main` directory and place scripts there.
-**Don't forget to keep proper directory structe inside `main_shared`!**
+**Don't forget to keep proper directory structure inside `main_shared`!**
 
 #### Structure Example
 ```
@@ -48,11 +51,11 @@ functions introduced in CoD4x. There are two reasons behind it:
 
 ## Dropped Support
 
-* `CodeCallback_PlayerSayCmd(string <text>, bool <teamchat>)` has been dropped. New solution to catch commands is
-now `CodeCallback_ScriptCommand()`.
+* `CodeCallback_PlayerSayCmd(string <text>, bool <teamchat>)` support has been dropped. New solution to catch commands is
+now [`CodeCallback_ScriptCommand()`](#codecallback_scriptcommandstring-command-integer-default-power).
 
-* `CodeCallback_PlayerSayAll(string <text>, bool <teamchat>)` has been dropped. New solution to catch commands is 
-now `CodeCallback_ScriptCommand()`.
+* `CodeCallback_PlayerSayAll(string <text>, bool <teamchat>)` support has been dropped. New solution to catch commands is 
+now [`CodeCallback_ScriptCommand()`](#codecallback_scriptcommandstring-command-integer-default-power).
 
 
 ## CoD4x Exclusive Functions
@@ -69,7 +72,7 @@ For safe usage you have to include a `waittillframeend;` statement in the callba
 
 It has to be included in: `maps/mp/gametypes/_callbacksetup`
 
-See also: `addScriptCommand`
+See also: [`addScriptCommand`](#addscriptcommandstring-command-int-power)
 
 #### `execex(string <command>)`
 
@@ -92,7 +95,7 @@ Using `1` as the power is equal to allowing everyone to use it. Using power `100
 
 Usage example:`addScriptCommand("foo", 1);`
 
-See also: `CodeCallback_ScriptCommand`
+See also: [`CodeCallback_ScriptCommand()`](#codecallback_scriptcommandstring-command-integer-default-power)
 
 #### `GetRealTime()`
 #TODO_NEED_TO_TEST
@@ -214,7 +217,7 @@ s = "^2Foo^3bar";
 StrColorStrip(s);
 ```
 
-See also: `CopyStr`
+See also: [`CopyStr`](#copystrstring-string)
 
 #### `StrRepl(string <source>, string <pattern>, string <replacement>)`
 #TODO_NEED_TO_TEST
@@ -329,6 +332,174 @@ Usage example: `entity = removeTestClient()`
 
 
 ## Appendix: All Known Script Functions
+
+### Player Functions
+```
+Scr_AddMethod("giveweapon", (void*)0x80abc48, 0);
+Scr_AddMethod("takeweapon", (void*)0x80abbb4, 0);
+Scr_AddMethod("takeallweapons", (void*)0x80abb0e, 0);
+Scr_AddMethod("getcurrentweapon", (void*)0x80ad386, 0);
+Scr_AddMethod("getcurrentoffhand", (void*)0x80aa3f2, 0);
+Scr_AddMethod("hasweapon", (void*)0x80a9098, 0);
+Scr_AddMethod("switchtoweapon", (void*)0x80ac484, 0);
+Scr_AddMethod("switchtooffhand", (void*)0x80ac37a, 0);
+Scr_AddMethod("givestartammo", (void*)0x80ac2b4, 0);
+Scr_AddMethod("givemaxammo", (void*)0x80ac1a4, 0);
+Scr_AddMethod("getfractionstartammo", (void*)0x80ac09c, 0);
+Scr_AddMethod("getfractionmaxammo", (void*)0x80abf94, 0);
+Scr_AddMethod("setorigin", (void*)0x80ace3e, 0);
+Scr_AddMethod("getvelocity", (void*)0x80ab73a, 0);
+Scr_AddMethod("setplayerangles", (void*)0x80ab7b0, 0);
+Scr_AddMethod("getplayerangles", (void*)0x80ab6c2, 0);
+Scr_AddMethod("usebuttonpressed", (void*)0x80a9b46, 0);
+Scr_AddMethod("attackbuttonpressed", (void*)0x80a9aae, 0);
+Scr_AddMethod("adsbuttonpressed", (void*)0x80a9a14, 0);
+Scr_AddMethod("meleebuttonpressed", (void*)0x80a997c, 0);
+Scr_AddMethod("fragbuttonpressed", (void*)0x80a98e2, 0);
+Scr_AddMethod("secondaryoffhandbuttonpressed", (void*)0x80a9848, 0);
+Scr_AddMethod("playerads", (void*)0x80ab916, 0);
+Scr_AddMethod("isonground", (void*)0x80a979a, 0);
+Scr_AddMethod("pingplayer", (void*)0x80a8810, 0);
+Scr_AddMethod("setviewmodel", (void*)0x80ab61a, 0);
+Scr_AddMethod("getviewmodel", (void*)0x80ab4f4, 0);
+Scr_AddMethod("setoffhandsecondaryclass", (void*)0x80a9610, 0);
+Scr_AddMethod("getoffhandsecondaryclass", (void*)0x80ab576, 0);
+Scr_AddMethod("beginlocationselection", (void*)0x80ab366, 0);
+Scr_AddMethod("endlocationselection", (void*)0x80a86b2, 0);
+Scr_AddMethod("buttonpressed", (void*)0x80a9838, 0);
+Scr_AddMethod("sayall", (void*)0x80ab296, 0);
+Scr_AddMethod("sayteam", (void*)0x80ab1c6, 0);
+Scr_AddMethod("showscoreboard", (void*)0x80ab142, 0);
+Scr_AddMethod("setspawnweapon", (void*)0x80ab052, 0);
+Scr_AddMethod("dropitem", (void*)0x80aaf2a, 0);
+Scr_AddMethod("finishplayerdamage", (void*)0x80ac58e, 0);
+Scr_AddMethod("suicide", (void*)0x80aae5c, 0);
+Scr_AddMethod("openmenu", (void*)0x80aad5c, 0);
+Scr_AddMethod("openmenunomouse", (void*)0x80aac5c, 0);
+Scr_AddMethod("closemenu", (void*)0x80a8ffa, 0);
+Scr_AddMethod("closeingamemenu", (void*)0x80a8f5c, 0);
+Scr_AddMethod("freezecontrols", (void*)0x80a89c8, 0);
+Scr_AddMethod("disableweapons", (void*)0x80a879c, 0);
+Scr_AddMethod("enableweapons", (void*)0x80a8728, 0);
+Scr_AddMethod("setreverb", (void*)0x80aa95e, 0);
+Scr_AddMethod("deactivatereverb", (void*)0x80aa848, 0);
+Scr_AddMethod("setchannelvolumes", (void*)0x80aaafe, 0);
+Scr_AddMethod("deactivatechannelvolumes", (void*)0x80aa726, 0);
+Scr_AddMethod("setweaponammoclip", (void*)0x80aa540, 0);
+Scr_AddMethod("setweaponammostock", (void*)0x80ad248, 0);
+Scr_AddMethod("getweaponammoclip", (void*)0x80aa494, 0);
+Scr_AddMethod("getweaponammostock", (void*)0x80aa638, 0);
+Scr_AddMethod("anyammoforweaponmodes", (void*)0x80aa2f8, 0);
+Scr_AddMethod("iprintln", (void*)0x80aa262, 0);
+Scr_AddMethod("iprintlnbold", (void*)0x80aa1cc, 0);
+Scr_AddMethod("spawn", PlayerCmd_spawn, 0);
+Scr_AddMethod("setentertime", (void*)0x80a8a46, 0);
+Scr_AddMethod("cloneplayer", (void*)0x80acf50, 0);
+Scr_AddMethod("setclientdvar", (void*)0x80a9f74, 0);
+Scr_AddMethod("setclientdvars", (void*)0x80a9d56, 0);
+Scr_AddMethod("playlocalsound", (void*)0x80a9c9a, 0);
+Scr_AddMethod("stoplocalsound", (void*)0x80a9bde, 0);
+Scr_AddMethod("istalking", (void*)0x80a96f8, 0);
+Scr_AddMethod("allowspectateteam", (void*)0x80a9518, 0);
+Scr_AddMethod("getguid", (void*)0x80a9492, 0);
+Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
+Scr_AddMethod("getxuid", (void*)0x80a9418, 0);
+Scr_AddMethod("allowads", (void*)0x80ab852, 0);
+Scr_AddMethod("allowjump", (void*)0x80a8932, 0);
+Scr_AddMethod("allowsprint", (void*)0x80a889c, 0);
+Scr_AddMethod("setspreadoverride", (void*)0x80a9318, 0);
+Scr_AddMethod("resetspreadoverride", (void*)0x80a8bbe, 0);
+Scr_AddMethod("setactionslot", (void*)0x80a9156, 0);
+Scr_AddMethod("getweaponslist", (void*)0x80abeba, 0);
+Scr_AddMethod("getweaponslistprimaries", (void*)0x80abdd0, 0);
+Scr_AddMethod("setperk", (void*)0x80ad4ae, 0);
+Scr_AddMethod("hasperk", (void*)0x80ad576, 0);
+Scr_AddMethod("clearperks", (void*)0x80ad428, 0);
+Scr_AddMethod("unsetperk", (void*)0x80ad634, 0);
+Scr_AddMethod("updatescores", (void*)0x80a8e50, 0);
+Scr_AddMethod("updatedmscores", (void*)0x80a8c5e, 0);
+Scr_AddMethod("setrank", (void*)0x80a8ac4, 0);
+Scr_AddMethod("getuserinfo", PlayerCmd_GetUserinfo, 0);
+Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
+Scr_AddMethod("transmitbuffer", PlayerCmd_TransmitBuffer, 0);
+```
+
+### HUD Functions
+```
+Scr_AddMethod("settext", HECmd_SetText, 0);
+Scr_AddMethod("clearalltextafterhudelem", (void*)0x808f768, 0);
+Scr_AddMethod("setshader", (void*)0x808e52e, 0);
+Scr_AddMethod("settargetent", (void*)0x808f8ea, 0);
+Scr_AddMethod("cleartargetent", (void*)0x808f718, 0);
+Scr_AddMethod("settimer", (void*)0x808f702, 0);
+Scr_AddMethod("settimerup", (void*)0x808f6ec, 0);
+Scr_AddMethod("settenthstimer", (void*)0x808f6d6, 0);
+Scr_AddMethod("settenthstimerup", (void*)0x808f6c0, 0);
+Scr_AddMethod("setclock", (void*)0x808f53e, 0);
+Scr_AddMethod("setclockup", (void*)0x808f528, 0);
+Scr_AddMethod("setvalue", (void*)0x808f1ac, 0);
+Scr_AddMethod("setwaypoint", (void*)0x808f116, 0);
+Scr_AddMethod("fadeovertime", (void*)0x808efe6, 0);
+Scr_AddMethod("scaleovertime", (void*)0x808ee86, 0);
+Scr_AddMethod("moveovertime", (void*)0x808ed56, 0);
+Scr_AddMethod("reset", (void*)0x808ebfa, 0);
+Scr_AddMethod("destroy", (void*)0x808eba6, 0);
+Scr_AddMethod("setpulsefx", (void*)0x808feb8, 0);
+Scr_AddMethod("setplayernamestring", (void*)0x808ea9e, 0);
+Scr_AddMethod("setmapnamestring", (void*)0x808e85a, 0);
+Scr_AddMethod("setgametypestring", (void*)0x808e976, 0);
+```
+
+### Entity Functions
+```
+Scr_AddMethod("moveto", (void*)0x809b606, 0);
+Scr_AddMethod("movex", (void*)0x809abf2, 0);
+Scr_AddMethod("movey", (void*)0x809abd6, 0);
+Scr_AddMethod("movez", (void*)0x809abba, 0);
+Scr_AddMethod("movegravity", (void*)0x809ae2a, 0);
+Scr_AddMethod("rotateto", (void*)0x809a85e, 0);
+Scr_AddMethod("rotatepitch", (void*)0x809b8c6, 0);
+Scr_AddMethod("rotateyaw", (void*)0x809b8aa, 0);
+Scr_AddMethod("rotateroll", (void*)0x809b88e, 0);
+Scr_AddMethod("devaddpitch", (void*)0x8099f60, 0);
+Scr_AddMethod("devaddyaw", (void*)0x8099f66, 0);
+Scr_AddMethod("devaddroll", (void*)0x8099f6c, 0);
+Scr_AddMethod("vibrate", (void*)0x809bad0, 0);
+Scr_AddMethod("rotatevelocity", (void*)0x809b178, 0);
+Scr_AddMethod("solid", (void*)0x809a0ac, 0);
+Scr_AddMethod("notsolid", (void*)0x8099fd2, 0);
+Scr_AddMethod("setcandamage", (void*)0x809a19e, 0);
+Scr_AddMethod("physicslaunch", (void*)0x809afb4, 0);
+```
+
+### Helicopter functions
+```
+Scr_AddMethod("freehelicopter", (void*)0x80ba8bc, 0);
+Scr_AddMethod("setspeed", (void*)0x809d096, 0);
+Scr_AddMethod("getspeed", (void*)0x809d070, 0);
+Scr_AddMethod("getspeedmph", (void*)0x809d044, 0);
+Scr_AddMethod("resumespeed", (void*)0x809cf4a, 0);
+Scr_AddMethod("setyawspeed", (void*)0x809ce22, 0);
+Scr_AddMethod("setmaxpitchroll", (void*)0x809cd6c, 0);
+Scr_AddMethod("setturningability", (void*)0x809d0ae, 0);
+Scr_AddMethod("setairresistance", (void*)0x809cd36, 0);
+Scr_AddMethod("sethoverparams", (void*)0x809cc24, 0);
+Scr_AddMethod("setneargoalnotifydist", (void*)0x809cb42, 0);
+Scr_AddMethod("setvehgoalpos", (void*)0x809ca7c, 0);
+Scr_AddMethod("setgoalyaw", (void*)0x809ca42, 0);
+Scr_AddMethod("cleargoalyaw", (void*)0x809ca14, 0);
+Scr_AddMethod("settargetyaw", (void*)0x809c9da, 0);
+Scr_AddMethod("cleartargetyaw", (void*)0x809c9ac, 0);
+Scr_AddMethod("setlookatent", (void*)0x809c900, 0);
+Scr_AddMethod("clearlookatent", (void*)0x809c8d2, 0);
+Scr_AddMethod("setvehweapon", (void*)0x809c890, 0);
+Scr_AddMethod("fireweapon", (void*)0x809d9e2, 0);
+Scr_AddMethod("setturrettargetvec", (void*)0x809d48a, 0);
+Scr_AddMethod("setturrettargetent", (void*)0x809d550, 0);
+Scr_AddMethod("clearturrettarget", (void*)0x809d0de, 0);
+Scr_AddMethod("setvehicleteam", (void*)0x809cb72, 0);
+Scr_AddMethod("setdamagestage", (void*)0x80ba890, 0);
+```
 
 ### Unclassified Functions
 ```
@@ -563,127 +734,6 @@ Scr_AddFunction("getvalueforkey", GScr_GetValueForKey, 0);
 Scr_AddFunction("settransmitbuffer", GScr_SetTransmitBuffer, 0);
 Scr_AddFunction("getreceivebuffer", GScr_GetReceiveBuffer, 0);
 Scr_AddFunction("sha256", GScr_SHA256, 0);
-```
-
-### Player Functions
-```
-Scr_AddMethod("giveweapon", (void*)0x80abc48, 0);
-Scr_AddMethod("takeweapon", (void*)0x80abbb4, 0);
-Scr_AddMethod("takeallweapons", (void*)0x80abb0e, 0);
-Scr_AddMethod("getcurrentweapon", (void*)0x80ad386, 0);
-Scr_AddMethod("getcurrentoffhand", (void*)0x80aa3f2, 0);
-Scr_AddMethod("hasweapon", (void*)0x80a9098, 0);
-Scr_AddMethod("switchtoweapon", (void*)0x80ac484, 0);
-Scr_AddMethod("switchtooffhand", (void*)0x80ac37a, 0);
-Scr_AddMethod("givestartammo", (void*)0x80ac2b4, 0);
-Scr_AddMethod("givemaxammo", (void*)0x80ac1a4, 0);
-Scr_AddMethod("getfractionstartammo", (void*)0x80ac09c, 0);
-Scr_AddMethod("getfractionmaxammo", (void*)0x80abf94, 0);
-Scr_AddMethod("setorigin", (void*)0x80ace3e, 0);
-Scr_AddMethod("getvelocity", (void*)0x80ab73a, 0);
-Scr_AddMethod("setplayerangles", (void*)0x80ab7b0, 0);
-Scr_AddMethod("getplayerangles", (void*)0x80ab6c2, 0);
-Scr_AddMethod("usebuttonpressed", (void*)0x80a9b46, 0);
-Scr_AddMethod("attackbuttonpressed", (void*)0x80a9aae, 0);
-Scr_AddMethod("adsbuttonpressed", (void*)0x80a9a14, 0);
-Scr_AddMethod("meleebuttonpressed", (void*)0x80a997c, 0);
-Scr_AddMethod("fragbuttonpressed", (void*)0x80a98e2, 0);
-Scr_AddMethod("secondaryoffhandbuttonpressed", (void*)0x80a9848, 0);
-Scr_AddMethod("playerads", (void*)0x80ab916, 0);
-Scr_AddMethod("isonground", (void*)0x80a979a, 0);
-Scr_AddMethod("pingplayer", (void*)0x80a8810, 0);
-Scr_AddMethod("setviewmodel", (void*)0x80ab61a, 0);
-Scr_AddMethod("getviewmodel", (void*)0x80ab4f4, 0);
-Scr_AddMethod("setoffhandsecondaryclass", (void*)0x80a9610, 0);
-Scr_AddMethod("getoffhandsecondaryclass", (void*)0x80ab576, 0);
-Scr_AddMethod("beginlocationselection", (void*)0x80ab366, 0);
-Scr_AddMethod("endlocationselection", (void*)0x80a86b2, 0);
-Scr_AddMethod("buttonpressed", (void*)0x80a9838, 0);
-Scr_AddMethod("sayall", (void*)0x80ab296, 0);
-Scr_AddMethod("sayteam", (void*)0x80ab1c6, 0);
-Scr_AddMethod("showscoreboard", (void*)0x80ab142, 0);
-Scr_AddMethod("setspawnweapon", (void*)0x80ab052, 0);
-Scr_AddMethod("dropitem", (void*)0x80aaf2a, 0);
-Scr_AddMethod("finishplayerdamage", (void*)0x80ac58e, 0);
-Scr_AddMethod("suicide", (void*)0x80aae5c, 0);
-Scr_AddMethod("openmenu", (void*)0x80aad5c, 0);
-Scr_AddMethod("openmenunomouse", (void*)0x80aac5c, 0);
-Scr_AddMethod("closemenu", (void*)0x80a8ffa, 0);
-Scr_AddMethod("closeingamemenu", (void*)0x80a8f5c, 0);
-Scr_AddMethod("freezecontrols", (void*)0x80a89c8, 0);
-Scr_AddMethod("disableweapons", (void*)0x80a879c, 0);
-Scr_AddMethod("enableweapons", (void*)0x80a8728, 0);
-Scr_AddMethod("setreverb", (void*)0x80aa95e, 0);
-Scr_AddMethod("deactivatereverb", (void*)0x80aa848, 0);
-Scr_AddMethod("setchannelvolumes", (void*)0x80aaafe, 0);
-Scr_AddMethod("deactivatechannelvolumes", (void*)0x80aa726, 0);
-Scr_AddMethod("setweaponammoclip", (void*)0x80aa540, 0);
-Scr_AddMethod("setweaponammostock", (void*)0x80ad248, 0);
-Scr_AddMethod("getweaponammoclip", (void*)0x80aa494, 0);
-Scr_AddMethod("getweaponammostock", (void*)0x80aa638, 0);
-Scr_AddMethod("anyammoforweaponmodes", (void*)0x80aa2f8, 0);
-Scr_AddMethod("iprintln", (void*)0x80aa262, 0);
-Scr_AddMethod("iprintlnbold", (void*)0x80aa1cc, 0);
-Scr_AddMethod("spawn", PlayerCmd_spawn, 0);
-Scr_AddMethod("setentertime", (void*)0x80a8a46, 0);
-Scr_AddMethod("cloneplayer", (void*)0x80acf50, 0);
-Scr_AddMethod("setclientdvar", (void*)0x80a9f74, 0);
-Scr_AddMethod("setclientdvars", (void*)0x80a9d56, 0);
-Scr_AddMethod("playlocalsound", (void*)0x80a9c9a, 0);
-Scr_AddMethod("stoplocalsound", (void*)0x80a9bde, 0);
-Scr_AddMethod("istalking", (void*)0x80a96f8, 0);
-Scr_AddMethod("allowspectateteam", (void*)0x80a9518, 0);
-Scr_AddMethod("getguid", (void*)0x80a9492, 0);
-Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
-Scr_AddMethod("getxuid", (void*)0x80a9418, 0);
-Scr_AddMethod("allowads", (void*)0x80ab852, 0);
-Scr_AddMethod("allowjump", (void*)0x80a8932, 0);
-Scr_AddMethod("allowsprint", (void*)0x80a889c, 0);
-Scr_AddMethod("setspreadoverride", (void*)0x80a9318, 0);
-Scr_AddMethod("resetspreadoverride", (void*)0x80a8bbe, 0);
-Scr_AddMethod("setactionslot", (void*)0x80a9156, 0);
-Scr_AddMethod("getweaponslist", (void*)0x80abeba, 0);
-Scr_AddMethod("getweaponslistprimaries", (void*)0x80abdd0, 0);
-Scr_AddMethod("setperk", (void*)0x80ad4ae, 0);
-Scr_AddMethod("hasperk", (void*)0x80ad576, 0);
-Scr_AddMethod("clearperks", (void*)0x80ad428, 0);
-Scr_AddMethod("unsetperk", (void*)0x80ad634, 0);
-Scr_AddMethod("updatescores", (void*)0x80a8e50, 0);
-Scr_AddMethod("updatedmscores", (void*)0x80a8c5e, 0);
-Scr_AddMethod("setrank", (void*)0x80a8ac4, 0);
-Scr_AddMethod("getuserinfo", PlayerCmd_GetUserinfo, 0);
-Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
-Scr_AddMethod("transmitbuffer", PlayerCmd_TransmitBuffer, 0);
-```
-
-### HUD Functions
-```
-Scr_AddMethod("settext", HECmd_SetText, 0);
-Scr_AddMethod("clearalltextafterhudelem", (void*)0x808f768, 0);
-Scr_AddMethod("setshader", (void*)0x808e52e, 0);
-Scr_AddMethod("settargetent", (void*)0x808f8ea, 0);
-Scr_AddMethod("cleartargetent", (void*)0x808f718, 0);
-Scr_AddMethod("settimer", (void*)0x808f702, 0);
-Scr_AddMethod("settimerup", (void*)0x808f6ec, 0);
-Scr_AddMethod("settenthstimer", (void*)0x808f6d6, 0);
-Scr_AddMethod("settenthstimerup", (void*)0x808f6c0, 0);
-Scr_AddMethod("setclock", (void*)0x808f53e, 0);
-Scr_AddMethod("setclockup", (void*)0x808f528, 0);
-Scr_AddMethod("setvalue", (void*)0x808f1ac, 0);
-Scr_AddMethod("setwaypoint", (void*)0x808f116, 0);
-Scr_AddMethod("fadeovertime", (void*)0x808efe6, 0);
-Scr_AddMethod("scaleovertime", (void*)0x808ee86, 0);
-Scr_AddMethod("moveovertime", (void*)0x808ed56, 0);
-Scr_AddMethod("reset", (void*)0x808ebfa, 0);
-Scr_AddMethod("destroy", (void*)0x808eba6, 0);
-Scr_AddMethod("setpulsefx", (void*)0x808feb8, 0);
-Scr_AddMethod("setplayernamestring", (void*)0x808ea9e, 0);
-Scr_AddMethod("setmapnamestring", (void*)0x808e85a, 0);
-Scr_AddMethod("setgametypestring", (void*)0x808e976, 0);
-```
-
-### Cmd Functions
-```
 Scr_AddMethod("attach", (void*)0x80c4360, 0);
 Scr_AddMethod("detach", (void*)0x80c3950, 0);
 Scr_AddMethod("detachall", (void*)0x80c3904, 0);
@@ -766,56 +816,4 @@ Scr_AddMethod("startragdoll", (void*)0x80c4f08, 0);
 Scr_AddMethod("isragdoll", (void*)0x80c4eb4, 0);
 Scr_AddMethod("getcorpseanim", (void*)0x80c4dfc, 0);
 Scr_AddMethod("itemweaponsetammo", (void*)0x80c4c96, 0);
-```
-
-### Entity Functions
-```
-Scr_AddMethod("moveto", (void*)0x809b606, 0);
-Scr_AddMethod("movex", (void*)0x809abf2, 0);
-Scr_AddMethod("movey", (void*)0x809abd6, 0);
-Scr_AddMethod("movez", (void*)0x809abba, 0);
-Scr_AddMethod("movegravity", (void*)0x809ae2a, 0);
-Scr_AddMethod("rotateto", (void*)0x809a85e, 0);
-Scr_AddMethod("rotatepitch", (void*)0x809b8c6, 0);
-Scr_AddMethod("rotateyaw", (void*)0x809b8aa, 0);
-Scr_AddMethod("rotateroll", (void*)0x809b88e, 0);
-Scr_AddMethod("devaddpitch", (void*)0x8099f60, 0);
-Scr_AddMethod("devaddyaw", (void*)0x8099f66, 0);
-Scr_AddMethod("devaddroll", (void*)0x8099f6c, 0);
-Scr_AddMethod("vibrate", (void*)0x809bad0, 0);
-Scr_AddMethod("rotatevelocity", (void*)0x809b178, 0);
-Scr_AddMethod("solid", (void*)0x809a0ac, 0);
-Scr_AddMethod("notsolid", (void*)0x8099fd2, 0);
-Scr_AddMethod("setcandamage", (void*)0x809a19e, 0);
-Scr_AddMethod("physicslaunch", (void*)0x809afb4, 0);
-```
-
-### Helicopter functions
-```
-Scr_AddMethod("freehelicopter", (void*)0x80ba8bc, 0);
-Scr_AddMethod("setspeed", (void*)0x809d096, 0);
-Scr_AddMethod("getspeed", (void*)0x809d070, 0);
-Scr_AddMethod("getspeedmph", (void*)0x809d044, 0);
-Scr_AddMethod("resumespeed", (void*)0x809cf4a, 0);
-Scr_AddMethod("setyawspeed", (void*)0x809ce22, 0);
-Scr_AddMethod("setmaxpitchroll", (void*)0x809cd6c, 0);
-Scr_AddMethod("setturningability", (void*)0x809d0ae, 0);
-Scr_AddMethod("setairresistance", (void*)0x809cd36, 0);
-Scr_AddMethod("sethoverparams", (void*)0x809cc24, 0);
-Scr_AddMethod("setneargoalnotifydist", (void*)0x809cb42, 0);
-Scr_AddMethod("setvehgoalpos", (void*)0x809ca7c, 0);
-Scr_AddMethod("setgoalyaw", (void*)0x809ca42, 0);
-Scr_AddMethod("cleargoalyaw", (void*)0x809ca14, 0);
-Scr_AddMethod("settargetyaw", (void*)0x809c9da, 0);
-Scr_AddMethod("cleartargetyaw", (void*)0x809c9ac, 0);
-Scr_AddMethod("setlookatent", (void*)0x809c900, 0);
-Scr_AddMethod("clearlookatent", (void*)0x809c8d2, 0);
-Scr_AddMethod("setvehweapon", (void*)0x809c890, 0);
-Scr_AddMethod("fireweapon", (void*)0x809d9e2, 0);
-Scr_AddMethod("setturrettargetvec", (void*)0x809d48a, 0);
-Scr_AddMethod("setturrettargetent", (void*)0x809d550, 0);
-Scr_AddMethod("clearturrettarget", (void*)0x809d0de, 0);
-Scr_AddMethod("setvehicleteam", (void*)0x809cb72, 0);
-Scr_AddMethod("setdamagestage", (void*)0x80ba890, 0);
-
 ```
