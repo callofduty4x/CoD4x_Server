@@ -36,7 +36,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
-
+#include <stdarg.h>
 
 #ifndef __stdcall
 #define __stdcall __attribute__((stdcall))
@@ -113,7 +113,7 @@ typedef enum {qfalse, qtrue}	qboolean;
 #define	MAX_STRING_CHARS	1024
 
 #ifndef Q_vsnprintf
-#define Q_vsnprintf vsnprintf
+int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
 #endif
 
 #define Q_COLOR_ESCAPE	'^'
