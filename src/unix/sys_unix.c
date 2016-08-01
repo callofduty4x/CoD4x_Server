@@ -103,19 +103,6 @@ void Sys_ReplaceProcess( char *cmdline )
 	_exit( 0 );
 }
 
-void Sys_DoStartProcess( char *cmdline ) {
-
-	switch ( fork() )
-	{
-	case - 1:
-		// main thread
-		break;
-	case 0:
-		Sys_ReplaceProcess( cmdline );
-		break;
-	}
-}
-
 
 /*
 ==================
@@ -713,5 +700,29 @@ void  __attribute__ ((noreturn)) Sys_ExitForOS( int exitCode )
 int Sys_Chmod(const char* file, int mode)
 {
     return chmod(file, mode);
+
+}
+
+
+void* Sys_RunNewProcess(void* arg)
+{
+	char cmdline[4096];
+
+	Q_strncpyz(cmdline, (const char*)arg, sizeof(cmdline));
+	free(arg);
+	system(cmdline);
+}
+
+
+void Sys_DoStartProcess( char *cmdline ) {
+
+	threadid_t tid;
+
+	void* mcmdline = (void*)strdup(cmdline);
+	if(mcmdline == NULL)
+	{
+		return;
+	}
+	Sys_CreateNewThread(Sys_RunNewProcess, &tid, mcmdline);
 
 }
