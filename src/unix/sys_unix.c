@@ -711,6 +711,7 @@ void* Sys_RunNewProcess(void* arg)
 	Q_strncpyz(cmdline, (const char*)arg, sizeof(cmdline));
 	free(arg);
 	system(cmdline);
+	return NULL;
 }
 
 
@@ -723,6 +724,9 @@ void Sys_DoStartProcess( char *cmdline ) {
 	{
 		return;
 	}
-	Sys_CreateNewThread(Sys_RunNewProcess, &tid, mcmdline);
+	if(Sys_CreateNewThread(Sys_RunNewProcess, &tid, mcmdline) == qfalse)
+	{
+		free(mcmdline);
+	}
 
 }
