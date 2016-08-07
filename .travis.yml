@@ -5,10 +5,6 @@ branches:
    - master
 
 before_install:
-  - chmod +x version_make_progress.sh
-  - chmod +x build_updateable_elf.sh
-  - chmod +x src/tomcrypt/compile_linux.sh
-  
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
