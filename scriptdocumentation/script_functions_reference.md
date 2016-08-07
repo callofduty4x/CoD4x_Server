@@ -219,7 +219,7 @@ StrColorStrip(s);
 See also: [`CopyStr`](#copystrstring-string)
 
 #### `StrRepl(string <source>, string <pattern>, string <replacement>)`
-#TODO_NEED_TO_TEST
+
 Returns string that has all occurences of `pattern` in `source` replaced with `replacement`.
 `Source` string will not be affected.
 
@@ -313,19 +313,18 @@ Usage example: `deleted = FS_Remove("foo.txt");`
 #### `AddTestClient()`
 
 Adds test client. Returns newly created entity.
-# TODO_CRASHES_SERVER
+
 Usage example: `ent = AddTestClient()`
 
 #### `removeAllTestClients()`
 
-Removes all added bots.
+Removes all added test clients.
 
 Usage example: `removeAllTestClients()`
 
 #### `RemoveTestClient()`
 
-# TODO_NEED_TO_TEST
-I'm pretty sure it takes ent as an argument.
+Removes first test client it finds on the server.
 
 Usage example: `entity = removeTestClient()`
 
