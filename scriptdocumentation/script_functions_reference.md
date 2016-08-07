@@ -1,4 +1,4 @@
-# Script functions reference
+# Script Functions Reference
 
 _Disclaimer: Information included here may be incomplete and/or not necessarily true at the time you're reading it.
 We do our best to keep it updated._
