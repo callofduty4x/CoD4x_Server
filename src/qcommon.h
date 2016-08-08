@@ -55,6 +55,7 @@ int QDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, .
 int Com_FilterPath( char *filter, char *name, int casesensitive );
 
 void Com_RandomBytes( byte *string, int len );
+void Com_Random();
 int Com_HashKey( char *string, int maxlen );
 void Com_Quit_f( void );
 unsigned int Com_GetFrameTime(void);

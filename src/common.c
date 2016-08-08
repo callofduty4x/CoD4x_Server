@@ -509,6 +509,20 @@ void Com_RandomBytes( byte *string, int len )
 		string[i] = (unsigned char)( rand() % 255 );
 }
 
+/*
+==================
+Com_Random
+
+Works as 'Com_RandomBytes' but returns integer.
+==================
+*/
+int Com_Random()
+{
+    int res;
+    Com_RandomBytes((byte*)&res, 4);
+    return res;
+}
+
 
 /*
 ============
