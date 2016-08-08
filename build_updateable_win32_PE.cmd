@@ -39,5 +39,5 @@ dlltool -D _____________________________________________cod4x18_dedrun.exe -d co
 rename _____________________________________________cod4x18_dedrun.exe cod4x18_dedrun.exe
 
 echo Done!
-pause
+REM pause
 REM .\version_make_progress.sh
