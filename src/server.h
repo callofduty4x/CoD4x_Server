@@ -744,6 +744,7 @@ extern cvar_t* sv_modStats;
 extern cvar_t* sv_password;
 extern cvar_t* sv_mapRotation;
 extern cvar_t* sv_mapRotationCurrent;
+extern cvar_t* sv_randomMapRotation;
 extern cvar_t* sv_cheats;
 extern cvar_t* sv_consayname;
 extern cvar_t* sv_contellname;
