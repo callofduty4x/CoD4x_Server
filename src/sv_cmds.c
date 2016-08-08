@@ -1706,6 +1706,18 @@ static void SV_Map_f( void ) {
 	}
 }
 
+/*
+================
+SV_MixMapsInRotation
+
+Input map list: cvar 'sv_mapRotation'
+Output map list: cvar 'sv_mapRotationCurrent'
+================
+*/
+static void SV_MixMapsInRotation()
+{
+    char buffer[CVAR_STRING_SIZE];
+}
 
 /*
 ================
@@ -1717,7 +1729,7 @@ static void SV_MapRotate_f( void ) {
 
 	char map[MAX_QPATH];
 	char gametype[MAX_QPATH];
-	char map_rotationbuf[8192];
+    char map_rotationbuf[CVAR_STRING_SIZE];
 	char* maplist;
 	int len;
 
@@ -1726,9 +1738,12 @@ static void SV_MapRotate_f( void ) {
 	Com_Printf("\"sv_mapRotation\" is: \"%s\"\n\n", sv_mapRotation->string);
 	Com_Printf("\"sv_mapRotationCurrent\" is: \"%s\"\n\n", sv_mapRotationCurrent->string);
 
-	if(sv_mapRotationCurrent->string[0] == '\0')
+    if(sv_mapRotationCurrent->string[0] == '\0') // No maps in current rotation.
 	{
-		Cvar_SetString(sv_mapRotationCurrent, sv_mapRotation->string);
+        if(sv_randomMapRotation->boolean)
+            SV_Mi
+        else
+            Cvar_SetString(sv_mapRotationCurrent, sv_mapRotation->string);
 	}
 
 	Q_strncpyz(map_rotationbuf, sv_mapRotationCurrent->string, sizeof(map_rotationbuf));
