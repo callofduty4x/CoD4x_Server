@@ -1726,7 +1726,7 @@ static void SV_MixMapsInRotation()
 	{
 		char* gametype;
 		char* mapname;
-	} *rotInfo = calloc(8, CVAR_STRING_SIZE/8 + 1); // Minimum possible correct rotation command: "map mp_z". Len = 8.
+	} rotInfo[CVAR_STRING_SIZE / 8] = {{NULL, NULL}}; // Minimum possible correct rotation command: "map mp_z". Len = 8.
 
 	int rotationLen = strlen(sv_mapRotation->string) > CVAR_STRING_SIZE ? CVAR_STRING_SIZE : strlen(sv_mapRotation->string);
 	Com_Memcpy(buffer, sv_mapRotation->string, rotationLen);
@@ -1782,7 +1782,6 @@ static void SV_MixMapsInRotation()
 			break;
 	}
 
-	free(rotInfo);
 	Cvar_SetString(sv_mapRotationCurrent, mixedList);
 	Com_Printf("Picked random map rotation:\n%s\n", mixedList);
 }
