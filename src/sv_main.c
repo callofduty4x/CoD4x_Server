@@ -3583,6 +3583,250 @@ qboolean SV_CheckPaused( void ) {
 }
 
 
+
+void SV_SetConfigValueForKey(int start, int max, const char *key, const char *value)
+{
+  int v4;
+  signed int ccsi;
+  int i;
+
+
+  if ( start < 821 )
+    v4 = SL_FindString(key);
+  else
+    v4 = SL_FindLowercaseString(key);
+  ccsi = CCS_GetConstConfigStringIndex(value);
+
+  if ( ccsi < 0 )
+  {
+    i = 0;
+	for(i = 0; i < max; ++i)
+	{
+		if ( sv.configstrings[start + i] == sv.emptyConfigString )
+		{
+			break;
+		}
+
+		if ( v4 == sv.configstrings[start + i] )
+        {
+			break;
+		}
+	}
+
+	if(sv.configstrings[start + i] == sv.emptyConfigString)
+	{
+	    SV_SetConfigstring(i + start, key);
+	}
+
+  }else{
+
+    i = CCS_GetConfigStringNumForConstIndex(ccsi);
+	//constantConfigStrings[ccsi].index;
+    if ( i >= start && i < max + start )
+	{
+      SV_SetConfigstring(i + start, key);
+	}
+  }
+
+  if ( i == max )
+  {
+    Com_Printf("Overflow at config string start value of %i: key values printed below\n", start);
+    for(i = 0; i < max; ++i)
+	{
+		Com_Printf("%i: %i ( %s )\n", i + start, sv.configstrings[start + i], SL_ConvertToString(sv.configstrings[start + i]));
+	}
+    Com_Error(ERR_FATAL, "SV_SetConfigValueForKey: overflow");
+  }
+  SV_SetConfigstring(max + start + i, (char *)value);
+}
+
+
+
+void SV_SetSystemInfoConfig(void)
+{
+  char buf[8192];
+
+  Cvar_InfoString_Big(CVAR_SYSTEMINFO, buf, sizeof(buf));
+
+  if ( !fs_gameDirVar->string[0] )
+  {
+	if ( strlen(buf) + 10 <= 1024 )
+	{
+		Q_strcat(buf, 1024, "\\fs_game\\\\");
+	}
+	else
+	{
+		Com_Printf("Info string length exceeded\nkey: fs_game\nInfo string:\n%s\n", buf);
+	}
+  }
+
+  SV_SetConfigstring(1, buf);
+  cvar_modifiedFlags &= ~CVAR_SYSTEMINFO;
+}
+
+
+typedef struct
+{
+	int start;
+	int max;
+	int bit_flags;
+}svConfigCvarInfo_t;
+
+
+void SV_SetConfigCvar(const cvar_t *var, void* varg)
+{
+  const char *value;
+  svConfigCvarInfo_t *arg;
+
+  arg = (svConfigCvarInfo_t *)varg;
+
+  if ( var->flags & arg->bit_flags )
+  {
+    value = Cvar_DisplayableValue(var);
+    SV_SetConfigValueForKey(arg->start, arg->max, var->name, value);
+  }
+}
+
+void SV_SetConfig(int start, int max, int bit)
+{
+  svConfigCvarInfo_t arg;
+
+  arg.start = start;
+  arg.max = max;
+  arg.bit_flags = bit;
+  Cvar_ForEach(SV_SetConfigCvar, &arg);
+}
+
+
+
+float randomf()
+{
+	float r = (double)rand() * 0.000030517578125;
+	return r;
+}
+
+
+double crandom()
+{
+  
+  float r = (float)(2 * randomf() - 1.0);
+  return r;
+}
+
+void SV_BotUserMove(client_t *client)
+{
+	signed int clientnum;
+	usercmd_t ucmd;
+
+	if(!client->gentity)
+	{
+		return;
+	}
+  
+	memset(&ucmd, 0, sizeof(ucmd));
+  
+    clientnum = client - svs.clients;
+
+	playerState_t* ps = SV_GameClientNum(clientnum);
+	
+    *(uint32_t *)&ucmd.weapon = ps->weapon;
+
+    if ( level.clients[clientnum].sess.archiveTime == 0 )
+    {
+      if ( randomf() < 0.5 && sv_botsPressAttackBtn->boolean )
+        ucmd.buttons |= 1u;
+      if ( randomf() < 0.5 )
+        ucmd.buttons |= 0x28u;
+      if ( randomf() >= 0.33000001 )
+      {
+        if ( randomf() < 0.5 )
+          ucmd.forwardmove = -127;
+      }
+      else
+      {
+        ucmd.forwardmove = 127;
+      }
+      if ( randomf() >= 0.33000001 )
+      {
+        if ( randomf() < 0.5 )
+          ucmd.rightmove = -127;
+      }
+      else
+      {
+        ucmd.rightmove = 127;
+      }
+      if ( randomf() < 0.33000001 )
+        ucmd.angles[0] = (signed int)(crandom() * 360.0);
+      if ( randomf() < 0.33000001 )
+        ucmd.angles[1] = (signed int)(crandom() * 360.0);
+      if ( randomf() < 0.33000001 )
+        ucmd.angles[2] = (signed int)(crandom() * 360.0);
+    }
+    client->deltaMessage = client->netchan.outgoingSequence - 1;
+    SV_ClientThink(client, &ucmd);
+
+}
+
+void SV_ResetSkeletonCache()
+{
+  ++sv.skelTimeStamp;
+  if ( !sv.skelTimeStamp )
+  {
+    sv.skelTimeStamp = 1;
+  }
+  sv.skelMemPos = 0;
+  g_sv_skel_memory_start = (char*)((unsigned int)&g_sv_skel_memory[15] & 0xFFFFFFF0);
+}
+
+
+void SV_UpdateBots()
+{
+	int i;
+	client_t* cl;
+	
+	SV_ResetSkeletonCache();
+	
+	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
+	{
+		if(cl->state >= CS_CONNECTED && cl->netchan.remoteAddress.type == NA_BOT)
+		{
+			SV_BotUserMove(cl);
+		}
+	}
+}
+
+
+
+/*
+==================
+SV_PreFrame
+==================
+*/
+void SV_PreFrame()
+{
+  SV_UpdateBots();
+  if ( cvar_modifiedFlags & 0x404 )
+  {
+    SV_SetConfigstring(0, Cvar_InfoString(4));
+    cvar_modifiedFlags &= ~0x404;
+  }
+  
+  if ( cvar_modifiedFlags & CVAR_SYSTEMINFO )
+  {
+    SV_SetSystemInfoConfig();
+  }
+  
+  if ( cvar_modifiedFlags & 256 )
+  {
+    SV_SetConfig(20, 128, 256);
+    cvar_modifiedFlags &= ~256;
+  }
+}
+
+
+
+
+
 /*
 ==================
 SV_FrameMsec
@@ -4145,119 +4389,6 @@ void SV_CreateBaseline( void ) {
 	}
 }
 
-
-void SV_SetConfigValueForKey(int start, int max, const char *key, const char *value)
-{
-  int v4;
-  signed int ccsi;
-  int i;
-
-
-  if ( start < 821 )
-    v4 = SL_FindString(key);
-  else
-    v4 = SL_FindLowercaseString(key);
-  ccsi = CCS_GetConstConfigStringIndex(value);
-
-  if ( ccsi < 0 )
-  {
-    i = 0;
-	for(i = 0; i < max; ++i)
-	{
-		if ( sv.configstrings[start + i] == sv.emptyConfigString )
-		{
-			break;
-		}
-
-		if ( v4 == sv.configstrings[start + i] )
-        {
-			break;
-		}
-	}
-
-	if(sv.configstrings[start + i] == sv.emptyConfigString)
-	{
-	    SV_SetConfigstring(i + start, key);
-	}
-
-  }else{
-
-    i = CCS_GetConfigStringNumForConstIndex(ccsi);
-	//constantConfigStrings[ccsi].index;
-    if ( i >= start && i < max + start )
-	{
-      SV_SetConfigstring(i + start, key);
-	}
-  }
-
-  if ( i == max )
-  {
-    Com_Printf("Overflow at config string start value of %i: key values printed below\n", start);
-    for(i = 0; i < max; ++i)
-	{
-		Com_Printf("%i: %i ( %s )\n", i + start, sv.configstrings[start + i], SL_ConvertToString(sv.configstrings[start + i]));
-	}
-    Com_Error(ERR_FATAL, "SV_SetConfigValueForKey: overflow");
-  }
-  SV_SetConfigstring(max + start + i, (char *)value);
-}
-
-
-
-void SV_SetSystemInfoConfig(void)
-{
-  char buf[8192];
-
-  Cvar_InfoString_Big(CVAR_SYSTEMINFO, buf, sizeof(buf));
-
-  if ( !fs_gameDirVar->string[0] )
-  {
-	if ( strlen(buf) + 10 <= 1024 )
-	{
-		Q_strcat(buf, 1024, "\\fs_game\\\\");
-	}
-	else
-	{
-		Com_Printf("Info string length exceeded\nkey: fs_game\nInfo string:\n%s\n", buf);
-	}
-  }
-
-  SV_SetConfigstring(1, buf);
-  cvar_modifiedFlags &= ~CVAR_SYSTEMINFO;
-}
-
-
-typedef struct
-{
-	int start;
-	int max;
-	int bit_flags;
-}svConfigCvarInfo_t;
-
-
-void SV_SetConfigCvar(const cvar_t *var, void* varg)
-{
-  const char *value;
-  svConfigCvarInfo_t *arg;
-
-  arg = (svConfigCvarInfo_t *)varg;
-
-  if ( var->flags & arg->bit_flags )
-  {
-    value = Cvar_DisplayableValue(var);
-    SV_SetConfigValueForKey(arg->start, arg->max, var->name, value);
-  }
-}
-
-void SV_SetConfig(int start, int max, int bit)
-{
-  svConfigCvarInfo_t arg;
-
-  arg.start = start;
-  arg.max = max;
-  arg.bit_flags = bit;
-  Cvar_ForEach(SV_SetConfigCvar, &arg);
-}
 
 
 void SV_InitSnapshot()

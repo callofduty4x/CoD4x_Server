@@ -494,8 +494,8 @@ typedef struct {//0x13e78d00
 	int				restartTime;
 	int				time;*/
 
-	int			field_5FB44;
-	int			field_5FB48;
+	int			skelTimeStamp;
+	int			skelMemPos;
 	int			bpsWindow[MAX_BPS_WINDOW];
 	int			bpsWindowSteps;
 	int			bpsTotalBytes;
@@ -506,8 +506,9 @@ typedef struct {//0x13e78d00
 	float		ucompAve;
 	int			ucompNum;
 	char		gametype[MAX_QPATH]; //(0x13ed8908)
-	qboolean	unk5;
-	qboolean	unk6;
+	byte		killserver;
+	byte		pad3[3];
+	const char* killreason;
 } server_t;//Size: 0x5fc50
 
 #pragma pack(pop)
@@ -573,6 +574,12 @@ typedef struct
   unsigned int duration; //minutes
 	time_t created;
 }baninfo_t;
+
+
+
+#define g_sv_skel_memory ((char*)(0x13F5A1C0))
+#define g_sv_skel_memory_start (*(char**)(0x13F5A1A8))
+
 
 int SV_NumForGentity( gentity_t *ent );
 gentity_t *SV_GentityNum( int num );

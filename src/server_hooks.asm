@@ -80,9 +80,9 @@ global SV_ResetSekeletonCache
 SV_ResetSekeletonCache:
 	jmp dword [oSV_ResetSekeletonCache]
 
-global SV_PreFrame
-SV_PreFrame:
-	jmp dword [oSV_PreFrame]
+;global SV_PreFrame
+;SV_PreFrame:
+;	jmp dword [oSV_PreFrame]
 
 global SV_ShutdownGameProgs
 SV_ShutdownGameProgs:
@@ -137,7 +137,7 @@ oSV_SetGametype dd 0x817c72c
 oSV_InitCvars dd 0x819e66c
 oSV_RestartGameProgs dd 0x817c68a
 oSV_ResetSekeletonCache dd 0x817c602
-oSV_PreFrame dd 0x8177534
+;oSV_PreFrame dd 0x8177534
 oSV_SendClientMessages dd 0x817b71e
 oSV_SetServerStaticHeader dd 0x8178fd4
 oSV_ShutdownGameProgs dd 0x817c818
