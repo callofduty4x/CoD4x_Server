@@ -73,7 +73,7 @@ cvar_t	*sv_reconnectlimit;		// minimum seconds between connect messages
 cvar_t	*sv_padPackets;			// add nop bytes to messages
 cvar_t	*sv_mapRotation;
 cvar_t	*sv_mapRotationCurrent;
-cvar_t	*sv_randomMapRotation;
+cvar_t  *sv_randomMapRotation;
 cvar_t	*sv_nextmap;
 cvar_t	*sv_paused;
 cvar_t	*sv_killserver;			// menu system can set to 1 to shut server down
@@ -2790,7 +2790,7 @@ void SV_InitCvarsOnce(void){
 	sv_mapRotation = Cvar_RegisterString("sv_mapRotation", "", 0, "List of all maps server will play");
 	sv_mapRotationCurrent = Cvar_RegisterString("sv_mapRotationCurrent", "", 0, "List of remaining maps server has to play");
 	sv_nextmap = Cvar_RegisterString("nextmap", "", 0, "String to execute on map_rotate. This will override the default maprotation of CoD4 with the Quake3 style maprotation");
-    sv_randomMapRotation = Cvar_RegisterBool("sv_randomMapRotation", qfalse, CVAR_ARCHIVE, "Mixes up maps in rotation when true");
+	sv_randomMapRotation = Cvar_RegisterBool("sv_randomMapRotation", qfalse, CVAR_ARCHIVE, "Mixes up maps in rotation when true");
 
 	sv_timeout = Cvar_RegisterInt("sv_timeout", 40, 0, 1800, 0, "Seconds to keep a client on server without a new clientmessage");
 	sv_connectTimeout = Cvar_RegisterInt("sv_connectTimeout", 90, 0, 1800, 0, "Seconds to wait for a client which is loading a map without a new clientmessage");
