@@ -36,3 +36,10 @@ src/steam_api/
 lib/*.a
 
 plugins/libcom_plugin.a
+
+#T-Max: ignore Qt Creator files to keep project clean
+CoD4x_Server.config
+CoD4x_Server.creator
+CoD4x_Server.files
+CoD4x_Server.includes
+build_win32_PE_nopause.cmd
