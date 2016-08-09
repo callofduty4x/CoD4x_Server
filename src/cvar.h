@@ -230,4 +230,6 @@ void Cvar_Init(void);
 #define CVAR_NORESTART		1024	// do not clear when a cvar_restart is issued
 #define	CVAR_USER_CREATED	16384	// created by a set command
 
+// TODO: replace 8192 integer to this symbol in cvar.c
+#define CVAR_STRING_SIZE 8192
 #endif

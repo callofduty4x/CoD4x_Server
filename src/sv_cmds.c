@@ -1706,6 +1706,85 @@ static void SV_Map_f( void ) {
 	}
 }
 
+/*
+================
+SV_MixMapsInRotation
+
+Input map list: cvar 'sv_mapRotation'
+Output map list: cvar 'sv_mapRotationCurrent'
+================
+*/
+static void SV_MixMapsInRotation()
+{
+	char buffer[CVAR_STRING_SIZE] = {'\0'};
+	char mixedList[CVAR_STRING_SIZE] = {'\0'};
+	int i;
+	int mapCount = 0;
+	char* lastGametype = sv_g_gametype->string;
+
+	struct
+	{
+		char* gametype;
+		char* mapname;
+	} rotInfo[CVAR_STRING_SIZE / 8] = {{NULL, NULL}}; // Minimum possible correct rotation command: "map mp_z". Len = 8.
+
+	int rotationLen = strlen(sv_mapRotation->string) > CVAR_STRING_SIZE ? CVAR_STRING_SIZE : strlen(sv_mapRotation->string);
+	Com_Memcpy(buffer, sv_mapRotation->string, rotationLen);
+
+	char* p = strtok(buffer, " ");
+	do
+	{
+		if(!Q_stricmp(p, "gametype"))
+		{
+			p = strtok(NULL, " ");
+			rotInfo[mapCount].gametype = p;
+			lastGametype = p;
+			p = strtok(NULL, " ");
+		}
+		else
+			rotInfo[mapCount].gametype = lastGametype;
+
+		if(!Q_stricmp(p, "map"))
+		{
+			p = strtok(NULL, " ");
+			rotInfo[mapCount].mapname = p;
+		}
+
+		++mapCount;
+		p = strtok(NULL, " ");
+	}
+	while(p);
+
+	lastGametype = NULL;
+	for(i = mapCount; i > 0; --i) // Random here. i isn't in use. mapIndex iterations.
+	{
+		int ri = ((unsigned int)Com_RandomInt()) % mapCount;
+
+		if(Q_stricmp(rotInfo[ri].gametype, lastGametype)) // Gametype of previous placed map differs from new one? place 'gametype' keyword.
+		{
+			Q_strcat(mixedList, CVAR_STRING_SIZE, "gametype ");
+			Q_strcat(mixedList, CVAR_STRING_SIZE, rotInfo[ri].gametype);
+			Q_strcat(mixedList, CVAR_STRING_SIZE, " ");
+			lastGametype = rotInfo[ri].gametype;
+		}
+
+		Q_strcat(mixedList, CVAR_STRING_SIZE, "map ");
+		Q_strcat(mixedList, CVAR_STRING_SIZE, rotInfo[ri].mapname);
+		Q_strcat(mixedList, CVAR_STRING_SIZE, " ");
+
+		// SWAP: Copy last rotInfo to picked one.
+		rotInfo[ri].gametype = rotInfo[mapCount - 1].gametype;
+		rotInfo[ri].mapname = rotInfo[mapCount - 1].mapname;
+
+		--mapCount;
+
+		if(strlen(mixedList) > CVAR_STRING_SIZE - 100) // Exit from safezone. EXTREMELY rare rotation crash: when len(mapname) >= ~90
+			break;
+	}
+
+	Cvar_SetString(sv_mapRotationCurrent, mixedList);
+	Com_Printf("Picked random map rotation:\n%s\n", mixedList);
+}
 
 /*
 ================
@@ -1717,7 +1796,7 @@ static void SV_MapRotate_f( void ) {
 
 	char map[MAX_QPATH];
 	char gametype[MAX_QPATH];
-	char map_rotationbuf[8192];
+    char map_rotationbuf[CVAR_STRING_SIZE];
 	char* maplist;
 	int len;
 
@@ -1726,9 +1805,12 @@ static void SV_MapRotate_f( void ) {
 	Com_Printf("\"sv_mapRotation\" is: \"%s\"\n\n", sv_mapRotation->string);
 	Com_Printf("\"sv_mapRotationCurrent\" is: \"%s\"\n\n", sv_mapRotationCurrent->string);
 
-	if(sv_mapRotationCurrent->string[0] == '\0')
+    if(sv_mapRotationCurrent->string[0] == '\0') // No maps in current rotation.
 	{
-		Cvar_SetString(sv_mapRotationCurrent, sv_mapRotation->string);
+		if(sv_randomMapRotation->boolean)
+			SV_MixMapsInRotation();
+		else
+			Cvar_SetString(sv_mapRotationCurrent, sv_mapRotation->string);
 	}
 
 	Q_strncpyz(map_rotationbuf, sv_mapRotationCurrent->string, sizeof(map_rotationbuf));
