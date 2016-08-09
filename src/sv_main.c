@@ -4517,7 +4517,7 @@ void SV_SpawnServer(const char *mapname)
 
   sv.state = SS_GAME;
   SV_Heartbeat_f();
-  Com_Printf("By using this software you agree to the usage conditions you can find at http://cod4x.me/serverconditions.html\n");
+  Com_Printf("By using this software you agree to the usage conditions you can find at https://github.com/D4edalus/CoD4x_Server#usage-conditions-for-server-hosters\n");
   Com_Printf("-----------------------------------\n");
 
   Sys_EndLoadThreadPriorities();
