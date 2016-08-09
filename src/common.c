@@ -516,10 +516,10 @@ Com_Random
 Works as 'Com_RandomBytes' but returns integer.
 ==================
 */
-int Com_Random()
+int Com_RandomInt()
 {
     int res;
-    Com_RandomBytes((byte*)&res, 4);
+	Com_RandomBytes((byte*)&res, sizeof(int));
     return res;
 }
 

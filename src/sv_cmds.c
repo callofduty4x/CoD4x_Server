@@ -1758,7 +1758,7 @@ static void SV_MixMapsInRotation()
 	lastGametype = NULL;
 	for(i = mapCount; i > 0; --i) // Random here. i isn't in use. mapIndex iterations.
 	{
-		int ri = ((unsigned int)Com_Random()) % mapCount;
+		int ri = ((unsigned int)Com_RandomInt()) % mapCount;
 
 		if(Q_stricmp(rotInfo[ri].gametype, lastGametype)) // Gametype of previous placed map differs from new one? place 'gametype' keyword.
 		{
