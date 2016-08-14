@@ -157,6 +157,12 @@ Available types:
 
 Usage example: `loc = self getgeolocation(2);`
 
+#### `GetCountedFPS()`
+
+Returns counted FPS for targeted player.
+
+Usage example: `self iprintln("Current FPS: " + self getCountedFPS());`
+
 ### Player Movement Related Functions
 
 After first call to any of the following three functions, changing the variables: `g_speed`, `g_gravity` and `jump_height` 

@@ -2795,3 +2795,16 @@ void PlayerCmd_ADSButtonPressed(scr_entref_t object)
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_ADS ? qtrue : qfalse);
 }
+
+void PlayerCmd_GetCountedFPS(scr_entref_t arg)
+{
+	if(Scr_GetNumParam())
+		Scr_Error("Usage: <player entity> GetCountedFPS()\n");
+
+	client_t* cl = VM_GetClientForEntityNumber(arg);
+
+	if(!cl)
+		Scr_Error("Error: passed entity is not a client's entity\n");
+
+	Scr_AddInt(cl->clFPS);
+}
