@@ -62,7 +62,7 @@ typedef struct{
 }sprintState_t;
 
 typedef struct{
-	int	yaw;
+	float	yaw;
 	int	timer;
 	int	transIndex;
 	int	flags;
