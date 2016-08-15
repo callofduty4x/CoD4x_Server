@@ -1052,10 +1052,13 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 	//		if ( cmds[i].serverTime > cmds[cmdCount-1].serverTime ) {
 			continue;   // from just before a map_restart
 		}
-		if(sysTime >= cl->clFrameCalcTime){
-			cl->clFrameCalcTime = sysTime + 1000;
-			cl->clFPS = cl->clFrames;
+
+		double elapsedTime = sysTime - cl->clFrameCalcTime;
+		if(elapsedTime >= MS_BETWEEN_CLFPS_UPDATES)
+		{
+			cl->clFPS = cl->clFrames / (elapsedTime / 1000);
 			cl->clFrames = 0;
+			cl->clFrameCalcTime = sysTime;
 		}
 		cl->clFrames++;
 

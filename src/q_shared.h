@@ -165,6 +165,8 @@ int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
 #define NET_CONNRESET -0x7002
 #define NET_ERROR -0x7003
 
+#define MS_BETWEEN_CLFPS_UPDATES 50
+
 short   ShortSwap (short l);
 short	ShortNoSwap (short l);
 int    LongSwap (int l);
