@@ -48,6 +48,7 @@ void PlayerCmd_SetGroundReferenceEnt(scr_entref_t arg);
 void PlayerCmd_SetJumpHeight(scr_entref_t arg);
 void PlayerCmd_SetMoveSpeed(scr_entref_t arg);
 void PlayerCmd_GetGeoLocation(scr_entref_t arg);
+void PlayerCmd_GetCountedFPS(scr_entref_t arg);
 
 void PlayerCmd_ForwardButtonPressed(scr_entref_t object);
 void PlayerCmd_BackButtonPressed(scr_entref_t object);
