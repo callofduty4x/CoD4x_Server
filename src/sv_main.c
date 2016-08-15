@@ -3823,6 +3823,8 @@ void SV_PreFrame()
     SV_SetConfig(20, 128, 256);
     cvar_modifiedFlags &= ~256;
   }
+  SV_ClientCalcFramerate();
+
 }
 
 
