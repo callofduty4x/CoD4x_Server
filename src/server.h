@@ -845,6 +845,7 @@ void SV_ScreenshotClient(client_t* cl, const char* name);
 void SV_ScreenshotArrived(client_t* cl, const char* filename);
 void SV_ModuleArrived(client_t* cl, const char* filename, long checksum);
 void SV_AddBanForSteamIDGUID(uint64_t id, const char* guid, const char* name, int bantime, const char* banreason);
+void SV_ClientCalcFramerate();
 
 #ifdef COD4X18UPDATE
 void SV_ConnectWithUpdateProxy(client_t *cl);
