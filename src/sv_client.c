@@ -1052,11 +1052,7 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 	//		if ( cmds[i].serverTime > cmds[cmdCount-1].serverTime ) {
 			continue;   // from just before a map_restart
 		}
-		if(sysTime >= cl->clFrameCalcTime){
-			cl->clFrameCalcTime = sysTime + 1000;
-			cl->clFPS = cl->clFrames;
-			cl->clFrames = 0;
-		}
+
 		cl->clFrames++;
 
 		SV_ClientThink( cl, &cmds[ i ] );
@@ -1066,6 +1062,34 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		if(cl->demorecording && !cl->demowaiting)
 			SV_WriteDemoArchive(cl);
 	}
+}
+
+void SV_ClientCalcFramerate()
+{
+	int i;
+	client_t* cl;
+	static int oldtime = 0;
+
+	int now = Sys_Milliseconds();
+	int elapsed = now - oldtime;
+	if(elapsed <= 0)
+	{
+		elapsed = 1;
+	}
+	
+	int calcfactor = ((1000 << 8) / (elapsed << 8));
+	
+	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
+	{
+		if(cl->state == CS_ACTIVE)
+		{
+			cl->clFPS = cl->clFrames * calcfactor;
+		}else{
+			cl->clFPS = 0;
+		}
+		cl->clFrames = 0;
+	}
+	oldtime = now;
 }
 
 /*
