@@ -43,6 +43,7 @@
 #include "nvconfig.h"
 #include "hl2rcon.h"
 #include "crc.h"
+#include "sv_bots.h"
 
 #include "sapi.h"
 
@@ -3699,74 +3700,50 @@ void SV_SetConfig(int start, int max, int bit)
   Cvar_ForEach(SV_SetConfigCvar, &arg);
 }
 
-
-
-float randomf()
-{
-	float r = (double)rand() * 0.000030517578125;
-	return r;
-}
-
-
-double crandom()
-{
-  
-  float r = (float)(2 * randomf() - 1.0);
-  return r;
-}
-
 void SV_BotUserMove(client_t *client)
 {
 	signed int clientnum;
 	usercmd_t ucmd;
+	int i;
 
 	if(!client->gentity)
-	{
 		return;
-	}
   
 	memset(&ucmd, 0, sizeof(ucmd));
   
-    clientnum = client - svs.clients;
+	clientnum = client - svs.clients;
+	ucmd.serverTime = svs.time;
 
 	playerState_t* ps = SV_GameClientNum(clientnum);
 	
-    *(uint32_t *)&ucmd.weapon = ps->weapon;
+	ucmd.weapon = *(byte*)&ps->weapon;
 
-    if ( level.clients[clientnum].sess.archiveTime == 0 )
-    {
-      if ( randomf() < 0.5 && sv_botsPressAttackBtn->boolean )
-        ucmd.buttons |= 1u;
-      if ( randomf() < 0.5 )
-        ucmd.buttons |= 0x28u;
-      if ( randomf() >= 0.33000001 )
-      {
-        if ( randomf() < 0.5 )
-          ucmd.forwardmove = -127;
-      }
-      else
-      {
-        ucmd.forwardmove = 127;
-      }
-      if ( randomf() >= 0.33000001 )
-      {
-        if ( randomf() < 0.5 )
-          ucmd.rightmove = -127;
-      }
-      else
-      {
-        ucmd.rightmove = 127;
-      }
-      if ( randomf() < 0.33000001 )
-        ucmd.angles[0] = (signed int)(crandom() * 360.0);
-      if ( randomf() < 0.33000001 )
-        ucmd.angles[1] = (signed int)(crandom() * 360.0);
-      if ( randomf() < 0.33000001 )
-        ucmd.angles[2] = (signed int)(crandom() * 360.0);
-    }
-    client->deltaMessage = client->netchan.outgoingSequence - 1;
-    SV_ClientThink(client, &ucmd);
+	if ( level.clients[clientnum].sess.archiveTime == 0 )
+	{
 
+		ucmd.buttons = BotMovement[clientnum].buttons;
+		ucmd.forwardmove = BotMovement[clientnum].forwardMove;
+		ucmd.rightmove = BotMovement[clientnum].rightMove;
+
+		gentity_t *ent = VM_GetGEntityForNum(clientnum);
+		VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
+
+		if(BotMovement[clientnum].rotIterCount)
+		{
+			--BotMovement[clientnum].rotIterCount;
+			for(i = 0; i < 3; ++i)
+			{
+				ucmd.angles[i] += BotMovement[clientnum].rotFrac[i];
+				if(ucmd.angles[i] < 0)
+					ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
+				else if(ucmd.angles[i] > 0xFFFF)
+					ucmd.angles[i] -= 0xFFFF;
+			}
+		}
+		//ucmd.angles[0] = (unsigned int)rand() % 0xFFFF;
+	}
+	client->deltaMessage = client->netchan.outgoingSequence - 1;
+	SV_ClientThink(client, &ucmd);
 }
 
 void SV_ResetSkeletonCache()

@@ -2,15 +2,23 @@
 #define _SV_BOTS_H
 
 #include "player.h"
-#include "sys_cod4defs.h"  // MAX_CLIENTS.
+#include "sys_cod4defs.h"
+#include "scr_vm.h"
+#include "sys_main.h"
+#include "q_math.h"
+#include "scr_vm_functions.h"
 
-typedef struct
+typedef struct BotMovementInfo_s
 {
-	int clNum;
+	byte forwardMove;
+	byte rightMove;
 	int buttons;
-} BotMovement_t;
+	short int rotFrac[3];
+	int rotIterCount;
+} BotMovementInfo_t;
 
-extern BotMovement_t BotMovement[MAX_CLIENTS];
-void addBotsMovementScriptCommands();
+extern BotMovementInfo_t BotMovement[MAX_CLIENTS];
+
+void Scr_AddBotsMovement();
 
 #endif
