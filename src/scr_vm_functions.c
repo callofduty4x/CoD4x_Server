@@ -2847,3 +2847,4 @@ qboolean GetTagOrigin(gentity_t* ent, short int tagNameIdx, qboolean seekInSubMo
             PrintModelBonesInfo(ent);
     }
     return qfalse;
+}

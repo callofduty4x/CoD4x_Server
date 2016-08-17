@@ -2,7 +2,33 @@
 #include "q_math.h"
 #include <math.h>
 
-void (__cdecl *Math_VectorToAngles)(vec3_t vector, vec3_t angles) = (void(__cdecl*)(vec3_t, vec3_t))0x081921A2;
+void Math_VectorToAngles(vec3_t vector, vec3_t angles)
+{
+	angles[0] = 0.0;
+	angles[1] = 0.0;
+	angles[2] = 0.0;
+
+	if ( vector[1] == 0.0 )
+	{
+		if ( vector[0] == 0.0 )
+		{
+			angles[0] = 90.0;
+			if ( vector[2] > 0.0 )
+				angles[0] = 270.0;
+		}
+	}
+	else
+	{
+		angles[0] = atan2(vector[2], sqrt(vector[0] * vector[0] + vector[1] * vector[1])) * -180.0 / M_PI;
+		angles[1] = atan2(vector[1], vector[0]) * 180.0 / M_PI;
+
+		if ( angles[0] < 0.0 )
+			angles[0] += 360.0;
+
+		if ( angles[1] < 0.0 )
+			angles[1] += 360.0;
+	}
+}
 
 void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up ) {
 	float angle;

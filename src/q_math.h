@@ -76,7 +76,8 @@ struct cplane_s;
 void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanFrac, const float fViewRoll, const float fLeanDist);
 int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd);
 int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
-extern void (__cdecl *Math_VectorToAngles)(vec3_t vector, vec3_t angles);
+// 0x081921A2
+void Math_VectorToAngles(vec3_t vector, vec3_t angles);
 
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001
