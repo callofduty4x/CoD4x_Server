@@ -231,12 +231,6 @@ static void Scr_BotStopRotation_f(scr_entref_t entNum)
 	BotMovement[entNum].rotIterCount = 0;
 }
 
-static void Scr_TestPrintButtons_f(scr_entref_t entNum)
-{
-	gentity_t* ent = VM_GetGEntityForNum(entNum);
-	Scr_AddInt(Sys_Milliseconds() - ent->client->sess.cmd.serverTime);
-}
-
 static void Scr_BotLookAt_f(scr_entref_t entNum)
 {
 	vec3_t lookAtOrigin  = {0, 0, 0};
@@ -343,5 +337,4 @@ void Scr_AddBotsMovement()
 	Scr_AddMethod("botStopRotation", Scr_BotStopRotation_f, qfalse);
 	Scr_AddMethod("botLookAt", Scr_BotLookAt_f, qfalse);
 	Scr_AddMethod("botLookAtPlayer", Scr_BotLookAtPlayer_f, qfalse);
-	Scr_AddMethod("testPrintButtons", Scr_TestPrintButtons_f, qtrue);
 }
