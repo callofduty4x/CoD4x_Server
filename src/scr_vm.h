@@ -395,9 +395,27 @@ unsigned int __cdecl Scr_GetType( unsigned int );
 unsigned int __cdecl Scr_GetPointerType( unsigned int );
 void __cdecl Scr_GetVector( unsigned int, float* );
 unsigned int __cdecl Scr_GetObject( unsigned int );
+
+/* Scr_Error
+ *
+ * Throws script runtime error with 'string' description.
+ * Asterisk points to function name.
+ */
 void __cdecl Scr_Error( const char *string);
 void __cdecl Scr_SetLoading( qboolean );
-void __cdecl Scr_ParamError( int, const char *string);
+
+/* Scr_ParamError
+ *
+ * Throws script runtime error with 'string' description.
+ * Asterisk points to 'paramNum' function parameter.
+ */
+void __cdecl Scr_ParamError( int paramNum, const char *string);
+
+/* Scr_ObjectError
+ *
+ * Throws script runtime error with 'string' description.
+ * Asterisk points to function caller.
+ */
 void __cdecl Scr_ObjectError( const char *string);
 void __cdecl Scr_AddInt(int value);
 void __cdecl Scr_AddFloat(float);

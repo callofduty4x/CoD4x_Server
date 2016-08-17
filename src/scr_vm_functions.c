@@ -2808,3 +2808,42 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
 
 	Scr_AddInt(cl->clFPS);
 }
+
+int (*GetModelStringIdx)(int a1) = (int(*)(int))0x80CAC42;
+qboolean (*EntHasDObj)(gentity_t* ent) = (qboolean(*)(gentity_t*))0x0817C89E;
+signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int* a3) = (signed int(*)(gentity_t*, int, int*))0x80CC7BA;
+void (*PrintModelBonesInfo)(gentity_t *ent) = (void(*)(gentity_t*))0x817CBEC;
+char* (*GetStringForIdx)(int idx) = (char*(*)(int))0x08150340;
+
+/* GetTagOrigin
+ *
+ *
+ * Returns qtrue if bone has been found in current entity model.
+ * Origin array can be accessed using (*(vec3_t*)0x8373280).
+ *
+ * Based on 0x080BFFB6. Similar functionality (except script error messages).
+ *
+ * a3 - somehow used for caching of previous requests, moved from args to local variable
+ */
+qboolean GetTagOrigin(gentity_t* ent, short int tagNameIdx, qboolean seekInSubModels)
+{
+    // Here used some kind of caching.
+    // Checked if latest requested tag is the same as previous - just return from function.
+    // Find tag origin otherwise.
+    int* a3 = (int*)0x8373250;
+    if(a3[0] == *(int*)0x837062C && a3[1] == ent->s.number && (unsigned short int)a3[4] == tagNameIdx)
+        return qtrue;
+
+    if(EntHasDObj(ent))
+    {
+        if(sub_80CC7BA(ent, tagNameIdx, a3 + 3))
+        {
+            a3[1] = ent->s.number;
+            a3[0] = *(int*)0x837062C;
+            Scr_SetString((unsigned short int *)a3 + 4, tagNameIdx);
+            return qtrue;
+        }
+        if(seekInSubModels)
+            PrintModelBonesInfo(ent);
+    }
+    return qfalse;

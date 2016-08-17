@@ -2,6 +2,7 @@
 #include "q_math.h"
 #include <math.h>
 
+void (__cdecl *Math_VectorToAngles)(vec3_t vector, vec3_t angles) = (void(__cdecl*)(vec3_t, vec3_t))0x081921A2;
 
 void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up ) {
 	float angle;
