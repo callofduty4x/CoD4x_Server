@@ -101,7 +101,9 @@ void GScr_TypeTest();
 __cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
 
 qboolean GetTagOrigin(gentity_t* ent, short int tagNameIdx, qboolean seekInSubModels);
-extern qboolean (*EntHasDObj)(gentity_t* ent);
+int* GetDObjForEntity(int entNum);
+qboolean EntHasDObj(gentity_t* ent);
+
 // TODO: Give name.
 extern signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int a3);
 extern void (*PrintModelBonesInfo)(gentity_t *ent);

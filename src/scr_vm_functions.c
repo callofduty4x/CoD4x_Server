@@ -2809,8 +2809,27 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
 	Scr_AddInt(cl->clFPS);
 }
 
-int (*GetModelStringIdx)(int a1) = (int(*)(int))0x80CAC42;
-qboolean (*EntHasDObj)(gentity_t* ent) = (qboolean(*)(gentity_t*))0x0817C89E;
+/* GetDObjForEntity
+ * 0x08125E32
+ * Return value obviously not int*, but pointer to a struct (size 0x25).
+ * pWord_88E8500 - pointer to a 1024 array elements?
+ */
+int* GetDObjForEntity(int entNum)
+{
+	short int* pWord_88E8500 = (short int*)0x88E8500;
+	if ( pWord_88E8500[entNum] )
+		return (int*)0x88E8D20 + 25 * pWord_88E8500[entNum];
+	return NULL;
+}
+
+/* EntHasDObj
+ * 0x0817C89E
+ */
+qboolean EntHasDObj(gentity_t* ent)
+{
+	return GetDObjForEntity(ent->s.number) != NULL;
+}
+
 signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int* a3) = (signed int(*)(gentity_t*, int, int*))0x80CC7BA;
 void (*PrintModelBonesInfo)(gentity_t *ent) = (void(*)(gentity_t*))0x817CBEC;
 char* (*GetStringForIdx)(int idx) = (char*(*)(int))0x08150340;
