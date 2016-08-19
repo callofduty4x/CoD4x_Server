@@ -2958,7 +2958,7 @@ int SV_GetConfigstringIndex(int num)
  */
 int SV_GetModelConfigstringIndex(int num)
 {
-	return SV_GetConfigStringIndex(num + 0x33E);
+	return SV_GetConfigstringIndex(num + 0x33E);
 }
 
 void SV_UpdateClientConfigInfo(client_t* cl)
