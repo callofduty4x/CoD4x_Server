@@ -2944,6 +2944,14 @@ void SV_GetConfigstring( int index, char *buffer, int bufferSize ) {
 	Q_strncpyz( buffer, cs, bufferSize );
 }
 
+/* SV_GetConfigstringIndex
+ * 0x08172FB0
+ * T-Max: Should add index check? 0 <= num < MAX_CONFIGSTRINGS
+ */
+int SV_GetConfigstringIndex(int num)
+{
+	return (int)sv.configstrings[num];
+}
 
 void SV_UpdateClientConfigInfo(client_t* cl)
 {
