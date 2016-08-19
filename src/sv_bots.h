@@ -7,6 +7,7 @@
 #include "sys_main.h"
 #include "q_math.h"
 #include "scr_vm_functions.h"
+#include "misc.h"
 
 typedef struct BotMovementInfo_s
 {

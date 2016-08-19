@@ -107,7 +107,5 @@ qboolean EntHasDObj(gentity_t* ent);
 // TODO: Give name.
 extern signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int a3);
 extern void (*PrintModelBonesInfo)(gentity_t *ent);
-// TODO: check if function already exists.
-extern char* (*GetStringForIdx)(int idx);
 
 #endif

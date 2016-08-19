@@ -2832,7 +2832,6 @@ qboolean EntHasDObj(gentity_t* ent)
 
 signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int* a3) = (signed int(*)(gentity_t*, int, int*))0x80CC7BA;
 void (*PrintModelBonesInfo)(gentity_t *ent) = (void(*)(gentity_t*))0x817CBEC;
-char* (*GetStringForIdx)(int idx) = (char*(*)(int))0x08150340;
 
 /* GetTagOrigin
  *
