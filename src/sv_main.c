@@ -3364,7 +3364,7 @@ This allows fair starts with variable load times.
 */
 void SV_MapRestart( qboolean fastRestart ){
 
-	int i, j;
+	int i;
 	client_t    *client;
 	const char  *denied;
 	char cmd[128];
@@ -3410,12 +3410,9 @@ void SV_MapRestart( qboolean fastRestart ){
 		}
 
 		// add the map_restart command
-		//NET_OutOfBandPrint( NS_SERVER, &client->netchan.remoteAddress, "fastrestart" ); //Replaced
+//		NET_OutOfBandPrint( NS_SERVER, &client->netchan.remoteAddress, "fastrestart" ); //Replaced
 
 		SV_SendServerCommandNoLoss( client, "%c", 'm' );
-		// force a snapshot to be sent
-		//client->nextSnapshotTime = -1;
-		//SV_SendClientSnapshot( client );
 	}
 
 	SV_InitCvars();
@@ -3424,6 +3421,8 @@ void SV_MapRestart( qboolean fastRestart ){
 	svs.snapFlagServerBit ^= 4;
 
 	SV_GenerateServerId(qfalse); //Short restart
+
+	//sv.inFrame = 0;
 
 	sv.state = SS_LOADING;
 	sv.restarting = qtrue;
@@ -3451,11 +3450,7 @@ void SV_MapRestart( qboolean fastRestart ){
 			continue;
 		}
 
-		if(!pers)
-			j = -1;
-		else
-			j = 0;
-		Com_sprintf(cmd, sizeof(cmd), "%c", ((-44 & j) + 110) );
+		Com_sprintf(cmd, sizeof(cmd), "%c", pers != 0 ? 'n' : 'B');
 		SV_AddServerCommand(client, 1, cmd);
 
 		// connect the client again, without the firstTime flag
@@ -3853,7 +3848,10 @@ unsigned int SV_FrameUsec()
 	else
 		return 1;
 }
-
+/*
+spawnerrortest_t e_spawns[64];
+#include <math.h>
+*/
 /*
 ==================
 SV_Frame
@@ -3930,6 +3928,56 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 
 	// send a heartbeat to the master if needed
 	SV_MasterHeartbeat( HEARTBEAT_GAME );
+
+/*
+	for(i = 0; i < sv_maxclients->integer; ++i)
+	{
+		if(svs.clients[i].state < CS_ACTIVE)
+		{
+			continue;
+		}
+		if(fabs(svs.clients[i].gentity->r.currentAngles[0] - e_spawns[i].direction1[0]) > 0.1||
+		fabs(svs.clients[i].gentity->r.currentAngles[1] - e_spawns[i].direction1[1]) > 0.1 ||
+		fabs(svs.clients[i].gentity->r.currentAngles[2] - e_spawns[i].direction1[2]) > 0.1)
+		{
+			Com_Printf("^1Debug Spawn angles changed: ^7ent->r.currentAngles changed new: %.2f, %.2f, %.2f\n",
+			svs.clients[i].gentity->r.currentAngles[0],
+			svs.clients[i].gentity->r.currentAngles[1],
+			svs.clients[i].gentity->r.currentAngles[2]);
+			Com_Printf("^1Old angles: ^7ent->r.currentAngles: %.2f, %.2f, %.2f\n",
+			e_spawns[i].direction1[0],
+			e_spawns[i].direction1[1],
+			e_spawns[i].direction1[2]);
+
+
+			e_spawns[i].direction1[0] = svs.clients[i].gentity->r.currentAngles[0];
+			e_spawns[i].direction1[1] = svs.clients[i].gentity->r.currentAngles[1];
+			e_spawns[i].direction1[2] = svs.clients[i].gentity->r.currentAngles[2];
+		}
+
+		if(fabs(svs.clients[i].gentity->client->ps.viewangles[0] != e_spawns[i].direction2[0]) > 0.1 ||
+		fabs(svs.clients[i].gentity->client->ps.viewangles[1] != e_spawns[i].direction2[1]) > 0.1 ||
+		fabs(svs.clients[i].gentity->client->ps.viewangles[2] != e_spawns[i].direction2[2]) > 0.1)
+		{
+			Com_Printf("^1Debug Spawn angles changed: ^7ent->client->ps.viewangles changed new: %.2f, %.2f, %.2f\n",
+			svs.clients[i].gentity->client->ps.viewangles[0],
+			svs.clients[i].gentity->client->ps.viewangles[1],
+			svs.clients[i].gentity->client->ps.viewangles[2]);
+			Com_Printf("^1Old angles: ^7ent->client->ps.viewangles: %.2f, %.2f, %.2f\n",
+			e_spawns[i].direction2[0],
+			e_spawns[i].direction2[1],
+			e_spawns[i].direction2[2]);
+			
+			e_spawns[i].direction2[0] = svs.clients[i].gentity->client->ps.viewangles[0];
+			e_spawns[i].direction2[1] = svs.clients[i].gentity->client->ps.viewangles[1];
+			e_spawns[i].direction2[2] = svs.clients[i].gentity->client->ps.viewangles[2];
+
+		}
+
+	}
+
+*/
+
 
 
 #ifdef PUNKBUSTER
@@ -4287,8 +4335,6 @@ void SV_SetConfigstring( int index, const char *val ) {
 	}
 
 }
-
-
 
 
 void SV_GenerateServerId(qboolean longrestart)
