@@ -2831,7 +2831,22 @@ qboolean EntHasDObj(gentity_t* ent)
 }
 
 signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int* a3) = (signed int(*)(gentity_t*, int, int*))0x80CC7BA;
-void (*PrintModelBonesInfo)(gentity_t *ent) = (void(*)(gentity_t*))0x817CBEC;
+
+void (*PrintDObjInfo)(int *dobj) = (void(*)(int*))0x081AE114;
+
+/* PrintModelBonesInfo
+ * 0x0817CBEC
+ */
+void PrintModelBonesInfo(gentity_t *ent)
+{
+	if(com_developer->boolean)
+	{
+		if(EntHasDObj(ent))
+			PrintDObjInfo(GetDObjForEntity(ent->s.number));
+		else
+			Com_Printf("no model.\n");
+	}
+}
 
 /* GetTagOrigin
  *
