@@ -2466,8 +2466,8 @@ void SV_ClearServer( void ) {
 	int i;
 
 	for ( i = 0 ; i < MAX_CONFIGSTRINGS ; i++ ) {
-		if ( sv.configstrings[i] ) {
-			SL_RemoveRefToString( sv.configstrings[i] );
+		if ( SV_GetConfigstringIndex(i) ) {
+			SL_RemoveRefToString( SV_GetConfigstringIndex(i) );
 		}
 	}
 
@@ -2937,7 +2937,7 @@ void SV_GetConfigstring( int index, char *buffer, int bufferSize ) {
 	if ( index < 0 || index >= MAX_CONFIGSTRINGS ) {
 		Com_Error( ERR_DROP, "SV_GetConfigstring: bad index %i\n", index );
 	}
-	strIndex = sv.configstrings[index];
+	strIndex = SV_GetConfigstringIndex(index);
 
 	cs = SL_ConvertToString(strIndex);
 
@@ -2946,7 +2946,7 @@ void SV_GetConfigstring( int index, char *buffer, int bufferSize ) {
 
 /* SV_GetConfigstringIndex
  * 0x08172FB0
- * T-Max: Should add index check? 0 <= num < MAX_CONFIGSTRINGS
+ * T-Max: Should add array index check? 0 <= num < MAX_CONFIGSTRINGS
  */
 int SV_GetConfigstringIndex(int num)
 {
@@ -2988,7 +2988,7 @@ void SV_WriteGameState( msg_t* msg, client_t* cl ) {
 
 	for ( i = 0, numConfigstrings = 0; i < MAX_CONFIGSTRINGS ; i++) {
 
-		strindex = sv.configstrings[i];
+		strindex = SV_GetConfigstringIndex(i);
 		if(strindex != 0)
 		{
 			numConfigstrings++;
@@ -2999,7 +2999,7 @@ void SV_WriteGameState( msg_t* msg, client_t* cl ) {
 	for ( i = 0 ; i < MAX_CONFIGSTRINGS ; i++)
 	{
 
-		strindex = sv.configstrings[i];
+		strindex = SV_GetConfigstringIndex(i);
 
 		if(strindex == 0)
 		{
@@ -3613,18 +3613,18 @@ void SV_SetConfigValueForKey(int start, int max, const char *key, const char *va
     i = 0;
 	for(i = 0; i < max; ++i)
 	{
-		if ( sv.configstrings[start + i] == sv.emptyConfigString )
+		if ( SV_GetConfigstringIndex(start + i) == sv.emptyConfigString )
 		{
 			break;
 		}
 
-		if ( v4 == sv.configstrings[start + i] )
+		if ( v4 == SV_GetConfigstringIndex(start + i) )
         {
 			break;
 		}
 	}
 
-	if(sv.configstrings[start + i] == sv.emptyConfigString)
+	if(SV_GetConfigstringIndex(start + i) == sv.emptyConfigString)
 	{
 	    SV_SetConfigstring(i + start, key);
 	}
@@ -3644,7 +3644,7 @@ void SV_SetConfigValueForKey(int start, int max, const char *key, const char *va
     Com_Printf("Overflow at config string start value of %i: key values printed below\n", start);
     for(i = 0; i < max; ++i)
 	{
-		Com_Printf("%i: %i ( %s )\n", i + start, sv.configstrings[start + i], SL_ConvertToString(sv.configstrings[start + i]));
+		Com_Printf("%i: %i ( %s )\n", i + start, SV_GetConfigstringIndex(start + i), SL_ConvertToString(SV_GetConfigstringIndex(start + i)));
 	}
     Com_Error(ERR_FATAL, "SV_SetConfigValueForKey: overflow");
   }
@@ -4209,13 +4209,13 @@ void SV_SetConfigstring( int index, const char *val ) {
 	}
 
 	// don't bother broadcasting an update if no change
-	if ( !strcmp( val, SL_ConvertToString(sv.configstrings[index]) ) )
+	if ( !strcmp( val, SL_ConvertToString(SV_GetConfigstringIndex(index)) ) )
 	{
 		return;
 	}
 
 	// change the string in sv
-	SL_RemoveRefToString( sv.configstrings[index] );
+	SL_RemoveRefToString( SV_GetConfigstringIndex(index) );
 	if(index <= 820)
 	{
 		ccs = SL_GetString(val, 0);
