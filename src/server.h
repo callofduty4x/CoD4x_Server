@@ -730,6 +730,7 @@ __cdecl qboolean SV_GameCommand(void);
 
 void SV_GetConfigstring( int index, char *buffer, int bufferSize );
 int SV_GetConfigstringIndex(int num);
+int SV_GetModelConfigstringIndex(int num);
 
 extern cvar_t* sv_rconPassword;
 extern cvar_t* sv_protocol;

@@ -314,7 +314,7 @@ static void Scr_BotLookAtPlayer_f(scr_entref_t entNum)
 
 	if(!GetTagOrigin(player, tagName, qtrue))
 	{
-		Scr_ParamError(1, va("tag '%s' does not exist in model '%s' (or any attached submodels)", GetStringForIdx(tagName), GetStringForIdx(GetModelStringIdx(ent->model))));
+		Scr_ParamError(1, va("tag '%s' does not exist in model '%s' (or any attached submodels)", GetStringForIdx(tagName), GetStringForIdx(SV_GetModelConfigstringIndex(ent->model))));
 		return;
 	}
 

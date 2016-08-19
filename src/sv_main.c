@@ -2953,6 +2953,14 @@ int SV_GetConfigstringIndex(int num)
 	return (int)sv.configstrings[num];
 }
 
+/* SV_GetModelConfigstringIndex
+ * 0x080CAC42
+ */
+int SV_GetModelConfigstringIndex(int num)
+{
+	return SV_GetConfigStringIndex(num + 0x33E);
+}
+
 void SV_UpdateClientConfigInfo(client_t* cl)
 {
 	++svse.configDataSequence;
