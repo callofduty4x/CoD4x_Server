@@ -283,7 +283,18 @@ __asm__ __volatile__(
 
     ::"a"(ent), "d"(px), "c"(py));
 
+/*
+	Com_Printf("^1Debug: ^7SpawnClient ent->r.currentAngles: %.2f, %.2f, %.2f\n", ent->r.currentAngles[0], ent->r.currentAngles[1], ent->r.currentAngles[2]);
+	Com_Printf("^1Debug: ^7SpawnClient ent->client->ps.viewangles: %.2f, %.2f, %.2f\n", ent->client->ps.viewangles[0], ent->client->ps.viewangles[0], ent->client->ps.viewangles[0]);
 
+	e_spawns[ent->s.number].direction1[0] = ent->r.currentAngles[0];
+	e_spawns[ent->s.number].direction1[1] = ent->r.currentAngles[1];
+	e_spawns[ent->s.number].direction1[2] = ent->r.currentAngles[2];
+
+	e_spawns[ent->s.number].direction2[0] = ent->client->ps.viewangles[0];
+	e_spawns[ent->s.number].direction2[1] = ent->client->ps.viewangles[1];
+	e_spawns[ent->s.number].direction2[2] = ent->client->ps.viewangles[2];
+*/
 //	ent->client->ps.gravity = 800;
 
 	client_t *cl = &svs.clients[ent->s.number];

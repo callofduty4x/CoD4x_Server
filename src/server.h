@@ -232,7 +232,7 @@ typedef struct client_s {//90b4f8c
 	qboolean		wwwDownload;		// (0x21444)
 	qboolean		wwwDownloadStarted;	// (0x21448)
 	qboolean		wwwDlAck;		// (0x2144c)
-	qboolean		wwwDl_var03;
+	qboolean		wwwDl_failed;
 	int			nextReliableTime;	// (0x21454) svs.time when another reliable command will be allowed
 	int			floodprotect;		// (0x21458)
 	int			lastPacketTime;		// (0x2145c)svs.time when packet was last received
@@ -854,3 +854,14 @@ void SV_ConnectWithUpdateProxy(client_t *cl);
 #endif
 void SV_WriteChecksumInfo(msg_t* msg, const char* filename);
 #endif
+
+/*
+
+typedef struct{
+    vec3_t direction1;
+    vec3_t direction2;
+}spawnerrortest_t;
+
+
+extern spawnerrortest_t e_spawns[64];
+*/

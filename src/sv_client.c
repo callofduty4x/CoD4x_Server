@@ -1462,11 +1462,7 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 
 		Com_Printf( "clientDownload: %d : begining \"%s\"\n", cl - svs.clients, cl->downloadName );
 
-		if(sv_wwwDownload->boolean && cl->wwwDownload){
-			if(cl->wwwDl_var03){
-				cl->wwwDl_var03 = 0;
-				return;
-			}
+		if(sv_wwwDownload->boolean && cl->wwwDownload && !cl->wwwDl_failed){
 			MSG_WriteByte(&msg, DLSUBCMD_FILEINIT);
 			MSG_WriteLong(&msg, cl->downloadSize);
 			SV_WriteChecksumInfo(&msg, cl->downloadName);
@@ -1489,6 +1485,7 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 		cl->downloadNumBytes = 0;
 		cl->downloadBeginOffset = 0;
 		cl->wwwDownloadStarted = 0;
+		cl->wwwDl_failed = 0;
 
 		MSG_WriteByte(&msg, DLSUBCMD_FILEINIT);
 		MSG_WriteLong(&msg, cl->downloadSize);
@@ -1501,7 +1498,6 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 	{
 		return;
 	}
-
 
 	cl->downloadBlockSize = 900;
 	if(cl->downloadBlockSize > sizeof(downloadBlock))
@@ -1716,6 +1712,7 @@ SV_ExecuteClientMessage
 Parse a client packet
 ===================
 */
+
 __optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) {
 	int c, clnum;
 	int serverId;
@@ -2060,7 +2057,7 @@ void SV_WWWDownload_Fail_f(client_t *cl)
 	*cl->downloadName = 0;
 	cl->wwwDownloadStarted = 0;
 	cl->wwwDlAck = 0;
-	cl->wwwDl_var03 = 1;
+	cl->wwwDl_failed = 1;
 
 	SV_SendClientGameState(cl);
 }
@@ -2085,7 +2082,7 @@ void SV_WWWDownload_ChkFail_f(client_t *cl)
 	*cl->downloadName = 0;
 	cl->wwwDownloadStarted = 0;
 	cl->wwwDlAck = 0;
-	cl->wwwDl_var03 = 1;
+	cl->wwwDl_failed = 1;
 	SV_SendClientGameState(cl);
 }
 
