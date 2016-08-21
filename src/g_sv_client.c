@@ -356,7 +356,6 @@ __cdecl void ClientUserinfoChanged( int clientNum ) {
 
 	gentity_t *ent;
 	char    *s;
-	//char name[64];
 
 	gclient_t   *client;
 	char userinfo[MAX_INFO_STRING];
@@ -390,6 +389,7 @@ __cdecl void ClientUserinfoChanged( int clientNum ) {
 	}
 
 	/* ToDo: Has to be deleted in version 16.x */
+  char name[64];
 	SV_GetUsername(clientNum, name, sizeof(name));
 	ClientSetUsername(clientNum, name);
 

@@ -507,6 +507,7 @@ void SV_InitSApi()
 	exports.Sys_Milliseconds = Sys_Milliseconds;
 	exports.pkcs_5_alg2 = pkcs_5_alg2_200sleep;
 	exports.find_hash = find_hash;
+	exports.Cvar_RegisterEnum = Cvar_RegisterEnum;
 
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
 	if(hmodule == NULL)
