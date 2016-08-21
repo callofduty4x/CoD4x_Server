@@ -11,16 +11,14 @@ before_install:
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
+  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386
 script:
   - cd src/tomcrypt
   - ./compile_linux.sh
   - cd ../mbedtls
   - make
   - cd ../..
-  
   - ./build_updateable_elf.sh
-  
 deploy:
   skip_cleanup: true
   provider: releases
@@ -29,4 +27,5 @@ deploy:
   file: ./bin/cod4x18_dedrun
   on:
     tags: true
+#    all_branches: true
     #repo: D4edalus/CoD4x1.8_Server_Pub
