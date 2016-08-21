@@ -9,4 +9,4 @@ set OBJS_TLS=	debug.o		net.o		ssl_cache.o	ssl_ciphersuites.o		ssl_cli.o	ssl_cook
 
 ar cr ../../lib/libmbedtls_win32.a %OBJS_CRYPTO% %OBJS_TLS% %OBJS_X509%
 del *.o
-pause
+::pause
