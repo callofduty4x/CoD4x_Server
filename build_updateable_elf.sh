@@ -31,11 +31,15 @@ nasm -f elf src/pluginexports.asm    -o bin/pluginexports.o
 echo Linking...
 #gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ltommath_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
 gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
+
 rm bin/*.o
 
 #cp lib/steamclient.so bin
+./version_make_progress.sh
 
 /sbin/paxctl -c ./bin/cod4x18_dedrun
 /sbin/paxctl -em ./bin/cod4x18_dedrun
 
-./version_make_progress.sh
+exit $?
+
+

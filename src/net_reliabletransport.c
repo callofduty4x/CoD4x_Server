@@ -273,7 +273,8 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 {	
 	int sequence, acknowledge;
-	unsigned int numselectiveack, windowsize, fragmentsize, length, startack;
+	unsigned __attribute__((__unused__)) int windowsize;
+	unsigned int numselectiveack, fragmentsize, length, startack;
 	int i, j;
 	int usedfragmentcnt;
 

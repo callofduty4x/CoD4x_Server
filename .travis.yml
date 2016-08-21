@@ -11,7 +11,7 @@ before_install:
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
+  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386
 script:
   - cd src/tomcrypt
   - ./compile_linux.sh

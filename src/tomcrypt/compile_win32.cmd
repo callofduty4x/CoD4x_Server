@@ -30,4 +30,4 @@ gcc %MATHFLAGS% math\*.c
 ar cr ../../lib/libtomcrypt_win32.a *.o
 
 DEL *.o
-pause
+exit %errorlevel%
