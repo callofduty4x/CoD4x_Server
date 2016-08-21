@@ -5,25 +5,13 @@ branches:
    - master
 
 before_install:
-  - chmod +x version_make_progress.sh
-  - chmod +x build_updateable_elf.sh
-  - chmod +x src/tomcrypt/compile_linux.sh
-  
-#  - chmod +x ./plugins/antinamechange/makedll32
-#  - chmod +x ./plugins/antinamesteal/makedll32
-#  - chmod +x ./plugins/antispam/makedll32
-#  - chmod +x ./plugins/censor/makedll32
-#  - chmod +x ./plugins/clan-tag-protection/makedll32
-#  - chmod +x ./plugins/cpptest/makedll32
-  
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib libtomcrypt-dev libtommath-dev
-
+  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib
 script:
   - cd src/tomcrypt
   - ./compile_linux.sh
@@ -33,17 +21,6 @@ script:
   
   - ./build_updateable_elf.sh
   
-#  - ./plugins/antinamechange/makedll32
-#  - ./plugins/antinamesteal/makedll32
-
-  - cd plugins/antispam
-#  - ./makedll32
-#  - ./plugins/censor/makedll32
-#  - ./plugins/clan-tag-protection/makedll32
-#  - ./plugins/cpptest/makedll32
-
-  - cd ../..
-
 deploy:
   skip_cleanup: true
   provider: releases
