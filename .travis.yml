@@ -18,9 +18,7 @@ script:
   - cd ../mbedtls
   - make
   - cd ../..
-  
   - ./build_updateable_elf.sh
-  
 deploy:
   skip_cleanup: true
   provider: releases
@@ -29,4 +27,5 @@ deploy:
   file: ./bin/cod4x18_dedrun
   on:
     tags: true
+    all_branches: true
     #repo: D4edalus/CoD4x1.8_Server_Pub
