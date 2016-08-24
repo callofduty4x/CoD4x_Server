@@ -60,7 +60,7 @@ void Math_AnglesToVectors( const vec3_t angles, vec3_t forward, vec3_t right, ve
 		right[1] = ( -1 * sr * sp * sy + - 1 * cr * cy );
 		right[2] = -1 * sr * cp;
 	}
-	if (up)
+	if(up)
 	{
 		up[0] = ( cr * sp * cy + - sr * -sy );
 		up[1] = ( cr * sp * sy + - sr * cy );
@@ -82,7 +82,7 @@ void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanF
     v3ViewAngles[0] = 0.0;
     v3ViewAngles[1] = fViewYaw;
     v3ViewAngles[2] = fViewRoll * v;
-    AngleVectors(v3ViewAngles, 0, right, 0);
+	Math_AnglesToVectors(v3ViewAngles, 0, right, 0);
     VectorMA(position, v * fLeanDist, right, position);
   }
 }
