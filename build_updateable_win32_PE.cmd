@@ -1,5 +1,4 @@
 @set path=%LOCALAPPDATA%\nasm;C:\MinGW\bin;%path%
-@echo off
 
 echo Compiling C-code...
 cd bin
@@ -38,6 +37,8 @@ rename cod4x18_dedrun.exe _____________________________________________cod4x18_d
 dlltool -D _____________________________________________cod4x18_dedrun.exe -d cod4x18_dedrun.def -l ..\plugins\libcom_plugin.a
 rename _____________________________________________cod4x18_dedrun.exe cod4x18_dedrun.exe
 
-echo Done!
-pause
-REM .\version_make_progress.sh
+::REM .\version_make_progress.sh
+dir
+::exit /b %errorlevel%
+::pause
+

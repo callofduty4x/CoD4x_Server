@@ -59,6 +59,7 @@ typedef struct{
 	                int iteration_count,           int hash_idx,
 	                unsigned char *out,            unsigned long *outlen);
 	int (*find_hash)(const char* name);
+	cvar_t* (*Cvar_RegisterEnum)(const char* name, const char** strings, int integer, unsigned short flags, const char* description);
 }imports_t;
 
 

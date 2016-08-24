@@ -1,0 +1,57 @@
+version: 1.0.{build}
+build_script:
+- ps: >-
+    curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
+
+    .\nasminst.exe /S
+
+    $env:path="C:\Program Files (x86)\nasm;$($env:path)"
+
+
+
+    curl -o xz.7z "http://tukaani.org/xz/xz-5.2.1-windows.7z"
+
+    curl -o pexports.tar.xz "http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/pexports/pexports-0.47/pexports-0.47-mingw32-bin.tar.xz"
+
+
+    7z x xz.7z
+
+    ls
+
+    ./bin_x86-64/xz.exe -d pexports.tar.xz
+
+
+    7z x pexports.tar
+
+    $env:path="$pwd\bin;$($env:path)"
+
+
+    ls
+
+
+    cd src/tomcrypt
+
+    ./compile_win32.cmd
+
+    cd ../mbedtls
+
+    ./build.cmd
+
+    cd ../..
+
+    ./build_updateable_win32_PE.cmd
+test_script:
+- ps: ./bin/cod4x18_dedrun.exe
+artifacts: 
+  - path: bin\cod4x18_dedrun.exe
+    name: cod4exe
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: Je7YohhSVawAyVkWQG3zyoppIB73CjJB99IlzzJzosFJ5NeBkYLUuA2SV52LTWXj
+  artifact: cod4exe
+  draft: false
+  prerelease: false
+  on:
+    branch: master                 # release from master branch only
+    appveyor_repo_tag: true        # deploy on tag push only

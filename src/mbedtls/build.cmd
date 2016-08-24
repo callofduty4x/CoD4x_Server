@@ -1,3 +1,5 @@
+@set path=C:\MinGW\bin;%path%
+
 @echo off
 echo Compiling: release
 gcc -m32 -Wall -O0 -g -I../ -mtune=core2 -c *.c
@@ -9,4 +11,6 @@ set OBJS_TLS=	debug.o		net.o		ssl_cache.o	ssl_ciphersuites.o		ssl_cli.o	ssl_cook
 
 ar cr ../../lib/libmbedtls_win32.a %OBJS_CRYPTO% %OBJS_TLS% %OBJS_X509%
 del *.o
-pause
+
+exit %errorlevel%
+::pause
