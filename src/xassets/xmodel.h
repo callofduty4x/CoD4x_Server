@@ -217,7 +217,7 @@ typedef struct XModelLodInfo_s
 }XModelLodInfo_t;
  
  
- typedef void xScriptString_t;
+ typedef WORD xScriptString_t;
  typedef void  xMaterial_t;
  typedef void  xPhysPreset_t;
  
