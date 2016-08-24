@@ -22,4 +22,4 @@ typedef struct DObjPartCache_s
 
 #define DOBJ_PART_CACHE (*(DObjPartCache_t*)0x08373250)
 
-#endif
+#endif // __DOBJ_PART_CACHE__

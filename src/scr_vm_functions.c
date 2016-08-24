@@ -40,6 +40,7 @@
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
+#include "scr_vm_functions.h"
 
 
 /*
@@ -2809,31 +2810,6 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
 	Scr_AddInt(cl->clFPS);
 }
 
-/* GetDObjForEntity
- * 0x08125E32
- * Return value obviously not int*, but pointer to a struct (size 0x25).
- * pWord_88E8500 - pointer to a 1024 array elements?
- */
-int* GetDObjForEntity(int entNum)
-{
-	short int* pWord_88E8500 = (short int*)0x88E8500;
-	if ( pWord_88E8500[entNum] )
-		return (int*)0x88E8D20 + 25 * pWord_88E8500[entNum];
-	return NULL;
-}
-
-/* EntHasDObj
- * 0x0817C89E
- */
-qboolean EntHasDObj(gentity_t* ent)
-{
-	return GetDObjForEntity(ent->s.number) != NULL;
-}
-
-signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int* a3) = (signed int(*)(gentity_t*, int, int*))0x80CC7BA;
-
-void (*PrintDObjInfo)(int *dobj) = (void(*)(int*))0x081AE114;
-
 /* PrintModelBonesInfo
  * 0x0817CBEC
  */
@@ -2848,32 +2824,30 @@ void PrintModelBonesInfo(gentity_t *ent)
 	}
 }
 
-/* GetTagOrigin
+/* GetTagInfoForEntity
  *
  *
  * Returns qtrue if bone has been found in current entity model.
- * Origin array can be accessed using (*(vec3_t*)0x8373280).
+ * Origin vector can be accessed using 'DOBJ_PART_CACHE.vectorSet.origin'.
  *
  * Based on 0x080BFFB6. Similar functionality (except script error messages).
- *
- * a3 - somehow used for caching of previous requests, moved from args to local variable
  */
-qboolean GetTagOrigin(gentity_t* ent, short int tagNameIdx, qboolean seekInSubModels)
+qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels)
 {
     // Here used some kind of caching.
     // Checked if latest requested tag is the same as previous - just return from function.
     // Find tag origin otherwise.
-    int* a3 = (int*)0x8373250;
-    if(a3[0] == *(int*)0x837062C && a3[1] == ent->s.number && (unsigned short int)a3[4] == tagNameIdx)
+
+	if(cache->svsFrameTime == svs.time && cache->entNum == ent->s.number && cache->partNameIdx == partNameIdx)
         return qtrue;
 
     if(EntHasDObj(ent))
     {
-        if(sub_80CC7BA(ent, tagNameIdx, a3 + 3))
+		if(GetDObjPartInfo(ent, partNameIdx, &cache->vectorSet))
         {
-            a3[1] = ent->s.number;
-            a3[0] = *(int*)0x837062C;
-            Scr_SetString((unsigned short int *)a3 + 4, tagNameIdx);
+			cache->entNum = ent->s.number;
+			cache->svsFrameTime = svs.time;
+			Scr_SetString(&cache->partNameIdx, partNameIdx);
             return qtrue;
         }
         if(seekInSubModels)

@@ -26,6 +26,7 @@
 
 #include "scr_vm.h"
 #include "g_sv_shared.h"
+#include "dobj.h"
 
 #ifndef SCR_ENTREF_DEFINED
 #define SCR_ENTREF_DEFINED
@@ -100,13 +101,7 @@ void GScr_VectorAdd();
 void GScr_TypeTest();
 __cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
 
-qboolean GetTagOrigin(gentity_t* ent, short int tagNameIdx, qboolean seekInSubModels);
-int* GetDObjForEntity(int entNum);
-qboolean EntHasDObj(gentity_t* ent);
-
-// TODO: Give name.
-extern signed int (__cdecl *sub_80CC7BA)(gentity_t *ent, int tagNameIdx, int a3);
-extern void (*PrintDObjInfo)(int *dobj);
+qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
 void PrintModelBonesInfo(gentity_t *ent);
 
 #endif
