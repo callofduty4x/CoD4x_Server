@@ -312,7 +312,7 @@ static void Scr_BotLookAtPlayer_f(scr_entref_t entNum)
 	if(Scr_GetNumParam() == 2)
 		tagName = Scr_GetConstString(1);
 
-	if(!GetTagOrigin(player, tagName, qtrue))
+	if(!GetTagInfoForEntity(player, tagName, &DOBJ_PART_CACHE, qtrue))
 	{
 		Scr_ParamError(1, va("tag '%s' does not exist in model '%s' (or any attached submodels)", SL_ConvertToString(tagName), SL_ConvertToString(SV_GetModelConfigstringIndex(ent->model))));
 		return;
@@ -325,7 +325,7 @@ static void Scr_BotLookAtPlayer_f(scr_entref_t entNum)
 		multiplier = 2.0;
 
 	VectorScale(player->client->ps.velocity, multiplier/sv_fps->integer, velocity);
-	VectorAdd(*(vec3_t*)0x8373280, velocity, lookOrigin);	
+	VectorAdd(DOBJ_PART_CACHE.vectorSet.origin, velocity, lookOrigin);
 	Bot_CalculateRotationForOrigin(ent, lookOrigin, 1.0/sv_fps->integer);
 }
 

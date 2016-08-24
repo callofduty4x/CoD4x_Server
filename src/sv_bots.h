@@ -8,6 +8,7 @@
 #include "q_math.h"
 #include "scr_vm_functions.h"
 #include "misc.h"
+#include "dobj_part_cache.h"
 
 typedef struct BotMovementInfo_s
 {
