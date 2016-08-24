@@ -329,6 +329,11 @@ static void Scr_BotLookAtPlayer_f(scr_entref_t entNum)
 	Bot_CalculateRotationForOrigin(ent, lookOrigin, 1.0/sv_fps->integer);
 }
 
+void Scr_TestPrintButtons_f(scr_entref_t entNum)
+{
+	PrintDObjInfo(GetDObjForEntity(entNum));
+}
+
 void Scr_AddBotsMovement()
 {
 	Scr_AddMethod("botAction", Scr_BotAction_f, qfalse);
@@ -337,4 +342,5 @@ void Scr_AddBotsMovement()
 	Scr_AddMethod("botStopRotation", Scr_BotStopRotation_f, qfalse);
 	Scr_AddMethod("botLookAt", Scr_BotLookAt_f, qfalse);
 	Scr_AddMethod("botLookAtPlayer", Scr_BotLookAtPlayer_f, qfalse);
+	Scr_AddMethod("testPrintButtons", Scr_TestPrintButtons_f, qtrue);
 }

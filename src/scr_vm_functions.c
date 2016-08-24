@@ -2817,8 +2817,9 @@ void PrintModelBonesInfo(gentity_t *ent)
 {
 	if(com_developer->boolean)
 	{
-		if(EntHasDObj(ent))
-			PrintDObjInfo(GetDObjForEntity(ent->s.number));
+		DObj_t* dobj = GetDObjForEntity(ent->s.number);
+		if(dobj)
+			PrintDObjInfo(dobj);
 		else
 			Com_Printf("no model.\n");
 	}

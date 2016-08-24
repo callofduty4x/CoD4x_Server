@@ -7,6 +7,8 @@
 #include "entity.h"
 #include "xassets/xmodel.h"
 #include "dobj_part_cache.h"
+#include "qcommon_io.h"
+#include "misc.h"
 
 typedef struct DObjSkeletonPartMatrix_s // Same as DObjAnimMat_t? Need confirmation!
 {
@@ -51,9 +53,12 @@ typedef struct DObj_s
 
 DObj_t* GetDObjForEntity(int entNum);
 qboolean EntHasDObj(gentity_t* ent);
-extern void (*PrintDObjInfo)(DObj_t* dobj);
+void PrintDObjInfo(DObj_t* dobj);
 extern signed int (__cdecl *GetDObjPartInfo)(gentity_t *ent, int partNameIdx, DObjPartCacheVectorSet_t *vectorSet);
 extern void (*DObjInit)();
 extern void (*DB_LoadDObjs)();
+
+#define SV_ENTITY_DOBJS ((WORD*)  0x088E8500)    // Max = 0x400
+#define SV_DOBJ         ((DObj_t*)0x088E8D20)    // Max = 0x800
 
 #endif //__DOBJ_H__
