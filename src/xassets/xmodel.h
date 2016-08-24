@@ -1,3 +1,6 @@
+#ifndef __XMODEL_H__
+#define __XMODEL_H__
+
 #include "../q_shared.h"
 #include "../q_math.h"
 
@@ -256,3 +259,5 @@ typedef struct XModel_s
   xPhysPreset_t *physPreset;
   PhysGeomList_t *physGeoms;
 }XModel_t;
+
+#endif // __XMODEL_H__
