@@ -53,6 +53,7 @@ DObj_t* GetDObjForEntity(int entNum);
 qboolean EntHasDObj(gentity_t* ent);
 extern void (*PrintDObjInfo)(DObj_t* dobj);
 extern signed int (__cdecl *GetDObjPartInfo)(gentity_t *ent, int partNameIdx, DObjPartCacheVectorSet_t *vectorSet);
-extern void (*DObjInit)(); //0x81acb00
+extern void (*DObjInit)();
+extern void (*DB_LoadDObjs)();
 
 #endif //__DOBJ_H__
