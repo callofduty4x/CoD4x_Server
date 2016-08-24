@@ -51,6 +51,7 @@
 #include "httpftp.h"
 #include "huffman.h"
 #include "sapi.h"
+#include "dobj.h"
 
 #include <string.h>
 #include <setjmp.h>

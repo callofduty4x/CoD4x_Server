@@ -2,6 +2,7 @@
 
 void (*PrintDObjInfo)(DObj_t* dobj) = (void(*)(DObj_t*))0x081AE114;
 signed int (__cdecl *GetDObjPartInfo)(gentity_t *ent, int partNameIdx, DObjPartCacheVectorSet_t *vectorSet) = (signed int(*)(gentity_t*, int, DObjPartCacheVectorSet_t*))0x80CC7BA;
+void (*DObjInit)() = (void(*)())0x081ACB00;
 
 /* GetDObjForEntity
  * 0x08125E32
