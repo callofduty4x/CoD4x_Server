@@ -9,7 +9,6 @@ void PrintDObjInfo(DObj_t* dobj)
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		Com_Printf("\nModels:\n");
-		//xmodels = dobj->models;
 		if ( dobj->numModels > 0 )
 		{
 			idx = 0;
@@ -20,10 +19,10 @@ void PrintDObjInfo(DObj_t* dobj)
 			}
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////////
+		Com_Printf("\nBones:\n");
 		if(dobj->numBones)
 		{
 			idx = 0;
-			Com_Printf("\nBones:\n");
 			for(i = 0; i < dobj->numModels; ++i)
 			{
 				for(j = 0; j < dobj->models[i]->numBones; ++j)
@@ -31,9 +30,9 @@ void PrintDObjInfo(DObj_t* dobj)
 			}
 		}
 		/////////////////////////////////////////////////////////////////////////////////////
+		Com_Printf("\nPart duplicates:\n");
 		if(dobj->duplicateParts)
 		{
-			Com_Printf("\nPart duplicates:\n");
 			duplicatePartsString = SL_ConvertToString(dobj->duplicateParts);
 			i = 16;
 			while(duplicatePartsString[i])
@@ -43,15 +42,11 @@ void PrintDObjInfo(DObj_t* dobj)
 			}
 		}
 		else
-		{
 			Com_Printf("\nNo part duplicates.\n");
-		}
 		Com_Printf("\n");
-	  }
-	  else
-	  {
+	}
+	else
 		Com_Printf("No Dobj\n");
-	  }
 }
 
 signed int (__cdecl *GetDObjPartInfo)(gentity_t *ent, int partNameIdx, DObjPartCacheVectorSet_t *vectorSet) = (signed int(*)(gentity_t*, int, DObjPartCacheVectorSet_t*))0x80CC7BA;
