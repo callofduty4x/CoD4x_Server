@@ -509,7 +509,7 @@ void SV_InitSApi()
 	exports.find_hash = find_hash;
 	exports.Cvar_RegisterEnum = Cvar_RegisterEnum;
 	exports.Cvar_RegisterString = Cvar_RegisterString;
-	exports.Cvar_RegisterBool = Cvar_RegisterString;
+	exports.Cvar_RegisterBool = Cvar_RegisterBool;
 
 
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
