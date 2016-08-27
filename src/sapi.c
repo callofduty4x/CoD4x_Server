@@ -508,6 +508,9 @@ void SV_InitSApi()
 	exports.pkcs_5_alg2 = pkcs_5_alg2_200sleep;
 	exports.find_hash = find_hash;
 	exports.Cvar_RegisterEnum = Cvar_RegisterEnum;
+	exports.Cvar_RegisterString = Cvar_RegisterString;
+	exports.Cvar_RegisterBool = Cvar_RegisterString;
+
 
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
 	if(hmodule == NULL)
