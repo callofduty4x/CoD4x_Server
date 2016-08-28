@@ -37,6 +37,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdarg.h>
+#include <string.h>
 
 #ifndef __stdcall
 #define __stdcall __attribute__((stdcall))

@@ -25,6 +25,7 @@
 #define __XASSETS_H__
 
 #include "q_shared.h"
+#include "dobj.h"
 /*
 typedef struct{
     const char*		fastfile;
@@ -52,7 +53,6 @@ int __cdecl DB_GetXAssetTypeSize(int type);
 void __cdecl XAnimInit(void);
 void XAssets_PatchLimits(void);
 void DB_LoadSounds();
-void DB_LoadDObjs();
 void Material_DirtyTechniqueSetOverrides();
 void BG_FillInAllWeaponItems();
 void DB_FreeUnusedResources();
