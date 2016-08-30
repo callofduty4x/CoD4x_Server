@@ -144,6 +144,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	char			denied[MAX_STRING_CHARS];
 	const char		*denied2;
 	qboolean		canreserved;
+	qboolean		validpassword;
 
 	Q_strncpyz( userinfo, SV_Cmd_Argv(1), sizeof(userinfo) );
 	challenge = atoi( Info_ValueForKey( userinfo, "challenge" ) );
@@ -284,10 +285,22 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			}
 		}
 	}
-	if(*sv_password->string && Q_strncmp(sv_password->string, password, 32)){
-		NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server has set a join-password\n^1Invalid Password\n");
-		Com_Printf("Connection rejected from %s - Invalid Password\n", NET_AdrToString(from));
-		return;
+	
+	if(*sv_password->string && !Q_strncmp(sv_password->string, password, 32))
+	{
+		validpassword = qtrue;
+	}else{
+		validpassword = qfalse;
+	}
+
+	if(*sv_password->string && !validpassword )
+	{
+		if(!sv_steamgroup || !sv_steamgroup->string[0]) //If server is in a Steamgroup we have to let him in and see later if he is a member of steam group
+		{
+			NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server has set a join-password\n^1Invalid Password\n");
+			Com_Printf("Connection rejected from %s - Invalid Password\n", NET_AdrToString(from));
+			return;
+		}
 	}
 	//Process queue
 	for(i = 0 ; i < 10 ; i++){//Purge all older players from queue
@@ -532,7 +545,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	// notice that it is from a different serverid and that the
 	// gamestate message was not just sent, forcing a retransmit
 	newcl->gamestateMessageNum = -1; //newcl->gamestateMessageNum = -1;
-
+	newcl->hasValidPassword = validpassword;
 
 	// if this was the first client on the server, or the last client
 	// the server can hold, send a heartbeat to the master.

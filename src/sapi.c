@@ -15,7 +15,7 @@
 #include "sec_crypto.h"
 #include "g_sv_shared.h"
 
-void (*Init)(imports_t* sapi_imports, exports_t* exports);
+int (*Init)(imports_t* sapi_imports, exports_t* exports);
 
 
 void SV_SApiSteamIDTo64String(uint64_t steamid, char* string, int length)
@@ -510,6 +510,7 @@ void SV_InitSApi()
 	exports.Cvar_RegisterEnum = Cvar_RegisterEnum;
 	exports.Cvar_RegisterString = Cvar_RegisterString;
 	exports.Cvar_RegisterBool = Cvar_RegisterBool;
+	exports.Cvar_SetString = Cvar_SetString;
 
 
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
@@ -525,7 +526,10 @@ void SV_InitSApi()
 		Com_PrintError("Init entrypoint not found. Steam is not going to work.\n");
 		return;
 	}
-	Init(&exports, &sapi_imp);
+	if(Init(&exports, &sapi_imp))
+	{
+		sv_steamgroup = Cvar_RegisterString("sv_steamgroup", "", CVAR_ARCHIVE | CVAR_LATCH, "Steam group this server belongs to");
+	}
 	Cmd_AddPCommand ("getss", SV_GetSS_f, 45);
 }
 

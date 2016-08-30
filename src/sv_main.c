@@ -124,6 +124,7 @@ cvar_t* sv_clientArchive;
 cvar_t* sv_shownet;
 cvar_t* sv_updatebackendname;
 cvar_t* sv_legacymode;
+cvar_t* sv_steamgroup;
 
 serverStaticExt_t	svse;	// persistant server info across maps
 permServerStatic_t	psvs;	// persistant even if server does shutdown

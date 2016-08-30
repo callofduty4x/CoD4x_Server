@@ -62,7 +62,7 @@ typedef struct{
 	cvar_t* (*Cvar_RegisterEnum)(const char* name, const char** strings, int integer, unsigned short flags, const char* description);
 	cvar_t* (*Cvar_RegisterString)(const char *var_name, const char *var_value, unsigned short flags, const char *var_description);
 	cvar_t* (*Cvar_RegisterBool)(const char *var_name, qboolean var_value, unsigned short flags, const char *var_description);
-
+	void (*Cvar_SetString)(cvar_t*, const char*);
 }imports_t;
 
 

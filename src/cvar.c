@@ -969,9 +969,9 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 			{
 				Com_Printf ("\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
 				Com_Printf ("  Domain is one of the following:\n");
-				for(i = 0; var->enumStr[i] != NULL; i++ )
-					Com_Printf ("   %d: %s\n", var->enumStr[i]);
-
+				for(i = 0; var->enumStr[i] != NULL; i++ ){
+					Com_Printf ("   %d: %s\n",i, var->enumStr[i]);
+				}
 				Sys_LeaveCriticalSection(CRIT_CVAR);
 				return -1;
 			}
