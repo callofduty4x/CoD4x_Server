@@ -77,6 +77,7 @@ typedef struct{
 	int (*Connect)(client_t* client);
 	void (*NotifyDisconnect)(client_t* drop);
 	void (*RunFrame)();
+	bool (*SteamGetGroupMemberStatusByClientNum)(int clnum, uint64_t groupid, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, bool m_bMember, bool m_bOfficer));
 }exports_t;
 #endif
 

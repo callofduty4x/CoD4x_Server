@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <inttypes.h>
 #include "q_shared.h"
 #include "q_platform.h"
