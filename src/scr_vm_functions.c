@@ -40,6 +40,7 @@
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
+#include "scr_vm_functions.h"
 
 
 /*
@@ -2807,4 +2808,51 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
 	Scr_AddInt(cl->clFPS);
+}
+
+/* PrintModelBonesInfo
+ * 0x0817CBEC
+ */
+void PrintModelBonesInfo(gentity_t *ent)
+{
+	if(com_developer->boolean)
+	{
+		DObj_t* dobj = GetDObjForEntity(ent->s.number);
+		if(dobj)
+			PrintDObjInfo(dobj);
+		else
+			Com_Printf("no model.\n");
+	}
+}
+
+/* GetTagInfoForEntity
+ *
+ *
+ * Returns qtrue if bone has been found in current entity model.
+ * Origin vector can be accessed using 'DOBJ_PART_CACHE.vectorSet.origin'.
+ *
+ * Based on 0x080BFFB6. Similar functionality (except script error messages).
+ */
+qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels)
+{
+    // Here used some kind of caching.
+    // Checked if latest requested tag is the same as previous - just return from function.
+    // Find tag origin otherwise.
+
+	if(cache->svsFrameTime == svs.time && cache->entNum == ent->s.number && cache->partNameIdx == partNameIdx)
+        return qtrue;
+
+    if(EntHasDObj(ent))
+    {
+		if(GetDObjPartInfo(ent, partNameIdx, &cache->vectorSet))
+        {
+			cache->entNum = ent->s.number;
+			cache->svsFrameTime = svs.time;
+			Scr_SetString(&cache->partNameIdx, partNameIdx);
+            return qtrue;
+        }
+        if(seekInSubModels)
+            PrintModelBonesInfo(ent);
+    }
+    return qfalse;
 }

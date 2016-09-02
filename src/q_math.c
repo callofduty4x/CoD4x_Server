@@ -2,33 +2,66 @@
 #include "q_math.h"
 #include <math.h>
 
+void Math_VectorToAngles(vec3_t vector, vec3_t angles)
+{
+	angles[0] = 0.0;
+	angles[1] = 0.0;
+	angles[2] = 0.0;
 
-void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up ) {
-	float angle;
+	if ( vector[1] == 0.0 )
+	{
+		if ( vector[0] == 0.0 )
+		{
+			angles[0] = 90.0;
+			if ( vector[2] > 0.0 )
+				angles[0] = 270.0;
+		}
+	}
+	else
+	{
+		angles[0] = atan2(vector[2], sqrt(vector[0] * vector[0] + vector[1] * vector[1])) * -180.0 / M_PI;
+		angles[1] = atan2(vector[1], vector[0]) * 180.0 / M_PI;
+
+		if ( angles[0] < 0.0 )
+			angles[0] += 360.0;
+
+		if ( angles[1] < 0.0 )
+			angles[1] += 360.0;
+	}
+}
+
+void Math_AnglesToVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up )
+{
+	double angle;
 	static float sr, sp, sy, cr, cp, cy;
 	// static to help MS compiler fp bugs
 
-	angle = angles[YAW] * ( M_PI * 2 / 360 );
-	sy = sin( angle );
-	cy = cos( angle );
-	angle = angles[PITCH] * ( M_PI * 2 / 360 );
-	sp = sin( angle );
-	cp = cos( angle );
-	angle = angles[ROLL] * ( M_PI * 2 / 360 );
-	sr = sin( angle );
-	cr = cos( angle );
+	angle = angles[YAW] * (M_PI / 180.0);
+	sy = sin(angle);
+	cy = cos(angle);
 
-	if ( forward ) {
+	angle = angles[PITCH] * (M_PI / 180.0);
+	sp = sin(angle);
+	cp = cos(angle);
+
+	angle = angles[ROLL] * (M_PI / 180.0);
+	sr = sin(angle);
+	cr = cos(angle);
+
+	if(forward)
+	{
 		forward[0] = cp * cy;
 		forward[1] = cp * sy;
 		forward[2] = -sp;
 	}
-	if ( right ) {
+	if(right)
+	{
 		right[0] = ( -1 * sr * sp * cy + - 1 * cr * -sy );
 		right[1] = ( -1 * sr * sp * sy + - 1 * cr * cy );
 		right[2] = -1 * sr * cp;
 	}
-	if ( up ) {
+	if(up)
+	{
 		up[0] = ( cr * sp * cy + - sr * -sy );
 		up[1] = ( cr * sp * sy + - sr * cy );
 		up[2] = cr * cp;
@@ -49,7 +82,7 @@ void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanF
     v3ViewAngles[0] = 0.0;
     v3ViewAngles[1] = fViewYaw;
     v3ViewAngles[2] = fViewRoll * v;
-    AngleVectors(v3ViewAngles, 0, right, 0);
+	Math_AnglesToVectors(v3ViewAngles, 0, right, 0);
     VectorMA(position, v * fLeanDist, right, position);
   }
 }

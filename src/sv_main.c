@@ -43,6 +43,7 @@
 #include "nvconfig.h"
 #include "hl2rcon.h"
 #include "crc.h"
+#include "sv_bots.h"
 
 #include "sapi.h"
 
@@ -2466,8 +2467,8 @@ void SV_ClearServer( void ) {
 	int i;
 
 	for ( i = 0 ; i < MAX_CONFIGSTRINGS ; i++ ) {
-		if ( sv.configstrings[i] ) {
-			SL_RemoveRefToString( sv.configstrings[i] );
+		if ( SV_GetConfigstringIndex(i) ) {
+			SL_RemoveRefToString( SV_GetConfigstringIndex(i) );
 		}
 	}
 
@@ -2937,13 +2938,29 @@ void SV_GetConfigstring( int index, char *buffer, int bufferSize ) {
 	if ( index < 0 || index >= MAX_CONFIGSTRINGS ) {
 		Com_Error( ERR_DROP, "SV_GetConfigstring: bad index %i\n", index );
 	}
-	strIndex = sv.configstrings[index];
+	strIndex = SV_GetConfigstringIndex(index);
 
 	cs = SL_ConvertToString(strIndex);
 
 	Q_strncpyz( buffer, cs, bufferSize );
 }
 
+/* SV_GetConfigstringIndex
+ * 0x08172FB0
+ * T-Max: Should add array index check? 0 <= num < MAX_CONFIGSTRINGS
+ */
+int SV_GetConfigstringIndex(int num)
+{
+	return (int)sv.configstrings[num];
+}
+
+/* SV_GetModelConfigstringIndex
+ * 0x080CAC42
+ */
+int SV_GetModelConfigstringIndex(int num)
+{
+	return SV_GetConfigstringIndex(num + 0x33E);
+}
 
 void SV_UpdateClientConfigInfo(client_t* cl)
 {
@@ -2980,7 +2997,7 @@ void SV_WriteGameState( msg_t* msg, client_t* cl ) {
 
 	for ( i = 0, numConfigstrings = 0; i < MAX_CONFIGSTRINGS ; i++) {
 
-		strindex = sv.configstrings[i];
+		strindex = SV_GetConfigstringIndex(i);
 		if(strindex != 0)
 		{
 			numConfigstrings++;
@@ -2991,7 +3008,7 @@ void SV_WriteGameState( msg_t* msg, client_t* cl ) {
 	for ( i = 0 ; i < MAX_CONFIGSTRINGS ; i++)
 	{
 
-		strindex = sv.configstrings[i];
+		strindex = SV_GetConfigstringIndex(i);
 
 		if(strindex == 0)
 		{
@@ -3600,18 +3617,18 @@ void SV_SetConfigValueForKey(int start, int max, const char *key, const char *va
     i = 0;
 	for(i = 0; i < max; ++i)
 	{
-		if ( sv.configstrings[start + i] == sv.emptyConfigString )
+		if ( SV_GetConfigstringIndex(start + i) == sv.emptyConfigString )
 		{
 			break;
 		}
 
-		if ( v4 == sv.configstrings[start + i] )
+		if ( v4 == SV_GetConfigstringIndex(start + i) )
         {
 			break;
 		}
 	}
 
-	if(sv.configstrings[start + i] == sv.emptyConfigString)
+	if(SV_GetConfigstringIndex(start + i) == sv.emptyConfigString)
 	{
 	    SV_SetConfigstring(i + start, key);
 	}
@@ -3631,7 +3648,7 @@ void SV_SetConfigValueForKey(int start, int max, const char *key, const char *va
     Com_Printf("Overflow at config string start value of %i: key values printed below\n", start);
     for(i = 0; i < max; ++i)
 	{
-		Com_Printf("%i: %i ( %s )\n", i + start, sv.configstrings[start + i], SL_ConvertToString(sv.configstrings[start + i]));
+		Com_Printf("%i: %i ( %s )\n", i + start, SV_GetConfigstringIndex(start + i), SL_ConvertToString(SV_GetConfigstringIndex(start + i)));
 	}
     Com_Error(ERR_FATAL, "SV_SetConfigValueForKey: overflow");
   }
@@ -3695,74 +3712,50 @@ void SV_SetConfig(int start, int max, int bit)
   Cvar_ForEach(SV_SetConfigCvar, &arg);
 }
 
-
-
-float randomf()
-{
-	float r = (double)rand() * 0.000030517578125;
-	return r;
-}
-
-
-double crandom()
-{
-  
-  float r = (float)(2 * randomf() - 1.0);
-  return r;
-}
-
 void SV_BotUserMove(client_t *client)
 {
 	signed int clientnum;
 	usercmd_t ucmd;
+	int i;
 
 	if(!client->gentity)
-	{
 		return;
-	}
   
 	memset(&ucmd, 0, sizeof(ucmd));
   
-    clientnum = client - svs.clients;
+	clientnum = client - svs.clients;
+	ucmd.serverTime = svs.time;
 
 	playerState_t* ps = SV_GameClientNum(clientnum);
 	
-    *(uint32_t *)&ucmd.weapon = ps->weapon;
+	ucmd.weapon = *(byte*)&ps->weapon;
 
-    if ( level.clients[clientnum].sess.archiveTime == 0 )
-    {
-      if ( randomf() < 0.5 && sv_botsPressAttackBtn->boolean )
-        ucmd.buttons |= 1u;
-      if ( randomf() < 0.5 )
-        ucmd.buttons |= 0x28u;
-      if ( randomf() >= 0.33000001 )
-      {
-        if ( randomf() < 0.5 )
-          ucmd.forwardmove = -127;
-      }
-      else
-      {
-        ucmd.forwardmove = 127;
-      }
-      if ( randomf() >= 0.33000001 )
-      {
-        if ( randomf() < 0.5 )
-          ucmd.rightmove = -127;
-      }
-      else
-      {
-        ucmd.rightmove = 127;
-      }
-      if ( randomf() < 0.33000001 )
-        ucmd.angles[0] = (signed int)(crandom() * 360.0);
-      if ( randomf() < 0.33000001 )
-        ucmd.angles[1] = (signed int)(crandom() * 360.0);
-      if ( randomf() < 0.33000001 )
-        ucmd.angles[2] = (signed int)(crandom() * 360.0);
-    }
-    client->deltaMessage = client->netchan.outgoingSequence - 1;
-    SV_ClientThink(client, &ucmd);
+	if ( level.clients[clientnum].sess.archiveTime == 0 )
+	{
 
+		ucmd.buttons = BotMovement[clientnum].buttons;
+		ucmd.forwardmove = BotMovement[clientnum].forwardMove;
+		ucmd.rightmove = BotMovement[clientnum].rightMove;
+
+		gentity_t *ent = VM_GetGEntityForNum(clientnum);
+		VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
+
+		if(BotMovement[clientnum].rotIterCount)
+		{
+			--BotMovement[clientnum].rotIterCount;
+			for(i = 0; i < 3; ++i)
+			{
+				ucmd.angles[i] += BotMovement[clientnum].rotFrac[i];
+				if(ucmd.angles[i] < 0)
+					ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
+				else if(ucmd.angles[i] > 0xFFFF)
+					ucmd.angles[i] -= 0xFFFF;
+			}
+		}
+		//ucmd.angles[0] = (unsigned int)rand() % 0xFFFF;
+	}
+	client->deltaMessage = client->netchan.outgoingSequence - 1;
+	SV_ClientThink(client, &ucmd);
 }
 
 void SV_ResetSkeletonCache()
@@ -4273,13 +4266,13 @@ void SV_SetConfigstring( int index, const char *val ) {
 	}
 
 	// don't bother broadcasting an update if no change
-	if ( !strcmp( val, SL_ConvertToString(sv.configstrings[index]) ) )
+	if ( !strcmp( val, SL_ConvertToString(SV_GetConfigstringIndex(index)) ) )
 	{
 		return;
 	}
 
 	// change the string in sv
-	SL_RemoveRefToString( sv.configstrings[index] );
+	SL_RemoveRefToString( SV_GetConfigstringIndex(index) );
 	if(index <= 820)
 	{
 		ccs = SL_GetString(val, 0);
