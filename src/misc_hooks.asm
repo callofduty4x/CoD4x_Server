@@ -54,10 +54,6 @@ global SEH_StringEd_GetString
 SEH_StringEd_GetString:
 	jmp dword [oSEH_StringEd_GetString]
 
-global DObjInit
-DObjInit:
-	jmp dword [oDObjInit]
-
 global SL_RemoveRefToString
 SL_RemoveRefToString:
 	jmp dword [oSL_RemoveRefToString]
@@ -72,5 +68,4 @@ oSEH_UpdateLanguageInfo dd 0x8180432
 oSetAnimCheck dd 0x81423f0
 oBG_IsWeaponValid dd 0x805f4fe
 oSEH_StringEd_GetString dd 0x817fbe0
-oDObjInit dd 0x81acb00
 oSL_RemoveRefToString dd 0x8150e24

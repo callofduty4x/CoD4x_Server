@@ -26,6 +26,7 @@
 
 #include "scr_vm.h"
 #include "g_sv_shared.h"
+#include "dobj.h"
 
 #ifndef SCR_ENTREF_DEFINED
 #define SCR_ENTREF_DEFINED
@@ -100,5 +101,8 @@ void GScr_SpawnHelicopter();
 void GScr_VectorAdd();
 void GScr_TypeTest();
 __cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
+
+qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
+void PrintModelBonesInfo(gentity_t *ent);
 
 #endif
