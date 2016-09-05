@@ -293,9 +293,9 @@ typedef struct
 struct VariableStackBuffer
 {
   const char *pos;
-  unsigned int16_t size;
-  unsigned int16_t bufLen;
-  unsigned int16_t localId;
+  uint16_t size;
+  uint16_t bufLen;
+  uint16_t localId;
   char time;
   char buf[1];
 };
