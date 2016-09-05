@@ -2837,3 +2837,20 @@ void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
         Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);
     }
 }
+
+/*
+//Delete me once we have an example function
+void GScr_TestCodePos()
+{
+	if ( Scr_GetNumParam() != 1 )
+	{
+		Scr_Error("Usage: codepostest <function>");
+		return;
+	}
+
+  uint32_t vmromaddress = Scr_GetFunc(0);
+  short threadid = Scr_ExecThread( vmromaddress, 0);
+  Scr_FreeThread( threadid );
+
+}
+*/

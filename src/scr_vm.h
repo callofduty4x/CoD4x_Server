@@ -357,7 +357,7 @@ typedef struct
   unsigned int animId;
   unsigned int freeEntList;
   unsigned int tempVariable;
-  byte bInited; 
+  byte bInited;
   byte pad2;
   uint16_t savecount;
   unsigned int checksum;
@@ -425,6 +425,7 @@ unsigned int __cdecl Scr_GetType( unsigned int );
 unsigned int __cdecl Scr_GetPointerType( unsigned int );
 void __cdecl Scr_GetVector( unsigned int, float* );
 unsigned int __cdecl Scr_GetObject( unsigned int );
+int Scr_GetFunc(unsigned int paramnum);
 void __cdecl Scr_Error( const char *string);
 void __cdecl Scr_SetLoading( qboolean );
 void __cdecl Scr_ParamError( int, const char *string);
@@ -545,5 +546,8 @@ gentity_t* VM_GetGEntityForNum(scr_entref_t num);
 gclient_t* VM_GetGClientForEntity(gentity_t* ent);
 gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
 client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
+
+
+void GScr_TestCodePos();
 
 #endif

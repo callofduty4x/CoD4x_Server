@@ -299,6 +299,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("execex", GScr_CbufAddTextEx, 0);
 	Scr_AddFunction("sha256", GScr_SHA256, 0);
 	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
+/*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
 
 
 }
@@ -568,7 +569,7 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("leanleftbuttonpressed", PlayerCmd_LeanLeftButtonPressed, 0);
 	Scr_AddMethod("leanrightbuttonpressed", PlayerCmd_LeanRightButtonPressed, 0);
 	Scr_AddMethod("isproning", PlayerCmd_IsProning, 0);
-	Scr_AddMethod("iscrouching", PlayerCmd_IsCrouching, 0);	
+	Scr_AddMethod("iscrouching", PlayerCmd_IsCrouching, 0);
 	Scr_AddMethod("isstanding", PlayerCmd_IsStanding, 0);
 	Scr_AddMethod("jumpbuttonpressed", PlayerCmd_JumpButtonPressed, 0);
 	Scr_AddMethod("isinads", PlayerCmd_IsInADS, 0);
@@ -1456,7 +1457,7 @@ int Scr_GetInt(unsigned int paramnum)
 	Scr_Error(va("parameter %d does not exist", paramnum + 1));
 	return 0;
   }
- 
+
   var = &scrVmPub.top[-paramnum];
   if ( var->type == 6 )
   {
@@ -1467,23 +1468,25 @@ int Scr_GetInt(unsigned int paramnum)
   return 0;
 }
 
-const char* Scr_GetCodePosArg(unsigned int paramnum)
+//Use with Scr_Exce(Ent)Thread
+int Scr_GetFunc(unsigned int paramnum)
 {
   mvabuf;
   VariableValue *var;
 
   if ( paramnum >= scrVmPub.outparamcount )
   {
-	Scr_Error(va("parameter %d does not exist", paramnum + 1));
-	return NULL;
+  	Scr_Error(va("parameter %d does not exist", paramnum + 1));
+  	return -1;
   }
- 
+
   var = &scrVmPub.top[-paramnum];
   if ( var->type == 9 )
   {
-    return var->u.codePosValue;
+    int vmRomAddress = var->u.codePosValue - scrVarPub.programBuffer;
+    return vmRomAddress;
   }
   scrVarPub.error_index = paramnum + 1;
-  Scr_Error(va("type %s is not an int", var_typename[var->type]));
-  return NULL;
+  Scr_Error(va("type %s is not an function", var_typename[var->type]));
+  return -1;
 }

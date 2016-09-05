@@ -593,10 +593,12 @@ void* Sys_LoadLibrary(const char* dlfile)
 {
 	HMODULE handle = LoadLibraryA(dlfile);
 	currentLibHandle = handle;
+/*
 	if(handle == NULL)
 	{
 		Sys_ShowErrorDialog("Sys_LoadLibrary");
 	}
+*/
 	return handle;
 }
 
