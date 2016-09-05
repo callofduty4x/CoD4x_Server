@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stdint.h>
-#include "guid2playerid.h"
+#include "../../plugins/guid2playerid.h"
 
 
 
@@ -18,7 +18,7 @@ static char *Q_strlwr( char *s1 ) {
 
 char accounttypechars[] = {'I', 'U', 'M', 'G', 'A', 'P', 'C', 'g', 'T', ' ', 'a'};
 
-static void SteamIDToString(uint64_t steamid, char* string)
+/*static void SteamIDToString(uint64_t steamid, char* string)
 {
 	uint32_t accounttype, universe, accountid;
 
@@ -33,7 +33,7 @@ static void SteamIDToString(uint64_t steamid, char* string)
 		return;
 	}
 	sprintf(string, "[%c:%u:%u]", accounttypechars[accounttype], universe, accountid);
-}
+}*/
 
 
 static char* IsGUID(char* GUID){
@@ -66,7 +66,7 @@ static char* IsGUID(char* GUID){
 
 int main(int argc, char *argv[])
 {
-  char string[1024];
+  //char string[1024];
   if(argc != 2)
   {
     printf("Usage: guid2playerid <guid>\n");
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  uint64_t playerid = SV_SApiGUID2PlayerID(guid);
+  uint64_t playerid = GUID2PlayerID(guid);
   //SteamIDToString(playerid, string);
   printf("%llu\n", playerid);
   //printf("%s\n", string);
