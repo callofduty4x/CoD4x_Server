@@ -54,9 +54,9 @@ global Scr_GetNumParam
 Scr_GetNumParam:
 	jmp dword [oScr_GetNumParam]
 
-global Scr_GetInt
-Scr_GetInt:
-	jmp dword [oScr_GetInt]
+;global Scr_GetInt
+;Scr_GetInt:
+;	jmp dword [oScr_GetInt]
 
 global Scr_GetFloat
 Scr_GetFloat:
@@ -291,7 +291,7 @@ oGScr_Shutdown dd 0x80bf610
 oScr_AllocArray dd 0x8153cca
 oAllocObject dd 0x8153e88
 oScr_GetNumParam dd 0x815d01e
-oScr_GetInt dd 0x8160fee
+;oScr_GetInt dd 0x8160fee
 oScr_GetFloat dd 0x816094c
 oScr_GetString dd 0x8160932
 oScr_GetEntity dd 0x80c76ec
