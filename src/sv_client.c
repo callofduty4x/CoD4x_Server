@@ -47,6 +47,7 @@
 #include <stdint.h>
 #include <stdarg.h>
 #include <string.h>
+#include <ctype.h>
 
 
 static void SV_CloseDownload( client_t *cl );
@@ -116,7 +117,33 @@ __optimize3 __regparm1 void SV_GetChallenge(netadr_t *from)
 
 }
 
+/* True if user nick name not empty and have at least 3 visible characters */
+static qboolean is_nick_visible ( char *nick, int len )
+{
+	byte alphanumeric_count = 0;
+	byte color_codes_count = 0;
+	int i = 0;
 
+	if (nick[0] == '\0')
+		return qfalse;
+
+	while (nick[i] && i < len)
+	{
+		if (isalnum(nick[i]))
+			++alphanumeric_count;
+		else if (nick[i] == '^' && isdigit(nick[i + 1]))
+		{
+			++color_codes_count;
+			++i;
+		} /* Color code include decimal so it must not be counted */
+		++i;
+	}
+
+	if (alphanumeric_count < 3)
+		return qfalse;
+
+	return qtrue;
+}
 
 /*
 ==================
@@ -206,8 +233,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	Com_sprintf(ip_str, sizeof(ip_str), "%s", NET_AdrToConnectionString( from ));
 	Info_SetValueForKey( userinfo, "ip", ip_str );
 
-
-	Q_strncpyz(nick, Info_ValueForKey( userinfo, "name" ), 33);
+	Q_strncpyz(nick, Info_ValueForKey( userinfo, "name" ), sizeof nick);
 
 	denied[0] = '\0';
 
@@ -674,6 +700,13 @@ void SV_UserinfoChanged( client_t *cl ) {
 
 	}else{
 */
+	char nick[33] = {'\0'};
+	Q_strncpyz(nick, Info_ValueForKey(cl->userinfo, "name"), sizeof nick);
+
+	if (!is_nick_visible(nick, sizeof nick))
+		Q_strncpyz(nick, "NoName", sizeof nick);
+
+	Q_strncpyz(cl->name, nick, sizeof cl->name);
 	Q_strncpyz(cl->shortname, cl->name, sizeof(cl->shortname));
 /*
 	}
