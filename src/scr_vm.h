@@ -293,9 +293,9 @@ typedef struct
 struct VariableStackBuffer
 {
   const char *pos;
-  unsigned __int16 size;
-  unsigned __int16 bufLen;
-  unsigned __int16 localId;
+  unsigned int16_t size;
+  unsigned int16_t bufLen;
+  unsigned int16_t localId;
   char time;
   char buf[1];
 };
@@ -546,8 +546,5 @@ gentity_t* VM_GetGEntityForNum(scr_entref_t num);
 gclient_t* VM_GetGClientForEntity(gentity_t* ent);
 gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
 client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
-
-
-void GScr_TestCodePos();
 
 #endif
