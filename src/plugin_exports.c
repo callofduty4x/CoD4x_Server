@@ -659,6 +659,11 @@ P_P_F int Plugin_FS_SV_WriteFile( const char *qpath, const void *buffer, int siz
     return FS_SV_HomeWriteFile( qpath, buffer, size);
 }
 
+P_P_F int Plugin_HTTP_SendReceiveData(ftRequest_t* request)
+{
+  return HTTP_SendReceiveData(request);
+}
+
 
 /* blocking */
 P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines)

@@ -714,7 +714,7 @@ static int HTTP_ProcessChunkedEncoding(ftRequest_t* request, qboolean connection
 }
 
 
-static int HTTP_SendReceiveData(ftRequest_t* request)
+int HTTP_SendReceiveData(ftRequest_t* request)
 {
 	char* line;
 	int status, i, flags;
