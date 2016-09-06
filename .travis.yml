@@ -13,7 +13,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386
 script:
-  - TRAVIS_TAG="test"
+  - TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT)
+#  - RES=$([ -z "$TRAVIS_TAG" ] && echo $TRAVIS_TAG)
   - cd src/tomcrypt
   - ./compile_linux.sh
   - cd ../mbedtls
