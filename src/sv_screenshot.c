@@ -165,6 +165,8 @@ void SV_ScreenshotArrived( client_t* cl, const char* filename )
 		return;
 	}
 	Com_sprintf(cmdline, sizeof(cmdline), "\"%s/apps/%s\" \"%s/%s\"", fs_homepath->string, sv_screenshotArrivedCmd->string, fs_homepath->string, filename);
+	
+	PHandler_Event(PLUGINS_ONSCREENSHOTARRIVED, cl, filename); 
 	Sys_DoStartProcess(cmdline);
 }
 
