@@ -27,5 +27,4 @@ deploy:
   file: ./bin/cod4x18_dedrun
   on:
     tags: true
-    all_branches: true
     #repo: D4edalus/CoD4x1.8_Server_Pub
