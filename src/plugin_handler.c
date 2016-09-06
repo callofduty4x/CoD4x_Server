@@ -70,7 +70,7 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnPlayerAddBan",
     "OnPlayerGetBanStatus",
     "OnPlayerRemoveBan",
-    "OnScreenshotArrived"
+    "OnScreenshotArrived",
     "OnModuleLoaded",
     "OnTerminate"
 };
