@@ -14,6 +14,7 @@ before_install:
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386
 script:
   - TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT)
+  - echo $TRAVIS_TAG
 #  - RES=$([ -z "$TRAVIS_TAG" ] && echo $TRAVIS_TAG)
   - cd src/tomcrypt
   - ./compile_linux.sh
