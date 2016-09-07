@@ -426,6 +426,7 @@ unsigned int __cdecl Scr_GetPointerType( unsigned int );
 void __cdecl Scr_GetVector( unsigned int, float* );
 unsigned int __cdecl Scr_GetObject( unsigned int );
 int Scr_GetFunc(unsigned int paramnum);
+extern char* (__cdecl *Scr_GetLocalizedString)(unsigned int arg);
 void __cdecl Scr_Error( const char *string);
 void __cdecl Scr_SetLoading( qboolean );
 void __cdecl Scr_ParamError( int, const char *string);

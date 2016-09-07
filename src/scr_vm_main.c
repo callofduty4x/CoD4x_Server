@@ -174,7 +174,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("precacheshellshock", (void*)0x80be308, 0);
 	Scr_AddFunction("precacheitem", (void*)0x80be28a, 0);
 	Scr_AddFunction("precacheshader", (void*)0x80be126, 0);
-	Scr_AddFunction("precachestring", (void*)0x80be0ea, 0);
+	Scr_AddFunction("precachestring", Scr_PrecacheString_f, 0);
 	Scr_AddFunction("precacherumble", (void*)0x80bb010, 0);
 	Scr_AddFunction("loadfx", (void*)0x80be064, 0);
 	Scr_AddFunction("playfx", (void*)0x80c6a38, 0);
@@ -417,7 +417,7 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("scaleovertime", (void*)0x808ee86, 0);
 	Scr_AddMethod("moveovertime", (void*)0x808ed56, 0);
 	Scr_AddMethod("reset", (void*)0x808ebfa, 0);
-	Scr_AddMethod("destroy", (void*)0x808eba6, 0);
+	Scr_AddMethod("destroy", Scr_Destroy_f, 0);
 	Scr_AddMethod("setpulsefx", (void*)0x808feb8, 0);
 	Scr_AddMethod("setplayernamestring", (void*)0x808ea9e, 0);
 	Scr_AddMethod("setmapnamestring", (void*)0x808e85a, 0);
