@@ -285,7 +285,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			}
 		}
 	}
-	
+
 	if(*sv_password->string && !Q_strncmp(sv_password->string, password, 32))
 	{
 		validpassword = qtrue;
@@ -1072,7 +1072,7 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 
 		PHandler_Event(PLUGINS_ONCLIENTMOVECOMMAND, cl, &cmds[ i ]);
 
-		if(cl->demorecording && !cl->demowaiting)
+		if(cl->demorecording && !cl->demowaiting && cl->demofile.handleFiles.file.o)
 			SV_WriteDemoArchive(cl);
 	}
 }
@@ -1089,9 +1089,9 @@ void SV_ClientCalcFramerate()
 	{
 		elapsed = 1;
 	}
-	
+
 	int calcfactor = ((1000 << 8) / (elapsed << 8));
-	
+
 	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
 	{
 		if(cl->state == CS_ACTIVE)
@@ -1153,6 +1153,16 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	Pmove_ExtendedInitForClient(client);
 
 	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
+
+	if(client->demorecording)
+	{
+		if(client->demofile.handleFiles.file.o)
+		{
+			SV_StopRecord(client); //Should never happen but who knows
+		}
+		client->demorecording = qfalse;
+		SV_RecordClient(client, client->demoName); //Write ther next demo of client
+	}
 
 	if(sv_autodemorecord->boolean && !client->demorecording && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6))
 	{

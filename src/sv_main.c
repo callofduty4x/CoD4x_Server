@@ -2064,7 +2064,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg)
 	char stringline[1024];
 	msg_t singlemsg;
 	int ic;
-	
+
 	while(msg->readcount < msg->cursize)
 	{
 		int messagelen = MSG_ReadLong(msg);
@@ -2346,11 +2346,11 @@ void SV_MasterHeartbeat(const char *message)
 
 			MSG_Init(&msg, opts.message, sizeof(opts.message));
 			MSG_WriteString(&msg, string);
-			
+
 			MSG_WriteShort(&msg, NET_GetHostPort());
 			MSG_WriteLong(&msg, psvs.masterserver_messageid);
 			++psvs.masterserver_messageid;
-			
+
 			MSG_BeginWriteMessageLength(&msg); //Messagelength
 			MSG_WriteLong(&msg, 1); //Command sourceenginequery
 			SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
@@ -3706,7 +3706,7 @@ float randomf()
 
 double crandom()
 {
-  
+
   float r = (float)(2 * randomf() - 1.0);
   return r;
 }
@@ -3720,13 +3720,13 @@ void SV_BotUserMove(client_t *client)
 	{
 		return;
 	}
-  
+
 	memset(&ucmd, 0, sizeof(ucmd));
-  
+
     clientnum = client - svs.clients;
 
 	playerState_t* ps = SV_GameClientNum(clientnum);
-	
+
     *(uint32_t *)&ucmd.weapon = ps->weapon;
 
     if ( level.clients[clientnum].sess.archiveTime == 0 )
@@ -3781,9 +3781,9 @@ void SV_UpdateBots()
 {
 	int i;
 	client_t* cl;
-	
+
 	SV_ResetSkeletonCache();
-	
+
 	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
 	{
 		if(cl->state >= CS_CONNECTED && cl->netchan.remoteAddress.type == NA_BOT)
@@ -3808,12 +3808,12 @@ void SV_PreFrame()
     SV_SetConfigstring(0, Cvar_InfoString(4));
     cvar_modifiedFlags &= ~0x404;
   }
-  
+
   if ( cvar_modifiedFlags & CVAR_SYSTEMINFO )
   {
     SV_SetSystemInfoConfig();
   }
-  
+
   if ( cvar_modifiedFlags & 256 )
   {
     SV_SetConfig(20, 128, 256);
@@ -3968,7 +3968,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 			e_spawns[i].direction2[0],
 			e_spawns[i].direction2[1],
 			e_spawns[i].direction2[2]);
-			
+
 			e_spawns[i].direction2[0] = svs.clients[i].gentity->client->ps.viewangles[0];
 			e_spawns[i].direction2[1] = svs.clients[i].gentity->client->ps.viewangles[1];
 			e_spawns[i].direction2[2] = svs.clients[i].gentity->client->ps.viewangles[2];
@@ -4525,6 +4525,21 @@ void SV_SpawnServer(const char *mapname)
 
 		for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, cl++)
 		{
+			if(cl->demorecording)
+			{
+				SV_StopRecord(cl);
+				cl->demorecording = qtrue; //Making a new demo later when server is spawned
+				char shortdmname[1024];
+				int demonamelen = strlen(cl->demoName);
+				if(demonamelen < 15 )
+				{
+					cl->demoName[0] = 0;
+				}else{
+					Q_strncpyz(shortdmname, cl->demoName + 6, sizeof(cl->demoName)); //Remove demos/
+					shortdmname[demonamelen -6 -5 -4] = 0;
+					Q_strncpyz(cl->demoName, shortdmname, sizeof(cl->demoName)); //remove .dm_1
+				}
+			}
 
 			if ( cl->state < CS_PRIMED )
 	    {
@@ -4696,6 +4711,7 @@ void SV_SpawnServer(const char *mapname)
   SV_SaveSystemInfo();
 
   sv.state = SS_GAME;
+
   SV_Heartbeat_f();
   Com_Printf("By using this software you agree to the usage conditions you can find at https://github.com/D4edalus/CoD4x_Server#usage-conditions-for-server-hosters\n");
   Com_Printf("-----------------------------------\n");

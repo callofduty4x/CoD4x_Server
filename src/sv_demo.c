@@ -248,11 +248,27 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 	// write out the gamestate message
 	MSG_Init( &msg, bufData, sizeof( bufData ) );
 
+	byte head = 2;
+	FS_DemoWrite(&head, 1u, &cl->demofile);
+	int32_t dummyend = -1;
+
+	//serverMessageSequence -> protocol
+	int protocol = PROTOCOL_VERSION;
+	FS_DemoWrite(&protocol, sizeof(protocol), &cl->demofile);
+
+	//datalen -> -1 = demo ended
+	FS_DemoWrite(&dummyend, sizeof(dummyend), &cl->demofile);
+	//additional reserved data
+	dummyend = 0;
+	FS_DemoWrite(&dummyend, sizeof(dummyend), &cl->demofile);
+	FS_DemoWrite(&dummyend, sizeof(dummyend), &cl->demofile);
+
 	// NOTE, MRE: all server->client messages now acknowledge
 	MSG_WriteLong( &msg, cl->lastClientCommand );
 
 	SV_WriteGameState(&msg, cl);
 
+	MSG_WriteLong( &msg, svse.configDataSequence );
 	// write the client num
 	MSG_WriteLong( &msg, cl - svs.clients );
 	// write the checksum feed
@@ -385,7 +401,7 @@ FS_FOpenDemoFileWrite
 ===========
 */
 qboolean FS_FOpenDemoFileWrite( const char *filename, fileHandleData_t *fh ) {
-	
+
 	char ospath[MAX_OSPATH];
 
 	if ( !FS_Initialized() ) {
@@ -528,4 +544,3 @@ void FS_DemoForceFlush(fileHandleData_t *fh){
 	setvbuf( fh->handleFiles.file.o, NULL, _IONBF, 0 );
 
 }
-

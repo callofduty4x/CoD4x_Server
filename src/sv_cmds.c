@@ -1318,7 +1318,7 @@ static void Cmd_KickPlayer_f()
 		}
 	}
 	else // Kick only one player.
-	{		
+	{
 		cl = SV_Cmd_GetPlayerByHandle();
 
 		if(!cl.cl)
@@ -1583,8 +1583,8 @@ static void SV_Record_f( void ) {
 	}else{
     SV_SApiSteamIDTo64String(cl.cl->playerid, psti, sizeof(psti));
     Com_sprintf(name, sizeof(name), "demo_%s_", psti);
+    SV_RecordClient(cl.cl, name);
   }
-	SV_RecordClient(cl.cl, name);
 }
 
 
