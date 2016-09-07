@@ -2400,7 +2400,7 @@ const char* SV_GetGuid( unsigned int clnum, char* buffer, int len)
 	{
 	 	return svs.clients[clnum].legacy_pbguid;
 	}
-	SV_SApiSteamIDToString(svs.clients[clnum].steamid, buffer, len);
+	Com_sprintf(buffer, len, "%llu", svs.clients[clnum].playerid);
 	return buffer;
 }
 const char* SV_GetGuidBin(int clnum)

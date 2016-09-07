@@ -202,6 +202,7 @@ int Q_CountChar(const char *string, char tocount);
 int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...);
 void Q_strchrrepl(char *string, char torepl, char repl);
 char* Q_BitConv(int val);
+int Q_strLF2CRLF(const char* input, char* output, int outputlimit );
 /* char	* QDECL va( char *format, ... ); */
 char* QDECL va_replacement(char *dest, int size, const char *fmt, ...);
 #define mvabuf char va_buffer[MAX_STRING_CHARS]
