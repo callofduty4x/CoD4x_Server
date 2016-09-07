@@ -2130,42 +2130,46 @@ void GScr_NewClientHudElem(){
 }
 
 
-void HECmd_SetText(scr_entref_t entnum){
+void HECmd_SetText(scr_entref_t entnum)
+{
+	char buffer[1024];
 
-    char buffer[1024];
+	if (HIWORD(entnum) != 1)
+	{
+		Scr_ObjectError("G_HudSetText: Not a hud element");
+		return;
+	}
 
-    if(HIWORD(entnum) != 1)
-    {
-        Scr_ObjectError("G_HudSetText: Not a hud element");
-        return;
-    }
+	game_hudelem_t *element = &g_hudelems[LOWORD(entnum)];
 
-    game_hudelem_t* element = &g_hudelems[LOWORD(entnum)];
+	element->var_14 = 0;
+	element->var_15 = 0;
+	element->var_16 = 0;
 
-    element->var_14 = 0;
-    element->var_15 = 0;
-    element->var_16 = 0;
+	element->movex = 0;
+	element->movey = 0;
+	element->movealign = 0;
+	element->movescralign = 0;
 
-    element->movex = 0;
-    element->movey = 0;
-    element->movealign = 0;
-    element->movescralign = 0;
+	element->var_18 = 0;
+	element->var_19 = 0;
+	element->var_20 = 0;
+	element->var_21 = 0;
 
-    element->var_18 = 0;
-    element->var_19 = 0;
-    element->var_20 = 0;
-    element->var_21 = 0;
+	element->var_28 = 0;
+	element->var_29 = 0;
+	element->var_30 = 0;
 
-    element->var_28 = 0;
-    element->var_29 = 0;
-    element->var_30 = 0;
+	/* Attempt to avoid CS overflow using "SetText()" */
+	/* Better check all hudelems and if CS not in use: clear it */
+	if (element->hudTextConfigStringIndex)
+		SV_SetConfigstring(element->hudTextConfigStringIndex + 309, "");
 
-    element->hudTextConfigStringIndex = 0;
+	element->hudTextConfigStringIndex = 0;
 
-    Scr_ConstructMessageString(0,0, "Hud Elem String", buffer, sizeof(buffer));
-    element->inuse = qtrue;
-    element->hudTextConfigStringIndex = G_LocalizedStringIndex(buffer);
-
+	Scr_ConstructMessageString(0,0, "Hud Elem String", buffer, sizeof(buffer));
+	element->inuse = qtrue;
+	element->hudTextConfigStringIndex = G_LocalizedStringIndex(buffer);
 }
 
 void GScr_MakeCvarServerInfo(void)
