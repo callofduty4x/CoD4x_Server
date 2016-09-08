@@ -4550,7 +4550,7 @@ void SV_SpawnServer(const char *mapname)
 			cl->nextSnapshotTime = -1;
 			SV_SendClientSnapshot( cl );
 		}
-    NET_Sleep(250);
+    Sys_SleepUSec(250000);
   }
   Cvar_SetStringByName("mapname", mapname);
 #ifndef DEDICATEDONLY
