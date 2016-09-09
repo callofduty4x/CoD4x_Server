@@ -51,7 +51,8 @@ void OpenWarnFile(void)
 {
   char filename[512]; // [sp+10h] [bp-208h]@1
   char stringbuf[512];
-  snprintf(filename, 0x200u, "%s/warn.dat", Plugin_Cvar_VariableStringBuffer("fs_homepath", stringbuf, sizeof(stringbuf)));
+  Plugin_Cvar_VariableStringBuffer("fs_homepath", stringbuf, sizeof(stringbuf));
+  snprintf(filename, 0x200u, "%s/warn.dat", stringbuf);
   w_filehandle = fopen(filename, "a+");
   Plugin_Printf("Warn_System: File has been opened!\n");
 }
