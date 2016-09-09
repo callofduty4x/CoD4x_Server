@@ -101,4 +101,6 @@ void GScr_VectorAdd();
 void GScr_TypeTest();
 __cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
 
+void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg);
+
 #endif

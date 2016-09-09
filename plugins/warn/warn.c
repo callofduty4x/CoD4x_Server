@@ -50,8 +50,8 @@ void __cdecl OnPlayerDC(client_t *client, const char* reason)
 void OpenWarnFile(void)
 {
   char filename[512]; // [sp+10h] [bp-208h]@1
-
-  snprintf(filename, 0x200u, "%s/warn.dat", Plugin_Cvar_VariableString("fs_homepath"));
+  char stringbuf[512];
+  snprintf(filename, 0x200u, "%s/warn.dat", Plugin_Cvar_VariableStringBuffer("fs_homepath", stringbuf, sizeof(stringbuf)));
   w_filehandle = fopen(filename, "a+");
   Plugin_Printf("Warn_System: File has been opened!\n");
 }
@@ -225,7 +225,7 @@ void __cdecl SV_IssueWarnCmd()
     Plugin_Printf("Plugin_Warn: The limit is %i", c_wlimit->integer);
     return;
   }
-  
+
   wcl = Plugin_SV_Cmd_GetPlayerClByHandle(Plugin_Cmd_Argv(1));//Prints message if bad in most cases
   if(wcl == NULL)
   {
