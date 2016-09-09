@@ -716,12 +716,12 @@ static void SV_Status_f( void ) {
     			j++;
     		} while(j < l);
 
-        Com_Printf ("%s", cl->shortname);
+        Com_Printf ("%s", cl->name);
 
     		// TTimo adding a ^7 to reset the color
     		// NOTE: colored names in status breaks the padding (WONTFIX)
     		Com_Printf ("^7");
-    		l = 16 - Q_PrintStrlen(cl->shortname);
+    		l = 16 - Q_PrintStrlen(cl->name);
     		j = 0;
 
     		do

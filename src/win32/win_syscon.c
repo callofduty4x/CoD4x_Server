@@ -189,8 +189,8 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 	case WM_COMMAND:
 		if ( wParam == COPY_ID ) {
-			SendMessage( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
-			SendMessage( s_wcd.hwndBuffer, WM_COPY, 0, 0 );
+			SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
+			SendMessageA( s_wcd.hwndBuffer, WM_COPY, 0, 0 );
 		} else if ( wParam == QUIT_ID )   {
 			if ( s_wcd.quitOnClose ) {
 				PostQuitMessage( 0 );
@@ -200,8 +200,8 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 			}
 		} else if ( wParam == CLEAR_ID )   {
-			SendMessage( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
-			SendMessage( s_wcd.hwndBuffer, EM_REPLACESEL, FALSE, ( LPARAM ) "" );
+			SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
+			SendMessageA( s_wcd.hwndBuffer, EM_REPLACESEL, FALSE, ( LPARAM ) "" );
 			UpdateWindow( s_wcd.hwndBuffer );
 		}
 		break;
@@ -272,7 +272,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam ) {
 	char inputBuffer[1024];
-	mvabuf;
+
 	switch ( uMsg )
 	{
 	case WM_KILLFOCUS:
@@ -290,7 +290,7 @@ LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 			strcat( s_wcd.consoleText, "\n" );
 			SetWindowText( s_wcd.hwndInputLine, "" );
 
-			Sys_Print( va( "]%s\n", inputBuffer ) );
+			//CON_Print( va( "]%s\n", inputBuffer ) );
 
 			return 0;
 		}
@@ -399,21 +399,21 @@ void CON_InitInternal( void ) {
 										 s_wcd.hWnd,
 										 ( HMENU ) COPY_ID,         // child window ID
 										 g_wv.hInstance, NULL );
-	SendMessage( s_wcd.hwndButtonCopy, WM_SETTEXT, 0, ( LPARAM ) "copy" );
+	SendMessageA( s_wcd.hwndButtonCopy, WM_SETTEXT, 0, ( LPARAM ) "copy" );
 
 	s_wcd.hwndButtonClear = CreateWindow( "button", NULL, BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 										  82, 425, 72, 24,
 										  s_wcd.hWnd,
 										  ( HMENU ) CLEAR_ID,       // child window ID
 										  g_wv.hInstance, NULL );
-	SendMessage( s_wcd.hwndButtonClear, WM_SETTEXT, 0, ( LPARAM ) "clear" );
+	SendMessageA( s_wcd.hwndButtonClear, WM_SETTEXT, 0, ( LPARAM ) "clear" );
 
 	s_wcd.hwndButtonQuit = CreateWindow( "button", NULL, BS_PUSHBUTTON | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 										 462, 425, 72, 24,
 										 s_wcd.hWnd,
 										 ( HMENU ) QUIT_ID,         // child window ID
 										 g_wv.hInstance, NULL );
-	SendMessage( s_wcd.hwndButtonQuit, WM_SETTEXT, 0, ( LPARAM ) "quit" );
+	SendMessageA( s_wcd.hwndButtonQuit, WM_SETTEXT, 0, ( LPARAM ) "quit" );
 
 
 	//
@@ -425,10 +425,10 @@ void CON_InitInternal( void ) {
 									 s_wcd.hWnd,
 									 ( HMENU ) EDIT_ID,             // child window ID
 									 g_wv.hInstance, NULL );
-	SendMessage( s_wcd.hwndBuffer, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
+	SendMessageA( s_wcd.hwndBuffer, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
 
 	s_wcd.SysInputLineWndProc = ( WNDPROC ) SetWindowLong( s_wcd.hwndInputLine, GWL_WNDPROC, ( long ) InputLineWndProc );
-	SendMessage( s_wcd.hwndInputLine, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
+	SendMessageA( s_wcd.hwndInputLine, WM_SETFONT, ( WPARAM ) s_wcd.hfBufferFont, 0 );
 
 	ShowWindow( s_wcd.hWnd, SW_SHOWDEFAULT );
 	UpdateWindow( s_wcd.hWnd );
@@ -474,7 +474,7 @@ void CON_Show( int visLevel, qboolean quitOnClose ) {
 		break;
 	case 1:
 		ShowWindow( s_wcd.hWnd, SW_SHOWNORMAL );
-		SendMessage( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
+		SendMessageA( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
 		break;
 	case 2:
 		ShowWindow( s_wcd.hWnd, SW_MINIMIZE );
@@ -559,17 +559,17 @@ void CON_Print( const char *pMsg ) {
 	// replace selection instead of appending if we're overflowing
 	//
 	if ( s_totalChars > CONSOLE_BUFFER_SIZE ) {
-		SendMessage( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
+		SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0, -1 );
 		s_totalChars = bufLen;
 	} else {
 		// NERVE - SMF - always append at the bottom of the textbox
-		SendMessage( s_wcd.hwndBuffer, EM_SETSEL, 0xFFFF, 0xFFFF );
+		SendMessageA( s_wcd.hwndBuffer, EM_SETSEL, 0xFFFF, 0xFFFF );
 	}
 
 	//
 	// put this text into the windows console
 	//
-	SendMessage( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
-	SendMessage( s_wcd.hwndBuffer, EM_SCROLLCARET, 0, 0 );
-	SendMessage( s_wcd.hwndBuffer, EM_REPLACESEL, 0, (LPARAM) buffer );
+	SendMessageA( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
+	SendMessageA( s_wcd.hwndBuffer, EM_SCROLLCARET, 0, 0 );
+	SendMessageA( s_wcd.hwndBuffer, EM_REPLACESEL, 0, (LPARAM) buffer );
 }

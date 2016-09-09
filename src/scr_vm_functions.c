@@ -2851,18 +2851,22 @@ static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t st
     return; //Server restarted or changed game/map --> VM state has changed
   }
 
-  Scr_AddEntity(&g_entities[clientnum]);
+  if(svs.clients[clientnum].steamid != steamid && svs.clients[clientnum].steamidPending != steamid)
+  {
+    return; //Most likely an old player which is no longer on server!?
+  }
 
-  SV_SApiSteamIDTo64String(steamid, sidstring, sizeof(sidstring));
-  Scr_AddString(sidstring);
+  Scr_AddBool(m_bOfficer);
+
+  Scr_AddBool(m_bMember);
 
   SV_SApiSteamIDTo64String(groupid, gidstring, sizeof(gidstring));
   Scr_AddString(gidstring);
 
-  Scr_AddBool(m_bMember);
-  Scr_AddBool(m_bOfficer);
+  SV_SApiSteamIDTo64String(steamid, sidstring, sizeof(sidstring));
+  Scr_AddString(sidstring);
 
-  unsigned short threadid = Scr_ExecThread( romaddress, 5);
+  unsigned short threadid = Scr_ExecEntThread(&g_entities[clientnum], romaddress, 4);
   Scr_FreeThread( threadid );
 }
 
@@ -2883,9 +2887,9 @@ void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg)
       }
   }
 
-	if ( Scr_GetNumParam() != 1 )
+	if ( Scr_GetNumParam() != 2 )
 	{
-		Scr_Error("Usage: self steamGroupMembershipQuery <callbackfunction>");
+		Scr_Error("Usage: self steamGroupMembershipQuery(<steamgroupid>, <::callbackfunction(<sid>, <gid>, <member>, <officer>)>)");
 		return;
 	}
 
