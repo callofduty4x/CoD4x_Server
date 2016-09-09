@@ -366,7 +366,6 @@ Returns last event time
 */
 void Com_EventLoop( void ) {
 	sysEvent_t	*ev;
-  char consoleline[1024];
 
 	while ( 1 ) {
 		ev = Com_GetSystemEvent();
@@ -379,6 +378,7 @@ void Com_EventLoop( void ) {
 			{
 				case SE_CONSOLE:
 #ifdef _WIN32
+	  char consoleline[1024];
           Com_sprintf(consoleline, sizeof(consoleline), "]%s", (char *)ev->evPtr);
           Sys_Print(consoleline);
 #endif

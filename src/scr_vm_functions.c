@@ -2851,11 +2851,6 @@ static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t st
     return; //Server restarted or changed game/map --> VM state has changed
   }
 
-  if(svs.clients[clientnum].steamid != steamid && svs.clients[clientnum].steamidPending != steamid)
-  {
-    return; //Most likely an old player which is no longer on server!?
-  }
-
   Scr_AddBool(m_bOfficer);
 
   Scr_AddBool(m_bMember);
