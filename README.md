@@ -26,6 +26,7 @@ Now you can run the server with `./cod4x18_dedrun +map mp_killhouse`. If you are
 Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root. That would be a major security threat.
 
 A more detailed server tutorial is available on [our wiki](https://github.com/D4edalus/CoD4x_Server/wiki/Server-setup).
+[Also read about new banlists here](https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes)
 
 ## Compiling
 To compile Cod4X from source you require the following tools:
