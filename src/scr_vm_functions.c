@@ -19,8 +19,6 @@
 ===========================================================================
 */
 
-
-
 #include "q_shared.h"
 #include "qcommon_io.h"
 #include "qcommon.h"
@@ -40,7 +38,6 @@
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
-
 
 /*
 ============

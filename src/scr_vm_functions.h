@@ -67,6 +67,9 @@ void PlayerCmd_IsInADS(scr_entref_t object);
 void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object);
 void PlayerCmd_ADSButtonPressed(scr_entref_t object);
 
+/* SQL */
+void gsc_mysql_version();
+
 void GScr_StrTokByPixLen();
 void GScr_StrTokByLen();
 void GScr_StrPixLen();

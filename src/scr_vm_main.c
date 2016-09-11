@@ -576,7 +576,12 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
 	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
 
-  Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
+    Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
+
+    /* SQL */
+    Scr_AddMethod("gsc_mysql_version", gsc_mysql_version, 0);
+
+
 
 }
 
