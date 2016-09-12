@@ -575,6 +575,9 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("isinads", PlayerCmd_IsInADS, 0);
 	Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
 	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
+
+  Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
+
 }
 
 void Scr_InitFunctions()

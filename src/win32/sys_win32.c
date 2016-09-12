@@ -745,7 +745,7 @@ void* Sys_EventLoopThread(void* nullarg){
 
 
 	// pump the message loop
-	while ( GetMessageA( &msg, NULL, 0, 0 ) )
+	while ( GetMessageA( &msg, NULL, 0, 0 ) > 0)
 	{
 		// save the msg time, because wndprocs don't have access to the timestamp
 		g_wv.sysMsgTime = msg.time;
@@ -753,6 +753,7 @@ void* Sys_EventLoopThread(void* nullarg){
 		TranslateMessage( &msg );
 		DispatchMessageA( &msg );
 	}
+	MessageBoxA(NULL, "GetMessageA has failed", "GetMessageA has failed", MB_OK);
 	Com_Quit_f();
 	return NULL;
 }

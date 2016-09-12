@@ -613,7 +613,8 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 	}
 	if(cl->receivedstats == 1)
 	{
-		SV_DropClient(cl, "Received stats although it was not requested from client");
+		return; //Double requests due to map_rotate?
+		//SV_DropClient(cl, "Received stats although it was not requested from client");
 	}
 	MSG_ReadData(msg, &cl->stats, sizeof(cl->stats));
 	Com_Printf("Received packet %i of stats data\n", 0);

@@ -2881,26 +2881,79 @@ void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
     }
 }
 
-/*
-//Delete me once we have an example function
-void GScr_TestCodePos()
+static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)
 {
-	if ( Scr_GetNumParam() != 1 )
+  char sidstring[128], gidstring[128];
+  uint32_t romaddress = (reference >> 32) & 0xffffffff;
+  uint32_t oldserverid = reference & 0xffffffff;
+
+  uint32_t currentsvbaseid = sv_serverid->integer & 0xffffff00;
+
+  if(oldserverid != currentsvbaseid || clientnum < 0 || clientnum >= sv_maxclients->integer)
+  {
+    return; //Server restarted or changed game/map --> VM state has changed
+  }
+
+  Scr_AddBool(m_bOfficer);
+
+  Scr_AddBool(m_bMember);
+
+  SV_SApiSteamIDTo64String(groupid, gidstring, sizeof(gidstring));
+  Scr_AddString(gidstring);
+
+  SV_SApiSteamIDTo64String(steamid, sidstring, sizeof(sidstring));
+  Scr_AddString(sidstring);
+
+  unsigned short threadid = Scr_ExecEntThread(&g_entities[clientnum], romaddress, 4);
+  Scr_FreeThread( threadid );
+}
+
+void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg)
+{
+  gentity_t* gentity;
+  int entityNum = 0;
+  mvabuf;
+
+  if(HIWORD(arg)){
+      Scr_ObjectError("Not an entity");
+  }else{
+      entityNum = LOWORD(arg);
+      gentity = &g_entities[entityNum];
+
+      if(!gentity->client){
+          Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+      }
+  }
+
+	if ( Scr_GetNumParam() != 2 )
 	{
-		Scr_Error("Usage: codepostest <function>");
+		Scr_Error("Usage: self steamGroupMembershipQuery(<steamgroupid>, <::callbackfunction(<sid>, <gid>, <member>, <officer>)>)");
 		return;
 	}
 
-  uint32_t vmromaddress = Scr_GetFunc(0);
-  short threadid = Scr_ExecThread( vmromaddress, 0);
-  Scr_FreeThread( threadid );
+  const char* sgid = Scr_GetString(0);
+  uint64_t gid = SV_SApiStringToID(sgid);
+  uint32_t vmromaddress = Scr_GetFunc(1);
+
+  if(gid == 0 || vmromaddress == 0)
+  {
+    Scr_AddBool(qfalse);
+    return;
+  }
+
+  uint32_t serverbaseid = sv_serverid->integer & 0xffffff00;
+  uint64_t reference = ((uint64_t)vmromaddress << 32) | (uint64_t)serverbaseid;
+
+  qboolean status = SV_SApiGetGroupMemberStatusByClientNum(entityNum, gid, reference, PlayerCmd_GetSteamGroupMembershipCallback);
+
+  Scr_AddBool(status);
 
 }
-*/
 
 void Scr_PrecacheString_f()
 {
 	char *locStrName = NULL;
+
 	if ( *(qboolean*)0x0837045C == qfalse )
 		Scr_Error("precacheString must be called before any wait statements "
 		          "in the gametype or level script\n");
