@@ -921,7 +921,7 @@ qboolean Sys_SendPacket( int length, const void *data, netadr_t *to ) {
 	int	i;
 	struct sockaddr_storage	addr;
 	char errstr[256];
-	
+
 	if( to->type != NA_BROADCAST && to->type != NA_IP && to->type != NA_IP6 && to->type != NA_MULTICAST6)
 	{
 		Com_Error( ERR_FATAL, "Sys_SendPacket: bad address type" );
@@ -2417,7 +2417,7 @@ int NET_TcpSendData( int sock, const void *data, int length, char* errormsg, int
 
 	if(state == SOCKET_ERROR)
 	{
-			err = SOCKET_ERROR;
+			err = socketError;
 
 			if(err == EAGAIN || err == EINTR)
 			{
