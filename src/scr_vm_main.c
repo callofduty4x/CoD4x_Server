@@ -401,7 +401,7 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
 	//HUD Functions
 	Scr_AddMethod("settext", HECmd_SetText, 0);
-	Scr_AddMethod("clearalltextafterhudelem", (void*)0x808f768, 0);
+	Scr_AddMethod("clearalltextafterhudelem", (void*)0x808f768, qtrue);
 	Scr_AddMethod("setshader", (void*)0x808e52e, 0);
 	Scr_AddMethod("settargetent", (void*)0x808f8ea, 0);
 	Scr_AddMethod("cleartargetent", (void*)0x808f718, 0);
