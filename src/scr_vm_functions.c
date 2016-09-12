@@ -39,7 +39,6 @@
 #include <time.h>
 #include "plugin_handler.h"
 
-#include <mysql/mysql.h>
 /*
 ============
 PlayerCmd_GetUid
@@ -2903,10 +2902,4 @@ void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg)
 
   Scr_AddBool(status);
 
-}
-
-void gsc_mysql_version() {
-    const char *version = mysql_get_client_info();
-    Com_PrintError("MySQL client version: %s\n", version);
-    return;
 }

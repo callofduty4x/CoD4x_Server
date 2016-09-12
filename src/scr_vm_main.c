@@ -299,10 +299,16 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("execex", GScr_CbufAddTextEx, 0);
 	Scr_AddFunction("sha256", GScr_SHA256, 0);
 	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
+
     /* SQL */
     Scr_AddFunction("gsc_mysql_version", gsc_mysql_version, 0);
+    Scr_AddFunction("gsc_mysql_init", gsc_mysql_init, 0);
+    Scr_AddFunction("gsc_mysql_real_connect", gsc_mysql_real_connect, 0);
+    Scr_AddFunction("gsc_mysql_close", gsc_mysql_close, 0);
+    Scr_AddFunction("gsc_mysql_query", gsc_mysql_query, 0);
+    Scr_AddFunction("gsc_mysql_errno", gsc_mysql_errno, 0);
+    Scr_AddFunction("gsc_mysql_error", gsc_mysql_error, 0);
 }
-
 
 void Scr_AddStockMethods()
 {

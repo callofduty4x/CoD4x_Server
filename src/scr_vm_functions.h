@@ -105,5 +105,11 @@ void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg);
 
 /* SQL */
 void gsc_mysql_version();
+void gsc_mysql_init();
+void gsc_mysql_real_connect(int mysql, char *host, char *user, char *pass, char *db, int port);
+void gsc_mysql_close(int mysql);
+void gsc_mysql_query(int mysql, char *sql);
+void gsc_mysql_errno(int mysql);
+void gsc_mysql_error(int mysql);
 
 #endif
