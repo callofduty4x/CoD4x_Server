@@ -299,9 +299,8 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("execex", GScr_CbufAddTextEx, 0);
 	Scr_AddFunction("sha256", GScr_SHA256, 0);
 	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
-/*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
-
-
+    /* SQL */
+    Scr_AddFunction("gsc_mysql_version", gsc_mysql_version, 0);
 }
 
 
@@ -577,9 +576,6 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
 
     Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
-
-    /* SQL */
-    Scr_AddMethod("gsc_mysql_version", gsc_mysql_version, 0);
 
 
 

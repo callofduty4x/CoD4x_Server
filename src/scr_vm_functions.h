@@ -67,9 +67,6 @@ void PlayerCmd_IsInADS(scr_entref_t object);
 void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object);
 void PlayerCmd_ADSButtonPressed(scr_entref_t object);
 
-/* SQL */
-void gsc_mysql_version();
-
 void GScr_StrTokByPixLen();
 void GScr_StrTokByLen();
 void GScr_StrPixLen();
@@ -105,5 +102,8 @@ void GScr_TypeTest();
 __cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
 
 void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg);
+
+/* SQL */
+void gsc_mysql_version();
 
 #endif
