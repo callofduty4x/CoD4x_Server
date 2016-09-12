@@ -52,4 +52,32 @@
 #define MAX_CLIENTS 64
 #define MAX_CONFIGSTRINGS 2442
 
+// Configstrings limits.
+#define MAX_LOCATIONSELECTORS  3
+#define MAX_STATUSICONS        8
+#define MAX_HEADICONS          15
+#define MAX_SHOCKS             16
+#define MAX_TAGS               32
+#define MAX_MENUS              32
+#define MAX_FX                 100
+#define MAX_SOUNDS             256
+#define MAX_FXONTAGS           256
+#define MAX_MATERIALS          256
+#define MAX_LOCALIZEDSTRINGS   512
+#define MAX_MODELS             512
+
+// Configstrings types offsets.
+#define CS_LOCALIZEDSTRINGS   309
+#define CS_LOCATIONSELECTORS  827
+#define CS_MODELS             (CS_LOCATIONSELECTORS + MAX_LOCATIONSELECTORS)
+#define CS_SOUNDS             (CS_MODELS + MAX_MODELS)
+#define CS_FX                 (CS_SOUNDS + MAX_SOUNDS)
+#define CS_FXONTAGS           (CS_FX + MAX_FX)
+#define CS_SHOCKS             (CS_FXONTAGS + MAX_FXONTAGS)
+#define CS_MENUS              (CS_SHOCKS + MAX_SHOCKS)
+#define CS_MATERIALS          (CS_MENUS + MAX_MENUS)
+#define CS_STATUSICONS        2259
+#define CS_HEADICONS          (CS_STATUSICONS + MAX_STATUSICONS)
+#define CS_TAGS               (CS_HEADICONS + MAX_HEADICONS)
+
 #endif
