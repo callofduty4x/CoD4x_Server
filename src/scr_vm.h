@@ -426,6 +426,7 @@ unsigned int __cdecl Scr_GetPointerType( unsigned int );
 void __cdecl Scr_GetVector( unsigned int, float* );
 unsigned int __cdecl Scr_GetObject( unsigned int );
 int Scr_GetFunc(unsigned int paramnum);
+extern char* (__cdecl *Scr_GetLocalizedString)(unsigned int arg);
 void __cdecl Scr_Error( const char *string);
 void __cdecl Scr_SetLoading( qboolean );
 void __cdecl Scr_ParamError( int, const char *string);
@@ -439,6 +440,7 @@ void __cdecl Scr_AddUndefined(void);
 void __cdecl Scr_AddVector( vec3_t vec );
 void __cdecl Scr_AddArray( void );
 void __cdecl Scr_MakeArray( void );
+void __cdecl Scr_AddArrayKey( int strIdx );
 void __cdecl Scr_Notify( gentity_t*, unsigned short, unsigned int);
 void __cdecl Scr_NotifyNum( int, unsigned int, unsigned int, unsigned int);
 /*Not working :(  */

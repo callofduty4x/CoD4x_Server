@@ -1444,6 +1444,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		mainThreadInError = qfalse;
 		longjmp (*abortframe, -1);
 	} else {
+		Sys_BeginShutdownWatchdog();
 		SV_SApiShutdown();
 		SV_Shutdown(va("Server fatal crashed: %s", com_errorMessage));
 	}

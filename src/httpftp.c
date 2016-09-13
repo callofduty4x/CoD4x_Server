@@ -276,9 +276,12 @@ static int FT_SendData(ftRequest_t* request)
     {
       return 0;
     }
+/*
     if(bytes < 0){
       Com_Printf("FT_SendData: %s\n", errormsg);
     }
+*/
+
   }else{
 		bytes = mbedtls_ssl_write( &request->tls->ssl, request->sendmsg.data, request->sendmsg.cursize );
 		if( bytes == MBEDTLS_ERR_SSL_WANT_READ || bytes == MBEDTLS_ERR_SSL_WANT_WRITE )
@@ -755,13 +758,17 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 		status = FT_SendData(request);
 
 		if(status < 0)
-			return -1;
-		return 0;
+    {
+//      Com_DPrintf("FT_SendData error\n");
+    	return -1;
+		}
+    return 0;
 	}
 
 	status = FT_ReceiveData(request);
   if(status == -2)
   {
+//    Com_DPrintf("FT_ReceiveData error\n");
     return -1; //bail out
   }
 
@@ -984,10 +991,14 @@ int mbedtls_net_send( void *ctx, const unsigned char *buf, size_t len )
     int ret;
     int fd = (int)ctx;
 
+//    Com_Printf("Calling BIO send - Len: %d FD: %d\n", len, fd);
+
     if( fd < 0 )
         return( MBEDTLS_ERR_NET_INVALID_CONTEXT );
 
-    ret = NET_TcpSendData( fd, buf, len, NULL, 0 );
+    char errormsg[1024];
+
+    ret = NET_TcpSendData( fd, buf, len, errormsg, sizeof(errormsg) );
 //    Com_Printf("BIO sent %d bytes\n", ret);
 
     if( ret < 0 )
@@ -2117,7 +2128,6 @@ void HTTPServer_BuildResponse(ftRequest_t* request, char* sessionkey, httpPostVa
 }
 
 
-
 void HTTP_ParseFormDataBody(char* body, httpPostVals_t* values)
 {
 	int i, k;
@@ -2146,14 +2156,19 @@ void HTTP_ParseFormDataBody(char* body, httpPostVals_t* values)
 		body += i+1;
 		i = 0;
 
-		while (body[i] != '&' && body[i] != '\0')
+		while (body[i] != '&' && body[i] != '\0' && body[i] != '\r' && body[i] != '\n')
 		{
 			i++;
 		}
-		if(body[i] == '\0')
+		if(body[i] == '\0' || body[i] == '\r' || body[i] == '\n')
 		{
 			Q_strncpyz(values[k].value, body, sizeof(values[k].value));
-			HTTP_DecodeURL(values[k].value);
+      if(sizeof(values[k].value) <= i)
+      {
+        i = sizeof(values[k].value) -1;
+      }
+      values[k].value[i] = 0;
+      HTTP_DecodeURL(values[k].value);
 			break;
 		}
 		body[i] = '\0';
@@ -2167,6 +2182,7 @@ void HTTP_ParseFormDataBody(char* body, httpPostVals_t* values)
 
 
 }
+
 
 const char* HTTP_GetFormDataItem(httpPostVals_t* values, const char* search)
 {

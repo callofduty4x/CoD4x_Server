@@ -131,7 +131,12 @@ void Sys_StartProcess( char *cmdline, qboolean doexit ) {
 		// JPW NERVE swiped from Sherman's SP code
 		if ( !CreateProcess( NULL, cmdline, NULL, NULL,FALSE, 0, NULL, NULL, &si, &pi ) ) {
 			// couldn't start it, popup error box
-			Com_Error( ERR_DROP, "Could not start process: '%s' ", cmdline );
+			if(doexit)
+			{
+				Com_Error( ERR_DROP, "Could not start process: '%s' ", cmdline );
+			}else{
+				Com_PrintError("Could not start process: '%s'\n", cmdline);
+			}
 			return;
 		}
 		// jpw

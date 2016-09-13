@@ -104,6 +104,13 @@ __cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
 
 void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg);
 
+void Scr_PrecacheString_f();
+void Scr_Destroy_f(scr_entref_t hud_elem_num);
+
+void GScr_IsCvarDefined();
+
+void Scr_IsArray_f();
+
 /* SQL */
 void gsc_mysql_version();
 void gsc_mysql_init();
