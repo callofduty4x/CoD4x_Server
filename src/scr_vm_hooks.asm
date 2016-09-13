@@ -142,9 +142,9 @@ global Scr_MakeArray
 Scr_MakeArray:
 	jmp dword [oScr_MakeArray]
 
-global Scr_MakeArrayKey
-Scr_MakeArrayKey:
-	jmp dword [oScr_MakeArrayKey]
+global Scr_AddArrayKey
+Scr_AddArrayKey:
+	jmp dword [oScr_AddArrayKey]
 
 ;global Scr_Notify
 ;Scr_Notify:
@@ -317,7 +317,7 @@ oScr_AddUndefined dd 0x815eea2
 oScr_AddVector dd 0x815ee12
 oScr_AddArray dd 0x815d5c0
 oScr_MakeArray dd 0x815ed8a
-oScr_MakeArrayKey dd 0x0815D0B8
+oScr_AddArrayKey dd 0x0815D0B8
 oScr_Notify dd 0x80c7604
 oScr_NotifyNum dd 0x815e762
 oScr_PrintPrevCodePos dd 0x814ef6e
