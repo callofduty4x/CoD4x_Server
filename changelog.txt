@@ -39,3 +39,6 @@ September 12 2016:
 After a 2 years its still good to write about changes in server code ^^
  - 'SetText' script command now safe to use with dynamically created strings like player names, number increments and etc.
  - 'ClearAllTextAfterHudElem' script command now can be used only in developer mode because of its bugs.
+
+September 13 2016:
+ + Added 'Scr_MakeArrayKey' script and plugin function. It allows you to create script arrays with string keys instead of numeric. Just make sure you passed value returned from 'Scr_AllocString' (call this one on initialization).
