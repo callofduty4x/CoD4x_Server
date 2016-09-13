@@ -59,6 +59,7 @@ static char cmdline[MAX_CMD + MAX_OSPATH] = "";
 #define MAXPRINTMSG 1024
 #endif
 
+cvar_t* sys_shutdowntimeout;
 
 /*
 ================
@@ -244,6 +245,7 @@ void Sys_DoSignalAction( int signal, const char* sigstring )
 	else
 	{
 		signalcaught = qtrue;
+		Sys_BeginShutdownWatchdog();
 		Com_Printf("Server received signal: %s\nShutting down server...\n", sigstring);
 		Com_sprintf(termmsg, sizeof(termmsg), "\nServer received signal: %s\nTerminating server...", sigstring);
 		SV_Shutdown( termmsg );
@@ -287,6 +289,8 @@ __cdecl void QDECL Sys_Error( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 	char		buffer[MAXPRINTMSG];
+
+	Sys_BeginShutdownWatchdog();
 
 	va_start (argptr,fmt);
 	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
@@ -465,6 +469,8 @@ int Sys_Main(char* commandLine){
 
     Com_Init( commandLine );
 
+	sys_shutdowntimeout = Cvar_RegisterInt("sys_shutdowntimeout", 60, 1, 1200, CVAR_ARCHIVE, "When server is going to shutdown there will be a timeout in seconds after server gets killed in case it is still running");
+
     while ( 1 )
     {
         Com_Frame();
@@ -475,6 +481,8 @@ int Sys_Main(char* commandLine){
 void Sys_Restart(const char* reason)
 {
 	char commandline[1024];
+
+	Sys_BeginShutdownWatchdog();
 
 	SV_Shutdown( reason );
 	SV_SApiShutdown( );
@@ -493,5 +501,37 @@ void Sys_BeginLoadThreadPriorities()
 
 void Sys_EndLoadThreadPriorities()
 {
+
+}
+
+
+void* Sys_ShutdownWatchdogThread(void* arg)
+{
+	int timeoutsec = (int)arg;
+	int maxmsec = timeoutsec * 1000 + Sys_Milliseconds();
+
+	do{
+		Sys_SleepSec(1);
+	}while(Sys_Milliseconds() < maxmsec);
+
+	_exit(-64);
+	return NULL;
+}
+
+void Sys_BeginShutdownWatchdog()
+{
+	static qboolean watchdogActive = false;
+	if(watchdogActive)
+	{
+		return;
+	}
+	threadid_t tinfo;
+	int timeout = 30;
+	if(sys_shutdowntimeout)
+	{
+		timeout = sys_shutdowntimeout->integer;
+	}
+	watchdogActive = true;
+	Sys_CreateNewThread(Sys_ShutdownWatchdogThread, &tinfo, (void*)timeout);
 
 }
