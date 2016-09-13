@@ -2611,6 +2611,18 @@ void Cvar_ClearFlagsForEach(unsigned short flags)
 
 }
 
+qboolean Cvar_IsDefined(const char* cvarname)
+{
+	Sys_EnterCriticalSection(CRIT_CVAR);
+	cvar_t* v = Cvar_FindVar(cvarname);
+	Sys_LeaveCriticalSection(CRIT_CVAR);
+	if(v)
+	{
+		return qtrue;
+	}
+	return qfalse;
+}
+
 
 void Cvar_PatchModifiedFlags()
 {
