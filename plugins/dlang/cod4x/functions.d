@@ -148,6 +148,7 @@ extern (C) void Plugin_Scr_AddUndefined();
 extern (C) void Plugin_Scr_AddVector( vec3_t vec );
 extern (C) void Plugin_Scr_AddArray( );
 extern (C) void Plugin_Scr_MakeArray( );
+extern (C) void Plugin_Scr_MakeArrayKey( int strIdx );
 extern (C) short Plugin_Scr_ExecEntThread( gentity_t* ent, int callbackHook, int numArgs);
 extern (C) short Plugin_Scr_ExecThread( int callbackHook, int numArgs);
 extern (C) void Plugin_Scr_FreeThread( short threadId);
