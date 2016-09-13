@@ -308,6 +308,8 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("gsc_mysql_query", gsc_mysql_query, 0);
     Scr_AddFunction("gsc_mysql_errno", gsc_mysql_errno, 0);
     Scr_AddFunction("gsc_mysql_error", gsc_mysql_error, 0);
+    Scr_AddFunction("consoleprint", GSC_writeToConsole, 0);
+    Scr_AddFunction("gsc_handle_row", gsc_handle_row, 0);
 }
 
 void Scr_AddStockMethods()

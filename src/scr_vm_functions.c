@@ -39,6 +39,13 @@
 #include <time.h>
 #include "plugin_handler.h"
 
+
+// Ignore me
+void GSC_writeToConsole() {
+    char* shit = Scr_GetString(0);
+    Com_Printf(shit);
+}
+
 /*
 ============
 PlayerCmd_GetUid
