@@ -5,13 +5,22 @@ branches:
    - master
 
 before_install:
+  # hack for broken package, https://github.com/travis-ci/travis-ci/issues/6588
+  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ main restricted'"
+  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ universe'"
+  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ multiverse'"
+  - "sudo add-apt-repository http://archive.ubuntu.com/ubuntu/"
+  - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ universe'"
+  - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ multiverse'"
+  - "sudo apt-get -qq update"
+
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 --fix-missing
+  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386
 script:
   - TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT)
   - echo $TRAVIS_TAG
