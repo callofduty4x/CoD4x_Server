@@ -73,7 +73,8 @@ void gsc_mysql_init() {
     }
 
     /* Print to let the user know the MySQL Connection Handle ID */
-    Com_Printf("The conneciton handle ID is: %d", (int)&my);
+    Com_Printf("The conneciton handle ID is: %d", (int)my);
+
 
     /* Returns the MySQL Handle Connection ID */
     Scr_AddInt((int)my);
@@ -94,28 +95,50 @@ void gsc_mysql_init() {
     if the connection was unsuccessful. For a successful connection,
     the return value is the same as the value of the first parameter.
    ================================================================= */
-void gsc_mysql_real_connect(int mysql, char *host, char *user, char *pass, char *db, int port) {
-    int mysql2;
+void gsc_mysql_real_connect() {
+
+    int mysql = Scr_GetInt(0);
+    char *host = Scr_GetString(1);
+    char *user = Scr_GetString(2);
+    char *pass = Scr_GetString(3);
+    char *db = Scr_GetString(4);
+    int port = Scr_GetInt(5);
+    MYSQL* mysql2;
+
+    /* On *Unix based systems, using "localhost" instead of 127.0.0.1 causes a unix socket error, we replace it*/
+    if (strcmp(host, "localhost") == 0) {
+        host = "127.0.0.1";
+    }
+
     if (Scr_GetNumParam() != 6) {
         Scr_Error("Usage: gsc_mysql_real_connect(mysql, host, user, pass, db, port);\n");
-}
+    }
+
+    /* Debugging code */
+    //Com_Printf("\n gsc_mysql_real_connect(mysql=%d, host=\"%s\", user=\"%s\", pass=\"%s\", db=\"%s\", port=%d)\n", mysql, host, user, pass, db, port);
 
     /* Attempt to connect to the database */
-	mysql2 = (int) mysql_real_connect((MYSQL *)mysql, host, user, pass, db, port, NULL, 0);
+	//mysql2 = mysql_real_connect((MYSQL *)mysql, host, user, pass, db, port, NULL, 0);
 
+
+    mysql2 = mysql_real_connect((MYSQL *)mysql, host, user, pass, db, port, NULL, 0);
      /* Check to make sure the CID was properly assigned */
-    if (mysql2 == (int)NULL) {
-        Scr_Error("Something went wrong when trying to connect to mysql_real_connect");
+
+
+     /* We don't want to crash the server, so we have a check to return nothing to prevent that */
+    if (mysql2 == NULL) {
+        Com_Printf("Error: %s", mysql_error((MYSQL *)mysql));
+        return;
     }
 
     /* Would you like to reconnect if connection is dropped? */
-    qboolean reconnect = true;
+    qboolean reconnect = qtrue;
 
     /* Check to see if the mySQL server connection has dropped */
-	mysql_options((MYSQL*)mysql2, MYSQL_OPT_RECONNECT, &reconnect);
+	mysql_options((MYSQL*)mysql, MYSQL_OPT_RECONNECT, &reconnect);
 
     /* Return the MySQL Connection Handle (should be the same as the first parameter)*/
-	Scr_AddInt(mysql2);
+    Scr_AddBool(qtrue);
 }
 
 /* =================================================================
@@ -131,13 +154,15 @@ void gsc_mysql_real_connect(int mysql, char *host, char *user, char *pass, char 
 * Return Value(s)
     None.
    ================================================================= */
-void gsc_mysql_close(int mysql) {
+void gsc_mysql_close() {
+    int mysql = Scr_GetInt(0);
 
 	if (Scr_GetNumParam() != 1) {
 		Scr_Error("Usage: gsc_mysql_close(mysql);\n");
 	}
 
     /* Closes the MySQL Handle Connection that is passed as first arguement*/
+    Com_Printf("Closing CID: %d\n", (MYSQL *)mysql);
     mysql_close((MYSQL *)mysql);
 
     /* Let the function properly close */
@@ -158,29 +183,53 @@ void gsc_mysql_close(int mysql) {
 * Return Value(s)
     Zero for success. Nonzero if an error occurred.
    ================================================================= */
-void gsc_mysql_query(int mysql, char *sql) {
+void gsc_mysql_query() {
+   int mysql = Scr_GetInt(0);
+   char *sql = Scr_GetString(1);
 
-	if (Scr_GetNumParam() != 2) {
-		Scr_Error("Usage: gsc_mysql_query(mysql, *sql);\n");
-        Scr_Error("Where *sql is your query\n");
-	}
 
-    /* Set ret (return) to the return value
-     *  0 = success
-     * !0 = failure
-     */
+   if (Scr_GetNumParam() != 2) {
+       Scr_Error("Usage: gsc_mysql_query(mysql, *sql);\n");
+       Scr_Error("Where *sql is your query\n");
+   }
 
-	int ret = mysql_query((MYSQL *)mysql, sql);
+   /* Set ret (return) to the return value
+   *  0 = success
+   * !0 = failure
+   */
 
-    /* Check to see if the query was a success */
-    if (ret == 0) {
-        Com_Printf("Successful query!\n");
-    } else {
-        Scr_Error("Query failed\n");
-    }
+   /* Check to see if the query was a success */
+   if (mysql_query((MYSQL *)mysql, sql) == 0) {
+       Com_Printf("\nSuccessful query!\n");
+       MYSQL_RES *result = mysql_store_result((MYSQL *)mysql);
+       int num_fields = mysql_num_fields(result);
+       MYSQL_ROW row;
 
-    /* Return 0 if successful */
-	Scr_AddInt(ret);
+       Scr_MakeArray(); [makearray1][makearray2]
+
+       int count = 0;
+       while((row = mysql_fetch_row(result))){
+           if( count != 0 ) {
+               Scr_AddString("break");
+               Scr_AddArray();
+           }
+           for(int i = 0; i < num_fields; i++){
+               Com_Printf("Data [%d]: %s\n", i, row[i]);
+               Scr_AddString(row[i]);
+               Scr_AddArray();
+           }
+           count++;
+       }
+   } else {
+       Scr_Error("Query failed\n");
+       Scr_AddBool(qfalse);
+       return;
+   }
+}
+
+void gsc_handle_row() {
+    char* row = Scr_GetString(0);
+    Com_Printf("%s", row);
 }
 
 /* =================================================================
@@ -199,7 +248,8 @@ void gsc_mysql_query(int mysql, char *sql) {
 * Return Value(s)
     An error code value for the last mysql_xxx() call, if it failed. Zero means no error occurred.
    ================================================================= */
-void gsc_mysql_errno(int mysql) {
+void gsc_mysql_errno() {
+    int mysql = Scr_GetInt(0);
 
 	if (Scr_GetNumParam() != 1)  {
 		printf("Usage: gsc_mysql_errno(mysql);\n");
@@ -236,7 +286,9 @@ void gsc_mysql_errno(int mysql) {
 * Return Value(s)
     A null-terminated character string that describes the error. An empty string if no error occurred.
    ================================================================= */
-void gsc_mysql_error(int mysql) {
+void gsc_mysql_error() {
+    int mysql = Scr_GetInt(0);
+
 
     if (Scr_GetNumParam() != 1)  {
 		printf("Usage: gsc_mysql_error(mysql);\n");
