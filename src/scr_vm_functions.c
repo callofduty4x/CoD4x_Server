@@ -2380,6 +2380,19 @@ void  GScr_GetCvar()
   Scr_AddString(stringval);
 }
 
+void GScr_IsCvarDefined()
+{
+    const char * var_name;
+    cvar_t * var;
+
+    if(Scr_GetNumParam() != 1)
+	Scr_Error("Usage: IsCvarDefined <cvarname>");
+
+    var_name = Scr_GetString(0);
+    var = Cvar_FindVar(var_name);
+
+    Scr_AddBool(var ? qtrue : qfalse);
+}
 
 void GScr_ScriptCommandCB()
 {

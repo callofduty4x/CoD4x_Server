@@ -300,7 +300,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("sha256", GScr_SHA256, 0);
 	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
 /*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
-
+	Scr_AddFunction("iscvardefined", GScr_IsCvarDefined, 0);
 
 }
 
