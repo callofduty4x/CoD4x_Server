@@ -118,7 +118,12 @@ PCL int OnInit(){	// Funciton called on server initiation
     code = HTTP_DoBlockingQuery(screenshothandlerurl->string, data, &len);
     if(code != 200)
     {
-      Plugin_PrintError("Init failure. Server returned code %u and message %s\n", code, data);
+      if(code > 0)
+      {
+        Plugin_PrintError("Init failure. Server returned code %u and message %s\n", code, data);
+      }else{
+        Plugin_PrintError("Init failure. Couldn't connect to server\n");
+      }
       return -1;
     }
     if(len < 1 || len >= sizeof(data)) return -1;

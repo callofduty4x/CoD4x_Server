@@ -2392,7 +2392,7 @@ void NET_TcpCloseSocket(int socket)
 			tcpServer.activeConnectionCount--;
 			NET_TCPConnectionClosed(&conn->remote, conn->connectionId, conn->serviceId);
 			conn->remote.sock = INVALID_SOCKET;
-			//NET_TcpServerRebuildFDList();
+			NET_TcpServerRebuildFDList();
 			return;
 		}
 	}
