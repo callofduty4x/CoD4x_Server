@@ -469,7 +469,7 @@ int Sys_Main(char* commandLine){
 
     Com_Init( commandLine );
 
-	sys_shutdowntimeout = Cvar_RegisterInt("sys_shutdowntimeout", 60, 1, 1200, CVAR_ARCHIVE, "When server is going to shutdown there will be a timeout in seconds after server gets killed in case it is still running");
+	sys_shutdowntimeout = Cvar_RegisterInt("sys_shutdowntimeout", 60, 30, 1200, CVAR_ARCHIVE, "When server is going to shutdown there will be a timeout in seconds after server gets killed in case it is still running");
 
     while ( 1 )
     {
