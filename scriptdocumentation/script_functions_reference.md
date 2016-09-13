@@ -102,6 +102,19 @@ Returns current time in seconds since 01/01/_2012_ UTC.
 
 Usage example: `t = getRealTime();`
 
+#### `IsCvarDefined(string <cvar name>)`
+Returns boolean value that states whether the cvar of given name has been already defined or not.
+
+Usage example:
+```
+get_dvar_or_default(name, default_value)
+{
+    if (IsCvarDefined(name))
+       return GetDvar(name);
+    return default_value;
+}
+```
+
 ### Players Related Functions
 
 #### `GetUserinfo(string <variable_name>)`
