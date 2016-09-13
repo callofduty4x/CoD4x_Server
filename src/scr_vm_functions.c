@@ -2380,6 +2380,19 @@ void  GScr_GetCvar()
   Scr_AddString(stringval);
 }
 
+void GScr_IsCvarDefined()
+{
+    const char * var_name;
+    qboolean defined;
+
+    if(Scr_GetNumParam() != 1)
+	Scr_Error("Usage: IsCvarDefined <cvarname>");
+
+    var_name = Scr_GetString(0);
+    defined = Cvar_IsDefined(var_name); //@florczakraf Please pay attention about critical sections. I am not sure if direct access is safe as you used it.
+
+    Scr_AddBool( defined );
+}
 
 void GScr_ScriptCommandCB()
 {

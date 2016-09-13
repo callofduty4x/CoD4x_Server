@@ -100,6 +100,7 @@ void Sys_Restart(const char* reason);
 
 void Sys_BeginLoadThreadPriorities();
 void Sys_EndLoadThreadPriorities();
+void Sys_BeginShutdownWatchdog();
 #endif
 
 
