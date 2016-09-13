@@ -2985,3 +2985,14 @@ void Scr_Destroy_f(scr_entref_t hud_elem_num)
 	Scr_FreeHudElem(hud_elem);
 	hud_elem->inuse = 0;
 }
+
+void Scr_IsArray_f()
+{
+	if(Scr_GetNumParam() != 1)
+	{
+		Scr_Error("usage: isArray(<variable>)");
+		return;
+	}
+
+	Scr_AddBool(Scr_GetType(0) == 1 ? qtrue : qfalse);
+}
