@@ -1,23 +1,5 @@
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "qcommon.h"
-#include "g_hud.h"
 #include "scr_vm.h"
-#include "cmd.h"
-#include "server.h"
-#include "maxmind_geoip.h"
-#include "q_platform.h"
-#include "g_sv_shared.h"
-#include "cvar.h"
-#include "misc.h"
-#include "sec_crypto.h"
-#include "sv_auth.h"
-#include "sapi.h"
-
-#include <string.h>
-#include <time.h>
 #include "plugin_handler.h"
-
 #include <mysql/mysql.h>
 
 /* =================================================================
@@ -38,7 +20,8 @@ void gsc_mysql_version() {
      * This is an indication of whether or not cod4x is properly reading <mysql/mysql.h>
      * I recommend using this as a basic test
      */
-    Com_Printf("MySQL client version: %s\n", version);
+    Scr_AddString(version);
+    Com_Printf("MySQL Version: %s\n", version);
     return;
 }
 
@@ -63,18 +46,16 @@ void gsc_mysql_init() {
     }
 
     /* Print to let the user know that the function initalized */
-	Com_Printf("gsc_mysql_init()\n");
+    Com_DPrintf("gsc_mysql_init()\n");
 
     /* Sets my, (a pointer of type MYSQL), to the MySQL Connection Handle ID */
-	MYSQL *my = mysql_init(NULL);
+    MYSQL *my = mysql_init(NULL);
 
     if (my == NULL) {
-        Scr_Error("Something went wrong when trying to get the MySQL CID");
+        Scr_AddUndefined();
+        Scr_Error("\nSomething went wrong when trying to get the MySQL CID\n");
+        return;
     }
-
-    /* Print to let the user know the MySQL Connection Handle ID */
-    Com_Printf("The conneciton handle ID is: %d", (int)my);
-
 
     /* Returns the MySQL Handle Connection ID */
     Scr_AddInt((int)my);
@@ -114,20 +95,12 @@ void gsc_mysql_real_connect() {
         Scr_Error("Usage: gsc_mysql_real_connect(mysql, host, user, pass, db, port);\n");
     }
 
-    /* Debugging code */
-    //Com_Printf("\n gsc_mysql_real_connect(mysql=%d, host=\"%s\", user=\"%s\", pass=\"%s\", db=\"%s\", port=%d)\n", mysql, host, user, pass, db, port);
-
-    /* Attempt to connect to the database */
-	//mysql2 = mysql_real_connect((MYSQL *)mysql, host, user, pass, db, port, NULL, 0);
-
-
     mysql2 = mysql_real_connect((MYSQL *)mysql, host, user, pass, db, port, NULL, 0);
-     /* Check to make sure the CID was properly assigned */
 
-
-     /* We don't want to crash the server, so we have a check to return nothing to prevent that */
+    /* We don't want to crash the server, so we have a check to return nothing to prevent that */
     if (mysql2 == NULL) {
-        Com_Printf("Error: %s", mysql_error((MYSQL *)mysql));
+        Com_DPrintf("Error: %s", mysql_error((MYSQL *)mysql));
+        Scr_AddUndefined();
         return;
     }
 
@@ -135,7 +108,7 @@ void gsc_mysql_real_connect() {
     qboolean reconnect = qtrue;
 
     /* Check to see if the mySQL server connection has dropped */
-	mysql_options((MYSQL*)mysql, MYSQL_OPT_RECONNECT, &reconnect);
+    mysql_options((MYSQL*)mysql, MYSQL_OPT_RECONNECT, &reconnect);
 
     /* Return the MySQL Connection Handle (should be the same as the first parameter)*/
     Scr_AddBool(qtrue);
@@ -157,16 +130,48 @@ void gsc_mysql_real_connect() {
 void gsc_mysql_close() {
     int mysql = Scr_GetInt(0);
 
-	if (Scr_GetNumParam() != 1) {
-		Scr_Error("Usage: gsc_mysql_close(mysql);\n");
-	}
+    if (Scr_GetNumParam() != 1) {
+        Scr_Error("Usage: gsc_mysql_close(mysql);\n");
+    }
 
     /* Closes the MySQL Handle Connection that is passed as first arguement*/
-    Com_Printf("Closing CID: %d\n", (MYSQL *)mysql);
+    Com_DPrintf("Closing CID: %d\n", (MYSQL *)mysql);
     mysql_close((MYSQL *)mysql);
 
     /* Let the function properly close */
-	return;
+    return;
+}
+
+/* =================================================================
+* URL
+    http://dev.mysql.com/doc/refman/5.7/en/mysql-affected-rows.html
+
+* Description
+    mysql_affected_rows() may be called immediately after executing
+    a statement with mysql_query() or mysql_real_query(). It
+    returns the number of rows changed, deleted, or inserted by
+    the last statement if it was an UPDATE, DELETE, or INSERT.
+    For SELECT statements, mysql_affected_rows() works like
+    mysql_num_rows().
+
+* Return Value(s)
+    An integer greater than zero indicates the number of rows
+    affected or retrieved. Zero indicates that no records
+    were updated for an UPDATE statement, no rows matched the
+    WHERE clause in the query or that no query has yet been
+    executed. -1 indicates that the query returned an error
+    or that, for a SELECT query, mysql_affected_rows()
+    was called prior to calling mysql_store_result().
+   ================================================================= */
+void gsc_mysql_affected_rows() {
+    int mysql = Scr_GetInt(0);
+
+    if (Scr_GetNumParam() != 1) {
+        Scr_Error("Usage: gsc_mysql_affected_rows(mysql);\n");
+    }
+
+    int rowsAffected = mysql_affected_rows((MYSQL *)mysql);
+    Scr_AddInt(rowsAffected);
 }
 
 /* =================================================================
@@ -184,52 +189,125 @@ void gsc_mysql_close() {
     Zero for success. Nonzero if an error occurred.
    ================================================================= */
 void gsc_mysql_query() {
-   int mysql = Scr_GetInt(0);
-   char *sql = Scr_GetString(1);
+    int mysql = Scr_GetInt(0);
+    char* sql = Scr_GetString(1);
 
+    if (Scr_GetNumParam() != 2) {
+        Scr_Error("Usage: gsc_mysql_query(mysql, *sql);\n");
+        Scr_Error("Where *sql is your query\n");
+    }
 
-   if (Scr_GetNumParam() != 2) {
-       Scr_Error("Usage: gsc_mysql_query(mysql, *sql);\n");
-       Scr_Error("Where *sql is your query\n");
-   }
+    if (mysql_query((MYSQL *)mysql, sql) == 0) {
+        Com_DPrintf("\nSuccessful query!\n");
+        MYSQL_RES *result = mysql_store_result((MYSQL *) mysql);
 
-   /* Set ret (return) to the return value
-   *  0 = success
-   * !0 = failure
-   */
-
-   /* Check to see if the query was a success */
-   if (mysql_query((MYSQL *)mysql, sql) == 0) {
-       Com_Printf("\nSuccessful query!\n");
-       MYSQL_RES *result = mysql_store_result((MYSQL *)mysql);
-       int num_fields = mysql_num_fields(result);
-       MYSQL_ROW row;
-
-       Scr_MakeArray(); [makearray1][makearray2]
-
-       int count = 0;
-       while((row = mysql_fetch_row(result))){
-           if( count != 0 ) {
-               Scr_AddString("break");
-               Scr_AddArray();
-           }
-           for(int i = 0; i < num_fields; i++){
-               Com_Printf("Data [%d]: %s\n", i, row[i]);
-               Scr_AddString(row[i]);
-               Scr_AddArray();
-           }
-           count++;
-       }
-   } else {
-       Scr_Error("Query failed\n");
-       Scr_AddBool(qfalse);
-       return;
-   }
+        Scr_AddInt((int) result);
+    }
+    else
+        Scr_AddUndefined();
 }
 
-void gsc_handle_row() {
-    char* row = Scr_GetString(0);
-    Com_Printf("%s", row);
+/* =================================================================
+* URL
+    http://dev.mysql.com/doc/refman/5.7/en/mysql-num-rows.html
+
+* Description
+    Returns the number of rows in the result set.
+
+* Return Value(s)
+    The number of rows in the result set.
+   ================================================================= */
+void gsc_mysql_rowcount() {
+    int result = Scr_GetInt(0);
+
+    if (Scr_GetNumParam() != 1) {
+        Scr_Error("Usage: gsc_mysql_rowcount(query result from gsc_mysql_query);\n");
+    }
+
+    int rowCount = mysql_num_rows((MYSQL_RES *) result);
+    Scr_AddInt( rowCount );
+}
+
+/* =================================================================
+* URL
+    http://dev.mysql.com/doc/refman/5.7/en/mysql-num-fields.html
+
+* Description
+    Returns the number of columns in a result set.
+
+* Return Value(s)
+    An unsigned integer representing the number of columns in a result set.
+   ================================================================= */
+void gsc_mysql_num_field() {
+    int result = Scr_GetInt(0);
+
+    if (Scr_GetNumParam() != 1) {
+        Scr_Error("Usage: gsc_mysql_num_field(query result from gsc_mysql_query);\n");
+    }
+
+    int fieldCount = mysql_num_fields((MYSQL_RES *) result);
+    Scr_AddInt( fieldCount );
+}
+
+/* =================================================================
+* URL
+    http://dev.mysql.com/doc/refman/5.7/en/mysql-fetch-row.html
+
+* Description
+    Retrieves the next row of a result set.
+
+* Return Value(s)
+    A MYSQL_ROW structure for the next row. NULL if there are no more rows to retrieve or if an error occurred.
+   ================================================================= */
+void gsc_mysql_fetch_rows() {
+    int results = Scr_GetInt(0);
+    MYSQL_RES* result = (MYSQL_RES*) results;
+
+    if (Scr_GetNumParam() != 1) {
+        Scr_Error("Usage: gsc_mysql_fetch_row(query result from gsc_mysql_query);\n");
+    }
+
+    if( mysql_num_rows(result) != 0 )
+    {
+        int num_fields = mysql_num_fields(result);
+        MYSQL_FIELD *field;
+        MYSQL_ROW row;
+        MYSQL_FIELD* fieldArray[num_fields];
+        int count = 0;
+        Scr_MakeArray();
+
+        /* Check to see if this is a single element row */
+        if (mysql_num_rows(result) == 1) {
+            while((field = mysql_fetch_field(result))) {
+                fieldArray[count] = field;
+                count++;
+            }
+            row = mysql_fetch_row(result);
+            Scr_MakeArray();
+            for (int i = 0; i < num_fields; i++) {
+                Scr_AddString(row[i]);
+                int tempId = Scr_AllocString(fieldArray[i]->name);
+                Scr_AddArrayKey(tempId);
+            }
+            return;
+        }
+
+        /* If it's not a single row column, get row data*/
+        while((row = mysql_fetch_row(result))){
+            Scr_MakeArray();
+            while((field = mysql_fetch_field(result))) {
+                fieldArray[count] = field;
+                count++;
+            }
+
+            for (int i = 0; i < num_fields; i++) {
+                Scr_AddString(row[i]);
+                int tempId = Scr_AllocString(fieldArray[i]->name);
+                Scr_AddArrayKey(tempId);
+            }
+            Scr_AddArray();
+        }
+    }
 }
 
 /* =================================================================
@@ -251,22 +329,16 @@ void gsc_handle_row() {
 void gsc_mysql_errno() {
     int mysql = Scr_GetInt(0);
 
-	if (Scr_GetNumParam() != 1)  {
-		printf("Usage: gsc_mysql_errno(mysql);\n");
-		return;
-	}
-
-    /*Set ret (return value) of the mysql_errno to the error number */
-	int ret = mysql_errno((MYSQL *)mysql);
-
-    /* Check to see if ret is 0, if it is, no error*/
-    if (ret == 0) {
-        Com_Printf("No errors occured (this is a good thing)\n");
+    if (Scr_GetNumParam() != 1)  {
+        printf("Usage: gsc_mysql_errno(mysql);\n");
         return;
     }
 
+    /*Set ret (return value) of the mysql_errno to the error number */
+    int ret = mysql_errno((MYSQL *)mysql);
+
     /* Return the error number*/
-	Scr_AddInt(ret);
+    Scr_AddInt(ret);
 }
 
 /* =================================================================
@@ -291,17 +363,17 @@ void gsc_mysql_error() {
 
 
     if (Scr_GetNumParam() != 1)  {
-		printf("Usage: gsc_mysql_error(mysql);\n");
-		return;
-	}
-
-    /* Set ret, (which is a char pointer), to the value of mysql_error (casted to a char *, since C doesn't support strings) */
-	char *ret = (char *)mysql_error((MYSQL *)mysql);
-
-    /* Check to see if no error occured */
-    if (strcmp(ret, "")) {
-        Com_Printf("No errors occured (this is a good thing)\n");
+        printf("Usage: gsc_mysql_error(mysql);\n");
         return;
     }
-	Scr_AddString(ret);
+
+    /* Set ret, (which is a char pointer), to the value of mysql_error (casted to a char *, since C doesn't support strings) */
+    char *ret = (char *)mysql_error((MYSQL *)mysql);
+
+    /* Check to see if no error occured */
+    if (strcmp(ret, "") == 0) {
+        Scr_AddUndefined(); // if( isDefined(gsc_mysql_error)) ...
+        return;
+    }
+    Scr_AddString(ret);
 }

@@ -47,7 +47,7 @@ char* (*Scr_GetLocalizedString)(unsigned int arg) =
 // Ignore me
 void GSC_writeToConsole() {
     char* shit = Scr_GetString(0);
-    Com_Printf(shit);
+    Com_Printf("%s\n", shit);
 }
 
 /*

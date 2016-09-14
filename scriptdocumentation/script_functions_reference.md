@@ -15,6 +15,7 @@ We do our best to keep it updated._
    4. [String Functions](#string-functions)
    5. [File Operations](#file-operations)
    6. [Bot Related Functions](#bot-related-functions)
+   7. [MySQL Related Functions](#mysql-related-functions)
 5. [Appendix: All Known Script Functions](#appendix-all-known-script-functions)
 
 ## Introduction
@@ -41,10 +42,10 @@ The only thing you have to do is to create `main_shared` directory next to your 
         _weapons.gsx
 ```
 
-It's also recommended to change the extension of your scripts to `.gsx` if they are overriding some existing files or using 
+It's also recommended to change the extension of your scripts to `.gsx` if they are overriding some existing files or using
 functions introduced in CoD4x. There are two reasons behind it:
 
-1. Scripts which names end with `.gsx` are executed instead of ones with the same *basenames* but ending with `.gsc`. 
+1. Scripts which names end with `.gsx` are executed instead of ones with the same *basenames* but ending with `.gsc`.
   This allows easy overriding of stock scripts.
 2. It serves a fail-safe when you're developing a mod. You can include scripts for both CoD4x and vanilla servers this way.
 
@@ -54,7 +55,7 @@ functions introduced in CoD4x. There are two reasons behind it:
 * `CodeCallback_PlayerSayCmd(string <text>, bool <teamchat>)` support has been dropped. New solution to catch commands is
 now [`CodeCallback_ScriptCommand()`](#codecallback_scriptcommandstring-command-integer-default-power).
 
-* `CodeCallback_PlayerSayAll(string <text>, bool <teamchat>)` support has been dropped. New solution to catch commands is 
+* `CodeCallback_PlayerSayAll(string <text>, bool <teamchat>)` support has been dropped. New solution to catch commands is
 now [`CodeCallback_ScriptCommand()`](#codecallback_scriptcommandstring-command-integer-default-power).
 
 
@@ -66,7 +67,7 @@ now [`CodeCallback_ScriptCommand()`](#codecallback_scriptcommandstring-command-i
 
 It gets called after a script registered command has been called.
 First argument is the name of called function. Second argument aggregates all remaining arguments.
-The player entity will be available as `self` if player has called this command. 
+The player entity will be available as `self` if player has called this command.
 If this command gets called from rcon/console `self` is undefined.
 For safe usage you have to include a `waittillframeend;` statement in the callback function.
 
@@ -178,7 +179,7 @@ Usage example: `self iprintln("Current FPS: " + self getCountedFPS());`
 
 ### Player Movement Related Functions
 
-After first call to any of the following three functions, changing the variables: `g_speed`, `g_gravity` and `jump_height` 
+After first call to any of the following three functions, changing the variables: `g_speed`, `g_gravity` and `jump_height`
 will have no effect. They will have their normal behaviour back after map change.
 
 #### `setgravity(int <gravity>)`
@@ -258,7 +259,7 @@ Returns the given time as readable string. `Realtime` is the time in seconds you
 `UTC/Local` argument:
 - `0` — time will be displayed in UTC timezone
 - `1` — time will be displayed in Local timezone
- 
+
 `Format` is a string to describe how the time will be displayed. It accepts formats from c++ function `strftime()`.
 For it's reference please head to: http://cplusplus.com/reference/ctime/strftime.
 
@@ -347,6 +348,78 @@ Removes first test client it finds on the server.
 
 Usage example: `entity = removeTestClient()`
 
+### MySQL Related Functions
+
+#### `mysql_version()`
+
+Returns the MySQL clients version
+
+Usage example: `version = mysql_version()`
+
+#### `mysql_init()`
+
+Initializes a connection ID of type MySQL *
+
+Usage example `mysql = mysql_init() //mysql is now a connection ID`
+All following functions reference this mysql variable
+
+#### `mysql_real_connect()`
+
+Connects to a database
+
+Usage example `db = mysql_real_connect(mysql, host, user, pass, db, port)`
+
+###### Use 127.0.0.1 on unix, and the default port for mysql is 3306.
+
+#### `mysql_close()`
+
+Close a MySQL Connection
+
+Usage example `mysql_close(mysql)`
+
+#### `mysql_errno()`
+
+Returns the MySQL Error number.
+Usage example: `error = mysql_errno(mysql)`
+
+#### `mysql_error()`
+
+Returns the MySQL Error number.
+Usage example: `error = mysql_error(mysql)`
+
+#### `mysql_query()`
+
+Send a query to a database and returns the result for use in the following functions:
+
+Usage example:
+```cs
+query = mysql_query(mysql, "QUERY")
+```
+All following functions reference this query variable
+#### `mysql_rowcount()`
+Returns the amount of rows
+
+Usage example: `count = mysql_rowcount(query)`
+
+#### `mysql_affected_rows()`
+Returns the amount of affected rows
+
+Usage example: `count = mysql_affected_rows(mysql)`
+
+#### `mysql_num_field()`
+
+Returns number of fields
+
+Usage example = `count = mysql_num_field(query)`
+
+
+#### `mysql_fetch_rows()`
+
+Fetches and handles all rows from the `mysql_query()`
+
+Usage example = `data = mysql_fetch_rows(query)`
+
+Returns: This function will return two different data types depending on the field count. If the field count is one, `if( mysql_num_field(mysql) == 1 )`, then the function will return a key based array `data['field_name']`. If the `mysql_num_field()` is larger than one then it will return a 2D array. The first array being a numeric array and the second being a key based array `data[0]['field_name']`.
 
 ## Appendix: All Known Script Functions
 

@@ -1,4 +1,4 @@
-/*
+/*)
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -19,8 +19,6 @@
 ===========================================================================
 */
 
-
-
 #include "q_shared.h"
 #include "scr_vm.h"
 #include "scr_vm_functions.h"
@@ -29,7 +27,7 @@
 #include "cmd.h"
 #include "misc.h"
 #include "sys_main.h"
-
+#include "gsc_mysql.h"
 #include <stdarg.h>
 
 typedef struct{
@@ -300,19 +298,24 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("sha256", GScr_SHA256, 0);
 	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
 	Scr_AddFunction("isarray", Scr_IsArray_f, qfalse);             // http://zeroy.com/script/variables/isarray.htm
-/*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
+    /*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
 	Scr_AddFunction("iscvardefined", GScr_IsCvarDefined, 0);
 
-    /* SQL */
-    Scr_AddFunction("gsc_mysql_version", gsc_mysql_version, 0);
-    Scr_AddFunction("gsc_mysql_init", gsc_mysql_init, 0);
-    Scr_AddFunction("gsc_mysql_real_connect", gsc_mysql_real_connect, 0);
-    Scr_AddFunction("gsc_mysql_close", gsc_mysql_close, 0);
-    Scr_AddFunction("gsc_mysql_query", gsc_mysql_query, 0);
-    Scr_AddFunction("gsc_mysql_errno", gsc_mysql_errno, 0);
-    Scr_AddFunction("gsc_mysql_error", gsc_mysql_error, 0);
+    /* Custom */
     Scr_AddFunction("consoleprint", GSC_writeToConsole, 0);
-    Scr_AddFunction("gsc_handle_row", gsc_handle_row, 0);
+
+    /* SQL */
+    Scr_AddFunction("mysql_version", gsc_mysql_version, 0);
+    Scr_AddFunction("mysql_init", gsc_mysql_init, 0);
+    Scr_AddFunction("mysql_real_connect", gsc_mysql_real_connect, 0);
+    Scr_AddFunction("mysql_close", gsc_mysql_close, 0);
+    Scr_AddFunction("mysql_query", gsc_mysql_query, 0);
+    Scr_AddFunction("mysql_errno", gsc_mysql_errno, 0);
+    Scr_AddFunction("mysql_error", gsc_mysql_error, 0);
+    Scr_AddFunction("mysql_affected_rows", gsc_mysql_affected_rows, 0);
+	Scr_AddFunction("mysql_num_field", gsc_mysql_num_field, 0);
+	Scr_AddFunction("mysql_fetch_rows", gsc_mysql_fetch_rows, 0);
+    Scr_AddFunction("mysql_rowcount", gsc_mysql_rowcount, 0);
 }
 
 void Scr_AddStockMethods()
