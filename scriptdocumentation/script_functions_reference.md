@@ -116,6 +116,18 @@ get_dvar_or_default(name, default_value)
 }
 ```
 
+#### `isArray(<variable>)`
+
+Returns true if passed variable has 'array' type.
+
+Usage example:
+```
+if (isArray(a))
+   do_something();
+else
+   do_something_else();
+```
+
 ### Players Related Functions
 
 #### `GetUserinfo(string <variable_name>)`
