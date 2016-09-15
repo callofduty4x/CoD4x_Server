@@ -10,7 +10,7 @@ gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/he
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/elf32_parser.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/sys_cod4linker_linux.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/sys_con_tty.c
-gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib/mysql/ -I../lib_tomcrypt/math/tommath -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -c ../src/*.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib/mysql/unix -I../lib_tomcrypt/math/tommath -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -c ../src/*.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -D _GNU_SOURCE -c ../src/zlib/*.c
 
 cd ../
