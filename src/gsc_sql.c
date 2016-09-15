@@ -288,22 +288,22 @@ void gsc_mysql_fetch_rows() {
                 int tempId = Scr_AllocString(fieldArray[i]->name);
                 Scr_AddArrayKey(tempId);
             }
-        } else {
-            /* If it's not a single row column, get row data*/
-            while((row = mysql_fetch_row(result))){
-                Scr_MakeArray();
-                while((field = mysql_fetch_field(result))) {
-                    fieldArray[count] = field;
-                    count++;
-                }
-
-                for (int i = 0; i < num_fields; i++) {
-                    Scr_AddString(row[i]);
-                    int tempId = Scr_AllocString(fieldArray[i]->name);
-                    Scr_AddArrayKey(tempId);
-                }
-                Scr_AddArray();
+            return;
+        }
+        /* If it's not a single row column, get row data*/
+        while((row = mysql_fetch_row(result))){
+            Scr_MakeArray();
+            while((field = mysql_fetch_field(result))) {
+                fieldArray[count] = field;
+                count++;
             }
+
+            for (int i = 0; i < num_fields; i++) {
+                Scr_AddString(row[i]);
+                int tempId = Scr_AllocString(fieldArray[i]->name);
+                Scr_AddArrayKey(tempId);
+            }
+            Scr_AddArray();
         }
     }
 }
