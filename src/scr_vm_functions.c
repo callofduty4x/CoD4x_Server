@@ -19,8 +19,6 @@
 ===========================================================================
 */
 
-
-
 #include "q_shared.h"
 #include "qcommon_io.h"
 #include "qcommon.h"

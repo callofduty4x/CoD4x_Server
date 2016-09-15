@@ -88,7 +88,7 @@
 #define QDECL __cdecl
 
 #undef QCALL
-#define QCALL __stdcall
+#define QCALL __stdcall_codx
 
 #if defined( _MSC_VER )
 #define OS_STRING "win_msvc64"
@@ -99,7 +99,7 @@
 #define ID_INLINE __inline
 #define PATH_SEP '\\'
 
-#if defined( __WIN64__ ) 
+#if defined( __WIN64__ )
 #define ARCH_STRING "x64"
 #elif defined _M_ALPHA
 #define ARCH_STRING "AXP"
@@ -115,7 +115,7 @@
 #define QDECL __cdecl
 
 #undef QCALL
-#define QCALL __stdcall
+#define QCALL __stdcall_codx
 
 #undef DLLEXPORT
 #define DLLEXPORT __declspec(dllexport)

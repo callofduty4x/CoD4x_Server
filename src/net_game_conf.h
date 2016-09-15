@@ -45,7 +45,7 @@
 
 #define	PORT_SERVER		28960
 
-#define	PROTOCOL_VERSION (unsigned int)(SYS_COMMONVERSION + 0.00001)
+#define	CODX_PROTOCOL_VERSION (unsigned int)(SYS_COMMONVERSION + 0.00001)
 
 #define _STRINGIFY(s) #s
 #define STRINGIFY(s) _STRINGIFY(s)
@@ -94,4 +94,3 @@ enum clc_ops_e {
 };
 
 #endif
-

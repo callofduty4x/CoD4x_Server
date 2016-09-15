@@ -2761,7 +2761,7 @@ void SV_InitCvarsOnce(void){
 
 	sv_paused = Cvar_RegisterBool("sv_paused", qfalse, CVAR_ROM, "True if the server is paused");
 	sv_killserver = Cvar_RegisterBool("sv_killserver", qfalse, CVAR_ROM, "True if the server getting killed");
-	sv_protocol = Cvar_RegisterInt("protocol", PROTOCOL_VERSION, PROTOCOL_VERSION, PROTOCOL_VERSION, 0x44, "Protocol version");
+	sv_protocol = Cvar_RegisterInt("protocol", CODX_PROTOCOL_VERSION, CODX_PROTOCOL_VERSION, CODX_PROTOCOL_VERSION, 0x44, "Protocol version");
 	sv_privateClients = Cvar_RegisterInt("sv_privateClients", 0, 0, 64, 4, "Maximum number of private clients allowed onto this server");
 	sv_hostname = Cvar_RegisterString("sv_hostname", "^5CoD4Host", 5, "Host name of the server");
 #ifdef PUNKBUSTER
@@ -3268,7 +3268,7 @@ void SV_BuildXAssetCSString()
 	char list[MAX_STRING_CHARS];
 
 	DB_BuildOverallocatedXAssetList(list, sizeof(list));
-	Com_sprintf(cs, sizeof(cs), "cod%d %s", PROTOCOL_VERSION, list);
+	Com_sprintf(cs, sizeof(cs), "cod%d %s", CODX_PROTOCOL_VERSION, list);
 	SV_SetConfigstring(2, cs);
 }
 
