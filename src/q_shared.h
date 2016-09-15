@@ -38,8 +38,8 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-#ifndef __stdcall
-#define __stdcall __attribute__((stdcall))
+#ifndef __stdcall_codx
+#define __stdcall_codx __attribute__((stdcall))
 #endif
 
 #ifndef __cdecl
@@ -101,8 +101,8 @@ typedef enum {qfalse, qtrue}	qboolean;
 //#define DEVRELEASE
 
 
-#ifndef STDCALL
-#define STDCALL __attribute__((stdcall))
+#ifndef STDCALL_CODX
+#define STDCALL_CODX __attribute__((stdcall))
 #endif
 
 #define HOMEPATH_NAME_UNIX ".callofduty4"
