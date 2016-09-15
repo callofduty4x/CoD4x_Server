@@ -283,7 +283,8 @@ void gsc_mysql_fetch_rows() {
             }
             row = mysql_fetch_row(result);
             Scr_MakeArray();
-            for (int i = 0; i < num_fields; i++) {
+            int i = 0;
+            for (i = 0; i < num_fields; i++) {
                 Scr_AddString(row[i]);
                 int tempId = Scr_AllocString(fieldArray[i]->name);
                 Scr_AddArrayKey(tempId);
@@ -297,8 +298,9 @@ void gsc_mysql_fetch_rows() {
                 fieldArray[count] = field;
                 count++;
             }
-
-            for (int i = 0; i < num_fields; i++) {
+            
+            int i = 0;
+            for (i = 0; i < num_fields; i++) {
                 Scr_AddString(row[i]);
                 int tempId = Scr_AllocString(fieldArray[i]->name);
                 Scr_AddArrayKey(tempId);
