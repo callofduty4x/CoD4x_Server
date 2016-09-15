@@ -301,9 +301,6 @@ void Scr_AddStockFunctions()
     /*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
 	Scr_AddFunction("iscvardefined", GScr_IsCvarDefined, 0);
 
-    /* Custom */
-    Scr_AddFunction("consoleprint", GSC_writeToConsole, 0);
-
     /* SQL */
     Scr_AddFunction("mysql_version", gsc_mysql_version, 0);
     Scr_AddFunction("mysql_init", gsc_mysql_init, 0);

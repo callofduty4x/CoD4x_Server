@@ -32,7 +32,6 @@
 typedef int scr_entref_t;
 #endif
 
-void GSC_writeToConsole();
 void PlayerCmd_GetUid(scr_entref_t arg);
 void PlayerCmd_SetUid(scr_entref_t arg);
 void PlayerCmd_GetGuid(scr_entref_t arg);

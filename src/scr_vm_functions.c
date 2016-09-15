@@ -44,12 +44,6 @@ static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 char* (*Scr_GetLocalizedString)(unsigned int arg) =
 		(char*(*)(unsigned int))0x0816541C;
 
-// Ignore me
-void GSC_writeToConsole() {
-    char* shit = Scr_GetString(0);
-    Com_Printf("%s\n", shit);
-}
-
 /*
 ============
 PlayerCmd_GetUid
