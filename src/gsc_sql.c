@@ -86,13 +86,15 @@ void gsc_mysql_real_connect() {
     int port = Scr_GetInt(5);
     MYSQL* mysql2;
 
+    if (Scr_GetNumParam() != 6) {
+        Scr_Error("Usage: gsc_mysql_real_connect(mysql, host, user, pass, db, port);\n");
+        Scr_AddUndefined();
+        return;
+    }
+
     /* On *Unix based systems, using "localhost" instead of 127.0.0.1 causes a unix socket error, we replace it*/
     if (strcmp(host, "localhost") == 0) {
         host = "127.0.0.1";
-    }
-
-    if (Scr_GetNumParam() != 6) {
-        Scr_Error("Usage: gsc_mysql_real_connect(mysql, host, user, pass, db, port);\n");
     }
 
     mysql2 = mysql_real_connect((MYSQL *)mysql, host, user, pass, db, port, NULL, 0);
@@ -137,9 +139,6 @@ void gsc_mysql_close() {
     /* Closes the MySQL Handle Connection that is passed as first arguement*/
     Com_DPrintf("Closing CID: %d\n", (MYSQL *)mysql);
     mysql_close((MYSQL *)mysql);
-
-    /* Let the function properly close */
-    return;
 }
 
 /* =================================================================
@@ -289,23 +288,22 @@ void gsc_mysql_fetch_rows() {
                 int tempId = Scr_AllocString(fieldArray[i]->name);
                 Scr_AddArrayKey(tempId);
             }
-            return;
-        }
+        } else {
+            /* If it's not a single row column, get row data*/
+            while((row = mysql_fetch_row(result))){
+                Scr_MakeArray();
+                while((field = mysql_fetch_field(result))) {
+                    fieldArray[count] = field;
+                    count++;
+                }
 
-        /* If it's not a single row column, get row data*/
-        while((row = mysql_fetch_row(result))){
-            Scr_MakeArray();
-            while((field = mysql_fetch_field(result))) {
-                fieldArray[count] = field;
-                count++;
+                for (int i = 0; i < num_fields; i++) {
+                    Scr_AddString(row[i]);
+                    int tempId = Scr_AllocString(fieldArray[i]->name);
+                    Scr_AddArrayKey(tempId);
+                }
+                Scr_AddArray();
             }
-
-            for (int i = 0; i < num_fields; i++) {
-                Scr_AddString(row[i]);
-                int tempId = Scr_AllocString(fieldArray[i]->name);
-                Scr_AddArrayKey(tempId);
-            }
-            Scr_AddArray();
         }
     }
 }
@@ -330,7 +328,7 @@ void gsc_mysql_errno() {
     int mysql = Scr_GetInt(0);
 
     if (Scr_GetNumParam() != 1)  {
-        printf("Usage: gsc_mysql_errno(mysql);\n");
+        Com_Printf("Usage: gsc_mysql_errno(mysql);\n");
         return;
     }
 
