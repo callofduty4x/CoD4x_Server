@@ -1,6 +1,6 @@
 #include "scr_vm.h"
 #include "plugin_handler.h"
-#include <mysql/mysql.h>
+#include "mysql.h"
 
 /* =================================================================
     * URL
@@ -361,7 +361,7 @@ void gsc_mysql_error() {
 
 
     if (Scr_GetNumParam() != 1)  {
-        printf("Usage: gsc_mysql_error(mysql);\n");
+        Com_Printf("Usage: gsc_mysql_error(mysql);\n");
         return;
     }
 

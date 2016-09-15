@@ -1,4 +1,5 @@
 
+clear
 echo Compiling C-code...
 
 cd bin
@@ -9,7 +10,7 @@ gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/he
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/elf32_parser.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/sys_cod4linker_linux.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -D _GNU_SOURCE -c ../src/unix/sys_con_tty.c
-gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib_tomcrypt/math/tommath -I../lib/mysql -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -c ../src/*.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -I../lib_tomcrypt/headers -I../lib/mysql/ -I../lib_tomcrypt/math/tommath -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -c ../src/*.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -mtune=nocona -D _GNU_SOURCE -c ../src/zlib/*.c
 
 cd ../
@@ -30,7 +31,7 @@ nasm -f elf src/pluginexports.asm    -o bin/pluginexports.o
 
 echo Linking...
 #gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ltommath_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
-gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmbedtls -lmbedcrypto -lmysqlclient -lmbedx509 -ltomcrypt_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
+gcc -m32 -static-libgcc -rdynamic -Tlinkerscript.ld -o bin/cod4x18_dedrun bin/*.o -L./lib -lmysqlclient -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
 
 rm bin/*.o
 

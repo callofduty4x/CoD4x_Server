@@ -253,7 +253,7 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 	int32_t dummyend = -1;
 
 	//serverMessageSequence -> protocol
-	int protocol = PROTOCOL_VERSION;
+	int protocol = CODX_PROTOCOL_VERSION;
 	FS_DemoWrite(&protocol, sizeof(protocol), &cl->demofile);
 
 	//datalen -> -1 = demo ended
