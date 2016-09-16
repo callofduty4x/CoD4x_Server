@@ -37,6 +37,8 @@ void PlayerCmd_SetUid(scr_entref_t arg);
 void PlayerCmd_GetGuid(scr_entref_t arg);
 void PlayerCmd_GetSteamID(scr_entref_t arg);
 void PlayerCmd_GetPlayerID(scr_entref_t arg);
+void PlayerCmd_GetSteamID64(scr_entref_t arg);
+void PlayerCmd_GetPlayerID64(scr_entref_t arg);
 void PlayerCmd_GetPower(scr_entref_t arg);
 void PlayerCmd_SetPower(scr_entref_t arg);
 void PlayerCmd_SetStat(scr_entref_t arg);

@@ -382,6 +382,8 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
 	Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
 	Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
+	Scr_AddMethod("getsteamid64", PlayerCmd_GetSteamID, 0);
+	Scr_AddMethod("getplayerid64", PlayerCmd_GetPlayerID, 0);	
 	Scr_AddMethod("getxuid", (void*)0x80a9418, 0);
 	Scr_AddMethod("allowads", (void*)0x80ab852, 0);
 	Scr_AddMethod("allowjump", (void*)0x80a8932, 0);

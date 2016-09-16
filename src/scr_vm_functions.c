@@ -104,6 +104,38 @@ void PlayerCmd_GetSteamID(scr_entref_t arg){
     Scr_AddString(str);
 }
 
+void PlayerCmd_GetSteamID64(scr_entref_t arg){
+
+    gentity_t* gentity;
+    int entityNum = 0;
+    uint64_t steamid;
+    mvabuf;
+    char str[128];
+
+    if(HIWORD(arg)){
+
+        Scr_ObjectError("Not an entity");
+
+    }else{
+
+        entityNum = LOWORD(arg);
+        gentity = &g_entities[entityNum];
+
+        if(!gentity->client){
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        }
+    }
+    if(Scr_GetNumParam()){
+        Scr_Error("Usage: self getsteamid()\n");
+    }
+
+    steamid = svs.clients[entityNum].steamid;
+
+    SV_SApiSteamIDTo64String(steamid, str, sizeof(str));
+
+    Scr_AddString(str);
+}
+
 /*
 ============
 PlayerCmd_GetPlayerID
@@ -141,6 +173,47 @@ void PlayerCmd_GetPlayerID(scr_entref_t arg){
     playerid = svs.clients[entityNum].playerid;
 
     SV_SApiSteamIDToString(playerid, str, sizeof(str));
+
+    Scr_AddString(str);
+}
+
+/*
+============
+PlayerCmd_GetPlayerID
+
+Returns the players playerid in 64Bit format as string.
+Usage: string = self getplayerid();
+============
+*/
+
+void PlayerCmd_GetPlayerID64(scr_entref_t arg){
+
+    gentity_t* gentity;
+    int entityNum = 0;
+    uint64_t playerid;
+    mvabuf;
+    char str[128];
+
+    if(HIWORD(arg)){
+
+        Scr_ObjectError("Not an entity");
+
+    }else{
+
+        entityNum = LOWORD(arg);
+        gentity = &g_entities[entityNum];
+
+        if(!gentity->client){
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        }
+    }
+    if(Scr_GetNumParam()){
+        Scr_Error("Usage: self getplayerid()\n");
+    }
+
+    playerid = svs.clients[entityNum].playerid;
+
+    SV_SApiSteamIDTo64String(playerid, str, sizeof(str));
 
     Scr_AddString(str);
 }
