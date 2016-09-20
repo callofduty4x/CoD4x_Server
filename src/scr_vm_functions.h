@@ -37,6 +37,8 @@ void PlayerCmd_SetUid(scr_entref_t arg);
 void PlayerCmd_GetGuid(scr_entref_t arg);
 void PlayerCmd_GetSteamID(scr_entref_t arg);
 void PlayerCmd_GetPlayerID(scr_entref_t arg);
+void PlayerCmd_GetSteamID64(scr_entref_t arg);
+void PlayerCmd_GetPlayerID64(scr_entref_t arg);
 void PlayerCmd_GetPower(scr_entref_t arg);
 void PlayerCmd_SetPower(scr_entref_t arg);
 void PlayerCmd_SetStat(scr_entref_t arg);
@@ -100,5 +102,14 @@ void GScr_SpawnHelicopter();
 void GScr_VectorAdd();
 void GScr_TypeTest();
 __cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
+
+void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg);
+
+void Scr_PrecacheString_f();
+void Scr_Destroy_f(scr_entref_t hud_elem_num);
+
+void GScr_IsCvarDefined();
+
+void Scr_IsArray_f();
 
 #endif

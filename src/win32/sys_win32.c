@@ -131,7 +131,12 @@ void Sys_StartProcess( char *cmdline, qboolean doexit ) {
 		// JPW NERVE swiped from Sherman's SP code
 		if ( !CreateProcess( NULL, cmdline, NULL, NULL,FALSE, 0, NULL, NULL, &si, &pi ) ) {
 			// couldn't start it, popup error box
-			Com_Error( ERR_DROP, "Could not start process: '%s' ", cmdline );
+			if(doexit)
+			{
+				Com_Error( ERR_DROP, "Could not start process: '%s' ", cmdline );
+			}else{
+				Com_PrintError("Could not start process: '%s'\n", cmdline);
+			}
 			return;
 		}
 		// jpw
@@ -745,7 +750,7 @@ void* Sys_EventLoopThread(void* nullarg){
 
 
 	// pump the message loop
-	while ( GetMessageA( &msg, NULL, 0, 0 ) )
+	while ( GetMessageA( &msg, NULL, 0, 0 ) > 0)
 	{
 		// save the msg time, because wndprocs don't have access to the timestamp
 		g_wv.sysMsgTime = msg.time;
@@ -753,6 +758,7 @@ void* Sys_EventLoopThread(void* nullarg){
 		TranslateMessage( &msg );
 		DispatchMessageA( &msg );
 	}
+	MessageBoxA(NULL, "GetMessageA has failed", "GetMessageA has failed", MB_OK);
 	Com_Quit_f();
 	return NULL;
 }

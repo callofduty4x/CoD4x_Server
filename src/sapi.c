@@ -603,3 +603,11 @@ void SV_SApiProcessModules( client_t* cl, msg_t* msg )
     if(sapi_imp.ProcessModules)
         sapi_imp.ProcessModules(cl, msg);
 }
+
+qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer))
+{
+	if(sapi_imp.SteamGetGroupMemberStatusByClientNum)
+			return sapi_imp.SteamGetGroupMemberStatusByClientNum(clnum, groupid, reference, callback);
+
+	return qfalse;
+}

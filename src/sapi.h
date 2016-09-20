@@ -2,6 +2,7 @@
 
 #include "msg.h"
 #include "server.h"
+#include <stdbool.h>
 
 void SV_InitSApi();
 void SV_SApiShutdown();
@@ -21,6 +22,7 @@ qboolean SV_SApiSteamIDIndividualSteamOnly(uint64_t steamid);
 //void SV_SApiRequestModules( client_t* cl, msg_t* msg );
 void SV_SApiSendModuleRequest(client_t* cl);
 void SV_SApiProcessModules( client_t* cl, msg_t* msg );
+qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer));
 
 uint64_t SV_SApiGUID2PlayerID(const char* guid);
 
@@ -77,7 +79,7 @@ typedef struct{
 	int (*Connect)(client_t* client);
 	void (*NotifyDisconnect)(client_t* drop);
 	void (*RunFrame)();
-	bool (*SteamGetGroupMemberStatusByClientNum)(int clnum, uint64_t groupid, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, bool m_bMember, bool m_bOfficer));
+	bool (*SteamGetGroupMemberStatusByClientNum)(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)); //reference is user configurable variable passed back to callback
 }exports_t;
 #endif
 

@@ -17,7 +17,7 @@ auto Plugin_GetPlayerName(int slot)
 {
 	char* rawname = cod4x.functions.Plugin_GetPlayerName(slot);
 	import std.conv : to;
-	return fromStringz(rawname).to!string; 
+	return fromStringz(rawname).to!string;
 }
 
 GUID Plugin_GetPlayerGUID(int slot)
@@ -35,7 +35,7 @@ void Plugin_Printf(string str)
 }
 
 void Plugin_Printf(string str, int i)
-{	
+{
 	cod4x.functions.Plugin_Printf(str.toStringz(), i);
 }
 
@@ -66,16 +66,17 @@ int Plugin_Cvar_VariableIntegerValue(string var)
 	immutable(char)* arg = toStringz(var);
 	return cod4x.functions.Plugin_Cvar_VariableIntegerValue(arg);
 }
-
+/*
+Mimi please fix
 string Plugin_Cvar_VariableString(string var)
 {
 	immutable(char)* arg = toStringz(var);
 	char* erg = cod4x.functions.Plugin_Cvar_VariableString(arg);
-	
+
 	import std.conv;
 	return fromStringz(erg).to!string;
 }
-
+*/
 /*void Plugin_Cvar_SetString(string var, string val)
 {
 	import std.conv;
@@ -93,7 +94,7 @@ void Plugin_Scr_AddString(string str)
 	cod4x.functions.Plugin_Scr_AddString(str.toStringz);
 }
 
-void Plugin_Scr_AddInt(int value) 
+void Plugin_Scr_AddInt(int value)
 {
 	cod4x.functions.Plugin_Scr_AddInt(value);
 }

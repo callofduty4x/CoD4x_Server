@@ -285,7 +285,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			}
 		}
 	}
-	
+
 	if(*sv_password->string && !Q_strncmp(sv_password->string, password, 32))
 	{
 		validpassword = qtrue;
@@ -613,7 +613,8 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 	}
 	if(cl->receivedstats == 1)
 	{
-		SV_DropClient(cl, "Received stats although it was not requested from client");
+		return; //Double requests due to map_rotate?
+		//SV_DropClient(cl, "Received stats although it was not requested from client");
 	}
 	MSG_ReadData(msg, &cl->stats, sizeof(cl->stats));
 	Com_Printf("Received packet %i of stats data\n", 0);
@@ -1072,7 +1073,7 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 
 		PHandler_Event(PLUGINS_ONCLIENTMOVECOMMAND, cl, &cmds[ i ]);
 
-		if(cl->demorecording && !cl->demowaiting)
+		if(cl->demorecording && !cl->demowaiting && cl->demofile.handleFiles.file.o)
 			SV_WriteDemoArchive(cl);
 	}
 }
@@ -1089,9 +1090,9 @@ void SV_ClientCalcFramerate()
 	{
 		elapsed = 1;
 	}
-	
+
 	int calcfactor = ((1000 << 8) / (elapsed << 8));
-	
+
 	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
 	{
 		if(cl->state == CS_ACTIVE)
@@ -1153,6 +1154,16 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	Pmove_ExtendedInitForClient(client);
 
 	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
+
+	if(client->demorecording)
+	{
+		if(client->demofile.handleFiles.file.o)
+		{
+			SV_StopRecord(client); //Should never happen but who knows
+		}
+		client->demorecording = qfalse;
+		SV_RecordClient(client, client->demoName); //Write ther next demo of client
+	}
 
 	if(sv_autodemorecord->boolean && !client->demorecording && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6))
 	{
@@ -2390,7 +2401,7 @@ const char* SV_GetGuid( unsigned int clnum, char* buffer, int len)
 	{
 	 	return svs.clients[clnum].legacy_pbguid;
 	}
-	SV_SApiSteamIDToString(svs.clients[clnum].steamid, buffer, len);
+	Com_sprintf(buffer, len, "%llu", svs.clients[clnum].playerid);
 	return buffer;
 }
 const char* SV_GetGuidBin(int clnum)

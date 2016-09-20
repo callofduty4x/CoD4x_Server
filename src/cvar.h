@@ -176,6 +176,7 @@ void Cvar_WriteVariables(fileHandle_t fh);
 void Cvar_SetLatched(const char* name, const char* value);
 void Cvar_ClearFlagsForEach(unsigned short flags);
 void Cvar_ClearModified(cvar_t* cvar);
+qboolean Cvar_IsDefined(const char* varname);
 #define Cvar_GetInt Cvar_VariableIntegerValue
 #define Cvar_GetFloat Cvar_VariableValue
 #define Cvar_GetBool Cvar_VariableBooleanValue
