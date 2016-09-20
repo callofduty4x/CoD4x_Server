@@ -667,7 +667,6 @@ P_P_F int Plugin_HTTP_SendReceiveData(ftRequest_t* request)
 P_P_F ftRequest_t* Plugin_HTTP_MakeHttpRequest(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines)
 {
   ftRequest_t* curfileobj;
-  int transret;
   msg_t msgdata;
   msg_t *msg;
 
