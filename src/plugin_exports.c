@@ -664,6 +664,35 @@ P_P_F int Plugin_HTTP_SendReceiveData(ftRequest_t* request)
   return HTTP_SendReceiveData(request);
 }
 
+P_P_F ftRequest_t* Plugin_HTTP_MakeHttpRequest(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines)
+{
+  ftRequest_t* curfileobj;
+  msg_t msgdata;
+  msg_t *msg;
+
+  if(method == NULL)
+  {
+      method = "GET";
+  }
+
+  if(requestpayload == NULL || payloadlen < 1)
+  {
+    msg = NULL;
+  }else{
+    MSG_InitReadOnly(&msgdata, requestpayload, payloadlen );
+    msg = &msgdata;
+  }
+
+  curfileobj = HTTPRequest(url, method, msg, additionalheaderlines);
+
+  if(curfileobj == NULL)
+  {
+    Com_Printf("Couldn't connect to server.\n");
+    return qfalse;
+  }
+
+  return curfileobj;
+}
 
 /* blocking */
 P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines)
@@ -687,6 +716,7 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
   }
 
   curfileobj = HTTPRequest(url, method, msg, additionalheaderlines);
+
   if(curfileobj == NULL)
   {
     Com_Printf("Couldn't connect to server.\n");
@@ -698,6 +728,8 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
     transret = FileDownloadSendReceive( curfileobj );
     Sys_SleepUSec(20000);
   } while (transret == 0);
+
+  printf("DATA: %s\n", curfileobj->recvmsg.data);
 
   if(transret < 0)
   {
