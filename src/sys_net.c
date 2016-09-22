@@ -2864,17 +2864,65 @@ int NET_TcpClientGetData(int sock, void* buf, int buflen, char* errormsg, int ma
 
 /*
 ====================
-NET_TcpClientConnect
+NET_TcpIsSocketReady
+Test if socket is fully connected or not yet
 ====================
 */
-int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t *sourceadr, qboolean silent ) {
-	SOCKET			newsocket;
-	struct sockaddr_storage	address, bindaddr;
-	netadr_t remoteadr;
+int NET_TcpWaitForSocketIsReady(int socket, int timeoutsec)
+{
 	int err = 0;
 	int retval;
 	fd_set fdr;
 	struct timeval timeout;
+
+	FD_ZERO(&fdr);
+	FD_SET(socket, &fdr);
+
+	do{
+		timeout.tv_sec = timeoutsec;
+		timeout.tv_usec = 0;
+
+		retval = select(socket +1, NULL, &fdr, NULL, &timeout);
+		if(retval < 0)
+		{
+			err = socketError;
+		}else{
+			err = 0;
+		}
+	}while(err == EINTR);
+
+	if(retval < 0){
+		return -1; //Syscall has failed
+
+	}else if(retval > 0){
+		socklen_t so_len = sizeof(err);
+
+		if(getsockopt(socket, SOL_SOCKET, SO_ERROR, (char*) &err, &so_len) == 0)
+		{
+			return 1; //Socket is connected
+		}
+		return -2; //Other error
+
+	}
+	return 0; //Not yet ready
+}
+
+int NET_TcpIsSocketReady(int socket) //return: 1 ready, 0 not ready, -1 select error, -2 other error
+{
+	return NET_TcpWaitForSocketIsReady(socket, 0);
+}
+
+
+/*
+====================
+NET_TcpClientConnect
+====================
+*/
+int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t *sourceadr, qboolean silent, int timeoutsec ) {
+	SOCKET			newsocket;
+	struct sockaddr_storage	address, bindaddr;
+	netadr_t remoteadr;
+	int err = 0;
 	char errstr[256];
 	char adrstr[128];
 
@@ -2947,66 +2995,78 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
 
 
 
-	if( connect( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
+	if( connect( newsocket, (void *)&address, sizeof(address) ) != SOCKET_ERROR )
+	{
+		return newsocket;
+	}
 
-		err = socketError;
-		if(err == EINPROGRESS
+	err = socketError;
+
+	if(err == EINPROGRESS
 #ifdef _WIN32
-			|| err == WSAEWOULDBLOCK
+		|| err == WSAEWOULDBLOCK
 #endif
-		){
+	){
+		if(timeoutsec < 1)
+		{
+			return newsocket; //Non blocking
+		}
 
-			FD_ZERO(&fdr);
-			FD_SET(newsocket, &fdr);
-			timeout.tv_sec = 2;
-			timeout.tv_usec = 0;
+		switch(NET_TcpWaitForSocketIsReady(newsocket, timeoutsec))
+		{
+			case 1:
+				return newsocket;
 
-			retval = select(newsocket +1, NULL, &fdr, NULL, &timeout);
-
-			if(retval < 0){
-				if(!silent) Com_PrintWarning("NET_TcpConnect: select() syscall failed: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
-				closesocket( newsocket );
-				return INVALID_SOCKET;
-			}else if(retval > 0){
-
-				socklen_t so_len = sizeof(err);
-
-				if(getsockopt(newsocket, SOL_SOCKET, SO_ERROR, (char*) &err, &so_len) == 0)
-				{
-					return newsocket;
-				}
-
-			}else{
+			case 0:
 				if(!silent) Com_PrintWarning("NET_TcpConnect: Connecting to: %s timed out\n", NET_AdrToStringMT(&remoteadr, adrstr, sizeof(adrstr)));
 				closesocket( newsocket );
 				return INVALID_SOCKET;
-			}
+
+			case -1:
+				if(!silent) Com_PrintWarning("NET_TcpConnect: select() syscall failed: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
+				closesocket( newsocket );
+				return INVALID_SOCKET;
+
+			case -2:
+			default:
+				break;
+
 		}
-		if(!silent) Com_PrintWarning( "NET_TCPOpenConnection: connect: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
-		closesocket( newsocket );
-		return INVALID_SOCKET;
 	}
-	return newsocket;
+	if(!silent) Com_PrintWarning( "NET_TCPOpenConnection: connect error: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+	closesocket( newsocket );
+	return INVALID_SOCKET;
+
 }
 
 int NET_TcpClientConnect( const char *remoteAdr )
 {
-  return NET_TcpClientConnectInternal(remoteAdr, NULL, NULL, qfalse);
+  return NET_TcpClientConnectInternal(remoteAdr, NULL, NULL, qfalse, 2);
 }
 
 int NET_TcpClientConnectToAdr( netadr_t* adr )
 {
-  return NET_TcpClientConnectInternal(NULL, adr, NULL, qfalse);
+  return NET_TcpClientConnectInternal(NULL, adr, NULL, qfalse, 2);
 }
 
 int NET_TcpClientConnectFromAdrToAdr( netadr_t* destination, netadr_t* source )
 {
-  return NET_TcpClientConnectInternal(NULL, destination, source, qfalse);
+  return NET_TcpClientConnectInternal(NULL, destination, source, qfalse, 2);
 }
 
 int NET_TcpClientConnectFromAdrToAdrSilent( netadr_t* destination, netadr_t* source )
 {
-  return NET_TcpClientConnectInternal(NULL, destination, source, qtrue);
+  return NET_TcpClientConnectInternal(NULL, destination, source, qtrue, 2);
+}
+
+int NET_TcpClientConnectNonBlocking( const char *remoteAdr)
+{
+  return NET_TcpClientConnectInternal(remoteAdr, NULL, NULL, qfalse, 0);
+}
+
+int NET_TcpClientConnectNonBlockingToAdr( netadr_t* adr )
+{
+  return NET_TcpClientConnectInternal(NULL, adr, NULL, qfalse, 0);
 }
 
 /*
