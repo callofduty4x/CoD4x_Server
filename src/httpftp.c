@@ -130,9 +130,9 @@ static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 	{
 		Q_strncpyz(request->address, address, sizeof(request->address));
 		/* Open the connection */
-		request->socket = NET_TcpClientConnect(request->address);
+		request->socket = NET_TcpClientConnectNonBlocking(request->address);
 
-	  if(request->socket < 0)
+	  	if(request->socket < 0)
 		{
 			request->socket = -1;
 			FT_FreeRequest(request);
@@ -723,6 +723,13 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 	int status, i, flags;
 	qboolean gotheader, connectionClosed;
 	char stringlinebuf[MAX_STRING_CHARS];
+
+	status = NET_TcpIsSocketReady(request->socket);
+
+	if(status < 1)
+	{
+		return status;
+	}
 
 #ifndef NO_TLS
   char errormsg[1024];
