@@ -130,7 +130,8 @@ static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 	{
 		Q_strncpyz(request->address, address, sizeof(request->address));
 		/* Open the connection */
-		request->socket = NET_TcpClientConnectNonBlocking(request->address);
+		NET_StringToAdr(request->address, &request->remote, NA_UNSPEC); //Will block unfortunatly
+		request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
 
 	  	if(request->socket < 0)
 		{
@@ -723,13 +724,22 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 	int status, i, flags;
 	qboolean gotheader, connectionClosed;
 	char stringlinebuf[MAX_STRING_CHARS];
-
-	status = NET_TcpIsSocketReady(request->socket);
-
-	if(status < 1)
+	
+	if(request->socketReady == qfalse)
 	{
-		return status;
+		//Test if the socket is connected (3-way hanndshake completed)
+		status = NET_TcpIsSocketReady(request->socket);
+		if(status == 0)
+		{
+			return 0;
+		}
+		if(status < 0)
+		{
+			return -1;
+		}
+		request->socketReady = qtrue;
 	}
+
 
 #ifndef NO_TLS
   char errormsg[1024];
@@ -1492,6 +1502,20 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 	byte* buf;
 	netadr_t pasvadr;
 	char stringlinebuf[MAX_STRING_CHARS];
+
+	if(request->socketReady == qfalse)
+	{
+		status = NET_TcpIsSocketReady(request->socket);
+		if(status == 0)
+		{
+			return 0;
+		}
+		if(status < 0)
+		{
+			return -1;
+		}
+		request->socketReady = qtrue;
+	}
 
 	status = FT_ReceiveData(request);
 

@@ -54,6 +54,7 @@ typedef struct
 	int stage;
 	ftprotocols_t protocol;
 	netadr_t remote;
+	qboolean socketReady;
 	#ifndef NO_TLS
 		struct tlsstate_s *tls;
 	#endif

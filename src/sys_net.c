@@ -3059,11 +3059,6 @@ int NET_TcpClientConnectFromAdrToAdrSilent( netadr_t* destination, netadr_t* sou
   return NET_TcpClientConnectInternal(NULL, destination, source, qtrue, 2);
 }
 
-int NET_TcpClientConnectNonBlocking( const char *remoteAdr)
-{
-  return NET_TcpClientConnectInternal(remoteAdr, NULL, NULL, qfalse, 0);
-}
-
 int NET_TcpClientConnectNonBlockingToAdr( netadr_t* adr )
 {
   return NET_TcpClientConnectInternal(NULL, adr, NULL, qfalse, 0);

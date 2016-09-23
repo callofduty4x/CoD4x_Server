@@ -126,7 +126,6 @@ int NET_TcpClientConnect( const char *remoteAdr );
 int NET_TcpClientConnectToAdr( netadr_t* adr );
 int NET_TcpClientConnectFromAdrToAdr( netadr_t* destination, netadr_t* source );
 int NET_TcpClientConnectFromAdrToAdrSilent( netadr_t* destination, netadr_t* source );
-int NET_TcpClientConnectNonBlocking( const char *remoteAdr);
 int NET_TcpClientConnectNonBlockingToAdr( netadr_t* adr );
 int NET_TcpClientGetData(int sock, void* buf, int buflen, char* errormsg, int maxerrorlen);
 void NET_TcpCloseSocket(int socket);
