@@ -966,7 +966,7 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 		if (request->totalreceivedbytes < request->finallen) 
 		{
 			/* Still needing bytes... */
-			printf("received %d of %d bytes\n", request->totalreceivedbytes, request->finallen);
+			//printf("received %d of %d bytes\n", request->totalreceivedbytes, request->finallen);
 			return 0;
 		}
 		else
