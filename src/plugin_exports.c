@@ -729,8 +729,6 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
     Sys_SleepUSec(20000);
   } while (transret == 0);
 
-  printf("DATA: %s\n", curfileobj->recvmsg.data);
-
   if(transret < 0)
   {
     Com_Printf("Receiving data has failed\n");

@@ -742,65 +742,69 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 
 
 #ifndef NO_TLS
-  char errormsg[1024];
+	char errormsg[1024];
 
 	if(request->tls && request->tls->gothandshake == qfalse)
 	{
 		int ret = mbedtls_ssl_handshake( &request->tls->ssl );
 		if(ret != 0 )
 		{
-				if( ret != MBEDTLS_ERR_SSL_WANT_READ &&	ret != MBEDTLS_ERR_SSL_WANT_WRITE )
-				{
-            mbedtls_strerror(ret, errormsg, sizeof(errormsg));
-						Com_Printf( "HTTP_SendReceiveData: mbedtls_ssl_handshake returned %s\n", errormsg );
-						return -1;
-				}
-				return 0;
+			if( ret != MBEDTLS_ERR_SSL_WANT_READ &&	ret != MBEDTLS_ERR_SSL_WANT_WRITE )
+			{
+				mbedtls_strerror(ret, errormsg, sizeof(errormsg));
+				Com_Printf( "HTTP_SendReceiveData: mbedtls_ssl_handshake returned %s\n", errormsg );
+				return -1;
+			}
+			return 0;
 		}
 		request->tls->gothandshake = qtrue;
 
 		/* In real life, we probably want to bail out when ret != 0 */
 		if( ( flags = mbedtls_ssl_get_verify_result( &request->tls->ssl ) ) != 0 )
 		{
-				char vrfy_buf[512];
-				mbedtls_x509_crt_verify_info( vrfy_buf, sizeof( vrfy_buf ), "", flags );
-				Com_Printf( "The TLS host verification has failed\n%s\n", vrfy_buf);
-        return -1;
+			char vrfy_buf[512];
+			mbedtls_x509_crt_verify_info( vrfy_buf, sizeof( vrfy_buf ), "", flags );
+			Com_Printf( "The TLS host verification has failed\n%s\n", vrfy_buf);
+        	return -1;
 		}
-
 	}
 #endif
 
-	if (request->sendmsg.cursize > 0) {
+	if (request->sendmsg.cursize > 0) 
+	{
 		status = FT_SendData(request);
 
 		if(status < 0)
-    {
-//      Com_DPrintf("FT_SendData error\n");
-    	return -1;
+		{
+	//      Com_DPrintf("FT_SendData error\n");
+			return -1;
 		}
-    return 0;
+		
+		return 0;
 	}
 
 	status = FT_ReceiveData(request);
-  if(status == -2)
-  {
-//    Com_DPrintf("FT_ReceiveData error\n");
-    return -1; //bail out
-  }
+	if(status == -2)
+	{
+	//    Com_DPrintf("FT_ReceiveData error\n");
+		return -1; //bail out
+	}
 
-  if(status < 0)
+	if(status < 0)
 	{
 		connectionClosed = qtrue;
 	}else{
 		connectionClosed = qfalse;
 	}
 
-	if (status == -1 || status == 1) {
+	if (status == -1 || status == 1) 
+	{
 		if(request->chunkedEncoding && request->headerLength > 0)
 		{
 			return HTTP_ProcessChunkedEncoding(request, connectionClosed);
-		}else if(status != 1){
+		}
+		else if(status != 1)
+		{
 			return status;
 		}
 	}
@@ -808,7 +812,7 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 	{
 		gotheader = qfalse;
 
-    request->version = 0;
+    	request->version = 0;
 		request->code = 0;
 		request->status[0] = '\0';
 		request->contentLength = 0;
@@ -856,7 +860,9 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 		if(line[i +9] != '\0')
 		{
 			Q_strncpyz(request->status, &line[i +9], sizeof(request->status));
-		}else{
+		}
+		else
+		{
 			Q_strncpyz(request->status, "N/A", sizeof(request->status));
 		}
 
@@ -878,12 +884,16 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 					request->contentLength = 0;
 					return -1;
 				}
-			}else if(!Q_stricmpn("Transfer-Encoding:", line, 18)){
+			}
+			else if(!Q_stricmpn("Transfer-Encoding:", line, 18))
+			{
 				if(strstr(line, "chunked"))
 				{
 					request->chunkedEncoding = 1;
 				}
-			}else if(!Q_stricmpn("Location:", line, 9)){
+			}
+			else if(!Q_stricmpn("Location:", line, 9))
+			{
 				if(strlen(line +9) > 8)
 				{
 					/* We have to make it new... */
@@ -945,17 +955,22 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 
 	}
 	/* Header was complete */
-	if( request->finallen > 0){
+	if( request->finallen > 0)
+	{
 		request->transferactive = qtrue;
 	}
 
 	request->extrecvmsg = &request->recvmsg;
 	if(request->contentLengthArrived)
 	{
-		if (request->totalreceivedbytes < request->finallen) {
-		/* Still needing bytes... */
+		if (request->totalreceivedbytes < request->finallen) 
+		{
+			/* Still needing bytes... */
+			printf("received %d of %d bytes\n", request->totalreceivedbytes, request->finallen);
 			return 0;
-		}else{
+		}
+		else
+		{
 			/* Received full message */
 			return 1;
 		}
@@ -967,8 +982,8 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 	/* Received full message */
 	request->finallen = request->totalreceivedbytes;
 	request->contentLength = request->totalreceivedbytes - request->headerLength;
-	return 1;
 
+	return 1;
 }
 
 
