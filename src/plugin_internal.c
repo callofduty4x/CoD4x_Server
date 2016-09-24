@@ -61,6 +61,7 @@ qboolean PHandler_TcpConnect(int pID, const char* remote, int connection)
 int PHandler_TcpGetData(int pID, int connection, void* buf, int size )
 {
     char errormsg[1024];
+    errormsg[0] = 0;
     int len;
     pluginTcpClientSocket_t* ptcs = &pluginFunctions.plugins[pID].sockets[connection];
 
@@ -69,7 +70,7 @@ int PHandler_TcpGetData(int pID, int connection, void* buf, int size )
         return -1;
     }
     len = NET_TcpClientGetData(ptcs->sock, buf, size, errormsg, sizeof(errormsg));
-    Com_DPrintf("PHandler_TcpGetData: Retrived data from socket %d @ %d\n", ptcs->sock, connection);
+//    Com_DPrintf("PHandler_TcpGetData: Retrived data from socket %d @ %d\n", ptcs->sock, connection);
 
     if(len > 0)
     {
@@ -98,7 +99,7 @@ int PHandler_TcpSendData(int pID, int connection, void* data, int len)
         return -1;
     }
     state =  NET_TcpSendData(ptcs->sock, data, len, NULL, 0);
-    Com_DPrintf("PHandler_TcpSendData: Sent data from socket %d @ %d\n", ptcs->sock, connection);
+//    Com_DPrintf("PHandler_TcpSendData: Sent data from socket %d @ %d\n", ptcs->sock, connection);
 
     if(state == NET_WANT_WRITE)
     {
