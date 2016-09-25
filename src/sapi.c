@@ -124,7 +124,7 @@ static uint64_t ParseSteam3ID(const char* h)
 		}
 		accounttypei = AccountTypeCharToInt(accounttype);
 
-		if(cFieldConverted == EOF || cFieldConverted != 3 || extracheck || (universe > 4 && universe != 32) || universe < 1 || accounttypei < 1 || accounttypei > 10)
+		if(cFieldConverted == EOF || cFieldConverted != 3 || extracheck || (universe > 4 && (universe < 32 || universe >= 40)) || universe < 1 || accounttypei < 1 || accounttypei > 10)
 		{
 			return 0;
 		}
@@ -233,7 +233,7 @@ uint64_t ParseSteam64ID(const char* h)
 	accounttype = (steamid & 0xF0000000000000ULL) >> 52;
 	universe = (steamid & 0xFF00000000000000ULL) >> 56;
 
-	if((universe > 4 && universe != 32) || universe < 1 || accounttype < 1 || accounttype > 10)
+	if((universe > 4 && (universe < 32 || universe >= 40)) || universe < 1 || accounttype < 1 || accounttype > 10)
 	{
 		return 0;
 	}
@@ -249,7 +249,7 @@ qboolean SV_SApiSteamIDIndividual(uint64_t steamid)
 	universe = (steamid & 0xFF00000000000000ULL) >> 56;
 	instance = (steamid & 0xFFFFF00000000ULL) >> 32;
 
-	if((universe != 1 && universe != 32) || accounttype != 1 || instance != 1)
+	if((universe != 1 && (universe < 32 || universe >= 40)) || accounttype != 1 || instance != 1)
 	{
 		return qfalse;
 	}
@@ -301,7 +301,7 @@ void SV_SApiSteamIDToString(uint64_t steamid, char* string, int length)
 	//instance = (steamid & 0xFFFFF00000000ULL) >> 32;
 	accountid = (steamid & 0xFFFFFFFFULL);
 
-	if((universe > 4 && universe != 32) || universe < 1 || accounttype < 1 || accounttype > 10)
+	if((universe > 4 && (universe < 32 || universe >= 40)) || universe < 1 || accounttype < 1 || accounttype > 10)
 	{
 		Q_strncpyz(string, "[I:0:0]", length);
 		return;
