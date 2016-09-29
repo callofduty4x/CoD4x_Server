@@ -505,8 +505,8 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 	return qfalse;
 }
 
-
-static qboolean Sys_SStringToSockaddr(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
+#if 0
+static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
 {
 	int retval;
 	char ptonaddr[32];
@@ -617,7 +617,7 @@ static qboolean Sys_SStringToSockaddr(const char *s, struct sockaddr *sadr, int 
 */
 	return retval;
 }
-
+#endif
 
 /*
 =============
@@ -3786,13 +3786,16 @@ static int getdnsip(struct dns *dns)
 		for (ret--; fgets(line, sizeof(line), fp) != NULL; ) {
 			if (sscanf(line, "nameserver %d.%d.%d.%d",
 			   &a, &b, &c, &d) == 4) {
-				dns->sa.sin_addr.s_addr =
-				    htonl(a << 24 | b << 16 | c << 8 | d);
+				dns->salist[0].ip[0] = a;
+				dns->salist[0].ip[1] = b;
+				dns->salist[0].ip[2] = c;
+				dns->salist[0].ip[3] = d;
 				ret++;
+				dns->numdnsservers = 1;
 				break;
 			}
 		}
-		(void) fclose(fp);
+		fclose(fp);
 	}
 #endif /* _WIN32 */
 
@@ -4255,49 +4258,6 @@ int dns_poll(struct dns *dns)
 	}
 
 	return (num_packets);
-}
-
-static void callback(struct dns_cb_data *cbd)
-{
-	switch (cbd->error) {
-	case DNS_OK:
-		switch (cbd->query_type) {
-		case DNS_A_RECORD:
-			Com_Printf("%s: %u.%u.%u.%u\n", cbd->name,
-			    cbd->addr[0], cbd->addr[1],
-			    cbd->addr[2], cbd->addr[3]);
-			break;
-		case DNS_AAAA_RECORD:
-			Com_Printf("%s: %02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x:%02x%02x\n", cbd->name,
-			    cbd->addr[0], cbd->addr[1],
-			    cbd->addr[2], cbd->addr[3],
-			    cbd->addr[4], cbd->addr[5],
-			    cbd->addr[6], cbd->addr[7],
-			    cbd->addr[8], cbd->addr[9],
-			    cbd->addr[10], cbd->addr[11],
-			    cbd->addr[12], cbd->addr[13],
-			    cbd->addr[14], cbd->addr[15]);
-			break;
-		case DNS_MX_RECORD:
-			Com_Printf("%s\n", cbd->addr);
-			break;
-		default:
-			Com_Error(ERR_FATAL, "Unexpected DNS query type: %u\n", cbd->query_type);
-			/* NOTREACHED */
-			break;
-		}
-		break;
-	case DNS_TIMEOUT:
-		Com_Printf("Query timeout for [%s]\n", cbd->name);
-		break;
-	case DNS_DOES_NOT_EXIST:
-		Com_Printf("No such address: [%s]\n", cbd->name);
-		break;
-	case DNS_ERROR:
-		Com_Printf("System error occured\n");
-		break;
-	}
-
 }
 
 
