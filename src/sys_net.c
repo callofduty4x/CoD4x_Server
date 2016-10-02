@@ -3778,7 +3778,7 @@ int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
 			{
 				++linep;
 			}
-			if(Sys_StringToSockaddrNoDNS(linep, &sin[i], sizeof(sockaddr_storage), AF_UNSPEC))
+			if(Sys_StringToSockaddrNoDNS(linep, (struct sockaddr*)&sin[i], sizeof(struct sockaddr_storage), AF_UNSPEC))
 			{
 				i++;
 			}
