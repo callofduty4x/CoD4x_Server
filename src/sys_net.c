@@ -440,7 +440,50 @@ static struct addrinfo *SearchAddrInfo(struct addrinfo *hints, sa_family_t famil
 Sys_StringToSockaddr
 =============
 */
+static qboolean Sys_StringToSockaddrNoDNS(const char* s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
+{
+	char ptonaddr[32];
+	struct sockaddr_storage sadrstore;
+	struct sockaddr_in *sin = (struct sockaddr_in *)&sadrstore;
+	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sadrstore;
+	memset(sadr, '\0', sadr_len);
+	memset(&sadrstore, '\0', sizeof(sadrstore));
+	
+	sa_family_t ptonfamily = family;
 
+	if(ptonfamily == AF_UNSPEC)
+	{
+		 if(Q_CountChar(s, ':') > 1)
+		 {
+			 ptonfamily = AF_INET6;
+		 }else{
+			 ptonfamily = AF_INET;
+		 }
+	}
+
+	if(inet_pton(ptonfamily, s, &ptonaddr ) > 0)
+	{
+		if(ptonfamily == AF_INET6)
+		{
+			memcpy(&sin6->sin6_addr, ptonaddr, sizeof(sin6->sin6_addr));
+			sin6->sin6_family = AF_INET6;
+		}else if(ptonfamily == AF_INET){
+			memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
+			sin->sin_family = AF_INET;
+		}
+		if(sadr_len > sizeof(sadrstore))
+		{
+			sadr_len = sizeof(sadrstore);
+		}
+		memcpy(sadr, &sadrstore, sadr_len);
+		return qtrue;
+	}
+	return qfalse;
+}
+
+
+
+#if 1
 static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
 {
 	struct addrinfo hints;
@@ -504,7 +547,7 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 
 	return qfalse;
 }
-
+#endif
 #if 0
 static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
 {
@@ -516,34 +559,12 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 	memset(sadr, '\0', sadr_len);
 	memset(&sadrstore, '\0', sizeof(sadrstore));
 
-	sa_family_t ptonfamily = family;
-
-	if(ptonfamily == AF_UNSPEC)
+	//Attempt to read string as IP address
+	if(Sys_StringToSockaddrNoDNS(s, sadr, sadr_len, family))
 	{
-		 if(Q_CountChar(s, ':') > 1)
-		 {
-			 ptonfamily = AF_INET6;
-		 }else{
-			 ptonfamily = AF_INET;
-		 }
-	}
-	if(inet_pton(ptonfamily, s, &ptonaddr ) > 0)
-	{
-		if(ptonfamily == AF_INET6)
-		{
-			memcpy(&sin6->sin6_addr, ptonaddr, sizeof(sin6->sin6_addr));
-			sin6->sin6_family = AF_INET6;
-		}else if(ptonfamily == AF_INET){
-			memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
-			sin->sin_family = AF_INET;
-		}
-		if(sadr_len > sizeof(sadrstore))
-		{
-			sadr_len = sizeof(sadrstore);
-		}
-		memcpy(sadr, &sadrstore, sadr_len);
 		return qtrue;
 	}
+
 	if(Q_stricmp(s, "localhost") == 0)
 	{
 		memset(ptonaddr, 0, sizeof(ptonaddr));
@@ -3538,7 +3559,6 @@ qboolean Sys_IsReservedAddress( netadr_t *adr ) {
 }
 
 
-
 /*
  * Copyright (c) 2004-2005 Sergey Lyubka <valenok@gmail.com>
  *
@@ -3691,7 +3711,7 @@ struct dns *h_dns;
 
 #ifdef _WIN32
 // Fetches the MAC address and prints it
-int GetAdaptersDetails(struct sockaddr_storage *sin, int maxcount)
+int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
 {
   int i;
   IP_ADAPTER_ADDRESSES AdapterInfo[256];       // Allocate information
@@ -3724,8 +3744,50 @@ int GetAdaptersDetails(struct sockaddr_storage *sin, int maxcount)
   }
   return i;
 }
-#endif
+#else
+int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
+{
+	FILE	*fp;
+	char	line[512];
+	char*	linep;
+	int		i;
 
+	i = 0;
+
+	if ((fp = fopen("/etc/resolv.conf", "r")) == NULL) {
+		return 0;
+
+	} else {
+		/* Try to figure out what DNS server to use */
+		for (; fgets(line, sizeof(line), fp) != NULL; )
+		{
+			linep = line;
+			//Remove whitespace
+			while(*linep == ' ')
+			{
+				++linep;
+			}
+			if(Q_stricmpn(linep, "nameserver ", 11))
+			{
+				//Not a nameserver entry
+				continue;
+			}
+			linep += 11;
+			//Remove whitespace again
+			while(*linep == ' ')
+			{
+				++linep;
+			}
+			if(Sys_StringToSockaddrNoDNS(linep, &sin[i], sizeof(sockaddr_storage), AF_UNSPEC))
+			{
+				i++;
+			}
+		}
+		fclose(fp);
+	}
+	return i;
+}
+#endif
 
 
 
@@ -3736,13 +3798,12 @@ static int getdnsip(struct dns *dns)
 {
 	int	ret = 0;
 
-#ifdef _WIN32
 	struct sockaddr_storage sins[MAX_DNSSERVERS];
 	int sock;
 	int i, l;
 	
 
-	int dnscount = GetAdaptersDetails(sins, MAX_DNSSERVERS);
+	int dnscount = GetDNSAddresses(sins, MAX_DNSSERVERS);
 
 	//convert to netadr_t and remove duplicates
 	for(i = 0, dns->numdnsservers = 0; i < dnscount; ++i)
@@ -3774,31 +3835,6 @@ static int getdnsip(struct dns *dns)
 	{
 		ret = -1;
 	}
-#else
-	FILE	*fp;
-	char	line[512];
-	int	a, b, c, d;
-
-	if ((fp = fopen("/etc/resolv.conf", "r")) == NULL) {
-		ret--;
-	} else {
-		/* Try to figure out what DNS server to use */
-		for (ret--; fgets(line, sizeof(line), fp) != NULL; ) {
-			if (sscanf(line, "nameserver %d.%d.%d.%d",
-			   &a, &b, &c, &d) == 4) {
-				dns->salist[0].ip[0] = a;
-				dns->salist[0].ip[1] = b;
-				dns->salist[0].ip[2] = c;
-				dns->salist[0].ip[3] = d;
-				ret++;
-				dns->numdnsservers = 1;
-				break;
-			}
-		}
-		fclose(fp);
-	}
-#endif /* _WIN32 */
-
 	return (ret);
 }
 
@@ -4263,11 +4299,11 @@ int dns_poll(struct dns *dns)
 
 void NET_InitDNS()
 {
-/*	h_dns = dns_init();
+	h_dns = dns_init();
 	if(h_dns == NULL)
 	{
 		Com_PrintError("DNS resolver couldn't get initialized! Name resolution will not work\n");
-	}*/
+	}
 }
 
 void NET_ShutdownDNS()
