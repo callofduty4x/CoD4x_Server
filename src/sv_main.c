@@ -1337,7 +1337,6 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
 		return;
 	}
 
-
 	MSG_Init(&playermsg, pbuf, sizeof(pbuf));
 	/* Write the OOB-Header */
 	MSG_WriteLong(&playermsg, -1);

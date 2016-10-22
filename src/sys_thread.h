@@ -59,6 +59,7 @@ typedef enum
 	CRIT_PLUGIN = 18,
 	CRIT_HTTPS = 19,
 	CRIT_CVAR = 20,
+	CRIT_RESOLVE = 21,
 	CRIT_SIZE
 }crit_section_t;
 

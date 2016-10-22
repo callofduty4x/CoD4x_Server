@@ -611,7 +611,7 @@ int NET_CookieHash(netadr_t *from){
 
         *((unsigned short*)&data[4]) = from->port;
 
-        Com_Memcpy(&data[6], net_cookieSecret, sizeof(net_cookieSecret));
+        Com_Memcpy(&data[6], net_cookieSecret, sizeof(data) -6);
 
     }else if(from->type == NA_IP6){
         for(i = 0; i < 16; i++)
@@ -619,7 +619,7 @@ int NET_CookieHash(netadr_t *from){
 
         *((unsigned short*)&data[16]) = from->port;
 
-        Com_Memcpy(&data[18], net_cookieSecret, sizeof(net_cookieSecret) - 46);
+        Com_Memcpy(&data[18], net_cookieSecret, sizeof(data) -18);
 
     }else
         return 0;
