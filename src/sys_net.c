@@ -2897,7 +2897,7 @@ void NET_TcpServerRebuildFDList()
 			{
 				FD_SET(conn->remote.sock, &tcpServer.fdw);
 			}
-			if(conn->remote.sock > tcpServer.highestfd)
+			if((signed int)conn->remote.sock > (signed int)tcpServer.highestfd)
 			{
 				tcpServer.highestfd = conn->remote.sock;
 			}
@@ -3546,12 +3546,12 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 
 	for(i = 0; i < numIP; i++)
 	{
-		if(ip_socket[i].sock == INVALID_SOCKET)
+		if((signed int)ip_socket[i].sock == INVALID_SOCKET)
 			break;
 
 		FD_SET(ip_socket[i].sock, &fdr);
 
-		if(ip_socket[i].sock > highestfd)
+		if((signed int)ip_socket[i].sock > (signed int)highestfd)
 			highestfd = ip_socket[i].sock;
 	}
 
@@ -3560,16 +3560,16 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 
 		FD_SET(tcp_socket, &fdr);
 
-		if(tcp_socket > highestfd)
+		if((signed int)tcp_socket > (signed int)highestfd)
 			highestfd = tcp_socket;
 
 	}
 
-	if(tcp6_socket != INVALID_SOCKET)
+	if((signed int)tcp6_socket != INVALID_SOCKET)
 	{
 		FD_SET(tcp6_socket, &fdr);
 
-		if(tcp6_socket > highestfd)
+		if((signed int)tcp6_socket > (signed int)highestfd)
 			highestfd = tcp6_socket;
 	}
 
@@ -3577,7 +3577,7 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 	timeout.tv_usec = usec;
 
 #ifdef _WIN32
-	if(highestfd < 0)
+	if((signed int)highestfd < 0)
 	{
 		// windows ain't happy when select is called without valid FDs
 		SleepEx(usec, 0);
@@ -3599,7 +3599,7 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 
 		for(i = 0; i < numIP; i++)
 		{
-			if(ip_socket[i].sock == INVALID_SOCKET)
+			if((signed int)ip_socket[i].sock == INVALID_SOCKET)
 				break;
 
 			if(FD_ISSET(ip_socket[i].sock, &fdr)){
@@ -3609,7 +3609,7 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 
 		}
 
-		if((tcp_socket != INVALID_SOCKET && FD_ISSET(tcp_socket, &fdr)) || (tcp6_socket != INVALID_SOCKET && FD_ISSET(tcp6_socket, &fdr)))
+		if(((signed int)tcp_socket != INVALID_SOCKET && FD_ISSET(tcp_socket, &fdr)) || ((signed int)tcp6_socket != INVALID_SOCKET && FD_ISSET(tcp6_socket, &fdr)))
 		{
 			if(NET_TcpServerConnectEvent(&fdr))
 				netabort = qtrue;
@@ -4100,7 +4100,7 @@ static int getdnsip(struct dns *dns)
 		if(l == dns->numdnsservers)
 		{
 			dns->salist[dns->numdnsservers].port = BigShort(53);
-			Com_Printf("DNS: %s\n", NET_AdrToString(&dns->salist[dns->numdnsservers]));
+		//	Com_Printf("DNS: %s\n", NET_AdrToString(&dns->salist[dns->numdnsservers]));
 			++dns->numdnsservers;
 		}
 	}
@@ -4613,10 +4613,10 @@ qboolean NET_ResolveInternal(const char *domain, struct sockaddr_storage *outadd
 	{
 			/* Select on resolver socket */
 		FD_ZERO(&set);
-		if(h_dns->sock != INVALID_SOCKET)
+		if((signed int)h_dns->sock != INVALID_SOCKET)
 		{
 			FD_SET(h_dns->sock, &set);
-			if(h_dns->sock > highestfd)
+			if((signed int)h_dns->sock > (signed int)highestfd)
 			{
 				highestfd = h_dns->sock;
 			}
