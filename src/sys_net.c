@@ -80,6 +80,10 @@ typedef u_long	ioctlarg_t;
 static WSADATA	winsockdata;
 static qboolean	winsockInitialized = qfalse;
 
+#ifndef IPV6_V6ONLY
+#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
+#endif 
+
 int inet_pton(int af, const char *src, void *dst)
 {
 	struct sockaddr_storage sin;
@@ -296,6 +300,7 @@ tcpServer_t tcpServer;
 void NET_InitDNS();
 void NET_ShutdownDNS();
 qboolean NET_ResolveBlocking(const char *domain, struct sockaddr_storage *outaddr, sa_family_t family, char* errormessage1k);
+qboolean NET_ResolveNonBlocking(const char *domain, struct sockaddr_storage *outaddr, sa_family_t family, char* errormessage1k);
 
 
 /*
@@ -399,29 +404,51 @@ static void NetadrToSockadr( netadr_t *a, struct sockaddr *s ) {
 
 __optimize3 __regparm3 static void SockadrToNetadr( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
 	if (s->sa_family == AF_INET) {
+		*(int *)&a->ip = ((struct sockaddr_in *)s)->sin_addr.s_addr;
+		a->port = ((struct sockaddr_in *)s)->sin_port;
 		if(!tcp)
 			a->type = NA_IP;
 		else
 			a->type = NA_TCP;
-
-		*(int *)&a->ip = ((struct sockaddr_in *)s)->sin_addr.s_addr;
-		a->port = ((struct sockaddr_in *)s)->sin_port;
 	}
 	else if(s->sa_family == AF_INET6)
 	{
+		memcpy(a->ip6, &((struct sockaddr_in6 *)s)->sin6_addr, sizeof(a->ip6));
+		a->port = ((struct sockaddr_in6 *)s)->sin6_port;
+		a->scope_id = ((struct sockaddr_in6 *)s)->sin6_scope_id;
 		if(!tcp)
 			a->type = NA_IP6;
 		else
 			a->type = NA_TCP6;
-
-		memcpy(a->ip6, &((struct sockaddr_in6 *)s)->sin6_addr, sizeof(a->ip6));
-		a->port = ((struct sockaddr_in6 *)s)->sin6_port;
-		a->scope_id = ((struct sockaddr_in6 *)s)->sin6_scope_id;
 	}
 	a->sock = socket;
 }
 
+__optimize3 __regparm3 static void SockadrToNetadr6( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
 
+	a->sock = socket;
+	if(!tcp)
+		a->type = NA_IP6;
+	else
+		a->type = NA_TCP6;
+
+	if (s->sa_family == AF_INET) {
+		*(int *)(&a->ip6[0]) = 0;
+		*(int *)(&a->ip6[4]) = 0;
+		*(int16_t *)(&a->ip6[8]) = 0;
+		*(int16_t *)(&a->ip6[10]) = -1;
+		*(int *)(&a->ip6[12]) = ((struct sockaddr_in *)s)->sin_addr.s_addr;
+		a->port = ((struct sockaddr_in *)s)->sin_port;
+		a->scope_id = 0;
+	}
+	else if(s->sa_family == AF_INET6)
+	{
+		memcpy(a->ip6, &((struct sockaddr_in6 *)s)->sin6_addr, sizeof(a->ip6));
+		a->port = ((struct sockaddr_in6 *)s)->sin6_port;
+		a->scope_id = ((struct sockaddr_in6 *)s)->sin6_scope_id;
+	}
+
+}
 
 /*
 =============
@@ -431,6 +458,7 @@ Sys_StringToSockaddr
 static qboolean Sys_StringToSockaddrNoDNS(const char* s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
 {
 	char ptonaddr[32];
+	char addressstring[128];
 	char *ifstring;
 	struct sockaddr_storage sadrstore;
 	struct sockaddr_in *sin = (struct sockaddr_in *)&sadrstore;
@@ -440,9 +468,11 @@ static qboolean Sys_StringToSockaddrNoDNS(const char* s, struct sockaddr *sadr, 
 	
 	sa_family_t ptonfamily = family;
 
+	Q_strncpyz(addressstring, s, sizeof(addressstring));
+
 	if(ptonfamily == AF_UNSPEC)
 	{
-		 if(Q_CountChar(s, ':') > 1)
+		 if(Q_CountChar(addressstring, ':') > 1)
 		 {
 			ptonfamily = AF_INET6;
 		 }else{
@@ -451,15 +481,22 @@ static qboolean Sys_StringToSockaddrNoDNS(const char* s, struct sockaddr *sadr, 
 	}
 	if(ptonfamily == AF_INET6)
 	{
-		ifstring = strchr(s, '%');
+		ifstring = strchr(addressstring, '%');
 		if(ifstring)
 		{
 			*ifstring = '\0';
 			++ifstring;
 		}
+		if(Q_CountChar(addressstring, ':') < 2)
+		{
+			//Turn ipv4 into mapped ipv6 address
+			char ipv4string[32];
+			Q_strncpyz(ipv4string, addressstring, sizeof(ipv4string));
+			Com_sprintf(addressstring, sizeof(addressstring), "::ffff:%s", ipv4string);
+		}
 	}
 
-	if(inet_pton(ptonfamily, s, &ptonaddr ) > 0)
+	if(inet_pton(ptonfamily, addressstring, &ptonaddr ) > 0)
 	{
 		if(ptonfamily == AF_INET6)
 		{
@@ -610,56 +647,56 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 		Com_PrintError("DNS: %s\n", errormsg);
 	}
 	memcpy(sadr, &sadrstore, sadr_len);
-
-	//If we got here it is most likely a name which has to be resolved
-
-
-
-/*
-	if(family == AF_UNSPEC)
-	{
-			// Decide here and now which protocol family to use
-			if(net_enabled->integer & NET_PRIOV6)
-			{
-				if(net_enabled->integer & NET_ENABLEV6)
-					search = SearchAddrInfo(res, AF_INET6);
-
-				if(!search && (net_enabled->integer & NET_ENABLEV4))
-					search = SearchAddrInfo(res, AF_INET);
-			}
-			else
-			{
-				if(net_enabled->integer & NET_ENABLEV4)
-					search = SearchAddrInfo(res, AF_INET);
-
-				if(!search && (net_enabled->integer & NET_ENABLEV6))
-					search = SearchAddrInfo(res, AF_INET6);
-			}
-	}
-		else
-			search = SearchAddrInfo(res, family);
-
-		if(search)
-		{
-			if(search->ai_addrlen > sadr_len)
-				search->ai_addrlen = sadr_len;
-
-			memcpy(sadr, search->ai_addr, search->ai_addrlen);
-			freeaddrinfo(search);
-
-			return qtrue;
-		}
-		else
-			Com_PrintError("Sys_StringToSockaddr: Error resolving %s: No address of required type found.\n", s);
-	}
-	else
-		Com_PrintError("Sys_StringToSockaddr: Error resolving %s: %s\n", s, gai_strerror(retval));
-
-	if(res)
-		freeaddrinfo(res);
-*/
 	return retval;
 }
+
+
+static int Sys_StringToSockaddrNonBlock(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
+{
+	int retval;
+	char ptonaddr[32];
+	char errormsg[1024];
+	struct sockaddr_storage sadrstore;
+	struct sockaddr_in *sin = (struct sockaddr_in *)&sadrstore;
+	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sadrstore;
+	memset(sadr, '\0', sadr_len);
+	memset(&sadrstore, '\0', sizeof(sadrstore));
+
+	//Attempt to read string as IP address
+	if(Sys_StringToSockaddrNoDNS(s, sadr, sadr_len, family))
+	{
+		return 1;
+	}
+
+	if(Q_stricmp(s, "localhost") == 0)
+	{
+		memset(ptonaddr, 0, sizeof(ptonaddr));
+		if(family == AF_INET6)
+		{
+			ptonaddr[15] = 1;
+			memcpy(&sin6->sin6_addr, ptonaddr, sizeof(sin6->sin6_addr));
+			sin6->sin6_family = AF_INET6;
+		}else if(family == AF_INET){
+			ptonaddr[0] = 127;
+			ptonaddr[3] = 1;
+			memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
+			sin->sin_family = AF_INET;
+		}else{
+			return -1;
+		}
+		return 1;
+	}
+
+	retval = NET_ResolveNonBlocking(s, &sadrstore ,family, errormsg);
+	if(errormsg[0])
+	{
+		Com_PrintError("DNS: %s\n", errormsg);
+		return -1;
+	}
+	memcpy(sadr, &sadrstore, sadr_len);
+	return retval;
+}
+
 #endif
 
 /*
@@ -713,6 +750,44 @@ qboolean Sys_StringToAdr( const char *s, netadr_t *a, netadrtype_t family ) {
 
 	if( !Sys_StringToSockaddr(s, (struct sockaddr *) &sadr, sizeof(sadr), fam ) ) {
 		return qfalse;
+	}
+
+	SockadrToNetadr( (struct sockaddr *) &sadr, a, tcp, 0);
+
+	return qtrue;
+}
+
+
+int Sys_StringToAdrNonBlock( const char *s, netadr_t *a, netadrtype_t family ) {
+	struct sockaddr_storage sadr;
+	sa_family_t fam;
+	qboolean tcp = qfalse;
+
+	switch(family)
+	{
+		case NA_TCP:
+			tcp = qtrue;
+		case NA_IP:
+			fam = AF_INET;
+
+		break;
+
+		case NA_TCP6:
+			tcp = qtrue;
+		case NA_IP6:
+			fam = AF_INET6;
+
+		break;
+
+		default:
+			fam = AF_UNSPEC;
+		break;
+	}
+
+	int res = Sys_StringToSockaddrNonBlock(s, (struct sockaddr *) &sadr, sizeof(sadr), fam );
+	if(res < 1)
+	{
+		return res;
 	}
 
 	SockadrToNetadr( (struct sockaddr *) &sadr, a, tcp, 0);
@@ -1127,6 +1202,7 @@ qboolean Sys_SendPacket( int length, const void *data, netadr_t *to ) {
 		return qfalse;
 
 	memset(&addr, 0, sizeof(addr));
+
 	NetadrToSockadr( to, (struct sockaddr *) &addr );
 /*
 	if( usingSocks && to->type == NA_IP ) {
@@ -1150,8 +1226,9 @@ qboolean Sys_SendPacket( int length, const void *data, netadr_t *to ) {
 		if( to->type == NA_IP || to->type == NA_BROADCAST )
 			ret = sendto( to->sock, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in) );
 		else if( to->type == NA_IP6 || to->type == NA_MULTICAST6 )
+		{
 			ret = sendto( to->sock, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in6) );
-
+		}
 #ifdef SOCKET_DEBUG
 
 			int err2;
@@ -1345,10 +1422,10 @@ void Sys_ShowIP(void) {
 
 /*
 ====================
-NET_IPSocket
+NET_IP4Socket
 ====================
 */
-int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
+int NET_IP4Socket( char *net_interface, int port, int *err, qboolean tcp) {
 	SOCKET				newsocket;
 	struct sockaddr_in		address;
 	ioctlarg_t			_true = 1;
@@ -1379,13 +1456,13 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 
 	if( newsocket == INVALID_SOCKET ) {
 		*err = socketError;
-		Com_Printf( "WARNING: NET_IPSocket: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+		Com_Printf( "WARNING: NET_IP4Socket: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		return newsocket;
 	}
 
 	// make it non-blocking
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
-		Com_PrintWarning( "NET_IPSocket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+		Com_PrintWarning( "NET_IP4Socket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		*err = socketError;
 		closesocket(newsocket);
 		return INVALID_SOCKET;
@@ -1394,10 +1471,10 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 	if(!tcp){
 	// make it broadcast capable
 		if( setsockopt( newsocket, SOL_SOCKET, SO_BROADCAST, (char *) &i, sizeof(i) ) == SOCKET_ERROR ) {
-			Com_PrintWarning( "NET_IPSocket: setsockopt SO_BROADCAST: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+			Com_PrintWarning( "NET_IP4Socket: setsockopt SO_BROADCAST: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		}
 		if( setsockopt( newsocket, IPPROTO_IP, IP_TOS, (char *) &tos, sizeof(tos) ) == SOCKET_ERROR ) {
-			Com_PrintWarning( "NET_IPSocket: setsockopt IP_TOS: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+			Com_PrintWarning( "NET_IP4Socket: setsockopt IP_TOS: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		}
 	}else{
 /*
@@ -1406,13 +1483,13 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 		so_linger.l_linger = 2; //Two seconds timeout
 
 		if( setsockopt( newsocket, SOL_SOCKET, SO_LINGER, (char *) &so_linger, sizeof(so_linger) ) == SOCKET_ERROR ) {
-			Com_PrintWarning( "NET_IPSocket: setsockopt SO_LINGER: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+			Com_PrintWarning( "NET_IP4Socket: setsockopt SO_LINGER: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		}
 */
 		reuse = 1;
 
 		if( setsockopt( newsocket, SOL_SOCKET, SO_REUSEADDR, (char *) &reuse, sizeof(reuse) ) == SOCKET_ERROR ) {
-			Com_PrintWarning( "NET_IPSocket: setsockopt SO_REUSEADDR: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+			Com_PrintWarning( "NET_IP4Socket: setsockopt SO_REUSEADDR: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		}
 
 	}
@@ -1438,7 +1515,7 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 	}
 
 	if( bind( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
-		Com_PrintWarning( "NET_IPSocket: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+		Com_PrintWarning( "NET_IP4Socket: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		*err = socketError;
 		closesocket( newsocket );
 		return INVALID_SOCKET;
@@ -1447,7 +1524,7 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 	if(tcp){
 		// Listen
 		if( listen( newsocket, 96) == SOCKET_ERROR ) {
-			Com_PrintWarning( "NET_IPSocket: listen: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+			Com_PrintWarning( "NET_IP4Socket: listen: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 			*err = socketError;
 			closesocket( newsocket );
 			return INVALID_SOCKET;
@@ -1467,9 +1544,9 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 
 		if(ret == SOCKET_ERROR && err2 != EAGAIN)
 		{
-			Com_PrintError( "NET_IPSocket reading from open socket %d failed with: %s\n", newsocket, NET_ErrorStringMT(errstr, sizeof(errstr)) );
+			Com_PrintError( "NET_IP4Socket reading from open socket %d failed with: %s\n", newsocket, NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		}else {
-			Com_Printf( "NET_IPSocket opening of socket %d was successful\n", newsocket );
+			Com_Printf( "NET_IP4Socket opening of socket %d was successful\n", newsocket );
 
 		}
 	}
@@ -1629,6 +1706,118 @@ int NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto, i
 #endif
 	return newsocket;
 }
+
+
+
+
+
+
+/*
+====================
+NET_IPSocket
+This opens now a dual stack socket which can do IPv4 except on Windows XP/Windows Server 2003
+====================
+*/
+int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
+	SOCKET				newsocket;
+	struct sockaddr_in6		address;
+	ioctlarg_t			_true = 1;
+//	struct	linger			so_linger;
+	int				reuse;
+	char				errstr[256];
+	int			socktype;
+	*err = 0;
+
+	if(tcp)
+	{
+		socktype = SOCK_STREAM;
+	}else{
+		socktype = SOCK_DGRAM;
+	}
+
+	memset(&address, 0, sizeof(address));
+
+	if( !net_interface || !net_interface[0]) {
+		address.sin6_family = AF_INET6;
+		address.sin6_addr = in6addr_any;
+	}
+	else
+	{
+		if(!Sys_StringToSockaddr( net_interface, (struct sockaddr *)&address, sizeof(address), AF_INET6))
+		{
+			return INVALID_SOCKET;
+		}
+	}
+	if( port == PORT_ANY ) {
+		address.sin6_port = 0;
+	} else {
+		address.sin6_port = htons( (short)port );
+	}
+
+	netadr_t netadr;
+	char nstring[128];
+	SockadrToNetadr( (struct sockaddr *) &address, &netadr, tcp, 0);
+
+	if(socktype == SOCK_STREAM)
+		Com_Printf( "Opening IP socket: %s TCP\n", NET_AdrToStringMT(&netadr, nstring, sizeof(nstring)) );
+	else
+		Com_Printf( "Opening IP socket: %s UDP\n", NET_AdrToStringMT(&netadr, nstring, sizeof(nstring)) );
+
+	newsocket = socket( AF_INET6, socktype, 0 );
+
+	if( newsocket == INVALID_SOCKET ) {
+		*err = socketError;
+		Com_PrintWarning( "NET_IPSocket: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+		return newsocket;
+	}
+
+	// make it non-blocking
+	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
+		Com_PrintWarning( "NET_IPSocket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+		*err = socketError;
+		closesocket(newsocket);
+		return INVALID_SOCKET;
+	}
+
+	if(socktype == SOCK_STREAM)
+	{
+		reuse = 1;
+
+		if( setsockopt( newsocket, SOL_SOCKET, SO_REUSEADDR, (char *) &reuse, sizeof(reuse) ) == SOCKET_ERROR ) {
+			Com_PrintWarning( "NET_IPSocket: setsockopt SO_REUSEADDR: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+		}
+	}
+
+	int i = 0;
+
+	// ipv4 addresses should be allowed to connect via this socket.
+	if(setsockopt(newsocket, IPPROTO_IPV6, IPV6_V6ONLY, (char *) &i, sizeof(i)) == SOCKET_ERROR)
+	{
+		// win32 systems don't seem to support this anyways.
+		Com_PrintWarning("NET_IPSocket: setsockopt IPV6_V6ONLY: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
+	}
+
+
+	if( bind( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
+		Com_PrintWarning( "NET_IPSocket: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+		*err = socketError;
+		closesocket( newsocket );
+		return INVALID_SOCKET;
+	}
+
+	if(socktype == SOCK_STREAM)
+	{
+		// Listen
+		if( listen( newsocket, 96) == SOCKET_ERROR ) {
+			Com_PrintWarning( "NET_IPSocket: listen: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
+			*err = socketError;
+			closesocket( newsocket );
+			return INVALID_SOCKET;
+		}
+	}
+	return newsocket;
+}
+
 
 /*
 ====================
@@ -2220,7 +2409,7 @@ void NET_OpenIP( void ) {
 				Com_sprintf(addrbuf2, sizeof(addrbuf2), "%s:%d", net_ip->string, port + i );
 				NET_StringToAdr(addrbuf2, &ip_socket[socketindex], NA_IP);
 
-				ip_socket[socketindex].sock = NET_IPSocket( net_ip->string, port + i, &err, qfalse);
+				ip_socket[socketindex].sock = NET_IP4Socket( net_ip->string, port + i, &err, qfalse);
 
 				if(ip_socket[socketindex].sock != INVALID_SOCKET)
 				{
@@ -2254,7 +2443,7 @@ void NET_OpenIP( void ) {
 					Com_sprintf(addrbuf2, sizeof(addrbuf2), "%s:%d", addrbuf, port + i );
 					NET_StringToAdr(addrbuf2, &ip_socket[socketindex], NA_IP);
 
-					ip_socket[socketindex].sock = NET_IPSocket(addrbuf, port + i, &err, qfalse);
+					ip_socket[socketindex].sock = NET_IP4Socket(addrbuf, port + i, &err, qfalse);
 
 					if(ip_socket[socketindex].sock == INVALID_SOCKET)
 					{
@@ -2275,7 +2464,7 @@ void NET_OpenIP( void ) {
 			if( validsock )
 			{
 
-				tcp_socket = NET_IPSocket( net_ip->string, port + i, &err, qtrue);
+				tcp_socket = NET_IP4Socket( net_ip->string, port + i, &err, qtrue);
 
 				if(tcp_socket != INVALID_SOCKET){
 					Cvar_SetInt( net_port, port + i );
@@ -3459,13 +3648,6 @@ int NET_StringToAdr( const char *s, netadr_t *a, netadrtype_t family )
 	char	base[MAX_STRING_CHARS], *search;
 	char	*port = NULL;
 
-	if (!strcmp (s, "localhost")) {
-		Com_Memset (a, 0, sizeof(*a));
-		a->type = NA_LOOPBACK;
-// as NA_LOOPBACK doesn't require ports report port was given.
-		return 1;
-	}
-
 	Q_strncpyz( base, s, sizeof( base ) );
 
 	if(*base == '[' || Q_CountChar(base, ':') > 1)
@@ -3516,6 +3698,64 @@ int NET_StringToAdr( const char *s, netadr_t *a, netadrtype_t family )
 		return 2;
 	}
 }
+
+
+int NET_StringToAdrNonBlocking( const char *s, netadr_t *a, netadrtype_t family )
+{
+	char	base[MAX_STRING_CHARS], *search;
+	char	*port = NULL;
+
+	Q_strncpyz( base, s, sizeof( base ) );
+
+	if(*base == '[' || Q_CountChar(base, ':') > 1)
+	{
+		// This is an ipv6 address, handle it specially.
+		search = strchr(base, ']');
+		if(search)
+		{
+			*search = '\0';
+			search++;
+
+			if(*search == ':')
+				port = search + 1;
+		}
+
+		if(*base == '[')
+			search = base + 1;
+		else
+			search = base;
+	}
+	else
+	{
+		// look for a port number
+		port = strchr( base, ':' );
+
+		if ( port ) {
+			*port = '\0';
+			port++;
+		}
+
+		search = base;
+	}
+	int res = Sys_StringToAdrNonBlock(search, a, family);
+	if(res < 1)
+	{
+		a->type = NA_BAD;
+		return res;
+	}
+
+	if(port)
+	{
+		a->port = BigShort((short) atoi(port));
+		return 1;
+	}
+	else
+	{
+		a->port = BigShort(PORT_SERVER);
+		return 2;
+	}
+}
+
 
 int NET_GetHostPort()
 {
@@ -3706,7 +3946,6 @@ struct query {
  */
 struct dns {
 	int		sock;		/* UDP socket used for queries	*/
-	int 	sock6;
 	netadr_t salist[MAX_DNSSERVERS];		/* All DNS servers	*/
 	netadr_t sa;							/* The used DNS server	*/
 	int numdnsservers;
@@ -3840,13 +4079,14 @@ static int getdnsip(struct dns *dns)
 	//convert to netadr_t and remove duplicates
 	for(i = 0, dns->numdnsservers = 0; i < dnscount; ++i)
 	{
-		if(sins[i].ss_family == AF_INET)
+		sock = dns->sock;
+
+		SockadrToNetadr6( (struct sockaddr*)&sins[i], &dns->salist[dns->numdnsservers], qfalse, sock);
+		//ignore DNS starting with "fec0"
+		if(dns->salist[dns->numdnsservers].ip6[0] == 0xfe && dns->salist[dns->numdnsservers].ip6[1] == 0xc0)
 		{
-			sock = dns->sock;
-		}else if(sins[i].ss_family == AF_INET6){
-			sock = dns->sock6;
+			continue;
 		}
-		SockadrToNetadr( (struct sockaddr*)&sins[i], &dns->salist[dns->numdnsservers], qfalse, sock);
 
 		//Remove any duplicated dns servers
 		for(l = 0; l < dns->numdnsservers; ++l)
@@ -3860,6 +4100,7 @@ static int getdnsip(struct dns *dns)
 		if(l == dns->numdnsservers)
 		{
 			dns->salist[dns->numdnsservers].port = BigShort(53);
+			Com_Printf("DNS: %s\n", NET_AdrToString(&dns->salist[dns->numdnsservers]));
 			++dns->numdnsservers;
 		}
 	}
@@ -3876,7 +4117,6 @@ struct dns* dns_init(void)
 {
 	struct dns	*dns;
 	int		rcvbufsiz = 128 * 1024;
-	struct sockaddr_in6 boundif;
 	int err;
 
 	/* FIXME resource leak here */
@@ -3885,21 +4125,16 @@ struct dns* dns_init(void)
 
 
 	dns->sock = NET_IPSocket(NULL, 0, &err, qfalse);
-	dns->sock6 = NET_IP6Socket(NULL, 0, &boundif, &err, qfalse);
 
-	if(dns->sock == INVALID_SOCKET && dns->sock6 == INVALID_SOCKET)
+	if(dns->sock == INVALID_SOCKET)
 		return (NULL);
 
 	/* Increase socket's receive buffer */
 	if(dns->sock != INVALID_SOCKET)
 		setsockopt(dns->sock, SOL_SOCKET, SO_RCVBUF, (char *) &rcvbufsiz, sizeof(rcvbufsiz));
 
-	if(dns->sock6 != INVALID_SOCKET)
-		setsockopt(dns->sock6, SOL_SOCKET, SO_RCVBUF, (char *) &rcvbufsiz, sizeof(rcvbufsiz));
-
 	if (getdnsip(dns) != 0)
 		return (NULL);
-
 
 	LL_INIT(&dns->active);
 	LL_INIT(&dns->cached);
@@ -3924,9 +4159,6 @@ void dns_shutdown(struct dns *dns)
 
 	if (dns->sock != -1)
 		(void) closesocket(dns->sock);
-
-	if (dns->sock6 != -1)
-		(void) closesocket(dns->sock6);
 
 	LL_FOREACH_SAFE(&dns->active, lp, tmp) {
 		query = LL_ENTRY(lp, struct query, link);
@@ -4310,21 +4542,6 @@ int dns_poll(struct dns *dns)
 	netadr_t		from;
 
 	/* Check our socket for new stuff */
-	if(dns->sock6 != INVALID_SOCKET)
-	{
-		while ((n = NET_GetPacket(&from, pkt, sizeof(pkt), dns->sock6)) > 0 && n > (int) sizeof(struct header))
-		{
-			if(dns_responsefromvalidsource(dns, &from))
-			{
-				if(dns->sa.type == NA_BAD)
-				{
-					dns->sa = from;
-				}
-				parse_udp(dns, pkt, n);
-				num_packets++;
-			}
-		}
-	}
 	if(dns->sock != INVALID_SOCKET)
 	{
 		while ((n = NET_GetPacket(&from, pkt, sizeof(pkt), dns->sock)) > 0 && n > (int) sizeof(struct header))
@@ -4340,7 +4557,6 @@ int dns_poll(struct dns *dns)
 			}
 		}
 	}
-
 	return (num_packets);
 }
 
@@ -4405,14 +4621,7 @@ qboolean NET_ResolveInternal(const char *domain, struct sockaddr_storage *outadd
 				highestfd = h_dns->sock;
 			}
 		}
-		if(h_dns->sock6 != INVALID_SOCKET)
-		{
-			FD_SET(h_dns->sock6, &set);
-			if(h_dns->sock6 > highestfd)
-			{
-				highestfd = h_dns->sock6;
-			}
-		}
+
 		r = select(highestfd + 1, &set, NULL, NULL, &tv);
 		if(r < 1)
 		{

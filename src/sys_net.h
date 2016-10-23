@@ -113,6 +113,9 @@ const char*	NET_AdrMaskToString(netadr_t *adr);
 
 qboolean	Sys_SendPacket( int length, const void *data, netadr_t *to );
 qboolean	Sys_StringToAdr( const char *s, netadr_t *a, netadrtype_t family );
+int 		Sys_StringToAdrNonBlock( const char *s, netadr_t *a, netadrtype_t family );
+int NET_StringToAdrNonBlocking( const char *s, netadr_t *a, netadrtype_t family );
+
 
 //Does NOT parse port numbers, only base addresses.
 qboolean	Sys_IsLANAddress (netadr_t *adr);

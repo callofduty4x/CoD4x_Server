@@ -130,16 +130,24 @@ static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 	{
 		Q_strncpyz(request->address, address, sizeof(request->address));
 		/* Open the connection */
-		NET_StringToAdr(request->address, &request->remote, NA_UNSPEC); //Will block unfortunatly
-		request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
-
-	  	if(request->socket < 0)
-		{
+		int res = NET_StringToAdrNonBlocking(request->address, &request->remote, NA_UNSPEC);
+		if(res < 0){
+			Com_Printf("Unable to resolve hostname %s\n", request->address);
 			request->socket = -1;
 			FT_FreeRequest(request);
 			return NULL;
 		}
+		if(res > 0)
+		{
+			request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
 
+			if(request->socket < 0)
+			{
+				request->socket = -1;
+				FT_FreeRequest(request);
+				return NULL;
+			}
+		}
 	}
 
 	/* For proper terminating of string data +1 */
@@ -727,6 +735,29 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 	
 	if(request->socketReady == qfalse)
 	{
+		if(request->remote.type == 0)
+		{	//Hostname is still not resolved 
+			/* Open the connection */
+			int res = NET_StringToAdrNonBlocking(request->address, &request->remote, NA_UNSPEC);
+			if(res < 0){
+				Com_Printf("Unable to resolve hostname %s\n", request->address);
+				request->socket = -1;
+				return -1;
+			}
+			if(res > 0)
+			{
+				request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
+
+				if(request->socket < 0)
+				{
+					request->socket = -1;
+					return -1;
+				}
+			}
+			return 0;
+		}
+
+
 		//Test if the socket is connected (3-way hanndshake completed)
 		status = NET_TcpIsSocketReady(request->socket);
 		if(status == 0)
@@ -1520,6 +1551,28 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 
 	if(request->socketReady == qfalse)
 	{
+		if(request->remote.type == 0)
+		{	//Hostname is still not resolved 
+			/* Open the connection */
+			int res = NET_StringToAdrNonBlocking(request->address, &request->remote, NA_UNSPEC);
+			if(res < 0){
+				Com_Printf("Unable to resolve hostname %s\n", request->address);
+				request->socket = -1;
+				return -1;
+			}
+			if(res > 0)
+			{
+				request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
+
+				if(request->socket < 0)
+				{
+					request->socket = -1;
+					return -1;
+				}
+			}
+			return 0;
+		}
+
 		status = NET_TcpIsSocketReady(request->socket);
 		if(status == 0)
 		{
