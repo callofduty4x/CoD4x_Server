@@ -19,7 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
+//#define _LAGDEBUG
 
 #include "q_shared.h"
 #include "qcommon_io.h"
@@ -1569,7 +1569,17 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 	SV_SendReliableServerCommand(cl, &msg);
 }
 
+#ifdef _LAGDEBUG
 
+//Hit counter
+typedef struct
+{
+	unsigned int lastcleared;
+	int hitcount;
+}dbghitcounter_t;
+dbghitcounter_t hitcounter[64]; //ALL Clients
+
+#endif
 /*
 ================
 SV_SendClientGameState
@@ -1588,6 +1598,36 @@ void SV_SendClientGameState( client_t *client ) {
 	char banrejectmsg[1024];
 	uint64_t playerid;
 	uint64_t steamid;
+
+#ifdef _LAGDEBUG
+
+	dbghitcounter_t *dbgc = &hitcounter[client - svs.clients];
+	unsigned int time = Sys_Milliseconds();
+	if(dbgc->lastcleared + 300 < time)
+	{
+		dbgc->lastcleared = time;
+//		if(dbgc->hitcount > 80)
+		{
+			Com_DPrintfLogfile("Hitcount exceeded 80 in SV_SendClientGameState for client %d Count %d\n", client - svs.clients, dbgc->hitcount);
+			void** traces;
+			char** symbols;
+			int numFrames;
+			int i;
+
+			Com_DPrintfLogfile("---------- Begin Backtrace ----------\n");
+			traces = malloc(65536*sizeof(void*));
+			numFrames = backtrace(traces, 65536);
+			symbols = backtrace_symbols(traces, numFrames);
+			for(i = 0; i < numFrames; i++)
+				Com_DPrintfLogfile("%5d: %s\n", numFrames - i -1, symbols[i]);
+			Com_DPrintfLogfile("-------- Backtrace Completed --------\n");
+			free(traces);
+		}
+		dbgc->hitcount = 0;
+	}
+	dbgc->hitcount++;
+
+#endif
 
 	if(client->needupdate)
 	{

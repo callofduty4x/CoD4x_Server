@@ -206,6 +206,74 @@ void Com_PrintLogfile( const char *msg )
 }
 
 
+void Com_DPrintLogfile( const char *msg )
+{
+
+	char	logwritestart[256];
+	Sys_EnterCriticalSection(CRIT_LOGFILE);
+
+
+	if ( com_logfile && com_logfile->integer ) {
+        // TTimo: only open the qconsole.log if the filesystem is in an initialized state
+        // also, avoid recursing in the qconsole.log opening (i.e. if fs_debug is on)
+	    if ( !debuglogfile && FS_Initialized()) {
+				struct tm *newtime;
+				time_t aclock;
+
+				time( &aclock );
+				newtime = localtime( &aclock );
+
+				/* 1st try to delete any existing old backup logfile */
+				FS_HomeRemove( "qconsole.log.old" );
+				/* Now try to rename it */
+				FS_Rename( "qconsole.log", "qconsole.log.old" );
+
+				debuglogfile = FS_FOpenFileWrite( "debug_qconsole.log" );
+
+				if ( com_logfile->integer > 1 && debuglogfile ) {
+					// force it to not buffer so we get valid
+					// data even if we are crashing
+					FS_ForceFlush(debuglogfile);
+				}
+				if ( debuglogfile )
+				{
+#ifdef _WIN32
+					Com_sprintf(logwritestart, sizeof(logwritestart), "\r\nLogfile opened on %s\r\n\r\n", asctime( newtime ));
+#else
+					Com_sprintf(logwritestart, sizeof(logwritestart), "\nLogfile opened on %s\n\n", asctime( newtime ));
+#endif
+					FS_Write(logwritestart, strlen(logwritestart), debuglogfile);
+				}
+	    }
+	    if ( debuglogfile && FS_Initialized())
+	    {
+#ifdef _WIN32
+				char outstring[2* MAXPRINTMSG];
+				int stringlen = Q_strLF2CRLF(msg, outstring, sizeof(outstring) );
+				FS_Write( outstring, stringlen, debuglogfile );
+#else
+				FS_Write( msg, strlen(msg), debuglogfile);
+#endif
+		}
+	}
+	Sys_LeaveCriticalSection(CRIT_LOGFILE);
+}
+
+
+void QDECL Com_DPrintfLogfile( const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[0x10000];
+
+	va_start (argptr,fmt);
+	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
+	va_end (argptr);
+
+    Com_DPrintLogfile( msg );
+}
+
+
+
+
 /*
 This function should close all opened non Zip files
 */
@@ -233,3 +301,4 @@ void Com_CloseLogFiles()
 	Sys_LeaveCriticalSection(CRIT_LOGFILE);
 
 }
+
