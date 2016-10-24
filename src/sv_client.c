@@ -21,6 +21,10 @@
 */
 //#define _LAGDEBUG
 
+#ifdef _LAGDEBUG
+#include <execinfo.h>
+#endif
+
 #include "q_shared.h"
 #include "qcommon_io.h"
 #include "qcommon_mem.h"
@@ -1606,7 +1610,7 @@ void SV_SendClientGameState( client_t *client ) {
 	if(dbgc->lastcleared + 300 < time)
 	{
 		dbgc->lastcleared = time;
-//		if(dbgc->hitcount > 80)
+		if(dbgc->hitcount > 80)
 		{
 			Com_DPrintfLogfile("Hitcount exceeded 80 in SV_SendClientGameState for client %d Count %d\n", client - svs.clients, dbgc->hitcount);
 			void** traces;
