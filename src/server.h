@@ -176,7 +176,10 @@ typedef struct client_s {//90b4f8c
 	uint64_t		clanidPending;
 	uint64_t		playerid;
 	int			steamstatus;
-	int			free1[2];
+	int			isMember; //Steam group membership. 
+	//If sv_steamgroup is set up this variable will be 0 if membership status is still unknown.
+	//It will be -1 if he is not a member or 1 if he is a member or 2 if he is an officer
+	int			free1[1];
 	int			mutelevel; //1 = voice blocked; 2 = chat and voice blocked
 	int			lastFollowedClient;
 	byte		ssdata[24];
@@ -259,7 +262,7 @@ typedef struct client_s {//90b4f8c
 	stats_t			stats;		//(0xa3639)
 	byte			receivedstats;		//(0xa5639)
 	byte			gamestateSent;
-	byte			dummy2;
+	byte			hasValidPassword;
 } client_t;//0x0a563c
 
 /*
@@ -769,6 +772,7 @@ extern cvar_t* sv_showAverageBPS;
 extern cvar_t* sv_hostname;
 extern cvar_t* sv_shownet;
 extern cvar_t* sv_legacymode;
+extern cvar_t* sv_steamgroup;
 
 void __cdecl SV_StringUsage_f(void);
 void __cdecl SV_ScriptUsage_f(void);

@@ -43,6 +43,33 @@ typedef struct{
 #define G_SCR_DATA_ADDR (void*)0x8583ba0
 
 
+char *var_typename[] =
+{
+  "undefined",
+  "object",
+  "string",
+  "localized string",
+  "vector",
+  "float",
+  "int",
+  "codepos",
+  "precodepos",
+  "function",
+  "stack",
+  "animation",
+  "developer codepos",
+  "include codepos",
+  "thread",
+  "thread",
+  "thread",
+  "thread",
+  "struct",
+  "removed entity",
+  "entity",
+  "array",
+  "removed thread"
+};
+
 
 void Scr_AddStockFunctions()
 {
@@ -148,7 +175,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("precacheshellshock", (void*)0x80be308, 0);
 	Scr_AddFunction("precacheitem", (void*)0x80be28a, 0);
 	Scr_AddFunction("precacheshader", (void*)0x80be126, 0);
-	Scr_AddFunction("precachestring", (void*)0x80be0ea, 0);
+	Scr_AddFunction("precachestring", Scr_PrecacheString_f, 0);
 	Scr_AddFunction("precacherumble", (void*)0x80bb010, 0);
 	Scr_AddFunction("loadfx", (void*)0x80be064, 0);
 	Scr_AddFunction("playfx", (void*)0x80c6a38, 0);
@@ -273,7 +300,9 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("execex", GScr_CbufAddTextEx, 0);
 	Scr_AddFunction("sha256", GScr_SHA256, 0);
 	Scr_AddFunction("addscriptcommand", GScr_AddScriptCommand, 0);
-
+	Scr_AddFunction("isarray", Scr_IsArray_f, qfalse);             // http://zeroy.com/script/variables/isarray.htm
+/*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
+	Scr_AddFunction("iscvardefined", GScr_IsCvarDefined, 0);
 
 }
 
@@ -354,6 +383,8 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
 	Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
 	Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
+	Scr_AddMethod("getsteamid64", PlayerCmd_GetSteamID, 0);
+	Scr_AddMethod("getplayerid64", PlayerCmd_GetPlayerID, 0);	
 	Scr_AddMethod("getxuid", (void*)0x80a9418, 0);
 	Scr_AddMethod("allowads", (void*)0x80ab852, 0);
 	Scr_AddMethod("allowjump", (void*)0x80a8932, 0);
@@ -374,7 +405,7 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
 	//HUD Functions
 	Scr_AddMethod("settext", HECmd_SetText, 0);
-	Scr_AddMethod("clearalltextafterhudelem", (void*)0x808f768, 0);
+	Scr_AddMethod("clearalltextafterhudelem", (void*)0x808f768, qtrue);
 	Scr_AddMethod("setshader", (void*)0x808e52e, 0);
 	Scr_AddMethod("settargetent", (void*)0x808f8ea, 0);
 	Scr_AddMethod("cleartargetent", (void*)0x808f718, 0);
@@ -390,7 +421,7 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("scaleovertime", (void*)0x808ee86, 0);
 	Scr_AddMethod("moveovertime", (void*)0x808ed56, 0);
 	Scr_AddMethod("reset", (void*)0x808ebfa, 0);
-	Scr_AddMethod("destroy", (void*)0x808eba6, 0);
+	Scr_AddMethod("destroy", Scr_Destroy_f, 0);
 	Scr_AddMethod("setpulsefx", (void*)0x808feb8, 0);
 	Scr_AddMethod("setplayernamestring", (void*)0x808ea9e, 0);
 	Scr_AddMethod("setmapnamestring", (void*)0x808e85a, 0);
@@ -530,6 +561,7 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("setdamagestage", (void*)0x80ba890, 0);
 	Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
 	Scr_AddMethod("getcountedfps", PlayerCmd_GetCountedFPS, 0);
+	Scr_AddMethod("getspectatorclient", PlayerCmd_GetSpectatorClient, 0);
 
 	// Player movement detection.
 	Scr_AddMethod("forwardbuttonpressed", PlayerCmd_ForwardButtonPressed, 0);
@@ -541,15 +573,17 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("leanleftbuttonpressed", PlayerCmd_LeanLeftButtonPressed, 0);
 	Scr_AddMethod("leanrightbuttonpressed", PlayerCmd_LeanRightButtonPressed, 0);
 	Scr_AddMethod("isproning", PlayerCmd_IsProning, 0);
-	Scr_AddMethod("iscrouching", PlayerCmd_IsCrouching, 0);	
+	Scr_AddMethod("iscrouching", PlayerCmd_IsCrouching, 0);
 	Scr_AddMethod("isstanding", PlayerCmd_IsStanding, 0);
 	Scr_AddMethod("jumpbuttonpressed", PlayerCmd_JumpButtonPressed, 0);
 	Scr_AddMethod("isinads", PlayerCmd_IsInADS, 0);
 	Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
 	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
 
-	// Bots movement.
-	Scr_AddBotsMovement();
+    Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
+
+    /* Bot movement */
+    Scr_AddBotsMovement();
 }
 
 void Scr_InitFunctions()
@@ -1204,69 +1238,70 @@ void GetHuffmanArray(){
     Com_Quit_f();
 }
 */
-
+/*
 int GetArraySize(int aHandle)
 {
     int size = scrVarGlob.variables[aHandle].value.typeSize.size;
     return size;
 }
-
+*/
 /* only for debug */
-__regparm3 void VM_Notify_Hook(int entid, int constString, variableValue_t* arguments)
+__regparm3 void VM_Notify_Hook(int entid, int constString, VariableValue* arguments)
 {
     Com_Printf("^2Notify Entitynum: %d, EventString: %s\n", entid, SL_ConvertToString(constString));
     VM_Notify(entid, constString, arguments);
 }
 
+
 void Scr_InitSystem()
 {
-  scrVarPub.dword18 = AllocObject();
-  scrVarPub.dword1C = Scr_AllocArray();
-  scrVarPub.varLevel = AllocObject();
-  scrVarPub.dword28 = AllocObject();
-  scrVarPub.dword14 = 0;
+  scrVarPub.timeArrayId = AllocObject();
+  scrVarPub.pauseArrayId = Scr_AllocArray();
+  scrVarPub.levelId = AllocObject();
+  scrVarPub.animId = AllocObject();
+  scrVarPub.time = 0;
   g_script_error_level = -1;
 }
 
 void Scr_ClearArguments()
 {
-    while(scrVmPub.numParams)
+    while(scrVmPub.outparamcount)
     {
-        RemoveRefToValue(scrVmPub.argumentVariables->varType, scrVmPub.argumentVariables->value);
-        --scrVmPub.argumentVariables;
-        --scrVmPub.numParams;
+        RemoveRefToValue(scrVmPub.top->type, scrVmPub.top->u);
+        --scrVmPub.top;
+        --scrVmPub.outparamcount;
     }
 }
 
 void Scr_NotifyInternal(int varNum, int constString, int numArgs)
 {
-  variableValue_t *curArg;
+  VariableValue *curArg;
   int z;
   int ctype;
 
   Scr_ClearArguments();
-  curArg = scrVmPub.argumentVariables - numArgs;
-  z = scrVmPub.field_18 - numArgs;
+  curArg = scrVmPub.top - numArgs;
+  z = scrVmPub.inparamcount - numArgs;
   if ( varNum )
   {
-    ctype = curArg->varType;
-    curArg->varType = 8;
-    scrVmPub.field_18 = 0;
-    VM_Notify(varNum, constString, scrVmPub.argumentVariables);
-    curArg->varType = ctype;
+    ctype = curArg->type;
+    curArg->type = 8;
+    scrVmPub.inparamcount = 0;
+    VM_Notify(varNum, constString, scrVmPub.top);
+    curArg->type = ctype;
   }
-  while( scrVmPub.argumentVariables != curArg )
+  while( scrVmPub.top != curArg )
   {
-    RemoveRefToValue(scrVmPub.argumentVariables->varType, scrVmPub.argumentVariables->value);
-    --scrVmPub.argumentVariables;
+    RemoveRefToValue(scrVmPub.top->type, scrVmPub.top->u);
+    --scrVmPub.top;
   }
-  scrVmPub.field_18 = z;
+  scrVmPub.inparamcount = z;
 }
 
 
 void Scr_NotifyLevel(int constString, unsigned int numArgs)
 {
-    Scr_NotifyInternal(scrVarPub.varLevel, constString, numArgs);
+    Scr_NotifyInternal(scrVarPub.levelId, constString, numArgs);
 }
 
 
@@ -1287,50 +1322,50 @@ void Scr_Notify(gentity_t* ent, unsigned short constString, unsigned int numArgs
 }
 
 
-void RuntimeError_Debug(char *msg, char *a3, int a4)
+void RuntimeError_Debug(char *msg, char *pos, int a4)
 {
   int i;
 
   Com_Printf("\n^1******* script runtime error *******\n%s: ", msg);
-  Scr_PrintPrevCodePos(0, a3, a4);
-  if ( scrVmPub.field_8 )
+  Scr_PrintPrevCodePos(0, pos, a4);
+  if ( scrVmPub.function_count )
   {
-    for(i = scrVmPub.field_8 - 1; i > 0; --i)
+    for(i = scrVmPub.function_count - 1; i > 0; --i)
 	{
         Com_Printf("^1called from:\n");
-        Scr_PrintPrevCodePos(0, scrVmPub.backtrace[i].field_0, scrVmPub.backtrace[i].field_4 == 0);
+        Scr_PrintPrevCodePos(0, scrVmPub.function_frame_start[i].fs.pos, scrVmPub.function_frame_start[i].fs.localId == 0);
 	}
     Com_Printf("^1started from:\n");
-    Scr_PrintPrevCodePos(0, scrVmPub.backtrace[0].field_0, 1);
+    Scr_PrintPrevCodePos(0, scrVmPub.function_frame_start[0].fs.pos, 1);
   }
   Com_Printf("^1************************************\n");
 }
 
-void RuntimeError(char *a3, int arg4, char *message, char *a4)
+void RuntimeError(char *pos, int arg4, char *message, char *a4)
 {
 	int errtype;
 
-	if ( !scrVarPub.field_6 && !scrVmPub.field_16 )
+	if ( !scrVarPub.developer && !scrVmPub.terminal_error )
 	{
 		return;
 	}
 
-	if ( scrVmPub.field_14 )
+	if ( scrVmPub.debugCode )
 	{
 		Com_Printf("%s\n", message);
-		if ( !scrVmPub.field_16 )
+		if ( !scrVmPub.terminal_error )
 		{
 			return;
 		}
 	}else{
-		RuntimeError_Debug(message, a3, arg4);
-		if ( !scrVmPub.field_15 && !scrVmPub.field_16 )
+		RuntimeError_Debug(message, pos, arg4);
+		if ( !scrVmPub.abort_on_error && !scrVmPub.terminal_error )
 		{
 			return;
 		}
 	}
 
-	if(scrVmPub.field_16)
+	if(scrVmPub.terminal_error)
 	{
 		errtype = 5;
 	}else{
@@ -1386,4 +1421,81 @@ gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num)
 client_t* VM_GetClientForEntityNumber(scr_entref_t num)
 {
 	return &svs.clients[num];
+}
+
+/*
+void __cdecl sub_51D1F0()
+{
+  if ( !scrVarPub.evaluate && !unk_1509088 )
+  {
+    if ( scrVarPub.developer && scrVmGlob.loading )
+	{
+      scrVmPub.terminal_error = 1;
+    }
+	if ( scrVmPub.function_count || scrVmPub.debugCode )
+	{
+      longjmp(g_script_error[g_script_error_level], -1);
+	}
+    Sys_Error("%s", scrVarPub.error_message);
+  }
+  if ( scrVmPub.terminal_error )
+  {
+    Sys_Error("%s", scrVarPub.error_message);
+  }
+}
+
+void Scr_Error(const char *error)
+{
+  static char errormsg[1024];
+  if ( !scrVarPub.error_message )
+  {
+    Q_strncpyz(errormsg, error, sizeof(errormsg));
+    scrVarPub.error_message = errormsg;
+  }
+  sub_51D1F0();
+}
+*/
+int Scr_GetInt(unsigned int paramnum)
+{
+  mvabuf;
+  VariableValue *var;
+
+
+  if ( paramnum >= scrVmPub.outparamcount )
+  {
+	Scr_Error(va("parameter %d does not exist", paramnum + 1));
+	return 0;
+  }
+
+  var = &scrVmPub.top[-paramnum];
+  if ( var->type == 6 )
+  {
+    return var->u.intValue;
+  }
+  scrVarPub.error_index = paramnum + 1;
+  Scr_Error(va("type %s is not an int", var_typename[var->type]));
+  return 0;
+}
+
+//Use with Scr_Exce(Ent)Thread
+int Scr_GetFunc(unsigned int paramnum)
+{
+  mvabuf;
+  VariableValue *var;
+
+  if ( paramnum >= scrVmPub.outparamcount )
+  {
+  	Scr_Error(va("parameter %d does not exist", paramnum + 1));
+  	return -1;
+  }
+
+  var = &scrVmPub.top[-paramnum];
+  if ( var->type == 9 )
+  {
+    int vmRomAddress = var->u.codePosValue - scrVarPub.programBuffer;
+    return vmRomAddress;
+  }
+  scrVarPub.error_index = paramnum + 1;
+  Scr_Error(va("type %s is not an function", var_typename[var->type]));
+  return -1;
 }

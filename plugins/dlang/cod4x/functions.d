@@ -39,7 +39,7 @@ extern (C) void Plugin_Cvar_VariableStringBuffer(const char* cvarname, char* buf
 extern (C) float Plugin_Cvar_VariableValue( const char *var_name );
 extern (C) int Plugin_Cvar_VariableIntegerValue( const char *var_name );
 extern (C) int Plugin_Cvar_VariableBooleanValue( const char *var_name );
-extern (C) char* Plugin_Cvar_VariableString( const char *var_name );
+//Mimi please fix extern (C) char* Plugin_Cvar_VariableString( const char *var_name );
 // Sets a cvar by name and by a string value which gets interpreted correctly depending on the cvar type
 extern (C) void Plugin_Cvar_Set( const char *var_name, const char* value );
 
@@ -92,7 +92,7 @@ extern (C) void Plugin_DropClient( int clientnum, const char *reason );	// Kicks
 extern (C) void Plugin_BanClient( uint clientnum, int seconds, int invokerid, char *reason ); //Bans the client for seconds from server. Seconds can be "-1" to create a permanent ban. invokerid can be 0 or the numeric uid. banreason can be NULL or a valid char* pointer.
 
 //  -- TCP Connection functions --
-/* 
+/*
 connection is a static constant number. Every plugin can use a connection 0 up to 3. This is not a socket. This is handled internal.
 You can not use the same number for 2 open connections on the same time.
 
@@ -148,6 +148,7 @@ extern (C) void Plugin_Scr_AddUndefined();
 extern (C) void Plugin_Scr_AddVector( vec3_t vec );
 extern (C) void Plugin_Scr_AddArray( );
 extern (C) void Plugin_Scr_MakeArray( );
+extern (C) void Plugin_Scr_AddArrayKey( int strIdx );
 extern (C) short Plugin_Scr_ExecEntThread( gentity_t* ent, int callbackHook, int numArgs);
 extern (C) short Plugin_Scr_ExecThread( int callbackHook, int numArgs);
 extern (C) void Plugin_Scr_FreeThread( short threadId);

@@ -127,6 +127,7 @@ cvar_t* sv_clientArchive;
 cvar_t* sv_shownet;
 cvar_t* sv_updatebackendname;
 cvar_t* sv_legacymode;
+cvar_t* sv_steamgroup;
 
 serverStaticExt_t	svse;	// persistant server info across maps
 permServerStatic_t	psvs;	// persistant even if server does shutdown
@@ -1339,7 +1340,6 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
 		return;
 	}
 
-
 	MSG_Init(&playermsg, pbuf, sizeof(pbuf));
 	/* Write the OOB-Header */
 	MSG_WriteLong(&playermsg, -1);
@@ -2066,7 +2066,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg)
 	char stringline[1024];
 	msg_t singlemsg;
 	int ic;
-	
+
 	while(msg->readcount < msg->cursize)
 	{
 		int messagelen = MSG_ReadLong(msg);
@@ -2348,11 +2348,11 @@ void SV_MasterHeartbeat(const char *message)
 
 			MSG_Init(&msg, opts.message, sizeof(opts.message));
 			MSG_WriteString(&msg, string);
-			
+
 			MSG_WriteShort(&msg, NET_GetHostPort());
 			MSG_WriteLong(&msg, psvs.masterserver_messageid);
 			++psvs.masterserver_messageid;
-			
+
 			MSG_BeginWriteMessageLength(&msg); //Messagelength
 			MSG_WriteLong(&msg, 1); //Command sourceenginequery
 			SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
@@ -3789,9 +3789,9 @@ void SV_UpdateBots()
 {
 	int i;
 	client_t* cl;
-	
+
 	SV_ResetSkeletonCache();
-	
+
 	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
 	{
 		if(cl->state >= CS_CONNECTED && cl->netchan.remoteAddress.type == NA_BOT)
@@ -3816,12 +3816,12 @@ void SV_PreFrame()
     SV_SetConfigstring(0, Cvar_InfoString(4));
     cvar_modifiedFlags &= ~0x404;
   }
-  
+
   if ( cvar_modifiedFlags & CVAR_SYSTEMINFO )
   {
     SV_SetSystemInfoConfig();
   }
-  
+
   if ( cvar_modifiedFlags & 256 )
   {
     SV_SetConfig(20, 128, 256);
@@ -3976,7 +3976,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 			e_spawns[i].direction2[0],
 			e_spawns[i].direction2[1],
 			e_spawns[i].direction2[2]);
-			
+
 			e_spawns[i].direction2[0] = svs.clients[i].gentity->client->ps.viewangles[0];
 			e_spawns[i].direction2[1] = svs.clients[i].gentity->client->ps.viewangles[1];
 			e_spawns[i].direction2[2] = svs.clients[i].gentity->client->ps.viewangles[2];
@@ -4533,6 +4533,21 @@ void SV_SpawnServer(const char *mapname)
 
 		for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, cl++)
 		{
+			if(cl->demorecording)
+			{
+				SV_StopRecord(cl);
+				cl->demorecording = qtrue; //Making a new demo later when server is spawned
+				char shortdmname[1024];
+				int demonamelen = strlen(cl->demoName);
+				if(demonamelen < 15 )
+				{
+					cl->demoName[0] = 0;
+				}else{
+					Q_strncpyz(shortdmname, cl->demoName + 6, sizeof(cl->demoName)); //Remove demos/
+					shortdmname[demonamelen -6 -5 -4] = 0;
+					Q_strncpyz(cl->demoName, shortdmname, sizeof(cl->demoName)); //remove .dm_1
+				}
+			}
 
 			if ( cl->state < CS_PRIMED )
 	    {
@@ -4543,7 +4558,7 @@ void SV_SpawnServer(const char *mapname)
 			cl->nextSnapshotTime = -1;
 			SV_SendClientSnapshot( cl );
 		}
-    NET_Sleep(250);
+    Sys_SleepUSec(250000);
   }
   Cvar_SetStringByName("mapname", mapname);
 #ifndef DEDICATEDONLY
@@ -4704,6 +4719,7 @@ void SV_SpawnServer(const char *mapname)
   SV_SaveSystemInfo();
 
   sv.state = SS_GAME;
+
   SV_Heartbeat_f();
   Com_Printf("By using this software you agree to the usage conditions you can find at https://github.com/D4edalus/CoD4x_Server#usage-conditions-for-server-hosters\n");
   Com_Printf("-----------------------------------\n");

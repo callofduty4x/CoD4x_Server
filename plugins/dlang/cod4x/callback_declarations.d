@@ -24,3 +24,4 @@ extern (C) void OnClientUserinfoChanged(client_t* client);
 extern (C) void OnClientMoveCommand(client_t* client, usercmd_t* ucmd);
 extern (C) void OnPlayerWantReservedSlot(netadr_t* from, char* pbguid, char* userinfo, int authstate, qboolean *isallowed);
 extern (C) void OnModuleLoaded(client_t* client, char* fullpath, long checksum);
+extern (C) void OnScreenshotArrived(client_t* client, const char* path);

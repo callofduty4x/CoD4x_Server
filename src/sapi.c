@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <inttypes.h>
 #include "q_shared.h"
 #include "q_platform.h"
@@ -15,7 +16,7 @@
 #include "sec_crypto.h"
 #include "g_sv_shared.h"
 
-void (*Init)(imports_t* sapi_imports, exports_t* exports);
+int (*Init)(imports_t* sapi_imports, exports_t* exports);
 
 
 void SV_SApiSteamIDTo64String(uint64_t steamid, char* string, int length)
@@ -123,7 +124,7 @@ static uint64_t ParseSteam3ID(const char* h)
 		}
 		accounttypei = AccountTypeCharToInt(accounttype);
 
-		if(cFieldConverted == EOF || cFieldConverted != 3 || extracheck || (universe > 4 && universe != 32) || universe < 1 || accounttypei < 1 || accounttypei > 10)
+		if(cFieldConverted == EOF || cFieldConverted != 3 || extracheck || (universe > 4 && (universe < 32 || universe >= 40)) || universe < 1 || accounttypei < 1 || accounttypei > 10)
 		{
 			return 0;
 		}
@@ -232,7 +233,7 @@ uint64_t ParseSteam64ID(const char* h)
 	accounttype = (steamid & 0xF0000000000000ULL) >> 52;
 	universe = (steamid & 0xFF00000000000000ULL) >> 56;
 
-	if((universe > 4 && universe != 32) || universe < 1 || accounttype < 1 || accounttype > 10)
+	if((universe > 4 && (universe < 32 || universe >= 40)) || universe < 1 || accounttype < 1 || accounttype > 10)
 	{
 		return 0;
 	}
@@ -248,7 +249,7 @@ qboolean SV_SApiSteamIDIndividual(uint64_t steamid)
 	universe = (steamid & 0xFF00000000000000ULL) >> 56;
 	instance = (steamid & 0xFFFFF00000000ULL) >> 32;
 
-	if((universe != 1 && universe != 32) || accounttype != 1 || instance != 1)
+	if((universe != 1 && (universe < 32 || universe >= 40)) || accounttype != 1 || instance != 1)
 	{
 		return qfalse;
 	}
@@ -300,7 +301,7 @@ void SV_SApiSteamIDToString(uint64_t steamid, char* string, int length)
 	//instance = (steamid & 0xFFFFF00000000ULL) >> 32;
 	accountid = (steamid & 0xFFFFFFFFULL);
 
-	if((universe > 4 && universe != 32) || universe < 1 || accounttype < 1 || accounttype > 10)
+	if((universe > 4 && (universe < 32 || universe >= 40)) || universe < 1 || accounttype < 1 || accounttype > 10)
 	{
 		Q_strncpyz(string, "[I:0:0]", length);
 		return;
@@ -510,6 +511,7 @@ void SV_InitSApi()
 	exports.Cvar_RegisterEnum = Cvar_RegisterEnum;
 	exports.Cvar_RegisterString = Cvar_RegisterString;
 	exports.Cvar_RegisterBool = Cvar_RegisterBool;
+	exports.Cvar_SetString = Cvar_SetString;
 
 
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
@@ -525,7 +527,10 @@ void SV_InitSApi()
 		Com_PrintError("Init entrypoint not found. Steam is not going to work.\n");
 		return;
 	}
-	Init(&exports, &sapi_imp);
+	if(Init(&exports, &sapi_imp))
+	{
+		sv_steamgroup = Cvar_RegisterString("sv_steamgroup", "", CVAR_ARCHIVE | CVAR_LATCH, "Steam group this server belongs to");
+	}
 	Cmd_AddPCommand ("getss", SV_GetSS_f, 45);
 }
 
@@ -597,4 +602,12 @@ void SV_SApiProcessModules( client_t* cl, msg_t* msg )
 {
     if(sapi_imp.ProcessModules)
         sapi_imp.ProcessModules(cl, msg);
+}
+
+qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer))
+{
+	if(sapi_imp.SteamGetGroupMemberStatusByClientNum)
+			return sapi_imp.SteamGetGroupMemberStatusByClientNum(clnum, groupid, reference, callback);
+
+	return qfalse;
 }

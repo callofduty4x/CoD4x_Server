@@ -51,9 +51,3 @@ void AddRedirectLocations(void);
 qboolean __cdecl Com_LoadDvarsFromBuffer(const char **inputbuf, unsigned int length, const char *data_p, const char *filename);
 
 #endif
-
-/*
-void __cdecl HECmd_SetText)( scr_entref_t );
-tHECmd_SetText HECmd_SetText = (tHECmd_SetText)(0x808f7f6);
-*/
-

@@ -42,6 +42,10 @@
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
 
+static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
+
+char* (*Scr_GetLocalizedString)(unsigned int arg) =
+		(char*(*)(unsigned int))0x0816541C;
 
 /*
 ============
@@ -101,6 +105,38 @@ void PlayerCmd_GetSteamID(scr_entref_t arg){
     Scr_AddString(str);
 }
 
+void PlayerCmd_GetSteamID64(scr_entref_t arg){
+
+    gentity_t* gentity;
+    int entityNum = 0;
+    uint64_t steamid;
+    mvabuf;
+    char str[128];
+
+    if(HIWORD(arg)){
+
+        Scr_ObjectError("Not an entity");
+
+    }else{
+
+        entityNum = LOWORD(arg);
+        gentity = &g_entities[entityNum];
+
+        if(!gentity->client){
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        }
+    }
+    if(Scr_GetNumParam()){
+        Scr_Error("Usage: self getsteamid()\n");
+    }
+
+    steamid = svs.clients[entityNum].steamid;
+
+    SV_SApiSteamIDTo64String(steamid, str, sizeof(str));
+
+    Scr_AddString(str);
+}
+
 /*
 ============
 PlayerCmd_GetPlayerID
@@ -138,6 +174,47 @@ void PlayerCmd_GetPlayerID(scr_entref_t arg){
     playerid = svs.clients[entityNum].playerid;
 
     SV_SApiSteamIDToString(playerid, str, sizeof(str));
+
+    Scr_AddString(str);
+}
+
+/*
+============
+PlayerCmd_GetPlayerID
+
+Returns the players playerid in 64Bit format as string.
+Usage: string = self getplayerid();
+============
+*/
+
+void PlayerCmd_GetPlayerID64(scr_entref_t arg){
+
+    gentity_t* gentity;
+    int entityNum = 0;
+    uint64_t playerid;
+    mvabuf;
+    char str[128];
+
+    if(HIWORD(arg)){
+
+        Scr_ObjectError("Not an entity");
+
+    }else{
+
+        entityNum = LOWORD(arg);
+        gentity = &g_entities[entityNum];
+
+        if(!gentity->client){
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        }
+    }
+    if(Scr_GetNumParam()){
+        Scr_Error("Usage: self getplayerid()\n");
+    }
+
+    playerid = svs.clients[entityNum].playerid;
+
+    SV_SApiSteamIDTo64String(playerid, str, sizeof(str));
 
     Scr_AddString(str);
 }
@@ -2130,43 +2207,82 @@ void GScr_NewClientHudElem(){
     Scr_Error("GScr_NewHudElem: Exceeded limit of Hudelems");
 }
 
+static qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
+{
+	int i = 0;
+	mvabuf;
 
-void HECmd_SetText(scr_entref_t entnum){
+	/* Index not set + fast return from function */
+	if ( !index )
+		return qfalse;
 
-    char buffer[1024];
+	/* Overflow protection */
+	if ( index >= MAX_CONFIGSTRINGS )
+	{
+		Scr_Error(va("localized configstring index must be between 0 and %d",
+					 MAX_CONFIGSTRINGS - 1));
+		return qfalse;
+	}
 
-    if(HIWORD(entnum) != 1)
-    {
-        Scr_ObjectError("G_HudSetText: Not a hud element");
-        return;
-    }
+	/* Better not to free precached strings... + fast return */
+	if( g_isLocStringPrecached[index] == qtrue )
+		return qfalse;
 
-    game_hudelem_t* element = &g_hudelems[LOWORD(entnum)];
+	/* Check all script hud elements if index in use SLOOOOW :C */
+	while(i < 1024)
+	{
+		game_hudelem_t* elem = &g_hudelems[i];
+		if (elem->hudTextConfigStringIndex &&
+		    elem->hudTextConfigStringIndex == index)
+			return qfalse;
+		++i;
+	}
 
-    element->var_14 = 0;
-    element->var_15 = 0;
-    element->var_16 = 0;
+	return qtrue;
+}
 
-    element->movex = 0;
-    element->movey = 0;
-    element->movealign = 0;
-    element->movescralign = 0;
+void HECmd_SetText(scr_entref_t entnum)
+{
+	char buffer[1024];
 
-    element->var_18 = 0;
-    element->var_19 = 0;
-    element->var_20 = 0;
-    element->var_21 = 0;
+	if (HIWORD(entnum) != 1)
+	{
+		Scr_ObjectError("G_HudSetText: Not a hud element");
+		return;
+	}
 
-    element->var_28 = 0;
-    element->var_29 = 0;
-    element->var_30 = 0;
+	game_hudelem_t *element = &g_hudelems[LOWORD(entnum)];
 
-    element->hudTextConfigStringIndex = 0;
+	element->var_14 = 0;
+	element->var_15 = 0;
+	element->var_16 = 0;
 
-    Scr_ConstructMessageString(0,0, "Hud Elem String", buffer, sizeof(buffer));
-    element->inuse = qtrue;
-    element->hudTextConfigStringIndex = G_LocalizedStringIndex(buffer);
+	element->movex = 0;
+	element->movey = 0;
+	element->movealign = 0;
+	element->movescralign = 0;
 
+	element->var_18 = 0;
+	element->var_19 = 0;
+	element->var_20 = 0;
+	element->var_21 = 0;
+
+	element->var_28 = 0;
+	element->var_29 = 0;
+	element->var_30 = 0;
+
+	int cs_index = element->hudTextConfigStringIndex;
+
+	/* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
+	element->hudTextConfigStringIndex = 0;
+
+	/* Attempt to avoid CS overflow using "SetText()" */
+	if (Scr_CanFreeLocalizedConfigString(cs_index))
+		SV_SetConfigstring(cs_index + CS_LOCALIZEDSTRINGS, "");
+
+	Scr_ConstructMessageString(0,0, "Hud Elem String", buffer, sizeof(buffer));
+	element->inuse = qtrue;
+	element->hudTextConfigStringIndex = G_LocalizedStringIndex(buffer);
 }
 
 void GScr_MakeCvarServerInfo(void)
@@ -2338,6 +2454,19 @@ void  GScr_GetCvar()
   Scr_AddString(stringval);
 }
 
+void GScr_IsCvarDefined()
+{
+    const char * var_name;
+    qboolean defined;
+
+    if(Scr_GetNumParam() != 1)
+	Scr_Error("Usage: IsCvarDefined <cvarname>");
+
+    var_name = Scr_GetString(0);
+    defined = Cvar_IsDefined(var_name); //@florczakraf Please pay attention about critical sections. I am not sure if direct access is safe as you used it.
+
+    Scr_AddBool( defined );
+}
 
 void GScr_ScriptCommandCB()
 {
@@ -2808,6 +2937,151 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
 	Scr_AddInt(cl->clFPS);
+}
+
+void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
+{
+    gentity_t* gentity;
+    int entityNum = 0;
+    mvabuf;
+
+    if(HIWORD(arg)){
+        Scr_ObjectError("Not an entity");
+    }else{
+        entityNum = LOWORD(arg);
+        gentity = &g_entities[entityNum];
+
+        if(!gentity->client){
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        }
+    }
+    if(Scr_GetNumParam()){
+        Scr_Error("Usage: self getSpectatorClient()\n");
+    }
+
+    // Player isn't spectating anyone.
+    if(gentity->client->spectatorClient == -1) {
+        Scr_AddUndefined();
+    }
+    else {
+        Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);
+    }
+}
+
+static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)
+{
+  char sidstring[128], gidstring[128];
+  uint32_t romaddress = (reference >> 32) & 0xffffffff;
+  uint32_t oldserverid = reference & 0xffffffff;
+
+  uint32_t currentsvbaseid = sv_serverid->integer & 0xffffff00;
+
+  if(oldserverid != currentsvbaseid || clientnum < 0 || clientnum >= sv_maxclients->integer)
+  {
+    return; //Server restarted or changed game/map --> VM state has changed
+  }
+
+  Scr_AddBool(m_bOfficer);
+
+  Scr_AddBool(m_bMember);
+
+  SV_SApiSteamIDTo64String(groupid, gidstring, sizeof(gidstring));
+  Scr_AddString(gidstring);
+
+  SV_SApiSteamIDTo64String(steamid, sidstring, sizeof(sidstring));
+  Scr_AddString(sidstring);
+
+  unsigned short threadid = Scr_ExecEntThread(&g_entities[clientnum], romaddress, 4);
+  Scr_FreeThread( threadid );
+}
+
+void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg)
+{
+  gentity_t* gentity;
+  int entityNum = 0;
+  mvabuf;
+
+  if(HIWORD(arg)){
+      Scr_ObjectError("Not an entity");
+  }else{
+      entityNum = LOWORD(arg);
+      gentity = &g_entities[entityNum];
+
+      if(!gentity->client){
+          Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+      }
+  }
+
+	if ( Scr_GetNumParam() != 2 )
+	{
+		Scr_Error("Usage: self steamGroupMembershipQuery(<steamgroupid>, <::callbackfunction(<sid>, <gid>, <member>, <officer>)>)");
+		return;
+	}
+
+  const char* sgid = Scr_GetString(0);
+  uint64_t gid = SV_SApiStringToID(sgid);
+  uint32_t vmromaddress = Scr_GetFunc(1);
+
+  if(gid == 0 || vmromaddress == 0)
+  {
+    Scr_AddBool(qfalse);
+    return;
+  }
+
+  uint32_t serverbaseid = sv_serverid->integer & 0xffffff00;
+  uint64_t reference = ((uint64_t)vmromaddress << 32) | (uint64_t)serverbaseid;
+
+  qboolean status = SV_SApiGetGroupMemberStatusByClientNum(entityNum, gid, reference, PlayerCmd_GetSteamGroupMembershipCallback);
+
+  Scr_AddBool(status);
+
+}
+
+void Scr_PrecacheString_f()
+{
+	char *locStrName = NULL;
+
+	if ( *(qboolean*)0x0837045C == qfalse )
+		Scr_Error("precacheString must be called before any wait statements "
+		          "in the gametype or level script\n");
+
+	locStrName = Scr_GetLocalizedString(0);
+	if ( locStrName[0] )
+		g_isLocStringPrecached[G_LocalizedStringIndex(locStrName)] = qtrue;
+}
+
+void Scr_Destroy_f(scr_entref_t hud_elem_num)
+{
+	if ( HIWORD(hud_elem_num) != 1 )
+	{
+		Scr_ObjectError("not a hud element");
+		return;
+	}
+
+	game_hudelem_t *hud_elem = &g_hudelems[LOWORD(hud_elem_num)];
+
+	int cs_index = hud_elem->hudTextConfigStringIndex;
+
+	/* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
+	hud_elem->hudTextConfigStringIndex = 0;
+
+	/* Keep CS clear if assigned using 'settext' script command */
+	if (Scr_CanFreeLocalizedConfigString(cs_index))
+		SV_SetConfigstring(CS_LOCALIZEDSTRINGS + cs_index, "");
+
+	Scr_FreeHudElem(hud_elem);
+	hud_elem->inuse = 0;
+}
+
+void Scr_IsArray_f()
+{
+	if(Scr_GetNumParam() != 1)
+	{
+		Scr_Error("usage: isArray(<variable>)");
+		return;
+	}
+
+	Scr_AddBool(Scr_GetType(0) == 1 ? qtrue : qfalse);
 }
 
 /* PrintModelBonesInfo

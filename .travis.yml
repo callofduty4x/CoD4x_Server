@@ -5,6 +5,15 @@ branches:
    - master
 
 before_install:
+  # hack for broken package, https://github.com/travis-ci/travis-ci/issues/6588
+  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ main restricted'"
+  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ universe'"
+  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ multiverse'"
+  - "sudo add-apt-repository http://archive.ubuntu.com/ubuntu/"
+  - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ universe'"
+  - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ multiverse'"
+  - "sudo apt-get -qq update"
+
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
@@ -13,6 +22,9 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386
 script:
+  - TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT)
+  - echo $TRAVIS_TAG
+#  - RES=$([ -z "$TRAVIS_TAG" ] && echo $TRAVIS_TAG)
   - cd src/tomcrypt
   - ./compile_linux.sh
   - cd ../mbedtls
@@ -27,5 +39,5 @@ deploy:
   file: ./bin/cod4x18_dedrun
   on:
     tags: true
-#    all_branches: true
+    #condition: "$DODEPLOY = YES"
     #repo: D4edalus/CoD4x1.8_Server_Pub

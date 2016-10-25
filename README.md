@@ -1,4 +1,4 @@
-# CoD4X Server [![Build Status](https://travis-ci.org/D4edalus/CoD4x_Server.svg?branch=master)](https://travis-ci.org/D4edalus/CoD4x_Server) [![Build status](https://ci.appveyor.com/api/projects/status/wg6kfte0o8jmx7ak?svg=true)](https://ci.appveyor.com/project/D4edalus/cod4x-server)
+# CoD4X Server [![Build Status](https://travis-ci.org/callofduty4x/CoD4x_Server.svg?branch=master)](https://travis-ci.org/callofduty4x/CoD4x_Server) [![Build status](https://ci.appveyor.com/api/projects/status/oalrrpp4j49iqdgy?svg=true)](https://ci.appveyor.com/project/D4edalus/cod4x-server)
 Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke  installation of the proprietary Cod4X client to players joining the server using the Cod4X servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
 
 ## The most prominent features are:
@@ -15,7 +15,7 @@ The Cod4X client update is only available for windows.
 
 ## Setting up a Call of Duty 4 server with Cod4x 1.8
 [Pre-compiled binaries Linux](https://cod4x.me/downloads/cod4x_server-linux.zip)
-
+-
 [Pre-compiled binaries Windows](https://cod4x.me/downloads/cod4x_server-windows.zip)
 
 You also require the base game to run a server. Copy every .iwd file in `cod4directory/main/` to `serverdirectory/main/`.
@@ -26,6 +26,7 @@ Now you can run the server with `./cod4x18_dedrun +map mp_killhouse`. If you are
 Hint: you probably want to run the server on a separate user. Please don't run the server (any server) as root. That would be a major security threat.
 
 A more detailed server tutorial is available on [our wiki](https://github.com/D4edalus/CoD4x_Server/wiki/Server-setup).
+[Also read about new banlists here](https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes)
 
 ## Compiling
 To compile Cod4X from source you require the following tools:

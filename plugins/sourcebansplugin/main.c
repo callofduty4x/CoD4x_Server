@@ -350,6 +350,7 @@ PCL int OnInit(){	// Funciton called on server initiation
 
     char data[8192];
     char portstr[6];
+    char sbuf[256];
     int len, code;
     httpPostVals_t values;
 
@@ -371,7 +372,9 @@ PCL int OnInit(){	// Funciton called on server initiation
     Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "serverport", portstr);
     Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "gamename", "Call of Duty 4 - Modern Warfare X18");
     Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "gamedir", "cod4");
-    Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "rcon", Plugin_Cvar_VariableString("rcon_password"));
+    
+    Plugin_Cvar_VariableStringBuffer("rcon_password", sbuf, sizeof(sbuf));
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(data, sizeof(data), "rcon", sbuf);
 
     len = sizeof(data);
     code = HTTP_DoBlockingQuery(banlisthandlerurl->string, data, &len);

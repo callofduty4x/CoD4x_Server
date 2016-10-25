@@ -1687,3 +1687,21 @@ qboolean strToVect(const char* string, float *vect, int dim)
 
     return qtrue;
 }
+
+
+int Q_strLF2CRLF(const char* input, char* output, int outputlimit )
+{
+	int i, y;
+	for(i = 0, y = 0; input[i] && y < outputlimit -1; ++i, ++y)
+	{
+			//turning \n for windows to \r\n
+			if(input[i] == '\n')
+			{
+				output[y] = '\r';
+				++y;
+			}
+			output[y] = input[i];
+	}
+	output[y] = 0;
+	return y;
+}

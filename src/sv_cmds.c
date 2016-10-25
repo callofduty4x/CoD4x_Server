@@ -757,12 +757,12 @@ static void SV_Status_f( void ) {
       } while(j < l);
 
 
-      Com_Printf ("%s", cl->shortname);
+      Com_Printf ("%s", cl->name);
 
       // TTimo adding a ^7 to reset the color
       // NOTE: colored names in status breaks the padding (WONTFIX)
       Com_Printf ("^7");
-      l = 33 - Q_PrintStrlen(cl->shortname);
+      l = 33 - Q_PrintStrlen(cl->name);
       j = 0;
 
       do
@@ -1318,7 +1318,7 @@ static void Cmd_KickPlayer_f()
 		}
 	}
 	else // Kick only one player.
-	{		
+	{
 		cl = SV_Cmd_GetPlayerByHandle();
 
 		if(!cl.cl)
@@ -1583,8 +1583,8 @@ static void SV_Record_f( void ) {
 	}else{
     SV_SApiSteamIDTo64String(cl.cl->playerid, psti, sizeof(psti));
     Com_sprintf(name, sizeof(name), "demo_%s_", psti);
+    SV_RecordClient(cl.cl, name);
   }
-	SV_RecordClient(cl.cl, name);
 }
 
 
