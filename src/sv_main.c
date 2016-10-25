@@ -44,6 +44,8 @@
 #include "hl2rcon.h"
 #include "crc.h"
 #include "sv_bots.h"
+#include "q_math.h"
+#include "math.h"
 
 #include "sapi.h"
 
@@ -3714,29 +3716,43 @@ void SV_SetConfig(int start, int max, int bit)
 void SV_BotUserMove(client_t *client)
 {
 	signed int clientnum;
-	usercmd_t ucmd;
+	usercmd_t ucmd = { 0 };
+	vec3_t move_angle;
+	vec3_t move_pos;
+	float pitch_angle;
+	gentity_t *ent;
 	int i;
 
 	if(!client->gentity)
 		return;
   
-	memset(&ucmd, 0, sizeof(ucmd));
+	//memset(&ucmd, 0, sizeof(ucmd));
   
 	clientnum = client - svs.clients;
 	ucmd.serverTime = svs.time;
 
 	playerState_t* ps = SV_GameClientNum(clientnum);
 	
-	ucmd.weapon = *(byte*)&ps->weapon;
+	ucmd.weapon = (byte)(ps->weapon & 0xFF);
 
 	if ( level.clients[clientnum].sess.archiveTime == 0 )
 	{
-
 		ucmd.buttons = BotMovement[clientnum].buttons;
-		ucmd.forwardmove = BotMovement[clientnum].forwardMove;
-		ucmd.rightmove = BotMovement[clientnum].rightMove;
+        ent = VM_GetGEntityForNum(clientnum);
+        /* Apply movement. */
+        if (BotMovement[clientnum].doMove)
+        {
+            /* forwardmove == y */
+            /* rightmove == x */
+            VectorSubtract(BotMovement[clientnum].desiredPosition, ent->r.currentOrigin, move_pos);
+            Math_VectorToAngles(move_pos, move_angle);
+            pitch_angle = move_angle[1] - ps->viewangles[1];
 
-		gentity_t *ent = VM_GetGEntityForNum(clientnum);
+            ucmd.forwardmove = 127 * sin(pitch_angle);
+            ucmd.rightmove = 127 * cos(pitch_angle);
+            BotMovement[clientnum].doMove = math_vecdistance(BotMovement[clientnum].desiredPosition, ent->r.currentOrigin) > 10 ? 1 : 0;
+        }
+
 		VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
 
 		if(BotMovement[clientnum].rotIterCount)

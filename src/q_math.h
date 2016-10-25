@@ -78,6 +78,7 @@ int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *or
 int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
 // 0x081921A2
 void Math_VectorToAngles(vec3_t vector, vec3_t angles);
+float math_vecdistance(vec3_t v1, vec3_t v2);
 
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001

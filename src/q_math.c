@@ -185,3 +185,10 @@ int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p ) {
 	return sides;
 }
 
+float math_vecdistance(vec3_t v1, vec3_t v2)
+{
+    vec3_t diff;
+    /* ret len(v1 - v2) */
+    VectorSubtract(v2, v1, diff);
+    return sqrt(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+}
