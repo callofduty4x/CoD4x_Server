@@ -3750,7 +3750,8 @@ void SV_BotUserMove(client_t *client)
 
             ucmd.forwardmove = 127 * sin(pitch_angle);
             ucmd.rightmove = 127 * cos(pitch_angle);
-            BotMovement[clientnum].doMove = math_vecdistance(BotMovement[clientnum].desiredPosition, ent->r.currentOrigin) > 10 ? 1 : 0;
+            BotMovement[clientnum].doMove = math_vecdistance2d(BotMovement[clientnum].desiredPosition, ent->r.currentOrigin) > 5.0 ? 1 : 0;
+            Com_Printf("bot movement: %3d, %3d, do move? %1d\n", ucmd.forwardmove, ucmd.rightmove, BotMovement[clientnum].doMove);
         }
 
 		VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
@@ -3767,7 +3768,6 @@ void SV_BotUserMove(client_t *client)
 					ucmd.angles[i] -= 0xFFFF;
 			}
 		}
-		//ucmd.angles[0] = (unsigned int)rand() % 0xFFFF;
 	}
 	client->deltaMessage = client->netchan.outgoingSequence - 1;
 	SV_ClientThink(client, &ucmd);

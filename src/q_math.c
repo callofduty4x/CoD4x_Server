@@ -192,3 +192,11 @@ float math_vecdistance(vec3_t v1, vec3_t v2)
     VectorSubtract(v2, v1, diff);
     return sqrt(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
 }
+
+float math_vecdistance2d(vec3_t v1, vec3_t v2)
+{
+    vec3_t diff;
+    /* ret len(v1 - v2) */
+    VectorSubtract(v2, v1, diff);
+    return sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+}
