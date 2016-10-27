@@ -185,18 +185,140 @@ int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p ) {
 	return sides;
 }
 
-float math_vecdistance(vec3_t v1, vec3_t v2)
+/* to=from */
+void vec2_copy(vec2_t to, vec2_t from)
 {
-    vec3_t diff;
-    /* ret len(v1 - v2) */
-    VectorSubtract(v2, v1, diff);
-    return sqrt(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+    to[0] = from[0];
+    to[1] = from[1];
 }
 
-float math_vecdistance2d(vec3_t v1, vec3_t v2)
+/* to += from */
+void vec2_add(vec2_t to, vec2_t from)
+{
+    to[0] += from[0];
+    to[1] += from[1];
+}
+
+/* to -= from */
+void vec2_substract(vec2_t to, vec2_t from)
+{
+    to[0] -= from[0];
+    to[1] -= from[1];
+}
+
+/* v * k */
+void vec2_multiply(vec2_t v, float k)
+{
+    v[0] *= k;
+    v[1] *= k;
+}
+
+/* v / k */
+void vec2_divide(vec2_t v, float k)
+{
+    v[0] /= k;
+    v[1] /= k;
+}
+
+/* len(end-start) */
+float vec2_distance(vec2_t start, vec2_t end)
+{
+    //vec2_t diff;
+    float diff0 = end[0] - start[0];
+    float diff1 = end[1] - start[1];
+    return sqrtf(diff0*diff0 + diff1*diff1);
+}
+
+/* len(v) */
+float vec2_length(vec2_t v)
+{
+    return sqrtf(v[0]*v[0] + v[1]*v[1]);
+}
+
+/* nml(v) */
+void vec2_normalize(vec2_t v)
+{
+    float len = vec2_length(v);
+    v[0] /= len;
+    v[1] /= len;
+}
+
+/* Floor components of v */
+void vec2_floor(vec2_t v)
+{
+    v[0] = floorf(v[0]);
+    v[1] = floorf(v[1]);
+}
+
+/* to = from */
+void vec3_copy(vec3_t to, vec3_t from)
+{
+    to[0] = from[0];
+    to[1] = from[1];
+    to[2] = from[2];
+}
+
+/* to += from */
+void vec3_add(vec3_t to, vec3_t from)
+{
+    to[0] += from[0];
+    to[1] += from[1];
+    to[2] += from[2];
+}
+
+/* to -= from */
+void vec3_substract(vec3_t to, vec3_t from)
+{
+    to[0] -= from[0];
+    to[1] -= from[1];
+    to[2] -= from[2];
+}
+
+/* v * k */
+void vec3_multiply(vec3_t v, float k)
+{
+    v[0] *= k;
+    v[1] *= k;
+    v[2] *= k;
+}
+
+/* v/k */
+void vec3_divide(vec3_t v, float k)
+{
+    v[0] /= k;
+    v[1] /= k;
+    v[2] /= k;
+}
+
+/* len(end-start) */
+float vec3_distance(vec3_t start, vec3_t end)
 {
     vec3_t diff;
-    /* ret len(v1 - v2) */
-    VectorSubtract(v2, v1, diff);
-    return sqrt(diff[0] * diff[0] + diff[1] * diff[1]);
+    diff[0] = end[0] - start[0];
+    diff[1] = end[1] - start[1];
+    diff[2] = end[2] - start[2];
+    return sqrtf(diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2]);
+}
+
+/* len(v) */
+float vec3_length(vec3_t v)
+{
+    return sqrtf(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+}
+
+/* nml(v) */
+void vec3_normalize(vec3_t v)
+{
+    float len = vec3_length(v);
+    v[0] /= len;
+    v[1] /= len;
+    v[2] /= len;
+}
+
+/* Floor components of v */
+void vec3_floor(vec3_t v)
+{
+    v[0] = floorf(v[0]);
+    v[1] = floorf(v[1]);
+    v[2] = floorf(v[2]);
 }

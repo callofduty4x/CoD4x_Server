@@ -78,8 +78,26 @@ int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *or
 int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
 // 0x081921A2
 void Math_VectorToAngles(vec3_t vector, vec3_t angles);
-float math_vecdistance(vec3_t v1, vec3_t v2);
-float math_vecdistance2d(vec3_t v1, vec3_t v2);
+
+void  vec2_copy      (vec2_t to, vec2_t from);
+void  vec2_add       (vec2_t to, vec2_t from);
+void  vec2_substract (vec2_t to, vec2_t from);
+void  vec2_multiply  (vec2_t v, float k);
+void  vec2_divide    (vec2_t v, float k);
+float vec2_distance  (vec2_t start, vec2_t end);
+float vec2_length    (vec2_t v);
+void  vec2_normalize (vec2_t v);
+void  vec2_floor     (vec2_t v);
+
+void  vec3_copy      (vec3_t to, vec3_t from);
+void  vec3_add       (vec3_t to, vec3_t from);
+void  vec3_substract (vec3_t to, vec3_t from);
+void  vec3_multiply  (vec3_t v, float k);
+void  vec3_divide    (vec3_t v, float k);
+float vec3_distance  (vec3_t start, vec3_t end);
+float vec3_length    (vec3_t v);
+void  vec3_normalize (vec3_t v);
+void  vec3_floor     (vec3_t v);
 
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001
