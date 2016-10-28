@@ -26,6 +26,7 @@
 #include "qcommon.h"
 #include "filesystem.h"
 #include "sys_thread.h"
+#include "sys_main.h"
 
 #include <stdarg.h>
 #include <time.h>
@@ -249,6 +250,8 @@ void Com_DPrintLogfile( const char *msg )
 	    {
 #ifdef _WIN32
 				char outstring[2* MAXPRINTMSG];
+				Com_sprintf(outstring, sizeof(outstring), "Time=%ud ", Sys_Milliseconds());
+				FS_Write( outstring, strlen(outstring), debuglogfile );
 				int stringlen = Q_strLF2CRLF(msg, outstring, sizeof(outstring) );
 				FS_Write( outstring, stringlen, debuglogfile );
 #else
