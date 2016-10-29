@@ -30,128 +30,204 @@ const BotAction BotActions[] =
     { "ads",        KEY_MASK_ADS_MODE   },
     { "holdbreath", KEY_MASK_HOLDBREATH }
 };
-
+/*
+==================
+Bot_CalculateRotationForOrigin
+==================
+*/
 static void Bot_CalculateRotationForOrigin(gentity_t* bot, vec3_t origin, float duration)
 {
+    int bot_num = bot->s.clientNum;
     int i;
-    vec3_t viewOrigin    = {0, 0, 0};
-    vec3_t rotAngle      = {0, 0, 0};
-    vec3_t fixedEntAngle = {0, 0, 0};
+    vec3_t view;
+    vec3_t rot;
+    vec3_t bot_view;
 
-    g_botai[bot->s.clientNum].rotIterCount = (int)(duration * sv_fps->integer);
+    g_botai[bot_num].rotIterCount = (int)(duration * sv_fps->integer);
 
-    // Calculate current view origin: ent.origin + stance_z_addition: 11, 40, 60. Should change to 'tag_eye' origin?
-    VectorCopy(bot->r.currentOrigin, viewOrigin);
+    /* Calculate current view origin: ent.origin + stance_z_addition: */
+    /*  11, 40, 60. Should change to 'tag_eye' origin? */
+    vec3_copy(view, bot->r.currentOrigin);
 
-    // Values are close enough and used in many scripts with 'bullettrace' script function.
-    if(bot->client->ps.pm_flags & 1)      // Prone
-        viewOrigin[2] += 11.0;
-    else if(bot->client->ps.pm_flags & 2) // Crouch
-        viewOrigin[2] += 40.0;
-    else                                  // Stand
-        viewOrigin[2] += 60.0;
+    /* Values are close enough and used in many scripts with 'bullettrace' */
+    /*  script function. */
+    if(bot->client->ps.pm_flags & 1)      /* Prone. */
+        view[2] += 11.0;
+    else if(bot->client->ps.pm_flags & 2) /* Crouch. */
+        view[2] += 40.0;
+    else                                  /* Stand. */
+        view[2] += 60.0;
 
-    VectorSubtract(origin, viewOrigin, origin);
-    Math_VectorToAngles(origin, rotAngle);            // [0, 2Pi].
-    VectorCopy(bot->client->ps.viewangles, fixedEntAngle);  // [-Pi; Pi].
+    vec3_substract(origin, view);
+    Math_VectorToAngles(origin, rot);                /* [0, 2Pi]. */
+    vec3_copy(bot_view, bot->client->ps.viewangles); /* [-Pi; Pi]. */
 
-    // Pitch and yaw calc.
+    /* Pitch and yaw calc. */
     for(i = 0; i < 2; ++i)
     {
-        if(fixedEntAngle[i] < 0)
-            fixedEntAngle[i] = 360.0 + fixedEntAngle[i];        // [0; 2Pi].
-        rotAngle[i] -= fixedEntAngle[i];
+        if(bot_view[i] < 0)
+            bot_view[i] = 360.0 + bot_view[i];       /* [0; 2Pi]. */
+        rot[i] -= bot_view[i];
 
-        if(rotAngle[i] > 180.0)
-            rotAngle[i] -= 360.0; // Instead of [180; 360) will be [-180; 0). For 315.0 will be -45.0;
-        else if(rotAngle[i] < -180.0)
-            rotAngle[i] += 360.0; // Instead of [-360.0; -180.0) will be [0; 180). For -315.0 will be 45.0;
+        /* Instead of [180; 360) will be [-180; 0). */
+        /* For 315.0 will be -45.0. */
+        if(rot[i] > 180.0)
+            rot[i] -= 360.0;
+        /* Instead of [-360.0; -180.0) will be [0; 180). */
+        /* For -315.0 will be 45.0. */
+        else if(rot[i] < -180.0)
+            rot[i] += 360.0;
 
-        g_botai[bot->s.clientNum].rotFrac[i] = (short int)(((rotAngle[i]/360.0*65535) / g_botai[bot->s.clientNum].rotIterCount));
+        g_botai[bot_num].rotFrac[i] = (short int)(((rot[i]/360.0*65535) /
+                                      g_botai[bot->s.clientNum].rotIterCount));
     }
-    // Roll will be always 0.
-    g_botai[bot->s.clientNum].rotFrac[2] = 0.0;
+    /* Roll will be always 0. */
+    g_botai[bot_num].rotFrac[2] = 0.0;
 }
+/*
+==================
+scr_botmoveto
+==================
+*/
+/* self botmoveto(<vec pos>); */
+static void scr_botmoveto(scr_entref_t ent_num)
+{
+    vec3_t moveTo;
+    gentity_t* ent = VM_GetGEntityForNum(ent_num);
 
-static void Scr_BotAction_f(scr_entref_t entNum)
+    if (Scr_GetNumParam() == 1)
+    {
+        if (ent)
+        {
+            if (ent->client)
+            {
+                Scr_GetVector(0, moveTo);
+                vec2_copy(g_botai[ent_num].moveTo, moveTo);
+                g_botai[ent_num].doMove = 1;
+            }
+            else
+                Scr_ObjectError("Not a client.");
+        }
+        else
+            Scr_ObjectError("Not an entity.");
+    }
+    else
+        Scr_Error("Usage: bot botMoveTo(<vec3 position>);");
+}
+/*
+==================
+scr_botlookat
+==================
+*/
+/* bot botLookAt(<vec origin>, [float duration]); */
+static void scr_botlookat(scr_entref_t ent_num)
+{
+    vec3_t look_at;
+    gentity_t *bot = VM_GetGEntityForNum(ent_num);
+    float minDuration;
+    float duration;
+    int argc;
+    mvabuf;
+
+    argc = Scr_GetNumParam();
+    minDuration = 1.0/sv_fps->integer; /* 1 server frame */
+    duration = minDuration;
+
+    if(!bot)
+        Scr_ObjectError("Not an entity");
+
+    if(!bot->client)
+        Scr_ObjectError("Not a client");
+
+    if (argc == 1 || argc == 2)
+        Scr_GetVector(0, look_at);
+    else
+        Scr_Error("Usage: <bot> botLookAt(<origin>, [duration]);");
+
+    if (argc == 2)
+        duration = Scr_GetFloat(1);
+
+    if(duration >= minDuration)
+        Bot_CalculateRotationForOrigin(bot, look_at, duration);
+    else
+        Scr_ParamError(1, va("min duration must be %.4f", minDuration));
+}
+/*
+==================
+scr_botstop
+==================
+*/
+/* bot botStop(); */
+static void scr_botstop(scr_entref_t ent_num)
+{
+    gentity_t *bot = VM_GetGEntityForNum(ent_num);
+
+    if (!bot)
+        Scr_ObjectError("Not an entity.");
+
+    if(!bot->client)
+        Scr_ObjectError("Not a client.");
+
+    if(Scr_GetNumParam() != 0)
+        Scr_Error("Usage: <bot> botStop();");
+
+    g_botai[ent_num].buttons = 0;
+    g_botai[ent_num].doMove = 0;
+    g_botai[ent_num].rotIterCount = 0;
+    /*g_botai[ent_num].rotFrac[0] = 0;
+    g_botai[ent_num].rotFrac[1] = 0;*/
+}
+/*
+==================
+scr_botaction
+==================
+*/
+/* bot botAction(<str action>); */
+static void scr_botaction(scr_entref_t ent_num)
 {
     int i;
-    int argc = Scr_GetNumParam();
-    if(argc != 1)
-    {
-        Scr_Error("Usage: <bot> botDoAction(<action>);");
-        return;
-    }
+    int argc;
+    gentity_t *bot;
+    char* action;
+    qboolean key_found;
+    char buffer[1024];
+    mvabuf;
 
-    if(!VM_GetGClientForEntityNumber(entNum))
-    {
-        Scr_ObjectError("not a client");
-        return;
-    }
+    bot = VM_GetGEntityForNum(ent_num);
+    if (!bot)
+        Scr_Error("Not an entity.");
 
-    char* command = Scr_GetString(0);
-    byte sign = command[0];
-    char* action = &command[1];
+    if (!bot->client)
+        Scr_Error("Not a client.");
 
-    if(sign != '+' && sign != '-')
-    {
-        Scr_ParamError(0, "sign for action must be '+' or '-'");
-        return;
-    }
+    argc = Scr_GetNumParam();
+    if (argc != 1)
+        Scr_Error("Usage: <bot> botAction(<action>);");
 
-    qboolean keyFound = qfalse;
-#if 0
-    if(!Q_stricmp(action, "forward"))
+    action = Scr_GetString(0);
+
+    if (action[0] != '+' && action[0] != '-')
+        Scr_ParamError(0, "Sign for action must be '+' or '-'.");
+
+    key_found = qfalse;
+    for (i = 0; i < sizeof(BotActions) / sizeof(BotAction); ++i)
     {
-        keyFound = qtrue;
-        if(sign == '+')
-            g_botai[entNum].forwardMove = KEY_MASK_FORWARD;
-        else
-            g_botai[entNum].forwardMove = 0;
-    }
-    else if(!Q_stricmp(action, "back"))
-    {
-        keyFound = qtrue;
-        if(sign == '+')
-            g_botai[entNum].forwardMove = KEY_MASK_BACK;
-        else
-            g_botai[entNum].forwardMove = 0;
-    }
-    else if(!Q_stricmp(action, "moveleft"))
-    {
-        keyFound = qtrue;
-        if(sign == '+')
-            g_botai[entNum].rightMove = KEY_MASK_MOVELEFT;
-        else
-            g_botai[entNum].rightMove = 0;
-    }
-    else if(!Q_stricmp(action, "moveright"))
-    {
-        keyFound = qtrue;
-        if(sign == '+')
-            g_botai[entNum].rightMove = KEY_MASK_MOVERIGHT;
-        else
-            g_botai[entNum].rightMove = 0;
-    }
-#endif
-    for(i = 0; i < sizeof(BotActions) / sizeof(BotAction); ++i)
-    {
-        keyFound = qtrue;
-        if(!Q_stricmp(action, BotActions[i].action))
+        if (!Q_stricmp(&action[1], BotActions[i].action))
         {
-            if(sign == '+')
-                g_botai[entNum].buttons |= BotActions[i].key;
+            key_found = qtrue;
+            if (action[0] == '+')
+                g_botai[ent_num].buttons |= BotActions[i].key;
             else
-                g_botai[entNum].buttons &= ~(BotActions[i].key);
+                g_botai[ent_num].buttons &= ~(BotActions[i].key);
+
+            return;
         }
     }
 
-    if(!keyFound)
+    if (!key_found)
     {
-        char buffer[1024] = {'\0'};
-        mvabuf;
-
-        for(i = 0; i < sizeof(BotActions) / sizeof(BotAction); ++i)
+        buffer[0] = '\0';
+        for (i = 0; i < sizeof(BotActions) / sizeof(BotAction); ++i)
         {
             Q_strcat(buffer, 1024, " ");
             Q_strcat(buffer, 1024, BotActions[i].action);
@@ -159,212 +235,71 @@ static void Scr_BotAction_f(scr_entref_t entNum)
         Scr_ParamError(0, va("Unknown action. Must be one of:%s.", buffer));
     }
 }
-
-static void Scr_BotStopAllActions_f(scr_entref_t entNum)
+/*
+==================
+scr_botlookatplayer
+==================
+*/
+/* bot botLookAtPlayer(<ent target>, [str tag_name]); */
+static void scr_botlookatplayer(scr_entref_t ent_num)
 {
-    if(!VM_GetGClientForEntityNumber(entNum))
-    {
-        Scr_ObjectError("Not a client");
-        return;
-    }
-
-    if(Scr_GetNumParam() > 0)
-    {
-        Scr_Error("Usage: <bot> botStopAllActions();");
-        return;
-    }
-
-    Com_Memset(&g_botai[entNum], 0, sizeof(BotMovementInfo));
-}
-
-static void Scr_BotRotate_f(scr_entref_t entNum)
-{
-    vec3_t angle;
-    int i;
-    gentity_t *ent = VM_GetGEntityForNum(entNum);
+    gentity_t *bot;
+    gentity_t *target;
+    int argc;
+    vec3_t look_origin;
+    short tag_name;
     mvabuf;
 
-    if(!ent)
-    {
-        Scr_ObjectError("Not an entity");
-        return;
-    }
-    if(!ent->client)
-    {
-        Scr_ObjectError("Not a client");
-        return;
-    }
+    bot = VM_GetGEntityForNum(ent_num);
+    if(!bot)
+        Scr_ObjectError("Not an entity.");
 
-    if(Scr_GetNumParam() != 1 && Scr_GetNumParam() != 2)
-    {
-        Scr_Error("Usage: <bot> botRotate(<angles>, [duration]);");
-        return;
-    }
+    if(!bot->client)
+        Scr_ObjectError("Not a client.");
 
-    Scr_GetVector(0, (float*)&angle);
-    float minDuration = 1.0/sv_fps->integer;
-    float duration = minDuration; // 1 server frame.
-    if(Scr_GetNumParam() == 2)
-    {
-        duration = Scr_GetFloat(1);
-        if(duration < minDuration)
-        {
-            Scr_ParamError(1, va("minimal duration and its precision must be %.4f", minDuration));
-            return;
-        }
-    }
-    g_botai[entNum].rotIterCount = (int)(duration * sv_fps->integer);
-
-    for(i = 0; i < 3; ++i)
-        g_botai[entNum].rotFrac[i] = (short int)((angle[i]/360.0*65536) / g_botai[entNum].rotIterCount);
-}
-
-static void Scr_BotStopRotation_f(scr_entref_t entNum)
-{
-    if(!VM_GetGClientForEntityNumber(entNum))
-    {
-        Scr_ObjectError("Not a client");
-        return;
-    }
-
-    if(Scr_GetNumParam() != 0)
-    {
-        Scr_Error("Usage: <bot> botStopRotation();");
-        return;
-    }
-
-    Com_Memset(g_botai[entNum].rotFrac, 0, sizeof(g_botai[entNum].rotFrac));
-    g_botai[entNum].rotIterCount = 0;
-}
-
-static void Scr_BotLookAt_f(scr_entref_t entNum)
-{
-    vec3_t lookAtOrigin  = {0, 0, 0};
-    gentity_t *ent = VM_GetGEntityForNum(entNum);
-    mvabuf;
-
-    if(!ent)
-    {
-        Scr_ObjectError("Not an entity");
-        return;
-    }
-
-    if(!ent->client)
-    {
-        Scr_ObjectError("Not a client");
-        return;
-    }
-
-    if(Scr_GetNumParam() != 1 && Scr_GetNumParam() != 2)
-    {
-        Scr_Error("Usage: <bot> botLookAt(<origin>, [duration]);");
-        return;
-    }
-
-    float minDuration = 1.0/sv_fps->integer;
-    Scr_GetVector(0, (float*)&lookAtOrigin);
-    float duration = minDuration; // 1 server frame.
-    if(Scr_GetNumParam() == 2)
-    {
-        duration = Scr_GetFloat(1);
-        if(duration < minDuration)
-        {
-            Scr_ParamError(1, va("minimal duration and its precision must be %.4f", minDuration));
-            return;
-        }
-    }
-
-    Bot_CalculateRotationForOrigin(ent, lookAtOrigin, duration);
-}
-
-static void Scr_BotLookAtPlayer_f(scr_entref_t entNum)
-{
-    gentity_t *ent = VM_GetGEntityForNum(entNum);
-    vec3_t lookOrigin = {0, 0, 0};
-    vec3_t velocity   = {0, 0, 0};
-    mvabuf;
-
-    if(!ent)
-    {
-        Scr_ObjectError("Not an entity");
-        return;
-    }
-
-    if(!ent->client)
-    {
-        Scr_ObjectError("Not a client");
-        return;
-    }
-
-    if(Scr_GetNumParam() != 1 && Scr_GetNumParam() != 2)
-    {
+    argc = Scr_GetNumParam();
+    if(argc != 1 && argc != 2)
         Scr_Error("Usage: <bot> botLookAtPlayer(<player>, [tag_name]);");
-        return;
-    }
 
-    gentity_t* player = Scr_GetEntity(0);
-    if(!player)
-    {
+    target = Scr_GetEntity(0);
+    if(!target)
         Scr_ParamError(0, "Not an entity.");
-        return;
-    }
-    if(!player->client)
-    {
+
+    if(!target->client)
         Scr_ParamError(0, "Not a client.");
-        return;
-    }
 
-    short tagName = stringIndex.pelvis;
-    if(Scr_GetNumParam() == 2)
-        tagName = Scr_GetConstString(1);
+    tag_name = stringIndex.pelvis;
+    if(argc == 2)
+        tag_name = Scr_GetConstString(1);
 
-    if(!GetTagInfoForEntity(player, tagName, &DOBJ_PART_CACHE, qtrue))
-    {
-        Scr_ParamError(1, va("tag '%s' does not exist in model '%s' (or any attached submodels)", SL_ConvertToString(tagName), SL_ConvertToString(SV_GetModelConfigstringIndex(ent->model))));
-        return;
-    }
+    if(!GetTagInfoForEntity(target, tag_name, &DOBJ_PART_CACHE, qtrue))
+        Scr_ParamError(1, va("tag '%s' does not exist in model '%s' "
+                             "(or any attached submodels)",
+                             SL_ConvertToString(tag_name),
+                             SL_ConvertToString(SV_GetModelConfigstringIndex(
+                             bot->model))));
 
     // If velocity is units per second, then scale velocity by sec per frame...
     // ... and using sprint prediction multiplier
     float multiplier = 1.0;
-    if(player->client->ps.pm_flags == 32768) // is sprinting?
+    if(target->client->ps.pm_flags == 32768) // is sprinting?
         multiplier = 2.0;
 
-    VectorScale(player->client->ps.velocity, multiplier/sv_fps->integer, velocity);
-    VectorAdd(DOBJ_PART_CACHE.vectorSet.origin, velocity, lookOrigin);
-    Bot_CalculateRotationForOrigin(ent, lookOrigin, 1.0/sv_fps->integer);
-}
+    /* Get current target velocity. */
+    vec3_copy(look_origin, target->client->ps.velocity);
+    /* Divide it to represent units per frame. */
+    vec3_multiply(look_origin, multiplier/sv_fps->integer);
+    /* Add tag origin. */
+    vec3_add(look_origin, DOBJ_PART_CACHE.vectorSet.origin);
 
-void Scr_TestPrintButtons_f(scr_entref_t entNum)
-{
-    PrintDObjInfo(GetDObjForEntity(entNum));
-}
-
-static void scr_botmoveto(scr_entref_t entNum)
-{
-    /* self botmoveto(pos); */
-    vec3_t moveTo;
-
-    if (Scr_GetNumParam() != 1)
-    {
-        Scr_Error("Usage: bot botMoveTo(<vec3 position>);");
-        return;
-    }
-
-    Scr_GetVector(0, moveTo);
-    vec2_copy(g_botai[entNum].moveTo, moveTo);
-    g_botai[entNum].doMove = 1;
+    Bot_CalculateRotationForOrigin(bot, look_origin, 1.0/sv_fps->integer);
 }
 
 void Scr_AddBotsMovement()
 {
-    Scr_AddMethod("botAction", Scr_BotAction_f, qfalse);
-    Scr_AddMethod("botStopAllActions", Scr_BotStopAllActions_f, qfalse);
-    Scr_AddMethod("botRotate", Scr_BotRotate_f, qfalse);
-    Scr_AddMethod("botStopRotation", Scr_BotStopRotation_f, qfalse);
-    Scr_AddMethod("botLookAt", Scr_BotLookAt_f, qfalse);
-    Scr_AddMethod("botLookAtPlayer", Scr_BotLookAtPlayer_f, qfalse);
-    Scr_AddMethod("testPrintButtons", Scr_TestPrintButtons_f, qtrue);
-
-    Scr_AddMethod("botmoveto", scr_botmoveto, qfalse);
+    Scr_AddMethod("botmoveto",       scr_botmoveto,       qfalse);
+    Scr_AddMethod("botlookat",       scr_botlookat,       qfalse);
+    Scr_AddMethod("botstop",         scr_botstop,         qfalse);
+    Scr_AddMethod("botaction",       scr_botaction,       qfalse);
+    Scr_AddMethod("botlookatplayer", scr_botlookatplayer, qfalse);
 }

@@ -3717,16 +3717,12 @@ void SV_BotUserMove(client_t *client)
 {
     signed int num;
     usercmd_t ucmd = { 0 };
-    //	vec3_t move_angle;
     vec2_t move_pos;
-    //	float pitch_angle;
     gentity_t *ent;
     int i;
 
     if(!client->gentity)
         return;
-
-    //memset(&ucmd, 0, sizeof(ucmd));
 
     num = client - svs.clients;
     ucmd.serverTime = svs.time;
@@ -3762,10 +3758,13 @@ void SV_BotUserMove(client_t *client)
             /* Copy result to actual move command. */
             ucmd.forwardmove = ((int)move_pos[0]) & 0xFF;
             ucmd.leftmove    = ((int)move_pos[1]) & 0xFF;
+
             //Com_Printf("val: (%3d, %3d), distance: %f ", ucmd.forwardmove, ucmd.leftmove, distance);
-            Com_Printf("speed: (%d, %d)", ucmd.forwardmove, ucmd.leftmove);
+            //Com_Printf("speed: (%d, %d)", ucmd.forwardmove, ucmd.leftmove);
             //Com_Printf("origin: (%3.3f, %3.3f, %3.3f)", ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2]);
-            Com_Printf("\n");
+            //Com_Printf("\n");
+
+            /* Notify only once */
             if (!g_botai[num].doMove)
             {
                 Scr_Notify(ent, stringIndex.movedone, 0);
