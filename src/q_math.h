@@ -88,6 +88,8 @@ float vec2_distance  (vec2_t start, vec2_t end);
 float vec2_length    (vec2_t v);
 void  vec2_normalize (vec2_t v);
 void  vec2_floor     (vec2_t v);
+void  vec2_rotate    (vec2_t v, float pitch);
+float vec2_maxabs    (vec2_t v);
 
 void  vec3_copy      (vec3_t to, vec3_t from);
 void  vec3_add       (vec3_t to, vec3_t from);
@@ -98,6 +100,8 @@ float vec3_distance  (vec3_t start, vec3_t end);
 float vec3_length    (vec3_t v);
 void  vec3_normalize (vec3_t v);
 void  vec3_floor     (vec3_t v);
+/* void  vec3_rotate    (vec3_t v, float pitch, float yaw); */
+float vec3_maxabs    (vec3_t v);
 
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001

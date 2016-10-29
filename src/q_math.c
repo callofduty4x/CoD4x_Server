@@ -250,6 +250,30 @@ void vec2_floor(vec2_t v)
     v[1] = floorf(v[1]);
 }
 
+/* Rotate as radius-vector. */
+void vec2_rotate(vec2_t v, float pitch)
+{
+    vec2_t cp;
+    vec2_copy(cp, v);
+    float cosa = cosf(pitch*M_PI/180); /* In radians. */
+    float sina = sinf(pitch*M_PI/180);          /* In radians. */
+    v[0] = cp[0]*cosa - cp[1]*sina;
+    v[1] = cp[0]*sina + cp[1]*cosa;
+}
+
+/* Returns maximum absolute value of vector's components. */
+float vec2_maxabs(vec2_t v)
+{
+    vec2_t v_abs;
+    v_abs[0] = fabs(v[0]);
+    v_abs[1] = fabs(v[1]);
+
+    if (v_abs[0] > v_abs[1])
+        return v_abs[0];
+
+    return v_abs[1];
+}
+
 /* to = from */
 void vec3_copy(vec3_t to, vec3_t from)
 {
@@ -321,4 +345,22 @@ void vec3_floor(vec3_t v)
     v[0] = floorf(v[0]);
     v[1] = floorf(v[1]);
     v[2] = floorf(v[2]);
+}
+
+/* Returns maximum absolute value of vector's components. */
+float vec3_maxabs(vec3_t v)
+{
+    vec3_t v_abs;
+    v_abs[0] = fabs(v[0]);
+    v_abs[1] = fabs(v[1]);
+    v_abs[2] = fabs(v[2]);
+
+    float max_of_2 = v_abs[0];
+    if (v_abs[1] > v_abs[0])
+        max_of_2 = v_abs[1];
+
+    if (v_abs[2] > max_of_2)
+        return v_abs[2];
+
+    return max_of_2;
 }

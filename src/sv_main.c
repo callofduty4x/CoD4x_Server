@@ -3715,90 +3715,113 @@ void SV_SetConfig(int start, int max, int bit)
 
 void SV_BotUserMove(client_t *client)
 {
-	signed int clientnum;
-	usercmd_t ucmd = { 0 };
-	vec3_t move_angle;
-	vec3_t move_pos;
-	float pitch_angle;
-	gentity_t *ent;
-	int i;
+    signed int num;
+    usercmd_t ucmd = { 0 };
+    //	vec3_t move_angle;
+    vec2_t move_pos;
+    //	float pitch_angle;
+    gentity_t *ent;
+    int i;
 
-	if(!client->gentity)
-		return;
-  
-	//memset(&ucmd, 0, sizeof(ucmd));
-  
-	clientnum = client - svs.clients;
-	ucmd.serverTime = svs.time;
+    if(!client->gentity)
+        return;
 
-	playerState_t* ps = SV_GameClientNum(clientnum);
-	
-	ucmd.weapon = (byte)(ps->weapon & 0xFF);
+    //memset(&ucmd, 0, sizeof(ucmd));
 
-	if ( level.clients[clientnum].sess.archiveTime == 0 )
-	{
-		ucmd.buttons = BotMovement[clientnum].buttons;
-        ent = VM_GetGEntityForNum(clientnum);
+    num = client - svs.clients;
+    ucmd.serverTime = svs.time;
+
+    playerState_t* ps = SV_GameClientNum(num);
+
+    ucmd.weapon = (byte)(ps->weapon & 0xFF);
+
+    if ( level.clients[num].sess.archiveTime == 0 )
+    {
+        ucmd.buttons = g_botai[num].buttons;
+        ent = VM_GetGEntityForNum(num);
+
         /* Apply movement. */
-        if (BotMovement[clientnum].doMove)
+        if (g_botai[num].doMove)
         {
-            /* forwardmove == y */
-            /* rightmove == x */
-            VectorSubtract(BotMovement[clientnum].desiredPosition, ent->r.currentOrigin, move_pos);
-            Math_VectorToAngles(move_pos, move_angle);
-            pitch_angle = move_angle[1] - ps->viewangles[1];
+            /* forwardmove is moving on X axis. */
+            /* leftmove is moving on Y axis.    */
 
-            ucmd.forwardmove = 127 * sin(pitch_angle);
-            ucmd.rightmove = 127 * cos(pitch_angle);
-            BotMovement[clientnum].doMove = math_vecdistance2d(BotMovement[clientnum].desiredPosition, ent->r.currentOrigin) > 5.0 ? 1 : 0;
-            Com_Printf("bot movement: %3d, %3d, do move? %1d\n", ucmd.forwardmove, ucmd.rightmove, BotMovement[clientnum].doMove);
+            /* Calculate movement origin */
+            vec2_copy(move_pos, g_botai[num].moveTo);
+            vec2_substract(move_pos, ent->r.currentOrigin);
+            /* Com_Printf("move_pos: (%g, %g) ", move_pos[0], move_pos[1]); */
+            g_botai[num].doMove = vec2_length(move_pos) > 7.0 ? 1 : 0;
+            /* Rotate vector according to current client pitch angle. */
+            vec2_rotate(move_pos, -ent->r.currentAngles[1]);
+            /* Limit vector components to 127. */
+            vec2_multiply(move_pos, 127 / vec2_maxabs(move_pos));
+            /* Round components to integer values. */
+            vec2_floor(move_pos);
+            /* Invert second component to fit movement requirements. */
+            move_pos[1] = -move_pos[1];
+            /* Copy result to actual move command. */
+            ucmd.forwardmove = ((int)move_pos[0]) & 0xFF;
+            ucmd.leftmove    = ((int)move_pos[1]) & 0xFF;
+            //Com_Printf("val: (%3d, %3d), distance: %f ", ucmd.forwardmove, ucmd.leftmove, distance);
+            Com_Printf("speed: (%d, %d)", ucmd.forwardmove, ucmd.leftmove);
+            //Com_Printf("origin: (%3.3f, %3.3f, %3.3f)", ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2]);
+            Com_Printf("\n");
+            if (!g_botai[num].doMove)
+            {
+                Scr_Notify(ent, stringIndex.movedone, 0);
+                Com_DPrintf("Bot movement done at (%3.3f, %3.3f)\n",
+                            ent->r.currentOrigin[0], ent->r.currentOrigin[1]);
+            }
+
         }
 
-		VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
+        /* Apply rotation. */
+        VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
+        if(g_botai[num].rotIterCount)
+        {
+            --g_botai[num].rotIterCount;
+            for(i = 0; i < 3; ++i)
+            {
+                ucmd.angles[i] += g_botai[num].rotFrac[i];
+                if(ucmd.angles[i] < 0)
+                    ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
+                else if(ucmd.angles[i] > 0xFFFF)
+                    ucmd.angles[i] -= 0xFFFF;
+            }
+            /* Notify only once */
+            if (!g_botai[num].rotIterCount)
+                Scr_Notify(ent, stringIndex.rotatedone, 0);
+        }
+    }
 
-		if(BotMovement[clientnum].rotIterCount)
-		{
-			--BotMovement[clientnum].rotIterCount;
-			for(i = 0; i < 3; ++i)
-			{
-				ucmd.angles[i] += BotMovement[clientnum].rotFrac[i];
-				if(ucmd.angles[i] < 0)
-					ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
-				else if(ucmd.angles[i] > 0xFFFF)
-					ucmd.angles[i] -= 0xFFFF;
-			}
-		}
-	}
-	client->deltaMessage = client->netchan.outgoingSequence - 1;
-	SV_ClientThink(client, &ucmd);
+    client->deltaMessage = client->netchan.outgoingSequence - 1;
+    SV_ClientThink(client, &ucmd);
 }
 
 void SV_ResetSkeletonCache()
 {
-  ++sv.skelTimeStamp;
-  if ( !sv.skelTimeStamp )
-  {
-    sv.skelTimeStamp = 1;
-  }
-  sv.skelMemPos = 0;
-  g_sv_skel_memory_start = (char*)((unsigned int)&g_sv_skel_memory[15] & 0xFFFFFFF0);
+    ++sv.skelTimeStamp;
+    if ( !sv.skelTimeStamp )
+        sv.skelTimeStamp = 1;
+
+    sv.skelMemPos = 0;
+    g_sv_skel_memory_start = (char*)((unsigned int)&g_sv_skel_memory[15] & 0xFFFFFFF0);
 }
 
 
 void SV_UpdateBots()
 {
-	int i;
-	client_t* cl;
+    int i;
+    client_t* cl;
 
-	SV_ResetSkeletonCache();
+    SV_ResetSkeletonCache();
 
-	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
-	{
-		if(cl->state >= CS_CONNECTED && cl->netchan.remoteAddress.type == NA_BOT)
-		{
-			SV_BotUserMove(cl);
-		}
-	}
+    for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
+    {
+        if(cl->state >= CS_CONNECTED &&
+           cl->netchan.remoteAddress.type == NA_BOT)
+            SV_BotUserMove(cl);
+    }
 }
 
 

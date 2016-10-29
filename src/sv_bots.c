@@ -6,7 +6,7 @@
 #include "misc.h"
 #include "dobj_part_cache.h"
 
-BotMovementInfo_t BotMovement[MAX_CLIENTS];
+BotMovementInfo g_botai[MAX_CLIENTS];
 
 typedef struct BotAction
 {
@@ -38,7 +38,7 @@ static void Bot_CalculateRotationForOrigin(gentity_t* bot, vec3_t origin, float 
     vec3_t rotAngle      = {0, 0, 0};
     vec3_t fixedEntAngle = {0, 0, 0};
 
-    BotMovement[bot->s.clientNum].rotIterCount = (int)(duration * sv_fps->integer);
+    g_botai[bot->s.clientNum].rotIterCount = (int)(duration * sv_fps->integer);
 
     // Calculate current view origin: ent.origin + stance_z_addition: 11, 40, 60. Should change to 'tag_eye' origin?
     VectorCopy(bot->r.currentOrigin, viewOrigin);
@@ -67,10 +67,10 @@ static void Bot_CalculateRotationForOrigin(gentity_t* bot, vec3_t origin, float 
         else if(rotAngle[i] < -180.0)
             rotAngle[i] += 360.0; // Instead of [-360.0; -180.0) will be [0; 180). For -315.0 will be 45.0;
 
-        BotMovement[bot->s.clientNum].rotFrac[i] = (short int)(((rotAngle[i]/360.0*65535) / BotMovement[bot->s.clientNum].rotIterCount));
+        g_botai[bot->s.clientNum].rotFrac[i] = (short int)(((rotAngle[i]/360.0*65535) / g_botai[bot->s.clientNum].rotIterCount));
     }
     // Roll will be always 0.
-    BotMovement[bot->s.clientNum].rotFrac[2] = 0.0;
+    g_botai[bot->s.clientNum].rotFrac[2] = 0.0;
 }
 
 static void Scr_BotAction_f(scr_entref_t entNum)
@@ -100,49 +100,49 @@ static void Scr_BotAction_f(scr_entref_t entNum)
     }
 
     qboolean keyFound = qfalse;
-
+#if 0
     if(!Q_stricmp(action, "forward"))
     {
         keyFound = qtrue;
         if(sign == '+')
-            BotMovement[entNum].forwardMove = KEY_MASK_FORWARD;
+            g_botai[entNum].forwardMove = KEY_MASK_FORWARD;
         else
-            BotMovement[entNum].forwardMove = 0;
+            g_botai[entNum].forwardMove = 0;
     }
     else if(!Q_stricmp(action, "back"))
     {
         keyFound = qtrue;
         if(sign == '+')
-            BotMovement[entNum].forwardMove = KEY_MASK_BACK;
+            g_botai[entNum].forwardMove = KEY_MASK_BACK;
         else
-            BotMovement[entNum].forwardMove = 0;
+            g_botai[entNum].forwardMove = 0;
     }
     else if(!Q_stricmp(action, "moveleft"))
     {
         keyFound = qtrue;
         if(sign == '+')
-            BotMovement[entNum].rightMove = KEY_MASK_MOVELEFT;
+            g_botai[entNum].rightMove = KEY_MASK_MOVELEFT;
         else
-            BotMovement[entNum].rightMove = 0;
+            g_botai[entNum].rightMove = 0;
     }
     else if(!Q_stricmp(action, "moveright"))
     {
         keyFound = qtrue;
         if(sign == '+')
-            BotMovement[entNum].rightMove = KEY_MASK_MOVERIGHT;
+            g_botai[entNum].rightMove = KEY_MASK_MOVERIGHT;
         else
-            BotMovement[entNum].rightMove = 0;
+            g_botai[entNum].rightMove = 0;
     }
-
+#endif
     for(i = 0; i < sizeof(BotActions) / sizeof(BotAction); ++i)
     {
         keyFound = qtrue;
         if(!Q_stricmp(action, BotActions[i].action))
         {
             if(sign == '+')
-                BotMovement[entNum].buttons |= BotActions[i].key;
+                g_botai[entNum].buttons |= BotActions[i].key;
             else
-                BotMovement[entNum].buttons &= ~(BotActions[i].key);
+                g_botai[entNum].buttons &= ~(BotActions[i].key);
         }
     }
 
@@ -174,7 +174,7 @@ static void Scr_BotStopAllActions_f(scr_entref_t entNum)
         return;
     }
 
-    Com_Memset(&BotMovement[entNum], 0, sizeof(BotMovementInfo_t));
+    Com_Memset(&g_botai[entNum], 0, sizeof(BotMovementInfo));
 }
 
 static void Scr_BotRotate_f(scr_entref_t entNum)
@@ -213,10 +213,10 @@ static void Scr_BotRotate_f(scr_entref_t entNum)
             return;
         }
     }
-    BotMovement[entNum].rotIterCount = (int)(duration * sv_fps->integer);
+    g_botai[entNum].rotIterCount = (int)(duration * sv_fps->integer);
 
     for(i = 0; i < 3; ++i)
-        BotMovement[entNum].rotFrac[i] = (short int)((angle[i]/360.0*65536) / BotMovement[entNum].rotIterCount);
+        g_botai[entNum].rotFrac[i] = (short int)((angle[i]/360.0*65536) / g_botai[entNum].rotIterCount);
 }
 
 static void Scr_BotStopRotation_f(scr_entref_t entNum)
@@ -233,8 +233,8 @@ static void Scr_BotStopRotation_f(scr_entref_t entNum)
         return;
     }
 
-    Com_Memset(BotMovement[entNum].rotFrac, 0, sizeof(BotMovement[entNum].rotFrac));
-    BotMovement[entNum].rotIterCount = 0;
+    Com_Memset(g_botai[entNum].rotFrac, 0, sizeof(g_botai[entNum].rotFrac));
+    g_botai[entNum].rotIterCount = 0;
 }
 
 static void Scr_BotLookAt_f(scr_entref_t entNum)
@@ -343,14 +343,17 @@ void Scr_TestPrintButtons_f(scr_entref_t entNum)
 static void scr_botmoveto(scr_entref_t entNum)
 {
     /* self botmoveto(pos); */
+    vec3_t moveTo;
 
     if (Scr_GetNumParam() != 1)
     {
         Scr_Error("Usage: bot botMoveTo(<vec3 position>);");
         return;
     }
-    Scr_GetVector(0, BotMovement[entNum].desiredPosition);
-    BotMovement[entNum].doMove = 1;
+
+    Scr_GetVector(0, moveTo);
+    vec2_copy(g_botai[entNum].moveTo, moveTo);
+    g_botai[entNum].doMove = 1;
 }
 
 void Scr_AddBotsMovement()
