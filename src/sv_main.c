@@ -4519,6 +4519,10 @@ void SV_SpawnServer(const char *mapname)
 		return;
 	}
 
+#ifdef _LAGDEBUG
+	Com_DPrintfLogfile("SV_SpawnServer Begin\n");
+#endif
+
   Com_SyncThreads();
   Sys_BeginLoadThreadPriorities();
 #ifndef DEDICATEDONLY
@@ -4747,4 +4751,8 @@ void SV_SpawnServer(const char *mapname)
   Com_Printf("-----------------------------------\n");
 
   Sys_EndLoadThreadPriorities();
+
+#ifdef _LAGDEBUG
+	Com_DPrintfLogfile("SV_SpawnServer Ended\n");
+#endif
 }

@@ -34,6 +34,10 @@
 #ifndef __Q_SHARED_H__
 #define __Q_SHARED_H__
 
+//#define _LAGDEBUG
+
+
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdarg.h>

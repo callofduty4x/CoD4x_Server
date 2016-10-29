@@ -777,6 +777,8 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 
 	if(request->tls && request->tls->gothandshake == qfalse)
 	{
+		mbedtls_ssl_set_bio( &request->tls->ssl, (void*)request->socket, mbedtls_net_send, mbedtls_net_recv, NULL );
+
 		int ret = mbedtls_ssl_handshake( &request->tls->ssl );
 		if(ret != 0 )
 		{
@@ -1148,7 +1150,7 @@ static int HTTPS_SetupCAs()
   return 1;
 }
 
-
+//This does no longer setup BIO. BIO has to be set on a later stage
 static int HTTPS_Prepare( ftRequest_t* request, const char* commonname )
 {
 	int ret;
@@ -1207,7 +1209,6 @@ static int HTTPS_Prepare( ftRequest_t* request, const char* commonname )
   }
 
   mbedtls_ssl_conf_ca_chain( &request->tls->conf, &cacert, NULL );
-	mbedtls_ssl_set_bio( &request->tls->ssl, (void*)request->socket, mbedtls_net_send, mbedtls_net_recv, NULL );
 	return qtrue;
 
 failure:

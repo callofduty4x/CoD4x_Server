@@ -16,6 +16,8 @@
 #include "sec_crypto.h"
 #include "g_sv_shared.h"
 
+cvar_t* sv_usesteam64id;
+
 int (*Init)(imports_t* sapi_imports, exports_t* exports);
 
 
@@ -292,8 +294,9 @@ uint64_t SV_SApiStringToID(const char* string)
 
 char accounttypechars[] = {'I', 'U', 'M', 'G', 'A', 'P', 'C', 'g', 'T', ' ', 'a'};
 
-void SV_SApiSteamIDToString(uint64_t steamid, char* string, int length)
+void SV_SApiSteamIDTo3IDString(uint64_t steamid, char* string, int length)
 {
+
 	uint32_t accounttype, universe, accountid;
 
 	accounttype = (steamid & 0xF0000000000000ULL) >> 52;
@@ -307,6 +310,17 @@ void SV_SApiSteamIDToString(uint64_t steamid, char* string, int length)
 		return;
 	}
 	Com_sprintf(string, length, "[%c:%u:%u]", accounttypechars[accounttype], universe, accountid);
+}
+
+
+void SV_SApiSteamIDToString(uint64_t steamid, char* string, int length)
+{
+	if(sv_usesteam64id && sv_usesteam64id->boolean)
+	{
+		SV_SApiSteamIDTo64String(steamid, string, length);
+	}else{
+		SV_SApiSteamIDTo3IDString(steamid, string, length);
+	}
 }
 
 /**
@@ -503,7 +517,7 @@ void SV_InitSApi()
 	exports.SV_SendReliableServerCommand = SV_SendReliableServerCommand;
 	exports.SV_AddBanForClient = SV_AddBanForClient;
 	exports.SV_ScreenshotArrived = SV_ScreenshotArrived;
-  exports.SV_ModuleArrived = SV_ModuleArrived;
+	exports.SV_ModuleArrived = SV_ModuleArrived;
 	exports.FS_SV_HomeWriteFile = FS_SV_HomeWriteFile;
 	exports.Sys_Milliseconds = Sys_Milliseconds;
 	exports.pkcs_5_alg2 = pkcs_5_alg2_200sleep;
@@ -513,6 +527,7 @@ void SV_InitSApi()
 	exports.Cvar_RegisterBool = Cvar_RegisterBool;
 	exports.Cvar_SetString = Cvar_SetString;
 
+	sv_usesteam64id = Cvar_RegisterBool("sv_usesteam64id", qtrue, CVAR_ARCHIVE, "Display and log Steam64 id in most commands");
 
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
 	if(hmodule == NULL)
