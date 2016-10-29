@@ -54,9 +54,9 @@ global Scr_GetNumParam
 Scr_GetNumParam:
 	jmp dword [oScr_GetNumParam]
 
-global Scr_GetInt
-Scr_GetInt:
-	jmp dword [oScr_GetInt]
+;global Scr_GetInt
+;Scr_GetInt:
+;	jmp dword [oScr_GetInt]
 
 global Scr_GetFloat
 Scr_GetFloat:
@@ -141,6 +141,10 @@ Scr_AddArray:
 global Scr_MakeArray
 Scr_MakeArray:
 	jmp dword [oScr_MakeArray]
+
+global Scr_AddArrayKey
+Scr_AddArrayKey:
+	jmp dword [oScr_AddArrayKey]
 
 ;global Scr_Notify
 ;Scr_Notify:
@@ -291,7 +295,7 @@ oGScr_Shutdown dd 0x80bf610
 oScr_AllocArray dd 0x8153cca
 oAllocObject dd 0x8153e88
 oScr_GetNumParam dd 0x815d01e
-oScr_GetInt dd 0x8160fee
+;oScr_GetInt dd 0x8160fee
 oScr_GetFloat dd 0x816094c
 oScr_GetString dd 0x8160932
 oScr_GetEntity dd 0x80c76ec
@@ -313,6 +317,7 @@ oScr_AddUndefined dd 0x815eea2
 oScr_AddVector dd 0x815ee12
 oScr_AddArray dd 0x815d5c0
 oScr_MakeArray dd 0x815ed8a
+oScr_AddArrayKey dd 0x0815D0B8
 oScr_Notify dd 0x80c7604
 oScr_NotifyNum dd 0x815e762
 oScr_PrintPrevCodePos dd 0x814ef6e

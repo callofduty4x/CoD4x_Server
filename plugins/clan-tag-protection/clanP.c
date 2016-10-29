@@ -10,43 +10,45 @@ PCL int OnInit(){	// Funciton called on server initiation
 	char path[512];
 	//char* buffer;
 	size_t result;
+	char basepath[512];
+	Plugin_Cvar_VariableString("fs_basepath", basepath, sizeof(basepath));
 
-	snprintf(path,sizeof(path),"%s/guids.txt",Plugin_Cvar_VariableString("fs_basepath"));
-	
+	snprintf(path,sizeof(path),"%s/guids.txt",basepath);
+
 	FILE *file = fopen( path, "r" );
-	
+
 	if(!file)
 	{
-		Plugin_Printf("guids.txt does not exist in this dir: %s\n", Plugin_Cvar_VariableString("fs_basepath"));
+		Plugin_Printf("guids.txt does not exist in this dir: %s\n", basepath);
 		return;
 	}
-	
+
 	fseek(file, 0, SEEK_END);
-	
+
 	size = ftell(file);
-	
+
 	rewind(file);
-	
+
 	buffer = Plugin_Malloc(sizeof(char) * (size + 1));
-	
+
 	if(buffer == NULL)
 	{
 		Plugin_Printf("Memory error\n");
 		return;
 	}
-	
+
 	memset(buffer, 0, sizeof(char) * (size + 1));
-	
+
 	result = fread (buffer,1,size,file);
-	
+
 	if(result != size)
 	{
 		Plugin_Printf("Reading has resulted an error\n");
 		return;
 	}
-	
+
 	//Plugin_Printf("Debug from plugin %s", buffer);
-	
+
 	fclose (file);
 	return 0;
 }
@@ -71,11 +73,11 @@ PCL void OnClientUserinfoChanged(client_t* client)
 	char* tag = "IceOps"; //Your clan tag here.
 	//char* guids = "0000000037f53454f8b59a06e3896cch;000000003b32ea8fbd7d87adbfbadd0e"; //Add GUIDs here
 	char* gp = client->pbguid;
-	
+
 	//Plugin_Printf("Debug from plugin guid: %s\n", client->pbguid);
-	
+
 	int clientnum = client - clientbase;
-	
+
 	if(strstr(client->shortname, tag))
 	{
 		if(strstr(buffer, gp))

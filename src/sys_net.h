@@ -113,6 +113,9 @@ const char*	NET_AdrMaskToString(netadr_t *adr);
 
 qboolean	Sys_SendPacket( int length, const void *data, netadr_t *to );
 qboolean	Sys_StringToAdr( const char *s, netadr_t *a, netadrtype_t family );
+int 		Sys_StringToAdrNonBlock( const char *s, netadr_t *a, netadrtype_t family );
+int NET_StringToAdrNonBlocking( const char *s, netadr_t *a, netadrtype_t family );
+
 
 //Does NOT parse port numbers, only base addresses.
 qboolean	Sys_IsLANAddress (netadr_t *adr);
@@ -126,8 +129,10 @@ int NET_TcpClientConnect( const char *remoteAdr );
 int NET_TcpClientConnectToAdr( netadr_t* adr );
 int NET_TcpClientConnectFromAdrToAdr( netadr_t* destination, netadr_t* source );
 int NET_TcpClientConnectFromAdrToAdrSilent( netadr_t* destination, netadr_t* source );
+int NET_TcpClientConnectNonBlockingToAdr( netadr_t* adr );
 int NET_TcpClientGetData(int sock, void* buf, int buflen, char* errormsg, int maxerrorlen);
 void NET_TcpCloseSocket(int socket);
+int NET_TcpIsSocketReady(int socket); //return: 1 ready, 0 not ready, -1 select error, -2 other error
 const char* NET_GetHostAddress(char* adrstrbuf, int len);
 int NET_GetHostPort();
 netadr_t* NET_GetLocalAddressList(int* count);

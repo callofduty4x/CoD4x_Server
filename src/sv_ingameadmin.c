@@ -207,9 +207,6 @@ qboolean SV_ExecuteRemoteCmd(int clientnum, const char *msg){
 	Cmd_SetCurrentInvokerInfo(power, clientnum, cl->steamid, invname);
 
 	Cmd_ExecuteSingleCommand( 0, 0, buffer );
-#ifdef PUNKBUSTER
-	if(!Q_stricmpn(buffer, "pb_sv_", 6)) PbServerForceProcess();
-#endif
 
 	if(!critcmd)
 	{

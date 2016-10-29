@@ -255,6 +255,7 @@
     __cdecl void Plugin_Scr_AddVector( vec3_t vec );
     __cdecl void Plugin_Scr_AddArray( void );
     __cdecl void Plugin_Scr_MakeArray( void );
+    __cdecl void Plugin_Scr_AddArrayKey( int strIdx );
     __cdecl short Plugin_Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int numArgs);
     __cdecl short Plugin_Scr_ExecThread( int callbackHook, unsigned int numArgs);
     __cdecl void Plugin_Scr_FreeThread( short threadId);
@@ -307,6 +308,10 @@
     __cdecl ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines);
     __cdecl ftRequest_t* Plugin_HTTP_GET(const char* url); /* blocking */
     __cdecl void Plugin_HTTP_FreeObj(ftRequest_t* request);
+
+    __cdecl ftRequest_t* Plugin_HTTP_MakeHttpRequest(const char* url, const char* method, byte* requestpayload, int payloadlen, const char* additionalheaderlines);
+    __cdecl int Plugin_HTTP_SendReceiveData(ftRequest_t* request);
+    
 
     __cdecl void Plugin_HTTP_CreateString_x_www_form_urlencoded(char* outencodedstring, int len, const char* key, const char *value);
     __cdecl void Plugin_HTTP_ParseFormDataBody(const char* body, httpPostVals_t* values);

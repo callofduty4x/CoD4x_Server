@@ -290,20 +290,35 @@ typedef struct
     unsigned short size;
 }scrTypeSize_t;
 
-typedef union
+struct VariableStackBuffer
 {
-    int integer;
-    float floatVal;
-    short constString;
-    scrTypeSize_t typeSize;
-}VariableUnion_t;
+  const char *pos;
+  uint16_t size;
+  uint16_t bufLen;
+  uint16_t localId;
+  char time;
+  char buf[1];
+};
+
+/* 7500 */
+union VariableUnion
+{
+  int intValue;
+  float floatValue;
+  unsigned int stringValue;
+  const float *vectorValue;
+  const char *codePosValue;
+  unsigned int pointerValue;
+  struct VariableStackBuffer *stackValue;
+  unsigned int entityOffset;
+};
 
 #pragma pack(push, 1)
 typedef struct
 {
   unsigned short pathA;
   unsigned short next;
-  VariableUnion_t value;
+  union VariableUnion value;
   unsigned int type;
   unsigned short pathB;
   unsigned short prev;
@@ -311,9 +326,9 @@ typedef struct
 
 typedef struct
 {
-  VariableUnion_t value;
-  int varType;
-}variableValue_t;
+  union VariableUnion u;
+  int type;
+}VariableValue;
 
 typedef struct
 {
@@ -326,52 +341,67 @@ typedef struct
 
 typedef struct
 {
-  int dword0;
-  char field_4;
-  char field_5;
-  char field_6;
-  char field_7;
-  int dword8;
-  int dwordC;
-  int dword10;
-  int dword14;
-  int dword18;
-  int dword1C;
-  int varLevel;
-  int dword24;
-  int dword28;
+  const char *fieldBuffer;
+  uint16_t canonicalStrCount;
+  byte developer;
+  byte developer_script;
+  byte evaluate;
+  byte pad[3];
+  const char *error_message;
+  int error_index;
+  unsigned int time;
+  unsigned int timeArrayId;
+  unsigned int pauseArrayId;
+  unsigned int levelId;
+  unsigned int gameId;
+  unsigned int animId;
+  unsigned int freeEntList;
+  unsigned int tempVariable;
+  byte bInited;
+  byte pad2;
+  uint16_t savecount;
+  unsigned int checksum;
+  unsigned int entId;
+  unsigned int entFieldName;
+  struct HunkUser *programHunkUser;
+  const char *programBuffer;
+  const char *endScriptBuffer;
+  uint16_t saveIdMap[24574];
+  uint16_t saveIdMapRev[24574];
 }scrVarPub_t;
 
+
+struct function_stack_t
+{
+  const char *pos;
+  unsigned int localId;
+  unsigned int localVarCount;
+  VariableValue *top;
+  VariableValue *startTop;
+};
+
+
+struct function_frame_t
+{
+  struct function_stack_t fs;
+  int topType;
+};
+
 typedef struct
 {
-	const char *field_0;
-	int field_4;
-	int field_8;
-	int field_C;
-	int field_10;
-	int field_14;
-}scrVmBacktrace_t;
-
-
-
-typedef struct
-{
-  int field_0;
-  int field_4;
-  int field_8;
-  int field_C;
-  variableValue_t *argumentVariables;
-  char field_14;
-  char field_15;
-  char field_16;
-  char field_17;
-  int field_18;
-  int numParams;
-  scrVmBacktrace_t backtrace[32];
-  int field_320;
-  int field_324;
-  int field_328;
-  int field_32C[4093];
+  unsigned int *localVars;
+  VariableValue *maxstack;
+  int function_count;
+  struct function_frame_t *function_frame;
+  VariableValue *top;
+  byte debugCode;
+  byte abort_on_error;
+  byte terminal_error;
+  byte pad;
+  unsigned int inparamcount;
+  unsigned int outparamcount;
+  struct function_frame_t function_frame_start[32];
+  VariableValue stack[2048];
 }scrVmPub_t;
 
 #pragma pack(pop)
@@ -396,6 +426,9 @@ unsigned int __cdecl Scr_GetPointerType( unsigned int );
 void __cdecl Scr_GetVector( unsigned int, float* );
 unsigned int __cdecl Scr_GetObject( unsigned int );
 
+int Scr_GetFunc(unsigned int paramnum);
+extern char* (__cdecl *Scr_GetLocalizedString)(unsigned int arg);
+
 /* Scr_Error
  *
  * Throws script runtime error with 'string' description.
@@ -417,6 +450,7 @@ void __cdecl Scr_ParamError( int paramNum, const char *string);
  * Asterisk points to function caller.
  */
 void __cdecl Scr_ObjectError( const char *string);
+
 void __cdecl Scr_AddInt(int value);
 void __cdecl Scr_AddFloat(float);
 void __cdecl Scr_AddBool(qboolean);
@@ -426,10 +460,11 @@ void __cdecl Scr_AddUndefined(void);
 void __cdecl Scr_AddVector( vec3_t vec );
 void __cdecl Scr_AddArray( void );
 void __cdecl Scr_MakeArray( void );
+void __cdecl Scr_AddArrayKey( int strIdx );
 void __cdecl Scr_Notify( gentity_t*, unsigned short, unsigned int);
 void __cdecl Scr_NotifyNum( int, unsigned int, unsigned int, unsigned int);
 /*Not working :(  */
-void __cdecl Scr_PrintPrevCodePos( int printDest, const char* unk, qboolean unk2 );
+void __cdecl Scr_PrintPrevCodePos( int printDest, const char* pos, qboolean unk2 );
 int __cdecl Scr_GetFunctionHandle( const char* scriptName, const char* labelName);
 short __cdecl Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int numArgs);
 short __cdecl Scr_ExecThread( int callbackHook, unsigned int numArgs);
@@ -456,7 +491,7 @@ void __cdecl Scr_SetString(unsigned short *strindexptr, unsigned const stringind
 int __cdecl Scr_AllocString(const char* string);
 void Scr_InitSystem();
 int GetArraySize(int);
-void RemoveRefToValue(scriptVarType_t type, VariableUnion_t val);
+void RemoveRefToValue(scriptVarType_t type, union VariableUnion val);
 
 /*
 void __cdecl GScr_AddFieldsForEntity( void );
@@ -486,7 +521,7 @@ qboolean Scr_AddMethod( const char *cmd_name, xfunction_t function, qboolean dev
 qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
 __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
-void __regparm3 VM_Notify(int, int, variableValue_t* val);
+void __regparm3 VM_Notify(int, int, VariableValue* val);
 int __cdecl FindEntityId(int, int);
 
 #define MAX_SCRIPT_FILEHANDLES 10

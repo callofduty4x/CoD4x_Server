@@ -288,7 +288,7 @@ void G_SayCensor_Init()
                 exactmatch = qfalse;
             }
 
-            this = Plugin_Malloc(sizeof(badwordsList_t));
+            this = malloc(sizeof(badwordsList_t));
             if(this){
                 this->next = badwords;
                 this->exactmatch = exactmatch;

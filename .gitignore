@@ -43,3 +43,12 @@ CoD4x_Server.creator
 CoD4x_Server.files
 CoD4x_Server.includes
 build_win32_PE_nopause.cmd
+
+#fraggy: ignore .vscode
+.vscode/
+
+#T-Max: I don't want to have this plugin inside main project.
+plugins/mysql
+
+# Wth this is here?
+sys_error.txt

@@ -85,19 +85,19 @@ void SV_UpdateServerCommandsToClientRecover( client_t *client, msg_t *msg )
 {
 	int i;
 	int cmdlen;
-	
+
 	for(i = client->reliableAcknowledge + 1; i <= client->reliableSequence; i++)
 	{
-		
+
 		cmdlen = strlen(client->reliableCommands[i & ( MAX_RELIABLE_COMMANDS - 1 )].command);
-		
+
 		if ( cmdlen + msg->cursize + 6 >= msg->maxsize )
 			break;
-		
+
 		MSG_WriteByte(msg, svc_serverCommand);
 		MSG_WriteLong(msg, i);
 		MSG_WriteString(msg, client->reliableCommands[i & ( MAX_RELIABLE_COMMANDS - 1 )].command);
-	
+
 	}
 	if ( i - 1 > client->reliableSent )
 	client->reliableSent = i - 1;
@@ -167,7 +167,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 
         } else if(oldframe->first_client <  svsHeader.nextSnapshotClients - svsHeader.numSnapshotClients) {
 
-            Com_PrintWarning("%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n", 
+            Com_PrintWarning("%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n",
                             client->name, oldframe->first_client, svs.nextSnapshotClients - svs.numSnapshotClients, svs.nextSnapshotClients, oldframe->num_clients);
             oldframe = NULL;
             lastframe = 0;
@@ -351,32 +351,32 @@ void SV_WriteClientConfigInfo( msg_t* msg, client_t* cl, int messageNum )
 void SV_UpdateConfigData(client_t* cl, msg_t* msg)
 {
 	int i;
-	unsigned int index; 
-	
+	unsigned int index;
+
 	//cl: client to whom we write updates
 	if(svse.configDataSequence - MAX_CONFIGDATACACHE >= cl->configDataAcknowledge)
 	{
 		cl->delayDropMsg = "svse.configDataSequence - MAX_CONFIGDATACACHE >= cl->configDataAcknowledge";
 		return;
 	}
-	
+
 	if(svse.configDataSequence < cl->configDataAcknowledge)
 	{
 		cl->delayDropMsg = "svse.configDataSequence < cl->configDataAcknowledge";
 		return;
 	}
-	
+
 	for(i = cl->configDataAcknowledge +1; i <= svse.configDataSequence; ++i)
 	{
 	//	Com_Printf("Write Data: %d, Sequence %d\n", i, svse.configDataSequence);
 		index = svse.changedConfigData[i % MAX_CONFIGDATACACHE];
-		
+
 		if(index < 64)
 		{
 			SV_WriteClientConfigInfo( msg, &svs.clients[index], i );
 		}
 	}
-	
+
 }
 
 
@@ -463,7 +463,7 @@ __cdecl void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 		SV_DropClient(client, client->delayDropMsg);
 	}
 
-	if(client->demorecording && !client->demowaiting)
+	if(client->demorecording && !client->demowaiting && client->demofile.handleFiles.file.o)
 	{
 #ifdef SV_SEND_HUFFMAN
 		SV_WriteDemoMessageForClient((byte*)0x13f39080, len, client);
@@ -561,13 +561,13 @@ void SV_SendClientSnapshot(client_t *cl){
 void SV_BeginClientSnapshot(client_t *client, msg_t *msg)
 {
 	static byte tempSnapshotMsgBuf[NETCHAN_UNSENTBUFFER_SIZE];
-	
-	
+
+
 	MSG_Init( msg, tempSnapshotMsgBuf, sizeof(tempSnapshotMsgBuf) );
 	MSG_ClearLastReferencedEntity( msg );
-	
+
 	MSG_WriteLong( msg, client->lastClientCommand );
-	
+
 	if ( client->state >= CS_CONNECTED || client->state == CS_ZOMBIE )
 	{
 		SV_UpdateServerCommandsToClient( client, msg );
@@ -576,7 +576,7 @@ void SV_BeginClientSnapshot(client_t *client, msg_t *msg)
 	{
 		SV_UpdateConfigData(client, msg);
 	}
-	
+
 }
 
 void SV_EndClientSnapshot(client_t *client, msg_t *msg)
@@ -584,24 +584,24 @@ void SV_EndClientSnapshot(client_t *client, msg_t *msg)
 
 	if ( client->state != CS_ZOMBIE )
 		SV_WriteDownloadToClient( client );
-		
+
 	MSG_WriteByte(msg, svc_EOF);
-		
+
 	if ( msg->overflowed == qtrue)
-	{		
+	{
 		Com_PrintWarning( "WARNING: msg overflowed for %s, trying to recover\n", client->name);
-		
+
 		if ( client->state == CS_ACTIVE || client->state == CS_ZOMBIE )
 		{
 			SV_ShowClientUnAckCommands(client);
-			
+
 			MSG_Clear( msg );
 			MSG_WriteLong(msg, client->lastClientCommand);
-			
+
 			SV_UpdateServerCommandsToClientRecover( client, msg );
-			
+
 			MSG_WriteByte(msg, svc_EOF);
-						
+
 		}
 		if ( msg->overflowed == qtrue)
 		{
@@ -610,7 +610,7 @@ void SV_EndClientSnapshot(client_t *client, msg_t *msg)
 			SV_DropClient(client, "EXE_SERVERMESSAGEOVERFLOW");
 		}
 	}
-	
+
 	SV_SendMessageToClient(msg, client);
 }
 
@@ -651,49 +651,49 @@ static void SV_AddCachedEntitiesVisibleFromPoint(int from_num_entities, int from
 	uint16_t clusternums[128];
 	int lastLeaf;
 	archivedEntity_t *aent;
-	
-	
+
+
 	leafnum = CM_PointLeafnum( origin );
 	clientcluster = CM_LeafCluster( leafnum );
-	
+
 	if(clientcluster < 0)
 	{
 		return;
 	}
-	
+
 	clientpvs = CM_ClusterPVS( clientcluster );
-	
+
 	fogOpaqueDistSqrd = G_GetFogOpaqueDistSqrd();
-	
+
 	if ( fogOpaqueDistSqrd == 3.4028235e38 )
 	{
       fogOpaqueDistSqrd = 0.0;
 	}
-	
+
 	int maxCachedSnapshotEntities = sizeof(svs.cachedSnapshotEntities) / sizeof(svs.cachedSnapshotEntities[0]);
-	
+
 	for ( e = 0 ; e < from_num_entities ; e++ ) {
-		
+
 	    aent = &svs.cachedSnapshotEntities[(e + from_first_entity) % maxCachedSnapshotEntities];
         if ( (1 << (clientNum & 31)) & aent->r.clientMask[clientNum >> 5] || aent->s.number == clientNum )
 		{
 			continue;
 		}
- 
+
         if ( aent->r.svFlags & 0x18 )
 		{
             SV_AddEntToSnapshot( e, eNums );
 			continue;
 		}
-        
+
 		boxleafnums = CM_BoxLeafnums(aent->r.absmin, aent->r.absmax, clusternums, sizeof(clusternums) / sizeof(clusternums[0]), &lastLeaf);
         if ( !boxleafnums )
 		{
 			continue;
 		}
-        
+
 		bitvector = clientpvs;
-		
+
 		for ( i = 0 ; i < boxleafnums ; i++ )
 		{
 			l = CM_LeafCluster(clusternums[i]);
@@ -707,7 +707,7 @@ static void SV_AddCachedEntitiesVisibleFromPoint(int from_num_entities, int from
 		{
 			continue;
 		}
-		
+
 		if(!(fogOpaqueDistSqrd == 0.0 || BoxDistSqrdExceeds(aent->r.absmin, aent->r.absmax, origin, fogOpaqueDistSqrd) == qfalse) )
 		{
 			continue;
@@ -735,20 +735,20 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 	byte    *clientpvs;
 	byte    *bitvector;
 	float fogOpaqueDistSqrd;
-	
-	
+
+
 	leafnum = CM_PointLeafnum( origin );
 	clientcluster = CM_LeafCluster( leafnum );
-	
+
 	if(clientcluster < 0)
 	{
 		return;
 	}
-	
+
 	clientpvs = CM_ClusterPVS( clientcluster );
-	
+
 	fogOpaqueDistSqrd = G_GetFogOpaqueDistSqrd();
-	
+
 	if ( fogOpaqueDistSqrd == 3.4028235e38 )
 	{
       fogOpaqueDistSqrd = 0.0;
@@ -765,14 +765,14 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 			continue;
 		}
 
-			
+
 		if ( !ent->r.broadcastTime )
 		{
 		  if ( ent->r.svFlags & 1 || (1 << (clientNum & 31)) & ent->r.clientMask[clientNum >> 5] )
 		  {
 		    continue;
 		  }
-		
+
 		}else{
 			if(ent->r.broadcastTime < 0 || ent->r.broadcastTime >= svs.time)
 			{
@@ -781,14 +781,14 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 			}
 			ent->r.broadcastTime = 0;
 		}
-		
+
 
         if ( ent->r.svFlags & 0x18 )
         {
 			SV_AddEntToSnapshot( e, eNums );
 			continue;
 		}
-		
+
 		svEnt = SV_SvEntityForGentity( ent );
 
 		bitvector = clientpvs;
@@ -799,7 +799,7 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 			SV_AddEntToSnapshot( e, eNums );
 			continue;
 		}
-		
+
 		l = 0;
 		for ( i = 0 ; i < svEnt->numClusters ; i++ )
 		{
@@ -830,14 +830,14 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 				continue;
 			}
 		}
-		
+
 		if ( fogOpaqueDistSqrd != 0.0)
 		{
 			if(BoxDistSqrdExceeds(ent->r.absmin, ent->r.absmax, origin, fogOpaqueDistSqrd))
 			{
 				continue;
 			}
-		} 
+		}
 		// add it
 		SV_AddEntToSnapshot( e, eNums );
 	}
@@ -863,19 +863,19 @@ static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
 
   msec = *pArchiveTime * sv_fps->integer / 1000;
   snapTime = svs.nextArchivedSnapshotFrames - msec;
-  
+
   if ( snapTime < svs.nextArchivedSnapshotFrames - 1200 )
   {
     snapTime = svs.nextArchivedSnapshotFrames - 1200;
     *pArchiveTime = 1000 * (svs.nextArchivedSnapshotFrames - (svs.nextArchivedSnapshotFrames - 1200)) / sv_fps->integer;
   }
-  
+
   if ( snapTime < 0 )
   {
     snapTime = 0;
     *pArchiveTime = 1000 * svs.nextArchivedSnapshotFrames / sv_fps->integer;
   }
-  
+
   for( ; snapTime < svs.nextArchivedSnapshotFrames; ++snapTime)
   {
 	cachedSnap = SV_GetCachedSnapshotInternal(snapTime);
@@ -885,7 +885,7 @@ static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
 	}
   }
   *pArchiveTime = 0;
-  return NULL; 
+  return NULL;
 }
 
 /*
@@ -911,7 +911,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 	gentity_t              		*ent;
 	entityState_t               *entState;
 	cachedClient_t				*cachedClient;
-	clientState_t               *clientStateSource;	
+	clientState_t               *clientStateSource;
 	clientState_t               *clientState;
 	gentity_t					*clent;
 	int clientNum;
@@ -929,38 +929,38 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 	// show_bug.cgi?id=62
 	frame->num_entities = 0;
 	frame->num_clients = 0;
-	
+
 	clent = client->gentity;
 	if ( !clent || client->state == CS_ZOMBIE || sv.state < SS_GAME ) {
 		return;
 	}
-    
+
 	frame->first_entity = svs.nextSnapshotEntities;
     frame->first_client = svs.nextSnapshotClients;
 
 	clientNum = client - svs.clients;
 
-	
+
 	archiveTime = G_GetClientArchiveTime(clientNum);
-	
+
 	cachedSnap = SV_GetCachedSnapshot(&archiveTime);
-	
+
 	G_SetClientArchiveTime(clientNum, archiveTime);
 
-	
+
 	// grab the current playerState_t
 	ps = SV_GameClientNum( clientNum );
-	
+
 	frame->ps = *ps;
-	
+
 	//Update client num from other source here
 	clientNum = frame->ps.clientNum;
 
-	
+
 	if ( clientNum < 0 || clientNum >= MAX_GENTITIES ) {
 		Com_Error( ERR_DROP, "SV_BuildClientSnapshot(): bad gEnt" );
 	}
-	
+
 	// find the client's viewpoint
 	VectorCopy( ps->origin, org );
 	org[2] += ps->viewHeightCurrent;
@@ -968,23 +968,23 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 //----(SA)	added for 'lean'
 	// need to account for lean, so areaportal doors draw properly
 	AddLeanToPosition(org, ps->viewangles[1], ps->leanf, 16.0, 20.0);
-//----(SA)	end	
+//----(SA)	end
 
 	if(cachedSnap)
 	{
 		int snapTime = svs.time - cachedSnap->time;
-		
+
 		int maxCachedSnapshotEntities = sizeof(svs.cachedSnapshotEntities) / sizeof(svs.cachedSnapshotEntities[0]);
-		
+
 		SV_AddCachedEntitiesVisibleFromPoint(cachedSnap->num_entities, cachedSnap->first_entity, org, clientNum, &entityNumbers);
 
         for ( i = 0 ;i < entityNumbers.numSnapshotEntities; ++i )
         {
             entState = &svs.snapshotEntities[svs.nextSnapshotEntities % svs.numSnapshotEntities];
             aent = &svs.cachedSnapshotEntities[(cachedSnap->first_entity + entityNumbers.snapshotEntities[i]) % maxCachedSnapshotEntities];
-			
+
 			*entState = aent->s;
-			
+
             if ( entState->lerp.pos.trTime )
 			{
               entState->lerp.pos.trTime += snapTime;
@@ -997,7 +997,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 			{
               entState->time2 += snapTime;
 			}
-			
+
             if ( entState->eType == 4 || entState->eType == 0 || entState->eType == 66 )
 			{
               entState->lerp.u.anonymous.data[0] += snapTime;
@@ -1007,20 +1007,20 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 			if ( svs.nextSnapshotEntities >= 0x7FFFFFFE ) {
 				Com_Error( ERR_FATAL, "svs.nextSnapshotEntities wrapped" );
 			}
-         
+
 			frame->num_entities++;
         }
-		
-		
+
+
 		int maxCachedClients = sizeof(svs.cachedSnapshotClients) / sizeof(svs.cachedSnapshotClients[0]);
-		
+
 		for ( i = 0; i < cachedSnap->num_clients; ++i )
         {
 			cachedClient = &svs.cachedSnapshotClients[(i + cachedSnap->first_client) % maxCachedClients];
 			clientState = &svs.snapshotClients[svs.nextSnapshotClients % svs.numSnapshotClients];
 			*clientState = cachedClient->cs;
 			svs.nextSnapshotClients++;
-			
+
 			// this should never hit, map should always be restarted first in SV_Frame
 			if ( svs.nextSnapshotClients >= 0x7FFFFFFE ) {
 				Com_Error( ERR_FATAL, "svs.nextSnapshotClients wrapped" );
@@ -1029,7 +1029,7 @@ static void SV_BuildClientSnapshot( client_t *client ) {
         }
 		return;
 	}
-	
+
 
 
 	// add all the entities directly visible to the eye, which
@@ -1048,8 +1048,8 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 		}
 		frame->num_entities++;
 	}
-	
-	
+
+
 	// copy the client states out
 	for ( snapClient = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, snapClient++ )
 	{
@@ -1059,15 +1059,15 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 		}
 
 		clientStateSource = G_GetClientState( i );
-		
-		if(snapClient->undercover && i != clientNum) 
+
+		if(snapClient->undercover && i != clientNum)
 		{
 			continue; // skip send gamestate for undercover players
 		}
-		
+
 		clientState = &svs.snapshotClients[svs.nextSnapshotClients % svs.numSnapshotClients];
 		*clientState = *clientStateSource;
-		
+
 		svs.nextSnapshotClients++;
 		// this should never hit, map should always be restarted first in SV_Frame
 		if ( svs.nextSnapshotClients >= 0x7FFFFFFE ) {
@@ -1075,8 +1075,8 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 		}
 		frame->num_clients++;
 	}
-	
-	
+
+
 }
 //#endif
 
@@ -1101,12 +1101,12 @@ void SV_SendClientMessages( void ) {
 	 */
 	sv.bpsTotalBytes = 0; // NERVE - SMF - net debugging
 	sv.ubpsTotalBytes = 0; // NERVE - SMF - net debugging
-	
+
 	// send a message to each connected client
 	for ( i = 0, c = svs.clients ; i < sv_maxclients->integer ; i++, c++ ) {
 		if ( !c->state || c->netchan.remoteAddress.type == NA_BOT)
 		{
-			snapClients[i] = 0;		
+			snapClients[i] = 0;
 			continue; // not connected
 		}
 
@@ -1114,91 +1114,91 @@ void SV_SendClientMessages( void ) {
 
 		SV_ReceiveReliableMessages(c);
 		if ( svs.time < c->nextSnapshotTime ) {
-			snapClients[i] = 0;	
+			snapClients[i] = 0;
 			continue; // not time yet
 		}
-		
+
 		numclients++; // NERVE - SMF - net debugging
-		
+
 		// send additional message fragments if the last message
 		// was too large to send at once
 		if ( c->netchan.unsentFragments ) {
 			c->nextSnapshotTime = svs.time + SV_RateMsec( c, c->netchan.unsentLength - c->netchan.unsentFragmentStart );
 			SV_Netchan_TransmitNextFragment( c );
-			snapClients[i] = 0;	
+			snapClients[i] = 0;
 			continue;
 		}
-		
+
 		// generate a new message
 		snapClients[i] = 1;
-		
+
 		if ( c->state == CS_ACTIVE || c->state == CS_ZOMBIE )
             SV_BuildClientSnapshot( c );
-		
+
 	}
-	
+
 	SV_SetServerStaticHeader();
-	
+
 	for (i = 0, c = svs.clients; i < sv_maxclients->integer; i++, c++) {
-	
+
 		if(snapClients[i] == 0)
 			continue;
-		
+
 		SV_BeginClientSnapshot( c, &msg );
-		
+
 		if(c->state == CS_ACTIVE || c->state == CS_ZOMBIE)
 			SV_WriteSnapshotToClient( c, &msg );
-		
+
 		SV_EndClientSnapshot(c, &msg);
 		SV_SendClientVoiceData( c );
 	}
-	
+
 	// NERVE - SMF - net debugging
 	if ( sv_showAverageBPS->integer && numclients > 0 ) {
 		float ave = 0, uave = 0;
-		
+
 		for ( i = 0; i < MAX_BPS_WINDOW - 1; i++ ) {
 			sv.bpsWindow[i] = sv.bpsWindow[i + 1];
 			ave += sv.bpsWindow[i];
-			
+
 			sv.ubpsWindow[i] = sv.ubpsWindow[i + 1];
 			uave += sv.ubpsWindow[i];
 		}
-		
+
 		sv.bpsWindow[MAX_BPS_WINDOW - 1] = sv.bpsTotalBytes;
 		ave += sv.bpsTotalBytes;
-		
+
 		sv.ubpsWindow[MAX_BPS_WINDOW - 1] = sv.ubpsTotalBytes;
 		uave += sv.ubpsTotalBytes;
-		
+
 		if ( sv.bpsTotalBytes >= sv.bpsMaxBytes ) {
 			sv.bpsMaxBytes = sv.bpsTotalBytes;
 		}
-		
+
 		if ( sv.ubpsTotalBytes >= sv.ubpsMaxBytes ) {
 			sv.ubpsMaxBytes = sv.ubpsTotalBytes;
 		}
-		
+
 		sv.bpsWindowSteps++;
-		
+
 		if ( sv.bpsWindowSteps >= MAX_BPS_WINDOW ) {
 			float comp_ratio;
-			
+
 			sv.bpsWindowSteps = 0;
-			
+
 			ave = ( ave / (float)MAX_BPS_WINDOW );
 			uave = ( uave / (float)MAX_BPS_WINDOW );
-			
+
 			comp_ratio = ( 1 - ave / uave ) * 100.f;
 			sv.ucompAve += comp_ratio;
 			sv.ucompNum++;
-			
+
 			Com_DPrintf( "bpspc(%2.0f) bps(%2.0f) pk(%i) ubps(%2.0f) upk(%i) cr(%2.2f) acr(%2.2f)\n",
 						ave / (float)numclients, ave, sv.bpsMaxBytes, uave, sv.ubpsMaxBytes, comp_ratio, sv.ucompAve / sv.ucompNum );
 		}
 	}
 	// -NERVE - SMF
-	
+
 	if ( sv.state != SS_GAME )
 	{
 		SV_GetServerStaticHeader();
@@ -1207,31 +1207,31 @@ void SV_SendClientMessages( void ) {
 
 	MSG_Init(&msg, buf, sizeof(buf));
 	SV_ArchiveSnapshot(&msg);
-	
+
 	SV_GetServerStaticHeader();
-	
+
 	if ( msg.overflowed == qtrue )
 	{
 		Com_DPrintf("SV_ArchiveSnapshot: ignoring snapshot because it overflowed.\n");
 		return;
 	}
-	
+
 	int maxArchivedSnapshotFrames = sizeof(svs.archivedSnapshotFrames) / sizeof(svs.archivedSnapshotFrames[0]);
-	
+
 	svs.archivedSnapshotFrames[svs.nextArchivedSnapshotFrames % maxArchivedSnapshotFrames].start = svs.nextArchivedSnapshotBuffer;
 	svs.archivedSnapshotFrames[svs.nextArchivedSnapshotFrames % maxArchivedSnapshotFrames].size = msg.cursize;
 
 	index = svs.nextArchivedSnapshotBuffer % sizeof(svs.archivedSnapshotBuffer);
 
 	svs.nextArchivedSnapshotBuffer += msg.cursize;
-	
+
 	if ( svs.nextArchivedSnapshotBuffer >= (signed int)0x7FFFFFFE )
 	{
 		Com_Error(0, "svs.nextArchivedSnapshotBuffer wrapped");
 		return;
 	}
 	freeBytes = sizeof(svs.archivedSnapshotBuffer) - index;
-	
+
 	if ( msg.cursize > freeBytes )
 	{
 		memcpy(&svs.archivedSnapshotBuffer[index], msg.data, freeBytes);
@@ -1242,12 +1242,11 @@ void SV_SendClientMessages( void ) {
 	{
 		memcpy(&svs.archivedSnapshotBuffer[index], msg.data, msg.cursize);
 	}
-	
+
 	svs.nextArchivedSnapshotFrames++;
-	
+
 	if (  svs.nextArchivedSnapshotFrames >= (signed int)0x7FFFFFFE  ){
 		Com_Error(0, "svs.nextArchivedSnapshotFrames wrapped");
 	}
 
 }
-

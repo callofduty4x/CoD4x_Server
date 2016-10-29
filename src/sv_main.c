@@ -44,6 +44,8 @@
 #include "hl2rcon.h"
 #include "crc.h"
 #include "sv_bots.h"
+#include "q_math.h"
+#include "math.h"
 
 #include "sapi.h"
 
@@ -1338,7 +1340,6 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
 		return;
 	}
 
-
 	MSG_Init(&playermsg, pbuf, sizeof(pbuf));
 	/* Write the OOB-Header */
 	MSG_WriteLong(&playermsg, -1);
@@ -2065,7 +2066,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg)
 	char stringline[1024];
 	msg_t singlemsg;
 	int ic;
-	
+
 	while(msg->readcount < msg->cursize)
 	{
 		int messagelen = MSG_ReadLong(msg);
@@ -2347,11 +2348,11 @@ void SV_MasterHeartbeat(const char *message)
 
 			MSG_Init(&msg, opts.message, sizeof(opts.message));
 			MSG_WriteString(&msg, string);
-			
+
 			MSG_WriteShort(&msg, NET_GetHostPort());
 			MSG_WriteLong(&msg, psvs.masterserver_messageid);
 			++psvs.masterserver_messageid;
-			
+
 			MSG_BeginWriteMessageLength(&msg); //Messagelength
 			MSG_WriteLong(&msg, 1); //Command sourceenginequery
 			SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
@@ -3714,76 +3715,112 @@ void SV_SetConfig(int start, int max, int bit)
 
 void SV_BotUserMove(client_t *client)
 {
-	signed int clientnum;
-	usercmd_t ucmd;
-	int i;
+    signed int num;
+    usercmd_t ucmd = { 0 };
+    vec2_t move_pos;
+    gentity_t *ent;
+    int i;
 
-	if(!client->gentity)
-		return;
-  
-	memset(&ucmd, 0, sizeof(ucmd));
-  
-	clientnum = client - svs.clients;
-	ucmd.serverTime = svs.time;
+    if(!client->gentity)
+        return;
 
-	playerState_t* ps = SV_GameClientNum(clientnum);
-	
-	ucmd.weapon = *(byte*)&ps->weapon;
+    num = client - svs.clients;
+    ucmd.serverTime = svs.time;
 
-	if ( level.clients[clientnum].sess.archiveTime == 0 )
-	{
+    playerState_t* ps = SV_GameClientNum(num);
 
-		ucmd.buttons = BotMovement[clientnum].buttons;
-		ucmd.forwardmove = BotMovement[clientnum].forwardMove;
-		ucmd.rightmove = BotMovement[clientnum].rightMove;
+    ucmd.weapon = (byte)(ps->weapon & 0xFF);
 
-		gentity_t *ent = VM_GetGEntityForNum(clientnum);
-		VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
+    if ( level.clients[num].sess.archiveTime == 0 )
+    {
+        ucmd.buttons = g_botai[num].buttons;
+        ent = VM_GetGEntityForNum(num);
 
-		if(BotMovement[clientnum].rotIterCount)
-		{
-			--BotMovement[clientnum].rotIterCount;
-			for(i = 0; i < 3; ++i)
-			{
-				ucmd.angles[i] += BotMovement[clientnum].rotFrac[i];
-				if(ucmd.angles[i] < 0)
-					ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
-				else if(ucmd.angles[i] > 0xFFFF)
-					ucmd.angles[i] -= 0xFFFF;
-			}
-		}
-		//ucmd.angles[0] = (unsigned int)rand() % 0xFFFF;
-	}
-	client->deltaMessage = client->netchan.outgoingSequence - 1;
-	SV_ClientThink(client, &ucmd);
+        /* Apply movement. */
+        if (g_botai[num].doMove)
+        {
+            /* forwardmove is moving on X axis. */
+            /* leftmove is moving on Y axis.    */
+
+            /* Calculate movement origin */
+            vec2_copy(move_pos, g_botai[num].moveTo);
+            vec2_substract(move_pos, ent->r.currentOrigin);
+            /* Com_Printf("move_pos: (%g, %g) ", move_pos[0], move_pos[1]); */
+            g_botai[num].doMove = vec2_length(move_pos) > 7.0 ? 1 : 0;
+            /* Rotate vector according to current client pitch angle. */
+            vec2_rotate(move_pos, -ent->r.currentAngles[1]);
+            /* Limit vector components to 127. */
+            vec2_multiply(move_pos, 127 / vec2_maxabs(move_pos));
+            /* Round components to integer values. */
+            vec2_floor(move_pos);
+            /* Invert second component to fit movement requirements. */
+            move_pos[1] = -move_pos[1];
+            /* Copy result to actual move command. */
+            ucmd.forwardmove = ((int)move_pos[0]) & 0xFF;
+            ucmd.leftmove    = ((int)move_pos[1]) & 0xFF;
+
+            //Com_Printf("val: (%3d, %3d), distance: %f ", ucmd.forwardmove, ucmd.leftmove, distance);
+            //Com_Printf("speed: (%d, %d)", ucmd.forwardmove, ucmd.leftmove);
+            //Com_Printf("origin: (%3.3f, %3.3f, %3.3f)", ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2]);
+            //Com_Printf("\n");
+
+            /* Notify only once */
+            if (!g_botai[num].doMove)
+            {
+                Scr_Notify(ent, stringIndex.movedone, 0);
+                Com_DPrintf("Bot movement done at (%3.3f, %3.3f)\n",
+                            ent->r.currentOrigin[0], ent->r.currentOrigin[1]);
+            }
+
+        }
+
+        /* Apply rotation. */
+        VectorCopy(ent->client->sess.cmd.angles, ucmd.angles);
+        if(g_botai[num].rotIterCount)
+        {
+            --g_botai[num].rotIterCount;
+            for(i = 0; i < 3; ++i)
+            {
+                ucmd.angles[i] += g_botai[num].rotFrac[i];
+                if(ucmd.angles[i] < 0)
+                    ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
+                else if(ucmd.angles[i] > 0xFFFF)
+                    ucmd.angles[i] -= 0xFFFF;
+            }
+            /* Notify only once */
+            if (!g_botai[num].rotIterCount)
+                Scr_Notify(ent, stringIndex.rotatedone, 0);
+        }
+    }
+
+    client->deltaMessage = client->netchan.outgoingSequence - 1;
+    SV_ClientThink(client, &ucmd);
 }
 
 void SV_ResetSkeletonCache()
 {
-  ++sv.skelTimeStamp;
-  if ( !sv.skelTimeStamp )
-  {
-    sv.skelTimeStamp = 1;
-  }
-  sv.skelMemPos = 0;
-  g_sv_skel_memory_start = (char*)((unsigned int)&g_sv_skel_memory[15] & 0xFFFFFFF0);
+    ++sv.skelTimeStamp;
+    if ( !sv.skelTimeStamp )
+        sv.skelTimeStamp = 1;
+
+    sv.skelMemPos = 0;
+    g_sv_skel_memory_start = (char*)((unsigned int)&g_sv_skel_memory[15] & 0xFFFFFFF0);
 }
 
 
 void SV_UpdateBots()
 {
-	int i;
-	client_t* cl;
-	
-	SV_ResetSkeletonCache();
-	
-	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
-	{
-		if(cl->state >= CS_CONNECTED && cl->netchan.remoteAddress.type == NA_BOT)
-		{
-			SV_BotUserMove(cl);
-		}
-	}
+    int i;
+    client_t* cl;
+
+    SV_ResetSkeletonCache();
+
+    for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
+    {
+        if(cl->state >= CS_CONNECTED &&
+           cl->netchan.remoteAddress.type == NA_BOT)
+            SV_BotUserMove(cl);
+    }
 }
 
 
@@ -3801,12 +3838,12 @@ void SV_PreFrame()
     SV_SetConfigstring(0, Cvar_InfoString(4));
     cvar_modifiedFlags &= ~0x404;
   }
-  
+
   if ( cvar_modifiedFlags & CVAR_SYSTEMINFO )
   {
     SV_SetSystemInfoConfig();
   }
-  
+
   if ( cvar_modifiedFlags & 256 )
   {
     SV_SetConfig(20, 128, 256);
@@ -3961,7 +3998,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 			e_spawns[i].direction2[0],
 			e_spawns[i].direction2[1],
 			e_spawns[i].direction2[2]);
-			
+
 			e_spawns[i].direction2[0] = svs.clients[i].gentity->client->ps.viewangles[0];
 			e_spawns[i].direction2[1] = svs.clients[i].gentity->client->ps.viewangles[1];
 			e_spawns[i].direction2[2] = svs.clients[i].gentity->client->ps.viewangles[2];
@@ -4482,6 +4519,10 @@ void SV_SpawnServer(const char *mapname)
 		return;
 	}
 
+#ifdef _LAGDEBUG
+	Com_DPrintfLogfile("SV_SpawnServer Begin\n");
+#endif
+
   Com_SyncThreads();
   Sys_BeginLoadThreadPriorities();
 #ifndef DEDICATEDONLY
@@ -4518,6 +4559,21 @@ void SV_SpawnServer(const char *mapname)
 
 		for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, cl++)
 		{
+			if(cl->demorecording)
+			{
+				SV_StopRecord(cl);
+				cl->demorecording = qtrue; //Making a new demo later when server is spawned
+				char shortdmname[1024];
+				int demonamelen = strlen(cl->demoName);
+				if(demonamelen < 15 )
+				{
+					cl->demoName[0] = 0;
+				}else{
+					Q_strncpyz(shortdmname, cl->demoName + 6, sizeof(cl->demoName)); //Remove demos/
+					shortdmname[demonamelen -6 -5 -4] = 0;
+					Q_strncpyz(cl->demoName, shortdmname, sizeof(cl->demoName)); //remove .dm_1
+				}
+			}
 
 			if ( cl->state < CS_PRIMED )
 	    {
@@ -4528,7 +4584,7 @@ void SV_SpawnServer(const char *mapname)
 			cl->nextSnapshotTime = -1;
 			SV_SendClientSnapshot( cl );
 		}
-    NET_Sleep(250);
+    Sys_SleepUSec(250000);
   }
   Cvar_SetStringByName("mapname", mapname);
 #ifndef DEDICATEDONLY
@@ -4689,9 +4745,14 @@ void SV_SpawnServer(const char *mapname)
   SV_SaveSystemInfo();
 
   sv.state = SS_GAME;
+
   SV_Heartbeat_f();
   Com_Printf("By using this software you agree to the usage conditions you can find at https://github.com/D4edalus/CoD4x_Server#usage-conditions-for-server-hosters\n");
   Com_Printf("-----------------------------------\n");
 
   Sys_EndLoadThreadPriorities();
+
+#ifdef _LAGDEBUG
+	Com_DPrintfLogfile("SV_SpawnServer Ended\n");
+#endif
 }

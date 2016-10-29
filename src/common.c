@@ -367,6 +367,9 @@ Returns last event time
 */
 void Com_EventLoop( void ) {
 	sysEvent_t	*ev;
+#ifdef _WIN32
+	char consoleline[1024];
+#endif
 
 	while ( 1 ) {
 		ev = Com_GetSystemEvent();
@@ -378,7 +381,11 @@ void Com_EventLoop( void ) {
 			switch(ev->evType)
 			{
 				case SE_CONSOLE:
-					Cbuf_AddText( (char *)ev->evPtr );
+#ifdef _WIN32
+          Com_sprintf(consoleline, sizeof(consoleline), "]%s", (char *)ev->evPtr);
+          Sys_Print(consoleline);
+#endif
+        	Cbuf_AddText( (char *)ev->evPtr );
 					Cbuf_AddText("\n");
 				break;
 				default:
@@ -974,9 +981,17 @@ unsigned int Com_ModifyUsec( unsigned int usec ) {
 		// dedicated servers don't want to clamp for a much longer
 		// period, because it would mess up all the client's views
 		// of time.
+#ifdef _LAGDEBUG
+		if (usec > 280000)
+#else
 		if (usec > 500000)
+#endif
+		{
 			Com_Printf( "^5Hitch warning: %i msec frame time\n", usec / 1000 );
-
+#ifdef _LAGDEBUG
+			Com_DPrintfLogfile("^5Hitch warning: %i msec frame time\n", usec / 1000);
+#endif
+		}
 		clampTime = 5000000;
 	} else if ( !com_sv_running->boolean ) {
 		// clients of remote servers do not want to clamp time, because
@@ -1438,6 +1453,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		mainThreadInError = qfalse;
 		longjmp (*abortframe, -1);
 	} else {
+		Sys_BeginShutdownWatchdog();
 		SV_SApiShutdown();
 		SV_Shutdown(va("Server fatal crashed: %s", com_errorMessage));
 	}

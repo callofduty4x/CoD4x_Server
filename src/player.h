@@ -306,8 +306,8 @@ typedef struct usercmd_s {
 	int		angles[3];
 	byte	weapon;
 	byte	offHandIndex;
-	byte	forwardmove;
-	byte	rightmove;
+	char	forwardmove;      /* Must be char, not byte */
+	char	leftmove;         /* Must be char, not byte */
 	float	meleeChargeYaw;
 	byte	meleeChargeDist;
 	byte	pad[3];

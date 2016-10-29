@@ -130,15 +130,24 @@ static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 	{
 		Q_strncpyz(request->address, address, sizeof(request->address));
 		/* Open the connection */
-		request->socket = NET_TcpClientConnect(request->address);
-
-	  if(request->socket < 0)
-		{
+		int res = NET_StringToAdrNonBlocking(request->address, &request->remote, NA_UNSPEC);
+		if(res < 0){
+			Com_Printf("Unable to resolve hostname %s\n", request->address);
 			request->socket = -1;
 			FT_FreeRequest(request);
 			return NULL;
 		}
+		if(res > 0)
+		{
+			request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
 
+			if(request->socket < 0)
+			{
+				request->socket = -1;
+				FT_FreeRequest(request);
+				return NULL;
+			}
+		}
 	}
 
 	/* For proper terminating of string data +1 */
@@ -276,9 +285,12 @@ static int FT_SendData(ftRequest_t* request)
     {
       return 0;
     }
+/*
     if(bytes < 0){
       Com_Printf("FT_SendData: %s\n", errormsg);
     }
+*/
+
   }else{
 		bytes = mbedtls_ssl_write( &request->tls->ssl, request->sendmsg.data, request->sendmsg.cursize );
 		if( bytes == MBEDTLS_ERR_SSL_WANT_READ || bytes == MBEDTLS_ERR_SSL_WANT_WRITE )
@@ -714,69 +726,118 @@ static int HTTP_ProcessChunkedEncoding(ftRequest_t* request, qboolean connection
 }
 
 
-static int HTTP_SendReceiveData(ftRequest_t* request)
+int HTTP_SendReceiveData(ftRequest_t* request)
 {
 	char* line;
 	int status, i, flags;
 	qboolean gotheader, connectionClosed;
 	char stringlinebuf[MAX_STRING_CHARS];
+	
+	if(request->socketReady == qfalse)
+	{
+		if(request->remote.type == 0)
+		{	//Hostname is still not resolved 
+			/* Open the connection */
+			int res = NET_StringToAdrNonBlocking(request->address, &request->remote, NA_UNSPEC);
+			if(res < 0){
+				Com_Printf("Unable to resolve hostname %s\n", request->address);
+				request->socket = -1;
+				return -1;
+			}
+			if(res > 0)
+			{
+				request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
+
+				if(request->socket < 0)
+				{
+					request->socket = -1;
+					return -1;
+				}
+			}
+			return 0;
+		}
+
+
+		//Test if the socket is connected (3-way hanndshake completed)
+		status = NET_TcpIsSocketReady(request->socket);
+		if(status == 0)
+		{
+			return 0;
+		}
+		if(status < 0)
+		{
+			return -1;
+		}
+		request->socketReady = qtrue;
+	}
+
 
 #ifndef NO_TLS
-  char errormsg[1024];
+	char errormsg[1024];
 
 	if(request->tls && request->tls->gothandshake == qfalse)
 	{
+		mbedtls_ssl_set_bio( &request->tls->ssl, (void*)request->socket, mbedtls_net_send, mbedtls_net_recv, NULL );
+
 		int ret = mbedtls_ssl_handshake( &request->tls->ssl );
 		if(ret != 0 )
 		{
-				if( ret != MBEDTLS_ERR_SSL_WANT_READ &&	ret != MBEDTLS_ERR_SSL_WANT_WRITE )
-				{
-            mbedtls_strerror(ret, errormsg, sizeof(errormsg));
-						Com_Printf( "HTTP_SendReceiveData: mbedtls_ssl_handshake returned %s\n", errormsg );
-						return -1;
-				}
-				return 0;
+			if( ret != MBEDTLS_ERR_SSL_WANT_READ &&	ret != MBEDTLS_ERR_SSL_WANT_WRITE )
+			{
+				mbedtls_strerror(ret, errormsg, sizeof(errormsg));
+				Com_Printf( "HTTP_SendReceiveData: mbedtls_ssl_handshake returned %s\n", errormsg );
+				return -1;
+			}
+			return 0;
 		}
 		request->tls->gothandshake = qtrue;
 
 		/* In real life, we probably want to bail out when ret != 0 */
 		if( ( flags = mbedtls_ssl_get_verify_result( &request->tls->ssl ) ) != 0 )
 		{
-				char vrfy_buf[512];
-				mbedtls_x509_crt_verify_info( vrfy_buf, sizeof( vrfy_buf ), "", flags );
-				Com_Printf( "The TLS host verification has failed\n%s\n", vrfy_buf);
-        return -1;
+			char vrfy_buf[512];
+			mbedtls_x509_crt_verify_info( vrfy_buf, sizeof( vrfy_buf ), "", flags );
+			Com_Printf( "The TLS host verification has failed\n%s\n", vrfy_buf);
+        	return -1;
 		}
-
 	}
 #endif
 
-	if (request->sendmsg.cursize > 0) {
+	if (request->sendmsg.cursize > 0) 
+	{
 		status = FT_SendData(request);
 
 		if(status < 0)
+		{
+	//      Com_DPrintf("FT_SendData error\n");
 			return -1;
+		}
+		
 		return 0;
 	}
 
 	status = FT_ReceiveData(request);
-  if(status == -2)
-  {
-    return -1; //bail out
-  }
+	if(status == -2)
+	{
+	//    Com_DPrintf("FT_ReceiveData error\n");
+		return -1; //bail out
+	}
 
-  if(status < 0)
+	if(status < 0)
 	{
 		connectionClosed = qtrue;
 	}else{
 		connectionClosed = qfalse;
 	}
 
-	if (status == -1 || status == 1) {
+	if (status == -1 || status == 1) 
+	{
 		if(request->chunkedEncoding && request->headerLength > 0)
 		{
 			return HTTP_ProcessChunkedEncoding(request, connectionClosed);
-		}else if(status != 1){
+		}
+		else if(status != 1)
+		{
 			return status;
 		}
 	}
@@ -784,7 +845,7 @@ static int HTTP_SendReceiveData(ftRequest_t* request)
 	{
 		gotheader = qfalse;
 
-    request->version = 0;
+    	request->version = 0;
 		request->code = 0;
 		request->status[0] = '\0';
 		request->contentLength = 0;
@@ -832,7 +893,9 @@ static int HTTP_SendReceiveData(ftRequest_t* request)
 		if(line[i +9] != '\0')
 		{
 			Q_strncpyz(request->status, &line[i +9], sizeof(request->status));
-		}else{
+		}
+		else
+		{
 			Q_strncpyz(request->status, "N/A", sizeof(request->status));
 		}
 
@@ -854,12 +917,16 @@ static int HTTP_SendReceiveData(ftRequest_t* request)
 					request->contentLength = 0;
 					return -1;
 				}
-			}else if(!Q_stricmpn("Transfer-Encoding:", line, 18)){
+			}
+			else if(!Q_stricmpn("Transfer-Encoding:", line, 18))
+			{
 				if(strstr(line, "chunked"))
 				{
 					request->chunkedEncoding = 1;
 				}
-			}else if(!Q_stricmpn("Location:", line, 9)){
+			}
+			else if(!Q_stricmpn("Location:", line, 9))
+			{
 				if(strlen(line +9) > 8)
 				{
 					/* We have to make it new... */
@@ -921,17 +988,22 @@ static int HTTP_SendReceiveData(ftRequest_t* request)
 
 	}
 	/* Header was complete */
-	if( request->finallen > 0){
+	if( request->finallen > 0)
+	{
 		request->transferactive = qtrue;
 	}
 
 	request->extrecvmsg = &request->recvmsg;
 	if(request->contentLengthArrived)
 	{
-		if (request->totalreceivedbytes < request->finallen) {
-		/* Still needing bytes... */
+		if (request->totalreceivedbytes < request->finallen) 
+		{
+			/* Still needing bytes... */
+			//printf("received %d of %d bytes\n", request->totalreceivedbytes, request->finallen);
 			return 0;
-		}else{
+		}
+		else
+		{
 			/* Received full message */
 			return 1;
 		}
@@ -943,8 +1015,8 @@ static int HTTP_SendReceiveData(ftRequest_t* request)
 	/* Received full message */
 	request->finallen = request->totalreceivedbytes;
 	request->contentLength = request->totalreceivedbytes - request->headerLength;
-	return 1;
 
+	return 1;
 }
 
 
@@ -984,10 +1056,14 @@ int mbedtls_net_send( void *ctx, const unsigned char *buf, size_t len )
     int ret;
     int fd = (int)ctx;
 
+//    Com_Printf("Calling BIO send - Len: %d FD: %d\n", len, fd);
+
     if( fd < 0 )
         return( MBEDTLS_ERR_NET_INVALID_CONTEXT );
 
-    ret = NET_TcpSendData( fd, buf, len, NULL, 0 );
+    char errormsg[1024];
+
+    ret = NET_TcpSendData( fd, buf, len, errormsg, sizeof(errormsg) );
 //    Com_Printf("BIO sent %d bytes\n", ret);
 
     if( ret < 0 )
@@ -1074,7 +1150,7 @@ static int HTTPS_SetupCAs()
   return 1;
 }
 
-
+//This does no longer setup BIO. BIO has to be set on a later stage
 static int HTTPS_Prepare( ftRequest_t* request, const char* commonname )
 {
 	int ret;
@@ -1133,7 +1209,6 @@ static int HTTPS_Prepare( ftRequest_t* request, const char* commonname )
   }
 
   mbedtls_ssl_conf_ca_chain( &request->tls->conf, &cacert, NULL );
-	mbedtls_ssl_set_bio( &request->tls->ssl, (void*)request->socket, mbedtls_net_send, mbedtls_net_recv, NULL );
 	return qtrue;
 
 failure:
@@ -1474,6 +1549,42 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 	byte* buf;
 	netadr_t pasvadr;
 	char stringlinebuf[MAX_STRING_CHARS];
+
+	if(request->socketReady == qfalse)
+	{
+		if(request->remote.type == 0)
+		{	//Hostname is still not resolved 
+			/* Open the connection */
+			int res = NET_StringToAdrNonBlocking(request->address, &request->remote, NA_UNSPEC);
+			if(res < 0){
+				Com_Printf("Unable to resolve hostname %s\n", request->address);
+				request->socket = -1;
+				return -1;
+			}
+			if(res > 0)
+			{
+				request->socket = NET_TcpClientConnectNonBlockingToAdr(&request->remote);
+
+				if(request->socket < 0)
+				{
+					request->socket = -1;
+					return -1;
+				}
+			}
+			return 0;
+		}
+
+		status = NET_TcpIsSocketReady(request->socket);
+		if(status == 0)
+		{
+			return 0;
+		}
+		if(status < 0)
+		{
+			return -1;
+		}
+		request->socketReady = qtrue;
+	}
 
 	status = FT_ReceiveData(request);
 
@@ -2117,7 +2228,6 @@ void HTTPServer_BuildResponse(ftRequest_t* request, char* sessionkey, httpPostVa
 }
 
 
-
 void HTTP_ParseFormDataBody(char* body, httpPostVals_t* values)
 {
 	int i, k;
@@ -2146,14 +2256,19 @@ void HTTP_ParseFormDataBody(char* body, httpPostVals_t* values)
 		body += i+1;
 		i = 0;
 
-		while (body[i] != '&' && body[i] != '\0')
+		while (body[i] != '&' && body[i] != '\0' && body[i] != '\r' && body[i] != '\n')
 		{
 			i++;
 		}
-		if(body[i] == '\0')
+		if(body[i] == '\0' || body[i] == '\r' || body[i] == '\n')
 		{
 			Q_strncpyz(values[k].value, body, sizeof(values[k].value));
-			HTTP_DecodeURL(values[k].value);
+      if(sizeof(values[k].value) <= i)
+      {
+        i = sizeof(values[k].value) -1;
+      }
+      values[k].value[i] = 0;
+      HTTP_DecodeURL(values[k].value);
 			break;
 		}
 		body[i] = '\0';
@@ -2167,6 +2282,7 @@ void HTTP_ParseFormDataBody(char* body, httpPostVals_t* values)
 
 
 }
+
 
 const char* HTTP_GetFormDataItem(httpPostVals_t* values, const char* search)
 {

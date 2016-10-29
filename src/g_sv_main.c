@@ -452,7 +452,13 @@ __cdecl void QDECL G_LogPrintf( const char *fmt, ... ) {
 		return;
 	}
 
+#ifdef _WIN32
+	char outstring[2048];
+	stringlen = Q_strLF2CRLF(string, outstring, sizeof(outstring) );
+	FS_Write( outstring, stringlen, level.logFile );
+#else
 	FS_Write( string, stringlen, level.logFile );
+#endif
 }
 
 #define MAX_REDIRECTDESTINATIONS 4

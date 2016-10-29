@@ -54,6 +54,7 @@ typedef struct
 	int stage;
 	ftprotocols_t protocol;
 	netadr_t remote;
+	qboolean socketReady;
 	#ifndef NO_TLS
 		struct tlsstate_s *tls;
 	#endif
@@ -75,6 +76,7 @@ typedef struct
 	char value[MAX_STRING_CHARS];
 }httpPostVals_t;
 
+int HTTP_SendReceiveData(ftRequest_t* request);
 void FileDownloadFreeRequest(ftRequest_t* request);
 ftRequest_t* FileDownloadRequest( const char* url);
 int FileDownloadSendReceive( ftRequest_t* request );

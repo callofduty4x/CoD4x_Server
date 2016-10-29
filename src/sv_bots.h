@@ -3,23 +3,24 @@
 
 #include "player.h"
 #include "sys_cod4defs.h"
-#include "scr_vm.h"
-#include "sys_main.h"
-#include "q_math.h"
-#include "scr_vm_functions.h"
-#include "misc.h"
-#include "dobj_part_cache.h"
 
-typedef struct BotMovementInfo_s
+/* Should keep attribute and this field layout.
+ * Met situation where simple vector read into moveTo broke whole
+ *  structure.
+*/
+typedef struct __attribute__ ((aligned (1))) BotMovementInfo
 {
-	byte forwardMove;
-	byte rightMove;
-	int buttons;
-	short int rotFrac[3];
-	int rotIterCount;
-} BotMovementInfo_t;
+    /* Actions */
+    int buttons;
+    /* Movement */
+    int doMove;
+    float moveTo[2];
+    /* Rotation */
+    int rotIterCount;
+    short int rotFrac[2];
+} BotMovementInfo;
 
-extern BotMovementInfo_t BotMovement[MAX_CLIENTS];
+extern BotMovementInfo g_botai[MAX_CLIENTS];
 
 void Scr_AddBotsMovement();
 

@@ -129,7 +129,7 @@ void SV_ScreenshotClient( client_t* cl, const char* basename ) {
 		SV_SApiTakeSS(cl, name);
 		return;
 	}
-	
+
 	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
 	{
 		if( cl->state != CS_ACTIVE ) {
@@ -156,15 +156,19 @@ void SV_ScreenshotArrived( client_t* cl, const char* filename )
 {
 	static char cmdline[1024];
 
+	PHandler_Event(PLUGINS_ONSCREENSHOTARRIVED, cl, filename);
+
+
 	if(!*sv_screenshotArrivedCmd->string)
 		return;
-	
+
 	if(strstr(sv_screenshotArrivedCmd->string, ".."))
 	{
 		Com_PrintWarning("Commandlines containing \"..\" are not allowed\n");
 		return;
 	}
 	Com_sprintf(cmdline, sizeof(cmdline), "\"%s/apps/%s\" \"%s/%s\"", fs_homepath->string, sv_screenshotArrivedCmd->string, fs_homepath->string, filename);
+
 	Sys_DoStartProcess(cmdline);
 }
 
