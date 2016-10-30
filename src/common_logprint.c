@@ -248,10 +248,10 @@ void Com_DPrintLogfile( const char *msg )
 	    }
 	    if ( debuglogfile && FS_Initialized())
 	    {
-#ifdef _WIN32
 				char outstring[2* MAXPRINTMSG];
 				Com_sprintf(outstring, sizeof(outstring), "Time=%ud ", Sys_Milliseconds());
 				FS_Write( outstring, strlen(outstring), debuglogfile );
+#ifdef _WIN32
 				int stringlen = Q_strLF2CRLF(msg, outstring, sizeof(outstring) );
 				FS_Write( outstring, stringlen, debuglogfile );
 #else
