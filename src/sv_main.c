@@ -1198,13 +1198,6 @@ void SVC_SourceEngineQuery_WriteInfo( msg_t* msg, const char* challengeStr, qboo
 		MSG_WriteByte( msg, Cvar_VariableBooleanValue("scr_game_allowkillcam"));
 		MSG_WriteByte( msg, Cvar_VariableBooleanValue("scr_hardcore"));
 		MSG_WriteByte( msg, Cvar_VariableBooleanValue("scr_oldschool"));
-
-      Com_Printf("debug: %d %d %d %d\n", Cvar_VariableIntegerValue("scr_team_fftype"),
-	  Cvar_VariableBooleanValue("scr_game_allowkillcam"),
-	  Cvar_VariableBooleanValue("scr_hardcore"),
-	  Cvar_VariableBooleanValue("scr_oldschool"));
-
-
 		MSG_WriteByte( msg, sv_voice->boolean);
 
 
@@ -1891,7 +1884,9 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
 		SVC_SourceEngineQuery_Player( from, msg );
 	} else if(msg->data[4] == 'W'){
 		SVC_SourceEngineQuery_Challenge( from );
-
+	} else if (!Q_stricmp(c, "error")) {
+		char errbuf[256];
+		Com_Printf("Error: %s\n", MSG_ReadString(msg, errbuf, sizeof(errbuf)));
 #ifdef PUNKBUSTER
 	} else if (!Q_strncmp("PB_", (char *) &msg->data[4], 3)) {
 

@@ -185,8 +185,9 @@ float Cvar_VariableValueInternal( const char *var_name ) {
 		return var->value;
 	if(var->type == CVAR_INT)
 		return (float)var->integer;
-	else
-		return 0.0;
+	if(var->type == CVAR_STRING && var->string)
+		return atof(var->string);
+	return 0.0;
 }
 float Cvar_VariableValue( const char *var_name )
 {
@@ -212,8 +213,9 @@ int Cvar_VariableIntegerValueInternal( const char *var_name ) {
 		return (int)var->value;
 	if(var->type == CVAR_INT)
 		return var->integer;
-	else
-		return 0;
+	if(var->type == CVAR_STRING && var->string)
+		return atoi(var->string);
+	return 0;
 }
 int Cvar_VariableIntegerValue( const char *var_name )
 {
@@ -229,6 +231,7 @@ Cvar_VariableBooleanValue
 */
 qboolean Cvar_VariableBooleanValueInternal( const char *var_name ) {
 	cvar_t	*var;
+	int aival;
 
 	var = Cvar_FindVar (var_name);
 	if (!var)
@@ -249,8 +252,15 @@ qboolean Cvar_VariableBooleanValueInternal( const char *var_name ) {
 		else
 			return qtrue;
 	}
-	else
-		return 0;
+	if(var->type == CVAR_STRING && var->string)
+	{
+		aival = atoi(var->string);
+		if(aival)
+			return qtrue;
+		else
+			return qfalse;
+	}
+	return 0;
 }
 qboolean Cvar_VariableBooleanValue( const char *var_name )
 {
