@@ -688,28 +688,30 @@ void ReliableMessagesFrame(netreliablemsg_t *chan, int now)
 	{
 		return;
 	}
-        lastTime = ReliableMessageGetCurrentTime(chan);
-        //Get the time elapsed between last calling of this function and now
-        elapsed = now - lastTime;
-        ReliableMessageSetCurrentTime(chan, now);
+    lastTime = ReliableMessageGetCurrentTime(chan);
+    //Get the time elapsed between last calling of this function and now
+    elapsed = now - lastTime;
+    ReliableMessageSetCurrentTime(chan, now);
+
+    if(elapsed > 250)
+    {
 #ifdef RELIABLE_DEBUG
-        if(elapsed > 250)
-        {
-            Com_Printf("Omit sending packets - burst prevention\n");
-            return;
-        }
+        Com_Printf("Omit sending packets - burst prevention\n");
 #endif
+        return;
+    }
+
 	//HOW MANY frames we have to send compared to last time?
 	//Condition: windowsize -> sending all packets in 1000msec window
 	//Counting the amount of packets so we can stay with the rate in line
-        millipackets = elapsed * chan->txwindow.windowsize + chan->txwindow.unsentmillipackets;
-        packets = millipackets / 1000;
-        chan->txwindow.unsentmillipackets = millipackets % 1000;
-        //Sending all packets
-        for(i = 0; i < packets; ++i)
-        {
-            ReliableMessagesTransmitNextFragment(chan);
-        }
-        ReliableMessageTrackRate(chan);
+    millipackets = elapsed * chan->txwindow.windowsize + chan->txwindow.unsentmillipackets;
+    packets = millipackets / 1000;
+    chan->txwindow.unsentmillipackets = millipackets % 1000;
+    //Sending all packets
+    for(i = 0; i < packets; ++i)
+    {
+        ReliableMessagesTransmitNextFragment(chan);
+    }
+    ReliableMessageTrackRate(chan);
 }
 
