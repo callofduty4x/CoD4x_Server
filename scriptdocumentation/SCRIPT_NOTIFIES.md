@@ -2,79 +2,79 @@
 
 ## Table of contents
 
-1. Foreword.
-2. Core game script notifies.
-3. Custom CoD4X script notifies.
+1. [Foreword](#foreword)
+2. [Core game script notifies](#core-game-script-notifies)
+3. [Custom CoD4X script notifies](#custom-cod4x-script-notifies)
 
 ## Foreword
 
 Script notifies is a GSC engine feature allows you to create and listen to various events happens with entities (mostly). You can block script thread using
 
 ```C
-    ent waittill("some-event");
+ent waittill("some-event");
 ```
 
 To continue this thread you have to "notify" it in other script thread using
 
 ```C
-    ent notify("some-event");
+ent notify("some-event");
 ```
 
 Also, you can kill script thread with
 
 ```C
-    ent endon("some-event"); /* Not blocking call. */
+ent endon("some-event"); /* Not blocking call. */
 ```
 
 More than that, you can pass arguments among event notifications. For example, 
 
 ```C
-    ent waittill("my-cool-event-with-args", stringArg, intArg, target);
-    /* ... */
-    ent notify("my-cool-event-with-args", "string", 1337, self);
+ent waittill("my-cool-event-with-args", stringArg, intArg, target);
+/* ... */
+ent notify("my-cool-event-with-args", "string", 1337, self);
 ```
 
 ## Core game script notifies
 
-1. begin
-2. begin_firing
-3. call_vote
-4. cancel_location
-5. confirm_location
-6. damage
-7. death
-8. detonate
-9. end_firing
-10. explode
-11. flashbang
-12. goal
-13. goal_yaw
-14. grenade danger
-15. grenade_fire
-16. grenade_pullback
-17. menuresponse
-18. movedone
-19. near_goal
-20. night_vision_off
-21. night_vision_on
-22. projectile_impact
-23. reload
-24. reload_start
-25. rotatedone
-26. sprint_begin
-27. sprint_end
-28. touch
-29. trigger
-30. turret_no_vis
-31. turret_not_on_target
-32. turret_on_target
-33. turret_on_vistarget
-34. turret_rotate_stopped
-35. veh_collision
-36. veh_predictedcollision
-37. vote
-38. weapon_change
-39. weapon_fired
+1. [begin](#begin)
+2. [begin_firing](#begin_firing)
+3. [call_vote](#call_vote)
+4. [cancel_location](#cancel_location)
+5. [confirm_location](#confirm_location)
+6. [damage](#damage)
+7. [death](#death)
+8. [detonate](#detonate)
+9. [end_firing](#end_firing)
+10. [explode](#explode)
+11. [flashbang](#flashbang)
+12. [goal](#goal)
+13. [goal_yaw](#goal_yaw)
+14. [grenade danger](#grenade-danger)
+15. [grenade_fire](#grenade_fire)
+16. [grenade_pullback](#grenade_pullback)
+17. [menuresponse](#menuresponse)
+18. [movedone](#movedone)
+19. [near_goal](#near_goal)
+20. [night_vision_off](#night_vision_off)
+21. [night_vision_on](#night_vision_on)
+22. [projectile_impact](#projectile_impact)
+23. [reload](#reload)
+24. [reload_start](#reload_start)
+25. [rotatedone](#rotatedone)
+26. [sprint_begin](#sprint_begin)
+27. [sprint_end](#sprint_end)
+28. [touch](#touch)
+29. [trigger](#trigger)
+30. [turret_no_vis](#turret_no_vis)
+31. [turret_not_on_target](#turret_not_on_target)
+32. [turret_on_target](#turret_on_target)
+33. [turret_on_vistarget](#turret_on_vistarget)
+34. [turret_rotate_stopped](#turret_rotate_stopped)
+35. [veh_collision](#veh_collision)
+36. [veh_predictedcollision](#veh_predictedcollision)
+37. [vote](#vote)
+38. [weapon_change](#weapon_change)
+39. [weapon_fired](#weapon_fired)
 
 ### begin
 
@@ -418,8 +418,8 @@ __On:__ Player.
 
 ## Custom CoD4X script notifies
 
-1. movedone
-2. rotatedone
+1. [movedone](#movedone-1)
+2. [rotatedone](#rotatedone-1)
 
 ### movedone
 
