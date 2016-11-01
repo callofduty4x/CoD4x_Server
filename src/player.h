@@ -34,7 +34,9 @@
 #define KEY_MASK_BACK           129
 #define KEY_MASK_MOVELEFT       129
 
+#define KEY_MASK_FIRE           1
 #define KEY_MASK_SPRINT         2
+#define KEY_MASK_MELEE          4
 #define KEY_MASK_RELOAD         16
 #define KEY_MASK_LEANLEFT       64
 #define KEY_MASK_LEANRIGHT      128
@@ -42,7 +44,10 @@
 #define KEY_MASK_CROUCH         512
 #define KEY_MASK_JUMP           1024
 #define KEY_MASK_ADS_MODE       2048
+#define KEY_MASK_TEMP_ACTION    4096
 #define KEY_MASK_HOLDBREATH     8192
+#define KEY_MASK_FRAG           16384
+#define KEY_MASK_SMOKE          32768
 #define KEY_MASK_NIGHTVISION    262144
 #define KEY_MASK_ADS            524288
 
@@ -301,8 +306,8 @@ typedef struct usercmd_s {
 	int		angles[3];
 	byte	weapon;
 	byte	offHandIndex;
-	byte	forwardmove;
-	byte	rightmove;
+	char	forwardmove;      /* Must be char, not byte */
+	char	leftmove;         /* Must be char, not byte */
 	float	meleeChargeYaw;
 	byte	meleeChargeDist;
 	byte	pad[3];

@@ -37,7 +37,6 @@ void __cdecl SEH_UpdateLanguageInfo(void);
 void __cdecl SetAnimCheck(int);
 qboolean __cdecl BG_IsWeaponValid( playerState_t *ps, unsigned int index);
 qboolean __cdecl SEH_StringEd_GetString( const char* input );
-void __cdecl DObjInit(void);
 
 void __cdecl SL_Init(void);
 void __cdecl SL_RemoveRefToString( unsigned int );

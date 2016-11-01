@@ -29,6 +29,7 @@
 #include "cmd.h"
 #include "misc.h"
 #include "sys_main.h"
+#include "sv_bots.h"
 
 #include <stdarg.h>
 
@@ -579,8 +580,10 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
 	Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
 
-  Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
+    Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
 
+    /* Bot movement */
+    Scr_AddBotsMovement();
 }
 
 void Scr_InitFunctions()
