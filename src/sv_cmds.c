@@ -532,9 +532,9 @@ static void SV_MiniStatus_f( void ) {
 
 	Com_Printf ("map: %s\n", sv_mapname->string );
 
-	Com_Printf ("num score ping playerid          steamid           name                             address                                             FPS XVer\n");
+	Com_Printf ("num score ping playerid            steamid           name                             address                                             FPS XVer\n");
 
-	Com_Printf ("--- ----- ---- ----------------- ----------------- -------------------------------- --------------------------------------------------- --- ----------- \n");
+	Com_Printf ("--- ----- ---- ------------------- ----------------- -------------------------------- --------------------------------------------------- --- ----------- \n");
 	for (i=0,cl=svs.clients, gclient = level.clients ; i < sv_maxclients->integer ; i++, cl++, gclient++)
 	{
 		if (!cl->state)
@@ -564,7 +564,7 @@ static void SV_MiniStatus_f( void ) {
 
     Com_Printf ("%s", psti );
 
-    l = 18 - strlen(psti);
+    l = 20 - strlen(psti);
     j = 0;
 
     do
@@ -678,8 +678,8 @@ static void SV_Status_f( void ) {
 	Com_Printf("map     : %s\n", sv_mapname->string);
 	Com_Printf("\n");
 
-	Com_Printf ("num score ping playerid          steamid           name                             lastmsg address                                              qport rate\n");
-	Com_Printf ("--- ----- ---- ----------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
+	Com_Printf ("num score ping playerid            steamid           name                             lastmsg address                                              qport rate\n");
+	Com_Printf ("--- ----- ---- ------------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
   }
 
 	for (i=0,cl=svs.clients, gclient = level.clients; i < sv_maxclients->integer ; i++, cl++, gclient++)
@@ -736,7 +736,7 @@ static void SV_Status_f( void ) {
 
       Com_Printf ("%s", psti );
 
-      l = 18 - strlen(psti);
+      l = 20 - strlen(psti);
       j = 0;
 
       do
