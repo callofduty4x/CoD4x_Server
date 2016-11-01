@@ -2237,7 +2237,7 @@ static void NET_GetLocalAddress( void ) {
 		{
 			NET_AddLocalAddress("localhost", (struct sockaddr *) &localhostadr, (struct sockaddr *) &mask6);
 		}
-
+/*
 		if( has_ip6 )
 		{
 			for(i = 0; i < MAX_IPS; ++i)
@@ -2263,7 +2263,7 @@ static void NET_GetLocalAddress( void ) {
 
 			numIP++;
 		}
-
+*/
 		Sys_ShowIP();
 	}
 
