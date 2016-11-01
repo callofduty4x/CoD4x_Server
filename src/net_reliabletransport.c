@@ -238,26 +238,26 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 	    {
 		//Already received by the remote end
 #ifdef RELIABLE_DEBUG
-		Com_Printf("Send: Skip over %d\n", sequence);
+			Com_Printf("Send: Skip over %d\n", sequence);
 #endif
 	    }else{
-		MSG_WriteLong(&buf, 0xfffffff0);
-		MSG_WriteShort(&buf, chan->qport);
-		MSG_WriteLong(&buf, sequence);
-		MSG_WriteLong(&buf, chan->rxwindow.sequence); //Acknowledge for the other end
-		ReliableMessageWriteSelectiveAcklist(&chan->rxwindow, &buf);
-		MSG_WriteShort(&buf, chan->txwindow.windowsize);
-		MSG_WriteShort(&buf, chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len); //Fragment size
-		MSG_WriteData(&buf, chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].data, 
-							chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len);
-							
-		NET_SendPacket( chan->sock, buf.cursize, buf.data, &chan->remoteAddress );
-		chan->txwindow.packets++;
-		chan->nextacktime = chan->time + 350;
+			MSG_WriteLong(&buf, 0xfffffff0);
+			MSG_WriteShort(&buf, chan->qport);
+			MSG_WriteLong(&buf, sequence);
+			MSG_WriteLong(&buf, chan->rxwindow.sequence); //Acknowledge for the other end
+			ReliableMessageWriteSelectiveAcklist(&chan->rxwindow, &buf);
+			MSG_WriteShort(&buf, chan->txwindow.windowsize);
+			MSG_WriteShort(&buf, chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len); //Fragment size
+			MSG_WriteData(&buf, chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].data, 
+								chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len);
+								
+			NET_SendPacket( chan->sock, buf.cursize, buf.data, &chan->remoteAddress );
+			chan->txwindow.packets++;
+			chan->nextacktime = chan->time + 350;
 #ifdef RELIABLE_DEBUG
-		Com_Printf("Sending SEQ: %d ACK: %d\n", sequence, chan->rxwindow.sequence);
+			Com_Printf("Sending SEQ: %d ACK: %d\n", sequence, chan->rxwindow.sequence);
 #endif
-		chan->txwindow.rateInfo.bytesTotal += buf.cursize; //Track the rate
+			chan->txwindow.rateInfo.bytesTotal += buf.cursize; //Track the rate
 	    }
 	}
 
@@ -708,6 +708,7 @@ void ReliableMessagesFrame(netreliablemsg_t *chan, int now)
     packets = millipackets / 1000;
     chan->txwindow.unsentmillipackets = millipackets % 1000;
     //Sending all packets
+	//Com_Printf("Packet count: %d\n", packets);
     for(i = 0; i < packets; ++i)
     {
         ReliableMessagesTransmitNextFragment(chan);

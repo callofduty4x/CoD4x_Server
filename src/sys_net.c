@@ -2237,6 +2237,33 @@ static void NET_GetLocalAddress( void ) {
 		{
 			NET_AddLocalAddress("localhost", (struct sockaddr *) &localhostadr, (struct sockaddr *) &mask6);
 		}
+
+		if( has_ip6 )
+		{
+			for(i = 0; i < MAX_IPS; ++i)
+			{
+				struct sockaddr_in6* t6;
+				
+				if(localIP[numIP].type != NA_IP6)
+				{
+					continue;
+				}
+				t6 = &localIP[numIP].addr;
+				if(localIP[numIP].addr)
+
+
+			}
+
+			Q_strncpyz(localIP[numIP].ifname, ifname, sizeof(localIP[numIP].ifname));
+
+			localIP[numIP].family = family;
+
+			memcpy(&localIP[numIP].addr, addr, addrlen);
+			memcpy(&localIP[numIP].netmask, netmask, addrlen);
+
+			numIP++;
+		}
+
 		Sys_ShowIP();
 	}
 
