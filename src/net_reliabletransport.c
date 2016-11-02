@@ -693,6 +693,11 @@ void ReliableMessagesFrame(netreliablemsg_t *chan, int now)
     elapsed = now - lastTime;
     ReliableMessageSetCurrentTime(chan, now);
 
+#ifdef _LAGDEBUG
+	if(elapsed < 0)
+		Com_DPrintfLogfile("FATAL: elapsed is negative\n");
+#endif
+
     if(elapsed > 250)
     {
 #ifdef RELIABLE_DEBUG
@@ -709,6 +714,11 @@ void ReliableMessagesFrame(netreliablemsg_t *chan, int now)
     chan->txwindow.unsentmillipackets = millipackets % 1000;
     //Sending all packets
 	//Com_Printf("Packet count: %d\n", packets);
+#ifdef _LAGDEBUG
+
+	if(packets > 5)
+		Com_DPrintfLogfile("More than 5 packets: %d\n", packets);
+#endif
     for(i = 0; i < packets; ++i)
     {
         ReliableMessagesTransmitNextFragment(chan);
