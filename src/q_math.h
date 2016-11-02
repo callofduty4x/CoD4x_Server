@@ -44,15 +44,15 @@ typedef int fixed4_t;
 typedef int fixed8_t;
 typedef int fixed16_t;
 
-#define DotProduct(a,b)			((a)[0]*(b)[0]+(a)[1]*(b)[1]+(a)[2]*(b)[2])
-#define VectorSubtract(a,b,c)	((c)[0]=(a)[0]-(b)[0],(c)[1]=(a)[1]-(b)[1],(c)[2]=(a)[2]-(b)[2])
-#define VectorAdd(a,b,c)		((c)[0]=(a)[0]+(b)[0],(c)[1]=(a)[1]+(b)[1],(c)[2]=(a)[2]+(b)[2])
-#define VectorCopy(a,b)			((b)[0]=(a)[0],(b)[1]=(a)[1],(b)[2]=(a)[2])
-//#define VectorCopy(a,b)			((b).x=(a).x,(b).y=(a).y,(b).z=(a).z])
+#define DotProduct(a,b)         ((a)[0]*(b)[0]+(a)[1]*(b)[1]+(a)[2]*(b)[2])
+#define VectorSubtract(a,b,c)   ((c)[0]=(a)[0]-(b)[0],(c)[1]=(a)[1]-(b)[1],(c)[2]=(a)[2]-(b)[2])
+#define VectorAdd(a,b,c)        ((c)[0]=(a)[0]+(b)[0],(c)[1]=(a)[1]+(b)[1],(c)[2]=(a)[2]+(b)[2])
+#define VectorCopy(a,b)         ((b)[0]=(a)[0],(b)[1]=(a)[1],(b)[2]=(a)[2])
+//#define VectorCopy(a,b)         ((b).x=(a).x,(b).y=(a).y,(b).z=(a).z])
 
-#define	VectorScale(v, s, o)	((o)[0]=(v)[0]*(s),(o)[1]=(v)[1]*(s),(o)[2]=(v)[2]*(s))
-#define VectorMA( v, s, b, o )  ( ( o )[0] = ( v )[0] + ( b )[0] * ( s ),( o )[1] = ( v )[1] + ( b )[1] * ( s ),( o )[2] = ( v )[2] + ( b )[2] * ( s ) )
-#define CrossProduct(a,b,c)		((c)[0]=(a)[1]*(b)[2]-(a)[2]*(b)[1],(c)[1]=(a)[2]*(b)[0]-(a)[0]*(b)[2],(c)[2]=(a)[0]*(b)[1]-(a)[1]*(b)[0])
+#define	VectorScale(v, s, o)    ((o)[0]=(v)[0]*(s),(o)[1]=(v)[1]*(s),(o)[2]=(v)[2]*(s))
+#define VectorMA(v, s, b, o)    ((o)[0]=(v)[0]+(b)[0]*(s),(o)[1]=(v)[1]+(b)[1]*(s),(o)[2]=(v)[2]+(b)[2]*(s))
+#define CrossProduct(a,b,c)     ((c)[0]=(a)[1]*(b)[2]-(a)[2]*(b)[1],(c)[1]=(a)[2]*(b)[0]-(a)[0]*(b)[2],(c)[2]=(a)[0]*(b)[1]-(a)[1]*(b)[0])
 
 #define DotProduct4( x,y )        ( ( x )[0] * ( y )[0] + ( x )[1] * ( y )[1] + ( x )[2] * ( y )[2] + ( x )[3] * ( y )[3] )
 #define VectorSubtract4( a,b,c )  ( ( c )[0] = ( a )[0] - ( b )[0],( c )[1] = ( a )[1] - ( b )[1],( c )[2] = ( a )[2] - ( b )[2],( c )[3] = ( a )[3] - ( b )[3] )
@@ -76,12 +76,38 @@ struct cplane_s;
 void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanFrac, const float fViewRoll, const float fLeanDist);
 int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd);
 int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
+// 0x081921A2
+void Math_VectorToAngles(vec3_t vector, vec3_t angles);
+
+void  vec2_copy      (vec2_t to, vec2_t from);
+void  vec2_add       (vec2_t to, vec2_t from);
+void  vec2_substract (vec2_t to, vec2_t from);
+void  vec2_multiply  (vec2_t v, float k);
+void  vec2_divide    (vec2_t v, float k);
+float vec2_distance  (vec2_t start, vec2_t end);
+float vec2_length    (vec2_t v);
+void  vec2_normalize (vec2_t v);
+void  vec2_floor     (vec2_t v);
+void  vec2_rotate    (vec2_t v, float pitch);
+float vec2_maxabs    (vec2_t v);
+
+void  vec3_copy      (vec3_t to, vec3_t from);
+void  vec3_add       (vec3_t to, vec3_t from);
+void  vec3_substract (vec3_t to, vec3_t from);
+void  vec3_multiply  (vec3_t v, float k);
+void  vec3_divide    (vec3_t v, float k);
+float vec3_distance  (vec3_t start, vec3_t end);
+float vec3_length    (vec3_t v);
+void  vec3_normalize (vec3_t v);
+void  vec3_floor     (vec3_t v);
+/* void  vec3_rotate    (vec3_t v, float pitch, float yaw); */
+float vec3_maxabs    (vec3_t v);
 
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001
 #endif
 
-float Q_fabs( float f );
+float Q_fabs(float f);
 
 #ifndef ID_INLINE
 #ifdef _WIN32

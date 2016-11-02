@@ -26,6 +26,7 @@
 
 #include "scr_vm.h"
 #include "g_sv_shared.h"
+#include "dobj.h"
 
 #ifndef SCR_ENTREF_DEFINED
 #define SCR_ENTREF_DEFINED
@@ -111,5 +112,8 @@ void Scr_Destroy_f(scr_entref_t hud_elem_num);
 void GScr_IsCvarDefined();
 
 void Scr_IsArray_f();
+
+qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
+void PrintModelBonesInfo(gentity_t *ent);
 
 #endif

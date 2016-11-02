@@ -40,6 +40,7 @@
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
+#include "scr_vm_functions.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 
@@ -2766,7 +2767,7 @@ void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
 	if(!cl)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
-	Scr_AddBool(cl->lastUsercmd.rightmove == KEY_MASK_MOVELEFT ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.leftmove == KEY_MASK_MOVELEFT ? qtrue : qfalse);
 }
 
 void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
@@ -2779,7 +2780,7 @@ void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
 	if(!cl)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
-	Scr_AddBool(cl->lastUsercmd.rightmove == KEY_MASK_MOVERIGHT ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.leftmove == KEY_MASK_MOVERIGHT ? qtrue : qfalse);
 }
 
 void PlayerCmd_SprintButtonPressed(scr_entref_t object)
@@ -2938,35 +2939,6 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
 	Scr_AddInt(cl->clFPS);
 }
 
-void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
-{
-    gentity_t* gentity;
-    int entityNum = 0;
-    mvabuf;
-
-    if(HIWORD(arg)){
-        Scr_ObjectError("Not an entity");
-    }else{
-        entityNum = LOWORD(arg);
-        gentity = &g_entities[entityNum];
-
-        if(!gentity->client){
-            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
-        }
-    }
-    if(Scr_GetNumParam()){
-        Scr_Error("Usage: self getSpectatorClient()\n");
-    }
-
-    // Player isn't spectating anyone.
-    if(gentity->client->spectatorClient == -1) {
-        Scr_AddUndefined();
-    }
-    else {
-        Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);
-    }
-}
-
 static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)
 {
   char sidstring[128], gidstring[128];
@@ -3081,4 +3053,80 @@ void Scr_IsArray_f()
 	}
 
 	Scr_AddBool(Scr_GetType(0) == 1 ? qtrue : qfalse);
+}
+
+/* PrintModelBonesInfo
+ * 0x0817CBEC
+ */
+void PrintModelBonesInfo(gentity_t *ent)
+{
+	if(com_developer->boolean)
+	{
+		DObj_t* dobj = GetDObjForEntity(ent->s.number);
+		if(dobj)
+			PrintDObjInfo(dobj);
+		else
+			Com_Printf("no model.\n");
+	}
+}
+
+/* GetTagInfoForEntity
+ *
+ *
+ * Returns qtrue if bone has been found in current entity model.
+ * Origin vector can be accessed using 'DOBJ_PART_CACHE.vectorSet.origin'.
+ *
+ * Based on 0x080BFFB6. Similar functionality (except script error messages).
+ */
+qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels)
+{
+    // Here used some kind of caching.
+    // Checked if latest requested tag is the same as previous - just return from function.
+    // Find tag origin otherwise.
+
+	if(cache->svsFrameTime == svs.time && cache->entNum == ent->s.number && cache->partNameIdx == partNameIdx)
+        return qtrue;
+
+    if(EntHasDObj(ent))
+    {
+		if(GetDObjPartInfo(ent, partNameIdx, &cache->vectorSet))
+        {
+			cache->entNum = ent->s.number;
+			cache->svsFrameTime = svs.time;
+			Scr_SetString(&cache->partNameIdx, partNameIdx);
+            return qtrue;
+        }
+        if(seekInSubModels)
+            PrintModelBonesInfo(ent);
+    }
+    return qfalse;
+}
+
+void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
+{
+    gentity_t* gentity;
+    int entityNum = 0;
+    mvabuf;
+
+    if(HIWORD(arg)){
+        Scr_ObjectError("Not an entity");
+    }else{
+        entityNum = LOWORD(arg);
+        gentity = &g_entities[entityNum];
+
+        if(!gentity->client){
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        }
+    }
+    if(Scr_GetNumParam()){
+        Scr_Error("Usage: self getSpectatorClient()\n");
+    }
+
+    // Player isn't spectating anyone.
+    if(gentity->client->spectatorClient == -1) {
+        Scr_AddUndefined();
+    }
+    else {
+        Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);
+    }
 }

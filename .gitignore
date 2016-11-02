@@ -49,3 +49,6 @@ build_win32_PE_nopause.cmd
 
 #T-Max: I don't want to have this plugin inside main project.
 plugins/mysql
+
+# Wth this is here?
+sys_error.txt

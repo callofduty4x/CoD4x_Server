@@ -51,6 +51,7 @@
 #include "httpftp.h"
 #include "huffman.h"
 #include "sapi.h"
+#include "dobj.h"
 
 #include <string.h>
 #include <setjmp.h>
@@ -1377,7 +1378,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 
 
 	if(com_developer && com_developer->integer > 1)
-		__builtin_trap ( );
+		__builtin_trap ( ); // SIGILL on windows - crash. Have to do something?
 
 	Sys_EnterCriticalSection(CRIT_ERROR);
 
