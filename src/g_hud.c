@@ -38,66 +38,57 @@ game_hudelem_t* G_GetNewHudElem(unsigned int clientnum){
 
     for(i = 0; i < MAX_HUDELEMS; i++, element++)
     {
-        if(element->inuse)
+        if(element->type)
             continue;
 
-        element->inuse = qtrue;
+        element->type = 1;
         element->x = 0;
         element->y = 0;
         element->var_03 = 0;
-        element->var_04 = 1023;
-        element->fonttype = 0;
+        element->targetEnt = 1023;
+        element->fontType = 0;
         element->align = 0;
-        element->screenalign = 0;
+        element->screenAlign = 0;
 
-        element->color.red = 255;
-        element->color.green = 255;
-        element->color.blue = 255;
-        element->color.alpha = 255;
-        element->glowcolor.red = 0;
-        element->glowcolor.green = 0;
-        element->glowcolor.blue = 0;
-        element->glowcolor.alpha = 0;
-        element->fadecolor.red = 0;
-        element->fadecolor.green = 0;
-        element->fadecolor.blue = 0;
-        element->fadecolor.alpha = 0;
+        element->color.i = 0xFFFFFFFF;
+        element->glowColor.i = 0;
+        element->fadeColor.i = 0;
 
-        element->fadestarttime = 0;
-        element->fadetime = 0;
+        element->fadeStartTime = 0;
+        element->fadeTime = 0;
         element->var_13 = 0;
         element->sort = 0;
-        element->displayoption = 0;
-        element->var_34 = 0;
-        element->var_35 = 0;
-        element->var_36 = 0;
-        element->var_37 = 0;
+        element->displayOption = 0;
+        element->pulseStartTime = 0;
+        element->pulseSpeed = 0;
+        element->pulseDecayStart = 0;
+        element->pulseDecayDuration = 0;
         element->var_38 = 0;
-        element->movestarttime = 0;
-        element->movingtime = 0;
-        element->fontscale = 1.4;
+        element->moveStartTime = 0;
+        element->movingTime = 0;
+        element->fontScale = 1.4;
         element->archived = 1;
-        element->var_14 = 0;
-        element->var_15 = 0;
-        element->movex = 0;
-        element->movey = 0;
-        element->movealign = 0;
-        element->movescralign = 0;
-        element->var_18 = 0;
-        element->var_19 = 0;
-        element->var_20 = 0;
-        element->var_21 = 0;
-        element->var_28 = 0;
-        element->var_29 = 0;
-        element->var_30 = 0;
+        element->shaderWidth = 0;
+        element->shaderHeight = 0;
+        element->moveX = 0;
+        element->moveY = 0;
+        element->moveAlign = 0;
+        element->moveScreenAlign = 0;
+        element->shaderOldWidth = 0;
+        element->shaderOldHeight = 0;
+        element->scaleStartTime = 0;
+        element->scaleTime = 0;
+        element->timeValue = 0;
+        element->duration = 0;
+        element->value = 0;
         element->hudTextConfigStringIndex = 0;
 
         if(clientnum > 63)
-            element->entitynum = 1023;
+            element->entityNum = 1023;
         else
-            element->entitynum = clientnum;
+            element->entityNum = clientnum;
 
-        element->teamnum = 0;
+        element->teamNum = 0;
         return element;
     }
     Com_PrintWarning("G_CreateHudElem: Exceeded limit of Hudelems\n");
@@ -108,7 +99,7 @@ game_hudelem_t* G_GetNewHudElem(unsigned int clientnum){
 void G_HudSetColor(game_hudelem_t* element ,ucolor_t color,ucolor_t glowcolor){
 
     element->color = color;
-    element->glowcolor = glowcolor;
+    element->glowColor = glowcolor;
 
 }
 
@@ -117,7 +108,7 @@ void G_HudSetPosition(game_hudelem_t* element ,float x, float y, hudscrnalign_t 
     element->x = x;
     element->y = y;
     element->align = alignx | aligny;
-    element->screenalign = scrnhalign + scrnvalign;
+    element->screenAlign = scrnhalign + scrnvalign;
 }
 
 void G_HudSetFont(game_hudelem_t* element ,float fontscale, fonttype_t fonttype){
@@ -127,8 +118,8 @@ void G_HudSetFont(game_hudelem_t* element ,float fontscale, fonttype_t fonttype)
         Com_PrintWarning("Fontscale: %f is out of range. Range is 1.4 to 4.6\n", fontscale);
         fontscale = 1.4;
     }
-    element->fontscale = fontscale;
-    element->fonttype = fonttype;
+    element->fontScale = fontscale;
+    element->fontType = fonttype;
 }
 
 void G_HudSetMovingOverTime(game_hudelem_t* element ,int time, float newx, float newy){
@@ -140,14 +131,14 @@ void G_HudSetMovingOverTime(game_hudelem_t* element ,int time, float newx, float
     }
 
 
-    element->movestarttime = level.time;
-    element->movex = element->x;
-    element->movey = element->y;
+    element->moveStartTime = level.time;
+    element->moveX = element->x;
+    element->moveY = element->y;
     element->x = newx;
     element->y = newy;
-    element->movealign = element->align;
-    element->movescralign = element->screenalign;
-    element->movingtime = time;
+    element->moveAlign = element->align;
+    element->moveScreenAlign = element->screenAlign;
+    element->movingTime = time;
 }
 
 void G_HudSetFadingOverTime(game_hudelem_t* element ,int time, ucolor_t newcolor){
@@ -158,42 +149,42 @@ void G_HudSetFadingOverTime(game_hudelem_t* element ,int time, ucolor_t newcolor
         time = 0;
     }
 
-    element->fadestarttime = level.time;
-    element->fadecolor = element->color;
-    element->fadetime = time;
+    element->fadeStartTime = level.time;
+    element->fadeColor = element->color;
+    element->fadeTime = time;
     element->color = newcolor;
 }
 
 
-void G_HudSetText(game_hudelem_t* element ,const char *text){
+void G_HudSetText(game_hudelem_t* element ,const char *text)
+{
+    element->shaderWidth = 0;
+    element->shaderHeight = 0;
+    element->materialIndex = 0;
 
-    element->var_14 = 0;
-    element->var_15 = 0;
-    element->var_16 = 0;
+    element->moveX = 0;
+    element->moveY = 0;
+    element->moveAlign = 0;
+    element->moveScreenAlign = 0;
 
-    element->movex = 0;
-    element->movey = 0;
-    element->movealign = 0;
-    element->movescralign = 0;
+    element->shaderOldWidth = 0;
+    element->shaderOldHeight = 0;
+    element->scaleStartTime = 0;
+    element->scaleTime = 0;
 
-    element->var_18 = 0;
-    element->var_19 = 0;
-    element->var_20 = 0;
-    element->var_21 = 0;
-
-    element->var_28 = 0;
-    element->var_29 = 0;
-    element->var_30 = 0;
+    element->timeValue = 0;
+    element->duration = 0;
+    element->value = 0;
 
     element->hudTextConfigStringIndex = G_LocalizedStringIndex(text);
-    element->inuse = qtrue;
+    element->type = 1;
 
 }
 
 void G_HudDestroy(game_hudelem_t* element){
 
     Scr_FreeHudElem(element);
-    element->inuse = qfalse;
+    element->type = qfalse;
 
 }
 

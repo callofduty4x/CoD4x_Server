@@ -1124,17 +1124,17 @@ void Cvar_Set2( const char *var_name, const char *valueStr, qboolean force ) {
 			if(isVector(valueStr, 0, 4))
 			{
 				strToVect(valueStr ,colorConv, 4);
-				value.color.alpha = (byte)((float)0xff * colorConv[3]);
+				value.color.rgba[3] = (byte)((float)0xff * colorConv[3]);
 			}else if(isVector(valueStr, 0, 3)){
 				strToVect(valueStr ,colorConv, 3);
-				value.color.alpha = 0x0;
+				value.color.rgba[3] = 0x0;
 			}else{
 				Sys_LeaveCriticalSection(CRIT_CVAR);
 				return;
 			}
-			value.color.red = (byte)((float)0xff * colorConv[0]);
-			value.color.green = (byte)((float)0xff * colorConv[1]);
-			value.color.blue = (byte)((float)0xff * colorConv[2]);
+			value.color.rgba[0] = (byte)((float)0xff * colorConv[0]);
+			value.color.rgba[1] = (byte)((float)0xff * colorConv[1]);
+			value.color.rgba[2] = (byte)((float)0xff * colorConv[2]);
 			Cvar_SetVariant( var, value, force );
 			Sys_LeaveCriticalSection(CRIT_CVAR);
 			return;
@@ -1401,10 +1401,10 @@ Cvar_SetColor
 void Cvar_SetColor( cvar_t* cvar, float r, float g, float b, float alpha){
 	CvarValue cval;
 
-	cval.color.red = (byte)((float)0xff * r);
-	cval.color.green = (byte)((float)0xff * g);
-	cval.color.blue = (byte)((float)0xff * b);
-	cval.color.alpha = (byte)((float)0xff * alpha);
+	cval.color.rgba[0] = (byte)((float)0xff * r);
+	cval.color.rgba[1] = (byte)((float)0xff * g);
+	cval.color.rgba[2] = (byte)((float)0xff * b);
+	cval.color.rgba[3] = (byte)((float)0xff * alpha);
 
 	Cvar_SetVariant( cvar, cval , qtrue);
 }
@@ -1599,9 +1599,9 @@ void Cvar_ValueToStr(cvar_t const *cvar, char* bufvalue, int sizevalue, char* bu
 			if(buflatch) Com_sprintf(buflatch, sizelatch, "%g %g %g %g", cvar->latchedVec4[0], cvar->latchedVec4[1], cvar->latchedVec4[2], cvar->latchedVec4[3]);
 			return;
 		case CVAR_COLOR:
-			if(bufvalue) Com_sprintf(bufvalue, sizevalue, "%.3g %.3g %.3g %.3g", (float)cvar->color.red / (float)0xff, (float)cvar->color.green / (float)0xff, (float)cvar->color.blue / (float)0xff, (float)cvar->color.alpha / (float)0xff);
-			if(bufreset) Com_sprintf(bufreset, sizereset, "%.3g %.3g %.3g %.3g", (float)cvar->resetColor.red / (float)0xff, (float)cvar->resetColor.green / (float)0xff, (float)cvar->resetColor.blue / (float)0xff, (float)cvar->resetColor.alpha / (float)0xff);
-			if(buflatch) Com_sprintf(buflatch, sizelatch, "%.3g %.3g %.3g %.3g", (float)cvar->latchedColor.red / (float)0xff, (float)cvar->latchedColor.green / (float)0xff, (float)cvar->latchedColor.blue / (float)0xff, (float)cvar->latchedColor.alpha / (float)0xff);
+			if(bufvalue) Com_sprintf(bufvalue, sizevalue, "%.3g %.3g %.3g %.3g", (float)cvar->color.rgba[0] / (float)0xff, (float)cvar->color.rgba[1] / (float)0xff, (float)cvar->color.rgba[2] / (float)0xff, (float)cvar->color.rgba[3] / (float)0xff);
+			if(bufreset) Com_sprintf(bufreset, sizereset, "%.3g %.3g %.3g %.3g", (float)cvar->resetColor.rgba[0] / (float)0xff, (float)cvar->resetColor.rgba[1] / (float)0xff, (float)cvar->resetColor.rgba[2] / (float)0xff, (float)cvar->resetColor.rgba[3] / (float)0xff);
+			if(buflatch) Com_sprintf(buflatch, sizelatch, "%.3g %.3g %.3g %.3g", (float)cvar->latchedColor.rgba[0] / (float)0xff, (float)cvar->latchedColor.rgba[1] / (float)0xff, (float)cvar->latchedColor.rgba[2] / (float)0xff, (float)cvar->latchedColor.rgba[3] / (float)0xff);
 			return;
 		case CVAR_INT:
 			if(bufvalue) Com_sprintf(bufvalue, sizevalue, "%d", cvar->integer);
@@ -2393,10 +2393,10 @@ cvar_t* Cvar_RegisterColor(const char* name, float r, float g, float b, float al
 	limits.fmin = 0.0;
 	limits.fmax = 0.0;
 
-	value.color.red = (byte)(0xff * r);
-	value.color.green = (byte)(0xff * g);
-	value.color.blue = (byte)(0xff * b);
-	value.color.alpha = (byte)(0xff * alpha);
+	value.color.rgba[0] = (byte)(0xff * r);
+	value.color.rgba[1] = (byte)(0xff * g);
+	value.color.rgba[2] = (byte)(0xff * b);
+	value.color.rgba[3] = (byte)(0xff * alpha);
 
 	cvar = Cvar_Register(name, CVAR_COLOR, flags, value, limits, description);
 

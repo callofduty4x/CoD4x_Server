@@ -2063,64 +2063,64 @@ void GScr_NewHudElem(){
 
     for(i = 0; i < MAX_HUDELEMS; i++, element++)
     {
-        if(element->inuse)
+        if(element->type)
             continue;
 
-        element->inuse = qtrue;
+        element->type = 1;
         element->x = 0;
         element->y = 0;
         element->var_03 = 0;
-        element->var_04 = 1023;
-        element->fonttype = 0;
+        element->targetEnt = 1023;
+        element->fontType = 0;
         element->align = 0;
-        element->screenalign = 0;
-
-        element->color.red = 255;
+        element->screenAlign = 0;
+        element->color.i = 0xFFFFFFFF;
+        /*element->color.red = 255;
         element->color.green = 255;
         element->color.blue = 255;
-        element->color.alpha = 255;
+        element->color.alpha = 255;*/
+        element->glowColor.i = 0x00000000;
+        /*element->glowColor.red = 0;
+        element->glowColor.green = 0;
+        element->glowColor.blue = 0;
+        element->glowColor.alpha = 0;*/
+        element->fadeColor.i = 0x00000000;
+        /*element->fadeColor.red = 0;
+        element->fadeColor.green = 0;
+        element->fadeColor.blue = 0;
+        element->fadeColor.alpha = 0;*/
 
-        element->glowcolor.red = 0;
-        element->glowcolor.green = 0;
-        element->glowcolor.blue = 0;
-        element->glowcolor.alpha = 0;
-
-        element->fadecolor.red = 0;
-        element->fadecolor.green = 0;
-        element->fadecolor.blue = 0;
-        element->fadecolor.alpha = 0;
-
-        element->fadestarttime = 0;
-        element->fadetime = 0;
+        element->fadeStartTime = 0;
+        element->fadeTime = 0;
         element->var_13 = 0;
         element->sort = 0;
-        element->displayoption = 0;
-        element->var_34 = 0;
-        element->var_35 = 0;
-        element->var_36 = 0;
-        element->var_37 = 0;
+        element->displayOption = 0;
+        element->pulseStartTime = 0;
+        element->pulseSpeed = 0;
+        element->pulseDecayStart = 0;
+        element->pulseDecayDuration = 0;
         element->var_38 = 0;
-        element->movestarttime = 0;
-        element->movingtime = 0;
-        element->fontscale = 0;
+        element->moveStartTime = 0;
+        element->movingTime = 0;
+        element->fontScale = 0;
         element->archived = 1;
-        element->var_14 = 0;
-        element->var_15 = 0;
-        element->var_16 = 0;
-        element->movex = 0;
-        element->movey = 0;
-        element->movealign = 0;
-        element->movescralign = 0;
-        element->var_18 = 0;
-        element->var_19 = 0;
-        element->var_20 = 0;
-        element->var_21 = 0;
-        element->var_28 = 0;
-        element->var_29 = 0;
-        element->var_30 = 0;
+        element->shaderWidth = 0;
+        element->shaderHeight = 0;
+        element->materialIndex = 0;
+        element->moveX = 0;
+        element->moveY = 0;
+        element->moveAlign = 0;
+        element->moveScreenAlign = 0;
+        element->shaderOldWidth = 0;
+        element->shaderOldHeight = 0;
+        element->scaleStartTime = 0;
+        element->scaleTime = 0;
+        element->timeValue = 0;
+        element->duration = 0;
+        element->value = 0;
         element->hudTextConfigStringIndex = 0;
-        element->entitynum = 1023;
-        element->teamnum = 0;
+        element->entityNum = 1023;
+        element->teamNum = 0;
         Scr_AddHudElem(element);
         return;
     }
@@ -2143,64 +2143,53 @@ void GScr_NewClientHudElem(){
 
     for(i = 0; i < MAX_HUDELEMS; i++, element++)
     {
-        if(element->inuse)
+        if(element->type)
             continue;
 
-        element->inuse = qtrue;
+        element->type = qtrue;
         element->x = 0;
         element->y = 0;
         element->var_03 = 0;
-        element->var_04 = 1023;
-        element->fonttype = 0;
+        element->targetEnt = 1023;
+        element->fontType = 0;
         element->align = 0;
-        element->screenalign = 0;
+        element->screenAlign = 0;
 
-        element->color.red = 255;
-        element->color.green = 255;
-        element->color.blue = 255;
-        element->color.alpha = 255;
+        element->color.i = 0xFFFFFFFF;
+        element->glowColor.i = 0x00000000;
+        element->fadeColor.i = 0x00000000;
 
-        element->glowcolor.red = 0;
-        element->glowcolor.green = 0;
-        element->glowcolor.blue = 0;
-        element->glowcolor.alpha = 0;
-
-        element->fadecolor.red = 0;
-        element->fadecolor.green = 0;
-        element->fadecolor.blue = 0;
-        element->fadecolor.alpha = 0;
-
-        element->fadestarttime = 0;
-        element->fadetime = 0;
+        element->fadeStartTime = 0;
+        element->fadeTime = 0;
         element->var_13 = 0;
         element->sort = 0;
-        element->displayoption = 0;
-        element->var_34 = 0;
-        element->var_35 = 0;
-        element->var_36 = 0;
-        element->var_37 = 0;
+        element->displayOption = 0;
+        element->pulseStartTime = 0;
+        element->pulseSpeed = 0;
+        element->pulseDecayStart = 0;
+        element->pulseDecayDuration = 0;
         element->var_38 = 0;
-        element->movestarttime = 0;
-        element->movingtime = 0;
-        element->fontscale = 0;
+        element->moveStartTime = 0;
+        element->movingTime = 0;
+        element->fontScale = 0;
         element->archived = 1;
-        element->var_14 = 0;
-        element->var_15 = 0;
-        element->var_16 = 0;
-        element->movex = 0;
-        element->movey = 0;
-        element->movealign = 0;
-        element->movescralign = 0;
-        element->var_18 = 0;
-        element->var_19 = 0;
-        element->var_20 = 0;
-        element->var_21 = 0;
-        element->var_28 = 0;
-        element->var_29 = 0;
-        element->var_30 = 0;
+        element->shaderWidth = 0;
+        element->shaderHeight = 0;
+        element->materialIndex = 0;
+        element->moveX = 0;
+        element->moveY = 0;
+        element->moveAlign = 0;
+        element->moveScreenAlign = 0;
+        element->shaderOldWidth = 0;
+        element->shaderOldHeight = 0;
+        element->scaleStartTime = 0;
+        element->scaleTime = 0;
+        element->timeValue = 0;
+        element->duration = 0;
+        element->value = 0;
         element->hudTextConfigStringIndex = 0;
-        element->entitynum = ent->s.number;
-        element->teamnum = 0;
+        element->entityNum = ent->s.number;
+        element->teamNum = 0;
         Scr_AddHudElem(element);
         return;
     }
@@ -2253,23 +2242,23 @@ void HECmd_SetText(scr_entref_t entnum)
 
 	game_hudelem_t *element = &g_hudelems[LOWORD(entnum)];
 
-	element->var_14 = 0;
-	element->var_15 = 0;
-	element->var_16 = 0;
+	element->shaderWidth = 0;
+	element->shaderHeight = 0;
+	element->materialIndex = 0;
 
-	element->movex = 0;
-	element->movey = 0;
-	element->movealign = 0;
-	element->movescralign = 0;
+	element->moveX = 0;
+	element->moveY = 0;
+	element->moveAlign = 0;
+	element->moveScreenAlign = 0;
 
-	element->var_18 = 0;
-	element->var_19 = 0;
-	element->var_20 = 0;
-	element->var_21 = 0;
+	element->shaderOldWidth = 0;
+	element->shaderOldHeight = 0;
+	element->scaleStartTime = 0;
+	element->scaleTime = 0;
 
-	element->var_28 = 0;
-	element->var_29 = 0;
-	element->var_30 = 0;
+	element->timeValue = 0;
+	element->duration = 0;
+	element->value = 0;
 
 	int cs_index = element->hudTextConfigStringIndex;
 
@@ -2281,7 +2270,7 @@ void HECmd_SetText(scr_entref_t entnum)
 		SV_SetConfigstring(cs_index + CS_LOCALIZEDSTRINGS, "");
 
 	Scr_ConstructMessageString(0,0, "Hud Elem String", buffer, sizeof(buffer));
-	element->inuse = qtrue;
+	element->type = qtrue;
 	element->hudTextConfigStringIndex = G_LocalizedStringIndex(buffer);
 }
 
@@ -3041,7 +3030,7 @@ void Scr_Destroy_f(scr_entref_t hud_elem_num)
 		SV_SetConfigstring(CS_LOCALIZEDSTRINGS + cs_index, "");
 
 	Scr_FreeHudElem(hud_elem);
-	hud_elem->inuse = 0;
+	hud_elem->type = 0;
 }
 
 void Scr_IsArray_f()

@@ -59,56 +59,51 @@ typedef enum{
     HUDDISPLAY_HIDEINMENU = 4
 }huddisplayoptions_t;
 
-
 typedef struct
 {
-
-	qboolean inuse;
-	float x;
-	float y;
-	int var_03;
-	int var_04;
-
-	float fontscale;
-	fonttype_t fonttype;
-
-	hudalign_t align;
-	hudscrnalign_t screenalign;
-	ucolor_t color;
-	ucolor_t fadecolor;
-	int fadestarttime;
-	int fadetime;
-	int var_13;
-	int var_14;
-	int var_15;
-	int var_16;
-	int var_17;
-	int var_18;
-	int var_19;
-	int var_20;
-	int var_21;
-	float movex;
-	float movey;
-	int movealign;
-	int movescralign;
-	int movestarttime;
-	int movingtime;
-	int var_28;
-	int var_29;
-	int var_30;
-	int hudTextConfigStringIndex;
-	float sort;
-	ucolor_t glowcolor;
-	int var_34;
-	int var_35;
-	int var_36;
-	int var_37;
-	int var_38;
-	huddisplayoptions_t displayoption;
-	unsigned int entitynum;
-	unsigned int teamnum;
-	qboolean archived;
-
+    int type;
+    float x;
+    float y;
+    int var_03;
+    int targetEnt;
+    float fontScale;
+    fonttype_t fontType;
+    hudalign_t align;
+    hudscrnalign_t screenAlign;
+    ucolor_t color;
+    ucolor_t fadeColor;
+    int fadeStartTime;
+    int fadeTime;
+    int var_13;
+    int shaderWidth;
+    int shaderHeight;
+    int materialIndex;
+    int waypointMaterialIndex;
+    int shaderOldWidth;
+    int shaderOldHeight;
+    int scaleStartTime;
+    int scaleTime;
+    float moveX;
+    float moveY;
+    int moveAlign;
+    int moveScreenAlign;
+    int moveStartTime;
+    int movingTime;
+    int timeValue;
+    int duration;
+    float value;
+    int hudTextConfigStringIndex;
+    float sort;
+    ucolor_t glowColor;
+    int pulseStartTime;
+    int pulseSpeed;
+    int pulseDecayStart;
+    int pulseDecayDuration;
+    int var_38;
+    huddisplayoptions_t displayOption;
+    int entityNum;
+    int teamNum;
+    int archived;
 }game_hudelem_t; //Size: 0xac
 
 extern game_hudelem_t* g_hudelems;

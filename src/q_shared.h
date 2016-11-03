@@ -343,12 +343,10 @@ void Com_Parse3DMatrix( const char *( *buf_p ), int z, int y, int x, float *m );
 
 //=====================================================================================
 
-typedef struct
+typedef union
 {
-    byte red;
-    byte green;
-    byte blue;
-    byte alpha;
+    int i;
+    byte rgba[4];
 }ucolor_t;
 
 

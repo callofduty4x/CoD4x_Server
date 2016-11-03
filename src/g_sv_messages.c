@@ -47,40 +47,26 @@ static char motdBuff[200];
 
 void G_DestroyMessage(game_hudelem_t* hudelem){
 
-    if(!hudelem || !hudelem->inuse)
+    if(!hudelem || !hudelem->type)
         return;
 
     ucolor_t color;
-
-    color.red = 255;
-    color.green = 255;
-    color.blue = 255;
-    color.alpha = 0;
-
+    color.i = 0x00FFFFFF;
     G_HudSetFadingOverTime(hudelem, 700, color);
-
 }
 
 
 
-void G_ShowMessage(game_hudelem_t* hudelem, const char* rule, int time){
-
-    if(!hudelem || !hudelem->inuse)
+void G_ShowMessage(game_hudelem_t* hudelem, const char* rule, int time)
+{
+    if(!hudelem || !hudelem->type)
         return;
 
     ucolor_t color;
-
-    color.red = 255;
-    color.green = 255;
-    color.blue = 255;
-    color.alpha = 255;
-
+    color.i = 0xFFFFFFFF;
     G_HudSetFadingOverTime(hudelem, 700, color);
-
     G_HudSetText(hudelem, rule);
-
     Com_AddTimedEvent(time+700, G_DestroyMessage, 1, hudelem);
-
 }
 
 
@@ -152,15 +138,8 @@ void G_SetupHudMessagesForPlayer(client_t* cl){
     ucolor_t glowcolor;
     ucolor_t color;
 
-    color.red = 255;
-    color.green = 255;
-    color.blue = 255;
-    color.alpha = 0;
-
-    glowcolor.red = 0;
-    glowcolor.green = 0;
-    glowcolor.blue = 0;
-    glowcolor.alpha = 0;
+    glowcolor.i = 0x00000000;
+    color.i = 0x00FFFFFF;
 
     if(cl == NULL)
         return;
@@ -174,7 +153,7 @@ void G_SetupHudMessagesForPlayer(client_t* cl){
     G_HudSetColor(cl->hudMsg, color, glowcolor);
 
 
-    cl->hudMsg->displayoption = HUDDISPLAY_HIDEINMENU | HUDDISPLAY_FOREGROUND;
+    cl->hudMsg->displayOption = HUDDISPLAY_HIDEINMENU | HUDDISPLAY_FOREGROUND;
     cl->hudMsg->sort = 100;
 }
 
@@ -409,16 +388,8 @@ void G_ShowMotd(unsigned int clnum)
     ucolor_t glowcolor;
     ucolor_t color;
 
-    color.red = 204;
-    color.green = 255;
-    color.blue = 204;
-    color.alpha = 255;
-
-    glowcolor.red = 76;
-    glowcolor.green = 153;
-    glowcolor.blue = 76;
-    glowcolor.alpha = 10;
-
+    color.i = 0xFFCCFFCC;
+    glowcolor.i = 0x0A4C994C;
 
     Com_DPrintf("Draw Message of the Day of client num: %i\n", clnum);
 
@@ -444,8 +415,8 @@ void G_ShowMotd(unsigned int clnum)
     G_HudSetFont(hudelem1, fontscale, HUDFONT_OBJECTIVE);
     G_HudSetFont(hudelem2, fontscale, HUDFONT_OBJECTIVE);
 
-    hudelem1->displayoption = HUDDISPLAY_HIDEINMENU | HUDDISPLAY_FOREGROUND;
-    hudelem2->displayoption = HUDDISPLAY_HIDEINMENU | HUDDISPLAY_FOREGROUND;
+    hudelem1->displayOption = HUDDISPLAY_HIDEINMENU | HUDDISPLAY_FOREGROUND;
+    hudelem2->displayOption = HUDDISPLAY_HIDEINMENU | HUDDISPLAY_FOREGROUND;
     hudelem1->sort = 100;
     hudelem2->sort = 99;
 
