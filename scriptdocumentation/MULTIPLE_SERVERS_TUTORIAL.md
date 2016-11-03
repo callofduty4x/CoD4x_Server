@@ -8,11 +8,11 @@ Example shows how to create 2 servers on 192.168.1.30:28960 (modded) and 192.168
 
 # Table of contents
 
-1. [Requirements](#)
-2. [Setting up base game server](#)
-3. [Setting up first server](#)
-4. [Setting up second server](#)
-5. [Launching servers](#)
+1. [Requirements](#requirements)
+2. [Setting up base game server](#setting-up-base-game-server)
+3. [Setting up first server](#setting-up-first-server)
+4. [Setting up second server](#setting-up-second-server)
+5. [Launching servers](#launching-servers)
 
 ---
 
@@ -28,13 +28,14 @@ Assume all servers will be located inside 'CoD4X' directory.
 Let's create directory `CoD4X\BaseGame`.
 
 Base game server must have the following list of files:
+
 1. main/*.iwd
-2. zone/<lang>/code_post_gfx_mp.ff
-3. zone/<lang>/common_mp.ff
-4. zone/<lang>/localized_code_post_gfx_mp.ff
-5. zone/<lang>/localized_common_mp.ff
-4. zone/<english>/ui_mp.ff
-5. (optional?) main/localized_<lang>_iw**.iwd
+2. zone/__lang__/code_post_gfx_mp.ff
+3. zone/__lang__/common_mp.ff
+4. zone/__lang__/localized_code_post_gfx_mp.ff
+5. zone/__lang__/localized_common_mp.ff
+4. zone/__lang__>/ui_mp.ff
+5. (optional?) main/localized_"lang"_iw*.iwd
 6. cod4x18_dedrun self updateable binary
 
 When you in first time launch 'cod4x18_dedrun' binary, the server will download self update and required libraries.
@@ -71,4 +72,4 @@ TODO. Almost the same except 'start' command and .bat script extension.
 
 ## Launching servers
 
-That's it. Now you can launch your servers using scripts inside `CoD4X`. You can always check your servers' visibility on cod4master.cod4x.me.
+That's it. Now you can launch your servers using scripts inside `CoD4X`. You can always check your servers' visibility on http://cod4master.cod4x.me.
