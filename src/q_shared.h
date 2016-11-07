@@ -34,7 +34,7 @@
 #ifndef __Q_SHARED_H__
 #define __Q_SHARED_H__
 
-//#define _LAGDEBUG
+#define _LAGDEBUG
 
 
 

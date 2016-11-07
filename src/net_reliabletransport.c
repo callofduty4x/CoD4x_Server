@@ -195,6 +195,19 @@ void ReliableMessageWriteSelectiveAcklist(framedata_t *frame, msg_t* msg)
 	msg->data[numbytepos] = count;
 }
 
+#ifdef _LAGDEBUG
+
+//Hit counter
+typedef struct
+{
+	unsigned int lastcleared;
+	int hitcount;
+}dbghitcounter_t;
+dbghitcounter_t phitcounter[65535]; //ALL Clients
+
+#endif
+
+
 //This function sends one new sequence
 void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 {
@@ -219,6 +232,21 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 			MSG_WriteShort(&buf, chan->txwindow.windowsize);
 			MSG_WriteShort(&buf, 0);
 			NET_SendPacket( chan->sock, buf.cursize, buf.data, &chan->remoteAddress );	
+			
+#ifdef _LAGDEBUG			
+			dbghitcounter_t *dbgc = &phitcounter[(unsigned short)chan->qport];
+			unsigned int time = Sys_Milliseconds();
+			if(dbgc->lastcleared + 1000 < time)
+			{
+				dbgc->lastcleared = time;
+				if(dbgc->hitcount > 44)
+				{
+					Com_DPrintfLogfile("Hitcount exceeded 44 in SendPacket for qport %hu Count %d\n", chan->qport, dbgc->hitcount);
+				}
+				dbgc->hitcount = 0;
+			}
+			dbgc->hitcount++;
+#endif			
 			chan->txwindow.packets++;
 			chan->nextacktime = chan->time + 350;
 			chan->txwindow.rateInfo.bytesTotal += buf.cursize; //Track the rate
@@ -252,6 +280,22 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 								chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len);
 								
 			NET_SendPacket( chan->sock, buf.cursize, buf.data, &chan->remoteAddress );
+
+#ifdef _LAGDEBUG			
+			dbghitcounter_t *dbgc = &phitcounter[(unsigned short)chan->qport];
+			unsigned int time = Sys_Milliseconds();
+			if(dbgc->lastcleared + 1000 < time)
+			{
+				dbgc->lastcleared = time;
+				if(dbgc->hitcount > 44)
+				{
+					Com_DPrintfLogfile("Hitcount exceeded 44 in SendPacket for qport %hu Count %d\n", chan->qport, dbgc->hitcount);
+				}
+				dbgc->hitcount = 0;
+			}
+			dbgc->hitcount++;
+#endif	
+
 			chan->txwindow.packets++;
 			chan->nextacktime = chan->time + 350;
 #ifdef RELIABLE_DEBUG

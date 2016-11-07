@@ -2141,6 +2141,36 @@ static void NET_AddLocalAddress(char *ifname, struct sockaddr *addr, struct sock
 	}
 }
 
+
+qboolean IsStaticIP6Addr(nip_localaddr_t* localaddr)
+{
+	int z;
+	struct sockaddr_in6* t6;
+				
+	if(localaddr->type != NA_IP6)
+	{
+		return qfalse;
+	}
+	t6 = (struct sockaddr_in6*)&localaddr->addr;
+	byte* baddr6 = (byte*)t6->sin6_addr.s6_addr;
+	//:0000: in last 64bits ?
+	for(z = 8; z < 15; ++z)
+	{
+		if(baddr6[z] == 0 && baddr6[z+1] == 0)
+		{
+			return qtrue;
+		}
+	}
+	//0000:0000:0000:0000:0000:00ff:fe00:0000 ?
+	if(baddr6[11] == 0xff && baddr6[12] == 0xfe)
+	{
+		return qtrue;
+	}
+	return qfalse;
+
+}
+
+
 #if defined(__linux__) || defined(MACOSX) || defined(__BSD__)
 static void NET_GetLocalAddress(void)
 {
@@ -2237,33 +2267,36 @@ static void NET_GetLocalAddress( void ) {
 		{
 			NET_AddLocalAddress("localhost", (struct sockaddr *) &localhostadr, (struct sockaddr *) &mask6);
 		}
-/*
-		if( has_ip6 )
+		
+		qboolean hasstaticip6 = qfalse;
+		int i;
+
+		if(has_ip6)
 		{
 			for(i = 0; i < MAX_IPS; ++i)
 			{
-				struct sockaddr_in6* t6;
-				
-				if(localIP[numIP].type != NA_IP6)
+				if(IsStaticIP6Addr(&localIP[i]))
 				{
-					continue;
+					hasstaticip6 = qtrue;
 				}
-				t6 = &localIP[numIP].addr;
-				if(localIP[numIP].addr)
-
-
 			}
-
-			Q_strncpyz(localIP[numIP].ifname, ifname, sizeof(localIP[numIP].ifname));
-
-			localIP[numIP].family = family;
-
-			memcpy(&localIP[numIP].addr, addr, addrlen);
-			memcpy(&localIP[numIP].netmask, netmask, addrlen);
-
-			numIP++;
 		}
-*/
+
+		//Clear out all temp IPv6 addresses
+		if(hasstaticip6)
+		{
+			for(i = 0; i < MAX_IPS; ++i)
+			{
+				if(localIP[i].type == NA_IP6)
+				{
+					if(IsStaticIP6Addr(&localIP[i]) == qfalse)
+					{
+						memset(&localIP[i], 0, sizeof(localIP[0]));
+					}
+				}
+			}
+		}
+
 		Sys_ShowIP();
 	}
 
