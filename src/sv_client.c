@@ -57,11 +57,6 @@
 #define backtrace(buffer, size) 0
 #define backtrace_symbols(buffer, size) 0
 
-#else
-
-#define backtrace(buffer, size) ::backtrace(buffer, size)
-#define backtrace_symbols(buffer, size) ::backtrace(buffer, size)
-
 #endif /* ifdef _WIN32 */
 #endif /* ifdef _LAGDEBUG */
 
