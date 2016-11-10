@@ -51,6 +51,20 @@
 #include <stdarg.h>
 #include <string.h>
 
+#ifdef _LAGDEBUG
+#ifdef _WIN32
+
+#define backtrace(buffer, size) 0
+#define backtrace_symbols(buffer, size) 0
+
+#else
+
+#define backtrace(buffer, size) ::backtrace(buffer, size)
+#define backtrace_symbols(buffer, size) ::backtrace(buffer, size)
+
+#endif /* ifdef _WIN32 */
+#endif /* ifdef _LAGDEBUG */
+
 
 static void SV_CloseDownload( client_t *cl );
 
@@ -1623,8 +1637,11 @@ void SV_SendClientGameState( client_t *client ) {
 			symbols = backtrace_symbols(traces, numFrames);
 			for(i = 0; i < numFrames; i++)
 				Com_DPrintfLogfile("%5d: %s\n", numFrames - i -1, symbols[i]);
-			Com_DPrintfLogfile("-------- Backtrace Completed --------\n");
 			free(traces);
+#ifdef _WIN32
+            Com_DPrintfLogfile("Backtrace is not supported for Windows\n");
+#endif
+            Com_DPrintfLogfile("-------- Backtrace Completed --------\n");
 		}
 		dbgc->hitcount = 0;
 	}

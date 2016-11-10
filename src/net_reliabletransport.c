@@ -8,6 +8,7 @@
 #include "sys_net.h"
 #include "msg.h"
 #include "net_reliabletransport.h"
+#include "sys_main.h"
 #include <string.h>
 #include <stdlib.h>
 
