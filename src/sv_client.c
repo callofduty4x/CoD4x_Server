@@ -57,7 +57,10 @@
 #define backtrace(buffer, size) 0
 #define backtrace_symbols(buffer, size) 0
 
+#else
+#include <execinfo.h>
 #endif /* ifdef _WIN32 */
+
 #endif /* ifdef _LAGDEBUG */
 
 
