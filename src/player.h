@@ -50,6 +50,7 @@
 #define KEY_MASK_SMOKE          32768
 #define KEY_MASK_NIGHTVISION    262144
 #define KEY_MASK_ADS            524288
+#define KEY_MASK_USE            0x28 /* Combination */
 
 typedef struct{
     int	score; //0x2f78

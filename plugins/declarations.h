@@ -706,21 +706,31 @@ struct gentity_s {
 
 	struct gclient_s    *client;            // NULL if not a client		0x15c
 
-	qboolean inuse;
+	turretInfo_s *pTurretInfo;
+	struct scr_vehicle_s *scr_vehicle;
 
-  int vehicle;
+	uint16_t model;
+	byte physicsObject;
+	byte takedamage;
+	byte active;
+	byte nopickup;
+	byte handler;
+	byte team;
 
-	int field_168;
-	int field_16C;
+	uint16_t classname;
+	uint16_t target;
 
-	int classname;
-
-	int field_174;
-	int field_178;
+	uint16_t targetname;
+	uint16_t pad;
+	unsigned int attachIgnoreCollision;
 
 	int spawnflags;
+	int flags;
+	int eventTime;
 
-	char unknown[244];
+    char pad_188[24];
+    int healthPoints;
+	char unknown[208];
 
 
 /*

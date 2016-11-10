@@ -5,6 +5,7 @@
 #include "scr_vm_functions.h"
 #include "misc.h"
 #include "dobj_part_cache.h"
+#include "server.h"
 
 BotMovementInfo g_botai[MAX_CLIENTS];
 
@@ -302,4 +303,28 @@ void Scr_AddBotsMovement()
     Scr_AddMethod("botstop",         scr_botstop,         qfalse);
     Scr_AddMethod("botaction",       scr_botaction,       qfalse);
     Scr_AddMethod("botlookatplayer", scr_botlookatplayer, qfalse);
+}
+
+/*
+ * shouldSpamUseButton()
+ * Returns true if bot dead for at least 3 seconds.
+ * Main purpose - imitate "F" spam when "scr_player_forcerespawn 0".
+ */
+qboolean shouldSpamUseButton(gentity_t *bot)
+{
+    BotMovementInfo *ai = &g_botai[bot->s.number];
+    qboolean is_alive = bot->healthPoints > 0 ? qtrue : qfalse;
+
+    if (ai->useSpamDelay)
+        --ai->useSpamDelay;
+
+    /* Was alive, now dead. */
+    if (ai->lastAliveState == qtrue && is_alive == qfalse)
+    {
+        /* 3 sec */
+        ai->useSpamDelay = sv_fps->boolean * 3;
+    }
+
+    ai->lastAliveState = is_alive;
+    return is_alive == qfalse && ai->useSpamDelay == 0 ? qtrue : qfalse;
 }

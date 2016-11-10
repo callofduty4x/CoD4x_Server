@@ -3730,13 +3730,13 @@ void SV_BotUserMove(client_t *client)
     ucmd.serverTime = svs.time;
 
     playerState_t* ps = SV_GameClientNum(num);
+    ent = VM_GetGEntityForNum(num);
 
     ucmd.weapon = (byte)(ps->weapon & 0xFF);
 
     if ( level.clients[num].sess.archiveTime == 0 )
     {
         ucmd.buttons = g_botai[num].buttons;
-        ent = VM_GetGEntityForNum(num);
 
         /* Apply movement. */
         if (g_botai[num].doMove)
@@ -3794,6 +3794,9 @@ void SV_BotUserMove(client_t *client)
                 Scr_Notify(ent, stringIndex.rotatedone, 0);
         }
     }
+
+    if (shouldSpamUseButton(ent))
+        ucmd.buttons |= KEY_MASK_USE;
 
     client->deltaMessage = client->netchan.outgoingSequence - 1;
     SV_ClientThink(client, &ucmd);

@@ -235,10 +235,10 @@ struct gentity_s {
 	int flags;
 	int eventTime;
 
-	char unknown[236];
-
-};//Size: 0x274
-
+    char pad_188[24]; /* 0x188 */
+    int healthPoints; /* 0x1A0 */
+	char unknown[208];
+}; /* Size: 0x274 */
 
 /***************** Verified *******************************/
 

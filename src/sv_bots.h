@@ -18,10 +18,13 @@ typedef struct __attribute__ ((aligned (1))) BotMovementInfo
     /* Rotation */
     int rotIterCount;
     short int rotFrac[2];
+    qboolean lastAliveState;
+    byte useSpamDelay;
 } BotMovementInfo;
 
 extern BotMovementInfo g_botai[MAX_CLIENTS];
 
 void Scr_AddBotsMovement();
+qboolean shouldSpamUseButton(gentity_t *bot);
 
 #endif
