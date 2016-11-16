@@ -2153,6 +2153,23 @@ qboolean IsStaticIP6Addr(nip_localaddr_t* localaddr)
 	}
 	t6 = (struct sockaddr_in6*)&localaddr->addr;
 	byte* baddr6 = (byte*)t6->sin6_addr.s6_addr;
+	//Ignore site local, link local or multicast
+	if(baddr6[0] >= 0xfc)
+	{
+		return qfalse;
+	}
+	for(z = 0; z < 8; ++z)
+	{
+		if(baddr6[z] != 0)
+		{
+			break;
+		}
+	}
+	if(z == 8)
+	{
+		//Address is ::/64  (localhost or mapped IPv4 address)
+		return qfalse;
+	}
 	//:0000: in last 64bits ?
 	for(z = 8; z < 15; ++z)
 	{
@@ -2175,8 +2192,10 @@ qboolean IsStaticIP6Addr(nip_localaddr_t* localaddr)
 static void NET_GetLocalAddress(void)
 {
 	struct ifaddrs *ifap, *search;
-
+	qboolean has_ip6 = 0;
+	qboolean hasstaticip6 = 0;
 	numIP = 0;
+	int i;
 
 	if(getifaddrs(&ifap))
 		Com_PrintError("NET_GetLocalAddress: Unable to get list of network interfaces: %s\n", NET_ErrorString());
@@ -2187,9 +2206,40 @@ static void NET_GetLocalAddress(void)
 			// Only add interfaces that are up.
 			if(ifap->ifa_flags & IFF_UP)
 				NET_AddLocalAddress(search->ifa_name, search->ifa_addr, search->ifa_netmask);
+
+			if(search->ifa_addr && search->ifa_addr->sa_family == AF_INET6){
+				has_ip6 = qtrue;
+			}
 		}
 
 		freeifaddrs(ifap);
+
+		if(has_ip6)
+		{
+			for(i = 0; i < MAX_IPS; ++i)
+			{
+				if(IsStaticIP6Addr(&localIP[i]))
+				{
+					hasstaticip6 = qtrue;
+				}
+			}
+		}
+
+		//Clear out all temp IPv6 addresses
+		if(hasstaticip6)
+		{
+			for(i = 0; i < MAX_IPS; ++i)
+			{
+				if(localIP[i].type == NA_IP6)
+				{
+					if(IsStaticIP6Addr(&localIP[i]) == qfalse)
+					{
+						memset(&localIP[i], 0, sizeof(localIP[0]));
+					}
+				}
+			}
+		}
+
 
 		Sys_ShowIP();
 	}
