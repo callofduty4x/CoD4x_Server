@@ -320,7 +320,7 @@ static int HTTP_DoBlockingQuery(const char *url, char* data, int *len)
     {
       stringlen = *len;
     }
-    ftRequest_t* r = Plugin_HTTP_Request(url, "POST", (byte*)data, stringlen, "ContentType: application/x-www-form-urlencoded\r\n");
+    ftRequest_t* r = Plugin_HTTP_Request(url, "POST", (byte*)data, stringlen, NULL);
 
     if(r == NULL)
     {
@@ -565,7 +565,7 @@ static void* QueryThreadForPlayer(void* q)
   {
     Plugin_Printf("WebbanlistAPI: server returned code %d\n", code);
   }else{
-    Plugin_Printf("WebbanlistAPI: server returned %s\n", querystring);
+//    Plugin_Printf("WebbanlistAPI: server returned %s\n", querystring);
 
     Plugin_HTTP_ParseFormDataBody(querystring, &values);
     const char* status = Plugin_HTTP_GetFormDataItem(&values, "status");
