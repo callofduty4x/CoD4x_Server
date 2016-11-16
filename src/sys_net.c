@@ -1436,7 +1436,6 @@ int NET_IP4Socket( char *net_interface, int port, int *err, qboolean tcp) {
 //	struct	linger			so_linger;
 
 	*err = 0;
-	tos = tos << 2;
 
 	if( net_interface ) {
 		if(tcp)

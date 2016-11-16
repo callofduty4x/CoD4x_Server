@@ -20,9 +20,6 @@
 ===========================================================================
 */
 
-#ifdef _LAGDEBUG
-#include <execinfo.h>
-#endif
 
 #include "q_shared.h"
 #include "qcommon_io.h"
