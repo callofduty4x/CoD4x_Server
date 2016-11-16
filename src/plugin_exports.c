@@ -140,10 +140,10 @@ P_P_F void Plugin_AddCommand(char *name, xcommand_t xcommand, int power)
 
 
 }
-#if 0
+
 P_P_F void Plugin_RemoveCommand(char *name)
 {
-    int i;
+//    int i;
     volatile int pID;
     pID = PHandler_CallerID();
     if(pID>=MAX_PLUGINS){
@@ -158,15 +158,15 @@ P_P_F void Plugin_RemoveCommand(char *name)
     }
     Com_DPrintf("Remove a plugin command for plugin %d, command name: %s.\n",pID,name);
     Cmd_RemoveCommand( name );
-  /*  for(i=0; i < )
+
+  /* Leaving the command in list. Is not that good but will not make much trouble.
+  for(i=0; i < )
     pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds].xcommand = xcommand;
     strcpy(pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds++].name,name);
     */Com_DPrintf("Command removed.\n");
    // pluginFunctions.plugins[pID].
-
-
 }
-#endif
+
 
 P_P_F qboolean Plugin_TcpConnectMT( int pID, int connection, const char* remote)
 {
