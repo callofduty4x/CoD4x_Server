@@ -2730,7 +2730,7 @@ void PlayerCmd_ForwardButtonPressed(scr_entref_t object)
 	if(!cl)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
-	Scr_AddBool(cl->lastUsercmd.forwardmove == KEY_MASK_FORWARD ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.forwardmove > 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_BackButtonPressed(scr_entref_t object)
@@ -2743,7 +2743,7 @@ void PlayerCmd_BackButtonPressed(scr_entref_t object)
 	if(!cl)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
-	Scr_AddBool(cl->lastUsercmd.forwardmove == KEY_MASK_BACK ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.forwardmove < 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
@@ -2756,7 +2756,7 @@ void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
 	if(!cl)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
-	Scr_AddBool(cl->lastUsercmd.leftmove == KEY_MASK_MOVELEFT ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.leftmove > 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
@@ -2769,7 +2769,7 @@ void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
 	if(!cl)
 		Scr_Error("Error: passed entity is not a client's entity\n");
 
-	Scr_AddBool(cl->lastUsercmd.leftmove == KEY_MASK_MOVERIGHT ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.leftmove < 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_SprintButtonPressed(scr_entref_t object)
