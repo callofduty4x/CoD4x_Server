@@ -260,6 +260,7 @@ typedef struct
 
 	netadrtype_t type;
 	sa_family_t family;
+	qboolean isstaticip6;
 	struct sockaddr_storage addr;
 	struct sockaddr_storage netmask;
 } nip_localaddr_t;
@@ -2140,7 +2141,7 @@ static void NET_AddLocalAddress(char *ifname, struct sockaddr *addr, struct sock
 	}
 }
 
-
+//Autodetection of internet version 6 addresses which do not change. Required as players should learn only permanent server addresses and not storing temporarly addresses in favorites
 qboolean IsStaticIP6Addr(nip_localaddr_t* localaddr)
 {
 	int z;
@@ -2182,8 +2183,47 @@ qboolean IsStaticIP6Addr(nip_localaddr_t* localaddr)
 	{
 		return qtrue;
 	}
-	return qfalse;
+	//Last: On Windows there exist non EUI-64 permanent IPv6 addresses but link local address interface identifier and public ip interface identifier match
+	for(z = 0; z < MAX_IPS; ++z)
+	{
+		if(localIP[z].type != NA_IP6)
+		{
+			continue;
+		}
+		struct sockaddr_in6* probe6 = (struct sockaddr_in6*)&localIP[z].addr;
+		byte* probebaddr6 = (byte*)probe6->sin6_addr.s6_addr;
 
+		if(probebaddr6[0] == 0xfe && probebaddr6[1] == 0x80 && 
+		   probebaddr6[2] == 0x00 && probebaddr6[3] == 0x00 &&
+		   probebaddr6[4] == 0x00 && probebaddr6[5] == 0x00 &&
+		   probebaddr6[6] == 0x00 && probebaddr6[7] == 0x00)
+		{
+			//Link local address
+			if(memcmp(probebaddr6 + 8, baddr6 + 8, 8) == 0)
+			{
+				//Found a link local address where the interface identifier does match to this IP 
+				return qtrue;
+			}
+		}		
+	}
+	return qfalse;
+}
+
+//Sets the static flag for all ip6 addresses which match our rules. Returns true if any address was found
+qboolean NET_FlagStaticIP6Addresses()
+{
+	int i;
+	qboolean hasstaticip6 = 0;
+
+	for(i = 0; i < MAX_IPS; ++i)
+	{
+		if(IsStaticIP6Addr(&localIP[i]))
+		{
+			localIP[i].isstaticip6 = qtrue;
+			hasstaticip6 = qtrue;
+		}
+	}
+	return hasstaticip6;
 }
 
 
@@ -2192,7 +2232,6 @@ static void NET_GetLocalAddress(void)
 {
 	struct ifaddrs *ifap, *search;
 	qboolean has_ip6 = 0;
-	qboolean hasstaticip6 = 0;
 	numIP = 0;
 	int i;
 
@@ -2215,31 +2254,21 @@ static void NET_GetLocalAddress(void)
 
 		if(has_ip6)
 		{
-			for(i = 0; i < MAX_IPS; ++i)
+			if(NET_FlagStaticIP6Addresses())
 			{
-				if(IsStaticIP6Addr(&localIP[i]))
+				//Clear out all temp IPv6 addresses
+				for(i = 0; i < MAX_IPS; ++i)
 				{
-					hasstaticip6 = qtrue;
-				}
-			}
-		}
-
-		//Clear out all temp IPv6 addresses
-		if(hasstaticip6)
-		{
-			for(i = 0; i < MAX_IPS; ++i)
-			{
-				if(localIP[i].type == NA_IP6)
-				{
-					if(IsStaticIP6Addr(&localIP[i]) == qfalse)
+					if(localIP[i].type == NA_IP6)
 					{
-						memset(&localIP[i], 0, sizeof(localIP[0]));
+						if(localIP[i].isstaticip6 == qfalse)
+						{
+							memset(&localIP[i], 0, sizeof(localIP[0]));
+						}
 					}
 				}
 			}
 		}
-
-
 		Sys_ShowIP();
 	}
 }
@@ -2317,30 +2346,21 @@ static void NET_GetLocalAddress( void ) {
 			NET_AddLocalAddress("localhost", (struct sockaddr *) &localhostadr, (struct sockaddr *) &mask6);
 		}
 		
-		qboolean hasstaticip6 = qfalse;
 		int i;
 
 		if(has_ip6)
 		{
-			for(i = 0; i < MAX_IPS; ++i)
+			if(NET_FlagStaticIP6Addresses())
 			{
-				if(IsStaticIP6Addr(&localIP[i]))
+				//Clear out all temp IPv6 addresses
+				for(i = 0; i < MAX_IPS; ++i)
 				{
-					hasstaticip6 = qtrue;
-				}
-			}
-		}
-
-		//Clear out all temp IPv6 addresses
-		if(hasstaticip6)
-		{
-			for(i = 0; i < MAX_IPS; ++i)
-			{
-				if(localIP[i].type == NA_IP6)
-				{
-					if(IsStaticIP6Addr(&localIP[i]) == qfalse)
+					if(localIP[i].type == NA_IP6)
 					{
-						memset(&localIP[i], 0, sizeof(localIP[0]));
+						if(localIP[i].isstaticip6 == qfalse)
+						{
+							memset(&localIP[i], 0, sizeof(localIP[0]));
+						}
 					}
 				}
 			}
