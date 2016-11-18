@@ -3,18 +3,16 @@ WIN_CLIBS=-I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath
 WIN_CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer -D WINVER=0x501 -c
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows
 WIN_LLIBS=-Llib\ -ltomcrypt_win32 -lmbedtls_win32 -lm -lws2_32 -lwsock32 -liphlpapi -lgdi32 -mwindows -lwinmm -static-libgcc -static -lstdc++
-
 NASM=nasm
-
 COD4XBIN=cod4x18_dedrun
 
 all:
 	@echo Please select 'makefile.*' instead of this one.
 
-exe: windows zlib nasm common $(COD4XBIN).exe clean_win
+updateable_exe: windows zlib nasm common $(COD4XBIN).exe pexports clean_win
 	@echo Updateable Windows PE compiled successfully.
 
-updateable_exe: windows zlib nasm common_official $(COD4XBIN).exe clean_win
+exe: windows zlib nasm common_updateable $(COD4XBIN).exe pexports clean_win
 	@echo Developer Windows PE build compiled successfully.
 
 windows:
@@ -32,7 +30,7 @@ common:
 	$(CC) $(WIN_CFLAGS) -march=nocona -D COD4X18UPDATE ..\src\*.c
 	@cd ..
 
-common_official:
+common_updateable:
 	@echo Compiling common...
 	@cd bin
 	$(CC) $(WIN_CFLAGS) -march=nocona -D COD4X18UPDATE -D OFFICIAL ..\src\*.c
@@ -61,6 +59,13 @@ nasm:
 $(COD4XBIN).exe:
 	@echo Linking binary...
 	$(CC) $(WIN_LFLAGS) -o bin\$@ bin\*.o src\win32\win_cod4.res $(WIN_LLIBS)
+
+pexports:
+	@echo Creating plugin export lib...
+	@cd bin
+	pexports $(COD4XBIN).exe > $(COD4XBIN).def
+	dlltool -D $(COD4XBIN).exe -d $(COD4XBIN).def -l ..\plugins\libcom_plugin.a
+	@cd ..
 
 clean_win:
 	@echo Cleaning up...
