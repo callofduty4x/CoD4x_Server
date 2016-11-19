@@ -1,7 +1,7 @@
 all:
 	@echo Building updateable Linux ELF
-	@nmake -s -f makefile updateable_elf
+	@make -s -f makefile updateable_elf
 
 dev:
 	@echo Building developer Linux ELF
-	@nmake -f makefile elf
+	@make -f makefile elf
