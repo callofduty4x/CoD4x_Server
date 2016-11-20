@@ -1,7 +1,11 @@
 all:
-	@echo Building updateable Linux ELF
-	@make -s -f makefile updateable_elf
+	@echo [Linux] Building updateable ELF...
+	@make -s updateable_elf
 
 dev:
-	@echo Building developer Linux ELF
-	@make -f makefile elf
+	@echo [Linux] Building developer ELF...
+	@make -s elf
+
+dev_verbose:
+	@echo [Linux] Building developer ELF with verbose output...
+	@make elf
