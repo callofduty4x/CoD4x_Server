@@ -119,7 +119,7 @@ void Sys_DumpCrash(int signal,struct sigcontext *ctx)
 	for(i = 0; i < numFrames; i++)
 		Com_Printf("%5d: %s\n", numFrames - i -1, symbols[i]);
 	Com_Printf("\n-- Registers ---\n");
-	Com_Printf("edi 0x%lx\nesi 0x%lx\nebp 0x%lx\nesp 0x%lx\neax 0x%lx\nebx 0x%lx\necx 0x%lx\nedx 0x%lu\neip 0x%lx\n",ctx->edi,ctx->esi,ctx->ebp,ctx->esp,ctx->eax,ctx->ebx,ctx->ecx,ctx->edx,ctx->eip);
+	Com_Printf("edi 0x%lx\nesi 0x%lx\nebp 0x%lx\nesp 0x%lx\neax 0x%lx\nebx 0x%lx\necx 0x%lx\nedx 0x%lx\neip 0x%lx\n",ctx->edi,ctx->esi,ctx->ebp,ctx->esp,ctx->eax,ctx->ebx,ctx->ecx,ctx->edx,ctx->eip);
 	Com_Printf("-------- Backtrace Completed --------\n");
 	free(traces);
 }

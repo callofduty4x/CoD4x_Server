@@ -2728,9 +2728,9 @@ void PlayerCmd_ForwardButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
-	Scr_AddBool(cl->lastUsercmd.forwardmove == KEY_MASK_FORWARD ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.forwardmove > 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_BackButtonPressed(scr_entref_t object)
@@ -2741,9 +2741,9 @@ void PlayerCmd_BackButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
-	Scr_AddBool(cl->lastUsercmd.forwardmove == KEY_MASK_BACK ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.forwardmove < 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
@@ -2754,9 +2754,9 @@ void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
-	Scr_AddBool(cl->lastUsercmd.leftmove == KEY_MASK_MOVELEFT ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.leftmove > 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
@@ -2767,9 +2767,9 @@ void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
-	Scr_AddBool(cl->lastUsercmd.leftmove == KEY_MASK_MOVERIGHT ? qtrue : qfalse);
+	Scr_AddBool(cl->lastUsercmd.leftmove < 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_SprintButtonPressed(scr_entref_t object)
@@ -2780,7 +2780,7 @@ void PlayerCmd_SprintButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_SPRINT ? qtrue : qfalse);
 }
@@ -2793,7 +2793,7 @@ void PlayerCmd_ReloadButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_RELOAD ? qtrue : qfalse);
 }
@@ -2806,7 +2806,7 @@ void PlayerCmd_LeanLeftButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_LEANLEFT ? qtrue : qfalse);
 }
@@ -2819,7 +2819,7 @@ void PlayerCmd_LeanRightButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_LEANRIGHT ? qtrue : qfalse);
 }
@@ -2832,7 +2832,7 @@ void PlayerCmd_IsProning(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_PRONE ? qtrue : qfalse);
 }
@@ -2845,7 +2845,7 @@ void PlayerCmd_IsCrouching(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_CROUCH ? qtrue : qfalse);
 }
@@ -2858,7 +2858,7 @@ void PlayerCmd_IsStanding(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(!(cl->lastUsercmd.buttons & KEY_MASK_CROUCH) && !(cl->lastUsercmd.buttons & KEY_MASK_PRONE) ? qtrue : qfalse);
 }
@@ -2871,7 +2871,7 @@ void PlayerCmd_JumpButtonPressed(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_JUMP ? qtrue : qfalse);
 }
@@ -2884,7 +2884,7 @@ void PlayerCmd_IsInADS(scr_entref_t object)
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_ADS_MODE ? qtrue : qfalse);
 }
@@ -2892,12 +2892,12 @@ void PlayerCmd_IsInADS(scr_entref_t object)
 void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object)
 {
 	if(Scr_GetNumParam())
-		Scr_Error("Usage: <client> HoldBreathButtonPressed_M()\n");
+		Scr_Error("Usage: <client> HoldBreathButtonPressed()\n");
 
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_HOLDBREATH ? qtrue : qfalse);
 }
@@ -2905,12 +2905,12 @@ void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object)
 void PlayerCmd_ADSButtonPressed(scr_entref_t object)
 {
 	if(Scr_GetNumParam())
-		Scr_Error("Usage: <client> ADSButtonPressed_M()\n");
+		Scr_Error("Usage: <client> AimButtonPressed()\n");
 
 	client_t* cl = VM_GetClientForEntityNumber(object);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_ADS ? qtrue : qfalse);
 }
@@ -2923,7 +2923,7 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
 	client_t* cl = VM_GetClientForEntityNumber(arg);
 
 	if(!cl)
-		Scr_Error("Error: passed entity is not a client's entity\n");
+		Scr_ObjectError("not a client\n");
 
 	Scr_AddInt(cl->clFPS);
 }
