@@ -508,3 +508,14 @@ static void ClientCleanName( const char *in, char *out, int outSize, qboolean al
 		Q_strncpyz( p, "UnnamedPlayer", outSize );
 	}
 }
+
+
+void G_ClientStopUsingTurret_hook(gentity_t* ent)
+{
+	gentity_t *playerent = &g_entities[ent->r.ownerNum];
+	if(playerent->client)
+	{
+		G_ClientStopUsingTurret(ent);
+	}
+}
+

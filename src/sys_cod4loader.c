@@ -74,6 +74,7 @@ void __regparm3 VM_Notify_Hook(int, int, void*);
 unsigned int PushGroundEnt();
 qboolean Scr_ScriptRuntimecheckInfiniteLoop();
 const char* SV_GetGuidBin(int clnum);
+void G_ClientStopUsingTurret_hook(void* ent);
 
 
 static void __cdecl Cbuf_AddText_Wrapper_IW(int dummy, const char *text )
@@ -412,7 +413,11 @@ static byte patchblock_DB_LOADXASSETS[] = { 0x8a, 0x64, 0x20, 0x8,
 	*(byte*)0x80c0455 = 0x1c;
 	*(byte*)0x80c0456 = 0x24;
 	SetCall(0x80c0457, Scr_GetPlayername);
-  SetCall(0x8092168, SV_GetGuidBin);
+	SetCall(0x8092168, SV_GetGuidBin);
+	SetCall(0x80b7a2a, G_ClientStopUsingTurret_hook);
+	SetCall(0x80a7ecf, G_ClientStopUsingTurret_hook);
+	SetCall(0x80b8bce, G_ClientStopUsingTurret_hook);
+
 }
 
 

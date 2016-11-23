@@ -92,4 +92,5 @@ int G_GetClientArchiveTime(int clientindex);
 void G_SetClientArchiveTime(int clindex, int time);
 clientState_t* G_GetClientState( int clnum );
 float G_GetFogOpaqueDistSqrd();
+void G_ClientStopUsingTurret(gentity_t* ent);
 #endif

@@ -66,6 +66,9 @@ global G_SetModel
 G_SetModel:
 	jmp dword [oG_SetModel]
 
+global G_ClientStopUsingTurret
+G_ClientStopUsingTurret:
+	jmp dword [oG_ClientStopUsingTurret]
 
 SECTION .rodata
 
@@ -80,3 +83,4 @@ oG_CallSpawnEntity dd 0x80c8af8
 oG_SpawnHelicopter dd 0x80ba8d6
 oSpawnVehicle dd 0x80cd966
 oG_SetModel dd 0x80cae3a
+oG_ClientStopUsingTurret dd 0x80b7866
