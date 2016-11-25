@@ -1,0 +1,11 @@
+all:
+	@echo [Windows] Building updateable PE...
+	@nmake -s updateable_exe
+
+dev:
+	@echo [Windows] Building developer PE...
+	@nmake -s exe
+
+dev_verbose:
+	@echo [Windows] Building developer PE with verbose output...
+	@nmake exe
