@@ -58,10 +58,23 @@ yaourt -S nasm paxctl gcc-multilib make
 
 First enter `src/tomcrypt`, and run `./compile_linux.sh`. Then go to `src/mbedtls`, and run `make`.
 
-Now compile the server with `./build_updateable_elf.sh`.
+Now compile the server:
+
+Linux:
+```
+make -f makefile.linux32
+```
+
+Windows:
+```
+nmake -f makefile.win32
+```
+
 If compilation was successful the binary will be placed in the `bin/` folder.
 
-##Contributing
+If you developing something right now, please update your build script to use makefiles instead of old build scripts (.sh, .cmd) as it will be removed from repo soon.
+
+## Contributing
 Cod4X is licensed under the AGPL3 license. We welcome anybody to fork this project and submit a pull request.
 
 Plugins can be written in C/C++ and we also provide language bindings for D. The `/plugins` directory contains some example plugins. You can contribute to the project by developing plugins and create a pull request for them and/or uploading and promoting them on the [forums](https://cod4x.me/forum/forum-17.html).

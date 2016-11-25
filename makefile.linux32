@@ -2,10 +2,22 @@ all:
 	@echo [Linux] Building updateable ELF...
 	@make -s updateable_elf
 
+################################################################################
+################################################################################
+#### DO NOT USE LOWER RECIPIES UNLESS YOU'RE DEBUGGING/DEVELOPING SOMETHING ####
+################################################################################
+################################################################################
+
+################################################
+### dev: non-updateable, no build lines spam ###
+################################################
 dev:
 	@echo [Linux] Building developer ELF...
 	@make -s elf
 
+#####################################################
+### dev_verbose: non-updateable, build lines spam ###
+#####################################################
 dev_verbose:
 	@echo [Linux] Building developer ELF with verbose output...
 	@make elf
