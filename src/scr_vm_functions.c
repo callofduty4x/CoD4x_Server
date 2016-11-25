@@ -2748,28 +2748,28 @@ void PlayerCmd_BackButtonPressed(scr_entref_t object)
 
 void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
 {
-	if(Scr_GetNumParam())
-		Scr_Error("Usage: <client> MoveLeftButtonPressed()\n");
+    if (Scr_GetNumParam())
+        Scr_Error("Usage: <client> MoveLeftButtonPressed()\n");
 
-	client_t* cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntityNumber(object);
 
-	if(!cl)
-		Scr_ObjectError("not a client\n");
+    if (!cl)
+        Scr_ObjectError("not a client\n");
 
-	Scr_AddBool(cl->lastUsercmd.leftmove > 0 ? qtrue : qfalse);
+    Scr_AddBool(cl->lastUsercmd.rightmove < 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
 {
-	if(Scr_GetNumParam())
-		Scr_Error("Usage: <client> MoveRightButtonPressed()\n");
+    if (Scr_GetNumParam())
+        Scr_Error("Usage: <client> MoveRightButtonPressed()\n");
 
-	client_t* cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntityNumber(object);
 
-	if(!cl)
-		Scr_ObjectError("not a client\n");
+    if (!cl)
+        Scr_ObjectError("not a client\n");
 
-	Scr_AddBool(cl->lastUsercmd.leftmove < 0 ? qtrue : qfalse);
+    Scr_AddBool(cl->lastUsercmd.rightmove > 0 ? qtrue : qfalse);
 }
 
 void PlayerCmd_SprintButtonPressed(scr_entref_t object)

@@ -301,19 +301,19 @@ typedef struct clientState_s
 #define PICKUP_FORCE    2   // pickup the next item when touched (and reset to PICKUP_ACTIVATE when done)
 
 // usercmd_t is sent to the server each client frame
-typedef struct usercmd_s {
-	int		serverTime;
-	int		buttons;
-	int		angles[3];
-	byte	weapon;
-	byte	offHandIndex;
-	char	forwardmove;      /* Must be char, not byte */
-	char	leftmove;         /* Must be char, not byte */
-	float	meleeChargeYaw;
-	byte	meleeChargeDist;
-	byte	pad[3];
+typedef struct usercmd_s
+{
+    int serverTime;
+    int buttons;
+    int angles[3];
+    byte weapon;
+    byte offHandIndex;
+    char forwardmove; /* Must be char, not byte */
+    char rightmove;   /* Must be char, not byte */
+    float meleeChargeYaw;
+    byte meleeChargeDist;
+    byte pad[3];
 } usercmd_t;
-
 
 // client data that stays across multiple respawns, but is cleared
 // on each level change or team change at ClientBegin()

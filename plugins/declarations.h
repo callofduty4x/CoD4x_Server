@@ -131,18 +131,17 @@ typedef struct{		// A structure representing a player's scoreboard
 // usercmd_t is sent to the server each client frame
 typedef struct usercmd_s
 {
-	int		serverTime;
-	int		buttons;
-	int		angles[3];
-	byte	weapon;
-	byte	offHandIndex;
-	char	forwardmove;      /* Must be char, not byte */
-	char	leftmove;         /* Must be char, not byte */
-	float	meleeChargeYaw;
-	byte	meleeChargeDist;
-	byte	pad[3];
+    int serverTime;
+    int buttons;
+    int angles[3];
+    byte weapon;
+    byte offHandIndex;
+    char forwardmove; /* Must be char, not byte */
+    char rightmove;   /* Must be char, not byte */
+    float meleeChargeYaw;
+    byte meleeChargeDist;
+    byte pad[3];
 } usercmd_t;
-
 
 typedef enum{
     CVAR_BOOL,

@@ -3759,7 +3759,7 @@ void SV_BotUserMove(client_t *client)
             move_pos[1] = -move_pos[1];
             /* Copy result to actual move command. */
             ucmd.forwardmove = ((int)move_pos[0]) & 0xFF;
-            ucmd.leftmove    = ((int)move_pos[1]) & 0xFF;
+            ucmd.rightmove    = ((int)move_pos[1]) & 0xFF;
 
             //Com_Printf("val: (%3d, %3d), distance: %f ", ucmd.forwardmove, ucmd.leftmove, distance);
             //Com_Printf("speed: (%d, %d)", ucmd.forwardmove, ucmd.leftmove);
