@@ -512,7 +512,7 @@ static void ClientCleanName( const char *in, char *out, int outSize, qboolean al
 
 void G_ClientStopUsingTurret_hook(gentity_t* ent)
 {
-	gentity_t *playerent = &g_entities[ent->r.ownerNum];
+	gentity_t *playerent = &g_entities[ent->r.ownerNum -1];
 	if(playerent->client)
 	{
 		G_ClientStopUsingTurret(ent);
