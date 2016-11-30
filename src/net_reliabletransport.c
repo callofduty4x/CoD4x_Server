@@ -242,7 +242,7 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 				dbgc->lastcleared = time;
 				if(dbgc->hitcount > 44)
 				{
-					Com_DPrintfLogfile("Hitcount exceeded 44 in SendPacket for qport %hu Count %d\n", chan->qport, dbgc->hitcount);
+					Com_DPrintfLogfile("Hitcount exceeded 44 in SendPacket for qport %hu Count %d (ACK only)\n", chan->qport, dbgc->hitcount);
 				}
 				dbgc->hitcount = 0;
 			}
