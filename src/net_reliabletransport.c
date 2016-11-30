@@ -586,7 +586,7 @@ int ReliableMessageGetAvailableSendBufferSize(netreliablemsg_t *chan)
 	return freefragmentcnt;
 }
 
-netreliablemsg_t* ReliableMessageSetup( int qport, int netsrc, netadr_t* remote)
+netreliablemsg_t* ReliableMessageSetup( int qport, int sock, netadr_t* remote)
 {
 	fragment_t* dynrxmem;
 	fragment_t* dyntxmem;

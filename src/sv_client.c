@@ -2710,7 +2710,7 @@ qboolean SV_SetupReliableMessageProtocol(client_t* client)
         Com_Error(ERR_FATAL, "SV_SetupRelibiableMessageProtocol() called without setting up netchan");
     }
 
-    client->reliablemsg.netstate = ReliableMessageSetup(client->netchan.sock, client->netchan.qport, &client->netchan.remoteAddress);
+    client->reliablemsg.netstate = ReliableMessageSetup(client->netchan.qport, client->netchan.sock, &client->netchan.remoteAddress);
 
     if(defaultbuffer == NULL)
     {
