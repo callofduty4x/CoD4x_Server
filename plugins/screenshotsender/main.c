@@ -30,6 +30,7 @@
 static cvar_t* identkey;
 static cvar_t *screenshothandlerurl;
 static int serverport;
+static int globaloptions;
 
 
 PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain information about the plugin
@@ -137,6 +138,8 @@ PCL int OnInit(){	// Funciton called on server initiation
       Plugin_Printf("Status: %s\n", status);
       return -1;
     }
+    const char *options = Plugin_HTTP_GetFormDataItem(&values, "options");
+    globaloptions = atoi(options);
     Plugin_Printf("Screenshot sending plugin is ready to work\n");
     return 0;
 }
@@ -492,4 +495,164 @@ PCL void OnScreenshotArrived(client_t* client, const char* path)
   Q_strncpyz(sti.name, client->name, sizeof(sti.name));
   sti.clientNum = NUMFORCLIENT(client);
   SendScreenshotForFile(&sti);
+}
+
+
+//query: guid;
+static void* BanUnbanPlayerThread(void* q)
+{
+  char querystring[8192];
+  httpPostVals_t values;
+  char tmp[1024];
+  int attempts;
+  int code;
+  int len = sizeof(querystring);
+  baninfo_t *baninfo = (baninfo_t*)q;
+  char sid[128];
+  char pid[128];
+
+
+  //Buid the query string
+  querystring[0] = 0;
+  if(baninfo->playerid)
+  {
+    Com_sprintf(tmp, sizeof(tmp), "%llu", baninfo->playerid);
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "playerid", tmp);
+  }
+  if(baninfo->steamid > 0)
+  {
+    Com_sprintf(tmp, sizeof(tmp), "%llu", baninfo->steamid);
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "steamid", tmp);
+  }
+
+  Com_sprintf(tmp, sizeof(tmp), "%llu", baninfo->adminsteamid);
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "adminsteamid", tmp);
+
+  if(baninfo->playername[0])
+  {
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "playername", baninfo->playername);
+  }
+  if(baninfo->message[0])
+  {
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "reason", baninfo->message);
+  }
+  if(baninfo->adr.type >= NA_IP)
+  {
+    //Plugin_NET_AdrToStringShort is not thread safe. Need own function.
+    Plugin_NET_AdrToStringShortMT(&baninfo->adr ,tmp, sizeof(tmp));
+    Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "address", tmp);
+  }
+
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "identkey", identkey->string);
+
+  Com_sprintf(tmp, sizeof(tmp), "%u", serverport);
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "serverport", tmp);
+
+  Com_sprintf(tmp, sizeof(tmp), "%d", baninfo->duration);
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "timeleft", tmp);
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, sizeof(querystring), "command", "modifyban");
+
+  //3 attempts to put data
+  attempts = 0;
+  do
+  {
+    code = HTTP_DoBlockingQuery(screenshothandlerurl->string, querystring, &len);
+    ++attempts;
+  }while(code == 0 && attempts < 3);
+
+  if(code != 200)
+  {
+    Plugin_Printf("WebbanlistAPI: server returned code %d\n", code);
+  }else{
+    Plugin_HTTP_ParseFormDataBody(querystring, &values);
+    const char* status = Plugin_HTTP_GetFormDataItem(&values, "status");
+    const char* message = Plugin_HTTP_GetFormDataItem(&values, "message");
+    if(!Q_stricmpn(status, "success", 7))
+    {
+      //Action completed
+      uint64_t playerid = Plugin_StringToSteamID(Plugin_HTTP_GetFormDataItem(&values, "playerid"));
+      uint64_t steamid = Plugin_StringToSteamID( Plugin_HTTP_GetFormDataItem(&values, "steamid"));
+      const char* playername = Plugin_HTTP_GetFormDataItem(&values, "nick");
+
+      if(message[0])
+      {
+        Plugin_Printf("%s\n", message);
+      }else{
+        Plugin_Printf("Player ");
+        if(playername[0])
+        {
+          Plugin_Printf("%s ", playername);
+        }
+        if(playerid)
+        {
+          Plugin_SteamIDToString(playerid, pid, sizeof(pid));
+          Plugin_Printf("with id %s ", pid);
+        }
+        if(steamid > 0)
+        {
+          Plugin_SteamIDToString(steamid, sid, sizeof(sid));
+          Plugin_Printf("with steamid %s ", sid);
+        }
+        if(!Q_stricmp(status +7, "_ban"))
+        {
+          Plugin_Printf("got banned.\n");
+        }
+      }
+
+    }else if(!Q_stricmp(status, "permission")){
+      //Insifficient permissions
+      if(message[0])
+      {
+        Plugin_Printf("%s\n", message);
+      }else{
+        Plugin_Printf("You are not allowed to ban or unban this player\n");
+      }
+    }else if(!Q_stricmp(status, "notfound")){
+      //Not found
+      if(message[0])
+      {
+        Plugin_Printf("%s\n", message);
+      }else{
+        Plugin_Printf("The requested player was not found with the information provided\n");
+      }
+    }else{
+      //unknown return code
+      if(message[0])
+      {
+        Plugin_Printf("%s\n", message);
+      }else{
+        Plugin_Printf("Ban API received unknown status message %s\n", status);
+      }
+    }
+  }
+
+  free(baninfo);
+  return NULL;
+}
+
+
+static void SendBanUnbanPlayer(baninfo_t *baninfo)
+{
+  baninfo_t *baninfoT = malloc(sizeof(baninfo_t));
+  if(baninfoT == NULL)
+  {
+    return;
+  }
+
+  memcpy(baninfoT, baninfo, sizeof(baninfo_t));
+
+  if(Plugin_CreateNewThread(BanUnbanPlayerThread, NULL, (void*)baninfoT) == qfalse)
+  {
+      //On error
+      free(baninfoT);
+  }
+
+}
+
+PCL void OnPlayerAddBan(baninfo_t* pb)
+{
+  if(globaloptions & 1)
+  {
+    SendBanUnbanPlayer(pb);
+  }
 }
