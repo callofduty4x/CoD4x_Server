@@ -469,9 +469,14 @@ void __cdecl G_VehSpawner(gentity_t *ent);
 void __cdecl G_VehCollmapSpawner(gentity_t *ent);
 void __cdecl G_SetModel(gentity_t *ent, const char *modelname);
 void ClientSetUsername(int clientNum, const char *username);
-//This defines Cvars directly related to executable file
-#define getcvaradr(adr) ((cvar_t *)(*(int *)(adr)))
 
+//This defines Cvars directly related to executable file
+#ifndef getcvaradr
+#define getcvaradr(adr) ((cvar_t *)(*(int *)(adr)))
+#endif
+
+#ifndef g_maxclients
 #define g_maxclients getcvaradr(0x84bcfe8)
+#endif
 
 #endif /*G_SHARED_H*/

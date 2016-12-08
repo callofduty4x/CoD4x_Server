@@ -46,9 +46,13 @@ void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *
 __cdecl void GScr_LoadScripts(void);
 
 //This defines Cvars directly related to executable file
-#define getcvaradr(adr) ((cvar_t*)(*(int*)(adr)))
+#ifndef getcvaradr
+#define getcvaradr(adr) ((cvar_t *)(*(int *)(adr)))
+#endif
 
+#ifndef g_maxclients
 #define g_maxclients getcvaradr(0x84bcfe8)
+#endif
 
 extern cvar_t* g_speed;
 
