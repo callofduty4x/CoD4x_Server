@@ -19,8 +19,6 @@
 ===========================================================================
 */
 
-
-
 #ifndef G_SHARED_H
 #define G_SHARED_H
 
@@ -32,171 +30,168 @@
 #include "sys_cod4defs.h"
 
 #define level_ADDR 0x8370440
-#define level (*((level_locals_t*)(level_ADDR)))
+#define level (*((level_locals_t *)(level_ADDR)))
 
-#define g_gametypes ((gametypes_t*)(0x8583bc0))
+/* Unfortunately, this can't be used to check\get gametypes... At least for now... */
+/*#define g_gametypes ((gametypes_t*)(0x8583bc0))*/
+/*#define g_gametypes_count (*(int*)(0x08583BCC))*/
+/*#define g_gametypes_info ((gametype_t*)(0x08583BD0))*/ /* Count = 32 */
 
 // this structure is cleared as each map is entered
 //
-#define MAX_SPAWN_VARS          64
-#define MAX_SPAWN_VARS_CHARS    2048
+#define MAX_SPAWN_VARS 64
+#define MAX_SPAWN_VARS_CHARS 2048
 
 typedef struct
 {
-  const char *key;
-  const char *value;
-}keyValueStr_t;
-
-
-typedef struct
-{
-  byte spawnVarsValid;
-  byte pad[3];
-  int numSpawnVars;
-  keyValueStr_t spawnVars[64];
-  int numSpawnVarChars;
-  char spawnVarChars[2048];
-}SpawnVar;
-
+    const char *key;
+    const char *value;
+} keyValueStr_t;
 
 typedef struct
 {
-  void *name;
-  int offset;
-  int type;
-}cspField_t;
-
+    byte spawnVarsValid;
+    byte pad[3];
+    int numSpawnVars;
+    keyValueStr_t spawnVars[64];
+    int numSpawnVarChars;
+    char spawnVarChars[2048];
+} SpawnVar;
 
 typedef struct
 {
-  int time;
-  int entnum;
-  uint16_t name;
-  uint16_t pad;
-  float tagMat[4][3];
-}cached_tag_mat_t;
+    void *name;
+    int offset;
+    int type;
+} cspField_t;
+
+typedef struct
+{
+    int time;
+    int entnum;
+    uint16_t name;
+    uint16_t pad;
+    float tagMat[4][3];
+} cached_tag_mat_t;
 
 /* 7571 */
 typedef struct
 {
-  uint16_t entnum;
-  uint16_t otherEntnum;
-  int useCount;
-  int otherUseCount;
-}trigger_info_t;
-
+    uint16_t entnum;
+    uint16_t otherEntnum;
+    int useCount;
+    int otherUseCount;
+} trigger_info_t;
 
 /* 7383 */
 typedef struct
 {
-  int lines;
-  const char *text;
-  int ungetToken;
-  int backup_lines;
-  const char *backup_text;
-}com_parse_mark_t;
+    int lines;
+    const char *text;
+    int ungetToken;
+    int backup_lines;
+    const char *backup_text;
+} com_parse_mark_t;
 
-typedef struct { //0x8370440
-	struct gclient_s    *clients;       // [maxclients]
+typedef struct
+{                              //0x8370440
+    struct gclient_s *clients; // [maxclients]
 
-	struct gentity_s    *gentities;
+    struct gentity_s *gentities;
 
-	int gentitySize;
+    int gentitySize;
 
-	int num_entities;               // current number, <= MAX_GENTITIES
+    int num_entities; // current number, <= MAX_GENTITIES
 
-	struct gentity_s *firstFreeEnt;
-	struct gentity_s *lastFreeEnt;
+    struct gentity_s *firstFreeEnt;
+    struct gentity_s *lastFreeEnt;
 
-	fileHandle_t logFile;
+    fileHandle_t logFile;
 
-	int initializing;
-	int clientIsSpawning;
-	objective_t objectives[16];
+    int initializing;
+    int clientIsSpawning;
+    objective_t objectives[16];
 
-	// store latched cvars here that we want to get at often
-	int maxclients;				//0x1e4
-	int framenum;
-	int time;                           // in msec		0x1ec
-	int previousTime;                   // 0x1f0 so movers can back up when blocked
-	int frameTime;                      // Gordon: time the frame started, for antilag stuff
+    // store latched cvars here that we want to get at often
+    int maxclients; //0x1e4
+    int framenum;
+    int time;         // in msec		0x1ec
+    int previousTime; // 0x1f0 so movers can back up when blocked
+    int frameTime;    // Gordon: time the frame started, for antilag stuff
 
-	int startTime;                      // level.time the map was started
+    int startTime; // level.time the map was started
 
+    int teamScores[TEAM_NUM_TEAMS]; //0x1fc
+    int lastTeammateHealthTime;     // last time of client team location update
 
-	int teamScores[TEAM_NUM_TEAMS];		//0x1fc
-	int lastTeammateHealthTime;               // last time of client team location update
+    qboolean bUpdateScoresForIntermission; //???? Not known 0x210
+    byte teamHasRadar[TEAM_NUM_TEAMS];
+    int manualNameChange;           //0x218 Manual Change mode
+    int numConnectedClients;        // connected, non-spectators
+    int sortedClients[MAX_CLIENTS]; //sorted by rank or score ? 0x220
 
-	qboolean bUpdateScoresForIntermission;		//???? Not known 0x210
-	byte teamHasRadar[TEAM_NUM_TEAMS];
-	int manualNameChange;			//0x218 Manual Change mode
-	int numConnectedClients;              // connected, non-spectators
-	int sortedClients[MAX_CLIENTS];		//sorted by rank or score ? 0x220
+    // voting state
+    char voteString[MAX_STRING_CHARS];        //0x320
+    char voteDisplayString[MAX_STRING_CHARS]; //0x720
+    int voteTime;                             // level.time vote was called	0xb20
+    int voteExecuteTime;                      // time the vote is executed
+    int voteYes;                              //0xb28
+    int voteNo;                               //0xb2c
+    int numVotingClients;                     // set by CalculateRanks
 
+    SpawnVar spawnVars;
+    int savePersist;
 
+    struct gentity_s *droppedWeaponCue[32];
+    float fFogOpaqueDist;
+    float fFogOpaqueDistSqrd;
+    int remapCount;
+    int currentPlayerClone;
+    trigger_info_t pendingTriggerList[256];
+    trigger_info_t currentTriggerList[256];
+    int pendingTriggerListSize;
+    int currentTriggerListSize;
+    int finished;
+    int bPlayerIgnoreRadiusDamage;
+    int bPlayerIgnoreRadiusDamageLatched;
+    int registerWeapons;
+    int bRegisterItems;
+    int currentEntityThink;
+    void *openScriptIOFileHandles[1];
+    char *openScriptIOFileBuffers[1];
+    com_parse_mark_t currentScriptIOLineMark[1];
+    cached_tag_mat_t cachedTagMat;
+    int scriptPrintChannel;
+    float compassMapUpperLeft[2];
+    float compassMapWorldSize[2];
+    float compassNorth[2];
+    struct scr_vehicle_s *vehicles;
+} level_locals_t;
 
-	// voting state
-	char voteString[MAX_STRING_CHARS];		//0x320
-	char voteDisplayString[MAX_STRING_CHARS];	//0x720
-	int voteTime;                       // level.time vote was called	0xb20
-	int voteExecuteTime;                // time the vote is executed
-	int voteYes;				//0xb28
-	int voteNo;				//0xb2c
-	int numVotingClients;			// set by CalculateRanks
-
-	SpawnVar spawnVars;
-	int savePersist;
-
-	struct gentity_s *droppedWeaponCue[32];
-	float fFogOpaqueDist;
-	float fFogOpaqueDistSqrd;
-	int remapCount;
-	int currentPlayerClone;
-	trigger_info_t pendingTriggerList[256];
-	trigger_info_t currentTriggerList[256];
-	int pendingTriggerListSize;
-	int currentTriggerListSize;
-	int finished;
-	int bPlayerIgnoreRadiusDamage;
-	int bPlayerIgnoreRadiusDamageLatched;
-	int registerWeapons;
-	int bRegisterItems;
-	int currentEntityThink;
-	void *openScriptIOFileHandles[1];
-	char *openScriptIOFileBuffers[1];
-	com_parse_mark_t currentScriptIOLineMark[1];
-	cached_tag_mat_t cachedTagMat;
-	int scriptPrintChannel;
-	float compassMapUpperLeft[2];
-	float compassMapWorldSize[2];
-	float compassNorth[2];
-	struct scr_vehicle_s *vehicles;
-}level_locals_t;
-
-
-
-typedef struct {
+/* Max count = 32, started at 0x08583C10 */
+/*typedef struct gametype_t
+{
     char	gametypename[64];
     char	gametypereadable[68];
-} gametype_t;
+} gametype_t;*/
 
-
-typedef struct {
+/* If started at 0x08583BC0, then var_03 points to 0x08583BC8 which is g_playerLastStandLabel - a handler to script function. */
+/*typedef struct gametypes_t
+{
     int		var_01;
     int		var_02;
     int		var_03;
     int		numGametypes;
     gametype_t	gametype[];
-} gametypes_t;
+} gametypes_t;*/
 
-
-#define iDFLAGS_RADIUS					1			// explosive damage
-#define iDFLAGS_NO_ARMOR				2			// ???
-#define iDFLAGS_NO_KNOCKBACK			4			// players dont get pushed in damage_dir
-#define iDFLAGS_PENETRATION				8			// bullets can penetrate walls
-#define iDFLAGS_NO_TEAM_PROTECTION		16			// team kills/damage in TDM/SD etc
-#define iDFLAGS_NO_PROTECTION			32			// nothing can stop damage
-#define iDFLAGS_PASSTHRU				64			// bullet passed through non solid surface (???)
+#define iDFLAGS_RADIUS 1              // explosive damage
+#define iDFLAGS_NO_ARMOR 2            // ???
+#define iDFLAGS_NO_KNOCKBACK 4        // players dont get pushed in damage_dir
+#define iDFLAGS_PENETRATION 8         // bullets can penetrate walls
+#define iDFLAGS_NO_TEAM_PROTECTION 16 // team kills/damage in TDM/SD etc
+#define iDFLAGS_NO_PROTECTION 32      // nothing can stop damage
+#define iDFLAGS_PASSTHRU 64           // bullet passed through non solid surface (???)
 
 //
 // config strings are a general means of communicating variable length strings
@@ -214,10 +209,10 @@ typedef struct {
 #define CS_SCORES2              7
 */
 
-#define CS_VOTE_TIME            13
-#define CS_VOTE_STRING          14
-#define CS_VOTE_YES             15
-#define CS_VOTE_NO              16
+#define CS_VOTE_TIME 13
+#define CS_VOTE_STRING 14
+#define CS_VOTE_YES 15
+#define CS_VOTE_NO 16
 /*
 #define CS_GAME_VERSION         12
 #define CS_LEVEL_START_TIME     13      // so the timer only shows the current level
@@ -227,15 +222,15 @@ typedef struct {
 // DHM - Nerve :: Wolf Multiplayer information
 
 // TTimo - voting config flags
-#define VOTEFLAGS_RESTART           ( 1 << 0 )
-#define VOTEFLAGS_GAMETYPE          ( 1 << 1 )
-#define VOTEFLAGS_STARTMATCH        ( 1 << 2 )
-#define VOTEFLAGS_NEXTMAP           ( 1 << 3 )
-#define VOTEFLAGS_SWAP              ( 1 << 4 )
-#define VOTEFLAGS_TYPE              ( 1 << 5 )
-#define VOTEFLAGS_KICK              ( 1 << 6 )
-#define VOTEFLAGS_MAP               ( 1 << 7 )
-#define VOTEFLAGS_ANYMAP            ( 1 << 8 )
+#define VOTEFLAGS_RESTART (1 << 0)
+#define VOTEFLAGS_GAMETYPE (1 << 1)
+#define VOTEFLAGS_STARTMATCH (1 << 2)
+#define VOTEFLAGS_NEXTMAP (1 << 3)
+#define VOTEFLAGS_SWAP (1 << 4)
+#define VOTEFLAGS_TYPE (1 << 5)
+#define VOTEFLAGS_KICK (1 << 6)
+#define VOTEFLAGS_MAP (1 << 7)
+#define VOTEFLAGS_ANYMAP (1 << 8)
 /*
 // entityState_t->eFlags
 #define EF_DEAD             0x00000001      // don't draw a foe marker over players with EF_DEAD
@@ -262,16 +257,16 @@ typedef struct {
 #define EF_MONSTER_EFFECT3  0x00010000      // show the third special effect for this character
 #define EF_HEADLOOK         0x00020000      // make the head look around*/
 
-#define EF_VOTED            0x00100000     // already cast a vote
-#define EF_TALK             0x00200000      // draw a talk balloon
-#define EF_TAUNT			0x00400000		// player saying taunt
-#define EF_FIRING           0x00000020      // for lightning gun
-#define EF_MANTLE           0x00008000      // for mantle move over something
-#define EF_CROUCHING        0x00000004      // player is crouching
-#define EF_PRONE			0x00000008		// player is prone
-#define EF_DEAD             0x00020000      // don't draw a foe marker over players with EF_DEAD
-#define EF_USETURRET		0x00000200		// use a turret? Not sure about it but using it sets this flag
-#define EF_AIMDOWNSIGHT		0x00040000
+#define EF_VOTED 0x00100000     // already cast a vote
+#define EF_TALK 0x00200000      // draw a talk balloon
+#define EF_TAUNT 0x00400000     // player saying taunt
+#define EF_FIRING 0x00000020    // for lightning gun
+#define EF_MANTLE 0x00008000    // for mantle move over something
+#define EF_CROUCHING 0x00000004 // player is crouching
+#define EF_PRONE 0x00000008     // player is prone
+#define EF_DEAD 0x00020000      // don't draw a foe marker over players with EF_DEAD
+#define EF_USETURRET 0x00000200 // use a turret? Not sure about it but using it sets this flag
+#define EF_AIMDOWNSIGHT 0x00040000
 
 /*
 
@@ -293,11 +288,6 @@ typedef struct {
 #define EF_MOVER_STOP       0x10000000      // will push otherwise	// (SA) moved down to make space for one more client flag
 
 */
-
-
-
-
-
 
 /*
 // --- COD4: raw\maps\mp\gametypes\_missions.gsc --- //
@@ -370,9 +360,6 @@ static const char *g_HitLocNames[] =
 };
 
 */
-
-
-
 
 /*
 // --- COD4: raw\maps\mp\gametypes\_hud.gsc --- //
@@ -468,23 +455,22 @@ extern cvar_t *jump_height;
 extern cvar_t *jump_stepSize;
 extern cvar_t *jump_slowdownEnable;
 
-
 extern qboolean onExitLevelExecuted;
 
-int BG_GetPerkIndexForName(const char* name);
+int BG_GetPerkIndexForName(const char *name);
 int G_GetSavePersist(void);
 void G_SetSavePersist(int val);
 
 int G_GetClientSize();
-gclient_t* G_GetPlayerState(int num);
-clientState_t * G_GetClientState(int num);
-void SpawnVehicle(gentity_t* ent, const char* vehtype);
+gclient_t *G_GetPlayerState(int num);
+clientState_t *G_GetClientState(int num);
+void SpawnVehicle(gentity_t *ent, const char *vehtype);
 void __cdecl G_VehSpawner(gentity_t *ent);
 void __cdecl G_VehCollmapSpawner(gentity_t *ent);
-void __cdecl G_SetModel(gentity_t *ent, const char* modelname);
-void ClientSetUsername(int clientNum, const char* username);
+void __cdecl G_SetModel(gentity_t *ent, const char *modelname);
+void ClientSetUsername(int clientNum, const char *username);
 //This defines Cvars directly related to executable file
-#define getcvaradr(adr) ((cvar_t*)(*(int*)(adr)))
+#define getcvaradr(adr) ((cvar_t *)(*(int *)(adr)))
 
 #define g_maxclients getcvaradr(0x84bcfe8)
 
