@@ -36,6 +36,7 @@
 #include <errno.h>
 #include <inttypes.h>
 #include <io.h>
+#include <Shlobj.h>
 
 void Sys_ShowErrorDialog(const char* functionName);
 
@@ -104,13 +105,8 @@ Sys_Mkdir
 */
 qboolean Sys_Mkdir( const char *path )
 {
-
-	int result = _mkdir( path );
-
-	if( result != 0 && errno != EEXIST)
-		return qfalse;
-
-	return qtrue;
+    int result = SHCreateDirectoryExA(0, path, 0);
+    return result == ERROR_SUCCESS || result == ERROR_FILE_EXISTS || result == ERROR_ALREADY_EXISTS;
 }
 
 /*
@@ -548,6 +544,24 @@ char *Sys_Cwd( void ) {
 	return cwd;
 }
 
+/*
+==============
+Sys_Dirname
+==============
+*/
+const char *Sys_Dirname(char *path)
+{
+    static char dir[MAX_OSPATH];
+    char *slash = 0;
+
+    strcpy(dir, path);
+    slash = strrchr(dir, '/');
+    if (!slash)
+        slash = strrchr(dir, '\\');
+    if (slash)
+        *slash = '\0';
+    return dir;
+}
 /*
 ==============
 Sys_PlatformInit

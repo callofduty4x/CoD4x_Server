@@ -52,6 +52,7 @@
 #include "huffman.h"
 #include "sapi.h"
 #include "dobj.h"
+#include "xassets/extractor.h"
 
 #include <string.h>
 #include <setjmp.h>
@@ -895,6 +896,8 @@ void Com_Init(char* commandLine){
         Cmd_AddCommand ("error", Com_Error_f);
         Cmd_AddCommand ("crash", Com_Crash_f);
         Cmd_AddCommand ("freeze", Com_Freeze_f);
+        /* Do it only in developer mode. Just not to let remote admins abuse it. */
+        add_extractor_console_commands();
     }
     Cmd_AddCommand ("quit", Com_Quit_f);
     Cmd_AddCommand ("writeconfig", Com_WriteConfig_f );

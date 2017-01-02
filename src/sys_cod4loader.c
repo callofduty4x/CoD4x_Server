@@ -42,6 +42,7 @@
 #include "sec_crypto.h"
 #include "cmd.h"
 #include "xassets.h"
+#include "xassets/extractor.h"
 
 
 #include <string.h>
@@ -417,7 +418,7 @@ static byte patchblock_DB_LOADXASSETS[] = { 0x8a, 0x64, 0x20, 0x8,
 	SetCall(0x80b7a2a, G_ClientStopUsingTurret_hook);
 	SetCall(0x80a7ecf, G_ClientStopUsingTurret_hook);
 	SetCall(0x80b8bce, G_ClientStopUsingTurret_hook);
-
+	SetCall(0x081DADD8, store_fastfile_contents_information);
 }
 
 

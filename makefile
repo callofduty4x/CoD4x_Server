@@ -37,24 +37,24 @@ linux:
 common_win: 
 	@echo [Windows] Building common code...
 	@cd bin
-	$(CC) $(CFLAGS) -D COD4X18UPDATE -D WINVER=0x501 -march=nocona ..\src\*.c
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D WINVER=0x501 -march=nocona ..\src\*.c ..\src\xassets\*.c
 	@cd ..
 
 common_linux: 
 	@echo [Linux] Building common code...
 	cd bin && \
-	$(CC) $(CFLAGS) -D COD4X18UPDATE -D _GNU_SOURCE -march=nocona ../src/*.c
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D _GNU_SOURCE -march=nocona ../src/*.c ../src/xassets/*.c
 
 common_updateable_win:
 	@echo [Windows] Building self-updateable common code...
 	@cd bin
-	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D WINVER=0x501 -march=nocona ..\src\*.c
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D WINVER=0x501 -march=nocona ..\src\*.c ..\src\xassets\*.c
 	@cd ..
 
 common_updateable_linux:
 	@echo [Linux] Building self-updateable common code...
 	cd bin && \
-	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -march=nocona ../src/*.c
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -march=nocona ../src/*.c ../src/xassets/*.c
 
 zlib_win:
 	@echo [Windows] Building ZLib...
