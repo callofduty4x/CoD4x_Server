@@ -103,7 +103,7 @@ qboolean Sys_RandomBytes( byte *string, int len )
 Sys_Mkdir
 ==================
 */
-qboolean Sys_Mkdir( const char *path )
+qboolean Sys_Mkdir(const char *path)
 {
     int result = SHCreateDirectoryExA(0, path, 0);
     return result == ERROR_SUCCESS || result == ERROR_FILE_EXISTS || result == ERROR_ALREADY_EXISTS;

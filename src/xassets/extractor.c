@@ -13,6 +13,8 @@
 #include "../sys_main.h"
 /* Assets includes: */
 #include "rawfile.h"
+#include "localized_string.h"
+#include "stringtable.h"
 
 #define MAX_STORE_FASTFILES (32)
 
@@ -23,7 +25,7 @@ typedef struct AssetHandler_t
 {
     int type;
     void *header;
-}AssetHandler_t;
+} AssetHandler_t;
 
 typedef struct FastFileContents_t
 {
@@ -31,35 +33,35 @@ typedef struct FastFileContents_t
     char *str_list_data;
     int asset_list_count;
     AssetHandler_t *asset_list_data;
-}FastFileContents_t;
+} FastFileContents_t;
 
 typedef struct ZoneDataBlock_t
 {
-  byte_t *data;
-  uint size;
-}ZoneDataBlock_t;
+    byte_t *data;
+    uint size;
+} ZoneDataBlock_t;
 
 typedef struct FastFileZlibHandler_t
 {
-  FILE *fd;
-  char *name;
-  ZoneDataBlock_t *pBlocks;
-  int avail_in;
-  z_stream strm;
-  int *next_in;
-  int field_48;
-  int (*funcUnk)(void);
-  int pad2;
-}FastFileZlibHandler_t;
+    FILE *fd;
+    char *name;
+    ZoneDataBlock_t *pBlocks;
+    int avail_in;
+    z_stream strm;
+    int *next_in;
+    int field_48;
+    int (*funcUnk)(void);
+    int pad2;
+} FastFileZlibHandler_t;
 
-#define g_pFFContents (*(FastFileContents_t**)0x1411F540)
-#define g_ff (*(FastFileZlibHandler_t*)0x1411EF60)
+#define g_pFFContents (*(FastFileContents_t **)0x1411F540)
+#define g_ff (*(FastFileZlibHandler_t *)0x1411EF60)
 
 typedef struct FastFileAssetsTableInfo_t
 {
     char name[64];
     FastFileContents_t content;
-}FastFileAssetsTableInfo_t;
+} FastFileAssetsTableInfo_t;
 
 static FastFileAssetsTableInfo_t g_FastFileAssetsTableInfo[MAX_STORE_FASTFILES];
 static char g_savePath[MAX_OSPATH];
@@ -80,7 +82,7 @@ void extractor_init()
 void store_fastfile_contents_information()
 {
     int i;
-    FastFileAssetsTableInfo_t* info;
+    FastFileAssetsTableInfo_t *info;
 
     /* Do not add maps to this list as they can be unloaded 
        and unloading not covered by this code. */
@@ -99,11 +101,11 @@ void store_fastfile_contents_information()
     Com_Memcpy(&info->content, g_pFFContents, sizeof(FastFileContents_t));
 }
 
-/* Extract rawfile */
-static void extract_rawfile(void *header)
+/* Extract rawfile. */
+static void extract_rawfile(const void *header)
 {
     char output_path[MAX_OSPATH];
-    Rawfile_t *asset = (Rawfile_t*)header;
+    Rawfile_t *asset = (Rawfile_t *)header;
     FILE *f;
     char *dir_path;
     char *pdir_path;
@@ -113,9 +115,105 @@ static void extract_rawfile(void *header)
     sprintf(output_path, "%s%s", g_savePath, asset->name);
     output_path[MAX_OSPATH - 1] = '\0';
     /* Convert slashes. */
-    dir_path = (char*)Sys_Dirname(output_path);
+    dir_path = (char *)Sys_Dirname(output_path);
     pdir_path = dir_path;
-    while(*pdir_path)
+    while (*pdir_path)
+    {
+        if (*pdir_path == '/')
+            *pdir_path = '\\';
+        ++pdir_path;
+    }
+    Sys_Mkdir(dir_path);
+
+    f = fopen(output_path, "w");
+    if (!f)
+    {
+        Com_Printf("Can't open '%s': %s\n", output_path, strerror(errno));
+        return;
+    }
+
+    fwrite(asset->data, sizeof(char), asset->data_size, f);
+    fclose(f);
+    Com_Printf("done.\n");
+}
+
+/* Extract localized string. */
+static void extract_localized_string(const void *header)
+{
+    char output_path[MAX_OSPATH];
+    char prefix[64] = {'\0'};
+    LocalizedString_t *asset = (LocalizedString_t *)header;
+    char *prefix_end;
+    FILE *f;
+    char *dir_path;
+    char *pdir_path;
+
+    Com_Printf("Extracting '%s'...", asset->key);
+
+    /* Will be always because prefix is a file name. */
+    prefix_end = strchr(asset->key, '_');
+    if (prefix_end - asset->key + 1 > sizeof(prefix))
+    {
+        Com_Printf("Too long prefix for localized string '%s'. Increase prefix size (now %d).\n", asset->key, sizeof(prefix));
+        return;
+    }
+    strncpy(prefix, asset->key, prefix_end - asset->key);
+    /* Build output file path. */
+    sprintf(output_path, "%s/raw/english/localizedstrings/%s.str", g_savePath, prefix);
+    /* Convert slashes. */
+    dir_path = (char *)Sys_Dirname(output_path);
+    pdir_path = dir_path;
+    while (*pdir_path)
+    {
+        if (*pdir_path == '/')
+            *pdir_path = '\\';
+        ++pdir_path;
+    }
+    Sys_Mkdir(dir_path);
+
+    /* Check if file already exist. */
+    f = fopen(output_path, "r");
+    if (!f)
+    {
+        /* File not exist -> add default header. */
+        f = fopen(output_path, "w");
+        if (!f)
+        {
+            Com_Printf("Can't open '%s': %s...\n", output_path, strerror(errno));
+            return;
+        }
+        fwrite("VERSION             \"1\"\n", sizeof(char), 24, f);
+        fwrite("CONFIG              \"C:\\trees\\cod3\\cod3\\bin\\StringEd.cfg\"\n", sizeof(char), 58, f);
+        fwrite("FILENOTES           \"Extracted from fastfile.\"\n\n", sizeof(char), 48, f);
+    }
+    else
+        f = freopen(output_path, "a", f);
+
+    /* TODO: handle case with '\n', '\t' in asset->value. */
+    fprintf(f, "REFERENCE           %s\n", asset->key);
+    fprintf(f, "LANG_ENGLISH        \"%s\"\n\n", asset->value);
+    fclose(f);
+    Com_Printf("done.\n");
+}
+
+/* Extract string table. */
+static void extract_stringtable(const void *header)
+{
+    StringTable_t *asset = (StringTable_t *)header;
+    char output_path[MAX_OSPATH];
+    FILE *f;
+    char *dir_path;
+    char *pdir_path;
+    uint i;
+    uint j;
+
+    Com_Printf("Extracting: '%s'...", asset->name);
+    sprintf(output_path, "%s%s", g_savePath, asset->name);
+
+    /* Convert slashes. */
+    dir_path = (char *)Sys_Dirname(output_path);
+    pdir_path = dir_path;
+    while (*pdir_path)
     {
         if (*pdir_path == '/')
             *pdir_path = '\\';
@@ -129,14 +227,24 @@ static void extract_rawfile(void *header)
         Com_Printf("Can't open '%s': %s...\n", output_path, strerror(errno));
         return;
     }
-
-    fwrite(asset->data, sizeof(char), asset->data_size, f);
+    /* Write out string table. */
+    for (i = 0; i < asset->rows; ++i)
+    {
+        for (j = 0; j < asset->columns; ++j)
+        {
+            /* Differ last column. */
+            if (j != asset->columns - 1)
+                fprintf(f, "%s,", asset->data[i * asset->columns + j]);
+            else
+                fprintf(f, "%s\n", asset->data[i * asset->columns + j]);
+        }
+    }
     fclose(f);
     Com_Printf("done.\n");
 }
 
 /* Extract all assets from fastfile. */
-static void extract_from_fastfile(const FastFileAssetsTableInfo_t* ff_info, const unsigned int type, void(*handler)(void *header))
+static void extract_from_fastfile(const FastFileAssetsTableInfo_t *ff_info, const unsigned int type, void (*handler)(const void *header))
 {
     int i;
     for (i = 0; i < ff_info->content.asset_list_count; ++i)
@@ -152,17 +260,17 @@ void Cmd_ExtractAsset()
     char *type;
     int type_num = -1;
     char *ff;
-    FastFileAssetsTableInfo_t* ff_info = 0;
-    void (*handler)(void *) = 0;
+    FastFileAssetsTableInfo_t *ff_info = 0;
+    void (*handler)(const void *) = 0;
     int i;
 
     if (Cmd_Argc() != 3)
     {
-        USAGE:
+    USAGE:
         Com_Printf("Usage:\n");
         Com_Printf("  extract <ff> <type>\n");
         Com_Printf("    ff - Name of fastfile to look into, without extension.\n");
-        Com_Printf("    type - Type of asset. Must be one of: rawfile.\n");
+        Com_Printf("    type - Type of asset. Must be one of: rawfile, localized_string, stringtable\n");
         return;
     }
 
@@ -186,7 +294,17 @@ void Cmd_ExtractAsset()
         handler = extract_rawfile;
         type_num = XASSET_TYPE_RAWFILE;
     }
-    
+    else if (!strcmp(type, "localized_string"))
+    {
+        handler = extract_localized_string;
+        type_num = XASSET_TYPE_LOCALIZEDSTRING;
+    }
+    else if (!strcmp(type, "stringtable"))
+    {
+        handler = extract_stringtable;
+        type_num = XASSET_TYPE_STRINGTABLE;
+    }
+
     if (!handler || type_num == -1)
     {
         Com_Printf("Unknown asset type '%s'.\n", type);
