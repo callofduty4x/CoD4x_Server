@@ -131,13 +131,13 @@ static void extract_rawfile(const void *header)
     output_path[MAX_OSPATH - 1] = '\0';
     create_directories(output_path);
 
+    /* Mode must be "wb" because of \r\n doubling. */
     f = fopen(output_path, "wb");
     if (!f)
     {
         Com_Printf("Can't open '%s': %s\n", output_path, strerror(errno));
         return;
     }
-    /* TODO: handle line feed\carriage return doubling. */
     fwrite(asset->data, sizeof(char), asset->data_size, f);
     fclose(f);
 }
