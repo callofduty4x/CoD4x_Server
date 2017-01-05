@@ -15,6 +15,8 @@
 #include "rawfile.h"
 #include "localized_string.h"
 #include "stringtable.h"
+#include "menufile.h"
+#include "menu.h"
 
 #define MAX_STORE_FASTFILES (32)
 
@@ -222,6 +224,25 @@ static void extract_stringtable(const void *header)
     fclose(f);
 }
 
+/* Extract single menu. Must be used only inside 'extract_menufile' */
+static void extract_menu(Menu_t *asset)
+{
+    Com_Printf("    Writing menu '%s'...", asset->name);
+    //TODO
+    Com_Printf("done.\n");
+}
+
+/* Extract menufile. */
+static void extract_menufile(const void *header)
+{
+    Menufile_t *asset = (Menufile_t *)header;
+    uint i;
+    /* Newline for each menu. */
+    Com_Printf("\n");
+    for (i = 0; i < asset->count; ++i)
+        extract_menu(asset->menus[i]);
+}
+
 /* Extract all assets from fastfile. */
 static void extract_from_fastfile(const FastFileAssetsTableInfo_t *ff_info, const unsigned int type, void (*handler)(const void *header))
 {
@@ -253,7 +274,7 @@ void Cmd_ExtractAsset()
         Com_Printf("Usage:\n");
         Com_Printf("  extract <ff> <type>\n");
         Com_Printf("    ff - Name of fastfile to look into, without extension.\n");
-        Com_Printf("    type - Type of asset. Must be one of: rawfile, localized_string, stringtable\n");
+        Com_Printf("    type - Type of asset. Must be one of: rawfile, localized_string, stringtable, menufile.\n");
         return;
     }
 
@@ -286,6 +307,11 @@ void Cmd_ExtractAsset()
     {
         handler = extract_stringtable;
         type_num = XASSET_TYPE_STRINGTABLE;
+    }
+    else if (!strcmp(type, "menufile"))
+    {
+        handler = extract_menufile;
+        type_num = XASSET_TYPE_MENUFILE;
     }
 
     if (!handler || type_num == -1)
