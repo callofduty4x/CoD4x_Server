@@ -14,7 +14,7 @@ typedef struct Menufile_t
 {
     char *name;
     uint count; /* Count of menus inside. */
-    Menu_t **menus; /* Pointer to array of 'menu' pointers. Its size == count. */
+    MenuDef_t **menus; /* Pointer to array of 'menu' pointers. Its size == count. */
 } Menufile_t;
 
 #define XASSET_TYPE_MENUFILE (20)

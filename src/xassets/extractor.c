@@ -225,14 +225,17 @@ static void extract_stringtable(const void *header)
 }
 
 /* Extract single menu. Must be used only inside 'extract_menufile' */
-static void extract_menu(Menu_t *asset)
+static void extract_menu(MenuDef_t *asset)
 {
-    Com_Printf("    Writing menu '%s'...", asset->name);
+    Com_Printf("    Writing menu '%s'...", asset->window.name);
     //TODO
     Com_Printf("done.\n");
 }
 
 /* Extract menufile. */
+/* TODO: 2 cases. */
+/*     1) menufile is .menu => extract all inside of this file. */
+/*     2) menufile is .txt => extract all to separate files and create .txt with loadMenus. */
 static void extract_menufile(const void *header)
 {
     Menufile_t *asset = (Menufile_t *)header;
