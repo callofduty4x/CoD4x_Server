@@ -19,6 +19,7 @@
 #include "menu.h"
 
 #define MAX_STORE_FASTFILES (32)
+#define ACTION_OPTIMIZER_BUFFER_SIZE (4096)
 
 typedef unsigned char byte_t;
 typedef unsigned int uint;
@@ -68,6 +69,7 @@ typedef struct FastFileAssetsTableInfo_t
 
 static FastFileAssetsTableInfo_t g_FastFileAssetsTableInfo[MAX_STORE_FASTFILES];
 static char g_savePath[MAX_OSPATH];
+static char *g_zone_name;
 
 /* Setups output path. */
 void extractor_init()
@@ -122,6 +124,26 @@ static void create_directories(char *path)
     Sys_Mkdir(dir_path);
 }
 
+/* Adds a line to zone_source file which can be used by linker_pc. */
+static void add_zone_source_line(const char *asset_type, const char *asset_name)
+{
+    FILE *zone_source;
+    char zone_source_path[MAX_OSPATH] = {'\0'};
+
+    sprintf(zone_source_path, "%s%s/zone_source/%s.csv", g_savePath, g_zone_name, g_zone_name);
+    create_directories(zone_source_path);
+
+    zone_source = fopen(zone_source_path, "a");
+    if (!zone_source)
+    {
+        Com_Printf("Can't save to zone source file '%s': %s.\n", zone_source_path, strerror(errno));
+        return;
+    }
+    
+    fprintf(zone_source, "%s,%s\n", asset_type, asset_name);
+    fclose(zone_source);
+}
+
 /* Extract rawfile. */
 static void extract_rawfile(const void *header)
 {
@@ -129,9 +151,10 @@ static void extract_rawfile(const void *header)
     Rawfile_t *asset = (Rawfile_t *)header;
     FILE *f;
 
-    sprintf(output_path, "%s%s", g_savePath, asset->name);
+    sprintf(output_path, "%s%s/%s", g_savePath, g_zone_name, asset->name);
     output_path[MAX_OSPATH - 1] = '\0';
     create_directories(output_path);
+    add_zone_source_line("rawfile", asset->name);
 
     /* Mode must be "wb" because of \r\n doubling. */
     f = fopen(output_path, "wb");
@@ -162,7 +185,7 @@ static void extract_localized_string(const void *header)
     }
     strncpy(prefix, asset->key, prefix_end - asset->key);
     /* Build output file path. */
-    sprintf(output_path, "%s/raw/english/localizedstrings/%s.str", g_savePath, prefix);
+    sprintf(output_path, "%s%s/raw/english/localizedstrings/%s.str", g_savePath, g_zone_name, prefix);
     output_path[MAX_OSPATH - 1] = '\0';
     create_directories(output_path);
 
@@ -180,6 +203,7 @@ static void extract_localized_string(const void *header)
         fwrite("VERSION             \"1\"\n", sizeof(char), 24, f);
         fwrite("CONFIG              \"C:\\trees\\cod3\\cod3\\bin\\StringEd.cfg\"\n", sizeof(char), 58, f);
         fwrite("FILENOTES           \"Extracted from fastfile.\"\n\n", sizeof(char), 48, f);
+        add_zone_source_line("localize", prefix);
     }
     else
         f = freopen(output_path, "a", f);
@@ -199,9 +223,10 @@ static void extract_stringtable(const void *header)
     uint i;
     uint j;
 
-    sprintf(output_path, "%s%s", g_savePath, asset->name);
+    sprintf(output_path, "%s%s/%s", g_savePath, g_zone_name, asset->name);
     output_path[MAX_OSPATH - 1] = '\0';
     create_directories(output_path);
+    add_zone_source_line("stringtable", asset->name);
 
     f = fopen(output_path, "w");
     if (!f)
@@ -224,26 +249,547 @@ static void extract_stringtable(const void *header)
     fclose(f);
 }
 
-/* Extract single menu. Must be used only inside 'extract_menufile' */
-static void extract_menu(MenuDef_t *asset)
+/* Generates expression string for statement. */
+static const char *generate_expression_string(const Statement_t *s)
 {
+    uint i;
+    int j;
+    ExpressionEntry_t *entry;
+    Operand_t *operand;
+    static char expression[2048];
+    char *ptr = expression;
+    int parensCount = 0;
+
+    memset(expression, ' ', 2048);
+    expression[2048 - 1] = '\0';
+    /* Parse each entry. (expect first - '(') */
+    for (i = 0; i < s->entries_count; ++i)
+    {
+        entry = s->entries[i];
+        if (entry->type == ENTRYTYPE_OPERATION) /* 0 */
+        {
+            /* Operation, paren or function. */
+            ptr += sprintf(ptr, "%s ", g_MenuOperations[entry->data.operation]);
+        }
+        else if (entry->type == ENTRYTYPE_OPERAND)
+        {
+            /* Integer, float or string. */
+            operand = &entry->data.operand;
+            if (operand->type == OPERANDTYPE_INTEGER)
+                ptr += sprintf(ptr, "%d ", operand->data.i);
+            else if (operand->type == OPERANDTYPE_FLOAT)
+                ptr += sprintf(ptr, "%g ", operand->data.f);
+            else if (operand->type == OPERANDTYPE_STRING)
+                if (operand->data.s)
+                    ptr += sprintf(ptr, "\"%s\" ", operand->data.s);
+        }
+    }
+    *ptr = '\0';
+
+    /* Recheck parens. */
+    ptr = expression;
+    while (*ptr)
+    {
+        if (*ptr == '(')
+            ++parensCount;
+        else if (*ptr == ')')
+            --parensCount;
+
+        ++ptr;
+    }
+    /* Should not be negative, but show warning. */
+    if (parensCount < 0)
+        Com_Printf("Warning: more right parens than left parens.\n");
+    else
+    {
+        /* Write missing right parens. */
+        for (j = 0; j < parensCount; ++j)
+        {
+            ptr[0] = ')';
+            ptr[1] = '\0';
+            ++ptr;
+        }
+    }
+    return expression;
+}
+
+/* Remove quotes from action string so interpreter will correctly parse its content. */
+/* No null arg check but guaranteed to be called when action != 0. */
+static const char *action_optimize(const char *action)
+{
+    static char res[ACTION_OPTIMIZER_BUFFER_SIZE];
+    char ca[ACTION_OPTIMIZER_BUFFER_SIZE] = {'\0'};
+    char *iter;
+    char *start;
+    int start_len;
+    char *wIter;
+    char can_remove = 1;
+    char block_end = 0;
+
+    /* Check for buffer overflow. */
+    if (strlen(action) >= ACTION_OPTIMIZER_BUFFER_SIZE)
+    {
+        Com_Printf("Buffer overflow detected (%d bytes). Increase ACTION_OPTIMIZER_BUFFER_SIZE.", strlen(action));
+        return action;
+    }
+
+    /* Zero buffer. */
+    memset(res, 0, ACTION_OPTIMIZER_BUFFER_SIZE);
+
+    /* Copy string to first buffer so we can edit it. */
+    strcpy(ca, action);
+    ca[ACTION_OPTIMIZER_BUFFER_SIZE - 1] = '\0';
+    
+    /* Split input action by "<sometext>" or <text> blocks. */
+    iter = ca;
+    while (*iter)
+    {
+        /* Find begin of block. */
+        while(*iter == ' ')
+            ++iter;
+        
+        start = iter;
+        ++iter;
+
+        /* If block started with '\"' then must be ended with '\"'. */
+        if (start[0] == '\"')
+        {
+            block_end = '\"';
+            can_remove = 1;
+        }
+        else
+        {
+            block_end = ' ';
+            can_remove = 0;
+        }
+        
+        /* Find end of block. */
+        while (*iter && *iter != block_end)
+            ++iter;
+
+        if (block_end == '\"')
+            ++iter;
+        *iter = '\0';
+
+        /* Start now points to one block. */
+        start_len = strlen(start);
+
+        /* Confirm if we can remove quotes. */
+        wIter = start;
+        while(*wIter && can_remove)
+        {
+            /* Found space character? Sad but leave string as is. */
+            if (*wIter == ' ')
+                can_remove = 0;
+            ++wIter;
+        }
+        /* Copy block to without\with quotes to other buffer. */
+        if (can_remove)
+            strncat(res, start + 1, start_len - 2);
+        else
+            strncat(res, start, start_len);
+
+        strcat(res, " ");
+        ++iter;
+    }
+    return res;
+}
+
+#define WRITE_ITEMDEF_FIELD_INT(str_key, int_val) \
+        WRITE_MENU_FIELD("            %-20s %d\n", (str_key), (int_val))
+
+#define WRITE_ITEMDEF_FIELD_FLOAT(str_key, float_val) \
+        WRITE_MENU_FIELD("            %-20s %g\n", (str_key), (float_val))
+
+#define WRITE_ITEMDEF_FIELD_STRING(str_key, str_val) \
+        WRITE_MENU_FIELD("            %-20s \"%s\"\n", (str_key), (str_val))
+
+#define WRITE_ITEMDEF_FIELD_RECT(str_key, rect_val) \
+    do { \
+        if ( (rect_val).x || (rect_val).y || (rect_val).w || (rect_val).h || (rect_val).horzAlign || (rect_val).vertAlign ) \
+            fprintf(f, "            %-20s %g %g %g %g %d %d\n", (str_key), (rect_val).x, (rect_val).y, (rect_val).w, (rect_val).h, (rect_val).horzAlign, (rect_val).vertAlign); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_VEC4(str_key, vec4_val) \
+    do { \
+        if ( (vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3] ) \
+            fprintf(f, "            %-20s %g %g %g %g\n", (str_key), (vec4_val)[0], (vec4_val)[1], (vec4_val)[2], (vec4_val)[3]); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_ORIGIN(str_key, rect_val) \
+    do { \
+        if ( (rect_val).x || (rect_val).y ) \
+            fprintf(f, "            %-20s %g %g\n", (str_key), (rect_val).x, (rect_val).y); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_MATERIAL(str_key, mtl) \
+    do { \
+        if ((mtl)) \
+            fprintf(f, "            %-20s \"%s\"\n", (str_key), *(mtl)); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_ACTION(str_key, str_action) \
+    do { \
+        if ((str_action)) \
+            WRITE_MENU_FIELD("            %-20s { %s }\n", (str_key), action_optimize((str_action))); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_KEY(key_hndl) \
+    do { \
+        if ((key_hndl)) \
+            fprintf(f, "            %-20s \"%c\" { %s }\n", "execKey", (key_hndl)->key, (key_hndl)->action); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_STATEMENT(str_key, statement) \
+    do { \
+        if ((statement).entries_count) \
+            fprintf(f, "            %-20s %s ( %s );\n", "exp", (str_key), generate_expression_string(&statement)); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_VISIBLE(statement) \
+    do { \
+        if ((statement).entries_count) \
+            fprintf(f, "            %-20s when ( %s );\n", "visible", generate_expression_string(&statement)); \
+    } while(0)
+
+#define WRITE_ITEMDEF_FIELD_PROPERTY(str_prop, bool_write) \
+    do { \
+        if ((bool_write)) \
+            fprintf(f, "            %s\n", (str_prop)); \
+    } while(0)
+
+#define WRITE_MENUDEF_FIELD_INT(str_key, int_val) \
+        WRITE_MENU_FIELD("        %-20s %d\n", (str_key), (int_val))
+
+#define WRITE_MENUDEF_FIELD_FLOAT(str_key, float_val) \
+        WRITE_MENU_FIELD("        %-20s %g\n", (str_key), (float_val))
+
+#define WRITE_MENUDEF_FIELD_STRING(str_key, str_val) \
+        WRITE_MENU_FIELD("        %-20s \"%s\"\n", (str_key), (str_val))
+
+#define WRITE_MENUDEF_FIELD_MATERIAL(str_key, mtl) \
+    do { \
+        if ((mtl)) \
+            fprintf(f, "        %-20s \"%s\"\n", (str_key), *(mtl)); \
+    } while(0)
+
+
+
+#define WRITE_MENUDEF_FIELD_ACTION(str_key, str_action) \
+    do { \
+        if ((str_action)) \
+            WRITE_MENU_FIELD("        %-20s { %s }\n", (str_key), action_optimize((str_action))); \
+    } while(0)
+
+#define WRITE_MENUDEF_FIELD_RECT(str_key, rect_val) \
+    do { \
+        if ( (rect_val).x || (rect_val).y || (rect_val).w || (rect_val).h || (rect_val).horzAlign || (rect_val).vertAlign ) \
+            fprintf(f, "        %-20s %g %g %g %g %d %d\n", (str_key), (rect_val).x, (rect_val).y, (rect_val).w, (rect_val).h, (rect_val).horzAlign, (rect_val).vertAlign); \
+    } while(0)
+
+#define WRITE_MENUDEF_FIELD_VEC4(str_key, vec4_val) \
+    do { \
+        if ( (vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3] ) \
+            fprintf(f, "        %-20s %g %g %g %g\n", (str_key), (vec4_val)[0], (vec4_val)[1], (vec4_val)[2], (vec4_val)[3]); \
+    } while(0)
+
+#define WRITE_MENUDEF_FIELD_KEY(key_hndl) \
+    do { \
+        if ((key_hndl)) \
+            fprintf(f, "        %-20s \"%c\" { %s }\n", "execKey", (key_hndl)->key, (key_hndl)->action); \
+    } while(0)
+
+#define WRITE_MENUDEF_FIELD_STATEMENT(str_key, statement) \
+    do { \
+        if ((statement).entries_count) \
+            fprintf(f, "        %-20s %s ( %s );\n", "exp", (str_key), generate_expression_string(&statement)); \
+    } while(0)
+
+#define WRITE_MENUDEF_FIELD_VISIBLE(statement) \
+    do { \
+        if ((statement).entries_count) \
+            fprintf(f, "        %-20s when ( %s );\n", "visible", generate_expression_string(&(statement))); \
+    } while(0)
+
+#define WRITE_MENU_FIELD(format, str_key, val) \
+    do { \
+        if ((val)) \
+            fprintf(f, format, (str_key), (val)); \
+    } while(0)
+
+/* Write window properties to file. */
+static void extract_menu_window(FILE *f, const WindowDef_t *w)
+{
+    WRITE_MENUDEF_FIELD_STRING("name", w->name);
+    WRITE_MENUDEF_FIELD_RECT("rect", w->rect);
+    /* WRITE_MENUDEF_FIELD_VEC2("origin", w->origin); No origin for menudef.*/
+    WRITE_MENUDEF_FIELD_STRING("group", w->group);
+    WRITE_MENUDEF_FIELD_INT("style", w->style);
+    WRITE_MENUDEF_FIELD_INT("border", w->border);
+    WRITE_MENUDEF_FIELD_INT("ownerDraw", w->ownerDraw);
+    WRITE_MENUDEF_FIELD_INT("ownerDrawFlag", w->ownerDrawFlag);
+    WRITE_MENUDEF_FIELD_FLOAT("borderSize", w->borderSize);
+    WRITE_MENUDEF_FIELD_VEC4("foreColor", w->foreColor);
+    WRITE_MENUDEF_FIELD_VEC4("backColor", w->backColor);
+    WRITE_MENUDEF_FIELD_VEC4("borderColor", w->borderColor);
+    WRITE_MENUDEF_FIELD_VEC4("outlineColor", w->outlineColor);
+    WRITE_MENUDEF_FIELD_MATERIAL("background", ((char**)w->background));
+}
+
+/* Write MenuDef_t properties. */
+static void extract_menu_fields(FILE *f, const MenuDef_t *m)
+{
+    ItemKeyHandler_t *key = m->onKey;
+    extract_menu_window(f, &m->window);    
+    /* m->font unused??? */
+    WRITE_MENUDEF_FIELD_INT("fullScreen", m->fullScreen);
+    /* m->fontIndex unused? */
+    WRITE_MENUDEF_FIELD_INT("fadeCycle", m->fadeCycle);
+    WRITE_MENUDEF_FIELD_FLOAT("fadeClamp", m->fadeClamp);
+    WRITE_MENUDEF_FIELD_FLOAT("fadeAmount", m->fadeAmount);
+    WRITE_MENUDEF_FIELD_FLOAT("fadeInAmount", m->fadeInAmount);
+    WRITE_MENUDEF_FIELD_FLOAT("blurWorld", m->blurWorld);
+    WRITE_MENUDEF_FIELD_ACTION("onOpen", m->onOpen);
+    WRITE_MENUDEF_FIELD_ACTION("onClose", m->onClose);
+    WRITE_MENUDEF_FIELD_ACTION("onESC", m->onESC);
+    while (key)
+    {
+        WRITE_MENUDEF_FIELD_KEY(key);
+        key = key->next;
+    }
+    WRITE_MENUDEF_FIELD_VISIBLE(m->visibleExp);
+    WRITE_MENUDEF_FIELD_STRING("allowedBinding", m->allowedBinding);
+    WRITE_MENUDEF_FIELD_STRING("soundLoop", m->soundLoop);
+    //TODO imageTrack
+    WRITE_MENUDEF_FIELD_VEC4("focusColor", m->focusColor);
+    WRITE_MENUDEF_FIELD_VEC4("disableColor", m->disableColor);
+    WRITE_MENUDEF_FIELD_STATEMENT("rect X", m->rectXExp);
+    WRITE_MENUDEF_FIELD_STATEMENT("rect Y", m->rectYExp);
+}
+
+/* Extract ItemDef's window properties. */
+static void extract_menu_item_window(FILE *f, const WindowDef_t *w)
+{
+    WRITE_ITEMDEF_FIELD_STRING("name", w->name);
+    WRITE_ITEMDEF_FIELD_RECT("rect", w->rect);
+    /* WRITE_ITEMDEF_FIELD_ORIGIN("origin", w->origin); // Not required as covered in "rect" */
+    WRITE_ITEMDEF_FIELD_STRING("group", w->group);
+    WRITE_ITEMDEF_FIELD_INT("style", w->style);
+    WRITE_ITEMDEF_FIELD_INT("border", w->border);
+    WRITE_ITEMDEF_FIELD_INT("ownerDraw", w->ownerDraw);
+    WRITE_ITEMDEF_FIELD_INT("ownerDrawFlag", w->ownerDrawFlag);
+    WRITE_ITEMDEF_FIELD_FLOAT("borderSize", w->borderSize);
+    WRITE_ITEMDEF_FIELD_VEC4("foreColor", w->foreColor);
+    WRITE_ITEMDEF_FIELD_VEC4("backColor", w->backColor);
+    WRITE_ITEMDEF_FIELD_VEC4("borderColor", w->borderColor);
+    WRITE_ITEMDEF_FIELD_VEC4("outlineColor", w->outlineColor);
+    WRITE_ITEMDEF_FIELD_MATERIAL("background", ((char**)w->background));
+}
+
+/* Extract ItemDef's list box properties. */
+static void extract_menu_item_listbox(FILE *f, const ListBoxDef_t *lb)
+{
+    uint i;
+    WRITE_ITEMDEF_FIELD_FLOAT("elementWidth", lb->elementWidth);
+    WRITE_ITEMDEF_FIELD_FLOAT("elementHeight", lb->elementHeight);
+    WRITE_ITEMDEF_FIELD_INT("elementType", lb->elementType);
+    /* Columns output. Not sure if ColumnInfo_t.alignment in use. */
+    if (lb->columns_count)
+    {
+        fprintf(f, "            columns %2d %4d %4d %3d\n", lb->columns_count, lb->columns[0].xpos, lb->columns[0].xwidth, lb->columns[0].textLen);
+        for (i = 1; i < lb->columns_count; ++i)
+            fprintf(f, "                       %4d %4d %3d\n", lb->columns[i].xpos, lb->columns[i].xwidth, lb->columns[i].textLen);
+    }
+    WRITE_ITEMDEF_FIELD_STRING("doubleClick", lb->doubleClick);
+    WRITE_ITEMDEF_FIELD_PROPERTY("notSelectable", lb->notSelectable);
+    WRITE_ITEMDEF_FIELD_PROPERTY("noScrollBars", lb->noScrollBars);
+    WRITE_ITEMDEF_FIELD_PROPERTY("usePaging", lb->usePaging);
+    WRITE_ITEMDEF_FIELD_VEC4("selectBorder", lb->selectBorder);
+    WRITE_ITEMDEF_FIELD_VEC4("disableColor", lb->disableColor);
+    WRITE_ITEMDEF_FIELD_MATERIAL("selectIcon", (char**)lb->selectIcon);
+}
+
+/* Extract ItemDef's edit field properties. */
+static void extract_menu_item_editfield(FILE *f, const EditFieldDef_t *ef)
+{
+    /*
+    ItemDef_t.minVal not used?
+    ItemDef_t.maxVal not used?
+    ItemDef_t.defVal not used?
+    ItemDef_t.range not used?
+    */
+    WRITE_ITEMDEF_FIELD_INT("maxChars", ef->maxChars);
+    WRITE_ITEMDEF_FIELD_PROPERTY("maxCharsGotoNext", ef->maxCharsGotoNext);
+    WRITE_ITEMDEF_FIELD_INT("maxPaintChars", ef->maxPaintChars);
+    /* paintOffset nor defined in engine nor used in default menus */
+}
+
+/* Extract ItemDef's multilist properties. */
+static void extract_menu_item_multi(FILE *f, const ItemDefData_t *idd)
+{
+    char *list_type = "dvarFloatList";
+
+    if (idd->multi->count)
+    {
+        if (idd->multi->strDef != 0)
+            list_type = "dvarStrList";
+
+        fprintf(f, "            %-20s %s\n", list_type, idd->enumDvarName);
+    }
+}
+
+/* Extract ItemDef's dvarenum properties. */
+static void extract_menu_item_dvarenum(FILE *f, const ItemDefData_t *idd)
+{
+    if (idd->multi->count)
+        fprintf(f, "            %-20s %s\n", "dvarEnumList", idd->enumDvarName);
+}
+
+/* Extract ItemDef_t prorerties. */
+static void extract_menu_item(FILE *f, const ItemDef_t *i)
+{
+    ItemKeyHandler_t *key = i->onKey;
+    extract_menu_item_window(f, &i->window);
+    /* i->textRect. What is it. I can't remember but I know there's a way to move text within itemdef. */
+    WRITE_ITEMDEF_FIELD_INT("type", i->type);
+    /* i->dataType - same as type. Shouldn't be extracted here? */
+    //Com_Printf("itemDef type: %s, %s\n", g_MenuItemTypes[i->type], g_MenuItemTypes[i->dataType]);
+    WRITE_ITEMDEF_FIELD_INT("align", i->align);
+    WRITE_ITEMDEF_FIELD_INT("textFont", i->textFont);
+    WRITE_ITEMDEF_FIELD_INT("textAlign", i->textAlign);
+    WRITE_ITEMDEF_FIELD_FLOAT("textAlignX", i->textAlignX);
+    WRITE_ITEMDEF_FIELD_FLOAT("textAlignY", i->textAlignY);
+    WRITE_ITEMDEF_FIELD_FLOAT("textScale", i->textScale);
+    WRITE_ITEMDEF_FIELD_INT("textStyle", i->textStyle);
+    WRITE_ITEMDEF_FIELD_INT("gameMsgWindowIndex", i->gameMsgWindowIndex);
+    WRITE_ITEMDEF_FIELD_INT("gameMsgWindowMode", i->gameMsgWindowMode);
+    WRITE_ITEMDEF_FIELD_STRING("text", i->text);
+    WRITE_ITEMDEF_FIELD_INT("textSavegame", i->textSavegame);
+    WRITE_ITEMDEF_FIELD_STRING("mouseEnterText", i->mouseEnterText);
+    WRITE_ITEMDEF_FIELD_STRING("mouseExitText", i->mouseExitText);
+    WRITE_ITEMDEF_FIELD_ACTION("mouseEnter", i->mouseEnter);
+    WRITE_ITEMDEF_FIELD_ACTION("mouseExit", i->mouseExit);
+    WRITE_ITEMDEF_FIELD_ACTION("action", i->action);
+    WRITE_ITEMDEF_FIELD_ACTION("accept", i->accept);
+    WRITE_ITEMDEF_FIELD_ACTION("onFocus", i->onFocus);
+    WRITE_ITEMDEF_FIELD_ACTION("leaveFocus", i->leaveFocus);
+    WRITE_ITEMDEF_FIELD_STRING("dvar", i->dvar);
+    WRITE_ITEMDEF_FIELD_STRING("dvarTest", i->dvarTest);
+    while (key)
+    {
+        WRITE_ITEMDEF_FIELD_KEY(key);
+        key = key->next;
+    }
+    WRITE_ITEMDEF_FIELD_STRING("enableDvar", i->enableDvar);
+    /* ItemDef_t.focusSound was not used. */
+    WRITE_ITEMDEF_FIELD_FLOAT("special", i->special);
+    
+    if (i->type == ITEM_TYPE_LISTBOX)
+        extract_menu_item_listbox(f, i->typeData.listBox);
+    else if (i->type == ITEM_TYPE_EDITFIELD)
+        extract_menu_item_editfield(f, i->typeData.editField);
+    else if (i->type == ITEM_TYPE_MULTI)
+        extract_menu_item_multi(f, &i->typeData);
+    else if (i->type == ITEM_TYPE_DVARENUM)
+        extract_menu_item_dvarenum(f, &i->typeData);
+    
+    WRITE_ITEMDEF_FIELD_VISIBLE(i->visibleExp);
+    WRITE_ITEMDEF_FIELD_STATEMENT("text", i->textExp);
+    WRITE_ITEMDEF_FIELD_STATEMENT("material", i->materialExp);
+    WRITE_ITEMDEF_FIELD_STATEMENT("rect X", i->rectXExp);
+    WRITE_ITEMDEF_FIELD_STATEMENT("rect Y", i->rectYExp);
+    WRITE_ITEMDEF_FIELD_STATEMENT("rect W", i->rectWExp);
+    WRITE_ITEMDEF_FIELD_STATEMENT("rect H", i->rectHExp);
+    WRITE_ITEMDEF_FIELD_STATEMENT("foreColor A", i->foreColorAExp);
+}
+
+/* Extract single menu. Must be used only inside 'extract_menufile' */
+static void extract_menu(MenuDef_t *asset, const char *subdir)
+{
+    int i;
+    FILE *f;
+    char output_path[MAX_OSPATH];
+
     Com_Printf("    Writing menu '%s'...", asset->window.name);
-    //TODO
+    sprintf(output_path, "%s%s/%s/%s.menu", g_savePath, g_zone_name, subdir, asset->window.name);
+    output_path[MAX_OSPATH - 1] = '\0';
+    create_directories(output_path);
+
+    f = fopen(output_path, "w");
+    if (!f)
+    {
+        Com_Printf("Can't open '%s': %s...\n", output_path, strerror(errno));
+        return;
+    }
+
+    /* Write .menu file header. */
+    fwrite("{\n    menuDef\n    {\n", sizeof(char), 20, f);
+    /* Write menu fields. */
+    extract_menu_fields(f, asset);
+    /* Write all menu items. */
+    for (i = 0; i < asset->itemCount; ++i)
+    {
+        fwrite("        itemDef\n        {\n", sizeof(char), 26, f);
+        extract_menu_item(f, asset->items[i]);
+        fwrite("        }\n", sizeof(char), 10, f);
+    }
+    /* Write .menu file footer. */
+    fwrite("    }\n}\n", sizeof(char), 8, f);
+
+    fclose(f);
     Com_Printf("done.\n");
 }
 
 /* Extract menufile. */
-/* TODO: 2 cases. */
-/*     1) menufile is .menu => extract all inside of this file. */
-/*     2) menufile is .txt => extract all to separate files and create .txt with loadMenus. */
 static void extract_menufile(const void *header)
 {
     Menufile_t *asset = (Menufile_t *)header;
+    char subpath[128] = {'\n'};
+    FILE *text_menufile;
+    char text_asset_name[MAX_OSPATH] = {'\0'};
+
     uint i;
+
+    strcpy(subpath, Sys_Dirname(asset->name));
     /* Newline for each menu. */
     Com_Printf("\n");
-    for (i = 0; i < asset->count; ++i)
-        extract_menu(asset->menus[i]);
+    /*  */
+    if (asset->count == 1)
+    {
+        add_zone_source_line("menufile", asset->name);
+        extract_menu(asset->menus[0], subpath);
+    }
+    else
+    {
+        /* Generate .txt name for asset. */
+        sprintf(text_asset_name, "%s%s/%s", g_savePath, g_zone_name, asset->name);
+        *(strrchr(text_asset_name, '.')) = '\0';
+        strcat(text_asset_name, ".txt");
+        create_directories(text_asset_name);
+
+        text_menufile = fopen(text_asset_name, "w");        
+        if (!text_menufile)
+        {
+            Com_Printf("Can't open '%s': %s...\n", text_asset_name, strerror(errno));
+            return;
+        }
+        /* Write header to .txt file. */
+        fwrite("{\n", sizeof(char), 2, text_menufile);
+        /* Write each menu and add it to .txt menufile. */
+        for (i = 0; i < asset->count; ++i)
+        {
+            extract_menu(asset->menus[i], subpath);
+            fprintf(text_menufile, "    loadMenu { \"%s/%s.menu\" }\n", subpath, asset->menus[i]->window.name);
+        }
+        /* Write footer to .txt file. */
+        fwrite("}\n", sizeof(char), 2, text_menufile);
+        fclose(text_menufile);
+        /* Add .txt menufile to zone_source file. */
+        sprintf(text_asset_name, "%s", asset->name);
+        *(strrchr(text_asset_name, '.')) = '\0';
+        strcat(text_asset_name, ".txt");
+        add_zone_source_line("menufile", text_asset_name);
+    }
 }
 
 /* Extract all assets from fastfile. */
@@ -266,7 +812,6 @@ void Cmd_ExtractAsset()
 {
     char *type;
     int type_num = -1;
-    char *ff;
     FastFileAssetsTableInfo_t *ff_info = 0;
     void (*handler)(const void *) = 0;
     int i;
@@ -282,15 +827,15 @@ void Cmd_ExtractAsset()
     }
 
     /* Find FastFile info. */
-    ff = Cmd_Argv(1);
+    g_zone_name = Cmd_Argv(1);
     for (i = 0; i < MAX_STORE_FASTFILES; ++i)
     {
-        if (!strcmp(ff, g_FastFileAssetsTableInfo[i].name))
+        if (!strcmp(g_zone_name, g_FastFileAssetsTableInfo[i].name))
             ff_info = &g_FastFileAssetsTableInfo[i];
     }
     if (!ff_info)
     {
-        Com_Printf("Fastfile with name '%s' not loaded.\n", ff);
+        Com_Printf("Fastfile with name '%s' not loaded.\n", g_zone_name);
         return;
     }
 
@@ -323,9 +868,10 @@ void Cmd_ExtractAsset()
         goto USAGE;
     }
     /* Do it. */
-    Com_Printf("Extracting assets of type '%s' from fastfile '%s':\n", type, ff);
-    Com_Printf("Output directory: %s\n", g_savePath);
+    Com_Printf("Extracting assets of type '%s' from fastfile '%s':\n", type, g_zone_name);
+    Com_Printf("Output directory: %s%s/\n", g_savePath, g_zone_name);
     extract_from_fastfile(ff_info, type_num, handler);
+    g_zone_name = 0;
 }
 
 void add_extractor_console_commands()

@@ -552,14 +552,23 @@ Sys_Dirname
 const char *Sys_Dirname(char *path)
 {
     static char dir[MAX_OSPATH];
-    char *slash = 0;
+    char *slash1 = 0;
+    char *slash2 = 0;
+    char *max = 0;
 
     strcpy(dir, path);
-    slash = strrchr(dir, '/');
-    if (!slash)
-        slash = strrchr(dir, '\\');
-    if (slash)
-        *slash = '\0';
+    slash1 = strrchr(dir, '/');
+    slash2 = strrchr(dir, '\\');
+
+    if (slash1 && slash2)
+        max = slash1 < slash2 ? slash2 : slash1;
+    else if (slash1 && !slash2)
+        max = slash1;
+    else if (!slash1 && slash2)
+        max = slash2;
+        
+    if (max)
+        *max = '\0';
     return dir;
 }
 /*

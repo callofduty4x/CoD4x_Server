@@ -1,120 +1,118 @@
 #pragma once
 #include "../q_math.h"
 
-/* In case of split screen. */
-#define NUM_SCREENS (1)
+typedef unsigned int uint;
 /* TODO these are a placeholders. Better to use struct definitions. */
 typedef void snd_alias_list_t;
 typedef void Material_t;
 
 typedef enum OperationEnum_t 
 {
-    OP_NOOP = 0x0,
-    OP_RIGHTPAREN = 0x1,
-    OP_MULTIPLY = 0x2,
-    OP_DIVIDE = 0x3,
-    OP_MODULUS = 0x4,
-    OP_ADD = 0x5,
-    OP_SUBTRACT = 0x6,
-    OP_NOT = 0x7,
-    OP_LESSTHAN = 0x8,
-    OP_LESSTHANEQUALTO = 0x9,
-    OP_GREATERTHAN = 0xA,
-    OP_GREATERTHANEQUALTO = 0xB,
-    OP_EQUALS = 0xC,
-    OP_NOTEQUAL = 0xD,
-    OP_AND = 0xE,
-    OP_OR = 0xF,
-    OP_LEFTPAREN = 0x10,
-    OP_COMMA = 0x11,
-    OP_BITWISEAND = 0x12,
-    OP_BITWISEOR = 0x13,
-    OP_BITWISENOT = 0x14,
-    OP_BITSHIFTLEFT = 0x15,
-    OP_BITSHIFTRIGHT = 0x16,
-    OP_SIN = 0x17,
-    OP_FIRSTFUNCTIONCALL = 0x17,
-    OP_COS = 0x18,
-    OP_MIN = 0x19,
-    OP_MAX = 0x1A,
-    OP_MILLISECONDS = 0x1B,
-    OP_CVARINT = 0x1C,
-    OP_CVARBOOL = 0x1D,
-    OP_CVARFLOAT = 0x1E,
-    OP_CVARSTRING = 0x1F,
-    OP_STAT = 0x20,
-    OP_UIACTIVE = 0x21,
-    OP_FLASHBANGED = 0x22,
-    OP_SCOPED = 0x23,
-    OP_SCOREBOARDVISIBLE = 0x24,
-    OP_INKILLCAM = 0x25,
-    OP_PLAYERFIELD = 0x26,
-    OP_SELECTINGLOCATION = 0x27,
-    OP_TEAMFIELD = 0x28,
-    OP_OTHERTEAMFIELD = 0x29,
-    OP_MARINESFIELD = 0x2A,
-    OP_OPFORFIELD = 0x2B,
-    OP_MENUISOPEN = 0x2C,
-    OP_WRITINGDATA = 0x2D,
-    OP_INLOBBY = 0x2E,
-    OP_INPRIVATEPARTY = 0x2F,
-    OP_PRIVATEPARTYHOST = 0x30,
-    OP_PRIVATEPARTYHOSTINLOBBY = 0x31,
-    OP_ALONEINPARTY = 0x32,
-    OP_ADSJAVELIN = 0x33,
-    OP_WEAPLOCKBLINK = 0x34,
-    OP_WEAPATTACKTOP = 0x35,
-    OP_WEAPATTACKDIRECT = 0x36,
-    OP_SECONDSASTIME = 0x37,
-    OP_TABLELOOKUP = 0x38,
-    OP_LOCALIZESTRING = 0x39,
-    OP_LOCALVARINT = 0x3A,
-    OP_LOCALVARBOOL = 0x3B,
-    OP_LOCALVARFLOAT = 0x3C,
-    OP_LOCALVARSTRING = 0x3D,
-    OP_TIMELEFT = 0x3E,
-    OP_SECONDSASCOUNTDOWN = 0x3F,
-    OP_TOINT = 0x40,
-    OP_TOSTRING = 0x41,
-    OP_TOFLOAT = 0x42,
-    OP_GAMETYPENAME = 0x43,
-    OP_GAMETYPE = 0x44,
-    OP_GAMETYPEDESCRIPTION = 0x45,
-    OP_SCORE = 0x46,
-    OP_FRIENDSONLINE = 0x47,
-    OP_FOLLOWING = 0x48,
-    OP_STATRANGEBITSSET = 0x49,
-    NUM_OPERATORS = 0x4A
+    OP_NOOP = 0,
+    OP_RIGHTPAREN,
+    OP_MULTIPLY,
+    OP_DIVIDE,
+    OP_MODULUS,
+    OP_ADD,
+    OP_SUBTRACT,
+    OP_NOT,
+    OP_LESSTHAN,
+    OP_LESSTHANEQUALTO,
+    OP_GREATERTHAN,
+    OP_GREATERTHANEQUALTO,
+    OP_EQUALS,
+    OP_NOTEQUAL,
+    OP_AND,
+    OP_OR,
+    OP_LEFTPAREN,
+    OP_COMMA,
+    OP_BITWISEAND,
+    OP_BITWISEOR,
+    OP_BITWISENOT,
+    OP_BITSHIFTLEFT,
+    OP_BITSHIFTRIGHT,
+    OP_SIN,
+    OP_COS,
+    OP_MIN,
+    OP_MAX,
+    OP_MILLISECONDS,
+    OP_DVARINT,
+    OP_DVARBOOL,
+    OP_DVARFLOAT,
+    OP_DVARSTRING,
+    OP_STAT,
+    OP_UI_ACTIVE,
+    OP_FLASHBANGED,
+    OP_SCOPED,
+    OP_SCOREBOARD_VISIBLE,
+    OP_INKILLCAM,
+    OP_PLAYER,
+    OP_SELECTING_LOCATION,
+    OP_TEAM,
+    OP_OTHERTEAM,
+    OP_MARINES,
+    OP_OPFOR,
+    OP_MENUISOPEN,
+    OP_WRITINGDATA,
+    OP_INLOBBY,
+    OP_INPRIVATEPARTY,
+    OP_PRIVATEPARTYHOST,
+    OP_PRIVATEPARTYHOSTINLOBBY,
+    OP_ALONEINPARTY,
+    OP_ADSJAVELIN,
+    OP_WEAPLOCKBLINK,
+    OP_WEAPATTACKTOP,
+    OP_WEAPATTACKDIRECT,
+    OP_SECONDSASTIME,
+    OP_TABLELOOKUP,
+    OP_LOCSTRING,
+    OP_LOCALVARINT,
+    OP_LOCALVARBOOL,
+    OP_LOCALVARFLOAT,
+    OP_LOCALVARSTRING,
+    OP_TIMELEFT,
+    OP_SECONDSASCOUNTDOWN,
+    OP_GAMEMSGWNDACTIVE,
+    OP_INT,
+    OP_STRING,
+    OP_FLOAT,
+    OP_GAMETYPENAME,
+    OP_GAMETYPE,
+    OP_GAMETYPEDESCRIPTION,
+    OP_SCOREATRANK,
+    OP_FRIENDSONLINE,
+    OP_SPECTATINGCLIENT,
+    OP_STATRANGEANYBITSSET,
+    OP_KEYBINDING,
+    OP_ACTIONSLOTUSABLE,
+    OP_HUDFADE,
+    OP_MAXRECOMMENDEDPLAYERS,
+    OP_ACCEPTINGINVITE,
+    OP_ISINTERMISSION,
+    NUM_OPERATIONS
 } OperationEnum_t;
-
-typedef enum ExpDataType_t 
-{
-    VAL_INT = 0x0,
-    VAL_FLOAT = 0x1,
-    VAL_STRING = 0x2
-} ExpDataType_t;
 
 typedef struct ColumnInfo_t
 {
-    int pos;
-    int width;
-    int maxChars;
+    int xpos;
+    int xwidth;
+    int textLen;
     int alignment;
 } ColumnInfo_t;
 
 typedef struct ListBoxDef_t
 {
-    int startPos[NUM_SCREENS];
-    int endPos[NUM_SCREENS];
-    int drawPadding;
-    int cursorPos[NUM_SCREENS];
+    int startPos; /* Not used at compile time? */
+    int endPos; /* Not used at compile time? */
+    int drawPadding; /* Not used at compile time? */
+    int cursorPos; /* Not used at compile time? */
     float elementWidth;
     float elementHeight;
-    int elementStyle;
-    int numColumns;
-    ColumnInfo_t columnInfo[16];
+    int elementType; /* Was elementStyle, but it not exist in engine. */
+    uint columns_count; /* Not extracted, but useful  */
+    ColumnInfo_t columns[16];
     const char *doubleClick;
-    int notselectable;
+    int notSelectable;
     int noScrollBars;
     int usePaging;
     vec4_t selectBorder;
@@ -134,13 +132,14 @@ typedef struct EditFieldDef_t
     int paintOffset;
 } EditFieldDef_t;
 
+/* Not actually used. */
 typedef struct MultiDef_t
 {
-    const char *cvarList[32];
-    const char *cvarStr[32];
-    float cvarValue[32];
-    int count;
-    int strDef;
+    const char *dvarEnumList[32];   /* ITEM_TYPE_DVARENUM */
+    const char *dvarStrList[32];    /* ITEM_TYPE_MULTI */
+    float dvarFloatList[32];        /* ITEM_TYPE_MULTI */
+    uint count;
+    int strDef;                     /* boolean? If true => dvarStrList? */
 } MultiDef_t;
 
 typedef union ItemDefData_t
@@ -148,38 +147,51 @@ typedef union ItemDefData_t
     ListBoxDef_t *listBox;
     EditFieldDef_t *editField;
     MultiDef_t *multi;
-    const char *enumCvarName;
+    const char *enumDvarName;
     void *data;
 } ItemDefData_t;
 
 typedef union OperandInternalDataUnion_t
 {
-    int intVal;
-    float floatVal;
-    const char *string;
+    int i;
+    float f;
+    const char *s;
 } OperandInternalDataUnion_t;
+
+typedef enum OperandDataType_t 
+{
+    OPERANDTYPE_INTEGER = 0,
+    OPERANDTYPE_FLOAT,
+    OPERANDTYPE_STRING
+} OperandDataType_t;
 
 typedef struct Operand_t
 {
-    ExpDataType_t dataType;
-    OperandInternalDataUnion_t internals;
+    OperandDataType_t type;
+    OperandInternalDataUnion_t data;
 } Operand_t;
 
 typedef union EntryInternalData_t
 {
-    OperationEnum_t op;
+    OperationEnum_t operation;
     Operand_t operand;
 } EntryInternalData_t;
 
+typedef enum EntryType_t
+{
+    ENTRYTYPE_OPERATION = 0,
+    ENTRYTYPE_OPERAND
+} EntryType_t;
+
 typedef struct ExpressionEntry_t
 {
-    int type;
+    EntryType_t type;
     EntryInternalData_t data;
 } ExpressionEntry_t;
 
 typedef struct Statement_t
 {
-    int numEntries;
+    uint entries_count;
     ExpressionEntry_t **entries;
 } Statement_t;
 
@@ -204,15 +216,15 @@ typedef struct WindowDef_t
 {
     const char *name;
     RectDef_t rect;
-    RectDef_t rectClient;
+    RectDef_t origin;
     const char *group;
     int style;
     int border;
     int ownerDraw;
-    int ownerDrawFlags;
+    int ownerDrawFlag;
     float borderSize;
     int staticFlags;
-    int dynamicFlags[NUM_SCREENS];
+    int dynamicFlags;
     int nextTime;
     vec4_t foreColor;
     vec4_t backColor;
@@ -221,40 +233,65 @@ typedef struct WindowDef_t
     Material_t *background;
 } WindowDef_t;
 
+typedef enum ItemDefType_t
+{
+    ITEM_TYPE_TEXT = 0,             /* Simple text. */
+    ITEM_TYPE_BUTTON,               /* Button, basically text with a border. */
+    ITEM_TYPE_RADIOBUTTON,          /* Toggle button, may be grouped. */
+    ITEM_TYPE_CHECKBOX,             /* Check box. */
+    ITEM_TYPE_EDITFIELD,            /* Editable text, associated with a dvar. */
+    ITEM_TYPE_COMBO,                /* Drop down list. */
+    ITEM_TYPE_LISTBOX,              /* Scrollable list. */
+    ITEM_TYPE_MODEL,                /* Model. */
+    ITEM_TYPE_OWNERDRAW,            /* Owner draw, name specs what it is. */
+    ITEM_TYPE_NUMERICFIELD,         /* Editable text, associated with a dvar. */
+    ITEM_TYPE_SLIDER,               /* Mouse speed, volume, etc.. */
+    ITEM_TYPE_YESNO,                /* Yes no dvar setting. */
+    ITEM_TYPE_MULTI,                /* Multiple list setting, enumerated. */
+    ITEM_TYPE_DVARENUM,             /* Multiple list setting, enumerated from a dvar. */
+    ITEM_TYPE_BIND,                 /* Bind. */
+    ITEM_TYPE_MENUMODEL,            /* Special menu model. */
+    ITEM_TYPE_VALIDFILEFIELD,       /* Text must be valid for use in a dos filename. */
+    ITEM_TYPE_DECIMALFIELD,         /* Editable text, associated with a dvar, which allows decimal input. */
+    ITEM_TYPE_UPREDITFIELD,         /* Editable text, associated with a dvar. */
+    ITEM_TYPE_GAME_MESSAGE_WINDOW,  /* Game message window. */
+    MAX_ITEM_TYPES
+} ItemDefType_t;
+
 typedef struct ItemDef_t
 {
     WindowDef_t window;
-    RectDef_t textRect[NUM_SCREENS];
-    int type;
-    int dataType;
-    int alignment;
-    int fontEnum;
-    int textAlignMode;
-    float textalignx;
-    float textaligny;
-    float textscale;
+    RectDef_t textRect;
+    ItemDefType_t type;
+    ItemDefType_t dataType;
+    int align;
+    int textFont;
+    int textAlign;
+    float textAlignX;
+    float textAlignY;
+    float textScale;
     int textStyle;
     int gameMsgWindowIndex;
     int gameMsgWindowMode;
     const char *text;
-    int textSavegameInfo;
-    struct menuDef_s *parent;
+    int textSavegame;
+    struct MenuDef_t *parent;
     const char *mouseEnterText;
     const char *mouseExitText;
     const char *mouseEnter;
     const char *mouseExit;
     const char *action;
-    const char *onAccept;
+    const char *accept;
     const char *onFocus;
     const char *leaveFocus;
-    const char *cvar;
-    const char *cvarTest;
+    const char *dvar;
+    const char *dvarTest;
     ItemKeyHandler_t *onKey;
-    const char *enableCvar;
+    const char *enableDvar;
     int cvarFlags;
     snd_alias_list_t *focusSound;
-    float special;
-    int cursorPos[NUM_SCREENS];
+    float special; // menu model?
+    int cursorPos;
     ItemDefData_t typeData;
     int imageTrack;
     Statement_t visibleExp;
@@ -274,19 +311,19 @@ typedef struct MenuDef_t
     int fullScreen;
     int itemCount;
     int fontIndex;
-    int cursorItem[NUM_SCREENS];
+    int cursorItem;
     int fadeCycle;
     float fadeClamp;
     float fadeAmount;
     float fadeInAmount;
-    float blurRadius;
+    float blurWorld;
     const char *onOpen;
     const char *onClose;
     const char *onESC;
     ItemKeyHandler_t *onKey;
     Statement_t visibleExp;
     const char *allowedBinding;
-    const char *soundName;
+    const char *soundLoop;
     int imageTrack;
     vec4_t focusColor;
     vec4_t disableColor;
@@ -294,6 +331,9 @@ typedef struct MenuDef_t
     Statement_t rectYExp;
     ItemDef_t **items;
 } MenuDef_t;
+
+extern const char *g_MenuOperations[NUM_OPERATIONS];
+extern const char *g_MenuItemTypes[MAX_ITEM_TYPES];
 
 /* No such kind of asset in ANY default fastfile but I want to left it here. */
 /*#define XASSET_TYPE_MENU (21)*/
