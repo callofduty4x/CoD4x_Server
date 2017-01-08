@@ -4155,7 +4155,7 @@ int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
 		{
 			linep = line;
 			//Remove whitespace
-			while(*linep == ' ')
+			while(*linep == ' ' || *linep == '\t')
 			{
 				++linep;
 			}
@@ -4166,7 +4166,7 @@ int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
 			}
 			linep += 11;
 			//Remove whitespace again
-			while(*linep == ' ')
+			while(*linep == ' ' || *linep == '\t')
 			{
 				++linep;
 			}
