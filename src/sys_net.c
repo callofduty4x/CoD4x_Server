@@ -4131,7 +4131,7 @@ int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
 		}
 		pAdapterInfo = pAdapterInfo->Next;    // Progress through linked list
 	  }
-	  while(pAdapterInfo);                   // Terminate if last adapter
+	  while(pAdapterInfo && i < maxcount);                   // Terminate if last adapter
   }
   return i;
 }
@@ -4151,7 +4151,7 @@ int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
 
 	} else {
 		/* Try to figure out what DNS server to use */
-		for (; fgets(line, sizeof(line), fp) != NULL; )
+		for (; fgets(line, sizeof(line), fp) != NULL && i < maxcount; )
 		{
 			linep = line;
 			//Remove whitespace
