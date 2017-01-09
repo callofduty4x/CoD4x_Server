@@ -19,7 +19,7 @@
 #include "menu.h"
 
 #define MAX_STORE_FASTFILES (32)
-#define ACTION_OPTIMIZER_BUFFER_SIZE (4096)
+#define ACTION_OPTIMIZER_BUFFER_SIZE (2560)
 
 typedef unsigned char byte_t;
 typedef unsigned int uint;
@@ -518,12 +518,12 @@ static const char *action_optimize(const char *action)
     } while(0)
 
 /* Write window properties to file. */
+/* Some of WindowDef_t fields are not required for MenuDef_t. */
 static void extract_menu_window(FILE *f, const WindowDef_t *w)
 {
+    /* Ignored for menu: origin, group. */
     WRITE_MENUDEF_FIELD_STRING("name", w->name);
     WRITE_MENUDEF_FIELD_RECT("rect", w->rect);
-    /* WRITE_MENUDEF_FIELD_VEC2("origin", w->origin); No origin for menudef.*/
-    WRITE_MENUDEF_FIELD_STRING("group", w->group);
     WRITE_MENUDEF_FIELD_INT("style", w->style);
     WRITE_MENUDEF_FIELD_INT("border", w->border);
     WRITE_MENUDEF_FIELD_INT("ownerDraw", w->ownerDraw);
@@ -541,9 +541,7 @@ static void extract_menu_fields(FILE *f, const MenuDef_t *m)
 {
     ItemKeyHandler_t *key = m->onKey;
     extract_menu_window(f, &m->window);    
-    /* m->font unused??? */
     WRITE_MENUDEF_FIELD_INT("fullScreen", m->fullScreen);
-    /* m->fontIndex unused? */
     WRITE_MENUDEF_FIELD_INT("fadeCycle", m->fadeCycle);
     WRITE_MENUDEF_FIELD_FLOAT("fadeClamp", m->fadeClamp);
     WRITE_MENUDEF_FIELD_FLOAT("fadeAmount", m->fadeAmount);
@@ -557,22 +555,29 @@ static void extract_menu_fields(FILE *f, const MenuDef_t *m)
         WRITE_MENUDEF_FIELD_KEY(key);
         key = key->next;
     }
-    WRITE_MENUDEF_FIELD_VISIBLE(m->visibleExp);
+    
     WRITE_MENUDEF_FIELD_STRING("allowedBinding", m->allowedBinding);
     WRITE_MENUDEF_FIELD_STRING("soundLoop", m->soundLoop);
-    //TODO imageTrack
     WRITE_MENUDEF_FIELD_VEC4("focusColor", m->focusColor);
     WRITE_MENUDEF_FIELD_VEC4("disableColor", m->disableColor);
+    /* TODO: "outOfBoundsClick;" */
+    /* TODO: "popUp;" */
+    /* TODO: "legacySplitScreenScale;" */
+    /* TODO: "hiddenDuringScope;" */
+    /* TODO: "hiddenDuringFlashbang;" */
+    /* TODO: "hiddenDuringUI;" */
     WRITE_MENUDEF_FIELD_STATEMENT("rect X", m->rectXExp);
     WRITE_MENUDEF_FIELD_STATEMENT("rect Y", m->rectYExp);
+    /* WAS: //WRITE_MENUDEF_FIELD_VISIBLE(m->visibleExp); */
+    WRITE_MENUDEF_FIELD_STATEMENT("visible when", m->visibleExp);
 }
 
 /* Extract ItemDef's window properties. */
 static void extract_menu_item_window(FILE *f, const WindowDef_t *w)
 {
+    /* Ignored: origin. */
     WRITE_ITEMDEF_FIELD_STRING("name", w->name);
     WRITE_ITEMDEF_FIELD_RECT("rect", w->rect);
-    /* WRITE_ITEMDEF_FIELD_ORIGIN("origin", w->origin); // Not required as covered in "rect" */
     WRITE_ITEMDEF_FIELD_STRING("group", w->group);
     WRITE_ITEMDEF_FIELD_INT("style", w->style);
     WRITE_ITEMDEF_FIELD_INT("border", w->border);
@@ -612,16 +617,9 @@ static void extract_menu_item_listbox(FILE *f, const ListBoxDef_t *lb)
 /* Extract ItemDef's edit field properties. */
 static void extract_menu_item_editfield(FILE *f, const EditFieldDef_t *ef)
 {
-    /*
-    ItemDef_t.minVal not used?
-    ItemDef_t.maxVal not used?
-    ItemDef_t.defVal not used?
-    ItemDef_t.range not used?
-    */
     WRITE_ITEMDEF_FIELD_INT("maxChars", ef->maxChars);
     WRITE_ITEMDEF_FIELD_PROPERTY("maxCharsGotoNext", ef->maxCharsGotoNext);
     WRITE_ITEMDEF_FIELD_INT("maxPaintChars", ef->maxPaintChars);
-    /* paintOffset nor defined in engine nor used in default menus */
 }
 
 /* Extract ItemDef's multilist properties. */
@@ -631,7 +629,7 @@ static void extract_menu_item_multi(FILE *f, const ItemDefData_t *idd)
 
     if (idd->multi->count)
     {
-        if (idd->multi->strDef != 0)
+        if (idd->multi->isStrList == 1)
             list_type = "dvarStrList";
 
         fprintf(f, "            %-20s %s\n", list_type, idd->enumDvarName);
@@ -675,14 +673,16 @@ static void extract_menu_item(FILE *f, const ItemDef_t *i)
     WRITE_ITEMDEF_FIELD_ACTION("leaveFocus", i->leaveFocus);
     WRITE_ITEMDEF_FIELD_STRING("dvar", i->dvar);
     WRITE_ITEMDEF_FIELD_STRING("dvarTest", i->dvarTest);
+    /* TODO: "dvarFloat ???" */
     while (key)
     {
         WRITE_ITEMDEF_FIELD_KEY(key);
         key = key->next;
     }
-    WRITE_ITEMDEF_FIELD_STRING("enableDvar", i->enableDvar);
-    /* ItemDef_t.focusSound was not used. */
-    WRITE_ITEMDEF_FIELD_FLOAT("special", i->special);
+    /* TODO: enableDvar action changes. */
+    //WRITE_ITEMDEF_FIELD_STRING("enableDvar", i->enableDvar);
+    /* TODO_later: ItemDef_t.focusSound was not used. */
+    WRITE_ITEMDEF_FIELD_FLOAT("feeder", i->feeder);
     
     if (i->type == ITEM_TYPE_LISTBOX)
         extract_menu_item_listbox(f, i->typeData.listBox);
@@ -693,7 +693,6 @@ static void extract_menu_item(FILE *f, const ItemDef_t *i)
     else if (i->type == ITEM_TYPE_DVARENUM)
         extract_menu_item_dvarenum(f, &i->typeData);
     
-    WRITE_ITEMDEF_FIELD_VISIBLE(i->visibleExp);
     WRITE_ITEMDEF_FIELD_STATEMENT("text", i->textExp);
     WRITE_ITEMDEF_FIELD_STATEMENT("material", i->materialExp);
     WRITE_ITEMDEF_FIELD_STATEMENT("rect X", i->rectXExp);
@@ -701,6 +700,11 @@ static void extract_menu_item(FILE *f, const ItemDef_t *i)
     WRITE_ITEMDEF_FIELD_STATEMENT("rect W", i->rectWExp);
     WRITE_ITEMDEF_FIELD_STATEMENT("rect H", i->rectHExp);
     WRITE_ITEMDEF_FIELD_STATEMENT("foreColor A", i->foreColorAExp);
+    /* WAS //WRITE_ITEMDEF_FIELD_VISIBLE(i->visibleExp); */
+    WRITE_ITEMDEF_FIELD_STATEMENT("visible", i->foreColorAExp);
+    /* TODO: "decoration;" */
+    /* TODO: "autoWrapped;" */
+    /* TODO: "horizontalScroll;" */
 }
 
 /* Extract single menu. Must be used only inside 'extract_menufile' */

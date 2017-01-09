@@ -99,8 +99,7 @@ typedef enum WindowBorderType_t {
     WINDOW_BORDER_VERT,       /* Vertical borders only. */
     WINDOW_BORDER_KCGRADIENT, /* Horizontal border using the gradient bars. */
     WINDOW_BORDER_RAISED,     /* Darken the bottom and right sides of the border. */
-    WINDOW_BORDER_SUNKEN,     /* Darken the top and left sides of the border. */
-    MAX_WINDOW_BORDER
+    WINDOW_BORDER_SUNKEN      /* Darken the top and left sides of the border. */
 } WindowBorderType_t;
 
 typedef enum WindowStyle_t {
@@ -110,29 +109,38 @@ typedef enum WindowStyle_t {
     WINDOW_STYLE_SHADER,      /* Shader based on background color. */
     WINDOW_STYLE_TEAMCOLOR,   /* Team color. */
     WINDOW_STYLE_DVAR_SHADER, /* Draws the shader specified by the dvar. */
-    WINDOW_STYLE_LOADBAR,     /* Shader based on background color. */
-    MAX_WINDOW_STYLE
+    WINDOW_STYLE_LOADBAR      /* Shader based on background color. */
 } WindowStyle_t;
 
 typedef enum ItemMSGWindowMode_t {
     MODE_BOTTOMUP_ALIGN_TOP = 0, /* Text appears on bottom of list and moves up to specified Y coordinate as old text fades out. */
     MODE_BOTTOMUP_ALIGN_BOTTOM,  /* Text appears on bottom of list and moves away from specified Y coordinate as new text pushes it up. */
     MODE_TOPDOWN_ALIGN_TOP,      /* Text appears on top of list and moves away from specified Y coordinate as new text pushes it down. */
-    MODE_TOPDOWN_ALIGN_BOTTOM,   /* Text appears on top of list and moves down to specified Y coordinate as old text fades out. */
-    MAX_MSGWINDOWMODE
+    MODE_TOPDOWN_ALIGN_BOTTOM    /* Text appears on top of list and moves down to specified Y coordinate as old text fades out. */
 } ItemMSGWindowMode_t;
 
 typedef enum ItemDefAlign_t {
     HUD_VERTICAL = 0,
-    HUD_HORIZONTAL = 1,
-    MAX_ITEMDEFALIGN
+    HUD_HORIZONTAL
 } ItemDefAlign_t;
 
 typedef enum ListBoxElementType_t {
     LISTBOX_TEXT = 0,
-    LISTBOX_IMAGE,
-    MAX_LISTBOX_ELEMENT_TYPE
+    LISTBOX_IMAGE
 } ListBoxElementType_t;
+
+/* TODO print window flags */
+typedef enum WindowStaticFlags_t {
+    WINDOW_FLAG_DECORATION              = 0x00100000u, // item
+    WINDOW_FLAG_HORIZONTALSCROLL        = 0x00200000u, // item
+    WINDOW_FLAG_AUTOWRAPPED             = 0x00800000u, // item
+    WINDOW_FLAG_POPUP                   = 0x01000000u, // menu
+    WINDOW_FLAG_OUTOFBOUNDSCLICK        = 0x02000000u, // menu
+    WINDOW_FLAG_LEGACYSPLITSCREENSCALE  = 0x04000000u, // menu
+    WINDOW_FLAG_HIDDENDURINGFLASHBANG   = 0x10000000u, // menu
+    WINDOW_FLAG_HIDDENDURINGSCOPE       = 0x20000000u, // menu
+    WINDOW_FLAG_HIDDENDURINGUI          = 0x40000000u, // menu
+} WindowStaticFlags_t;
 
 typedef enum ListBoxFeeder_t {
     FEEDER_HEADS = 0x00,         /* model heads. */
@@ -177,8 +185,7 @@ typedef enum ListBoxFeeder_t {
     FEEDER_LOBBY_MEMBERS_RANK = 0x28,  /* rank icon. */
     FEEDER_PARTY_MEMBERS_RANK = 0x29,  /* rank icon. */
     FEEDER_ENEMY_MEMBERS_RANK = 0x30,  /* rank icon. */
-    FEEDER_MYTEAM_MEMBERS_RANK = 0x31, /* rank icon. */
-    MAX_FEEDER
+    FEEDER_MYTEAM_MEMBERS_RANK = 0x31  /* rank icon. */
 } ListBoxFeeder_t;
 
 typedef enum ItemFontType_t {
@@ -188,8 +195,7 @@ typedef enum ItemFontType_t {
     UI_FONT_SMALL,
     UI_FONT_BOLD,
     UI_FONT_CONSOLE,
-    UI_FONT_OBJECTIVE,
-    MAX_UI_FONT
+    UI_FONT_OBJECTIVE
 } ItemFontType_t;
 
 typedef enum OwnerdrawType_t {
@@ -318,8 +324,7 @@ typedef enum RectAlignHorizontal_t {
     HORIZONTAL_ALIGN_FULLSCREEN,      /* Disregards safe area. */
     HORIZONTAL_ALIGN_NOSCALE,         /* Uses exact parameters - neither adjusts for safe area nor scales for screen size. */
     HORIZONTAL_ALIGN_TO640,           /* Scales a real-screen resolution x down into the 0 - 640 range. */
-    HORIZONTAL_ALIGN_CENTER_SAFEAREA, /* Center of the safearea. */
-    MAX_HORIZONTAL_ALIGN
+    HORIZONTAL_ALIGN_CENTER_SAFEAREA  /* Center of the safearea. */
 } RectAlignHorizontal_t;
 
 typedef enum RectAlignVertical_t {
@@ -330,9 +335,54 @@ typedef enum RectAlignVertical_t {
     VERTICAL_ALIGN_FULLSCREEN,      /* Disregards safe area. */
     VERTICAL_ALIGN_NOSCALE,         /* Uses exact parameters - neither adjusts for safe area nor scales for screen size. */
     VERTICAL_ALIGN_TO480,           /* Scales a real-screen resolution y down into the 0 - 480 range. */
-    VERTICAL_ALIGN_CENTER_SAFEAREA, /* Center of the save area. */
-    VERTICAL_ALIGN_MAX
+    VERTICAL_ALIGN_CENTER_SAFEAREA  /* Center of the save area. */
 } RectAlignVertical_t;
+
+typedef enum ItemDefType_t {
+    ITEM_TYPE_TEXT = 0,            /* Simple text. */
+    ITEM_TYPE_BUTTON,              /* Button, basically text with a border. */
+    ITEM_TYPE_RADIOBUTTON,         /* Toggle button, may be grouped. */
+    ITEM_TYPE_CHECKBOX,            /* Check box. */
+    ITEM_TYPE_EDITFIELD,           /* Editable text, associated with a dvar. */
+    ITEM_TYPE_COMBO,               /* Drop down list. */
+    ITEM_TYPE_LISTBOX,             /* Scrollable list. */
+    ITEM_TYPE_MODEL,               /* Model. */
+    ITEM_TYPE_OWNERDRAW,           /* Owner draw, name specs what it is. */
+    ITEM_TYPE_NUMERICFIELD,        /* Editable text, associated with a dvar. */
+    ITEM_TYPE_SLIDER,              /* Mouse speed, volume, etc.. */
+    ITEM_TYPE_YESNO,               /* Yes no dvar setting. */
+    ITEM_TYPE_MULTI,               /* Multiple list setting, enumerated. */
+    ITEM_TYPE_DVARENUM,            /* Multiple list setting, enumerated from a dvar. */
+    ITEM_TYPE_BIND,                /* Bind. */
+    ITEM_TYPE_MENUMODEL,           /* Special menu model. */
+    ITEM_TYPE_VALIDFILEFIELD,      /* Text must be valid for use in a dos filename. */
+    ITEM_TYPE_DECIMALFIELD,        /* Editable text, associated with a dvar, which allows decimal input. */
+    ITEM_TYPE_UPREDITFIELD,        /* Editable text, associated with a dvar. */
+    ITEM_TYPE_GAME_MESSAGE_WINDOW  /* Game message window. */
+} ItemDefType_t;
+
+typedef enum ItemAlign_t {
+    ITEM_ALIGN_LEGACY_LEFT = 0, /* Aligns bottom of text to top of containing rectangle. */
+    ITEM_ALIGN_LEGACY_CENTER = 1,
+    ITEM_ALIGN_LEGACY_RIGHT = 2,
+    ITEM_ALIGN_TOP_LEFT = 4, /* Aligns top of text to top of containing rectangle. */
+    ITEM_ALIGN_TOP_CENTER = 5,
+    ITEM_ALIGN_TOP_RIGHT = 6,
+    ITEM_ALIGN_MIDDLE_LEFT = 8, /* Aligns middle of text to middle of containing rectangle. */
+    ITEM_ALIGN_MIDDLE_CENTER = 9,
+    ITEM_ALIGN_MIDDLE_RIGHT = 10,
+    ITEM_ALIGN_BOTTOM_LEFT = 12, /* Aligns bottom of text to bottom of containing rectangle. */
+    ITEM_ALIGN_BOTTOM_CENTER = 13,
+    ITEM_ALIGN_BOTTOM_RIGHT = 14
+} ItemAlign_t;
+
+typedef enum ItemTextStyle_t {
+    ITEM_TEXTSTYLE_NORMAL = 0,       /* Normal text. */
+    ITEM_TEXTSTYLE_BLINK = 1,        /* Fast blinking. */
+    ITEM_TEXTSTYLE_SHADOWED = 3,     /* Drop shadow (need a color for this). */
+    ITEM_TEXTSTYLE_SHADOWEDMORE = 6, /* Drop shadow (need a color for this). */
+    ITEM_TEXTSTYLE_MONOSPACE = 128
+} ItemTextStyle_t;
 
 typedef struct ColumnInfo_t
 {
@@ -342,7 +392,6 @@ typedef struct ColumnInfo_t
     int alignment;
 } ColumnInfo_t;
 
-/* TODO: Where is feeder?! */
 typedef struct ListBoxDef_t
 {
     int startPos;    /* Not used at compile time? */
@@ -352,7 +401,7 @@ typedef struct ListBoxDef_t
     float elementWidth;
     float elementHeight;
     ListBoxElementType_t elementType; /* Was elementStyle, but it not exist in engine. */
-    uint columns_count;               /* Not extracted, but useful  */
+    uint columns_count;               /* Not going to be extracted, but useful. */
     ColumnInfo_t columns[16];
     const char *doubleClick;
     int notSelectable;
@@ -375,14 +424,13 @@ typedef struct EditFieldDef_t
     int paintOffset;
 } EditFieldDef_t;
 
-/* Not actually used. */
 typedef struct MultiDef_t
 {
     const char *dvarEnumList[32]; /* ITEM_TYPE_DVARENUM */
     const char *dvarStrList[32];  /* ITEM_TYPE_MULTI */
     float dvarFloatList[32];      /* ITEM_TYPE_MULTI */
     uint count;
-    int strDef; /* boolean? If true => dvarStrList? */
+    int isStrList; /* 0 means dvarFloatList. 1 means dvarStrList. TODO: check extraction. */
 } MultiDef_t;
 
 typedef union ItemDefData_t {
@@ -458,7 +506,7 @@ typedef struct WindowDef_t
     const char *group;
     WindowStyle_t style;
     WindowBorderType_t border;
-    int ownerDraw;
+    OwnerdrawType_t ownerDraw;
     int ownerDrawFlag;
     float borderSize;
     int staticFlags;
@@ -470,54 +518,6 @@ typedef struct WindowDef_t
     vec4_t outlineColor;
     Material_t *background;
 } WindowDef_t;
-
-typedef enum ItemDefType_t {
-    ITEM_TYPE_TEXT = 0,            /* Simple text. */
-    ITEM_TYPE_BUTTON,              /* Button, basically text with a border. */
-    ITEM_TYPE_RADIOBUTTON,         /* Toggle button, may be grouped. */
-    ITEM_TYPE_CHECKBOX,            /* Check box. */
-    ITEM_TYPE_EDITFIELD,           /* Editable text, associated with a dvar. */
-    ITEM_TYPE_COMBO,               /* Drop down list. */
-    ITEM_TYPE_LISTBOX,             /* Scrollable list. */
-    ITEM_TYPE_MODEL,               /* Model. */
-    ITEM_TYPE_OWNERDRAW,           /* Owner draw, name specs what it is. */
-    ITEM_TYPE_NUMERICFIELD,        /* Editable text, associated with a dvar. */
-    ITEM_TYPE_SLIDER,              /* Mouse speed, volume, etc.. */
-    ITEM_TYPE_YESNO,               /* Yes no dvar setting. */
-    ITEM_TYPE_MULTI,               /* Multiple list setting, enumerated. */
-    ITEM_TYPE_DVARENUM,            /* Multiple list setting, enumerated from a dvar. */
-    ITEM_TYPE_BIND,                /* Bind. */
-    ITEM_TYPE_MENUMODEL,           /* Special menu model. */
-    ITEM_TYPE_VALIDFILEFIELD,      /* Text must be valid for use in a dos filename. */
-    ITEM_TYPE_DECIMALFIELD,        /* Editable text, associated with a dvar, which allows decimal input. */
-    ITEM_TYPE_UPREDITFIELD,        /* Editable text, associated with a dvar. */
-    ITEM_TYPE_GAME_MESSAGE_WINDOW, /* Game message window. */
-    MAX_ITEM_TYPES
-} ItemDefType_t;
-
-typedef enum ItemAlign_t {
-    ITEM_ALIGN_LEGACY_LEFT = 0, /* Aligns bottom of text to top of containing rectangle. */
-    ITEM_ALIGN_LEGACY_CENTER = 1,
-    ITEM_ALIGN_LEGACY_RIGHT = 2,
-    ITEM_ALIGN_TOP_LEFT = 4, /* Aligns top of text to top of containing rectangle. */
-    ITEM_ALIGN_TOP_CENTER = 5,
-    ITEM_ALIGN_TOP_RIGHT = 6,
-    ITEM_ALIGN_MIDDLE_LEFT = 8, /* Aligns middle of text to middle of containing rectangle. */
-    ITEM_ALIGN_MIDDLE_CENTER = 9,
-    ITEM_ALIGN_MIDDLE_RIGHT = 10,
-    ITEM_ALIGN_BOTTOM_LEFT = 12, /* Aligns bottom of text to bottom of containing rectangle. */
-    ITEM_ALIGN_BOTTOM_CENTER = 13,
-    ITEM_ALIGN_BOTTOM_RIGHT = 14,
-    MAX_ITEM_ALIGN = 16
-} ItemAlign_t;
-
-typedef enum ItemTextStyle_t {
-    ITEM_TEXTSTYLE_NORMAL = 0,       /* Normal text. */
-    ITEM_TEXTSTYLE_BLINK = 1,        /* Fast blinking. */
-    ITEM_TEXTSTYLE_SHADOWED = 3,     /* Drop shadow (need a color for this). */
-    ITEM_TEXTSTYLE_SHADOWEDMORE = 6, /* Drop shadow (need a color for this). */
-    ITEM_TEXTSTYLE_MONOSPACE = 128
-} ItemTextStyle_t;
 
 typedef struct ItemDef_t
 {
@@ -548,10 +548,10 @@ typedef struct ItemDef_t
     const char *dvar;
     const char *dvarTest;
     ItemKeyHandler_t *onKey;
-    const char *enableDvar;
-    int cvarFlags;
+    const char *enableDvar; // if (dvarFlags & 2) is disableDvar; if (dvarFlags & 1) is enableDvar; if (dvarFlags & 4) is showDvar; if (dvarFlags & 8) is hideDvar; if (dvarFlags & 16) is focusDvar. TODO
+    int dvarFlags;
     snd_alias_list_t *focusSound;
-    float special; // menu model?
+    float feeder;
     int cursorPos;
     ItemDefData_t typeData;
     int imageTrack;
@@ -593,7 +593,6 @@ typedef struct MenuDef_t
     ItemDef_t **items;
 } MenuDef_t;
 
-const char *get_item_textstyle_string(ItemTextStyle_t style);
 extern const char *g_MenuOperations[NUM_OPERATIONS];
 extern KeyWord_t g_MenuItemTypes[];
 extern KeyWord_t g_MenuItemAlign[];
@@ -607,5 +606,6 @@ extern KeyWord_t g_ItemFontType[];
 extern KeyWord_t g_ItemOwnerdrawType[];
 extern KeyWord_t g_RectAlignHorizontal[];
 extern KeyWord_t g_RectAlignVertical[];
+extern KeyWord_t g_ItemTextStyle[];
 /* No such kind of asset in ANY default fastfile but I want to left it here. */
 /*#define XASSET_TYPE_MENU (21)*/
