@@ -723,7 +723,7 @@ static void extract_menu(MenuDef_t *asset, const char *subdir)
     }
 
     /* Write .menu file header. */
-    fwrite("{\n    menuDef\n    {\n", sizeof(char), 20, f);
+    fwrite("#include \"ui/menudefinition.h\";\n{\n    menuDef\n    {\n", sizeof(char), 52, f);
     /* Write menu fields. */
     extract_menu_fields(f, asset);
     /* Write all menu items. */
