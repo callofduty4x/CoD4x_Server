@@ -9,7 +9,7 @@ const char *g_MenuOperations[NUM_OPERATIONS] = {
     ")",
     "*",
     "/",
-    "\%",
+    "%", /* Github, why you keep red highlight on me? %( */
     "+",
     "-",
     "!",
