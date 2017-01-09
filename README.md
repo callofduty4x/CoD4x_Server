@@ -97,7 +97,6 @@ They can also use it on their own servers.
 4. Plugins have to be made available as sourcecode so the user can interact with it
 
 Server's IPs violating these conditions can get permanently disabled.
-Servers hosted by Luxhosting are not affected by these conditions.
 
 These conditions have been established to keep user created content open to everyone, and also to value the work on CoD4X.
 
