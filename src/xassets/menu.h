@@ -430,7 +430,7 @@ typedef struct MultiDef_t
     const char *dvarStrList[32];  /* ITEM_TYPE_MULTI */
     float dvarFloatList[32];      /* ITEM_TYPE_MULTI */
     uint count;
-    int isStrList; /* 0 means dvarFloatList. 1 means dvarStrList. TODO: check extraction. */
+    int isStrList; /* 0 means dvarFloatList. 1 means dvarStrList. */
 } MultiDef_t;
 
 typedef union ItemDefData_t {

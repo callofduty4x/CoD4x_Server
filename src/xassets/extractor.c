@@ -167,7 +167,40 @@ static void extract_rawfile(const void *header)
     fclose(f);
 }
 
+static void replace_escape_characters(const char *in, char *out, uint out_size)
+{
+    char *ptr_in = (char*)in;
+    char *ptr_out = out;
+    uint i = 0;
+    while(i <= out_size && *ptr_in)
+    {
+        if (*ptr_in == '\n')
+        {
+            *ptr_out = '\\';
+            ++ptr_out;
+            *ptr_out = 'n';
+        }
+        else if (*ptr_in == '\t')
+        {
+            *ptr_out = '\\';
+            ++ptr_out;
+            *ptr_out = 't';
+        }
+        else
+            *ptr_out = *ptr_in;
+
+        ++ptr_in;
+        ++ptr_out;
+        ++i;
+    }
+    *ptr_out = '\0';
+    /* Oops, something has been left untouched. Need to increase buffer. */
+    if (*ptr_in)
+        Com_Printf("Out buffer overflow. Increase size by %d bytes to get all data parsed...", strlen(ptr_in));
+}
+
 /* Extract localized string. */
+/* TODO: Change overall extraction logic to find, store & extract. This will help to avoid forgotten "endmarker" at end of extracted file. */
 static void extract_localized_string(const void *header)
 {
     char output_path[MAX_OSPATH];
@@ -175,6 +208,7 @@ static void extract_localized_string(const void *header)
     LocalizedString_t *asset = (LocalizedString_t *)header;
     char *prefix_end;
     FILE *f;
+    char value_buf[1024] = {'\0'};
 
     /* Will be always because prefix is a file name. */
     prefix_end = strchr(asset->key, '_');
@@ -208,9 +242,9 @@ static void extract_localized_string(const void *header)
     else
         f = freopen(output_path, "a", f);
 
-    /* TODO: handle case with '\n', '\t' in asset->value. */
     fprintf(f, "REFERENCE           %s\n", asset->key);
-    fprintf(f, "LANG_ENGLISH        \"%s\"\n\n", asset->value);
+    replace_escape_characters(asset->value, value_buf, sizeof(value_buf));
+    fprintf(f, "LANG_ENGLISH        \"%s\"\n\n", value_buf);
     fclose(f);
 }
 
@@ -395,127 +429,183 @@ static const char *action_optimize(const char *action)
     return res;
 }
 
-#define WRITE_ITEMDEF_FIELD_INT(str_key, int_val) \
-        WRITE_MENU_FIELD("            %-20s %d\n", (str_key), (int_val))
+#define MENUDEF_INDENT "        "
+#define ITEMDEF_INDENT "            "
+#define COMBINE(a, b, c, d) a b c d
+/* MenuDef_t fields. */
+#define WRITE_MENU_FIELD(indent, args_format, ...) \
+    fprintf(f, indent "%-20s " args_format "\n", __VA_ARGS__)
 
-#define WRITE_ITEMDEF_FIELD_FLOAT(str_key, float_val) \
-        WRITE_MENU_FIELD("            %-20s %g\n", (str_key), (float_val))
 
-#define WRITE_ITEMDEF_FIELD_STRING(str_key, str_val) \
-        WRITE_MENU_FIELD("            %-20s \"%s\"\n", (str_key), (str_val))
-
-#define WRITE_ITEMDEF_FIELD_RECT(str_key, rect_val) \
+#define WRITE_MENU_FIELD_COND(condition, indent, args_format, ...) \
     do { \
-        if ( (rect_val).x || (rect_val).y || (rect_val).w || (rect_val).h || (rect_val).horzAlign || (rect_val).vertAlign ) \
-            fprintf(f, "            %-20s %g %g %g %g %d %d\n", (str_key), (rect_val).x, (rect_val).y, (rect_val).w, (rect_val).h, (rect_val).horzAlign, (rect_val).vertAlign); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_VEC4(str_key, vec4_val) \
-    do { \
-        if ( (vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3] ) \
-            fprintf(f, "            %-20s %g %g %g %g\n", (str_key), (vec4_val)[0], (vec4_val)[1], (vec4_val)[2], (vec4_val)[3]); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_ORIGIN(str_key, rect_val) \
-    do { \
-        if ( (rect_val).x || (rect_val).y ) \
-            fprintf(f, "            %-20s %g %g\n", (str_key), (rect_val).x, (rect_val).y); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_MATERIAL(str_key, mtl) \
-    do { \
-        if ((mtl)) \
-            fprintf(f, "            %-20s \"%s\"\n", (str_key), *(mtl)); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_ACTION(str_key, str_action) \
-    do { \
-        if ((str_action)) \
-            WRITE_MENU_FIELD("            %-20s { %s }\n", (str_key), action_optimize((str_action))); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_KEY(key_hndl) \
-    do { \
-        if ((key_hndl)) \
-            fprintf(f, "            %-20s \"%c\" { %s }\n", "execKey", (key_hndl)->key, (key_hndl)->action); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_STATEMENT(str_key, statement) \
-    do { \
-        if ((statement).entries_count) \
-            fprintf(f, "            %-20s %s ( %s );\n", "exp", (str_key), generate_expression_string(&statement)); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_VISIBLE(statement) \
-    do { \
-        if ((statement).entries_count) \
-            fprintf(f, "            %-20s when ( %s );\n", "visible", generate_expression_string(&statement)); \
-    } while(0)
-
-#define WRITE_ITEMDEF_FIELD_PROPERTY(str_prop, bool_write) \
-    do { \
-        if ((bool_write)) \
-            fprintf(f, "            %s\n", (str_prop)); \
-    } while(0)
-
-#define WRITE_MENUDEF_FIELD_INT(str_key, int_val) \
-        WRITE_MENU_FIELD("        %-20s %d\n", (str_key), (int_val))
-
-#define WRITE_MENUDEF_FIELD_FLOAT(str_key, float_val) \
-        WRITE_MENU_FIELD("        %-20s %g\n", (str_key), (float_val))
-
-#define WRITE_MENUDEF_FIELD_STRING(str_key, str_val) \
-        WRITE_MENU_FIELD("        %-20s \"%s\"\n", (str_key), (str_val))
-
-#define WRITE_MENUDEF_FIELD_MATERIAL(str_key, mtl) \
-    do { \
-        if ((mtl)) \
-            fprintf(f, "        %-20s \"%s\"\n", (str_key), *(mtl)); \
+        if ((condition)) \
+            WRITE_MENU_FIELD(indent, args_format, __VA_ARGS__); \
     } while(0)
 
 
+#define WRITE_MENUDEF_FIELD_FLAG(str_key, int_condition) \
+    WRITE_MENU_FIELD_COND( \
+        (int_condition), \
+        MENUDEF_INDENT, \
+        "", \
+        (str_key) \
+    )
 
-#define WRITE_MENUDEF_FIELD_ACTION(str_key, str_action) \
-    do { \
-        if ((str_action)) \
-            WRITE_MENU_FIELD("        %-20s { %s }\n", (str_key), action_optimize((str_action))); \
-    } while(0)
 
-#define WRITE_MENUDEF_FIELD_RECT(str_key, rect_val) \
-    do { \
-        if ( (rect_val).x || (rect_val).y || (rect_val).w || (rect_val).h || (rect_val).horzAlign || (rect_val).vertAlign ) \
-            fprintf(f, "        %-20s %g %g %g %g %d %d\n", (str_key), (rect_val).x, (rect_val).y, (rect_val).w, (rect_val).h, (rect_val).horzAlign, (rect_val).vertAlign); \
-    } while(0)
+#define WRITE_MENUDEF_FIELD_EXPRESSION(str_key, expression) WRITE_MENU_FIELD_COND( (expression).entries_count, MENUDEF_INDENT, "%s ( %s );", \
+        "exp", \
+        (str_key), \
+        generate_expression_string(&(expression)) \
+    )
+
+#define WRITE_MENUDEF_FIELD_KEY(key_hndl) WRITE_MENU_FIELD_COND( (key_hndl), MENUDEF_INDENT, "\"%c\" { %s }", \
+        "execKey", (key_hndl)->key, (key_hndl)->action \
+    )
+
 
 #define WRITE_MENUDEF_FIELD_VEC4(str_key, vec4_val) \
-    do { \
-        if ( (vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3] ) \
-            fprintf(f, "        %-20s %g %g %g %g\n", (str_key), (vec4_val)[0], (vec4_val)[1], (vec4_val)[2], (vec4_val)[3]); \
-    } while(0)
+    WRITE_MENU_FIELD_COND( \
+        ((vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3]), \
+        MENUDEF_INDENT, \
+        "%g %g %g %g", \
+        (str_key), \
+        (vec4_val)[0], (vec4_val)[1], (vec4_val)[2], (vec4_val)[3] \
+    )
 
-#define WRITE_MENUDEF_FIELD_KEY(key_hndl) \
-    do { \
-        if ((key_hndl)) \
-            fprintf(f, "        %-20s \"%c\" { %s }\n", "execKey", (key_hndl)->key, (key_hndl)->action); \
-    } while(0)
+#define WRITE_MENUDEF_FIELD_RECT(str_key, rect_val) \
+    WRITE_MENU_FIELD_COND( \
+        ((rect_val).x || (rect_val).y || (rect_val).w || (rect_val).h || (rect_val).horzAlign || (rect_val).vertAlign), \
+        MENUDEF_INDENT, \
+        "%g %g %g %g %d %d", \
+        (str_key), \
+        (rect_val).x, (rect_val).y, (rect_val).w, (rect_val).h, (rect_val).horzAlign, (rect_val).vertAlign \
+    )
 
-#define WRITE_MENUDEF_FIELD_STATEMENT(str_key, statement) \
-    do { \
-        if ((statement).entries_count) \
-            fprintf(f, "        %-20s %s ( %s );\n", "exp", (str_key), generate_expression_string(&statement)); \
-    } while(0)
+#define WRITE_MENUDEF_FIELD_ACTION(str_key, str_action) WRITE_MENU_FIELD_COND( (str_action), MENUDEF_INDENT, "{ %s }\n", \
+        (str_key), action_optimize((str_action)) \
+    )
 
-#define WRITE_MENUDEF_FIELD_VISIBLE(statement) \
-    do { \
-        if ((statement).entries_count) \
-            fprintf(f, "        %-20s when ( %s );\n", "visible", generate_expression_string(&(statement))); \
-    } while(0)
+#define WRITE_MENUDEF_FIELD_MATERIAL(str_key, mtl) \
+    WRITE_MENU_FIELD_COND( \
+        (mtl), \
+        MENUDEF_INDENT, \
+        "\"%s\"", \
+        (str_key), \
+        *(mtl) \
+    )
 
-#define WRITE_MENU_FIELD(format, str_key, val) \
-    do { \
-        if ((val)) \
-            fprintf(f, format, (str_key), (val)); \
-    } while(0)
+#define WRITE_MENUDEF_FIELD_STRING(str_key, str_val) \
+    WRITE_MENU_FIELD_COND( \
+        (str_val), \
+        MENUDEF_INDENT, \
+        "\"%s\"", \
+        (str_key), \
+        (str_val) \
+    )
+
+#define WRITE_MENUDEF_FIELD_FLOAT(str_key, float_val) \
+    WRITE_MENU_FIELD_COND( \
+        (float_val) != 0, \
+        MENUDEF_INDENT, \
+        "%g", \
+        (str_key), \
+        (float_val) \
+    )
+
+
+#define WRITE_MENUDEF_FIELD_INT(str_key, int_val) \
+    WRITE_MENU_FIELD_COND( \
+        (int_val), \
+        MENUDEF_INDENT, \
+        "%d", \
+        (str_key), \
+        (int_val) \
+    )
+
+
+/* ItemDef_t fields. */
+#define WRITE_ITEMDEF_FIELD_FLAG(str_key, int_condition) \
+    WRITE_MENU_FIELD_COND( \
+        (int_condition), \
+        ITEMDEF_INDENT, \
+        "", \
+        (str_key) \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_EXPRESSION(str_key, expression) WRITE_MENU_FIELD_COND( (expression).entries_count, ITEMDEF_INDENT, "%s ( %s );", \
+        "exp", (str_key), generate_expression_string(&(expression)) \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_KEY(key_hndl) WRITE_MENU_FIELD_COND( (key_hndl), ITEMDEF_INDENT, "\"%c\" { %s }", \
+        "execKey", (key_hndl)->key, (key_hndl)->action \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_VEC4(str_key, vec4_val) \
+    WRITE_MENU_FIELD_COND( \
+        ((vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3]), \
+        ITEMDEF_INDENT, \
+        "%g %g %g %g", \
+        (str_key), \
+        (vec4_val)[0], (vec4_val)[1], (vec4_val)[2], (vec4_val)[3] \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_RECT(str_key, rect_val) \
+    WRITE_MENU_FIELD_COND( \
+        ((rect_val).x || (rect_val).y || (rect_val).w || (rect_val).h || (rect_val).horzAlign || (rect_val).vertAlign), \
+        ITEMDEF_INDENT, \
+        "%g %g %g %g %d %d", \
+        (str_key), \
+        (rect_val).x, (rect_val).y, (rect_val).w, (rect_val).h, (rect_val).horzAlign, (rect_val).vertAlign \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_ACTION(str_key, str_action) WRITE_MENU_FIELD_COND( (str_action), ITEMDEF_INDENT, "{ %s }\n", \
+        (str_key), action_optimize((str_action)) \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_MATERIAL(str_key, mtl) \
+    WRITE_MENU_FIELD_COND( \
+        (mtl), \
+        ITEMDEF_INDENT, \
+        "\"%s\"", \
+        (str_key), \
+        *(mtl) \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_STRING(str_key, str_val) \
+    WRITE_MENU_FIELD_COND( \
+        (str_val), \
+        ITEMDEF_INDENT, \
+        "\"%s\"", \
+        (str_key), \
+        (str_val) \
+    )
+
+#define WRITE_ITEMDEF_FIELD_FLOAT(str_key, float_val) \
+    WRITE_MENU_FIELD_COND( \
+        (float_val) != 0, \
+        ITEMDEF_INDENT, \
+        "%g", \
+        (str_key), \
+        (float_val) \
+    )
+
+
+#define WRITE_ITEMDEF_FIELD_INT(str_key, int_val) \
+    WRITE_MENU_FIELD_COND( \
+        (int_val), \
+        ITEMDEF_INDENT, \
+        "%d", \
+        (str_key), \
+        (int_val) \
+    )
 
 /* Write window properties to file. */
 /* Some of WindowDef_t fields are not required for MenuDef_t. */
@@ -566,10 +656,9 @@ static void extract_menu_fields(FILE *f, const MenuDef_t *m)
     /* TODO: "hiddenDuringScope;" */
     /* TODO: "hiddenDuringFlashbang;" */
     /* TODO: "hiddenDuringUI;" */
-    WRITE_MENUDEF_FIELD_STATEMENT("rect X", m->rectXExp);
-    WRITE_MENUDEF_FIELD_STATEMENT("rect Y", m->rectYExp);
-    /* WAS: //WRITE_MENUDEF_FIELD_VISIBLE(m->visibleExp); */
-    WRITE_MENUDEF_FIELD_STATEMENT("visible when", m->visibleExp);
+    WRITE_MENUDEF_FIELD_EXPRESSION("rect X", m->rectXExp);
+    WRITE_MENUDEF_FIELD_EXPRESSION("rect Y", m->rectYExp);
+    WRITE_MENUDEF_FIELD_EXPRESSION("visible when", m->visibleExp);
 }
 
 /* Extract ItemDef's window properties. */
@@ -606,20 +695,20 @@ static void extract_menu_item_listbox(FILE *f, const ListBoxDef_t *lb)
             fprintf(f, "                       %4d %4d %3d\n", lb->columns[i].xpos, lb->columns[i].xwidth, lb->columns[i].textLen);
     }
     WRITE_ITEMDEF_FIELD_STRING("doubleClick", lb->doubleClick);
-    WRITE_ITEMDEF_FIELD_PROPERTY("notSelectable", lb->notSelectable);
-    WRITE_ITEMDEF_FIELD_PROPERTY("noScrollBars", lb->noScrollBars);
-    WRITE_ITEMDEF_FIELD_PROPERTY("usePaging", lb->usePaging);
     WRITE_ITEMDEF_FIELD_VEC4("selectBorder", lb->selectBorder);
     WRITE_ITEMDEF_FIELD_VEC4("disableColor", lb->disableColor);
     WRITE_ITEMDEF_FIELD_MATERIAL("selectIcon", (char**)lb->selectIcon);
+    WRITE_ITEMDEF_FIELD_FLAG("notSelectable", lb->notSelectable);
+    WRITE_ITEMDEF_FIELD_FLAG("noScrollBars", lb->noScrollBars);
+    WRITE_ITEMDEF_FIELD_FLAG("usePaging", lb->usePaging);
 }
 
 /* Extract ItemDef's edit field properties. */
 static void extract_menu_item_editfield(FILE *f, const EditFieldDef_t *ef)
 {
     WRITE_ITEMDEF_FIELD_INT("maxChars", ef->maxChars);
-    WRITE_ITEMDEF_FIELD_PROPERTY("maxCharsGotoNext", ef->maxCharsGotoNext);
     WRITE_ITEMDEF_FIELD_INT("maxPaintChars", ef->maxPaintChars);
+    WRITE_ITEMDEF_FIELD_FLAG("maxCharsGotoNext", ef->maxCharsGotoNext);
 }
 
 /* Extract ItemDef's multilist properties. */
@@ -693,15 +782,15 @@ static void extract_menu_item(FILE *f, const ItemDef_t *i)
     else if (i->type == ITEM_TYPE_DVARENUM)
         extract_menu_item_dvarenum(f, &i->typeData);
     
-    WRITE_ITEMDEF_FIELD_STATEMENT("text", i->textExp);
-    WRITE_ITEMDEF_FIELD_STATEMENT("material", i->materialExp);
-    WRITE_ITEMDEF_FIELD_STATEMENT("rect X", i->rectXExp);
-    WRITE_ITEMDEF_FIELD_STATEMENT("rect Y", i->rectYExp);
-    WRITE_ITEMDEF_FIELD_STATEMENT("rect W", i->rectWExp);
-    WRITE_ITEMDEF_FIELD_STATEMENT("rect H", i->rectHExp);
-    WRITE_ITEMDEF_FIELD_STATEMENT("foreColor A", i->foreColorAExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("text", i->textExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("material", i->materialExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("rect X", i->rectXExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("rect Y", i->rectYExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("rect W", i->rectWExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("rect H", i->rectHExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("foreColor A", i->foreColorAExp);
     /* WAS //WRITE_ITEMDEF_FIELD_VISIBLE(i->visibleExp); */
-    WRITE_ITEMDEF_FIELD_STATEMENT("visible", i->foreColorAExp);
+    WRITE_ITEMDEF_FIELD_EXPRESSION("visible", i->foreColorAExp);
     /* TODO: "decoration;" */
     /* TODO: "autoWrapped;" */
     /* TODO: "horizontalScroll;" */
