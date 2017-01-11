@@ -4756,7 +4756,7 @@ qboolean NET_ResolveInternal(const char *domain, struct sockaddr_storage *outadd
 		{
 			if(errormessage1k)
 			{
-				Com_sprintf(errormessage1k, 1024, "Query timeout for [%s]", cbd.name);
+				Com_sprintf(errormessage1k, 1024, "Query timeout for [%s]", domain);
 			}
 			return qfalse;
 		}
