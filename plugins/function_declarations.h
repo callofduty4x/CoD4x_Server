@@ -359,3 +359,5 @@
     __cdecl void Plugin_DisableThreadDebug();                                   //Disables debug info printing
     __cdecl void Plugin_SleepSec(int sec);
     __cdecl void Plugin_SleepMSec(int msec);
+    __cdecl void Plugin_SetStat(int clientNum, signed int index, int value);
+    __cdecl int Plugin_GetStat(int clientNum, signed int index);
