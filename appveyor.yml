@@ -37,6 +37,13 @@ before_build:
     
     curl -o mingw/mingw32-make.tar.gz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/make/mingw32-make-3.81-2/mingw32-make-3.81-2.tar.gz
     
+    curl -o mingw/gcc-c++-bin.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-bin.tar.lzma
+
+    curl -o mingw/gcc-c++-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-dev.tar.lzma
+
+    curl -o mingw/gcc-c++-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-dll.tar.lzma
+
+
     cd mingw
 
     7z x binutils.tar.xz
@@ -102,6 +109,18 @@ before_build:
     7z x mingw32-make.tar.gz
     
     7z x mingw32-make.tar
+
+    7z x gcc-c++-bin.tar.lzma
+
+    7z x gcc-c++-bin.tar
+
+    7z x gcc-c++-dev.tar.lzma
+
+    7z x gcc-c++-dev.tar
+
+    7z x gcc-c++-dll.tar.lzma
+
+    7z x gcc-c++-dll.tar
 
     cd ..
 
