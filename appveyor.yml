@@ -188,6 +188,9 @@ build_script:
     Write-Host "Done."
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
+branches:
+  only:
+    - master    # Ignore all other branches.
 artifacts: 
   - path: bin\cod4x18_dedrun.exe
     name: cod4exe
