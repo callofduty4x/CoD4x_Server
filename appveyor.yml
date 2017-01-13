@@ -1,34 +1,132 @@
 version: 1.0.{build}
+before_build:
+- ps: >-
+    echo Installing MinGW
+
+    mkdir mingw
+    
+    curl -o mingw/binutils.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz
+    
+    curl -o mingw/mingw-runtime-dev.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mingwrt/mingwrt-3.22/mingwrt-3.22.4-mingw32-dev.tar.xz
+    
+    curl -o mingw/mingw-runtime-dll.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mingwrt/mingwrt-3.22/mingwrt-3.22.4-mingw32-dll.tar.xz
+    
+    curl -o mingw/w32api.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/w32api/w32api-3.18/w32api-3.18.2-mingw32-dev.tar.xz
+    
+    curl -o mingw/mpc.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mpc/mpc-1.0.2/libmpc-1.0.2-mingw32-dll-3.tar.xz
+    
+    curl -o mingw/mpfr.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mpfr/mpfr-3.1.2/mpfr-3.1.2-1-mingw32-dll.tar.lzma
+    
+    curl -o mingw/gmp.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gmp/gmp-5.1.2/gmp-5.1.2-1-mingw32-dll.tar.lzma
+    
+    curl -o mingw/pthreads-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/pthreads-w32/pthreads-w32-2.9.1/pthreads-w32-2.9.1-1-mingw32-dev.tar.lzma
+    
+    curl -o mingw/pthreads-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/pthreads-w32/pthreads-w32-2.9.1/pthreads-w32-2.9.1-1-mingw32-dll.tar.lzma
+    
+    curl -o mingw/libiconv.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/libiconv/libiconv-1.14-3/libiconv-1.14-3-mingw32-dll.tar.lzma
+    
+    curl -o mingw/zlib.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/zlib/zlib-1.2.8/zlib-1.2.8-1-mingw32-dll.tar.lzma
+    
+    curl -o mingw/gettext.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gettext/gettext-0.18.3.1-1/gettext-0.18.3.1-1-mingw32-dll.tar.lzma
+    
+    curl -o mingw/gcc-core-bin.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-bin.tar.lzma
+    
+    curl -o mingw/gcc-core-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-dev.tar.lzma
+    
+    curl -o mingw/gcc-core-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-dll.tar.lzma
+    
+    curl -o mingw/mingw32-make.tar.gz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/make/mingw32-make-3.81-2/mingw32-make-3.81-2.tar.gz
+    
+    cd mingw
+
+    7z x binutils.tar.xz
+    
+    7z x binutils.tar
+    
+    7z x mingw-runtime-dev.tar.xz
+    
+    7z x mingw-runtime-dev.tar
+    
+    7z x mingw-runtime-dll.tar.xz
+    
+    7z x mingw-runtime-dll.tar
+    
+    7z x w32api.tar.xz
+    
+    7z x w32api.tar
+    
+    7z x mpc.tar.xz
+    
+    7z x mpc.tar
+    
+    7z x mpfr.tar.lzma
+    
+    7z x mpfr.tar
+    
+    7z x gmp.tar.lzma
+    
+    7z x gmp.tar
+    
+    7z x pthreads-dev.tar.lzma
+    
+    7z x pthreads-dev.tar
+    
+    7z x pthreads-dll.tar.lzma
+    
+    7z x pthreads-dll.tar
+    
+    7z x libiconv.tar.lzma
+    
+    7z x libiconv.tar
+    
+    7z x zlib.tar.lzma
+    
+    7z x zlib.tar
+    
+    7z x gettext.tar.lzma
+    
+    7z x gettext.tar
+    
+    7z x gcc-core-bin.tar.lzma
+    
+    7z x gcc-core-bin.tar
+    
+    7z x gcc-core-dev.tar.lzma
+    
+    7z x gcc-core-dev.tar
+    
+    7z x gcc-core-dll.tar.lzma
+    
+    7z x gcc-core-dll.tar
+    
+    7z x mingw32-make.tar.gz
+    
+    7z x mingw32-make.tar
+
+    cd ..
+
 build_script:
 - ps: >-
     curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
 
     .\nasminst.exe /S
 
-    $env:path="C:\Program Files (x86)\nasm;$($env:path)"
-
-
-
     curl -o xz.7z "http://tukaani.org/xz/xz-5.2.1-windows.7z"
 
     curl -o pexports.tar.xz "http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/pexports/pexports-0.47/pexports-0.47-mingw32-bin.tar.xz"
 
-
     7z x xz.7z
-
-    ls
 
     ./bin_x86-64/xz.exe -d pexports.tar.xz
 
-
     7z x pexports.tar
-
-    $env:path="$pwd\bin;$($env:path)"
-
 
     ls
 
+    ls $pwd/bin
 
+    [Environment]::SetEnvironmentVariable("PATH",  "$pwd\mingw\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
+    
     cd src/tomcrypt
 
     ./compile_win32.cmd
@@ -36,10 +134,10 @@ build_script:
     cd ../mbedtls
 
     ./build.cmd
-
+    
     cd ../..
 
-    ./build_updateable_win32_PE.cmd
+    mingw32-make.exe win32
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 artifacts: 

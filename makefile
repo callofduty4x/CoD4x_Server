@@ -26,7 +26,7 @@ linux32_dev: linux zlib_linux nasm_linux common_linux $(COD4XBIN).elf clean_linu
 windows:
 	@echo [Windows] Building specific files...
 	@cd bin && \
-	$(CC) $(CFLAGS) -D WINVER=0x501 -march=nocona $(CLIBS) ..\src\win32\*.c
+	$(CC) $(CFLAGS) -D WINVER=0x501 -march=nocona $(CLIBS) ../src/win32/*.c
 
 linux:
 	@echo [Linux] Building specific files...
@@ -36,7 +36,7 @@ linux:
 common_win: 
 	@echo [Windows] Building common code...
 	@cd bin && \
-	$(CC) $(CFLAGS) -D COD4X18UPDATE -D WINVER=0x501 -march=nocona ..\src\*.c ..\src\xassets\*.c
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D WINVER=0x501 -march=nocona ../src/*.c ../src/xassets/*.c
 
 common_linux: 
 	@echo [Linux] Building common code...
@@ -46,7 +46,7 @@ common_linux:
 common_updateable_win:
 	@echo [Windows] Building self-updateable common code...
 	@cd bin && \
-	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D WINVER=0x501 -march=nocona ..\src\*.c ..\src\xassets\*.c
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D WINVER=0x501 -march=nocona ../src/*.c ../src/xassets/*.c
 
 common_updateable_linux:
 	@echo [Linux] Building self-updateable common code...
@@ -56,7 +56,7 @@ common_updateable_linux:
 zlib_win:
 	@echo [Windows] Building ZLib...
 	@cd bin && \
-	$(CC) $(CFLAGS) -D WINVER=0x501 -mtune=nocona ..\src\zlib\*.c
+	$(CC) $(CFLAGS) -D WINVER=0x501 -mtune=nocona ../src/zlib/*.c
 
 zlib_linux:
 	@echo [Linux] Building ZLib...
