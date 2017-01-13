@@ -8,10 +8,10 @@ LINUX_LLIBS=-L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpt
 NASM=nasm
 COD4XBIN=cod4x18_dedrun
 
-ifeq ($(OS),Windows_NT) 
-RM = del 
+ifeq ($(APPVEYOR),True) 
+RM = rm
 else
-RM = rm 
+RM = del
 endif
 
 all:

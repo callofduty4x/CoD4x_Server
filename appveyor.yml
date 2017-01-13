@@ -55,10 +55,6 @@ before_build:
 
     curl -o mingw/pexports.tar.xz "http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/pexports/pexports-0.47/pexports-0.47-mingw32-bin.tar.xz"
 
-    Write-Host "    Donwloading NASM..."
-
-    curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
-
     cd mingw
 
     Write-Host "    Installing MinGW..."
@@ -153,17 +149,23 @@ before_build:
 
     cd ..
 
+    Write-Host "Setting up NASM:"
+
+    Write-Host "    Downloading NASM..."
+
+    curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
+
     Write-Host "    Installing NASM..."
 
     .\nasminst.exe /S
 
-    Write-Host "Setting up environment variables..."
+    Write-Host "Setting up environment variables."
 
     [Environment]::SetEnvironmentVariable("PATH",  "$pwd\mingw\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
 
 build_script:
 - ps: >-
-    Write-Host "Building server code"
+    Write-Host "Building server code:"
 
     Write-Host "    Building tomcrypt..."
 
@@ -177,7 +179,7 @@ build_script:
 
     ./build.cmd  | Out-Null
     
-    Write-Host "    Building server code..."
+    Write-Host "    Building cod4x18 server..."
 
     cd ../..
 
