@@ -8,6 +8,12 @@ LINUX_LLIBS=-L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpt
 NASM=nasm
 COD4XBIN=cod4x18_dedrun
 
+ifeq ($(OS),Windows_NT) 
+RM = del 
+else
+RM = rm 
+endif
+
 all:
 	@echo Please specify 'win32', 'win32_dev', 'linux32' or 'linux32_dev' recipy.
 
@@ -109,9 +115,9 @@ pexports:
 clean_win:
 	@echo [Windows] Cleaning up...
 	@cd bin && \
-	del *.o
+	$(RM) *.o
 
 clean_linux:
 	@echo [Linux] Cleaning up...
-	@rm bin/*.o
+	@$(RM) bin/*.o
 # Travis, are you okay?

@@ -147,9 +147,9 @@ before_build:
 
     Write-Host "    Installing pexports..."
 
-    7z x pexports.tar.xz
+    7z x pexports.tar.xz | Out-Null
 
-    7z x pexports.tar
+    7z x pexports.tar | Out-Null
 
     cd ..
 
@@ -163,23 +163,27 @@ before_build:
 
 build_script:
 - ps: >-
-    ls
+    Write-Host "Building server code"
 
-    ls $pwd/mingw/bin
-    
+    Write-Host "    Building tomcrypt..."
+
     cd src/tomcrypt
 
-    ./compile_win32.cmd
+    ./compile_win32.cmd | Out-Null
+
+    Write-Host "    Building mbedtls..."
 
     cd ../mbedtls
 
-    ./build.cmd
+    ./build.cmd  | Out-Null
     
+    Write-Host "    Building server code..."
+
     cd ../..
 
-    del /?
-
     mingw32-make.exe win32
+
+    Write-Host "Done."
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 artifacts: 
