@@ -2,9 +2,10 @@ version: 1.0.{build}
 before_build:
 - ps: >-
     Write-Host "Setting up MinGW environment:"
+
     Write-Host "    Downloading MinGW..."
 
-    mkdir mingw
+    mkdir mingw | Out-Null
     
     curl -o mingw/binutils.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz
     
@@ -176,7 +177,9 @@ build_script:
     
     cd ../..
 
-    cmd.exe /c "mingw32-make.exe win32"
+    del /?
+
+    mingw32-make.exe win32
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 artifacts: 
