@@ -1,7 +1,7 @@
 /* crc32.h -- tables for rapid CRC calculation
  * Generated automatically by crc32.c
  */
-
+#pragma once
 local const unsigned long FAR crc_table[TBLS][256] =
 {
   {

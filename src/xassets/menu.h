@@ -129,7 +129,6 @@ typedef enum ListBoxElementType_t {
     LISTBOX_IMAGE
 } ListBoxElementType_t;
 
-/* TODO print window flags */
 typedef enum WindowStaticFlags_t {
     WINDOW_FLAG_DECORATION              = 0x00100000u, // item
     WINDOW_FLAG_HORIZONTALSCROLL        = 0x00200000u, // item
@@ -384,6 +383,15 @@ typedef enum ItemTextStyle_t {
     ITEM_TEXTSTYLE_MONOSPACE = 128
 } ItemTextStyle_t;
 
+typedef enum DvarFlag_t
+{
+    DVAR_FLAG_ENABLEDVAR = 1 << 0,
+    DVAR_FLAG_DISABLEDVAR = 1 << 1,
+    DVAR_FLAG_SHOWDVAR = 1 << 2,
+    DVAR_FLAG_HIDEDVAR = 1 << 3,
+    DVAR_FLAG_FOCUSDVAR = 1 << 4
+} DvarFlag_t;
+
 typedef struct ColumnInfo_t
 {
     int xpos;
@@ -548,8 +556,8 @@ typedef struct ItemDef_t
     const char *dvar;
     const char *dvarTest;
     ItemKeyHandler_t *onKey;
-    const char *enableDvar; // if (dvarFlags & 2) is disableDvar; if (dvarFlags & 1) is enableDvar; if (dvarFlags & 4) is showDvar; if (dvarFlags & 8) is hideDvar; if (dvarFlags & 16) is focusDvar. TODO
-    int dvarFlags;
+    const char *onDvar;
+    DvarFlag_t dvarFlags;
     snd_alias_list_t *focusSound;
     float feeder;
     int cursorPos;
@@ -594,18 +602,22 @@ typedef struct MenuDef_t
 } MenuDef_t;
 
 extern const char *g_MenuOperations[NUM_OPERATIONS];
-extern KeyWord_t g_MenuItemTypes[];
-extern KeyWord_t g_MenuItemAlign[];
-extern KeyWord_t g_WindowBorderType[];
-extern KeyWord_t g_WindowStyle[];
+
+extern KeyWord_t g_ItemType[];
+extern KeyWord_t g_ItemAlign[];
 extern KeyWord_t g_ItemMSGWindowMode[];
 extern KeyWord_t g_ItemDefAlign[];
+extern KeyWord_t g_ItemFontType[];
+extern KeyWord_t g_ItemTextStyle[];
+
+extern KeyWord_t g_WindowBorderType[];
+extern KeyWord_t g_WindowStyle[];
+extern KeyWord_t g_WindowOwnerdrawType[];
+
 extern KeyWord_t g_ListBoxElementType[];
 extern KeyWord_t g_ListBoxFeeder[];
-extern KeyWord_t g_ItemFontType[];
-extern KeyWord_t g_ItemOwnerdrawType[];
+
 extern KeyWord_t g_RectAlignHorizontal[];
 extern KeyWord_t g_RectAlignVertical[];
-extern KeyWord_t g_ItemTextStyle[];
 /* No such kind of asset in ANY default fastfile but I want to left it here. */
 /*#define XASSET_TYPE_MENU (21)*/
