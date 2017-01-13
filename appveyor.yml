@@ -1,7 +1,8 @@
 version: 1.0.{build}
 before_build:
 - ps: >-
-    echo Installing MinGW
+    Write-Host "Setting up MinGW environment:"
+    Write-Host "    Downloading MinGW..."
 
     mkdir mingw
     
@@ -29,122 +30,141 @@ before_build:
     
     curl -o mingw/gettext.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gettext/gettext-0.18.3.1-1/gettext-0.18.3.1-1-mingw32-dll.tar.lzma
     
+    Write-Host "    Downloading gcc..."
+
     curl -o mingw/gcc-core-bin.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-bin.tar.lzma
     
     curl -o mingw/gcc-core-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-dev.tar.lzma
     
     curl -o mingw/gcc-core-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-dll.tar.lzma
     
+    Write-Host "    Downloading mingw32-make..."
+
     curl -o mingw/mingw32-make.tar.gz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/make/mingw32-make-3.81-2/mingw32-make-3.81-2.tar.gz
     
+    Write-Host "    Downloading g++..."
+
     curl -o mingw/gcc-c++-bin.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-bin.tar.lzma
 
     curl -o mingw/gcc-c++-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-dev.tar.lzma
 
     curl -o mingw/gcc-c++-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-dll.tar.lzma
 
+    Write-Host "    Downloading pexports..."
+
+    curl -o mingw/pexports.tar.xz "http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/pexports/pexports-0.47/pexports-0.47-mingw32-bin.tar.xz"
+
+    Write-Host "    Donwloading NASM..."
+
+    curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
 
     cd mingw
 
-    7z x binutils.tar.xz
-    
-    7z x binutils.tar
-    
-    7z x mingw-runtime-dev.tar.xz
-    
-    7z x mingw-runtime-dev.tar
-    
-    7z x mingw-runtime-dll.tar.xz
-    
-    7z x mingw-runtime-dll.tar
-    
-    7z x w32api.tar.xz
-    
-    7z x w32api.tar
-    
-    7z x mpc.tar.xz
-    
-    7z x mpc.tar
-    
-    7z x mpfr.tar.lzma
-    
-    7z x mpfr.tar
-    
-    7z x gmp.tar.lzma
-    
-    7z x gmp.tar
-    
-    7z x pthreads-dev.tar.lzma
-    
-    7z x pthreads-dev.tar
-    
-    7z x pthreads-dll.tar.lzma
-    
-    7z x pthreads-dll.tar
-    
-    7z x libiconv.tar.lzma
-    
-    7z x libiconv.tar
-    
-    7z x zlib.tar.lzma
-    
-    7z x zlib.tar
-    
-    7z x gettext.tar.lzma
-    
-    7z x gettext.tar
-    
-    7z x gcc-core-bin.tar.lzma
-    
-    7z x gcc-core-bin.tar
-    
-    7z x gcc-core-dev.tar.lzma
-    
-    7z x gcc-core-dev.tar
-    
-    7z x gcc-core-dll.tar.lzma
-    
-    7z x gcc-core-dll.tar
-    
-    7z x mingw32-make.tar.gz
-    
-    7z x mingw32-make.tar
+    Write-Host "    Installing MinGW..."
 
-    7z x gcc-c++-bin.tar.lzma
+    7z x binutils.tar.xz | Out-Null
 
-    7z x gcc-c++-bin.tar
+    7z x binutils.tar | Out-Null
+    
+    7z x mingw-runtime-dev.tar.xz | Out-Null
+    
+    7z x mingw-runtime-dev.tar | Out-Null
+    
+    7z x mingw-runtime-dll.tar.xz | Out-Null
+    
+    7z x mingw-runtime-dll.tar | Out-Null
+    
+    7z x w32api.tar.xz | Out-Null
+    
+    7z x w32api.tar | Out-Null
+    
+    7z x mpc.tar.xz | Out-Null
+    
+    7z x mpc.tar | Out-Null
+    
+    7z x mpfr.tar.lzma | Out-Null
+    
+    7z x mpfr.tar | Out-Null
+    
+    7z x gmp.tar.lzma | Out-Null
+    
+    7z x gmp.tar | Out-Null
+    
+    7z x pthreads-dev.tar.lzma | Out-Null
+    
+    7z x pthreads-dev.tar | Out-Null
+    
+    7z x pthreads-dll.tar.lzma | Out-Null
+    
+    7z x pthreads-dll.tar | Out-Null
+    
+    7z x libiconv.tar.lzma | Out-Null
+    
+    7z x libiconv.tar | Out-Null
+    
+    7z x zlib.tar.lzma | Out-Null
+    
+    7z x zlib.tar | Out-Null
+    
+    7z x gettext.tar.lzma | Out-Null
+    
+    7z x gettext.tar | Out-Null
 
-    7z x gcc-c++-dev.tar.lzma
+    Write-Host "    Installing gcc..."
+    
+    7z x gcc-core-bin.tar.lzma | Out-Null
+    
+    7z x gcc-core-bin.tar | Out-Null
+    
+    7z x gcc-core-dev.tar.lzma | Out-Null
+    
+    7z x gcc-core-dev.tar | Out-Null
+    
+    7z x gcc-core-dll.tar.lzma | Out-Null
+    
+    7z x gcc-core-dll.tar | Out-Null
 
-    7z x gcc-c++-dev.tar
+    Write-Host "    Installing mingw32-make..."
+    
+    7z x mingw32-make.tar.gz | Out-Null
+    
+    7z x mingw32-make.tar | Out-Null
 
-    7z x gcc-c++-dll.tar.lzma
+    Write-Host "    Installing g++..."
+    
+    7z x gcc-c++-bin.tar.lzma | Out-Null
+    
+    7z x gcc-c++-bin.tar | Out-Null
+    
+    7z x gcc-c++-dev.tar.lzma | Out-Null
+    
+    7z x gcc-c++-dev.tar | Out-Null
+    
+    7z x gcc-c++-dll.tar.lzma | Out-Null
+    
+    7z x gcc-c++-dll.tar | Out-Null
 
-    7z x gcc-c++-dll.tar
+    Write-Host "    Installing pexports..."
 
-    cd ..
-
-build_script:
-- ps: >-
-    curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
-
-    .\nasminst.exe /S
-
-    curl -o xz.7z "http://tukaani.org/xz/xz-5.2.1-windows.7z"
-
-    curl -o pexports.tar.xz "http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/pexports/pexports-0.47/pexports-0.47-mingw32-bin.tar.xz"
-
-    7z x xz.7z
-
-    ./bin_x86-64/xz.exe -d pexports.tar.xz
+    7z x pexports.tar.xz
 
     7z x pexports.tar
 
-    ls
+    cd ..
 
-    ls $pwd/bin
+    Write-Host "    Installing NASM..."
+
+    .\nasminst.exe /S
+
+    Write-Host "Setting up environment variables..."
 
     [Environment]::SetEnvironmentVariable("PATH",  "$pwd\mingw\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
+
+build_script:
+- ps: >-
+    ls
+
+    ls $pwd/mingw/bin
     
     cd src/tomcrypt
 
@@ -156,7 +176,7 @@ build_script:
     
     cd ../..
 
-    mingw32-make.exe win32
+    cmd.exe /c "mingw32-make.exe win32"
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 artifacts: 
