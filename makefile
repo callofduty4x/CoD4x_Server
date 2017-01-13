@@ -30,7 +30,7 @@ windows:
 
 linux:
 	@echo [Linux] Building specific files...
-	cd bin && \
+	@cd bin && \
 	$(CC) $(CFLAGS) -D _GNU_SOURCE -mtune=nocona $(CLIBS) ../src/unix/sys_unix.c ../src/unix/sys_linux.c ../src/unix/elf32_parser.c ../src/unix/sys_cod4linker_linux.c ../src/unix/sys_con_tty.c
 
 common_win: 
@@ -40,7 +40,7 @@ common_win:
 
 common_linux: 
 	@echo [Linux] Building common code...
-	cd bin && \
+	@cd bin && \
 	$(CC) $(CFLAGS) -D COD4X18UPDATE -D _GNU_SOURCE -march=nocona ../src/*.c ../src/xassets/*.c
 
 common_updateable_win:
@@ -50,7 +50,7 @@ common_updateable_win:
 
 common_updateable_linux:
 	@echo [Linux] Building self-updateable common code...
-	cd bin && \
+	@cd bin && \
 	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -march=nocona ../src/*.c ../src/xassets/*.c
 
 zlib_win:
@@ -60,7 +60,7 @@ zlib_win:
 
 zlib_linux:
 	@echo [Linux] Building ZLib...
-	cd bin && \
+	@cd bin && \
 	$(CC) $(CFLAGS) -D _GNU_SOURCE -mtune=nocona ../src/zlib/*.c
 
 nasm_win:
@@ -79,17 +79,17 @@ nasm_win:
 
 nasm_linux:
 	@echo [Linux] Building NASM code...
-	$(NASM) -f elf src/qcommon_hooks.asm    -o bin/qcommon_hooks.o
-	$(NASM) -f elf src/cmd_hooks.asm        -o bin/cmd_hooks.o
-	$(NASM) -f elf src/filesystem_hooks.asm -o bin/filesystem_hooks.o
-	$(NASM) -f elf src/misc_hooks.asm       -o bin/misc_hooks.o
-	$(NASM) -f elf src/g_sv_hooks.asm       -o bin/g_sv_hooks.o
-	$(NASM) -f elf src/xassets_hooks.asm    -o bin/xassets_hooks.o
-	$(NASM) -f elf src/trace_hooks.asm      -o bin/trace_hooks.o
-	$(NASM) -f elf src/scr_vm_hooks.asm     -o bin/scr_vm_hooks.o	
-	$(NASM) -f elf src/server_hooks.asm     -o bin/server_hooks.o
-	$(NASM) -f elf src/msg_hooks.asm        -o bin/msg_hooks.o
-	$(NASM) -f elf src/pluginexports.asm    -o bin/pluginexports.o
+	@$(NASM) -f elf src/qcommon_hooks.asm    -o bin/qcommon_hooks.o
+	@$(NASM) -f elf src/cmd_hooks.asm        -o bin/cmd_hooks.o
+	@$(NASM) -f elf src/filesystem_hooks.asm -o bin/filesystem_hooks.o
+	@$(NASM) -f elf src/misc_hooks.asm       -o bin/misc_hooks.o
+	@$(NASM) -f elf src/g_sv_hooks.asm       -o bin/g_sv_hooks.o
+	@$(NASM) -f elf src/xassets_hooks.asm    -o bin/xassets_hooks.o
+	@$(NASM) -f elf src/trace_hooks.asm      -o bin/trace_hooks.o
+	@$(NASM) -f elf src/scr_vm_hooks.asm     -o bin/scr_vm_hooks.o	
+	@$(NASM) -f elf src/server_hooks.asm     -o bin/server_hooks.o
+	@$(NASM) -f elf src/msg_hooks.asm        -o bin/msg_hooks.o
+	@$(NASM) -f elf src/pluginexports.asm    -o bin/pluginexports.o
 
 $(COD4XBIN).exe:
 	@echo [Windows] Linking binary...
@@ -97,7 +97,7 @@ $(COD4XBIN).exe:
 
 $(COD4XBIN).elf:
 	@echo [Linux] Linking binary...
-	$(CC) $(LINUX_LFLAGS) -o bin/$(COD4XBIN) bin/*.o $(LINUX_LLIBS)
+	@$(CC) $(LINUX_LFLAGS) -o bin/$(COD4XBIN) bin/*.o $(LINUX_LLIBS)
 
 
 pexports:
