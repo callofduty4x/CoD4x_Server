@@ -2,32 +2,31 @@ CC=gcc
 CLIBS=-I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath
 CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer -c
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows
-WIN_LLIBS=-Llib\ -ltomcrypt_win32 -lmbedtls_win32 -lm -lws2_32 -lwsock32 -liphlpapi -lgdi32 -mwindows -lwinmm -static-libgcc -static -lstdc++
+WIN_LLIBS=-Llib/ -ltomcrypt_win32 -lmbedtls_win32 -lm -lws2_32 -lwsock32 -liphlpapi -lgdi32 -mwindows -lwinmm -static-libgcc -static -lstdc++
 LINUX_LFLAGS=-m32 -static-libgcc -rdynamic -Tlinkerscript.ld
 LINUX_LLIBS=-L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
 NASM=nasm
 COD4XBIN=cod4x18_dedrun
 
 all:
-	@echo Please select 'makefile.*' instead of this one.
+	@echo Please specify 'win32', 'win32_dev', 'linux32' or 'linux32_dev' recipy.
 
-updateable_exe: windows zlib_win nasm_win common_updateable_win $(COD4XBIN).exe pexports clean_win
+win32: windows zlib_win nasm_win common_updateable_win $(COD4XBIN).exe pexports clean_win
 	@echo [Windows] Updateable PE built successfully.
 
-exe: windows zlib_win nasm_win common_win $(COD4XBIN).exe pexports clean_win
+win32_dev: windows zlib_win nasm_win common_win $(COD4XBIN).exe pexports clean_win
 	@echo [Windows] Developer PE built successfully.
 
-updateable_elf: linux zlib_linux nasm_linux common_updateable_linux $(COD4XBIN).elf clean_linux
+linux32: linux zlib_linux nasm_linux common_updateable_linux $(COD4XBIN).elf clean_linux
 	@echo [Linux] Updateable ELF built successfully.
 
-elf: linux zlib_linux nasm_linux common_linux $(COD4XBIN).elf clean_linux
+linux32_dev: linux zlib_linux nasm_linux common_linux $(COD4XBIN).elf clean_linux
 	@echo [Linux] Developer ELF built successfully.
 
 windows:
 	@echo [Windows] Building specific files...
-	@cd bin
+	@cd bin && \
 	$(CC) $(CFLAGS) -D WINVER=0x501 -march=nocona $(CLIBS) ..\src\win32\*.c
-	@cd ..
 
 linux:
 	@echo [Linux] Building specific files...
@@ -36,9 +35,8 @@ linux:
 
 common_win: 
 	@echo [Windows] Building common code...
-	@cd bin
+	@cd bin && \
 	$(CC) $(CFLAGS) -D COD4X18UPDATE -D WINVER=0x501 -march=nocona ..\src\*.c ..\src\xassets\*.c
-	@cd ..
 
 common_linux: 
 	@echo [Linux] Building common code...
@@ -47,9 +45,8 @@ common_linux:
 
 common_updateable_win:
 	@echo [Windows] Building self-updateable common code...
-	@cd bin
+	@cd bin && \
 	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D WINVER=0x501 -march=nocona ..\src\*.c ..\src\xassets\*.c
-	@cd ..
 
 common_updateable_linux:
 	@echo [Linux] Building self-updateable common code...
@@ -58,9 +55,8 @@ common_updateable_linux:
 
 zlib_win:
 	@echo [Windows] Building ZLib...
-	@cd bin
+	@cd bin && \
 	$(CC) $(CFLAGS) -D WINVER=0x501 -mtune=nocona ..\src\zlib\*.c
-	@cd ..
 
 zlib_linux:
 	@echo [Linux] Building ZLib...
@@ -69,17 +65,17 @@ zlib_linux:
 
 nasm_win:
 	@echo [Windows] Building NASM code...
-	$(NASM) -f coff src/qcommon_hooks.asm         --prefix _ -o bin/qcommon_hooks.o
-	$(NASM) -f coff src/cmd_hooks.asm             --prefix _ -o bin/cmd_hooks.o
-	$(NASM) -f coff src/filesystem_hooks.asm      --prefix _ -o bin/filesystem_hooks.o
-	$(NASM) -f coff src/misc_hooks.asm            --prefix _ -o bin/misc_hooks.o
-	$(NASM) -f coff src/g_sv_hooks.asm            --prefix _ -o bin/g_sv_hooks.o
-	$(NASM) -f coff src/xassets_hooks.asm         --prefix _ -o bin/xassets_hooks.o
-	$(NASM) -f coff src/trace_hooks.asm           --prefix _ -o bin/trace_hooks.o
-	$(NASM) -f coff src/scr_vm_hooks.asm          --prefix _ -o bin/scr_vm_hooks.o	
-	$(NASM) -f coff src/server_hooks.asm          --prefix _ -o bin/server_hooks.o
-	$(NASM) -f coff src/msg_hooks.asm             --prefix _ -o bin/msg_hooks.o
-	$(NASM) -f coff src/pluginexports.asm -dWin32 --prefix _ -o bin/pluginexports.o
+	@$(NASM) -f coff src/qcommon_hooks.asm         --prefix _ -o bin/qcommon_hooks.o
+	@$(NASM) -f coff src/cmd_hooks.asm             --prefix _ -o bin/cmd_hooks.o
+	@$(NASM) -f coff src/filesystem_hooks.asm      --prefix _ -o bin/filesystem_hooks.o
+	@$(NASM) -f coff src/misc_hooks.asm            --prefix _ -o bin/misc_hooks.o
+	@$(NASM) -f coff src/g_sv_hooks.asm            --prefix _ -o bin/g_sv_hooks.o
+	@$(NASM) -f coff src/xassets_hooks.asm         --prefix _ -o bin/xassets_hooks.o
+	@$(NASM) -f coff src/trace_hooks.asm           --prefix _ -o bin/trace_hooks.o
+	@$(NASM) -f coff src/scr_vm_hooks.asm          --prefix _ -o bin/scr_vm_hooks.o	
+	@$(NASM) -f coff src/server_hooks.asm          --prefix _ -o bin/server_hooks.o
+	@$(NASM) -f coff src/msg_hooks.asm             --prefix _ -o bin/msg_hooks.o
+	@$(NASM) -f coff src/pluginexports.asm -dWin32 --prefix _ -o bin/pluginexports.o
 
 nasm_linux:
 	@echo [Linux] Building NASM code...
@@ -97,7 +93,7 @@ nasm_linux:
 
 $(COD4XBIN).exe:
 	@echo [Windows] Linking binary...
-	$(CC) $(WIN_LFLAGS) -o bin\$@ bin\*.o src\win32\win_cod4.res $(WIN_LLIBS)
+	@$(CC) $(WIN_LFLAGS) -o bin/$@ bin/*.o src/win32/win_cod4.res $(WIN_LLIBS)
 
 $(COD4XBIN).elf:
 	@echo [Linux] Linking binary...
@@ -106,16 +102,14 @@ $(COD4XBIN).elf:
 
 pexports:
 	@echo [Windows] Building plugin exports library...
-	@cd bin
-	pexports $(COD4XBIN).exe > $(COD4XBIN).def
-	dlltool -D $(COD4XBIN).exe -d $(COD4XBIN).def -l ..\plugins\libcom_plugin.a
-	@cd ..
+	@pexports bin/$(COD4XBIN).exe > bin/$(COD4XBIN).def
+	@cd bin && \
+	dlltool -D $(COD4XBIN).exe -d $(COD4XBIN).def -l ../plugins/libcom_plugin.a
 
 clean_win:
 	@echo [Windows] Cleaning up...
-	@cd bin
+	@cd bin && \
 	del *.o
-	@cd ..
 
 clean_linux:
 	@echo [Linux] Cleaning up...

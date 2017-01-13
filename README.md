@@ -28,11 +28,13 @@ Hint: you probably want to run the server on a separate user. Please don't run t
 A more detailed server tutorial is available on [our wiki](https://github.com/D4edalus/CoD4x_Server/wiki/Server-setup).
 [Also read about new banlists here](https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes)
 
-## Compiling
+## Compiling (Linux)
 To compile Cod4X from source you require the following tools:
-- nasm
-- paxctl (not needed for Windows)
-- gcc on Linux or mingw32 on Windows
+
+- NASM
+- paxctl
+- gcc
+- make
 
 Debian/Ubuntu 32-bit:
 ```
@@ -56,23 +58,31 @@ Arch Linux 32-bit:
 yaourt -S nasm paxctl gcc-multilib make
 ```
 
-First enter `src/tomcrypt`, and run `./compile_linux.sh`. Then go to `src/mbedtls`, and run `make`.
+First enter `/src/tomcrypt`, and run `./compile_linux.sh`. Then go to `/src/mbedtls`, and run `make`.
 
 Now compile the server:
 
-Linux:
 ```
-make -f makefile.linux32
-```
-
-Windows:
-```
-nmake -f makefile.win32
+make linux32
 ```
 
-If compilation was successful the binary will be placed in the `bin/` folder.
+If compilation was successful the binary will be placed in the `/bin/` folder.
 
-If you developing something right now, please update your build script to use makefiles instead of old build scripts (.sh, .cmd) as it will be removed from repo soon.
+## Compiling (Windows)
+To compile Cod4X from source you require the following tools:
+
+- [NASM](http://www.nasm.us/pub/nasm/releasebuilds/?C=M;O=D)
+- [MinGW](http://www.mingw.org/): 'gcc' and 'mingw32-make'
+
+First enter `/src/tomcrypt`, and run `compile_win32.cmd`. Then go to `/src/mbedtls`, and run `build.cmd`.
+
+Now compile the server:
+
+```
+mingw32-make win32
+```
+
+If compilation was successful the binary will be placed in the `/bin/` folder.
 
 ## Contributing
 Cod4X is licensed under the AGPL3 license. We welcome anybody to fork this project and submit a pull request.
