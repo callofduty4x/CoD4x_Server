@@ -768,7 +768,7 @@ static void extract_menu_fields(fileHandle_t f, const MenuDef_t *m)
 }
 
 /* Extract ItemDef's window properties. */
-static void extract_menu_item_window(fileHandle_t f, const WindowDef_t *w, const WindowDef_t *parent)
+static void extract_menu_item_window(fileHandle_t f, const WindowDef_t *w)
 {
     /* Ignored: origin. */
     WRITE_ITEMDEF_FIELD_STRING("name", w->name);
@@ -869,11 +869,11 @@ static int is_editField_item(const ItemDef_t *i)
 }
 
 /* Extract ItemDef_t prorerties. */
-static void extract_menu_item(fileHandle_t f, const ItemDef_t *i, const MenuDef_t *m)
+static void extract_menu_item(fileHandle_t f, const ItemDef_t *i)
 {
     ItemKeyHandler_t *key = i->onKey;
     char *onDvarString;
-    extract_menu_item_window(f, &i->window, &m->window);
+    extract_menu_item_window(f, &i->window);
     /* i->textRect. What is it. I can't remember but I know there's a way to move text within itemdef. */
     WRITE_ITEMDEF_FIELD_KEYWORD("type", g_ItemType, i->type);
     /* i->dataType - same as type. Shouldn't be extracted here? */
@@ -962,7 +962,7 @@ static void extract_menu(fileHandle_t f, MenuDef_t *asset)
         /* Write itemdef header. */
         FS_Write("        itemDef\n        {\n", 26, f);
         /* Write itemdef fields. */
-        extract_menu_item(f, asset->items[i], asset);
+        extract_menu_item(f, asset->items[i]);
         /* Write itemdef footer. */
         FS_Write("        }\n", 10, f);
     }
