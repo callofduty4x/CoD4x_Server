@@ -748,9 +748,6 @@ void DB_BuildOverallocatedXAssetList(char* configstring, int len)
 {
     int i;
     char cstring[64];
-    int countlist[NumXAssets];
-
-    DB_CountXAssets(countlist, sizeof(countlist), qtrue);
 
     configstring[0] = '\0';
 
@@ -761,17 +758,17 @@ void DB_BuildOverallocatedXAssetList(char* configstring, int len)
             continue;
         }
 
-        if(DB_GetXAssetStdCount(i) >= countlist[i])
+		if(DB_XAssetPoolSize[i] <= DB_GetXAssetStdCount(i))
         {
             continue;
         }
-
+/*
         if(countlist[i] < 1)
         {
             continue;
         }
-
-        Com_sprintf(cstring, sizeof(cstring), "%s=%d ", DB_GetXAssetTypeName[i], countlist[i]);
+*/
+        Com_sprintf(cstring, sizeof(cstring), "%s=%d ", DB_GetXAssetTypeName[i], DB_XAssetPoolSize[i]);
         Q_strcat(configstring, len, cstring);
     }
 
