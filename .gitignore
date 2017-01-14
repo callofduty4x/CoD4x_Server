@@ -43,6 +43,7 @@ CoD4x_Server.creator
 CoD4x_Server.files
 CoD4x_Server.includes
 build_win32_PE_nopause.cmd
+build_linux32_ELF_nopause.sh
 
 #fraggy: ignore .vscode
 .vscode/

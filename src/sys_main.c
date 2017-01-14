@@ -37,6 +37,7 @@
 #include "sec_crypto.h"
 #include "cmd.h"
 #include "sapi.h"
+#include "xassets/extractor.h"
 #include <libgen.h>
 #include <signal.h>
 #include <stdarg.h>
@@ -464,7 +465,7 @@ int Sys_Main(char* commandLine){
     Sys_ThreadMain();
 
     CON_Init();
-
+    extractor_init();
 /*    Sys_ImageFindConstant();   */
 
     Com_Init( commandLine );

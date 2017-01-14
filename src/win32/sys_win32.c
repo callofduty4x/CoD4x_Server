@@ -36,6 +36,7 @@
 #include <errno.h>
 #include <inttypes.h>
 #include <io.h>
+#include <Shlobj.h>
 
 void Sys_ShowErrorDialog(const char* functionName);
 
@@ -102,15 +103,10 @@ qboolean Sys_RandomBytes( byte *string, int len )
 Sys_Mkdir
 ==================
 */
-qboolean Sys_Mkdir( const char *path )
+qboolean Sys_Mkdir(const char *path)
 {
-
-	int result = _mkdir( path );
-
-	if( result != 0 && errno != EEXIST)
-		return qfalse;
-
-	return qtrue;
+    int result = SHCreateDirectoryExA(0, path, 0);
+    return result == ERROR_SUCCESS || result == ERROR_FILE_EXISTS || result == ERROR_ALREADY_EXISTS;
 }
 
 /*
@@ -548,6 +544,34 @@ char *Sys_Cwd( void ) {
 	return cwd;
 }
 
+/*
+==============
+Sys_Dirname
+==============
+*/
+const char *Sys_Dirname(const char *path)
+{
+	char dir[MAX_OSPATH] = {'\0'};
+    char *slash1 = 0;
+    char *slash2 = 0;
+    char *max = 0;
+	mvabuf;
+
+    strcpy(dir, path);
+    slash1 = strrchr(dir, '/');
+    slash2 = strrchr(dir, '\\');
+
+    if (slash1 && slash2)
+        max = slash1 < slash2 ? slash2 : slash1;
+    else if (slash1 && !slash2)
+        max = slash1;
+    else if (!slash1 && slash2)
+        max = slash2;
+        
+    if (max)
+        *max = '\0';
+	return va("%s", dir);
+}
 /*
 ==============
 Sys_PlatformInit
