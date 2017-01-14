@@ -549,7 +549,7 @@ char *Sys_Cwd( void ) {
 Sys_Dirname
 ==============
 */
-const char *Sys_Dirname(char *path)
+const char *Sys_Dirname(const char *path)
 {
 	char dir[MAX_OSPATH] = {'\0'};
     char *slash1 = 0;
