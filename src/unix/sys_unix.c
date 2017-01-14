@@ -550,6 +550,17 @@ void Sys_WaitForErrorConfirmation(const char* error)
 
 void* currentLibHandle = NULL;
 
+void Sys_LoadLibraryError(char* errormessage, int maxlen)
+{
+	const char* pterror = dlerror();
+	if(pterror == NULL)
+	{
+		Q_strncpyz(errormessage, "no error occurred while loading shared library", maxlen);
+		return;
+	}
+	Q_strncpy(errormessage, pterror, maxlen);
+}
+
 void* Sys_LoadLibrary(const char* dlfile)
 {
 	void* handle = dlopen(dlfile, RTLD_LAZY);

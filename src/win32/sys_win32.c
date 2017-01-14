@@ -594,6 +594,21 @@ void Sys_PlatformInit( void )
 
 HMODULE currentLibHandle = NULL;
 
+void Sys_LoadLibraryError(char* errormessage, int maxlen)
+{
+	DWORD lastError;
+
+	lastError = GetLastError();
+
+	if(lastError != 0)
+	{
+		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT), (LPSTR)errormessage, sizeof(maxlen) -1, NULL);
+	}else{
+		Q_strncpyz(errormessage, "an unknown error occurred while loading shared library", maxlen);
+	}
+}
+
+
 void* Sys_LoadLibrary(const char* dlfile)
 {
 	HMODULE handle = LoadLibraryA(dlfile);

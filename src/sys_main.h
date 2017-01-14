@@ -86,6 +86,7 @@ void Sys_SleepSec(int seconds);
 int Sys_Backtrace(void** buffer, int size);
 void Sys_EventLoop(void);
 uint32_t Sys_MillisecondsRaw();
+void Sys_LoadLibraryError(char* errormessage, int maxlen);
 void* Sys_LoadLibrary(const char* dlfile);
 void Sys_CloseLibrary(void* dlhandle);
 void* Sys_GetProcedure(const char* procname);

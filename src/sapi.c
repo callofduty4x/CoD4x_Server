@@ -502,6 +502,7 @@ void SV_GetSS_f();
 
 void SV_InitSApi()
 {
+	char errormsg[1024];
 	void* hmodule;
 	imports_t exports;
 	exports.Com_Printf = Com_Printf;
@@ -532,7 +533,8 @@ void SV_InitSApi()
 	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
 	if(hmodule == NULL)
 	{
-		Com_PrintError("steam_api.dll not found. Steam is not going to work.\n");
+		Sys_LoadLibraryError(errormsg, sizeof(errormsg));
+		Com_PrintError("steam_api" DLL_EXT " not found or it was not possible to load. Error is: %s. Steam is not going to work.\n", errormsg);
 		return;
 	}
 	Init = Sys_GetProcedure("Init");
