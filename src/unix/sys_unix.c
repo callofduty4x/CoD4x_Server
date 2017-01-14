@@ -109,9 +109,15 @@ void Sys_ReplaceProcess( char *cmdline )
 Sys_Dirname
 ==================
 */
-const char *Sys_Dirname( char *path )
+/* Not changes passed path. */
+const char *Sys_Dirname(const char *path)
 {
-	return dirname( path );
+	char dir[MAX_OSPATH] = {'\0'};
+	mvabuf;
+
+	strncpy(dir, path, MAX_OSPATH);
+	dirname(dir);
+	return va("%s", dir);
 }
 
 

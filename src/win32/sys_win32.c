@@ -551,10 +551,11 @@ Sys_Dirname
 */
 const char *Sys_Dirname(char *path)
 {
-    static char dir[MAX_OSPATH];
+	char dir[MAX_OSPATH] = {'\0'};
     char *slash1 = 0;
     char *slash2 = 0;
     char *max = 0;
+	mvabuf;
 
     strcpy(dir, path);
     slash1 = strrchr(dir, '/');
@@ -569,7 +570,7 @@ const char *Sys_Dirname(char *path)
         
     if (max)
         *max = '\0';
-    return dir;
+	return va("%s", dir);
 }
 /*
 ==============

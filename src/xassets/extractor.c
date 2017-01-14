@@ -976,7 +976,7 @@ static void extract_menu(fileHandle_t f, MenuDef_t *asset)
 static void extract_menufile(const void *header)
 {
     Menufile_t *asset = (Menufile_t *)header;
-    char subpath[128] = {'\n'};
+    char subpath[128] = {'\0'};
     fileHandle_t text_menufile;
     fileHandle_t f;
     char text_asset_name[MAX_OSPATH] = {'\0'};
@@ -1117,7 +1117,7 @@ void Cmd_ExtractAsset()
     /* First check if all assets requested. */
     if (!strcmp(type, "all"))
     {
-        Com_Printf("Output directory: './%s%s/'\n", g_savePath, g_zone_name);
+        Com_Printf("Output directory: '%s%s/'\n", g_savePath, g_zone_name);
         /* Do all assets. */
         for (i = 0; i < 33; ++i)
         {

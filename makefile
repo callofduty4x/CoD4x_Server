@@ -23,10 +23,10 @@ win32: windows zlib_win nasm_win common_updateable_win $(COD4XBIN).exe pexports 
 win32_dev: windows zlib_win nasm_win common_win $(COD4XBIN).exe pexports clean_win
 	@echo [Windows] Developer PE built successfully.
 
-linux32: linux zlib_linux nasm_linux common_updateable_linux $(COD4XBIN).elf clean_linux
+linux32: linux zlib_linux nasm_linux common_updateable_linux $(COD4XBIN).elf clean_linux do_paxctl
 	@echo [Linux] Updateable ELF built successfully.
 
-linux32_dev: linux zlib_linux nasm_linux common_linux $(COD4XBIN).elf clean_linux
+linux32_dev: linux zlib_linux nasm_linux common_linux $(COD4XBIN).elf clean_linux do_paxctl
 	@echo [Linux] Developer ELF built successfully.
 
 windows:
@@ -119,5 +119,8 @@ clean_win:
 
 clean_linux:
 	@echo [Linux] Cleaning up...
-	@$(RM) bin/*.o
-# Travis, are you okay?
+	@rm bin/*.o
+
+do_paxctl:
+	@/sbin/paxctl -c ./bin/$(COD4XBIN)
+	@/sbin/paxctl -em ./bin/$(COD4XBIN)
