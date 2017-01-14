@@ -30,7 +30,7 @@ script:
   - cd ../mbedtls
   - make
   - cd ../..
-  - ./build_updateable_elf.sh
+  - make linux32
 deploy:
   skip_cleanup: true
   provider: releases
