@@ -12,6 +12,7 @@
 #include "../qcommon_io.h"
 #include "../sys_main.h"
 #include "../filesystem.h"
+#include "../qcommon.h"
 /* Assets includes: */
 #include "rawfile.h"
 #include "localized_string.h"
@@ -195,7 +196,7 @@ static void extract_rawfile(const void *header)
         return;
     }
 
-    snprintf(output_path, MAX_OSPATH, "%s%s/%s", g_savePath, g_zone_name, asset->name);
+    snprintf(output_path, MAX_OSPATH, "%s%s/raw/%s", g_savePath, g_zone_name, asset->name);
     /* Mode must be "wb" because of \r\n doubling. */
     f = FS_SV_FOpenFileWrite(output_path);
     if (!f)
@@ -290,7 +291,7 @@ static void extract_localized_string(const void *header)
     }
     strncpy(prefix, asset->key, prefix_end - asset->key);
     /* Build output file path. */
-    snprintf(output_path, MAX_OSPATH, "%s%s/english/localizedstrings/%s.str", g_savePath, g_zone_name, prefix);
+    snprintf(output_path, MAX_OSPATH, "%s%s/raw/english/localizedstrings/%s.str", g_savePath, g_zone_name, prefix);
     /* Check if file already exist. */
     if (!FS_SV_FOpenFileRead(output_path, &f))
     {
@@ -329,14 +330,13 @@ static void extract_stringtable(const void *header)
     uint i;
     uint j;
 
-    snprintf(output_path, MAX_OSPATH, "%s%s/%s", g_savePath, g_zone_name, asset->name);
+    snprintf(output_path, MAX_OSPATH, "%s%s/raw/%s", g_savePath, g_zone_name, asset->name);
     f = FS_SV_FOpenFileWrite(output_path);
     if (!f)
     {
         Com_Printf("Can't open '%s'.\n", output_path);
         return;
     }
-    WRITE_EXTRACTOR_HEADER(f);
     /* Write out string table. */
     for (i = 0; i < asset->rows; ++i)
     {
@@ -501,9 +501,10 @@ static const char *action_optimize(const char *action)
 
 #define MENUDEF_INDENT "        "
 #define ITEMDEF_INDENT "            "
+#define MENU_KEY_INDENT "%-25s "
 /* MenuDef_t fields. */
 #define WRITE_MENU_FIELD(indent, args_format, ...) \
-    FS_Printf(f, indent "%-25s " args_format "\n", __VA_ARGS__)
+    FS_Printf(f, indent MENU_KEY_INDENT args_format "\n", __VA_ARGS__)
 
 
 #define WRITE_MENU_FIELD_COND(condition, indent, args_format, ...) \
@@ -528,6 +529,14 @@ static const char *action_optimize(const char *action)
         generate_expression_string(&(expression)) \
     )
 
+#define WRITE_MENUDEF_FIELD_VISIBLE(expression) \
+    do { \
+        if ((expression).entries_count) \
+            WRITE_MENU_FIELD(MENUDEF_INDENT, "when ( %s )", "visible", generate_expression_string(&(expression))); \
+        else \
+            WRITE_MENU_FIELD(MENUDEF_INDENT, "", "visible 0"); \
+    }while(0)
+
 #define WRITE_MENUDEF_FIELD_KEY(key_hndl) WRITE_MENU_FIELD_COND( (key_hndl), MENUDEF_INDENT, "\"%c\" { %s }", \
         "execKey", (key_hndl)->key, action_optimize((key_hndl)->action) \
     )
@@ -535,7 +544,7 @@ static const char *action_optimize(const char *action)
 
 #define WRITE_MENUDEF_FIELD_VEC4(str_key, vec4_val) \
     WRITE_MENU_FIELD_COND( \
-        ((vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3]), \
+        1, \
         MENUDEF_INDENT, \
         "%g %g %g %g", \
         (str_key), \
@@ -617,6 +626,14 @@ static const char *action_optimize(const char *action)
         "exp", (str_key), generate_expression_string(&(expression)) \
     )
 
+#define WRITE_ITEMDEF_FIELD_VISIBLE(expression) \
+    do { \
+        if ((expression).entries_count) \
+            WRITE_MENU_FIELD(ITEMDEF_INDENT, "when ( %s )", "visible", generate_expression_string(&(expression))); \
+        else \
+            WRITE_MENU_FIELD(ITEMDEF_INDENT, "", "visible 1"); \
+    }while(0)
+
 
 #define WRITE_ITEMDEF_FIELD_KEY(key_hndl) WRITE_MENU_FIELD_COND( (key_hndl), ITEMDEF_INDENT, "\"%c\" { %s }", \
         "execKey", (key_hndl)->key, action_optimize((key_hndl)->action) \
@@ -625,7 +642,7 @@ static const char *action_optimize(const char *action)
 
 #define WRITE_ITEMDEF_FIELD_VEC4(str_key, vec4_val) \
     WRITE_MENU_FIELD_COND( \
-        ((vec4_val)[0] || (vec4_val)[1] || (vec4_val)[2] || (vec4_val)[3]), \
+        1, \
         ITEMDEF_INDENT, \
         "%g %g %g %g", \
         (str_key), \
@@ -739,23 +756,24 @@ static void extract_menu_fields(fileHandle_t f, const MenuDef_t *m)
     WRITE_MENUDEF_FIELD_STRING("soundLoop", m->soundLoop);
     WRITE_MENUDEF_FIELD_VEC4("focusColor", m->focusColor);
     WRITE_MENUDEF_FIELD_VEC4("disableColor", m->disableColor);
-    WRITE_MENUDEF_FIELD_FLAG("outOfBoundsClick", m->window.staticFlags & WINDOW_FLAG_OUTOFBOUNDSCLICK);
-    WRITE_MENUDEF_FIELD_FLAG("popUp", m->window.staticFlags & WINDOW_FLAG_POPUP);
-    WRITE_MENUDEF_FIELD_FLAG("legacySplitScreenScale", m->window.staticFlags & WINDOW_FLAG_LEGACYSPLITSCREENSCALE);
-    WRITE_MENUDEF_FIELD_FLAG("hiddenDuringScope", m->window.staticFlags & WINDOW_FLAG_HIDDENDURINGSCOPE);
-    WRITE_MENUDEF_FIELD_FLAG("hiddenDuringFlashbang", m->window.staticFlags & WINDOW_FLAG_HIDDENDURINGFLASHBANG);
-    WRITE_MENUDEF_FIELD_FLAG("hiddenDuringUI", m->window.staticFlags & WINDOW_FLAG_HIDDENDURINGUI);
+    WRITE_MENUDEF_FIELD_FLAG("outofboundsclick", m->window.staticFlags & WINDOW_FLAG_OUTOFBOUNDSCLICK);
+    WRITE_MENUDEF_FIELD_FLAG("popup", m->window.staticFlags & WINDOW_FLAG_POPUP);
+    WRITE_MENUDEF_FIELD_FLAG("legacysplitscreenscale", m->window.staticFlags & WINDOW_FLAG_LEGACYSPLITSCREENSCALE);
+    WRITE_MENUDEF_FIELD_FLAG("hiddenduringscope", m->window.staticFlags & WINDOW_FLAG_HIDDENDURINGSCOPE);
+    WRITE_MENUDEF_FIELD_FLAG("hiddenduringflashbang", m->window.staticFlags & WINDOW_FLAG_HIDDENDURINGFLASHBANG);
+    WRITE_MENUDEF_FIELD_FLAG("hiddenduringui", m->window.staticFlags & WINDOW_FLAG_HIDDENDURINGUI);
     WRITE_MENUDEF_FIELD_EXPRESSION("rect X", m->rectXExp);
     WRITE_MENUDEF_FIELD_EXPRESSION("rect Y", m->rectYExp);
-    WRITE_MENUDEF_FIELD_EXPRESSION("visible when", m->visibleExp);
+    WRITE_MENUDEF_FIELD_VISIBLE(m->visibleExp);
 }
 
 /* Extract ItemDef's window properties. */
-static void extract_menu_item_window(fileHandle_t f, const WindowDef_t *w)
+static void extract_menu_item_window(fileHandle_t f, const WindowDef_t *w, const WindowDef_t *parent)
 {
     /* Ignored: origin. */
     WRITE_ITEMDEF_FIELD_STRING("name", w->name);
-    WRITE_ITEMDEF_FIELD_RECT("rect", w->rect);
+    /* For ItemDef we don't need full RECT values. */
+    WRITE_ITEMDEF_FIELD_RECT("rect", w->rectClient);
     WRITE_ITEMDEF_FIELD_STRING("group", w->group);
     WRITE_ITEMDEF_FIELD_KEYWORD("style", g_WindowStyle, w->style);
     WRITE_ITEMDEF_FIELD_KEYWORD("border", g_WindowBorderType, w->border);
@@ -803,17 +821,31 @@ static void extract_menu_item_editfield(fileHandle_t f, const EditFieldDef_t *ef
 /* Extract ItemDef's multilist properties. */
 static void extract_menu_item_multi(fileHandle_t f, const ItemDefData_t *idd)
 {
+    uint i;
     char *list_type = "dvarFloatList";
     if (idd->multi->isStrList == 1)
-            list_type = "dvarStrList";
+        list_type = "dvarStrList";
     
-    WRITE_MENU_FIELD_COND(idd->multi->count, ITEMDEF_INDENT, "%s", list_type, idd->enumDvarName);
+    if (idd->multi->count)
+    {
+        FS_Printf(f, ITEMDEF_INDENT MENU_KEY_INDENT "{ ", list_type);
+        for (i = 0; i < idd->multi->count; ++i)
+        {
+            if (idd->multi->isStrList == 1)
+                FS_Printf(f, "\"%s\", \"%s\"; ", idd->multi->stringValue[i], idd->multi->onDvarString[i]);
+            else
+                FS_Printf(f, "\"%s\" %g ", idd->multi->stringValue[i], idd->multi->onDvarFloat[i]);
+        }
+        FS_Printf(f, " }\n");
+    }
 }
 
 /* Extract ItemDef's dvarenum properties. */
+/* TODO. rework */
 static void extract_menu_item_dvarenum(fileHandle_t f, const ItemDefData_t *idd)
 {
     WRITE_MENU_FIELD_COND(idd->multi->count, ITEMDEF_INDENT, "%s", "dvarEnumList", idd->enumDvarName);
+    return;
 }
 
 static int is_editField_item(const ItemDef_t *i)
@@ -837,11 +869,11 @@ static int is_editField_item(const ItemDef_t *i)
 }
 
 /* Extract ItemDef_t prorerties. */
-static void extract_menu_item(fileHandle_t f, const ItemDef_t *i)
+static void extract_menu_item(fileHandle_t f, const ItemDef_t *i, const MenuDef_t *m)
 {
     ItemKeyHandler_t *key = i->onKey;
     char *onDvarString;
-    extract_menu_item_window(f, &i->window);
+    extract_menu_item_window(f, &i->window, &m->window);
     /* i->textRect. What is it. I can't remember but I know there's a way to move text within itemdef. */
     WRITE_ITEMDEF_FIELD_KEYWORD("type", g_ItemType, i->type);
     /* i->dataType - same as type. Shouldn't be extracted here? */
@@ -908,7 +940,7 @@ static void extract_menu_item(fileHandle_t f, const ItemDef_t *i)
     WRITE_ITEMDEF_FIELD_EXPRESSION("rect W", i->rectWExp);
     WRITE_ITEMDEF_FIELD_EXPRESSION("rect H", i->rectHExp);
     WRITE_ITEMDEF_FIELD_EXPRESSION("foreColor A", i->foreColorAExp);
-    WRITE_ITEMDEF_FIELD_EXPRESSION("visible", i->visibleExp);
+    WRITE_ITEMDEF_FIELD_VISIBLE(i->visibleExp);
     WRITE_ITEMDEF_FIELD_FLAG("decoration", i->window.staticFlags & WINDOW_FLAG_DECORATION);
     WRITE_ITEMDEF_FIELD_FLAG("autoWrapped", i->window.staticFlags & WINDOW_FLAG_AUTOWRAPPED);
     WRITE_ITEMDEF_FIELD_FLAG("horizontalScroll", i->window.staticFlags & WINDOW_FLAG_HORIZONTALSCROLL);
@@ -930,7 +962,7 @@ static void extract_menu(fileHandle_t f, MenuDef_t *asset)
         /* Write itemdef header. */
         FS_Write("        itemDef\n        {\n", 26, f);
         /* Write itemdef fields. */
-        extract_menu_item(f, asset->items[i]);
+        extract_menu_item(f, asset->items[i], asset);
         /* Write itemdef footer. */
         FS_Write("        }\n", 10, f);
     }
@@ -956,7 +988,7 @@ static void extract_menufile(const void *header)
     Com_Printf("\n");
     if (!strstr(asset->name, ".txt"))
     {
-        snprintf(output_path, MAX_OSPATH, "%s%s/%s", g_savePath, g_zone_name, asset->name);
+        snprintf(output_path, MAX_OSPATH, "%s%s/raw/%s", g_savePath, g_zone_name, asset->name);
         f = FS_SV_FOpenFileWrite(output_path);
         if (!f)
         {
@@ -978,7 +1010,7 @@ static void extract_menufile(const void *header)
     else
     {
         /* Generate .txt name for asset. */
-        snprintf(text_asset_name, MAX_OSPATH, "%s%s/%s", g_savePath, g_zone_name, asset->name);
+        snprintf(text_asset_name, MAX_OSPATH, "%s%s/raw/%s", g_savePath, g_zone_name, asset->name);
         text_menufile = FS_SV_FOpenFileWrite(text_asset_name);
         if (!text_menufile)
         {
@@ -992,7 +1024,7 @@ static void extract_menufile(const void *header)
         for (i = 0; i < asset->count; ++i)
         {
             
-            snprintf(output_path, MAX_OSPATH, "%s%s/%s/%s.menu", g_savePath, g_zone_name, subpath, asset->menus[i]->window.name);
+            snprintf(output_path, MAX_OSPATH, "%s%s/raw/%s/%s.menu", g_savePath, g_zone_name, subpath, asset->menus[i]->window.name);
             f = FS_SV_FOpenFileWrite(output_path);
             if (!f)
             {
@@ -1049,7 +1081,8 @@ void Cmd_ExtractAsset()
     {
     USAGE:
         Com_Printf("Usage:\n");
-        Com_Printf("  extract <ff> <type>\n");
+        Com_Printf("Server must be running in order to extract assets.\n");
+        Com_Printf("  %s <ff> <type>\n", Cmd_Argv(0));
         Com_Printf("    ff - Name of fastfile to look into, without extension.\n");
         Com_Printf("    type - Type of asset. Must be one of:\n");
         Com_Printf("           all\n");
@@ -1059,6 +1092,11 @@ void Cmd_ExtractAsset()
                 Com_Printf("           %s\n", g_ExtractorRoutines[i].name);
         }
         return;
+    }
+
+    if (!com_sv_running->boolean)
+    {
+        goto USAGE;
     }
 
     /* Find FastFile info. */
@@ -1124,6 +1162,7 @@ void add_extractor_console_commands()
 /* Definitions cleanup. */
 #undef MENUDEF_INDENT
 #undef ITEMDEF_INDENT
+#undef MENU_KEY_INDENT
 #undef WRITE_MENU_FIELD
 #undef WRITE_MENU_FIELD_COND
 #undef WRITE_MENUDEF_FIELD_FLAG

@@ -434,9 +434,9 @@ typedef struct EditFieldDef_t
 
 typedef struct MultiDef_t
 {
-    const char *dvarEnumList[32]; /* ITEM_TYPE_DVARENUM */
-    const char *dvarStrList[32];  /* ITEM_TYPE_MULTI */
-    float dvarFloatList[32];      /* ITEM_TYPE_MULTI */
+    const char *stringValue[32];
+    const char *onDvarString[32];
+    float onDvarFloat[32];
     uint count;
     int isStrList; /* 0 means dvarFloatList. 1 means dvarStrList. */
 } MultiDef_t;
@@ -510,7 +510,7 @@ typedef struct WindowDef_t
 {
     const char *name;
     RectDef_t rect;
-    RectDef_t origin;
+    RectDef_t rectClient;
     const char *group;
     WindowStyle_t style;
     WindowBorderType_t border;
