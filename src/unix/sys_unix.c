@@ -564,7 +564,7 @@ void Sys_LoadLibraryError(char* errormessage, int maxlen)
 		Q_strncpyz(errormessage, "no error occurred while loading shared library", maxlen);
 		return;
 	}
-	Q_strncpy(errormessage, pterror, maxlen);
+	Q_strncpyz(errormessage, pterror, maxlen);
 }
 
 void* Sys_LoadLibrary(const char* dlfile)
