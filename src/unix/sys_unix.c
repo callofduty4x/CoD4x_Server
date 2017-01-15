@@ -109,9 +109,15 @@ void Sys_ReplaceProcess( char *cmdline )
 Sys_Dirname
 ==================
 */
-const char *Sys_Dirname( char *path )
+/* Not changes passed path. */
+const char *Sys_Dirname(const char *path)
 {
-	return dirname( path );
+	char dir[MAX_OSPATH] = {'\0'};
+	mvabuf;
+
+	strncpy(dir, path, MAX_OSPATH);
+	dirname(dir);
+	return va("%s", dir);
 }
 
 
@@ -549,6 +555,17 @@ void Sys_WaitForErrorConfirmation(const char* error)
 }
 
 void* currentLibHandle = NULL;
+
+void Sys_LoadLibraryError(char* errormessage, int maxlen)
+{
+	const char* pterror = dlerror();
+	if(pterror == NULL)
+	{
+		Q_strncpyz(errormessage, "no error occurred while loading shared library", maxlen);
+		return;
+	}
+	Q_strncpyz(errormessage, pterror, maxlen);
+}
 
 void* Sys_LoadLibrary(const char* dlfile)
 {

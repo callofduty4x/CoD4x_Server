@@ -224,9 +224,10 @@ static void Auth_SetAdmin_f() {
     }
 
     name = SV_GetPlayerNameByHandle(Cmd_Argv(1));
-		steamid = SV_GetPlayerSteamIDByHandle(Cmd_Argv(1));
+	steamid = SV_GetPlayerSteamIDByHandle(Cmd_Argv(1));
 	if(steamid == 0)
 	{
+
 		Com_Printf("No such player with a valid SteamID found.\n");
 		return;
 	}

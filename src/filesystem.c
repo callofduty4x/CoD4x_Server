@@ -585,6 +585,7 @@ FS_CreatePath
 Creates any directories needed to store the given filename
 ============
 */
+/* TODO: Not creating nested directories on Windows. */
 qboolean FS_CreatePath (char *OSPath) {
 	char	*ofs;
 

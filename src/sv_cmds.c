@@ -316,6 +316,11 @@ uint64_t SV_GetPlayerSteamIDByHandle( const char* handle)
 	{
 		return cl.cl->steamid;
 	}
+	uint64_t sid = SV_SApiStringToID(handle);
+	if(sid > 0 && SV_SApiSteamIDIndividualSteamOnly(sid))
+	{
+		return sid;
+	}
 	return 0;
 }
 

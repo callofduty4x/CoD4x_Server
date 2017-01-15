@@ -53,7 +53,7 @@ const char *Sys_DefaultAppPath(void);
 //sys_unix.c
 qboolean Sys_RandomBytes( byte *string, int len );
 void Sys_DoStartProcess( char *cmdline );
-const char *Sys_Dirname( char *path );
+const char *Sys_Dirname(const char *path);
 char *Sys_Cwd( void );
 void Sys_InitCrashDumps();
 qboolean Sys_MemoryProtectWrite(void* startoffset, int len);
@@ -86,6 +86,7 @@ void Sys_SleepSec(int seconds);
 int Sys_Backtrace(void** buffer, int size);
 void Sys_EventLoop(void);
 uint32_t Sys_MillisecondsRaw();
+void Sys_LoadLibraryError(char* errormessage, int maxlen);
 void* Sys_LoadLibrary(const char* dlfile);
 void Sys_CloseLibrary(void* dlhandle);
 void* Sys_GetProcedure(const char* procname);

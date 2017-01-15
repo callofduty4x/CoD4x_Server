@@ -59,7 +59,7 @@ static int HTTP_DoBlockingQuery(const char *url, char* data, int *len)
     {
       stringlen = *len;
     }
-    ftRequest_t* r = Plugin_HTTP_Request(url, "POST", (byte*)data, stringlen, "ContentType: application/x-www-form-urlencoded; charset=utf-8\r\n");
+    ftRequest_t* r = Plugin_HTTP_Request(url, "POST", (byte*)data, stringlen, "Content-Type: application/x-www-form-urlencoded\r\n");
 
     if(r == NULL)
     {
