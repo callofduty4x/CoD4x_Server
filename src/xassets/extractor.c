@@ -1188,7 +1188,7 @@ void Cmd_ListAssets()
         ++assets[ff_contents->asset_list_data[i].type];
 
     Com_Printf("Contents of fastfile '%s':\n", ff);
-    for (i = 0; i < 32; ++i)
+    for (i = 0; i < 33; ++i)
     {
         if (assets[i])
             Com_Printf("Assets count for type '%s': %d\n", g_AssetNames[i], assets[i]);
