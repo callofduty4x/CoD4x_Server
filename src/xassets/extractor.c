@@ -1154,12 +1154,55 @@ void Cmd_ExtractAsset()
     g_zone_name = 0;
 }
 
+#define g_AssetNames ((char**)0x08274940)
+
+void Cmd_ListAssets()
+{
+    char *ff;
+    FastFileContents_t *ff_contents = 0;
+    int assets[33] = {0};
+    int i;
+
+    if (Cmd_Argc() != 2)
+    {
+        Com_Printf("List contents of fastfile.\n");
+        Com_Printf("Map fastfiles are ignored for now.\n");
+        Com_Printf("Usage:\n");
+        Com_Printf("  %s <fastfile_name>\n", Cmd_Argv(0));
+        return;
+    }
+
+    ff = Cmd_Argv(1);
+    for (i = 0; i < MAX_STORE_FASTFILES; ++i)
+    {
+        if (!strcmp(ff, g_FastFileAssetsTableInfo[i].name))
+            ff_contents = &g_FastFileAssetsTableInfo[i].content;
+    }
+    if (!ff_contents)
+    {
+        Com_Printf("Fastfile with name '%s' not loaded.\n", ff);
+        return;
+    }
+
+    for (i = 0; i < ff_contents->asset_list_count; ++i)
+        ++assets[ff_contents->asset_list_data[i].type];
+
+    Com_Printf("Contents of fastfile '%s':\n", ff);
+    for (i = 0; i < 33; ++i)
+    {
+        if (assets[i])
+            Com_Printf("Assets count for type '%s': %d\n", g_AssetNames[i], assets[i]);
+    }
+}
+
 void add_extractor_console_commands()
 {
     Cmd_AddCommand("extract", Cmd_ExtractAsset);
+    Cmd_AddCommand("assets", Cmd_ListAssets);
 }
 
 /* Definitions cleanup. */
+#undef g_AssetNames
 #undef MENUDEF_INDENT
 #undef ITEMDEF_INDENT
 #undef MENU_KEY_INDENT
