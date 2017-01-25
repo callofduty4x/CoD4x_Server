@@ -163,7 +163,7 @@ int serverBansCount = 0;
 
 #define MASTERSERVERSECRETLENGTH 64
 
-static netadr_t	master_adr[MAX_MASTER_SERVERS][2];
+static netadr_t	atvimaster;
 static char masterServerSecret[MASTERSERVERSECRETLENGTH +1];
 
 /*
@@ -761,7 +761,7 @@ __optimize3 __regparm1 void SVC_Status( netadr_t *from ) {
 		Info_SetValueForKey( infostring, "type", va("%i", sv_authorizemode->integer));
 
 	// add "demo" to the sv_keywords if restricted
-	if(NET_CompareBaseAdr(&master_adr[6][0], from))
+	if(NET_CompareBaseAdr(&atvimaster, from))
 	{
 		Info_SetValueForKey( infostring, "protocol", "6" );
 	}
@@ -2059,10 +2059,13 @@ typedef struct
 	byte message[2000];
 	int messagelen;
 	qboolean locked;
+	qboolean authoritative;
+	netadr_t* iplist;
+	int ipcount;
 }masterHeartbeatThreadOptions_t;
 
 
-void SV_HeartBeatMessageLoop(msg_t* msg)
+void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
 {
 	byte databuf[8192];
 	char stringline[1024];
@@ -2106,14 +2109,25 @@ void SV_HeartBeatMessageLoop(msg_t* msg)
 				if(ic == 1)
 				{
 					MSG_ReadString(&singlemsg, stringline, sizeof(stringline));
-					Q_strncpyz(svse.sysrestartmessage, stringline, sizeof(svse.sysrestartmessage));
+					if(authoritative)
+					{
+						Q_strncpyz(svse.sysrestartmessage, stringline, sizeof(svse.sysrestartmessage));
+					}else{
+						Com_Printf("Received restart message from masterserver which is not authoritative. Ignoring\n");
+					}
 				}
 				break;
 			case 3:
 				ic = MSG_ReadLong(&singlemsg);
 				if(ic == 1)
 				{
-					SV_SendServerCommand(NULL, "h \"^5Broadcast^7: %s\"\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+					MSG_ReadString(&singlemsg, stringline, sizeof(stringline));
+					if(authoritative)
+					{
+						SV_SendServerCommand(NULL, "h \"^5Broadcast^7: %s\"\n", stringline);
+					}else{
+						Com_Printf("Received broadcast message from masterserver which is not authoritative. Ignoring\n");
+					}
 				}
 				break;
 			default:
@@ -2124,7 +2138,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg)
 }
 
 
-void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen)
+void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen, qboolean authoritative)
 {
 	int l = 0;
 	byte response[16384];
@@ -2188,7 +2202,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
 				if(Q_stricmp(line, "masterHeartbeatResponse") == 0)
 				{
 					MSG_ReadLong(&msg); //MessageID maybe future use but placeholder here
-					SV_HeartBeatMessageLoop(&msg);
+					SV_HeartBeatMessageLoop(&msg, authoritative);
 				}else{
 					Com_Printf("Corrupted Masterserver response\n");
 				}
@@ -2212,9 +2226,9 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
 void* SV_SendHeartbeatThread(void* arg)
 {
 	masterHeartbeatThreadOptions_t* opts = arg;
-
-	int count, i;
-	netadr_t* iplist = NET_GetLocalAddressList(&count);
+	int count = opts->ipcount;
+	int i;
+	netadr_t* iplist = opts->iplist;
 	for(i = 0; i < count; ++i)
 	{
 		char adrstr[128];
@@ -2222,13 +2236,15 @@ void* SV_SendHeartbeatThread(void* arg)
 
 		if(iplist[i].type == NA_IP && opts->adr4.type == NA_IP && iplist[i].ip[0] != 127 && iplist[i].ip[0] < 224)
 		{
+			//IPv4
 			Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
 			NET_AdrToStringMT(&opts->adr4, adrstrdst, sizeof(adrstrdst)));
-			SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen);
+			SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
 		}else	if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe && iplist[i].ip6[0] > 0){
+			//IPv6
 			Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
 			NET_AdrToStringMT(&opts->adr6, adrstrdst, sizeof(adrstrdst)));
-			SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen);
+			SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
 		}
 	}
 	opts->locked = qfalse;
@@ -2247,6 +2263,154 @@ changes from empty to non-empty, and full to non-full,
 but not on every player enter or exit.
 ================
 */
+void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4, netadr_t* adr6, qboolean authoritative)
+{
+	msg_t msg;
+	char string[1024];
+	masterHeartbeatThreadOptions_t *opts = NULL;
+	masterHeartbeatThreadOptions_t options[8];
+	int i;
+	
+	if(adr4 == NULL || adr6 == NULL || message == NULL)
+	{
+		return;
+	}
+	for(i = 0; i < 8; ++i)
+	{
+		if(options[i].locked == qfalse)
+		{
+			opts = &options[i];
+			break;
+		}
+	}
+	if(opts == NULL)
+	{
+		return;
+	}
+	opts->locked = qtrue;
+
+	opts->authoritative = authoritative;
+	opts->adr4 = *adr4;
+	opts->adr6 = *adr6;
+	Com_sprintf(string, sizeof(string), "\xff\xff\xff\xffheartbeat %s", message);
+
+	MSG_Init(&msg, opts->message, sizeof(opts->message));
+	MSG_WriteString(&msg, string);
+
+	MSG_WriteShort(&msg, NET_GetHostPort());
+	MSG_WriteLong(&msg, psvs.masterserver_messageid);
+	++psvs.masterserver_messageid;
+
+	MSG_BeginWriteMessageLength(&msg); //Messagelength
+	MSG_WriteLong(&msg, 1); //Command sourceenginequery
+	SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
+	MSG_EndWriteMessageLength(&msg);
+
+	MSG_BeginWriteMessageLength(&msg); //Messagelength
+	MSG_WriteLong(&msg, 0); //EOF
+	MSG_EndWriteMessageLength(&msg);
+
+	opts->messagelen = msg.cursize;
+	opts->iplist = NET_GetLocalAddressList(&opts->ipcount);
+	threadid_t tinfo;
+	Sys_CreateNewThread(SV_SendHeartbeatThread, &tinfo, opts);
+
+}
+
+
+typedef struct
+{
+	netadr_t i4;
+	netadr_t i6;
+	qboolean authoritative; //Can send commands server executes. Like restart etc.
+	char name[64];
+}masterserver_t;
+
+typedef struct
+{
+	masterserver_t *servers;
+	int count;
+}masterservers_t;
+
+static masterservers_t	masterservers;
+
+void SV_MasterHeartbeatInit()
+{
+	char* file;
+	char* tok;
+	const char* name;
+	int i;
+	int res;
+	char line[1024];
+	int len = FS_SV_ReadFile( "masterservers.txt", (void**)&file );
+	if(len < 1)
+	{
+		Com_Printf("No masterservers found in file masterservers.txt\n");
+		return;
+	}
+	tok = strtok(file, "\n");
+	for(i = 0; tok; ++i)
+	{
+		tok = strtok(NULL, "\n");
+	}
+	masterservers.servers = Z_Malloc(i*sizeof(masterserver_t));
+	
+	tok = strtok(file, "\n");
+	for(i = 0; tok; ++i)
+	{
+		Q_strncpyz(line, tok, sizeof(line));
+		Q_strchrrepl(line, '\r', '\0');
+		Cmd_TokenizeString(line);
+		name = Cmd_Argv(0);
+		if(name[0] == '*')
+		{
+			masterservers.servers[i].authoritative = qtrue;
+			name++;
+		}
+		Q_strncpyz(masterservers.servers[i].name, name, sizeof(masterservers.servers[i].name));
+		Cmd_EndTokenizedString();
+		if(strlen(masterservers.servers[i].name) > 3)
+		{
+			Com_Printf("Resolving %s \n", masterservers.servers[i].name);
+			//NA_IPANY For broadcasting to all interfaces
+			res = NET_StringToAdr(masterservers.servers[i].name, &masterservers.servers[i].i4, NA_IP);				
+			if(res == 2)
+			{
+				masterservers.servers[i].i4.port = BigShort(PORT_MASTER);
+			}
+			masterservers.servers[i].i4.sock = 0;
+			if(res)
+			{
+				Com_Printf( "%s resolved to %s\n", masterservers.servers[i].name, NET_AdrToString(&masterservers.servers[i].i4));
+			}else{
+				Com_Printf( "Couldn't resolve(IPv4) %s\n", masterservers.servers[i].name);
+				masterservers.servers[i].i4.type = NA_DOWN;
+			}
+			res = NET_StringToAdr(masterservers.servers[i].name, &masterservers.servers[i].i6, NA_IP6);				
+			if(res == 2)
+			{
+				masterservers.servers[i].i6.port = BigShort(PORT_MASTER);
+			}
+			masterservers.servers[i].i6.sock = 0;
+			if(res)
+			{
+				Com_Printf( "%s resolved to %s\n", masterservers.servers[i].name, NET_AdrToString(&masterservers.servers[i].i6));
+			}else{
+				Com_Printf( "Couldn't resolve(IPv6) %s\n", masterservers.servers[i].name);
+				masterservers.servers[i].i6.type = NA_DOWN;
+			}
+			if(masterservers.servers[i].i6.type == NA_DOWN || masterservers.servers[i].i6.type == NA_DOWN)
+			{
+				Com_PrintError("Couldn't resolve masterserver %s\n", masterservers.servers[i].name);
+				Com_Memset(&masterservers.servers[i], 0, sizeof(masterserver_t));
+			}
+		}
+		tok = strtok(NULL, "\n");
+	}
+	masterservers.count = i;
+	FS_FreeFile(file);
+}
+
 
 #define	HEARTBEAT_USEC	180*1000*1000
 void SV_MasterHeartbeat(const char *message)
@@ -2254,8 +2418,10 @@ void SV_MasterHeartbeat(const char *message)
 	int			i;
 	int			res;
 	int			netenabled;
+	static netadr_t	master_adr[MAX_MASTER_SERVERS][2];
 
 	netenabled = net_enabled->integer;
+
 
 	// "dedicated 1" is for lan play, "dedicated 2" is for inet public play
 	if (com_dedicated->integer != 2 || !(netenabled & (NET_ENABLEV4 | NET_ENABLEV6)))
@@ -2267,7 +2433,43 @@ void SV_MasterHeartbeat(const char *message)
 
 	svse.nextHeartbeatTime = com_uFrameTime + HEARTBEAT_USEC;
 
-	// send to group masters
+	// this command should be changed if the server info / status format
+	// ever incompatably changes
+	
+	/* Official CoD4X master servers used also by ingame serverbrowser */
+	char string[1024];
+	Com_sprintf(string, sizeof(string), "\xff\xff\xff\xffheartbeat %s", message);
+	for(i = 0; i < masterservers.count; ++i)
+	{
+		SV_CreateAndSendMasterheartbeatMessage(string, &masterservers.servers[i].i4, 
+													&masterservers.servers[i].i6, 
+														masterservers.servers[i].authoritative);
+	}
+	/* Activision master servers */
+	if(netenabled & NET_ENABLEV4)
+	{
+		if(atvimaster.type == NA_BAD)
+		{
+			Com_Printf("Resolving %s \n", MASTER_SERVER_NAME);
+			//NA_IPANY For broadcasting to all interfaces
+			res = NET_StringToAdr(MASTER_SERVER_NAME, &atvimaster, NA_IP);
+			atvimaster.port = BigShort(PORT_MASTER);
+			atvimaster.sock = 0;
+			if(res)
+			{
+				Com_Printf( "%s resolved to %s\n", MASTER_SERVER_NAME, NET_AdrToString(&atvimaster));
+			}else{
+				Com_Printf( "Couldn't resolve %s\n", MASTER_SERVER_NAME);
+				atvimaster.type = NA_DOWN;
+			}
+		}
+		if(atvimaster.type == NA_IP)
+		{
+			NET_OutOfBandPrint( NS_SERVER, &atvimaster, "heartbeat %s\n", message);
+		}
+	}
+
+	/* User added masterservers */
 	for (i = 0; i < MAX_MASTER_SERVERS; i++)
 	{
 		if(!sv_master[i]->string[0])
@@ -2328,48 +2530,8 @@ void SV_MasterHeartbeat(const char *message)
 				continue;
 			}
 		}
-
 		Com_Printf ("Sending heartbeat to %s\n", sv_master[i]->string );
 
-		// this command should be changed if the server info / status format
-		// ever incompatably changes
-		if(i == 7)
-		{
-			msg_t msg;
-			char string[1024];
-			static masterHeartbeatThreadOptions_t opts;
-
-			if(opts.locked)
-			{
-				continue;
-			}
-
-			opts.adr4 = master_adr[i][0];
-			opts.adr6 = master_adr[i][1];
-			Com_sprintf(string, sizeof(string), "\xff\xff\xff\xffheartbeat %s", message);
-
-			MSG_Init(&msg, opts.message, sizeof(opts.message));
-			MSG_WriteString(&msg, string);
-
-			MSG_WriteShort(&msg, NET_GetHostPort());
-			MSG_WriteLong(&msg, psvs.masterserver_messageid);
-			++psvs.masterserver_messageid;
-
-			MSG_BeginWriteMessageLength(&msg); //Messagelength
-			MSG_WriteLong(&msg, 1); //Command sourceenginequery
-			SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
-			MSG_EndWriteMessageLength(&msg);
-
-			MSG_BeginWriteMessageLength(&msg); //Messagelength
-			MSG_WriteLong(&msg, 0); //EOF
-			MSG_EndWriteMessageLength(&msg);
-
-			opts.locked = qtrue;
-			opts.messagelen = msg.cursize;
-			threadid_t tinfo;
-			Sys_CreateNewThread(SV_SendHeartbeatThread, &tinfo, &opts);
-			continue;
-		}
 		if(master_adr[i][0].type != NA_BAD)
 			NET_OutOfBandPrint( NS_SERVER, &master_adr[i][0], "heartbeat %s\n", message);
 		if(master_adr[i][1].type != NA_BAD)
@@ -2824,12 +2986,7 @@ void SV_InitCvarsOnce(void){
 	sv_master[1] = Cvar_RegisterString("sv_master2", "", 0, "A masterserver name");
 	sv_master[2] = Cvar_RegisterString("sv_master3", "", 0, "A masterserver name");
 	sv_master[3] = Cvar_RegisterString("sv_master4", "", 0, "A masterserver name");
-	sv_master[4] = Cvar_RegisterString("sv_master5", "", 0, "A masterserver name");
-	sv_master[5] = Cvar_RegisterString("sv_master6", "", 0, "A masterserver name");
-
-	sv_master[6] = Cvar_RegisterString("sv_master7", MASTER_SERVER_NAME, CVAR_ROM, "Default masterserver name");
-	sv_master[7] = Cvar_RegisterString("sv_master8", MASTER_SERVER_NAME2, CVAR_ROM, "Default masterserver name");
-
+	
 	sv_g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24, "Current game type");
 	sv_mapname = Cvar_RegisterString("mapname", "", CVAR_ROM | CVAR_SERVERINFO, "Current map name");
 	sv_maxclients = Cvar_RegisterInt("sv_maxclients", 16, 1, 64, CVAR_INIT | CVAR_SERVERINFO, "Maximum number of clients that can connect to a server");
@@ -2868,6 +3025,7 @@ void SV_Init(){
     SV_InitBanlist();
     Init_CallVote();
     SV_InitServerId();
+	SV_MasterHeartbeatInit();
     Com_RandomBytes((byte*)&psvs.randint, sizeof(psvs.randint));
     SV_InitSApi();
 }

@@ -284,6 +284,8 @@ void Com_CloseLogFiles()
 {
 	Sys_EnterCriticalSection(CRIT_LOGFILE);
 
+	Cvar_SetInt(com_logfile, 0);
+
 	if(adminlogfile){
 		FS_FCloseFile( adminlogfile );
 		adminlogfile = 0;

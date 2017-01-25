@@ -280,7 +280,7 @@ typedef struct {
 */
 
 #define	MAX_STREAM_SERVERS	6
-#define	MAX_MASTER_SERVERS	8	// max recipients for heartbeat packets
+#define	MAX_MASTER_SERVERS	2	// max recipients for heartbeat packets
 // this structure will be cleared only when the game dll changes
 
 
