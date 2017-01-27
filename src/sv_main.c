@@ -2984,8 +2984,6 @@ void SV_InitCvarsOnce(void){
 
 	sv_master[0] = Cvar_RegisterString("sv_master1", "", 0, "A masterserver name");
 	sv_master[1] = Cvar_RegisterString("sv_master2", "", 0, "A masterserver name");
-	sv_master[2] = Cvar_RegisterString("sv_master3", "", 0, "A masterserver name");
-	sv_master[3] = Cvar_RegisterString("sv_master4", "", 0, "A masterserver name");
 	
 	sv_g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24, "Current game type");
 	sv_mapname = Cvar_RegisterString("mapname", "", CVAR_ROM | CVAR_SERVERINFO, "Current map name");
