@@ -304,7 +304,9 @@ static int FT_SendData(ftRequest_t* request)
     NET_TcpCloseSocket(request->socket);
     request->socket = -1;
 		return -1;
-  }else if(bytes == 0){
+    }
+    else if(bytes == 0)
+    {
 		return 0;
 	}
 
