@@ -405,7 +405,7 @@ static void NetadrToSockadr( netadr_t *a, struct sockaddr *s ) {
 
 __optimize3 __regparm3 static void SockadrToNetadr( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
 	if (s->sa_family == AF_INET) {
-		*(int *)&a->ip = ((struct sockaddr_in *)s)->sin_addr.s_addr;
+		memcpy(a->ip, &((struct sockaddr_in *)s)->sin_addr.s_addr, sizeof(a->ip));
 		a->port = ((struct sockaddr_in *)s)->sin_port;
 		if(!tcp)
 			a->type = NA_IP;
@@ -434,11 +434,10 @@ __optimize3 __regparm3 static void SockadrToNetadr6( struct sockaddr *s, netadr_
 		a->type = NA_TCP6;
 
 	if (s->sa_family == AF_INET) {
-		*(int *)(&a->ip6[0]) = 0;
-		*(int *)(&a->ip6[4]) = 0;
-		*(int16_t *)(&a->ip6[8]) = 0;
-		*(int16_t *)(&a->ip6[10]) = -1;
-		*(int *)(&a->ip6[12]) = ((struct sockaddr_in *)s)->sin_addr.s_addr;
+		memset(a->ip6, 0, 10);
+		a->ip6[10] = -1;
+		a->ip6[11] = -1;
+		memcpy(a->ip6 + 12, &((struct sockaddr_in *)s)->sin_addr.s_addr, 4);
 		a->port = ((struct sockaddr_in *)s)->sin_port;
 		a->scope_id = 0;
 	}

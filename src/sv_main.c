@@ -866,12 +866,13 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
 	Info_SetValueForKey( infostring, "shortversion", Q3_VERSION );
 
         if(*sv_password->string)
+	{
 	    Info_SetValueForKey( infostring, "pswrd", "1");
-	else
+	}else{
 	    Info_SetValueForKey( infostring, "pswrd", "0");
+	}
 
-
-	    Info_SetValueForKey( infostring, "ff", va("%d", Cvar_VariableIntegerValue("scr_team_fftype")));
+	Info_SetValueForKey( infostring, "ff", va("%d", Cvar_VariableIntegerValue("scr_team_fftype")));
 
         if(Cvar_GetVariantString("scr_game_allowkillcam")){
 	    Info_SetValueForKey( infostring, "ki", "1");
@@ -2268,7 +2269,7 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4,
 	msg_t msg;
 	char string[1024];
 	masterHeartbeatThreadOptions_t *opts = NULL;
-	masterHeartbeatThreadOptions_t options[8];
+	static masterHeartbeatThreadOptions_t options[8];
 	int i;
 	
 	if(adr4 == NULL || adr6 == NULL || message == NULL)
@@ -2984,8 +2985,6 @@ void SV_InitCvarsOnce(void){
 
 	sv_master[0] = Cvar_RegisterString("sv_master1", "", 0, "A masterserver name");
 	sv_master[1] = Cvar_RegisterString("sv_master2", "", 0, "A masterserver name");
-	sv_master[2] = Cvar_RegisterString("sv_master3", "", 0, "A masterserver name");
-	sv_master[3] = Cvar_RegisterString("sv_master4", "", 0, "A masterserver name");
 	
 	sv_g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24, "Current game type");
 	sv_mapname = Cvar_RegisterString("mapname", "", CVAR_ROM | CVAR_SERVERINFO, "Current map name");
