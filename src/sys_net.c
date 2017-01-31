@@ -217,10 +217,10 @@ cvar_t	*net_ip;
 cvar_t	*net_ip6;
 cvar_t	*net_port;
 cvar_t	*net_port6;
-/*
+
 static cvar_t	*net_mcast6addr;
 static cvar_t	*net_mcast6iface;
-*/
+
 static cvar_t	*net_dropsim;
 
 
@@ -232,17 +232,20 @@ typedef struct{
 
 }socketData_t;
 
-static netadr_t	ip_socket[MAX_IPS];
-static netadr_t	ip_defaultSock = { 0 };
+static netadr_t	ip4_socket;
+static netadr_t	ip6_socket;
 
 static SOCKET	tcp_socket = INVALID_SOCKET;
 static SOCKET	tcp6_socket = INVALID_SOCKET;
 static SOCKET	socks_socket = INVALID_SOCKET;
-//static SOCKET	multicast6_socket = INVALID_SOCKET;
+
+/*
+static SOCKET	multicast6_socket = INVALID_SOCKET;
 
 // Keep track of currently joined multicast group.
 static struct ipv6_mreq curgroup;
 // And the currently bound address.
+*/
 static struct sockaddr_in6 boundto;
 
 #ifndef IF_NAMESIZE
@@ -250,13 +253,14 @@ static struct sockaddr_in6 boundto;
 #endif
 
 // use an admin local address per default so that network admins can decide on how to handle quake3 traffic.
-#define NET_MULTICAST_IP6 "ff04::696f:7175:616b:6533"
+#define NET_MULTICAST_IP6 "ff08::696f:7175:616b:6533"
 
 
 
 typedef struct
 {
 	char ifname[IF_NAMESIZE];
+	int ifindex;
 
 	netadrtype_t type;
 	sa_family_t family;
@@ -297,12 +301,6 @@ typedef struct{
 }tcpServer_t;
 
 tcpServer_t tcpServer;
-
-void NET_InitDNS();
-void NET_ShutdownDNS();
-qboolean NET_ResolveBlocking(const char *domain, struct sockaddr_storage *outaddr, sa_family_t family, char* errormessage1k);
-qboolean NET_ResolveNonBlocking(const char *domain, struct sockaddr_storage *outaddr, sa_family_t family, char* errormessage1k);
-
 
 /*
 ====================
@@ -394,12 +392,12 @@ static void NetadrToSockadr( netadr_t *a, struct sockaddr *s ) {
 		((struct sockaddr_in6 *)s)->sin6_port = a->port;
 		((struct sockaddr_in6 *)s)->sin6_scope_id = a->scope_id;
 	}
-	else if(a->type == NA_MULTICAST6)
+/*	else if(a->type == NA_MULTICAST6)
 	{
 		((struct sockaddr_in6 *)s)->sin6_family = AF_INET6;
 		((struct sockaddr_in6 *)s)->sin6_addr = curgroup.ipv6mr_multiaddr;
 		((struct sockaddr_in6 *)s)->sin6_port = a->port;
-	}
+	}*/
 }
 
 
@@ -526,7 +524,176 @@ static qboolean Sys_StringToSockaddrNoDNS(const char* s, struct sockaddr *sadr, 
 
 
 
-#if 0
+typedef struct
+{
+	struct in_addr sin_addr;
+	struct in6_addr sin6_addr; 
+	uint32_t crc;
+	char last15[16];
+	unsigned long lastupdate;
+	unsigned long lastused;
+}dns_cache_t;
+
+static dns_cache_t dnscachelist[32];
+
+static uint32_t DNS_crc32(const char* name)
+{
+  unsigned int j;
+  int length = strlen(name);
+  uint32_t crc = ~0;
+  unsigned char* current = (unsigned char*) name;
+  while (length--)
+  {
+    crc ^= *current++;
+    for (j = 0; j < 8; j++)
+      if (crc & 1)
+        crc = (crc >> 1) ^ 0xEDB88320;
+      else
+        crc =  crc >> 1;
+  }
+  return ~crc;
+}
+
+static void NET_DnsCacheUpdate(const char* name, struct sockaddr_storage *sockadr)
+{
+	int i, j;
+	char namei[256];
+	char last15[16];
+	struct sockaddr_in *sin = (struct sockaddr_in *)&sockadr;
+	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sockadr;
+	unsigned long oldest = ~0;
+	
+	if(sockadr->ss_family != AF_INET && sockadr->ss_family != AF_INET6)
+	{
+		return;
+	}
+
+	Q_strncpyz(namei, name, sizeof(namei));
+
+	int len = strlen(namei);
+
+	if(len < sizeof(last15))
+	{
+		Q_strncpyz(last15, namei, sizeof(last15));
+	}else{
+		Q_strncpyz(last15, namei + len - 15, sizeof(last15));
+	}
+	Q_strlwr(namei);
+
+	unsigned long now = NET_TimeGetTime();
+
+	uint32_t crc = DNS_crc32(namei);
+
+	for(i = 0, j = 0; i < sizeof(dnscachelist[0]) / sizeof(dnscachelist); ++i)
+	{
+		if(crc == dnscachelist[i].crc && !strcmp(last15, dnscachelist[i].last15))
+		{
+			//Found entry
+			if(sockadr->ss_family == AF_INET)
+			{
+				dnscachelist[i].sin_addr = sin->sin_addr;
+			}else if(sockadr->ss_family == AF_INET6){
+				dnscachelist[i].sin6_addr = sin6->sin6_addr;
+			}
+			dnscachelist[i].lastupdate = now;
+			return;
+		}
+		//Wrap around
+		if(dnscachelist[i].lastused > now)
+		{
+			dnscachelist[i].lastused = now;
+		}
+
+		if(dnscachelist[i].lastused < oldest)
+		{
+			oldest = dnscachelist[i].lastused;
+			j = i;
+		}
+	}
+	//Nothing found. Overwrite the least recently used entry
+	Q_strncpyz(dnscachelist[j].last15, last15, sizeof(dnscachelist[j].last15));
+	dnscachelist[j].crc = crc;
+	if(sockadr->ss_family == AF_INET)
+	{
+		dnscachelist[j].sin_addr = sin->sin_addr;
+	}else if(sockadr->ss_family == AF_INET6){
+		dnscachelist[j].sin6_addr = sin6->sin6_addr;
+	}
+	dnscachelist[j].lastupdate = NET_TimeGetTime();
+}
+
+static qboolean Q_isZero(void* data, int size)
+{
+	int i;
+	byte* d = (byte*)data;
+	for(i = 0; i < size; ++i)
+	{
+		if(d[i])
+		{
+			return qfalse;
+		}
+	}
+	return qtrue;
+}
+
+static qboolean NET_DnsCacheQuery(const char* name, struct sockaddr_storage *outaddr, sa_family_t family)
+{
+	int i;
+	char namei[256];
+	char last15[16];
+	struct sockaddr_in *sin = (struct sockaddr_in *)&outaddr;
+	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&outaddr;
+
+	if(family != AF_INET && family != AF_INET6)
+	{
+		return qfalse;
+	}
+
+	Q_strncpyz(namei, name, sizeof(namei));
+
+	int len = strlen(namei);
+
+	if(len < sizeof(last15))
+	{
+		Q_strncpyz(last15, namei, sizeof(last15));
+	}else{
+		Q_strncpyz(last15, namei + len - 15, sizeof(last15));
+	}
+	
+	Q_strlwr(namei);
+	uint32_t crc = DNS_crc32(namei);
+	for(i = 0; i < sizeof(dnscachelist[0]) / sizeof(dnscachelist); ++i)
+	{
+		if(crc == dnscachelist[i].crc && !strcmp(last15, dnscachelist[i].last15))
+		{
+			//Found entry
+			if(family == AF_INET)
+			{
+				if(Q_isZero(&dnscachelist[i].sin_addr, sizeof(dnscachelist[i].sin_addr)))
+				{
+					return qfalse;
+				}
+				sin->sin_addr = dnscachelist[i].sin_addr;
+				outaddr->ss_family = AF_INET;
+			}else if(family == AF_INET6){
+				if(Q_isZero(&dnscachelist[i].sin6_addr, sizeof(dnscachelist[i].sin6_addr)))
+				{
+					return qfalse;
+				}
+				sin6->sin6_addr = dnscachelist[i].sin6_addr;
+				outaddr->ss_family = AF_INET6;
+			}
+			dnscachelist[i].lastused = NET_TimeGetTime();
+			return qtrue;
+		}
+	}
+	return qfalse;
+}
+
+
+
+
+
 static struct addrinfo *SearchAddrInfo(struct addrinfo *hints, sa_family_t family)
 {
 	while(hints)
@@ -541,7 +708,7 @@ static struct addrinfo *SearchAddrInfo(struct addrinfo *hints, sa_family_t famil
 }
 
 
-static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
+static qboolean NET_Resolve(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family, char* errormsg1k)
 {
 	struct addrinfo hints;
 	struct addrinfo *res = NULL;
@@ -594,17 +761,22 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 			return qtrue;
 		}
 		else
-			Com_PrintError("Sys_StringToSockaddr: Error resolving %s: No address of required type found.\n", s);
+		{
+			Com_sprintf(errormsg1k, 1024, "Sys_StringToSockaddr: Error resolving %s: No address of required type found.\n", s);
+		}
 	}
 	else
-		Com_PrintError("Sys_StringToSockaddr: Error resolving %s: %s\n", s, gai_strerror(retval));
-
+	{
+		Com_PrintError(errormsg1k, 1024, "Sys_StringToSockaddr: Error resolving %s: %s\n", s, gai_strerror(retval));
+	}
 	if(res)
+	{
 		freeaddrinfo(res);
-
+	}
 	return qfalse;
 }
-#else
+
+
 static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
 {
 	int retval;
@@ -638,66 +810,28 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 		}else{
 			return qfalse;
 		}
+		memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
 		return qtrue;
 	}
 
-	retval = NET_ResolveBlocking(s, &sadrstore ,family, errormsg);
-	if(errormsg[0])
+
+	if(NET_DnsCacheQuery(s, &sadrstore, family))
 	{
-		Com_PrintError("DNS: %s\n", errormsg);
+		memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+		return qtrue;
 	}
-	memcpy(sadr, &sadrstore, sadr_len);
+
+	retval = NET_Resolve(s, (struct sockaddr*)&sadrstore , sizeof(sadrstore), family, errormsg);
+
+	NET_DnsCacheUpdate(s, &sadrstore);
+
+	memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
 	return retval;
 }
 
 
-static int Sys_StringToSockaddrNonBlock(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family)
-{
-	int retval;
-	char ptonaddr[32];
-	char errormsg[1024];
-	struct sockaddr_storage sadrstore;
-	struct sockaddr_in *sin = (struct sockaddr_in *)&sadrstore;
-	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sadrstore;
-	memset(sadr, '\0', sadr_len);
-	memset(&sadrstore, '\0', sizeof(sadrstore));
 
-	//Attempt to read string as IP address
-	if(Sys_StringToSockaddrNoDNS(s, sadr, sadr_len, family))
-	{
-		return 1;
-	}
 
-	if(Q_stricmp(s, "localhost") == 0)
-	{
-		memset(ptonaddr, 0, sizeof(ptonaddr));
-		if(family == AF_INET6)
-		{
-			ptonaddr[15] = 1;
-			memcpy(&sin6->sin6_addr, ptonaddr, sizeof(sin6->sin6_addr));
-			sin6->sin6_family = AF_INET6;
-		}else if(family == AF_INET){
-			ptonaddr[0] = 127;
-			ptonaddr[3] = 1;
-			memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
-			sin->sin_family = AF_INET;
-		}else{
-			return -1;
-		}
-		return 1;
-	}
-
-	retval = NET_ResolveNonBlocking(s, &sadrstore ,family, errormsg);
-	if(errormsg[0])
-	{
-		Com_PrintError("DNS: %s\n", errormsg);
-		return -1;
-	}
-	memcpy(sadr, &sadrstore, sadr_len);
-	return retval;
-}
-
-#endif
 
 /*
 =============
@@ -758,44 +892,6 @@ qboolean Sys_StringToAdr( const char *s, netadr_t *a, netadrtype_t family ) {
 }
 
 
-int Sys_StringToAdrNonBlock( const char *s, netadr_t *a, netadrtype_t family ) {
-	struct sockaddr_storage sadr;
-	sa_family_t fam;
-	qboolean tcp = qfalse;
-
-	switch(family)
-	{
-		case NA_TCP:
-			tcp = qtrue;
-		case NA_IP:
-			fam = AF_INET;
-
-		break;
-
-		case NA_TCP6:
-			tcp = qtrue;
-		case NA_IP6:
-			fam = AF_INET6;
-
-		break;
-
-		default:
-			fam = AF_UNSPEC;
-		break;
-	}
-
-	int res = Sys_StringToSockaddrNonBlock(s, (struct sockaddr *) &sadr, sizeof(sadr), fam );
-	if(res < 1)
-	{
-		return res;
-	}
-
-	SockadrToNetadr( (struct sockaddr *) &sadr, a, tcp, 0);
-
-	return qtrue;
-}
-
-
 /*
 ===================
 NET_SocketToAdr
@@ -806,24 +902,45 @@ Returns the associated netadr_t struct of the passed udp-socket.
 
 netadr_t* NET_SockToAdr(int sock)
 {
-	int i;
-
 	if(sock == INVALID_SOCKET)
 		return NULL;
 
-	for(i = 0; i < numIP; i++)
+	if(sock == ip4_socket.sock)
 	{
-		if(sock == ip_socket[i].sock)
-			return &ip_socket[i];
+		return &ip4_socket;
 	}
-
+	if(sock == ip6_socket.sock)
+	{
+		return &ip6_socket;
+	}
 	return NULL;
 }
 
 netadr_t* NET_GetLocalAddressList(int* count)
 {
-  *count = numIP;
-  return ip_socket;
+  static netadr_t localaddrlist[2];
+  if(ip4_socket.sock != INVALID_SOCKET && ip6_socket.sock != INVALID_SOCKET)
+  {
+      localaddrlist[0] = ip4_socket;
+      localaddrlist[1] = ip6_socket;
+      *count = 2;
+      return localaddrlist;
+  }
+
+  if(ip4_socket.sock != INVALID_SOCKET)
+  {
+      localaddrlist[0] = ip4_socket;
+      *count = 1;
+      return localaddrlist;
+  }
+  if(ip6_socket.sock != INVALID_SOCKET)
+  {
+      localaddrlist[0] = ip6_socket;
+      *count = 1;
+      return localaddrlist;
+  }
+  *count = 0;
+  return localaddrlist;
 }
 
 
@@ -1089,20 +1206,22 @@ Wipe out all remaining packets. This is only called when server is under attack
 
 void NET_Clear(){
 
-    byte buff[4];
-    int ret, i;
+    byte buff[65535];
+    int ret;
 
-    for(i = 0; i < numIP; i++)
+    if(ip4_socket.sock != INVALID_SOCKET)
     {
-
-	    if(ip_socket[i].sock == INVALID_SOCKET)
-		continue;
-
-	    do{
-		ret = recv(ip_socket[i].sock, (void *)buff, 0, 0);
-	    }while(ret != SOCKET_ERROR);
+        do{
+	ret = recv(ip4_socket.sock, (void *)buff, sizeof(buff), 0);
+        }while(ret != SOCKET_ERROR);
     }
 
+    if(ip6_socket.sock != INVALID_SOCKET)
+    {
+        do{
+		ret = recv(ip6_socket.sock, (void *)buff, sizeof(buff), 0);
+        }while(ret != SOCKET_ERROR);
+    }
 }
 
 
@@ -1185,7 +1304,6 @@ Sys_SendPacket
 */
 qboolean Sys_SendPacket( int length, const void *data, netadr_t *to ) {
 	int	ret = SOCKET_ERROR;
-	int	i;
 	struct sockaddr_storage	addr;
 	char errstr[256];
 
@@ -1244,49 +1362,8 @@ qboolean Sys_SendPacket( int length, const void *data, netadr_t *to ) {
 			}
 #endif
 
-	}else{//Send this packet to any available socket
-
-		for(i = 0; i < numIP; i++)
-		{
-			ret = 0;
-
-			if(ip_socket[i].sock == INVALID_SOCKET)
-				break;
-
-			if( to->type != ip_socket[i].type )
-				continue;
-
-			if( to->type == NA_IP )
-			{
-				if(ip_socket[i].ip[0] == 127)
-				{
-					continue;
-				}
-				ret = sendto( ip_socket[i].sock, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in) );
-			}
-			else if( to->type == NA_IP6 )
-			{
-				ret = sendto( ip_socket[i].sock, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in6) );
-			}
-#ifdef SOCKET_DEBUG
-			int err2;
-
-			if(ret == SOCKET_ERROR)
-			{
-				err2 = socketError;
-				if(err2 != EAGAIN)
-				{
-					Q_strncpyz( tmpstr, NET_AdrToStringMT(&ip_socket[i], adrstr, sizeof(adrstr)), sizeof(tmpstr));
-					Com_PrintError( "Sys_SendPacket: socket %d Conn: %s ==> %s failed with: %s\n", ip_socket[i].sock, tmpstr, NET_AdrToStringMT(to, adrstr, sizeof(adrstr)), NET_ErrorStringMT(errstr, sizeof(errstr)) );
-				}
-			}else{
-				Q_strncpyz( tmpstr, NET_AdrToStringMT(&ip_socket[i], adrstr, sizeof(adrstr)), sizeof(tmpstr));
-				Com_Printf( "^2Sys_SendPacket: socket %d Conn: %s ==> %s successfully sent\n", ip_socket[i].sock, tmpstr, NET_AdrToStringMT(to, adrstr, sizeof(adrstr)) );
-			}
-#endif
-
-
-		}
+	}else{
+		return qfalse;
 	}
 
 //	}
@@ -2131,6 +2208,13 @@ static void NET_AddLocalAddress(char *ifname, struct sockaddr *addr, struct sock
 
 		Q_strncpyz(localIP[numIP].ifname, ifname, sizeof(localIP[numIP].ifname));
 
+#ifdef _WIN32
+
+#else
+		localIP[numIP].ifindex = if_nametoindex(ifname);
+		Com_Printf("if_name: %s\n", ifname);
+#endif
+
 		localIP[numIP].family = family;
 
 		memcpy(&localIP[numIP].addr, addr, addrlen);
@@ -2379,19 +2463,16 @@ NET_OpenIP
 ====================
 */
 void NET_OpenIP( void ) {
-	int		i, j, socketindex;
-	int		socketindex6 = 0;
+	int		i;
 	int		err;
-	int		port;
-	int		port6;
-	int		limit;
-	int		limit6;
-	char		addrbuf[NET_ADDRSTRMAXLEN];
+	int		port, limit;
+	int		port6, limit6;
 	char		addrbuf2[NET_ADDRSTRMAXLEN];
-	qboolean	validsock6 = qfalse;
 	qboolean	support6;
-	qboolean	validsock = qfalse;
 	qboolean	support4;
+
+	support6 = qfalse;
+	support4 = qfalse;
 
 	port = net_port->integer;
 	port6 = net_port6->integer;
@@ -2411,10 +2492,8 @@ void NET_OpenIP( void ) {
 		limit6 = 1;
 	}
 
-	for(i = 0; i < MAX_IPS; i++)
-	{
-		ip_socket[i].sock = INVALID_SOCKET;
-	}
+	ip4_socket.sock = INVALID_SOCKET;
+	ip6_socket.sock = INVALID_SOCKET;
 	tcp_socket = INVALID_SOCKET;
 	tcp6_socket = INVALID_SOCKET;
 	NET_GetLocalAddress();
@@ -2425,212 +2504,88 @@ void NET_OpenIP( void ) {
 
 	if(net_enabled->integer & NET_ENABLEV6)
 	{
-
-		support6 = qfalse;
-		for( i = 0 ; i < limit6 ; i++ )
+		support6 = qtrue;
+		for(i = 0; i < limit6; ++i, ++port6)
 		{
-			socketindex6 = 0;
-			validsock6 = qfalse;
+			Com_sprintf(addrbuf2, sizeof(addrbuf2), "[%s]:%d", net_ip6->string, port6);
+			NET_StringToAdr(addrbuf2, &ip6_socket, NA_IP6);
 
-			if(Q_stricmp(net_ip6->string, "::"))
+			ip6_socket.sock = NET_IP6Socket(net_ip6->string, port6, &boundto, &err, qfalse);
+
+			if(ip6_socket.sock == INVALID_SOCKET && err == EAFNOSUPPORT)
 			{
-
-				Com_sprintf(addrbuf2, sizeof(addrbuf2), "[%s]:%d", net_ip6->string, port6 + i );
-				NET_StringToAdr(addrbuf2, &ip_socket[0], NA_IP6);
-
-				ip_socket[0].sock = NET_IP6Socket(net_ip6->string, port6 + i, &boundto, &err, qfalse);
-
-				if(ip_socket[0].sock != INVALID_SOCKET)
-				{
-
-					validsock6 = qtrue;	//This is a valid port
-					support6 = qtrue;
-					socketindex6 = 1;
-
-				}else if(err != EAFNOSUPPORT){
-
-					support6 = qtrue;
-				}
-			}
-			else
-			{
-				for(j = 0; j < numIP; j++)
-				{
-					if(localIP[j].type != NA_IP6)
-						continue;
-
-					Sys_SockaddrToString(addrbuf, sizeof(addrbuf), (struct sockaddr *) &localIP[j].addr);
-
-					ip_socket[socketindex6].sock = INVALID_SOCKET;
-					ip_socket[socketindex6 + 1].sock = INVALID_SOCKET;
-
-					if(!Q_stricmp(addrbuf,"::"))
-						continue;
-
-					Com_sprintf(addrbuf2, sizeof(addrbuf2), "[%s]:%d", addrbuf, port6 + i );
-					NET_StringToAdr(addrbuf2, &ip_socket[socketindex6], NA_IP6);
-
-					ip_socket[socketindex6].sock = NET_IP6Socket(addrbuf, port6 + i, &boundto, &err, qfalse);
-
-					if(ip_socket[socketindex6].sock == INVALID_SOCKET)
-					{
-						if(err != EAFNOSUPPORT)
-							support6 = qtrue;
-						continue;
-					}
-					validsock6 = qtrue;	//This is a valid port
-					support6 = qtrue;
-					socketindex6++; //This is a valid socket, count up by one
-				}
-			}
-
-			if(support6 == qfalse)
+				support6 = qfalse;
 				break;
-
-			if( validsock6 )// && tcp6_socket != INVALID_SOCKET)
-			{
-
-				tcp6_socket = NET_IP6Socket( net_ip6->string, port6 + i, &boundto, &err, qtrue);
-
-				if(tcp6_socket != INVALID_SOCKET){
-					Cvar_SetInt( net_port6, port6 + i );
-					break;
-
-				}else{
-
-					if(err == EAFNOSUPPORT)
-					{
-						Cvar_SetInt( net_port6, port6 + i );
-						break;
-					}else{
-						for(j = 0; j < numIP; j++)
-						{
-							if(ip_socket[j].sock != INVALID_SOCKET)
-							{
-								validsock6 = qfalse;	//This is an invalid port
-								closesocket( ip_socket[j].sock );
-								ip_socket[j].sock = INVALID_SOCKET;
-							}
-						}
-						socketindex6 = 0;
-					}
+			}else{
+				if(ip6_socket.sock == INVALID_SOCKET)
+				{
+					continue;
 				}
+				tcp6_socket = NET_IP6Socket( net_ip6->string, port6, &boundto, &err, qtrue);
+
+				if(tcp6_socket != INVALID_SOCKET)
+				{
+					Cvar_SetInt(net_port6, port6);
+					break;
+				}
+				closesocket(ip6_socket.sock);
+				ip6_socket.sock = INVALID_SOCKET;
 			}
 		}
-
-		if(!validsock6)
-			Com_PrintWarning( "Couldn't bind to a v6 ip address.\n");
 	}
 
 	if(net_enabled->integer & NET_ENABLEV4)
 	{
+		support4 = qtrue;
 
-		support4 = qfalse;
+		for(i = 0; i < limit; ++i, ++port)
+		{
 
-		for( i = 0 ; i < limit ; i++ ) {
+			Com_sprintf(addrbuf2, sizeof(addrbuf2), "%s:%d", net_ip->string, port );
+			NET_StringToAdr(addrbuf2, &ip4_socket, NA_IP);
 
-			validsock = qfalse;
-			socketindex = socketindex6;
-
-			if(Q_stricmp(net_ip->string, "0.0.0.0")){
-
-				Com_sprintf(addrbuf2, sizeof(addrbuf2), "%s:%d", net_ip->string, port + i );
-				NET_StringToAdr(addrbuf2, &ip_socket[socketindex], NA_IP);
-
-				ip_socket[socketindex].sock = NET_IP4Socket( net_ip->string, port + i, &err, qfalse);
-
-				if(ip_socket[socketindex].sock != INVALID_SOCKET)
-				{
-
-					validsock = qtrue;	//This is a valid port
-					support4 = qtrue;
-					NET_RegisterDefaultCommunicationSocket(&ip_socket[socketindex]);
-					socketindex = socketindex6 +1;
-				}else if(err != EAFNOSUPPORT){
-
-					support4 = qtrue;
-				}
+			ip4_socket.sock = NET_IP4Socket( net_ip->string, port, &err, qfalse);
 
 
+			if(ip4_socket.sock == INVALID_SOCKET && err == EAFNOSUPPORT)
+			{
+				support4 = qfalse;
+				break;
 			}else{
 
-				for(j = 0; j < numIP; j++)
+				if(ip4_socket.sock == INVALID_SOCKET)
 				{
-
-					if(localIP[j].type != NA_IP)
-						continue;
-
-					Sys_SockaddrToString(addrbuf, sizeof(addrbuf), (struct sockaddr *) &localIP[j].addr);
-
-					if(!Q_stricmp(addrbuf,"0.0.0.0"))
-						continue;
-
-					ip_socket[socketindex].sock = INVALID_SOCKET;
-					ip_socket[socketindex + 1].sock = INVALID_SOCKET;
-
-					Com_sprintf(addrbuf2, sizeof(addrbuf2), "%s:%d", addrbuf, port + i );
-					NET_StringToAdr(addrbuf2, &ip_socket[socketindex], NA_IP);
-
-					ip_socket[socketindex].sock = NET_IP4Socket(addrbuf, port + i, &err, qfalse);
-
-					if(ip_socket[socketindex].sock == INVALID_SOCKET)
-					{
-						if(err != EAFNOSUPPORT)
-							support4 = qtrue;
-						continue;
-					}
-					validsock = qtrue;	//This is a valid port
-					support4 = qtrue;
-					socketindex++; //This is a valid socket, count up by one
+					continue;
 				}
-
-			}
-
-			if(support4 == qfalse)
-				break;
-
-			if( validsock )
-			{
-
-				tcp_socket = NET_IP4Socket( net_ip->string, port + i, &err, qtrue);
-
-				if(tcp_socket != INVALID_SOCKET){
-					Cvar_SetInt( net_port, port + i );
+				tcp_socket = NET_IP4Socket( net_ip->string, port, &err, qtrue);
+				
+				if(tcp_socket != INVALID_SOCKET)
+				{
+					Cvar_SetInt(net_port, port);
 					break;
-
-				}else{
-
-					if(err == EAFNOSUPPORT)
-					{
-						Cvar_SetInt( net_port, port + i );
-						break;
-					}else{
-						for(j = socketindex6; j < numIP; j++)
-						{
-							if(ip_socket[j].sock != INVALID_SOCKET)
-							{
-								validsock = qfalse;	//This is an invalid port
-								closesocket( ip_socket[j].sock );
-								ip_socket[j].sock = INVALID_SOCKET;
-							}
-						}
-						socketindex = socketindex6;
-					}
 				}
+				closesocket(ip4_socket.sock);
+				ip4_socket.sock = INVALID_SOCKET;
 			}
 		}
-
-		if(!validsock)
-			Com_PrintWarning( "Couldn't bind to a v4 ip address.\n");
 	}
 
-	if(!validsock && !validsock6)
-		Com_Error(ERR_FATAL,"Could not bind to a IPv4 or IPv6 network socket");
-
-	if(tcp_socket != INVALID_SOCKET || tcp6_socket != INVALID_SOCKET)
+	if(tcp_socket == INVALID_SOCKET && support4)
 	{
-		NET_TcpServerInit();
+		Com_Error(ERR_FATAL,"Could not bind to a IPv4 network socket");
 	}
+
+	if(tcp6_socket == INVALID_SOCKET && support6)
+	{
+		Com_Error(ERR_FATAL,"Could not bind to a IPv6 network socket");
+	}
+
+	if(support6 == qfalse || support4 == qfalse)
+	{
+		Com_Error(ERR_FATAL,"No IPv4 or IPv6 support");
+	}
+	NET_TcpServerInit();
+
 }
 
 
@@ -2665,7 +2620,7 @@ static qboolean NET_GetCvars( void ) {
 	net_port6 = Cvar_RegisterInt( "net_port6", 0, 0, 65535, CVAR_LATCH, "IPv6 Network Port Server will listen on" );
 	modified += net_port6->modified;
 	net_port6->modified = qfalse;
-/*
+
 	// Some cvars for configuring multicast options which facilitates scanning for servers on local subnets.
 	net_mcast6addr = Cvar_RegisterString( "net_mcast6addr", NET_MULTICAST_IP6, CVAR_LATCH | CVAR_ARCHIVE,  "IPv6 Network multicast address");
 	modified += net_mcast6addr->modified;
@@ -2676,7 +2631,7 @@ static qboolean NET_GetCvars( void ) {
 #else
 	net_mcast6iface = Cvar_RegisterString( "net_mcast6iface", "", CVAR_LATCH | CVAR_ARCHIVE ,  "IPv6 Network multicast interface");
 #endif
-
+/*
 	modified += net_mcast6iface->modified;
 	net_mcast6iface->modified = qfalse;
 
@@ -2764,21 +2719,30 @@ void NET_Config( qboolean enableNetworking ) {
 			}
 		}
 
-		for(i = 0; i < numIP; i++){
-
-			if(ip_socket[i].sock != INVALID_SOCKET){
-				Com_Printf("Close UDP socket: %d\n", ip_socket[i].sock);
-				closesocket( ip_socket[i].sock );
-				ip_socket[i].sock = INVALID_SOCKET;
-			}
+		if(ip4_socket.sock != INVALID_SOCKET)
+		{
+			Com_Printf("Closing IPv4 UDP socket: %d\n", ip4_socket.sock);
+			closesocket( ip4_socket.sock );
+			ip4_socket.sock = INVALID_SOCKET;
+		}
+		if(ip6_socket.sock != INVALID_SOCKET)
+		{
+			Com_Printf("Closing IPv6 UDP socket: %d\n", ip6_socket.sock);
+			closesocket( ip6_socket.sock );
+			ip6_socket.sock = INVALID_SOCKET;
 		}
 
 		if ( tcp_socket != INVALID_SOCKET ) {
-			Com_Printf("Close TCPv4 socket: %d\n", tcp_socket);
+			Com_Printf("Closing IPv4 TCP socket: %d\n", tcp_socket);
 			closesocket( tcp_socket );
 			tcp_socket = INVALID_SOCKET;
 		}
 
+		if ( tcp6_socket != INVALID_SOCKET ) {
+			Com_Printf("Closing IPv6 TCP socket: %d\n", tcp6_socket);
+			closesocket( tcp6_socket );
+			tcp6_socket = INVALID_SOCKET;
+		}
 /*
 		if(multicast6_socket)
 		{
@@ -2788,18 +2752,13 @@ void NET_Config( qboolean enableNetworking ) {
 			multicast6_socket = INVALID_SOCKET;
 		}
 */
-		if ( tcp6_socket != INVALID_SOCKET ) {
-			Com_Printf("Close TCPv6 socket: %d\n", tcp6_socket);
-			closesocket( tcp6_socket );
-			tcp6_socket = INVALID_SOCKET;
-		}
+
 
 		if ( socks_socket != INVALID_SOCKET ) {
 			Com_Printf("Close Socks socket: %d\n", socks_socket);
 			closesocket( socks_socket );
 			socks_socket = INVALID_SOCKET;
 		}
-		NET_ShutdownDNS();
 #ifdef _WIN32
 		WSACleanup( );
 #endif
@@ -2825,42 +2784,9 @@ void NET_Config( qboolean enableNetworking ) {
 		{
 			NET_OpenIP();
 			//NET_SetMulticast6();
-			NET_InitDNS();
 		}
 	}
 }
-
-//Dumb trick to find out which socket is suitable to send data over
-void NET_RegisterDefaultCommunicationSocket(netadr_t *adr){
-
-	netadr_t *socketadr = NET_SockToAdr(adr->sock);
-	netadr_t test;
-
-
-	if(socketadr != NULL && socketadr->type == NA_IP){
-		/* Ignore localhost */
-		NET_StringToAdr("127.0.0.1", &test, NA_IP);
-
-		if(NET_CompareBaseAdr(socketadr, &test))
-			return;
-
-		ip_defaultSock = *socketadr;
-		Com_Printf("NET_Notice: Default address selected for outgoing networkdata is %s\n", NET_AdrToString(&ip_defaultSock));
-	}else{
-		Com_PrintWarning("NET_RegisterDefaultCommunicationSocket, got packet from bad socket %d at %s\n", adr->sock, NET_AdrToString(adr));
-
-	}
-
-}
-
-netadr_t* NET_GetDefaultCommunicationSocket(){
-
-	if(ip_defaultSock.sock == 0)
-		return NULL;
-
-	return &ip_defaultSock;
-}
-
 
 
 /*========================================================================================================
@@ -3601,7 +3527,6 @@ __optimize3 __regparm1 qboolean NET_Event(int socket)
 				if(rand() % 101 <= net_dropsim->integer)
 					continue;          // drop this packet
 			}
-
 			NET_UDPPacketEvent(&from, bufData, len, sizeof(bufData));
 
 				//Com_RunAndTimeServerPacket(&from, &netmsg);
@@ -3663,7 +3588,6 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 	fd_set fdr;
 	int highestfd = -1;
 	int retval;
-	int i;
 	qboolean netabort = qfalse; //This will be true if we had to process more than 666 packets on one single interface
 				  //Usually this marks an ongoing floodattack onto this CoD4 server
 
@@ -3672,25 +3596,33 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 
 	FD_ZERO(&fdr);
 
-	for(i = 0; i < numIP; i++)
+	if((signed int)ip4_socket.sock != INVALID_SOCKET)
 	{
-		if((signed int)ip_socket[i].sock == INVALID_SOCKET)
-			break;
+		FD_SET(ip4_socket.sock, &fdr);
 
-		FD_SET(ip_socket[i].sock, &fdr);
-
-		if((signed int)ip_socket[i].sock > (signed int)highestfd)
-			highestfd = ip_socket[i].sock;
+		if((signed int)ip4_socket.sock > (signed int)highestfd)
+		{
+			highestfd = ip4_socket.sock;
+		}
 	}
+	if((signed int)ip6_socket.sock != INVALID_SOCKET)
+	{
+		FD_SET(ip6_socket.sock, &fdr);
 
-	if(tcp_socket != INVALID_SOCKET)
+		if((signed int)ip6_socket.sock > (signed int)highestfd)
+		{
+			highestfd = ip6_socket.sock;
+		}
+	}
+	if((signed int)tcp_socket != INVALID_SOCKET)
 	{
 
 		FD_SET(tcp_socket, &fdr);
 
 		if((signed int)tcp_socket > (signed int)highestfd)
+		{
 			highestfd = tcp_socket;
-
+		}
 	}
 
 	if((signed int)tcp6_socket != INVALID_SOCKET)
@@ -3724,25 +3656,28 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 		return qfalse;
 	}
 	else if(retval > 0){
-
-		for(i = 0; i < numIP; i++)
+		if((signed int)ip6_socket.sock != INVALID_SOCKET && FD_ISSET(ip6_socket.sock, &fdr))
 		{
-			if((signed int)ip_socket[i].sock == INVALID_SOCKET)
-				break;
-
-			if(FD_ISSET(ip_socket[i].sock, &fdr)){
-				if(NET_Event(ip_socket[i].sock))
-					netabort = qtrue;
+			if(NET_Event(ip6_socket.sock))
+			{
+				netabort = qtrue;
 			}
-
+		}
+		if((signed int)ip4_socket.sock != INVALID_SOCKET && FD_ISSET(ip4_socket.sock, &fdr))
+		{
+			if(NET_Event(ip4_socket.sock))
+			{
+				netabort = qtrue;
+			}
 		}
 
 		if(((signed int)tcp_socket != INVALID_SOCKET && FD_ISSET(tcp_socket, &fdr)) || ((signed int)tcp6_socket != INVALID_SOCKET && FD_ISSET(tcp6_socket, &fdr)))
 		{
 			if(NET_TcpServerConnectEvent(&fdr))
+			{
 				netabort = qtrue;
+			}
 		}
-
 	}
 	return netabort;
 }
@@ -3828,61 +3763,6 @@ int NET_StringToAdr( const char *s, netadr_t *a, netadrtype_t family )
 }
 
 
-int NET_StringToAdrNonBlocking( const char *s, netadr_t *a, netadrtype_t family )
-{
-	char	base[MAX_STRING_CHARS], *search;
-	char	*port = NULL;
-
-	Q_strncpyz( base, s, sizeof( base ) );
-
-	if(*base == '[' || Q_CountChar(base, ':') > 1)
-	{
-		// This is an ipv6 address, handle it specially.
-		search = strchr(base, ']');
-		if(search)
-		{
-			*search = '\0';
-			search++;
-
-			if(*search == ':')
-				port = search + 1;
-		}
-
-		if(*base == '[')
-			search = base + 1;
-		else
-			search = base;
-	}
-	else
-	{
-		// look for a port number
-		port = strchr( base, ':' );
-
-		if ( port ) {
-			*port = '\0';
-			port++;
-		}
-
-		search = base;
-	}
-	int res = Sys_StringToAdrNonBlock(search, a, family);
-	if(res < 1)
-	{
-		a->type = NA_BAD;
-		return res;
-	}
-
-	if(port)
-	{
-		a->port = BigShort((short) atoi(port));
-		return 1;
-	}
-	else
-	{
-		a->port = BigShort(PORT_SERVER);
-		return 2;
-	}
-}
 
 
 int NET_GetHostPort()
@@ -3949,887 +3829,15 @@ qboolean Sys_IsReservedAddress( netadr_t *adr ) {
 }
 
 
-/*
- * Copyright (c) 2004-2005 Sergey Lyubka <valenok@gmail.com>
- *
- * "THE BEER-WARE LICENSE" (Revision 42):
- * Sergey Lyubka wrote this file.  As long as you retain this notice you
- * can do whatever you want with this stuff. If we meet some day, and you think
- * this stuff is worth it, you can buy me a beer in return.
- */
+netadr_t* NET_GetDefaultCommunicationSocket(){
 
-
-
-struct llhead {
-	struct llhead *prev, *next;
-};
-
-#define	LL_INIT(N)	((N)->next = (N)->prev = (N))
-
-#define LL_HEAD(H)	struct llhead H = { &H, &H }
-
-#define	LL_ENTRY(P,T,N)	((T *) ((char *) (P) - offsetof(T,N)))
-
-#define	LL_ADD(H, N)							\
-	do {								\
-		((H)->next)->prev = (N);				\
-		(N)->next = ((H)->next);				\
-		(N)->prev = (H);					\
-		(H)->next = (N);					\
-	} while (0)
-
-#define	LL_TAIL(H, N)							\
-	do {								\
-		((H)->prev)->next = (N);				\
-		(N)->prev = ((H)->prev);				\
-		(N)->next = (H);					\
-		(H)->prev = (N);					\
-	} while (0)
-
-#define	LL_DEL(N)								\
-	do {										\
-		((N)->next)->prev = ((N)->prev);		\
-		((N)->prev)->next = ((N)->next);		\
-		LL_INIT(N);								\
-	} while (0)
-
-#define	LL_EMPTY(N)	((N)->next == (N))
-
-#define	LL_FOREACH(H,N)	for (N = (H)->next; N != (H); N = (N)->next)
-
-#define LL_FOREACH_SAFE(H,N,T)						\
-	for (N = (H)->next, T = (N)->next; N != (H);			\
-			N = (T), T = (N)->next)
-
-
-
-enum dns_query_type {
-	DNS_A_RECORD = 0x01,		/* Lookup IP adress for host	*/
-	DNS_AAAA_RECORD = 28,
-	DNS_MX_RECORD = 0x0f		/* Lookup MX for domain		*/
-};
-
-/*
- * User defined function that will be called when DNS reply arrives for
- * requested hostname. "struct dns_cb_data" is passed to the user callback,
- * which has an error indicator, resolved address, etc.
- */
-
-enum dns_error {
-	DNS_OK,				/* No error			*/
-	DNS_DOES_NOT_EXIST,		/* Error: adress does not exist	*/
-	DNS_TIMEOUT,			/* Lookup time expired		*/
-	DNS_ERROR			/* No memory or other error	*/
-};
-
-struct dns_cb_data {
-	void			*context;
-	enum dns_error		error;
-	enum dns_query_type	query_type;
-	const char		*name;		/* Requested host name	*/
-	const unsigned char	*addr;		/* Resolved address	*/
-	size_t			addr_len;	/* Resolved address len	*/
-};
-
-typedef void (*dns_callback_t)(struct dns_cb_data *);
-
-#define	DNS_QUERY_TIMEOUT	30	/* Query timeout, seconds	*/
-
-/*
- * The API
- */
-struct dns;
-extern struct dns *dns_init(void);
-extern void	dns_fini(struct dns *);
-extern int	dns_get_fd(struct dns *);
-extern void	dns_queue(struct dns *, void *context, const char *host,
-			enum dns_query_type type, dns_callback_t callback);
-extern void	dns_cancel(struct dns *, const void *context);
-extern int	dns_poll(struct dns *);
-
-
-#define	DNS_MAX			1025	/* Maximum host name		*/
-#define	DNS_PACKET_LEN		2048	/* Buffer size for DNS packet	*/
-#define	MAX_CACHE_ENTRIES	10000	/* Dont cache more than that	*/
-#define MAX_DNSSERVERS	8
-/*
- * User query. Holds mapping from application-level ID to DNS transaction id,
- * and user defined callback function.
- */
-struct query {
-	struct llhead	link;		/* Link				*/
-	enum dns_error	error;
-	time_t		expire;		/* Time when this query expire	*/
-	uint16_t	tid;		/* UDP DNS transaction ID	*/
-	uint16_t	qtype;		/* Query type			*/
-	char		name[DNS_MAX];	/* Host name			*/
-	void		*ctx;		/* Application context		*/
-	dns_callback_t	callback;	/* User callback routine	*/
-	unsigned char	addr[DNS_MAX];	/* Host address			*/
-	size_t		addrlen;	/* Address length		*/
-};
-
-/*
- * Resolver descriptor.
- */
-struct dns {
-	int		sock;		/* UDP socket used for queries	*/
-	netadr_t salist[MAX_DNSSERVERS];		/* All DNS servers	*/
-	netadr_t sa;							/* The used DNS server	*/
-	int numdnsservers;
-	uint16_t	tid;		/* Latest tid used		*/
-
-	struct llhead	active;		/* Active queries, MRU order	*/
-	struct llhead	cached;		/* Cached queries		*/
-	int		num_cached;	/* Number of cached queries	*/
-};
-
-/*
- * DNS network packet
- */
-struct header {
-	uint16_t	tid;		/* Transaction ID		*/
-	uint16_t	flags;		/* Flags			*/
-	uint16_t	nqueries;	/* Questions			*/
-	uint16_t	nanswers;	/* Answers			*/
-	uint16_t	nauth;		/* Authority PRs		*/
-	uint16_t	nother;		/* Other PRs			*/
-	unsigned char	data[1];	/* Data, variable length	*/
-};
-
-struct dns *h_dns;
-
-#ifdef _WIN32
-// Fetches the MAC address and prints it
-int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
-{
-  int i;
-  IP_ADAPTER_ADDRESSES AdapterInfo[256];       // Allocate information
-                                         // for up to 16 NICs
-  DWORD dwBufLen = sizeof(AdapterInfo);  // Save memory size of buffer
-
-  DWORD dwStatus = GetAdaptersAddresses(      // Call GetAdapterInfo
-			AF_UNSPEC,
-			GAA_FLAG_SKIP_ANYCAST | GAA_FLAG_SKIP_MULTICAST | GAA_FLAG_INCLUDE_PREFIX | GAA_FLAG_SKIP_FRIENDLY_NAME,
-			NULL,
-			(IP_ADAPTER_ADDRESSES*)AdapterInfo,                 // [out] buffer to receive data
-			&dwBufLen);             // [in] size of receive data buffer
-  
-  if(dwStatus == ERROR_SUCCESS)
-  {  // Verify return value is
-										  // valid, no buffer overflow
-
-	  IP_ADAPTER_ADDRESSES* pAdapterInfo = (IP_ADAPTER_ADDRESSES*)AdapterInfo; // Contains pointer to
-	  i = 0;
-	  do
-	  {
-		if(pAdapterInfo->FirstDnsServerAddress != NULL)
-		{
-			sin[i] = *((struct sockaddr_storage*)pAdapterInfo->FirstDnsServerAddress->Address.lpSockaddr);
-			++i;
-		}
-		pAdapterInfo = pAdapterInfo->Next;    // Progress through linked list
-	  }
-	  while(pAdapterInfo && i < maxcount);                   // Terminate if last adapter
-  }
-  return i;
-}
-#else
-int GetDNSAddresses(struct sockaddr_storage *sin, int maxcount)
-{
-	FILE	*fp;
-	char	line[512];
-	char*	linep;
-	char*	lineend;
-	int	i;
-
-	i = 0;
-
-	if ((fp = fopen("/etc/resolv.conf", "r")) == NULL) {
-		return 0;
-
-	} else {
-		/* Try to figure out what DNS server to use */
-		for (; fgets(line, sizeof(line), fp) != NULL && i < maxcount; )
-		{
-			linep = line;
-			//Remove whitespace
-			while(*linep == ' ' || *linep == '\t')
-			{
-				++linep;
-			}
-			if(Q_stricmpn(linep, "nameserver ", 11))
-			{
-				//Not a nameserver entry
-				continue;
-			}
-			linep += 11;
-			//Remove whitespace again
-			while(*linep == ' ' || *linep == '\t')
-			{
-				++linep;
-			}
-			//Remove garbage characters from linened
-			lineend = linep;
-			while(isprint(*lineend))
-			{
-				++lineend;
-			}
-			*lineend = '\0';
-
-			if(Sys_StringToSockaddrNoDNS(linep, (struct sockaddr*)&sin[i], sizeof(struct sockaddr_storage), AF_UNSPEC))
-			{
-				i++;
-			}
-		}
-		fclose(fp);
-	}
-	return i;
-}
-#endif
-
-
-
-/*
- * Find what DNS server to use. Return 0 if OK, -1 if error
- */
-static int getdnsip(struct dns *dns)
-{
-	int	ret = 0;
-
-	struct sockaddr_storage sins[MAX_DNSSERVERS];
-	int sock;
-	int i, l;
-	
-
-	int dnscount = GetDNSAddresses(sins, MAX_DNSSERVERS);
-
-	//convert to netadr_t and remove duplicates
-	for(i = 0, dns->numdnsservers = 0; i < dnscount; ++i)
+	if(ip4_socket.sock != INVALID_SOCKET)
 	{
-		sock = dns->sock;
-
-		SockadrToNetadr6( (struct sockaddr*)&sins[i], &dns->salist[dns->numdnsservers], qfalse, sock);
-		//ignore DNS starting with "fec0"
-		if(dns->salist[dns->numdnsservers].ip6[0] == 0xfe && dns->salist[dns->numdnsservers].ip6[1] == 0xc0)
-		{
-			continue;
-		}
-
-		//Remove any duplicated dns servers
-		for(l = 0; l < dns->numdnsservers; ++l)
-		{
-			if(NET_CompareBaseAdr(&dns->salist[dns->numdnsservers], &dns->salist[l]))
-			{
-				break;
-			}
-		}
-		//Is this a new server?
-		if(l == dns->numdnsservers)
-		{
-			dns->salist[dns->numdnsservers].port = BigShort(53);
-		//	Com_Printf("DNS: %s\n", NET_AdrToString(&dns->salist[dns->numdnsservers]));
-			++dns->numdnsservers;
-		}
+		return &ip4_socket;
 	}
-	if(dns->numdnsservers == 0)
+	if(ip6_socket.sock != INVALID_SOCKET)
 	{
-		ret = -1;
+		return &ip6_socket;
 	}
-	return (ret);
-}
-
-
-
-struct dns* dns_init(void)
-{
-	struct dns	*dns;
-	int		rcvbufsiz = 128 * 1024;
-	int err;
-
-	/* FIXME resource leak here */
-	if ((dns = (struct dns *) calloc(1, sizeof(*dns))) == NULL)
-		return (NULL);
-
-
-	dns->sock = NET_IPSocket(NULL, 0, &err, qfalse);
-
-	if(dns->sock == INVALID_SOCKET)
-		return (NULL);
-
-	/* Increase socket's receive buffer */
-	if(dns->sock != INVALID_SOCKET)
-		setsockopt(dns->sock, SOL_SOCKET, SO_RCVBUF, (char *) &rcvbufsiz, sizeof(rcvbufsiz));
-
-	if (getdnsip(dns) != 0)
-		return (NULL);
-
-	LL_INIT(&dns->active);
-	LL_INIT(&dns->cached);
-
-	return (dns);
-}
-
-static void destroy_query(struct query *query)
-{
-	LL_DEL(&query->link);
-	free(query);
-}
-
-
-/*
- * Cleanup
- */
-void dns_shutdown(struct dns *dns)
-{
-	struct llhead	*lp, *tmp;
-	struct query	*query;
-
-	if (dns->sock != -1)
-		(void) closesocket(dns->sock);
-
-	LL_FOREACH_SAFE(&dns->active, lp, tmp) {
-		query = LL_ENTRY(lp, struct query, link);
-		destroy_query(query);
-	}
-
-	LL_FOREACH_SAFE(&dns->cached, lp, tmp) {
-		query = LL_ENTRY(lp, struct query, link);
-		destroy_query(query);
-		dns->num_cached--;
-	}
-	free(dns);
-}
-
-/*
- * Fetch name from DNS packet
- */
-static void fetch(const uint8_t *pkt, const uint8_t *s, int pktsiz, char *dst, int dstlen)
-{
-	const uint8_t	*e = pkt + pktsiz;
-	int		j, i = 0, n = 0;
-
-
-	while (*s != 0 && s < e) {
-		if (n > 0)
-			dst[i++] = '.';
-
-		if (i >= dstlen)
-			break;
-
-		if ((n = *s++) == 0xc0) {
-			s = pkt + *s;	/* New offset */
-			n = 0;
-		} else {
-			for (j = 0; j < n && i < dstlen; j++)
-				dst[i++] = *s++;
-		}
-	}
-
-	dst[i] = '\0';
-}
-
-/*
- * Find host in host cache. Add it if not found.
- */
-static struct query* find_cached_query(struct dns *dns, enum dns_query_type qtype, const char *name)
-{
-	struct llhead	*lp, *tmp;
-	struct query	*query;
-
-	LL_FOREACH_SAFE(&dns->cached, lp, tmp) {
-		query = LL_ENTRY(lp, struct query, link);
-
-		if (query->qtype == qtype && Q_stricmp(name, query->name) == 0) {
-			/* Keep sorted by LRU: move to the head */
-			LL_DEL(&query->link);
-			LL_ADD(&dns->cached, &query->link);
-			return (query);
-		}
-	}
-
-	return (NULL);
-}
-
-static struct query *find_active_query(struct dns *dns, uint16_t tid)
-{
-	struct llhead	*lp;
-	struct query	*query;
-
-	LL_FOREACH(&dns->active, lp) {
-		query = LL_ENTRY(lp, struct query, link);
-		if (tid == query->tid)
-			return (query);
-	}
-
-	return (NULL);
-}
-
-/*
- * User wants to cancel query
- */
-void dns_cancel(struct dns *dns, const void *context)
-{
-	struct llhead	*lp, *tmp;
-	struct query	*query;
-
-	LL_FOREACH_SAFE(&dns->active, lp, tmp) {
-		query = LL_ENTRY(lp, struct query, link);
-
-		if (query->ctx == context) {
-			destroy_query(query);
-			break;
-		}
-	}
-}
-
-static void move_querytocache(struct dns *dns, struct query *query)
-{
-	/* Move query to cache */
-	LL_DEL(&query->link);
-	LL_ADD(&dns->cached, &query->link);
-	dns->num_cached++;
-	if (dns->num_cached >= MAX_CACHE_ENTRIES) {
-		query = LL_ENTRY(dns->cached.prev, struct query, link);
-		destroy_query(query);
-		dns->num_cached--;
-	}
-}
-
-/*
- * Queue the resolution or get result
- */
-int dns_getorqueue(struct dns *dns, struct dns_cb_data *cbd, const char *name, enum dns_query_type qtype)
-{
-	struct query	*query;
-	struct header	*header;
-	void*		ctx = NULL;
-	int		i, z, n, name_len;
-	char		pkt[DNS_PACKET_LEN], *p;
-	const char 	*s;
-	time_t		now = time(NULL);
-	struct llhead	*lp, *tmp;
-
-	Sys_EnterCriticalSection(CRIT_RESOLVE);
-
-	/* Adding our query to the cache if it is already received */
-	dns_poll(dns);
-	
-	/* XXX Search the cache first */
-	if ((query = find_cached_query(dns, qtype, name)) != NULL) {
-		query->ctx = ctx;
-
-		cbd->context = query->ctx;
-		cbd->query_type = (enum dns_query_type) query->qtype;
-		cbd->error = query->error;
-		cbd->name = query->name;
-		cbd->addr = query->addr;
-		cbd->addr_len = query->addrlen;
-
-		if (query->expire < now || query->error > DNS_DOES_NOT_EXIST) {
-			destroy_query(query);
-			dns->num_cached--;
-		}
-		Sys_LeaveCriticalSection(CRIT_RESOLVE);
-		return qtrue;
-	}
-
-	/* Cleanup cached queries */
-	LL_FOREACH_SAFE(&dns->cached, lp, tmp)
-	{
-		query = LL_ENTRY(lp, struct query, link);
-		if (query->expire < now) {
-			destroy_query(query);
-			dns->num_cached--;
-		}
-	}
-
-	/* Cleanup expired active queries and see if we have this query already on the list */
-	LL_FOREACH_SAFE(&dns->active, lp, tmp)
-	{
-		query = LL_ENTRY(lp, struct query, link);
-
-		if (query->expire < now) {
-			query->addrlen = 0;
-			query->error = DNS_TIMEOUT;
-			query->expire += 30; //Hold it for 30 more seconds in cache to make this available to get
-			move_querytocache(dns, query);
-			break;
-		}
-		if(query->ctx == ctx && query->qtype == qtype && Q_stricmp(name, query->name) == 0)
-		{
-			/* This query is already in the queue */
-			Sys_LeaveCriticalSection(CRIT_RESOLVE);
-			return qfalse;
-		}
-	}
-
-
-	/* Allocate new query */
-	if ((query = (struct query *) calloc(1, sizeof(*query))) == NULL) {
-		(void) memset(cbd, 0, sizeof(*cbd));
-		cbd->error = DNS_ERROR;
-		Sys_LeaveCriticalSection(CRIT_RESOLVE);
-		return qtrue;
-	}
-
-	/* Init query structure */
-	query->ctx	= ctx;
-	query->qtype	= (uint16_t) qtype;
-	query->tid	= ++dns->tid;
-	query->callback	= NULL;
-	query->expire	= now + DNS_QUERY_TIMEOUT;
-	for (p = query->name; *name && p < query->name + sizeof(query->name) - 1; name++, p++)
-	{
-		*p = tolower(*name);
-	}
-	*p = '\0';
-	name = query->name;
-
-	/* Prepare DNS packet header */
-	header		= (struct header *) pkt;
-	header->tid	= query->tid;
-	header->flags	= htons(0x100);		/* Haha. guess what it is */
-	header->nqueries= htons(1);		/* Just one query */
-	header->nanswers= 0;
-	header->nauth	= 0;
-	header->nother	= 0;
-
-	/* Encode DNS name */
-
-	name_len = strlen(name);
-	p = (char *) &header->data;	/* For encoding host name into packet */
-
-	do {
-		if ((s = strchr(name, '.')) == NULL)
-			s = name + name_len;
-
-		n = s - name;			/* Chunk length */
-		*p++ = n;			/* Copy length */
-		for (i = 0; i < n; i++)		/* Copy chunk */
-			*p++ = name[i];
-
-		if (*s == '.')
-			n++;
-
-		name += n;
-		name_len -= n;
-
-	} while (*s != '\0');
-
-	*p++ = 0;			/* Mark end of host name */
-	*p++ = 0;			/* Well, lets put this byte as well */
-	*p++ = (unsigned char) qtype;	/* Query Type */
-
-	*p++ = 0;
-	*p++ = 1;			/* Class: inet, 0x0001 */
-
-//	assert(p < pkt + sizeof(pkt)); //Makes no sense!?
-	n = p - pkt;			/* Total packet length */
-
-	int sb;
-	qboolean success = qfalse;
-	if(dns->sa.type == NA_IP || dns->sa.type == NA_IP6)
-	{
-		sb = Sys_SendPacket( n, pkt, &dns->sa ); //Send to all available dns servers
-		if(sb)
-		{
-			success = qtrue;
-		}
-	}else{
-		for(z = 0; z < dns->numdnsservers; ++z)
-		{
-			sb = Sys_SendPacket( n, pkt, &dns->salist[z] ); //Send to all available dns servers
-			if(sb)
-			{
-				success = qtrue;
-			}
-		}
-	}
-	if (!success)
-	{
-		memset(cbd, 0, sizeof(*cbd));
-		cbd->error = DNS_ERROR;
-		free(query);
-		Sys_LeaveCriticalSection(CRIT_RESOLVE);
-		return qtrue;
-	}else{
-		LL_TAIL(&dns->active, &query->link);
-	}
-	Sys_LeaveCriticalSection(CRIT_RESOLVE);
-	return qfalse;
-}
-
-
-static void parse_udp(struct dns *dns, const unsigned char *pkt, int len)
-{
-	struct header		*header;
-	const unsigned char	*p, *e;
-	struct query		*q;
-	uint32_t		ttl;
-	uint16_t		type;
-	char			name[1025];
-	int			found, stop, dlen, nlen;
-
-	/* We sent 1 query. We want to see more that 1 answer. */
-	header = (struct header *) pkt;
-	if (ntohs(header->nqueries) != 1)
-		return;
-
-	/* Return if we did not send that query */
-	if ((q = find_active_query(dns, header->tid)) == NULL)
-		return;
-
-	/* Received 0 answers */
-	if (header->nanswers == 0) {
-		q->addrlen = 0;
-		q->error = DNS_DOES_NOT_EXIST;
-		move_querytocache(dns, q);
-		return;
-	}
-
-	/* Skip host name */
-	for (e = pkt + len, nlen = 0, p = &header->data[0];
-	    p < e && *p != '\0'; p++)
-		nlen++;
-
-#define	NTOHS(p)	(((p)[0] << 8) | (p)[1])
-
-	/* We sent query class 1, query type 1 */
-	if (&p[5] > e || NTOHS(p + 1) != q->qtype)
-		return;
-
-	/* Go to the first answer section */
-	p += 5;
-
-	/* Loop through the answers, we want A type answer */
-	for (found = stop = 0; !stop && &p[12] < e; ) {
-
-		/* Skip possible name in CNAME answer */
-		if (*p != 0xc0) {
-			while (*p && &p[12] < e)
-				p++;
-			p--;
-		}
-
-		type = htons(((uint16_t *)p)[1]);
-
-		if (type == 5) {
-			/* CNAME answer. shift to the next section */
-			dlen = htons(((uint16_t *) p)[5]);
-			p += 12 + dlen;
-		} else if (type == q->qtype) {
-			found = stop = 1;
-		} else {
-			stop = 1;
-		}
-	}
-
-	if (found && &p[12] < e) {
-		dlen = htons(((uint16_t *) p)[5]);
-		p += 12;
-
-		if (p + dlen <= e) {
-			q->error = DNS_OK;
-			/* Add to the cache */
-			(void) memcpy(&ttl, p - 6, sizeof(ttl));
-			q->expire = time(NULL) + (time_t) ntohl(ttl);
-
-			/* Call user */
-			if (q->qtype == DNS_MX_RECORD) {
-				fetch((uint8_t *) header, p + 2, len, name, sizeof(name) - 1);
-				p = (const unsigned char *) name;
-				dlen = strlen(name);
-			}
-			q->addrlen = dlen;
-			if (q->addrlen > sizeof(q->addr))
-				q->addrlen = sizeof(q->addr);
-			(void) memcpy(q->addr, p, q->addrlen);
-			move_querytocache(dns, q);
-		}
-	}
-}
-
-static qboolean dns_responsefromvalidsource(struct dns *dns, netadr_t* from)
-{
-	int i;
-	for(i = 0; i < dns->numdnsservers; ++i)
-	{
-		if(NET_CompareBaseAdr(from, &dns->salist[i]))
-		{
-			return qtrue;
-		}
-	}
-	return qfalse;
-}
-
-int dns_poll(struct dns *dns)
-{
-	int			n, num_packets = 0;
-	unsigned char		pkt[DNS_PACKET_LEN];
-	netadr_t		from;
-
-	/* Check our socket for new stuff */
-	if(dns->sock != INVALID_SOCKET)
-	{
-		while ((n = NET_GetPacket(&from, pkt, sizeof(pkt), dns->sock)) > 0 && n > (int) sizeof(struct header))
-		{
-			if(dns_responsefromvalidsource(dns, &from))
-			{
-				if(dns->sa.type == NA_BAD)
-				{
-					dns->sa = from;
-				}
-				parse_udp(dns, pkt, n);
-				num_packets++;
-			}
-		}
-	}
-	return (num_packets);
-}
-
-
-void NET_InitDNS()
-{
-	h_dns = dns_init();
-	if(h_dns == NULL)
-	{
-		Com_PrintError("DNS resolver couldn't get initialized! Name resolution will not work\n");
-	}
-}
-
-void NET_ShutdownDNS()
-{
-	if(h_dns)
-	{
-		dns_shutdown(h_dns);
-	}
-}
-
-
-qboolean NET_ResolveInternal(const char *domain, struct sockaddr_storage *outaddr, sa_family_t family, qboolean nonblocking, char* errormessage1k)
-{
-	enum dns_query_type	qtype;
-	fd_set			set;
-	int			highestfd = 0;
-	struct timeval		tv = {5, 0};
-	int r;
-	qboolean		resolvestatus;
-	struct dns_cb_data cbd;
-
-	if(errormessage1k)
-	{
-		errormessage1k[0] = '\0';
-	}
-	if(h_dns == NULL || outaddr == NULL)
-	{
-		if(errormessage1k)
-		{
-			Q_strncpyz(errormessage1k, "DNS resolver is not initialized", 1024);
-		}
-		return qfalse;
-	}
-
-	if(family == AF_INET6)
-		qtype = DNS_AAAA_RECORD;
-	else
-		qtype = DNS_A_RECORD;
-
-	int att = 0;
-
-	while(!(resolvestatus = dns_getorqueue(h_dns, &cbd, domain, qtype)) && !nonblocking)
-	{
-			/* Select on resolver socket */
-		FD_ZERO(&set);
-		if((signed int)h_dns->sock != INVALID_SOCKET)
-		{
-			FD_SET(h_dns->sock, &set);
-			if((signed int)h_dns->sock > (signed int)highestfd)
-			{
-				highestfd = h_dns->sock;
-			}
-		}
-
-		r = select(highestfd + 1, &set, NULL, NULL, &tv);
-		if(r < 1)
-		{
-			if(errormessage1k)
-			{
-				Com_sprintf(errormessage1k, 1024, "Query timeout for [%s]", domain);
-			}
-			return qfalse;
-		}
-		++att;
-	}
-
-	if(nonblocking && !resolvestatus)
-	{
-		return qfalse; //Takes some more time
-	}
-
-	memset(outaddr, 0, sizeof(struct sockaddr_storage));
-	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)outaddr;
-	struct sockaddr_in *sin = (struct sockaddr_in *)outaddr;
-
-	switch(cbd.error)
-	{
-		case DNS_TIMEOUT:
-			if(errormessage1k)
-			{
-				Com_sprintf(errormessage1k, 1024, "Query timeout for [%s]", cbd.name);
-			}
-			break;
-		case DNS_DOES_NOT_EXIST:
-			if(errormessage1k)
-			{
-				Com_sprintf(errormessage1k, 1024, "No such address: [%s]", cbd.name);
-			}
-			break;
-		case DNS_ERROR:
-			if(errormessage1k)
-			{
-				Com_sprintf(errormessage1k, 1024, "DNS resolver system error");
-			}
-			break;
-		case DNS_OK:
-			switch (cbd.query_type) {
-			case DNS_A_RECORD:
-				sin->sin_family = AF_INET;
-				memcpy(&sin->sin_addr, cbd.addr, sizeof(sin->sin_addr));
-				break;
-			case DNS_AAAA_RECORD:
-				sin6->sin6_family = AF_INET6;
-				memcpy(&sin6->sin6_addr, cbd.addr, sizeof(sin6->sin6_addr));
-				break;
-			case DNS_MX_RECORD:
-//				strncpy(name, (char*)cbd.addr, sizeof(name));
-				break;
-			default:
-				Com_Error(ERR_FATAL, "Unexpected DNS query type: %u\n", cbd.query_type);
-				/* NOTREACHED */
-				break;
-			}
-/*
-			if(outaddr->ss_family == AF_INET)
-			{
-				inet_ntop(AF_INET, &sin->sin_addr, addrstr, sizeof(addrstr));
-			}else{
-				inet_ntop(AF_INET6, &sin6->sin6_addr, addrstr, sizeof(addrstr));
-			}
-*/
-			return qtrue;
-	}
-	return qfalse;
-
-}
-
-
-qboolean NET_ResolveNonBlocking(const char *domain, struct sockaddr_storage *outaddr, sa_family_t family, char* errormessage1k)
-{
-	return NET_ResolveInternal(domain, outaddr, family, qtrue, errormessage1k);
-}
-
-qboolean NET_ResolveBlocking(const char *domain, struct sockaddr_storage *outaddr, sa_family_t family, char* errormessage1k)
-{
-	return NET_ResolveInternal(domain, outaddr, family, qfalse, errormessage1k);
+	return NULL;
 }

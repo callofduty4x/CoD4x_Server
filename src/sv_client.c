@@ -111,11 +111,6 @@ __optimize3 __regparm1 void SV_GetChallenge(netadr_t *from)
 		}
 		if(svse.authorizeAddress.type == NA_IP && from->type == NA_IP && NET_CompareBaseAdr(from, &svse.authorizeAddress))
 		{
-			//Reset the default socket so that this is forwarded to all sockets
-			if(NET_GetDefaultCommunicationSocket() == NULL){
-				NET_RegisterDefaultCommunicationSocket(from);
-				svse.authorizeAddress.sock = from->sock;
-			}
 			from->port = BigShort(PORT_AUTHORIZE);
 			challenge = NET_CookieHash(from);
 			NET_OutOfBandPrint( NS_SERVER, from, "getIpAuthorize %i %s \"\" 0", challenge, NET_AdrToStringShort(from));
