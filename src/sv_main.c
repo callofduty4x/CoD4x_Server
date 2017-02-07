@@ -2241,7 +2241,7 @@ void* SV_SendHeartbeatThread(void* arg)
 			Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
 			NET_AdrToStringMT(&opts->adr4, adrstrdst, sizeof(adrstrdst)));
 			SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
-		}else	if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe && iplist[i].ip6[0] > 0){
+		}else	if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe){
 			//IPv6
 			Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
 			NET_AdrToStringMT(&opts->adr6, adrstrdst, sizeof(adrstrdst)));
@@ -2443,8 +2443,8 @@ void SV_MasterHeartbeat(const char *message)
 	for(i = 0; i < masterservers.count; ++i)
 	{
 		SV_CreateAndSendMasterheartbeatMessage(string, &masterservers.servers[i].i4, 
-													&masterservers.servers[i].i6, 
-														masterservers.servers[i].authoritative);
+								&masterservers.servers[i].i6, 
+								masterservers.servers[i].authoritative);
 	}
 	/* Activision master servers */
 	if(netenabled & NET_ENABLEV4)
