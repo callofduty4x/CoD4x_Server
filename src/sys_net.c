@@ -3422,6 +3422,10 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
 
   if(sourceadr)
   {
+char str[1024];
+    NET_AdrToStringMT(sourceadr, str, sizeof(str));
+    Com_DPrintf( "bind %s\n", str);
+
     NetadrToSockadr(sourceadr, (struct sockaddr *)&bindaddr);
 	if( bind( newsocket, (void *)&bindaddr, sizeof(bindaddr) ) == SOCKET_ERROR ) {
 		if(!silent) Com_PrintWarning( "NET_TcpClientConnect: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
