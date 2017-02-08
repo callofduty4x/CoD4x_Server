@@ -422,7 +422,7 @@ __optimize3 __regparm3 static void SockadrToNetadr( struct sockaddr *s, netadr_t
 	}
 	a->sock = socket;
 }
-
+/*
 __optimize3 __regparm3 static void SockadrToNetadr6( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
 
 	a->sock = socket;
@@ -447,7 +447,7 @@ __optimize3 __regparm3 static void SockadrToNetadr6( struct sockaddr *s, netadr_
 	}
 
 }
-
+*/
 /*
 =============
 Sys_StringToSockaddr
@@ -2457,6 +2457,24 @@ static void NET_GetLocalAddress( void ) {
 }
 #endif
 
+/* Why so complicated? Well Announcing the server by using [::] results in the temporary address getting used
+for announcements! Bad!
+So either Serveradmin has specified the IPv6 address to bind to or we have to pick the first permanent address available */
+int NET_GetStaticIPv6Address(netadr_t* adr, unsigned int startindex)
+{
+	unsigned int i;
+
+	for(i = startindex; i < numIP; ++i)
+	{
+		if(localIP[i].isstaticip6)
+		{
+			SockadrToNetadr( (struct sockaddr *) &localIP[i].addr, adr, qtrue, 0);
+			return i +1;
+		}
+	}
+	return 0;
+}
+
 /*
 ====================
 NET_OpenIP
@@ -3422,10 +3440,6 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
 
   if(sourceadr)
   {
-char str[1024];
-    NET_AdrToStringMT(sourceadr, str, sizeof(str));
-    Com_DPrintf( "bind %s\n", str);
-
     NetadrToSockadr(sourceadr, (struct sockaddr *)&bindaddr);
 	if( bind( newsocket, (void *)&bindaddr, sizeof(bindaddr) ) == SOCKET_ERROR ) {
 		if(!silent) Com_PrintWarning( "NET_TcpClientConnect: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );

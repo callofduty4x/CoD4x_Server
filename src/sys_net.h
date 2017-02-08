@@ -110,6 +110,8 @@ void		NET_LeaveMulticast6(void);
 __optimize3 __regparm1 qboolean	NET_Sleep(unsigned int usec);
 void NET_Clear(void);
 const char*	NET_AdrMaskToString(netadr_t *adr);
+int NET_GetStaticIPv6Address(netadr_t* adr, unsigned int startindex);
+__cdecl const char	*NET_AdrToStringShortMT(netadr_t *a, char* buf, int len);
 
 qboolean	Sys_SendPacket( int length, const void *data, netadr_t *to );
 qboolean	Sys_StringToAdr( const char *s, netadr_t *a, netadrtype_t family );

@@ -2148,12 +2148,41 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
 	int socket;
 	netadr_t bindaddr = *sourceadr;
 	bindaddr.port = 0;
+	socket = -1;
 
-	if(com_developer->integer)
+	if((bindaddr.type == NA_IP6 || bindaddr.type == NA_TCP6) && bindaddr.ip6[0] == 0)
 	{
-		socket = NET_TcpClientConnectFromAdrToAdr( adr, &bindaddr );
-	}else{
-		socket = NET_TcpClientConnectFromAdrToAdrSilent( adr, &bindaddr );
+		netadr_t ip6announce;
+		ip6announce.port = 0;
+		int dx = 0;
+		do
+		{
+			dx = NET_GetStaticIPv6Address(&ip6announce, dx);
+			if(dx > 0)
+			{
+				if(com_developer->integer)
+				{
+					socket = NET_TcpClientConnectFromAdrToAdr( adr, &ip6announce );
+				}else{
+					socket = NET_TcpClientConnectFromAdrToAdrSilent( adr, &ip6announce );
+				}
+			}
+		}while(dx > 0 && socket == -1);
+		if(socket >= 0)
+		{
+			NET_AdrToStringShortMT(&ip6announce, line, sizeof(line));
+			Com_Printf("Cvar net_ip6 is undefined. Announcing address %s!\n", line);
+		}
+	}
+
+	if(socket == -1)
+	{
+		if(com_developer->integer)
+		{
+			socket = NET_TcpClientConnectFromAdrToAdr( adr, &bindaddr );
+		}else{
+			socket = NET_TcpClientConnectFromAdrToAdrSilent( adr, &bindaddr );
+		}
 	}
 	if(socket >= 0)
 	{
