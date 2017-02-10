@@ -422,6 +422,26 @@ __optimize3 __regparm3 static void SockadrToNetadr( struct sockaddr *s, netadr_t
 	}
 	a->sock = socket;
 }
+
+/*
+=============
+Sys_SockaddrToString
+=============
+*/
+static void Sys_SockaddrToString(char *dest, int destlen, struct sockaddr *input)
+{
+	socklen_t inputlen;
+
+	if (input->sa_family == AF_INET6)
+		inputlen = sizeof(struct sockaddr_in6);
+	else
+		inputlen = sizeof(struct sockaddr_in);
+
+	if(getnameinfo(input, inputlen, dest, destlen, NULL, 0, NI_NUMERICHOST) && destlen > 0)
+		*dest = '\0';
+}
+
+
 /*
 __optimize3 __regparm3 static void SockadrToNetadr6( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
 
@@ -559,10 +579,10 @@ static void NET_DnsCacheUpdate(const char* name, struct sockaddr_storage *sockad
 	int i, j;
 	char namei[256];
 	char last15[16];
-	struct sockaddr_in *sin = (struct sockaddr_in *)&sockadr;
-	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sockadr;
+	struct sockaddr_in *sin = (struct sockaddr_in *)sockadr;
+	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)sockadr;
 	unsigned long oldest = ~0;
-	
+
 	if(sockadr->ss_family != AF_INET && sockadr->ss_family != AF_INET6)
 	{
 		return;
@@ -580,11 +600,11 @@ static void NET_DnsCacheUpdate(const char* name, struct sockaddr_storage *sockad
 	}
 	Q_strlwr(namei);
 
-	unsigned long now = NET_TimeGetTime();
+	unsigned long now = NET_TimeGetTime() +1;
 
 	uint32_t crc = DNS_crc32(namei);
 
-	for(i = 0, j = 0; i < sizeof(dnscachelist[0]) / sizeof(dnscachelist); ++i)
+	for(i = 0, j = 0; i < sizeof(dnscachelist) / sizeof(dnscachelist[0]); ++i)
 	{
 		if(crc == dnscachelist[i].crc && !strcmp(last15, dnscachelist[i].last15))
 		{
@@ -603,7 +623,6 @@ static void NET_DnsCacheUpdate(const char* name, struct sockaddr_storage *sockad
 		{
 			dnscachelist[i].lastused = now;
 		}
-
 		if(dnscachelist[i].lastused < oldest)
 		{
 			oldest = dnscachelist[i].lastused;
@@ -619,7 +638,8 @@ static void NET_DnsCacheUpdate(const char* name, struct sockaddr_storage *sockad
 	}else if(sockadr->ss_family == AF_INET6){
 		dnscachelist[j].sin6_addr = sin6->sin6_addr;
 	}
-	dnscachelist[j].lastupdate = NET_TimeGetTime();
+	dnscachelist[j].lastused = now;
+	dnscachelist[j].lastupdate = now;
 }
 
 static qboolean Q_isZero(void* data, int size)
@@ -641,14 +661,13 @@ static qboolean NET_DnsCacheQuery(const char* name, struct sockaddr_storage *out
 	int i;
 	char namei[256];
 	char last15[16];
-	struct sockaddr_in *sin = (struct sockaddr_in *)&outaddr;
-	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&outaddr;
+	struct sockaddr_in *sin = (struct sockaddr_in *)outaddr;
+	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)outaddr;
 
 	if(family != AF_INET && family != AF_INET6)
 	{
 		return qfalse;
 	}
-
 	Q_strncpyz(namei, name, sizeof(namei));
 
 	int len = strlen(namei);
@@ -662,7 +681,7 @@ static qboolean NET_DnsCacheQuery(const char* name, struct sockaddr_storage *out
 	
 	Q_strlwr(namei);
 	uint32_t crc = DNS_crc32(namei);
-	for(i = 0; i < sizeof(dnscachelist[0]) / sizeof(dnscachelist); ++i)
+	for(i = 0; i < sizeof(dnscachelist) / sizeof(dnscachelist[0]); ++i)
 	{
 		if(crc == dnscachelist[i].crc && !strcmp(last15, dnscachelist[i].last15))
 		{
@@ -673,25 +692,23 @@ static qboolean NET_DnsCacheQuery(const char* name, struct sockaddr_storage *out
 				{
 					return qfalse;
 				}
+
 				sin->sin_addr = dnscachelist[i].sin_addr;
-				outaddr->ss_family = AF_INET;
+				sin->sin_family = AF_INET;
 			}else if(family == AF_INET6){
 				if(Q_isZero(&dnscachelist[i].sin6_addr, sizeof(dnscachelist[i].sin6_addr)))
 				{
 					return qfalse;
 				}
 				sin6->sin6_addr = dnscachelist[i].sin6_addr;
-				outaddr->ss_family = AF_INET6;
+				sin6->sin6_family = AF_INET6;
 			}
-			dnscachelist[i].lastused = NET_TimeGetTime();
+			dnscachelist[i].lastused = NET_TimeGetTime() +1;
 			return qtrue;
 		}
 	}
 	return qfalse;
 }
-
-
-
 
 
 static struct addrinfo *SearchAddrInfo(struct addrinfo *hints, sa_family_t family)
@@ -823,8 +840,10 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 
 	retval = NET_Resolve(s, (struct sockaddr*)&sadrstore , sizeof(sadrstore), family, errormsg);
 
-	NET_DnsCacheUpdate(s, &sadrstore);
-
+	if(retval == qtrue)
+	{
+		NET_DnsCacheUpdate(s, &sadrstore);
+	}
 	memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
 	return retval;
 }
@@ -832,24 +851,6 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 
 
 
-
-/*
-=============
-Sys_SockaddrToString
-=============
-*/
-static void Sys_SockaddrToString(char *dest, int destlen, struct sockaddr *input)
-{
-	socklen_t inputlen;
-
-	if (input->sa_family == AF_INET6)
-		inputlen = sizeof(struct sockaddr_in6);
-	else
-		inputlen = sizeof(struct sockaddr_in);
-
-	if(getnameinfo(input, inputlen, dest, destlen, NULL, 0, NI_NUMERICHOST) && destlen > 0)
-		*dest = '\0';
-}
 
 /*
 =============
@@ -2945,7 +2946,7 @@ int NET_TcpServerGetPacket(tcpConnections_t *conn, void *netmsg, int maxsize, qb
 
 	}else{
 
-		conn->lastMsgTime = NET_TimeGetTime(); //Don't timeout
+		conn->lastMsgTime = NET_TimeGetTime() +1; //Don't timeout
 		return ret;
 	}
 }
@@ -3078,7 +3079,7 @@ void NET_TcpServerPacketEventLoop()
 			}
 			break;
 
-		}else if(conn->lastMsgTime + MAX_TCPAUTHWAITTIME < NET_TimeGetTime()){
+		}else if(conn->lastMsgTime + MAX_TCPAUTHWAITTIME < NET_TimeGetTime() +1){
 			NET_TcpCloseSocket(conn->remote.sock);
 		}
 	}
@@ -3128,20 +3129,20 @@ void NET_TcpServerOpenConnection( netadr_t *from )
 
 	if(i == MAX_TCPCONNECTIONS)
 	{
-		if(tcpServer.activeConnectionCount > MAX_TCPCONNECTIONS / 3 && oldestTimeAccepted + MAX_TCPCONNECTEDTIMEOUT < NET_TimeGetTime()){
+		if(tcpServer.activeConnectionCount > MAX_TCPCONNECTIONS / 3 && oldestTimeAccepted + MAX_TCPCONNECTEDTIMEOUT < NET_TimeGetTime() +1){
 				conn = &tcpServer.connections[oldestAccepted];
 				tcpServer.activeConnectionCount--; //As this connection is going to be closed decrease the counter
 				NET_TCPConnectionClosed(&conn->remote, conn->connectionId, conn->serviceId);
 
-		}else if(oldestTime + MIN_TCPAUTHWAITTIME < NET_TimeGetTime()){
+		}else if(oldestTime + MIN_TCPAUTHWAITTIME < NET_TimeGetTime() +1){
 				conn = &tcpServer.connections[oldest];
 
 		}else{
 			closesocket(from->sock); //We have already too many open connections. Not possible to open more. Possible attack
 
-			if(tcpServer.lastAttackWarnTime + MIN_TCPAUTHWAITTIME < NET_TimeGetTime())
+			if(tcpServer.lastAttackWarnTime + MIN_TCPAUTHWAITTIME < NET_TimeGetTime() +1)
 			{
-				tcpServer.lastAttackWarnTime = NET_TimeGetTime();
+				tcpServer.lastAttackWarnTime = NET_TimeGetTime() +1;
 				Com_PrintWarning("Possible Denial of Service Attack, Dropping connectrequest from: %s\n", NET_AdrToStringMT(from, adrstr, sizeof(adrstr)));
 			}
 			return;
@@ -3153,7 +3154,7 @@ void NET_TcpServerOpenConnection( netadr_t *from )
 		NET_TcpCloseSocket(conn->remote.sock);
 	}
 	conn->remote = *from;
-	conn->lastMsgTime = NET_TimeGetTime();
+	conn->lastMsgTime = NET_TimeGetTime() +1;
 	conn->state = TCP_AUTHWAIT;
 	conn->serviceId = -1;
 	conn->connectionId = -1;
