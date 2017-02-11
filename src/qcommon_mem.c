@@ -48,6 +48,10 @@ void Mem_Init()
     com_hunkMegs = Cvar_RegisterInt("com_hunkMegs", 250, 150, 600, CVAR_LATCH, "Number of megabytes allocated for the hunk memory");
     sizeofmemory = 1024*1024 * (com_hunkMegs->integer);
     memory = Mem_AlignedAlloc(0x1000, sizeofmemory);
+    if(memory == NULL)
+    {
+        Com_Error(ERR_FATAL, "Mem_Init failed to allocate %d MiB of RAM. Maybe try commandline option \"+set com_hunkmegs 150\" ?\n", com_hunkMegs->integer);
+    }
     memset(memory, 0, sizeofmemory);
     memset((void*)0x1407e7a0, 0, 0x21C);
     *(int**)(0x1407e7a0) = memory;
