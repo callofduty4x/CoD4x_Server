@@ -3,12 +3,15 @@
 
 #include "player.h"
 #include "sys_cod4defs.h"
+#include "q_math.h"
 
 /* Should keep attribute and this field layout.
  * Met situation where simple vector read into moveTo broke whole
  *  structure.
 */
-typedef struct __attribute__ ((aligned (1))) BotMovementInfo
+/* !!!DO NOT CHANGE ALIGNED TO 1!!! */
+/* T-Max: I have no idea why it changes ints' sizes to 1 byte and brokes whole structure x2. */
+typedef struct __attribute__ ((aligned (4))) BotMovementInfo_t
 {
     /* Actions */
     int buttons;
@@ -20,9 +23,9 @@ typedef struct __attribute__ ((aligned (1))) BotMovementInfo
     short int rotFrac[2];
     qboolean lastAliveState;
     byte useSpamDelay;
-} BotMovementInfo;
+} BotMovementInfo_t;
 
-extern BotMovementInfo g_botai[MAX_CLIENTS];
+extern BotMovementInfo_t g_botai[MAX_CLIENTS];
 
 void Scr_AddBotsMovement();
 qboolean shouldSpamUseButton(gentity_t *bot);

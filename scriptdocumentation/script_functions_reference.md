@@ -361,53 +361,17 @@ Usage example: `entity = removeTestClient()`
 
 **Bot functions below TODO: please, fix my english and remove this line.**
 
-#### `<botEntity> botAction(<<sign>action>)`
+#### `<botEntity> botMoveTo(<origin>)`
 
-Forces bot to do or to stop doing `action`.
+Makes bot move directly to `origin` no matter where he points to.
 
-*sign*: '+' or '-'.
+*origin*: 3-dimensional vector (x, y, z)
 
-*action*: must be one of "gostand gocrouch goprone fire melee frag smoke reload sprint leanleft leanright ads holdbreath".
+Usage example 1: `bot botMoveTo(ent.origin);`
 
-Usage example 1: `bot botAction("+fire");`
+Usage example 2: `bot botMoveTo((100, 200, 300)); /* 300 (z) will be ignored. */`
 
-Usage example 2: `bot botAction("-fire");`
-
-#### `<botEntity> botStopAllActions()`
-
-Forces bot to do stop doing anything.
-
-Usage example: `bot botStopAllActions();`
-
-#### `<botEntity> botRotate(<angles>, [duration=0.05])`
-
-Forces bot to rotate by `angles`. Rotation will take `duration` seconds.
-
-*angles*: 3-dimensional vector (pitch, yaw, roll).
-
-*duration*: float value. Must be >= 1.0/sv_fps->integer (usually >= 0.05). Default: 0.05.
-
-Usage example 1: `bot botRotate((0, 90, 0)); // Instant rotate bot by 90 degrees (yaw)`
-
-Usage example 2: `bot botRotate((70, 168, 0), 3.0); //  70 degrees (pitch) and 168 degrees (yaw) rotation for 3.0 seconds.`
-
-#### `<botEntity> botStopRotation()`
-
-Stops all rotations. Doesn't impact on actions.
-
-Usage example: `bot botStopRotation();`
-
-#### `<botEntity> botLookAt(<origin>, [duration=0.05])`
-
-Forces bot to look at specified position. Rotation will take `duration` seconds.
-
-*origin*: 3-dimensional vector (x, y, z).
-
-*duration*: float value. Must be >= 1.0/sv_fps->integer (usually >= 0.05). Default: 0.05.
-
-Usage example 1: `bot botLookAt(ent.origin); // Instant look at ent's origin`
-
-Usage example 2: `bot botLookAt((0, 0, 0), 5.0); // Look at map center. Rotation will take 5.0 seconds.`
+Usage example 3: `bot botMoveTo(GetOrigin(enemy_player));`
 
 #### `<botEntity> botLookAtPlayer(<player>, [tag_name="pelvis"])`
 
@@ -423,6 +387,35 @@ Usage example 1: `bot botLookAtPlayer(ent);`
 
 Usage example 2: `bot botLookAtPlayer(ent, "j_head");`
 
+#### `<botEntity> botAction(<<sign>action>)`
+
+Forces bot to do or to stop doing `action`.
+
+*sign*: '+' or '-'.
+
+*action*: must be one of "gostand gocrouch goprone fire melee frag smoke reload sprint leanleft leanright ads holdbreath".
+
+Usage example 1: `bot botAction("+fire");`
+
+Usage example 2: `bot botAction("-fire");`
+
+#### `<botEntity> botStop()`
+
+Forces bot to stop doing anything.
+
+Usage example: `bot botStop();`
+
+#### `<botEntity> botLookAt(<origin>, [duration=0.05])`
+
+Forces bot to look at specified position. Rotation will take `duration` seconds.
+
+*origin*: 3-dimensional vector (x, y, z).
+
+*duration*: float value. Must be >= 1.0/sv_fps->integer (usually >= 0.05). Default: 0.05.
+
+Usage example 1: `bot botLookAt(ent.origin); // Instant look at ent's origin`
+
+Usage example 2: `bot botLookAt((0, 0, 0), 5.0); // Look at map center. Rotation will take 5.0 seconds.`
 
 ## Appendix: All Known Script Functions
 
