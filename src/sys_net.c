@@ -3847,9 +3847,9 @@ qboolean Sys_IsReservedAddress( netadr_t *adr ) {
 }
 
 
-netadr_t* NET_GetDefaultCommunicationSocket(){
+netadr_t* NET_GetDefaultCommunicationSocket(netadrtype_t family){
 
-	if(ip4_socket.sock != INVALID_SOCKET)
+	if(family == NA_IP && ip4_socket.sock != INVALID_SOCKET)
 	{
 		return &ip4_socket;
 	}

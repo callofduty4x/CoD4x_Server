@@ -1760,7 +1760,7 @@ void SV_ConnectWithUpdateProxy(client_t *cl)
                 Com_Printf("Resolving %s\n", sv_updatebackendname->string);
                 Cvar_ClearModified(sv_updatebackendname);
                 res = NET_StringToAdr(sv_updatebackendname->string, &update_connection.updateserveradr, NA_IP);
-                defif = NET_GetDefaultCommunicationSocket();
+                defif = NET_GetDefaultCommunicationSocket(NA_IP);
                 if(defif == NULL)
                 {
                     Com_Printf("Missing outgoing interface. Can not send data to updateserver\n");
@@ -1893,36 +1893,6 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
     } else if (!Q_stricmp(c, "error")) {
         char errbuf[256];
         Com_Printf("Error: %s\n", MSG_ReadString(msg, errbuf, sizeof(errbuf)));
-#ifdef PUNKBUSTER
-    } else if (!Q_strncmp("PB_", (char *) &msg->data[4], 3)) {
-
-        int	clnum;
-        int	i;
-        client_t *cl;
-
-        //pb_sv_process here
-        SV_Cmd_EndTokenizedString();
-
-        if(msg->data[7] == 0x43 || msg->data[7] == 0x31 || msg->data[7] == 0x4a)
-            return;
-
-        for ( i = 0, clnum = -1, cl = svs.clients ; i < sv_maxclients->integer ; i++, cl++ )
-        {
-            if ( !NET_CompareBaseAdr( from, &cl->netchan.remoteAddress ) )	continue;
-            if(cl->netchan.remoteAddress.port != from->port) continue;
-            clnum = i;
-            break;
-        }
-
-        if(NET_GetDefaultCommunicationSocket() == NULL)
-            NET_RegisterDefaultCommunicationSocket(from);
-
-        if(clnum == -1)
-            return;
-
-        PbSvAddEvent(13, clnum, msg->cursize-4, (char *)&msg->data[4]);
-        return;
-#endif
     } else {
         Com_DPrintf ("bad connectionless packet from %s\n", NET_AdrToString (from));
     }
@@ -2485,6 +2455,8 @@ void SV_MasterHeartbeat(const char *message)
             if(res)
             {
                 Com_Printf( "%s resolved to %s\n", MASTER_SERVER_NAME, NET_AdrToString(&atvimaster));
+                netadr_t* defif = NET_GetDefaultCommunicationSocket(NA_IP);
+                atvimaster.sock = defif ? defif->sock : 0;
             }else{
                 Com_Printf( "Couldn't resolve %s\n", MASTER_SERVER_NAME);
                 atvimaster.type = NA_DOWN;

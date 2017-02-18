@@ -676,7 +676,7 @@ static void SV_Status_f( void ) {
   }else{
 	Com_Printf("hostname: %s\n", sv_hostname->string);
 	Com_Printf("version : %s\n", com_version->string);
-	netadr_t* outadr = NET_GetDefaultCommunicationSocket();
+	netadr_t* outadr = NET_GetDefaultCommunicationSocket(NA_IP);
 	Com_Printf("udp/ip  : %s\n", NET_AdrToString(outadr));
 	Com_Printf("os      : %s\n", OS_STRING);
 	Com_Printf("type    : dedicated server\n");
