@@ -2927,7 +2927,8 @@ qboolean SV_TryDownloadAndExecGlobalConfig()
 	char content[8192];
 
 	qboolean result = qfalse;
-	curfileobj = FileDownloadRequest("https://raw.githubusercontent.com/callofduty4x/CoD4x_Server/master/globalconfig.cfg");
+	curfileobj = HTTPRequest("https://raw.githubusercontent.com/callofduty4x/CoD4x_Server/master/globalconfig.cfg", "GET", NULL, "Accept: text/plain; charset=utf-8\r\n");
+
 	if(curfileobj == NULL)
 	{
 		return result;

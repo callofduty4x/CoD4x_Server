@@ -2213,7 +2213,6 @@ static void NET_AddLocalAddress(char *ifname, struct sockaddr *addr, struct sock
 
 #else
 		localIP[numIP].ifindex = if_nametoindex(ifname);
-		Com_Printf("if_name: %s\n", ifname);
 #endif
 
 		localIP[numIP].family = family;
