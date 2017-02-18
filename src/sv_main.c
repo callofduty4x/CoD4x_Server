@@ -46,6 +46,7 @@
 #include "sv_bots.h"
 #include "q_math.h"
 #include "math.h"
+#include "httpftp.h"
 
 #include "sapi.h"
 
@@ -2367,30 +2368,26 @@ static masterservers_t	masterservers;
 
 void SV_MasterHeartbeatInit()
 {
-    char* file;
+    char svlist[4096];
     char* tok;
     const char* name;
     int i;
     int res;
     char line[1024];
-    int len = FS_SV_ReadFile( "masterservers.txt", (void**)&file );
-    if(len < 1)
-    {
-        Com_Printf("No masterservers found in file masterservers.txt\n");
-        return;
-    }
-    tok = strtok(file, "\n");
+
+    Q_strncpyz(svlist, sv_masterservers->string, sizeof(svlist));
+
+    tok = strtok(svlist, ";");
     for(i = 0; tok; ++i)
     {
-        tok = strtok(NULL, "\n");
+        tok = strtok(NULL, ";");
     }
     masterservers.servers = Z_Malloc(i*sizeof(masterserver_t));
-    
-    tok = strtok(file, "\n");
+
+    tok = strtok(svlist, ";");
     for(i = 0; tok; ++i)
     {
         Q_strncpyz(line, tok, sizeof(line));
-        Q_strchrrepl(line, '\r', '\0');
         Cmd_TokenizeString(line);
         name = Cmd_Argv(0);
         if(name[0] == '*')
@@ -2439,7 +2436,6 @@ void SV_MasterHeartbeatInit()
         tok = strtok(NULL, "\n");
     }
     masterservers.count = i;
-    FS_FreeFile(file);
 }
 
 
@@ -2924,6 +2920,70 @@ void SV_InitServerId(){
 
 }
 
+qboolean SV_TryDownloadAndExecGlobalConfig()
+{
+	ftRequest_t* curfileobj;
+	int transret;
+	char content[8192];
+
+	qboolean result = qfalse;
+	curfileobj = FileDownloadRequest("https://raw.githubusercontent.com/callofduty4x/CoD4x_Server/master/globalconfig.cfg");
+	if(curfileobj == NULL)
+	{
+		return result;
+	}
+	do
+	{
+		transret = FileDownloadSendReceive( curfileobj );
+		Sys_SleepUSec(20000);
+	} while (transret == 0);
+
+	if(transret < 0)
+	{
+		FileDownloadFreeRequest(curfileobj);
+		return result;
+	}
+
+	if(curfileobj->code != 200)
+	{
+		Com_Printf("Downloading of global config has failed with the following http code: %d\n", curfileobj->code);
+		FileDownloadFreeRequest(curfileobj);
+		return result;
+	}
+
+	if(sizeof(content) <= curfileobj->contentLength)
+	{
+		FileDownloadFreeRequest(curfileobj);
+		return result;
+	}
+
+	Q_strncpyz(content, (const char*)curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength +1);
+
+	if(strstr(content, "sv_master"))
+	{
+		FS_SV_HomeWriteFile("globalconfig.cfg", content, strlen(content));
+		Cmd_ExecuteString( content );
+		result = qtrue;
+	}
+	FileDownloadFreeRequest(curfileobj);
+	return result;
+}
+
+void SV_DownloadAndExecGlobalConfig()
+{
+	char* buf;
+
+	if(!SV_TryDownloadAndExecGlobalConfig())
+	{
+		if(FS_SV_ReadFile("globalconfig.cfg", (void**)&buf) >= 0)
+		{
+			Cmd_ExecuteString( buf );
+			FS_FreeFile(buf);
+		}
+	}
+}
+
+
 void SV_CopyCvars()
 {
 
@@ -3017,7 +3077,7 @@ void SV_InitCvarsOnce(void){
     sv_master[0] = Cvar_RegisterString("sv_master1", "", 0, "A masterserver name");
     sv_master[1] = Cvar_RegisterString("sv_master2", "", 0, "A masterserver name");
 
-    sv_masterservers = Cvar_RegisterString("sv_masterservers", "cod4master.cod4x.me", 0, "Official used masterservers separated by ;");
+    sv_masterservers = Cvar_RegisterString("sv_masterservers", "", 0, "Official used masterservers separated by ;");
 
     sv_g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24, "Current game type");
     sv_mapname = Cvar_RegisterString("mapname", "", CVAR_ROM | CVAR_SERVERINFO, "Current map name");
@@ -3051,12 +3111,13 @@ void SV_InitCvarsOnce(void){
 
 
 void SV_Init(){
-        SV_AddSafeCommands();
+    SV_AddSafeCommands();
     SV_InitCvarsOnce();
     SVC_RateLimitInit( );
     SV_InitBanlist();
     Init_CallVote();
     SV_InitServerId();
+    SV_DownloadAndExecGlobalConfig();
     SV_MasterHeartbeatInit();
     Com_RandomBytes((byte*)&psvs.randint, sizeof(psvs.randint));
     SV_InitSApi();
