@@ -79,29 +79,28 @@ int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
 // 0x081921A2
 void Math_VectorToAngles(vec3_t vector, vec3_t angles);
 
-void  vec2_copy      (vec2_t to, vec2_t from);
-void  vec2_add       (vec2_t to, vec2_t from);
-void  vec2_substract (vec2_t to, vec2_t from);
-void  vec2_multiply  (vec2_t v, float k);
-void  vec2_divide    (vec2_t v, float k);
-float vec2_distance  (vec2_t start, vec2_t end);
-float vec2_length    (vec2_t v);
-void  vec2_normalize (vec2_t v);
-void  vec2_floor     (vec2_t v);
-void  vec2_rotate    (vec2_t v, float pitch);
+/* Using 'vec*_t' types causes errors. */
+#define vec2_copy(to, from) (to)[0] = (from)[0]; (to)[1] = (from)[1]
+#define vec2_add(to, from) (to)[0] += (from)[0]; (to)[1] += (from)[1]
+#define vec2_substract(to, from) (to)[0] -= (from)[0]; (to)[1] -= (from)[1]
+#define vec2_multiply(v, k) (v)[0] *= (k); (v)[1] *= (k)
+#define vec2_length(v) sqrtf((v)[0]*(v)[0] + (v)[1]*(v)[1])
+#define vec2_floor(v) (v)[0] = floorf((v)[0]); (v)[1] = floorf((v)[1])
+#define vec2_rotate(v, pitch) \
+    do { \
+        vec2_t __cp; \
+        vec2_copy(__cp, (v)); \
+        float cosa = cosf(pitch*M_PI/180); /* In radians. */ \
+        float sina = sinf(pitch*M_PI/180); /* In radians. */ \
+        (v)[0] = __cp[0]*cosa - __cp[1]*sina; \
+        (v)[1] = __cp[0]*sina + __cp[1]*cosa; \
+    } while(0)
 float vec2_maxabs    (vec2_t v);
 
-void  vec3_copy      (vec3_t to, vec3_t from);
-void  vec3_add       (vec3_t to, vec3_t from);
-void  vec3_substract (vec3_t to, vec3_t from);
-void  vec3_multiply  (vec3_t v, float k);
-void  vec3_divide    (vec3_t v, float k);
-float vec3_distance  (vec3_t start, vec3_t end);
-float vec3_length    (vec3_t v);
-void  vec3_normalize (vec3_t v);
-void  vec3_floor     (vec3_t v);
-/* void  vec3_rotate    (vec3_t v, float pitch, float yaw); */
-float vec3_maxabs    (vec3_t v);
+#define vec3_copy(to, from) vec2_copy((to), (from)); (to)[2] = (from)[2]
+#define vec3_add(to, from) vec2_add((to), (from)); (to)[2] += (from)[2]
+#define vec3_substract(to, from) vec2_substract((to), (from)); (to)[2] -= (from)[2]
+#define vec3_multiply(v, k) vec2_multiply((v), (k)); (v)[2] *= (k)
 
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001

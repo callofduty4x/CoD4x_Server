@@ -7,15 +7,15 @@
 #include "dobj_part_cache.h"
 #include "server.h"
 
-BotMovementInfo g_botai[MAX_CLIENTS];
+BotMovementInfo_t g_botai[MAX_CLIENTS];
 
-typedef struct BotAction
+typedef struct BotAction_t
 {
     char* action;
     int key;
-}BotAction;
+}BotAction_t;
 
-const BotAction BotActions[] =
+const BotAction_t BotActions[] =
 {
     { "gostand",    KEY_MASK_JUMP       },
     { "gocrouch",   KEY_MASK_CROUCH     },
@@ -211,7 +211,7 @@ static void scr_botaction(scr_entref_t ent_num)
         Scr_ParamError(0, "Sign for action must be '+' or '-'.");
 
     key_found = qfalse;
-    for (i = 0; i < sizeof(BotActions) / sizeof(BotAction); ++i)
+    for (i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
     {
         if (!Q_stricmp(&action[1], BotActions[i].action))
         {
@@ -228,7 +228,7 @@ static void scr_botaction(scr_entref_t ent_num)
     if (!key_found)
     {
         buffer[0] = '\0';
-        for (i = 0; i < sizeof(BotActions) / sizeof(BotAction); ++i)
+        for (i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
         {
             Q_strcat(buffer, 1024, " ");
             Q_strcat(buffer, 1024, BotActions[i].action);
@@ -241,7 +241,7 @@ static void scr_botaction(scr_entref_t ent_num)
 scr_botlookatplayer
 ==================
 */
-/* bot botLookAtPlayer(<ent target>, [str tag_name]); */
+/* bot gPlayer(<ent target>, [str tag_name]); */
 static void scr_botlookatplayer(scr_entref_t ent_num)
 {
     gentity_t *bot;
@@ -312,7 +312,7 @@ void Scr_AddBotsMovement()
  */
 qboolean shouldSpamUseButton(gentity_t *bot)
 {
-    BotMovementInfo *ai = &g_botai[bot->s.number];
+    BotMovementInfo_t *ai = &g_botai[bot->s.number];
     qboolean is_alive = bot->healthPoints > 0 ? qtrue : qfalse;
 
     if (ai->useSpamDelay)
