@@ -98,6 +98,7 @@ cvar_t	*sv_demoCompletedCmd;
 cvar_t	*sv_screenshotArrivedCmd;
 cvar_t	*sv_mapDownloadCompletedCmd;
 cvar_t	*sv_master[MAX_MASTER_SERVERS];	// master server ip address
+cvar_t	*sv_masterservers;
 cvar_t	*g_mapstarttime;
 cvar_t	*sv_uptime;
 
@@ -3014,7 +3015,9 @@ void SV_InitCvarsOnce(void){
 
 	sv_master[0] = Cvar_RegisterString("sv_master1", "", 0, "A masterserver name");
 	sv_master[1] = Cvar_RegisterString("sv_master2", "", 0, "A masterserver name");
-	
+
+	sv_masterservers = Cvar_RegisterString("sv_masterservers", "cod4master.cod4x.me", 0, "Official used masterservers separated by ;");
+
 	sv_g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24, "Current game type");
 	sv_mapname = Cvar_RegisterString("mapname", "", CVAR_ROM | CVAR_SERVERINFO, "Current map name");
 	sv_maxclients = Cvar_RegisterInt("sv_maxclients", 16, 1, 64, CVAR_INIT | CVAR_SERVERINFO, "Maximum number of clients that can connect to a server");
