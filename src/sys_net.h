@@ -90,7 +90,7 @@ qboolean	NET_SendPacket (netsrc_t sock, int length, const void *data, netadr_t *
 void		QDECL NET_OutOfBandPrint( netsrc_t net_socket, netadr_t *adr, const char *format, ...) __attribute__ ((format (printf, 3, 4)));
 void		QDECL NET_OutOfBandData( netsrc_t sock, netadr_t *adr, byte *format, int len );
 void		NET_RegisterDefaultCommunicationSocket(netadr_t *adr);
-netadr_t*	NET_GetDefaultCommunicationSocket();
+netadr_t*	NET_GetDefaultCommunicationSocket(netadrtype_t family);
 qboolean	NET_CompareAdr (netadr_t *a, netadr_t *b);
 qboolean	NET_CompareBaseAdrMask(netadr_t *a, netadr_t *b, int netmask);
 qboolean	NET_CompareBaseAdr (netadr_t *a, netadr_t *b);
