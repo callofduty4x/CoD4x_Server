@@ -2831,132 +2831,132 @@ void FS_DisplayPath( void ) {
 	}
 }
 
-void FS_Startup(const char* gameName)
+void FS_Startup(const char *gameName)
 {
 
-  char* homePath;
-  cvar_t *levelname;
-  mvabuf;
+    char *homePath;
+    cvar_t *levelname;
+    mvabuf;
 
-  Sys_EnterCriticalSection(CRIT_FILESYSTEM);
+    Sys_EnterCriticalSection(CRIT_FILESYSTEM);
 
-  Com_Printf("----- FS_Startup -----\n");
-  fs_debug = Cvar_RegisterInt("fs_debug", 0, 0, 2, 0, "Enable file system debugging information");
-  fs_copyfiles = Cvar_RegisterBool("fs_copyfiles", 0, 16, "Copy all used files to another location");
-  fs_cdpath = Cvar_RegisterString("fs_cdpath", Sys_DefaultCDPath(), 16, "CD path");
-  fs_basepath = Cvar_RegisterString("fs_basepath", Sys_DefaultInstallPath(), 528, "Base game path");
-  fs_basegame = Cvar_RegisterString("fs_basegame", "", 16, "Base game name");
-  fs_gameDirVar = Cvar_RegisterString("fs_game", "", 28, "Game data directory. Must be \"\" or a sub directory of 'mods/'.");
-  fs_ignoreLocalized = Cvar_RegisterBool("fs_ignoreLocalized", qfalse, 160, "Ignore localized files");
+    Com_Printf("----- FS_Startup -----\n");
+    fs_debug = Cvar_RegisterInt("fs_debug", 0, 0, 2, 0, "Enable file system debugging information");
+    fs_copyfiles = Cvar_RegisterBool("fs_copyfiles", 0, 16, "Copy all used files to another location");
+    fs_cdpath = Cvar_RegisterString("fs_cdpath", Sys_DefaultCDPath(), 16, "CD path");
+    fs_basepath = Cvar_RegisterString("fs_basepath", Sys_DefaultInstallPath(), 528, "Base game path");
+    fs_basegame = Cvar_RegisterString("fs_basegame", "", 16, "Base game name");
+    fs_gameDirVar = Cvar_RegisterString("fs_game", "", 28, "Game data directory. Must be \"\" or a sub directory of 'mods/'.");
+    fs_ignoreLocalized = Cvar_RegisterBool("fs_ignoreLocalized", qfalse, 160, "Ignore localized files");
 
-  fs_packFiles = 0;
+    fs_packFiles = 0;
 
-  homePath = (char*)Sys_DefaultHomePath();
-  if ( !homePath || !homePath[0] )
-    homePath = fs_basepath->resetString;
-  fs_homepath = Cvar_RegisterString("fs_homepath", homePath, 528, "Game home path");
-  fs_restrict = Cvar_RegisterBool("fs_restrict", qfalse, 16, "Restrict file access for demos etc.");
-  fs_usedevdir = Cvar_RegisterBool("fs_usedevdir", qfalse, 16, "Use development directories.");
+    homePath = (char *)Sys_DefaultHomePath();
+    if (!homePath || !homePath[0])
+        homePath = fs_basepath->resetString;
+    fs_homepath = Cvar_RegisterString("fs_homepath", homePath, 528, "Game home path");
+    fs_restrict = Cvar_RegisterBool("fs_restrict", qfalse, 16, "Restrict file access for demos etc.");
+    fs_usedevdir = Cvar_RegisterBool("fs_usedevdir", qfalse, 16, "Use development directories.");
 
-  levelname = Cvar_FindVar("mapname");
+    levelname = Cvar_FindVar("mapname");
 
-  FS_SetDirSep(fs_homepath);
-  FS_SetDirSep(fs_basepath);
-  FS_SetDirSep(fs_gameDirVar);
-  FS_GameCheckDir(fs_gameDirVar);
+    FS_SetDirSep(fs_homepath);
+    FS_SetDirSep(fs_basepath);
+    FS_SetDirSep(fs_gameDirVar);
+    FS_GameCheckDir(fs_gameDirVar);
 
-
-  if( fs_basepath->string[0] )
-  {
-    if( fs_usedevdir->string )
+    if (fs_basepath->string[0])
     {
-      FS_AddGameDirectory(fs_basepath->string, "devraw_shared");
-      FS_AddGameDirectory(fs_basepath->string, "devraw");
-      FS_AddGameDirectory(fs_basepath->string, "raw_shared");
-      FS_AddGameDirectory(fs_basepath->string, "raw");
+        if (fs_usedevdir->string)
+        {
+            FS_AddGameDirectory(fs_basepath->string, "devraw_shared");
+            FS_AddGameDirectory(fs_basepath->string, "devraw");
+            FS_AddGameDirectory(fs_basepath->string, "raw_shared");
+            FS_AddGameDirectory(fs_basepath->string, "raw");
+        }
+        FS_AddGameDirectory(fs_basepath->string, "players");
     }
-    FS_AddGameDirectory(fs_basepath->string, "players");
-  }
 
-  if ( fs_homepath->string[0] && Q_stricmp(fs_basepath->string, fs_homepath->string) && fs_usedevdir->string)
-  {
-    FS_AddGameDirectory(fs_homepath->string, "devraw_shared");
-    FS_AddGameDirectory(fs_homepath->string, "devraw");
-    FS_AddGameDirectory(fs_homepath->string, "raw_shared");
-    FS_AddGameDirectory(fs_homepath->string, "raw");
-  }
-
-  if ( fs_cdpath->string[0] && Q_stricmp(fs_basepath->string, fs_cdpath->string) )
-  {
-    if ( fs_usedevdir->string )
+    if (fs_homepath->string[0] && Q_stricmp(fs_basepath->string, fs_homepath->string) && fs_usedevdir->string)
     {
-      FS_AddGameDirectory(fs_cdpath->string, "devraw_shared");
-      FS_AddGameDirectory(fs_cdpath->string, "devraw");
-      FS_AddGameDirectory(fs_cdpath->string, "raw_shared");
-      FS_AddGameDirectory(fs_cdpath->string, "raw");
+        FS_AddGameDirectory(fs_homepath->string, "devraw_shared");
+        FS_AddGameDirectory(fs_homepath->string, "devraw");
+        FS_AddGameDirectory(fs_homepath->string, "raw_shared");
+        FS_AddGameDirectory(fs_homepath->string, "raw");
     }
-    FS_AddGameDirectory(fs_cdpath->string, gameName);
-  }
+    /* CDPath set. */
+    if (fs_cdpath->string[0] && Q_stricmp(fs_basepath->string, fs_cdpath->string))
+    {
+        if (fs_usedevdir->string)
+        {
+            FS_AddGameDirectory(fs_cdpath->string, "devraw_shared");
+            FS_AddGameDirectory(fs_cdpath->string, "devraw");
+            FS_AddGameDirectory(fs_cdpath->string, "raw_shared");
+            FS_AddGameDirectory(fs_cdpath->string, "raw");
+        }
+        FS_AddGameDirectory(fs_cdpath->string, gameName);
+    }
+    /* BaseGame set. */
+    if (fs_basepath->string[0])
+    {
+        FS_AddGameDirectory(fs_basepath->string, va("%s_shared", gameName));
+        FS_AddGameDirectory(fs_basepath->string, gameName);
+    }
+    /* BaseGame set and (HomePath not equal to BaseGame). (aka multiple servers on one game). */
+    if (fs_basepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string))
+    {
+        /* Last added fs_homepath directory used for logfiles output? */
+        /* Swap next 2 lines and you will get logfile output to '%s_shared'. Why? */
+        /* What about 'usermaps' directory? Why output still same? */
+        FS_AddGameDirectory(fs_homepath->string, va("%s_shared", gameName));
+        FS_AddGameDirectory(fs_homepath->string, gameName);
+        FS_AddGameDirectory(fs_basepath->string, va("%s_shared", gameName));
+    }
+    /* BaseGame set, fs_game is "main" and BaseGame not equal to "main". WUT? */
+    if (fs_basegame->string[0] && !Q_stricmp(gameName, BASEGAME) && Q_stricmp(fs_basegame->string, gameName))
+    {
+        if (fs_cdpath->string[0])
+            FS_AddGameDirectory(fs_cdpath->string, fs_basegame->string);
+        if (fs_basepath->string[0])
+            FS_AddGameDirectory(fs_basepath->string, fs_basegame->string);
+        if (fs_homepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string))
+            FS_AddGameDirectory(fs_homepath->string, fs_basegame->string);
+    }
 
-  if ( fs_basepath->string[0] )
-  {
-    FS_AddGameDirectory(fs_basepath->string, va("%s_shared", gameName));
-    FS_AddGameDirectory(fs_basepath->string, gameName);
-  }
+    /* Setup usermaps directory. */
+    if (fs_gameDirVar->string[0] && !Q_stricmp(gameName, BASEGAME) && Q_stricmp(fs_gameDirVar->string, gameName) && levelname && levelname->string[0])
+    {
+        if (fs_cdpath->string[0])
+            FS_AddGameDirectory(fs_cdpath->string, va("usermaps/%s", levelname->string));
+        if (fs_basepath->string[0])
+            FS_AddGameDirectory(fs_basepath->string, va("usermaps/%s", levelname->string));
+        if (fs_homepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string))
+            FS_AddGameDirectory(fs_homepath->string, va("usermaps/%s", levelname->string));
+    }
 
-  if ( fs_basepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string) )
-  {
-    FS_AddGameDirectory(fs_basepath->string, va("%s_shared", gameName));
-    FS_AddGameDirectory(fs_homepath->string, gameName);
-  }
+    if (fs_gameDirVar->string[0] && !Q_stricmp(gameName, BASEGAME) && Q_stricmp(fs_gameDirVar->string, gameName))
+    {
+        if (fs_cdpath->string[0])
+            FS_AddGameDirectory(fs_cdpath->string, fs_gameDirVar->string);
+        if (fs_basepath->string[0])
+            FS_AddGameDirectory(fs_basepath->string, fs_gameDirVar->string);
+        if (fs_homepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string))
+            FS_AddGameDirectory(fs_homepath->string, fs_gameDirVar->string);
+    }
 
+    /*  Com_ReadCDKey(); */
+    Cmd_AddCommand("path", FS_Path_f);
+    Cmd_AddCommand("which", FS_Which_f);
+    //Cmd_AddCommand("dir", FS_Dir_f );
+    FS_DisplayPath();
+    /*  Cvar_ClearModified(fs_gameDirVar);*/
+    fs_gameDirVar->modified = 0;
+    Com_Printf("----------------------\n");
+    Com_Printf("%d files in iwd files\n", fs_packFiles);
 
-
-  if ( fs_basegame->string[0] && !Q_stricmp(gameName, BASEGAME) && Q_stricmp(fs_basegame->string, gameName) )
-  {
-    if ( fs_cdpath->string[0] )
-      FS_AddGameDirectory(fs_cdpath->string, fs_basegame->string);
-    if ( fs_basepath->string[0] )
-      FS_AddGameDirectory(fs_basepath->string, fs_basegame->string);
-    if ( fs_homepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string) )
-      FS_AddGameDirectory(fs_homepath->string, fs_basegame->string);
-  }
-
-  if ( fs_gameDirVar->string[0] && !Q_stricmp(gameName, BASEGAME) && Q_stricmp(fs_gameDirVar->string, gameName) && levelname && levelname->string[0])
-  {
-	if ( fs_cdpath->string[0] )
-		FS_AddGameDirectory(fs_cdpath->string, va("usermaps/%s", levelname->string));
-	if ( fs_basepath->string[0] )
-		FS_AddGameDirectory(fs_basepath->string, va("usermaps/%s", levelname->string));
-	if ( fs_homepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string) )
-		FS_AddGameDirectory(fs_homepath->string, va("usermaps/%s", levelname->string));
-  }
-
-  if ( fs_gameDirVar->string[0] && !Q_stricmp(gameName, BASEGAME) && Q_stricmp(fs_gameDirVar->string, gameName) )
-  {
-    if ( fs_cdpath->string[0] )
-      FS_AddGameDirectory(fs_cdpath->string, fs_gameDirVar->string);
-    if ( fs_basepath->string[0] )
-      FS_AddGameDirectory(fs_basepath->string, fs_gameDirVar->string);
-    if ( fs_homepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string) )
-      FS_AddGameDirectory(fs_homepath->string, fs_gameDirVar->string);
-  }
-
-/*  Com_ReadCDKey(); */
-  Cmd_AddCommand("path", FS_Path_f);
-  Cmd_AddCommand("which", FS_Which_f);
-  //Cmd_AddCommand("dir", FS_Dir_f );
-  FS_DisplayPath();
-/*  Cvar_ClearModified(fs_gameDirVar);*/
-  fs_gameDirVar->modified = 0;
-  Com_Printf("----------------------\n");
-  Com_Printf("%d files in iwd files\n", fs_packFiles);
-
-  Sys_LeaveCriticalSection(CRIT_FILESYSTEM);
-
+    Sys_LeaveCriticalSection(CRIT_FILESYSTEM);
 
     PHandler_Event(PLUGINS_ONFSSTARTED, fs_searchpaths);
-
 }
 
 void FS_AddIwdFilesForGameDirectory(const char *path, const char *dir);
