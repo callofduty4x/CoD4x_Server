@@ -1959,7 +1959,7 @@ static int FTP_SendReceiveData(ftRequest_t* request)
  HTTP-Server
  =====================================================================
  */
-#ifndef CLIENT_WINDOW_TITLE
+#ifndef DEMOEXT
 
 int HTTPServer_ReadMessage(netadr_t* from, msg_t* msg, ftRequest_t* request)
 {

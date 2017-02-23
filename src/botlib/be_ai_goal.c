@@ -266,7 +266,7 @@ void BotMutateGoalFuzzyLogic( int goalstate, float range ) {
 itemconfig_t *LoadItemConfig( char *filename ) {
 	int max_iteminfo;
 	token_t token;
-	char path[MAX_PATH];
+	char path[BMAX_PATH];
 	source_t *source;
 	itemconfig_t *ic;
 	iteminfo_t *ii;
@@ -278,7 +278,7 @@ itemconfig_t *LoadItemConfig( char *filename ) {
 		LibVarSet( "max_iteminfo", "128" );
 	}
 
-	strncpy( path, filename, MAX_PATH );
+	strncpy( path, filename, BMAX_PATH );
 	source = LoadSourceFile( path );
 	if ( !source ) {
 		botimport.Print( PRT_ERROR, "counldn't load %s\n", path );

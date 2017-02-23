@@ -29,7 +29,7 @@
 
 #define PRODUCT_NAME				"Call of Duty 4 - Modern Warfare Dedicated Server"
 #define BASEGAME					"main"
-//#define CLIENT_WINDOW_TITLE     	"Call of Duty 4 - Modern Warfare Dedicated Server"
+#define CLIENT_WINDOW_TITLE     	"Call of Duty 4 - Modern Warfare Dedicated Server"
 #define CLIENT_WINDOW_MIN_TITLE 	"CoD4 MW"
 
 #define PORT_MASTER 20810

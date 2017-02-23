@@ -36,7 +36,7 @@ If you have questions concerning this license or the applicable additional terms
  *****************************************************************************/
 
 #ifndef _MAX_PATH
-	#define MAX_PATH            MAX_QPATH
+	#define BMAX_PATH            MAX_QPATH
 #endif
 
 #ifndef PATH_SEPERATORSTR

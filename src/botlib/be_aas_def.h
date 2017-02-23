@@ -53,8 +53,8 @@ If you have questions concerning this license or the applicable additional terms
 #define DF_AASENTCLIENT( x )      ( x - ( *aasworlds ).entities - 1 )
 #define DF_CLIENTAASENT( x )      ( &( *aasworlds ).entities[x + 1] )
 
-#ifndef MAX_PATH
-	#define MAX_PATH                MAX_QPATH
+#ifndef BMAX_PATH
+	#define BMAX_PATH                MAX_QPATH
 #endif
 
 //string index (for model, sound and image index)
@@ -181,8 +181,8 @@ typedef struct aas_s
 	float time;
 	int numframes;
 	//name of the aas file
-	char filename[MAX_PATH];
-	char mapname[MAX_PATH];
+	char filename[BMAX_PATH];
+	char mapname[BMAX_PATH];
 	//bounding boxes
 	int numbboxes;
 	aas_bbox_t *bboxes;

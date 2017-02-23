@@ -200,7 +200,7 @@ void DumpWeaponConfig( weaponconfig_t *wc ) {
 weaponconfig_t *LoadWeaponConfig( char *filename ) {
 	int max_weaponinfo, max_projectileinfo;
 	token_t token;
-	char path[MAX_PATH];
+	char path[BMAX_PATH];
 	int i, j;
 	source_t *source;
 	weaponconfig_t *wc;
@@ -218,7 +218,7 @@ weaponconfig_t *LoadWeaponConfig( char *filename ) {
 		max_projectileinfo = 32;
 		LibVarSet( "max_projectileinfo", "32" );
 	} //end if
-	strncpy( path, filename, MAX_PATH );
+	strncpy( path, filename, BMAX_PATH );
 	source = LoadSourceFile( path );
 	if ( !source ) {
 		botimport.Print( PRT_ERROR, "counldn't load %s\n", path );

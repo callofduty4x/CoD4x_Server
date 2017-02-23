@@ -318,8 +318,8 @@ float AAS_Time( void ) {
 //===========================================================================
 int AAS_LoadFiles( const char *mapname ) {
 	int errnum;
-	char aasfile[MAX_PATH];
-//	char bspfile[MAX_PATH];
+	char aasfile[BMAX_PATH];
+//	char bspfile[BMAX_PATH];
 
 	strcpy( ( *aasworld ).mapname, mapname );
 	//NOTE: first reset the entity links into the AAS areas and BSP leaves
@@ -332,14 +332,14 @@ int AAS_LoadFiles( const char *mapname ) {
 	AAS_LoadBSPFile();
 
 	//load the aas file
-	Com_sprintf( aasfile, MAX_PATH, "maps/%s.aas", mapname );
+	Com_sprintf( aasfile, BMAX_PATH, "maps/%s.aas", mapname );
 	errnum = AAS_LoadAASFile( aasfile );
 	if ( errnum != BLERR_NOERROR ) {
 		return errnum;
 	}
 
 	botimport.Print( PRT_MESSAGE, "loaded %s\n", aasfile );
-	strncpy( ( *aasworld ).filename, aasfile, MAX_PATH );
+	strncpy( ( *aasworld ).filename, aasfile, BMAX_PATH );
 	return BLERR_NOERROR;
 } //end of the function AAS_LoadFiles
 //===========================================================================
