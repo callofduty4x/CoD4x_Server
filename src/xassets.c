@@ -84,7 +84,7 @@ void R_Init(){
 #define MAX_XMODELS 2000
 #define MAX_GFXIMAGE 3800
 #define MAX_WEAPON 196
-#define MAX_FX 680
+//#define MAX_FX 680
 
 typedef enum{
         XModelPieces,

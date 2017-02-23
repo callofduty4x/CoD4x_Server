@@ -37,9 +37,13 @@
 //#define _LAGDEBUG
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include <stdarg.h>
 #include <string.h>
+#include <time.h>
+#include <math.h>
+
 
 #ifndef __stdcall
 #define __stdcall __attribute__((stdcall))
@@ -523,4 +527,84 @@ typedef struct hudElemState_s
   hudelem_t archival[MAX_HUDELEMENTS];
 }hudElemState_t;
 
+
+// mode parm for FS_FOpenFile
+typedef enum {
+	FS_READ,
+	FS_WRITE,
+	FS_APPEND,
+	FS_APPEND_SYNC
+} fsMode_t;
+
+typedef enum {
+	FS_SEEK_CUR,
+	FS_SEEK_END,
+	FS_SEEK_SET
+} fsOrigin_t;
+
+
+
+//=============================================
+
+float Com_Clamp( float min, float max, float value );
+
+char    *COM_SkipPath( char *pathname );
+void    COM_StripExtension( const char *in, char *out );
+void    COM_StripExtension2( const char *in, char *out, int destsize );
+void    COM_StripFilename( char *in, char *out );
+void    COM_DefaultExtension( char *path, int maxSize, const char *extension );
+
+void    COM_BeginParseSession( const char *name );
+void    COM_RestoreParseSession( char **data_p );
+void    COM_SetCurrentParseLine( int line );
+int     COM_GetCurrentParseLine( void );
+char    *COM_Parse( char **data_p );
+char    *COM_ParseExt( char **data_p, qboolean allowLineBreak );
+int     COM_Compress( char *data_p );
+void    COM_ParseError( char *format, ... );
+void    COM_ParseWarning( char *format, ... );
+//int		COM_ParseInfos( char *buf, int max, char infos[][MAX_INFO_STRING] );
+
+qboolean COM_BitCheck( const int array[], int bitNum );
+void COM_BitSet( int array[], int bitNum );
+void COM_BitClear( int array[], int bitNum );
+
+
+#define MAX_TOKENLENGTH     1024
+
+#ifndef TT_STRING
+//token types
+#define TT_STRING                   1           // string
+#define TT_LITERAL                  2           // literal
+#define TT_NUMBER                   3           // number
+#define TT_NAME                     4           // name
+#define TT_PUNCTUATION              5           // punctuation
 #endif
+
+typedef struct pc_token_s
+{
+	int type;
+	int subtype;
+	int intvalue;
+	float floatvalue;
+	char string[MAX_TOKENLENGTH];
+} pc_token_t;
+
+// data is an in/out parm, returns a parsed out token
+
+void    COM_MatchToken( char**buf_p, char *match );
+
+void    Swap_Init( void );
+
+
+#define random()    ( ( rand() & 0x7fff ) / ( (float)0x7fff ) )
+#define crandom()   ( 2.0 * ( random() - 0.5 ) )
+
+
+#include "q_platform.h"
+#include "q_math.h"
+#include "sys_cod4defs.h"
+#include "entity.h"
+
+#endif
+

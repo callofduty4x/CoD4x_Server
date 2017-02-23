@@ -88,8 +88,6 @@ qboolean G_ShouldEntitiesClip(moveclip_t *clip, int touchNum, gentity_t *touch)
 	return qtrue;
 }
 
-vec3_t vec3_origin = {0,0,0};
-
 __cdecl void SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *trace){
 
 	gentity_t	*touch;

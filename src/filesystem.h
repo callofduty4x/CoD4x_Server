@@ -58,20 +58,6 @@
 //#define MAX_OSPATH 256
 #define MAX_FILE_HANDLES 64
 
-// mode parm for FS_FOpenFile
-typedef enum {
-	FS_READ,
-	FS_WRITE,
-	FS_APPEND,
-	FS_APPEND_SYNC
-} fsMode_t;
-
-typedef enum {
-	FS_SEEK_CUR,
-	FS_SEEK_END,
-	FS_SEEK_SET
-} fsOrigin_t;
-
 
 typedef struct fileInPack_s {
 	unsigned long		pos;		// file info position in zip

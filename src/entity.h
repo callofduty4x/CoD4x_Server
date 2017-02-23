@@ -282,8 +282,16 @@ struct gentity_s {
 
 
 #define CONTENTS_BODY           0x2000000   // should never be on a brush, only in game
-
 #define PLAYER_SOLIDMASK	0x00600000
+
+/* Probably not. Just here so botlib compiles */
+#define CONTENTS_LAVA           8
+#define CONTENTS_SLIME          16
+#define CONTENTS_WATER          32
+#define CONTENTS_FOG            64
+#define SURF_SKY                0x4     // lighting from environment map
+
+
 
 
 gentity_t* G_Spawn();
