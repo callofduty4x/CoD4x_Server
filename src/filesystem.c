@@ -1638,6 +1638,7 @@ Properly handles line reads
 int FS_ReadLine( void *buffer, int len, fileHandle_t f ) {
 	char		*read;
 	char		*buf;
+	char 		line[4096];
 
 	if ( !FS_Initialized() ) {
 		Com_Error( ERR_FATAL, "Filesystem call made without initialization\n" );
@@ -1653,15 +1654,23 @@ int FS_ReadLine( void *buffer, int len, fileHandle_t f ) {
 
 	buf = buffer;
         *buf = 0;
-	read = fgets (buf, len, fsh[f].handleFiles.file.o);
-
-
+	
+	//--- TODO: This should be updated to read until it properly encounters end of line characters.  
+	//---       Since fgets() will stop reading when it reads len-1 characters the end of line characters will be left for the next read.
+	//---       It should also not return the EOL characters.  This would eliminate the need to check for them.
+	
+	//read = fgets (buf, len, fsh[f].handleFiles.file.o);
+	read = fgets (line, sizeof(line), fsh[f].handleFiles.file.o);
+	
 	if (read == NULL) {	//Error
 
 		if(feof(fsh[f].handleFiles.file.o)) return 0;
 		Com_PrintError("FS_ReadLine: couldn't read");
 		return -1;
-	}
+	}	
+	
+	Q_strncpyz(buf,line,len);
+	
 	return 1;
 }
 
