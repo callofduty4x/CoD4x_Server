@@ -213,8 +213,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	Com_sprintf(ip_str, sizeof(ip_str), "%s", NET_AdrToConnectionString( from ));
 	Info_SetValueForKey( userinfo, "ip", ip_str );
 
-
-	Q_strncpyz(nick, Info_ValueForKey( userinfo, "name" ), 33);
+    ClientCleanName(Info_ValueForKey(userinfo, "name"), nick, 33, false);
 
 	denied[0] = '\0';
 

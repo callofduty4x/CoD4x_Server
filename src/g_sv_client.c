@@ -337,10 +337,6 @@ __asm__ __volatile__(
 	}*/
 }
 
-
-
-static void ClientCleanName( const char *in, char *out, int outSize, qboolean allowcolor );
-
 /*
 ===========
 ClientUserInfoChanged
@@ -423,7 +419,7 @@ void ClientSetUsername(int clientNum, const char* username)
 ClientCheckName
 ============
 */
-static void ClientCleanName( const char *in, char *out, int outSize, qboolean allowColor ) {
+void ClientCleanName( const char *in, char *out, int outSize, qboolean allowColor ) {
 	int len, colorlessLen;
 	char ch;
 	char    *p;
