@@ -1161,15 +1161,8 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 
 	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
 
-	if(client->demorecording)
-	{
-		if(client->demofile.handleFiles.file.o)
-		{
-			SV_StopRecord(client); //Should never happen but who knows
-		}
-		client->demorecording = qfalse;
-		SV_RecordClient(client, client->demoName); //Write ther next demo of client
-	}
+	//It was never intended to make a new demo for each fast_restart.
+	//SV_SpawnServer() stops the demo and cleans the name which did not happen here which resulted in strange naming bug
 
 	if(sv_autodemorecord->boolean && !client->demorecording && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6))
 	{
