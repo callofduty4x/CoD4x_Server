@@ -57,8 +57,19 @@ This tutorial does not cover general programming concepts like Variables, Functi
 
 Describes how some not so basic language concepts are used in GSC.
 
+#### Supported Operators
+* +, -, *, /
+* % modulo
+* <<, >> leftshift and rightshift respectively
+
+#### Supported Types
+* int (32 bit signed)
+* float (32 bit, IEEE 754)
+* string
+* array/dictionary
+
 #### Context
-Functions can be run inside a context. The context of a function can be referenced as **self** from within the function.
+Functions can be run inside a context. The context of a function can be referenced with the **self** keyword from within the function.
 
 ```
 SayHelloToPlayer()
