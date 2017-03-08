@@ -60,6 +60,7 @@ Describes how some not so basic language concepts are used in GSC.
 #### Supported Operators
 * +, -, *, /
 * % modulo
+* !, <, >, <=, >=
 * <<, >> leftshift and rightshift respectively
 
 #### Supported Types
@@ -67,6 +68,12 @@ Describes how some not so basic language concepts are used in GSC.
 * float (32 bit, IEEE 754)
 * string
 * array/dictionary
+
+#### Builtin Functions / Keywords
+* for, while, do-while
+* break, continue, return
+* if, else, switch-case
+* wait, waittill, waittillframeend
 
 #### Context
 Functions can be run inside a context. The context of a function can be referenced with the **self** keyword from within the function.
