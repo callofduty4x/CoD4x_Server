@@ -68,6 +68,7 @@ Describes how some not so basic language concepts are used in GSC.
 * float (32 bit, IEEE 754)
 * string
 * array/dictionary
+* struct
 
 #### Builtin Functions / Keywords
 * for, while, do-while
