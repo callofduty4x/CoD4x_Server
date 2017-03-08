@@ -213,8 +213,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	Com_sprintf(ip_str, sizeof(ip_str), "%s", NET_AdrToConnectionString( from ));
 	Info_SetValueForKey( userinfo, "ip", ip_str );
 
-
-	Q_strncpyz(nick, Info_ValueForKey( userinfo, "name" ), 33);
+    ClientCleanName(Info_ValueForKey(userinfo, "name"), nick, 33, false);
 
 	denied[0] = '\0';
 
@@ -1162,15 +1161,8 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 
 	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
 
-	if(client->demorecording)
-	{
-		if(client->demofile.handleFiles.file.o)
-		{
-			SV_StopRecord(client); //Should never happen but who knows
-		}
-		client->demorecording = qfalse;
-		SV_RecordClient(client, client->demoName); //Write ther next demo of client
-	}
+	//It was never intended to make a new demo for each fast_restart.
+	//SV_SpawnServer() stops the demo and cleans the name which did not happen here which resulted in strange naming bug
 
 	if(sv_autodemorecord->boolean && !client->demorecording && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6))
 	{
