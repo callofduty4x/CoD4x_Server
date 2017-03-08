@@ -105,7 +105,7 @@ Assign a function inside another file to a function pointer:
 bar = myscripts\script::foo;
 ```
 
-To call function pointers we used double brackets:
+To call function pointers we use double brackets:
 ```
 bar = myscripts\script::foo;
 [[bar]]();
