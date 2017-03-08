@@ -35,15 +35,15 @@ Create a file called **_callbacksetup.gsc** inside main_shared/maps/mp/gametypes
 ```
 CodeCallback_StartGameType()
 {
-	// If the gametype has not beed started, run the startup
-	if(!isDefined(level.gametypestarted) || !level.gametypestarted)
-	{
-		[[level.callbackStartGameType]]();
+  // If the gametype has not beed started, run the startup
+  if(!isDefined(level.gametypestarted) || !level.gametypestarted)
+  {
+    [[level.callbackStartGameType]]();
 
-		level.gametypestarted = true; // so we know that the gametype has been started up
-    
-    		thread welcome::init(); // initializes the welcome script
-	}
+    level.gametypestarted = true; // so we know that the gametype has been started up
+
+    thread welcome::init(); // initializes the welcome script
+  }
 }
 
 ```
