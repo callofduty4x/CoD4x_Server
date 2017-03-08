@@ -48,6 +48,95 @@ CodeCallback_StartGameType()
 
 ```
 
+<sub><a name="myfootnote1">1</a>: main_shared is only one possibility to load custom scripts on the CoD4x server. Most certainly the best one for development.</sub>
+
+## Scripting Basics
+### Language Features
+This tutorial does not cover general programming concepts like Variables, Functions, Arrays, etc. Consider reading [this](http://wiki.modsrepository.com/index.php?title=Call_of_Duty_4:_CoD_Script_Handbook) first if you have no clue about programming at all.
+
+#### Context
+Functions can be run inside a context. The context of a function can be referenced as **self** from within the function.
+
+```
+SayHelloToPlayer()
+{
+  self printlnbold("Hello " + self.name);
+}
+
+...
+
+player SayHelloToPlayer();
+```
+
+#### Function Pointers
+Usually you can only define and call functions. However, function pointers let you take a function and store it into a variable for later use. A great example for the use of function pointers is **_callbacksetup.gsc** which was used in the previous chapter. 
+
+Assignment of a function pointer: 
+```
+foo() { ... }
+bar = ::foo;
+```
+
+Assign a function inside another file to a function pointer: 
+```
+// foo now is defined in a scriptfile inside a folder main_shared/myscripts/script.gsc
+bar = myscripts\script::foo;
+```
+
+To call function pointers we used double brackets:
+```
+bar = myscripts\script::foo;
+[[bar]]();
+```
+
+#### Events
+You can emit and wait for events. This enables easy communications across scriptfunctions.
+
+Example:
+```
+notify("player_iscamping"); // called when a player was detected camping
+
+...
+
+player thread watchCamping(); // called when the player connects
+
+...
+
+watchCamping()
+{
+  for(;;)
+  {
+    waittill("player_iscamping");
+    player iprintlnbold("You filthy camper!");
+    // do something cruel to the player because he's camping
+  }
+}
+```
+
+#### Threads
+Threads are used to execute multiple functions in parallel. Don't worry, you don't have to deal with concurreny and synchronization in GSC. Threads are implemented as Fibers aka resumable functions, and are executed sequentially. 
+
+Starting a new thread:
+```
+foo() { ... }
+thread foo();
+```
+
+End a thread at event
+```
+foo()
+{
+  endon("disconnect");
+  
+  for(;;) // do something in infinite loop
+  {
+    ...
+  }
+}
+
+player thread foo(); // threads gets terminated when player disconnects
+```
+
+> Protip: Threads are running until they are paused by wait(seconds) or waittill(event). In case you have many heavy threads you can loadbalance them between serverframes.
 
 
-<a name="myfootnote1">1</a>: main_shared is only one possibility to load custom scripts on the CoD4x server. Most certainly the best one for development.
