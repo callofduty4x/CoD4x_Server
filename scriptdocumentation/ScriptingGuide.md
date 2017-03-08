@@ -124,7 +124,7 @@ Waittill event with parameters:
 
 
 #### Threads
-Threads are used to execute multiple functions in parallel. Don't worry, you don't have to deal with concurreny and synchronization in GSC. Threads are implemented as Fibers aka resumable functions, and are executed sequentially. 
+Threads are used to execute multiple functions in parallel. No worries, you don't have to deal with concurreny and synchronization in GSC. Threads are implemented as Fibers aka resumable functions, and are executed sequentially. 
 
 Starting a new thread:
 ```
@@ -151,7 +151,12 @@ player thread foo(); // threads gets terminated when player disconnects
 
 > use `waittillframeend` to pause the thread and keep executing it on the next serverframe.
 
-## Unmodded (but actually modded) Servers and Modding Mods
+
+## Advanced Topics
+### Unmodded (but actually modded) Servers and Modding Mods
 TODO: describe difference between mods and serverside mods, serverside modding mods
 
+### The Virtual Filesystem
+
+### Serverside Userinterfaces
 
