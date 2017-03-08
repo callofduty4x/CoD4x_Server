@@ -149,6 +149,8 @@ player thread foo(); // threads gets terminated when player disconnects
 
 > Protip: Threads are running until they are paused by wait(seconds) or waittill(event). In case you have many heavy threads you can loadbalance them between serverframes.
 
+> use `waittillframeend` to pause the thread and keep executing it on the next serverframe.
+
 ## Unmodded (but actually modded) Servers and Modding Mods
 TODO: describe difference between mods and serverside mods, serverside modding mods
 
