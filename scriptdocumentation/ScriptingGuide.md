@@ -13,7 +13,7 @@ init()
 {
   for(;;)
   {
-    waittill("connected", player); // waits until a new player connects - player stored in "player" variable
+    level waittill("connected", player); // waits until a new player connects - player stored in "player" variable
     player thread welcome(); // execute a new thread for "player"
   }
 }
@@ -51,8 +51,11 @@ CodeCallback_StartGameType()
 <sub><a name="myfootnote1">1</a>: main_shared is only one possibility to load custom scripts on the CoD4x server. Most certainly the best one for development.</sub>
 
 ## Scripting Basics
-### Language Features
 This tutorial does not cover general programming concepts like Variables, Functions, Arrays, etc. Consider reading [this](http://wiki.modsrepository.com/index.php?title=Call_of_Duty_4:_CoD_Script_Handbook) first if you have no clue about programming at all.
+
+### Language Features
+
+Describes how some not so basic language concepts are used in GSC.
 
 #### Context
 Functions can be run inside a context. The context of a function can be referenced as **self** from within the function.
@@ -90,11 +93,11 @@ bar = myscripts\script::foo;
 ```
 
 #### Events
-You can emit and wait for events. This enables easy communications across scriptfunctions.
+You can emit and wait for events. This enables easy communication between different threads in your code.
 
 Example:
 ```
-notify("player_iscamping"); // called when a player was detected camping
+player notify("player_iscamping"); // called when a player was detected camping
 
 ...
 
@@ -112,6 +115,13 @@ watchCamping()
   }
 }
 ```
+
+Notify with parameter:
+`notify("player_iscamping", 5.0)`
+
+Waittill event with parameters:
+`player waittill("player_iscamping", camptime)`
+
 
 #### Threads
 Threads are used to execute multiple functions in parallel. Don't worry, you don't have to deal with concurreny and synchronization in GSC. Threads are implemented as Fibers aka resumable functions, and are executed sequentially. 
@@ -138,5 +148,8 @@ player thread foo(); // threads gets terminated when player disconnects
 ```
 
 > Protip: Threads are running until they are paused by wait(seconds) or waittill(event). In case you have many heavy threads you can loadbalance them between serverframes.
+
+## Unmodded (but actually modded) Servers and Modding Mods
+TODO: describe difference between mods and serverside mods, serverside modding mods
 
 
