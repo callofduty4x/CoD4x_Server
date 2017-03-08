@@ -109,8 +109,8 @@ watchCamping()
 {
   for(;;)
   {
-    waittill("player_iscamping");
-    player iprintlnbold("You filthy camper!");
+    self waittill("player_iscamping");
+    self iprintlnbold("You filthy camper!");
     // do something cruel to the player because he's camping
   }
 }
