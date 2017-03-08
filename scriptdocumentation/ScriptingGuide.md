@@ -42,7 +42,7 @@ CodeCallback_StartGameType()
 
 		level.gametypestarted = true; // so we know that the gametype has been started up
     
-    thread welcome::init(); // initializes the welcome script
+    		thread welcome::init(); // initializes the welcome script
 	}
 }
 
