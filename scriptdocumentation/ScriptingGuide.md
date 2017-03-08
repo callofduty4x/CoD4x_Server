@@ -153,9 +153,6 @@ player thread foo(); // threads gets terminated when player disconnects
 
 
 ## Advanced Topics
-### Unmodded (but actually modded) Servers and Modding Mods
-TODO: describe difference between mods and serverside mods, serverside modding mods
-
 ### The Virtual Filesystem
 
 ### Serverside Userinterfaces
