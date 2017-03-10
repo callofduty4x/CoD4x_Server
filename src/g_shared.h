@@ -468,7 +468,7 @@ void SpawnVehicle(gentity_t *ent, const char *vehtype);
 void __cdecl G_VehSpawner(gentity_t *ent);
 void __cdecl G_VehCollmapSpawner(gentity_t *ent);
 void __cdecl G_SetModel(gentity_t *ent, const char *modelname);
-void ClientSetUsername(int clientNum, const char *username);
+/* void ClientSetUsername(int clientNum, const char *username); */
 
 //This defines Cvars directly related to executable file
 #ifndef getcvaradr

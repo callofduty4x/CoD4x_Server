@@ -1309,9 +1309,9 @@ gentity_t* SV_AddBotClient(){
 
 	Q_strncpyz(cl->name, name, sizeof(cl->name));
 	Q_strncpyz(cl->shortname, name, sizeof(cl->shortname));
-/*
-	ClientSetUsername(i, name);
-*/
+
+	/* ClientSetUsername(i, name); */
+
 	SV_UpdateClientConfigInfo(cl);
 
 	// when we receive the first packet from the client, we will
