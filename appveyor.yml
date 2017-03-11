@@ -2,7 +2,11 @@ version: 1.0.{build}
 before_build:
 - ps: >-
     choco install -y mingw -x86
-    
+
+    ls "C:/tools"
+    ls "C:/tools/mingw32"
+    ls "C:/tools/mingw32/bin"
+
     Write-Host "Setting up NASM:"
     Write-Host "    Downloading NASM..."
     curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
