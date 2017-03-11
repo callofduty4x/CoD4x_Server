@@ -7,6 +7,7 @@ before_build:
 
     mkdir mingw | Out-Null
     
+    
     curl -o mingw/binutils.tar.xz https://github.com/luzexi/MinGW/raw/master/x86/var/cache/mingw-get/packages/binutils-2.24-1-mingw32-bin.tar.xz
     
     curl -o mingw/mingw-runtime-dev.tar.xz https://github.com/luzexi/MinGW/raw/master/x86/var/cache/mingw-get/packages/mingwrt-3.21-mingw32-dev.tar.xz
