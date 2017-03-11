@@ -1,3 +1,4 @@
+# 
 CC=cc
 CLIBS=-I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath
 CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer -c
