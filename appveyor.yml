@@ -4,16 +4,23 @@ before_build:
     choco install -y mingw -x86
 
     ls "C:/tools"
+    
     ls "C:/tools/mingw32"
+    
     ls "C:/tools/mingw32/bin"
 
     Write-Host "Setting up NASM:"
+    
     Write-Host "    Downloading NASM..."
+    
     curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
+    
     Write-Host "    Installing NASM..."
+    
     .\nasminst.exe /S
     
     Write-Host "Setting up environment variables."
+    
     [Environment]::SetEnvironmentVariable("PATH",  "C:\tools\mingw32\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
 
 build_script:
