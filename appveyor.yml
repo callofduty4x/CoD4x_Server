@@ -56,6 +56,8 @@ before_build:
     curl -o mingw/pexports.tar.xz "http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/pexports/pexports-0.47/pexports-0.47-mingw32-bin.tar.xz"
 
     cd mingw
+    
+    ls
 
     Write-Host "    Installing MinGW..."
 
