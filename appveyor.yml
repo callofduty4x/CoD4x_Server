@@ -7,7 +7,7 @@ before_build:
 
     mkdir mingw | Out-Null
     
-    curl -o mingw/binutils.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz
+    wget -O mingw/binutils.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz
     
     curl -o mingw/mingw-runtime-dev.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mingwrt/mingwrt-3.22/mingwrt-3.22.4-mingw32-dev.tar.xz
     
