@@ -8,6 +8,20 @@ before_build:
     ls "C:/tools/mingw32"
     
     ls "C:/tools/mingw32/bin"
+    
+    Write-Host "    Downloading pexports..."
+
+    pushd "C:/tools/mingw32/bin/"
+    
+    curl -o "pexports.tar.xz" "https://github.com/callofduty4x/CoD4x_Server/raw/master/tools/pexports-0.47-mingw32-bin.tar.xz"
+    
+    Write-Host "    Installing pexports..."
+
+    7z x pexports.tar.xz | Out-Null
+
+    7z x pexports.tar | Out-Null
+
+    popd
 
     Write-Host "Setting up NASM:"
     
