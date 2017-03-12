@@ -20,6 +20,8 @@ before_build:
     7z x pexports.tar.xz | Out-Null
 
     7z x pexports.tar | Out-Null
+    
+    ls
 
     popd
 
