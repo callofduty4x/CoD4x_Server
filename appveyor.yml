@@ -1,167 +1,37 @@
 version: 1.0.{build}
 before_build:
 - ps: >-
-    Write-Host "Setting up MinGW environment:"
+    choco install -y mingw -x86
 
-    Write-Host "    Downloading MinGW..."
-
-    mkdir mingw | Out-Null
+    ls "C:/tools"
     
-    curl -o mingw/binutils.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/binutils/binutils-2.24/binutils-2.24-1-mingw32-bin.tar.xz
+    ls "C:/tools/mingw32"
     
-    curl -o mingw/mingw-runtime-dev.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mingwrt/mingwrt-3.22/mingwrt-3.22.4-mingw32-dev.tar.xz
+    ls "C:/tools/mingw32/bin"
     
-    curl -o mingw/mingw-runtime-dll.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mingwrt/mingwrt-3.22/mingwrt-3.22.4-mingw32-dll.tar.xz
-    
-    curl -o mingw/w32api.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/w32api/w32api-3.18/w32api-3.18.2-mingw32-dev.tar.xz
-    
-    curl -o mingw/mpc.tar.xz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mpc/mpc-1.0.2/libmpc-1.0.2-mingw32-dll-3.tar.xz
-    
-    curl -o mingw/mpfr.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/mpfr/mpfr-3.1.2/mpfr-3.1.2-1-mingw32-dll.tar.lzma
-    
-    curl -o mingw/gmp.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gmp/gmp-5.1.2/gmp-5.1.2-1-mingw32-dll.tar.lzma
-    
-    curl -o mingw/pthreads-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/pthreads-w32/pthreads-w32-2.9.1/pthreads-w32-2.9.1-1-mingw32-dev.tar.lzma
-    
-    curl -o mingw/pthreads-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/pthreads-w32/pthreads-w32-2.9.1/pthreads-w32-2.9.1-1-mingw32-dll.tar.lzma
-    
-    curl -o mingw/libiconv.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/libiconv/libiconv-1.14-3/libiconv-1.14-3-mingw32-dll.tar.lzma
-    
-    curl -o mingw/zlib.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/zlib/zlib-1.2.8/zlib-1.2.8-1-mingw32-dll.tar.lzma
-    
-    curl -o mingw/gettext.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gettext/gettext-0.18.3.1-1/gettext-0.18.3.1-1-mingw32-dll.tar.lzma
-    
-    Write-Host "    Downloading gcc..."
-
-    curl -o mingw/gcc-core-bin.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-bin.tar.lzma
-    
-    curl -o mingw/gcc-core-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-dev.tar.lzma
-    
-    curl -o mingw/gcc-core-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-core-4.8.1-4-mingw32-dll.tar.lzma
-    
-    Write-Host "    Downloading mingw32-make..."
-
-    curl -o mingw/mingw32-make.tar.gz http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/make/mingw32-make-3.81-2/mingw32-make-3.81-2.tar.gz
-    
-    Write-Host "    Downloading g++..."
-
-    curl -o mingw/gcc-c++-bin.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-bin.tar.lzma
-
-    curl -o mingw/gcc-c++-dev.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-dev.tar.lzma
-
-    curl -o mingw/gcc-c++-dll.tar.lzma http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Base/gcc/Version4/gcc-4.8.1-4/gcc-c++-4.8.1-4-mingw32-dll.tar.lzma
-
     Write-Host "    Downloading pexports..."
-
-    curl -o mingw/pexports.tar.xz "http://vorboss.dl.sourceforge.net/project/mingw/MinGW/Extension/pexports/pexports-0.47/pexports-0.47-mingw32-bin.tar.xz"
-
-    cd mingw
-
-    Write-Host "    Installing MinGW..."
-
-    7z x binutils.tar.xz | Out-Null
-
-    7z x binutils.tar | Out-Null
     
-    7z x mingw-runtime-dev.tar.xz | Out-Null
+    curl -o "pexports.tar.xz" "https://github.com/callofduty4x/CoD4x_Server/raw/master/tools/pexports-0.47-mingw32-bin.tar.xz"
     
-    7z x mingw-runtime-dev.tar | Out-Null
-    
-    7z x mingw-runtime-dll.tar.xz | Out-Null
-    
-    7z x mingw-runtime-dll.tar | Out-Null
-    
-    7z x w32api.tar.xz | Out-Null
-    
-    7z x w32api.tar | Out-Null
-    
-    7z x mpc.tar.xz | Out-Null
-    
-    7z x mpc.tar | Out-Null
-    
-    7z x mpfr.tar.lzma | Out-Null
-    
-    7z x mpfr.tar | Out-Null
-    
-    7z x gmp.tar.lzma | Out-Null
-    
-    7z x gmp.tar | Out-Null
-    
-    7z x pthreads-dev.tar.lzma | Out-Null
-    
-    7z x pthreads-dev.tar | Out-Null
-    
-    7z x pthreads-dll.tar.lzma | Out-Null
-    
-    7z x pthreads-dll.tar | Out-Null
-    
-    7z x libiconv.tar.lzma | Out-Null
-    
-    7z x libiconv.tar | Out-Null
-    
-    7z x zlib.tar.lzma | Out-Null
-    
-    7z x zlib.tar | Out-Null
-    
-    7z x gettext.tar.lzma | Out-Null
-    
-    7z x gettext.tar | Out-Null
-
-    Write-Host "    Installing gcc..."
-    
-    7z x gcc-core-bin.tar.lzma | Out-Null
-    
-    7z x gcc-core-bin.tar | Out-Null
-    
-    7z x gcc-core-dev.tar.lzma | Out-Null
-    
-    7z x gcc-core-dev.tar | Out-Null
-    
-    7z x gcc-core-dll.tar.lzma | Out-Null
-    
-    7z x gcc-core-dll.tar | Out-Null
-
-    Write-Host "    Installing mingw32-make..."
-    
-    7z x mingw32-make.tar.gz | Out-Null
-    
-    7z x mingw32-make.tar | Out-Null
-
-    Write-Host "    Installing g++..."
-    
-    7z x gcc-c++-bin.tar.lzma | Out-Null
-    
-    7z x gcc-c++-bin.tar | Out-Null
-    
-    7z x gcc-c++-dev.tar.lzma | Out-Null
-    
-    7z x gcc-c++-dev.tar | Out-Null
-    
-    7z x gcc-c++-dll.tar.lzma | Out-Null
-    
-    7z x gcc-c++-dll.tar | Out-Null
-
     Write-Host "    Installing pexports..."
 
     7z x pexports.tar.xz | Out-Null
 
     7z x pexports.tar | Out-Null
 
-    cd ..
-
     Write-Host "Setting up NASM:"
-
+    
     Write-Host "    Downloading NASM..."
-
+    
     curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
-
+    
     Write-Host "    Installing NASM..."
-
+    
     .\nasminst.exe /S
-
+    
     Write-Host "Setting up environment variables."
-
-    [Environment]::SetEnvironmentVariable("PATH",  "$pwd\mingw\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
+    
+    [Environment]::SetEnvironmentVariable("PATH",  "C:\tools\mingw32\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
 
 build_script:
 - ps: >-
