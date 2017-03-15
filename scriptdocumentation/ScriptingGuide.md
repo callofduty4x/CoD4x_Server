@@ -185,6 +185,8 @@ As your code grows bigger you want to split your code into multiple files. As br
 
 One of the most commonly included files is probably `#include maps\mp\gametypes\_hud_util;`. Which contains different functions for creating serverside hudelements. One of such functions is `setPoint(...)`. Without the **#include** preprocessor directive we would call the function as `maps\mp\gametypes\_hud_util::setPoint(...);`. By adding the include directive as stated before we can shorten this to `setPoint(...);`.
 
+TODO: does #define work in GSC? Any other preprocessor directives possible?
+
 ## Scripting by Example
 
 A collection of scripts to explain common patterns.
