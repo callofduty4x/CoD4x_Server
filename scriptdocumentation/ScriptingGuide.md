@@ -179,6 +179,17 @@ player thread foo(); // threads gets terminated when player disconnects
 
 > Use `waittillframeend;` to pause the thread and keep executing it on the next serverframe. Rarely needed, better use `wait 0.05;`.
 
+#### Referencing external functions
+
+As your code grows bigger you want to split your code into multiple files. As briefly mentioned in the chapter about function pointers (`bar = myscripts\script::foo;`), we can reference external functions via `<foldername>\<scriptfilename>\<functionname>\`. But as you like know it from the C programming lanuage GSC also has a preprocessor. The **#include** directive can be used to insert contents of a gsc file into another one. 
+
+One of the most commonly included files is probably `#include maps\mp\gametypes\_hud_util;`. Which contains different functions for creating serverside hudelements. One of such functions is `setPoint(...)`. Without the **#include** preprocessor directive we would call the function as `maps\mp\gametypes\_hud_util::setPoint(...);`. By adding the include directive as stated before we can shorten this to `setPoint(...);`.
+
+## Scripting by Example
+
+A collection of scripts to explain common patterns.
+
+### Run 
 
 ## Advanced Topics
 ### The Virtual Filesystem
