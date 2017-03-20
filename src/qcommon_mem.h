@@ -25,7 +25,7 @@
 #ifndef __QCOMMON_MEM_H__
 #define __QCOMMON_MEM_H__
 
-#define ZONE_DEBUG
+//#define ZONE_DEBUG
 
 #include <stdlib.h>
 #include "q_shared.h"

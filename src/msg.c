@@ -2630,7 +2630,7 @@ qboolean MSG_ShouldSendPSField(struct snapshotInfo_s *snapInfo, byte sendOriginA
 	return sendOriginAndVel;
 }
 
-
+/* Broken implementation will not work: */
 void oMSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
 {
 
