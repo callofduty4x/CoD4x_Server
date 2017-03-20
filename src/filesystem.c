@@ -3019,7 +3019,7 @@ void FS_AddGameDirectory_Single(const char *path, const char *dir_nolocal, qbool
     {
       Q_strncpyz(fs_gamedir, dir, 256);
     }
-    search = (searchpath_t *)Z_Malloc(sizeof(searchpath_t));
+    search = (searchpath_t *)S_Malloc(sizeof(searchpath_t));
     search->dir = (directory_t *)Z_Malloc(sizeof(directory_t));
     Q_strncpyz(search->dir->path, path, sizeof(search->dir->path));
     Q_strncpyz(search->dir->gamedir, dir, sizeof(search->dir->gamedir));
@@ -3194,7 +3194,7 @@ void FS_AddIwdFilesForGameDirectory(const char *path, const char *dir)
 
 		Q_strncpyz(pak->pakGamename, dir, sizeof(pak->pakGamename));
 
-		search = (searchpath_t *)Z_Malloc(sizeof(searchpath_t));
+		search = (searchpath_t *)S_Malloc(sizeof(searchpath_t));
 		search->pack = pak;
 		search->localized = islocalized;
 		search->langIndex = langindex;

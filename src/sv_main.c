@@ -516,7 +516,7 @@ static void SVC_RateLimitInit( ){
 
     int totalsize = querylimit.max_buckets * sizeof(leakyBucket_t) + querylimit.max_hashes * sizeof(leakyBucket_t*);
 
-    querylimit.buckets = Z_Malloc(totalsize);
+    querylimit.buckets = L_Malloc(totalsize);
 
     if(!querylimit.buckets)
     {
@@ -3255,9 +3255,10 @@ void SV_WriteGameState( msg_t* msg, client_t* cl ) {
         MSG_WriteByte( msg, svc_baseline );
 
         snapInfo.clnum = clnum;
-        snapInfo.cl = NULL;
-        snapInfo.var_01 = 0xFFFFFFFF;
-        snapInfo.var_02 = qtrue;
+        snapInfo.client = NULL;
+        snapInfo.snapshotDeltaTime = 0xFFFFFFFF;
+        snapInfo.fromBaseline = qtrue;
+        snapInfo.archived = 0;
 
         MSG_WriteDeltaEntity( &snapInfo, msg, 0, &nullstate, base, qtrue );
     }
@@ -4987,3 +4988,20 @@ void SV_SpawnServer(const char *mapname)
     Com_DPrintfLogfile("SV_SpawnServer Ended\n");
 #endif
 }
+
+
+
+void SV_SetMapCenterInSVSHeader(float* center)
+{
+	svsHeader.mapCenter[0] = center[0];
+	svsHeader.mapCenter[1] = center[1];
+	svsHeader.mapCenter[2] = center[2];
+}
+
+void SV_GetMapCenterFromSVSHeader(float* center)
+{
+	center[0] = svsHeader.mapCenter[0];
+	center[1] = svsHeader.mapCenter[1];
+	center[2] = svsHeader.mapCenter[2];
+}
+

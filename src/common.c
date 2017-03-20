@@ -342,7 +342,7 @@ sysEvent_t* Com_GetSystemEvent( void )
 		int   len;
 
 		len = strlen( s ) + 1;
-		b = Z_Malloc( len );
+		b = S_Malloc( len );
 		strcpy( b, s );
 		Com_QueueEvent( 0, SE_CONSOLE, 0, 0, len, b );
 	}
@@ -809,6 +809,8 @@ void Com_Init(char* commandLine){
 
     Sec_Init();
 
+	Com_InitZoneMemory();
+
     FS_InitFilesystem();
 
     if(FS_SV_FileExists("securemode"))
@@ -839,53 +841,29 @@ void Com_Init(char* commandLine){
     creator[4] = '4';
     creator[5] = ' ';
     creator[6] = 'X';
-
     creator[7] = ' ';
-    creator[8] = 'C';
-    creator[9] = 'r';
-    creator[10] = 'e';
-    creator[11] = 'a';
-    creator[12] = 't';
-    creator[13] = 'o';
-    creator[14] = 'r';
-    creator[15] = '\0';
+    creator[8] = 'S';
+    creator[9] = 'i';
+    creator[10] = 't';
+    creator[11] = 'e';
+    creator[12] = '\0';
 
-    creatorname[0] = 'N';
-    creatorname[1] = 'i';
-    creatorname[2] = 'n';
-    creatorname[3] = 'j';
-    creatorname[4] = 'a';
-    creatorname[5] = 'm';
-    creatorname[6] = 'a';
-    creatorname[7] = 'n';
-    creatorname[8] = ',';
-    creatorname[9] = ' ';
-    creatorname[10] = 'T';
-    creatorname[11] = 'h';
-    creatorname[12] = 'e';
-    creatorname[13] = 'K';
+    creatorname[0] = 'h';
+    creatorname[1] = 't';
+    creatorname[2] = 't';
+    creatorname[3] = 'p';
+    creatorname[4] = ':';
+    creatorname[5] = '/';
+    creatorname[6] = '/';
+    creatorname[7] = 'c';
+    creatorname[8] = 'o';
+    creatorname[9] = 'd';
+    creatorname[10] = '4';
+    creatorname[11] = 'x';
+    creatorname[12] = '.';
+    creatorname[13] = 'm';
     creatorname[14] = 'e';
-    creatorname[15] = 'l';
-    creatorname[16] = 'm';
-    creatorname[17] = ' ';
-    creatorname[18] = '@';
-    creatorname[19] = ' ';
-    creatorname[20] = 'h';
-    creatorname[21] = 't';
-    creatorname[22] = 't';
-    creatorname[23] = 'p';
-    creatorname[24] = ':';
-    creatorname[25] = '/';
-    creatorname[26] = '/';
-    creatorname[27] = 'c';
-    creatorname[28] = 'o';
-    creatorname[29] = 'd';
-    creatorname[30] = '4';
-    creatorname[31] = 'x';
-    creatorname[32] = '.';
-    creatorname[33] = 'm';
-    creatorname[34] = 'e';
-    creatorname[35] = '\0';
+    creatorname[15] = '\0';
 
     Cvar_RegisterString (creator, creatorname, CVAR_ROM | CVAR_SERVERINFO , "");
 
@@ -952,6 +930,8 @@ void Com_Init(char* commandLine){
     com_fullyInitialized = qtrue;
 
     Com_AddStartupCommands( );
+
+
 }
 
 

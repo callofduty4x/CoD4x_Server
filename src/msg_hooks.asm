@@ -22,40 +22,19 @@
 
 SECTION .text
 
-global GetMinBitCount
-GetMinBitCount:
-	jmp dword [oGetMinBitCount]
-
-global MSG_WriteDeltaClient
-MSG_WriteDeltaClient:
-	jmp dword [oMSG_WriteDeltaClient]
-
-global MSG_WriteDeltaField
-MSG_WriteDeltaField:
-	jmp dword [oMSG_WriteDeltaField]
-
 global MSG_WriteDeltaPlayerstate
 MSG_WriteDeltaPlayerstate:
 	jmp dword [oMSG_WriteDeltaPlayerstate]
 
-global MSG_WriteEntityIndex
-MSG_WriteEntityIndex:
-	jmp dword [oMSG_WriteEntityIndex]
+
 
 global MSG_ReadDeltaUsercmdKey
 MSG_ReadDeltaUsercmdKey:
 	jmp dword [oMSG_ReadDeltaUsercmdKey]
 
-global MSG_SetDefaultUserCmd
-MSG_SetDefaultUserCmd:
-	jmp dword [oMSG_SetDefaultUserCmd]
 
 SECTION .rodata
 
-oGetMinBitCount dd 0x8130500
-oMSG_WriteDeltaClient dd 0x813f49c
-oMSG_WriteDeltaField dd 0x813e22a
 oMSG_WriteDeltaPlayerstate dd 0x813f5a6
-oMSG_WriteEntityIndex dd 0x813de54
+
 oMSG_ReadDeltaUsercmdKey dd 0x81392ae
-oMSG_SetDefaultUserCmd dd 0x8130ad0

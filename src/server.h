@@ -193,10 +193,8 @@ typedef struct client_s {//90b4f8c
 	byte		free[420];
 
 	int 		configDataAcknowledge; //New: to determine which config data updates the client has not yet received
-	int			unknownUsercmd1;	//0x63c
-	int			unknownUsercmd2;	//0x640
-	int			unknownUsercmd3;	//0x644
-	int			unknownUsercmd4;	//0x648
+	vec3_t		predictedOrigin;	//0x63c
+	int			predictedOriginServerTime;	//0x640
 
 	const char*		delayDropMsg;		//0x64c
 	char			userinfo[MAX_INFO_STRING];		// name, etc (0x650)
@@ -852,6 +850,9 @@ void SV_ScreenshotArrived(client_t* cl, const char* filename);
 void SV_ModuleArrived(client_t* cl, const char* filename, long checksum);
 void SV_AddBanForSteamIDGUID(uint64_t id, const char* guid, const char* name, int bantime, const char* banreason);
 void SV_ClientCalcFramerate();
+int SV_GetPredirectedOriginAndTimeForClientNum(int clientNum, float *origin);
+void SV_SetMapCenterInSVSHeader(float* center);
+void SV_GetMapCenterFromSVSHeader(float* center);
 
 #ifdef COD4X18UPDATE
 void SV_ConnectWithUpdateProxy(client_t *cl);

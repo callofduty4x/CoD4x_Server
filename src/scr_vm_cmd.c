@@ -53,7 +53,7 @@ qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean d
 	}
 
 	// use a small malloc to avoid zone fragmentation
-	cmd = Z_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1);
+	cmd = S_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1);
 	strcpy((char*)(cmd +1), cmd_name);
 	cmd->name = (char*)(cmd +1);
 	cmd->function = function;
@@ -156,7 +156,7 @@ qboolean Scr_AddMethod( const char *cmd_name, xfunction_t function, qboolean dev
 	}
 
 	// use a small malloc to avoid zone fragmentation
-	cmd = Z_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1);
+	cmd = S_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1);
 	strcpy((char*)(cmd +1), cmd_name);
 	cmd->name = (char*)(cmd +1);
 	cmd->function = function;

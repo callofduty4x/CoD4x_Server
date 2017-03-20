@@ -122,6 +122,10 @@ float vec2_maxabs    (vec2_t v);
 
 float Q_fabs(float f);
 
+
+#define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f + 0.5f) & 65535)
+#define	SHORT2ANGLE(x)	((x)*(360.0/65536))
+
 #ifndef ID_INLINE
 #ifdef _WIN32
 #define ID_INLINE __inline

@@ -2209,7 +2209,7 @@ void SV_DownloadMap_f()
 		return;
 	}
 
-	url = Z_Malloc(len +1);
+	url = S_Malloc(len +1);
 	if(url == NULL)
 	{
 		Com_PrintError("SV_DownloadMap_f(): Out of memory\n");

@@ -25,8 +25,23 @@
 #ifndef __QCOMMON_MEM_H__
 #define __QCOMMON_MEM_H__
 
+#define ZONE_DEBUG
+
 #include <stdlib.h>
 #include "q_shared.h"
+
+
+typedef enum {
+	TAG_FREE,
+	TAG_GENERAL,
+	TAG_BOTLIB,
+	TAG_RENDERER,
+	TAG_SMALL,
+	TAG_STATIC,
+    TAG_XZONE,
+    TAG_UNZIP
+} memtag_t;
+
 
 void __cdecl Com_InitHunkMemory(void);
 void __cdecl Hunk_InitDebugMemory(void);
@@ -34,7 +49,6 @@ void __cdecl Hunk_ClearTempMemory(void);
 void __cdecl Hunk_ClearTempMemoryHigh(void);
 void* __cdecl Hunk_AllocateTempMemory(int size);
 void __cdecl Hunk_FreeTempMemory(void *buffer);
-void* __cdecl Z_Malloc( int size);
 void __cdecl Mem_Init(void);
 void __cdecl Mem_BeginAlloc(const char*, qboolean);
 void __cdecl Mem_EndAlloc(const char*, int);
@@ -43,8 +57,27 @@ char *CopyString( const char *in );
 void FreeString( char *free );
 void __cdecl PMem_Free(const char*, unsigned int);
 void __cdecl Sys_OutOfMemError(const char* filename, int line);
-#define Z_Free free
-#define S_Malloc Z_Malloc
+void Z_Free( void *ptr );
+void Com_InitSmallZoneMemory( void );
+void Com_InitZoneMemory( void );
+
+#define L_Malloc malloc
+#define L_Free free
+
+
+
+#ifdef ZONE_DEBUG
+#define Z_TagMalloc(size, tag)			Z_TagMallocDebug(size, tag, #size, __FILE__, __LINE__)
+#define Z_Malloc(size)					Z_MallocDebug(size, #size, __FILE__, __LINE__)
+#define S_Malloc(size)					S_MallocDebug(size, #size, __FILE__, __LINE__)
+void *Z_TagMallocDebug( int size, int tag, char *label, char *file, int line );	// NOT 0 filled memory
+void *Z_MallocDebug( int size, char *label, char *file, int line );			// returns 0 filled memory
+void *S_MallocDebug( int size, char *label, char *file, int line );			// returns 0 filled memory
+#else
+void *Z_TagMalloc( int size, int tag );	// NOT 0 filled memory
+void *Z_Malloc( int size );			// returns 0 filled memory
+void *S_Malloc( int size );			// NOT 0 filled memory only for small allocations
+#endif
 
 #endif
 

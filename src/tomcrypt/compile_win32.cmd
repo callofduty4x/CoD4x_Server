@@ -3,6 +3,7 @@
 SET FLAGS=-m32 -Wall -Os -s -c -I. -DLTC_NO_ROLC -DLTC_SOURCE
 SET MATHFLAGS=-m32 -Wall -Os -s -c -I. -Imath -DLTC_NO_ROLC -DLTC_SOURCE
 REM -Wsign-compare -W -Wshadow -Wno-unused-parameter-Wsystem-headers -Wdeclaration-after-statement -Wbad-function-cast -Wcast-align -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wpointer-arith
+gcc %FLAGS% ciphers\aes\aes.c
 gcc %FLAGS% hashes\*.c
 gcc %FLAGS% misc\crypt\*.c
 gcc %FLAGS% misc\base64\*.c

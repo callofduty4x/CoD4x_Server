@@ -783,7 +783,7 @@ qboolean HTTPCreateWebadminMessage(ftRequest_t* request, msg_t* msg, char* sessi
 
 	len = 0x20000;
 
-	buf = Z_Malloc(len);
+	buf = L_Malloc(len);
 	if(buf == NULL)
 	{
 		return qfalse;

@@ -28,6 +28,7 @@
 #include "qcommon_io.h"
 #include "qcommon_logprint.h"
 #include "qcommon.h"
+#include "qcommon_mem.h"
 #include "sys_cod4defs.h"
 #include "filesystem.h"
 #include "sys_cod4loader.h"
@@ -463,6 +464,8 @@ int Sys_Main(char* commandLine){
     Sys_InitializeCriticalSections();
 
     Sys_ThreadMain();
+
+	Com_InitSmallZoneMemory( );
 
     CON_Init();
     extractor_init();

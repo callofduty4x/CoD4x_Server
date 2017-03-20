@@ -1067,7 +1067,7 @@ static void   zcfree  OF((voidp opaque, voidp ptr));
 #endif
 
 #ifndef ALLOC
-# define ALLOC(size) (Z_Malloc(size))
+# define ALLOC(size) (Z_TagMalloc(size, TAG_UNZIP))
 #endif
 #ifndef TRYFREE
 # define TRYFREE(p) {if (p) Z_Free(p);}
@@ -4388,7 +4388,7 @@ int inflateSyncPoint(z_streamp z)
 voidp zcalloc (voidp opaque, unsigned items, unsigned size)
 {
     if (opaque) items += size - size; /* make compiler happy */
-    return (voidp)Z_Malloc(items*size);
+    return (voidp)Z_TagMalloc(items*size, TAG_UNZIP);
 }
 
 void  zcfree (voidp opaque, voidp ptr)

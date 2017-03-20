@@ -316,7 +316,7 @@ void DB_CustomAllocOnce(XAssetType_t type)
 	int typesize = DB_GetXAssetTypeSize(type);
 	void *alloc;
 
-	alloc = Z_Malloc(count * typesize);
+	alloc = Z_TagMalloc(count * typesize, TAG_XZONE);
 	if(alloc)
 	{
 		DB_XAssetPool[type] = alloc;
@@ -346,7 +346,7 @@ void DB_RelocateXAssetMem()
 		count = XAssetRequestedCount[i];
 		typesize = DB_GetXAssetTypeSize(i);
 
-		newmem = Z_Malloc(count * typesize);
+		newmem = Z_TagMalloc(count * typesize, TAG_XZONE);
 
 		if(newmem == NULL)
 		{

@@ -855,7 +855,7 @@ qboolean SV_RemoteCmdAddAdmin(int uid, char* guid, int power)
 		return qfalse;
 	}
 
-	admin = Z_Malloc(sizeof(adminPower_t));
+	admin = S_Malloc(sizeof(adminPower_t));
 
 	if(admin)
 	{

@@ -75,17 +75,17 @@ static void FT_FreeRequest(ftRequest_t* request)
 	}
 	if(request->recvmsg.data != NULL)
 	{
-		Z_Free(request->recvmsg.data);
+		L_Free(request->recvmsg.data);
 		request->recvmsg.data = NULL;
 	}
 	if(request->sendmsg.data != NULL)
 	{
-		Z_Free(request->sendmsg.data);
+		L_Free(request->sendmsg.data);
 		request->sendmsg.data = NULL;
 	}
 	if(request->transfermsg.data != NULL)
 	{
-		Z_Free(request->transfermsg.data);
+		L_Free(request->transfermsg.data);
 		request->transfermsg.data = NULL;
 	}
 	if(request->socket >= 0)
@@ -98,7 +98,7 @@ static void FT_FreeRequest(ftRequest_t* request)
     NET_TcpCloseSocket(request->transfersocket);
 		request->transfersocket = -1;
 	}
-	Z_Free(request);
+	L_Free(request);
 }
 
 
@@ -116,7 +116,7 @@ static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 	size = sizeof(ftRequest_t);
 #endif
 
-	request = Z_Malloc(size);
+	request = L_Malloc(size);
 	if(request == NULL)
 		return NULL;
 
@@ -132,7 +132,7 @@ static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 	}
 
 	/* For proper terminating of string data +1 */
-	buf = Z_Malloc(INITIAL_BUFFERLEN +1);
+	buf = L_Malloc(INITIAL_BUFFERLEN +1);
 	if( buf == NULL)
 	{
 		FT_FreeRequest(request);
@@ -140,7 +140,7 @@ static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 	}
 	MSG_Init(&request->recvmsg, buf, INITIAL_BUFFERLEN);
 
-	buf = Z_Malloc(INITIAL_BUFFERLEN);
+	buf = L_Malloc(INITIAL_BUFFERLEN);
 	if( buf == NULL)
 	{
 		FT_FreeRequest(request);
@@ -231,7 +231,7 @@ static void FT_AddData(ftRequest_t* request, void* data, int len)
 	{
 		newsize = request->sendmsg.cursize + len;
 
-		newbuf = Z_Malloc(newsize);
+		newbuf = L_Malloc(newsize);
 		if(newbuf == NULL)
 		{
 			MSG_WriteData(&request->sendmsg, data, len);
@@ -239,7 +239,7 @@ static void FT_AddData(ftRequest_t* request, void* data, int len)
 		}
 		Com_Memcpy(newbuf, request->sendmsg.data, request->sendmsg.cursize);
 
-		Z_Free(request->sendmsg.data);
+		L_Free(request->sendmsg.data);
 		request->sendmsg.data = newbuf;
 		request->sendmsg.maxsize = newsize;
 	}
@@ -374,16 +374,16 @@ static int FT_ReceiveData(ftRequest_t* request)
 	if (newsize)
 	{
 		/* For proper terminating of string data +1 */
-		newbuf = Z_Malloc(newsize +1);
+		newbuf = L_Malloc(newsize +1);
 		if(newbuf == NULL)
 		{
-      NET_TcpCloseSocket(request->socket);
-      request->socket = -1;
-      return -2;
+			NET_TcpCloseSocket(request->socket);
+			request->socket = -1;
+			return -2;
 		}
 		Com_Memcpy(newbuf, request->recvmsg.data, request->recvmsg.cursize);
 
-		Z_Free(request->recvmsg.data);
+		L_Free(request->recvmsg.data);
 		request->recvmsg.data = newbuf;
 		request->recvmsg.maxsize = newsize;
 	}
@@ -1490,14 +1490,14 @@ static int FTP_ReceiveData(ftRequest_t* request)
 
 	if (newsize)
 	{
-		newbuf = Z_Malloc(newsize +1);
+		newbuf = L_Malloc(newsize +1);
 		if(newbuf == NULL)
 		{
 			return -1;
 		}
 		Com_Memcpy(newbuf, request->transfermsg.data, request->transfermsg.cursize);
 
-		Z_Free(request->transfermsg.data);
+		L_Free(request->transfermsg.data);
 		request->transfermsg.data = newbuf;
 		request->transfermsg.maxsize = newsize;
 	}
@@ -1723,7 +1723,7 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 					request->headerLength = 0;
 					request->transfertotalreceivedbytes = 0;
 
-					buf = Z_Malloc(INITIAL_BUFFERLEN +1);
+					buf = L_Malloc(INITIAL_BUFFERLEN +1);
 					if( buf == NULL)
 					{
 						Com_PrintWarning("FTP_SendReceiveData: Failed to allocate %d bytes for download file!\n", bytes);
@@ -1929,7 +1929,7 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 			}
 			if(request->recvmsg.data != NULL)
 			{
-				Z_Free(request->recvmsg.data);
+				L_Free(request->recvmsg.data);
 				request->recvmsg.data = NULL;
 			}
 			if(request->transfermsg.data == NULL)
@@ -1986,7 +1986,7 @@ int HTTPServer_ReadMessage(netadr_t* from, msg_t* msg, ftRequest_t* request)
 			newsize = 2 * request->recvmsg.maxsize + msg->cursize;
 		}
 
-		newbuf = Z_Malloc(newsize);
+		newbuf = L_Malloc(newsize);
 		if(newbuf == NULL)
 		{
 			return -1;
@@ -1994,7 +1994,7 @@ int HTTPServer_ReadMessage(netadr_t* from, msg_t* msg, ftRequest_t* request)
 
 		Com_Memcpy(newbuf, request->recvmsg.data, request->recvmsg.cursize);
 
-		Z_Free(request->recvmsg.data);
+		L_Free(request->recvmsg.data);
 		request->recvmsg.data = newbuf;
 		request->recvmsg.maxsize = newsize;
 
@@ -2149,14 +2149,14 @@ void HTTPServer_BuildMessage( ftRequest_t* request, char* status, char* message,
 					  "\r\n", status, len, sessionkey);
 
 
-	newbuf = Z_Malloc(headerlen + len);
+	newbuf = L_Malloc(headerlen + len);
 	if(newbuf == NULL)
 	{
 		return;
 	}
 	if(request->sendmsg.data)
 	{
-		Z_Free(request->sendmsg.data);
+		L_Free(request->sendmsg.data);
 	}
 	request->sendmsg.data = newbuf;
 	request->sendmsg.maxsize = headerlen + len;
@@ -2204,7 +2204,7 @@ void HTTPServer_BuildResponse(ftRequest_t* request, char* sessionkey, httpPostVa
 	if(hasmessage)
 	{
 		HTTPServer_BuildMessage( request, "200 OK", (char*)msg.data, msg.cursize, sessionkey);
-		Z_Free(msg.data);
+		L_Free(msg.data);
 		return;
 	}
 	HTTPServer_BuildMessage( request, "403 FORBIDDEN", "Error: Forbidden", strlen("Error: Forbidden"), sessionkey);

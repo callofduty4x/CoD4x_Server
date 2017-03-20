@@ -118,10 +118,10 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
     int var_x, from_first_entity, from_num_clients, from_first_client;
 
     snapInfo.clnum = client - svsHeader.clients;
-    snapInfo.cl = (void*)client;
-    snapInfo.var_01 = 0;
-    snapInfo.var_02 = 0;
-    snapInfo.var_03 = 0;
+    snapInfo.client = (void*)client;
+	snapInfo.snapshotDeltaTime = 0;
+    snapInfo.fromBaseline = 0;
+    snapInfo.archived = 0;
 
     frame = &client->frames[client->netchan.outgoingSequence & PACKET_MASK];
     frame->var_03 = svsHeader.time;
@@ -179,7 +179,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
     MSG_WriteByte(msg, svc_snapshot);
     MSG_WriteLong(msg, svsHeader.time);
     MSG_WriteByte(msg, lastframe);
-    snapInfo.var_01 = var_x;
+    snapInfo.snapshotDeltaTime = var_x;
 
     snapFlags = svsHeader.snapFlagServerBit;
 
@@ -257,10 +257,10 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 
 		if ( newnum < oldnum ) {
 			// this is a new entity, send it from the baseline
-			snapInfo.var_02 = 1;
+			snapInfo.fromBaseline = 1;
 	//		Com_Printf("Delta Add Entity: %i\n", newent->number);
 			MSG_WriteDeltaEntity( &snapInfo, msg, svsHeader.time, &svsHeader.svEntities[newnum].baseline.s, newent, qtrue );
-			snapInfo.var_02 = 0;
+			snapInfo.fromBaseline = 0;
 			newindex++;
 			continue;
 		}

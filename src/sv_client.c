@@ -40,6 +40,7 @@
 #include "sys_thread.h"
 #include "hl2rcon.h"
 #include "sv_auth.h"
+#include "sec_crypto.h"
 
 #include "sapi.h"
 
@@ -602,14 +603,15 @@ client->receivedstats reset by SV_SpawnServer
 */
 void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 {
-	int type, size;
+	int type, size, i, k;
+	byte statsbuf[sizeof(cl->stats)];
 	type = MSG_ReadByte(msg);
 	if(type == 0)
 	{
 		cl->receivedstats = 1;
 		return;
 	}
-	if(type != 1)
+	if(type != 1 && type != 2)
 	{
 		return;
 	}
@@ -623,7 +625,43 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 		return; //Double requests due to map_rotate?
 		//SV_DropClient(cl, "Received stats although it was not requested from client");
 	}
-	MSG_ReadData(msg, &cl->stats, sizeof(cl->stats));
+	MSG_ReadData(msg, statsbuf, sizeof(statsbuf));
+	if(type != 2)
+	{
+		memcpy(&cl->stats, statsbuf, sizeof(cl->stats));
+	}else{
+		//Decrypt stats.
+		/* For OVH Hosting's buggy firewalls making us mad!!!
+		Need to CBC encrypt stats to fool it */
+		symmetric_key skey;
+
+		uint8_t key[16];
+		uint32_t* ikey = (uint32_t*)key;
+		ikey[0] = cl->challenge;
+		ikey[1] = cl->challenge;
+		ikey[2] = cl->challenge;
+		ikey[3] = cl->challenge;
+
+		uint8_t plaintext[16];
+		uint8_t ciphertext[16];
+		uint8_t iv[16] = {0x4f, 0x11, 0x62, 0xeb, 0x44, 0x61, 0x99, 0x66, 0xa4, 0xcf, 0x41, 0x73, 0x99, 0x12, 0x55, 0xb9};
+		memcpy(ciphertext, iv, sizeof(ciphertext));
+
+		rijndael_setup(key, 16, 0, &skey);
+		for(i = 0; i < sizeof(cl->stats)/16; ++i)
+		{
+			memcpy(ciphertext, statsbuf + 16*i, sizeof(ciphertext));
+			rijndael_ecb_decrypt(ciphertext, plaintext, &skey);
+
+			for(k = 0; k < 16; ++k) //Cipher Block Chaining Mode
+			{
+				plaintext[k] ^= iv[k];
+			}
+			memcpy(iv, ciphertext, sizeof(iv));
+			memcpy(((uint8_t*)&cl->stats) + 16*i, plaintext, sizeof(plaintext));
+		}
+		rijndael_done(&skey);
+	}
 	Com_Printf("Received packet %i of stats data\n", 0);
 	cl->receivedstats = 1;
 }
@@ -1022,10 +1060,10 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		oldcmd = cmd;
 	}
 
-	cl->unknownUsercmd1 = MSG_ReadLong(msg);
-	cl->unknownUsercmd2 = MSG_ReadLong(msg);
-	cl->unknownUsercmd3 = MSG_ReadLong(msg);
-	cl->unknownUsercmd4 = MSG_ReadLong(msg);
+	*((uint32_t*)&cl->predictedOrigin[0]) = MSG_ReadLong(msg);
+	*((uint32_t*)&cl->predictedOrigin[1]) = MSG_ReadLong(msg);
+	*((uint32_t*)&cl->predictedOrigin[2]) = MSG_ReadLong(msg);
+	cl->predictedOriginServerTime = MSG_ReadLong(msg);
 
 
 	// TTimo
@@ -2575,7 +2613,7 @@ void SV_RelocateReliableMessageProtocolBuffer(msg_t* msg, int newsize)
 	{
 		newsize = msg->cursize;
 	}
-	newbuffer = Z_Malloc(newsize);
+	newbuffer = L_Malloc(newsize);
 
 	if(newbuffer == NULL)
 	{
@@ -2584,7 +2622,7 @@ void SV_RelocateReliableMessageProtocolBuffer(msg_t* msg, int newsize)
 	if(msg->data != NULL)
 	{
 		memcpy(newbuffer, msg->data, msg->cursize);
-		Z_Free(msg->data);
+		L_Free(msg->data);
 	}
 	msg->data = newbuffer;
 	msg->maxsize = newsize;
@@ -2698,7 +2736,7 @@ qboolean SV_SetupReliableMessageProtocol(client_t* client)
     int size;
 
     size = RNET_DEFAULT_BUFFER_SIZE;
-    defaultbuffer = Z_Malloc(size);
+    defaultbuffer = L_Malloc(size);
 
     if(client->netchan.remoteAddress.type == NA_BAD)
     {
@@ -2726,7 +2764,7 @@ void SV_DisconnectReliableMessageProtocol(client_t* client)
 	ReliableMessageDisconnect(client->reliablemsg.netstate);
 	if(client->reliablemsg.recvbuffer.data)
 	{
-		Z_Free(client->reliablemsg.recvbuffer.data);
+		L_Free(client->reliablemsg.recvbuffer.data);
 	}
 	client->reliablemsg.recvbuffer.data = NULL;
 	client->reliablemsg.recvbuffer.cursize = 0;
@@ -2803,4 +2841,16 @@ int SV_GetClientStat(int clientNum, signed int index)
 
 	return 0;
   }
+}
+
+
+
+
+int SV_GetPredirectedOriginAndTimeForClientNum(int clientNum, float *origin)
+{
+	client_t* client = &svs.clients[clientNum];
+	origin[0] = client->predictedOrigin[0];
+	origin[1] = client->predictedOrigin[1];
+	origin[2] = client->predictedOrigin[2];	
+	return client->predictedOriginServerTime;
 }

@@ -378,7 +378,7 @@ qboolean FS_FCloseDemoFile( fileHandleData_t *fh ) {
 	if (fh->handleFiles.file.o) {
 	    FS_DemoFlush( fh );
 	    if(fh->writebuffer){
-		Z_Free(fh->writebuffer);
+		L_Free(fh->writebuffer);
 	    }
 	    fclose (fh->handleFiles.file.o);
 	    Com_Memset( fh, 0, sizeof( fileHandleData_t ) );
@@ -386,7 +386,7 @@ qboolean FS_FCloseDemoFile( fileHandleData_t *fh ) {
 	}
 
 	if(fh->writebuffer){
-		Z_Free(fh->writebuffer);
+		L_Free(fh->writebuffer);
 	}
 
 	Com_Memset( fh, 0, sizeof( fileHandleData_t ) );
@@ -429,7 +429,7 @@ qboolean FS_FOpenDemoFileWrite( const char *filename, fileHandleData_t *fh ) {
 	if (!fh->handleFiles.file.o) {
 		return qfalse;
 	}
-	fh->writebuffer = Z_Malloc(FS_DEMOWRITEBUF_SIZE);
+	fh->writebuffer = L_Malloc(FS_DEMOWRITEBUF_SIZE);
 	fh->bufferSize = FS_DEMOWRITEBUF_SIZE;
 	return qtrue;
 }

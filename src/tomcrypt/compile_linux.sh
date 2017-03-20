@@ -1,5 +1,6 @@
 FLAGS="-m32 -Wall -Os -s -c -I. -DLTC_NO_ROLC -DLTC_SOURCE"
 MATHFLAGS="-m32 -Wall -Os -s -c -I. -Imath -DLTC_NO_ROLC -DLTC_SOURCE"
+gcc $FLAGS ciphers/aes/aes.c
 gcc $FLAGS hashes/*.c
 gcc $FLAGS misc/crypt/*.c
 gcc $FLAGS misc/base64/*.c
