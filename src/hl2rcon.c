@@ -757,7 +757,7 @@ void HL2Rcon_StatusCommand()
 	if (!cl->state)
 		continue;
 
-	SV_SApiSteamIDToString(cl->playerid, psti, sizeof(psti));
+	SV_SApiSteamIDTo3IDString(cl->playerid, psti, sizeof(psti));
 
 	int contime = (svs.time - cl->connectedTime) / 1000;
 

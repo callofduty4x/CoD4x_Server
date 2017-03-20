@@ -568,11 +568,10 @@ qboolean HTTP_BuildNewRequest( ftRequest_t* request, const char* method, msg_t* 
 	if(msg != NULL)
 	{
 		Com_sprintf(extheaderfields, sizeof(extheaderfields), "Content-Length: %d\r\n", msg->cursize);
-		if(additionalheaderlines && additionalheaderlines[0])
-		{
-			Q_strcat(extheaderfields, sizeof(extheaderfields), additionalheaderlines);
-		}
-
+	}
+	if(additionalheaderlines && additionalheaderlines[0])
+	{
+		Q_strcat(extheaderfields, sizeof(extheaderfields), additionalheaderlines);
 	}
 	Com_sprintf(getbuffer, sizeof(getbuffer),
 				"%s %s HTTP/1.1\r\n"

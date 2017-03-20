@@ -337,10 +337,6 @@ __asm__ __volatile__(
 	}*/
 }
 
-
-
-static void ClientCleanName( const char *in, char *out, int outSize, qboolean allowcolor );
-
 /*
 ===========
 ClientUserInfoChanged
@@ -389,8 +385,10 @@ __cdecl void ClientUserinfoChanged( int clientNum ) {
 	}
 
 }
-
-void ClientSetUsername(int clientNum, const char* username)
+/* T-Max: I think this can be used to remove color codes from
+ * players in game, but keep colors for spectators somehow.
+ * But I'm not sure since players can't change their name during game. */
+/* void ClientSetUsername(int clientNum, const char* username)
 {
 
 	gentity_t *ent;
@@ -416,14 +414,14 @@ void ClientSetUsername(int clientNum, const char* username)
 
 	Q_strncpyz(client->sess.cs.netname, client->sess.newnetname, sizeof( client->sess.newnetname ));
 
-}
+}*/
 
 /*
 ===========
 ClientCheckName
 ============
 */
-static void ClientCleanName( const char *in, char *out, int outSize, qboolean allowColor ) {
+void ClientCleanName( const char *in, char *out, int outSize, qboolean allowColor ) {
 	int len, colorlessLen;
 	char ch;
 	char    *p;

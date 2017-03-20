@@ -1,4 +1,5 @@
-CC=cc
+# 
+CC=gcc
 CLIBS=-I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath
 CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer -c
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows
