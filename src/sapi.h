@@ -18,6 +18,7 @@ void SV_SApiSteamIDTo64String(uint64_t steamid, char* string, int length);
 uint64_t SV_SApiStringToID(const char* steamidstring);
 qboolean SV_SApiSteamIDIndividual(uint64_t steamid);
 qboolean SV_SApiSteamIDIndividualSteamOnly(uint64_t steamid);
+void SV_SApiSteamIDTo3IDString(uint64_t steamid, char* string, int length);
 //void SV_SApiReadModules( client_t* cl, msg_t* msg );
 //void SV_SApiRequestModules( client_t* cl, msg_t* msg );
 void SV_SApiSendModuleRequest(client_t* cl);
