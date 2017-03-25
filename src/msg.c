@@ -1865,7 +1865,7 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
 }
 
 
-void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
+__regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
 {
 	int nullfield;
 	int32_t timetodata;
@@ -1992,7 +1992,8 @@ void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int 
 			break;
 
 		case -86:
-			MSG_WriteBits(msg, floorf(((floattodata - 1.4) * 10.0)), 5);
+			MSG_WriteBits(msg, 2/*(unsigned int)floorf(((floattodata - 1.4) * 10.0))*/, 5);
+			Com_Printf("Scale: %hu\n", (unsigned int)floorf(((floattodata - 1.4) * 10.0)));
 			break;
 
 		case -85:

@@ -76,7 +76,7 @@ unsigned int PushGroundEnt();
 qboolean Scr_ScriptRuntimecheckInfiniteLoop();
 const char* SV_GetGuidBin(int clnum);
 void G_ClientStopUsingTurret_hook(void* ent);
-
+void MSG_WriteDeltaField();
 
 static void __cdecl Cbuf_AddText_Wrapper_IW(int dummy, const char *text )
 {
@@ -418,7 +418,9 @@ static byte patchblock_DB_LOADXASSETS[] = { 0x8a, 0x64, 0x20, 0x8,
 	SetCall(0x80b7a2a, G_ClientStopUsingTurret_hook);
 	SetCall(0x80a7ecf, G_ClientStopUsingTurret_hook);
 	SetCall(0x80b8bce, G_ClientStopUsingTurret_hook);
-	SetCall(0x081DADD8, store_fastfile_contents_information);
+	SetCall(0x81DADD8, store_fastfile_contents_information);
+	SetJump(0x813e22a, MSG_WriteDeltaField);
+
 }
 
 
