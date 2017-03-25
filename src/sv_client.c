@@ -2643,7 +2643,6 @@ void SV_ExecuteReliableMessage(client_t* client)
 			break;
 		case 0x35448:
 			SV_SApiProcessModules(client, msg);
-			//asdftest();
 			break;
 		default:
 			Com_PrintWarning("Unknown clientcommand: %d\n", command);
