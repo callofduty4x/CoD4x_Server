@@ -54,6 +54,50 @@ xbase.iwd must be updated!
 - Http Api exposed to plugins ( blocking / non-blocking )
 
 ## Before ...
-### 
 
+July 7 2013:
+
+Code_CallbackPlayerSay*: Added 2nd argument (to entity)
+
+August 11 2013
+Code_CallbackPlayerSay*: 2nd argument = boolean teamchat -> false: toall true: onlyteam
+
+
+Hmm I was too lazy to write anything...
+
+February 3 2014:
+
+CodeCallback_PlayerSayCmd is removed.
+CodeCallback_PlayerSayAll is renamed to CodeCallback_PlayerSay.
+CodeCallback_ScriptCommand added as well as script function: addscriptcommand()
+
+Fixed an issue that cheatprotected cvars got no reset on level startup which caused strange effects on Deathrun mod with bg_falldamage cvars.
+
+June 22 2014:
+Removed chat trap for script when a command gets invoked.
+Use CodeCallback_ScriptCommand and addscriptcommand() instead  (see scriptcommand_example.txt)
+
+Added securemode which should prevent breaking out of cod4 server into shell.
+
+
+June 29 2014:
+Removed the non working recusion callback function for player's chat. Use plugins instead.
+
+July 27 2014:
+exec() script function now returns the result as string truncated - Maybe this functionality getting removed later again if issues arise
+
+September 09 2014:
+exec is now execex
+exec works like before July 27 2014
+
+September 12 2016:
+After a 2 years its still good to write about changes in server code ^^
+ - 'SetText' script command now safe to use with dynamically created strings like player names, number increments and etc.
+ - 'ClearAllTextAfterHudElem' script command now can be used only in developer mode because of its bugs.
+
+September 13 2016:
+ + Added 'Scr_AddArrayKey' script and plugin function. It allows you to create script arrays with string keys instead of numeric. Just make sure you passed value returned from 'Scr_AllocString' (call this one on initialization).
+
+September 14 2016:
+ + Added 'isArray' script function. (http://zeroy.com/script/variables/isarray.htm)
 
