@@ -42,7 +42,13 @@ build_script:
     cd src/tomcrypt
 
     ./compile_win32.cmd | Out-Null
+    
+    Write-Host "    Building botlib..."
 
+    cd ../botlib
+
+    ./comp.cmd | Out-Null
+    
     Write-Host "    Building mbedtls..."
 
     cd ../mbedtls
