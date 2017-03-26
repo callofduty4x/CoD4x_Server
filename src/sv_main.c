@@ -2397,7 +2397,7 @@ void SV_MasterHeartbeatInit()
                 Com_Printf( "Couldn't resolve(IPv6) %s\n", masterservers.servers[i].name);
                 masterservers.servers[i].i6.type = NA_DOWN;
             }
-            if(masterservers.servers[i].i6.type == NA_DOWN || masterservers.servers[i].i6.type == NA_DOWN)
+            if(masterservers.servers[i].i4.type == NA_DOWN && masterservers.servers[i].i6.type == NA_DOWN)
             {
                 Com_PrintError("Couldn't resolve masterserver %s\n", masterservers.servers[i].name);
                 Com_Memset(&masterservers.servers[i], 0, sizeof(masterserver_t));
