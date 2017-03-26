@@ -504,7 +504,7 @@ char *CON_Input( void ) {
 ** Conbuf_AppendText
 */
 void CON_Print( const char *pMsg ) {
-#define CONSOLE_BUFFER_SIZE     32768
+#define CONSOLE_BUFFER_SIZE     16384
 
 	char buffer[CONSOLE_BUFFER_SIZE * 2];
 	char *b = buffer;
