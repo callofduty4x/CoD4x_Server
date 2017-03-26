@@ -6,4 +6,4 @@ echo Linking
 ar cr ../../lib/libbot_win32.a *.o
 echo Cleaning up
 del *.o
-pause
+:: pause
