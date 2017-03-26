@@ -1855,7 +1855,7 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
     MSG_WriteBit1(msg);
 	SV_GetMapCenterFromSVSHeader(center);
 	mcenterbits = (signed int)(center[2] + 0.5);
-    MSG_WriteBits(msg, (ival - mcenterbits + 0x8000) ^ (ioldval - mcenterbits + 0x8000), 16);
+    MSG_WriteBits(msg, (ival - mcenterbits + 0x80000) ^ (ioldval - mcenterbits + 0x80000), 20);
   }
   else
   {
@@ -1992,8 +1992,7 @@ __regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg,
 			break;
 
 		case -86:
-			MSG_WriteBits(msg, 2/*(unsigned int)floorf(((floattodata - 1.4) * 10.0))*/, 5);
-			Com_Printf("Scale: %hu\n", (unsigned int)floorf(((floattodata - 1.4) * 10.0)));
+			MSG_WriteBits(msg, floorf(((floattodata - 1.4) * 10.0) + 0.5), 5);
 			break;
 
 		case -85:

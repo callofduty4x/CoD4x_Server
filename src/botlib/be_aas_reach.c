@@ -3407,7 +3407,7 @@ void AAS_Reachability_JumpPad( void ) {
 #ifdef REACHDEBUG
 		botimport.Print( PRT_MESSAGE, "absmins = %f %f %f\n", absmins[0], absmins[1], absmins[2] );
 		botimport.Print( PRT_MESSAGE, "absmaxs = %f %f %f\n", absmaxs[0], absmaxs[1], absmaxs[2] );
-#endif REACHDEBUG
+#endif /*REACHDEBUG*/
 		VectorAdd( absmins, absmaxs, origin );
 		VectorScale( origin, 0.5, origin );
 

@@ -142,7 +142,7 @@ void PrintContents( int contents ) {
 	} //end for
 } //end of the function PrintContents
 
-#endif BSP_DEBUG
+#endif
 //===========================================================================
 // traces axial boxes of any size through the world
 //
