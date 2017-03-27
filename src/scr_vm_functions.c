@@ -1741,7 +1741,7 @@ void GScr_FS_Remove(){
 
     char* qpath = Scr_GetString(0);
 
-    if(!Scr_FS_AlreadyOpened(qpath))
+    if(Scr_FS_AlreadyOpened(qpath))
     {
             Scr_Error("FS_Remove: Tried to delete an opened file!\n");
             Scr_AddBool(qfalse);
