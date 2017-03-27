@@ -41,19 +41,19 @@ build_script:
 
     cd src/tomcrypt
 
-    ./compile_win32.cmd | Out-Null
+    ./compile_win32.cmd
     
     Write-Host "    Building botlib..."
 
     cd ../botlib
 
-    ./comp.cmd | Out-Null
+    ./comp.cmd
     
     Write-Host "    Building mbedtls..."
 
     cd ../mbedtls
 
-    ./build.cmd  | Out-Null
+    ./build.cmd
     
     Write-Host "    Building cod4x18 server..."
 
