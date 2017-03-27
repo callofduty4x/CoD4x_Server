@@ -1613,7 +1613,7 @@ void GScr_FS_FCloseAll(){
 
     int i;
 
-    for(i=0; i < MAX_SCRIPT_FILEHANDLES; i++)
+    for(i=1; i <= MAX_SCRIPT_FILEHANDLES; i++)
     {
         Scr_CloseScriptFile(i);
     }
