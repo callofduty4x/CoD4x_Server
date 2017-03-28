@@ -211,6 +211,13 @@ Changes the movement speed of targeted player.
 
 Usage example: `self setmovespeed(300);`
 
+#### `setVelocity(<vec velocity>)`
+
+Changes current player velocity. Note that you might experience some kind of player lag shortly after function has been called. 
+This happens due to small server\client internal structure mismatch. After synchronizing (few frames) everything will be fine.
+
+Usage example: `self setVelocity((0, 0, 300)); // Go up.`
+
 ### String Functions
 
 #### `StrTokByLen(string <string>, int <maxcharacter count>)`
