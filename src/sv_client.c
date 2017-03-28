@@ -627,6 +627,7 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 	MSG_ReadData(msg, statsbuf, sizeof(statsbuf));
 	if(type != 2)
 	{
+		return;
 		memcpy(&cl->stats, statsbuf, sizeof(cl->stats));
 	}else{
 		//Decrypt stats.
@@ -2643,7 +2644,6 @@ void SV_ExecuteReliableMessage(client_t* client)
 			break;
 		case 0x35448:
 			SV_SApiProcessModules(client, msg);
-			//asdftest();
 			break;
 		default:
 			Com_PrintWarning("Unknown clientcommand: %d\n", command);

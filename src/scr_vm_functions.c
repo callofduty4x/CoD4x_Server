@@ -1613,7 +1613,7 @@ void GScr_FS_FCloseAll(){
 
     int i;
 
-    for(i=0; i < MAX_SCRIPT_FILEHANDLES; i++)
+    for(i=1; i <= MAX_SCRIPT_FILEHANDLES; i++)
     {
         Scr_CloseScriptFile(i);
     }
@@ -1741,7 +1741,7 @@ void GScr_FS_Remove(){
 
     char* qpath = Scr_GetString(0);
 
-    if(!Scr_FS_AlreadyOpened(qpath))
+    if(Scr_FS_AlreadyOpened(qpath))
     {
             Scr_Error("FS_Remove: Tried to delete an opened file!\n");
             Scr_AddBool(qfalse);
