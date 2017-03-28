@@ -1855,7 +1855,7 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
     MSG_WriteBit1(msg);
 	SV_GetMapCenterFromSVSHeader(center);
 	mcenterbits = (signed int)(center[2] + 0.5);
-    MSG_WriteBits(msg, (ival - mcenterbits + 0x80000) ^ (ioldval - mcenterbits + 0x80000), 20);
+    MSG_WriteBits(msg, (ival - mcenterbits + 0x8000) ^ (ioldval - mcenterbits + 0x8000), 16);
   }
   else
   {
