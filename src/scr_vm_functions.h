@@ -19,8 +19,6 @@
 ===========================================================================
 */
 
-
-
 #ifndef __SCR_VM_FUNCTIONS_H__
 #define __SCR_VM_FUNCTIONS_H__
 
@@ -53,6 +51,7 @@ void PlayerCmd_SetMoveSpeed(scr_entref_t arg);
 void PlayerCmd_GetGeoLocation(scr_entref_t arg);
 void PlayerCmd_GetCountedFPS(scr_entref_t arg);
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg);
+void PlayerCmd_SetVelocity(scr_entref_t arg);
 
 void PlayerCmd_ForwardButtonPressed(scr_entref_t object);
 void PlayerCmd_BackButtonPressed(scr_entref_t object);
@@ -102,7 +101,7 @@ void GScr_SpawnVehicle();
 void GScr_SpawnHelicopter();
 void GScr_VectorAdd();
 void GScr_TypeTest();
-__cdecl void ClientScr_SetSessionTeam(gclient_t* gcl, client_fields_t* gfl);
+__cdecl void ClientScr_SetSessionTeam(gclient_t *gcl, client_fields_t *gfl);
 
 void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg);
 
