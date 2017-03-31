@@ -166,7 +166,7 @@ Com_InitZoneMemory
 =================
 */
 void Com_InitSmallZoneMemory( void ) {
-	int s_smallZoneTotal = 512 * 1024;
+	int s_smallZoneTotal = 2048 * 1024;
 	// bk001205 - was malloc
 	smallzone = calloc( s_smallZoneTotal, 1 );
 	if ( !smallzone ) {
