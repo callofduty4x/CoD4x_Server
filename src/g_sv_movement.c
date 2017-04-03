@@ -186,7 +186,7 @@ __cdecl __optimize3 float Jump_CalcHeight( playerState_t* ps ) {
 	val = jumpHeight;
 	val = (val + val) * ps->gravity;
 
-	if(ps->legsAnimDuration & 64 && ps->pm_time <= 1800 ){
+	if(ps->pm_flags & 0x4000 && ps->pm_time <= 1800 ){
 
 		if(jump_slowdownEnable->boolean){
 
