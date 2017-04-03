@@ -2598,7 +2598,7 @@ void NET_OpenIP( void ) {
 		Com_Error(ERR_FATAL,"Could not bind to a IPv6 network socket");
 	}
 
-	if(support6 == qfalse || support4 == qfalse)
+	if(support6 == qfalse && support4 == qfalse)
 	{
 		Com_Error(ERR_FATAL,"No IPv4 or IPv6 support");
 	}
