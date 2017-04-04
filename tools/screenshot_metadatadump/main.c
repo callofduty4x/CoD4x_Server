@@ -112,7 +112,7 @@ int main(int argc, char **argv)
         header = freadbyte(fh);
         size = freadbigshort(fh);
 
-        if(header == M_EOI)
+        if(header == M_EOI || header == M_SOS)
         {
             fclose(fh);
             printf("No CoD4X metadata found\n");
