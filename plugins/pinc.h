@@ -97,17 +97,44 @@
     #undef PCL
 #endif /*PCL*/
 
+#ifdef PCL_LOCAL
+    #undef PCL_LOCAL
+#endif /*PCL_LOCAL*/
+
 #ifdef __iceimport
     #undef __iceimport
 #endif /*__iceimport*/
 
 #define __iceimport extern __cdecl
 
-#if LANG == CPP
-    #define PCL extern "C" __attribute__ ((visibility ("default"))) __attribute__ ((cdecl))
-#else
-    #define PCL __attribute__ ((visibility ("default"))) __attribute__ ((cdecl))
-#endif /*LANG == CPP*/
+#if defined _WIN32 || defined __CYGWIN__        /*Windows*/
+    #ifdef __GNUC__                             /*Windows and mingw*/
+        #if LANG == CPP                         /*Windows, mingw and c++*/
+            #define PCL extern "C" __attribute__ ((dllexport)) __attribute__ ((cdecl))
+        #else                                   /*Windows, mingw and c*/
+            #define PCL __attribute__ ((dllexport)) __attribute__ ((cdecl))
+        #endif /*LANG == CPP*/
+    #else                                       /*Windows and msvc*/
+        #if LANG == CPP                         /*Windows and msvc and c++*/
+            #define PCL extern "C" __declspec(dllexport) __cdecl
+        #else                                   /*Windows and msvc and c*/
+            #define PCL __declspec(dllexport) __cdecl
+        #endif /*LANG == CPP*/
+    #endif
+    #define PCL_LOCAL
+#else                                           /*Unix*/
+    #if __GNUC__ >= 4                           /*Unix, modern GCC*/
+        #if LANG == CPP                         /*Unix, modern GCC, G++*/
+            #define PCL extern "C" __attribute__ ((visibility ("default"))) __attribute__ ((cdecl))
+        #else                                   /*Unix, modern GCC, GCC*/
+            #define PCL __attribute__ ((visibility ("default"))) __attribute__ ((cdecl))
+        #endif /*LANG == CPP*/
+        #define PCL_LOCAL  __attribute__ ((visibility ("hidden")))
+    #else                                       /*Unix, old GCC*/
+        #define PCL
+        #define PCL_LOCAL
+    #endif
+#endif
 
 #define Com_Memset memset
 
