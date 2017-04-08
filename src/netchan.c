@@ -477,8 +477,9 @@ qboolean NET_SendPacket( netsrc_t sock, int length, const void *data, netadr_t *
 	}
 
 	// sequenced packets are shown in netchan, so just show oob
-	if ( showpackets->boolean && *(int *)data == -1 )	{
-		Com_Printf ("send packet %4i\n", length);
+	if ( showpackets->boolean && *(int *)data == -1 ){
+		char string[128];
+		Com_Printf ("NET_SendPacket %4i destination %s\n", length, NET_AdrToStringMT(to, string, sizeof(string)));
 	}
 	if ( to->type == NA_LOOPBACK ) {
 		NET_SendLoopPacket (sock, length, data, *to);
