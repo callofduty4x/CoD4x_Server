@@ -2073,7 +2073,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                 }else if(ic == 0){
                     Com_PrintError("Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
                 }else if(ic == 2){
-                    Com_PrintError("Failure registering server on masterserver. Server address is banned\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+                    Com_PrintError("Failure registering server on masterserver. Server address is banned: %s\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
                 }
                 break;
             case 2:
