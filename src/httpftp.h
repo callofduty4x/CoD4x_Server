@@ -9,6 +9,8 @@
 #include "msg.h"
 #include "sys_net.h"
 
+#define HTTP_CONNECTTIMEOUT 15000
+
 typedef enum
 {
 	FT_PROTO_HTTP,

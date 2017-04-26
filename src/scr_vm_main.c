@@ -298,6 +298,7 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("isarray", Scr_IsArray_f, qfalse); // http://zeroy.com/script/variables/isarray.htm
                                                        /*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
     Scr_AddFunction("iscvardefined", GScr_IsCvarDefined, 0);
+    Scr_AddFunction("arraytest", GScr_ArrayTest, 0);
 }
 
 void Scr_AddStockMethods()
@@ -1231,8 +1232,8 @@ int GetArraySize(int aHandle)
 {
     int size = scrVarGlob.variables[aHandle].value.typeSize.size;
     return size;
-}
-*/
+}*/
+
 /* only for debug */
 __regparm3 void VM_Notify_Hook(int entid, int constString, VariableValue *arguments)
 {
@@ -1460,6 +1461,28 @@ int Scr_GetInt(unsigned int paramnum)
     return 0;
 }
 
+unsigned int Scr_GetObject(unsigned int paramnum)
+{
+    mvabuf;
+    VariableValue *var;
+
+    if (paramnum >= scrVmPub.outparamcount)
+    {
+        Scr_Error(va("parameter %d does not exist", paramnum + 1));
+        return 0;
+    }
+
+    var = &scrVmPub.top[-paramnum];
+    if (var->type == 1)
+    {
+        return var->u.pointerValue;
+    }
+    scrVarPub.error_index = paramnum + 1;
+    Scr_Error(va("type %s is not an object", var_typename[var->type]));
+    return 0;
+}
+
+
 //Use with Scr_Exce(Ent)Thread
 int Scr_GetFunc(unsigned int paramnum)
 {
@@ -1481,4 +1504,40 @@ int Scr_GetFunc(unsigned int paramnum)
     scrVarPub.error_index = paramnum + 1;
     Scr_Error(va("type %s is not an function", var_typename[var->type]));
     return -1;
+}
+
+
+
+unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvariables)
+{
+    unsigned int ptr = Scr_GetObject(paramnum);
+    VariableValueInternal *var;
+
+    unsigned int hash_id = 0;
+    int i = 0;
+
+    do
+    {
+        if(hash_id == 0)
+        {
+            hash_id = scrVarGlob[ptr + 1].hash.u.prevSibling;
+            if(hash_id == 0)
+            {
+                return 0;
+            }
+        }else{
+            hash_id = scrVarGlob_high[var->hash.u.prevSibling].hash.id;
+        }
+        var = &scrVarGlob_high[hash_id];
+
+        int type = var->w.type & 0x1f;
+
+        v[i]->type = type;
+        v[i]->u = var->u.u;
+
+        ++i;
+    }
+    while ( var->hash.u.prevSibling && scrVarGlob_high[var->hash.u.prevSibling].hash.id && i < maxvariables);
+
+    return 0;//GetArraySize(ptr);
 }

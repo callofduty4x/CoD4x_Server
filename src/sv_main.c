@@ -2354,9 +2354,12 @@ void SV_MasterHeartbeatInit()
     }
     masterservers.servers = Z_Malloc(i*sizeof(masterserver_t));
 
+    Q_strncpyz(svlist, sv_masterservers->string, sizeof(svlist));
+
     tok = strtok(svlist, ";");
     for(i = 0; tok; ++i)
     {
+        Com_Printf("Masterserver%d: %s\n", i, tok);
         Q_strncpyz(line, tok, sizeof(line));
         Cmd_TokenizeString(line);
         name = Cmd_Argv(0);
@@ -2403,7 +2406,7 @@ void SV_MasterHeartbeatInit()
                 Com_Memset(&masterservers.servers[i], 0, sizeof(masterserver_t));
             }
         }
-        tok = strtok(NULL, "\n");
+        tok = strtok(NULL, ";");
     }
     masterservers.count = i;
 }
