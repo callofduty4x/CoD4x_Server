@@ -2359,7 +2359,6 @@ void SV_MasterHeartbeatInit()
     tok = strtok(svlist, ";");
     for(i = 0; tok; ++i)
     {
-        Com_Printf("Masterserver%d: %s\n", i, tok);
         Q_strncpyz(line, tok, sizeof(line));
         Cmd_TokenizeString(line);
         name = Cmd_Argv(0);
@@ -2370,6 +2369,9 @@ void SV_MasterHeartbeatInit()
         }
         Q_strncpyz(masterservers.servers[i].name, name, sizeof(masterservers.servers[i].name));
         Cmd_EndTokenizedString();
+
+        Com_Printf("Master%d: %s\n", i, masterservers.servers[i].name);
+
         if(strlen(masterservers.servers[i].name) > 3)
         {
             Com_Printf("Resolving %s \n", masterservers.servers[i].name);
