@@ -140,10 +140,10 @@ const char* PHandler_OpenTempFile(char* name, char* fullfilepath, int fplen){ //
 
     Com_sprintf(filepath, sizeof(filepath),"plugins/%s" DLL_EXT, name);
 
-    len = FS_ReadFile(filepath, &buf);
+    len = FS_SV_ReadFile(filepath, &buf);
 
     if(len < 100)
-        len = FS_SV_ReadFile( filepath, &buf );
+        len = FS_ReadFile( filepath, &buf );
 
     if(len < 100)
     {

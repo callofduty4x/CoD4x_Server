@@ -298,6 +298,11 @@ P_P_F qboolean Plugin_UdpSendData(netadr_t* to, void* data, int len)
         Com_PrintError("Plugin_UdpSendData: First argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
         return qfalse;
     }
+
+    netadr_t* defif;
+    defif = NET_GetDefaultCommunicationSocket(to->type);
+    to->sock = defif ? defif->sock : 0;
+
     return Sys_SendPacket( len, data, to);
 }
 
