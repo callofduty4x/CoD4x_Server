@@ -744,6 +744,10 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 		status = NET_TcpIsSocketReady(request->socket);
 		if(status == 0)
 		{
+			if(request->startTime + HTTP_CONNECTTIMEOUT < Sys_Milliseconds())
+			{
+				return -1;
+			}
 			return 0;
 		}
 		if(status < 0)

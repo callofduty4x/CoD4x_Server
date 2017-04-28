@@ -27,7 +27,8 @@
 #define SCRSTRUCT_ADDR 0x895bf08
 #define STRINGINDEX_ADDR 0x836fe20
 #define stringIndex (*((stringIndex_t*)(STRINGINDEX_ADDR)))
-#define scrVarGlob (*((VariableValueInternal_t*)( 0x8a64e80 )))
+#define scrVarGlob (((VariableValueInternal*)( 0x8a64e80 )))
+#define scrVarGlob_high (((VariableValueInternal*)( 0x8a64e80 + 16 * 32770 )))
 #define scrVarPub (*((scrVarPub_t*)( 0x8be4e80 )))
 #define scrVmPub (*((scrVmPub_t*)( 0x8c06320 )))
 #define g_script_error_level *(int*)(0x8c0631c)
@@ -314,15 +315,50 @@ union VariableUnion
 };
 
 #pragma pack(push, 1)
-typedef struct
+/* 7512 */
+union ObjectInfo_u
 {
-  unsigned short pathA;
-  unsigned short next;
-  union VariableUnion value;
+  uint16_t size;
+  uint16_t entnum;
+  uint16_t nextEntId;
+  uint16_t self;
+};
+
+
+/* 7513 */
+struct ObjectInfo
+{
+  uint16_t refCount;
+  union ObjectInfo_u u;
+};
+
+/* 7514 */
+union VariableValueInternal_u
+{
+  uint16_t next;
+  union VariableUnion u;
+  struct ObjectInfo o;
+};
+
+/* 7515 */
+union VariableValueInternal_w
+{
+  unsigned int status;
   unsigned int type;
-  unsigned short pathB;
-  unsigned short prev;
-}VariableValueUnit_t;
+  unsigned int name;
+  unsigned int classnum;
+  unsigned int notifyName;
+  unsigned int waitTime;
+  unsigned int parentLocalId;
+};
+
+/* 7516 */
+union VariableValueInternal_v
+{
+  uint16_t next;
+  uint16_t index;
+};
+
 
 typedef struct
 {
@@ -330,13 +366,29 @@ typedef struct
   int type;
 }VariableValue;
 
-typedef struct
+/* 7510 */
+union Variable_u
 {
-  VariableValueUnit_t header;
-  VariableValueUnit_t variables[32768];
-  VariableValueUnit_t header2;
-  VariableValueUnit_t variables2[32768];
-}VariableValueInternal_t;
+  uint16_t prev;
+  uint16_t prevSibling;
+};
+
+/* 7511 */
+struct Variable
+{
+  uint16_t id;
+  union Variable_u u;
+};
+
+/* 7517 */
+typedef struct 
+{
+  struct Variable hash;
+  union VariableValueInternal_u u;
+  union VariableValueInternal_w w;
+  union VariableValueInternal_v v;
+  uint16_t nextSibling;
+}VariableValueInternal;
 
 
 typedef struct

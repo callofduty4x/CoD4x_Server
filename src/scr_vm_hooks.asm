@@ -86,10 +86,6 @@ global Scr_GetVector
 Scr_GetVector:
 	jmp dword [oScr_GetVector]
 
-global Scr_GetObject
-Scr_GetObject:
-	jmp dword [oScr_GetObject]
-
 global Scr_Error
 Scr_Error:
 	jmp dword [oScr_Error]

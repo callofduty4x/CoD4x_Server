@@ -3197,3 +3197,9 @@ void PlayerCmd_SetVelocity(scr_entref_t arg)
     cl->ps.velocity[1] = velocity[1];
     cl->ps.velocity[2] = velocity[2];
 }
+
+void GScr_ArrayTest()
+{
+    Scr_GetArrayId(0);
+
+}

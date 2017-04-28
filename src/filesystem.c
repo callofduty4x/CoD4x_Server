@@ -3213,7 +3213,8 @@ void FS_AddIwdFilesForGameDirectory(const char *path, const char *dir)
 		search->next = sp;
 		prev->next = search;
 	}
-/*	Sys_FreeFileList(sorted); */
+
+	Sys_FreeFileList(pakfiles);
 }
 
 

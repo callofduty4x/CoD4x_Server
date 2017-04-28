@@ -2073,7 +2073,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                 }else if(ic == 0){
                     Com_PrintError("Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
                 }else if(ic == 2){
-                    Com_PrintError("Failure registering server on masterserver. Server address is banned\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+                    Com_PrintError("Failure registering server on masterserver. Server address is banned: %s\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
                 }
                 break;
             case 2:
@@ -2354,6 +2354,8 @@ void SV_MasterHeartbeatInit()
     }
     masterservers.servers = Z_Malloc(i*sizeof(masterserver_t));
 
+    Q_strncpyz(svlist, sv_masterservers->string, sizeof(svlist));
+
     tok = strtok(svlist, ";");
     for(i = 0; tok; ++i)
     {
@@ -2367,6 +2369,9 @@ void SV_MasterHeartbeatInit()
         }
         Q_strncpyz(masterservers.servers[i].name, name, sizeof(masterservers.servers[i].name));
         Cmd_EndTokenizedString();
+
+        Com_Printf("Master%d: %s\n", i, masterservers.servers[i].name);
+
         if(strlen(masterservers.servers[i].name) > 3)
         {
             Com_Printf("Resolving %s \n", masterservers.servers[i].name);
@@ -2403,7 +2408,7 @@ void SV_MasterHeartbeatInit()
                 Com_Memset(&masterservers.servers[i], 0, sizeof(masterserver_t));
             }
         }
-        tok = strtok(NULL, "\n");
+        tok = strtok(NULL, ";");
     }
     masterservers.count = i;
 }
