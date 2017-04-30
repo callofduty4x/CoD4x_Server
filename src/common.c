@@ -53,6 +53,7 @@
 #include "sapi.h"
 #include "dobj.h"
 #include "xassets/extractor.h"
+#include "sec_update.h"
 
 #include <string.h>
 #include <setjmp.h>
@@ -811,6 +812,13 @@ void Com_Init(char* commandLine){
 
 	Com_InitZoneMemory();
 
+	FS_InitCvars(); //Needed for autoupdate
+
+    Sys_Init();
+	NET_Init();
+
+    Sec_Update( qfalse );
+
     FS_InitFilesystem();
 
     if(FS_SV_FileExists("securemode"))
@@ -883,8 +891,6 @@ void Com_Init(char* commandLine){
 //    Com_AddLoggingCommands();
 //    HL2Rcon_AddSourceAdminCommands();
 
-    Sys_Init();
-
     Com_UpdateRealtime();
 
     Com_RandomBytes( (byte*)&qport, sizeof(int) );
@@ -892,9 +898,6 @@ void Com_Init(char* commandLine){
 	Huffman_InitMain();
 
     PHandler_Init();
-
-    NET_Init();
-
 
     SV_Init();
 

@@ -104,6 +104,8 @@ typedef unsigned short WORD;
 typedef unsigned char byte;
 typedef enum {qfalse, qtrue}	qboolean;
 
+#define _STRINGIFY(s) #s
+#define STRINGIFY(s) _STRINGIFY(s)
 
 //#define DEVRELEASE
 

@@ -38,6 +38,111 @@
 #include <unistd.h>
 #include <errno.h>
 
+
+
+static char upd_binpath[1024]; //On Windows it is filepath of executable file. On Linux it is current working directory
+static char upd_execpath[1024];
+static char upd_homepath[1024];
+
+void Sec_SetupPaths()
+{
+	Q_strncpyz(upd_homepath, fs_homepath->string, sizeof(upd_homepath));
+#ifdef _WIN32
+	Q_strncpyz(upd_binpath, Sys_BinaryPath(), sizeof(upd_binpath));
+#else
+	Q_strncpyz(upd_binpath, Sys_Cwd(), sizeof(upd_binpath));
+#endif
+	Q_strncpyz(upd_execpath, Sys_BinaryPath(), sizeof(upd_execpath));
+}
+
+const char* Sec_GetStorePath(const char* path)
+{
+
+	char filename[1024];
+
+	const char* f = strrchr(path, '/');
+
+	if(f)
+	{
+		path = f +1;
+	}
+	Q_strncpyz(filename, path, sizeof(filename));
+	int len = strlen(filename);
+	if(len < 4)
+	{
+		return upd_homepath; //Error should not happen
+	}
+
+	if(Q_stricmp(filename + (len -4), ".exe") == 0 || Q_stricmp(filename + (len -4), ".dll") == 0)
+	{
+		return upd_binpath;
+	}
+
+	if(Q_stricmp(filename + (len -3), ".so") == 0 || strstr(filename, ".so.") != NULL)
+	{
+		return upd_binpath;
+	}
+
+	if(strstr(filename, EXECUTABLE_NAME))
+	{
+		return upd_execpath;
+	}
+	return upd_homepath;
+
+}
+
+const char* Sec_GetStoreFilename(const char* shortname, char *fullfilepath, int maxpathlen)
+{
+	const char* p = Sec_GetStorePath(shortname);
+	Com_sprintf(fullfilepath, maxpathlen, "%s/%s", p, shortname);
+	FS_StripSeperators(fullfilepath);
+	FS_ReplaceSeparators(fullfilepath);
+	return fullfilepath;
+}
+
+
+char* FS_UpdateGetFilepath( const char *file, char* testpath, int lenpath )
+{
+	FILE *f;
+
+	if(lenpath < MAX_OSPATH)
+		Com_Error(ERR_FATAL, "FS_SV_GetFilepath: Given buffer has less than %d bytes length\n", MAX_OSPATH );
+
+	FS_BuildOSPathForThread(fs_homepath->string, file, "", testpath, 0 );
+	FS_StripTrailingSeperator( testpath );
+
+	f = fopen( testpath, "rb" );
+	if (f) {
+		fclose( f );
+		return testpath;
+	}
+
+	FS_BuildOSPathForThread(fs_basepath->string, file, "", testpath, 0 );
+	FS_StripTrailingSeperator( testpath );
+
+	f = fopen( testpath, "rb" );
+	if (f) {
+		fclose( f );
+		return testpath;
+	}
+/*
+	Q_strncpyz( file, testpath, 0 );
+  	FS_ReplaceSeparators(testpath);
+	FS_StripTrailingSeperator( testpath );
+
+	f = fopen( testpath, "rb" );
+	if (f) {
+		fclose( f );
+		return testpath;
+	}
+*/
+	return NULL;
+}
+
+
+
+
+
 #define BUFSIZE 10240
 
 char *Sec_StrTok(char *str,char *tokens,int id){
@@ -123,29 +228,60 @@ qboolean Sec_VerifyFile(byte* data, int length, const char* hash)
 */
 }
 
-int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
+qboolean Sec_BuildNeededList(sec_file_t *argcurrFile)
 {
-	
-		char buff[1024];
-		int transret, len;
-	    ftRequest_t* curfileobj;
-		qboolean isvalid;
-		byte* filebuf;
-		
+	char name1[1024];
+	qboolean isvalid;
+	byte* filebuf;
+	int len;
+
+	sec_file_t *currFile = argcurrFile;
+
+	while(currFile != NULL)
+	{
+		currFile->needed = qtrue;
+
+		Sec_GetStoreFilename(currFile->name, name1, sizeof(name1));
+
 		//Does our file already exist?
-		len = FS_SV_ReadFile(currFile->path, (void*)&filebuf);
+		len = FS_ReadFileOSPath(name1, (void*)&filebuf);
 		
 		if(len > 0)
 		{	//Is it already the file we need? Then don't download it.
 			isvalid = Sec_VerifyFile(filebuf, len, currFile->hash);
-			FS_FreeFile(filebuf);
+			FS_FreeFileOSPath(filebuf);
 			if(isvalid)
 			{
-				currFile->alreadyInstalled = qtrue;
-				return 0;
+				currFile->needed = qfalse;
 			}
 		}
-		
+		currFile = currFile->next;
+	}
+
+	currFile = argcurrFile;
+
+	while(currFile != NULL)
+	{
+		if(currFile->needed)
+		{
+			return qtrue;
+		}
+		currFile = currFile->next;
+	}
+	return qfalse;
+}
+
+
+int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
+{
+		qboolean isvalid;
+		char buff[1024];
+		int transret, len;
+	    ftRequest_t* curfileobj;
+
+		char sfnb[1024];
+		const char* sfn = Sec_GetStoreFilename(currFile->path, sfnb, sizeof(sfnb));
+
 		Com_sprintf(buff, sizeof(buff), SEC_UPDATE_DOWNLOAD(baseurl, currFile->path));
 		
 		curfileobj = FileDownloadRequest(buff);
@@ -159,7 +295,7 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 		do {
 			transret = FileDownloadSendReceive( curfileobj );
 #ifndef _WIN32
-				Com_Printf("%s", FileDownloadGenerateProgress( curfileobj ));
+//				Com_Printf("%s", FileDownloadGenerateProgress( curfileobj ));
 #endif
 			Sys_SleepUSec(20000);
 		} while (transret == 0);
@@ -172,7 +308,7 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 			return -1;
 		}
 
-		Q_strncpyz(buff,currFile->name, sizeof(buff));
+		Q_strncpyz(buff, sfn, sizeof(buff));
 		Q_strcat(buff, sizeof(buff),".new");
 
 		if(curfileobj->code != 200){
@@ -198,17 +334,13 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 			return -1;
 		}
 		
-	
-		len = FS_SV_BaseWriteFile(buff, curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength);
-		if(len != curfileobj->contentLength){
-
-			len = FS_SV_HomeWriteFile(buff, curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength);
-			if(len != curfileobj->contentLength)
-			{
-				Com_PrintError("Opening \"%s\" for writing! Update aborted.\n",buff);
-				FileDownloadFreeRequest(curfileobj);
-				return -1;
-			}
+		Com_Printf("Writing file to %s\n", buff);
+		len = FS_WriteFileOSPath(buff, curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength);
+		if(len != curfileobj->contentLength)
+		{
+			Com_PrintError("Opening \"%s\" for writing! Update aborted.\n",buff);
+			FileDownloadFreeRequest(curfileobj);
+			return -1;
 		}
 		FileDownloadFreeRequest(curfileobj);
 		
@@ -273,61 +405,78 @@ sec_file_t* Sec_ParseLine(const char* line)
 qboolean Sec_MakeExecutable(sec_file_t *currFile)
 {
 	char buff[1024];
-	char filepathbuf[1024];
-	const char* testfile;
 
-	Q_strncpyz(buff,currFile->name, sizeof(buff));
+	Sec_GetStoreFilename(currFile->name, buff, sizeof(buff));
+
 	Q_strcat(buff, sizeof(buff),".new");
 
-	testfile = FS_SV_GetFilepath(buff, filepathbuf, sizeof(filepathbuf));
-	if(testfile == NULL)
+	if(FS_FileExistsOSPath(buff) == qfalse)
 	{
-		Com_PrintError("Can not find file %s\n", filepathbuf);
+		Com_PrintError("Can not find file %s\n", buff);
 		Com_PrintError("Update has failed!\n");
 		return qfalse;
 	}
 
-	Com_Printf("Set permissions for: %s\n", testfile);
-	if(FS_SetPermissionsExec(testfile) == qfalse)
+	Com_Printf("Set permissions for: %s\n", buff);
+	if(FS_SetPermissionsExec(buff) == qfalse)
 	{
-		Com_PrintError("CRITICAL ERROR: failed to change mode of the file \"%s\"! Aborting, manual installation might be required.\n", testfile);
+		Com_PrintError("CRITICAL ERROR: failed to change mode of the file \"%s\"! Aborting, manual installation might be required.\n", buff);
 		return qfalse;
 	}
 	return qtrue;
 }
 
 
-qboolean Sec_RemoveOldBackupfiles(sec_file_t *currFile)
+qboolean Sec_RemoveOldInstallfiles(sec_file_t *currFile)
 {
 	char name1[1024];
-	char filepathbuf[1024];
-	const char* testfile;
-
 
 	while(currFile != NULL)
 	{
-		if(currFile->alreadyInstalled)
+		if(!currFile->needed)
 		{
 			currFile = currFile->next;
 			continue;
 		}
 		
+		Sec_GetStoreFilename(currFile->name, name1, sizeof(name1));
 
-		Q_strncpyz(name1, currFile->name, sizeof(name1));
+		Q_strcat(name1, sizeof(name1), ".new");
+
+		if(FS_FileExistsOSPath(name1))
+		{ // Old backupfile exists, delete it!
+			Com_Printf("Removing old install file %s...\n", name1);
+			FS_RemoveOSPath( name1 );
+			if(FS_FileExistsOSPath(name1))
+			{
+				Com_PrintWarning("Couldn't remove install file: %s\n", name1);
+				return qfalse;
+			}
+		}
+		currFile = currFile->next;
+	}
+	return qtrue;
+}
+
+
+
+qboolean Sec_RemoveOldBackupfiles(sec_file_t *currFile)
+{
+	char name1[1024];
+
+	while(currFile != NULL)
+	{
+		Sec_GetStoreFilename(currFile->name, name1, sizeof(name1));
 
 		Q_strcat(name1, sizeof(name1), ".old");
 
-		Com_Printf("Removing backup file %s...\n", name1);
-
-		testfile = FS_SV_GetFilepath(name1, filepathbuf, sizeof(filepathbuf));
-		if(testfile != NULL)
-		{ // Old file exists, back it up
-			FS_SV_BaseRemove( name1 );
-			FS_SV_HomeRemove( name1 );
-			testfile = FS_SV_GetFilepath(name1, filepathbuf, sizeof(filepathbuf));
-			if(testfile != NULL)
+		if(FS_FileExistsOSPath(name1))
+		{ // Old backupfile exists, delete it!
+			Com_Printf("Removing backup file %s...\n", name1);
+			FS_RemoveOSPath( name1 );
+			if(FS_FileExistsOSPath(name1))
 			{
-				Com_PrintWarning("Couldn't remove backup file: %s\n", testfile);
+				Com_PrintWarning("Couldn't remove backup file: %s\n", name1);
 				return qfalse;
 			}
 		}
@@ -339,46 +488,25 @@ qboolean Sec_RemoveOldBackupfiles(sec_file_t *currFile)
 qboolean Sec_Backupfiles(sec_file_t *currFile)
 {
 	char name1[1024];
-	char filepathbuf[1024];
-	const char* testfile;
-	const char* curfilename;
-	qboolean isexefile;
+	char curfilename[1024];
 	qboolean fexist;
 
 	while(currFile != NULL)
 	{
-		if(currFile->alreadyInstalled)
+		if(!currFile->needed)
 		{
 			currFile = currFile->next;
 			continue;
 		}
 		
-		if(strstr(currFile->name, EXECUTABLE_NAME))
-		{
-			curfilename = Sys_ExeFile();
-			isexefile = qtrue;
-		}else{
-			curfilename = currFile->name;
-			isexefile = qfalse;
-		}
+		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
 		Q_strncpyz(name1, curfilename, sizeof(name1));
 		Q_strcat(name1, sizeof(name1), ".old");
 
 		Com_Printf("Backing up file %s...\n", curfilename);
-		if(isexefile == qfalse)
-		{
-			// Check if an old file exists with this name
-			testfile = FS_SV_GetFilepath(curfilename, filepathbuf, sizeof(filepathbuf));
-			if(testfile != NULL)
-			{// Old file exists, back it up
-				FS_SV_Rename(curfilename, name1);
-			}
-			fexist = FS_SV_FileExists(curfilename);
-		}else{
 
-			FS_RenameOSPath(curfilename, name1);
-			fexist = FS_FileExistsOSPath(curfilename);			
-		}
+		FS_RenameOSPath(curfilename, name1);
+		fexist = FS_FileExistsOSPath(curfilename);			
 
 		// We couldn't back it up. Raise error
 		if(fexist)
@@ -394,13 +522,11 @@ qboolean Sec_Backupfiles(sec_file_t *currFile)
 void Sec_UndoBackup(sec_file_t *currFile)
 {
 	char name1[1024];
-	char filepathbuf[1024];
-	const char* testfile;
-	const char* curfilename;
+	char curfilename[1024];
 
 	while(currFile != NULL)
 	{
-		if(currFile->alreadyInstalled)
+		if(!currFile->needed)
 		{
 			currFile = currFile->next;
 			continue;
@@ -408,23 +534,20 @@ void Sec_UndoBackup(sec_file_t *currFile)
 		
 		Com_Printf("Undo backup file %s...\n", currFile->name);
 
-		Q_strncpyz(name1, currFile->name, sizeof(name1));
+		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
+
+		Q_strncpyz(name1, curfilename, sizeof(name1));
 		Q_strcat(name1, sizeof(name1), ".old");
 
-		if(strstr(currFile->name, EXECUTABLE_NAME))
-		{
-			curfilename = Sys_ExeFile();
-		}else{
-			curfilename = currFile->name;
-		}
-
 		// Check if an backupfile exists with this name
-		testfile = FS_SV_GetFilepath(name1, filepathbuf, sizeof(filepathbuf));
-		if(testfile != NULL)
-		{// Backupfile exists, rename it back
-			FS_SV_BaseRemove( curfilename );
-			FS_SV_HomeRemove( curfilename );
-			FS_SV_Rename(name1, curfilename);
+		if(FS_FileExistsOSPath(name1) == qfalse)
+		{
+			Com_Printf("Backupfile %s not found!\n", name1);
+		}else{
+			//Backupfile exists, rename it back
+			FS_RemoveOSPath(curfilename);
+			Com_Printf("Rename from %s to %s\n", name1, curfilename);
+			FS_RenameOSPath(name1, curfilename);
 		}
 		currFile = currFile->next;
 	}
@@ -433,38 +556,25 @@ void Sec_UndoBackup(sec_file_t *currFile)
 qboolean Sec_InstallNewFiles(sec_file_t *currFile)
 {
 	char name1[1024];
-	char filepathbuf[1024];
-	const char* curfilename;
-	qboolean fileexists;
-
+	char curfilename[1024];
 	
 	while(currFile != NULL)
 	{
-		if(currFile->alreadyInstalled)
+		if(!currFile->needed)
 		{
 			currFile = currFile->next;
 			continue;
 		}
 		Com_Printf("Install file %s...\n", currFile->name);
 
-		Q_strncpyz(name1, currFile->name, sizeof(name1));
+		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
+
+		Q_strncpyz(name1, curfilename, sizeof(name1));
 		Q_strcat(name1, sizeof(name1), ".new");
 
-		if(strstr(currFile->name, EXECUTABLE_NAME))
-		{
-			curfilename = Sys_ExeFile();
-			Q_strncpyz(filepathbuf, name1, sizeof(filepathbuf));
-			FS_BuildOSPathForThread(Sys_BinaryPath(), filepathbuf, "", name1, 0);
-			FS_StripTrailingSeperator(name1);
-			FS_RenameOSPath(name1, curfilename);
-			fileexists = FS_FileExistsOSPath(curfilename);
-		}else{
-			curfilename = currFile->name;
-			FS_SV_Rename(name1, curfilename);
-			fileexists = FS_SV_FileExists(curfilename);
-		}
+		FS_RenameOSPath(name1, curfilename);
 
-		if(!fileexists)
+		if(!FS_FileExistsOSPath(curfilename))
 		{
 			Com_PrintError("Failed to rename file %s to %s\n", name1, curfilename);
 			Com_PrintError("Update has failed!\n");
@@ -525,11 +635,21 @@ void Sec_Update( qboolean getbasefiles ){
     char buff[SEC_UPDATE_INITIALBUFFSIZE];
     char *ptr;
     char baseurl[1024];
+	char version[1024];
     sec_file_t files, *currFile = &files;
     int len;
     ftRequest_t* filetransferobj;
     int transret;
 	FILE* lockfile;
+
+	struct version_t
+	{
+		int minor;
+		int major;
+	};
+
+	struct version_t newversion;
+	struct version_t currentversion;
 
     if(!Sec_Initialized()){
 		return;
@@ -542,12 +662,10 @@ void Sec_Update( qboolean getbasefiles ){
     Com_Printf(" Current build: %d\n", BUILD_NUMBER);
     Com_Printf("-----------------------------\n\n");
 
-    if(getbasefiles == qtrue)
-    {
-        Com_sprintf(buff, sizeof(buff), UPDATE_SERVER_NAME "?mode=10&os=" OS_STRING "&ver=%g", 1.0);
-    }else{
-        Com_sprintf(buff, sizeof(buff), UPDATE_SERVER_NAME "?mode=10&os=" OS_STRING "&ver=%g", SYS_COMMONVERSION);
-    }
+	Sec_SetupPaths();
+
+    Com_sprintf(buff, sizeof(buff), UPDATE_SERVER_NAME "?mode=11&os=" OS_STRING "&ver=%g", SYS_COMMONVERSION);
+
     filetransferobj = FileDownloadRequest( buff );
 
     if(filetransferobj == NULL){
@@ -577,7 +695,7 @@ void Sec_Update( qboolean getbasefiles ){
 		return;
     }
     if(filetransferobj->code == 204){
-		Com_Printf("\nServer is up to date.\n\n");
+		Com_Printf("\nServer is up to date.\n\n"); //Should not happen anymore. Instead we want to verify all files
 		FileDownloadFreeRequest(filetransferobj);
 		return;
     }
@@ -608,6 +726,30 @@ void Sec_Update( qboolean getbasefiles ){
 	}
 	
     /* We need to parse filenames etc */
+	ptr = Sec_StrTok(buff,"\n",42); // Yes, 42.
+
+	if(ptr == NULL || Q_stricmpn("version: ", ptr, 9))
+	{
+		Com_PrintWarning("Sec_Update: Corrupt data from update server. Update aborted.\n");
+		FileDownloadFreeRequest(filetransferobj);
+		Sec_AutoaupdateUnlock(lockfile);
+		return;
+	}
+	Q_strncpyz(version, ptr +9, sizeof(version));
+
+	int l1 = sscanf(STRINGIFY(SYS_COMMONVERSION), "%d.%d", &currentversion.major, &currentversion.minor);
+	int l2 = sscanf(version, "%d.%d", &newversion.major, &newversion.minor);
+	
+	if(l1 != 2 || l2 != 2)
+	{
+		Com_PrintWarning("Sec_Update: Corrupt version strings. Update aborted.\n");
+		FileDownloadFreeRequest(filetransferobj);
+		Sec_AutoaupdateUnlock(lockfile);
+		return;
+	}
+
+	Com_Printf("New subversion %d.%d\n", newversion.major, newversion.minor);
+
     ptr = Sec_StrTok(buff,"\n",42); // Yes, 42.
 
 	if(ptr == NULL || Q_stricmpn("baseurl: ", ptr, 9))
@@ -619,7 +761,7 @@ void Sec_Update( qboolean getbasefiles ){
 	}
 	Q_strncpyz(baseurl, ptr +9, sizeof(baseurl));
 	
-	//Parsing update filelist + downloadloading/verifying files
+	//Parsing update filelist
 	while((ptr = Sec_StrTok(NULL,"\n",42)) != NULL)
 	{
 		currFile->next = Sec_ParseLine(ptr);
@@ -630,13 +772,60 @@ void Sec_Update( qboolean getbasefiles ){
 			Sec_FreeFileStruct(files.next);
 			FileDownloadFreeRequest(filetransferobj);
 			Sec_AutoaupdateUnlock(lockfile);
-			Com_PrintError("Update has failed\n");
+			Com_PrintError("Update has failed with: Parser error\n");
 			return;
 		}
+	}
+	FileDownloadFreeRequest(filetransferobj);
 
-		switch(Sec_DownloadFile(baseurl, currFile))
+#ifndef OFFICIAL
+	//IF this is a custom build we want to bail out early if this is not really needed
+	if(currentversion.major >= newversion.major)
+	{
+		Com_Printf("Update rejected because it is not required.\n");
+		Sec_FreeFileStruct(files.next);
+		Sec_AutoaupdateUnlock(lockfile);
+		return;
+	}
+#endif
+
+	//IF this is a custom build we want to bail out early if this is not really needed
+	if(currentversion.major > newversion.major || (currentversion.minor > newversion.minor && currentversion.major == newversion.major))
+	{
+		Com_Printf("Update rejected because updateserver reports older version.\n");
+		Sec_FreeFileStruct(files.next);
+		Sec_AutoaupdateUnlock(lockfile);
+		return;
+	}
+
+	if(Sec_RemoveOldInstallfiles(files.next) == qfalse)
+	{
+		Com_PrintError("Update has failed\n");
+		Sec_FreeFileStruct(files.next);
+		Sec_AutoaupdateUnlock(lockfile);
+		return;
+	}
+
+	if(!Sec_BuildNeededList(files.next))
+	{
+		Com_Printf("Update not needed. All files are equal.\n");
+		Sec_FreeFileStruct(files.next);
+		Sec_AutoaupdateUnlock(lockfile);
+		return;
+	}
+
+	sec_file_t *f = files.next;
+	while(f != NULL)
+	{
+		if(!f->needed)
+		{
+			f = f->next;
+			continue;
+		}
+		switch(Sec_DownloadFile(baseurl, f))
 		{
 			case 0:
+				f = f->next;
 				continue;
 			case 1:
 				break;
@@ -648,9 +837,9 @@ void Sec_Update( qboolean getbasefiles ){
 				Com_PrintError("Update has failed\n");
 				return;
 		}
-		if(strstr(currFile->name, "run"))
+		if(strstr(f->name, "run"))
 		{
-			if(Sec_MakeExecutable(currFile) == qfalse)
+			if(Sec_MakeExecutable(f) == qfalse)
 			{
 				Sec_FreeFileStruct(files.next);
 				Sec_AutoaupdateUnlock(lockfile);
@@ -658,13 +847,12 @@ void Sec_Update( qboolean getbasefiles ){
 				return;
 			}
 		}
+		f = f->next;
 	}
 
-	FileDownloadFreeRequest(filetransferobj);
 	//Everything is downloaded and parsed
     Com_Printf("All files downloaded successfully. Applying update...\n");
 	//Installing the update files...
-    currFile = files.next;
 
 	if(Sec_RemoveOldBackupfiles(files.next) == qfalse)
 	{
@@ -704,118 +892,3 @@ void Sec_Update( qboolean getbasefiles ){
     Sys_Restart("System has been updated and will restart now.");
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#if 0
-    while(currFile != NULL)
-	{
-		if(currFile->alreadyInstalled)
-		{
-			currFile = currFile->next;
-			continue;
-		}
-		
-		Com_Printf("Updating file %s...\n", currFile->name);
-		Q_strncpyz(name1, currFile->name, sizeof(name1));
-
-		Q_strcat(name1, sizeof(name1), ".old");
-
-		Q_strncpyz(name2, currFile->name, sizeof(name2));
-
-		Q_strcat(name2, sizeof(name2), ".new");
-
-		testfile = FS_SV_GetFilepath(name1, filepathbuf, sizeof(filepathbuf));
-		if(testfile != NULL)
-		{ // Old file exists, back it up
-			FS_SV_BaseRemove( name1 );
-			FS_SV_HomeRemove( name1 );
-			testfile = FS_SV_GetFilepath(name1, filepathbuf, sizeof(filepathbuf));
-			if(testfile != NULL)
-			{
-				Com_PrintWarning("Couldn't remove backup file: %s\n", testfile);
-			}
-			if(FS_SV_HomeFileExists(name1) == qtrue)
-			{
-				Com_PrintError("Couldn't remove backup file from fs_homepath: %s\n", name1);
-			}
-		}
-		// Check if an old file exists with this name
-		testfile = FS_SV_GetFilepath(currFile->name, filepathbuf, sizeof(filepathbuf));
-		if(testfile != NULL)
-		{ // Old file exists, back it up
-			FS_SV_Rename(currFile->name, name1);
-		}
-		testfile = FS_SV_GetFilepath(currFile->name, filepathbuf, sizeof(filepathbuf));
-		// We couldn't back it up. Now we try to just delete it.
-		if(testfile != NULL)
-		{
-			FS_SV_BaseRemove( currFile->name );
-			FS_SV_HomeRemove( currFile->name );
-			testfile = FS_SV_GetFilepath( currFile->name, filepathbuf, sizeof(filepathbuf) );
-			if(testfile != NULL)
-			{
-				Com_PrintWarning("Couldn't remove file: %s\n", testfile);
-			}
-			if(FS_SV_HomeFileExists(currFile->name) == qtrue)
-			{
-				Com_PrintError("Couldn't remove file from fs_homepath: %s\n", currFile->name);
-				Com_PrintError("Update has failed!\n");
-				return;
-			}
-		}
-
-		if(Q_strncmp(currFile->name, EXECUTABLE_NAME) == 0){
-			/* This is not the executable file */
-			FS_SV_Rename(name2, currFile->name);
-			testfile = FS_SV_GetFilepath(currFile->name, filepathbuf, sizeof(filepathbuf));
-			if(testfile == NULL)
-			{
-				Com_PrintError("Failed to rename file %s to %s\n", name2,currFile->name);
-				Com_PrintError("Update has failed!\n");
-				return;
-			}
-			Com_Printf("Update on file %s successfully applied.\n",currFile->name);
-
-		}else{
-			/* This is the executable file */
-			testfile = FS_SV_GetFilepath(name2, filepathbuf, sizeof(filepathbuf));
-			if(testfile == NULL)
-			{
-				Com_PrintError("Can not find file %s\n", name2);
-				Com_PrintError("Update has failed!\n");
-				return;
-			}
-			FS_RenameOSPath(Sys_ExeFile(), va("%s.dead", Sys_ExeFile()));
-			FS_RemoveOSPath(va("%s.dead", Sys_ExeFile()));
-			FS_RemoveOSPath(Sys_ExeFile());
-			if(FS_FileExistsOSPath(Sys_ExeFile()))
-			{
-				Com_PrintError("Failed to delete file %s\n", Sys_ExeFile());
-				Com_PrintError("Update has failed!\n");
-				return;
-			}
-			FS_RenameOSPath(testfile, Sys_ExeFile());
-			if(!FS_FileExistsOSPath(Sys_ExeFile()))
-			{
-				Com_PrintError("Failed to rename file %s\n", testfile);
-				Com_PrintError("Update has failed! Manual reinstallation of file %s is required. This server is now broken!\n", Sys_ExeFile());
-				return;
-			}
-			Com_Printf("Update on file %s successfully applied.\n", Sys_ExeFile());
-		}
-		currFile = currFile->next;
-    }
-#endif

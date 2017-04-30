@@ -16,15 +16,21 @@ RM = del
 endif
 
 all:
-	@echo Please specify 'win32', 'win32_dev', 'linux32' or 'linux32_dev' recipy.
+	@echo Please specify 'win32', 'win32_dev', 'win32_official', 'linux32', 'linux32_dev' or 'linux32_official' recipy.
 
 win32: windows zlib_win nasm_win common_updateable_win $(COD4XBIN).exe pexports clean_win
+	@echo [Windows] Updateable PE built successfully.
+
+win32_official: windows zlib_win nasm_win common_updateable_official_win $(COD4XBIN).exe pexports clean_win
 	@echo [Windows] Updateable PE built successfully.
 
 win32_dev: windows zlib_win nasm_win common_win $(COD4XBIN).exe pexports clean_win
 	@echo [Windows] Developer PE built successfully.
 
 linux32: linux zlib_linux nasm_linux common_updateable_linux $(COD4XBIN).elf clean_linux do_paxctl
+	@echo [Linux] Updateable ELF built successfully.
+
+linux32_official: linux zlib_linux nasm_linux common_updateable_official_linux $(COD4XBIN).elf clean_linux do_paxctl
 	@echo [Linux] Updateable ELF built successfully.
 
 linux32_dev: linux zlib_linux nasm_linux common_linux $(COD4XBIN).elf clean_linux do_paxctl
@@ -53,12 +59,22 @@ common_linux:
 common_updateable_win:
 	@echo [Windows] Building self-updateable common code...
 	@cd bin && \
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D WINVER=0x501 -march=nocona ../src/*.c ../src/xassets/*.c
+
+common_updateable_official_win:
+	@echo [Windows] Building self-updateable official common code...
+	@cd bin && \
 	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D WINVER=0x501 -march=nocona ../src/*.c ../src/xassets/*.c
+
+common_updateable_official_linux:
+	@echo [Linux] Building self-updateable official common code...
+	@cd bin && \
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -march=nocona ../src/*.c ../src/xassets/*.c
 
 common_updateable_linux:
 	@echo [Linux] Building self-updateable common code...
 	@cd bin && \
-	$(CC) $(CFLAGS) -D COD4X18UPDATE -D OFFICIAL -D _GNU_SOURCE -march=nocona ../src/*.c ../src/xassets/*.c
+	$(CC) $(CFLAGS) -D COD4X18UPDATE -D _GNU_SOURCE -march=nocona ../src/*.c ../src/xassets/*.c
 
 zlib_win:
 	@echo [Windows] Building ZLib...

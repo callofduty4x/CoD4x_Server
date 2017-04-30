@@ -38,7 +38,6 @@
 #include "filesystem.h"
 #include "misc.h"
 #include "sys_cod4loader.h"
-#include "sec_update.h"
 #include "sec_crypto.h"
 #include "cmd.h"
 #include "xassets.h"
@@ -470,16 +469,9 @@ qboolean Sys_LoadImage( ){
 
     if(len != DLLMOD_FILESIZE)
     {/* Nope !*/
-
-        Sec_Update( qtrue );
-        len = FS_FOpenFileRead(BIN_FILENAME, NULL);
-        if(len != DLLMOD_FILESIZE)
-        {/* Nope !*/
             Com_PrintError("Failed to load the CoD4 Game. Can not startup the game\n");
             return qfalse;
-        }
     }
-    Sec_Update( qfalse );
 #endif
     len = FS_ReadFile(BIN_FILENAME, (void**)&fileimage);
 

@@ -493,8 +493,7 @@ void Sys_Restart(const char* reason)
 	Com_sprintf(commandline, sizeof(commandline), "%s %s", Sys_ExeFile(), Sys_GetCommandline());
 	Com_Printf("Restart commandline is: %s\n", commandline);
 	Sys_SetExitCmdline(commandline);
-
-	Cbuf_ExecuteText(EXEC_NOW, "quit\n");
+	Com_Quit_f();
 }
 
 

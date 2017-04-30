@@ -161,6 +161,7 @@ qboolean FS_SV_FileExists( const char *file );
 qboolean FS_SV_HomeFileExists( const char *file );
 
 char* FS_SV_GetFilepath( const char *file, char* buf, int buflen );
+
 void FS_Rename( const char *from, const char *to );
 void FS_SV_Rename( const char *from, const char *to );
 qboolean FS_FCloseFile( fileHandle_t f );
@@ -177,12 +178,14 @@ int	FS_FTell( fileHandle_t f );
 void	FS_Flush( fileHandle_t f );
 void FS_FreeFile( void *buffer );
 void FS_FreeFileKeepBuf( );
+void FS_FreeFileOSPath( void *buffer );
 int FS_ReadLine( void *buffer, int len, fileHandle_t f );
 fileHandle_t FS_SV_FOpenFileWrite( const char *filename );
 long FS_SV_FOpenFileRead( const char *filename, fileHandle_t *fp );
 fileHandle_t FS_SV_FOpenFileAppend( const char *filename );
 int FS_Write( const void *buffer, int len, fileHandle_t h );
 int FS_ReadFile( const char *qpath, void **buffer );
+int FS_ReadFileOSPath( const char *ospath, void **buffer );
 int FS_SV_ReadFile( const char *qpath, void **buffer );
 int FS_WriteFile( const char *qpath, const void *buffer, int size );
 
@@ -210,6 +213,7 @@ void FS_SV_HomeCopyFile(char* from, char* to);
 void FS_Restart(int checksumfeed);
 
 void __cdecl FS_Startup(const char* game);
+void FS_InitCvars();
 unsigned Com_BlockChecksumKey32( void *buffer, int length, int key );
 void FS_PatchFileHandleData();
 int FS_LoadStack();
@@ -225,7 +229,9 @@ void DB_BuildQPath(const char *filename, int ffdir, int len, char *buff);
 int     FS_FOpenFileByMode( const char *qpath, fileHandle_t *f, fsMode_t mode );
 void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen);
 void FS_AddIwdPureCheckReference(searchpath_t *search);
+void FS_StripSeperators(char* path);
 void FS_StripTrailingSeperator( char *path );
+void FS_ReplaceSeparators( char *path );
 int FS_CalculateChecksumForFile(const char* filename, int *crc32);
 int FS_WriteChecksumInfo(const char* filename, byte* data, int maxsize);
 int FS_WriteFileOSPath( char *ospath, const void *buffer, int size );

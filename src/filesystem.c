@@ -512,7 +512,7 @@ FS_ReplaceSeparators
 Fix things up differently for win/unix/mac
 ====================
 */
-static void FS_ReplaceSeparators( char *path ) {
+void FS_ReplaceSeparators( char *path ) {
 	char	*s;
 
 	for ( s = path ; *s ; s++ ) {
@@ -534,12 +534,37 @@ void FS_StripTrailingSeperator( char *path ) {
 
 	int len = strlen(path);
 
-	if(path[len -1] == PATH_SEP)
+	if(path[len -1] == '\\' || path[len -1] == '/')
 	{
 		path[len -1] = '\0';
 	}
 }
 
+
+void FS_StripSeperators(char* qpath)
+{
+	int i, y;
+	char newpath[4096];
+	int len = strlen(qpath);
+
+	if(len > sizeof(newpath))
+	{
+		len = sizeof(newpath);
+	}
+
+	for(i = 0, y = 0; i < len; ++i)
+	{
+		if((qpath[i] == '\\' || qpath[i] == '/') && (qpath[i +1] == '\\' || qpath[i +1] == '/'))
+		{
+			continue;
+		}
+		newpath[y] = qpath[i];
+		++y;
+	}
+	newpath[y] = '\0';
+	FS_StripTrailingSeperator( newpath );
+	Q_strncpyz(qpath, newpath, len +1);
+}
 
 
 void FS_BuildOSPathForThread(const char *base, const char *game, const char *qpath, char *fs_path, int fs_thread)
@@ -774,6 +799,8 @@ char* FS_SV_GetFilepath( const char *file, char* testpath, int lenpath )
 
 	return NULL;
 }
+
+
 
 
 /*
@@ -2613,13 +2640,6 @@ void SEH_InitLanguage()
 
 void FS_InitFilesystem()
 {
-  Com_StartupVariable("fs_cdpath");
-  Com_StartupVariable("fs_basepath");
-  Com_StartupVariable("fs_homepath");
-  Com_StartupVariable("fs_game");
-  Com_StartupVariable("fs_copyfiles");
-  Com_StartupVariable("fs_restrict");
-  Com_StartupVariable("loc_language");
   SEH_InitLanguage();
   FS_Startup(BASEGAME);
 //  _Z17SEH_Init_StringEdv();
@@ -2831,39 +2851,54 @@ void FS_DisplayPath( void ) {
 	}
 }
 
+void FS_InitCvars()
+{
+    char *homePath;
+
+	Com_StartupVariable("fs_cdpath");
+	Com_StartupVariable("fs_basepath");
+	Com_StartupVariable("fs_homepath");
+	Com_StartupVariable("fs_game");
+	Com_StartupVariable("fs_copyfiles");
+	Com_StartupVariable("fs_restrict");
+	Com_StartupVariable("loc_language");
+
+    fs_cdpath = Cvar_RegisterString("fs_cdpath", Sys_DefaultCDPath(), 16, "CD path");
+    fs_basepath = Cvar_RegisterString("fs_basepath", Sys_DefaultInstallPath(), 528, "Base game path");
+    fs_basegame = Cvar_RegisterString("fs_basegame", "", 16, "Base game name");
+    fs_gameDirVar = Cvar_RegisterString("fs_game", "", 28, "Game data directory. Must be \"\" or a sub directory of 'mods/'.");
+    homePath = (char *)Sys_DefaultHomePath();
+    if (!homePath || !homePath[0])
+        homePath = Sys_Cwd();
+    fs_homepath = Cvar_RegisterString("fs_homepath", homePath, 528, "Game home path");
+
+    FS_SetDirSep(fs_homepath);
+    FS_SetDirSep(fs_basepath);
+    FS_SetDirSep(fs_gameDirVar);
+    FS_GameCheckDir(fs_gameDirVar);
+
+    fs_debug = Cvar_RegisterInt("fs_debug", 0, 0, 2, 0, "Enable file system debugging information");
+    fs_copyfiles = Cvar_RegisterBool("fs_copyfiles", 0, 16, "Copy all used files to another location");
+    fs_ignoreLocalized = Cvar_RegisterBool("fs_ignoreLocalized", qfalse, 160, "Ignore localized files");
+    fs_restrict = Cvar_RegisterBool("fs_restrict", qfalse, 16, "Restrict file access for demos etc.");
+    fs_usedevdir = Cvar_RegisterBool("fs_usedevdir", qfalse, 16, "Use development directories.");
+
+}
+
 void FS_Startup(const char *gameName)
 {
-
-    char *homePath;
     cvar_t *levelname;
     mvabuf;
 
     Sys_EnterCriticalSection(CRIT_FILESYSTEM);
 
     Com_Printf("----- FS_Startup -----\n");
-    fs_debug = Cvar_RegisterInt("fs_debug", 0, 0, 2, 0, "Enable file system debugging information");
-    fs_copyfiles = Cvar_RegisterBool("fs_copyfiles", 0, 16, "Copy all used files to another location");
-    fs_cdpath = Cvar_RegisterString("fs_cdpath", Sys_DefaultCDPath(), 16, "CD path");
-    fs_basepath = Cvar_RegisterString("fs_basepath", Sys_DefaultInstallPath(), 528, "Base game path");
-    fs_basegame = Cvar_RegisterString("fs_basegame", "", 16, "Base game name");
-    fs_gameDirVar = Cvar_RegisterString("fs_game", "", 28, "Game data directory. Must be \"\" or a sub directory of 'mods/'.");
-    fs_ignoreLocalized = Cvar_RegisterBool("fs_ignoreLocalized", qfalse, 160, "Ignore localized files");
 
     fs_packFiles = 0;
 
-    homePath = (char *)Sys_DefaultHomePath();
-    if (!homePath || !homePath[0])
-        homePath = fs_basepath->resetString;
-    fs_homepath = Cvar_RegisterString("fs_homepath", homePath, 528, "Game home path");
-    fs_restrict = Cvar_RegisterBool("fs_restrict", qfalse, 16, "Restrict file access for demos etc.");
-    fs_usedevdir = Cvar_RegisterBool("fs_usedevdir", qfalse, 16, "Use development directories.");
+	FS_InitCvars();
 
     levelname = Cvar_FindVar("mapname");
-
-    FS_SetDirSep(fs_homepath);
-    FS_SetDirSep(fs_basepath);
-    FS_SetDirSep(fs_gameDirVar);
-    FS_GameCheckDir(fs_gameDirVar);
 
     if (fs_basepath->string[0])
     {
@@ -4387,4 +4422,169 @@ int FS_WriteChecksumInfo(const char* filename, byte* data, int maxsize)
     //Slow search did not generate results :/
     return 0;
 
+}
+
+
+/*
+=================
+FS_ReadOSPath
+
+Properly handles partial reads
+=================
+*/
+int FS_ReadOSPath( void *buffer, int len, FILE* f ) {
+	int		block, remaining;
+	int		read;
+	byte	*buf;
+
+	if ( !f ) {
+		return 0;
+	}
+
+	buf = (byte *)buffer;
+
+	remaining = len;
+	while (remaining) {
+		block = remaining;
+		read = fread (buf, 1, block, f);
+		if (read == 0)
+		{
+			return len-remaining;	//Com_Error (ERR_FATAL, "FS_Read: 0 bytes read");
+		}
+
+		if (read == -1) {
+			Com_Error(ERR_FATAL, "FS_ReadOSPath: -1 bytes read");
+		}
+
+		remaining -= read;
+		buf += read;
+	}
+	return len;
+
+}
+
+
+/*
+================
+FS_filelengthOSPath
+
+If this is called on a non-unique FILE (from a pak file),
+it will return the size of the pak file, not the expected
+size of the file.
+================
+*/
+int FS_filelengthOSPath( FILE* h ) {
+	int		pos;
+	int		end;
+
+	pos = ftell (h);
+	fseek (h, 0, SEEK_END);
+	end = ftell (h);
+	fseek (h, pos, SEEK_SET);
+
+	return end;
+}
+
+/*
+===========
+FS_FOpenFileReadOSPathUni
+search for a file somewhere below the home path, base path or cd path
+we search in that order, matching FS_SV_FOpenFileRead order
+===========
+*/
+int FS_FOpenFileReadOSPath( const char *filename, FILE **fp ) {
+	char ospath[MAX_OSPATH];
+	FILE* fh;
+
+	Q_strncpyz( ospath, filename, sizeof( ospath ) );
+
+	fh = fopen( ospath, "rb" );
+
+	if ( !fh ){
+		*fp = NULL;
+		return -1;
+	}
+
+	*fp = fh;
+
+	return FS_filelengthOSPath(fh);
+}
+
+/*
+==============
+FS_FCloseFileOSPath
+
+==============
+*/
+qboolean FS_FCloseFileOSPath( FILE* f ) {
+
+	if (f) {
+	    fclose (f);
+	    return qtrue;
+	}
+	return qfalse;
+}
+
+
+/*
+============
+FS_ReadFileOSPath
+
+Filename are os paths a null buffer will just return the file length without loading
+============
+*/
+int FS_ReadFileOSPath( const char *ospath, void **buffer ) {
+	byte*	buf;
+	int		len;
+	FILE*   h;
+
+
+	if ( !ospath || !ospath[0] ) {
+		Com_Error(ERR_FATAL, "FS_ReadFileOSPath with empty name\n" );
+	}
+
+	buf = NULL;	// quiet compiler warning
+
+	// look for it in the filesystem or pack files
+	len = FS_FOpenFileReadOSPath( ospath, &h );
+	if ( len == -1 ) {
+		if ( buffer ) {
+			*buffer = NULL;
+		}
+		return -1;
+	}
+
+	if ( !buffer ) {
+		FS_FCloseFileOSPath( h );
+		return len;
+	}
+
+	buf = malloc(len+1);
+	if(buf == NULL)
+	{
+		Com_Error(ERR_FATAL, "FS_ReadFileOSPathUni got no memory\n" );
+	}
+	*buffer = buf;
+
+	FS_ReadOSPath (buf, len, h);
+
+	// guarantee that it will have a trailing 0 for string operations
+	buf[len] = 0;
+	FS_FCloseFileOSPath( h );
+	return len;
+}
+
+
+/*
+=============
+FS_FreeFile
+=============
+*/
+void FS_FreeFileOSPath( void *buffer ) {
+
+	if ( !buffer ) {
+		Com_Error( ERR_FATAL, "FS_FreeFile( NULL )" );
+	}
+	//Like regular FS_FreeFile but ignoring FS_LoadStack
+	free( buffer );
 }
