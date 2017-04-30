@@ -1,0 +1,142 @@
+############################################
+# A test makefile for incremental building.#
+############################################
+# If you want to get a debug version, use  #
+# `make DEBUG=true`                        #
+############################################
+########################################################################
+# TODO: pexports for windows, linux.                                   #
+# Check if something wrong. I got 2.3 mb file like in good old days ;D #
+########################################################################
+
+##############################
+# A name of server executable.
+TARGETNAME=cod4x18_dedrun
+
+############################################
+# Check if requested build is a debug build.
+ifeq ($(DEBUG), true)
+RELEASE=
+else
+RELEASE=OFFICIAL
+endif
+
+###################
+# Compiler options.
+CC=gcc
+WIN_DEFINES=WINVER=0x501
+UNIX_DEFINES=_GNU_SOURCE
+C_FLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer
+WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows -static-libgcc -static -lm
+WIN_LLIBS=tomcrypt_win32 bot_win32 mbedtls_win32 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
+LINUX_LFLAGS=-m32 -static-libgcc -rdynamic -Tlinkerscript.ld
+LINUX_LLIBS=-L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
+COD4X_DEFINES=COD4X18UPDATE $(RELEASE)
+
+########################
+# Setup directory names.
+SRC_DIR=src
+BIN_DIR=bin
+LIB_DIR=lib
+ZLIB_DIR=$(SRC_DIR)/zlib
+WIN_DIR=$(SRC_DIR)/win32
+LINUX_DIR=$(SRC_DIR)/unix
+ASSETS_DIR=$(SRC_DIR)/xassets
+
+##############################
+# Setup external applications.
+NASM=nasm
+
+
+##############################
+# Setup OS-specific variables.
+ifeq ($(OS),Windows_NT)
+####################
+# Windows variables.
+BIN_EXT=.exe
+RM=del
+NASMFLAGS=-f coff -dWin32 --prefix _
+OS_SOURCES=$(wildcard $(WIN_DIR)/*.c)
+OS_OBJ=$(patsubst $(WIN_DIR)/%.c,$(BIN_DIR)/%.o,$(OS_SOURCES))
+C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(WIN_DEFINES))
+LFLAGS=$(WIN_LFLAGS)
+LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
+RESOURCE_FILE=src/win32/win_cod4.res
+else
+#################
+# LINUX variables.
+BIN_EXT=
+RM=rm
+NASMFLAGS=-f elf
+OS_SOURCES=$(wildcard $(LINUX_DIR)/*.c)
+OS_OBJ=$(patsubst $(LINUX_DIR)/%.c,$(BIN_DIR)/%.o,$(OS_SOURCES))
+C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(LINUX_DEFINES))
+LFLAGS=$(LINUX_LFLAGS)
+# was -L./lib
+LLIBS=-L$(LIB_DIR)/
+RESOURCE_FILE=
+endif
+
+
+#####################
+# Source files lists.
+TARGET=$(addprefix $(BIN_DIR)/,$(TARGETNAME)$(BIN_EXT))
+ASM_SOURCES=$(wildcard $(SRC_DIR)/*.asm)
+C_SOURCES=$(wildcard $(SRC_DIR)/*.c)
+ZLIB_SOURCES=$(wildcard $(ZLIB_DIR)/*.c)
+ASSETS_SOURCES=$(wildcard $(ASSETS_DIR)/*.c)
+
+#################################################################
+# Object files lists. (prefixes for rules may be required later).
+ASM_OBJ=$(patsubst $(SRC_DIR)/%.asm,$(BIN_DIR)/%.o,$(ASM_SOURCES))
+C_OBJ=$(patsubst $(SRC_DIR)/%.c,$(BIN_DIR)/%.o,$(C_SOURCES))
+ZLIB_OBJ=$(patsubst $(ZLIB_DIR)/%.c,$(BIN_DIR)/%.o,$(ZLIB_SOURCES))
+ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(BIN_DIR)/%.o,$(ASSETS_SOURCES))
+
+#############################################################
+#############################################################
+#############################################################
+#############################################################
+#############################################################
+
+###############################
+# Default rule: rebuild server.
+all: $(TARGET)
+	@echo Done.
+
+###############################
+# A rule to link server binary.
+$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ)
+	$(CC) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
+
+#####################################
+# A rule to build common server code.
+# -march=nocona
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+
+################################
+# A rule to build assemler code.
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.asm
+	$(NASM) $(NASMFLAGS) $< -o $@
+
+###################################
+# A rule to build zlib source code.
+$(BIN_DIR)/%.o: $(ZLIB_DIR)/%.c
+	$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+
+######################################
+# A rule to build xassets source code.
+$(BIN_DIR)/%.o: $(ASSETS_DIR)/%.c
+	$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+
+########################################
+# A rule to build Windows specific code.
+$(BIN_DIR)/%.o: $(WIN_DIR)/%.c
+	$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+
+############################
+# Delete built object files.
+clean:
+	$(RM) $(BIN_DIR)\*.o
+
