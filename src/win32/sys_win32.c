@@ -873,6 +873,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	if(copylen >= (sizeof(lpFilename) -1))
 	{
 		Sys_SetExeFile( "" );
+		Sys_SetExeFileShort( "" );
 		Sys_SetBinaryPath( "" );
 		MessageBoxA(NULL, "Path is too long. The whole path to location of this .exe file must not exceed 254 characters", CLIENT_WINDOW_TITLE " Error", MB_OK | MB_ICONERROR);
 		return 1;
@@ -889,6 +890,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 				return 1;
 			}
 			Sys_SetBinaryPath( lpFilename );
+			Sys_SetExeFileShort( lastSep +1 );
 		}else{
 			MessageBoxA(NULL, "GetModuleFileName() returned an unexpected filepath.", CLIENT_WINDOW_TITLE " Error", MB_OK | MB_ICONERROR);
 			return 1;

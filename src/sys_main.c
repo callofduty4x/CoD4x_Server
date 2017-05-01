@@ -55,6 +55,7 @@ static char exit_cmdline[MAX_CMD + MAX_OSPATH] = "";
 static char binaryPath[ MAX_OSPATH ] = { 0 };
 static char installPath[ MAX_OSPATH ] = { 0 };
 static char exeFilename[ MAX_OSPATH ] = { 0 };
+static char exeFilenameShort[ MAX_OSPATH ] = { 0 };
 static char cmdline[MAX_CMD + MAX_OSPATH] = "";
 
 #ifndef MAXPRINTMSG
@@ -377,6 +378,11 @@ void Sys_SetExeFile(const char *filepath)
 	Q_strncpyz(exeFilename, filepath, sizeof(exeFilename));
 }
 
+void Sys_SetExeFileShort(const char *filepath)
+{
+	Q_strncpyz(exeFilenameShort, filepath, sizeof(exeFilenameShort));
+}
+
 /*
 =================
 Sys_ExeFile
@@ -387,6 +393,10 @@ const char* Sys_ExeFile( void )
 	return exeFilename;
 }
 
+const char* Sys_ExeFileShort( void )
+{
+	return exeFilenameShort;
+}
 
 /*
 =================

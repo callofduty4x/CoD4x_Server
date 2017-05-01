@@ -465,7 +465,14 @@ int main(int argc, char* argv[])
     }
 
     Sys_SetExeFile( argv[ 0 ] );
-    /* This function modifies argv[ 0 ] :S */
+	const char* find = strrchr( argv[0], '/' );
+    if(find)
+	{
+		Sys_SetExeFileShort( find +1 );
+	}else{
+		Sys_SetExeFileShort( argv[0] );
+	}
+	/* This function modifies argv[ 0 ] :S */
     Sys_SetBinaryPath( Sys_Dirname( argv[ 0 ] ) );
 
     return Sys_Main(commandLine);

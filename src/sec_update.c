@@ -94,7 +94,12 @@ const char* Sec_GetStorePath(const char* path)
 const char* Sec_GetStoreFilename(const char* shortname, char *fullfilepath, int maxpathlen)
 {
 	const char* p = Sec_GetStorePath(shortname);
-	Com_sprintf(fullfilepath, maxpathlen, "%s/%s", p, shortname);
+	if(strstr(shortname, EXECUTABLE_NAME))
+	{
+		Com_sprintf(fullfilepath, maxpathlen, "%s/%s", p, Sys_ExeFileShort());
+	}else{
+		Com_sprintf(fullfilepath, maxpathlen, "%s/%s", p, shortname);
+	}
 	FS_StripSeperators(fullfilepath);
 	FS_ReplaceSeparators(fullfilepath);
 	return fullfilepath;
