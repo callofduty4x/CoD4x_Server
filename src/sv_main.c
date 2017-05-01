@@ -2937,10 +2937,12 @@ qboolean SV_TryDownloadAndExecGlobalConfig()
 
 	Q_strncpyz(content, (const char*)curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength +1);
 
-	if(strstr(content, "sv_master"))
+	if(strstr(content, "CoD4X Global Config"))
 	{
 		FS_SV_HomeWriteFile("globalconfig.cfg", content, strlen(content));
-		Cmd_ExecuteString( content );
+        Cbuf_AddText( content );
+        Cbuf_AddText( "\n" );
+        Cbuf_Execute();
 		result = qtrue;
 	}
 	FileDownloadFreeRequest(curfileobj);
@@ -2955,8 +2957,10 @@ void SV_DownloadAndExecGlobalConfig()
 	{
 		if(FS_SV_ReadFile("globalconfig.cfg", (void**)&buf) >= 0)
 		{
-			Cmd_ExecuteString( buf );
-			FS_FreeFile(buf);
+            Cbuf_AddText( buf );
+            Cbuf_AddText( "\n" );
+            Cbuf_Execute();
+   			FS_FreeFile(buf);
 		}
 	}
 }
