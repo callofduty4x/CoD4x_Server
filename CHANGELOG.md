@@ -3,6 +3,21 @@ All notable changes to this project will be documented in this file.
 
 Versions in this file correspond to git tags.
 
+## 17.3
+Default fs_homepath under Windows is now the current working directory - before default fs_homepath was fs_basepath
+Masterserver announcing works now with more than 1 address - was a bug before
+Autoupdate:
+  Autoupdate will check for updates earlier in startup
+  Updatefiles will now only written to these locations: 
+    The cod4x18_dedrun, 
+    Windows: Executable-directory,
+    Linux: Current working directory,
+    fs_homepath
+  User compiled cod4x server will only receive updates on major version increases
+Network init happens now early to allow early run of autoupdater
+
+###Note: For proper operation of Autoupdate every gameserver needs to run on a dedicated fs_homepath
+
 ## [Unreleased] (17.0)
 Note: 17.0 is a major update. Servers and Clients will be forced to upgrade.
 
