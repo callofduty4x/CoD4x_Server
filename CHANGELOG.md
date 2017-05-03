@@ -6,7 +6,7 @@ Versions in this file correspond to git tags.
 ## 17.3
 Default fs_homepath under Windows is now the current working directory - before default fs_homepath was fs_basepath
 
-### Fixed
+### Fixes
 Masterserver announcing works now with more than 1 address - was a bug before 
 
 Small zone overflow [#148](https://github.com/callofduty4x/CoD4x_Server/issues/148)
