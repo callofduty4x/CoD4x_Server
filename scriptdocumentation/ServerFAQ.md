@@ -10,5 +10,13 @@ Some working packages are ...
 - Ubuntu 14 32bit: sudo apt-get install libstdc++6
 -  Debian 8 64bit: sudo apt-get install gcc-multilib g++-multilib
 3) Read
-https://github.com/callofduty4x/CoD4x_Server/issues/100
-https://github.com/callofduty4x/CoD4x_Server/issues/95
+- https://github.com/callofduty4x/CoD4x_Server/issues/100
+- https://github.com/callofduty4x/CoD4x_Server/issues/95
+
+### All GUIDs are 0
+It means the authentication library is not functioning correctly - see above
+
+### I cannot ban anyone / bans are not stored:
+https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes
+
+
