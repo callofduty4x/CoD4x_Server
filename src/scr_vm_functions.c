@@ -3200,6 +3200,7 @@ void PlayerCmd_SetVelocity(scr_entref_t arg)
 
 void GScr_ArrayTest()
 {
-    Scr_GetArrayId(0);
-
+    // Does nothing for now.
+    // To be implemented with other script function name.
+    //Scr_GetArrayId(0);
 }

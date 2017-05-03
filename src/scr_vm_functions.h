@@ -18,9 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
-#ifndef __SCR_VM_FUNCTIONS_H__
-#define __SCR_VM_FUNCTIONS_H__
+#pragma once
 
 #include "scr_vm.h"
 #include "g_sv_shared.h"
@@ -111,12 +109,7 @@ void Scr_Destroy_f(scr_entref_t hud_elem_num);
 void GScr_IsCvarDefined();
 
 void Scr_IsArray_f();
+void GScr_ArrayTest();
 
 qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
 void PrintModelBonesInfo(gentity_t *ent);
-
-
-void GScr_ArrayTest();
-
-
-#endif
