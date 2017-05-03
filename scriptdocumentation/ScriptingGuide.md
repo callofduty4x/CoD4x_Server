@@ -186,6 +186,5 @@ As your code grows bigger you want to split your code into multiple files. As br
 One of the most commonly included files is probably `#include maps\mp\gametypes\_hud_util;`. Which contains different functions for creating serverside hudelements. One of such functions is `setPoint(...)`. Without the **#include** preprocessor directive we would call the function as `maps\mp\gametypes\_hud_util::setPoint(...);`. By adding the include directive as stated before we can shorten this to `setPoint(...);`.
 
 ## Troubleshooting Scripts
-#### "With the reason: Server fatal crashed: script compile error
-unknown function"
+#### Server fatal crashed: script compile error unknown function
 To see more details on the error set the "developer" variable to "1" on your server. Put `set developer 1` inside your config, or run the server with the commandline argument `+set developer 1`
