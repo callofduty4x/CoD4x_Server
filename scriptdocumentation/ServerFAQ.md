@@ -7,8 +7,8 @@ If you see this error the Authentication Library was not loaded correctly. At ru
 1) Try to remove with the server provided libstdc++.so.6
 2) Install the c++ standard library matching your system.
 Some working packages are ...
-## Ubuntu 14 32bit: sudo apt-get install libstdc++6
-## Debian 8 64bit: sudo apt-get install gcc-multilib g++-multilib
+- Ubuntu 14 32bit: sudo apt-get install libstdc++6
+-  Debian 8 64bit: sudo apt-get install gcc-multilib g++-multilib
 3) Read
 https://github.com/callofduty4x/CoD4x_Server/issues/100
 https://github.com/callofduty4x/CoD4x_Server/issues/95
