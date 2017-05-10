@@ -650,7 +650,7 @@ void Com_InitThreadData()
 
     Sys_SetValue(1, 0);
     Sys_SetValue(2, &jmpbuf_obj);
-    Sys_SetValue(3, (const void*)0x14087620);
+    Sys_SetValue(3, (void*)0x14087620); //box_brush, box_model
 }
 
 

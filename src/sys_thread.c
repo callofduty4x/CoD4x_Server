@@ -43,9 +43,9 @@ qboolean __cdecl Sys_IsDatabaseThread( void )
 
 #define MAX_KEYS 3
 
-const void* sys_valuestoreage[MAX_KEYS];
+void* sys_valuestoreage[MAX_KEYS];
 
-const void* __cdecl Sys_GetValue(int key)
+void* __cdecl Sys_GetValue(int key)
 {
 	if(key < 1 || key > MAX_KEYS)
 		Com_Error(ERR_FATAL, "Sys_GetValue: Invalid value");
@@ -53,7 +53,7 @@ const void* __cdecl Sys_GetValue(int key)
     return sys_valuestoreage[key -1];
 }
 
-void __cdecl Sys_SetValue(int key, const void* value)
+void __cdecl Sys_SetValue(int key, void* value)
 {
 	if(key < 1 || key > MAX_KEYS)
 		Com_Error(ERR_FATAL, "Sys_GetValue: Invalid value");

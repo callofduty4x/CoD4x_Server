@@ -82,6 +82,7 @@ int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
 void Math_VectorToAngles(vec3_t vector, vec3_t angles);
 void vectoangles( const vec3_t value1, vec3_t angles );
 void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up );
+float RadiusFromBounds( const vec3_t mins, const vec3_t maxs );
 
 vec_t VectorNormalize( vec3_t v );
 vec_t VectorNormalize2( const vec3_t v, vec3_t out );
@@ -92,6 +93,7 @@ vec_t VectorLength( const vec3_t v );
 int VectorCompare( const vec3_t v1, const vec3_t v2 );
 float VectorDistance( vec3_t v1, vec3_t v2 );
 vec_t Distance( const vec3_t p1, const vec3_t p2 ) ;
+void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
 
 /* Using 'vec*_t' types causes errors. */
 #define vec2_copy(to, from) (to)[0] = (from)[0]; (to)[1] = (from)[1]
