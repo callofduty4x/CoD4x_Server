@@ -5,8 +5,14 @@ Versions in this file correspond to git tags.
 
 ## 17.3
 Default fs_homepath under Windows is now the current working directory - before default fs_homepath was fs_basepath
-Masterserver announcing works now with more than 1 address - was a bug before
-#### Autoupdate
+
+### Fixes
+Masterserver announcing works now with more than 1 address - was a bug before 
+
+Small zone overflow [#148](https://github.com/callofduty4x/CoD4x_Server/issues/148)
+
+### Changes
+#### Autoupdate [#150](https://github.com/callofduty4x/CoD4x_Server/issues/150)
 Autoupdate will check for updates earlier in startup
 
 Updatefiles will now only written to these locations: 
@@ -21,7 +27,7 @@ Network init happens now early to allow early run of autoupdater
 
 #### Note: For proper operation of Autoupdate every gameserver needs to run on a dedicated fs_homepath
 
-## [Unreleased] (17.0)
+## 17.0
 Note: 17.0 is a major update. Servers and Clients will be forced to upgrade.
 
 xbase.iwd must be updated!
