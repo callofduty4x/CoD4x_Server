@@ -26,9 +26,9 @@ global CM_TraceBox
 CM_TraceBox:
 	jmp dword [oCM_TraceBox]
 
-global CM_TempBoxModel
-CM_TempBoxModel:
-	jmp dword [oCM_TempBoxModel]
+;global CM_TempBoxModel
+;CM_TempBoxModel:
+;	jmp dword [oCM_TempBoxModel]
 
 global CM_TransformedBoxTrace
 CM_TransformedBoxTrace:

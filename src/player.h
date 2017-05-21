@@ -51,6 +51,7 @@
 #define KEY_MASK_NIGHTVISION    262144
 #define KEY_MASK_ADS            524288
 #define KEY_MASK_USE            0x28 /* Combination */
+#define BUTTON_ATTACK			KEY_MASK_FIRE
 
 typedef struct{
     int	score; //0x2f78

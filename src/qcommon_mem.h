@@ -58,6 +58,7 @@ void FreeString( char *free );
 void __cdecl PMem_Free(const char*, unsigned int);
 void __cdecl Sys_OutOfMemError(const char* filename, int line);
 void Z_Free( void *ptr );
+void Z_FreeTags( int tag );
 void Com_InitSmallZoneMemory( void );
 void Com_InitZoneMemory( void );
 

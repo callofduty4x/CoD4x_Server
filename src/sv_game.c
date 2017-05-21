@@ -25,6 +25,10 @@
 #include "player.h"
 #include "cvar.h"
 #include "server.h"
+#include "cm_public.h"
+#include "game/botlib.h"
+
+botlib_export_t *botlib_export;
 
 // sv_game.c -- interface to the game dll
 
@@ -78,4 +82,31 @@ void SV_GameSendServerCommand(int clientNum, int cmdtype, const char *cmdstring)
   {
     SV_SendServerCommand_IW(&svs.clients[clientNum], cmdtype, "%s", cmdstring);
   }
+}
+
+
+/*
+=================
+SV_inPVSIgnorePortals
+
+Does NOT check portalareas
+=================
+*/
+qboolean SV_inPVSIgnorePortals( const vec3_t p1, const vec3_t p2 ) {
+	int leafnum;
+	int cluster;
+	byte    *mask;
+
+	leafnum = CM_PointLeafnum( p1 );
+	cluster = CM_LeafCluster( leafnum );
+	mask = CM_ClusterPVS( cluster );
+
+	leafnum = CM_PointLeafnum( p2 );
+	cluster = CM_LeafCluster( leafnum );
+
+	if ( mask && ( !( mask[cluster >> 3] & ( 1 << ( cluster & 7 ) ) ) ) ) {
+		return qfalse;
+	}
+
+	return qtrue;
 }

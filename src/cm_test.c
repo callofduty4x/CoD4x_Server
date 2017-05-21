@@ -146,3 +146,115 @@ int CM_BoxLeafnums( const vec3_t mins, const vec3_t maxs, uint16_t *list, int li
 }
 
 
+
+
+
+int CM_PointContentsLeafBrushNode_r(const float *p, cLeafBrushNode_t *node)
+{
+  int contents;
+  cbrush_t *b;
+  signed int i, k, u;
+  float d;
+
+  contents = 0;
+  while ( node->leafBrushCount <= 0 )
+  {
+//retry_2:
+	if ( node->leafBrushCount < 0 )
+	{
+		contents |= CM_PointContentsLeafBrushNode_r(p, node + 1);
+	}
+    if ( node->data.children.dist < (double)p[node->axis] )
+      node += node->data.children.childOffset[0];
+    else
+      node += node->data.children.childOffset[1];
+  }
+
+  for (k=0 ; k < node->leafBrushCount; k++)
+  {
+	int brushnum = node->data.leaf.brushes[k];
+    b = &cm.brushes[brushnum];
+    for(u = 0; b->mins[u] <= p[u] && b->maxs[u] >= p[u] && u < 3; ++u);
+    if ( u >= 3 )
+    {
+		// see if the point is in the brush
+        for ( i = 0 ; i < b->numsides ; i++ ) {
+            d = DotProduct( p, b->sides[i].plane->normal );
+            if ( d > b->sides[i].plane->dist ) {
+                break;
+            }
+        }
+        if ( i == b->numsides ) {
+            contents |= b->contents;
+        }
+    }
+//miss:
+  }
+  return contents;
+}
+
+
+int CM_PointContents(const float *p, unsigned int model)
+{
+
+	cLeaf_t *leaf;
+	signed int i;
+
+	if ( model )
+	{
+		cmodel_t* c = CM_ClipHandleToModel(model);
+		leaf = &c->leaf;
+	}
+	else
+	{
+		int leafnum = CM_PointLeafnum(p);
+		leaf = &cm.leafs[leafnum];
+	}
+
+	if ( !leaf->leafBrushNode )
+	{
+		return 0;
+	}
+
+	for(i = 0; i < 3; ++i)
+	{
+		if ( leaf->mins[i] >= p[i] || p[i] >= leaf->maxs[i] )
+		{
+			return 0;
+		}
+
+	}
+
+	return CM_PointContentsLeafBrushNode_r(p, &cm.leafbrushNodes[leaf->leafBrushNode]);
+
+}
+
+/*
+==================
+CM_TransformedPointContents
+
+Handles offseting and rotation of the end points for moving and
+rotating entities
+==================
+*/
+int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_t origin, const vec3_t angles ) {
+	vec3_t p_l;
+	vec3_t temp;
+	vec3_t axis[3];
+
+	// subtract origin offset
+	VectorSubtract( p, origin, p_l );
+
+	// rotate start and end into the models frame of reference
+	if ( angles[0] || angles[1] || angles[2] )
+	{
+		AnglesToAxis(angles, axis);
+
+		VectorCopy( p_l, temp );
+		p_l[0] = DotProduct( temp, axis[0] );
+		p_l[1] = DotProduct( temp, axis[1] );
+		p_l[2] = DotProduct( temp, axis[2] );
+	}
+
+	return CM_PointContents( p_l, model );
+}

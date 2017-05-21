@@ -5,6 +5,9 @@
 
 #define cm (*((clipMap_t*)(0x889EBC0)))
 
+#define BOX_MODEL_HANDLE 4095
+
+
 #pragma pack(push, 2)
 typedef struct 
 {
@@ -98,7 +101,7 @@ typedef union
 #pragma pack(push, 2)
 typedef struct cLeafBrushNode_s
 {
-  char axis;
+  byte axis;
   int16_t leafBrushCount;
   int contents;
   cLeafBrushNodeData_t data;
@@ -237,5 +240,23 @@ typedef struct leafList_s
   vec3_t bounds[2];
   int lastLeaf;
 }leafList_t;
+
+struct TraceCheckCount
+{
+  int global;
+  int *partitions;
+};
+
+/* 7216 */
+typedef struct 
+{
+  struct TraceCheckCount checkcount;
+  cbrush_t *box_brush;
+  cmodel_t *box_model;
+}TraceThreadInfo;
+
+
+cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle );
+
 
 #endif

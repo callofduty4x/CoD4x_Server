@@ -19,4 +19,9 @@ It means the authentication library is not functioning correctly - see above
 ### I cannot ban anyone / bans are not stored:
 https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes
 
+### What is the difference between gsc and gsx scripts?
+the file extensions are only relevant when having equally named, one with gsc and one with gsx extension. the cod4x server will then favor the file with gsx extension over gsc. this was originally designed to write scripts that can be used on both cod4x and non cod4x servers ( in more detail: to avoid not available functionality on non cod4x servers ) 
 
+there is a nice sideeffect that lets you favor gsx over gsc files when loading from multiple scripts locations e.g. main_shared AND dev_raw. then also the gsx is favored over gsc. 
+
+https://github.com/callofduty4x/CoD4x_Server/blob/5222e3e8746348ada01ed0fc84545c61a5b41121/scriptdocumentation/script_functions_reference.md

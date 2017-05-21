@@ -375,6 +375,23 @@ void QDECL Com_Error( int a, const char *error, ...);
 #define YAW                 1       // left / right
 #define ROLL                2       // fall over
 
+// plane types are used to speed some tests
+// 0-2 are axial planes
+#define PLANE_X         0
+#define PLANE_Y         1
+#define PLANE_Z         2
+#define PLANE_NON_AXIAL 3
+
+
+/*
+=================
+PlaneTypeForNormal
+=================
+*/
+
+#define PlaneTypeForNormal( x ) ( x[0] == 1.0 ? PLANE_X : ( x[1] == 1.0 ? PLANE_Y : ( x[2] == 1.0 ? PLANE_Z : PLANE_NON_AXIAL ) ) )
+
+
 // plane_t structure
 // !!! if this is changed, it must be changed in asm code too !!!
 typedef struct cplane_s {//Nothing validated

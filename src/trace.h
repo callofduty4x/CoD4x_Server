@@ -25,20 +25,42 @@
 #ifndef __TRACE_H__
 #define __TRACE_H__
 
-// a trace is returned when a box is swept through the world
-typedef struct trace_s{
-	float	fraction;       //0x00 time completed, 1.0 = didn't hit anything
-	int	unknown[6];
-/*	qboolean allsolid;      // if true, plane is not valid
-	qboolean startsolid;    // if true, the initial point was in a solid area
-	float fraction;         // time completed, 1.0 = didn't hit anything			//0x00
-	vec3_t endpos;          // final position
-	cplane_t plane;         // surface normal at impact, transformed to world space
-	int surfaceFlags;       // surface hit
-	int contents;           // contents on other side of surface hit*/
-	int	var_02;		//0x1c
-	short	entityNum;      //0x20 entity the contacted sirface is a part of
-} trace_t;
+/* 760 */
+typedef enum
+{
+  TRACE_HITTYPE_NONE = 0x0,
+  TRACE_HITTYPE_ENTITY = 0x1,
+  TRACE_HITTYPE_DYNENT_MODEL = 0x2,
+  TRACE_HITTYPE_DYNENT_BRUSH = 0x3,
+}TraceHitType;
+
+typedef struct trace_s
+{
+  float fraction;
+  vec3_t normal;
+  int surfaceFlags;
+  int contents;
+  const char *material;
+  TraceHitType hitType;
+  uint16_t hitId;
+  uint16_t modelIndex;
+  uint16_t partName;
+  uint16_t partGroup;
+  byte allsolid;
+  byte startsolid;
+  byte walkable;
+  byte padding;
+}trace_t;
+
+typedef struct
+{
+  int baseEntity;
+  int parentEntity;
+  byte ignoreSelf;
+  byte ignoreParent;
+  byte ignoreSiblings;
+  byte ignoreChildren;
+}IgnoreEntParams;
 
 // trace->entityNum can also be 0 to (MAX_GENTITIES-1)
 // or ENTITYNUM_NONE, ENTITYNUM_WORLD
