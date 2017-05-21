@@ -24,3 +24,8 @@ void __cdecl ClientScr_SetSessionTeam(gclient_t *pSelf, client_fields_t *pField)
 #define ClientScr_GetArchiveTime ((void (__cdecl *)(gclient_t *pSelf))0x0808B23C)
 #define ClientScr_SetPSOffsetTime ((void (__cdecl *)(gclient_t *pSelf, client_fields_t *pField))0x0808B1AA)
 #define ClientScr_GetPSOffsetTime ((void (__cdecl *)(gclient_t *pSelf))0x0808B194)
+
+#define Scr_ReadOnlyField ((void (__cdecl *)(gentity_t *ent, int offset))0x080C75D0)
+#define Scr_SetOrigin ((void (__cdecl *)(gentity_t *ent, int offset))0x080BDE46)
+#define Scr_SetHealth ((void (__cdecl *)(gentity_t *ent, int offset))0x080BB096)
+#define Scr_SetAngles ((void (__cdecl *)(gentity_t *ent, int offset))0x080BFEC4)

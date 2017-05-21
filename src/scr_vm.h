@@ -262,7 +262,7 @@ typedef enum{
 
 extern int script_CallBacks_new[8];
 
-typedef enum fieldtype_t
+typedef enum fieldtype_e
 {
     F_INT = 0x0,
     F_FLOAT = 0x1,
@@ -272,8 +272,8 @@ typedef enum fieldtype_t
     F_ENTITY = 0x5,
     F_VECTORHACK = 0x6,
     F_OBJECT = 0x7,
-    F_MODEL = 0x8, // Maybe, moved to 9.
-    F_UNKNOWN = 0x9 // Maybe moved to 8.
+    F_UNKNOWN = 0x8,
+	F_MODEL = 0x9
 } fieldtype_t;
 
 typedef struct client_fields_s
@@ -284,6 +284,14 @@ typedef struct client_fields_s
     void (__cdecl *setter)(gclient_t *, struct client_fields_s *);
     void (__cdecl *getter)(gclient_t *);
 }client_fields_t;
+
+typedef struct ent_field_s
+{
+  const char *name;
+  int ofs;
+  fieldtype_t type;
+  void (__cdecl *callback)(gentity_t *, int);
+} ent_field_t;
 
 typedef enum
 {
@@ -547,7 +555,7 @@ void* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, byte )
 void __cdecl Scr_InitAllocNode( void );
 void __cdecl Scr_BeginLoadScripts( void );
 void __cdecl Scr_SetClassMap( unsigned int );
-void __cdecl Scr_AddFields( unsigned int, const char*, unsigned int );
+#define Scr_AddClassField ((void (__cdecl *)(unsigned int classnum, const char* name, unsigned short int offset))0x081535BA)
 void __cdecl Scr_SetGenericField( void*, fieldtype_t, int );
 void __cdecl Scr_GetGenericField( void*, fieldtype_t, int );
 void __cdecl Scr_SetString(unsigned short *strindexptr, unsigned const stringindex);
@@ -556,10 +564,6 @@ void Scr_InitSystem();
 int GetArraySize(int);
 void RemoveRefToValue(scriptVarType_t type, union VariableUnion val);
 
-/*
-void __cdecl GScr_AddFieldsForEntity( void );
-tGScr_AddFieldsForEntity GScr_AddFieldsForEntity = (tGScr_AddFieldsForEntity(0x80c7808);
-*/
 void __cdecl GScr_AddFieldsForHudElems( void );
 void __cdecl GScr_AddFieldsForRadiant( void );
 void __cdecl Scr_AddHudElem( game_hudelem_t* );
@@ -631,5 +635,8 @@ gentity_t* VM_GetGEntityForNum(scr_entref_t num);
 gclient_t* VM_GetGClientForEntity(gentity_t* ent);
 gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
 client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
+
+// Returns pointer to new 'fields_1' array. To be used in patching purposes.
+ent_field_t* __internalGet_fields_1();
 
 #endif

@@ -43,7 +43,7 @@ void G_RegisterCvars( );
 void QDECL G_LogPrintf( const char *fmt, ... );
 void __cdecl StopFollowing( gentity_t* ent );
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
-__cdecl void GScr_LoadScripts(void);
+void __cdecl GScr_LoadScripts(void);
 
 //This defines Cvars directly related to executable file
 #ifndef getcvaradr

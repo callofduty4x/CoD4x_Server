@@ -86,9 +86,31 @@ client_fields_t fields[] = {
     {"archivetime", 0x2F74, F_FLOAT, ClientScr_SetArchiveTime, ClientScr_GetArchiveTime},
     {"psoffsettime", 0x3070, F_INT, ClientScr_SetPSOffsetTime, ClientScr_GetPSOffsetTime},
     {"pers", 0x2F88, F_MODEL, ClientScr_ReadOnly, 0},
-    {0, 0, F_INT, 0, 0}
+    {0, 0, 0, 0, 0}
 };
 
+// Original: 0x082202A0
+// This array used in patch inside cod4loader routines.
+// If you have decompiled one of mentioned there functions, make sure
+//   to remove patch.
+ent_field_t fields_1[] = {
+    {"classname", 0x170, F_STRING, Scr_ReadOnlyField},
+    {"origin", 0x13C, F_VECTOR, Scr_SetOrigin},
+    {"model", 0x168, F_MODEL, Scr_ReadOnlyField},
+    {"spawnflags", 0x17C, F_INT, Scr_ReadOnlyField},
+    {"target", 0x172, F_STRING, 0},
+    {"targetname", 0x174, F_STRING, 0},
+    {"count", 0x1AC, F_INT, 0},
+    {"health", 0x1A0, F_INT, Scr_SetHealth},
+    {"dmg", 0x1A8, F_INT, 0},
+    {"angles", 0x148, F_VECTOR, Scr_SetAngles},
+    {0, 0, 0, 0}
+};
+
+ent_field_t* __internalGet_fields_1()
+{
+    return fields_1;
+}
 
 void Scr_AddStockFunctions()
 {
@@ -723,38 +745,27 @@ void GScr_LoadGameTypeScript(void)
     script_CallBacks_new[SCR_CB_SCRIPTCOMMAND] = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_ScriptCommand", 0);
 }
 
-typedef struct
-{
-    char *name;
-    int val1;
-    int val2;
-    void *setfun;
-
-} scrEntityFields_t;
-
-//Other functions access scrEntityFields_t too
-
 void GScr_AddFieldsForEntity()
 {
-    int i;
-
-    scrEntityFields_t *ptr;
-
-    for (ptr = (scrEntityFields_t *)0x82202a0, i = 0; ptr->name; ptr++, i++)
+    int i = 0;
+    ent_field_t *iterator = fields_1;
+    while(iterator->name)
     {
-        Scr_AddFields(0, ptr->name, i);
+        Scr_AddClassField(0, iterator->name, i);
+        ++i;
+        ++iterator;
     }
 }
 
 void GScr_AddFieldsForClient()
 {
-    int i;
-
-    client_fields_t *ptr;
-
-    for (ptr = (client_fields_t *)0x8215780, i = 0; ptr->name; ptr++, i++)
+    int i = 0;
+    client_fields_t *iterator = fields;
+    while(iterator->name)
     {
-        Scr_AddFields(0, ptr->name, 0xc000 + i);
+        Scr_AddClassField(0, iterator->name, 0xc000 + i);
+        ++i;
+        ++iterator;
     }
 }
 /*
@@ -800,9 +811,8 @@ void Scr_SetClientField(gclient_t* gcl, int num)
 }
 */
 
-__cdecl void GScr_LoadScripts(void)
+void __cdecl GScr_LoadScripts(void)
 {
-
     char mappath[MAX_QPATH];
     cvar_t *mapname;
     int i;
@@ -822,7 +832,7 @@ __cdecl void GScr_LoadScripts(void)
 
     g_scr_data.map = GScr_LoadScriptAndLabel(mappath, "main", qfalse);
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < 4; ++i)
         Scr_SetClassMap(i);
 
     GScr_AddFieldsForEntity();
@@ -1166,13 +1176,13 @@ void GetPlayerFieldArray(){
     Com_Quit_f();
 }
 */
-#include <string.h>
+/*#include <string.h>
 void GetEntityFieldArray()
 {
 
     char buffer[1024 * 1024];
     char line[128];
-    scrEntityFields_t *ptr;
+    ent_field_t *ptr;
     int j;
 
     Com_Memset(buffer, 0, sizeof(buffer));
@@ -1181,7 +1191,7 @@ void GetEntityFieldArray()
     Q_strcat(buffer, sizeof(buffer), line);
     Com_Printf("%s\n", line);
 
-    for (j = 0, ptr = (scrEntityFields_t *)0x82202a0; ptr->name != NULL; ptr++, j++)
+    for (j = 0, ptr = (ent_field_t *)0x82202a0; ptr->name != NULL; ptr++, j++)
     {
 
         Com_sprintf(line, sizeof(line), "\t{ \"%s\", %d, %d, (void*)%p) },\n", ptr->name, ptr->val1, ptr->val2, ptr->setfun);
@@ -1196,7 +1206,7 @@ void GetEntityFieldArray()
     FS_WriteFile("array.txt", buffer, strlen(buffer));
     Com_Quit_f();
 }
-
+*/
 /*
 void GetHuffmanArray(){
 
