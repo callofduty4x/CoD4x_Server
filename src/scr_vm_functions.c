@@ -2629,19 +2629,6 @@ void GScr_SpawnHelicopter()
     Scr_AddEntity(newent);
 }
 
-void __cdecl ClientScr_GetName(gclient_t *gclient)
-{
-    if (gclient->sess.cs.clientIndex < 0 || gclient->sess.cs.clientIndex >= MAX_CLIENTS)
-    {
-        Com_PrintError("ClientScr_GetName() Bad entity\n");
-        Scr_AddString("");
-        return;
-    }
-    //	Com_Printf("ClientScr_GetName(): Name: %s for%d  %d\n", gclient->sess.newnetname,gclient->ps.clientNum, gclient->sess.cs.clientIndex, gclient->ps.clientNum);
-    Scr_AddString(svs.clients[gclient->sess.cs.clientIndex].name);
-    //	Scr_AddString(gclient->sess.newnetname);
-}
-
 const char *Scr_GetPlayername(gentity_t *gent)
 {
     if (gent->s.number < 0 || gent->s.number >= MAX_CLIENTS)

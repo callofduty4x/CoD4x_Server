@@ -28,6 +28,7 @@
 #include "misc.h"
 #include "sys_main.h"
 #include "sv_bots.h"
+#include "scr_vm_classfunc.h"
 
 #include <stdarg.h>
 
@@ -65,6 +66,29 @@ char *var_typename[] =
         "entity",
         "array",
         "removed thread"};
+
+// Original: 0x08215780
+client_fields_t fields[] = {
+    {"name", 0, F_LSTRING, ClientScr_ReadOnly, ClientScr_GetName},
+    {"sessionteam", 0, F_STRING, ClientScr_SetSessionTeam, ClientScr_GetSessionTeam},
+    {"sessionstate", 0, F_STRING, ClientScr_SetSessionState, ClientScr_GetSessionState},
+    {"maxhealth", 0x2FE8, F_INT, ClientScr_SetMaxHealth, 0},
+    {"score", 0x2F78, F_INT, ClientScr_SetScore, 0},
+    {"deaths", 0x2F7C, F_INT, 0, 0},
+    {"statusicon", 0, F_STRING, ClientScr_SetStatusIcon, ClientScr_GetStatusIcon},
+    {"headicon", 0, F_STRING, ClientScr_SetHeadIcon, ClientScr_GetHeadIcon},
+    {"headiconteam", 0, F_STRING, ClientScr_SetHeadIconTeam, ClientScr_GetHeadIconTeam},
+    {"kills", 0x2F80, F_INT, 0, 0},
+    {"assists", 0x2F84, F_INT, 0, 0},
+    {"hasradar", 0x3178, F_INT, 0, 0},
+    {"spectatorclient", 0x2F68, F_INT, ClientScr_SetSpectatorClient, 0},
+    {"killcamentity", 0x2F6C, F_INT, ClientScr_SetKillcamEntity, 0},
+    {"archivetime", 0x2F74, F_FLOAT, ClientScr_SetArchiveTime, ClientScr_GetArchiveTime},
+    {"psoffsettime", 0x3070, F_INT, ClientScr_SetPSOffsetTime, ClientScr_GetPSOffsetTime},
+    {"pers", 0x2F88, F_MODEL, ClientScr_ReadOnly, 0},
+    {0, 0, F_INT, 0, 0}
+};
+
 
 void Scr_AddStockFunctions()
 {
@@ -721,28 +745,6 @@ void GScr_AddFieldsForEntity()
         Scr_AddFields(0, ptr->name, i);
     }
 }
-/*
-client_fields_t clientField[] = {
-    { "name", 0, 0, (void*)0x808b5b2, (void*)0x808b5d6 },
-    { "sessionteam", 0, 0, (void*)0x808b764, (void*)0x808b3da },
-    { "sessionstate", 0, 0, (void*)0x808b508, (void*)0x808b376 },
-    { "maxhealth", 12264, 12264, (void*)0x808b1c8, NULL },
-    { "score", 12152, 12152, (void*)0x808b73e, NULL },
-    { "deaths", 12156, 12156, NULL, NULL },
-    { "statusicon", 0, 0, (void*)0x808b718, (void*)0x808b672 },
-    { "headicon", 0, 0, (void*)0x808b6ce, (void*)0x808b5e6 },
-    { "headiconteam", 0, 0, (void*)0x808b43e, (void*)0x808b2fa },
-    { "kills", 12160, 12160, NULL, NULL },
-    { "assists", 12164, 12164, NULL, NULL },
-    { "hasradar", 12664, 12664, NULL, NULL },
-    { "spectatorclient", 12136, 12136, (void*)0x808b2c2, NULL },
-    { "killcamentity", 12140, 12140, (void*)0x808b288, NULL },
-    { "archivetime", 12148, 12148, (void*)0x808b258, (void*)0x808b23c },
-    { "psoffsettime", 12400, 12400, (void*)0x808b1aa, (void*)0x808b194 },
-    { "pers", 12168, 12168, (void*)0x808b5b2, NULL },
-    { NULL, 0, 0, NULL, NULL }
-};
-*/
 
 void GScr_AddFieldsForClient()
 {

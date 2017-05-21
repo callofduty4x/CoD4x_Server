@@ -262,16 +262,27 @@ typedef enum{
 
 extern int script_CallBacks_new[8];
 
-typedef int fieldtype_t;
-
-typedef struct
+typedef enum fieldtype_t
 {
-    char* name;
-    int val1;
-    fieldtype_t type;
-    void (*setfun)();
-    void (*getfun)();
+    F_INT = 0x0,
+    F_FLOAT = 0x1,
+    F_LSTRING = 0x2,
+    F_STRING = 0x3,
+    F_VECTOR = 0x4,
+    F_ENTITY = 0x5,
+    F_VECTORHACK = 0x6,
+    F_OBJECT = 0x7,
+    F_MODEL = 0x8, // Maybe, moved to 9.
+    F_UNKNOWN = 0x9 // Maybe moved to 8.
+} fieldtype_t;
 
+typedef struct client_fields_s
+{
+    const char *name;
+    int ofs;
+    fieldtype_t type;
+    void (__cdecl *setter)(gclient_t *, struct client_fields_s *);
+    void (__cdecl *getter)(gclient_t *);
 }client_fields_t;
 
 typedef enum
