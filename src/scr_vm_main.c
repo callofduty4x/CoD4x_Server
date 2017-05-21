@@ -68,6 +68,18 @@ char *var_typename[] =
         "removed thread"};
 
 // Original: 0x08215780
+// Last element must be zeroed.
+// Warning: max 64 elements in array. Hardcoded into VM structures.
+// How to understand?
+//   name is the name of script field.
+//   offset is the address in gclient_t structure.
+//   type is the type of variable.
+//   setter is the function pointer to be called when trying to set variable (self.statusicon = "something")
+//   getter is the function pointer to be called when trying to get variable (iprintln(self.statusicon))
+// Some notes: (based on Scr_GetClientField, 0x080C89D8)
+//   - if offset is 0 then setter/getter should be set. Offset 0 still can be used (rarely).
+//     getter/setter will be called with passed client_field_t value.
+//   - if getter/setter is 0 then field will be get from/set to specified offset and type from client_t structure.
 client_fields_t fields[] = {
     {"name", 0, F_LSTRING, ClientScr_ReadOnly, ClientScr_GetName},
     {"sessionteam", 0, F_STRING, ClientScr_SetSessionTeam, ClientScr_GetSessionTeam},
@@ -93,6 +105,7 @@ client_fields_t fields[] = {
 // This array used in patch inside cod4loader routines.
 // If you have decompiled one of mentioned there functions, make sure
 //   to remove patch.
+// Appears to have max 16384 elements.
 ent_field_t fields_1[] = {
     {"classname", 0x170, F_STRING, Scr_ReadOnlyField},
     {"origin", 0x13C, F_VECTOR, Scr_SetOrigin},
