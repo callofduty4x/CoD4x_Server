@@ -42,6 +42,7 @@
 #include "cmd.h"
 #include "xassets.h"
 #include "xassets/extractor.h"
+#include "scr_vm_classfunc.h"
 
 
 #include <string.h>
