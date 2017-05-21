@@ -6,7 +6,6 @@
 void __cdecl ClientScr_ReadOnly(gclient_t *pSelf, client_fields_t *pField);
 void __cdecl ClientScr_GetName(gclient_t *pSelf);
 void __cdecl ClientScr_SetSessionTeam(gclient_t *pSelf, client_fields_t *pField);
-
 #define ClientScr_GetSessionTeam ((void (__cdecl *)(gclient_t *pSelf))0x0808B3DA)
 #define ClientScr_SetSessionState ((void (__cdecl *)(gclient_t *pSelf, client_fields_t *pField))0x0808B508)
 #define ClientScr_GetSessionState ((void (__cdecl *)(gclient_t *pSelf))0x0808B376)
@@ -19,6 +18,7 @@ void __cdecl ClientScr_SetSessionTeam(gclient_t *pSelf, client_fields_t *pField)
 #define ClientScr_SetHeadIconTeam ((void (__cdecl *)(gclient_t *pSelf, client_fields_t *pField))0x0808B43E)
 #define ClientScr_GetHeadIconTeam ((void (__cdecl *)(gclient_t *pSelf))0x0808B2FA)
 #define ClientScr_SetSpectatorClient ((void (__cdecl *)(gclient_t *pSelf, client_fields_t *pField))0x0808B2C2)
+void __cdecl ClientScr_GetSpectatorClient(gclient_t *pSelf);
 #define ClientScr_SetKillcamEntity ((void (__cdecl *)(gclient_t *pSelf, client_fields_t *pField))0x0808B288)
 #define ClientScr_SetArchiveTime ((void (__cdecl *)(gclient_t *pSelf, client_fields_t *pField))0x0808B258)
 #define ClientScr_GetArchiveTime ((void (__cdecl *)(gclient_t *pSelf))0x0808B23C)

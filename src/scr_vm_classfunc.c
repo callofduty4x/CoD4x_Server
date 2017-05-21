@@ -75,3 +75,8 @@ void __cdecl ClientScr_SetSessionTeam(gclient_t *gcl, client_fields_t *gfl)
     ClientUserinfoChanged(cid);
     HL2Rcon_EventClientEnterTeam(cid, gcl->sess.cs.team);
 }
+
+void __cdecl ClientScr_GetSpectatorClient(gclient_t *pSelf)
+{
+    Scr_AddInt(pSelf->spectatorClient);
+}

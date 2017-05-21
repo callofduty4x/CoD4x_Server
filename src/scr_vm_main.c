@@ -81,7 +81,7 @@ client_fields_t fields[] = {
     {"kills", 0x2F80, F_INT, 0, 0},
     {"assists", 0x2F84, F_INT, 0, 0},
     {"hasradar", 0x3178, F_INT, 0, 0},
-    {"spectatorclient", 0x2F68, F_INT, ClientScr_SetSpectatorClient, 0},
+    {"spectatorclient", 0x2F68, F_INT, ClientScr_SetSpectatorClient, ClientScr_GetSpectatorClient},
     {"killcamentity", 0x2F6C, F_INT, ClientScr_SetKillcamEntity, 0},
     {"archivetime", 0x2F74, F_FLOAT, ClientScr_SetArchiveTime, ClientScr_GetArchiveTime},
     {"psoffsettime", 0x3070, F_INT, ClientScr_SetPSOffsetTime, ClientScr_GetPSOffsetTime},
