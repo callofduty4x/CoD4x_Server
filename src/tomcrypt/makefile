@@ -3,7 +3,6 @@ CFLAGS=-m32 -Wall -Os -s -I. -DLTC_NO_ROLC -DLTC_SOURCE
 MATHCFLAGS=-m32 -Wall -Os -s -I. -Imath -DLTC_NO_ROLC -DLTC_SOURCE
 
 CC=gcc
-CL=ar
 TARGETDIR=../../lib
 TARGETNAME=$(TARGETDIR)/$(TARGET)
 SOURCES=$(wildcard ciphers/aes/aes.c \
@@ -33,30 +32,28 @@ OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
 MATHSOURCES=$(wildcard math/*.c)
 MATHOBJECTS=$(patsubst %.c,%.o,$(MATHSOURCES))
 
-ifeq ($(OS),Windows_NT)
-CLEAN=del $(subst /,\,$(OBJECTS)) $(subst /,\,$(MATHOBJECTS))
-else
-CLEAN=rm $(OBJECTS) $(MATHOBJECTS)
-endif
-
 all: notify $(TARGETNAME)
-	@echo "TomCrypt done"
+	@echo TomCrypt done
 
 notify:
-	@echo "TomCrypt start"
+	@echo TomCrypt start
 
 $(TARGETNAME): $(OBJECTS) $(MATHOBJECTS)
-	@echo "  $(CL)  $@"
-	@$(CL) cr $@ $^
+	@echo   $(AR)  $@
+	@$(AR) cr $@ $^
 
 %.o: %.c
-	@echo "  $(CC)  $@"
+	@echo   $(CC)  $@
 	@$(CC) -c $(CFLAGS) -o $@ $<
 
 math/%.o: math/%.c
-	@echo "  $(CC)  $@"
+	@echo   $(CC)  $@
 	@$(CC) -c $(MATHCFLAGS) -o $@ $<
 
 clean:
-	@$(CLEAN)
-	@echo "Clean done"
+ifeq ($(OS),Windows_NT)
+	@del $(subst /,\,$(OBJECTS)) $(subst /,\,$(MATHOBJECTS))
+else
+	@rm $(OBJECTS) $(MATHOBJECTS)
+endif
+	@echo Clean done

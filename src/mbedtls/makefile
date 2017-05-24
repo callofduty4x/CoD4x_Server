@@ -1,6 +1,6 @@
 
 # Also see "include/mbedtls/config.h"
-
+CC=gcc
 CFLAGS	?= -O2 -m32
 WARNING_CFLAGS ?=  -Wall -W -Wdeclaration-after-statement
 LDFLAGS ?= -m32
