@@ -37,29 +37,7 @@ build_script:
 - ps: >-
     Write-Host "Building server code:"
 
-    Write-Host "    Building tomcrypt..."
-
-    cd src/tomcrypt
-
-    ./compile_win32.cmd
-    
-    Write-Host "    Building botlib..."
-
-    cd ../botlib
-
-    ./comp.cmd
-    
-    Write-Host "    Building mbedtls..."
-
-    cd ../mbedtls
-
-    ./build.cmd
-    
-    Write-Host "    Building cod4x18 server..."
-
-    cd ../..
-
-    mingw32-make.exe win32
+    mingw32-make.exe -fmakefile2
 
     Write-Host "Done."
 test_script:
@@ -67,6 +45,7 @@ test_script:
 branches:
   only:
     - master    # Ignore all other branches.
+    - makefile2
 artifacts: 
   - path: bin\cod4x18_dedrun.exe
     name: cod4exe

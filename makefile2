@@ -133,7 +133,8 @@ tomcrypt:
 botlib:
 	@echo   sh  $@
 ifeq ($(OS),Windows_NT)
-	@cd $(SRC_DIR)/$@ && comp.cmd
+	# Fuck you, PowerShell.
+	@cmd.exe /C "cd $(SRC_DIR)/$@ && comp.cmd"
 else
 	@cd $(SRC_DIR)/$@ && ./comp.sh
 endif
