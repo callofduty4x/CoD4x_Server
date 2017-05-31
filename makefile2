@@ -132,12 +132,13 @@ tomcrypt:
 # A rule to make bot library.
 botlib:
 	@echo   sh  $@
-# What is your OS, Appveyor?
-	@echo My OS is $(OS)
+# What is your OS, Appveyor? Fine, Windows_NT
+# What is current build command?
+	@echo Current lib build command:
 ifeq ($(OS),Windows_NT)
-	@cd $(SRC_DIR)/$@ && comp.cmd
+	cd $(SRC_DIR)/$@ && comp.cmd
 else
-	@cd $(SRC_DIR)/$@ && ./comp.sh
+	cd $(SRC_DIR)/$@ && ./comp.sh
 endif
 
 ###############################
