@@ -156,3 +156,11 @@ DWORD SetJump(DWORD addr, void* destination){
 
 	return restore;
 }
+
+DWORD SetDword(DWORD addr, DWORD replacement)
+{
+    DWORD restore = *(DWORD*)addr;
+    *(DWORD*)addr = replacement;
+    
+    return restore;
+}

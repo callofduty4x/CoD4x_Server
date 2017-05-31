@@ -1,11 +1,11 @@
 #!/bin/bash
 
-gcc -D BOTLIB -c *.c
-gcc -c ../q_math.c
-gcc -c ../qshared.c
-gcc -c ../qvsnprintf.c
+gcc -m32 -D BOTLIB -c *.c
+# gcc -c ../q_math.c
+# gcc -c ../qshared.c
+# gcc -c ../qvsnprintf.c
 echo Linking
-gcc -shared -o botlib.so *.o
+ar rcs ../../lib/libbot.a *.o
 echo Cleaning up
-rm *.o
+rm -r *.o
 

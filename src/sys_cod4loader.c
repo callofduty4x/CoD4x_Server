@@ -42,6 +42,7 @@
 #include "cmd.h"
 #include "xassets.h"
 #include "xassets/extractor.h"
+#include "scr_vm_classfunc.h"
 
 
 #include <string.h>
@@ -420,6 +421,50 @@ static byte patchblock_DB_LOADXASSETS[] = { 0x8a, 0x64, 0x20, 0x8,
 	SetCall(0x81DADD8, store_fastfile_contents_information);
 	SetJump(0x813e22a, MSG_WriteDeltaField);
 
+    // Patching 'fields_1' array here because some code are located in .eh_frame.
+    //   Please, refer 'fields_1' array note before modifying lower code.
+    DWORD dw_fields_1 = (DWORD)__internalGet_fields_1();
+    DWORD dw_fields_1__1 = dw_fields_1 + sizeof(ent_field_t); // Second element of array.
+    // G_DuplicateEntityFields, 0x080C74E8
+    SetDword(0x080C74F7 + 2, dw_fields_1);
+    SetDword(0x080C750C + 2, dw_fields_1);
+    SetDword(0x080C7503 + 2, dw_fields_1);
+    SetDword(0x080C7557 + 2, dw_fields_1);
+    SetDword(0x080C7572 + 2, dw_fields_1);
+    SetDword(0x080C759E + 2, dw_fields_1);
+
+    SetDword(0x080C7548 + 2, dw_fields_1__1);
+    SetDword(0x080C7563 + 2, dw_fields_1__1);
+    SetDword(0x080C758B + 2, dw_fields_1__1);
+    SetDword(0x080C75BA + 2, dw_fields_1__1);
+    SetDword(0x080C7527 + 2, dw_fields_1__1);
+    // G_ParseEntityField, 0x080C798A
+    SetDword(0x080C799A + 1, dw_fields_1);
+    SetDword(0x080C79A3 + 1, dw_fields_1);
+    // Scr_FreeEntityConstStrings, 0x080C8A5E
+    SetDword(0x080C8A97 + 2, dw_fields_1);
+    SetDword(0x080C8A6A + 1, dw_fields_1);
+    SetDword(0x080C8A84 + 2, dw_fields_1);
+
+    SetDword(0x080C8AA5 + 2, dw_fields_1__1);
+    SetDword(0x080C8A77 + 2, dw_fields_1__1);
+    // Scr_GetEnt, 0x080C7C72
+    SetDword(0x080C7CAE + 2, dw_fields_1);
+    // Scr_GetEntArray, 0x080C7B44
+    SetDword(0x080C7BF0 + 2, dw_fields_1);
+    // Scr_GetEntityField, 0x080C89D8
+    SetDword(0x080C8A1A + 2, dw_fields_1);
+    // Scr_GetObjectField, 0x080C7E38
+    SetDword(0x080C7E6E + 2, dw_fields_1);
+    // Scr_SetEntityField, 0x080C8020
+    SetDword(0x080C806F + 2, dw_fields_1);
+    // sub_080C7460, 0x080C7460
+    SetDword(0x080C7499 + 2, dw_fields_1);
+    SetDword(0x080C746C + 1, dw_fields_1);
+    SetDword(0x080C7486 + 2, dw_fields_1);
+
+    SetDword(0x080C74A7 + 2, dw_fields_1__1);
+    SetDword(0x080C7479 + 2, dw_fields_1__1);
 }
 
 

@@ -219,10 +219,6 @@ global Scr_SetClassMap
 Scr_SetClassMap:
 	jmp dword [oScr_SetClassMap]
 
-global Scr_AddFields
-Scr_AddFields:
-	jmp dword [oScr_AddFields]
-
 global Scr_SetGenericField
 Scr_SetGenericField:
 	jmp dword [oScr_SetGenericField]
@@ -333,7 +329,6 @@ oScr_AddSourceBuffer dd 0x814fbac
 oScr_InitAllocNode dd 0x814fea6
 oScr_BeginLoadScripts dd 0x814c266
 oScr_SetClassMap dd 0x8153a3a
-oScr_AddFields dd 0x81535ba
 oScr_SetGenericField dd 0x80c7eae
 oScr_GetGenericField dd 0x80c7d36
 oGScr_AddFieldsForHudElems dd 0x808db80

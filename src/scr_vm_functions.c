@@ -2629,19 +2629,6 @@ void GScr_SpawnHelicopter()
     Scr_AddEntity(newent);
 }
 
-void __cdecl ClientScr_GetName(gclient_t *gclient)
-{
-    if (gclient->sess.cs.clientIndex < 0 || gclient->sess.cs.clientIndex >= MAX_CLIENTS)
-    {
-        Com_PrintError("ClientScr_GetName() Bad entity\n");
-        Scr_AddString("");
-        return;
-    }
-    //	Com_Printf("ClientScr_GetName(): Name: %s for%d  %d\n", gclient->sess.newnetname,gclient->ps.clientNum, gclient->sess.cs.clientIndex, gclient->ps.clientNum);
-    Scr_AddString(svs.clients[gclient->sess.cs.clientIndex].name);
-    //	Scr_AddString(gclient->sess.newnetname);
-}
-
 const char *Scr_GetPlayername(gentity_t *gent)
 {
     if (gent->s.number < 0 || gent->s.number >= MAX_CLIENTS)
@@ -3144,38 +3131,7 @@ qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *c
 
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
 {
-    gentity_t *gentity;
-    int entityNum = 0;
-    mvabuf;
-
-    if (HIWORD(arg))
-    {
-        Scr_ObjectError("Not an entity");
-    }
-    else
-    {
-        entityNum = LOWORD(arg);
-        gentity = &g_entities[entityNum];
-
-        if (!gentity->client)
-        {
-            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
-        }
-    }
-    if (Scr_GetNumParam())
-    {
-        Scr_Error("Usage: self getSpectatorClient()\n");
-    }
-
-    // Player isn't spectating anyone.
-    if (gentity->client->spectatorClient == -1)
-    {
-        Scr_AddUndefined();
-    }
-    else
-    {
-        Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);
-    }
+    Scr_Error("Functionality dropped. To get/set spectator client number, use 'ent.spectatorClient' member instead.");
 }
 
 void PlayerCmd_SetVelocity(scr_entref_t arg)

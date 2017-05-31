@@ -91,7 +91,6 @@ typedef struct{
 static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force );
 void Cvar_ValueToStr(cvar_t const *cvar, char* bufvalue, int sizevalue, char* bufreset, int sizereset, char* buflatch, int sizelatch);
 void Cvar_Set2( const char *var_name, const char *value, qboolean force);
-static const char	*Cvar_DisplayableValueMT( cvar_t const *var, char* value, int maxlen);
 
 /*
 ================
@@ -2211,7 +2210,7 @@ char	*Cvar_DisplayableValue( cvar_t const *var) {
 	return value;
 }
 
-static const char	*Cvar_DisplayableValueMT( cvar_t const *var, char* value, int maxlen) {
+char	*Cvar_DisplayableValueMT( cvar_t const *var, char* value, int maxlen) {
 
 	if(!var)
 		value[0] = '\0';

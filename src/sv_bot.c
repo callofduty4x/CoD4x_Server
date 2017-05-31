@@ -27,8 +27,12 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 // sv_bot.c
-
+#include "cvar.h"
 #include "server.h"
+#include "scr_vm.h"
+#include "g_sv_shared.h"
+#include "cm_public.h"
+#include "qcommon_mem.h"
 #include "game/botlib.h"
 //#include "../botai/botai.h"
 
@@ -49,7 +53,8 @@ static bot_debugpoly_t debugpolygons[MAX_DEBUGPOLYS];
 extern botlib_export_t  *botlib_export;
 int bot_enable;
 
-
+static cvar_t *bot_debug, *bot_groundonly, *bot_reachability, *bot_highlightarea;
+static cvar_t *bot_testhidepos;
 
 /*
 ==================
@@ -59,6 +64,12 @@ SV_BotAllocateClient
 int SV_BotAllocateClient( void ) {
 	int i;
 	client_t    *cl;
+    unsigned short qport;
+    const char* denied;
+    char name[16];
+    char userinfo[MAX_INFO_STRING];
+    usercmd_t ucmd;
+	mvabuf;
 
 	// find a client slot
 	for ( i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++ ) {
@@ -76,12 +87,84 @@ int SV_BotAllocateClient( void ) {
 		return -1;
 	}
 
+
+	Com_RandomBytes((byte*) &qport, sizeof(short));
+
+	Q_strncpyz(name,va("bot%d", i),sizeof(name));
+
+	*userinfo = 0;
+
+	Info_SetValueForKey( userinfo, "cg_predictItems", "1");
+	Info_SetValueForKey( userinfo, "color", "4");
+	Info_SetValueForKey( userinfo, "head", "default");
+	Info_SetValueForKey( userinfo, "model", "multi");
+	Info_SetValueForKey( userinfo, "snaps", "20");
+	Info_SetValueForKey( userinfo, "rate", "99999");
+	Info_SetValueForKey( userinfo, "name", name);
+	Info_SetValueForKey( userinfo, "protocol", va("%i", sv_protocol->integer));
+	Info_SetValueForKey( userinfo, "qport", va("%hi", qport));
+
+	//gotnewcl:
+	Com_Memset(cl, 0x00, sizeof(client_t));
+
+	cl->power = 0; //Sets the default power for the client
+	// (build a new connection
+	// accept the new client
+	// this is the only place a client_t is ever initialized)
+	Q_strncpyz(cl->legacy_pbguid, "BOT-Client",33);	// save the pbguid
+
+	// save the userinfo
+	Q_strncpyz(cl->userinfo, userinfo, 1024 );
+
+
 	cl->gentity = SV_GentityNum( i );
 	cl->gentity->s.number = i;
 	cl->state = CS_ACTIVE;
 	cl->lastPacketTime = svs.time;
 	cl->netchan.remoteAddress.type = NA_BOT;
 	cl->rate = 16384;
+	cl->clscriptid = Scr_AllocArray();
+	
+	denied = ClientConnect(i, cl->clscriptid);
+	if ( denied ) {
+		Com_Printf("Bot couldn't connect: %s\n", denied);
+		SV_FreeClientScriptId(cl);
+		return -1;
+	}
+	
+	Com_Printf( "Going from CS_FREE to CS_CONNECTED for %s num %i\n", name, i);
+
+	// save the addressgamestateMessageNum
+	// init the netchan queue
+	Netchan_Setup( NS_SERVER, &cl->netchan, cl->netchan.remoteAddress, qport,
+			 cl->unsentBuffer, sizeof(cl->unsentBuffer),
+			 cl->fragmentBuffer, sizeof(cl->fragmentBuffer));
+	cl->state = CS_CONNECTED;
+	cl->nextSnapshotTime = svs.time;
+	cl->lastPacketTime = svs.time;
+	cl->lastConnectTime = svs.time;
+
+	SV_UserinfoChanged(cl);
+
+
+	Q_strncpyz(cl->name, name, sizeof(cl->name));
+	Q_strncpyz(cl->shortname, name, sizeof(cl->shortname));
+
+	/* ClientSetUsername(i, name); */
+
+	SV_UpdateClientConfigInfo(cl);
+
+	// when we receive the first packet from the client, we will
+	// notice that it is from a different serverid and that the
+	// gamestate message was not just sent, forcing a retransmit
+	cl->gamestateMessageNum = -1; //newcl->gamestateMessageNum = -1;
+
+	cl->canNotReliable = 1;
+        //Let enter our new bot the game
+
+	Com_Memset(&ucmd, 0, sizeof(ucmd));
+
+	SV_ClientEnterWorld(cl, &ucmd);
 
 	return i;
 }
@@ -98,11 +181,7 @@ void SV_BotFreeClient( int clientNum ) {
 		Com_Error( ERR_DROP, "SV_BotFreeClient: bad clientNum: %i", clientNum );
 	}
 	cl = &svs.clients[clientNum];
-	cl->state = CS_FREE;
-	cl->name[0] = 0;
-	if ( cl->gentity ) {
-		cl->gentity->r.svFlags &= ~SVF_BOT;
-	}
+	SV_DropClient(cl, NULL);
 }
 
 /*
@@ -111,10 +190,9 @@ BotDrawDebugPolygons
 ==================
 */
 void BotDrawDebugPolygons( void ( *drawPoly )( int color, int numPoints, float *points ), int value ) {
-	static cvar_t *bot_debug, *bot_groundonly, *bot_reachability, *bot_highlightarea;
-	static cvar_t *bot_testhidepos;
 	bot_debugpoly_t *poly;
 	int i, parm0;
+	char s[1024];
 
 #ifdef PRE_RELEASE_DEMO
 	return;
@@ -123,27 +201,7 @@ void BotDrawDebugPolygons( void ( *drawPoly )( int color, int numPoints, float *
 	if ( !bot_enable ) {
 		return;
 	}
-	//bot debugging
-	if ( !bot_debug ) {
-		bot_debug = Cvar_Get( "bot_debug", "0", 0 );
-	}
-	//show reachabilities
-	if ( !bot_reachability ) {
-		bot_reachability = Cvar_Get( "bot_reachability", "0", 0 );
-	}
-	//show ground faces only
-	if ( !bot_groundonly ) {
-		bot_groundonly = Cvar_Get( "bot_groundonly", "1", 0 );
-	}
-	//get the hightlight area
-	if ( !bot_highlightarea ) {
-		bot_highlightarea = Cvar_Get( "bot_highlightarea", "0", 0 );
-	}
-	//
-	if ( !bot_testhidepos ) {
-		bot_testhidepos = Cvar_Get( "bot_testhidepos", "0", 0 );
-	}
-	//
+
 	if ( bot_debug->integer ) {
 		parm0 = 0;
 		if ( svs.clients[0].lastUsercmd.buttons & BUTTON_ATTACK ) {
@@ -155,8 +213,8 @@ void BotDrawDebugPolygons( void ( *drawPoly )( int color, int numPoints, float *
 		if ( bot_groundonly->integer ) {
 			parm0 |= 4;
 		}
-		botlib_export->BotLibVarSet( "bot_highlightarea", bot_highlightarea->string );
-		botlib_export->BotLibVarSet( "bot_testhidepos", bot_testhidepos->string );
+		botlib_export->BotLibVarSet( "bot_highlightarea", Cvar_DisplayableValueMT(bot_highlightarea, s, sizeof(s)) );
+		botlib_export->BotLibVarSet( "bot_testhidepos", Cvar_DisplayableValueMT(bot_testhidepos, s, sizeof(s)) );
 		botlib_export->Test( parm0, NULL, svs.clients[0].gentity->r.currentOrigin,
 							 svs.clients[0].gentity->r.currentAngles );
 	} //end if
@@ -211,6 +269,7 @@ void QDECL BotImport_Print( int type, char *fmt, ... ) {
 	}
 }
 
+
 /*
 ==================
 BotImport_Trace
@@ -218,20 +277,28 @@ BotImport_Trace
 */
 void BotImport_Trace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int passent, int contentmask ) {
 	trace_t trace;
-
+	int i;
 	// always use bounding box for bot stuff ?
-	SV_Trace( &trace, start, mins, maxs, end, passent, contentmask, qfalse );
+	G_TraceCapsule( &trace, start, mins, maxs, end, passent, contentmask );
 	//copy the trace information
 	bsptrace->allsolid = trace.allsolid;
 	bsptrace->startsolid = trace.startsolid;
 	bsptrace->fraction = trace.fraction;
-	VectorCopy( trace.endpos, bsptrace->endpos );
-	bsptrace->plane.dist = trace.plane.dist;
-	VectorCopy( trace.plane.normal, bsptrace->plane.normal );
-	bsptrace->plane.signbits = trace.plane.signbits;
-	bsptrace->plane.type = trace.plane.type;
+	//RTCW calculates endpos in CM_Trace() but not cod4
+	// generate endpos from the original, unmodified start/end
+	if ( trace.fraction == 1 ) {
+		VectorCopy( end, bsptrace->endpos );
+	} else {
+		for ( i = 0 ; i < 3 ; i++ ) {
+			bsptrace->endpos[i] = start[i] + trace.fraction * ( end[i] - start[i] );
+		}
+	}
+	bsptrace->plane.dist = 0; //Seems like this doesn't exist in CoD4 - is 0 a good value?
+	VectorCopy( trace.normal, bsptrace->plane.normal );
+	SetPlaneSignbits( &bsptrace->plane ); //And again stupid gussing how to solve: bsptrace->plane.signbits = trace.plane.signbits;
+	bsptrace->plane.type = PlaneTypeForNormal( bsptrace->plane.normal ); //Another guess bsptrace->plane.type = trace.plane.type;
 	bsptrace->surface.value = trace.surfaceFlags;
-	bsptrace->ent = trace.entityNum;
+	bsptrace->ent = trace.hitId;
 	bsptrace->exp_dist = 0;
 	bsptrace->sidenum = 0;
 	bsptrace->contents = 0;
@@ -244,6 +311,7 @@ BotImport_EntityTrace
 */
 void BotImport_EntityTrace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int entnum, int contentmask ) {
 	trace_t trace;
+	int i;
 
 	// always use bounding box for bot stuff ?
 	SV_ClipToEntity( &trace, start, mins, maxs, end, entnum, contentmask, qfalse );
@@ -251,17 +319,22 @@ void BotImport_EntityTrace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, ve
 	bsptrace->allsolid = trace.allsolid;
 	bsptrace->startsolid = trace.startsolid;
 	bsptrace->fraction = trace.fraction;
-	VectorCopy( trace.endpos, bsptrace->endpos );
-	bsptrace->plane.dist = trace.plane.dist;
-	VectorCopy( trace.plane.normal, bsptrace->plane.normal );
-	bsptrace->plane.signbits = trace.plane.signbits;
-	bsptrace->plane.type = trace.plane.type;
+	//RTCW calculates endpos in CM_TransformedBoxTrace() but not cod4
+	for ( i = 0 ; i < 3 ; i++ ) {
+		bsptrace->endpos[i] = start[i] + trace.fraction * ( end[i] - start[i] );
+	}
+	bsptrace->plane.dist = 0; //Seems like this doesn't exist in CoD4 - is 0 a good value?
+	VectorCopy( trace.normal, bsptrace->plane.normal );
+	SetPlaneSignbits( &bsptrace->plane ); //And again stupid gussing how to solve: bsptrace->plane.signbits = trace.plane.signbits;
+	bsptrace->plane.type = PlaneTypeForNormal( bsptrace->plane.normal ); //Another guess bsptrace->plane.type = trace.plane.type;
+
 	bsptrace->surface.value = trace.surfaceFlags;
-	bsptrace->ent = trace.entityNum;
+	bsptrace->ent = trace.hitId;
 	bsptrace->exp_dist = 0;
 	bsptrace->sidenum = 0;
 	bsptrace->contents = 0;
 }
+
 
 
 /*
@@ -270,7 +343,7 @@ BotImport_PointContents
 ==================
 */
 int BotImport_PointContents( vec3_t point ) {
-	return SV_PointContents( point, -1 );
+	return SV_PointContents( point, -1, -1 );
 }
 
 /*
@@ -279,7 +352,8 @@ BotImport_inPVS
 ==================
 */
 int BotImport_inPVS( vec3_t p1, vec3_t p2 ) {
-	return SV_inPVS( p1, p2 );
+	//return SV_inPVS( p1, p2 ); //It seems area details are not available in CoD4 BSP
+	return SV_inPVSIgnorePortals( p1, p2 );
 }
 
 /*
@@ -362,10 +436,13 @@ BotImport_HunkAlloc
 =================
 */
 void *BotImport_HunkAlloc( int size ) {
+	
+	//Possible results in critical memory leak when using L_Malloc!!!
+	/*
 	if ( Hunk_CheckMark() ) {
 		Com_Error( ERR_DROP, "SV_Bot_HunkAlloc: Alloc with marks already set\n" );
-	}
-	return Hunk_Alloc( size, h_high );
+	}*/
+	return L_Malloc(size); //Hunk_Alloc( size, h_high );
 }
 
 /*
@@ -477,19 +554,15 @@ SV_BotClientCommand
 ==================
 */
 void BotClientCommand( int client, char *command ) {
-	SV_ExecuteClientCommand( &svs.clients[client], command, qtrue );
+	SV_ExecuteClientCommand( &svs.clients[client], command, qtrue, qfalse );
 }
-
+#if 0
 /*
 ==================
 SV_BotFrame
 ==================
 */
 void SV_BotFrame( int time ) {
-
-#ifdef PRE_RELEASE_DEMO
-	return;
-#endif
 
 	if ( !bot_enable ) {
 		return;
@@ -500,17 +573,13 @@ void SV_BotFrame( int time ) {
 	}
 	VM_Call( gvm, BOTAI_START_FRAME, time );
 }
-
+#endif
 /*
 ===============
 SV_BotLibSetup
 ===============
 */
 int SV_BotLibSetup( void ) {
-
-#ifdef PRE_RELEASE_DEMO
-	return 0;
-#endif
 
 	if ( !bot_enable ) {
 		return 0;
@@ -541,6 +610,8 @@ int SV_BotLibShutdown( void ) {
 	return botlib_export->BotLibShutdown();
 }
 
+
+
 /*
 ==================
 SV_BotInitCvars
@@ -548,21 +619,29 @@ SV_BotInitCvars
 */
 void SV_BotInitCvars( void ) {
 
+	//enable bot debugging
+	bot_debug = Cvar_RegisterBool( "bot_debug", qfalse, 0, "Enable bot debugging" );
+	//show reachabilities
+	bot_reachability = Cvar_RegisterBool( "bot_reachability", qfalse, 0, "Show all reachabilities to other areas when bot debugging is enabled" );
+	//show ground faces only
+	bot_groundonly = Cvar_RegisterBool( "bot_groundonly", qfalse, 0, "Show ground faces only of areas when bot debugging is enabled" );
+	//get the hightlight area
+	bot_highlightarea = Cvar_RegisterBool( "bot_highlightarea", qfalse, 0, "Show highlight area when bot debugging is enabled" );
+	//
+	bot_testhidepos = Cvar_RegisterBool( "bot_testhidepos", qfalse, 0, "test hide pos when bot debugging is enabled" );
+	//
 	// DHM - Nerve :: bot_enable defaults to 0
-	Cvar_Get( "bot_enable", "0", 0 );               //enable the bot
-	Cvar_Get( "bot_developer", "0", 0 );            //bot developer mode
-	Cvar_Get( "bot_debug", "0", 0 );                //enable bot debugging
-	Cvar_Get( "bot_groundonly", "1", 0 );           //only show ground faces of areas
-	Cvar_Get( "bot_reachability", "0", 0 );     //show all reachabilities to other areas
-	Cvar_Get( "bot_thinktime", "100", 0 );      //msec the bots thinks
-	Cvar_Get( "bot_reloadcharacters", "0", 0 ); //reload the bot characters each time
-	Cvar_Get( "bot_testichat", "0", 0 );            //test ichats
-	Cvar_Get( "bot_testrchat", "0", 0 );            //test rchats
-	Cvar_Get( "bot_fastchat", "0", 0 );         //fast chatting bots
-	Cvar_Get( "bot_nochat", "0", 0 );               //disable chats
-	Cvar_Get( "bot_grapple", "0", 0 );          //enable grapple
-	Cvar_Get( "bot_rocketjump", "1", 0 );           //enable rocket jumping
-	Cvar_Get( "bot_miniplayers", "0", 0 );      //minimum players in a team or the game
+	Cvar_RegisterBool( "bot_enable", qfalse, 0, "Enable the bot" ); //enable the bot
+	Cvar_RegisterBool( "bot_testhidepos", qfalse, 0, "bot developer mode");
+	Cvar_RegisterInt( "bot_thinktime", 100, 0, 350, 0, "msec the bots thinks");
+	Cvar_RegisterBool( "bot_reloadcharacters", qfalse, 0, "reload the bot characters each time");
+	Cvar_RegisterBool( "bot_testichat", qfalse, 0, "test ichats");
+	Cvar_RegisterBool( "bot_testrchat", qfalse, 0, "test rchats");
+	Cvar_RegisterBool( "bot_fastchat", qfalse, 0, "fast chatting bots");
+	Cvar_RegisterBool( "bot_nochat", qfalse, 0, "disable chats");
+	Cvar_RegisterBool( "bot_grapple", qfalse, 0, "enable grapple");
+	Cvar_RegisterBool( "bot_rocketjump", qfalse, CVAR_ROM, "enable rocket jumping");
+	Cvar_RegisterInt( "bot_miniplayers", 0, 0, 22, 0, "minimum players in a team or the game");
 }
 
 // Ridah, Cast AI
@@ -573,7 +652,8 @@ BotImport_AICast_VisibleFromPos
 */
 qboolean BotImport_AICast_VisibleFromPos(   vec3_t srcpos, int srcnum,
 											vec3_t destpos, int destnum, qboolean updateVisPos ) {
-	return VM_Call( gvm, AICAST_VISIBLEFROMPOS, (int)srcpos, srcnum, (int)destpos, destnum, updateVisPos );
+//	return VM_Call( gvm, AICAST_VISIBLEFROMPOS, (int)srcpos, srcnum, (int)destpos, destnum, updateVisPos );
+	return 0;
 }
 
 /*
@@ -582,11 +662,11 @@ BotImport_AICast_CheckAttackAtPos
 ===============
 */
 qboolean BotImport_AICast_CheckAttackAtPos( int entnum, int enemy, vec3_t pos, qboolean ducking, qboolean allowHitWorld ) {
-	return VM_Call( gvm, AICAST_CHECKATTACKATPOS, entnum, enemy, (int)pos, ducking, allowHitWorld );
+//	return VM_Call( gvm, AICAST_CHECKATTACKATPOS, entnum, enemy, (int)pos, ducking, allowHitWorld );
+	return 0;
+
 }
 // done.
-
-#endif
 
 /*
 ==================

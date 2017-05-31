@@ -1705,3 +1705,53 @@ int Q_strLF2CRLF(const char* input, char* output, int outputlimit )
 	output[y] = 0;
 	return y;
 }
+
+
+
+int COM_Compress( char *data_p ) {
+	char *datai, *datao;
+	int c, size;
+	qboolean ws = qfalse;
+
+	size = 0;
+	datai = datao = data_p;
+	if ( datai ) {
+		while ( ( c = *datai ) != 0 ) {
+			if ( c == 13 || c == 10 ) {
+				*datao = c;
+				datao++;
+				ws = qfalse;
+				datai++;
+				size++;
+				// skip double slash comments
+			} else if ( c == '/' && datai[1] == '/' ) {
+				while ( *datai && *datai != '\n' ) {
+					datai++;
+				}
+				ws = qfalse;
+				// skip /* */ comments
+			} else if ( c == '/' && datai[1] == '*' ) {
+				while ( *datai && ( *datai != '*' || datai[1] != '/' ) )
+				{
+					datai++;
+				}
+				if ( *datai ) {
+					datai += 2;
+				}
+				ws = qfalse;
+			} else {
+				if ( ws ) {
+					*datao = ' ';
+					datao++;
+				}
+				*datao = c;
+				datao++;
+				datai++;
+				ws = qfalse;
+				size++;
+			}
+		}
+	}
+	*datao = 0;
+	return size;
+}

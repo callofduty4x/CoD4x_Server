@@ -120,6 +120,10 @@ global SV_GameCommand
 SV_GameCommand:
 	jmp dword [oSV_GameCommand]
 
+global SV_Trace
+SV_Trace:
+	jmp dword [oSV_Trace]
+
 global FS_GetMapBaseName
 FS_GetMapBaseName:
 	jmp dword [oFS_GetMapBaseName]
@@ -154,7 +158,7 @@ oSV_BuildClientSnapshot dd 0x817a988
 oSV_PreGameUserVoice dd 0x817c388
 oSV_UserVoice dd 0x817c08e
 oSV_ArchiveSnapshot dd 0x816b758
-
+oSV_Trace dd 0x817D9F8
 
 bin_import SV_SetExpectedHunkUsage, 0x8173BD4
 bin_import SV_InitGameProgs, 0x817D2D8

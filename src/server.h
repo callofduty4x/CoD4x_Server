@@ -36,6 +36,7 @@
 #include "sys_cod4defs.h"
 #include "cvar.h"
 #include "net_game_conf.h"
+#include "trace.h"
 
 #include "net_reliabletransport.h"
 
@@ -49,6 +50,9 @@
 
 #define SERVERHEADER_STRUCT_ADDR 0x13f18f80
 #define svsHeader (*((svsHeader_t*)(SERVERHEADER_STRUCT_ADDR)))
+
+#define CM_WORLD_STRUCT_ADDR 0x889efa0
+#define cm_world (*((struct cm_world_t*)(CM_WORLD_STRUCT_ADDR)))
 
 
 // MAX_CHALLENGES is made large to prevent a denial
@@ -557,6 +561,60 @@ typedef struct
 }snapshotEntityNumbers_t;
 
 
+
+typedef struct
+{
+  const float *mins;
+  const float *maxs;
+  int *list;
+  int count;
+  int maxcount;
+  int contentmask;
+}areaParms_t;
+
+/* 7561 */
+struct worldContents_s
+{
+  int contentsStaticModels;
+  int contentsEntities;
+  int linkcontentsEntities;
+  uint16_t entities;
+  uint16_t staticModels;
+};
+
+/* 7563 */
+struct worldTree_s
+{
+  float dist;
+  uint16_t axis;
+  union
+  {
+	uint16_t parent;
+	uint16_t nextFree;
+  };
+  uint16_t child[2];
+};
+
+/* 7564 */
+struct worldSector_s
+{
+  struct worldContents_s contents;
+  struct worldTree_s tree;
+};
+
+/* 7565 */
+struct cm_world_t
+{
+  float mins[3];
+  float maxs[3];
+  uint16_t freeHead;
+  uint16_t gap;
+  struct worldSector_s sectors[1024];
+};
+
+
+
+
 typedef struct
 {
   //Player banned
@@ -834,6 +892,11 @@ __cdecl void SV_ClipMoveToEntity(struct moveclip_s *clip, svEntity_t *entity, st
 void SV_Cmd_Init();
 void SV_CopyCvars();
 void SV_SteamData(client_t* cl, msg_t* msg);
+void __cdecl SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels); //0817D9F8
+void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int entityNum, int contentmask, int capsule );
+void G_TraceCapsule(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentmask);
+int SV_PointContents( const vec3_t p, int passEntityNum, int contentmask );
+qboolean SV_inPVSIgnorePortals( const vec3_t p1, const vec3_t p2 );
 
 qboolean SV_SetupReliableMessageProtocol(client_t* client);
 void SV_DisconnectReliableMessageProtocol(client_t* client);

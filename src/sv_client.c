@@ -201,11 +201,11 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 				cl->lastConnectTime = svs.time;
 				break;
 /*			}*/
-		}else if ( NET_CompareBaseAdr( from, &cl->netchan.remoteAddress ) && cl->state == CS_CONNECTED){
+		}else if ( NET_CompareBaseAdr( from, &cl->netchan.remoteAddress ) && (cl->state == CS_CONNECTED || cl->state == CS_ZOMBIE)){
 			NET_OutOfBandPrint( NS_SERVER, from,
 				"error\nConnection refused:\nAn uncompleted connection from %s has been detected\nPlease try again later\n",
 				NET_AdrToString(&cl->netchan.remoteAddress));
-			Com_Printf("Rejected connection from %s. This is a Fake-Player-DoS protection\n", NET_AdrToString(&cl->netchan.remoteAddress));
+			Com_DPrintf("Rejected connection from %s. This is a Fake-Player-DoS protection\n", NET_AdrToString(&cl->netchan.remoteAddress));
 			return;
 		}
 	}
@@ -236,7 +236,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			if(version < 8)
 			{
 				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please install the inofficial cod4x-update you can find at http://cod4x.me\n",
+							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
 							    sv_protocol->integer);
 			}else{
 #ifdef BETA_RELEASE

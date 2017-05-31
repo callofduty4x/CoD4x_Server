@@ -357,3 +357,69 @@ vec_t Distance( const vec3_t p1, const vec3_t p2 ) {
 	return VectorLength( v );
 }
 
+/*
+=================
+RadiusFromBounds
+=================
+*/
+float RadiusFromBounds( const vec3_t mins, const vec3_t maxs ) {
+	int i;
+	vec3_t corner;
+	float a, b;
+
+	for ( i = 0 ; i < 3 ; i++ ) {
+		a = fabs( mins[i] );
+		b = fabs( maxs[i] );
+		corner[i] = a > b ? a : b;
+	}
+
+	return VectorLength( corner );
+}
+
+
+/*
+=================
+AnglesToAxis
+=================
+*/
+void AnglesToAxis( const vec3_t angles, vec3_t axis[3] ) {
+	vec3_t right;
+
+	// angle vectors returns "right" instead of "y axis"
+	AngleVectors( angles, axis[0], right, axis[2] );
+	VectorSubtract( vec3_origin, right, axis[1] );
+}
+
+void AxisClear( vec3_t axis[3] ) {
+	axis[0][0] = 1;
+	axis[0][1] = 0;
+	axis[0][2] = 0;
+	axis[1][0] = 0;
+	axis[1][1] = 1;
+	axis[1][2] = 0;
+	axis[2][0] = 0;
+	axis[2][1] = 0;
+	axis[2][2] = 1;
+}
+
+void AxisCopy( vec3_t in[3], vec3_t out[3] ) {
+	VectorCopy( in[0], out[0] );
+	VectorCopy( in[1], out[1] );
+	VectorCopy( in[2], out[2] );
+}
+
+/*
+================
+ProjectPointOntoVector
+================
+*/
+void ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_t vProj ) {
+	vec3_t pVec, vec;
+
+	VectorSubtract( point, vStart, pVec );
+	VectorSubtract( vEnd, vStart, vec );
+	VectorNormalize( vec );
+	// project onto the directional vector for this segment
+	VectorMA( vStart, DotProduct( pVec, vec ), vec, vProj );
+}
+
