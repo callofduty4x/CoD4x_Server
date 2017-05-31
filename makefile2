@@ -136,7 +136,7 @@ botlib:
 # What is current build command?
 	@echo Current lib build command:
 ifeq ($(OS),Windows_NT)
-	cd $(SRC_DIR)/$@ && comp.cmd
+	@cmd.exe /C "@cd $(SRC_DIR)/$@ && @comp.cmd"
 else
 	cd $(SRC_DIR)/$@ && ./comp.sh
 endif
