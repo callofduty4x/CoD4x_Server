@@ -37,29 +37,31 @@ build_script:
 - ps: >-
     Write-Host "Building server code:"
 
-    Write-Host "    Building tomcrypt..."
+#    Write-Host "    Building tomcrypt..."
 
-    cd src/tomcrypt
+#    cd src/tomcrypt
 
-    ./compile_win32.cmd
+#    ./compile_win32.cmd
     
-    Write-Host "    Building botlib..."
+#    Write-Host "    Building botlib..."
 
-    cd ../botlib
+#    cd ../botlib
 
-    ./comp.cmd
+#    ./comp.cmd
     
-    Write-Host "    Building mbedtls..."
+#    Write-Host "    Building mbedtls..."
 
-    cd ../mbedtls
+#    cd ../mbedtls
 
-    ./build.cmd
+#    ./build.cmd
     
-    Write-Host "    Building cod4x18 server..."
+#    Write-Host "    Building cod4x18 server..."
 
-    cd ../..
+#    cd ../..
 
-    mingw32-make.exe win32
+#    mingw32-make.exe win32
+
+    mingw32-make.exe -f makefile2
 
     Write-Host "Done."
 test_script:
