@@ -36,34 +36,10 @@ before_build:
 build_script:
 - ps: >-
     Write-Host "Building server code:"
-	
+
     mingw32-make.exe -f makefile2
-	
+
     Write-Host "Done."
-
-#    Write-Host "    Building tomcrypt..."
-
-#    cd src/tomcrypt
-
-#    ./compile_win32.cmd
-    
-#    Write-Host "    Building botlib..."
-
-#    cd ../botlib
-
-#    ./comp.cmd
-    
-#    Write-Host "    Building mbedtls..."
-
-#    cd ../mbedtls
-
-#    ./build.cmd
-    
-#    Write-Host "    Building cod4x18 server..."
-
-#    cd ../..
-
-#    mingw32-make.exe win32
 
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
