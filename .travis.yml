@@ -3,7 +3,6 @@ language: cpp
 branches:
   only:
    - master
-   - makefile2
 
 before_install:
   # hack for broken package, https://github.com/travis-ci/travis-ci/issues/6588
@@ -26,7 +25,7 @@ script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
   - echo $TRAVIS_TAG
-  - make -f makefile2
+  - make -fmakefile2
 deploy:
   skip_cleanup: true
   provider: releases
