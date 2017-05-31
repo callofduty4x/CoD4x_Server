@@ -65,7 +65,6 @@ build_script:
 
 #    mingw32-make.exe win32
 
-	
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 branches:
