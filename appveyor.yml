@@ -60,7 +60,7 @@ build_script:
 #    cd ../..
 
 #    mingw32-make.exe win32
-
+    
     mingw32-make.exe -f makefile2
 
     Write-Host "Done."
