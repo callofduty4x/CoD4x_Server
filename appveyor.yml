@@ -38,7 +38,7 @@ build_script:
     Write-Host "Building server code:"
 	
     mingw32-make.exe -f makefile2
-
+	
     Write-Host "Done."
 
 #    Write-Host "    Building tomcrypt..."
