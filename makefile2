@@ -132,6 +132,8 @@ tomcrypt:
 # A rule to make bot library.
 botlib:
 	@echo   sh  $@
+# What is your OS, Appveyor?
+	@echo My OS is $(OS)
 ifeq ($(OS),Windows_NT)
 	@cd $(SRC_DIR)/$@ && comp.cmd
 else
