@@ -31,7 +31,7 @@ script:
   - cd ../mbedtls
   - make
   - cd ../botlib
-  - comp.sh
+  - ./comp.sh
   - cd ../..
   - make linux32
 deploy:
