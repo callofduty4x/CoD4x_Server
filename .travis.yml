@@ -3,7 +3,6 @@ language: cpp
 branches:
   only:
    - master
-   - makefile2
 
 before_install:
   # hack for broken package, https://github.com/travis-ci/travis-ci/issues/6588

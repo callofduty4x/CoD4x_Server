@@ -45,7 +45,6 @@ test_script:
 branches:
   only:
     - master    # Ignore all other branches.
-    - makefile2
 artifacts: 
   - path: bin\cod4x18_dedrun.exe
     name: cod4exe
