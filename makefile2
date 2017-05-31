@@ -145,7 +145,8 @@ endif
 # A rule to link server binary.
 $(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ)
 	@echo   $(CC)  $@
-	@$(CC) $(CFLAGS) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
+# CFLAGS for compiler, LFLAGS for linker.
+	@$(CC) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
 
 #####################################
 # A rule to build common server code.
