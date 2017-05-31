@@ -26,8 +26,8 @@ script:
   - echo $TRAVIS_TAG
 #  - RES=$([ -z "$TRAVIS_TAG" ] && echo $TRAVIS_TAG)
   - cd src/tomcrypt
-  - ./compile_linux.sh
-#  - make
+#  - ./compile_linux.sh
+  - make
   - cd ../mbedtls
   - make
   - cd ../botlib
