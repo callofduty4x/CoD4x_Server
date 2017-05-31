@@ -236,7 +236,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			if(version < 8)
 			{
 				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please install the inofficial cod4x-update you can find at http://cod4x.me\n",
+							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
 							    sv_protocol->integer);
 			}else{
 #ifdef BETA_RELEASE
