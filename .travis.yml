@@ -20,7 +20,7 @@ before_install:
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386
+  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
 script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
