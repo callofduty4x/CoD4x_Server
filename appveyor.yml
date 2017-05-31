@@ -36,6 +36,10 @@ before_build:
 build_script:
 - ps: >-
     Write-Host "Building server code:"
+	
+    mingw32-make.exe -f makefile2
+
+    Write-Host "Done."
 
 #    Write-Host "    Building tomcrypt..."
 
@@ -61,9 +65,7 @@ build_script:
 
 #    mingw32-make.exe win32
 
-    mingw32-make.exe -f makefile2
-
-    Write-Host "Done."
+	
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 branches:
