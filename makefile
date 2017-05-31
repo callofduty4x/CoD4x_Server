@@ -3,7 +3,7 @@ CC=gcc
 CLIBS=-I..\lib_tomcrypt\headers -I..\lib_tomcrypt\math\tommath
 CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer -c
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows
-WIN_LLIBS=-Llib/ -ltomcrypt_win32 -lbot_win32 -lmbedtls_win32 -lm -lws2_32 -lwsock32 -liphlpapi -lgdi32 -mwindows -lwinmm -static-libgcc -static -lstdc++
+WIN_LLIBS=-Llib/ -ltomcrypt_win32 -lbot -lmbedtls_win32 -lm -lws2_32 -lwsock32 -liphlpapi -lgdi32 -mwindows -lwinmm -static-libgcc -static -lstdc++
 LINUX_LFLAGS=-m32 -static-libgcc -rdynamic -Tlinkerscript.ld
 LINUX_LLIBS=-L./lib -lmbedtls -lmbedcrypto -lmbedx509 -ltomcrypt_linux -ldl -lpthread -lm -lstdc++ -Wl,-rpath=./
 NASM=nasm
