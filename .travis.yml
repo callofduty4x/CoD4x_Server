@@ -34,7 +34,7 @@ script:
   - cd ../botlib
   - ./comp.sh
   - cd ../..
-  - make -f makefile2 linux32
+  - make -f makefile2
 deploy:
   skip_cleanup: true
   provider: releases
