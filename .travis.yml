@@ -30,6 +30,8 @@ script:
 #  - make
   - cd ../mbedtls
   - make
+  - cd ../botlib
+  - comp.sh
   - cd ../..
   - make linux32
 deploy:
