@@ -1227,6 +1227,19 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 
 }
 
+int SV_ClientNameInUse(char *name){
+	int i;
+    client_t *cl = NULL;
+	
+	for ( i = sv_privateClients->integer; i < sv_maxclients->integer; i++) {
+		cl = &svs.clients[i];
+		if (strcmp(cl->name, name) == 0) {
+			return 1;
+		}
+	}
+	
+	return 0;
+}
 
 gentity_t* SV_AddBotClient(){
 
@@ -1241,7 +1254,8 @@ gentity_t* SV_AddBotClient(){
     usercmd_t ucmd;
     fileHandle_t file;
     mvabuf;
-
+	int idx;
+	
 	//Find a free serverslot for our bot
 
 	for ( i = sv_privateClients->integer; i < sv_maxclients->integer; i++) {
@@ -1260,21 +1274,34 @@ gentity_t* SV_AddBotClient(){
 		cntnames = 0;
 	}else{
 		for(cntnames = 0; cntnames < 128; cntnames++){
-			read = FS_ReadLine(botnames[cntnames], 16, file);
+			read = FS_ReadLine(botnames[cntnames], sizeof(botnames[cntnames]), file);			
 			if(read <= 0)
 				break;
-			if(strlen(botnames[cntnames]) < 2)
-				break;
+			// Remove EOL characters.
+			for(p = 0; p < sizeof(botnames[cntnames]); p++){
+				if(botnames[cntnames][p] == '\n' || botnames[cntnames][p] == '\r')
+					botnames[cntnames][p] = 0;
+			}
 		}
 		FS_FCloseFile(file);
 	}
 	if(!cntnames){
 		Q_strncpyz(name,va("bot%d", i),sizeof(name));
 	}else{
-		Q_strncpyz(name,botnames[rand() % cntnames],sizeof(name));
-		for(p = 0; p < sizeof(name); p++){
-			if(name[p] == '\n' || name[p] == '\r')
-				name[p] = 0;
+		
+		if (cntnames >= sv_maxclients->integer) {
+			// Get bot name that is not already being used.  Only if there are at least the same amount of names as the maximum number of players.
+			while(qtrue)
+			{
+				idx = rand() % cntnames;	
+				if (SV_ClientNameInUse(botnames[idx]) == 0) {
+					Q_strncpyz(name,botnames[idx],sizeof(name));
+					break;				
+				}
+			}
+		}else{
+			idx = rand() % cntnames;	
+			Q_strncpyz(name,botnames[idx],sizeof(name));
 		}
 	}
 
