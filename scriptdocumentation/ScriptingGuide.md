@@ -196,7 +196,7 @@ Suppose we have two iwd archives named `main\common_mp.ff` and `main\localized_e
 
 ### Script Locations
 In the introductory example we have already learned that scripts can be loaded from the `main_shared` folder. However, there is several more locations that scripts can be loaded from.
-- localized_zone07.iwd 
+- localized_zone07.iwd ( among others, but that one is relevant )
 - main_shared
 - raw
 - raw_shared
