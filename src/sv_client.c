@@ -170,9 +170,9 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	char* xversion;
 
 	xversion = Info_ValueForKey( userinfo, "xver");
-	if(Q_stricmp(xversion, COD4X_SUBVERSION) && version > 6)
+	if(Q_stricmp(xversion, Sys_GetCommonVersionString()) && version > 6)
 	{
-		NET_OutOfBandPrint( NS_SERVER, from, "error\nBad subversion. Server expects subversion %s but client is %s\n", COD4X_SUBVERSION, xversion );
+		NET_OutOfBandPrint( NS_SERVER, from, "error\nBad subversion. Server expects subversion %s but client is %s\n", Sys_GetCommonVersionString(), xversion );
 		return;
 	}
 

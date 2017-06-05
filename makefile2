@@ -132,9 +132,6 @@ tomcrypt:
 # A rule to make bot library.
 botlib:
 	@echo   sh  $@
-# What is your OS, Appveyor? Fine, Windows_NT
-# What is current build command?
-	@echo Current lib build command:
 ifeq ($(OS),Windows_NT)
 	@cmd.exe /C "@cd $(SRC_DIR)/$@ && @comp.cmd"
 else
@@ -143,10 +140,20 @@ endif
 
 ###############################
 # A rule to link server binary.
-$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ)
+$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o
 	@echo   $(CC)  $@
 # CFLAGS for compiler, LFLAGS for linker.
 	@$(CC) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
+
+################################
+# A rule to make version module.
+obj/version.o: src/version/version.c FORCE
+	@echo   $(CC)  $@
+	@$(CC) -c -o $@ $<
+
+############################################
+# An empty rule to force rebuild other rule.
+FORCE:
 
 #####################################
 # A rule to build common server code.

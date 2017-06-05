@@ -271,7 +271,7 @@ void Sys_PrintBinVersion( const char* name ) {
 	char* sep = "==============================================================";
 	fprintf( stdout, "\n\n%s\n", sep );
 
-	fprintf( stdout, "%s %s %s build %i %s\n", GAME_STRING,Q3_VERSION,PLATFORM_STRING, BUILD_NUMBER, __DATE__);
+	fprintf( stdout, "%s %s %s build %i %s\n", GAME_STRING,Q3_VERSION,PLATFORM_STRING, Sys_GetBuild(), __DATE__);
 
 	fprintf( stdout, " local install: %s\n", name );
 	fprintf( stdout, "%s\n\n", sep );

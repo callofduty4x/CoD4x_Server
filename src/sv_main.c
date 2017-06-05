@@ -864,7 +864,7 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
     Info_SetValueForKey( infostring, "sv_maxclients", va("%i", sv_maxclients->integer - sv_privateClients->integer ) );
     Info_SetValueForKey( infostring, "gametype", sv_g_gametype->string );
     Info_SetValueForKey( infostring, "pure", va("%i", sv_pure->boolean ) );
-    Info_SetValueForKey( infostring, "build", va("%i", BUILD_NUMBER));
+    Info_SetValueForKey( infostring, "build", va("%i", Sys_GetBuild()));
     Info_SetValueForKey( infostring, "shortversion", Q3_VERSION );
 
         if(*sv_password->string)
@@ -1210,7 +1210,7 @@ void SVC_SourceEngineQuery_WriteInfo( msg_t* msg, const char* challengeStr, qboo
         if(masterserver)
         {
             MSG_WriteLong( msg, psvs.masterServer_id);
-            MSG_WriteLong( msg, BUILD_NUMBER);
+            MSG_WriteLong( msg, Sys_GetBuild());
             MSG_WriteString( msg, masterServerSecret);
 
         }

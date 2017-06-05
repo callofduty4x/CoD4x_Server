@@ -663,13 +663,13 @@ void Sec_Update( qboolean getbasefiles ){
     Com_Printf("\n-----------------------------\n");
     Com_Printf(" CoD4X Auto Update\n");
     Com_Printf(" Current version: %g\n", SEC_VERSION);
-    Com_Printf(" Current subversion: %g\n", SYS_COMMONVERSION);
-    Com_Printf(" Current build: %d\n", BUILD_NUMBER);
+    Com_Printf(" Current subversion: %g\n", Sys_GetCommonVersion());
+    Com_Printf(" Current build: %d\n", Sys_GetBuild());
     Com_Printf("-----------------------------\n\n");
 
 	Sec_SetupPaths();
 
-    Com_sprintf(buff, sizeof(buff), UPDATE_SERVER_NAME "?mode=11&os=" OS_STRING "&ver=%g", SYS_COMMONVERSION);
+    Com_sprintf(buff, sizeof(buff), UPDATE_SERVER_NAME "?mode=11&os=" OS_STRING "&ver=%g", Sys_GetCommonVersion());
 
     filetransferobj = FileDownloadRequest( buff );
 
@@ -742,7 +742,7 @@ void Sec_Update( qboolean getbasefiles ){
 	}
 	Q_strncpyz(version, ptr +9, sizeof(version));
 
-	int l1 = sscanf(STRINGIFY(SYS_COMMONVERSION), "%d.%d", &currentversion.major, &currentversion.minor);
+	int l1 = sscanf(Sys_GetCommonVersionString(), "%d.%d", &currentversion.major, &currentversion.minor);
 	int l2 = sscanf(version, "%d.%d", &newversion.major, &newversion.minor);
 	
 	if(l1 != 2 || l2 != 2)

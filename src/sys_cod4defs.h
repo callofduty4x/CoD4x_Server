@@ -44,10 +44,7 @@
 
 #define GAME_STRING "CoD4 X"
 
-#include "version.h"
-#ifndef BUILD_NUMBER
-#define BUILD_NUMBER -1
-#endif
+#include "version/version.h"
 
 #define MAX_CLIENTS 64
 #define MAX_CONFIGSTRINGS 2442
