@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 Versions in this file correspond to git tags.
 
+## Unreleased
+### Changes
+#### Makefiles
+incremental builds are now possible. `make -f makefile2` runs the new build scripts. appveyor and travis continuous integration services have been updated to the new buildprocess.
+
 ## 17.3
 Default fs_homepath under Windows is now the current working directory - before default fs_homepath was fs_basepath
 
