@@ -51,8 +51,7 @@ typedef struct bot_debugpoly_s
 static bot_debugpoly_t debugpolygons[MAX_DEBUGPOLYS];
 
 extern botlib_export_t  *botlib_export;
-int bot_enable;
-
+cvar_t* bot_enable;
 static cvar_t *bot_debug, *bot_groundonly, *bot_reachability, *bot_highlightarea;
 static cvar_t *bot_testhidepos;
 
@@ -198,7 +197,7 @@ void BotDrawDebugPolygons( void ( *drawPoly )( int color, int numPoints, float *
 	return;
 #endif
 
-	if ( !bot_enable ) {
+	if ( !bot_enable->boolean ) {
 		return;
 	}
 
@@ -564,7 +563,7 @@ SV_BotFrame
 */
 void SV_BotFrame( int time ) {
 
-	if ( !bot_enable ) {
+	if ( !bot_enable->boolean ) {
 		return;
 	}
 	//NOTE: maybe the game is already shutdown
@@ -581,7 +580,7 @@ SV_BotLibSetup
 */
 int SV_BotLibSetup( void ) {
 
-	if ( !bot_enable ) {
+	if ( !bot_enable->boolean ) {
 		return 0;
 	}
 
@@ -593,6 +592,10 @@ int SV_BotLibSetup( void ) {
 	return botlib_export->BotLibSetup();
 }
 
+int SV_BotLoadMap(const char* levelname)
+{
+	return botlib_export->BotLibLoadMap( levelname );
+}
 /*
 ===============
 SV_ShutdownBotLib
@@ -631,7 +634,7 @@ void SV_BotInitCvars( void ) {
 	bot_testhidepos = Cvar_RegisterBool( "bot_testhidepos", qfalse, 0, "test hide pos when bot debugging is enabled" );
 	//
 	// DHM - Nerve :: bot_enable defaults to 0
-	Cvar_RegisterBool( "bot_enable", qfalse, 0, "Enable the bot" ); //enable the bot
+	bot_enable = Cvar_RegisterBool( "bot_enable", qfalse, 0, "Enable the bot" ); //enable the bot
 	Cvar_RegisterBool( "bot_testhidepos", qfalse, 0, "bot developer mode");
 	Cvar_RegisterInt( "bot_thinktime", 100, 0, 350, 0, "msec the bots thinks");
 	Cvar_RegisterBool( "bot_reloadcharacters", qfalse, 0, "reload the bot characters each time");
@@ -675,6 +678,8 @@ SV_BotInitBotLib
 */
 void SV_BotInitBotLib( void ) {
 	botlib_import_t botlib_import;
+
+	SV_BotInitCvars();
 
 	botlib_import.Print = BotImport_Print;
 	botlib_import.Trace = BotImport_Trace;

@@ -274,6 +274,9 @@ vec_t VectorLength( const vec3_t v ) {
 	return sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
 }
 
+vec_t VectorLengthSquared( const vec3_t v ) {
+	return ( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
+}
 
 void VectorInverse( vec3_t v ) {
 	v[0] = -v[0];

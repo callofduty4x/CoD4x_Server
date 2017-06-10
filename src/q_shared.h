@@ -45,6 +45,8 @@
 #include <math.h>
 
 
+#include "game/def.h"
+
 #ifndef __stdcall
 #define __stdcall __attribute__((stdcall))
 #endif
@@ -599,7 +601,7 @@ void COM_BitClear( int array[], int bitNum );
 #define TT_NAME                     4           // name
 #define TT_PUNCTUATION              5           // punctuation
 #endif
-
+/*
 typedef struct pc_token_s
 {
 	int type;
@@ -608,7 +610,7 @@ typedef struct pc_token_s
 	float floatvalue;
 	char string[MAX_TOKENLENGTH];
 } pc_token_t;
-
+*/
 // data is an in/out parm, returns a parsed out token
 
 void    COM_MatchToken( char**buf_p, char *match );
@@ -618,6 +620,22 @@ void    Swap_Init( void );
 
 #define random()    ( ( rand() & 0x7fff ) / ( (float)0x7fff ) )
 #define crandom()   ( 2.0 * ( random() - 0.5 ) )
+
+qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const char *function, const char *fmt, ...);
+
+
+#define assert ASSERT
+#define assertx XASSERT
+#define ASSERT_HANDLER(x, f, l, fu, ...) (Assert_MyHandler(x, f, l, fu, __VA_ARGS__))
+#define XASSERT(x, ...) (!(x) && ASSERT_HANDLER(#x, __FILE__, __LINE__, __func__, __VA_ARGS__) && (ASSERT_HALT(), 1))
+#define ASSERT(x) XASSERT(x, NULL)
+
+#ifdef __cplusplus
+#include <cstdlib>
+#define ASSERT_HALT() (std::abort())
+#else
+#define ASSERT_HALT() (abort())
+#endif
 
 
 #include "q_platform.h"

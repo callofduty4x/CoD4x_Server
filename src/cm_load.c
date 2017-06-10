@@ -40,6 +40,7 @@ BSP trees instead of being compared directly.
 Capsules are handled differently though.
 ===================
 */
+
 clipHandle_t CM_TempBoxModel( const vec3_t mins, const vec3_t maxs, int capsule ) {
 
 	TraceThreadInfo* tti = Sys_GetValue(3);
@@ -53,7 +54,7 @@ clipHandle_t CM_TempBoxModel( const vec3_t mins, const vec3_t maxs, int capsule 
 	VectorCopy( mins, box_brush->mins );
 	VectorCopy( maxs, box_brush->maxs );
 
-	return BOX_MODEL_HANDLE;
+	return CAPSULE_MODEL_HANDLE;
 }
 
 /*
@@ -61,6 +62,7 @@ clipHandle_t CM_TempBoxModel( const vec3_t mins, const vec3_t maxs, int capsule 
 CM_ClipHandleToModel
 ==================
 */
+
 cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle ) {
 
 	if ( handle < 0 ) {

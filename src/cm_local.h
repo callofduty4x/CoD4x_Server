@@ -6,6 +6,7 @@
 #define cm (*((clipMap_t*)(0x889EBC0)))
 
 #define BOX_MODEL_HANDLE 4095
+#define CAPSULE_MODEL_HANDLE BOX_MODEL_HANDLE
 
 
 #pragma pack(push, 2)
