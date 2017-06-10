@@ -36,7 +36,7 @@
 #include "sys_cod4defs.h"
 #include "cvar.h"
 #include "net_game_conf.h"
-#include "trace.h"
+#include "cm_public.h"
 
 #include "net_reliabletransport.h"
 
@@ -840,6 +840,9 @@ void __cdecl SV_SetGametype( void );
 void __cdecl SV_InitCvars( void );
 void __cdecl SV_RestartGameProgs( int savepersist );
 void __cdecl SV_ResetSekeletonCache(void);
+void SV_BotInitBotLib( void );
+int SV_BotLibSetup( void );
+int SV_BotLoadMap(const char* levelname);
 void __cdecl SV_PreFrame(void);
 void __cdecl SV_SendClientMessages(void);
 void __cdecl SV_SetServerStaticHeader(void);

@@ -40,6 +40,7 @@ SV_Netchan_Decode
 ==============
 */
 void SV_Netchan_Decode( client_t *client, byte *data, int remaining ) {
+
 	int i, index;
 	byte key, *string;
 //	extclient_t *extcl = &svs.extclients[ client - svs.clients ];
@@ -48,7 +49,7 @@ void SV_Netchan_Decode( client_t *client, byte *data, int remaining ) {
 	string = (byte *)client->reliableCommands[ client->reliableAcknowledge & ( MAX_RELIABLE_COMMANDS - 1 ) ].command;
 
 	if(!remaining) return;
-	key = client->challenge ^ client->serverId ^ client->messageAcknowledge;
+	key = client->challenge ^ (byte)client->serverId ^ client->messageAcknowledge;
 
 	for ( i=0, index=0; i < remaining; i++ ) {
 
@@ -62,6 +63,7 @@ void SV_Netchan_Decode( client_t *client, byte *data, int remaining ) {
 
 		index++;
 	}
+
 }
 
 /*
@@ -94,6 +96,7 @@ void SV_Netchan_Encode( client_t *client, byte *data, int cursize ) {
 
 		index++;
 	}
+
 }
 
 

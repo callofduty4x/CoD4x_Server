@@ -89,6 +89,7 @@ vec_t VectorNormalize2( const vec3_t v, vec3_t out );
 
 void VectorInverse( vec3_t v );
 vec_t VectorLength( const vec3_t v );
+vec_t VectorLengthSquared( const vec3_t v );
 
 int VectorCompare( const vec3_t v1, const vec3_t v2 );
 float VectorDistance( vec3_t v1, vec3_t v2 );
@@ -117,6 +118,9 @@ float vec2_maxabs    (vec2_t v);
 #define vec3_add(to, from) vec2_add((to), (from)); (to)[2] += (from)[2]
 #define vec3_substract(to, from) vec2_substract((to), (from)); (to)[2] -= (from)[2]
 #define vec3_multiply(v, k) vec2_multiply((v), (k)); (v)[2] *= (k)
+
+#define Square( x ) ( ( x ) * ( x ) )
+
 
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001
