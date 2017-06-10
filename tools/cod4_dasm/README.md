@@ -12,8 +12,10 @@ $ make
 $ ./cod4_dasm cod4-mac_binary
 ```
 
+If you see:
+
 ```bash
-ld-mac: ./mach/hello.c.bin mmap(file) failed: Operation not permitted
+mmap(file) failed: Operation not permitted
 ```
 you should run the following command to allow users to mmap files to
 addresses less than 0x10000.
