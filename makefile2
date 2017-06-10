@@ -149,7 +149,7 @@ $(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o
 # A rule to make version module.
 obj/version.o: src/version/version.c FORCE
 	@echo   $(CC)  $@
-	@$(CC) -c -o $@ $<
+	@$(CC) -c $(CFLAGS) -o $@ $<
 
 ############################################
 # An empty rule to force rebuild other rule.

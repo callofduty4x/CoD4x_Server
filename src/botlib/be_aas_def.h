@@ -35,6 +35,8 @@ If you have questions concerning this license or the applicable additional terms
  *
  *****************************************************************************/
 
+#include "../game/def.h"
+
 //debugging on
 #define AAS_DEBUG
 

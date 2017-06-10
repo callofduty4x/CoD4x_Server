@@ -26,12 +26,13 @@
 
 #include "q_math.h"
 #include "q_shared.h"
+#include "game/surfaceflags.h"
 
 #define g_entities ((gentity_t*)(0x841ffe0))
 
 #ifndef CLIPHANDLE_DEFINED
 #define CLIPHANDLE_DEFINED
-typedef int clipHandle_t;
+typedef unsigned int clipHandle_t;
 #endif
 
 typedef enum {
@@ -257,41 +258,6 @@ struct gentity_s {
 #define ENTITYNUM_MAX_NORMAL    ( MAX_GENTITIES - 2 )
 
 #define	MAX_ENT_CLUSTERS	16
-
-
-
-
-
-// contents flags are seperate bits
-// a given brush can contribute multiple content bits
-// multiple brushes can be in a single leaf
-
-// these definitions also need to be in q_shared.h!
-
-// lower bits are stronger, and will eat weaker brushes completely
-#define CONTENTS_SOLID          1       // an eye is never valid in a solid
-
-
-#define CONTENTS_PLAYERCLIP     0x10000
-#define CONTENTS_MONSTERCLIP    0x20000
-#define CONTENTS_VEHICLECLIP	//??
-#define CONTENTS_ITEMCLIP
-#define CONTENTS_NODROP
-#define CONTENTS_NONSOLID
-
-
-
-#define CONTENTS_BODY           0x2000000   // should never be on a brush, only in game
-#define PLAYER_SOLIDMASK	0x00600000
-
-/* Probably not. Just here so botlib compiles */
-#define CONTENTS_LAVA           8
-#define CONTENTS_SLIME          16
-#define CONTENTS_WATER          32
-#define CONTENTS_FOG            64
-#define SURF_SKY                0x4     // lighting from environment map
-
-
 
 
 gentity_t* G_Spawn();

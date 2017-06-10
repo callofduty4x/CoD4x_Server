@@ -23,16 +23,8 @@
 
 
 #include "q_shared.h"
-#include "trace.h"
 #include "server.h"
 #include "cm_public.h"
-
-typedef struct 
-{
-	vec3_t start;	//0x24
-	vec3_t end;	//0x30
-	vec3_t invDelta;
-}TraceExtents;
 
 typedef struct moveclip_s{
 	vec3_t mins;	//0x00
@@ -173,7 +165,7 @@ __cdecl void SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *
 	VectorAdd(touch->r.absmin, clip->mins, mins);
 	VectorAdd(touch->r.absmax, clip->maxs, maxs);
 
-	if(CM_TraceBox(clip->extents.start, mins, maxs, trace->fraction))
+	if(CM_TraceBox(&clip->extents, mins, maxs, trace->fraction))
 		return;
 	
 	clipHandle = SV_ClipHandleForEntity(touch);

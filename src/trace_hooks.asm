@@ -22,9 +22,9 @@
 
 SECTION .text
 
-global CM_TraceBox
-CM_TraceBox:
-	jmp dword [oCM_TraceBox]
+;global CM_TraceBox
+;CM_TraceBox:
+;	jmp dword [oCM_TraceBox]
 
 ;global CM_TempBoxModel
 ;CM_TempBoxModel:
