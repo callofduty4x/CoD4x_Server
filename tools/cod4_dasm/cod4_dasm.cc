@@ -757,13 +757,6 @@ static Timer g_timer;
 class MachOLoader;
 static MachOLoader* g_loader;
 
-static void initRename() {
-#define RENAME(src, dst) g_rename.insert(make_pair(#src, #dst));
-#define WRAP(src) RENAME(src, __darwin_ ## src)
-#include "rename.tab"
-#undef RENAME
-#undef WRAP
-}
 
 
 static uint64_t alignMem(uint64_t p, uint64_t a) {
@@ -3002,7 +2995,6 @@ extern "C" {
 
 int main(int argc, char* argv[]) {
   g_timer.start();
-  initRename();
 
   argc--;
   argv++;
