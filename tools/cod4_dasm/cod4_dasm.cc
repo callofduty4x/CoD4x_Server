@@ -814,7 +814,7 @@ public:
           if(dasm_ptr->dasmOutputBuffer[i].label[0] == 0)
           {
             dasm_ptr->jmplabelcounter += 10;
-            snprintf(dasm_ptr->dasmOutputBuffer[i].label, sizeof(dasm_ptr->dasmOutputBuffer[0].label), "%s_%i", dasm_ptr->dasmCurrentSymbol->name.c_str(), dasm_ptr->jmplabelcounter);
+            snprintf(dasm_ptr->dasmOutputBuffer[i].label, sizeof(dasm_ptr->dasmOutputBuffer[0].label), "%s_%i", FunctionnameFromMangled(dasm_ptr->dasmCurrentSymbol->name.c_str()), dasm_ptr->jmplabelcounter);
           }
           return dasm_ptr->dasmOutputBuffer[i].label;
         }
@@ -842,16 +842,54 @@ public:
 
     if(off >= 0)
     {
-
-      addImport(s.name.c_str());
+      const char* demanname = FunctionnameFromMangled(s.name.c_str());
+      addImport(demanname);
 
       *offset = off;
-      strncpy(symname, s.name.c_str(), 256);
+      strncpy(symname, demanname, 256);
       return symname;
     }
     printf("Error: No symbol in symbolResolver 2! 0x%llx@0x%llx\n", address, ud_obj->pc);
     return NULL;
   }
+
+static const char* FunctionnameFromMangled(const char* mangledname)
+{
+  static char demangledname[128];
+
+  const char* orgname = mangledname;
+  if(mangledname[0] != '_')
+  {
+    return orgname;
+  }
+  ++mangledname;
+  if(mangledname[0] == '_')
+  {
+    ++mangledname;
+  }
+  if(mangledname[0] != 'Z')
+  {
+    return orgname;
+  }
+  ++mangledname;
+  if(!isdigit(mangledname[0]))
+  {
+    return orgname;
+  }
+  int l = atoi(mangledname);
+  if(l <= 0 || l > 40)
+  {
+    return orgname;
+  }
+  while(isdigit(mangledname[0]))
+  {
+    ++mangledname;
+  }
+  strncpy(demangledname, mangledname, l+1);
+  demangledname[l] = 0;
+  return demangledname;
+}
+
 /*
   static void traceReg(ud_t *ud_obj)
   {
@@ -1275,6 +1313,12 @@ public:
       }else{
         return NULL;
       }
+      const char* demanname = FunctionnameFromMangled(s.name.c_str());
+      addImport(demanname);
+
+      *offset = off;
+      strncpy(symname, demanname, 256);
+      return symname;
     }else if(sec.type == FileMap::SYM_CSTRING){
       return addStringToTable((const char*)address);
     }else if(sec.type == FileMap::SYM_CONSTVAR4){
@@ -1290,10 +1334,8 @@ public:
         printf("address 0x%llx@0x%llx not in symbolmap (bss)\n", address, ud_obj->insn_offset);
         return NULL;
       }
-      *offset = off;
       addPotentialConstant((uint32_t)address );
-      strncpy(symname, s.name.c_str(), 256);
-      return symname;
+
     }else if(sec.type == FileMap::SYM_CONSTVAR){
       if(off < 0)
       {
@@ -1301,9 +1343,7 @@ public:
         return NULL;
       }
       addPotentialConstant((uint32_t)address );
-      *offset = off;
-      strncpy(symname, s.name.c_str(), 256);
-      return symname;
+
     }else if(sec.type == FileMap::SYM_DATAVAR){
       if(off < 0)
       {
@@ -1311,11 +1351,10 @@ public:
         return NULL;
       }
       addPotentialConstant((uint32_t)address );
-      *offset = off;
-      strncpy(symname, s.name.c_str(), 256);
-      return symname;
+
     }else if(sec.type != FileMap::SYM_NONE){
       printf("Unhandled symbol type %d\n", sec.type);
+
     }
 
 
@@ -1393,7 +1432,7 @@ public:
       //printf("Float imm at 0x%llx\n", address);
       return addFloatToTable((const float*)address);
     }else if(sec.type == FileMap::SYM_CONSTVAR8){
-      printf("Double mem at 0x%llx\n", address);
+      //printf("Double mem at 0x%llx\n", address);
       return addDoubleToTable((const double*)address);
     }else if(sec.type == FileMap::SYM_CFSTRING){
       //Allocate the new cfstring object
@@ -1404,30 +1443,49 @@ public:
         printf("address 0x%llx@0x%llx not in symbolmap (bss)\n", address, ud_obj->insn_offset);
         return NULL;
       }
-      *offset = off;
       addPotentialConstant((uint32_t)address );
-      strncpy(symname, s.name.c_str(), 256);
-      return symname;
+
     }else if(sec.type == FileMap::SYM_CONSTVAR){
+      if(ud_obj->mnemonic == UD_Ijmp)
+      {
+        if(dasm_ptr->jumptableCount >= 32)
+        {
+          printf("Exceeded jumptable limit\n");
+          exit(-1);
+        }
+        dasm_ptr->jumptables[dasm_ptr->jumptableCount].address = address;
+        snprintf(dasm_ptr->jumptables[dasm_ptr->jumptableCount].name, sizeof(dasm_ptr->jumptables[0].name), "%s_jumptab_%d", FunctionnameFromMangled(dasm_ptr->dasmCurrentSymbol->name.c_str()), dasm_ptr->jumptableCount);
+        const char* jmptabname = dasm_ptr->jumptables[dasm_ptr->jumptableCount].name;
+        dasm_ptr->jumptableCount++;
+        return jmptabname;
+      }
+      if(ud_obj->mnemonic == UD_Icall)
+      {
+        //printf("Calltable handling needed const\n");
+      }
       if(off < 0)
       {
         printf("address 0x%llx@0x%llx not in symbolmap (const)\n", address, ud_obj->insn_offset);
         return NULL;
       }
       addPotentialConstant((uint32_t)address );
-      *offset = off;
-      strncpy(symname, s.name.c_str(), 256);
-      return symname;
+
     }else if(sec.type == FileMap::SYM_DATAVAR){
+      if(ud_obj->mnemonic == UD_Ijmp)
+      {
+        printf("Jumptable handling needed data\n");
+      }
+      if(ud_obj->mnemonic == UD_Icall)
+      {
+        //printf("Calltable handling needed const\n");
+      }
       if(off < 0)
       {
         printf("address 0x%llx@0x%llx not in symbolmap (data)\n", address, ud_obj->insn_offset);
         return NULL;
       }
       addPotentialConstant((uint32_t)address );
-      *offset = off;
-      strncpy(symname, s.name.c_str(), 256);
-      return symname;
+
     }else if(sec.type != FileMap::SYM_NONE){
       printf("Unhandled symbol type %d\n", sec.type);
     }
@@ -1533,8 +1591,15 @@ public:
     CFStringTableEntry_t strings[64];
   };
 
+  struct jumpTable_t
+  {
+    char name[256];
+    uint32_t address;
+  };
 
   dasmOutput_t dasmOutputBuffer[8000];
+  jumpTable_t jumptables[32];
+  uint32_t jumptableCount;
   int jmplabelcounter;
   const FileMap::Symbol* dasmCurrentSymbol;
   dasmImportExports_t impexp;
@@ -1727,7 +1792,7 @@ public:
 
     for(i = 0; i < (int)sizeof(shortstring) && shortstring[i]; ++i)
     {
-      if(shortstring[i] == '.')
+      if(shortstring[i] == '.' || shortstring[i] == '-')
       {
         shortstring[i] = '_';
       }
@@ -1756,7 +1821,7 @@ public:
         dasm_ptr->floattab.floats[i].fval = *val;
         dasm_ptr->floattab.floats[i].type = VAR_FLOAT;
         dasm_ptr->floattab.numfloats++;
-        return dasm_ptr->stringtab.strings[i].name;
+        return dasm_ptr->floattab.floats[i].name;
       }
     }
     return NULL;
@@ -1792,7 +1857,7 @@ public:
 
     for(i = 0; i < (int)sizeof(shortstring) && shortstring[i]; ++i)
     {
-      if(shortstring[i] == '.')
+      if(shortstring[i] == '.' || shortstring[i] == '-')
       {
         shortstring[i] = '_';
       }
@@ -1802,9 +1867,9 @@ public:
     {
       if(attempts > 0)
       {
-        sprintf(name, "_float_%s%d", shortstring, attempts);
+        sprintf(name, "_double_%s%d", shortstring, attempts);
       }else{
-        sprintf(name, "_float_%s", shortstring);
+        sprintf(name, "_double_%s", shortstring);
       }
       for(i = 0; i < dasm_ptr->floattab.numfloats; ++i)
       {
@@ -1821,7 +1886,7 @@ public:
         dasm_ptr->floattab.floats[i].dval = *val;
         dasm_ptr->floattab.floats[i].type = VAR_DOUBLE;
         dasm_ptr->floattab.numfloats++;
-        return dasm_ptr->stringtab.strings[i].name;
+        return dasm_ptr->floattab.floats[i].name;
       }
     }
     return NULL;
@@ -1938,9 +2003,9 @@ public:
     {
       if(floattab.floats[i].type == VAR_FLOAT)
       {
-        fprintf(f, "%s:\t\tdd %x; %g\n", floattab.floats[i].name, *(uint32_t*)&floattab.floats[i].fval, floattab.floats[i].fval);
+        fprintf(f, "%s:\t\tdd 0x%x\t; %g\n", floattab.floats[i].name, *(uint32_t*)&floattab.floats[i].fval, floattab.floats[i].fval);
       }else if(floattab.floats[i].type == VAR_DOUBLE){
-        fprintf(f, "%s:\t\tdd %llx; %g\n", floattab.floats[i].name, *(uint64_t*)&floattab.floats[i].dval, floattab.floats[i].dval);
+        fprintf(f, "%s:\t\tdq 0x%llx\t; %g\n", floattab.floats[i].name, *(uint64_t*)&floattab.floats[i].dval, floattab.floats[i].dval);
       }
     }
     fprintf(f, "\n");
@@ -2235,6 +2300,22 @@ public:
     return false; 
   }
 
+  static int jumpTableSort(const void* a1, const void* a2)
+  {
+    jumpTable_t* j1 = (jumpTable_t*)a1;
+    jumpTable_t* j2 = (jumpTable_t*)a2;
+
+    if(j1->address < j2->address) return -1;
+    if(j1->address > j2->address) return 1;
+
+
+    printf("Error: Duplicate address in jumptable detected\n");
+    exit(1);
+
+    return 0;
+  }
+
+
   void disassembleProcedure(const FileMap::Symbol* s, ud_t* ud_obj)
   {
     char demangledname[32768]; //would try realloc on failure. so it is really large so it won't happen
@@ -2249,6 +2330,8 @@ public:
     dasm_ptr = this;
     //Reset the jump label counter because this is new procedure
     jmplabelcounter = 0;
+    //Reset jumptable counter
+    jumptableCount = 0;
     //Storing current symbol so symbol resolver can know what the active function is
     dasmCurrentSymbol = s;
 
@@ -2271,7 +2354,7 @@ public:
 //    printf("\nDisassemble %s\n", demangledname);
 
     codeOutputBufferPos += snprintf(codeOutputBuffer +codeOutputBufferPos, sizeof(codeOutputBuffer) - codeOutputBufferPos, ";%s\n", demangledname);
-    codeOutputBufferPos += snprintf(codeOutputBuffer +codeOutputBufferPos, sizeof(codeOutputBuffer) - codeOutputBufferPos, "%s:\n", s->name.c_str());
+    codeOutputBufferPos += snprintf(codeOutputBuffer +codeOutputBufferPos, sizeof(codeOutputBuffer) - codeOutputBufferPos, "%s:\n", FunctionnameFromMangled(s->name.c_str()));
 
 //      int getSymbolForAddress(uint32_t address, Symbol* s);
 
@@ -2320,8 +2403,67 @@ public:
       //  __asm__("int $3");
       }
     }
-    int i;
-    for(i = 0; i < instructionCounter; ++i)
+
+    unsigned int i;
+
+    if(jumptableCount > 1)
+    {
+      qsort(jumptables, jumptableCount, sizeof(jumptables[0]), jumpTableSort);
+    }
+    if(jumptableCount > 0)
+    {
+      int z;
+      for(z = 0; z < 2; ++z)
+      {
+        dasmOutputBuffer[instructionCounter].comment[0] = 0;
+        dasmOutputBuffer[instructionCounter].label[0] = 0;
+        dasmOutputBuffer[instructionCounter].mnemonic[0] = 0;
+        dasmOutputBuffer[instructionCounter].address = -1;
+        ++instructionCounter;
+      }
+      for(i = 0; i < jumptableCount; ++i)
+      {
+        int size;
+        if(i +1 < jumptableCount)
+        {
+          size = (jumptables[i+1].address - jumptables[i].address) /4;
+        }else{
+          size = -1; //undefined will abort when address is not in function frame
+        }
+        for(z = 0; z < size || size == -1; ++z)
+        {
+          uint32_t jloc = ((uint32_t*)jumptables[i].address)[z];
+          int q;
+          for(q = 0; q < instructionCounter; ++q)
+          {
+            if(dasmOutputBuffer[q].address == jloc)
+            {
+              if(dasmOutputBuffer[q].label[0] == 0)
+              {
+                jmplabelcounter += 10;
+                snprintf(dasmOutputBuffer[q].label, sizeof(dasmOutputBuffer[0].label), "%s_%i", FunctionnameFromMangled(dasmCurrentSymbol->name.c_str()), jmplabelcounter);
+              }
+              break;
+            }
+          }
+          if(q == instructionCounter)
+          {
+            break; //End of jumptable
+          }
+          snprintf(dasmOutputBuffer[instructionCounter].mnemonic, sizeof(dasmOutputBuffer[0].mnemonic), "dd %s", dasmOutputBuffer[q].label);
+          dasmOutputBuffer[instructionCounter].comment[0] = 0;
+          if(z == 0)
+          {
+            strncpy(dasmOutputBuffer[instructionCounter].label, jumptables[i].name, sizeof(dasmOutputBuffer[0].label));
+          }else{
+            dasmOutputBuffer[instructionCounter].label[0] = 0;
+          }
+          dasmOutputBuffer[instructionCounter].address = -1;
+          ++instructionCounter;
+        }
+      }
+    }
+    for(i = 0; i < (unsigned int)instructionCounter; ++i)
     {
       if(strcmp(dasmOutputBuffer[i].mnemonic, "invalid") != 0)
       {
@@ -2338,6 +2480,15 @@ public:
 
   const char* symbolResolver_data(uint64_t address, uint64_t location)
   {
+    static char symnamebuf[4096];
+    static int select = 0;
+    char* symname = &symnamebuf[256 * select];
+    select++;
+    if(select >= 16)
+    {
+      select = 0;
+    }
+
     FileMap::Symbol s;
     uint32_t v = address;
     if(v > 0x2f00)
@@ -2371,7 +2522,9 @@ public:
           int off = g_file_map.getSymbolForAddress(v, &s);
           if(off == 0 && v != 0x2e7410)
           {
-            return s.name.c_str();
+            addImport(s.name.c_str());
+            strncpy(symname, s.name.c_str(), 256);
+            return symname;
 //              printf("Symbol reference in .rdata 0x%x@0x%x  %s+%d@%s\n", v, (uint32_t)(((uint32_t*)o->symbols[j]->address) +i), s.name.c_str(), off, o->symbols[j]->name.c_str());
           }
         }
@@ -2432,7 +2585,13 @@ public:
         int off = g_file_map.getSymbolForAddress(v, &s);
         if(off == 0)
         {
-          strncpy(symname, s.name.c_str(), 256);
+          const char* sn = s.name.c_str();
+          if(s.type == FileMap::SYM_PROC)
+          {
+            sn = FunctionnameFromMangled(s.name.c_str());
+          }
+          addImport(sn);
+          strncpy(symname, sn, 256);
           return symname;
         }
       }
@@ -2481,7 +2640,12 @@ public:
         disassembleProcedure(o->symbols[j], ud_obj);
       }
       //printf("%s, %s, 0x%x, %d\n", o->symbols[j]->name.c_str(), symtypename(o->symbols[j]->type), o->symbols[j]->address, o->symbols[j]->size);
-      addExport(o->symbols[j]->name.c_str());
+      if(o->symbols[j]->type == FileMap::SYM_PROC)
+      {
+        addExport(FunctionnameFromMangled(o->symbols[j]->name.c_str()));
+      }else{
+        addExport(o->symbols[j]->name.c_str());
+      }
     }
 
     snprintf(outputfilename, sizeof(outputfilename), "src/%s.asm", o->objectname.c_str());
