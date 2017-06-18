@@ -829,6 +829,7 @@ extern cvar_t* sv_hostname;
 extern cvar_t* sv_shownet;
 extern cvar_t* sv_legacymode;
 extern cvar_t* sv_steamgroup;
+extern cvar_t* sv_disableChat;
 
 void __cdecl SV_StringUsage_f(void);
 void __cdecl SV_ScriptUsage_f(void);
