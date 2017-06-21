@@ -1,6 +1,6 @@
+/* Raw file storage: name, size and data. Nothing more. Scripts, configs, any file. */
 #pragma once
-
-typedef unsigned int uint;
+#include "basictypes.h"
 
 typedef struct Rawfile_t
 {

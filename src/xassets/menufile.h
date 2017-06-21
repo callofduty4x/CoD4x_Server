@@ -1,7 +1,6 @@
 #pragma once
-#include "menu.h"
 
-typedef unsigned int uint;
+#include "menu.h"
 
 /* This asset holds all the menus used in game. */
 /* mod.csv string examples are next: */

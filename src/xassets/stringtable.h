@@ -1,6 +1,6 @@
+/* Representation of CSV table in fastfile. */
 #pragma once
-
-typedef unsigned int uint;
+#include "basictypes.h"
 
 typedef struct StringTable_t
 {

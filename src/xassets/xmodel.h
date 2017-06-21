@@ -1,15 +1,15 @@
-#ifndef __XMODEL_H__
-#define __XMODEL_H__
-
+#pragma once
+#include "xassetfwd.h"
 #include "../q_shared.h"
 #include "../q_math.h"
 
+typedef ushort ScriptString_t;
 
 #pragma pack(push, 2)
 typedef struct cbrushside_s
 {
   cplane_t *plane;
-  unsigned int materialNum;
+  uint materialNum;
   short firstAdjacentSideOffset;
   char edgeCount;
 }cbrushside_t;
@@ -25,23 +25,23 @@ typedef struct DObjAnimMat_s
 typedef struct XSurfaceVertexInfo_s
 {
   short vertCount[4];
-  unsigned short *vertsBlend;
+  ushort *vertsBlend;
 }XSurfaceVertexInfo_t;
  
 typedef union
 {
-  unsigned int packed;
+  uint packed;
   char array[4];
 }GfxColor_t;
  
 typedef union
 {
-  unsigned int packed;
+  uint packed;
 }PackedTexCoords_t;
  
 typedef union
 {
-  unsigned int packed;
+  uint packed;
 }PackedUnitVec_t;
  
 typedef struct GfxPackedVertex_s
@@ -66,38 +66,38 @@ typedef struct GfxPackedVertexInfo_s
  
 typedef struct XSurfaceCollisionAabb_s
 {
-  unsigned short mins[3];
-  unsigned short maxs[3];
+  ushort mins[3];
+  ushort maxs[3];
 }XSurfaceCollisionAabb_t;
  
 typedef struct XSurfaceCollisionNode_s
 {
   XSurfaceCollisionAabb_t aabb;
-  unsigned short childBeginIndex;
-  unsigned short childCount;
+  ushort childBeginIndex;
+  ushort childCount;
 }XSurfaceCollisionNode_t;
  
 typedef struct XSurfaceCollisionLeaf_s
 {
-  unsigned short triangleBeginIndex;
+  ushort triangleBeginIndex;
 }XSurfaceCollisionLeaf_t;
  
 typedef struct XSurfaceCollisionTree_s
 {
   float trans[3];
   float scale[3];
-  unsigned int nodeCount;
+  uint nodeCount;
   XSurfaceCollisionNode_t *nodes;
-  unsigned int leafCount;
+  uint leafCount;
   XSurfaceCollisionLeaf_t *leafs;
 }XSurfaceCollisionTree_t;
  
 typedef struct XRigidVertList_s
 {
-  unsigned short boneOffset;
-  unsigned short vertCount;
-  unsigned short triOffset;
-  unsigned short triCount;
+  ushort boneOffset;
+  ushort vertCount;
+  ushort triOffset;
+  ushort triCount;
   XSurfaceCollisionTree_t *collisionTree;
 }XRigidVertList_t;
  
@@ -106,8 +106,7 @@ typedef struct UnknownXSurface_s
   char unknown[8];
 }UnknownXSurface_t;
  
-typedef unsigned short r_index16_t;
- 
+
 #pragma pack(push, 4)
 typedef struct XSurface_s
 {
@@ -116,9 +115,9 @@ typedef struct XSurface_s
   bool deformed;
   */
   byte deformed;
-  unsigned short vertCount;
-  unsigned short triCount;
-  r_index16_t *triIndices;	// loaded last
+  ushort vertCount;
+  ushort triCount;
+  ushort *triIndices;	// loaded last
   XSurfaceVertexInfo_t vertInfo;
 #ifdef XBOX
   D3DVertexBuffer_t vb;
@@ -129,7 +128,7 @@ typedef struct XSurface_s
   GfxPackedVertexInfo_t *vertInfo;// 0x24
   UnknownXSurfacestruct_t struct2;// 0x28
 #endif
-  unsigned int vertListCount;	// 0x30
+  uint vertListCount;	// 0x30
   XRigidVertList_t *vertList;	// 0x34
 #ifdef XBOX
   D3DIndexBuffer_t indexBuffer;
@@ -146,7 +145,7 @@ typedef struct BrushWrapper_s
   float mins[3];
   int contents;
   float maxs[3];
-  unsigned int numsides;
+  uint numsides;
   cbrushside_t *sides;
   short axialMaterialNum[2][3];
   char *baseAdjacentSide;
@@ -175,7 +174,7 @@ typedef struct PhysGeomInfo_s
  
 typedef struct PhysGeomList_s
 {
-  unsigned int count;
+  uint count;
   PhysGeomInfo_t *geoms;
   PhysMass_t mass;
 }PhysGeomList_t;
@@ -211,15 +210,11 @@ typedef struct XModelCollSurf_s
 typedef struct XModelLodInfo_s
 {
   float dist;
-  unsigned short numsurfs;
-  unsigned short surfIndex;
+  ushort numsurfs;
+  ushort surfIndex;
   int partBits[4];
 }XModelLodInfo_t;
  
- 
- typedef WORD xScriptString_t;
- typedef void  xMaterial_t;
- typedef void  xPhysPreset_t;
  
 typedef struct XModel_s
 {
@@ -228,14 +223,14 @@ typedef struct XModel_s
   char numRootBones;
   char numsurfs;
   char field_7;
-  xScriptString_t *boneNames;
+  ScriptString_t *boneNames;
   char *parentList;
   short *quats;
   float *trans;
   char *partClassification;
   DObjAnimMat_t *baseMat;
   XSurface_t *surfs;
-  xMaterial_t **materialHandles;
+  Material_t **materialHandles;
   XModelLodInfo_t lodInfo[4];
   int field_88;
   int field_8C;
@@ -256,8 +251,6 @@ typedef struct XModel_s
   char field_D1;
   char field_D2;
   char field_D3;
-  xPhysPreset_t *physPreset;
+  PhysPreset_t *physPreset;
   PhysGeomList_t *physGeoms;
 }XModel_t;
-
-#endif // __XMODEL_H__

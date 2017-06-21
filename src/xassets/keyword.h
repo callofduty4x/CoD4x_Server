@@ -1,7 +1,6 @@
 /* Main purpose of this file: be able to stringify enum members. */
 #pragma once
-
-typedef unsigned int uint;
+#include "basictypes.h"
 
 #define KEYWORD_END ((uint)0xFFFFFFFF)
 

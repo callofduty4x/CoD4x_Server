@@ -30,8 +30,6 @@
         FS_Write("//    https://github.com/callofduty4x/CoD4x_Server/issues   //\n", 63, (file_handle)); \
     } while(0)
 
-typedef unsigned char byte_t;
-typedef unsigned int uint;
 typedef void(*extract_routine_t)(const char*);
 
 typedef struct AssetHandler_t
@@ -1050,7 +1048,7 @@ static void extract_menufile(const void *header)
 }
 
 /* Extract all assets from fastfile. */
-static void extract_from_fastfile(const FastFileAssetsTableInfo_t *ff_info, const unsigned int type, extract_routine_t handler)
+static void extract_from_fastfile(const FastFileAssetsTableInfo_t *ff_info, const uint type, extract_routine_t handler)
 {
     int i;
     for (i = 0; i < ff_info->content.asset_list_count; ++i)

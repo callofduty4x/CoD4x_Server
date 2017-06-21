@@ -1,13 +1,11 @@
+/* Both MenuDef and ItemDef structures. */
 #pragma once
+#include "xassetfwd.h"
 #include "../q_math.h"
 #include "keyword.h"
 
-typedef unsigned int uint;
-/* TODO these are a placeholders. Better to use struct definitions. */
-typedef void snd_alias_list_t;
-typedef void Material_t;
-
-typedef enum OperationEnum_t {
+typedef enum OperationEnum_t
+{
     OP_NOOP = 0,
     OP_RIGHTPAREN,
     OP_MULTIPLY,

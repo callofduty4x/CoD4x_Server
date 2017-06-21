@@ -94,7 +94,7 @@ typedef enum{
         Material,
         TechinqueSet,		// techset
         GfxImage,		// image
-        snd_alias_list_t,	// sound
+        SoundAliasList,	// sound
         SndCurve,
         LoadedSound,
         Col_Map_sp,
@@ -231,7 +231,7 @@ void XAssetsInitStdCount()
 	XAssetStdCount[Material] = 2048;
 	XAssetStdCount[TechinqueSet] = 1024;
 	XAssetStdCount[GfxImage] = 2400;
-	XAssetStdCount[snd_alias_list_t] = 16000;
+	XAssetStdCount[SoundAliasList] = 16000;
 	XAssetStdCount[SndCurve] = 64;
 	XAssetStdCount[LoadedSound] = 1200;
 	XAssetStdCount[Col_Map_sp] = 1;
