@@ -112,3 +112,12 @@ void GScr_ArrayTest();
 
 qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
 void PrintModelBonesInfo(gentity_t *ent);
+
+void GScr_Base64Encode();
+void GScr_Base64Decode();
+void GScr_IsEntity();
+void GScr_IsVector();
+void GScr_IsString();
+void GScr_IsFloat();
+void GScr_IsInt();
+void GScr_Float();

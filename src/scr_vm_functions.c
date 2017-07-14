@@ -34,16 +34,18 @@
 #include "sec_crypto.h"
 #include "sv_auth.h"
 #include "sapi.h"
-
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
+#include "tomcrypt/tomcrypt_misc.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 
 char *(*Scr_GetLocalizedString)(unsigned int arg) =
     (char *(*)(unsigned int))0x0816541C;
+
+extern char* var_typename[];
 
 /*
 ============
@@ -3159,4 +3161,118 @@ void GScr_ArrayTest()
     // Does nothing for now.
     // To be implemented with other script function name.
     //Scr_GetArrayId(0);
+}
+
+void GScr_Base64Encode()
+{
+    char encoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: encoded = base64Encode(\"String to be encoded\");");
+        return;
+    }
+
+    char* toEncode = Scr_GetString(0);
+    unsigned long encodedLen = sizeof(encoded);
+    base64_encode((byte*)toEncode, strlen(toEncode), (byte*)encoded, &encodedLen);
+    encoded[sizeof(encoded) - 1] = '\0';
+    Scr_AddString(encoded);
+}
+
+void GScr_Base64Decode()
+{
+    char decoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: decoded = base64Decode(\"bla-bla-bla too lazy to write proper example==\");");
+        return;
+    }
+
+    char* toDecode = Scr_GetString(0);
+    unsigned long decodedLen = sizeof(decoded);
+    base64_decode((byte*)toDecode, strlen(toDecode), (byte*)decoded, &decodedLen);
+    decoded[sizeof(decoded) - 1] = '\0';
+    Scr_AddString(decoded);
+}
+
+void GScr_IsEntity()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isEntity(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 20);
+}
+
+void GScr_IsVector()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isVector(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 4);
+}
+
+void GScr_IsString()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isString(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 2);
+}
+
+void GScr_IsFloat()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isFloat(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 5);
+}
+
+void GScr_IsInt()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isInt(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 6);
+}
+
+void GScr_Float()
+{
+    mvabuf;
+
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: floatVal = float(<float, int, bool or string>);");
+        return;
+    }
+
+    int varType = Scr_GetType(0);
+    if (varType == 5)
+        Scr_AddFloat(Scr_GetFloat(0));
+    else if (varType == 6)
+        Scr_AddFloat(1.0 * Scr_GetInt(0));
+    else if (varType == 2)
+    {
+        char* strFloat = Scr_GetString(0);
+        double result = 0.0;
+        if (isdigit(strFloat[0]))
+            result = atof(strFloat);
+        Scr_AddFloat((float)result);
+    }
+    else
+        Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
 }

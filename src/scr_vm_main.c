@@ -358,6 +358,14 @@ void Scr_AddStockFunctions()
                                                        /*Scr_AddFunction("codepostest", GScr_TestCodePos, 0);*/
     Scr_AddFunction("iscvardefined", GScr_IsCvarDefined, 0);
     Scr_AddFunction("arraytest", GScr_ArrayTest, 1);
+    Scr_AddFunction("base64encode", GScr_Base64Encode, 0);
+    Scr_AddFunction("base64decode", GScr_Base64Decode, 0);
+    Scr_AddFunction("isentity", GScr_IsEntity, 0);
+    Scr_AddFunction("isvector", GScr_IsVector, 0);
+    Scr_AddFunction("isstring", GScr_IsString, 0);
+    Scr_AddFunction("isfloat", GScr_IsFloat, 0);
+    Scr_AddFunction("isint", GScr_IsInt, 0);
+    Scr_AddFunction("float", GScr_Float, 0); // like int(...) but to convert to floating point number.
 }
 
 void Scr_AddStockMethods()
