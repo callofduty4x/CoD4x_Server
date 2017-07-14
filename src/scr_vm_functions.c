@@ -36,15 +36,17 @@
 #include "cscr_stringlist.h"
 
 #include "sapi.h"
-
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
+#include "tomcrypt/tomcrypt_misc.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 extern char* var_typename[];
 
+
+extern char* var_typename[];
 
 /*
 ============
@@ -3025,13 +3027,13 @@ void Scr_LogString()
 
 void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
 {
-  gentity_t *pSelf;
-  char svcmd[128];
+    gentity_t *pSelf;
+    char svcmd[128];
 
-  if (Scr_GetNumParam())
-  {
-    Scr_Error("Usage: <client> getXuid()\n");
-  }
+    if (Scr_GetNumParam())
+    {
+        Scr_Error("Usage: <client> getXuid()\n");
+    }
     if (arg.classnum)
     {
 
@@ -3043,15 +3045,101 @@ void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
         pSelf = &g_entities[arg.entnum];
     }
 
-  if ( pSelf->client )
-  {
-    Com_sprintf(svcmd, sizeof(svcmd), "%llx", SV_GetPlayerXuid(pSelf->client->sess.cs.clientIndex));
-    Scr_AddString(svcmd);
-  }
-  else
-  {
-    Scr_AddString("0");
-  }
+    if ( pSelf->client )
+    {
+        Com_sprintf(svcmd, sizeof(svcmd), "%llx", SV_GetPlayerXuid(pSelf->client->sess.cs.clientIndex));
+        Scr_AddString(svcmd);
+    }
+    else
+    {
+        Scr_AddString("0");
+    }
+}
+void GScr_Base64Encode()
+{
+    char encoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: encoded = base64Encode(\"String to be encoded\");");
+        return;
+    }
+
+    char* toEncode = Scr_GetString(0);
+    unsigned long encodedLen = sizeof(encoded);
+    base64_encode((byte*)toEncode, strlen(toEncode), (byte*)encoded, &encodedLen);
+    encoded[sizeof(encoded) - 1] = '\0';
+    Scr_AddString(encoded);
+}
+
+void GScr_Base64Decode()
+{
+    char decoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: decoded = base64Decode(\"bla-bla-bla too lazy to write proper example==\");");
+        return;
+    }
+
+    char* toDecode = Scr_GetString(0);
+    unsigned long decodedLen = sizeof(decoded);
+    base64_decode((byte*)toDecode, strlen(toDecode), (byte*)decoded, &decodedLen);
+    decoded[sizeof(decoded) - 1] = '\0';
+    Scr_AddString(decoded);
+}
+
+void GScr_IsEntity()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isEntity(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 20);
+}
+
+void GScr_IsVector()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isVector(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 4);
+}
+
+/*void GScr_IsString()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isString(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 2);
+}*/
+
+void GScr_IsFloat()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isFloat(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 5);
+}
+
+void GScr_IsInt()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isInt(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 6);
 }
 
 void GScr_Float()
