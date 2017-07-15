@@ -245,12 +245,12 @@ static void Cmd_B3Status_f()
 		if(cl->netchan.remoteAddress.type == NA_IP6)
         {
             //Use the last 4 octets xD
-            sprintf(address, "%u.%u.%u.%u:%u",
+            sprintf(address, "%u.%u.%u.%u:%hu",
                 cl->netchan.remoteAddress.ip6[12], 
                 cl->netchan.remoteAddress.ip6[13], 
                 cl->netchan.remoteAddress.ip6[14], 
                 cl->netchan.remoteAddress.ip6[15], 
-                BigShort(cl->netchan.remoteAddress.port));
+                (unsigned short)BigShort(cl->netchan.remoteAddress.port));
         }else{
             Plugin_NET_AdrToStringMT( &cl->netchan.remoteAddress, address, sizeof(address) );
         }

@@ -127,7 +127,7 @@ void CM_TraceCapsuleThroughBorder(traceWork_t *tw, CollisionBorder *border, trac
 
 		assertx(tw->deltaLenSq > 0.0f, "(tw->deltaLenSq) = %g", tw->deltaLenSq);
 
-		t = -deltaDotOffset - fsqrt(discriminant)) / tw->deltaLenSq;
+		t = (-deltaDotOffset - fsqrt(discriminant)) / tw->deltaLenSq;
 		if( t >= trace->fraction || t <= 0.0)
 		{
 			return;
@@ -164,7 +164,7 @@ void CM_TraceCapsuleThroughBorder(traceWork_t *tw, CollisionBorder *border, trac
 
 			return;
 		}
-		if ( edgeZ > -tw->offsetZ - tw->radius) )
+		if ( edgeZ > -tw->offsetZ - tw->radius )
 		{
 			CM_TraceSphereThroughBorder(tw, border, -tw->offsetZ, trace);
 		}
@@ -252,131 +252,123 @@ void CM_TraceSphereThroughVertex(traceWork_t *tw, bool isWalkable, const float *
 
 }
 
-
-
-
 SphereEdgeTraceResult CM_TraceSphereThroughEdge(traceWork_t *tw, const float *sphereStart, const float *v0, const float *v0_v1, trace_t *trace)
 {
-  float v6, v7, v8, v9, t, f;
-  float perpendicularLenSq;
-  float scaledProjectionDist;
-  float scaledProjectionDista;
-  vec3_t hitDelta;
-  float discriminant;
-  float edgeLenSq;
-  vec3_t edgeCrossDelta;
-  float radius;
-  float radiusSq;
-  vec3_t scaledNormal;
-  float tScaled;
-  float fracEnter;
-  vec3_t startDelta;
-  float fracLeave;
-  vec3_t perpendicular;
-  float scaledDist;
+    float v6, v7, v8, v9, t, f;
+    float perpendicularLenSq;
+    float scaledProjectionDist;
+    float scaledProjectionDista;
+    vec3_t hitDelta;
+    float discriminant;
+    float edgeLenSq;
+    vec3_t edgeCrossDelta;
+    float radius;
+    float radiusSq;
+    vec3_t scaledNormal;
+    float tScaled = 0.0;
+    float fracEnter;
+    vec3_t startDelta;
+    float fracLeave;
+    vec3_t perpendicular;
+    float scaledDist;
 
-  VectorSubstract(sphereStart, v0, startDelta);
-  Vec3Cross(v0_v1, tw->delta, perpendicular);
-  
-  scaledDist = DotProduct(startDelta, perpendicular);
-  perpendicularLenSq = VectorLengthSquared(perpendicular);
+    VectorSubstract(sphereStart, v0, startDelta);
+    Vec3Cross(v0_v1, tw->delta, perpendicular);
 
-  radius = tw->radius + 0.125;
-  radiusSq = radius * radius;
-  discriminant = (radius * radius * perpendicularLenSq) - (scaledDist * scaledDist);
-	if ( discriminant <= 0.0 )
-	{
-		return SPHERE_MISSES_EDGE;
-	}
-  
+    scaledDist = DotProduct(startDelta, perpendicular);
+    perpendicularLenSq = VectorLengthSquared(perpendicular);
+
+    radius = tw->radius + 0.125;
+    radiusSq = radius * radius;
+    discriminant = (radius * radius * perpendicularLenSq) - (scaledDist * scaledDist);
+    if (discriminant <= 0.0)
+    {
+        return SPHERE_MISSES_EDGE;
+    }
+
     edgeLenSq = VectorLengthSquared(v0_v1);
     f = fsqrt(edgeLenSq * discriminant) / perpendicularLenSq;
     Vec3Cross(startDelta, v0_v1, edgeCrossDelta);
     tScaled = DotProduct(edgeCrossDelta, perpendicular)
     t = tScaled / perpendicularLenSq;
     fracLeave = (tScaled / perpendicularLenSq) + f;
-    
-	if ( fracLeave < 0.0 )
-    {
-		return SPHERE_MISSES_EDGE;
-	}
-    fracEnter = t - f;
-    if ( (t - f) >= trace->fraction )
+
+    if (fracLeave < 0.0)
     {
         return SPHERE_MISSES_EDGE;
-	}
-	
-	
-	if ( fracEnter >= 0.0 )
+    }
+    fracEnter = t - f;
+    if ((t - f) >= trace->fraction)
     {
-		VectorMA(startDelta, fracEnter, tw->delta, hitDelta);
+        return SPHERE_MISSES_EDGE;
+    }
+
+    if (fracEnter >= 0.0)
+    {
+        VectorMA(startDelta, fracEnter, tw->delta, hitDelta);
 
         v7 = DotProduct(hitDelta, v0_v1);
-					   
-        scaledProjectionDista = -v7;
-        if ( scaledProjectionDista <= 0.0 )
-		{
-			return SPHERE_MAY_HIT_V0;
-		}
-        if ( scaledProjectionDista >= edgeLenSq )
-        {
-			return SPHERE_MAY_HIT_V1;
-		}
-		
-		VectorMA(hitDelta, scaledProjectionDista / edgeLenSq, v0_v1, scaledNormal);
-        
-		v8 = 1.0 / radius;
-        VectorScale(scaledNormal, 1.0 / radius, trace->normal);
-        
-		assertxerror(Vec3IsNormalizedEpsilon( trace->normal, TRACE_NORMAL_EPSILON ), "(%g %g %g) from (%g %g %g) / %g;\n\t\tdelta (%g %g %g), scale %g / %g, edge (%g %g %g)", 
-									trace->normal[0], trace->normal[1], trace->normal[2],
-									scaledNormal[0], scaledNormal[1], scaledNormal[2],
-									radius,
-									hitDelta[0], hitDelta[1], hitDelta[2],
-									scaledProjectionDista,
-									edgeLenSq,
-									v0_v1[0], v0_v1[1], v0_v1[2]);
 
-									
+        scaledProjectionDista = -v7;
+        if (scaledProjectionDista <= 0.0)
+        {
+            return SPHERE_MAY_HIT_V0;
+        }
+        if (scaledProjectionDista >= edgeLenSq)
+        {
+            return SPHERE_MAY_HIT_V1;
+        }
+
+        VectorMA(hitDelta, scaledProjectionDista / edgeLenSq, v0_v1, scaledNormal);
+
+        v8 = 1.0 / radius;
+        VectorScale(scaledNormal, 1.0 / radius, trace->normal);
+
+        assertxerror(Vec3IsNormalizedEpsilon(trace->normal, TRACE_NORMAL_EPSILON), "(%g %g %g) from (%g %g %g) / %g;\n\t\tdelta (%g %g %g), scale %g / %g, edge (%g %g %g)",
+                     trace->normal[0], trace->normal[1], trace->normal[2],
+                     scaledNormal[0], scaledNormal[1], scaledNormal[2],
+                     radius,
+                     hitDelta[0], hitDelta[1], hitDelta[2],
+                     scaledProjectionDista,
+                     edgeLenSq,
+                     v0_v1[0], v0_v1[1], v0_v1[2]);
+
         trace->fraction = fracEnter;
         return SPHERE_HITS_EDGE;
-		
     }
     else
     {
         v6 = DotProduct(startDelta, v0_v1);
         scaledProjectionDist = -v6;
-        
-		if ( scaledProjectionDist <= 0.0 )
+
+        if (scaledProjectionDist <= 0.0)
         {
-			return SPHERE_MAY_HIT_V0;
-		}
-        if ( scaledProjectionDist >= edgeLenSq )
+            return SPHERE_MAY_HIT_V0;
+        }
+        if (scaledProjectionDist >= edgeLenSq)
         {
-			return SPHERE_MAY_HIT_V1;
-		}
-		VectorMA(startDelta, scaledProjectionDist / edgeLenSq, v0_v1, scaledNormal);
-		sNdeltadp = DotProduct(scaledNormal, tw->delta);
-        if ( sNdeltadp >= 0.0 )
+            return SPHERE_MAY_HIT_V1;
+        }
+        VectorMA(startDelta, scaledProjectionDist / edgeLenSq, v0_v1, scaledNormal);
+        sNdeltadp = DotProduct(scaledNormal, tw->delta);
+        if (sNdeltadp >= 0.0)
         {
-			return SPHERE_MISSES_EDGE;
-		}
+            return SPHERE_MISSES_EDGE;
+        }
         Vec3NormalizeTo(scaledNormal, trace->normal);
         trace->fraction = 0.0;
         v9 = edgeLenSq * (((tw->radius * tw->radius) * perpendicularLenSq) - (scaledDist * scaledDist));
-		if ( v9 <= tScaled * tScaled )
-		{
-		  trace->startsolid = 0;
-		}
-		else
-		{
-		  trace->startsolid = 1;
-		}
-		return SPHERE_HITS_EDGE;  
+        if (v9 <= tScaled * tScaled)
+        {
+            trace->startsolid = 0;
+        }
+        else
+        {
+            trace->startsolid = 1;
+        }
+        return SPHERE_HITS_EDGE;
     }
 }
-
-
 
 void CM_TraceSphereThroughBorder(traceWork_t *tw, CollisionBorder *border, float offsetZ, trace_t *trace)
 {

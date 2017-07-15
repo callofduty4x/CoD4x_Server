@@ -495,69 +495,70 @@ Sys_AnsiColorPrint
 Transform Q3 colour codes to ANSI escape sequences
 =================
 */
-void Sys_AnsiColorPrint( const char *msg )
+void Sys_AnsiColorPrint(const char *msg)
 {
-	static char buffer[ MAXPRINTMSG ];
-	int         length = 0;
-	static int  q3ToAnsi[ 8 ] =
-	{
-		30, // COLOR_BLACK
-		31, // COLOR_RED
-		32, // COLOR_GREEN
-		33, // COLOR_YELLOW
-		34, // COLOR_BLUE
-		36, // COLOR_CYAN
-		35, // COLOR_MAGENTA
-		0   // COLOR_WHITE
-	};
+    if (!msg)
+        return;
 
-	while( *msg )
-	{
-		if( Q_IsColorString( msg ) || *msg == '\n' )
-		{
-			// First empty the buffer
-			if( length > 0 )
-			{
-				buffer[ length ] = '\0';
-				fputs( buffer, stderr );
-				length = 0;
-			}
+    static char buffer[MAXPRINTMSG];
+    int length = 0;
+    static int q3ToAnsi[8] =
+        {
+            30, // COLOR_BLACK
+            31, // COLOR_RED
+            32, // COLOR_GREEN
+            33, // COLOR_YELLOW
+            34, // COLOR_BLUE
+            36, // COLOR_CYAN
+            35, // COLOR_MAGENTA
+            0   // COLOR_WHITE
+        };
 
-			if( *msg == '\n' )
-			{
-				// Issue a reset and then the newline
-				fputs( "\033[0m\n", stderr );
-				msg++;
-			}
-			else
-			{
-				// Print the color code
-				Com_sprintf( buffer, sizeof( buffer ), "\033[1;%dm",
-						q3ToAnsi[ ColorIndex( *( msg + 1 ) ) ] );
-				fputs( buffer, stderr );
-				msg += 2;
-			}
-		}
-		else
-		{
-			if( length >= MAXPRINTMSG - 1 )
-				break;
+    while (*msg)
+    {
+        if (Q_IsColorString(msg) || *msg == '\n')
+        {
+            // First empty the buffer
+            if (length > 0)
+            {
+                buffer[length] = '\0';
+                fputs(buffer, stderr);
+                length = 0;
+            }
 
-			buffer[ length ] = *msg;
-			length++;
-			msg++;
-		}
-	}
+            if (*msg == '\n')
+            {
+                // Issue a reset and then the newline
+                fputs("\033[0m\n", stderr);
+                msg++;
+            }
+            else
+            {
+                // Print the color code
+                Com_sprintf(buffer, sizeof(buffer), "\033[1;%dm",
+                            q3ToAnsi[ColorIndex(*(msg + 1))]);
+                fputs(buffer, stderr);
+                msg += 2;
+            }
+        }
+        else
+        {
+            if (length >= MAXPRINTMSG - 1)
+                break;
 
-	// Empty anything still left in the buffer
-	if( length > 0 )
-	{
-		buffer[ length ] = '\0';
-		fputs( buffer, stderr );
-	}
+            buffer[length] = *msg;
+            length++;
+            msg++;
+        }
+    }
+
+    // Empty anything still left in the buffer
+    if (length > 0)
+    {
+        buffer[length] = '\0';
+        fputs(buffer, stderr);
+    }
 }
-
-
 
 /*
 ==================

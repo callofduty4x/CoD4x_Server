@@ -34,6 +34,7 @@ yy_buffer_state* __cdecl yy_create_buffer(FILE *file, int bufferSize)
   if (yybufState->yy_ch_buf == NULL)
   {
     Com_Error(ERR_FATAL,"out of dynamic memory in yy_create_buffer()");
+    free(yybufState);
     return NULL;
   }
 

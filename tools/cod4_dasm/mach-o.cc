@@ -41,13 +41,13 @@
 #include "mach-o.h"
 #include "mach-o/loader.h"
 
-DEFINE_bool(READ_SYMTAB,
 #ifdef NDEBUG
-            false,
+#define DEFINE_bool_VAL false
 #else
-            true,
+#define DEFINE_bool_VAL true
 #endif
-            "Read symtab for better backtrace");
+
+DEFINE_bool(READ_SYMTAB, DEFINE_bool_VAL, "Read symtab for better backtrace");
 DEFINE_bool(READ_DYSYMTAB, false, "Read dysymtab");
 
 typedef long long ll;
@@ -537,7 +537,7 @@ void MachOImpl::readExport(const uint8_t* start,
     exp->flag = uleb128(p);
     exp->addr = uleb128(p);
     LOGF("export: %s %lu %p\n",
-         name_buf->c_str(), (long)exp->flag, (void*)exp->addr);
+         name_buf->c_str(), (unsigned long)exp->flag, (void*)exp->addr);
 
     exports_.push_back(exp);
 
@@ -769,7 +769,7 @@ MachOImpl::MachOImpl(const char* filename, int fd, size_t offset, size_t len,
           uint32_t* sym = symtab;
           sym += index * (is64_ ? 4 : 3);
 
-          LOGF("dysym %d %s(%u)%s%s\n",
+          LOGF("dysym %ud %s(%u)%s%s\n",
                j, symstrtab + sym[0], index, local, abs);
         }
 
@@ -796,7 +796,7 @@ MachOImpl::MachOImpl(const char* filename, int fd, size_t offset, size_t len,
       uint32_t* p = reinterpret_cast<uint32_t*>(cmds_ptr);
       LOGF("UNIXTHREAD");
       for (uint32_t i = 2; i < p[1]; i++) {
-        LOGF(" %d:%x", i, p[i]);
+        LOGF(" %ud:%x", i, p[i]);
       }
       LOGF("\n");
       if (is64_) {

@@ -83,7 +83,7 @@
 
 #define msg "Compiling a plugin using CoD4X Plugin API. Your compiler is " COMPILER_NAME ", you are using " LANG_NAME "."
 
-#pragma message msg
+//#pragma message msg
 
 #undef msg
 

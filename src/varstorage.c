@@ -752,6 +752,8 @@ void HStorage_IterInit( vsMemObj_t* obj )
 
 const char* HStorage_GetLastErrorInternal( vsMemObj_t* obj )
 {
+    if (!obj)
+        return "";
     return obj->lastError;
 }
 
@@ -896,102 +898,98 @@ void HStorage_WriteDataToFile(varStorage_t* vobj, const char* filename){
     FS_SV_HomeCopyFile(va("%s.tmp", filename) , (char*)filename);
 }
 
-qboolean HStorage_ParseLine(varStorage_t* vobj ,char* line, int linenumber){
-
+qboolean HStorage_ParseLine(varStorage_t *vobj, char *line, int linenumber)
+{
     int i, count, outlen;
     varType_t varType;
     char *varValue;
-    vsMemObj_t* newobj;
-    vsMemObj_t* obj;
+    vsMemObj_t *newobj;
+    vsMemObj_t *obj = vobj->memObj;
     char queryString[32];
     char varname[32];
     char outbuf[8192];
     qboolean suc;
 
-    obj = vobj->memObj;
+    varType = HStorage_VarTypeToEnum(Info_ValueForKey(line, "type"));
 
-    varType = HStorage_VarTypeToEnum( Info_ValueForKey(line, "type") );
-
-    if(varType == VSVAR_BAD)
+    if (varType == VSVAR_BAD)
     {
         return qfalse;
     }
 
     Q_strncpyz(varname, Info_ValueForKey(line, "name"), sizeof(varname));
-    if(varname[0] == '\0')
+    if (varname[0] == '\0')
     {
         return qfalse;
     }
     count = atoi(Info_ValueForKey(line, "count"));
 
     /* should be usually 1. Arrays have more elements */
-    if(count < 1 || count > MAX_ARRAY_SIZE)
+    if (count < 1 || count > MAX_ARRAY_SIZE)
     {
         return qfalse;
     }
 
-    if(HStorage_BeginDataInternal(obj, varType, varname) != qtrue)
+    if (HStorage_BeginDataInternal(obj, varType, varname) != qtrue)
     {
-        Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal( obj ));
+        Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal(obj));
         return qfalse;
     }
 
-    for(i = 0; i < count; i++)
+    for (i = 0; i < count; i++)
     {
         Com_sprintf(queryString, sizeof(queryString), "v%d", i);
-        if(varType == VSVAR_STRING)
+        if (varType == VSVAR_STRING)
         {
             outlen = BigInfo_DecodedValueForKey(line, queryString, outbuf, sizeof(outbuf));
-            if(outlen < sizeof(outbuf))
+            if (outlen < sizeof(outbuf))
             {
                 outbuf[outlen] = '\0';
-            }else{
-                outbuf[sizeof(outbuf) -1] = '\0';
+            }
+            else
+            {
+                outbuf[sizeof(outbuf) - 1] = '\0';
             }
 
             vsValue_t value;
             value.string = outbuf;
-            suc = HStorage_AddDataInternal( obj, &value);
-
-        }else{
+            suc = HStorage_AddDataInternal(obj, &value);
+        }
+        else
+        {
             varValue = Info_ValueForKey(line, queryString);
         }
-        suc = HStorage_AddDataFromStringInternal( obj, varValue );
-        if(suc != qtrue)
+        suc = HStorage_AddDataFromStringInternal(obj, varValue);
+        if (suc != qtrue)
         {
-            Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal( obj ));
+            Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal(obj));
             return qfalse;
         }
     }
 
-    switch(HStorage_EndDataInternal( obj ))
+    switch (HStorage_EndDataInternal(obj))
     {
-        default:
-            Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal( obj ));
+    case 0:
+        newobj = HStorage_Relocate(obj);
+        if (newobj == NULL)
+        {
+            Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal(newobj));
             return qfalse;
-
-        case 0:
-            newobj = HStorage_Relocate( obj );
-            if(newobj == NULL)
-            {
-                Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal( newobj ));
-                return qfalse;
-            }
-            obj = newobj;
-            HStorage_EndDataInternal( obj );
-            vobj->memObj = obj;
-            vobj->relocationCount++;
-            break;
-
-        case 1:
-            break;
+        }
+        obj = newobj;
+        HStorage_EndDataInternal(obj);
+        vobj->memObj = obj;
+        vobj->relocationCount++;
+        break;
+    case 1:
+        break;
+    default:
+        Com_PrintError("HStorage_ParseLine: %s\n", HStorage_GetLastErrorInternal(obj));
+        return qfalse;
     }
 
     return qtrue;
 }
-
-
-
 
 qboolean HStorage_LoadDataFromFile(varStorage_t* vobj, const char* filename)
 {

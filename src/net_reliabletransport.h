@@ -57,6 +57,6 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf);
 int ReliableMessageReceive(netreliablemsg_t *chan, byte* outdata, int len);
 int ReliableMessageReceiveSingleFragment(netreliablemsg_t *chan, byte* outdata, int len);
 int ReliableMessageSend(netreliablemsg_t *chan, byte* indata, int len);
-netreliablemsg_t* ReliableMessageSetup(int netsrc, int qport, netadr_t* remote);
+netreliablemsg_t* ReliableMessageSetup(int qport, int netsrc, netadr_t* remote);
 void Net_TestingFunction(netreliablemsg_t *chan);
 void ReliableMessageDisconnect(netreliablemsg_t *chan);

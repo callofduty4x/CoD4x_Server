@@ -3373,125 +3373,139 @@ int NET_TcpIsSocketReady(int socket) //return: 1 ready, 0 not ready, -1 select e
 NET_TcpClientConnect
 ====================
 */
-int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t *sourceadr, qboolean silent, int timeoutsec ) {
-	SOCKET			newsocket;
-	struct sockaddr_storage	address, bindaddr;
-	netadr_t remoteadr;
-	int err = 0;
-	char errstr[256];
-	char adrstr[128];
+int NET_TcpClientConnectInternal(const char *remoteAdr, netadr_t *adr, netadr_t *sourceadr, qboolean silent, int timeoutsec)
+{
+    SOCKET newsocket;
+    struct sockaddr_storage address, bindaddr;
+    netadr_t remoteadr;
+    int err = 0;
+    char errstr[256];
+    char adrstr[128];
 
-  if(remoteAdr)
-  {
-    if(!silent) Com_Printf( "Connecting to: %s\n", remoteAdr);
-
-  	if(NET_StringToAdr(remoteAdr, &remoteadr, NA_UNSPEC))
-  	{
-  		if(!silent) Com_Printf( "Resolved %s to: %s\n", remoteAdr, NET_AdrToStringMT(&remoteadr, adrstr, sizeof(adrstr)));
-  	}else{
-  		if(!silent) Com_PrintWarning( "Couldn't resolve: %s\n", remoteAdr);
-  		return INVALID_SOCKET;
-  	}
-  }else{
-    memcpy(&remoteadr, adr, sizeof(remoteadr));
-  }
-
-  if(sourceadr)
-  {
-    int sourcefam, destfam;
-    sourcefam = sourceadr->type;
-    destfam = remoteadr.type;
-
-    if(sourcefam == NA_TCP)
+    if (remoteAdr)
     {
-	sourcefam = NA_IP;
-    }else if(sourcefam == NA_TCP6)
-    {
-	sourcefam = NA_IP6;
+        if (!silent)
+            Com_Printf("Connecting to: %s\n", remoteAdr);
+
+        if (NET_StringToAdr(remoteAdr, &remoteadr, NA_UNSPEC))
+        {
+            if (!silent)
+                Com_Printf("Resolved %s to: %s\n", remoteAdr, NET_AdrToStringMT(&remoteadr, adrstr, sizeof(adrstr)));
+        }
+        else
+        {
+            if (!silent)
+                Com_PrintWarning("Couldn't resolve: %s\n", remoteAdr);
+            return INVALID_SOCKET;
+        }
     }
-    if(destfam == NA_TCP)
-    {
-	destfam = NA_IP;
-    }else if(destfam == NA_TCP6)
-    {
-	destfam = NA_IP6;
-    }
+    else
+        memcpy(&remoteadr, adr, sizeof(remoteadr));
 
-    if(sourcefam != destfam)
+    if (sourceadr)
     {
-        if(!silent) Com_PrintWarning( "NET_TCPConnect: Protocol family mismatch for source and destination\n");
+        int sourcefam, destfam;
+        sourcefam = sourceadr->type;
+        destfam = remoteadr.type;
+
+        if (sourcefam == NA_TCP)
+        {
+            sourcefam = NA_IP;
+        }
+        else if (sourcefam == NA_TCP6)
+        {
+            sourcefam = NA_IP6;
+        }
+        if (destfam == NA_TCP)
+        {
+            destfam = NA_IP;
+        }
+        else if (destfam == NA_TCP6)
+        {
+            destfam = NA_IP6;
+        }
+
+        if (sourcefam != destfam)
+        {
+            if (!silent)
+                Com_PrintWarning("NET_TCPConnect: Protocol family mismatch for source and destination\n");
+            return INVALID_SOCKET;
+        }
+    }
+    NetadrToSockadr(&remoteadr, (struct sockaddr *)&address);
+
+    if ((newsocket = socket(address.ss_family, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
+    {
+        if (!silent)
+            Com_PrintWarning("NET_TCPConnect: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
         return INVALID_SOCKET;
     }
-  }
-  NetadrToSockadr( &remoteadr, (struct sockaddr *)&address);
+    // make it non-blocking
+    ioctlarg_t _true = 1;
+    if (ioctlsocket(newsocket, FIONBIO, &_true) == SOCKET_ERROR)
+    {
+        if (!silent)
+            Com_PrintWarning("NET_TCPIPSocket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
+        closesocket(newsocket);
+        return INVALID_SOCKET;
+    }
 
-	if( ( newsocket = socket( address.ss_family, SOCK_STREAM, IPPROTO_TCP ) ) == INVALID_SOCKET ) {
-		if(!silent) Com_PrintWarning( "NET_TCPConnect: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
-		return INVALID_SOCKET;
-	}
-	// make it non-blocking
-	ioctlarg_t	_true = 1;
-	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
-		if(!silent) Com_PrintWarning( "NET_TCPIPSocket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
-		closesocket(newsocket);
-		return INVALID_SOCKET;
-	}
+    if (sourceadr)
+    {
+        NetadrToSockadr(sourceadr, (struct sockaddr *)&bindaddr);
+        if (bind(newsocket, (void *)&bindaddr, sizeof(bindaddr)) == SOCKET_ERROR)
+        {
+            if (!silent)
+                Com_PrintWarning("NET_TcpClientConnect: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
+            closesocket(newsocket);
+            return INVALID_SOCKET;
+        }
+    }
 
+    if (connect(newsocket, (void *)&address, sizeof(address)) != SOCKET_ERROR)
+    {
+        return newsocket;
+    }
 
-  if(sourceadr)
-  {
-    NetadrToSockadr(sourceadr, (struct sockaddr *)&bindaddr);
-	if( bind( newsocket, (void *)&bindaddr, sizeof(bindaddr) ) == SOCKET_ERROR ) {
-		if(!silent) Com_PrintWarning( "NET_TcpClientConnect: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
-		closesocket( newsocket );
-		return INVALID_SOCKET;
-	}
-  }
+    err = socketError;
 
-
-
-	if( connect( newsocket, (void *)&address, sizeof(address) ) != SOCKET_ERROR )
-	{
-		return newsocket;
-	}
-
-	err = socketError;
-
-	if(err == EINPROGRESS
+    if (err == EINPROGRESS
 #ifdef _WIN32
-		|| err == WSAEWOULDBLOCK
+        || err == WSAEWOULDBLOCK
 #endif
-	){
-		if(timeoutsec < 1)
-		{
-			return newsocket; //Non blocking
-		}
+        )
+    {
+        if (timeoutsec < 1)
+        {
+            return newsocket; //Non blocking
+        }
 
-		switch(NET_TcpWaitForSocketIsReady(newsocket, timeoutsec))
-		{
-			case 1:
-				return newsocket;
+        switch (NET_TcpWaitForSocketIsReady(newsocket, timeoutsec))
+        {
+        case 1:
+            return newsocket;
 
-			case 0:
-				if(!silent) Com_PrintWarning("NET_TcpConnect: Connecting to: %s timed out\n", NET_AdrToStringMT(&remoteadr, adrstr, sizeof(adrstr)));
-				closesocket( newsocket );
-				return INVALID_SOCKET;
+        case 0:
+            if (!silent)
+                Com_PrintWarning("NET_TcpConnect: Connecting to: %s timed out\n", NET_AdrToStringMT(&remoteadr, adrstr, sizeof(adrstr)));
+            closesocket(newsocket);
+            return INVALID_SOCKET;
 
-			case -1:
-				if(!silent) Com_PrintWarning("NET_TcpConnect: select() syscall failed: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
-				closesocket( newsocket );
-				return INVALID_SOCKET;
+        case -1:
+            if (!silent)
+                Com_PrintWarning("NET_TcpConnect: select() syscall failed: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
+            closesocket(newsocket);
+            return INVALID_SOCKET;
 
-			case -2:
-			default:
-				break;
-
-		}
-	}
-	if(!silent) Com_PrintWarning( "NET_TCPOpenConnection: connect error: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
-	closesocket( newsocket );
-	return INVALID_SOCKET;
-
+        case -2:
+        default:
+            break;
+        }
+    }
+    if (!silent)
+        Com_PrintWarning("NET_TCPOpenConnection: connect error: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)));
+    closesocket(newsocket);
+    return INVALID_SOCKET;
 }
 
 int NET_TcpClientConnect( const char *remoteAdr )

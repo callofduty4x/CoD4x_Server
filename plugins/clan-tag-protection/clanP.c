@@ -34,6 +34,7 @@ PCL int OnInit(){	// Funciton called on server initiation
 	if(buffer == NULL)
 	{
 		Plugin_Printf("Memory error\n");
+		fclose(file);
 		return;
 	}
 
@@ -44,6 +45,7 @@ PCL int OnInit(){	// Funciton called on server initiation
 	if(result != size)
 	{
 		Plugin_Printf("Reading has resulted an error\n");
+		fclose(file);
 		return;
 	}
 

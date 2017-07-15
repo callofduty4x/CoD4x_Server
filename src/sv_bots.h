@@ -20,7 +20,7 @@ typedef struct __attribute__ ((aligned (4))) BotMovementInfo_t
     float moveTo[2];
     /* Rotation */
     int rotIterCount;
-    short int rotFrac[2];
+    short int rotFrac[3];
     qboolean lastAliveState;
     byte useSpamDelay;
 } BotMovementInfo_t;

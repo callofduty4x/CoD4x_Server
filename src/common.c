@@ -564,7 +564,7 @@ void Com_Quit_f( void ) {
   Com_Printf("quitting...\n");
 
 	// don't try to shutdown if we are in a recursive error
-  PHandler_Event(PLUGINS_ONTERMINATE, NULL); //Notify all plugins to hold and stop threads now
+  PHandler_Event(PLUGINS_ONTERMINATE); //Notify all plugins to hold and stop threads now
 
   Com_Printf("All plugins have terminated\n");
 

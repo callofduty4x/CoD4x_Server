@@ -616,7 +616,7 @@ int NET_CookieHash(netadr_t *from){
 
     }else if(from->type == NA_IP6){
         for(i = 0; i < 16; i++)
-            data[i] = from->ip[i];
+            data[i] = from->ip6[i];
 
         *((unsigned short*)&data[16]) = from->port;
 

@@ -28,7 +28,7 @@ void *Sec_Malloc(size_t size);
 #define Sec_GMalloc(type,n) (type *)Sec_Malloc(sizeof(type)*n)
 #define Sec_SMalloc(n) Sec_GMalloc(char,n)
 
-#define Sec_Free(x) if(x!=NULL) free(x); x=NULL
+#define Sec_Free(pX) if(*pX!=NULL) free(*pX); *pX = NULL
 
 extern int SecCryptErr;
 char *Sec_CryptErrStr(int);

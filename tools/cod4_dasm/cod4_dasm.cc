@@ -445,7 +445,7 @@ class FileMap {
       printf("Current object %s\nContains: \n", o->objectname.c_str());
       for(j = 0; j < o->symbolcount; ++j)
       {
-        printf("%s, %s, 0x%x, %d\n", o->symbols[j]->name.c_str(), symtypename(o->symbols[j]->type), o->symbols[j]->address, o->symbols[j]->size);
+        printf("%s, %s, 0x%x, %ud\n", o->symbols[j]->name.c_str(), symtypename(o->symbols[j]->type), o->symbols[j]->address, o->symbols[j]->size);
       }
       printf("\n\n");
     }
@@ -1447,7 +1447,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
           exit(-1);
         }
         dasm_ptr->jumptables[dasm_ptr->jumptableCount].address = address;
-        snprintf(dasm_ptr->jumptables[dasm_ptr->jumptableCount].name, sizeof(dasm_ptr->jumptables[0].name), "%s_jumptab_%d", FunctionnameFromMangled(dasm_ptr->dasmCurrentSymbol->name.c_str()), dasm_ptr->jumptableCount);
+        snprintf(dasm_ptr->jumptables[dasm_ptr->jumptableCount].name, sizeof(dasm_ptr->jumptables[0].name), "%s_jumptab_%ud", FunctionnameFromMangled(dasm_ptr->dasmCurrentSymbol->name.c_str()), dasm_ptr->jumptableCount);
         const char* jmptabname = dasm_ptr->jumptables[dasm_ptr->jumptableCount].name;
         dasm_ptr->jumptableCount++;
         return jmptabname;
@@ -2038,7 +2038,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       fprintf(f, "AT CFString.flags, dd 0x%x\n", CFStringtab.strings[i].cfs->flags);
       const char* cstringname = addStringToTable(CFStringtab.strings[i].cfs->str);
       fprintf(f, "AT CFString.str dd %s\n", cstringname);
-      fprintf(f, "AT CFString.length dd %d\n", (uint32_t)CFStringtab.strings[i].cfs->length);
+      fprintf(f, "AT CFString.length dd %ud\n", (uint32_t)CFStringtab.strings[i].cfs->length);
       fprintf(f, "IEND\n\n");
     }
     fprintf(f, "\n");

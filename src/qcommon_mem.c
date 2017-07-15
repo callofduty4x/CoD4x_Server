@@ -40,7 +40,7 @@ void* Mem_AlignedAlloc(unsigned int align, unsigned int size)
 {
     void* newmem;
 
-    newmem = calloc(1, size + align);
+    newmem = calloc(size + align, 1);
     if(newmem == NULL)
         return NULL;
 

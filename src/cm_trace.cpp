@@ -1574,7 +1574,7 @@ int CM_TransformedBoxSightTrace(int hitNum, const float *start, const float *end
   vec3_t matrix[3];
   float halfwidth;
   float halfheight;
-  vec3_t symetricSize[2];9
+  vec3_t symetricSize[2];
   vec3_t offset;
   vec3_t end_l;
   vec3_t start_l;
@@ -1923,7 +1923,7 @@ int CM_TraceCylinderThroughCylinder(traceWork_t *tw, const float *vStationary, f
 		}
 		
 		vDelta[2] = 0.0;
-		fDeltaLen = Vec3NormalizeTo(vDelta, vNormal)
+		fDeltaLen = Vec3NormalizeTo(vDelta, vNormal);
 		fEpsilon = (fDeltaLen * 0.125) / fB;
 		fEntry = (-fB - fsqrt(fDiscriminant)) / fA + fEpsilon;
 		if ( trace->fraction <= fEntry )
@@ -2054,7 +2054,7 @@ void CM_TraceThroughBrush(traceWork_t *tw, cbrush_t *brush, trace_t *trace)
   allsolid = 1;
   leadside = 0;
   sign = 1.0;
-  bounds = brush->?mins;
+  bounds = brush->mins;
   index = 0;
   while ( 1 )
   {
@@ -2792,7 +2792,7 @@ void CM_TestBoxInBrush(traceWork_t *tw, cbrush_t *brush, trace_t *trace)
 		assert(!IS_NAN(tw->offsetZ));
 	  
 
-		dist = (plane->dist + tw->radius) + fabs(plane->normal[2] * tw->offsetZ));
+		dist = (plane->dist + tw->radius) + fabs(plane->normal[2] * tw->offsetZ);
 
 		assert(!IS_NAN(dist));
 	  
@@ -3051,7 +3051,7 @@ void CM_Trace( trace_t *results, const vec3_t start, const vec3_t end,
         }
         else
         {
-            vec3_t start_, end_;
+            vec4_t start_, end_;
 			start_[0] = tw.extents.start[0];
 			start_[1] = tw.extents.start[1];
 			start_[2] = tw.extents.start[2];

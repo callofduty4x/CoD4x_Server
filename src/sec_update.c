@@ -198,13 +198,13 @@ char *Sec_StrTok(char *str,char *tokens,int id){
     }	
 }
 
-void Sec_FreeFileStruct(sec_file_t *file){
-    if(file->next != NULL)
-	Sec_FreeFileStruct(file->next);
-    Sec_Free(file);
+void Sec_FreeFileStruct(sec_file_t *file)
+{
+    if (file->next != NULL)
+        Sec_FreeFileStruct(file->next);
+
+    Sec_Free(&file);
 }
-
-
 
 qboolean Sec_VerifyFile(byte* data, int length, const char* hash)
 {

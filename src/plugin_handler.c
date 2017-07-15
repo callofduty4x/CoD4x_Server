@@ -270,6 +270,13 @@ void PHandler_Load(char* name) // Load a plugin, safe for use
         if(!(pluginFunctions.plugins[i].loaded))
             break;
     }
+    
+    if (i == MAX_PLUGINS)
+    {
+        Com_PrintError("Maximum %d plugins exceeded", MAX_PLUGINS);
+        return;
+    }
+
     pluginFunctions.plugins[i].OnInit = Sys_GetProcedure("OnInit");
     for(j=0;j<PLUGINS_ITEMCOUNT;++j){
         pluginFunctions.plugins[i].OnEvent[j] = Sys_GetProcedure(PHandler_Events[j]);

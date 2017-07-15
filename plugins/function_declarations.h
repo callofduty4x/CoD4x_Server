@@ -231,10 +231,10 @@
     __cdecl void Plugin_RandomBytes( byte *string, int len );
 
     //      == Scriptfunctions ==
-    __cdecl void Plugin_ScrAddFunction(char *name, void (*function)());
-    __cdecl void Plugin_ScrAddMethod(char *name, void (*function)(scr_entref_t object));
-    __cdecl void Plugin_ScrReplaceFunction(char *name, xfunction_t function);
-    __cdecl void Plugin_ScrReplaceMethod(char *name, xfunction_t function);
+    __cdecl void Plugin_ScrAddFunction(const char *name, void (*function)());
+    __cdecl void Plugin_ScrAddMethod(const char *name, void (*function)(scr_entref_t object));
+    __cdecl void Plugin_ScrReplaceFunction(const char *name, xfunction_t function);
+    __cdecl void Plugin_ScrReplaceMethod(const char *name, xfunction_t function);
 
     __cdecl void Plugin_Scr_AddEntity(gentity_t* ent);
     __cdecl int Plugin_Scr_GetNumParam( void );

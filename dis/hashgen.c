@@ -20,7 +20,7 @@ char* Com_CreateHash(const char* string){
         finalsha[r++] = hex[digestsha[i] >> 4];
         finalsha[r++] = hex[digestsha[i] & 0xf];
     }
-    finalsha[65] = 0x00;
+    finalsha[64] = 0x00;
     MD5Init(&md5);					//Create MD5 of SHA-256
     MD5Update(&md5 , (unsigned char*)finalsha, 64);
     MD5Final(&md5, digestmd5);
@@ -28,6 +28,6 @@ char* Com_CreateHash(const char* string){
         finalmd5[r++] = hex[digestmd5[i] >> 4];
         finalmd5[r++] = hex[digestmd5[i] & 0xf];
     }
-    finalmd5[33] = 0x00;
+    finalmd5[32] = 0x00;
     return finalmd5;
 }

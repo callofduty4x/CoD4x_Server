@@ -2138,12 +2138,14 @@ int FS_WriteFileOSPath(char *ospath, const void *buffer, int size ) {
 				tries = 1;
 			} else {
 				Com_Printf( "FS_WriteFileOSPath: 0 bytes written\n" );
+				fclose(fh);
 				return 0;
 			}
 		}
 
 		if (written == -1) {
 			Com_Printf( "FS_WriteFileOSPath: -1 bytes written\n" );
+			fclose(fh);
 			return 0;
 		}
 
@@ -2415,12 +2417,14 @@ void FS_SV_HomeCopyFile( char *from, char *to ) {
 
 	if( FS_CreatePath( to_ospath ) ) {
 		Sys_LeaveCriticalSection(CRIT_FILESYSTEM);
+		free(buf);
 		return;
 	}
 
 	f = fopen( to_ospath, "wb" );
 	if ( !f ) {
 		Sys_LeaveCriticalSection(CRIT_FILESYSTEM);
+		free(buf);
 		return;
 	}
 	if (fwrite( buf, 1, len, f ) != len)
@@ -3717,6 +3721,7 @@ void FS_CopyFile( char *fromOSPath, char *toOSPath ) {
 
 	if ( FS_CreatePath( toOSPath ) ) {
 		Sys_LeaveCriticalSection(CRIT_FILESYSTEM);
+		free(buf);
 		return;
 	}
 
