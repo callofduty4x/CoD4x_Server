@@ -480,7 +480,7 @@ qboolean Sys_DirectoryHasContent(const char *dir)
 	{
 		searchpath[strlen(searchpath) -1] = '\0';
 	}
-	Q_strcat(searchpath, sizeof(searchpath), "\\*");
+	Q_strncat(searchpath, sizeof(searchpath), "\\*");
 
     if((hFind = FindFirstFile(searchpath, &fdFile)) == INVALID_HANDLE_VALUE)
     {
@@ -671,7 +671,7 @@ void Sys_CloseLibrary(void* hModule)
 	FreeLibrary(hModule);
 }
 
-static CRITICAL_SECTION crit_sections[CRIT_SIZE];
+static CRITICAL_SECTION crit_sections[CRITSECT_COUNT];
 threadid_t mainthread;
 
 
@@ -679,18 +679,11 @@ void Sys_InitializeCriticalSections( void )
 {
 	int i;
 
-	for (i = 0; i < CRIT_SIZE; i++) {
+	for (i = 0; i < CRITSECT_COUNT; i++) {
 		InitializeCriticalSection( &crit_sections[i] );
 
 	}
 
-}
-
-void __cdecl Sys_ThreadMain( void )
-{
-	mainthread = GetCurrentThreadId();
-
-    Com_InitThreadData();
 }
 
 
@@ -704,8 +697,15 @@ void __cdecl Sys_LeaveCriticalSectionInternal(int section)
 	LeaveCriticalSection(&crit_sections[section]);
 }
 
+HANDLE Sys_GetThreadHandleFromID(threadid_t tid)
+{
+    return OpenThread(0, 0, tid);
+}
 
-qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)
+
+
+
+HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)
 {
 	char errMessageBuf[512];
 	DWORD lastError;
@@ -730,11 +730,24 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 		}else{
 			Com_PrintError("Failed to start thread!\n");
 		}
+		return NULL;
+	}
+	return thid;
+}
+
+qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)
+{
+	HANDLE thid = Sys_CreateThreadWithHandle(ThreadMain, tid, arg);
+
+	if(thid == NULL)
+	{
 		return qfalse;
 	}
+
 	CloseHandle(thid);
 	return qtrue;
 }
+
 
 
 qboolean __cdecl Sys_IsMainThread( void )
@@ -914,4 +927,15 @@ int Sys_Chmod(const char* filename, int mode)
 void Sys_SleepUSec(int usec)
 {
 	Sleep((usec + 999) / 1000);
+}
+
+unsigned int Sys_GetProcessAffinityMask()
+{
+  unsigned int systemAffinityMask;
+  unsigned int processAffinityMask = 0;
+
+  HANDLE h = GetCurrentProcess();
+
+  GetProcessAffinityMask(h, &processAffinityMask, &systemAffinityMask);
+  return processAffinityMask;
 }

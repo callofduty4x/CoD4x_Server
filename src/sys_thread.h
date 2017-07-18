@@ -25,7 +25,7 @@
 #define __SYS_THREAD_H__
 
 //#define THREAD_DEBUG
-
+#include "sys_main.h"
 #include <stdarg.h>
 
 
@@ -33,35 +33,35 @@
 	typedef DWORD threadid_t;
 #else
 	#include <pthread.h>
-	typedef pthread_t threadid_t;
 #endif
 
-typedef enum
+enum CriticalSection
 {
-	CRIT_CONSOLE = 0,
-	CRIT_ERRORCHECK = 1,
-	CRIT_ERROR = 2,
-	CRIT_STATMON = 3,
-	CRIT_SCRSTRINGGLOB = 4,
-	CRTI_MEMTREE = 5,
-	CRIT_REDIRECTPRINT = 6,
-	CRIT_EVENTQUEUE = 7,
-	CRIT_GPUFENCE = 8,
-	CRIT_RENDER = 9,
-	CRIT_FILESYSTEM = 10,
-	CRIT_PHYSIC = 11,
-	CRIT_MISC = 12,
-	CRIT_SOUND = 13,
-	CRIT_CINAMATIC1 = 14,
-	CRIT_CINEMATIC2 = 15,
-	CRIT_CBUF = 16,
-	CRIT_LOGFILE = 17,
-	CRIT_PLUGIN = 18,
-	CRIT_HTTPS = 19,
-	CRIT_CVAR = 20,
-	CRIT_RESOLVE = 21,
-	CRIT_SIZE
-}crit_section_t;
+  CRITSECT_CONSOLE = 0,
+  CRITSECT_DEBUG_SOCKET = 1,
+  CRITSECT_COM_ERROR = 2,
+  CRITSECT_STATMON = 3,
+  CRITSECT_SCRIPT_STRING = 4,
+  CRITSECT_MEMORY_TREE = 5,
+  CRITSECT_RD_BUFFER = 6,
+  CRITSECT_SYS_EVENT_QUEUE = 7,
+  CRITSECT_GPU_FENCE = 8,
+  CRITSECT_FATAL_ERROR = 9,
+  CRITSECT_DBHASH = 10,
+  CRITSECT_PHYSICS = 11,
+  CRITSECT_CVAR = 12,
+  CRITSECT_AUDIO_PHYSICS = 13,
+  CRITSECT_CINEMATIC = 14,
+  CRITSECT_CINEMATIC_TARGET_CHANGE = 15,
+  CRITSECT_CBUF = 16,
+  CRITSECT_LOGFILE = 17,
+  CRITSECT_PLUGIN = 18,
+  CRITSECT_HTTPS = 19,
+  CRITSECT_RESOLVE = 20,
+  CRITSECT_FILESYSTEM = 21,
+  CRITSECT_DL_MAP = 22,
+  CRITSECT_COUNT = 23
+};
 
 threadid_t Sys_GetCurrentThreadId( );
 void __cdecl Sys_EnterCriticalSection(int section);
@@ -69,10 +69,11 @@ void __cdecl Sys_LeaveCriticalSection(int section);
 void __cdecl Sys_EnterCriticalSectionInternal(int section);
 void __cdecl Sys_LeaveCriticalSectionInternal(int section);
 void __cdecl Sys_InitializeCriticalSections( void );
-void __cdecl Sys_ThreadMain( void );
+void __cdecl Sys_InitMainThread( void );
 qboolean __cdecl Sys_IsMainThread( void );
-qboolean __cdecl Sys_IsDatabaseThread( void );
-void Com_InitThreadData(void);
+bool __cdecl Sys_IsDatabaseThread( void );
+void Sys_SyncDatabase();
+void Com_InitThreadData(int threadcontext);
 void* __cdecl Sys_GetValue(int key);
 void __cdecl Sys_SetValue(int key, void* value);
 qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t*, void*);
@@ -81,9 +82,39 @@ qboolean Sys_SetupThreadCallback(void* callbackMain,...);
 qboolean Sys_CreateCallbackThread(void* threadMain,...);
 void Sys_RunThreadCallbacks();
 void Sys_ExitThread(int code);
-
-
 void Sys_RunDelegatedEvents();
-
 void Sys_SleepUSec(int usec);
+
+signed int __cdecl Sys_WaitForObject(HANDLE handle);
+signed int __cdecl Sys_IsObjectSignaled(HANDLE handle);
+
+#define MAX_VASTRINGS 2
+
+struct va_info_t
+{
+  char va_string[MAX_VASTRINGS][1024];
+  int index;
+};
+
+struct TraceCheckCount
+{
+  int global;
+  int *partitions;
+};
+
+
+typedef struct 
+{
+  struct TraceCheckCount checkcount;
+  struct cbrush_s *box_brush;
+  struct cmodel_s *box_model;
+}TraceThreadInfo;
+
+
+unsigned int Sys_GetProcessAffinityMask();
+void** Sys_GetThreadLocalStorage();
+void Sys_SetThreadLocalStorage(void**);
+
 #endif
+
+

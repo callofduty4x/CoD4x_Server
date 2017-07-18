@@ -19,10 +19,6 @@
 ===========================================================================
 */
 
-
-
-//This are dummy functions for the single thread server :D
-
 #include "q_shared.h"
 #include "sys_thread.h"
 #include "qcommon.h"
@@ -30,39 +26,80 @@
 #ifdef THREAD_DEBUG
 #include "sys_main.h"
 #endif
+#include "sys_thread.h"
+
 #include <string.h>
 #include <stdarg.h>
+#include <stdbool.h>
 
 
+#define NUMTHREADS 2
 
-qboolean __cdecl Sys_IsDatabaseThread( void )
-{
-	return qfalse;
-}
+typedef int ThreadOwner;
+
+HANDLE databaseCompletedEvent;
+HANDLE databaseCompletedEvent2;
+HANDLE wakeDatabaseEvent;
+HANDLE resumedDatabaseEvent;
+ThreadOwner g_databaseThreadOwner;
+threadid_t threadId[NUMTHREADS];
+#ifdef __WIN32
+HANDLE threadHandle[NUMTHREADS];
+#else
+threadid_t threadHandle[NUMTHREADS];
+#endif
+const char* s_threadNames[] = { "Mainthread", "Database" };
+void (*threadFunc[NUMTHREADS])(unsigned int p);
+
+//Thread local buffers
+struct va_info_t va_info[NUMTHREADS];
+jmp_buf g_com_error[NUMTHREADS];
+TraceThreadInfo g_traceThreadInfo[NUMTHREADS];
+
+
 
 
 #define MAX_KEYS 3
 
-void* sys_valuestoreage[MAX_KEYS];
+void* sys_valuestoreage[NUMTHREADS][MAX_KEYS];
 
 void* __cdecl Sys_GetValue(int key)
 {
-	if(key < 1 || key > MAX_KEYS)
-		Com_Error(ERR_FATAL, "Sys_GetValue: Invalid value");
+    void **s;
 
-    return sys_valuestoreage[key -1];
+    if(key < 1 || key > MAX_KEYS)
+	Com_Error(ERR_FATAL, "Sys_GetValue: Invalid value");
+
+
+
+    s = Sys_GetThreadLocalStorage();
+    if(!s)
+    {
+        return NULL;
+    }
+    return s[key -1];
 }
 
 void __cdecl Sys_SetValue(int key, void* value)
 {
-	if(key < 1 || key > MAX_KEYS)
-		Com_Error(ERR_FATAL, "Sys_GetValue: Invalid value");
+    void **s;
 
-    sys_valuestoreage[key -1] = value;
+    if(key < 1 || key > MAX_KEYS)
+	Com_Error(ERR_FATAL, "Sys_GetValue: Invalid value");
+
+
+
+
+    s = Sys_GetThreadLocalStorage();
+    if(!s)
+    {
+        return;
+    }
+    s[key -1] = value;
 }
 
 #ifdef THREAD_DEBUG
-static int mutex_depth[CRIT_SIZE] = { 0 };
+static int mutex_depth[CRITSECT_COUNT] = { 0 };
 
 #ifdef _WIN32
 
@@ -111,11 +148,11 @@ void Sys_EnterCriticalSection(int section)
 {
 #ifdef THREAD_DEBUG
 
-	if( section != CRIT_ERRORCHECK)
+	if( section != CRITSECT_COM_ERROR)
 		threadDebugPrint("Sys_EnterCriticalSection for Thread: %d Section: %d Depth: %d\n", Sys_GetCurrentThreadId(), section, mutex_depth[section]);
 	mutex_depth[section] ++;
 #endif
-/*	if(Com_InError() && section != CRIT_ERROR && Sys_IsMainThread() == qtrue)
+/*	if(Com_InError() && section != CRITSECT_COM_ERROR && Sys_IsMainThread() == qtrue)
 	{
 		Com_Error(0, "Error Cleanup");
 	}
@@ -123,7 +160,7 @@ void Sys_EnterCriticalSection(int section)
 	Sys_EnterCriticalSectionInternal(section);
 
 #ifdef THREAD_DEBUG
-	if( section != CRIT_ERRORCHECK)
+	if( section != CRITSECT_COM_ERROR)
 		threadDebugPrint("Section %d Locked for: %d\n", section, Sys_GetCurrentThreadId());
 #endif
 
@@ -133,7 +170,7 @@ void Sys_LeaveCriticalSection(int section)
 {
 #ifdef THREAD_DEBUG
 	mutex_depth[section] --;
-	if( section != CRIT_ERRORCHECK)
+	if( section != CRITSECT_COM_ERROR)
 		threadDebugPrint("Sys_LeaveCriticalSection for Thread: %d Section: %d\n", Sys_GetCurrentThreadId(), section);
 #endif
 	Sys_LeaveCriticalSectionInternal(section);
@@ -267,4 +304,242 @@ qboolean Sys_CreateCallbackThread(void* threadMain,...)
 	if(success == qfalse)
 		tcb->isActive = qtrue;
 	return success;
+}
+
+
+bool Sys_IsDatabaseReady()
+{
+  return Sys_IsObjectSignaled(databaseCompletedEvent) == 1;
+}
+
+void Sys_WaitStartDatabase()
+{
+  Sys_WaitForObject(wakeDatabaseEvent);
+}
+
+bool Sys_IsDatabaseThread()
+{
+  threadid_t curtid;
+
+  curtid = Sys_GetCurrentThreadId();
+  return curtid == threadId[1];
+}
+
+void Sys_WakeDatabase()
+{
+  Sys_ResetEvent(databaseCompletedEvent);
+}
+
+void __cdecl Sys_SuspendDatabaseThread(ThreadOwner owner)
+{
+  g_databaseThreadOwner = owner;
+  Sys_ResetEvent(resumedDatabaseEvent);
+}
+
+void __cdecl Sys_DatabaseCompleted()
+{
+  Sys_SetEvent(databaseCompletedEvent);
+}
+
+
+void __cdecl Sys_ResumeDatabaseThread(ThreadOwner to)
+{
+  g_databaseThreadOwner = 0;
+  Sys_SetEvent(resumedDatabaseEvent);
+}
+
+void Sys_WakeDatabase2()
+{
+  Sys_ResetEvent(databaseCompletedEvent2);
+}
+
+bool __cdecl Sys_IsDatabaseReady2()
+{
+  return Sys_IsObjectSignaled(databaseCompletedEvent2) == 1;
+}
+
+void __cdecl Sys_DatabaseCompleted2()
+{
+  Sys_SetEvent(databaseCompletedEvent2);
+}
+
+void __cdecl Sys_SyncDatabase()
+{
+  Sys_WaitForObject(databaseCompletedEvent);
+}
+
+bool __cdecl Sys_HaveSuspendedDatabaseThread(ThreadOwner to)
+{
+  return g_databaseThreadOwner == to;
+}
+
+void __cdecl Sys_NotifyDatabase()
+{
+  Sys_SetEvent(wakeDatabaseEvent);
+}
+
+void __cdecl Sys_WaitDatabaseThread()
+{
+  Sys_WaitForObject(resumedDatabaseEvent);
+}
+
+bool __cdecl Sys_IsRenderThread()
+{
+ // return Sys_GetCurrentThreadId() == threadId[1];
+  return false;
+}
+
+void* __cdecl Sys_ThreadMain(void *parameter)
+{
+  unsigned int p = (unsigned int)parameter;
+  assert(p < 2);
+  assert(threadFunc[p] != NULL);
+
+  Sys_SetThreadName(-1, s_threadNames[p]);
+  Com_InitThreadData(p);
+  threadFunc[p](p);
+  return NULL;
+}
+
+
+unsigned int s_cpuCount, s_affinityMaskForProcess;
+unsigned int s_affinityMaskForCpu[8];
+
+
+
+qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p))
+{
+  wakeDatabaseEvent = Sys_CreateEvent(0, 0, "wakeDatabaseEvent");
+  databaseCompletedEvent = Sys_CreateEvent(1, 1, "databaseCompletedEvent");
+  databaseCompletedEvent2 = Sys_CreateEvent(1, 1, "databaseCompletedEvent2");
+  resumedDatabaseEvent = Sys_CreateEvent(1, 1, "resumedDatabaseEvent");
+  threadFunc[1] = db_proc;
+
+  threadId[1] = 0;
+  threadHandle[1] = Sys_CreateThreadWithHandle(Sys_ThreadMain, &threadId[1], (void*)1);
+
+  if ( threadHandle[1] )
+  {
+#ifdef __WIN32
+    if ( s_cpuCount == 1 )
+    {
+      SetThreadIdealProcessor(threadHandle[1], 0);
+    }
+    else if ( s_cpuCount == 2 )
+    {
+      SetThreadIdealProcessor(threadHandle[1], 1u);
+    }
+    else
+    {
+      SetThreadIdealProcessor(threadHandle[1], 2u);
+    }
+#endif
+    //ResumeThread(threadHandle[1]);
+    return qtrue;
+  }
+
+  return qfalse;
+}
+
+
+void __cdecl Com_InitThreadData(int threadContext)
+{
+  Sys_SetThreadLocalStorage(sys_valuestoreage[threadContext]);
+
+  Sys_SetValue(1, &va_info[threadContext]);
+  Sys_SetValue(2, &g_com_error[threadContext]);
+  Sys_SetValue(3, &g_traceThreadInfo[threadContext]);
+/*
+  if ( threadContext == 1 )
+  {
+    Sys_SetValue(4, &args);
+  }
+  else
+  {
+    Sys_SetValue(4, &g_cmd_args);
+  }
+*/
+}
+
+void __cdecl Sys_InitThreadAffinity()
+{
+  unsigned int cpuCount;
+  unsigned int threadAffinityMask;
+  unsigned int affinityMaskBits[32];
+  unsigned int processAffinityMask;
+
+  processAffinityMask = Sys_GetProcessAffinityMask();
+
+  s_affinityMaskForProcess = processAffinityMask;
+  cpuCount = 0;
+  for ( threadAffinityMask = 1; processAffinityMask & -threadAffinityMask; threadAffinityMask *= 2 )
+  {
+    if ( processAffinityMask & threadAffinityMask )
+    {
+      affinityMaskBits[cpuCount++] = threadAffinityMask;
+      if ( cpuCount == 32 )
+      {
+        break;
+      }
+    }
+  }
+  if ( cpuCount && cpuCount != 1 )
+  {
+    s_cpuCount = cpuCount;
+    s_affinityMaskForCpu[0] = affinityMaskBits[0];
+    s_affinityMaskForCpu[1] = affinityMaskBits[cpuCount -1];
+    if ( cpuCount != 2 )
+    {
+      if ( cpuCount == 3 )
+      {
+        s_affinityMaskForCpu[2] = affinityMaskBits[1];
+      }
+      else if ( cpuCount == 4 )
+      {
+        s_affinityMaskForCpu[2] = affinityMaskBits[1];
+        s_affinityMaskForCpu[3] = affinityMaskBits[2];
+      }
+      else
+      {
+        s_affinityMaskForCpu[0] = -1;
+        s_affinityMaskForCpu[1] = -1;
+        s_affinityMaskForCpu[2] = -1;
+        s_affinityMaskForCpu[3] = -1;
+        s_affinityMaskForCpu[4] = -1;
+        s_affinityMaskForCpu[5] = -1;
+        s_affinityMaskForCpu[6] = -1;
+        s_affinityMaskForCpu[7] = -1;
+        if ( s_cpuCount >= 8 )
+        {
+          s_cpuCount = 8;
+        }
+      }
+    }
+  }
+  else
+  {
+    s_cpuCount = 1;
+    s_affinityMaskForCpu[0] = -1;
+  }
+}
+
+
+void Sys_InitMainThread()
+{
+    threadId[0] = Sys_GetCurrentThreadId();
+#ifdef __WIN32
+    HANDLE process = GetCurrentProcess();
+    HANDLE pseudoHandle = GetCurrentThread();
+    DuplicateHandle(process, pseudoHandle, process, threadHandle, 0, 0, 2u);
+#else
+    threadHandle[0] = threadId[0];
+#endif
+
+    Sys_InitThreadAffinity();
+
+#ifdef __WIN32
+    SetThreadIdealProcessor(threadHandle[0], 0);
+#endif
+
+    Com_InitThreadData(0);
 }

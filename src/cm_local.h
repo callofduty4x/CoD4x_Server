@@ -2,6 +2,7 @@
 #define __CM_LOCAL_H__
 
 #include "q_shared.h"
+#include "sys_thread.h"
 
 #define cm (*((clipMap_t*)(0x889EBC0)))
 
@@ -241,21 +242,20 @@ typedef struct leafList_s
   vec3_t bounds[2];
   int lastLeaf;
 }leafList_t;
-
+/*
 struct TraceCheckCount
 {
   int global;
   int *partitions;
 };
 
-/* 7216 */
 typedef struct 
 {
   struct TraceCheckCount checkcount;
   cbrush_t *box_brush;
   cmodel_t *box_model;
 }TraceThreadInfo;
-
+*/
 
 cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle );
 

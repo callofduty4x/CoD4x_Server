@@ -50,3 +50,5 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text);
 extern WinVars_t g_wv;
 extern byte cod4_plt[8192];
 #define IDI_ICON1                       1
+
+HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg);

@@ -47,6 +47,7 @@
 #include <pwd.h>
 #include <execinfo.h>
 #include <wait.h>
+#include <sched.h>
 
 char** ELF32_GetStrTable(void* buff, int len, sharedlib_data_t *text);
 
@@ -68,7 +69,7 @@ const char *Sys_DefaultHomePath(void)
 		if( ( p = getenv( "HOME" ) ) != NULL )
 		{
 			Com_sprintf(homePath, sizeof(homePath), "%s%c", p, PATH_SEP);
-			Q_strcat(homePath, sizeof(homePath), HOMEPATH_NAME_UNIX);
+			Q_strncat(homePath, sizeof(homePath), HOMEPATH_NAME_UNIX);
 		}
 	}
 
@@ -176,4 +177,23 @@ void Sys_TermProcess( )
 char** GetStrTable(void* buff, int len, sharedlib_data_t *text)
 {
 		return ELF32_GetStrTable(buff, len, text);
+}
+
+unsigned int Sys_GetProcessAffinityMask()
+{
+    unsigned int AffinityMask = 0;
+    cpu_set_t set;
+    int i;
+
+    sched_getaffinity(0, sizeof(set), &set);
+
+    for(i = 0; i < 32; ++i)
+    {
+        if(CPU_ISSET(i, &set))
+        {
+            AffinityMask |= (1 << i);
+        }
+    }
+
+    return AffinityMask;
 }

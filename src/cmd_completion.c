@@ -154,7 +154,7 @@ static qboolean Field_Complete( void )
 
 	if( matchCount == 1 )
 	{
-		Q_strcat( completionField->buffer, sizeof( completionField->buffer ), " " );
+		Q_strncat( completionField->buffer, sizeof( completionField->buffer ), " " );
 		completionField->cursor++;
 		return qtrue;
 	}

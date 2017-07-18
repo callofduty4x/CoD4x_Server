@@ -1,0 +1,3212 @@
+;Imports of g_main_mp:
+	extern Cvar_RegisterBool
+	extern Cvar_RegisterString
+	extern Cvar_RegisterInt
+	extern g_dedicatedEnumNames
+	extern Cvar_RegisterEnum
+	extern Cvar_RegisterFloat
+	extern Cvar_RegisterColor
+	extern Helicopter_RegisterDvars
+	extern G_VehRegisterDvars
+	extern G_RegisterMissileDvars
+	extern G_RegisterMissileDebugDvars
+	extern BG_RegisterDvars
+	extern Com_ServerDObjCreate
+	extern Com_GetServerDObj
+	extern Com_SafeServerDObjFree
+	extern G_RunClient
+	extern G_FreeEntity
+	extern SV_UnlinkEntity
+	extern G_RunItem
+	extern G_GeneralLink
+	extern G_RunMover
+	extern G_RunMissile
+	extern Com_Error
+	extern G_RunCorpse
+	extern G_GetEntityTypeName
+	extern va
+	extern colorWhiteFaded
+	extern CL_AddDebugString
+	extern BG_GetWeaponDef
+	extern colorRedFaded
+	extern Com_Printf
+	extern Swap_Init
+	extern _ZN9EntHandle4InitEv
+	extern memset
+	extern ms_srand
+	extern Rand_Init
+	extern GScr_LoadConsts
+	extern G_SetupWeaponDef
+	extern Cvar_GetBool
+	extern G_ProcessIPBans
+	extern SV_XModelGet
+	extern FS_FOpenFileByMode
+	extern Com_PrintWarning
+	extern Mantle_CreateAnims
+	extern bgs
+	extern SV_GetConfigstring
+	extern Info_SetValueForKey
+	extern SV_SetConfigstring
+	extern SV_LocateGameData
+	extern G_ParseHitLocDmgTable
+	extern BG_LoadPenetrationDepthTable
+	extern G_VehiclesInit
+	extern G_InitTurrets
+	extern G_SpawnEntitiesFromString
+	extern G_VehiclesSetupSpawnedEnts
+	extern G_setfog
+	extern G_InitObjectives
+	extern Missile_InitAttractors
+	extern Scr_FreeEntityList
+	extern Scr_InitSystem
+	extern Scr_SetLoading
+	extern Scr_AllocGameVariable
+	extern G_LoadStructs
+	extern Scr_LoadGameType
+	extern Scr_LoadLevel
+	extern Scr_StartupGameType
+	extern g_scr_data
+	extern SaveRegisteredWeapons
+	extern SaveRegisteredItems
+	extern SV_GetServerinfo
+	extern Com_FindSoundAlias
+	extern G_AnimScriptSound
+	extern GScr_LoadScripts
+	extern BG_LoadAnim
+	extern XAnimCreateTree
+	extern Cvar_SetCheatState
+	extern G_TouchTriggers
+	extern SV_DObjInitServerTime
+	extern Com_Memcpy
+	extern Scr_RunCurrentThreads
+	extern Scr_AddString
+	extern scr_const
+	extern Scr_Notify
+	extern PM_IsSprinting
+	extern Scr_IncTime
+	extern SV_ResetSkeletonCache
+	extern HudElem_UpdateClient
+	extern ClientEndFrame
+	extern CheckTeamStatus
+	extern SV_DObjDisplayAnim
+	extern Scr_AddEntity
+	extern G_DObjUpdateServerTime
+	extern SendScoreboard
+	extern SL_ConvertToString
+	extern Cvar_SetBool
+	extern vsnprintf
+	extern Com_sprintf
+	extern FS_Write
+	extern vec3_origin
+	extern SV_SightTrace
+	extern qsort
+	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern HudElem_DestroyAll
+	extern Scr_IsSystemActive
+	extern Scr_ShutdownSystem
+	extern Z_VirtualFreeInternal
+	extern _ZN9EntHandle8ShutdownEv
+	extern FS_FCloseFile
+	extern Mantle_ShutdownAnims
+	extern GScr_FreeScripts
+	extern Scr_FreeScripts
+	extern XAnimFreeTree
+	extern Com_FreeWeaponInfoMemory
+	extern Hunk_ClearToMarkLow
+	extern SV_FreeClientScriptPers
+	extern SV_SetupIgnoreEntParams
+	extern SV_Trace
+	extern Hunk_AllocLowInternal
+	extern SV_TracePassed
+	extern ceilf
+	extern SV_GameSendServerCommand
+	extern Cbuf_AddText
+
+;Exports of g_main_mp:
+	global g_clients
+	global g_entinfoNames
+	global _ZZ15G_RegisterDvarsvE28MY_DEFAULT_USEHOLDSPAWNDELAY
+	global G_RegisterDvars
+	global G_CreateDObj
+	global G_GetDObj
+	global G_SafeDObjFree
+	global SortRanks
+	global G_RunFrameForEntity
+	global ShowEntityInfo
+	global G_InitGame
+	global G_RunFrame
+	global G_RunThink
+	global G_LogPrintf
+	global G_SightTrace
+	global CalculateRanks
+	global G_ShutdownGame
+	global G_TraceCapsule
+	global G_GetClientSize
+	global G_AddDebugString
+	global G_GetClientScore
+	global G_GetClientState
+	global G_GetPlayerState
+	global G_GetSavePersist
+	global G_SetSavePersist
+	global G_LocationalTrace
+	global Hunk_AllocXAnimServer
+	global G_GetClientArchiveTime
+	global G_GetFogOpaqueDistSqrd
+	global G_SetClientArchiveTime
+	global G_TraceCapsuleComplete
+	global G_ExitAfterConnectPaths
+	global G_LocationalTracePassed
+	global G_LocationalTraceAllowChildren
+	global CheckVote
+	global ExitLevel
+	global g_compassShowEnemies
+	global bullet_penetrationEnabled
+	global g_debugLocDamage
+	global g_entities
+	global level
+	global g_dropForwardSpeed
+	global g_dropHorzSpeedRand
+	global g_dropUpSpeedBase
+	global g_dropUpSpeedRand
+	global g_maxDroppedWeapons
+	global pickupPrints
+	global entityHandlers
+	global g_minGrenadeDamageSpeed
+	global g_banIPs
+	global g_dedicated
+	global g_antilag
+	global melee_debug
+	global g_useholdspawndelay
+	global g_useholdtime
+	global player_MGUseRadius
+	global player_throwbackInnerRadius
+	global player_throwbackOuterRadius
+	global g_NoScriptSpam
+	global g_fogColorReadOnly
+	global g_fogHalfDistReadOnly
+	global g_fogStartDistReadOnly
+	global g_gametype
+	global g_maxclients
+	global level_bgs
+	global g_debugDamage
+	global radius_damage_debug
+	global g_allowVote
+	global g_cheats
+	global g_deadChat
+	global g_oldVoting
+	global g_gravity
+	global g_motd
+	global g_clonePlayerMaxVelocity
+	global g_knockback
+	global g_voiceChatTalkingDuration
+	global g_inactivity
+	global g_mantleBlockTimeBuffer
+	global g_playerCollisionEjectSpeed
+	global g_smoothClients
+	global g_speed
+	global g_synchronousClients
+	global g_ScoresColor_Allies
+	global g_ScoresColor_Axis
+	global g_ScoresColor_EnemyTeam
+	global g_ScoresColor_Free
+	global g_ScoresColor_MyTeam
+	global g_ScoresColor_Spectator
+	global g_TeamColor_Allies
+	global g_TeamColor_Axis
+	global g_TeamColor_EnemyTeam
+	global g_TeamColor_Free
+	global g_TeamColor_MyTeam
+	global g_TeamColor_Spectator
+	global g_TeamIcon_Allies
+	global g_TeamIcon_Axis
+	global g_TeamIcon_Free
+	global g_TeamIcon_Spectator
+	global g_TeamName_Allies
+	global g_TeamName_Axis
+	global g_debugBullets
+	global g_dumpAnims
+	global g_entinfo
+	global g_friendlyNameDist
+	global g_friendlyfireDist
+	global g_listEntity
+	global g_log
+	global g_logSync
+	global g_password
+	global g_redCrosshairs
+	global g_voteAbstainWeight
+	global voice_deadChat
+	global voice_global
+	global voice_localEcho
+
+
+SECTION .text
+
+
+;G_RegisterDvars()
+G_RegisterDvars:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x2c
+	mov dword [esp+0xc], _cstring_enable_cheats
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_sv_cheats
+	call Cvar_RegisterBool
+	mov [g_cheats], eax
+	mov dword [esp+0xc], _cstring_the_name_of_the_
+	mov dword [esp+0x8], 0x44
+	mov dword [esp+0x4], _cstring_call_of_duty_4
+	mov dword [esp], _cstring_gamename
+	call Cvar_RegisterString
+	mov dword [esp+0xc], _cstring_the_date_compile
+	mov dword [esp+0x8], 0x40
+	mov dword [esp+0x4], _cstring_feb_12_2009
+	mov dword [esp], _cstring_gamedate
+	call Cvar_RegisterString
+	mov dword [esp+0xc], _cstring_the_current_map_
+	mov dword [esp+0x8], 0x44
+	mov dword [esp+0x4], _cstring_null
+	mov dword [esp], _cstring_sv_mapname
+	call Cvar_RegisterString
+	mov dword [esp+0xc], _cstring_the_current_camp
+	mov dword [esp+0x8], 0x24
+	mov dword [esp+0x4], _cstring_war
+	mov dword [esp], _cstring_g_gametype
+	call Cvar_RegisterString
+	mov [g_gametype], eax
+	mov dword [esp+0x14], _cstring_the_maximum_numb
+	mov dword [esp+0x10], 0x25
+	mov dword [esp+0xc], 0x40
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x20
+	mov dword [esp], _cstring_ui_maxclients
+	call Cvar_RegisterInt
+	mov dword [esp+0x14], _cstring_the_maximum_numb
+	mov dword [esp+0x10], 0x25
+	mov eax, [eax+0xc]
+	mov [esp+0xc], eax
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x20
+	mov dword [esp], _cstring_sv_maxclients
+	call Cvar_RegisterInt
+	mov [g_maxclients], eax
+	mov dword [esp+0xc], _cstring_call_client_thin
+	mov dword [esp+0x8], 0x8
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_synchronouscli
+	call Cvar_RegisterBool
+	mov [g_synchronousClients], eax
+	mov dword [esp+0xc], _cstring_log_file_name
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], _cstring_games_mplog
+	mov dword [esp], _cstring_g_log
+	call Cvar_RegisterString
+	mov [g_log], eax
+	mov dword [esp+0xc], _cstring_enable_synchrono
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_logsync
+	call Cvar_RegisterBool
+	mov [g_logSync], eax
+	mov dword [esp+0xc], _cstring_password
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], _cstring_null
+	mov dword [esp], _cstring_g_password
+	call Cvar_RegisterString
+	mov [g_password], eax
+	mov dword [esp+0xc], _cstring_ip_addresses_to_
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], _cstring_null
+	mov dword [esp], _cstring_g_banips
+	call Cvar_RegisterString
+	mov [g_banIPs], eax
+	mov ebx, g_dedicatedEnumNames
+	mov dword [esp+0x10], _cstring_dedicated_server
+	mov dword [esp+0xc], 0x20
+	mov dword [esp+0x8], 0x0
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_dedicated
+	call Cvar_RegisterEnum
+	mov [g_dedicated], eax
+	mov eax, [eax+0xc]
+	test eax, eax
+	jz G_RegisterDvars_10
+	mov dword [esp+0x10], _cstring_dedicated_server
+	mov dword [esp+0xc], 0x40
+	mov dword [esp+0x8], 0x0
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_dedicated
+	call Cvar_RegisterEnum
+G_RegisterDvars_10:
+	mov dword [esp+0x14], _cstring_player_speed
+	mov dword [esp+0x10], 0x0
+	mov dword [esp+0xc], 0x7fffffff
+	mov dword [esp+0x8], 0x80000000
+	mov dword [esp+0x4], 0xbe
+	mov dword [esp], _cstring_g_speed
+	call Cvar_RegisterInt
+	mov [g_speed], eax
+	mov dword [esp+0x14], _cstring_game_gravity_in_
+	mov dword [esp+0x10], 0x0
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x3f800000
+	mov dword [esp+0x4], 0x44480000
+	mov dword [esp], _cstring_g_gravity
+	call Cvar_RegisterFloat
+	mov [g_gravity], eax
+	mov dword [esp+0x14], _cstring_maximum_knockbac
+	mov dword [esp+0x10], 0x0
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0xff7fffff
+	mov esi, 0x447a0000
+	mov [esp+0x4], esi
+	mov dword [esp], _cstring_g_knockback
+	call Cvar_RegisterFloat
+	mov [g_knockback], eax
+	mov dword [esp+0x14], _cstring_maximum_number_o
+	mov dword [esp+0x10], 0x0
+	mov dword [esp+0xc], 0x20
+	mov dword [esp+0x8], 0x2
+	mov dword [esp+0x4], 0x10
+	mov dword [esp], _cstring_g_maxdroppedweap
+	call Cvar_RegisterInt
+	mov [g_maxDroppedWeapons], eax
+	mov dword [esp+0x14], _cstring_time_delay_befor
+	mov dword [esp+0x10], 0x0
+	mov dword [esp+0xc], 0x7fffffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_inactivity
+	call Cvar_RegisterInt
+	mov [g_inactivity], eax
+	mov dword [esp+0xc], _cstring_show_debug_infor
+	mov dword [esp+0x8], 0x80
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_debugdamage
+	call Cvar_RegisterBool
+	mov [g_debugDamage], eax
+	mov dword [esp+0x14], _cstring_show_debug_infor1
+	mov dword [esp+0x10], 0x80
+	mov dword [esp+0xc], 0x6
+	mov dword [esp+0x8], 0xfffffffd
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_debugbullets
+	call Cvar_RegisterInt
+	mov [g_debugBullets], eax
+	mov dword [esp+0xc], _cstring_enabledisable_bu
+	mov dword [esp+0x8], 0x80
+	mov dword [esp+0x4], 0x1
+	mov dword [esp], _cstring_bullet_penetrati
+	call Cvar_RegisterBool
+	mov [bullet_penetrationEnabled], eax
+	mov dword [esp+0x10], _cstring_display_entity_i
+	mov dword [esp+0xc], 0x80
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], g_entinfoNames
+	mov dword [esp], _cstring_g_entinfo
+	call Cvar_RegisterEnum
+	mov [g_entinfo], eax
+	mov dword [esp+0xc], _cstring_the_message_of_t
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], _cstring_null
+	mov dword [esp], _cstring_g_motd
+	call Cvar_RegisterString
+	mov [g_motd], eax
+	mov dword [esp+0x14], _cstring_speed_at_which_t
+	mov dword [esp+0x10], 0x1
+	mov dword [esp+0xc], 0x7d00
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x19
+	mov dword [esp], _cstring_g_playercollisio
+	call Cvar_RegisterInt
+	mov [g_playerCollisionEjectSpeed], eax
+	mov dword [esp+0x14], _cstring_forward_speed_of
+	mov dword [esp+0x10], 0x1
+	mov [esp+0xc], esi
+	mov dword [esp+0x8], 0x0
+	mov ebx, 0x41200000
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_g_dropforwardspe
+	call Cvar_RegisterFloat
+	mov [g_dropForwardSpeed], eax
+	mov dword [esp+0x14], _cstring_base_component_o
+	mov dword [esp+0x10], 0x1
+	mov [esp+0xc], esi
+	mov dword [esp+0x8], 0x0
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_g_dropupspeedbas
+	call Cvar_RegisterFloat
+	mov [g_dropUpSpeedBase], eax
+	mov dword [esp+0x14], _cstring_random_component
+	mov dword [esp+0x10], 0x1
+	mov [esp+0xc], esi
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x40a00000
+	mov dword [esp], _cstring_g_dropupspeedran
+	call Cvar_RegisterFloat
+	mov [g_dropUpSpeedRand], eax
+	mov dword [esp+0x14], _cstring_random_component1
+	mov dword [esp+0x10], 0x1
+	mov [esp+0xc], esi
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x42c80000
+	mov dword [esp], _cstring_g_drophorzspeedr
+	call Cvar_RegisterFloat
+	mov [g_dropHorzSpeedRand], eax
+	mov dword [esp+0x14], _cstring_maximum_velocity
+	mov dword [esp+0x10], 0x1
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x42a00000
+	mov dword [esp], _cstring_g_cloneplayermax
+	call Cvar_RegisterFloat
+	mov [g_clonePlayerMaxVelocity], eax
+	mov dword [esp+0xc], _cstring_send_voice_messa
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_voice_global
+	call Cvar_RegisterBool
+	mov [voice_global], eax
+	mov dword [esp+0xc], _cstring_echo_voice_chat_
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_voice_localecho
+	call Cvar_RegisterBool
+	mov [voice_localEcho], eax
+	mov dword [esp+0xc], _cstring_allow_dead_playe
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_voice_deadchat
+	call Cvar_RegisterBool
+	mov [voice_deadChat], eax
+	mov dword [esp+0xc], _cstring_enable_voting_on
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x1
+	mov dword [esp], _cstring_g_allowvote
+	call Cvar_RegisterBool
+	mov [g_allowVote], eax
+	mov dword [esp+0xc], _cstring_list_the_entitie
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_listentity
+	call Cvar_RegisterBool
+	mov [g_listEntity], eax
+	mov dword [esp+0xc], _cstring_allow_dead_playe1
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_deadchat
+	call Cvar_RegisterBool
+	mov [g_deadChat], eax
+	mov dword [esp+0x14], _cstring_time_after_the_l
+	mov dword [esp+0x10], 0x1
+	mov dword [esp+0xc], 0x2710
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x1f4
+	mov dword [esp], _cstring_g_voicechattalki
+	call Cvar_RegisterInt
+	mov [g_voiceChatTalkingDuration], eax
+	mov dword [esp+0xc], _cstring_shader_name_for_
+	mov dword [esp+0x8], 0x100
+	mov dword [esp+0x4], _cstring_faction_128_usmc
+	mov dword [esp], _cstring_g_teamicon_allie
+	call Cvar_RegisterString
+	mov [g_TeamIcon_Allies], eax
+	mov dword [esp+0xc], _cstring_shader_name_for_1
+	mov dword [esp+0x8], 0x100
+	mov dword [esp+0x4], _cstring_faction_128_arab
+	mov dword [esp], _cstring_g_teamicon_axis
+	call Cvar_RegisterString
+	mov [g_TeamIcon_Axis], eax
+	mov dword [esp+0xc], _cstring_shader_name_for_2
+	mov dword [esp+0x8], 0x100
+	mov dword [esp+0x4], _cstring_null
+	mov dword [esp], _cstring_g_teamicon_free
+	call Cvar_RegisterString
+	mov [g_TeamIcon_Free], eax
+	mov dword [esp+0xc], _cstring_shader_name_for_3
+	mov dword [esp+0x8], 0x100
+	mov dword [esp+0x4], _cstring_null
+	mov dword [esp], _cstring_g_teamicon_spect
+	call Cvar_RegisterString
+	mov [g_TeamIcon_Spectator], eax
+	mov dword [esp+0x18], _cstring_player_team_colo
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov ebx, 0x3e800000
+	mov [esp+0xc], ebx
+	mov dword [esp+0x8], 0x3f3851ec
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_g_scorescolor_my
+	call Cvar_RegisterColor
+	mov [g_ScoresColor_MyTeam], eax
+	mov dword [esp+0x18], _cstring_enemy_team_color
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov dword [esp+0xc], 0x3d4ccccd
+	mov esi, 0x3d8f5c29
+	mov [esp+0x8], esi
+	mov edi, 0x3f30a3d7
+	mov [esp+0x4], edi
+	mov dword [esp], _cstring_g_scorescolor_en
+	call Cvar_RegisterColor
+	mov [g_ScoresColor_EnemyTeam], eax
+	mov dword [esp+0x18], _cstring_spectator_team_c
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov [esp+0xc], ebx
+	mov [esp+0x8], ebx
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_g_scorescolor_sp
+	call Cvar_RegisterColor
+	mov [g_ScoresColor_Spectator], eax
+	mov dword [esp+0x18], _cstring_free_team_color_
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov dword [esp+0xc], 0x3dcccccd
+	mov dword [esp+0x8], 0x3f47ae14
+	mov dword [esp+0x4], 0x3f428f5c
+	mov dword [esp], _cstring_g_scorescolor_fr
+	call Cvar_RegisterColor
+	mov [g_ScoresColor_Free], eax
+	mov dword [esp+0x18], _cstring_allies_team_colo
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov [esp+0xc], esi
+	mov dword [esp+0x8], 0x3eeb851f
+	mov dword [esp+0x4], 0x3db851ec
+	mov dword [esp], _cstring_g_scorescolor_al
+	call Cvar_RegisterColor
+	mov [g_ScoresColor_Allies], eax
+	mov dword [esp+0x18], _cstring_axis_team_color_
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov dword [esp+0xc], 0x3d4ccccd
+	mov [esp+0x8], esi
+	mov [esp+0x4], edi
+	mov dword [esp], _cstring_g_scorescolor_ax
+	call Cvar_RegisterColor
+	mov [g_ScoresColor_Axis], eax
+	mov dword [esp+0xc], _cstring_allied_team_name
+	mov dword [esp+0x8], 0x100
+	mov dword [esp+0x4], _cstring_game_allies
+	mov dword [esp], _cstring_g_teamname_allie
+	call Cvar_RegisterString
+	mov [g_TeamName_Allies], eax
+	mov dword [esp+0xc], _cstring_axis_team_name
+	mov dword [esp+0x8], 0x100
+	mov dword [esp+0x4], _cstring_game_axis
+	mov dword [esp], _cstring_g_teamname_axis
+	call Cvar_RegisterString
+	mov [g_TeamName_Axis], eax
+	mov dword [esp+0x18], _cstring_allies_team_colo1
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov [esp+0xc], edi
+	mov dword [esp+0x8], 0x3f23d70a
+	mov esi, 0x3f19999a
+	mov [esp+0x4], esi
+	mov dword [esp], _cstring_g_teamcolor_alli
+	call Cvar_RegisterColor
+	mov [g_TeamColor_Allies], eax
+	mov dword [esp+0x18], _cstring_axis_team_color
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov dword [esp+0xc], 0x3ed1eb85
+	mov dword [esp+0x8], 0x3f11eb85
+	mov dword [esp+0x4], 0x3f266666
+	mov dword [esp], _cstring_g_teamcolor_axis
+	call Cvar_RegisterColor
+	mov [g_TeamColor_Axis], eax
+	mov dword [esp+0x18], _cstring_player_team_colo1
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov dword [esp+0xc], 0x3f59999a
+	mov [esp+0x8], esi
+	mov dword [esp+0x4], 0x3ecccccd
+	mov dword [esp], _cstring_g_teamcolor_myte
+	call Cvar_RegisterColor
+	mov [g_TeamColor_MyTeam], eax
+	mov dword [esp+0x18], _cstring_enemy_team_color1
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov [esp+0xc], ebx
+	mov [esp+0x8], ebx
+	mov esi, 0x3f400000
+	mov [esp+0x4], esi
+	mov dword [esp], _cstring_g_teamcolor_enem
+	call Cvar_RegisterColor
+	mov [g_TeamColor_EnemyTeam], eax
+	mov dword [esp+0x18], _cstring_spectator_team_c1
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov [esp+0xc], ebx
+	mov [esp+0x8], ebx
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_g_teamcolor_spec
+	call Cvar_RegisterColor
+	mov [g_TeamColor_Spectator], eax
+	mov dword [esp+0x18], _cstring_free_team_color
+	mov dword [esp+0x14], 0x100
+	mov dword [esp+0x10], 0x3f800000
+	mov [esp+0xc], ebx
+	mov [esp+0x8], ebx
+	mov [esp+0x4], esi
+	mov dword [esp], _cstring_g_teamcolor_free
+	call Cvar_RegisterColor
+	mov [g_TeamColor_Free], eax
+	mov dword [esp+0xc], _cstring_enable_extrapola
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x1
+	mov dword [esp], _cstring_g_smoothclients
+	call Cvar_RegisterBool
+	mov [g_smoothClients], eax
+	mov dword [esp+0xc], _cstring_turn_on_antilag_
+	mov dword [esp+0x8], 0x40
+	mov dword [esp+0x4], 0x1
+	mov dword [esp], _cstring_g_antilag
+	call Cvar_RegisterBool
+	mov [g_antilag], eax
+	mov dword [esp+0xc], _cstring_use_old_voting_m
+	mov dword [esp+0x8], 0x1
+	mov dword [esp+0x4], 0x1
+	mov dword [esp], _cstring_g_oldvoting
+	call Cvar_RegisterBool
+	mov [g_oldVoting], eax
+	mov dword [esp+0x14], _cstring_how_much_an_abst
+	mov dword [esp+0x10], 0x1
+	mov dword [esp+0xc], 0x3f800000
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x3f000000
+	mov dword [esp], _cstring_g_voteabstainwei
+	call Cvar_RegisterFloat
+	mov [g_voteAbstainWeight], eax
+	mov dword [esp+0xc], _cstring_turn_off_script_
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_no_script_spam
+	call Cvar_RegisterBool
+	mov [g_NoScriptSpam], eax
+	mov dword [esp+0xc], _cstring_turn_on_debuggin
+	mov dword [esp+0x8], 0x80
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_debuglocdamage
+	call Cvar_RegisterBool
+	mov [g_debugLocDamage], eax
+	mov dword [esp+0x14], _cstring_maximum_range_fo
+	mov dword [esp+0x10], 0x80
+	mov ebx, 0x466a6000
+	mov [esp+0xc], ebx
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x43800000
+	mov dword [esp], _cstring_g_friendlyfiredi
+	call Cvar_RegisterFloat
+	mov [g_friendlyfireDist], eax
+	mov dword [esp+0x14], _cstring_maximum_range_fo1
+	mov dword [esp+0x10], 0x80
+	mov [esp+0xc], ebx
+	mov dword [esp+0x8], 0x0
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_g_friendlynamedi
+	call Cvar_RegisterFloat
+	mov [g_friendlyNameDist], eax
+	mov dword [esp+0xc], _cstring_turn_on_debug_li
+	mov dword [esp+0x8], 0x80
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_melee_debug
+	call Cvar_RegisterBool
+	mov [melee_debug], eax
+	mov dword [esp+0xc], _cstring_turn_on_debug_li1
+	mov dword [esp+0x8], 0x80
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_radius_damage_de
+	call Cvar_RegisterBool
+	mov [radius_damage_debug], eax
+	mov dword [esp+0x14], _cstring_the_radius_to_a_
+	mov dword [esp+0x10], 0x80
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x42b40000
+	mov dword [esp], _cstring_player_throwback
+	call Cvar_RegisterFloat
+	mov [player_throwbackInnerRadius], eax
+	mov dword [esp+0x14], _cstring_the_radius_playe
+	mov dword [esp+0x10], 0x80
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x43200000
+	mov dword [esp], _cstring_player_throwback1
+	call Cvar_RegisterFloat
+	mov [player_throwbackOuterRadius], eax
+	mov dword [esp+0x14], _cstring_the_radius_withi
+	mov dword [esp+0x10], 0x80
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x43000000
+	mov dword [esp], _cstring_player_mguseradi
+	call Cvar_RegisterFloat
+	mov [player_MGUseRadius], eax
+	mov dword [esp+0x14], _cstring_minimum_speed_at
+	mov dword [esp+0x10], 0x80
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x43c80000
+	mov dword [esp], _cstring_g_mingrenadedama
+	call Cvar_RegisterFloat
+	mov [g_minGrenadeDamageSpeed], eax
+	mov dword [esp+0xc], _cstring_whether_enemies_
+	mov dword [esp+0x8], 0x84
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_compassshowene
+	call Cvar_RegisterBool
+	mov [g_compassShowEnemies], eax
+	mov dword [esp+0xc], _cstring_print_a_message_
+	mov dword [esp+0x8], 0x80
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_pickupprints
+	call Cvar_RegisterBool
+	mov [pickupPrints], eax
+	mov dword [esp+0x14], _cstring_animation_debugg
+	mov dword [esp+0x10], 0x80
+	mov dword [esp+0xc], 0x3ff
+	mov dword [esp+0x8], 0xffffffff
+	mov dword [esp+0x4], 0xffffffff
+	mov dword [esp], _cstring_g_dumpanims
+	call Cvar_RegisterInt
+	mov [g_dumpAnims], eax
+	mov dword [esp+0x14], _cstring_time_to_hold_the
+	mov dword [esp+0x10], 0x0
+	mov dword [esp+0xc], 0x7fffffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_useholdtime
+	call Cvar_RegisterInt
+	mov [g_useholdtime], eax
+	mov dword [esp+0x14], _cstring_time_in_millisec
+	mov dword [esp+0x10], 0x81
+	mov dword [esp+0xc], 0x3e8
+	mov dword [esp+0x8], 0x0
+	mov eax, [_ZZ15G_RegisterDvarsvE28MY_DEFAULT_USEHOLDSPAWNDELAY]
+	mov [esp+0x4], eax
+	mov dword [esp], _cstring_g_useholdspawnde
+	call Cvar_RegisterInt
+	mov [g_useholdspawndelay], eax
+	mov dword [esp+0xc], _cstring_whether_red_cros
+	mov dword [esp+0x8], 0x21
+	mov dword [esp+0x4], 0x1
+	mov dword [esp], _cstring_g_redcrosshairs
+	call Cvar_RegisterBool
+	mov [g_redCrosshairs], eax
+	mov dword [esp+0x14], _cstring_time_that_the_cl
+	mov dword [esp+0x10], 0x80
+	mov dword [esp+0xc], 0xea60
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x1f4
+	mov dword [esp], _cstring_g_mantleblocktim
+	call Cvar_RegisterInt
+	mov [g_mantleBlockTimeBuffer], eax
+	call Helicopter_RegisterDvars
+	call G_VehRegisterDvars
+	call G_RegisterMissileDvars
+	call G_RegisterMissileDebugDvars
+	call BG_RegisterDvars
+	mov dword [esp+0x18], _cstring_fog_color_that_w
+	mov dword [esp+0x14], 0x10c0
+	mov dword [esp+0x10], 0x3f800000
+	mov dword [esp+0xc], 0x0
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x3f800000
+	mov dword [esp], _cstring_g_fogcolorreadon
+	call Cvar_RegisterColor
+	mov [g_fogColorReadOnly], eax
+	mov dword [esp+0x14], _cstring_fog_start_distan
+	mov dword [esp+0x10], 0x10c0
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], _cstring_g_fogstartdistre
+	call Cvar_RegisterFloat
+	mov [g_fogStartDistReadOnly], eax
+	mov dword [esp+0x14], _cstring_fog_start_distan
+	mov dword [esp+0x10], 0x10c0
+	mov dword [esp+0xc], 0x7f7fffff
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x3dcccccd
+	mov dword [esp], _cstring_g_foghalfdistrea
+	call Cvar_RegisterFloat
+	mov [g_fogHalfDistReadOnly], eax
+	add esp, 0x2c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+	nop
+
+
+;G_CreateDObj(DObjModel_s*, unsigned short, XAnimTree_s*, int, int, clientInfo_t*)
+G_CreateDObj:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	movzx edx, word [ebp+0xc]
+	mov eax, [ebp+0x14]
+	mov [esp+0xc], eax
+	mov eax, [ebp+0x10]
+	mov [esp+0x8], eax
+	mov [esp+0x4], edx
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call Com_ServerDObjCreate
+	leave
+	ret
+	nop
+
+
+;G_GetDObj(int, int)
+G_GetDObj:
+	push ebp
+	mov ebp, esp
+	pop ebp
+	jmp Com_GetServerDObj
+	nop
+
+
+;G_SafeDObjFree(int, int)
+G_SafeDObjFree:
+	push ebp
+	mov ebp, esp
+	pop ebp
+	jmp Com_SafeServerDObjFree
+	nop
+
+
+;SortRanks(void const*, void const*)
+SortRanks:
+	push ebp
+	mov ebp, esp
+	push esi
+	push ebx
+	mov ebx, [level]
+	mov eax, [ebp+0x8]
+	mov ecx, [eax]
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	add eax, ecx
+	lea esi, [ebx+eax]
+	mov eax, [ebp+0xc]
+	mov ecx, [eax]
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	add eax, ecx
+	lea edx, [ebx+eax]
+	cmp dword [esi+0x2f8c], 0x1
+	jnz SortRanks_10
+SortRanks_50:
+	mov eax, 0x1
+SortRanks_70:
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+SortRanks_10:
+	cmp dword [edx+0x2f8c], 0x1
+	jz SortRanks_20
+	cmp dword [esi+0x3010], 0x3
+	jz SortRanks_30
+	cmp dword [edx+0x3010], 0x3
+	jnz SortRanks_40
+SortRanks_20:
+	mov eax, 0xffffffff
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+SortRanks_40:
+	mov eax, [edx+0x2f78]
+	cmp [esi+0x2f78], eax
+	jg SortRanks_20
+	jl SortRanks_50
+	mov eax, [edx+0x2f7c]
+	cmp [esi+0x2f7c], eax
+	jl SortRanks_20
+	jg SortRanks_50
+SortRanks_60:
+	xor eax, eax
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+SortRanks_30:
+	cmp dword [edx+0x3010], 0x3
+	jnz SortRanks_50
+	cmp esi, edx
+	jb SortRanks_20
+	jbe SortRanks_60
+	mov eax, 0x1
+	jmp SortRanks_70
+	nop
+
+
+;G_RunFrameForEntity(gentity_s*)
+G_RunFrameForEntity:
+G_RunFrameForEntity_30:
+	push ebp
+	mov ebp, esp
+	push esi
+	push ebx
+	sub esp, 0x10
+	mov ebx, eax
+	mov eax, [level+0x1e8]
+	cmp [ebx+0x194], eax
+	jz G_RunFrameForEntity_10
+	mov [ebx+0x194], eax
+	mov eax, [ebx+0x218]
+	test eax, eax
+	jz G_RunFrameForEntity_20
+	mov eax, [eax]
+	call G_RunFrameForEntity_30
+G_RunFrameForEntity_20:
+	test byte [ebx+0xa], 0x1
+	jz G_RunFrameForEntity_40
+	mov eax, [level+0x1ec]
+	cmp eax, [ebx+0x70]
+	jg G_RunFrameForEntity_50
+G_RunFrameForEntity_140:
+	sub eax, [ebx+0x184]
+	cmp eax, 0x12c
+	jle G_RunFrameForEntity_60
+	mov eax, [ebx+0x188]
+	test eax, eax
+	jnz G_RunFrameForEntity_50
+	mov eax, [ebx+0x18c]
+	test eax, eax
+	jnz G_RunFrameForEntity_70
+G_RunFrameForEntity_60:
+	mov esi, [ebx+0x188]
+	test esi, esi
+	jnz G_RunFrameForEntity_10
+	mov eax, [ebx+0x4]
+	cmp eax, 0x4
+	jz G_RunFrameForEntity_80
+	cmp eax, 0x3
+	jz G_RunFrameForEntity_90
+	cmp eax, 0x2
+	jz G_RunFrameForEntity_100
+	cmp byte [ebx+0x16a], 0x0
+	jnz G_RunFrameForEntity_110
+	cmp eax, 0x6
+	jz G_RunFrameForEntity_120
+	cmp eax, 0xd
+	jz G_RunFrameForEntity_120
+	cmp eax, 0xa
+	jz G_RunFrameForEntity_120
+	mov edx, [ebx+0x15c]
+	test edx, edx
+	jz G_RunFrameForEntity_130
+	mov [esp], ebx
+	call G_RunClient
+G_RunFrameForEntity_10:
+	add esp, 0x10
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+G_RunFrameForEntity_40:
+	mov eax, [level+0x1ec]
+	jmp G_RunFrameForEntity_140
+G_RunFrameForEntity_50:
+	mov [esp], ebx
+	call G_FreeEntity
+	add esp, 0x10
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+G_RunFrameForEntity_70:
+	mov dword [ebx+0x18c], 0x0
+	mov [esp], ebx
+	call SV_UnlinkEntity
+	jmp G_RunFrameForEntity_60
+G_RunFrameForEntity_110:
+	mov [esp], ebx
+	call G_RunItem
+	jmp G_RunFrameForEntity_10
+G_RunFrameForEntity_90:
+	mov ecx, [ebx+0x218]
+	test ecx, ecx
+	jz G_RunFrameForEntity_110
+	mov [esp], ebx
+	call G_GeneralLink
+	mov eax, [ebx+0x19c]
+	test eax, eax
+	jle G_RunFrameForEntity_10
+G_RunFrameForEntity_170:
+	cmp eax, [level+0x1ec]
+	jg G_RunFrameForEntity_10
+	mov dword [ebx+0x19c], 0x0
+	movzx eax, byte [ebx+0x16e]
+	lea eax, [eax+eax*4]
+	mov esi, [eax*8+entityHandlers]
+	test esi, esi
+	jz G_RunFrameForEntity_150
+	mov [esp], ebx
+	call esi
+	jmp G_RunFrameForEntity_10
+G_RunFrameForEntity_120:
+	mov [esp], ebx
+	call G_RunMover
+	jmp G_RunFrameForEntity_10
+G_RunFrameForEntity_80:
+	mov [esp], ebx
+	call G_RunMissile
+	jmp G_RunFrameForEntity_10
+G_RunFrameForEntity_130:
+	test eax, eax
+	jnz G_RunFrameForEntity_160
+	mov eax, [ebx+0x218]
+	test eax, eax
+	jz G_RunFrameForEntity_160
+	mov [esp], ebx
+	call G_GeneralLink
+G_RunFrameForEntity_160:
+	mov eax, [ebx+0x19c]
+	test eax, eax
+	jg G_RunFrameForEntity_170
+	jmp G_RunFrameForEntity_10
+G_RunFrameForEntity_150:
+	mov dword [esp+0x4], _cstring_null_entthink
+	mov dword [esp], 0x2
+	call Com_Error
+	mov [esp], ebx
+	call esi
+	jmp G_RunFrameForEntity_10
+G_RunFrameForEntity_100:
+	mov [esp], ebx
+	call G_RunCorpse
+	jmp G_RunFrameForEntity_10
+	nop
+
+
+;ShowEntityInfo()
+ShowEntityInfo:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x5c
+	mov eax, [g_entinfo]
+	mov edx, [eax+0xc]
+	test edx, edx
+	jz ShowEntityInfo_10
+	mov eax, [level+0xc]
+	test eax, eax
+	jle ShowEntityInfo_10
+	mov esi, g_entities
+	xor ebx, ebx
+	mov edi, g_entities+0x4
+ShowEntityInfo_40:
+	mov eax, [edi]
+	cmp eax, 0x10
+	jg ShowEntityInfo_20
+	cmp byte [edi+0xfc], 0x0
+	jz ShowEntityInfo_20
+	cmp byte [edi+0xf0], 0x0
+	jz ShowEntityInfo_20
+	cmp eax, 0x3
+	jz ShowEntityInfo_30
+	lea edx, [esi+0x13c]
+	mov eax, [esi+0x13c]
+	mov [ebp-0x24], eax
+	mov eax, [edx+0x4]
+	mov [ebp-0x20], eax
+	mov eax, [edx+0x8]
+	mov [ebp-0x1c], eax
+	mov [esp], esi
+	call G_GetEntityTypeName
+	mov [esp+0x8], eax
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_i_s
+	call va
+	mov dword [esp+0x14], 0x1
+	mov dword [esp+0x10], 0x1
+	mov [esp+0xc], eax
+	mov dword [esp+0x8], 0x3f000000
+	mov eax, colorWhiteFaded
+	mov [esp+0x4], eax
+	lea edx, [ebp-0x24]
+	mov [esp], edx
+	call CL_AddDebugString
+	movss xmm0, dword [ebp-0x1c]
+	subss xmm0, [_float_10_00000000]
+	movss [ebp-0x1c], xmm0
+	mov eax, [edi+0x78]
+	mov [esp+0x4], eax
+	mov dword [esp], _cstring_ground_i
+	call va
+	mov dword [esp+0x14], 0x1
+	mov dword [esp+0x10], 0x1
+	mov [esp+0xc], eax
+	mov dword [esp+0x8], 0x3f000000
+	mov ecx, colorWhiteFaded
+	mov [esp+0x4], ecx
+	lea eax, [ebp-0x24]
+	mov [esp], eax
+	call CL_AddDebugString
+ShowEntityInfo_20:
+	add ebx, 0x1
+	add esi, 0x274
+	add edi, 0x274
+	cmp ebx, [level+0xc]
+	jl ShowEntityInfo_40
+ShowEntityInfo_10:
+	add esp, 0x5c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+ShowEntityInfo_30:
+	lea edx, [esi+0x13c]
+	mov eax, [esi+0x13c]
+	mov [ebp-0x30], eax
+	mov eax, [edx+0x4]
+	mov [ebp-0x2c], eax
+	movss xmm0, dword [_float_2_00000000]
+	addss xmm0, [edx+0x8]
+	movss [ebp-0x28], xmm0
+	mov [ebp-0x3c], esi
+	mov dword [ebp-0x40], 0x2
+	mov edx, esi
+	mov eax, [edx+0x1bc]
+	test eax, eax
+	jnz ShowEntityInfo_50
+ShowEntityInfo_60:
+	add dword [ebp-0x3c], 0xc
+	sub dword [ebp-0x40], 0x1
+	jz ShowEntityInfo_20
+	mov edx, [ebp-0x3c]
+	mov eax, [edx+0x1bc]
+	test eax, eax
+	jz ShowEntityInfo_60
+ShowEntityInfo_50:
+	mov [esp], eax
+	call BG_GetWeaponDef
+	mov ecx, [ebp-0x3c]
+	mov edx, [ecx+0x1b4]
+	mov [esp+0xc], edx
+	mov edx, [ecx+0x1b8]
+	mov [esp+0x8], edx
+	mov eax, [eax]
+	mov [esp+0x4], eax
+	mov dword [esp], _cstring_s_i__i
+	call va
+	mov dword [esp+0x14], 0x1
+	mov dword [esp+0x10], 0x1
+	mov [esp+0xc], eax
+	mov dword [esp+0x8], 0x3e99999a
+	mov eax, colorRedFaded
+	mov [esp+0x4], eax
+	lea eax, [ebp-0x30]
+	mov [esp], eax
+	call CL_AddDebugString
+	movss xmm0, dword [ebp-0x28]
+	subss xmm0, [_float_4_00000000]
+	movss [ebp-0x28], xmm0
+	jmp ShowEntityInfo_60
+
+
+;G_InitGame(int, int, int, int)
+G_InitGame:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x82c
+	mov ebx, [ebp+0x8]
+	mov esi, [ebp+0xc]
+	mov dword [esp+0x4], _cstring__game_initializa
+	mov dword [esp], 0xf
+	call Com_Printf
+	mov dword [esp+0x8], _cstring_call_of_duty_4
+	mov dword [esp+0x4], _cstring_gamename_s
+	mov dword [esp], 0xf
+	call Com_Printf
+	mov dword [esp+0x8], _cstring_feb_12_2009
+	mov dword [esp+0x4], _cstring_gamedate_s
+	mov dword [esp], 0xf
+	call Com_Printf
+	call Swap_Init
+	call _ZN9EntHandle4InitEv
+	mov dword [esp+0x8], 0x2e6c
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], level
+	call memset
+	mov dword [level+0x1c], 0x1
+	mov [level+0x1ec], ebx
+	mov [level+0x1f8], ebx
+	mov dword [level+0x2df0], 0xffffffff
+	mov dword [level+0x2e4c], 0x18
+	mov [esp], esi
+	call ms_srand
+	mov [esp], esi
+	call Rand_Init
+	call GScr_LoadConsts
+	call G_SetupWeaponDef
+	mov eax, [ebp+0x10]
+	test eax, eax
+	jz G_InitGame_10
+	mov eax, [ebp+0x14]
+	test eax, eax
+	jz G_InitGame_10
+G_InitGame_110:
+	mov dword [esp], _cstring_sv_cheats
+	call Cvar_GetBool
+	test al, al
+	jnz G_InitGame_20
+	mov eax, [ebp+0x10]
+	test eax, eax
+	jz G_InitGame_30
+G_InitGame_20:
+	call G_ProcessIPBans
+	mov eax, SV_XModelGet
+	mov [level_bgs+0x999ec], eax
+	mov dword [level_bgs+0x999f0], 0x126fb6
+	mov dword [level_bgs+0x999f4], 0x0
+	mov dword [level_bgs+0x999f8], 0x126fe0
+	mov dword [level_bgs+0x999fc], 0x126fea
+	mov dword [level_bgs+0x99a00], 0x126ff4
+	mov dword [level_bgs+0x999e8], 0x1
+	mov eax, [g_log]
+	mov edx, [eax+0xc]
+	cmp byte [edx], 0x0
+	jz G_InitGame_40
+	mov eax, [g_logSync]
+	cmp byte [eax+0xc], 0x0
+	jz G_InitGame_50
+	mov dword [esp+0x8], 0x3
+	mov dword [esp+0x4], level+0x18
+	mov [esp], edx
+	call FS_FOpenFileByMode
+	mov eax, [level+0x18]
+	test eax, eax
+	jnz G_InitGame_60
+G_InitGame_120:
+	mov eax, [g_log]
+	mov eax, [eax+0xc]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], _cstring_warning_couldnt_
+	mov dword [esp], 0xf
+	call Com_PrintWarning
+G_InitGame_130:
+	mov dword [level+0x2df4], 0x0
+	mov dword [level+0x2df8], 0x0
+	mov dword [level+0x2dfc], 0x0
+	mov dword [level+0x2e00], 0x0
+	mov dword [level+0x2e04], 0x0
+	mov dword [level+0x2e08], 0x0
+	mov dword [level+0x2e0c], 0x0
+	mov dword [esp], Hunk_AllocXAnimServer
+	call Mantle_CreateAnims
+	mov ebx, bgs
+	mov dword [ebx], level_bgs
+	mov eax, [ebp+0x10]
+	test eax, eax
+	jz G_InitGame_70
+G_InitGame_160:
+	mov dword [esp+0x8], 0x400
+	lea ebx, [ebp-0x418]
+	mov [esp+0x4], ebx
+	mov dword [esp], 0x13
+	call SV_GetConfigstring
+	mov dword [esp+0x8], _cstring_0
+	mov dword [esp+0x4], _cstring_winner
+	mov [esp], ebx
+	call Info_SetValueForKey
+	mov [esp+0x4], ebx
+	mov dword [esp], 0x13
+	call SV_SetConfigstring
+	mov dword [esp+0x8], 0x9d000
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], g_entities
+	call memset
+	mov dword [level+0x4], g_entities
+	mov eax, [g_maxclients]
+	mov eax, [eax+0xc]
+	mov [level+0x1e4], eax
+	mov dword [esp+0x8], 0xc6100
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], g_clients
+	call memset
+	mov dword [level], g_clients
+	mov ebx, [level+0x1e4]
+	test ebx, ebx
+	jle G_InitGame_80
+	xor ecx, ecx
+	mov edx, g_entities
+	mov eax, g_clients
+G_InitGame_90:
+	mov [edx+0x15c], eax
+	add ecx, 0x1
+	add edx, 0x274
+	add eax, 0x3184
+	cmp ecx, ebx
+	jnz G_InitGame_90
+G_InitGame_80:
+	mov dword [level+0xc], 0x48
+	mov dword [level+0x10], 0x0
+	mov dword [level+0x14], 0x0
+	mov dword [esp+0x10], 0x3184
+	mov eax, [level]
+	mov [esp+0xc], eax
+	mov dword [esp+0x8], 0x274
+	mov dword [esp+0x4], 0x48
+	mov eax, [level+0x4]
+	mov [esp], eax
+	call SV_LocateGameData
+	call G_ParseHitLocDmgTable
+	call BG_LoadPenetrationDepthTable
+	mov eax, [ebp+0x10]
+	mov [esp], eax
+	call G_VehiclesInit
+	call G_InitTurrets
+	call G_SpawnEntitiesFromString
+	call G_VehiclesSetupSpawnedEnts
+	mov dword [esp], _cstring_0
+	call G_setfog
+	call G_InitObjectives
+	call Missile_InitAttractors
+	call Scr_FreeEntityList
+	mov dword [esp+0x4], _cstring_
+	mov dword [esp], 0xf
+	call Com_Printf
+	mov dword [esp], 0x1
+	call Scr_InitSystem
+	mov dword [esp], 0x1
+	call Scr_SetLoading
+	call Scr_AllocGameVariable
+	call G_LoadStructs
+	call Scr_LoadGameType
+	call Scr_LoadLevel
+	call Scr_StartupGameType
+	mov eax, g_scr_data
+	lea edx, [eax+0x26e0]
+G_InitGame_100:
+	mov dword [eax+0x10c0], 0xffffffff
+	add eax, 0x4dc
+	cmp edx, eax
+	jnz G_InitGame_100
+	mov eax, bgs
+	mov dword [eax], 0x0
+	mov dword [level+0x1c], 0x0
+	call SaveRegisteredWeapons
+	call SaveRegisteredItems
+	add esp, 0x82c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+G_InitGame_10:
+	call G_RegisterDvars
+	jmp G_InitGame_110
+G_InitGame_50:
+	mov dword [esp+0x8], 0x2
+	mov dword [esp+0x4], level+0x18
+	mov [esp], edx
+	call FS_FOpenFileByMode
+	mov eax, [level+0x18]
+	test eax, eax
+	jz G_InitGame_120
+G_InitGame_60:
+	mov dword [esp+0x4], 0x400
+	lea ebx, [ebp-0x818]
+	mov [esp], ebx
+	call SV_GetServerinfo
+	mov dword [esp], _cstring_1
+	call G_LogPrintf
+	mov [esp+0x4], ebx
+	mov dword [esp], _cstring_initgame_s
+	call G_LogPrintf
+	jmp G_InitGame_130
+G_InitGame_40:
+	mov dword [esp+0x4], _cstring_not_logging_to_d
+	mov dword [esp], 0xf
+	call Com_Printf
+	jmp G_InitGame_130
+G_InitGame_70:
+	mov dword [esp+0x8], 0x999cc
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], level_bgs
+	call memset
+	mov edx, [ebx]
+	mov eax, Com_FindSoundAlias
+	mov [edx+0x999c4], eax
+	mov edx, [ebx]
+	mov eax, G_AnimScriptSound
+	mov [edx+0x999c8], eax
+	call GScr_LoadScripts
+	call BG_LoadAnim
+	mov edi, [level_bgs+0x999cc]
+	mov ebx, level_bgs
+	mov esi, level_bgs+0x13300
+G_InitGame_140:
+	mov dword [esp+0x4], Hunk_AllocXAnimServer
+	mov [esp], edi
+	call XAnimCreateTree
+	mov [ebx+0x99eac], eax
+	add ebx, 0x4cc
+	cmp esi, ebx
+	jnz G_InitGame_140
+	mov ebx, g_scr_data
+	lea esi, [ebx+0x26e0]
+G_InitGame_150:
+	mov dword [esp+0x4], Hunk_AllocXAnimServer
+	mov [esp], edi
+	call XAnimCreateTree
+	mov [ebx+0x10bc], eax
+	add ebx, 0x4dc
+	cmp ebx, esi
+	jnz G_InitGame_150
+	jmp G_InitGame_160
+G_InitGame_30:
+	call Cvar_SetCheatState
+	jmp G_InitGame_20
+	nop
+
+
+;G_RunFrame(int)
+G_RunFrame:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x44c
+	mov eax, [ebp+0x8]
+	add dword [level+0x1e8], 0x1
+	mov edx, [level+0x1ec]
+	mov [level+0x1f0], edx
+	mov [level+0x1ec], eax
+	mov ecx, eax
+	sub ecx, edx
+	mov [level+0x1f4], ecx
+	mov [level_bgs+0x999dc], eax
+	mov [level_bgs+0x999e0], eax
+	mov [level_bgs+0x999e4], ecx
+	mov eax, bgs
+	mov dword [eax], level_bgs
+	mov eax, [level+0x1e4]
+	test eax, eax
+	jle G_RunFrame_10
+	mov edi, g_entities
+	xor esi, esi
+	mov ebx, g_entities+0x100
+	jmp G_RunFrame_20
+G_RunFrame_30:
+	add esi, 0x1
+	add edi, 0x274
+	add ebx, 0x274
+	cmp esi, [level+0x1e4]
+	jge G_RunFrame_10
+G_RunFrame_20:
+	cmp byte [ebx], 0x0
+	jz G_RunFrame_30
+	mov eax, [ebx+0x5c]
+	mov eax, [eax+0x3078]
+	test eax, eax
+	jnz G_RunFrame_30
+	mov [esp], edi
+	call G_TouchTriggers
+	add esi, 0x1
+	add edi, 0x274
+	add ebx, 0x274
+	cmp esi, [level+0x1e4]
+	jl G_RunFrame_20
+G_RunFrame_10:
+	mov esi, [level+0xc]
+	test esi, esi
+	jle G_RunFrame_40
+	mov esi, g_entities
+	xor ebx, ebx
+	jmp G_RunFrame_50
+G_RunFrame_60:
+	add ebx, 0x1
+	add esi, 0x274
+	cmp ebx, [level+0xc]
+	jge G_RunFrame_40
+G_RunFrame_50:
+	cmp byte [esi+0x100], 0x0
+	jz G_RunFrame_60
+	cvtsi2ss xmm0, dword [level+0x1f4]
+	mulss xmm0, [_float_0_00100000]
+	movss [esp+0x4], xmm0
+	mov [esp], esi
+	call SV_DObjInitServerTime
+	add ebx, 0x1
+	add esi, 0x274
+	cmp ebx, [level+0xc]
+	jl G_RunFrame_50
+G_RunFrame_40:
+	lea eax, [ebp-0x418]
+	mov dword [esp+0x8], 0x400
+	mov dword [esp+0x4], 0x0
+	mov [esp], eax
+	call memset
+	mov eax, [level+0x2dd4]
+	lea eax, [eax+eax*2]
+	shl eax, 0x2
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], level+0x15d4
+	mov dword [esp], level+0x21d4
+	call Com_Memcpy
+	mov eax, [level+0x2dd4]
+	mov [level+0x2dd8], eax
+	mov dword [level+0x2dd4], 0x0
+	mov byte [ebp-0x441], 0x0
+G_RunFrame_120:
+	add byte [ebp-0x441], 0x1
+	mov ebx, [level+0x2dd8]
+	test ebx, ebx
+	jle G_RunFrame_70
+	mov dword [ebp-0x420], 0x0
+	mov dword [ebp-0x448], 0x0
+	mov edi, level+0x21d0
+	jmp G_RunFrame_80
+G_RunFrame_100:
+	mov eax, [level+0x2dd8]
+	sub eax, 0x1
+	mov [level+0x2dd8], eax
+	sub dword [ebp-0x420], 0x1
+	sub edi, 0xc
+	lea eax, [eax+eax*2]
+	shl eax, 0x2
+	mov edx, [eax+level+0x21d4]
+	mov [esi], edx
+	mov edx, [eax+level+0x21d8]
+	mov [esi+0x4], edx
+	mov eax, [eax+level+0x21dc]
+	mov [esi+0x8], eax
+	add dword [ebp-0x420], 0x1
+	add edi, 0xc
+	mov ecx, [ebp-0x420]
+	cmp ecx, [level+0x2dd8]
+	jge G_RunFrame_90
+G_RunFrame_80:
+	lea esi, [edi+0x4]
+	movzx ebx, word [edi+0x4]
+	lea eax, [ebx+ebx*8]
+	lea eax, [ebx+eax*2]
+	mov edx, eax
+	shl edx, 0x5
+	add eax, edx
+	lea eax, [eax+ebx+g_entities]
+	mov [ebp-0x424], eax
+	mov eax, [eax+0x26c]
+	cmp eax, [edi+0x8]
+	jnz G_RunFrame_100
+	movzx edx, word [esi+0x2]
+	lea eax, [edx+edx*8]
+	lea eax, [edx+eax*2]
+	mov ecx, eax
+	shl ecx, 0x5
+	add eax, ecx
+	lea edx, [eax+edx+g_entities]
+	mov eax, [edx+0x26c]
+	cmp eax, [esi+0x8]
+	jnz G_RunFrame_100
+	movzx ecx, byte [ebp-0x441]
+	cmp cl, [ebp+ebx-0x418]
+	jnz G_RunFrame_110
+	mov dword [ebp-0x448], 0x1
+	add dword [ebp-0x420], 0x1
+	add edi, 0xc
+	mov ecx, [ebp-0x420]
+	cmp ecx, [level+0x2dd8]
+	jl G_RunFrame_80
+G_RunFrame_90:
+	call Scr_RunCurrentThreads
+	mov ecx, [ebp-0x448]
+	test ecx, ecx
+	jnz G_RunFrame_120
+G_RunFrame_480:
+	mov ebx, [level+0x1e4]
+	test ebx, ebx
+	jle G_RunFrame_130
+	mov dword [ebp-0x428], g_entities
+	mov dword [ebp-0x41c], 0x0
+	mov dword [ebp-0x42c], g_entities+0x100
+G_RunFrame_230:
+	mov eax, [ebp-0x42c]
+	cmp byte [eax], 0x0
+	jz G_RunFrame_140
+	mov edx, [eax+0x5c]
+	mov [ebp-0x440], edx
+	mov eax, [edx+0xe8]
+	cmp eax, [edx+0x3170]
+	jz G_RunFrame_150
+	mov [esp], eax
+	call BG_GetWeaponDef
+	mov eax, [eax]
+	mov [esp], eax
+	call Scr_AddString
+	mov dword [esp+0x8], 0x1
+	mov eax, scr_const
+	movzx eax, word [eax+0xc8]
+	mov [esp+0x4], eax
+	mov ecx, [ebp-0x428]
+	mov [esp], ecx
+	call Scr_Notify
+	mov edx, [ebp-0x440]
+	mov eax, [edx+0xe8]
+	mov [edx+0x3170], eax
+	mov edx, [ebp-0x440]
+G_RunFrame_150:
+	mov ecx, scr_const
+	movzx esi, word [ecx+0x2c]
+	movzx eax, word [ecx+0x12]
+	movzx ecx, byte [edx+0x3174]
+	cmp dword [edx+0xec], 0x5
+	jz G_RunFrame_160
+G_RunFrame_460:
+	xor edx, edx
+G_RunFrame_470:
+	mov ebx, edx
+	mov edx, eax
+	cmp bl, cl
+	jz G_RunFrame_170
+	test bl, bl
+	jz G_RunFrame_180
+	mov dword [esp+0x8], 0x0
+	movzx eax, dx
+	mov [esp+0x4], eax
+	mov ecx, [ebp-0x428]
+	mov [esp], ecx
+	call Scr_Notify
+G_RunFrame_170:
+	movzx eax, bl
+	mov edx, [ebp-0x440]
+	mov [edx+0x3174], al
+	mov eax, [edx+0x10]
+	shr eax, 0x6
+	mov ebx, eax
+	and bl, 0x1
+	mov ecx, scr_const
+	movzx edx, word [ecx+0xd4]
+	movzx eax, word [ecx+0xd6]
+	mov ecx, [ebp-0x440]
+	cmp [ecx+0x3175], bl
+	jz G_RunFrame_190
+	test bl, bl
+	jz G_RunFrame_200
+	mov dword [esp+0x8], 0x0
+	movzx eax, dx
+	mov [esp+0x4], eax
+	mov eax, [ebp-0x428]
+	mov [esp], eax
+	call Scr_Notify
+G_RunFrame_190:
+	movzx eax, bl
+	mov ecx, [ebp-0x440]
+	mov [ecx+0x3175], al
+	mov eax, scr_const
+	movzx edi, word [eax+0x146]
+	movzx ebx, word [eax+0x144]
+	movzx esi, byte [ecx+0x3176]
+	mov [esp], ecx
+	call PM_IsSprinting
+	mov [ebp-0x439], al
+	mov ecx, esi
+	cmp [ebp-0x439], cl
+	jz G_RunFrame_210
+	cmp byte [ebp-0x439], 0x0
+	jz G_RunFrame_220
+	mov dword [esp+0x8], 0x0
+	movzx eax, bx
+	mov [esp+0x4], eax
+	mov eax, [ebp-0x428]
+	mov [esp], eax
+	call Scr_Notify
+G_RunFrame_210:
+	movzx eax, byte [ebp-0x439]
+	mov ecx, [ebp-0x440]
+	mov [ecx+0x3176], al
+G_RunFrame_140:
+	add dword [ebp-0x41c], 0x1
+	add dword [ebp-0x428], 0x274
+	add dword [ebp-0x42c], 0x274
+	mov eax, [ebp-0x41c]
+	cmp eax, [level+0x1e4]
+	jl G_RunFrame_230
+G_RunFrame_130:
+	mov edx, [level+0xc]
+	test edx, edx
+	jg G_RunFrame_240
+G_RunFrame_530:
+	call Scr_IncTime
+	call SV_ResetSkeletonCache
+	mov dword [level+0x2df0], 0x0
+	mov eax, [level+0xc]
+	test eax, eax
+	jg G_RunFrame_250
+G_RunFrame_500:
+	mov dword [level+0x2df0], 0xffffffff
+	mov eax, [level+0x1e4]
+	test eax, eax
+	jle G_RunFrame_260
+	mov dword [ebp-0x438], 0x0
+	mov dword [ebp-0x434], 0x0
+G_RunFrame_320:
+	mov eax, [ebp-0x434]
+	add eax, [level+0x4]
+	cmp byte [eax+0x100], 0x0
+	jz G_RunFrame_270
+	mov eax, [eax+0x15c]
+	mov edi, [eax+0x3010]
+	mov ecx, eax
+	mov ebx, level+0x24
+	mov esi, level+0x1e4
+	jmp G_RunFrame_280
+G_RunFrame_310:
+	cmp edi, eax
+	jz G_RunFrame_290
+G_RunFrame_300:
+	mov dword [ecx+0x65c], 0x0
+	add ebx, 0x1c
+	add ecx, 0x1c
+	cmp esi, ebx
+	jz G_RunFrame_270
+G_RunFrame_280:
+	mov eax, [ebx]
+	test eax, eax
+	jz G_RunFrame_300
+	mov eax, [ebx+0x14]
+	test eax, eax
+	jnz G_RunFrame_310
+G_RunFrame_290:
+	mov edx, ebx
+	sub edx, level+0x24
+	mov eax, [edx+level+0x24]
+	mov [ecx+0x65c], eax
+	mov eax, [edx+level+0x28]
+	mov [ecx+0x660], eax
+	mov eax, [edx+level+0x2c]
+	mov [ecx+0x664], eax
+	mov eax, [edx+level+0x30]
+	mov [ecx+0x668], eax
+	mov eax, [edx+level+0x34]
+	mov [ecx+0x66c], eax
+	mov eax, [edx+level+0x38]
+	mov [ecx+0x670], eax
+	mov eax, [edx+level+0x3c]
+	mov [ecx+0x674], eax
+	add ebx, 0x1c
+	add ecx, 0x1c
+	cmp esi, ebx
+	jnz G_RunFrame_280
+G_RunFrame_270:
+	add dword [ebp-0x438], 0x1
+	add dword [ebp-0x434], 0x274
+	mov eax, [ebp-0x438]
+	cmp eax, [level+0x1e4]
+	jl G_RunFrame_320
+G_RunFrame_260:
+	mov eax, [level+0x1e4]
+	test eax, eax
+	jle G_RunFrame_330
+	xor esi, esi
+	xor ebx, ebx
+	jmp G_RunFrame_340
+G_RunFrame_350:
+	add esi, 0x1
+	add ebx, 0x274
+	cmp esi, [level+0x1e4]
+	jge G_RunFrame_330
+G_RunFrame_340:
+	mov edx, ebx
+	add edx, [level+0x4]
+	cmp byte [edx+0x100], 0x0
+	jz G_RunFrame_350
+	mov dword [esp+0x8], 0x3
+	mov eax, [edx]
+	mov [esp+0x4], eax
+	mov eax, [edx+0x15c]
+	mov [esp], eax
+	call HudElem_UpdateClient
+	add esi, 0x1
+	add ebx, 0x274
+	cmp esi, [level+0x1e4]
+	jl G_RunFrame_340
+G_RunFrame_330:
+	mov eax, [level+0x1e4]
+	test eax, eax
+	jle G_RunFrame_360
+	mov esi, g_entities
+	xor ebx, ebx
+	jmp G_RunFrame_370
+G_RunFrame_380:
+	add ebx, 0x1
+	add esi, 0x274
+	cmp ebx, [level+0x1e4]
+	jge G_RunFrame_360
+G_RunFrame_370:
+	cmp byte [esi+0x100], 0x0
+	jz G_RunFrame_380
+	mov [esp], esi
+	call ClientEndFrame
+	add ebx, 0x1
+	add esi, 0x274
+	cmp ebx, [level+0x1e4]
+	jl G_RunFrame_370
+G_RunFrame_360:
+	call CheckTeamStatus
+	mov eax, [g_oldVoting]
+	cmp byte [eax+0xc], 0x0
+	jnz G_RunFrame_390
+G_RunFrame_600:
+	mov eax, [level+0x210]
+	test eax, eax
+	jz G_RunFrame_400
+	mov ecx, [level+0x1e4]
+	test ecx, ecx
+	jg G_RunFrame_410
+G_RunFrame_570:
+	mov dword [level+0x210], 0x0
+G_RunFrame_400:
+	mov eax, [g_listEntity]
+	cmp byte [eax+0xc], 0x0
+	jnz G_RunFrame_420
+G_RunFrame_630:
+	mov edi, [level+0x2de8]
+	test edi, edi
+	jnz G_RunFrame_430
+G_RunFrame_610:
+	mov esi, [level+0x2dec]
+	test esi, esi
+	jnz G_RunFrame_440
+G_RunFrame_590:
+	mov eax, [g_dumpAnims]
+	mov ecx, [eax+0xc]
+	test ecx, ecx
+	js G_RunFrame_450
+	mov dword [esp+0x4], _cstring_server
+	lea eax, [ecx+ecx*8]
+	lea eax, [ecx+eax*2]
+	mov edx, eax
+	shl edx, 0x5
+	add eax, edx
+	add eax, ecx
+	add eax, [level+0x4]
+	mov [esp], eax
+	call SV_DObjDisplayAnim
+G_RunFrame_450:
+	mov eax, bgs
+	mov dword [eax], 0x0
+	call ShowEntityInfo
+	add esp, 0x44c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+G_RunFrame_160:
+	cmp dword [edx+0x4], 0x6
+	jg G_RunFrame_460
+	mov edx, 0x1
+	jmp G_RunFrame_470
+G_RunFrame_70:
+	mov dword [ebp-0x448], 0x0
+	call Scr_RunCurrentThreads
+	mov ecx, [ebp-0x448]
+	test ecx, ecx
+	jnz G_RunFrame_120
+	jmp G_RunFrame_480
+G_RunFrame_110:
+	mov [ebp+ebx-0x418], cl
+	mov [esp], edx
+	call Scr_AddEntity
+	mov dword [esp+0x8], 0x1
+	mov eax, scr_const
+	movzx eax, word [eax+0xbc]
+	mov [esp+0x4], eax
+	mov edx, [ebp-0x424]
+	mov [esp], edx
+	call Scr_Notify
+	jmp G_RunFrame_100
+G_RunFrame_180:
+	mov dword [esp+0x8], 0x0
+	movzx eax, si
+	mov [esp+0x4], eax
+	mov eax, [ebp-0x428]
+	mov [esp], eax
+	call Scr_Notify
+	jmp G_RunFrame_170
+G_RunFrame_200:
+	mov dword [esp+0x8], 0x0
+	movzx eax, ax
+	mov [esp+0x4], eax
+	mov edx, [ebp-0x428]
+	mov [esp], edx
+	call Scr_Notify
+	jmp G_RunFrame_190
+G_RunFrame_220:
+	mov dword [esp+0x8], 0x0
+	movzx eax, di
+	mov [esp+0x4], eax
+	mov edx, [ebp-0x428]
+	mov [esp], edx
+	call Scr_Notify
+	jmp G_RunFrame_210
+G_RunFrame_250:
+	mov ebx, g_entities
+	jmp G_RunFrame_490
+G_RunFrame_510:
+	mov eax, [level+0x2df0]
+	add eax, 0x1
+	mov [level+0x2df0], eax
+	add ebx, 0x274
+	cmp eax, [level+0xc]
+	jge G_RunFrame_500
+G_RunFrame_490:
+	cmp byte [ebx+0x100], 0x0
+	jz G_RunFrame_510
+	mov eax, ebx
+	call G_RunFrameForEntity
+	jmp G_RunFrame_510
+G_RunFrame_240:
+	mov edi, g_entities
+	xor esi, esi
+	mov ebx, g_entities+0x100
+	jmp G_RunFrame_520
+G_RunFrame_540:
+	add esi, 0x1
+	add edi, 0x274
+	add ebx, 0x274
+	cmp esi, [level+0xc]
+	jge G_RunFrame_530
+G_RunFrame_520:
+	cmp byte [ebx], 0x0
+	jz G_RunFrame_540
+	lea ecx, [ebx+0x80]
+	mov [ebp-0x430], ecx
+	test byte [ebx+0x81], 0x20
+	jnz G_RunFrame_540
+G_RunFrame_550:
+	mov dword [esp+0x4], 0x1
+	mov [esp], edi
+	call G_DObjUpdateServerTime
+	test eax, eax
+	jz G_RunFrame_540
+	call Scr_RunCurrentThreads
+	cmp byte [ebx], 0x0
+	jz G_RunFrame_540
+	mov edx, [ebp-0x430]
+	test byte [edx+0x1], 0x20
+	jz G_RunFrame_550
+	jmp G_RunFrame_540
+G_RunFrame_410:
+	xor esi, esi
+	xor ebx, ebx
+	mov edi, g_entities
+	jmp G_RunFrame_560
+G_RunFrame_580:
+	add esi, 0x1
+	add ebx, 0x3184
+	add edi, 0x274
+	cmp esi, [level+0x1e4]
+	jge G_RunFrame_570
+G_RunFrame_560:
+	mov eax, ebx
+	add eax, [level]
+	cmp dword [eax+0x2f8c], 0x2
+	jnz G_RunFrame_580
+	cmp dword [eax+0x4], 0x5
+	jnz G_RunFrame_580
+	mov [esp], edi
+	call SendScoreboard
+	jmp G_RunFrame_580
+G_RunFrame_440:
+	call SaveRegisteredItems
+	jmp G_RunFrame_590
+G_RunFrame_390:
+	call CheckVote
+	jmp G_RunFrame_600
+G_RunFrame_430:
+	call SaveRegisteredWeapons
+	jmp G_RunFrame_610
+G_RunFrame_420:
+	xor ebx, ebx
+	mov esi, g_entities
+G_RunFrame_620:
+	movzx eax, word [esi+0x170]
+	mov [esp], eax
+	call SL_ConvertToString
+	mov [esp+0xc], eax
+	mov [esp+0x8], ebx
+	mov dword [esp+0x4], _cstring_4i_s
+	mov dword [esp], 0xf
+	call Com_Printf
+	add ebx, 0x1
+	add esi, 0x274
+	cmp ebx, 0x400
+	jnz G_RunFrame_620
+	mov dword [esp+0x4], 0x0
+	mov eax, [g_listEntity]
+	mov [esp], eax
+	call Cvar_SetBool
+	jmp G_RunFrame_630
+
+
+;G_RunThink(gentity_s*)
+G_RunThink:
+	push ebp
+	mov ebp, esp
+	push esi
+	push ebx
+	sub esp, 0x10
+	mov ebx, [ebp+0x8]
+	mov eax, [ebx+0x19c]
+	test eax, eax
+	jle G_RunThink_10
+	cmp eax, [level+0x1ec]
+	jg G_RunThink_10
+	mov dword [ebx+0x19c], 0x0
+	movzx eax, byte [ebx+0x16e]
+	lea eax, [eax+eax*4]
+	mov esi, [eax*8+entityHandlers]
+	test esi, esi
+	jz G_RunThink_20
+G_RunThink_30:
+	mov [ebp+0x8], ebx
+	mov ecx, esi
+	add esp, 0x10
+	pop ebx
+	pop esi
+	pop ebp
+	jmp ecx
+G_RunThink_10:
+	add esp, 0x10
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+G_RunThink_20:
+	mov dword [esp+0x4], _cstring_null_entthink
+	mov dword [esp], 0x2
+	call Com_Error
+	jmp G_RunThink_30
+	add [eax], al
+
+
+;G_LogPrintf(char const*, ...)
+G_LogPrintf:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x83c
+	mov edx, [level+0x18]
+	test edx, edx
+	jz G_LogPrintf_10
+	lea eax, [ebp+0xc]
+	mov [ebp-0x1c], eax
+	mov [esp+0xc], eax
+	mov eax, [ebp+0x8]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x400
+	lea ebx, [ebp-0x81c]
+	mov [esp], ebx
+	call vsnprintf
+	mov ecx, [level+0x1ec]
+	mov esi, 0x10624dd3
+	mov eax, ecx
+	imul esi
+	mov esi, edx
+	sar esi, 0x6
+	mov eax, ecx
+	sar eax, 0x1f
+	sub esi, eax
+	mov ecx, 0x88888889
+	mov eax, ecx
+	imul esi
+	lea edi, [edx+esi]
+	sar edi, 0x5
+	mov eax, esi
+	sar eax, 0x1f
+	sub edi, eax
+	lea ecx, [edi*4]
+	mov eax, edi
+	shl eax, 0x6
+	sub eax, ecx
+	sub esi, eax
+	mov eax, 0x66666667
+	imul esi
+	mov ecx, edx
+	sar ecx, 0x2
+	mov eax, esi
+	sar eax, 0x1f
+	sub ecx, eax
+	mov [esp+0x18], ebx
+	lea eax, [ecx+ecx*4]
+	add eax, eax
+	sub esi, eax
+	mov [esp+0x14], esi
+	mov [esp+0x10], ecx
+	mov [esp+0xc], edi
+	mov dword [esp+0x8], _cstring_3iii_s
+	mov dword [esp+0x4], 0x400
+	lea ebx, [ebp-0x41c]
+	mov [esp], ebx
+	call Com_sprintf
+	mov eax, [level+0x18]
+	mov [esp+0x8], eax
+	cld
+	mov ecx, 0xffffffff
+	xor eax, eax
+	mov edi, ebx
+	repne scasb
+	not ecx
+	sub ecx, 0x1
+	mov [esp+0x4], ecx
+	mov [esp], ebx
+	call FS_Write
+G_LogPrintf_10:
+	add esp, 0x83c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+	nop
+
+
+;G_SightTrace(int*, float const*, float const*, int, int)
+G_SightTrace:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x28
+	mov eax, [ebp+0x18]
+	mov [esp+0x1c], eax
+	mov dword [esp+0x18], 0x3ff
+	mov eax, [ebp+0x14]
+	mov [esp+0x14], eax
+	mov eax, [ebp+0x10]
+	mov [esp+0x10], eax
+	mov eax, vec3_origin
+	mov [esp+0xc], eax
+	mov [esp+0x8], eax
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call SV_SightTrace
+	leave
+	ret
+
+
+;CalculateRanks()
+CalculateRanks:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	xor ecx, ecx
+	mov dword [level+0x21c], 0x0
+	mov dword [level+0xb30], 0x0
+	mov eax, [level+0x1e4]
+	test eax, eax
+	jle CalculateRanks_10
+	xor edx, edx
+	mov eax, [level]
+CalculateRanks_40:
+	cmp dword [eax+0x2f8c], 0x0
+	jz CalculateRanks_20
+	mov [ecx*4+level+0x220], edx
+	add ecx, 0x1
+	mov [level+0x21c], ecx
+	cmp dword [eax+0x3010], 0x3
+	jz CalculateRanks_20
+	cmp dword [eax+0x2f8c], 0x2
+	jz CalculateRanks_30
+CalculateRanks_20:
+	add edx, 0x1
+	add eax, 0x3184
+	cmp edx, [level+0x1e4]
+	jl CalculateRanks_40
+CalculateRanks_50:
+	mov dword [esp+0xc], SortRanks
+	mov dword [esp+0x8], 0x4
+	mov [esp+0x4], ecx
+	mov dword [esp], level+0x220
+	call qsort
+	mov dword [level+0x210], 0x1
+	leave
+	ret
+CalculateRanks_10:
+	mov ecx, [level+0x21c]
+	jmp CalculateRanks_50
+CalculateRanks_30:
+	add dword [level+0xb30], 0x1
+	jmp CalculateRanks_20
+
+
+;G_ShutdownGame(int)
+G_ShutdownGame:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x1c
+	mov edi, [ebp+0x8]
+	mov [esp+0x8], edi
+	mov dword [esp+0x4], _cstring__shutdowngame_d_
+	mov dword [esp], 0xf
+	call Com_Printf
+	mov eax, [level+0x18]
+	test eax, eax
+	jnz G_ShutdownGame_10
+G_ShutdownGame_130:
+	mov eax, bgs
+	mov dword [eax], 0x0
+	mov eax, [level+0xc]
+	test eax, eax
+	jle G_ShutdownGame_20
+	mov esi, g_entities
+	xor ebx, ebx
+	jmp G_ShutdownGame_30
+G_ShutdownGame_40:
+	add ebx, 0x1
+	add esi, 0x274
+	cmp ebx, [level+0xc]
+	jge G_ShutdownGame_20
+G_ShutdownGame_30:
+	cmp byte [esi+0x100], 0x0
+	jz G_ShutdownGame_40
+	mov [esp], esi
+	call G_FreeEntity
+	add ebx, 0x1
+	add esi, 0x274
+	cmp ebx, [level+0xc]
+	jl G_ShutdownGame_30
+G_ShutdownGame_20:
+	cmp byte [g_entities+0x9cc18], 0x0
+	jnz G_ShutdownGame_50
+G_ShutdownGame_120:
+	xor esi, esi
+	mov ebx, level+0x1544
+G_ShutdownGame_60:
+	mov dword [esp+0x4], 0x0
+	mov [esp], ebx
+	call _ZN9EntHandle6setEntEP9gentity_s
+	add esi, 0x1
+	add ebx, 0x4
+	cmp esi, 0x20
+	jnz G_ShutdownGame_60
+	mov dword [level+0xc], 0x0
+	mov dword [level+0x10], 0x0
+	mov dword [level+0x14], 0x0
+	call HudElem_DestroyAll
+	mov dword [esp], 0x1
+	call Scr_IsSystemActive
+	test eax, eax
+	jz G_ShutdownGame_70
+	mov eax, [level+0x1540]
+	test eax, eax
+	jz G_ShutdownGame_80
+G_ShutdownGame_70:
+	xor eax, eax
+	cmp dword [level+0x1540], 0x0
+	setz al
+	mov [esp+0x4], eax
+	mov dword [esp], 0x1
+	call Scr_ShutdownSystem
+	test edi, edi
+	jnz G_ShutdownGame_90
+G_ShutdownGame_180:
+	mov eax, [level+0x2df8]
+	test eax, eax
+	jz G_ShutdownGame_100
+	mov [esp], eax
+	call Z_VirtualFreeInternal
+G_ShutdownGame_100:
+	mov dword [level+0x2df8], 0x0
+	mov eax, [level+0x2df4]
+	test eax, eax
+	jnz G_ShutdownGame_110
+	mov dword [level+0x2df4], 0x0
+	add esp, 0x1c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	jmp _ZN9EntHandle8ShutdownEv
+G_ShutdownGame_50:
+	mov dword [esp], g_entities+0x9cb18
+	call G_FreeEntity
+	jmp G_ShutdownGame_120
+G_ShutdownGame_10:
+	mov dword [esp], _cstring_shutdowngame
+	call G_LogPrintf
+	mov dword [esp], _cstring_1
+	call G_LogPrintf
+	mov eax, [level+0x18]
+	mov [esp], eax
+	call FS_FCloseFile
+	jmp G_ShutdownGame_130
+G_ShutdownGame_110:
+	mov [esp], eax
+	call FS_FCloseFile
+	mov dword [level+0x2df4], 0x0
+	add esp, 0x1c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	jmp _ZN9EntHandle8ShutdownEv
+G_ShutdownGame_90:
+	call Mantle_ShutdownAnims
+	call GScr_FreeScripts
+	mov dword [esp], 0x1
+	call Scr_FreeScripts
+	mov ebx, level_bgs
+	mov esi, level_bgs+0x13300
+G_ShutdownGame_150:
+	mov eax, [ebx+0x99eac]
+	test eax, eax
+	jz G_ShutdownGame_140
+	mov dword [esp+0x4], 0x0
+	mov [esp], eax
+	call XAnimFreeTree
+	mov dword [ebx+0x99eac], 0x0
+G_ShutdownGame_140:
+	add ebx, 0x4cc
+	cmp esi, ebx
+	jnz G_ShutdownGame_150
+	mov ebx, g_scr_data
+	mov edx, ebx
+	mov esi, ebx
+G_ShutdownGame_170:
+	mov eax, [ebx+0x10bc]
+	test eax, eax
+	jz G_ShutdownGame_160
+	mov dword [esp+0x4], 0x0
+	mov [esp], eax
+	call XAnimFreeTree
+	mov dword [ebx+0x10bc], 0x0
+	mov edx, esi
+G_ShutdownGame_160:
+	add ebx, 0x4dc
+	lea eax, [edx+0x26e0]
+	cmp eax, ebx
+	jnz G_ShutdownGame_170
+	mov dword [esp], 0x1
+	call Com_FreeWeaponInfoMemory
+	mov dword [esp], 0x0
+	call Hunk_ClearToMarkLow
+	jmp G_ShutdownGame_180
+G_ShutdownGame_80:
+	call SV_FreeClientScriptPers
+	jmp G_ShutdownGame_70
+
+
+;G_TraceCapsule(trace_t*, float const*, float const*, float const*, float const*, int, int)
+G_TraceCapsule:
+	push ebp
+	mov ebp, esp
+	push ebx
+	sub esp, 0x44
+	mov eax, [ebp+0x1c]
+	mov [esp+0x4], eax
+	lea ebx, [ebp-0x14]
+	mov [esp], ebx
+	call SV_SetupIgnoreEntParams
+	mov dword [esp+0x24], 0x0
+	mov dword [esp+0x20], 0x0
+	mov dword [esp+0x1c], 0x0
+	mov eax, [ebp+0x20]
+	mov [esp+0x18], eax
+	mov [esp+0x14], ebx
+	mov eax, [ebp+0x18]
+	mov [esp+0x10], eax
+	mov eax, [ebp+0x14]
+	mov [esp+0xc], eax
+	mov eax, [ebp+0x10]
+	mov [esp+0x8], eax
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call SV_Trace
+	add esp, 0x44
+	pop ebx
+	pop ebp
+	ret
+	nop
+
+
+;G_GetClientSize()
+G_GetClientSize:
+	push ebp
+	mov ebp, esp
+	mov eax, 0x3184
+	pop ebp
+	ret
+
+
+;G_AddDebugString(float const*, float const*, float, char const*, int)
+G_AddDebugString:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x28
+	mov eax, [ebp+0x18]
+	mov [esp+0x14], eax
+	mov dword [esp+0x10], 0x1
+	mov eax, [ebp+0x14]
+	mov [esp+0xc], eax
+	mov eax, [ebp+0x10]
+	mov [esp+0x8], eax
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call CL_AddDebugString
+	leave
+	ret
+	nop
+
+
+;G_GetClientScore(int)
+G_GetClientScore:
+	push ebp
+	mov ebp, esp
+	mov ecx, [ebp+0x8]
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	add eax, ecx
+	mov edx, [level]
+	mov eax, [eax+edx+0x2f78]
+	pop ebp
+	ret
+
+
+;G_GetClientState(int)
+G_GetClientState:
+	push ebp
+	mov ebp, esp
+	mov ecx, [ebp+0x8]
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	add eax, ecx
+	add eax, [level]
+	add eax, 0x300c
+	pop ebp
+	ret
+
+
+;G_GetPlayerState(int)
+G_GetPlayerState:
+	push ebp
+	mov ebp, esp
+	mov ecx, [ebp+0x8]
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	add eax, ecx
+	add eax, [level]
+	pop ebp
+	ret
+	nop
+
+
+;G_GetSavePersist()
+G_GetSavePersist:
+	push ebp
+	mov ebp, esp
+	mov eax, [level+0x1540]
+	pop ebp
+	ret
+
+
+;G_SetSavePersist(int)
+G_SetSavePersist:
+	push ebp
+	mov ebp, esp
+	mov eax, [ebp+0x8]
+	mov [level+0x1540], eax
+	pop ebp
+	ret
+	nop
+
+
+;G_LocationalTrace(trace_t*, float const*, float const*, int, int, unsigned char*)
+G_LocationalTrace:
+	push ebp
+	mov ebp, esp
+	push ebx
+	sub esp, 0x44
+	mov eax, [ebp+0x14]
+	mov [esp+0x4], eax
+	lea ebx, [ebp-0x14]
+	mov [esp], ebx
+	call SV_SetupIgnoreEntParams
+	mov dword [esp+0x24], 0x1
+	mov eax, [ebp+0x1c]
+	mov [esp+0x20], eax
+	mov dword [esp+0x1c], 0x1
+	mov eax, [ebp+0x18]
+	mov [esp+0x18], eax
+	mov [esp+0x14], ebx
+	mov eax, [ebp+0x10]
+	mov [esp+0x10], eax
+	mov eax, vec3_origin
+	mov [esp+0xc], eax
+	mov [esp+0x8], eax
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call SV_Trace
+	add esp, 0x44
+	pop ebx
+	pop ebp
+	ret
+	nop
+
+
+;Hunk_AllocXAnimServer(int)
+Hunk_AllocXAnimServer:
+	push ebp
+	mov ebp, esp
+	pop ebp
+	jmp Hunk_AllocLowInternal
+	nop
+
+
+;G_GetClientArchiveTime(int)
+G_GetClientArchiveTime:
+	push ebp
+	mov ebp, esp
+	mov ecx, [ebp+0x8]
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	add eax, ecx
+	mov edx, [level]
+	mov eax, [eax+edx+0x2f74]
+	pop ebp
+	ret
+
+
+;G_GetFogOpaqueDistSqrd()
+G_GetFogOpaqueDistSqrd:
+	push ebp
+	mov ebp, esp
+	fld dword [level+0x15c8]
+	pop ebp
+	ret
+	nop
+
+
+;G_SetClientArchiveTime(int, int)
+G_SetClientArchiveTime:
+	push ebp
+	mov ebp, esp
+	mov ecx, [ebp+0x8]
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x6
+	add eax, edx
+	add eax, ecx
+	mov ecx, [ebp+0xc]
+	mov edx, [level]
+	mov [eax+edx+0x2f74], ecx
+	pop ebp
+	ret
+	nop
+
+
+;G_TraceCapsuleComplete(float const*, float const*, float const*, float const*, int, int)
+G_TraceCapsuleComplete:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x38
+	mov dword [esp+0x24], 0x0
+	mov dword [esp+0x20], 0x0
+	mov dword [esp+0x1c], 0x0
+	mov eax, [ebp+0x1c]
+	mov [esp+0x18], eax
+	mov dword [esp+0x14], 0x3ff
+	mov eax, [ebp+0x18]
+	mov [esp+0x10], eax
+	mov eax, [ebp+0x14]
+	mov [esp+0xc], eax
+	mov eax, [ebp+0x10]
+	mov [esp+0x8], eax
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call SV_TracePassed
+	leave
+	ret
+
+
+;G_ExitAfterConnectPaths()
+G_ExitAfterConnectPaths:
+	push ebp
+	mov ebp, esp
+	xor eax, eax
+	pop ebp
+	ret
+	nop
+
+
+;G_LocationalTracePassed(float const*, float const*, int, int, int, unsigned char*)
+G_LocationalTracePassed:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x38
+	mov dword [esp+0x24], 0x1
+	mov eax, [ebp+0x1c]
+	mov [esp+0x20], eax
+	mov dword [esp+0x1c], 0x1
+	mov eax, [ebp+0x18]
+	mov [esp+0x18], eax
+	mov eax, [ebp+0x14]
+	mov [esp+0x14], eax
+	mov eax, [ebp+0x10]
+	mov [esp+0x10], eax
+	mov eax, [ebp+0xc]
+	mov [esp+0xc], eax
+	mov eax, vec3_origin
+	mov [esp+0x8], eax
+	mov [esp+0x4], eax
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call SV_TracePassed
+	leave
+	ret
+	nop
+
+
+;G_LocationalTraceAllowChildren(trace_t*, float const*, float const*, int, int, unsigned char*)
+G_LocationalTraceAllowChildren:
+	push ebp
+	mov ebp, esp
+	push ebx
+	sub esp, 0x44
+	mov eax, [ebp+0x14]
+	mov [esp+0x4], eax
+	lea ebx, [ebp-0x14]
+	mov [esp], ebx
+	call SV_SetupIgnoreEntParams
+	mov byte [ebp-0x9], 0x0
+	mov dword [esp+0x24], 0x1
+	mov eax, [ebp+0x1c]
+	mov [esp+0x20], eax
+	mov dword [esp+0x1c], 0x1
+	mov eax, [ebp+0x18]
+	mov [esp+0x18], eax
+	mov [esp+0x14], ebx
+	mov eax, [ebp+0x10]
+	mov [esp+0x10], eax
+	mov eax, vec3_origin
+	mov [esp+0xc], eax
+	mov [esp+0x8], eax
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call SV_Trace
+	add esp, 0x44
+	pop ebx
+	pop ebp
+	ret
+	nop
+
+
+;CheckVote()
+CheckVote:
+	push ebp
+	mov ebp, esp
+	push esi
+	push ebx
+	sub esp, 0x20
+	mov eax, [level+0xb24]
+	test eax, eax
+	jz CheckVote_10
+	cmp eax, [level+0x1ec]
+	jl CheckVote_20
+CheckVote_10:
+	mov eax, [level+0xb20]
+	test eax, eax
+	jz CheckVote_30
+	cmp [level+0x1ec], eax
+	js CheckVote_40
+	mov esi, [level+0xb28]
+	mov ebx, [level+0xb2c]
+	lea edx, [esi+ebx]
+	mov eax, [level+0xb30]
+	sub eax, edx
+	cvtsi2ss xmm0, eax
+	mov eax, [g_voteAbstainWeight]
+	mulss xmm0, [eax+0xc]
+	movss [esp], xmm0
+	call ceilf
+	fstp dword [ebp-0xc]
+	cvttss2si eax, [ebp-0xc]
+	add ebx, eax
+	cmp esi, ebx
+	jg CheckVote_50
+CheckVote_60:
+	mov dword [esp+0x4], 0x65
+	mov dword [esp], _cstring_c_game_votefaile
+	call va
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], 0xffffffff
+	call SV_GameSendServerCommand
+CheckVote_70:
+	mov dword [level+0xb20], 0x0
+	mov dword [esp+0x4], _cstring_null
+	mov dword [esp], 0xd
+	call SV_SetConfigstring
+CheckVote_30:
+	add esp, 0x20
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+CheckVote_40:
+	mov edx, [level+0xb30]
+	mov eax, edx
+	shr eax, 0x1f
+	add eax, edx
+	sar eax, 1
+	add eax, 0x1
+	cmp eax, [level+0xb28]
+	jle CheckVote_50
+	sub edx, eax
+	cmp [level+0xb2c], edx
+	jle CheckVote_30
+	jmp CheckVote_60
+CheckVote_50:
+	mov dword [esp+0x4], 0x65
+	mov dword [esp], _cstring_c_game_votepasse
+	call va
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], 0xffffffff
+	call SV_GameSendServerCommand
+	mov eax, [level+0x1ec]
+	add eax, 0xbb8
+	mov [level+0xb24], eax
+	jmp CheckVote_70
+CheckVote_20:
+	mov dword [level+0xb24], 0x0
+	mov dword [esp+0x4], level+0x320
+	mov dword [esp], _cstring_s
+	call va
+	mov [esp+0x4], eax
+	mov dword [esp], 0x0
+	call Cbuf_AddText
+	jmp CheckVote_10
+
+
+;ExitLevel()
+ExitLevel:
+	push ebp
+	mov ebp, esp
+	push ebx
+	sub esp, 0x14
+	mov dword [esp+0x4], _cstring_map_rotate
+	mov dword [esp], 0x0
+	call Cbuf_AddText
+	mov dword [level+0x200], 0x0
+	mov dword [level+0x204], 0x0
+	mov ebx, [g_maxclients]
+	mov eax, [ebx+0xc]
+	test eax, eax
+	jle ExitLevel_10
+	xor ecx, ecx
+	xor edx, edx
+	jmp ExitLevel_20
+ExitLevel_40:
+	add ecx, 0x1
+	add edx, 0x3184
+	cmp ecx, [ebx+0xc]
+	jge ExitLevel_30
+ExitLevel_20:
+	mov eax, edx
+	add eax, [level]
+	cmp dword [eax+0x2f8c], 0x2
+	jnz ExitLevel_40
+	mov dword [eax+0x2f78], 0x0
+	mov ebx, [g_maxclients]
+	add ecx, 0x1
+	add edx, 0x3184
+	cmp ecx, [ebx+0xc]
+	jl ExitLevel_20
+ExitLevel_30:
+	mov ecx, [ebx+0xc]
+	test ecx, ecx
+	jle ExitLevel_10
+	xor ecx, ecx
+	xor edx, edx
+	jmp ExitLevel_50
+ExitLevel_60:
+	add ecx, 0x1
+	add edx, 0x3184
+	cmp ecx, [ebx+0xc]
+	jge ExitLevel_10
+ExitLevel_50:
+	mov eax, edx
+	add eax, [level]
+	cmp dword [eax+0x2f8c], 0x2
+	jnz ExitLevel_60
+	mov dword [eax+0x2f8c], 0x1
+	mov ebx, [g_maxclients]
+	add ecx, 0x1
+	add edx, 0x3184
+	cmp ecx, [ebx+0xc]
+	jl ExitLevel_50
+ExitLevel_10:
+	mov dword [esp], _cstring_exitlevel_execut
+	call G_LogPrintf
+	add esp, 0x14
+	pop ebx
+	pop ebp
+	ret
+	nop
+
+
+;Zero initialized global or static variables of g_main_mp:
+SECTION .bss
+g_clients: resb 0xc6100
+g_compassShowEnemies: resb 0x4
+bullet_penetrationEnabled: resb 0x4
+g_debugLocDamage: resb 0x4
+g_entities: resb 0x9d000
+level: resb 0x2ea0
+g_dropForwardSpeed: resb 0x4
+g_dropHorzSpeedRand: resb 0x4
+g_dropUpSpeedBase: resb 0x4
+g_dropUpSpeedRand: resb 0x4
+g_maxDroppedWeapons: resb 0x4
+pickupPrints: resb 0x4
+g_minGrenadeDamageSpeed: resb 0x4
+g_banIPs: resb 0x4
+g_dedicated: resb 0x4
+g_antilag: resb 0x4
+melee_debug: resb 0x4
+g_useholdspawndelay: resb 0x4
+g_useholdtime: resb 0x4
+player_MGUseRadius: resb 0x4
+player_throwbackInnerRadius: resb 0x4
+player_throwbackOuterRadius: resb 0x4
+g_NoScriptSpam: resb 0x4
+g_fogColorReadOnly: resb 0x4
+g_fogHalfDistReadOnly: resb 0x4
+g_fogStartDistReadOnly: resb 0x4
+g_gametype: resb 0x14
+g_maxclients: resb 0x4
+level_bgs: resb 0xacd20
+g_debugDamage: resb 0x4
+radius_damage_debug: resb 0x4
+g_allowVote: resb 0x4
+g_cheats: resb 0x4
+g_deadChat: resb 0x8
+g_oldVoting: resb 0x4
+g_gravity: resb 0x4
+g_motd: resb 0x4
+g_clonePlayerMaxVelocity: resb 0x4
+g_knockback: resb 0x4
+g_voiceChatTalkingDuration: resb 0x4
+g_inactivity: resb 0x4
+g_mantleBlockTimeBuffer: resb 0x4
+g_playerCollisionEjectSpeed: resb 0x4
+g_smoothClients: resb 0x8
+g_speed: resb 0x4
+g_synchronousClients: resb 0x4
+g_ScoresColor_Allies: resb 0x4
+g_ScoresColor_Axis: resb 0x4
+g_ScoresColor_EnemyTeam: resb 0x4
+g_ScoresColor_Free: resb 0x4
+g_ScoresColor_MyTeam: resb 0x4
+g_ScoresColor_Spectator: resb 0x4
+g_TeamColor_Allies: resb 0x4
+g_TeamColor_Axis: resb 0x4
+g_TeamColor_EnemyTeam: resb 0x4
+g_TeamColor_Free: resb 0x4
+g_TeamColor_MyTeam: resb 0x4
+g_TeamColor_Spectator: resb 0x4
+g_TeamIcon_Allies: resb 0x4
+g_TeamIcon_Axis: resb 0x4
+g_TeamIcon_Free: resb 0x4
+g_TeamIcon_Spectator: resb 0x4
+g_TeamName_Allies: resb 0x4
+g_TeamName_Axis: resb 0x4
+g_debugBullets: resb 0x4
+g_dumpAnims: resb 0x4
+g_entinfo: resb 0x4
+g_friendlyNameDist: resb 0x4
+g_friendlyfireDist: resb 0x4
+g_listEntity: resb 0x4
+g_log: resb 0x4
+g_logSync: resb 0x4
+g_password: resb 0x4
+g_redCrosshairs: resb 0x4
+g_voteAbstainWeight: resb 0x4
+voice_deadChat: resb 0x4
+voice_global: resb 0x4
+voice_localEcho: resb 0x4
+
+
+;Initialized global or static variables of g_main_mp:
+SECTION .data
+g_entinfoNames: dd _cstring_off, _cstring_all_ents, 0x0
+_ZZ15G_RegisterDvarsvE28MY_DEFAULT_USEHOLDSPAWNDELAY: dd 0x1f4, 0x0, 0x0, 0x0, 0x0
+entityHandlers: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, Touch_Multi, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, hurt_use, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, hurt_touch, hurt_use, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, Use_trigger_damage, Pain_trigger_damage, Die_trigger_damage, 0x0, 0x0, 0x0, 0x0, Reached_ScriptMover, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, Reached_ScriptMover, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, G_ExplodeMissile, 0x0, 0x0, Touch_Item_Auto, 0x0, 0x0, 0x0, 0x0, 0x3, 0x4, G_TimedObjectThink, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, G_ExplodeMissile, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x5, 0x6, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, player_die, G_PlayerController, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, player_die, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, G_PlayerController, 0x0, 0x0, BodyEnd, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, turret_think_init, 0x0, 0x0, 0x0, turret_use, 0x0, 0x0, turret_controller, 0x0, 0x0, turret_think, 0x0, 0x0, 0x0, turret_use, 0x0, 0x0, turret_controller, 0x0, 0x0, DroppedItemClearOwner, 0x0, 0x0, Touch_Item_Auto, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, FinishSpawningItem, 0x0, 0x0, Touch_Item_Auto, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, Touch_Item_Auto, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, use_trigger_use, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, Reached_ScriptMover, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, G_FreeEntity, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, G_VehEntHandler_Think, 0x0, 0x0, G_VehEntHandler_Touch, G_VehEntHandler_Use, G_VehEntHandler_Pain, G_VehEntHandler_Die, G_VehEntHandler_Controller, 0x0, 0x0, Helicopter_Think, 0x0, 0x0, 0x0, 0x0, Helicopter_Pain, Helicopter_Die, Helicopter_Controller, 0x0, 0x0
+
+
+;Initialized constant data of g_main_mp:
+SECTION .rdata
+
+
+;All cstrings:
+SECTION .rdata
+_cstring_enable_cheats:		db "Enable cheats",0
+_cstring_sv_cheats:		db "sv_cheats",0
+_cstring_the_name_of_the_:		db "The name of the game",0
+_cstring_call_of_duty_4:		db "Call of Duty 4",0
+_cstring_gamename:		db "gamename",0
+_cstring_the_date_compile:		db "The date compiled",0
+_cstring_feb_12_2009:		db "Feb 12 2009",0
+_cstring_gamedate:		db "gamedate",0
+_cstring_the_current_map_:		db "The current map name",0
+_cstring_null:		db 0
+_cstring_sv_mapname:		db "sv_mapname",0
+_cstring_the_current_camp:		db "The current campaign",0
+_cstring_war:		db "war",0
+_cstring_g_gametype:		db "g_gametype",0
+_cstring_the_maximum_numb:		db "The maximum number of clients that can connect to a server",0
+_cstring_ui_maxclients:		db "ui_maxclients",0
+_cstring_sv_maxclients:		db "sv_maxclients",0
+_cstring_call_client_thin:		db "Call ",27h,"client think",27h," exactly once for each server frame to make smooth demos",0
+_cstring_g_synchronouscli:		db "g_synchronousClients",0
+_cstring_log_file_name:		db "Log file name",0
+_cstring_games_mplog:		db "games_mp.log",0
+_cstring_g_log:		db "g_log",0
+_cstring_enable_synchrono:		db "Enable synchronous logging",0
+_cstring_g_logsync:		db "g_logSync",0
+_cstring_password:		db "Password",0
+_cstring_g_password:		db "g_password",0
+_cstring_ip_addresses_to_:		db "IP addresses to ban from playing",0
+_cstring_g_banips:		db "g_banIPs",0
+_cstring_dedicated_server:		db "Dedicated server",0
+_cstring_dedicated:		db "dedicated",0
+_cstring_player_speed:		db "Player speed",0
+_cstring_g_speed:		db "g_speed",0
+_cstring_game_gravity_in_:		db "Game gravity in inches per second per second",0
+_cstring_g_gravity:		db "g_gravity",0
+_cstring_maximum_knockbac:		db "Maximum knockback",0
+_cstring_g_knockback:		db "g_knockback",0
+_cstring_maximum_number_o:		db "Maximum number of dropped weapons",0
+_cstring_g_maxdroppedweap:		db "g_maxDroppedWeapons",0
+_cstring_time_delay_befor:		db "Time delay before player is kicked for inactivity",0
+_cstring_g_inactivity:		db "g_inactivity",0
+_cstring_show_debug_infor:		db "Show debug information for damage",0
+_cstring_g_debugdamage:		db "g_debugDamage",0
+_cstring_show_debug_infor1:		db "Show debug information for bullets",0
+_cstring_g_debugbullets:		db "g_debugBullets",0
+_cstring_enabledisable_bu:		db "Enable/Disable bullet penetration.",0
+_cstring_bullet_penetrati:		db "bullet_penetrationEnabled",0
+_cstring_display_entity_i:		db "Display entity information",0
+_cstring_g_entinfo:		db "g_entinfo",0
+_cstring_the_message_of_t:		db "The message of the day",0
+_cstring_g_motd:		db "g_motd",0
+_cstring_speed_at_which_t:		db "Speed at which to push intersecting players away from each other",0
+_cstring_g_playercollisio:		db "g_playerCollisionEjectSpeed",0
+_cstring_forward_speed_of:		db "Forward speed of a dropped item",0
+_cstring_g_dropforwardspe:		db "g_dropForwardSpeed",0
+_cstring_base_component_o:		db "Base component of the initial vertical speed of a dropped item",0
+_cstring_g_dropupspeedbas:		db "g_dropUpSpeedBase",0
+_cstring_random_component:		db "Random component of the initial vertical speed of a dropped item",0
+_cstring_g_dropupspeedran:		db "g_dropUpSpeedRand",0
+_cstring_random_component1:		db "Random component of the initial horizontal speed of a dropped item",0
+_cstring_g_drophorzspeedr:		db "g_dropHorzSpeedRand",0
+_cstring_maximum_velocity:		db "Maximum velocity in each axis of a cloned player",0ah,"(for death animations)",0
+_cstring_g_cloneplayermax:		db "g_clonePlayerMaxVelocity",0
+_cstring_send_voice_messa:		db "Send voice messages to everybody",0
+_cstring_voice_global:		db "voice_global",0
+_cstring_echo_voice_chat_:		db "Echo voice chat back to the player",0
+_cstring_voice_localecho:		db "voice_localEcho",0
+_cstring_allow_dead_playe:		db "Allow dead players to talk to living players",0
+_cstring_voice_deadchat:		db "voice_deadChat",0
+_cstring_enable_voting_on:		db "Enable voting on this server",0
+_cstring_g_allowvote:		db "g_allowVote",0
+_cstring_list_the_entitie:		db "List the entities",0
+_cstring_g_listentity:		db "g_listEntity",0
+_cstring_allow_dead_playe1:		db "Allow dead players to chat with living players",0
+_cstring_g_deadchat:		db "g_deadChat",0
+_cstring_time_after_the_l:		db "Time after the last talk packet was received that the player is considered by the",0ah,"server to still be talking in milliseconds",0
+_cstring_g_voicechattalki:		db "g_voiceChatTalkingDuration",0
+_cstring_shader_name_for_:		db "Shader name for the allied scores banner",0
+_cstring_faction_128_usmc:		db "faction_128_usmc",0
+_cstring_g_teamicon_allie:		db "g_TeamIcon_Allies",0
+_cstring_shader_name_for_1:		db "Shader name for the axis scores banner",0
+_cstring_faction_128_arab:		db "faction_128_arab",0
+_cstring_g_teamicon_axis:		db "g_TeamIcon_Axis",0
+_cstring_shader_name_for_2:		db "Shader name for the scores of players with no team",0
+_cstring_g_teamicon_free:		db "g_TeamIcon_Free",0
+_cstring_shader_name_for_3:		db "Shader name for the scores of players who are spectators",0
+_cstring_g_teamicon_spect:		db "g_TeamIcon_Spectator",0
+_cstring_player_team_colo:		db "Player team color on scoreboard",0
+_cstring_g_scorescolor_my:		db "g_ScoresColor_MyTeam",0
+_cstring_enemy_team_color:		db "Enemy team color on scoreboard",0
+_cstring_g_scorescolor_en:		db "g_ScoresColor_EnemyTeam",0
+_cstring_spectator_team_c:		db "Spectator team color on scoreboard",0
+_cstring_g_scorescolor_sp:		db "g_ScoresColor_Spectator",0
+_cstring_free_team_color_:		db "Free Team color on scoreboard",0
+_cstring_g_scorescolor_fr:		db "g_ScoresColor_Free",0
+_cstring_allies_team_colo:		db "Allies team color on scoreboard",0
+_cstring_g_scorescolor_al:		db "g_ScoresColor_Allies",0
+_cstring_axis_team_color_:		db "Axis team color on scoreboard",0
+_cstring_g_scorescolor_ax:		db "g_ScoresColor_Axis",0
+_cstring_allied_team_name:		db "Allied team name",0
+_cstring_game_allies:		db "GAME_ALLIES",0
+_cstring_g_teamname_allie:		db "g_TeamName_Allies",0
+_cstring_axis_team_name:		db "Axis team name",0
+_cstring_game_axis:		db "GAME_AXIS",0
+_cstring_g_teamname_axis:		db "g_TeamName_Axis",0
+_cstring_allies_team_colo1:		db "Allies team color",0
+_cstring_g_teamcolor_alli:		db "g_TeamColor_Allies",0
+_cstring_axis_team_color:		db "Axis team color",0
+_cstring_g_teamcolor_axis:		db "g_TeamColor_Axis",0
+_cstring_player_team_colo1:		db "Player team color",0
+_cstring_g_teamcolor_myte:		db "g_TeamColor_MyTeam",0
+_cstring_enemy_team_color1:		db "Enemy team color",0
+_cstring_g_teamcolor_enem:		db "g_TeamColor_EnemyTeam",0
+_cstring_spectator_team_c1:		db "Spectator team color",0
+_cstring_g_teamcolor_spec:		db "g_TeamColor_Spectator",0
+_cstring_free_team_color:		db "Free Team color",0
+_cstring_g_teamcolor_free:		db "g_TeamColor_Free",0
+_cstring_enable_extrapola:		db "Enable extrapolation between client states",0
+_cstring_g_smoothclients:		db "g_smoothClients",0
+_cstring_turn_on_antilag_:		db "Turn on antilag checks for weapon hits",0
+_cstring_g_antilag:		db "g_antilag",0
+_cstring_use_old_voting_m:		db "Use old voting method",0
+_cstring_g_oldvoting:		db "g_oldVoting",0
+_cstring_how_much_an_abst:		db "How much an abstained vote counts as a ",27h,"no",27h," vote",0
+_cstring_g_voteabstainwei:		db "g_voteAbstainWeight",0
+_cstring_turn_off_script_:		db "Turn off script debugging info",0
+_cstring_g_no_script_spam:		db "g_no_script_spam",0
+_cstring_turn_on_debuggin:		db "Turn on debugging information for locational damage",0
+_cstring_g_debuglocdamage:		db "g_debugLocDamage",0
+_cstring_maximum_range_fo:		db "Maximum range for disabling fire at a friendly",0
+_cstring_g_friendlyfiredi:		db "g_friendlyfireDist",0
+_cstring_maximum_range_fo1:		db "Maximum range for seeing a friendly",27h,"s name",0
+_cstring_g_friendlynamedi:		db "g_friendlyNameDist",0
+_cstring_turn_on_debug_li:		db "Turn on debug lines for melee traces",0
+_cstring_melee_debug:		db "melee_debug",0
+_cstring_turn_on_debug_li1:		db "Turn on debug lines for radius damage traces",0
+_cstring_radius_damage_de:		db "radius_damage_debug",0
+_cstring_the_radius_to_a_:		db "The radius to a live grenade player must be within initially to do a throwback",0
+_cstring_player_throwback:		db "player_throwbackInnerRadius",0
+_cstring_the_radius_playe:		db "The radius player is allow to throwback a grenade once the player has been in the inner radius",0
+_cstring_player_throwback1:		db "player_throwbackOuterRadius",0
+_cstring_the_radius_withi:		db "The radius within which a player can mount a machine gun",0
+_cstring_player_mguseradi:		db "player_MGUseRadius",0
+_cstring_minimum_speed_at:		db "Minimum speed at which getting hit be a grenade will do damage (not the grenade explosion damage)",0
+_cstring_g_mingrenadedama:		db "g_minGrenadeDamageSpeed",0
+_cstring_whether_enemies_:		db "Whether enemies are visible on the compass at all times",0
+_cstring_g_compassshowene:		db "g_compassShowEnemies",0
+_cstring_print_a_message_:		db "Print a message to the game window when picking up ammo, etc.",0
+_cstring_pickupprints:		db "pickupPrints",0
+_cstring_animation_debugg:		db "Animation debugging info for the given character number",0
+_cstring_g_dumpanims:		db "g_dumpAnims",0
+_cstring_time_to_hold_the:		db "Time to hold the ",27h,"use",27h," button to activate use",0
+_cstring_g_useholdtime:		db "g_useholdtime",0
+_cstring_time_in_millisec:		db "Time in milliseconds that the player is unable to ",27h,"use",27h," after spawning",0
+_cstring_g_useholdspawnde:		db "g_useholdspawndelay",0
+_cstring_whether_red_cros:		db "Whether red crosshairs are enabled",0
+_cstring_g_redcrosshairs:		db "g_redCrosshairs",0
+_cstring_time_that_the_cl:		db "Time that the client think is delayed after mantling",0
+_cstring_g_mantleblocktim:		db "g_mantleBlockTimeBuffer",0
+_cstring_fog_color_that_w:		db "Fog color that was set in the most recent call to ",22h,"setexpfog",22h,0
+_cstring_g_fogcolorreadon:		db "g_fogColorReadOnly",0
+_cstring_fog_start_distan:		db "Fog start distance that was set in the most recent call to ",22h,"setexpfog",22h,0
+_cstring_g_fogstartdistre:		db "g_fogStartDistReadOnly",0
+_cstring_g_foghalfdistrea:		db "g_fogHalfDistReadOnly",0
+_cstring_null_entthink:		db 15h,"NULL ent->think",0
+_cstring_i_s:		db "#%i; ",22h,"%s",22h,0
+_cstring_ground_i:		db "ground: #%i",0
+_cstring_s_i__i:		db "%s (%i + %i)",0
+_cstring__game_initializa:		db "------- Game Initialization -------",0ah,0
+_cstring_gamename_s:		db "gamename: %s",0ah,0
+_cstring_gamedate_s:		db "gamedate: %s",0ah,0
+_cstring_warning_couldnt_:		db "WARNING: Couldn",27h,"t open logfile: %s",0ah,0
+_cstring_0:		db "0",0
+_cstring_winner:		db "winner",0
+_cstring_:		db "-----------------------------------",0ah,0
+_cstring_1:		db "------------------------------------------------------------",0ah,0
+_cstring_initgame_s:		db "InitGame: %s",0ah,0
+_cstring_not_logging_to_d:		db "Not logging to disk.",0ah,0
+_cstring_server:		db "server:",0ah,0
+_cstring_4i_s:		db "%4i: %s",0ah,0
+_cstring_3iii_s:		db "%3i:%i%i %s",0
+_cstring__shutdowngame_d_:		db "==== ShutdownGame (%d) ====",0ah,0
+_cstring_shutdowngame:		db "ShutdownGame:",0ah,0
+_cstring_c_game_votefaile:		db "%c ",22h,"GAME_VOTEFAILED",22h,0
+_cstring_c_game_votepasse:		db "%c ",22h,"GAME_VOTEPASSED",22h,0
+_cstring_s:		db "%s",0ah,0
+_cstring_map_rotate:		db "map_rotate",0ah,0
+_cstring_exitlevel_execut:		db "ExitLevel: executed",0ah,0
+_cstring_off:		db "off",0
+_cstring_all_ents:		db "all ents",0
+
+
+
+;All constant floats and doubles:
+SECTION .rdata
+_float_10_00000000:		dd 0x41200000	; 10
+_float_2_00000000:		dd 0x40000000	; 2
+_float_4_00000000:		dd 0x40800000	; 4
+_float_0_00100000:		dd 0x3a83126f	; 0.001
+

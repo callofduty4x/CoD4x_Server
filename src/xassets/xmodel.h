@@ -5,6 +5,14 @@
 #include "../q_math.h"
 
 
+enum XModelLodRampType
+{
+  XMODEL_LOD_RAMP_RIGID = 0x0,
+  XMODEL_LOD_RAMP_SKINNED = 0x1,
+  XMODEL_LOD_RAMP_COUNT = 0x2,
+};
+
+
 #pragma pack(push, 2)
 typedef struct cbrushside_s
 {
@@ -258,6 +266,16 @@ typedef struct XModel_s
   char field_D3;
   xPhysPreset_t *physPreset;
   PhysGeomList_t *physGeoms;
-}XModel_t;
+}XModel;
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+XModel *__cdecl XModelPrecache(const char *name, void *(__cdecl *Alloc)(int), void *(__cdecl *AllocColl)(int));
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // __XMODEL_H__

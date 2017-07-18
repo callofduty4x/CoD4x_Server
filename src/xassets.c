@@ -31,9 +31,11 @@
 #include "qcommon.h"
 #include "cmd.h"
 #include "xassets/xmodel.h"
+#include "sys_thread.h"
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 void XAssetUsage_f();
 void XAssetUsage2_f();
@@ -75,87 +77,40 @@ void R_Init(){
 }
 
 #define NUM_ASSETTYPES 33
-#define g_poolsize_ADDR 0x82401a0
-#define g_assetNames_ADDR 0x8274940
-#define DB_XAssetPool_ADDR 0x8240100
-#define DB_FreeXAssetHeaderHandler_ADDR 0x8240060
-#define DB_DynamicCloneXAssetHandler_ADDR 0x823fe80
 
 #define MAX_XMODELS 2000
 #define MAX_GFXIMAGE 3800
 #define MAX_WEAPON 196
 //#define MAX_FX 680
 
-typedef enum{
-        XModelPieces,
-        PhysPreset,
-        XAnimParts,
-        XModel,
-        Material,
-        TechinqueSet,		// techset
-        GfxImage,		// image
-        snd_alias_list_t,	// sound
-        SndCurve,
-        LoadedSound,
-        Col_Map_sp,
-        Col_Map_mp,
-        Com_Map,
-        Game_Map_sp,
-        Game_Map_mp,
-        MapEnts,
-        GfxMaps,
-        GfxLightDef,
-        UIMaps,
-        Font_s,
-        MenuList,		//menufile
-        menuDef_t,		//menu
-        LocalizeEntry,
-        WeaponDef,
-        SNDDriversGlobals,
-        FxEffectDef,		//fx
-        FxImpactTable,		//impactfx
-        AIType,
-        MPType,
-        Character,
-        XModelAlias,
-        RawFile,
-        StringTable,
-        NumXAssets
-}XAssetType_t;
 
-
-typedef void* XAssetHeader_t;
-
-typedef union
+struct XAsset
 {
-  XAssetType_t type;
-  void* nextHeader;
-}XAssetHeaderType_t;
+  enum XAssetType type;
+  union XAssetHeader header;
+};
 
-
-typedef struct
+struct XAssetEntry
 {
-  XAssetHeaderType_t this;
-  XAssetHeader_t header;
-  unsigned short field_8;
-  unsigned short nextListIndex;
-  unsigned short field_C;
-  unsigned short field_E;
-}XAsset_t;
+  struct XAsset asset;
+  byte zoneIndex;
+  bool inuse;
+  uint16_t nextHash;
+  uint16_t nextOverride;
+  uint16_t usageFrame;
+};
 
 
-unsigned short *db_hashTable = (unsigned short *)0x14121680;
-XAsset_t* g_assetEntryPool = (XAsset_t*)0x14131680;
-void* *DB_XAssetPool = (void*)DB_XAssetPool_ADDR;
-int *DB_XAssetPoolSize = (int*)g_poolsize_ADDR;
-char* *DB_GetXAssetTypeName = (char**)g_assetNames_ADDR;
+union XAssetEntryPoolEntry
+{
+  struct XAssetEntry entry;
+  union XAssetEntryPoolEntry *next;
+};
 
 
-//Are that headers ? I'm not sure
-typedef struct XModelAssetsHeader_s{
-        struct XModelAssetsHeader_s*	next;
-        XModel_t xmodel;
-}XModelAssetsHeader_t;
+union XAssetEntryPoolEntry g_assetEntryPool[32768];
+unsigned short db_hashTable[32768];
+
 
 typedef struct WeaponDefHeader_s{
         struct WeaponDefHeader_s*	next;
@@ -167,99 +122,104 @@ typedef struct XAssetsHeaderCommon_s{
 }XAssetsHeaderCommon_t;
 
 
-int XAssetStdCount[NumXAssets];
-int XAssetRequestedCount[NumXAssets];
+int XAssetStdCount[ASSET_TYPE_COUNT];
+int XAssetRequestedCount[ASSET_TYPE_COUNT];
 
 
-int DB_GetXAssetStdCount(XAssetType_t type)
+int DB_GetXAssetStdCount(enum XAssetType type)
 {
 	return XAssetStdCount[type];
 }
 
 
 
-qboolean DB_XAssetNoAlloc(XAssetType_t i)
+qboolean DB_XAssetNoAlloc(enum XAssetType i)
 {
-	if(i == Col_Map_sp)
+	if(i == ASSET_TYPE_CLIPMAP)
 		return qtrue;
-	if(i == Col_Map_mp)
+	if(i == ASSET_TYPE_CLIPMAP_PVS)
 		return qtrue;
-	if(i == Com_Map)
+	if(i == ASSET_TYPE_COMWORLD)
 		return qtrue;
-	if(i ==	Game_Map_sp)
+	if(i ==	ASSET_TYPE_GAMEWORLD_SP)
 		return qtrue;
-	if(i == Game_Map_mp)
+	if(i == ASSET_TYPE_GAMEWORLD_MP)
 		return qtrue;
-	if(i == MapEnts)
+	if(i == ASSET_TYPE_MAP_ENTS)
 		return qtrue;
-	if(i == GfxMaps)
+	if(i == ASSET_TYPE_GFXWORLD)
 		return qtrue;
-	if(i == UIMaps)
+	if(i == ASSET_TYPE_UI_MAP)
 		return qtrue;
-	if(i == SNDDriversGlobals)
+	if(i == ASSET_TYPE_SNDDRIVER_GLOBALS)
 		return qtrue;
-	if(i == AIType)
+	if(i == ASSET_TYPE_AITYPE)
 		return qtrue;
-	if(i == MPType)
+	if(i == ASSET_TYPE_MPTYPE)
 		return qtrue;
-	if(i == Character)
+	if(i == ASSET_TYPE_CHARACTER)
 		return qtrue;
-	if(i == LocalizeEntry)
+	if(i == ASSET_TYPE_LOCALIZE_ENTRY)
 		return qtrue;
-	if(i == XModelAlias)
+	if(i == ASSET_TYPE_XMODELALIAS)
 		return qtrue;
-	if(i == RawFile)
+	if(i == ASSET_TYPE_RAWFILE)
 		return qtrue;
-	if(i == menuDef_t)
+	if(i == ASSET_TYPE_MENU)
 		return qtrue;
-	if(i == WeaponDef)
+	if(i == ASSET_TYPE_WEAPON)
 		return qtrue;
-	if(i == StringTable)
+	if(i == ASSET_TYPE_STRINGTABLE)
 		return qtrue;
 
 	return qfalse;
 }
 
 
-
 void XAssetsInitStdCount()
 {
-	XAssetStdCount[XModelPieces] = 64;
-	XAssetStdCount[PhysPreset] = 64;
-	XAssetStdCount[XAnimParts] = 4096;
-	XAssetStdCount[XModel] = 1000;
-	XAssetStdCount[Material] = 2048;
-	XAssetStdCount[TechinqueSet] = 1024;
-	XAssetStdCount[GfxImage] = 2400;
-	XAssetStdCount[snd_alias_list_t] = 16000;
-	XAssetStdCount[SndCurve] = 64;
-	XAssetStdCount[LoadedSound] = 1200;
-	XAssetStdCount[Col_Map_sp] = 1;
-	XAssetStdCount[Col_Map_mp] = 1;
-	XAssetStdCount[Com_Map] = 1;
-	XAssetStdCount[Game_Map_sp] = 1;
-	XAssetStdCount[Game_Map_mp] = 1;
-	XAssetStdCount[MapEnts] = 2;
-	XAssetStdCount[GfxMaps] = 1;
-	XAssetStdCount[GfxLightDef] = 32;
-	XAssetStdCount[UIMaps] = 0;
-	XAssetStdCount[Font_s] = 16;
-	XAssetStdCount[MenuList] = 128;
-	XAssetStdCount[menuDef_t] = 1280;
-	XAssetStdCount[LocalizeEntry] = 6144;
-	XAssetStdCount[WeaponDef] = 720;
-	XAssetStdCount[SNDDriversGlobals] = 1;
-	XAssetStdCount[FxEffectDef] = 400;
-	XAssetStdCount[FxImpactTable] = 4;
-	XAssetStdCount[AIType] = 0;
-	XAssetStdCount[MPType] = 0;
-	XAssetStdCount[Character] = 0;
-	XAssetStdCount[XModelAlias] = 0;
-	XAssetStdCount[RawFile] = 1024;
-	XAssetStdCount[StringTable] = 100;
+	XAssetStdCount[ASSET_TYPE_XMODELPIECES] = 64;
+	XAssetStdCount[ASSET_TYPE_PHYSPRESET] = 64;
+	XAssetStdCount[ASSET_TYPE_XANIMPARTS] = 4096;
+	XAssetStdCount[ASSET_TYPE_XMODEL] = 1000;
+	XAssetStdCount[ASSET_TYPE_MATERIAL] = 2048;
+	XAssetStdCount[ASSET_TYPE_TECHNIQUE_SET] = 1024;
+	XAssetStdCount[ASSET_TYPE_IMAGE] = 2400;
+	XAssetStdCount[ASSET_TYPE_SOUND] = 16000;
+	XAssetStdCount[ASSET_TYPE_SOUND_CURVE] = 64;
+	XAssetStdCount[ASSET_TYPE_LOADED_SOUND] = 1200;
+	XAssetStdCount[ASSET_TYPE_CLIPMAP] = 1;
+	XAssetStdCount[ASSET_TYPE_CLIPMAP_PVS] = 1;
+	XAssetStdCount[ASSET_TYPE_COMWORLD] = 1;
+	XAssetStdCount[ASSET_TYPE_GAMEWORLD_SP] = 1;
+	XAssetStdCount[ASSET_TYPE_GAMEWORLD_MP] = 1;
+	XAssetStdCount[ASSET_TYPE_MAP_ENTS] = 2;
+	XAssetStdCount[ASSET_TYPE_GFXWORLD] = 1;
+	XAssetStdCount[ASSET_TYPE_LIGHT_DEF] = 32;
+	XAssetStdCount[ASSET_TYPE_UI_MAP] = 0;
+	XAssetStdCount[ASSET_TYPE_FONT] = 16;
+	XAssetStdCount[ASSET_TYPE_MENULIST] = 128;
+	XAssetStdCount[ASSET_TYPE_MENU] = 1280;
+	XAssetStdCount[ASSET_TYPE_LOCALIZE_ENTRY] = 6144;
+	XAssetStdCount[ASSET_TYPE_WEAPON] = 720;
+	XAssetStdCount[ASSET_TYPE_SNDDRIVER_GLOBALS] = 1;
+	XAssetStdCount[ASSET_TYPE_FX] = 400;
+	XAssetStdCount[ASSET_TYPE_IMPACT_FX] = 4;
+	XAssetStdCount[ASSET_TYPE_AITYPE] = 0;
+	XAssetStdCount[ASSET_TYPE_MPTYPE] = 0;
+	XAssetStdCount[ASSET_TYPE_CHARACTER] = 0;
+	XAssetStdCount[ASSET_TYPE_XMODELALIAS] = 0;
+	XAssetStdCount[ASSET_TYPE_RAWFILE] = 1024;
+	XAssetStdCount[ASSET_TYPE_STRINGTABLE] = 100;
 }
 
 cvar_t* r_xassetnum;
+extern const char* g_assetNames[];
+extern int g_zoneCount;
+extern int g_poolSize[];
+
+void __cdecl DB_EnumXAssets_FastFile(enum XAssetType type, void (__cdecl *func)(union XAssetHeader, void *), void *inData, bool includeOverride);
+
 
 void DB_ParseRequestedXAssetNum()
 {
@@ -275,15 +235,15 @@ void DB_ParseRequestedXAssetNum()
 	Com_Memcpy(XAssetRequestedCount, XAssetStdCount, sizeof(XAssetRequestedCount));
 	Com_sprintf(toparse, sizeof(toparse), " %s", r_xassetnum->string);
 
-	for(i = 0;  i < NumXAssets; ++i)
+	for(i = 0;  i < ASSET_TYPE_COUNT; ++i)
 	{
 
-		if(DB_XAssetNoAlloc(i) || i == menuDef_t || i == WeaponDef || i == StringTable)
+		if(DB_XAssetNoAlloc(i) || i == ASSET_TYPE_MENU || i == ASSET_TYPE_WEAPON || i == ASSET_TYPE_STRINGTABLE)
 		{
 			continue;
 		}
 
-		typename = DB_GetXAssetTypeName[ i ];
+		typename = g_assetNames[ i ];
 
 		Com_sprintf(scanstring, sizeof(scanstring), " %s=", typename);
 
@@ -309,8 +269,8 @@ void DB_ParseRequestedXAssetNum()
 	}
 }
 
-
-void DB_CustomAllocOnce(XAssetType_t type)
+#if 0
+void DB_CustomAllocOnce(enum XAssetType type)
 {
 	int count = DB_GetXAssetStdCount(type);
 	int typesize = DB_GetXAssetTypeSize(type);
@@ -320,7 +280,7 @@ void DB_CustomAllocOnce(XAssetType_t type)
 	if(alloc)
 	{
 		DB_XAssetPool[type] = alloc;
-		DB_XAssetPoolSize[type] = count;
+		g_poolSize[type] = count;
 	}
 }
 
@@ -330,14 +290,14 @@ void DB_RelocateXAssetMem()
 
 	void* newmem;
 
-	for(i = 0;  i < NumXAssets; ++i)
+	for(i = 0;  i < ASSET_TYPE_COUNT; ++i)
 	{
 		if(DB_XAssetNoAlloc(i))
 		{
 			continue;
 		}
 
-		if(XAssetRequestedCount[i] <= DB_XAssetPoolSize[i])
+		if(XAssetRequestedCount[i] <= g_poolSize[i])
 		{
 			//Only allocate if we need more than what is already allocated
 			continue;
@@ -353,9 +313,9 @@ void DB_RelocateXAssetMem()
 			continue;
 		}
 
-		Com_Printf("^2Reallocate %d XAssets on request of type: %s\n", count, DB_GetXAssetTypeName[i]);
+		Com_Printf("^2Reallocate %d XAssets on request of type: %s\n", count, g_assetNames[i]);
 		DB_XAssetPool[i] = newmem;
-		DB_XAssetPoolSize[i] = count;
+		g_poolSize[i] = count;
 	}
 }
 
@@ -367,7 +327,7 @@ void XAssets_PatchLimits(){
         int size = NUM_ASSETTYPES * sizeof(void*);
 
         ptrpool = &DB_XAssetPool[0];
-	ptrsize = &DB_XAssetPoolSize[0];
+	ptrsize = &g_poolSize[0];
 
 	if(!Sys_MemoryProtectWrite(ptrpool, size) || !Sys_MemoryProtectWrite(ptrsize, size))
 	{
@@ -388,7 +348,7 @@ void XAssets_PatchLimits(){
 		Com_Error(ERR_FATAL,"XAssets_PatchLimits: Failed to change memory to read only\n");
 	}
 }
-
+#endif
 
 typedef struct
 {
@@ -432,28 +392,14 @@ typedef struct
   int ff_dir;
 }XZone;
 
-
-typedef struct
-{
-  struct unk_xasset_struct1 *field_0;
-  int field_4;
-  short field_8;
-  short field_A;
-  int field_C;
-}unk_xasset_struct1;
-
 void R_UnlockVertexBuffer(IDirect3DVertexBuffer9* vertexbuf){}
 void R_FreeStaticVertexBuffer(IDirect3DVertexBuffer9* vertexbuf){}
 void R_UnlockIndexBuffer(IDirect3DIndexBuffer9* indexbuf){}
 void R_FreeStaticIndexBuffer(IDirect3DIndexBuffer9* indexbuf){}
 void Material_DirtyTechniqueSetOverrides(){};
 
-#define g_zoneCount (*(int*)(0x14121654))
-#define g_archiveBuf (*(byte*)(0x141b1694))
-#define g_unknownVar_1 (*(int*)(0x14121650))
-
-XZone *g_zones = (XZone*)0x141200a0;
-byte *g_zoneHandles = (byte*)0x14121660;
+XZone g_zones[33];
+uint8_t g_zoneHandles[33];
 
 void DB_FreeXZoneMemory(XZoneMemory* zonemem)
 {
@@ -517,25 +463,6 @@ void _InterlockedExchangeAdd(int* lockedvar, int num)
     *lockedvar += num;
 }
 
-void DB_LoadXAssets_Hook(XZoneInfo *zoneinfo, unsigned int assetscount)
-{
-
-	int i;
-
-	DB_FreeUnusedResources();
-	for(i = 0; i < assetscount; i++)
-	{
-		DB_UnloadXAssetsMemoryForZone( zoneinfo[i].freeFlags );
-	}
-	_InterlockedExchangeAdd(&g_unknownVar_1, -1);
-	g_archiveBuf = 0;
-	DB_LoadSounds();
-	DB_LoadDObjs();
-	Material_DirtyTechniqueSetOverrides();
-	BG_FillInAllWeaponItems();
-
-}
-
 int DB_FileSize(const char *filename, int FF_DIR)
 {
 	char ospath[MAX_OSPATH];
@@ -576,17 +503,17 @@ void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsi
 		{
 			if ( g_zoneNameList[0] )
 			{
-				Q_strcat(g_zoneNameList, maxsize, " ");
+				Q_strncat(g_zoneNameList, maxsize, " ");
 			}
-          Q_strcat(g_zoneNameList, maxsize, fs_gameDirVar->string);
-          Q_strcat(g_zoneNameList, maxsize, "/");
-          Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+          Q_strncat(g_zoneNameList, maxsize, fs_gameDirVar->string);
+          Q_strncat(g_zoneNameList, maxsize, "/");
+          Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
 		if ( g_zoneSumList[0] )
 		{
-			Q_strcat(g_zoneSumList, maxsize, " ");
+			Q_strncat(g_zoneSumList, maxsize, " ");
 		}
 		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
-		Q_strcat(g_zoneSumList, maxsize, checkSum);
+		Q_strncat(g_zoneSumList, maxsize, checkSum);
 
 		  continue;
 		}
@@ -594,15 +521,15 @@ void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsi
 		{
 			if ( g_zoneNameList[0] )
 			{
-				Q_strcat(g_zoneNameList, maxsize, " ");
+				Q_strncat(g_zoneNameList, maxsize, " ");
 			}
-			Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+			Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
 		if ( g_zoneSumList[0] )
 		{
-			Q_strcat(g_zoneSumList, maxsize, " ");
+			Q_strncat(g_zoneSumList, maxsize, " ");
 		}
 		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
-		Q_strcat(g_zoneSumList, maxsize, checkSum);
+		Q_strncat(g_zoneSumList, maxsize, checkSum);
 
 			continue;
 		}
@@ -622,61 +549,24 @@ void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsi
 
 		if ( g_zoneSumList[0] )
 		{
-			Q_strcat(g_zoneSumList, maxsize, " ");
+			Q_strncat(g_zoneSumList, maxsize, " ");
 		}
 		Com_sprintf(checkSum, sizeof(checkSum), "%u %u", zone->zoneSize, filesize);
-		Q_strcat(g_zoneSumList, maxsize, checkSum);
+		Q_strncat(g_zoneSumList, maxsize, checkSum);
 
 
-		Q_strcat(g_zoneNameList, maxsize, " usermaps/");
-		Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
-		Q_strcat(g_zoneNameList, maxsize, " usermaps/");
-		Q_strcat(g_zoneNameList, maxsize, zone->zoneinfo.name);
-		Q_strcat(g_zoneNameList, maxsize, "_load");
+		Q_strncat(g_zoneNameList, maxsize, " usermaps/");
+		Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+		Q_strncat(g_zoneNameList, maxsize, " usermaps/");
+		Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+		Q_strncat(g_zoneNameList, maxsize, "_load");
 
 	}
 }
 
-
-void DB_EnumXAssets(XAssetType_t type, void (__cdecl *callback)(XAssetHeader_t *, void *), void* cbargs, qboolean a4)
+void DB_PrintXAsset(union XAssetHeader header, void *none)
 {
-  int index, sindex, i;
-  XAsset_t *listselector, *slistselect;
-/*
-  InterlockedIncrement(&db_hashCritSect);
-  while ( xasset_interlock )
-  {
-    Sys_SleepUSec(0);
-  }
-*/
-  for(i = 0; i < 32768; ++i)
-  {
-    for(index = db_hashTable[i]; index; index = listselector->nextListIndex)
-    {
-	     listselector = &g_assetEntryPool[index];
-
-    	if ( listselector->this.type != type )
-    		continue;
-
-    	callback(listselector->header, cbargs);
-    	if ( !a4 )
-    		continue;
-
-    	for(sindex = listselector->field_C; sindex; sindex = slistselect->field_C)
-    	{
-                slistselect = &g_assetEntryPool[sindex];
-                callback(slistselect->header, cbargs);
-    	}
-    }
-  }
-/*
-  InterlockedDecrement();
-*/
-}
-
-void DB_PrintXAsset(XAssetHeader_t *header, void *none)
-{
-    XModel_t* xmodelhead = (XModel_t*)header;
+    XModel* xmodelhead = header.model;
 
     Com_Printf("%s\n", xmodelhead->name);
 }
@@ -688,7 +578,7 @@ void XModelList_f()
     Com_Printf("Name                          \n");
     Com_Printf("------------------------------\n");
 
-    DB_EnumXAssets(XModel, DB_PrintXAsset, NULL, qtrue);
+    DB_EnumXAssets_FastFile(ASSET_TYPE_XMODEL, DB_PrintXAsset, NULL, qtrue);
 
     Com_Printf("\n");
 }
@@ -697,8 +587,11 @@ void XModelList_f()
 void DB_CountXAssets(int *count, int len ,qboolean a4)
 {
   int index, sindex, i;
-  XAsset_t *listselector, *slistselect;
-  XAssetType_t type;
+  union XAssetEntryPoolEntry *listselector, *slistselect;
+  enum XAssetType type;
+
+  Sys_EnterCriticalSection(CRITSECT_DBHASH);
+
 /*
   InterlockedIncrement(&db_hashCritSect);
   while ( xasset_interlock )
@@ -706,7 +599,7 @@ void DB_CountXAssets(int *count, int len ,qboolean a4)
     Sys_SleepUSec(0);
   }
 */
-  if((len / sizeof(int)) < NumXAssets)
+  if((len / sizeof(int)) < ASSET_TYPE_COUNT)
   {
     return;
   }
@@ -715,13 +608,13 @@ void DB_CountXAssets(int *count, int len ,qboolean a4)
 
   for(i = 0; i < 32768; ++i)
   {
-    for(index = db_hashTable[i]; index; index = listselector->nextListIndex)
+    for(index = db_hashTable[i]; index; index = listselector->entry.nextHash)
     {
 	listselector = &g_assetEntryPool[index];
 
-	type = listselector->this.type;
+	type = listselector->entry.asset.type;
 
-	if(type < 0 || type >= NumXAssets)
+	if(type < 0 || type >= ASSET_TYPE_COUNT)
 	{
 		continue;
 	}
@@ -731,16 +624,14 @@ void DB_CountXAssets(int *count, int len ,qboolean a4)
 	if ( !a4 )
 		continue;
 
-	for(sindex = listselector->field_C; sindex; sindex = slistselect->field_C)
+	for(sindex = listselector->entry.nextOverride; sindex; sindex = slistselect->entry.nextOverride)
 	{
             slistselect = &g_assetEntryPool[sindex];
 	    ++count[type];
 	}
     }
   }
-/*
-  InterlockedDecrement();
-*/
+  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
 }
 
 
@@ -751,14 +642,14 @@ void DB_BuildOverallocatedXAssetList(char* configstring, int len)
 
     configstring[0] = '\0';
 
-    for(i = 0; i < NumXAssets; ++i)
+    for(i = 0; i < ASSET_TYPE_COUNT; ++i)
     {
         if(DB_XAssetNoAlloc(i))
         {
             continue;
         }
 
-		if(DB_XAssetPoolSize[i] <= DB_GetXAssetStdCount(i))
+		if(g_poolSize[i] <= DB_GetXAssetStdCount(i))
         {
             continue;
         }
@@ -768,8 +659,8 @@ void DB_BuildOverallocatedXAssetList(char* configstring, int len)
             continue;
         }
 */
-        Com_sprintf(cstring, sizeof(cstring), "%s=%d ", DB_GetXAssetTypeName[i], DB_XAssetPoolSize[i]);
-        Q_strcat(configstring, len, cstring);
+        Com_sprintf(cstring, sizeof(cstring), "%s=%d ", g_assetNames[i], g_poolSize[i]);
+        Q_strncat(configstring, len, cstring);
     }
 
 }
@@ -780,7 +671,7 @@ void DB_BuildOverallocatedXAssetList(char* configstring, int len)
 void XAssetUsage_f()
 {
     int assettype, j, l;
-    int countlist[NumXAssets];
+    int countlist[ASSET_TYPE_COUNT];
 
 
     Com_Printf("XAsset usage:\n");
@@ -789,11 +680,11 @@ void XAssetUsage_f()
 
     DB_CountXAssets(countlist, sizeof(countlist), qtrue);
 
-    for(assettype = 0; assettype < NumXAssets; assettype++)
+    for(assettype = 0; assettype < ASSET_TYPE_COUNT; assettype++)
     {
-	Com_Printf("%s", DB_GetXAssetTypeName[assettype]);
+	Com_Printf("%s", g_assetNames[assettype]);
 
-	l = 20 - strlen(DB_GetXAssetTypeName[assettype]);
+	l = 20 - strlen(g_assetNames[assettype]);
 	j = 0;
 
 	do
@@ -802,7 +693,7 @@ void XAssetUsage_f()
 		j++;
 	} while(j < l);
 
-	Com_Printf(" %5d %5d\n", countlist[assettype], DB_XAssetPoolSize[assettype] - countlist[assettype]);
+	Com_Printf(" %5d %5d\n", countlist[assettype], g_poolSize[assettype] - countlist[assettype]);
 
     }
     Com_Printf("\n");
@@ -828,7 +719,7 @@ void XAssetUsage_f()
 
 	header = DB_XAssetPool[assettype];
 
-	for(i = 0; i < DB_XAssetPoolSize[assettype]; i++)
+	for(i = 0; i < g_poolSize[assettype]; i++)
 	{
 	    if(header == NULL)
 	        break;
@@ -837,9 +728,9 @@ void XAssetUsage_f()
 	        header = header->next;
 	}
 
-	Com_Printf("%s", DB_GetXAssetTypeName[assettype]);
+	Com_Printf("%s", g_assetNames[assettype]);
 
-	l = 20 - strlen(DB_GetXAssetTypeName[assettype]);
+	l = 20 - strlen(g_assetNames[assettype]);
 	j = 0;
 
 	do
@@ -849,7 +740,7 @@ void XAssetUsage_f()
 	} while(j < l);
 
 
-	Com_Printf(" %5d %5d\n", DB_XAssetPoolSize[assettype] - i, i);
+	Com_Printf(" %5d %5d\n", g_poolSize[assettype] - i, i);
 
 
     }
@@ -861,11 +752,9 @@ void XAssetUsage_f()
 
 void DB_SyncXAssets()
 {
-  DB_PostLoadXZone();
+    Sys_SyncDatabase();
+    DB_PostLoadXZone();
 }
 
 char g_zoneNameList[2080];
 
-#if 0
-
-#endif

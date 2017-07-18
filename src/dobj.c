@@ -49,9 +49,6 @@ void PrintDObjInfo(DObj_t* dobj)
 		Com_Printf("No Dobj\n");
 }
 
-signed int (__cdecl *GetDObjPartInfo)(gentity_t *ent, int partNameIdx, DObjPartCacheVectorSet_t *vectorSet) = (signed int(*)(gentity_t*, int, DObjPartCacheVectorSet_t*))0x80CC7BA;
-void (*DObjInit)() = (void(*)())0x081ACB00;
-void (*DB_LoadDObjs)() = (void(*)())0x0812616C;
 
 /* GetDObjForEntity
  * 0x08125E32

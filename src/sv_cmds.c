@@ -999,8 +999,8 @@ gothandle:
   banreason[0] = 0;
   if ( Cmd_Argc() > 2) {
       for(i = 2; Cmd_Argc() > i ;i++){
-        Q_strcat(banreason,256,Cmd_Argv(i));
-        Q_strcat(banreason,256," ");
+        Q_strncat(banreason,256,Cmd_Argv(i));
+        Q_strncat(banreason,256," ");
       }
   }else{
       Q_strncpyz(banreason, "The admin has given no reason", 256);
@@ -1172,8 +1172,8 @@ gothandle:
     /* Get a valid banreason */
     banreason[0] = 0;
     for(i = 3; Cmd_Argc() > i ;i++){
-        Q_strcat(banreason,256,Cmd_Argv(i));
-        Q_strcat(banreason,256," ");
+        Q_strncat(banreason,256,Cmd_Argv(i));
+        Q_strncat(banreason,256," ");
     }
     if(strlen(banreason) > 126){
         Com_Printf("Error: You have exceeded the maximum allowed length of 126 for the reason\n");
@@ -1279,8 +1279,8 @@ static void Cmd_KickPlayer_f()
 	{
 		for(i = 2; i < Cmd_Argc(); ++i)
 		{
-			Q_strcat(kickreason, 256, Cmd_Argv(i));
-			Q_strcat(kickreason, 256, " ");
+			Q_strncat(kickreason, 256, Cmd_Argv(i));
+			Q_strncat(kickreason, 256, " ");
 		}
 	}
 	else
@@ -1767,15 +1767,15 @@ static void SV_MixMapsInRotation()
 
 		if(Q_stricmp(rotInfo[ri].gametype, lastGametype)) // Gametype of previous placed map differs from new one? place 'gametype' keyword.
 		{
-			Q_strcat(mixedList, CVAR_STRING_SIZE, "gametype ");
-			Q_strcat(mixedList, CVAR_STRING_SIZE, rotInfo[ri].gametype);
-			Q_strcat(mixedList, CVAR_STRING_SIZE, " ");
+			Q_strncat(mixedList, CVAR_STRING_SIZE, "gametype ");
+			Q_strncat(mixedList, CVAR_STRING_SIZE, rotInfo[ri].gametype);
+			Q_strncat(mixedList, CVAR_STRING_SIZE, " ");
 			lastGametype = rotInfo[ri].gametype;
 		}
 
-		Q_strcat(mixedList, CVAR_STRING_SIZE, "map ");
-		Q_strcat(mixedList, CVAR_STRING_SIZE, rotInfo[ri].mapname);
-		Q_strcat(mixedList, CVAR_STRING_SIZE, " ");
+		Q_strncat(mixedList, CVAR_STRING_SIZE, "map ");
+		Q_strncat(mixedList, CVAR_STRING_SIZE, rotInfo[ri].mapname);
+		Q_strncat(mixedList, CVAR_STRING_SIZE, " ");
 
 		// SWAP: Copy last rotInfo to picked one.
 		rotInfo[ri].gametype = rotInfo[mapCount - 1].gametype;
@@ -2108,17 +2108,17 @@ void SV_DownloadMapThread(char *inurl)
 	Z_Free(inurl);
 
 
-	Sys_EnterCriticalSection(CRIT_MISC);
+	Sys_EnterCriticalSection(CRITSECT_DL_MAP);
 
 	if(downloadActive)
 	{
 		Com_Printf("There is already a map download running. Won't download this.\n");
-		Sys_LeaveCriticalSection(CRIT_MISC);
+		Sys_LeaveCriticalSection(CRITSECT_DL_MAP);
 		return;
 	}
 	downloadActive = qtrue;
 
-	Sys_LeaveCriticalSection(CRIT_MISC);
+	Sys_LeaveCriticalSection(CRITSECT_DL_MAP);
 
 
 	len = strlen(url);

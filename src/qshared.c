@@ -25,8 +25,11 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+#define __QSHARED_C__
 #include "q_shared.h"
 #include "qcommon_io.h"
+#include "sys_thread.h"
+#include "misc.h"
 
 
 short   ShortSwap (short l)
@@ -273,12 +276,12 @@ void Q_bstrcpy(char* dest, const char* src){
 
 
 // never goes past bounds or leaves without a terminating 0
-void Q_strcat( char *dest, int size, const char *src ) {
+void Q_strncat( char *dest, int size, const char *src ) {
 	int		l1;
 
 	l1 = strlen( dest );
 	if ( l1 >= size ) {
-		Com_Error( ERR_FATAL, "Q_strcat: already overflowed" );
+		Com_Error( ERR_FATAL, "Q_strncat: already overflowed" );
 	}
 	Q_strncpyz( dest + l1, src, size - l1 );
 }
@@ -469,6 +472,33 @@ int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...)
 	return len;
 }
 
+int Com_sprintfPos(char *dest, const int destSize, int *destPos, const char *fmt, ...)
+{
+  char *destMod;
+  int destModSize;
+  int len;
+  va_list va;
+
+  va_start(va, fmt);
+  if ( *destPos < destSize - 1 )
+  {
+    destMod = &dest[*destPos];
+    destModSize = destSize - *destPos;
+    len = Q_vsnprintf(destMod, destSize - *destPos, fmt, va);
+    destMod[destModSize - 1] = 0;
+    if ( len != destModSize && len != -1 )
+    {
+      *destPos += len;
+    }
+    else
+    {
+      *destPos = destSize - 1;
+    }
+    return len;
+  }
+  return -1;
+}
+
 
 /*
 ============
@@ -516,8 +546,8 @@ void Com_TruncateLongString( char *buffer, const char *s )
 	else
 	{
 		Q_strncpyz( buffer, s, ( TRUNCATE_LENGTH / 2 ) - 3 );
-		Q_strcat( buffer, TRUNCATE_LENGTH, " ... " );
-		Q_strcat( buffer, TRUNCATE_LENGTH, s + length - ( TRUNCATE_LENGTH / 2 ) + 3 );
+		Q_strncat( buffer, TRUNCATE_LENGTH, " ... " );
+		Q_strncat( buffer, TRUNCATE_LENGTH, s + length - ( TRUNCATE_LENGTH / 2 ) + 3 );
 	}
 }
 
@@ -1754,4 +1784,272 @@ int COM_Compress( char *data_p ) {
 	}
 	*datao = 0;
 	return size;
+}
+
+void Com_Memset(void* p, byte v, int len)
+{
+    memset(p, v, len);
+}
+
+void Com_Memcpy(void* d, const void* s, int len)
+{
+    memcpy(d, s, len);
+}
+
+char *va(const char *format, ...)
+{
+  struct va_info_t *info;
+  int len;
+  int index;
+  va_list va;
+
+  va_start(va, format);
+  info = Sys_GetValue(1);
+  index = info->index;
+  info->index = (info->index + 1) % MAX_VASTRINGS;
+  len = Q_vsnprintf(info->va_string[index], sizeof(info->va_string[0]), format, va);
+  info->va_string[index][1023] = 0;
+  if ( len < 0 || len >= (unsigned int)sizeof(info->va_string[0]) )
+  {
+    Com_Error(ERR_DROP, "Attempted to overrun string in call to va(): \x27%s\x27", info->va_string[index]);
+  }
+  return info->va_string[index];
+}
+
+bool __cdecl Com_IsLegacyXModelName(const char *name)
+{
+  return !Q_stricmpn(name, "xmodel", 6) && (name[6] == '/' || name[6] == '\\');
+}
+
+/*
+int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKeyValue, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrcpy)(char *, const char *))
+{
+  char name;
+  char dest;
+
+  if ( pField->iFieldType < 15 )
+  {
+    switch ( pField->iFieldType )
+    {
+      case 0:
+        parseStrcpy(&pStruct[pField->iOffset], pszKeyValue);
+        return 1;
+      case 1:
+        Q_strncpyz(&pStruct[pField->iOffset], pszKeyValue, 1024);
+        return 1;
+      case 2:
+        Q_strncpyz(&pStruct[pField->iOffset], pszKeyValue, 64);
+        return 1;
+      case 3:
+        Q_strncpyz(&pStruct[pField->iOffset], pszKeyValue, 256);
+        return 1;
+      case 4:
+        *(uint32_t *)&pStruct[pField->iOffset] = atoi(pszKeyValue);
+        return 1;
+      case 5:
+        pStruct[pField->iOffset] = atoi(pszKeyValue) != 0;
+        return 1;
+      case 6:
+        *(uint32_t *)&pStruct[pField->iOffset] = atoi(pszKeyValue) != 0;
+        return 1;
+      case 7:
+        *(float *)&pStruct[pField->iOffset] = atof(pszKeyValue);
+        return 1;
+      case 8:
+        *(uint32_t *)&pStruct[pField->iOffset] = (signed int)(atof(pszKeyValue) * 1000.0);
+        return 1;
+      case 0xA:
+        Q_strncpyz(&dest, pszKeyValue, 0x2000);
+        *(uint32_t *)&pStruct[pField->iOffset] = R_RegisterModel(&dest);
+        if ( *(uint32_t *)&pStruct[pField->iOffset] )
+        {
+          return 1;
+        }
+        return 0;
+      case 0xB:
+      case 0xC:
+      case 9:
+        return 1;
+      case 0xD:
+        Q_strncpyz(&name, pszKeyValue, 245);
+        *(uint32_t *)&pStruct[pField->iOffset] = PhysPreset_Register(&name);
+        break;
+      case 0xE:
+//        *(uint16_t *)&pStruct[pField->iOffset] = SL_GetLowercaseString(pszKeyValue, 0, 0);
+        *(uint16_t *)&pStruct[pField->iOffset] = SL_GetLowercaseString(pszKeyValue, 0);
+
+        break;
+      default:
+        if ( pField->iFieldType >= 0 )
+        {
+          assertx(0, "ParseConfigStringToStruct is out of sync with the csParseFieldType_t enum list\n");
+        }
+        else
+        {
+          assertx(0, va("Negative field type %i given to ParseConfigStringToStruct\n", pField->iFieldType));
+        }
+        break;
+    }
+    return 1;
+  }
+  if ( iMaxFieldTypes > 0 && pField->iFieldType < iMaxFieldTypes )
+  {
+    assert(parseSpecialFieldType != NULL);
+    if ( !parseSpecialFieldType(pStruct, pszKeyValue, pField->iFieldType, pField->iOffset) )
+    {
+      return 0;
+    }
+    return 1;
+  }
+  assertx(0, va("Bad field type %i\n", pField->iFieldType));
+  Com_Error(ERR_DROP, "Bad field type %i\n", pField->iFieldType);
+  return 0;
+}
+*/
+int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKeyValue, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrcpy)(char *, const char *))
+{
+  char dest[0x2000];
+
+  if ( pField->iFieldType < 15 )
+  {
+    switch ( pField->iFieldType )
+    {
+      case 0:
+        parseStrcpy(&pStruct[pField->iOffset], pszKeyValue);
+        return 1;
+      case 1:
+        Q_strncpyz(&pStruct[pField->iOffset], pszKeyValue, 1024);
+        return 1;
+      case 2:
+        Q_strncpyz(&pStruct[pField->iOffset], pszKeyValue, 64);
+        return 1;
+      case 3:
+        Q_strncpyz(&pStruct[pField->iOffset], pszKeyValue, 256);
+        return 1;
+      case 4:
+        *(uint32_t *)&pStruct[pField->iOffset] = atoi(pszKeyValue);
+        return 1;
+      case 5:
+        *(uint32_t *)&pStruct[pField->iOffset] = atoi(pszKeyValue) != 0;
+        return 1;
+      case 6:
+        *(float *)&pStruct[pField->iOffset] = atof(pszKeyValue);
+        return 1;
+      case 7:
+        *(uint32_t *)&pStruct[pField->iOffset] = (signed int)(atof(pszKeyValue) * 1000.0);
+        return 1;
+      case 8:
+        Q_strncpyz(dest, pszKeyValue, sizeof(dest));
+        *(uint32_t *)&pStruct[pField->iOffset] = (uint32_t)FX_Register(dest);
+        return 1;
+      case 9:
+        Q_strncpyz(dest, pszKeyValue, sizeof(dest));
+        *(uint32_t *)&pStruct[pField->iOffset] = (uint32_t)R_RegisterModel(dest);
+        if ( *(uint32_t *)&pStruct[pField->iOffset] )
+        {
+          return 1;
+        }
+        return 0;
+      case 0xA:
+        Q_strncpyz(dest, pszKeyValue, sizeof(dest));
+        *(uint32_t *)&pStruct[pField->iOffset] = Material_RegisterHandle(dest);
+        if ( *(uint32_t *)&pStruct[pField->iOffset] )
+        {
+          return 1;
+        }
+        return 0;
+      case 0xB:
+        Q_strncpyz(dest, pszKeyValue, sizeof(dest));
+        *(uint32_t *)&pStruct[pField->iOffset] = (uint32_t)Com_FindSoundAlias(dest);
+        return 1;
+      default:
+        if ( pField->iFieldType >= 0 )
+        {
+          assertx(0, "ParseConfigStringToStruct is out of sync with the csParseFieldType_t enum list\n");
+        }
+        else
+        {
+          assertx(0, va("Negative field type %i given to ParseConfigStringToStruct\n", pField->iFieldType));
+        }
+        break;
+    }
+    return 1;
+  }
+  if ( iMaxFieldTypes > 0 && pField->iFieldType < iMaxFieldTypes )
+  {
+    assert(parseSpecialFieldType != NULL);
+    if ( !parseSpecialFieldType(pStruct, pszKeyValue, pField->iFieldType, pField->iOffset) )
+    {
+      return 0;
+    }
+    return 1;
+  }
+  assertx(0, va("Bad field type %i\n", pField->iFieldType));
+  Com_Error(ERR_DROP, "Bad field type %i\n", pField->iFieldType);
+  return 0;
+}
+
+
+
+bool __cdecl ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrCpy)(char *, const char *))
+{
+  char *pszKeyValue;
+  char error;
+  cspField_t *pField;
+  int iField;
+
+  error = 0;
+  iField = 0;
+  pField = pFieldList;
+  while ( iField < iNumFields )
+  {
+    pszKeyValue = Info_ValueForKey(pszBuffer, pField->szName);
+    if ( *pszKeyValue )
+    {
+      error |= KeyValueToField(pStruct, pField, pszKeyValue, iMaxFieldTypes, parseSpecialFieldType, parseStrCpy) == 0;
+    }
+    ++iField;
+    ++pField;
+  }
+  return iField == iNumFields && !error;
+}
+
+
+const char *__cdecl Com_GetExtensionSubString(const char *filename)
+{
+  const char *substr;
+
+  assert(filename);
+
+  substr = 0;
+  while ( *filename )
+  {
+    if ( *filename == '.' )
+    {
+      substr = filename;
+    }
+    else if ( *filename == '/' || *filename == '\\' )
+    {
+      substr = 0;
+    }
+    ++filename;
+  }
+  if ( !substr )
+  {
+    substr = filename;
+  }
+  return substr;
+}
+
+
+void __cdecl Com_StripExtension(const char *in, char *out)
+{
+  const char *extension;
+
+  extension = Com_GetExtensionSubString(in);
+  while ( in != extension )
+  {
+    *out++ = *in++;
+  }
+  *out = 0;
 }

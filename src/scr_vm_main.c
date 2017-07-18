@@ -1013,7 +1013,7 @@ void GetVirtualFunctionArray(){
     funtype = ptr->developer;
 
     Com_sprintf(line, sizeof(line), "\t{\"%s\", (void*)%p, %x},\n", funname, funaddr, funtype);
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
 
     }
 
@@ -1042,7 +1042,7 @@ void GetVirtualFunctionArray(){
     funtype = ptr->developer;
 
     Com_sprintf(line, sizeof(line), "\tScr_AddFunction(\"%s\", (void*)%p, %i);\n", funname, funaddr, funtype);
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
 
     }
 
@@ -1080,16 +1080,16 @@ void GetDeltaEntArray(){
 
     subptr = ptr->sub;
     Com_sprintf(line, sizeof(line), "netField_t entityStateFields_%i[] =\n{\n", j);
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
 
     for(i = 0; i < ptr->size; i++, subptr++)
     {
         Com_sprintf(line, sizeof(line), "\t{ NETF( %s ), %i, %i, %i},\n", subptr->name, subptr->offset, subptr->bits, subptr->zero);
-        Q_strcat(buffer, sizeof(buffer), line);
+        Q_strncat(buffer, sizeof(buffer), line);
     }
 
     Com_sprintf(line, sizeof(line), "};\n\n\n");
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
 
     }
 
@@ -1119,7 +1119,7 @@ void GetDeltaPlayerArray(){
     for(j=0, ptr = (netlistPlayer_t*)0x82283c0; ptr->name != NULL; ptr++, j++){
 
     Com_sprintf(line, sizeof(line), "\tint\t\t%s; %i\n", ptr->name, ptr->offset);
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
     Com_Printf("%s\n", line);
 
     }
@@ -1160,7 +1160,7 @@ void StringIndexArray(){
 
     Com_Printf("String: %s\n", ptr->string);
     Com_sprintf(line, sizeof(line), "\tshort   %s;\n", ptr->string);
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
     }
 
     FS_WriteFile("array.txt", buffer, strlen(buffer));
@@ -1180,7 +1180,7 @@ void GetPlayerFieldArray(){
     for(j=0, ptr = (scrClientFields_t*)0x8215780; ptr->name != NULL; ptr++, j++){
 
     Com_sprintf(line, sizeof(line), "\tScr_AddPlayerField(%s, %d, %d, %p, %p)\n", ptr->name, ptr->val1, ptr->val1, ptr->setfun, ptr->getfun);
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
     Com_Printf("%s\n", line);
 
     }
@@ -1201,19 +1201,19 @@ void GetEntityFieldArray()
     Com_Memset(buffer, 0, sizeof(buffer));
 
     Com_sprintf(line, sizeof(line), "entity_fields_t entityField[]");
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
     Com_Printf("%s\n", line);
 
     for (j = 0, ptr = (ent_field_t *)0x82202a0; ptr->name != NULL; ptr++, j++)
     {
 
         Com_sprintf(line, sizeof(line), "\t{ \"%s\", %d, %d, (void*)%p) },\n", ptr->name, ptr->val1, ptr->val2, ptr->setfun);
-        Q_strcat(buffer, sizeof(buffer), line);
+        Q_strncat(buffer, sizeof(buffer), line);
         Com_Printf("%s\n", line);
     }
 
     Com_sprintf(line, sizeof(line), "};\n");
-    Q_strcat(buffer, sizeof(buffer), line);
+    Q_strncat(buffer, sizeof(buffer), line);
     Com_Printf("%s\n", line);
 
     FS_WriteFile("array.txt", buffer, strlen(buffer));
@@ -1243,7 +1243,7 @@ void GetHuffmanArray(){
         for(j=0; j < 256 ; j++){
 
         Com_sprintf(line, sizeof(line), "\t%d,\t\t\t//%d\n", number[j],j);
-        Q_strcat(buffer, sizeof(buffer), line);
+        Q_strncat(buffer, sizeof(buffer), line);
 
     }
 
@@ -1565,4 +1565,23 @@ unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvar
     while ( var->hash.u.prevSibling && scrVarGlob_high[var->hash.u.prevSibling].hash.id && i < maxvariables);
 
     return 0;//GetArraySize(ptr);
+}
+
+void Scr_DumpScriptThreads( ){}; //Dummy
+void Scr_DumpScriptVariablesDefault( ){}; //Dummy
+
+
+void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
+{
+/*
+  Scr_DumpScriptThreads(inst);
+  Scr_DumpScriptVariablesDefault(inst);
+  scrVmPub.terminal_error = 1;
+  Scr_Error(inst, error, 0);
+*/
+  Scr_DumpScriptThreads( );
+  Scr_DumpScriptVariablesDefault( );
+  scrVmPub.terminal_error = 1;
+  Scr_Error(error);
+
 }

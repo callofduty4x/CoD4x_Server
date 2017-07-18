@@ -74,7 +74,7 @@ extern cvar_t* com_timescale;
 extern cvar_t* com_sv_running;
 extern cvar_t* com_logfile;
 extern cvar_t* com_developer;
-extern cvar_t* com_useFastfiles;
+extern cvar_t* useFastFile;
 extern cvar_t* com_animCheck;
 extern cvar_t* com_version;
 extern qboolean com_securemode;

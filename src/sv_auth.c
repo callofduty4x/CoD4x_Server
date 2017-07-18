@@ -651,7 +651,7 @@ void Auth_WriteAdminConfig(char* buffer, int size)
 	mvabuf;
 
 
-    Q_strcat(buffer, size, "\n//Admins authorization data\n");
+    Q_strncat(buffer, size, "\n//Admins authorization data\n");
 
     for ( admin = auth_admins.admins, i = 0; i < MAX_AUTH_ADMINS ; admin++, i++ ){
 
@@ -667,8 +667,8 @@ void Auth_WriteAdminConfig(char* buffer, int size)
         Info_SetValueForKey(infostring, "username", admin->username);
         Info_SetValueForKey(infostring, "undercover", va("%i", admin->undercover));
 				Info_SetValueForKey(infostring, "steamid", va("%llu", admin->steamid));
-				Q_strcat(buffer, size, infostring);
-        Q_strcat(buffer, size, "\\\n");
+				Q_strncat(buffer, size, infostring);
+        Q_strncat(buffer, size, "\\\n");
     }
 }
 

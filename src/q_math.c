@@ -254,7 +254,7 @@ float vec2_maxabs(vec2_t v)
 vec3_t vec3_origin = {0,0,0};
 
 
-vec_t VectorNormalize( vec3_t v ) {
+vec_t Vec3Normalize( vec3_t v ) {
 	float length, ilength;
 
 	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
@@ -274,8 +274,17 @@ vec_t VectorLength( const vec3_t v ) {
 	return sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
 }
 
+vec_t Vec2Length( const vec2_t v ) {
+	return sqrt( v[0] * v[0] + v[1] * v[1] );
+}
+
 vec_t VectorLengthSquared( const vec3_t v ) {
 	return ( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
+}
+
+vec_t Vec4LengthSq( const vec4_t v)
+{
+	return ( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3] );
 }
 
 void VectorInverse( vec3_t v ) {
@@ -424,5 +433,143 @@ void ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_t vP
 	VectorNormalize( vec );
 	// project onto the directional vector for this segment
 	VectorMA( vStart, DotProduct( pVec, vec ), vec, vProj );
+}
+
+
+vec_t Vec3NormalizeTo( const vec3_t v, vec3_t out )
+{
+  float length;
+
+  length = VectorLength(v);
+  if ( length == 0.0 )
+  {
+    length = 1.0;
+  }
+  VectorScale(v, length, out);
+  return length;
+}
+
+double __cdecl Vec2NormalizeTo(const float *v, float *out)
+{
+  float length;
+
+  length = Vec2Length(v);
+  if ( length == 0.0 )
+  {
+    length = 1.0;
+  }
+  Vec2Scale(v, length, out);
+  return length;
+}
+
+void __cdecl MatrixMultiply43(const float (*in1)[3], const float (*in2)[3], float (*out)[3])
+{
+  assert(in1 != out);
+  assert(in2 != out);
+
+  (*out)[0] = (((*in1)[0] * (*in2)[0]) + ((*in1)[1] * (*in2)[3])) + ((*in1)[2] * (*in2)[6]);
+  (*out)[3] = (((*in1)[3] * (*in2)[0]) + ((*in1)[4] * (*in2)[3])) + ((*in1)[5] * (*in2)[6]);
+  (*out)[6] = (((*in1)[6] * (*in2)[0]) + ((*in1)[7] * (*in2)[3])) + ((*in1)[8] * (*in2)[6]);
+  (*out)[1] = (((*in1)[0] * (*in2)[1]) + ((*in1)[1] * (*in2)[4])) + ((*in1)[2] * (*in2)[7]);
+  (*out)[4] = (((*in1)[3] * (*in2)[1]) + ((*in1)[4] * (*in2)[4])) + ((*in1)[5] * (*in2)[7]);
+  (*out)[7] = (((*in1)[6] * (*in2)[1]) + ((*in1)[7] * (*in2)[4])) + ((*in1)[8] * (*in2)[7]);
+  (*out)[2] = (((*in1)[0] * (*in2)[2]) + ((*in1)[1] * (*in2)[5])) + ((*in1)[2] * (*in2)[8]);
+  (*out)[5] = (((*in1)[3] * (*in2)[2]) + ((*in1)[4] * (*in2)[5])) + ((*in1)[5] * (*in2)[8]);
+  (*out)[8] = (((*in1)[6] * (*in2)[2]) + ((*in1)[7] * (*in2)[5])) + ((*in1)[8] * (*in2)[8]);
+  (*out)[9] = ((((*in1)[9] * (*in2)[0]) + ((*in1)[10] * (*in2)[3])) + ((*in1)[11] * (*in2)[6])) + (*in2)[9];
+  (*out)[10] = ((((*in1)[9] * (*in2)[1]) + ((*in1)[10] * (*in2)[4])) + ((*in1)[11] * (*in2)[7])) + (*in2)[10];
+  (*out)[11] = ((((*in1)[9] * (*in2)[2]) + ((*in1)[10] * (*in2)[5])) + ((*in1)[11] * (*in2)[8])) + (*in2)[11];
+}
+
+
+void __cdecl MatrixTranspose(const float (*in)[3], float (*out)[3])
+{
+  assert( in != out);
+
+  (*out)[0] = (*in)[0];
+  (*out)[1] = (*in)[3];
+  (*out)[2] = (*in)[6];
+  (*out)[3] = (*in)[1];
+  (*out)[4] = (*in)[4];
+  (*out)[5] = (*in)[7];
+  (*out)[6] = (*in)[2];
+  (*out)[7] = (*in)[5];
+  (*out)[8] = (*in)[8];
+}
+
+void __cdecl MatrixTransposeTransformVector(const float *in1, const float (*in2)[3], float *out)
+{
+  assert( in1 != out);
+
+  out[0] = ((*in1 * (*in2)[0]) + (in1[1] * (*in2)[1])) + (in1[2] * (*in2)[2]);
+  out[1] = ((*in1 * (*in2)[3]) + (in1[1] * (*in2)[4])) + (in1[2] * (*in2)[5]);
+  out[2] = ((*in1 * (*in2)[6]) + (in1[1] * (*in2)[7])) + (in1[2] * (*in2)[8]);
+}
+
+
+void __cdecl AxisToQuat(const float (*mat)[3], float *out)
+{
+  float invLength;
+  float test[4][4];
+  int best;
+  float testSizeSq;
+  test[0][0] = (*mat)[5] - (*mat)[7];
+  test[0][1] = (*mat)[6] - (*mat)[2];
+  test[0][2] = (*mat)[1] - (*mat)[3];
+  test[0][3] = (*mat)[0] + (*mat)[4] + (*mat)[8] + 1.0;
+  testSizeSq = Vec4LengthSq(test[0]);
+  if ( testSizeSq < 1.0 )
+  {
+    test[1][0] = (*mat)[6] + (*mat)[2];
+    test[1][1] = (*mat)[7] + (*mat)[5];
+    test[1][2] = (*mat)[8] - (*mat)[4] - (*mat)[0] + 1.0;
+    test[1][3] = test[0][2];
+    testSizeSq = Vec4LengthSq(test[1]);
+    if ( testSizeSq < 1.0 )
+    {
+      test[2][0] = (*mat)[0] - (*mat)[4] - (*mat)[8] + 1.0;
+      test[2][1] = (*mat)[3] + (*mat)[1];
+      test[2][2] = test[0][0];
+      test[2][3] = test[1][0];
+      testSizeSq = Vec4LengthSq(test[2]);
+      if ( testSizeSq < 1.0 )
+      {
+        test[3][0] = test[2][1];
+        test[3][1] = (*mat)[4] - (*mat)[0] - (*mat)[8] + 1.0;
+        test[3][2] = test[0][1];
+        test[3][3] = test[1][1];
+        testSizeSq = Vec4LengthSq(test[3]);
+        assertx(testSizeSq >= 1.0f, "(testSizeSq) = %g", testSizeSq);
+        best = 3;
+      }
+      else
+      {
+        best = 2;
+      }
+    }
+    else
+    {
+      best = 1;
+    }
+  }
+  else
+  {
+    best = 0;
+  }
+
+  assert(testSizeSq);
+
+  invLength = 1.0 / sqrt(testSizeSq);
+
+  VectorScale4(test[best], invLength, out);
+
+}
+
+void __cdecl AnglesToQuat(const float *angles, float *quat)
+{
+  float axis[3][3];
+
+  AnglesToAxis(angles, axis);
+  AxisToQuat(axis, quat);
 }
 

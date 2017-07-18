@@ -571,7 +571,7 @@ qboolean HTTP_BuildNewRequest( ftRequest_t* request, const char* method, msg_t* 
 	}
 	if(additionalheaderlines && additionalheaderlines[0])
 	{
-		Q_strcat(extheaderfields, sizeof(extheaderfields), additionalheaderlines);
+		Q_strncat(extheaderfields, sizeof(extheaderfields), additionalheaderlines);
 	}
 	Com_sprintf(getbuffer, sizeof(getbuffer),
 				"%s %s HTTP/1.1\r\n"
@@ -627,9 +627,9 @@ static qboolean HTTPSplitURL(const char* url, char* address, int lenaddress, cha
 	if (strchr(address, ':') == NULL) {
 		if(tls == qfalse)
 		{
-			Q_strcat(address, lenaddress, ":80");
+			Q_strncat(address, lenaddress, ":80");
 		}else{
-			Q_strcat(address, lenaddress, ":443");
+			Q_strncat(address, lenaddress, ":443");
 		}
 	}
 
@@ -1097,11 +1097,11 @@ static int HTTPS_SetupCAs()
   byte *ca_cert;
   char errormsg[1024];
 
-  Sys_EnterCriticalSection(CRIT_HTTPS);
+  Sys_EnterCriticalSection(CRITSECT_HTTPS);
 
   if(ca_loaded)
   {
-    Sys_LeaveCriticalSection(CRIT_HTTPS);
+    Sys_LeaveCriticalSection(CRITSECT_HTTPS);
     return 1;
   }
 
@@ -1119,20 +1119,20 @@ static int HTTPS_SetupCAs()
         mbedtls_strerror(ret, errormsg, sizeof(errormsg));
         Com_Printf( "HTTPSRequest failed: mbedtls_x509_crt_parse couldn't parse any returned %s\n", errormsg);
         FS_FreeFile(ca_cert);
-        Sys_LeaveCriticalSection(CRIT_HTTPS);
+        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
         return 0;
     }
     if( ret > 0 )
     {
         Com_Printf( "HTTPSRequest failed: mbedtls_x509_crt_parse failed to parse %d certificates\n", ret);
         FS_FreeFile(ca_cert);
-        Sys_LeaveCriticalSection(CRIT_HTTPS);
+        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
         return 0;
     }
     FS_FreeFile(ca_cert);
   }
   ca_loaded = 1;
-  Sys_LeaveCriticalSection(CRIT_HTTPS);
+  Sys_LeaveCriticalSection(CRITSECT_HTTPS);
   return 1;
 }
 
@@ -1293,7 +1293,7 @@ static void FTP_SplitURL(const char* url, char* address, int lenaddress, char* p
 	}
 	/* See if we have a port for our address given. If not complete this. */
 	if (strchr(address, ':') == NULL) {
-		Q_strcat(address, lenaddress, ":21");
+		Q_strncat(address, lenaddress, ":21");
 	}
 	/* In case we had no login we are done */
 	if(charloc == NULL)

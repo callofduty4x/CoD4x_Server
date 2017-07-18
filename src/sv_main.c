@@ -131,6 +131,9 @@ cvar_t* sv_updatebackendname;
 cvar_t* sv_legacymode;
 cvar_t* sv_steamgroup;
 
+serverStatic_t		svs;
+server_t		sv;
+svsHeader_t		svsHeader;
 serverStaticExt_t	svse;	// persistant server info across maps
 permServerStatic_t	psvs;	// persistant even if server does shutdown
 
@@ -3574,7 +3577,7 @@ qboolean SV_Map( const char *levelname ) {
     Q_strncpyz(mapname, map, sizeof(mapname));
     Q_strlwr(mapname);
 
-    if(!com_useFastfiles->integer)
+    if(!useFastFile->boolean)
     {
         Com_sprintf(expanded, sizeof(expanded), "maps/mp/%s.d3dbsp", mapname);
         if ( FS_ReadFile( expanded, NULL ) == -1 ) {
@@ -3904,7 +3907,7 @@ void SV_SetSystemInfoConfig(void)
   {
     if ( strlen(buf) + 10 <= 1024 )
     {
-        Q_strcat(buf, 1024, "\\fs_game\\\\");
+        Q_strncat(buf, 1024, "\\fs_game\\\\");
     }
     else
     {
@@ -4769,7 +4772,7 @@ void SV_SpawnServer(const char *mapname)
 #ifndef DEDICATEDONLY
   char loadffname[128];
 
-  if ( com_useFastfiles->boolean && !com_dedicated->integer )
+  if ( useFastFile->boolean && !com_dedicated->integer )
   {
     //DB_AddUserMapDir(mapname); //Done by FS_Startup
     DB_ResetZoneSize(0);
@@ -4787,7 +4790,7 @@ void SV_SpawnServer(const char *mapname)
   CL_InitLoad(mapname, sv_g_gametype->string);
 #endif
 
-  if ( com_useFastfiles->boolean )
+  if ( useFastFile->boolean )
   {
     DB_SyncXAssets();
     DB_UpdateDebugZone();
@@ -4838,7 +4841,7 @@ void SV_SpawnServer(const char *mapname)
 
   SV_ClearServer(); //Inline on MACOS_X
 
-  if ( !com_useFastfiles->boolean )
+  if ( !useFastFile->boolean )
   {
     FS_Shutdown(qtrue);
     FS_ClearPakReferences( 0 ); //FS_ClearIwdReferences();
@@ -4865,7 +4868,7 @@ void SV_SpawnServer(const char *mapname)
     FS_Restart( sv.checksumFeed );
 
 
-  if ( !com_useFastfiles->boolean )
+  if ( !useFastFile->boolean )
   {
     Com_GetBspFilename(bspfilename, 64, mapname);
     SV_SetExpectedHunkUsage(bspfilename);
@@ -4873,7 +4876,7 @@ void SV_SpawnServer(const char *mapname)
 #ifndef DEDICATEDONLY
   CL_StartLoading( );
 #endif
-  if ( com_useFastfiles->boolean )
+  if ( useFastFile->boolean )
   {
     //DB_AddUserMapDir(mapname); //Done by FS_Startup
     zoneinfo.name = mapname;
@@ -4906,13 +4909,13 @@ void SV_SpawnServer(const char *mapname)
 #endif
 
   Com_GetBspFilename(bspfilename, sizeof(bspfilename), mapname);
-  if ( !com_useFastfiles->boolean )
+  if ( !useFastFile->boolean )
   {
     Com_LoadBsp(bspfilename);
   }
   CM_LoadMap(bspfilename, &checksum);
   Com_LoadWorld(bspfilename);
-  if ( !com_useFastfiles->boolean )
+  if ( !useFastFile->boolean )
   {
     Com_UnloadBsp();
   }
@@ -4920,7 +4923,7 @@ void SV_SpawnServer(const char *mapname)
   SV_GenerateServerId(qtrue); //Long restart
 
   sv.state = SS_LOADING;
-  if ( !com_useFastfiles->boolean )
+  if ( !useFastFile->boolean )
   {
     Com_LoadSoundAliases(bspfilename, "all_mp", 2u);
   }

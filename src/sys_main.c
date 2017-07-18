@@ -336,12 +336,12 @@ Sys_Print
 */
 void Sys_Print( const char *msg )
 {
-	Sys_EnterCriticalSection(CRIT_CONSOLE);
+	Sys_EnterCriticalSection(CRITSECT_CONSOLE);
 
 //	CON_LogWrite( msg );
 	CON_Print( msg );
 
-	Sys_LeaveCriticalSection(CRIT_CONSOLE);
+	Sys_LeaveCriticalSection(CRITSECT_CONSOLE);
 
 }
 
@@ -473,9 +473,9 @@ int Sys_Main(char* commandLine){
 
     Sys_InitializeCriticalSections();
 
-    Sys_ThreadMain();
+    Sys_InitMainThread();
 
-	Com_InitSmallZoneMemory( );
+    Com_InitSmallZoneMemory( );
 
     CON_Init();
     extractor_init();
@@ -547,4 +547,11 @@ void Sys_BeginShutdownWatchdog()
 	watchdogActive = true;
 	Sys_CreateNewThread(Sys_ShutdownWatchdogThread, &tinfo, (void*)timeout);
 
+}
+
+void Sys_SleepMSec(int msec);
+
+void Sys_Sleep(int msec)
+{
+    Sys_SleepMSec(msec);
 }

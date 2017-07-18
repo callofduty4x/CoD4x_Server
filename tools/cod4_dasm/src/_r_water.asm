@@ -1,0 +1,708 @@
+;Imports of r_water:
+	extern sin
+	extern FFT_Init
+	extern r_picmip_water
+	extern Image_UploadData
+	extern R_DownsampleMipMapBilinear
+	extern FFT
+
+;Exports of r_water:
+	global _GLOBAL__I__Z28R_UploadWaterTextureInternalPv
+	global waterGlobStatic
+	global waterGlob
+	global _Z41__static_initialization_and_destruction_0ii_dup_1
+	global R_InitWater
+	global Load_PicmipWater
+	global R_UploadWaterTexture
+	global R_UploadWaterTextureInternal
+
+
+SECTION .text
+
+
+;R_InitWater()
+R_InitWater:
+	push ebp
+	mov ebp, esp
+	push esi
+	push ebx
+	sub esp, 0x20
+	xor ebx, ebx
+	mov esi, waterGlobStatic
+R_InitWater_10:
+	cvtsi2ss xmm0, ebx
+	mulss xmm0, [_float_0_35156250]
+	cvtss2sd xmm0, xmm0
+	mulsd xmm0, [_double_0_01745329]
+	movsd [esp], xmm0
+	call sin
+	fstp qword [ebp-0x10]
+	cvtsd2ss xmm0, [ebp-0x10]
+	movss [esi], xmm0
+	add ebx, 0x1
+	add esi, 0x4
+	cmp ebx, 0x400
+	jnz R_InitWater_10
+	mov dword [esp+0x4], waterGlobStatic+0x1000
+	mov dword [esp], waterGlobStatic+0x1800
+	call FFT_Init
+	add esp, 0x20
+	pop ebx
+	pop esi
+	pop ebp
+	ret
+
+
+;Load_PicmipWater(water_t**)
+Load_PicmipWater:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x18
+	mov eax, [ebp+0x8]
+	mov ebx, [eax]
+	mov edx, [ebx+0xc]
+	mov eax, r_picmip_water
+	mov eax, [eax]
+	mov ecx, [eax+0xc]
+	mov esi, edx
+	sar esi, cl
+	mov eax, 0x4
+	cmp esi, 0x3
+	cmovle esi, eax
+	mov [ebp-0x1c], esi
+	mov esi, [ebx+0x10]
+	mov edi, esi
+	sar edi, cl
+	cmp edi, 0x3
+	cmovg eax, edi
+	mov [ebp-0x18], eax
+	cmp [ebp-0x1c], edx
+	jz Load_PicmipWater_10
+Load_PicmipWater_60:
+	mov eax, edx
+	cdq
+	idiv dword [ebp-0x1c]
+	mov [ebp-0x24], eax
+	mov edx, [ebp-0x1c]
+	mov [ebx+0xc], edx
+	mov esi, [ebp+0x8]
+	mov eax, [esi]
+	mov edi, [ebp-0x18]
+	mov [eax+0x10], edi
+	test edx, edx
+	jle Load_PicmipWater_20
+	mov eax, [ebp-0x24]
+	sub eax, 0x1
+	imul eax, [ebp-0x24]
+	imul eax, edx
+	mov [ebp-0x20], eax
+	xor edi, edi
+	mov dword [ebp-0x10], 0x0
+	mov dword [ebp-0x14], 0x0
+Load_PicmipWater_50:
+	mov eax, [ebp-0x18]
+	test eax, eax
+	jle Load_PicmipWater_30
+	mov esi, [ebp-0x10]
+	shl esi, 0x3
+	xor ebx, ebx
+Load_PicmipWater_40:
+	mov edx, [ebp+0x8]
+	mov eax, [edx]
+	mov ecx, [eax+0x4]
+	mov eax, [ecx+edi*8]
+	mov edx, [ecx+edi*8+0x4]
+	mov [esi+ecx], eax
+	mov [esi+ecx+0x4], edx
+	add dword [ebp-0x10], 0x1
+	add edi, [ebp-0x24]
+	add ebx, 0x1
+	add esi, 0x8
+	cmp [ebp-0x18], ebx
+	jnz Load_PicmipWater_40
+Load_PicmipWater_30:
+	add edi, [ebp-0x20]
+	add dword [ebp-0x14], 0x1
+	mov esi, [ebp-0x14]
+	cmp [ebp-0x1c], esi
+	jnz Load_PicmipWater_50
+Load_PicmipWater_20:
+	add esp, 0x18
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+Load_PicmipWater_10:
+	cmp eax, esi
+	jnz Load_PicmipWater_60
+	jmp Load_PicmipWater_20
+
+
+;R_UploadWaterTexture(water_t*, float)
+R_UploadWaterTexture:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	movss xmm0, dword [ebp+0xc]
+	mov eax, [ebp+0x8]
+	ucomiss xmm0, [eax]
+	jp R_UploadWaterTexture_10
+	jnz R_UploadWaterTexture_10
+	leave
+	ret
+R_UploadWaterTexture_10:
+	movss [eax], xmm0
+	lea eax, [ebp+0x8]
+	mov [esp], eax
+	call R_UploadWaterTextureInternal
+	leave
+	ret
+
+
+;R_UploadWaterTextureInternal(void*)
+R_UploadWaterTextureInternal:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0xbc
+	mov dword [ebp-0x4c], 0x0
+	mov eax, [ebp+0x8]
+	mov eax, [eax]
+	mov [ebp-0x48], eax
+	cvtss2sd xmm0, [eax]
+	mulsd xmm0, [_double_162_97466173]
+	cvtsd2ss xmm6, xmm0
+	mov eax, [eax+0xc]
+	mov [ebp-0x7c], eax
+	mov esi, eax
+	mov edx, [ebp-0x48]
+	imul esi, [edx+0x10]
+	mov ecx, edx
+	mov edx, [edx+0x8]
+	mov ecx, [ecx+0x4]
+	test esi, esi
+	jle R_UploadWaterTextureInternal_10
+	xor edi, edi
+	mov ebx, waterGlob
+	xorps xmm5, xmm5
+	movss xmm3, dword [g_fltMin__uint4_dup_1+0x10]
+	movss xmm4, dword [g_fltMin__uint4_dup_1+0x20]
+	jmp R_UploadWaterTextureInternal_20
+R_UploadWaterTextureInternal_40:
+	mov dword [ebx], 0x0
+	mov dword [ebx+0x4], 0x0
+	add edi, 0x1
+	add edx, 0x4
+	add ecx, 0x8
+	add ebx, 0x8
+	cmp esi, edi
+	jz R_UploadWaterTextureInternal_30
+R_UploadWaterTextureInternal_20:
+	mov eax, [edx]
+	test eax, eax
+	jz R_UploadWaterTextureInternal_40
+	movaps xmm0, xmm6
+	mulss xmm0, [edx]
+	maxss xmm0, xmm5
+	movaps xmm1, xmm3
+	cmpss xmm1, xmm0, 0x2
+	movaps xmm2, xmm4
+	cmpss xmm2, xmm0, 0x2
+	movaps [ebp-0x68], xmm2
+	movaps xmm2, xmm1
+	andps xmm2, xmm3
+	pslld xmm1, 0x1f
+	subps xmm0, xmm2
+	cvttps2dq xmm0, xmm0
+	paddd xmm0, xmm1
+	por xmm0, [ebp-0x68]
+	movdqa [ebp-0x78], xmm0
+	mov eax, [ebp-0x78]
+	and eax, 0x3ff
+	movss xmm1, dword [eax*4+waterGlobStatic]
+	add eax, 0xff
+	and eax, 0x3ff
+	movss xmm0, dword [eax*4+waterGlobStatic]
+	mulss xmm0, [ecx]
+	movss [ebx], xmm0
+	mulss xmm1, [ecx+0x4]
+	movss [ebx+0x4], xmm1
+	add edi, 0x1
+	add edx, 0x4
+	add ecx, 0x8
+	add ebx, 0x8
+	cmp esi, edi
+	jnz R_UploadWaterTextureInternal_20
+R_UploadWaterTextureInternal_30:
+	mov eax, [ebp-0x48]
+	mov eax, [eax+0xc]
+	mov [ebp-0x7c], eax
+R_UploadWaterTextureInternal_10:
+	cmp dword [ebp-0x7c], 0x1
+	jz R_UploadWaterTextureInternal_50
+	mov dword [ebp-0x44], 0x0
+	mov edx, 0x1
+R_UploadWaterTextureInternal_60:
+	add dword [ebp-0x44], 0x1
+	mov eax, edx
+	movzx ecx, byte [ebp-0x44]
+	shl eax, cl
+	cmp [ebp-0x7c], eax
+	jnz R_UploadWaterTextureInternal_60
+R_UploadWaterTextureInternal_370:
+	mov ebx, [ebp-0x48]
+	mov edi, [ebx+0x10]
+	test edi, edi
+	jg R_UploadWaterTextureInternal_70
+R_UploadWaterTextureInternal_320:
+	mov esi, [ebp-0x7c]
+	test esi, esi
+	jz R_UploadWaterTextureInternal_80
+	mov dword [ebp-0x40], 0x0
+R_UploadWaterTextureInternal_100:
+	add dword [ebp-0x40], 0x1
+	mov edx, [ebp-0x40]
+	cmp [ebp-0x7c], edx
+	jbe R_UploadWaterTextureInternal_90
+	test edx, edx
+	jz R_UploadWaterTextureInternal_100
+	mov eax, [ebp-0x7c]
+	imul eax, edx
+	shl eax, 0x3
+	mov [ebp-0x1c], eax
+	xor edi, edi
+	mov edx, eax
+	mov ebx, eax
+R_UploadWaterTextureInternal_110:
+	mov eax, [edx+waterGlob]
+	mov edx, [edx+waterGlob+0x4]
+	mov [ebp-0xa0], eax
+	mov [ebp-0x9c], edx
+	mov ecx, [ebp-0x7c]
+	imul ecx, edi
+	add ecx, [ebp-0x40]
+	shl ecx, 0x3
+	mov eax, [ecx+waterGlob]
+	mov edx, [ecx+waterGlob+0x4]
+	mov [ebx+waterGlob], eax
+	mov [ebx+waterGlob+0x4], edx
+	mov eax, [ebp-0xa0]
+	mov edx, [ebp-0x9c]
+	mov [ecx+waterGlob], eax
+	mov [ecx+waterGlob+0x4], edx
+	add edi, 0x1
+	add ebx, 0x8
+	mov [ebp-0x1c], ebx
+	cmp [ebp-0x40], edi
+	jz R_UploadWaterTextureInternal_100
+	mov edx, ebx
+	mov ebx, [ebp-0x1c]
+	jmp R_UploadWaterTextureInternal_110
+R_UploadWaterTextureInternal_90:
+	mov ecx, [ebp-0x48]
+	mov ecx, [ecx+0xc]
+	mov [ebp-0x7c], ecx
+R_UploadWaterTextureInternal_80:
+	mov ebx, [ebp-0x7c]
+	test ebx, ebx
+	jg R_UploadWaterTextureInternal_120
+R_UploadWaterTextureInternal_360:
+	mov ecx, [ebp-0x7c]
+	test ecx, ecx
+	jz R_UploadWaterTextureInternal_130
+	mov dword [ebp-0x3c], 0x0
+R_UploadWaterTextureInternal_150:
+	add dword [ebp-0x3c], 0x1
+	mov edx, [ebp-0x3c]
+	cmp [ebp-0x7c], edx
+	jbe R_UploadWaterTextureInternal_140
+	test edx, edx
+	jz R_UploadWaterTextureInternal_150
+	mov eax, [ebp-0x7c]
+	imul eax, edx
+	shl eax, 0x3
+	mov [ebp-0x20], eax
+	xor edi, edi
+	mov edx, eax
+	mov ebx, eax
+R_UploadWaterTextureInternal_160:
+	mov eax, [edx+waterGlob]
+	mov edx, [edx+waterGlob+0x4]
+	mov [ebp-0xa0], eax
+	mov [ebp-0x9c], edx
+	mov ecx, [ebp-0x7c]
+	imul ecx, edi
+	add ecx, [ebp-0x3c]
+	shl ecx, 0x3
+	mov eax, [ecx+waterGlob]
+	mov edx, [ecx+waterGlob+0x4]
+	mov [ebx+waterGlob], eax
+	mov [ebx+waterGlob+0x4], edx
+	mov eax, [ebp-0xa0]
+	mov edx, [ebp-0x9c]
+	mov [ecx+waterGlob], eax
+	mov [ecx+waterGlob+0x4], edx
+	add edi, 0x1
+	add ebx, 0x8
+	mov [ebp-0x20], ebx
+	cmp [ebp-0x3c], edi
+	jz R_UploadWaterTextureInternal_150
+	mov edx, ebx
+	mov ebx, [ebp-0x20]
+	jmp R_UploadWaterTextureInternal_160
+R_UploadWaterTextureInternal_140:
+	mov ecx, [ebp-0x48]
+	mov ecx, [ecx+0xc]
+	mov [ebp-0x7c], ecx
+	mov eax, ecx
+	mov ebx, [ebp-0x48]
+	imul eax, [ebx+0x10]
+	mov [ebp-0xa4], eax
+	test eax, eax
+	js R_UploadWaterTextureInternal_170
+R_UploadWaterTextureInternal_210:
+	cvtsi2ss xmm0, eax
+	movss xmm4, dword [_float_1_00000000]
+	divss xmm4, xmm0
+	mov edx, [ebp-0xa4]
+	test edx, edx
+	jnz R_UploadWaterTextureInternal_180
+R_UploadWaterTextureInternal_220:
+	mov dword [esp+0x10], waterGlob+0x8000
+	mov dword [esp+0xc], 0x0
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x32
+	mov edx, [ebp-0x48]
+	mov eax, [edx+0x40]
+	mov [esp], eax
+	call Image_UploadData
+	mov ecx, [ebp-0x48]
+	mov ebx, [ecx+0xc]
+	cmp ebx, 0x1
+	jle R_UploadWaterTextureInternal_190
+	mov edi, 0x1
+R_UploadWaterTextureInternal_200:
+	mov dword [esp+0x10], waterGlob+0x8000
+	mov dword [esp+0xc], 0x1
+	mov [esp+0x8], ebx
+	mov [esp+0x4], ebx
+	mov dword [esp], waterGlob+0x8000
+	call R_DownsampleMipMapBilinear
+	mov dword [esp+0x10], waterGlob+0x8000
+	mov [esp+0xc], edi
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x32
+	mov edx, [ebp-0x48]
+	mov eax, [edx+0x40]
+	mov [esp], eax
+	call Image_UploadData
+	sar ebx, 1
+	add edi, 0x1
+	cmp ebx, 0x1
+	jg R_UploadWaterTextureInternal_200
+R_UploadWaterTextureInternal_190:
+	add esp, 0xbc
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+R_UploadWaterTextureInternal_130:
+	mov eax, [ebp-0x7c]
+	mov ebx, [ebp-0x48]
+	imul eax, [ebx+0x10]
+	mov [ebp-0xa4], eax
+	test eax, eax
+	jns R_UploadWaterTextureInternal_210
+R_UploadWaterTextureInternal_170:
+	shr eax, 1
+	mov edx, [ebp-0xa4]
+	and edx, 0x1
+	or eax, edx
+	cvtsi2ss xmm0, eax
+	addss xmm0, xmm0
+	movss xmm4, dword [_float_1_00000000]
+	divss xmm4, xmm0
+	mov edx, [ebp-0xa4]
+	test edx, edx
+	jz R_UploadWaterTextureInternal_220
+R_UploadWaterTextureInternal_180:
+	mov dword [ebp-0x34], waterGlob+0x8
+	mov dword [ebp-0x30], waterGlob+0xc
+	mov dword [ebp-0x2c], waterGlob+0x10
+	mov dword [ebp-0x28], waterGlob+0x14
+	mov dword [ebp-0x24], waterGlob+0x18
+	mov edi, waterGlob+0x1c
+	mov edx, waterGlob+0x8000
+	mov esi, waterGlob
+	mov ebx, waterGlob+0x4
+	movss xmm5, dword [_float_255_99899292]
+	jmp R_UploadWaterTextureInternal_230
+R_UploadWaterTextureInternal_270:
+	movaps xmm0, xmm5
+	cvttss2si eax, xmm0
+	mov [ebp-0x4c], al
+	movaps xmm1, xmm4
+	mulss xmm1, xmm6
+	movaps xmm0, xmm1
+	subss xmm0, [_float_1_00000000]
+	pxor xmm2, xmm2
+	ucomiss xmm0, xmm2
+	jb R_UploadWaterTextureInternal_240
+R_UploadWaterTextureInternal_280:
+	movaps xmm0, xmm5
+R_UploadWaterTextureInternal_290:
+	cvttss2si eax, xmm0
+	mov ecx, [ebp-0x4c]
+	mov ch, al
+	mov [ebp-0x4c], ecx
+	movaps xmm1, xmm4
+	mulss xmm1, xmm7
+	movaps xmm0, xmm1
+	subss xmm0, [_float_1_00000000]
+	pxor xmm2, xmm2
+	ucomiss xmm0, xmm2
+	jb R_UploadWaterTextureInternal_250
+	movaps xmm0, xmm5
+R_UploadWaterTextureInternal_340:
+	cvttss2si eax, xmm0
+	movzx eax, al
+	shl eax, 0x10
+	and dword [ebp-0x4c], 0xff00ffff
+	or [ebp-0x4c], eax
+	movss xmm1, dword [ebp-0x38]
+	mulss xmm1, xmm4
+	movaps xmm0, xmm1
+	subss xmm0, [_float_1_00000000]
+	pxor xmm2, xmm2
+	ucomiss xmm0, xmm2
+	jb R_UploadWaterTextureInternal_260
+	movaps xmm0, xmm5
+R_UploadWaterTextureInternal_330:
+	cvttss2si eax, xmm0
+	shl eax, 0x18
+	and dword [ebp-0x4c], 0xffffff
+	or [ebp-0x4c], eax
+	mov eax, [ebp-0x4c]
+	mov [edx], eax
+	add edx, 0x4
+	add esi, 0x20
+	add ebx, 0x20
+	add dword [ebp-0x34], 0x20
+	add dword [ebp-0x30], 0x20
+	add dword [ebp-0x2c], 0x20
+	add dword [ebp-0x28], 0x20
+	add dword [ebp-0x24], 0x20
+	add edi, 0x20
+	mov eax, edx
+	sub eax, waterGlob+0x8000
+	cmp eax, [ebp-0xa4]
+	jae R_UploadWaterTextureInternal_220
+R_UploadWaterTextureInternal_230:
+	movss xmm2, dword [esi]
+	movss xmm3, dword [ebx]
+	mov ecx, [ebp-0x34]
+	movss xmm1, dword [ecx]
+	mov eax, [ebp-0x30]
+	movss xmm0, dword [eax]
+	mulss xmm1, xmm1
+	mulss xmm0, xmm0
+	addss xmm1, xmm0
+	sqrtss xmm6, xmm1
+	mov ecx, [ebp-0x2c]
+	movss xmm1, dword [ecx]
+	mov eax, [ebp-0x28]
+	movss xmm0, dword [eax]
+	mulss xmm1, xmm1
+	mulss xmm0, xmm0
+	addss xmm1, xmm0
+	sqrtss xmm7, xmm1
+	mov ecx, [ebp-0x24]
+	movss xmm1, dword [ecx]
+	movss xmm0, dword [edi]
+	mulss xmm1, xmm1
+	mulss xmm0, xmm0
+	addss xmm1, xmm0
+	sqrtss xmm1, xmm1
+	movss [ebp-0x38], xmm1
+	mulss xmm2, xmm2
+	mulss xmm3, xmm3
+	addss xmm2, xmm3
+	sqrtss xmm2, xmm2
+	mulss xmm2, xmm4
+	movaps xmm0, xmm2
+	subss xmm0, [_float_1_00000000]
+	pxor xmm1, xmm1
+	ucomiss xmm0, xmm1
+	jae R_UploadWaterTextureInternal_270
+	movaps xmm0, xmm2
+	mulss xmm0, xmm5
+	cvttss2si eax, xmm0
+	mov [ebp-0x4c], al
+	movaps xmm1, xmm4
+	mulss xmm1, xmm6
+	movaps xmm0, xmm1
+	subss xmm0, [_float_1_00000000]
+	pxor xmm2, xmm2
+	ucomiss xmm0, xmm2
+	jae R_UploadWaterTextureInternal_280
+R_UploadWaterTextureInternal_240:
+	movaps xmm0, xmm1
+	mulss xmm0, xmm5
+	jmp R_UploadWaterTextureInternal_290
+R_UploadWaterTextureInternal_70:
+	xor ebx, ebx
+	mov edx, [ebp-0x48]
+	jmp R_UploadWaterTextureInternal_300
+R_UploadWaterTextureInternal_310:
+	mov edx, ecx
+R_UploadWaterTextureInternal_300:
+	mov dword [esp+0xc], waterGlobStatic+0x1000
+	mov dword [esp+0x8], waterGlobStatic+0x1800
+	mov eax, [ebp-0x44]
+	mov [esp+0x4], eax
+	mov eax, ebx
+	imul eax, [edx+0xc]
+	lea eax, [eax*8+waterGlob]
+	mov [esp], eax
+	call FFT
+	add ebx, 0x1
+	mov ecx, [ebp-0x48]
+	cmp [ecx+0x10], ebx
+	jg R_UploadWaterTextureInternal_310
+	mov ebx, [ecx+0xc]
+	mov [ebp-0x7c], ebx
+	jmp R_UploadWaterTextureInternal_320
+R_UploadWaterTextureInternal_260:
+	movaps xmm0, xmm1
+	mulss xmm0, xmm5
+	jmp R_UploadWaterTextureInternal_330
+R_UploadWaterTextureInternal_250:
+	movaps xmm0, xmm1
+	mulss xmm0, xmm5
+	jmp R_UploadWaterTextureInternal_340
+R_UploadWaterTextureInternal_120:
+	xor ebx, ebx
+R_UploadWaterTextureInternal_350:
+	mov dword [esp+0xc], waterGlobStatic+0x1000
+	mov dword [esp+0x8], waterGlobStatic+0x1800
+	mov eax, [ebp-0x44]
+	mov [esp+0x4], eax
+	mov eax, ebx
+	mov edx, [ebp-0x48]
+	imul eax, [edx+0x10]
+	lea eax, [eax*8+waterGlob]
+	mov [esp], eax
+	call FFT
+	add ebx, 0x1
+	mov ecx, [ebp-0x48]
+	mov ecx, [ecx+0xc]
+	mov [ebp-0x7c], ecx
+	cmp ecx, ebx
+	jg R_UploadWaterTextureInternal_350
+	jmp R_UploadWaterTextureInternal_360
+R_UploadWaterTextureInternal_50:
+	mov dword [ebp-0x44], 0x0
+	jmp R_UploadWaterTextureInternal_370
+	nop
+
+
+;Zero initialized global or static variables of r_water:
+SECTION .bss
+g_keepZ_dup_1: resb 0x10
+g_keepX_dup_1: resb 0x10
+g_keepZW_dup_1: resb 0x10
+g_keepXY_dup_1: resb 0x10
+g_keepXYZ_dup_1: resb 0x10
+g_keepXYW_dup_1: resb 0x10
+g_keepXZW_dup_1: resb 0x10
+g_keepYZW_dup_1: resb 0x10
+g_selectW_dup_1: resb 0x10
+g_selectZ_dup_1: resb 0x10
+g_selectY_dup_1: resb 0x10
+g_selectX_dup_1: resb 0x10
+g_swizzleWWWW_dup_1: resb 0x10
+g_swizzleZZZZ_dup_1: resb 0x10
+g_swizzleYYYY_dup_1: resb 0x10
+g_swizzleXXXX_dup_1: resb 0x10
+g_swizzleYZWA_dup_1: resb 0x10
+g_swizzleZWAW_dup_1: resb 0x10
+g_swizzleWABW_dup_1: resb 0x10
+g_swizzleZXYW_dup_1: resb 0x10
+g_swizzleYZXW_dup_1: resb 0x10
+g_swizzleXYZA_dup_1: resb 0x10
+g_swizzleZWCD_dup_1: resb 0x10
+g_swizzleXYAB_dup_1: resb 0x10
+g_swizzleYBWD_dup_1: resb 0x10
+g_swizzleXAZC_dup_1: resb 0x10
+g_swizzleYXWZ_dup_1: resb 0x10
+g_swizzleXZYW_dup_1: resb 0x10
+g_swizzleYXZW_dup_1: resb 0x10
+g_swizzleXYZW_dup_1: resb 0x10
+g_inc_dup_1: resb 0x10
+g_negativeZero_dup_1: resb 0x10
+g_fltMin_dup_1: resb 0x80
+waterGlobStatic: resb 0x1c00
+waterGlob: resb 0x9000
+
+
+;Initialized global or static variables of r_water:
+SECTION .data
+
+
+;Initialized constant data of r_water:
+SECTION .rdata
+g_keepZ__uint4_dup_1: dd 0x0, 0x0, 0xffffffff, 0x0
+g_keepX__uint4_dup_1: dd 0xffffffff, 0x0, 0x0, 0x0
+g_keepZW__uint4_dup_1: dd 0x0, 0x0, 0xffffffff, 0xffffffff
+g_keepXY__uint4_dup_1: dd 0xffffffff, 0xffffffff, 0x0, 0x0
+g_keepXYZ__uint4_dup_1: dd 0xffffffff, 0xffffffff, 0xffffffff, 0x0
+g_keepXYW__uint4_dup_1: dd 0xffffffff, 0xffffffff, 0x0, 0xffffffff
+g_keepXZW__uint4_dup_1: dd 0xffffffff, 0x0, 0xffffffff, 0xffffffff
+g_keepYZW__uint4_dup_1: dd 0x0, 0xffffffff, 0xffffffff, 0xffffffff
+g_selectW__uint4_dup_1: dd 0x10203, 0x4050607, 0x8090a0b, 0x1c1d1e1f
+g_selectZ__uint4_dup_1: dd 0x10203, 0x4050607, 0x18191a1b, 0xc0d0e0f
+g_selectY__uint4_dup_1: dd 0x10203, 0x14151617, 0x8090a0b, 0xc0d0e0f
+g_selectX__uint4_dup_1: dd 0x10111213, 0x4050607, 0x8090a0b, 0xc0d0e0f
+g_swizzleWWWW__uint4_dup_1: dd 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f
+g_swizzleZZZZ__uint4_dup_1: dd 0x8090a0b, 0x8090a0b, 0x8090a0b, 0x8090a0b
+g_swizzleYYYY__uint4_dup_1: dd 0x4050607, 0x4050607, 0x4050607, 0x4050607
+g_swizzleXXXX__uint4_dup_1: dd 0x10203, 0x10203, 0x10203, 0x10203
+g_swizzleYZWA__uint4_dup_1: dd 0x4050607, 0x8090a0b, 0xc0d0e0f, 0x10111213
+g_swizzleZWAW__uint4_dup_1: dd 0x8090a0b, 0xc0d0e0f, 0x10111213, 0xc0d0e0f
+g_swizzleWABW__uint4_dup_1: dd 0xc0d0e0f, 0x10111213, 0x14151617, 0xc0d0e0f
+g_swizzleZXYW__uint4_dup_1: dd 0x8090a0b, 0x10203, 0x4050607, 0xc0d0e0f
+g_swizzleYZXW__uint4_dup_1: dd 0x4050607, 0x8090a0b, 0x10203, 0xc0d0e0f
+g_swizzleXYZA__uint4_dup_1: dd 0x10203, 0x4050607, 0x8090a0b, 0x10111213
+g_swizzleZWCD__uint4_dup_1: dd 0x8090a0b, 0xc0d0e0f, 0x18191a1b, 0x1c1d1e1f
+g_swizzleXYAB__uint4_dup_1: dd 0x10203, 0x4050607, 0x10111213, 0x14151617
+g_swizzleYBWD__uint4_dup_1: dd 0x4050607, 0x14151617, 0xc0d0e0f, 0x1c1d1e1f
+g_swizzleXAZC__uint4_dup_1: dd 0x10203, 0x10111213, 0x8090a0b, 0x18191a1b
+g_swizzleYXWZ__uint4_dup_1: dd 0x4050607, 0x10203, 0xc0d0e0f, 0x8090a0b
+g_swizzleXZYW__uint4_dup_1: dd 0x10203, 0x8090a0b, 0x4050607, 0xc0d0e0f
+g_swizzleYXZW__uint4_dup_1: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
+g_swizzleXYZW__uint4_dup_1: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
+g_inc__uint4_dup_1: dd 0x1, 0x1, 0x1, 0x1
+g_negativeZero__uint4_dup_1: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
+g_fltMin__uint4_dup_1: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x2891cb, 0x2891d4, 0x2891dd, 0x2891e6, 0x2891ef, 0x2891f8, 0x289201, 0x28920a, 0x289213, 0x28921e, 0x289227, 0x289230, 0x289239, 0x289242, 0x28925d, 0x28927b, 0x289284, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;All cstrings:
+SECTION .rdata
+
+
+
+;All constant floats and doubles:
+SECTION .rdata
+_float_0_35156250:		dd 0x3eb40000	; 0.351562
+_double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
+_double_162_97466173:		dq 0x40645f306dc9c883	; 162.975
+_float_1_00000000:		dd 0x3f800000	; 1
+_float_255_99899292:		dd 0x437fffbe	; 255.999
+

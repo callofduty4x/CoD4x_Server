@@ -175,8 +175,6 @@ void
 ud_syn_print_mem_disp_addr(struct ud *u, const struct ud_operand *op, uint64_t addr, bool evalsign)
 {
   const char *name = NULL;
-  if(op->size == u->dis_mode || (op->size >= 32) || op->size == 0)
-  {
     if (u->sym_resolver_mem_disp) {
       int64_t offset = 0;
       name = u->sym_resolver_mem_disp(u, op, addr, &offset);
@@ -208,7 +206,6 @@ ud_syn_print_mem_disp_addr(struct ud *u, const struct ud_operand *op, uint64_t a
         }
         return;
       }
-    }
   }
   if(evalsign)
   {

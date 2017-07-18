@@ -43,6 +43,10 @@ typedef enum {
 } memtag_t;
 
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 void __cdecl Com_InitHunkMemory(void);
 void __cdecl Hunk_InitDebugMemory(void);
 void __cdecl Hunk_ClearTempMemory(void);
@@ -56,12 +60,15 @@ void* __cdecl TempMalloc( int );
 char *CopyString( const char *in );
 void FreeString( char *free );
 void __cdecl PMem_Free(const char*, unsigned int);
+void PMem_Init();
 void __cdecl Sys_OutOfMemError(const char* filename, int line);
 void Z_Free( void *ptr );
 void Z_FreeTags( int tag );
 void Com_InitSmallZoneMemory( void );
 void Com_InitZoneMemory( void );
-
+char* Z_MallocGarbage(int, const char*, int);
+void* Hunk_Alloc(int size, const char* name, int type);
+void *__cdecl Hunk_AllocInternal(int size);
 #define L_Malloc malloc
 #define L_Free free
 
@@ -79,6 +86,12 @@ void *Z_TagMalloc( int size, int tag );	// NOT 0 filled memory
 void *Z_Malloc( int size );			// returns 0 filled memory
 void *S_Malloc( int size );			// NOT 0 filled memory only for small allocations
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
+
 
 #endif
 

@@ -230,8 +230,8 @@ static void scr_botaction(scr_entref_t ent_num)
         buffer[0] = '\0';
         for (i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
         {
-            Q_strcat(buffer, 1024, " ");
-            Q_strcat(buffer, 1024, BotActions[i].action);
+            Q_strncat(buffer, 1024, " ");
+            Q_strncat(buffer, 1024, BotActions[i].action);
         }
         Scr_ParamError(0, va("Unknown action. Must be one of:%s.", buffer));
     }

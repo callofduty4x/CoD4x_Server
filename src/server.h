@@ -42,14 +42,6 @@
 
 #include <time.h>
 
-#define SERVER_STRUCT_ADDR 0x13e78d00
-#define sv (*((server_t*)(SERVER_STRUCT_ADDR)))
-
-#define SERVERSTATIC_STRUCT_ADDR 0x8c51780
-#define svs (*((serverStatic_t*)(SERVERSTATIC_STRUCT_ADDR)))
-
-#define SERVERHEADER_STRUCT_ADDR 0x13f18f80
-#define svsHeader (*((svsHeader_t*)(SERVERHEADER_STRUCT_ADDR)))
 
 #define CM_WORLD_STRUCT_ADDR 0x889efa0
 #define cm_world (*((struct cm_world_t*)(CM_WORLD_STRUCT_ADDR)))
@@ -194,7 +186,7 @@ typedef struct client_s {//90b4f8c
 	char*		commandWhitelist[32];
 
 	//Free Space
-	byte		free[420];
+	byte		free[412];
 
 	int 		configDataAcknowledge; //New: to determine which config data updates the client has not yet received
 	vec3_t		predictedOrigin;	//0x63c
@@ -551,6 +543,16 @@ typedef struct{//13F18F80
 	int gclientSize;
 
 }svsHeader_t;
+
+
+#define SERVER_STRUCT_ADDR 0x13e78d00
+extern server_t sv;
+
+#define SERVERSTATIC_STRUCT_ADDR 0x8c51780
+extern serverStatic_t svs;
+
+#define SERVERHEADER_STRUCT_ADDR 0x13f18f80
+extern svsHeader_t svsHeader;
 
 
 

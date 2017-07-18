@@ -478,15 +478,15 @@ P_P_F int Plugin_Cvar_GetInteger(void *cvar)
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin to get Cvar of NULL-Pointer\n");
         return 0;
     }
-    Sys_EnterCriticalSection(CRIT_CVAR);
+    Sys_EnterCriticalSection(CRITSECT_CVAR);
     if(var->type != CVAR_INT)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
-        Sys_LeaveCriticalSection(CRIT_CVAR);
+        Sys_LeaveCriticalSection(CRITSECT_CVAR);
         return 0;
     }
     v = var->integer;
-    Sys_LeaveCriticalSection(CRIT_CVAR);
+    Sys_LeaveCriticalSection(CRITSECT_CVAR);
 
     return v;
 }
@@ -503,15 +503,15 @@ P_P_F qboolean Plugin_Cvar_GetBoolean(void *cvar)
         return 0;
     }
 
-    Sys_EnterCriticalSection(CRIT_CVAR);
+    Sys_EnterCriticalSection(CRITSECT_CVAR);
     if(var->type != CVAR_BOOL)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
-        Sys_LeaveCriticalSection(CRIT_CVAR);
+        Sys_LeaveCriticalSection(CRITSECT_CVAR);
         return 0;
     }
     b = var->boolean;
-    Sys_LeaveCriticalSection(CRIT_CVAR);
+    Sys_LeaveCriticalSection(CRITSECT_CVAR);
     return b;
 }
 
@@ -527,16 +527,16 @@ P_P_F float Plugin_Cvar_GetValue(void *cvar)
         return 0;
     }
 
-    Sys_EnterCriticalSection(CRIT_CVAR);
+    Sys_EnterCriticalSection(CRITSECT_CVAR);
 
     if(var->type != CVAR_FLOAT)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
-        Sys_LeaveCriticalSection(CRIT_CVAR);
+        Sys_LeaveCriticalSection(CRITSECT_CVAR);
         return 0;
     }
     v = var->value;
-    Sys_LeaveCriticalSection(CRIT_CVAR);
+    Sys_LeaveCriticalSection(CRITSECT_CVAR);
     return v;
 }
 
@@ -551,16 +551,16 @@ P_P_F const char* Plugin_Cvar_GetString(void *cvar, char* buf, int sizebuf)
         return 0;
     }
 
-    Sys_EnterCriticalSection(CRIT_CVAR);
+    Sys_EnterCriticalSection(CRITSECT_CVAR);
 
     if(var->type != CVAR_STRING)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
-        Sys_LeaveCriticalSection(CRIT_CVAR);
+        Sys_LeaveCriticalSection(CRITSECT_CVAR);
         return 0;
     }
     Q_strncpyz(buf, var->string, sizebuf);
-    Sys_LeaveCriticalSection(CRIT_CVAR);
+    Sys_LeaveCriticalSection(CRITSECT_CVAR);
     return buf;
 }
 
@@ -766,12 +766,12 @@ P_P_F void Plugin_EnterCriticalSection()
   	Sys_Print(va("^6Plugin_EnterCriticalSection for thread: %d Section: [PLUGIN] Depth: %d\n", Sys_GetCurrentThreadId(), mutex_depth) );
   }
   mutex_depth ++;
-/*	if(Com_InError() && section != CRIT_ERROR && Sys_IsMainThread() == qtrue)
+/*	if(Com_InError() && section != CRITSECT_COM_ERROR && Sys_IsMainThread() == qtrue)
 	{
 		Com_Error(0, "Error Cleanup");
 	}
 */
-	Sys_EnterCriticalSectionInternal(CRIT_PLUGIN);
+	Sys_EnterCriticalSectionInternal(CRITSECT_PLUGIN);
 
   if(enable_threaddebug)
   {
@@ -790,7 +790,7 @@ P_P_F void Plugin_LeaveCriticalSection()
   }
   mutex_depth--;
 
-	Sys_LeaveCriticalSectionInternal(CRIT_PLUGIN);
+	Sys_LeaveCriticalSectionInternal(CRITSECT_PLUGIN);
 }
 
 P_P_F qboolean Plugin_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)

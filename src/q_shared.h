@@ -167,8 +167,15 @@ int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
 
 #define LIBRARY_ADDRESS_BY_HANDLE(dlhandle)((NULL == dlhandle) ? NULL :(void*)*(size_t const*)(dlhandle))
 
-#define Com_Memset memset
-#define Com_Memcpy memcpy
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+void Com_Memset(void*, byte, int);
+//#define Com_Memset memset
+void Com_Memcpy(void*, const void*, int);
+//#define Com_Memcpy memcpy
 
 
 #define NET_WANT_READ -0x7000
@@ -202,7 +209,7 @@ int Q_stricmp (const char *s1, const char *s2);
 char *Q_strlwr( char *s1 );
 char *Q_strupr( char *s1 );
 void Q_bstrcpy(char* dest, const char* src);
-void Q_strcat( char *dest, int size, const char *src );
+void Q_strncat( char *dest, int size, const char *src );
 void Q_strlcat( char *dest, size_t size, const char *src, int cpylimit);
 void Q_strnrepl( char *dest, size_t size, const char *src, const char* find, const char* replacement);
 const char *Q_stristr( const char *s, const char *find);
@@ -214,10 +221,15 @@ int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...);
 void Q_strchrrepl(char *string, char torepl, char repl);
 char* Q_BitConv(int val);
 int Q_strLF2CRLF(const char* input, char* output, int outputlimit );
-/* char	* QDECL va( char *format, ... ); */
+char* va( const char *format, ... );
+#define mvabuf
+/*
+#ifndef __QSHARED_C__
 char* QDECL va_replacement(char *dest, int size, const char *fmt, ...);
 #define mvabuf char va_buffer[MAX_STRING_CHARS]
 #define va(fmt,... ) va_replacement(va_buffer, sizeof(va_buffer), fmt, __VA_ARGS__)
+#endif
+*/
 
 void Com_TruncateLongString( char *buffer, const char *s );
 
@@ -591,6 +603,13 @@ void COM_BitSet( int array[], int bitNum );
 void COM_BitClear( int array[], int bitNum );
 
 
+typedef struct
+{
+  const char *szName;
+  int iOffset;
+  int iFieldType;
+}cspField_t;
+
 #define MAX_TOKENLENGTH     1024
 
 #ifndef TT_STRING
@@ -623,6 +642,10 @@ void    Swap_Init( void );
 
 qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const char *function, const char *fmt, ...);
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #define assert ASSERT
 #define assertx XASSERT

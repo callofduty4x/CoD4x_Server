@@ -28,6 +28,13 @@
 #include "q_shared.h"
 #include <setjmp.h>
 #include <inttypes.h>
+#include <stdbool.h>
+
+#ifndef __WIN32
+void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect);
+bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType);
+#include "unix/sys_unix.h"
+#endif
 
 unsigned int Sys_Milliseconds( void );
 unsigned long long Sys_MillisecondsLong( void );
@@ -104,6 +111,8 @@ void Sys_Restart(const char* reason);
 void Sys_BeginLoadThreadPriorities();
 void Sys_EndLoadThreadPriorities();
 void Sys_BeginShutdownWatchdog();
+
+
 #endif
 
 

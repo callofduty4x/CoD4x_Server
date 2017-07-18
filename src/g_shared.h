@@ -60,13 +60,6 @@ typedef struct
 
 typedef struct
 {
-    void *name;
-    int offset;
-    int type;
-} cspField_t;
-
-typedef struct
-{
     int time;
     int entnum;
     uint16_t name;

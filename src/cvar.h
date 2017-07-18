@@ -107,7 +107,10 @@ typedef struct cvar_s {
 
 extern int cvar_modifiedFlags;
 
-
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 //Defines Cvarrelated functions inside executable file
 cvar_t* Cvar_RegisterString(const char *var_name, const char *var_value, unsigned short flags, const char *var_description);
 cvar_t* Cvar_RegisterBool(const char *var_name, qboolean var_value, unsigned short flags, const char *var_description);
@@ -178,6 +181,10 @@ void Cvar_SetLatched(const char* name, const char* value);
 void Cvar_ClearFlagsForEach(unsigned short flags);
 void Cvar_ClearModified(cvar_t* cvar);
 qboolean Cvar_IsDefined(const char* varname);
+#ifdef __cplusplus
+}
+#endif
+
 #define Cvar_GetInt Cvar_VariableIntegerValue
 #define Cvar_GetFloat Cvar_VariableValue
 #define Cvar_GetBool Cvar_VariableBooleanValue

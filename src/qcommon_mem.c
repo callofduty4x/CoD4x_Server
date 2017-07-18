@@ -81,6 +81,11 @@ void __cdecl Sys_OutOfMemError(const char* filename, int line)
 	Com_Error(ERR_FATAL, "System is out of memory! Filename: %s, Line: %d\n", filename, line);
 }
 
+void __cdecl Sys_OutOfMemErrorInternal(const char* filename, int line)
+{
+	Sys_OutOfMemError(filename, line);
+}
+
 
 
 /*
@@ -631,6 +636,45 @@ char *CopyString( const char *in ) {
 }
 
 
+char *__cdecl Z_TryMallocGarbage(int size, const char *name, int type)
+{
+  char *buf;
+
+  buf = Z_Malloc(size + 164);
+  if ( buf )
+  {
+    buf += 164;
+    //track_z_alloc(size + 72, name, type, buf, 0, 164);
+  }
+  return buf;
+}
+
+#define CON_CHANNEL_SYSTEM 0
+
+void __cdecl Z_MallocFailed(int size)
+{
+  Com_PrintError(CON_CHANNEL_SYSTEM, "Failed to Z_Malloc %i bytes\n", size);
+  Sys_OutOfMemErrorInternal("C:\\projects_pc\\cod\\codsrc\\src\\universal\\com_memory.cpp", 436);
+}
+
+char *__cdecl Z_MallocGarbage(int size, const char *name, int type)
+{
+  char *buf;
+
+  buf = Z_TryMallocGarbage(size, name, type);
+  if ( !buf )
+  {
+    Z_MallocFailed(size + 164);
+  }
+  return buf;
+}
+
+void *Hunk_Alloc( int size, const char* name, int type ) {
+    return Hunk_AllocInternal(size);
+}
+
+
+
 #if 0
 
 #define HUNK_MAGIC  0x89537892
@@ -657,6 +701,7 @@ typedef struct hunkblock_s {
 static hunkblock_t *hunk_permanent;
 static hunkblock_t *hunk_temp;
 static hunkUsed_t hunk_used;
+
 
 
 /*

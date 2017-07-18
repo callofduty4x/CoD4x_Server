@@ -53,6 +53,7 @@ extern vec3_t vec3_origin;
 #define VectorCopy(a,b)         ((b)[0]=(a)[0],(b)[1]=(a)[1],(b)[2]=(a)[2])
 
 #define	VectorScale(v, s, o)    ((o)[0]=(v)[0]*(s),(o)[1]=(v)[1]*(s),(o)[2]=(v)[2]*(s))
+#define	Vec2Scale(v, s, o)    ((o)[0]=(v)[0]*(s),(o)[1]=(v)[1]*(s))
 #define VectorMA(v, s, b, o)    ((o)[0]=(v)[0]+(b)[0]*(s),(o)[1]=(v)[1]+(b)[1]*(s),(o)[2]=(v)[2]+(b)[2]*(s))
 #define CrossProduct(a,b,c)     ((c)[0]=(a)[1]*(b)[2]-(a)[2]*(b)[1],(c)[1]=(a)[2]*(b)[0]-(a)[0]*(b)[2],(c)[2]=(a)[0]*(b)[1]-(a)[1]*(b)[0])
 
@@ -71,30 +72,7 @@ extern vec3_t vec3_origin;
 
 #define SnapVector( v ) {v[0] = (int)v[0]; v[1] = (int)v[1]; v[2] = (int)v[2];}
 
-//#include "util_heap.h"
-
-struct cplane_s;
-
-void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanFrac, const float fViewRoll, const float fLeanDist);
-int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd);
-int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
-// 0x081921A2
-void Math_VectorToAngles(vec3_t vector, vec3_t angles);
-void vectoangles( const vec3_t value1, vec3_t angles );
-void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up );
-float RadiusFromBounds( const vec3_t mins, const vec3_t maxs );
-
-vec_t VectorNormalize( vec3_t v );
-vec_t VectorNormalize2( const vec3_t v, vec3_t out );
-
-void VectorInverse( vec3_t v );
-vec_t VectorLength( const vec3_t v );
-vec_t VectorLengthSquared( const vec3_t v );
-
-int VectorCompare( const vec3_t v1, const vec3_t v2 );
-float VectorDistance( vec3_t v1, vec3_t v2 );
-vec_t Distance( const vec3_t p1, const vec3_t p2 ) ;
-void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
+#define VectorNormalize Vec3Normalize
 
 /* Using 'vec*_t' types causes errors. */
 #define vec2_copy(to, from) (to)[0] = (from)[0]; (to)[1] = (from)[1]
@@ -112,7 +90,7 @@ void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
         (v)[0] = __cp[0]*cosa - __cp[1]*sina; \
         (v)[1] = __cp[0]*sina + __cp[1]*cosa; \
     } while(0)
-float vec2_maxabs    (vec2_t v);
+
 
 #define vec3_copy(to, from) vec2_copy((to), (from)); (to)[2] = (from)[2]
 #define vec3_add(to, from) vec2_add((to), (from)); (to)[2] += (from)[2]
@@ -126,7 +104,44 @@ float vec2_maxabs    (vec2_t v);
 #define EQUAL_EPSILON   0.001
 #endif
 
+//#include "util_heap.h"
+
+struct cplane_s;
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanFrac, const float fViewRoll, const float fLeanDist);
+int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd);
+int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
+// 0x081921A2
+void Math_VectorToAngles(vec3_t vector, vec3_t angles);
+void vectoangles( const vec3_t value1, vec3_t angles );
+void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up );
+float RadiusFromBounds( const vec3_t mins, const vec3_t maxs );
+
+vec_t Vec3Normalize( vec3_t v );
+vec_t VectorNormalize2( const vec3_t v, vec3_t out );
+vec_t Vec3NormalizeTo( const vec3_t v, vec3_t out );
+
+void VectorInverse( vec3_t v );
+vec_t VectorLength( const vec3_t v );
+vec_t VectorLengthSquared( const vec3_t v );
+
+int VectorCompare( const vec3_t v1, const vec3_t v2 );
+float VectorDistance( vec3_t v1, vec3_t v2 );
+vec_t Distance( const vec3_t p1, const vec3_t p2 ) ;
+void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
+
+float vec2_maxabs    (vec2_t v);
+
+
 float Q_fabs(float f);
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f + 0.5f) & 65535)

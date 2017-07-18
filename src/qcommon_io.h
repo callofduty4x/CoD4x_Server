@@ -35,6 +35,10 @@ typedef enum{
     MSG_NORDPRINT
 }msgtype_t;
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 void Com_BeginRedirect (char *buffer, int buffersize, void (*flush)( char *, qboolean) );
 void Com_EndRedirect (void);
 void Com_StopRedirect (void);
@@ -53,5 +57,10 @@ void __cdecl Com_ErrorCleanup(void);
 void QDECL Com_PrintScriptRuntimeWarning( const char *fmt, ... );
 __cdecl void Com_PrintMessage( int dumbIWvar, char *msg, msgtype_t type);
 void QDECL Com_DPrintfLogfile( const char *fmt, ... );
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

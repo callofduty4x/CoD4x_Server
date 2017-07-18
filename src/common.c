@@ -73,7 +73,7 @@ cvar_t* com_fixedtime;
 cvar_t* com_maxFrameTime;
 cvar_t* com_animCheck;
 cvar_t* com_developer;
-cvar_t* com_useFastfiles;
+cvar_t* useFastFile;
 cvar_t* com_developer;
 cvar_t* com_developer_script;
 cvar_t* com_logfile;
@@ -628,7 +628,7 @@ static void Com_InitCvars( void ){
     com_shortversion = Cvar_RegisterString ("shortversion", Q3_VERSION, CVAR_ROM | CVAR_SERVERINFO , "Short game version");
 
     Cvar_RegisterString ("build", va("%i", Sys_GetBuild()), CVAR_ROM | CVAR_SERVERINFO , "");
-    com_useFastfiles = Cvar_RegisterBool ("useFastFiles", qtrue, 16, "Enables loading data from fast files");
+    useFastFile = Cvar_RegisterBool ("useFastFiles", qtrue, 16, "Enables loading data from fast files");
     //MasterServer
     //AuthServer
     //MasterServerPort
@@ -643,20 +643,9 @@ static void Com_InitCvars( void ){
 }
 
 
-
-void Com_InitThreadData()
-{
-    static jmp_buf jmpbuf_obj;
-
-    Sys_SetValue(1, 0);
-    Sys_SetValue(2, &jmpbuf_obj);
-    Sys_SetValue(3, (void*)0x14087620); //box_brush, box_model
-}
-
-
 void Com_CopyCvars()
 {
-    *(cvar_t**)0x88a6170 = com_useFastfiles;
+    *(cvar_t**)0x88a6170 = useFastFile;
     *(cvar_t**)0x88a6184 = com_developer;
     *(cvar_t**)0x88a6188 = com_developer_script;
     *(cvar_t**)0x88a61b0 = com_logfile;
@@ -679,6 +668,8 @@ void Com_PatchError()
 	*(char**)0x81240A3 = com_errorMessage;
 }
 
+void Com_InitHunkMemoryLnx();
+
 void Com_InitGamefunctions()
 {
     int msec = 0;
@@ -686,13 +677,13 @@ void Com_InitGamefunctions()
     FS_CopyCvars();
     Com_CopyCvars();
     SV_CopyCvars();
-    XAssets_PatchLimits();  //Patch several asset-limits to higher values
+//    XAssets_PatchLimits();  //Patch several asset-limits to higher values
     SL_Init();
     Swap_Init();
 
     CSS_InitConstantConfigStrings();
 
-    if(com_useFastfiles->integer){
+    if(useFastFile->boolean){
 
         Mem_Init();
 
@@ -706,7 +697,9 @@ void Com_InitGamefunctions()
     }
 //    Con_InitChannels();
 
-    if(!com_useFastfiles->integer) SEH_UpdateLanguageInfo();
+    if(!useFastFile->boolean) SEH_UpdateLanguageInfo();
+
+    Com_InitHunkMemoryLnx();
 
     Com_InitHunkMemory();
 
@@ -728,14 +721,14 @@ void Com_InitGamefunctions()
 
     SV_Cmd_Init();
     SV_AddOperatorCommands();
-	SV_RemoteCmdInit();
+    SV_RemoteCmdInit();
 
     cvar_t **msg_dumpEnts = (cvar_t**)(0x8930c1c);
     cvar_t **msg_printEntityNums = (cvar_t**)(0x8930c18);
     *msg_dumpEnts = Cvar_RegisterBool( "msg_dumpEnts", qfalse, CVAR_TEMP, "Print snapshot entity info");
     *msg_printEntityNums = Cvar_RegisterBool( "msg_printEntityNums", qfalse, CVAR_TEMP, "Print entity numbers");
 
-    if(com_useFastfiles->integer)
+    if(useFastFile->boolean)
         R_Init();
 
     Com_InitParse();
@@ -893,6 +886,8 @@ void Com_Init(char* commandLine){
 
     Com_UpdateRealtime();
 
+    PMem_Init();
+
     Com_RandomBytes( (byte*)&qport, sizeof(int) );
     Netchan_Init( qport );
 	Huffman_InitMain();
@@ -1025,12 +1020,12 @@ __optimize3 void Com_Frame( void ) {
 
 	if(setjmp(*abortframe)){
 		/* Invokes Com_Error if needed */
-		Sys_EnterCriticalSection(CRIT_ERRORCHECK);
+		Sys_EnterCriticalSection(CRITSECT_COM_ERROR);
 		if(Com_InError() == qtrue)
 		{
 			Com_Error(0, "Error Cleanup");
 		}
-		Sys_LeaveCriticalSection(CRIT_ERRORCHECK);
+		Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
 	}
 	//
 	// main event loop
@@ -1170,12 +1165,12 @@ __optimize3 void Com_Frame( void ) {
 	Com_UpdateRealtime();
 
 	/* Invokes Com_Error if needed */
-	Sys_EnterCriticalSection(CRIT_ERRORCHECK);
+	Sys_EnterCriticalSection(CRITSECT_COM_ERROR);
 	if(Com_InError() == qtrue)
 	{
 		Com_Error(0, "Error Cleanup");
 	}
-	Sys_LeaveCriticalSection(CRIT_ERRORCHECK);
+	Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
 }
 
 
@@ -1366,7 +1361,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 	if(com_developer && com_developer->integer > 1)
 		__builtin_trap ( ); // SIGILL on windows - crash. Have to do something?
 
-	Sys_EnterCriticalSection(CRIT_ERROR);
+	Sys_EnterCriticalSection(CRITSECT_COM_ERROR);
 
 	if(Sys_IsMainThread() == qfalse)
 	{
@@ -1377,12 +1372,12 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		va_end (argptr);
 		lastErrorCode = code;
 		/* Terminate this thread and wait for the main-thread entering this function */
-		Sys_LeaveCriticalSection(CRIT_ERROR);
+		Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
 		Sys_ExitThread(-1);
 		return;
 	}
 	/* Main thread can't be twice in this function at same time */
-	Sys_LeaveCriticalSection(CRIT_ERROR);
+	Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
 
 	if(mainThreadInError == qtrue)
 	{
@@ -1522,4 +1517,9 @@ void Com_SyncThreads(){
 void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname)
 {
   Com_sprintf(bspfilename, len, "maps/mp/%s.d3dbsp", levelname);
+}
+
+void __cdecl Com_ErrorAbort()
+{
+  Sys_Error("%s", &com_errorMessage);
 }

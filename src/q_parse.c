@@ -470,9 +470,9 @@ const char *Com_ParseRestOfLine( const char *( *data_p ) ) {
 			break;
 		}
 		if ( line[0] ) {
-			Q_strcat( line, sizeof( line ), " " );
+			Q_strncat( line, sizeof( line ), " " );
 		}
-		Q_strcat( line, sizeof( line ), token );
+		Q_strncat( line, sizeof( line ), token );
 	}
 
 	return line;

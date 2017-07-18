@@ -66,10 +66,10 @@ const char *Sys_DefaultHomePath(void)
 		if( ( p = getenv( "HOME" ) ) != NULL )
 		{
 			Com_sprintf(homePath, sizeof(homePath), "%s%c", p, PATH_SEP);
-			Q_strcat(homePath, sizeof(homePath),
+			Q_strncat(homePath, sizeof(homePath),
 				"Library/Application Support/");
 
-			Q_strcat(homePath, sizeof(homePath), HOMEPATH_NAME_MACOSX);
+			Q_strncat(homePath, sizeof(homePath), HOMEPATH_NAME_MACOSX);
 		}
 	}
 
@@ -155,4 +155,21 @@ char** GetStrTable(void* buff, int len, sharedlib_data_t *text)
 	dummy = malloc(sizeof(char**));
 	dummy[0] = NULL;
 	return dummy;
+}
+
+
+unsigned int Sys_GetProcessAffinityMask()
+{
+  unsigned int cpucount = 0;
+  int size = sizeof(cpucount);
+
+  if ( sysctlbyname_stub("hw.logicalcpu", &cpucount, &size, 0, 0) || cpucount <= 1 )
+  {
+    processAffinityMask = 1;
+  }
+  else
+  {
+    processAffinityMask = 3;
+  }
+  return processAffinityMask;
 }

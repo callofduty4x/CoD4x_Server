@@ -136,6 +136,8 @@ typedef struct {
 FILE*		missingFiles = NULL;
 #endif
 
+#define FileWrapper_GetFileSize FS_fplength
+
 extern cvar_t*	fs_homepath;
 extern cvar_t*	fs_debug;
 extern cvar_t*	fs_basepath;
@@ -237,4 +239,9 @@ int FS_WriteChecksumInfo(const char* filename, byte* data, int maxsize);
 int FS_WriteFileOSPath( char *ospath, const void *buffer, int size );
 void FS_ClearPakReferences( int flags );
 int FS_filelengthForOSPath( const char* ospath );
+FILE *__cdecl FS_FileOpenReadText(const char *filename);
+int __cdecl FS_FileGetFileSize(FILE *file);
+unsigned int __cdecl FS_FileRead(void *ptr, unsigned int len, FILE *stream);
+
 #endif
+

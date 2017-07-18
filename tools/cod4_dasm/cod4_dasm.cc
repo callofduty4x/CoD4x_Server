@@ -76,6 +76,7 @@ extern const char* ud_reg_tab[];
 
 
 class MachO;
+class MachDisassembler;
 
 static map<string, string> g_rename;
 static vector<string> g_bound_names;
@@ -100,6 +101,127 @@ struct Timer {
   clock_t start_time;
 };
 
+static void TranslateFunctionName(char* fn)
+{
+  if(strcmp(fn, "I_strncpyz") == 0)
+  {
+    fn[0] = 'Q';
+    return;
+  }
+  if(strcmp(fn, "I_strncmp") == 0)
+  {
+    fn[0] = 'Q';
+    return;
+  }
+  if(strcmp(fn, "I_stricmp") == 0)
+  {
+    fn[0] = 'Q';
+    return;
+  }
+  if(strcmp(fn, "I_strncat") == 0)
+  {
+    fn[0] = 'Q';
+    return;
+  }
+  if(strcmp(fn, "I_strnicmp") == 0)
+  {
+    strcpy(fn, "Q_stricmpn");
+    return;
+  }
+  if(strncmp(fn, "Dvar_", 5) == 0)
+  {
+    fn[0] = 'C';
+    return;
+  }
+  if(strcmp(fn, "Hunk_AllocateTempMemoryInternal") == 0)
+  {
+    strcpy(fn, "Hunk_AllocateTempMemory");
+    return;
+  }
+  if(strcmp(fn, "Hunk_AllocateTempMemoryHighInternal") == 0)
+  {
+    strcpy(fn, "Hunk_AllocateTempMemoryHigh");
+    return;
+  }
+  if(strcmp(fn, "Cmd_AddCommandInternal") == 0)
+  {
+    strcpy(fn, "Cmd_AddCommand"); //3rd Argument gets just discarded
+    return;
+  }
+}
+
+
+
+static const char* FunctionnameFromMangled(const char* mangledname)
+{
+  static char demangledname[256];
+  char classname[128];
+  char funcname[128];
+
+  funcname[0] = 0;
+  classname[0] = 0;
+
+  const char* orgname = mangledname;
+  if(mangledname[0] != '_')
+  {
+    strncpy(demangledname, orgname, sizeof(demangledname));
+    TranslateFunctionName(demangledname);
+    return demangledname;
+  }
+  ++mangledname;
+  if(mangledname[0] == '_')
+  {
+    ++mangledname;
+  }
+  //First get the functionname
+  if(mangledname[0] != 'Z')
+  {
+    return orgname;
+  }
+  ++mangledname;
+  if(!isdigit(mangledname[0]))
+  {
+    return orgname;
+  }
+  int l = atoi(mangledname);
+  if(l <= 0 || l > 50)
+  {
+    return orgname;
+  }
+  while(isdigit(mangledname[0]))
+  {
+    ++mangledname;
+  }
+  strncpy(funcname, mangledname, sizeof(funcname));
+  funcname[l] = 0;
+  mangledname += l;
+  //Now get the classname of present
+  if(mangledname[0] == 'I' && isdigit(mangledname[1]))
+  {
+    ++mangledname;
+    int c = atoi(mangledname);
+    if(c > 0 && c < 50)
+    {
+      while(isdigit(mangledname[0]))
+      {
+        ++mangledname;
+      }
+      strncpy(classname, mangledname, sizeof(classname));
+      classname[c] = 0;
+      mangledname += c;
+    }
+  }
+  strncpy(demangledname, funcname, sizeof(demangledname));
+  if(classname[0])
+  {
+    strcat(demangledname, "_");
+    strcat(demangledname, classname);
+  }
+  TranslateFunctionName(demangledname);
+  return demangledname;
+}
+
+
 class FileMap {
  public:
 
@@ -118,7 +240,8 @@ class FileMap {
     SYM_CFSTRING,
     SYM_VTABLE,
     SYM_OBJECT,
-    SYM_IMPORT
+    SYM_IMPORT,
+    SYM_POINTERS
   };
   struct SectionData
   {
@@ -127,6 +250,13 @@ class FileMap {
     uint32_t start;
     uint32_t end;
   };
+  struct Symbol;
+  struct ObjectMap
+  {
+    string objectname;
+    Symbol *symbols[1800]; //List of symbols belong to this objectfile
+    int symbolcount;
+  };
   struct Symbol
   {
     uint32_t address;
@@ -134,13 +264,9 @@ class FileMap {
     uint8_t section;
     uint32_t size;
     SymbolType type;
+    ObjectMap* object;
   };
-  struct ObjectMap
-  {
-    string objectname;
-    Symbol *symbols[1800]; //List of symbols belong to this objectfile
-    int symbolcount;
-  };
+
 
   const char* symtypename(SymbolType type)
   {
@@ -159,6 +285,7 @@ class FileMap {
       case SYM_VTABLE: return "SYM_VTABLE";
       case SYM_OBJECT: return "SYM_OBJECT";
       case SYM_IMPORT: return "SYM_IMPORT";
+      case SYM_POINTERS: return "SYM_POINTERS";
       default: return "JUNK";
     }
   }
@@ -184,7 +311,7 @@ class FileMap {
   case 18: return "const18"; //Const stuff also vtables!
   case 19: return "bss"; //rw memory - zero initialized
   case 20: return "common"; //rw memory - zero initialized
-
+  case 21: return "pointers";
 	default:
         sprintf(unknown, "unknown: %d", section);
         return unknown;
@@ -236,6 +363,49 @@ class FileMap {
       return true;
     }
     return false;
+  }
+
+  bool inSymbolFilter(const char* name)
+  {
+    unsigned int i;
+    const char* filter[] = { "DB_EnumXAssets_LoadObj", "DB_GetAllXAssetOfType_LoadObj", "DB_EnumXAssets", "DB_GetAllXAssetOfType" };
+    for(i = 0; i < sizeof(filter)/sizeof(filter[0]); ++i)
+    {
+      if(strcmp(FunctionnameFromMangled(name), filter[i]) == 0)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void AddUserSymbols(const char* name)
+  {
+    string newsr;
+    if(strcmp(name, "db_memory") == 0)
+    {
+        newsr = "_Z22DB_EnumXAssets_LoadObj10XAssetTypePFv12XAssetHeaderPvES1_h";
+        addsymbol(newsr, 0x1cd17e, 1, SYM_PROC);
+        newsr = "_Z14DB_EnumXAssets10XAssetTypePFv12XAssetHeaderPvES1_h";
+        addsymbol(newsr, 0x1cd244, 1, SYM_PROC);
+        newsr = "_Z29DB_GetAllXAssetOfType_LoadObj10XAssetTypeP12XAssetHeaderi";
+        addsymbol(newsr, 0x1cd51a, 1, SYM_PROC);
+        newsr = "_Z21DB_GetAllXAssetOfType10XAssetTypeP12XAssetHeaderi";
+        addsymbol(newsr, 0x1cd420, 1, SYM_PROC);
+    }
+  }
+  void SymbolRename(string *name)
+  {
+    if(name->compare("__tolower") == 0 || name->compare("tolower_dup_1") == 0)
+    {
+      name->assign("tolower"); //3rd Argument gets just discarded
+      return;
+    }
+    if(name->compare("dx") == 0)
+    {
+        name->assign("dx_ctx"); //dx is not allowed
+        return;
+    }
   }
 
   void add(const MachO& mach, uintptr_t base) {
@@ -387,16 +557,20 @@ class FileMap {
       {
         ++name;
       }
+
       string newsr(name);
 
-      addsymbol(newsr, sym.addr, sym.section, type);
-      if(type == SYM_OBJECT)
+      if(!inSymbolFilter(name))
       {
-        //Add missing symbols
-        if(strcmp(name, "buildNumber_mp") == 0)
+        addsymbol(newsr, sym.addr, sym.section, type);
+        if(type == SYM_OBJECT)
         {
-          initsr.assign("build_string_buffer_ptr");
-          addsymbol(initsr, 0x3a9cc0, 12, SYM_DATAVAR);
+          //Add missing symbols
+          if(strcmp(name, "buildNumber_mp") == 0)
+          {
+            initsr.assign("build_string_buffer_ptr");
+            addsymbol(initsr, 0x3a9cc0, 12, SYM_DATAVAR);
+          }
         }
       }
     }
@@ -542,7 +716,7 @@ class FileMap {
        {"JUNK", SYM_NONE, 0, 0}, {"literal8", SYM_CONSTVAR8, 0x3a3c10, 0x3a3fef}, {"data", SYM_DATAVAR, 0x3a4000, 0x3b0def},
        {"JUNK", SYM_NONE, 0, 0}, {"cfstring", SYM_CFSTRING, 0x3b4044, 0x3b4583}, {"JUNK", SYM_NONE, 0,0}, {"JUNK", SYM_NONE, 0,0},
        {"const", SYM_CONSTVAR, 0x3b4fc0, 0x3bd573}, {"bss", SYM_VAR, 0x3bd580, 0xe6828b},{"common", SYM_VAR, 0xe68300, 0xd5cbd7f},
-       {"pointers", SYM_CONSTVAR, 0xd5cc000, 0xd5ccef7}, {"jump_table", SYM_IMPORT, 0xd5ccef8,0xd5cdc6c}};
+       {"pointers", SYM_POINTERS, 0xd5cc000, 0xd5ccef7}, {"jump_table", SYM_IMPORT, 0xd5ccef8,0xd5cdc6c}};
 
 
     for(i = 0; i < sizeof(sectiondata)/sizeof(sectiondata[0]); ++i)
@@ -600,6 +774,7 @@ class FileMap {
         printf("Error: Exceeded max objects\n");
         exit(1);
       }
+      AddUserSymbols(name.c_str());
       return;
     }
     int i;
@@ -626,6 +801,8 @@ class FileMap {
       }
     }
 
+    SymbolRename(&name);
+
     aname = name;
     int dupcount = 0;
     char dupstr[20];
@@ -649,6 +826,7 @@ class FileMap {
     symbols[symbolcount].address = address;
     symbols[symbolcount].section = section;
     symbols[symbolcount].type = type;
+    symbols[symbolcount].object = currentobject;
     
     symbolssorted[symbolcount].address = address;
     symbolssorted[symbolcount].symbol = &symbols[symbolcount];
@@ -846,42 +1024,6 @@ public:
     return NULL;
   }
 
-static const char* FunctionnameFromMangled(const char* mangledname)
-{
-  static char demangledname[128];
-
-  const char* orgname = mangledname;
-  if(mangledname[0] != '_')
-  {
-    return orgname;
-  }
-  ++mangledname;
-  if(mangledname[0] == '_')
-  {
-    ++mangledname;
-  }
-  if(mangledname[0] != 'Z')
-  {
-    return orgname;
-  }
-  ++mangledname;
-  if(!isdigit(mangledname[0]))
-  {
-    return orgname;
-  }
-  int l = atoi(mangledname);
-  if(l <= 0 || l > 40)
-  {
-    return orgname;
-  }
-  while(isdigit(mangledname[0]))
-  {
-    ++mangledname;
-  }
-  strncpy(demangledname, mangledname, l+1);
-  demangledname[l] = 0;
-  return demangledname;
-}
 
 /*
   static void traceReg(ud_t *ud_obj)
@@ -1237,21 +1379,17 @@ static const char* FunctionnameFromMangled(const char* mangledname)
 
   static bool isConstant(uint32_t address)
   {
-    if(address == 0xffffff)
+
+    int i;
+    uint32_t constants[] = {0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
+                            0x463800, 0x463804, 0x463808, 0x463838, 
+                            0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac,0x0};
+    for(i = 0; constants[i]; ++i)
     {
-      return true;
-    }
-    if(address == 0xff00ff)
-    {
-      return true;
-    }
-    if(address == 0x1f00000)
-    {
-      return true;
-    }
-    if(address == 0x484c68 || address == 0x46380c || address == 0x504526 || address == 0x48468c)
-    {
-      return true;
+      if(constants[i] == address)
+      {
+        return true;
+      }
     }
     return false;
 
@@ -1327,6 +1465,10 @@ static const char* FunctionnameFromMangled(const char* mangledname)
         printf("address 0x%llx@0x%llx not in symbolmap (bss)\n", address, ud_obj->insn_offset);
         return NULL;
       }
+      if(s.name.compare("svs") == 0 && strncmp(dasm_ptr->dasmCurrentSymbol->object->objectname.c_str(), "sv_", 3) != 0)
+      {
+        return NULL;
+      }
       addPotentialConstant((uint32_t)address );
 
     }else if(sec.type == FileMap::SYM_CONSTVAR){
@@ -1344,7 +1486,24 @@ static const char* FunctionnameFromMangled(const char* mangledname)
         return NULL;
       }
       addPotentialConstant((uint32_t)address );
+    }else if(sec.type == FileMap::SYM_POINTERS){
+      if(address & 3)
+      {
+        return NULL;
+      }
+      uint32_t* ptr = (uint32_t*)address;
+      int off = g_file_map.getSymbolForAddress(*ptr, &s);
+      if(off != 0)
+      {
+        //printf("Error pointer var has offset: %d\n", off);
+        return NULL;
+      }
 
+      snprintf(symname, 256, "pt_%s", s.name.c_str());
+
+      addImport(symname);
+      *offset = off;
+      return symname;
     }else if(sec.type != FileMap::SYM_NONE){
       printf("Unhandled symbol type %d\n", sec.type);
 
@@ -1401,6 +1560,38 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       return NULL;
     }
 
+    if(sec.type != FileMap::SYM_PROC && isConstant(address))
+    {
+      return NULL;
+    }   
+
+    if(address >= 0x387de0 && address <= 0x387ff0 && (address & 0xf) == 0) //xmm constants of ClipMap
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x388000 || address == 0x388020) //xmm constants of Com_CanPrimaryLightAffectPoint & Com_LoadWorldLoadObj
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x391900 || address == 0x388020) //xmm constants of Com_CanPrimaryLightAffectPoint & Com_LoadWorldLoadObj
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address < 0x391B60 && address >= 0x3918f0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x3913e0 || address == 0x3913f0 || address == 0x391440 || address == 0x391460) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
     if(sec.type == FileMap::SYM_PROC)
     {
         return NULL;
@@ -1434,6 +1625,10 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       if(off < 0)
       {
         printf("address 0x%llx@0x%llx not in symbolmap (bss)\n", address, ud_obj->insn_offset);
+        return NULL;
+      }
+      if(s.name.compare("svs") == 0 && strncmp(dasm_ptr->dasmCurrentSymbol->object->objectname.c_str(), "sv_", 3) != 0)
+      {
         return NULL;
       }
       addPotentialConstant((uint32_t)address );
@@ -1479,6 +1674,23 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       }
       addPotentialConstant((uint32_t)address );
 
+    }else if(sec.type == FileMap::SYM_POINTERS){
+      if(address & 3)
+      {
+        return NULL;
+      }
+      uint32_t* ptr = (uint32_t*)address;
+      int off = g_file_map.getSymbolForAddress(*ptr, &s);
+      if(off != 0)
+      {
+        //printf("Error pointer var has offset: %d\n", off);
+        return NULL;
+      }
+
+      snprintf(symname, 256, "ptss_%s", s.name.c_str());
+      *offset = off;
+      return symname;
+
     }else if(sec.type != FileMap::SYM_NONE){
       printf("Unhandled symbol type %d\n", sec.type);
     }
@@ -1511,14 +1723,18 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     char comment[128];
   };  
 
-
+  struct impexp_t
+  {
+    char name[256];
+    int count; //How often it is referenced
+  };
 
   struct dasmImportExports_t
   {
     int numimports;
     int numexports;
-    char imports[2048][256];
-    char exports[2048][256];
+    impexp_t imports[2048];
+    impexp_t exports[2048];
   };
 
 
@@ -1539,9 +1755,19 @@ static const char* FunctionnameFromMangled(const char* mangledname)
   enum floatType_t
   {
     VAR_FLOAT,
-    VAR_DOUBLE
+    VAR_DOUBLE,
+    VAR_4BYTE,
+    VAR_16BYTE
   };
 
+
+  struct uint128_t
+  {
+    uint32_t dw0;
+    uint32_t dw1;
+    uint32_t dw2;
+    uint32_t dw3;
+  };
 
   struct floatTableEntry_t
   {
@@ -1551,6 +1777,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       double dval;
       uint64_t idval;
       uint32_t ifval;
+      uint128_t iqval;
     };
     char name[32];
     floatType_t type;
@@ -1754,6 +1981,138 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     return NULL;
   }
 
+  static const char* add4ByteDataToTable(const uint32_t *val)
+  {
+    char name[64];
+    int attempts;
+    int i;
+
+    addPotentialConstant((uint32_t)val);
+
+    for(i = 0; i < dasm_ptr->floattab.numfloats; ++i)
+    {
+      //Float exists already? Then return its unique name
+      if(dasm_ptr->floattab.floats[i].ifval == *val && dasm_ptr->floattab.floats[i].type == VAR_4BYTE)
+      {
+        return dasm_ptr->floattab.floats[i].name;
+      }
+    }
+
+    if((unsigned int)dasm_ptr->floattab.numfloats >= sizeof(dasm_ptr->floattab.floats)/sizeof(dasm_ptr->floattab.floats[0]))
+    {
+      printf("Error: Exceeded max floats limit\n");
+      exit(-1);
+    }
+    //Strip non alnum characters of string and make it lowercase for a suitable name 
+    char shortstring[17];
+
+    sprintf(shortstring, "%x", *val);
+
+    for(i = 0; i < (int)sizeof(shortstring) && shortstring[i]; ++i)
+    {
+      if(shortstring[i] == '.' || shortstring[i] == '-')
+      {
+        shortstring[i] = '_';
+      }
+    }
+
+    for(attempts = 0; attempts < 500; attempts++)
+    {
+      if(attempts > 0)
+      {
+        sprintf(name, "_data4_%s%d", shortstring, attempts);
+      }else{
+        sprintf(name, "_data4_%s", shortstring);
+      }
+      for(i = 0; i < dasm_ptr->floattab.numfloats; ++i)
+      {
+        //Name exists already? Then try a new one
+        if(strcmp(name, dasm_ptr->floattab.floats[i].name) == 0)
+        {
+          break;
+        }
+      }
+      if(i == dasm_ptr->floattab.numfloats)
+      {
+        //Name is unique
+        strcpy(dasm_ptr->floattab.floats[i].name, name);
+        dasm_ptr->floattab.floats[i].ifval = *val;
+        dasm_ptr->floattab.floats[i].type = VAR_4BYTE;
+        dasm_ptr->floattab.numfloats++;
+        return dasm_ptr->floattab.floats[i].name;
+      }
+    }
+    return NULL;
+  }
+
+  static const char* addOWORDToTable(uint128_t *val)
+  {
+    char name[64];
+    int attempts;
+    int i;
+
+    addPotentialConstant((uint32_t)val);
+
+    for(i = 0; i < dasm_ptr->floattab.numfloats; ++i)
+    {
+      //Float exists already? Then return its unique name
+      if(dasm_ptr->floattab.floats[i].type == VAR_16BYTE && 
+        dasm_ptr->floattab.floats[i].iqval.dw0 == val->dw0 && 
+        dasm_ptr->floattab.floats[i].iqval.dw1 == val->dw1 && 
+        dasm_ptr->floattab.floats[i].iqval.dw2 == val->dw2 && 
+        dasm_ptr->floattab.floats[i].iqval.dw3 == val->dw3)
+      {
+        return dasm_ptr->floattab.floats[i].name;
+      }
+    }
+
+    if((unsigned int)dasm_ptr->floattab.numfloats >= sizeof(dasm_ptr->floattab.floats)/sizeof(dasm_ptr->floattab.floats[0]))
+    {
+      printf("Error: Exceeded max floats limit\n");
+      exit(-1);
+    }
+    //Strip non alnum characters of string and make it lowercase for a suitable name 
+    char shortstring[17];
+
+    sprintf(shortstring, "%x", val->dw0);
+
+    for(i = 0; i < (int)sizeof(shortstring) && shortstring[i]; ++i)
+    {
+      if(shortstring[i] == '.' || shortstring[i] == '-')
+      {
+        shortstring[i] = '_';
+      }
+    }
+
+    for(attempts = 0; attempts < 500; attempts++)
+    {
+      if(attempts > 0)
+      {
+        sprintf(name, "_data16_%s%d", shortstring, attempts);
+      }else{
+        sprintf(name, "_data16_%s", shortstring);
+      }
+      for(i = 0; i < dasm_ptr->floattab.numfloats; ++i)
+      {
+        //Name exists already? Then try a new one
+        if(strcmp(name, dasm_ptr->floattab.floats[i].name) == 0)
+        {
+          break;
+        }
+      }
+      if(i == dasm_ptr->floattab.numfloats)
+      {
+        //Name is unique
+        strcpy(dasm_ptr->floattab.floats[i].name, name);
+        dasm_ptr->floattab.floats[i].iqval = *val;
+        dasm_ptr->floattab.floats[i].type = VAR_16BYTE;
+        dasm_ptr->floattab.numfloats++;
+        return dasm_ptr->floattab.floats[i].name;
+      }
+    }
+    return NULL;
+  }
+
 
 
   static const char* addFloatToTable(const float *val)
@@ -1902,88 +2261,110 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     floattab.numfloats = 0;
   }
 
+  void emitChar(char c, char* escapestring, int* outstringcount, bool* inquotes)
+  {
+    int k = *outstringcount;
+    
+    if(!*inquotes && k > 0)
+    {
+      escapestring[k] = ',';
+      ++k;
+    }
+
+    switch(c)
+    {
+      case '\'':
+      case '\"':
+      case '\\':
+      case '\t':
+      case '\n':
+      case '\r':
+      case '?':
+      case '\x60':
+          if(*inquotes)
+          {
+            escapestring[k] = '\"';
+            escapestring[k+1] = ',';
+            k +=2;
+            *inquotes = false;
+          }
+          char idx[12];
+          sprintf(idx, "%02x", (uint32_t)c);
+          escapestring[k+0] = idx[0];
+          escapestring[k+1] = idx[1];
+          escapestring[k+2] = 'h';          
+          k += 3;
+          break;
+      default:
+        if(c >= ' ')
+        {
+          if(!*inquotes)
+          {
+            escapestring[k+0] = '\"';
+            k += 1;
+            *inquotes = true;
+          }
+          escapestring[k] = c;
+          ++k;
+        }else{
+          if(*inquotes)
+          {
+            escapestring[k] = '\"';
+            escapestring[k+1] = ',';
+            k +=2;
+            *inquotes = false;
+          }
+
+          char idx[12];
+          sprintf(idx, "%02x", (uint32_t)c);
+          escapestring[k+0] = idx[0];
+          escapestring[k+1] = idx[1];
+          escapestring[k+2] = 'h';          
+          k += 3;
+        }
+    }
+    *outstringcount = k;
+  }
+
+
   void dumpStringtableToFile(FILE* f)
   {
     int i;
+    bool inquotes;
     fprintf(f, "\n\n;All cstrings:\nSECTION .rdata\n");
     for(i = 0; i < stringtab.numstrings; ++i)
     {
       //String escaping before writing to file
       char escapestring[8192];
       int k;
+      
       const char* s = stringtab.strings[i].string;
+
+      inquotes = false;
 
       for(k = 0; *s && k < 8187; ++s)
       {
-        switch(*s)
-        {
-          case '\'':
-            escapestring[k] = '\\';
-            escapestring[k+1] = '\'';
-            k += 2;
-            break;
-          case '\"':
-            escapestring[k] = '\\';
-            escapestring[k+1] = 'x';
-            escapestring[k+2] = '2';
-            escapestring[k+3] = '2';
-            k += 4;
-            break;
-          case '\\':
-            escapestring[k] = '\\';
-            escapestring[k+1] = '\\';
-            k += 2;
-            break;
-          case '\t':
-            escapestring[k] = '\\';
-            escapestring[k+1] = 't';
-            k += 2;
-            break;
-          case '\n':
-            escapestring[k] = '\\';
-            escapestring[k+1] = 'n';
-            k += 2;
-            break;
-          case '\r':
-            escapestring[k] = '\\';
-            escapestring[k+1] = 'r';
-            k += 2;
-            break;
-          case '?':
-            escapestring[k] = '\\';
-            escapestring[k+1] = '?';
-            k += 2;
-            break;
-          case '\x60':
-            escapestring[k] = '\\';
-            escapestring[k+1] = 'x';
-            escapestring[k+2] = '6';
-            escapestring[k+3] = '0';
-            k += 4;
-            break;
-          default:
-            if(*s >= ' ')
-            {
-              escapestring[k] = *s;
-              ++k;
-            }else{
-              char idx[12];
-              sprintf(idx, "%02x", (uint32_t)*s);
-              escapestring[k] = '\\';
-              escapestring[k+1] = 'x';
-              escapestring[k+2] = idx[0];
-              escapestring[k+3] = idx[1];
-              k += 4;
-            }
-        }
+        emitChar(*s, escapestring, &k, &inquotes);
       }
-      escapestring[k] = 0;
+      if(inquotes)
+      {
+        escapestring[k] = '\"';
+        ++k;
+        inquotes = false;
+      }
+      if(k > 0)
+      {
+        escapestring[k] = ',';
+        ++k;
+      }
+      escapestring[k] = '0';
+      escapestring[k+1] = 0;
       if(k == 8187)
       {
         printf("Error: Oversize string needs software fix!\n");
       }
       //Escaped string
-      fprintf(f, "%s:\t\tdb \"%s\"\n", stringtab.strings[i].name, escapestring);
+      fprintf(f, "%s:\t\tdb %s\n", stringtab.strings[i].name, escapestring);
     }
     fprintf(f, "\n");
   }
@@ -1996,9 +2377,13 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     {
       if(floattab.floats[i].type == VAR_FLOAT)
       {
-        fprintf(f, "%s:\t\tdd 0x%x\t; %g\n", floattab.floats[i].name, *(uint32_t*)&floattab.floats[i].fval, floattab.floats[i].fval);
+        fprintf(f, "%s:\t\tdd 0x%x\t; %g\n", floattab.floats[i].name, floattab.floats[i].ifval, floattab.floats[i].fval);
       }else if(floattab.floats[i].type == VAR_DOUBLE){
-        fprintf(f, "%s:\t\tdq 0x%llx\t; %g\n", floattab.floats[i].name, *(uint64_t*)&floattab.floats[i].dval, floattab.floats[i].dval);
+        fprintf(f, "%s:\t\tdq 0x%llx\t; %g\n", floattab.floats[i].name, floattab.floats[i].idval, floattab.floats[i].dval);
+      }else if(floattab.floats[i].type == VAR_4BYTE){
+        fprintf(f, "%s:\t\tdd 0x%x\t; DWORD\n", floattab.floats[i].name, floattab.floats[i].ifval);
+      }else if(floattab.floats[i].type == VAR_16BYTE){
+        fprintf(f, "%s:\t\tdd 0x%x, 0x%x, 0x%x, 0x%x\t; OWORD\n", floattab.floats[i].name, floattab.floats[i].iqval.dw0, floattab.floats[i].iqval.dw1, floattab.floats[i].iqval.dw2, floattab.floats[i].iqval.dw3);
       }
     }
     fprintf(f, "\n");
@@ -2044,25 +2429,63 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     fprintf(f, "\n");
   }
 
+
+  static bool DoNotExport(const char* name)
+  {
+    if(strncmp(name, "g_swizzle", 9) == 0)
+    {
+      return true;
+    }
+    if(strncmp(name, "g_keepX", 7) == 0 || strncmp(name, "g_keepY", 7) == 0 || strncmp(name, "g_keepZ", 7) == 0)
+    {
+      return true;
+    }
+    if(strncmp(name, "g_selectW_", 10) == 0 || strncmp(name, "g_selectX_", 10) == 0 || strncmp(name, "g_selectY_", 10) == 0 || strncmp(name, "g_selectZ_", 10) == 0)
+    {
+      return true;
+    } 
+    if(strncmp(name, "g_fltMin__uint4", 15) == 0 || strncmp(name, "g_seg_negativeZero__uint4lectX", 30) == 0 || strncmp(name, "g_inc__uint4", 12) == 0 || strncmp(name, "g_fltMin", 8) == 0)
+    {
+      return true;
+    }     
+    if(strncmp(name, "g_negativeZero", 14) == 0 || strncmp(name, "g_inc_dup_1", 11) == 0)
+    {
+      return true;
+    }   
+    return false;
+  }
+
+
+
+
   static void addExport(const char* name)
   {
+    if(DoNotExport(name))
+    {
+      return;
+    }
+
+
     if(dasm_ptr->impexp.numexports >= 2048)
     {
       printf("Max Import/Export count exceeded\n");
       exit(-1);
     }
-    strncpy(dasm_ptr->impexp.exports[dasm_ptr->impexp.numexports], name, sizeof(dasm_ptr->impexp.exports[0]));
+    strncpy(dasm_ptr->impexp.exports[dasm_ptr->impexp.numexports].name, name, sizeof(dasm_ptr->impexp.exports[0].name));
+    dasm_ptr->impexp.exports[dasm_ptr->impexp.numexports].count = 1;
     ++dasm_ptr->impexp.numexports;
   }
 
   static void addImport(const char* name)
   {
     int i;
+
     //Does it exist already?
     for(i = 0; i < dasm_ptr->impexp.numimports; ++i)
     {
-      if(strcmp(dasm_ptr->impexp.imports[i], name) == 0)
+      if(strcmp(dasm_ptr->impexp.imports[i].name, name) == 0)
       {
+        ++dasm_ptr->impexp.imports[i].count;
         return;
       }
     }
@@ -2072,8 +2495,23 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       printf("Max Import/Export count exceeded\n");
       exit(-1);
     }
-    strncpy(dasm_ptr->impexp.imports[dasm_ptr->impexp.numimports], name, sizeof(dasm_ptr->impexp.imports[0]));
+    strncpy(dasm_ptr->impexp.imports[dasm_ptr->impexp.numimports].name, name, sizeof(dasm_ptr->impexp.imports[0].name));
+    dasm_ptr->impexp.imports[i].count = 1;
     ++dasm_ptr->impexp.numimports;
+  }
+
+  static void delImportReference(const char* name)
+  {
+    int i;
+    //Does it exist already?
+    for(i = 0; i < dasm_ptr->impexp.numimports; ++i)
+    {
+      if(strcmp(dasm_ptr->impexp.imports[i].name, name) == 0)
+      {
+        --dasm_ptr->impexp.imports[i].count;
+        return;
+      }
+    }
   }
 
   bool donotdisassemble(const string &procname)
@@ -2336,7 +2774,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
 
     size_t l = sizeof(demangledname);
     int status;
-    
+
     abi::__cxa_demangle ( s->name.c_str(), demangledname, &l, &status); 
 
     if(status != 0)
@@ -2389,12 +2827,33 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     while (pc = ud_obj->pc, !ud_input_end(ud_obj) && (instructionLength = ud_disassemble(ud_obj)))
     {
       strncpy(dasmOutputBuffer[instructionCounter].mnemonic, ud_insn_asm(ud_obj), sizeof(dasmOutputBuffer[0].mnemonic));
-      ++instructionCounter;
-      
-      if(ud_obj->pc == 0x18dea2)
+      char* l = strstr(dasmOutputBuffer[instructionCounter].mnemonic, ", [ptss_");
+      if(l)
       {
-      //  __asm__("int $3");
+        char* lz = l;
+        l += 8;
+        while(isalnum(*l) || *l == '_')
+        {
+          ++l;
+        }
+        if(*l == ']')
+        {
+          char ptrless[128];
+          char delimp[128];
+          strcpy(ptrless, lz +8);
+          l = ptrless;
+          while(isalnum(*l) || *l == '_')
+          {
+            ++l;
+          }
+          *l = 0;
+          sprintf(lz, ", %s", FunctionnameFromMangled(ptrless));
+          sprintf(delimp, "ptss_%s", ptrless);
+          delImportReference(delimp);
+          addImport(FunctionnameFromMangled(ptrless));
+        }
       }
+      ++instructionCounter;
     }
 
     unsigned int i;
@@ -2465,6 +2924,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
           codeOutputBufferPos += snprintf(codeOutputBuffer +codeOutputBufferPos, sizeof(codeOutputBuffer) - codeOutputBufferPos, "%s:\n", dasmOutputBuffer[i].label);
         }
         codeOutputBufferPos += snprintf(codeOutputBuffer +codeOutputBufferPos, sizeof(codeOutputBuffer) - codeOutputBufferPos, "\t%s\n", dasmOutputBuffer[i].mnemonic);
+        
       }
     }
 
@@ -2624,7 +3084,6 @@ static const char* FunctionnameFromMangled(const char* mangledname)
 
     for(j = 0; j < o->symbolcount; ++j)
     {
-
       if(o->symbols[j]->type == FileMap::SYM_PROC)
       {
         codeOutputBuffer[codeOutputBufferPos] = '\n';
@@ -2641,7 +3100,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       }
     }
 
-    snprintf(outputfilename, sizeof(outputfilename), "src/%s.asm", o->objectname.c_str());
+    snprintf(outputfilename, sizeof(outputfilename), "src/_%s.asm", o->objectname.c_str());
 
     outputFileHandle = fopen(outputfilename, "wb");
 
@@ -2658,14 +3117,14 @@ static const char* FunctionnameFromMangled(const char* mangledname)
       //Ignore symbols of this object in importlist
       for(j = 0; j < o->symbolcount; ++j)
       {
-        if(strcmp(impexp.imports[i], o->symbols[j]->name.c_str()) == 0)
+        if(strcmp(impexp.imports[i].name,  FunctionnameFromMangled(o->symbols[j]->name.c_str())) == 0)
         {
           break;
         }
       }
-      if(j == o->symbolcount)
+      if(j == o->symbolcount && impexp.imports[i].count > 0)
       {
-        fprintf(outputFileHandle, "\textern %s\n", impexp.imports[i]);
+        fprintf(outputFileHandle, "\textern %s\n", impexp.imports[i].name);
       }
     }
 
@@ -2673,7 +3132,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     //Writing all import/exported objects
     for(i = 0; i < impexp.numexports; ++i)
     {
-      fprintf(outputFileHandle, "\tglobal %s\n", impexp.exports[i]);
+      fprintf(outputFileHandle, "\tglobal %s\n", impexp.exports[i].name);
     }
 
 

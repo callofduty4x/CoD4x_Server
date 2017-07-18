@@ -889,7 +889,7 @@ void HStorage_WriteDataToFile(varStorage_t* vobj, const char* filename){
                 }
             }
 
-            Q_strcat(infostring, sizeof(infostring), "\\\n");
+            Q_strncat(infostring, sizeof(infostring), "\\\n");
             FS_Write(infostring, strlen(infostring), file);
     }
     FS_FCloseFile(file);

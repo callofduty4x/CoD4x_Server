@@ -388,7 +388,7 @@ int inflateInit OF((z_streamp strm));
 */
 
 
-static int inflate OF((z_streamp strm, int flush));
+int inflate OF((z_streamp strm, int flush));
 /*
     inflate decompresses as much data as possible, and stops when the input
   buffer becomes empty or the output buffer becomes full. It may some
@@ -457,7 +457,7 @@ static int inflate OF((z_streamp strm, int flush));
 */
 
 
-static int inflateEnd OF((z_streamp strm));
+int inflateEnd OF((z_streamp strm));
 /*
      All dynamically allocated data structures for this stream are freed.
    This function discards any unprocessed input and does not flush any
@@ -669,7 +669,7 @@ static int inflateSetDictionary OF((z_streamp strm,
   until success or end of the input data.
 */
 
-static int inflateReset OF((z_streamp strm));
+int inflateReset OF((z_streamp strm));
 /*
      This function is equivalent to inflateEnd followed by inflateInit,
    but does not free and reallocate all the internal decompression state.
@@ -4164,12 +4164,11 @@ int inflateInit2_(z_streamp z, int w, const char *version, int stream_size)
   return Z_OK;
 }
 
-#if 0
+
 int inflateInit_(z_streamp z, const char *version, int stream_size)
 {
   return inflateInit2_(z, DEF_WBITS, version, stream_size);
 }
-#endif
 
 #define iNEEDBYTE {if(z->avail_in==0)return r;r=f;}
 #define iNEXTBYTE (z->avail_in--,z->total_in++,*z->next_in++)

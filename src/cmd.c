@@ -83,7 +83,7 @@ void Cbuf_AddText( const char *text ) {
 	byte*		new_buf;
 	len = strlen (text) +1;
 
-	Sys_EnterCriticalSection(CRIT_CBUF);
+	Sys_EnterCriticalSection(CRITSECT_CBUF);
 
 	if ( len + cmd_text.cursize > cmd_text.maxsize ) {
 
@@ -101,7 +101,7 @@ void Cbuf_AddText( const char *text ) {
 		if(new_buf == NULL)
 		{
 			Com_PrintError( "Cbuf_AddText overflowed ; realloc failed\n" );
-			Sys_LeaveCriticalSection(CRIT_CBUF);
+			Sys_LeaveCriticalSection(CRITSECT_CBUF);
 			return;
 		}
 		cmd_text.data = new_buf;
@@ -111,7 +111,7 @@ void Cbuf_AddText( const char *text ) {
 	Com_Memcpy(&cmd_text.data[cmd_text.cursize], text, len -1);
 	cmd_text.cursize += len -1;
 
-	Sys_LeaveCriticalSection(CRIT_CBUF);
+	Sys_LeaveCriticalSection(CRITSECT_CBUF);
 
 }
 
@@ -130,7 +130,7 @@ void Cbuf_InsertText( const char *text ) {
 
 	len = strlen( text ) + 1;
 
-	Sys_EnterCriticalSection(CRIT_CBUF);
+	Sys_EnterCriticalSection(CRITSECT_CBUF);
 
 
 	if ( len + cmd_text.cursize > cmd_text.maxsize ) {
@@ -150,7 +150,7 @@ void Cbuf_InsertText( const char *text ) {
 		{
 			Com_PrintError( "Cbuf_InsertText overflowed ; realloc failed\n" );
 
-			Sys_LeaveCriticalSection(CRIT_CBUF);
+			Sys_LeaveCriticalSection(CRITSECT_CBUF);
 			return;
 		}
 		cmd_text.data = new_buf;
@@ -170,7 +170,7 @@ void Cbuf_InsertText( const char *text ) {
 
 	cmd_text.cursize += len;
 
-	Sys_LeaveCriticalSection(CRIT_CBUF);
+	Sys_LeaveCriticalSection(CRITSECT_CBUF);
 }
 
 /*
@@ -184,7 +184,7 @@ void Cbuf_ExecuteText (int exec_when, const char *text)
 	{
 	case EXEC_NOW:
 
-		Sys_EnterCriticalSection(CRIT_CBUF);
+		Sys_EnterCriticalSection(CRITSECT_CBUF);
 
 		if (text && strlen(text) > 0) {
 			Com_DPrintf(S_COLOR_YELLOW "EXEC_NOW %s\n", text);
@@ -194,7 +194,7 @@ void Cbuf_ExecuteText (int exec_when, const char *text)
 			Com_DPrintf(S_COLOR_YELLOW "EXEC_NOW %s\n", cmd_text.data);
 		}
 
-		Sys_LeaveCriticalSection(CRIT_CBUF);
+		Sys_LeaveCriticalSection(CRITSECT_CBUF);
 
 		break;
 	case EXEC_INSERT:
@@ -620,9 +620,9 @@ char	*Cmd_Args( char* buff, int bufsize ) {
 
 	buff[0] = 0;
 	for ( i = 1 ; i < cmd_argc ; i++ ) {
-		Q_strcat( buff, bufsize, Cmd_Argv(i) );
+		Q_strncat( buff, bufsize, Cmd_Argv(i) );
 		if ( i != cmd_argc-1 ) {
-			Q_strcat( buff, bufsize, " " );
+			Q_strncat( buff, bufsize, " " );
 		}
 	}
 
@@ -644,9 +644,9 @@ char	*Cmd_Argsv( int arg, char* buff, int bufsize ) {
 	int		cmd_argc = Cmd_Argc();
 	buff[0] = 0;
 	for ( i = arg ; i < cmd_argc ; i++ ) {
-		Q_strcat( buff, bufsize, Cmd_Argv(i) );
+		Q_strncat( buff, bufsize, Cmd_Argv(i) );
 		if ( i != cmd_argc-1 ) {
-			Q_strcat( buff, bufsize, " " );
+			Q_strncat( buff, bufsize, " " );
 		}
 	}
 
@@ -960,15 +960,15 @@ void Cmd_WritePowerConfig(char* buffer, int size)
     char infostring[MAX_INFO_STRING];
 	mvabuf;
 
-    Q_strcat(buffer, size,"\n//Minimum power settings\n");
+    Q_strncat(buffer, size,"\n//Minimum power settings\n");
     cmd_function_t *cmd;
     for ( cmd = cmd_functions ; cmd ; cmd = cmd->next ){
         *infostring = 0;
         Info_SetValueForKey(infostring, "type", "cmdMinPower");
         Info_SetValueForKey(infostring, "cmd", cmd->name);
         Info_SetValueForKey(infostring, "power", va("%i",cmd->minPower));
-        Q_strcat(buffer, size, infostring);
-        Q_strcat(buffer, size, "\\\n");
+        Q_strncat(buffer, size, infostring);
+        Q_strncat(buffer, size, "\\\n");
     }
 }
 

@@ -314,7 +314,7 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 		}
 
 		Q_strncpyz(buff, sfn, sizeof(buff));
-		Q_strcat(buff, sizeof(buff),".new");
+		Q_strncat(buff, sizeof(buff),".new");
 
 		if(curfileobj->code != 200){
 			Com_PrintError("Downloading has failed! Error code: %d. Update aborted.\n", curfileobj->code);
@@ -413,7 +413,7 @@ qboolean Sec_MakeExecutable(sec_file_t *currFile)
 
 	Sec_GetStoreFilename(currFile->name, buff, sizeof(buff));
 
-	Q_strcat(buff, sizeof(buff),".new");
+	Q_strncat(buff, sizeof(buff),".new");
 
 	if(FS_FileExistsOSPath(buff) == qfalse)
 	{
@@ -446,7 +446,7 @@ qboolean Sec_RemoveOldInstallfiles(sec_file_t *currFile)
 		
 		Sec_GetStoreFilename(currFile->name, name1, sizeof(name1));
 
-		Q_strcat(name1, sizeof(name1), ".new");
+		Q_strncat(name1, sizeof(name1), ".new");
 
 		if(FS_FileExistsOSPath(name1))
 		{ // Old backupfile exists, delete it!
@@ -473,7 +473,7 @@ qboolean Sec_RemoveOldBackupfiles(sec_file_t *currFile)
 	{
 		Sec_GetStoreFilename(currFile->name, name1, sizeof(name1));
 
-		Q_strcat(name1, sizeof(name1), ".old");
+		Q_strncat(name1, sizeof(name1), ".old");
 
 		if(FS_FileExistsOSPath(name1))
 		{ // Old backupfile exists, delete it!
@@ -506,7 +506,7 @@ qboolean Sec_Backupfiles(sec_file_t *currFile)
 		
 		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
 		Q_strncpyz(name1, curfilename, sizeof(name1));
-		Q_strcat(name1, sizeof(name1), ".old");
+		Q_strncat(name1, sizeof(name1), ".old");
 
 		Com_Printf("Backing up file %s...\n", curfilename);
 
@@ -542,7 +542,7 @@ void Sec_UndoBackup(sec_file_t *currFile)
 		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
 
 		Q_strncpyz(name1, curfilename, sizeof(name1));
-		Q_strcat(name1, sizeof(name1), ".old");
+		Q_strncat(name1, sizeof(name1), ".old");
 
 		// Check if an backupfile exists with this name
 		if(FS_FileExistsOSPath(name1) == qfalse)
@@ -575,7 +575,7 @@ qboolean Sec_InstallNewFiles(sec_file_t *currFile)
 		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
 
 		Q_strncpyz(name1, curfilename, sizeof(name1));
-		Q_strcat(name1, sizeof(name1), ".new");
+		Q_strncat(name1, sizeof(name1), ".new");
 
 		FS_RenameOSPath(name1, curfilename);
 

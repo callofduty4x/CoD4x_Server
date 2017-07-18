@@ -3116,7 +3116,7 @@ qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *c
 
     if (EntHasDObj(ent))
     {
-        if (GetDObjPartInfo(ent, partNameIdx, &cache->vectorSet))
+        if (G_DObjGetWorldTagMatrix(ent, partNameIdx, (float (*)[3])&cache->vectorSet))
         {
             cache->entNum = ent->s.number;
             cache->svsFrameTime = svs.time;

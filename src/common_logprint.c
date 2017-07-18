@@ -53,7 +53,7 @@ void QDECL SV_EnterLeaveLog( const char *fmt, ... ) {
 	char*		ltime;
 	time_t		realtime;
 
-	Sys_EnterCriticalSection(CRIT_LOGFILE);
+	Sys_EnterCriticalSection(CRITSECT_LOGFILE);
 
         // logfile
 	if ( com_logfile && com_logfile->integer ) {
@@ -97,13 +97,13 @@ void QDECL SV_EnterLeaveLog( const char *fmt, ... ) {
 	    }
 
 	}
-	Sys_LeaveCriticalSection(CRIT_LOGFILE);
+	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 }
 
 
 void QDECL Com_PrintAdministrativeLog( const char *msg ) {
 
-	Sys_EnterCriticalSection(CRIT_LOGFILE);
+	Sys_EnterCriticalSection(CRITSECT_LOGFILE);
 
 	struct tm 	*newtime;
 	char*		ltime;
@@ -150,14 +150,14 @@ void QDECL Com_PrintAdministrativeLog( const char *msg ) {
 	    }
 
 	}
-	Sys_LeaveCriticalSection(CRIT_LOGFILE);
+	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 }
 
 void Com_PrintLogfile( const char *msg )
 {
 
 	char	logwritestart[256];
-	Sys_EnterCriticalSection(CRIT_LOGFILE);
+	Sys_EnterCriticalSection(CRITSECT_LOGFILE);
 
 
 	if ( com_logfile && com_logfile->integer ) {
@@ -203,7 +203,7 @@ void Com_PrintLogfile( const char *msg )
 #endif
 			}
 	}
-	Sys_LeaveCriticalSection(CRIT_LOGFILE);
+	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 }
 
 
@@ -211,7 +211,7 @@ void Com_DPrintLogfile( const char *msg )
 {
 
 	char	logwritestart[256];
-	Sys_EnterCriticalSection(CRIT_LOGFILE);
+	Sys_EnterCriticalSection(CRITSECT_LOGFILE);
 
 
 	if ( com_logfile && com_logfile->integer ) {
@@ -259,7 +259,7 @@ void Com_DPrintLogfile( const char *msg )
 #endif
 		}
 	}
-	Sys_LeaveCriticalSection(CRIT_LOGFILE);
+	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 }
 
 
@@ -282,7 +282,7 @@ This function should close all opened non Zip files
 */
 void Com_CloseLogFiles()
 {
-	Sys_EnterCriticalSection(CRIT_LOGFILE);
+	Sys_EnterCriticalSection(CRITSECT_LOGFILE);
 
 	Cvar_SetInt(com_logfile, 0);
 
@@ -303,7 +303,7 @@ void Com_CloseLogFiles()
 		enterleavelogfile = 0;
 	}
 
-	Sys_LeaveCriticalSection(CRIT_LOGFILE);
+	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 
 }
 

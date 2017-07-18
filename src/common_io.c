@@ -98,7 +98,7 @@ __cdecl void Com_PrintMessage( int dumbIWvar, char *msg, msgtype_t type) {
 	if(type != MSG_NORDPRINT && !lock)
 	{
 	
-		Sys_EnterCriticalSection(CRIT_REDIRECTPRINT);
+		Sys_EnterCriticalSection(CRITSECT_RD_BUFFER);
 
 		if ( !lock) {
 
@@ -108,7 +108,7 @@ __cdecl void Com_PrintMessage( int dumbIWvar, char *msg, msgtype_t type) {
 
 			if ( rd_buffer ) {
 				if(!rd_flush){
-					Sys_LeaveCriticalSection(CRIT_REDIRECTPRINT);
+					Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
 					return;
 				}
 				if ((msglen + strlen(rd_buffer)) > (rd_buffersize - 1)) {
@@ -119,16 +119,16 @@ __cdecl void Com_PrintMessage( int dumbIWvar, char *msg, msgtype_t type) {
 
 					*rd_buffer = 0;
 				}
-				Q_strcat(rd_buffer, rd_buffersize, msg);
+				Q_strncat(rd_buffer, rd_buffersize, msg);
 				// TTimo nooo .. that would defeat the purpose
 				//rd_flush(rd_buffer);
 				//*rd_buffer = 0;
-				Sys_LeaveCriticalSection(CRIT_REDIRECTPRINT);
+				Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
 				return;
 			}
 		}
 		
-		Sys_LeaveCriticalSection(CRIT_REDIRECTPRINT);
+		Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
 	
 	}
 

@@ -27,9 +27,6 @@
 #include "q_shared.h"
 #include "player.h"
 
-#define STRBUFFBASEPTR_ADDR 0x897d780
-
-
 void __cdecl Swap_Init(void);
 void __cdecl CSS_InitConstantConfigStrings(void);
 void __cdecl Con_InitChannels(void);

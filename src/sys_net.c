@@ -1148,9 +1148,9 @@ const char	*NET_AdrToConnectionStringCommon(netadr_t *a, const char* (NET_AdrToS
 
 	s[0] = 0;
 
-	Q_strcat(s, sizeof(s), NET_AdrToString_a( a ));
-	Q_strcat(s, sizeof(s), "<=>");
-	Q_strcat(s, sizeof(s), NET_AdrToString_b( NET_SockToAdr( a->sock ) ));
+	Q_strncat(s, sizeof(s), NET_AdrToString_a( a ));
+	Q_strncat(s, sizeof(s), "<=>");
+	Q_strncat(s, sizeof(s), NET_AdrToString_b( NET_SockToAdr( a->sock ) ));
 
 	return s;
 }

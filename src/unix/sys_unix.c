@@ -30,6 +30,7 @@
 #include "../cmd.h"
 #include "../sys_cod4defs.h"
 #include "../sys_thread.h"
+#include "sys_unix.h"
 
 #include <sys/resource.h>
 #include <libgen.h>
@@ -45,8 +46,8 @@
 #include <pwd.h>
 #include <execinfo.h>
 #include <sys/time.h>
-#include<pthread.h>
-
+#include <pthread.h>
+#include <stdatomic.h>
 /*
 ==================
 Sys_RandomBytes
@@ -454,14 +455,14 @@ int main(int argc, char* argv[])
     {
         const qboolean containsSpaces = strchr(argv[i], ' ') != NULL;
         if (containsSpaces)
-            Q_strcat( commandLine, sizeof( commandLine ), "\"" );
+            Q_strncat( commandLine, sizeof( commandLine ), "\"" );
 
-        Q_strcat( commandLine, sizeof( commandLine ), argv[ i ] );
+        Q_strncat( commandLine, sizeof( commandLine ), argv[ i ] );
 
         if (containsSpaces)
-            Q_strcat( commandLine, sizeof( commandLine ), "\"" );
+            Q_strncat( commandLine, sizeof( commandLine ), "\"" );
 
-        Q_strcat( commandLine, sizeof( commandLine ), " " );
+        Q_strncat( commandLine, sizeof( commandLine ), " " );
     }
 
     Sys_SetExeFile( argv[ 0 ] );
@@ -650,8 +651,18 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 	return qtrue;
 }
 
+//Just for Win32 code compatibility
+threadid_t Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)
+{
+    if(Sys_CreateNewThread(ThreadMain, tid, arg))
+    {
+        return *tid;
+    }
+    return 0;
+}
 
-static pthread_mutex_t crit_sections[CRIT_SIZE];
+
+static pthread_mutex_t crit_sections[CRITSECT_COUNT];
 threadid_t mainthread;
 
 void Sys_InitializeCriticalSections( void )
@@ -662,7 +673,7 @@ void Sys_InitializeCriticalSections( void )
 	pthread_mutexattr_init(&muxattr);
 	pthread_mutexattr_settype(&muxattr, PTHREAD_MUTEX_RECURSIVE);
 
-	for (i = 0; i < CRIT_SIZE; i++) {
+	for (i = 0; i < CRITSECT_COUNT; i++) {
 		pthread_mutex_init( &crit_sections[i], &muxattr );
 
 	}
@@ -671,12 +682,6 @@ void Sys_InitializeCriticalSections( void )
 
 }
 
-void __cdecl Sys_ThreadMain( void )
-{
-	mainthread = pthread_self();
-
-    Com_InitThreadData();
-}
 
 void __cdecl Sys_EnterCriticalSectionInternal(int section)
 {
@@ -755,3 +760,410 @@ void Sys_DoStartProcess( char *cmdline ) {
 
 }
 
+void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect)
+{
+  if ( !address )
+    return calloc(1, dwSize);
+  else
+	Com_Printf("VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
+  return address;
+}
+
+bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
+{
+  if ( lpAddress && dwFreeType == 0x8000 )
+  {
+    free(lpAddress);
+    return true;
+  }
+  else
+  {
+//    Com_Error(ERR_FATAL, "VirtualFree without address or type != 0x8000");
+  }
+  return false;
+}
+
+DWORD __cdecl InterlockedDecrement(DWORD volatile *Addend)
+{
+	return atomic_fetch_sub(Addend, 1) -1;
+}
+DWORD __cdecl InterlockedIncrement(DWORD volatile *Addend)
+{
+	return atomic_fetch_add(Addend, 1) +1;
+}
+DWORD __cdecl InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
+{
+	return __sync_val_compare_and_swap(Destination, Comparand, Exchange);
+}
+DWORD __cdecl InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
+{
+	return atomic_fetch_add(Addend, value);
+}
+int __cdecl SleepEx(int dwMilliseconds, BOOL alert)
+{
+  return 0;
+}
+
+#pragma GCC diagnostic ignored "-Wmultichar"
+
+
+typedef struct
+{
+  DWORD type;
+  union
+  {
+	FILE* fh;
+	pthread_mutex_t mutex;
+  };
+  pthread_cond_t cond;
+  qboolean manualreset;
+  qboolean signaled;
+  char name[32];
+}hObject_t;
+
+BOOL __cdecl CloseHandle(HANDLE handle)
+{
+
+  hObject_t *hObject = (hObject_t *)handle;
+  
+  if ( hObject->type == 'File' )
+  {
+    if ( hObject->fh )
+    {
+      fclose(hObject->fh);
+      hObject->fh = 0;
+    }
+    hObject->type = 'DEAD';
+//    _ZdlPv_stub(hObject);
+    free(hObject);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+struct _OVERLAPPED
+{
+  DWORD* Internal;
+  DWORD* InternalHigh;
+  union{
+    union{
+      DWORD Offset;
+      DWORD OffsetHigh;
+    };
+    void* Pointer;
+  };
+  HANDLE hEvent;
+};
+
+DWORD sLastError;
+
+DWORD __cdecl GetLastError()
+{
+  DWORD result;
+
+  result = sLastError;
+  sLastError = 0;
+  return result;
+}
+
+void __cdecl SetLastError(DWORD error_val)
+{
+  sLastError = error_val;
+}
+
+BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(DWORD, DWORD, void *))
+{
+  sLastError = 0;
+  hObject_t *hObject = (hObject_t*)handle;
+  if ( hObject->type != 'File' )
+  {
+    return FALSE;
+  }
+  if ( fseek(hObject->fh, lpOverlapped->Offset, 0) )
+  {
+    SetLastError(38);
+    return FALSE;
+  }
+  if ( (signed int)fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh) <= 0 )
+  {
+    SetLastError(38);
+    return FALSE;
+  }
+  return TRUE;
+}
+
+FILE* NixFOpen(const char* filen, const char* mode)
+{
+    unsigned int i;
+    char filename[1024];
+    if(*filen == 0)
+    {
+        return NULL;
+    }
+    for(i = 0; i < sizeof(filename) -1 && filen[i]; ++i)
+    {
+        filename[i] = filen[i];
+        if(filename[i] == '\\')
+        {
+            filename[i] = '/';
+        }
+    }
+    return fopen(filename, mode);
+}
+
+HANDLE __cdecl CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, void *lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+{
+  FILE *fh;
+  hObject_t *ho;
+
+  fh = NixFOpen(lpFileName, "rb");
+  if ( fh )
+  {
+    ho = malloc(sizeof(hObject_t));
+    if(ho == NULL)
+    {
+        fclose(fh);
+        return (HANDLE)NULL;
+    }
+    ho->type = 'File';
+    ho->fh = fh;
+    return (HANDLE)ho;
+  }
+  return (HANDLE)NULL;
+}
+
+
+DWORD __cdecl GetFileSize(HANDLE handle, DWORD *lpFileSizeHigh)
+{
+  uint32_t current;
+  DWORD size;
+  hObject_t *hFile = (hObject_t*)handle;
+
+  if ( hFile->type == 'File' )
+  {
+    current = ftell(hFile->fh);
+    fseek(hFile->fh, 0, SEEK_END);
+    size = ftell(hFile->fh);
+    //restore
+    fseek(hFile->fh, current, 0);
+    if ( lpFileSizeHigh )
+    {
+      *lpFileSizeHigh = size;
+    }
+    return size;
+  }
+  return -1;
+
+}
+
+int NixStat(const char* filen, struct stat *b)
+{
+    unsigned int i;
+    char filename[1024];
+    if(*filen == 0)
+    {
+        return -1;
+    }
+    for(i = 0; i < sizeof(filename) -1 && filen[i]; ++i)
+    {
+        filename[i] = filen[i];
+        if(filename[i] == '\\')
+        {
+            filename[i] = '/';
+        }
+    }
+    return stat(filename, b);
+}
+
+
+int __cdecl GetFileAttributesA(const char *name)
+{
+  struct stat st;
+
+  if ( NixStat(name, &st) )
+    return -1;
+
+  return (st.st_uid & 0x4000u) >= 1 ? 0x10 : 0;
+}
+
+BOOL __cdecl SetFileAttributesA(const char *name, unsigned int fa)
+{
+  return FALSE;
+}
+
+
+
+
+signed int __cdecl Sys_ResetEvent(HANDLE handle)
+{
+  hObject_t *h = (hObject_t*)handle;
+  char yi;
+
+  if ( h->type != 'Evnt' || pthread_mutex_lock(&h->mutex) )
+  {
+    return 0;
+  }
+
+    if ( h->signaled == 1 )
+    {
+      h->signaled = 0;
+      yi = 1;
+    }
+    else
+    {
+      yi = 0;
+    }
+    pthread_mutex_unlock(&h->mutex);
+    if ( yi )
+    {
+#ifdef __MACH__
+      pthread_yield_np();
+#else
+      pthread_yield();
+#endif
+    }
+    return 1;
+}
+
+
+signed int __cdecl Sys_SetEvent(HANDLE handle)
+{
+  hObject_t *h = (hObject_t*)handle;
+
+  if ( h->type != 'Evnt' || pthread_mutex_lock(&h->mutex) )
+  {
+    return 0;
+  }
+  h->signaled = 1;
+  pthread_cond_broadcast(&h->cond);
+  pthread_mutex_unlock(&h->mutex);
+  return 1;
+}
+
+
+signed int __cdecl Sys_WaitForObject(HANDLE handle)
+{
+    int s;
+    int signaled;
+
+    hObject_t *h = (hObject_t*)handle;
+
+    if ( h->type != 'Evnt' ){
+	return -1;
+    }
+
+    if ( !pthread_mutex_lock(&h->mutex) )
+    {
+      signaled = h->signaled;
+      if ( !signaled )
+      {
+        while ( 1 )
+        {
+          s = pthread_cond_wait(&h->cond, &h->mutex);
+          if ( h->signaled )
+          {
+            signaled = 1;
+            break;
+          }
+          if ( s != 0)
+          {
+            signaled = 0;
+            break;
+          }
+        }
+        if ( !h->manualreset )
+        {
+          h->signaled = 0;
+        }
+      }
+      pthread_mutex_unlock(&h->mutex);
+      if ( signaled )
+      {
+        return 0; //Signaled
+      }
+    }
+    return -1; //Error
+}
+
+
+signed int __cdecl Sys_IsObjectSignaled(HANDLE handle)
+{
+    hObject_t *h = (hObject_t*)handle;
+    if ( h->type != 'Evnt' )
+    {
+	return -1;
+    }
+    if ( h->signaled )
+    {
+      return 1;
+    }
+    return 0;
+}
+
+HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)
+{
+  hObject_t *h;
+  int r;
+  pthread_mutexattr_t attr;
+
+  if ( pthread_mutexattr_init(&attr) )
+  {
+    return 0;
+  }
+  pthread_mutexattr_settype(&attr, 2);
+  h = (hObject_t *)malloc(sizeof(hObject_t));
+  if(h == NULL)
+  {
+    pthread_mutexattr_destroy(&attr);
+    return 0;
+  }
+  h->type = 'Evnt';
+  h->manualreset = bManualReset;
+  h->signaled = bInitialState;
+  Q_strncpyz(h->name, name, sizeof(h->name));
+  r = pthread_mutex_init(&h->mutex, &attr);
+  pthread_mutexattr_destroy(&attr);
+
+  if ( r != 0 || pthread_cond_init(&h->cond, 0) != 0)
+  {
+    free(h);
+    return 0;
+  }
+  return (HANDLE)h;
+}
+
+
+void Sys_SetThreadName(threadid_t tid, const char* name)
+{
+    pthread_t ti;
+    if(tid == -1)
+    {
+        ti = pthread_self();
+    }else{
+        ti = tid;
+    }
+    pthread_setname_np(ti, name);
+}
+
+pthread_key_t g_dwTlsKey;
+
+void** Sys_GetThreadLocalStorage()
+{
+    return pthread_getspecific(g_dwTlsKey);
+}
+
+void Sys_SetThreadLocalStorage(void** localvar)
+{
+    pthread_setspecific(g_dwTlsKey, localvar);
+}
+
+void Sys_InitThreadContext()
+{
+    pthread_key_create(&g_dwTlsKey, 0);
+}
+
+
+threadid_t Sys_GetThreadHandleFromID(threadid_t ti)
+{
+    return ti;
+}
