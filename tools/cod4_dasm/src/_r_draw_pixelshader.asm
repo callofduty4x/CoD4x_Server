@@ -64,16 +64,16 @@ R_SkipDrawSurfListMaterial_10:
 	ret
 
 
-;Zero initialized global or static variables of r_draw_pixelshader:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_draw_pixelshader:
 SECTION .data
 
 
 ;Initialized constant data of r_draw_pixelshader:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_draw_pixelshader:
+SECTION .bss
 
 
 ;All cstrings:

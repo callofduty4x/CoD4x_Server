@@ -2974,17 +2974,17 @@ DObjInit:
 	nop
 
 
-;Zero initialized global or static variables of dobj:
-SECTION .bss
-g_empty: resb 0x80
-
-
 ;Initialized global or static variables of dobj:
 SECTION .data
 
 
 ;Initialized constant data of dobj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of dobj:
+SECTION .bss
+g_empty: resb 0x80
 
 
 ;All cstrings:

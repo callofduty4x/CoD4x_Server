@@ -2266,19 +2266,19 @@ CG_CompassRadarPingEnemyPlayers_30:
 	jmp CG_CompassRadarPingEnemyPlayers_130
 
 
-;Zero initialized global or static variables of cg_compassfriendlies_mp:
-SECTION .bss
-SQRT2: resb 0x20
-s_compassVehicles: resb 0xe0
-s_compassActors: resb 0xc00
-
-
 ;Initialized global or static variables of cg_compassfriendlies_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_compassfriendlies_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_compassfriendlies_mp:
+SECTION .bss
+SQRT2: resb 0x20
+s_compassVehicles: resb 0xe0
+s_compassActors: resb 0xc00
 
 
 ;All cstrings:

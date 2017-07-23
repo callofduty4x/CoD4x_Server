@@ -561,17 +561,17 @@ Material_ClearShaderUploadList:
 	nop
 
 
-;Zero initialized global or static variables of rb_uploadshaders:
-SECTION .bss
-mtlUploadGlob: resb 0x1080
-
-
 ;Initialized global or static variables of rb_uploadshaders:
 SECTION .data
 
 
 ;Initialized constant data of rb_uploadshaders:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_uploadshaders:
+SECTION .bss
+mtlUploadGlob: resb 0x1080
 
 
 ;All cstrings:

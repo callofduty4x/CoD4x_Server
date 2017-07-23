@@ -2113,16 +2113,16 @@ XModelGetStaticBounds_10:
 	nop
 
 
-;Zero initialized global or static variables of xmodel_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of xmodel_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of xmodel_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of xmodel_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

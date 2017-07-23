@@ -125,7 +125,7 @@ void SV_StopRecord( client_t *cl ) {
 	static char cmdline[1024];
 
 	if ( !cl->demorecording ) {
-		Com_Printf( "Not recording a demo.\n" );
+		Com_Printf(CON_CHANNEL_SERVERDEMO, "Not recording a demo.\n" );
 		return;
 	}
 	// finish up
@@ -141,14 +141,14 @@ void SV_StopRecord( client_t *cl ) {
 
 	FS_FCloseDemoFile( &cl->demofile );
 	cl->demorecording = qfalse;
-	Com_Printf( "Stopped demo for: %s\n", cl->name);
+	Com_Printf(CON_CHANNEL_SERVERDEMO, "Stopped demo for: %s\n", cl->name);
 
 	if(!*sv_demoCompletedCmd->string)
 		return;
 
 	if(strstr(sv_demoCompletedCmd->string, ".."))
 	{
-		Com_PrintWarning("Commandlines containing \"..\" are not allowed\n");
+		Com_PrintWarning(CON_CHANNEL_SERVERDEMO,"Commandlines containing \"..\" are not allowed\n");
 		return;
 	}
 
@@ -198,12 +198,12 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 	char demoName[MAX_QPATH];
 
 	if ( cl->demorecording ) {
-		Com_Printf( "Already recording.\n" );
+		Com_Printf(CON_CHANNEL_SERVERDEMO, "Already recording.\n" );
 		return;
 	}
 
 	if ( cl->state != CS_ACTIVE ) {
-		Com_Printf( "Client must be in a level to record.\n" );
+		Com_Printf(CON_CHANNEL_SERVERDEMO, "Client must be in a level to record.\n" );
 		return;
 	}
 
@@ -225,10 +225,10 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 	}
 
 	// open the demo file
-	Com_Printf( "recording to %s.\n", name );
+	Com_Printf(CON_CHANNEL_SERVERDEMO, "recording to %s.\n", name );
 	if(!FS_FOpenDemoFileWrite( name, &cl->demofile ))
 	{
-		Com_Printf( "ERROR: couldn't open.\n" );
+		Com_Printf(CON_CHANNEL_SERVERDEMO, "ERROR: couldn't open.\n" );
 		return;
 	}
 
@@ -414,7 +414,7 @@ qboolean FS_FOpenDemoFileWrite( const char *filename, fileHandleData_t *fh ) {
 	fh->zipFile = qfalse;
 
 	if ( fs_debug->boolean ) {
-		Com_Printf( "FS_SV_FOpenDemoFileWrite: %s\n", ospath );
+		Com_Printf(CON_CHANNEL_SERVERDEMO, "FS_SV_FOpenDemoFileWrite: %s\n", ospath );
 	}
 
 	if( FS_CreatePath( ospath ) ) {
@@ -459,7 +459,7 @@ int FS_DemoWrite( const void *buffer, int len, fileHandleData_t *fh ) {
 		oldBufferPos = fh->bufferPos;
 
 		if(FS_DemoFlush( fh ) != oldBufferPos){ //Fatal file write error
-			Com_Printf("Demo file write error. Closing file %s\n", fh->name);
+			Com_Printf(CON_CHANNEL_SERVERDEMO,"Demo file write error. Closing file %s\n", fh->name);
 			FS_FCloseDemoFile( fh );
 			return 0;
 		}
@@ -472,7 +472,7 @@ int FS_DemoWrite( const void *buffer, int len, fileHandleData_t *fh ) {
 
 	if(len + fh->bufferPos > fh->bufferSize){ //If the buffer is too small to take more data flush it
 		if(FS_DemoFlush( fh ) != oldBufferPos){ //Fatal file write error
-			Com_Printf("Demo file write error. Closing file %s\n", fh->name);
+			Com_Printf(CON_CHANNEL_SERVERDEMO,"Demo file write error. Closing file %s\n", fh->name);
 			FS_FCloseDemoFile( fh );
 			return 0;
 		}
@@ -518,13 +518,13 @@ int FS_DemoFlush( fileHandleData_t *fh ) {
 			if (!tries) {
 				tries = 1;
 			} else {
-				Com_Printf( "FS_DemoFlush: 0 bytes written\n" );
+				Com_Printf(CON_CHANNEL_SERVERDEMO, "FS_DemoFlush: 0 bytes written\n" );
 				return 0;
 			}
 		}
 
 		if (written == -1) {
-			Com_Printf( "FS_DemoFlush: -1 bytes written\n" );
+			Com_Printf(CON_CHANNEL_SERVERDEMO, "FS_DemoFlush: -1 bytes written\n" );
 			return 0;
 		}
 

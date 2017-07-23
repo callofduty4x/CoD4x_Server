@@ -316,18 +316,18 @@ PMem_Init:
 	nop
 
 
-;Zero initialized global or static variables of physicalmemory:
-SECTION .bss
-g_mem: resb 0x21c
-g_overAllocatedSize: resb 0x64
-
-
 ;Initialized global or static variables of physicalmemory:
 SECTION .data
 
 
 ;Initialized constant data of physicalmemory:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of physicalmemory:
+SECTION .bss
+g_mem: resb 0x21c
+g_overAllocatedSize: resb 0x64
 
 
 ;All cstrings:

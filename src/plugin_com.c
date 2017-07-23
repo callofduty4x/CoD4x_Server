@@ -30,7 +30,7 @@ P_P_F qboolean Plugin_IsLoaded(char *name){
     pID = PHandler_CallerID();
 
     if(pID<0){
-        Com_Printf("^1Plugin_IsLoaded: Error! Called from an unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1Plugin_IsLoaded: Error! Called from an unknown plugin!\n");
         return qfalse;
     }
 
@@ -53,7 +53,7 @@ P_P_F version_t *Plugin_GetVersion(char *name)
     pID = PHandler_CallerID();
 
     if(pID<0){
-        Com_Printf("^1Plugin_GetVersion: Error! Called from an unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1Plugin_GetVersion: Error! Called from an unknown plugin!\n");
         return NULL;
     }
 for(i=0;i<MAX_PLUGINS;++i){
@@ -75,15 +75,15 @@ P_P_F qboolean Plugin_ExportFunction(char *name, void *(*function)()){
     pID = PHandler_CallerID();
 
     if(pID<0){
-        Com_Printf("^1Plugin_ExportFunction: Error! Called from an unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1Plugin_ExportFunction: Error! Called from an unknown plugin!\n");
         return qfalse;
     }
     if(pluginFunctions.plugins[pID].enabled==qfalse){
-        Com_Printf("^3WARNING^7: Plugin_ExportFunction called from a disabled plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^3WARNING^7: Plugin_ExportFunction called from a disabled plugin!\n");
         return qfalse;
     }
     if(name==NULL || function==NULL){
-        Com_DPrintf("Plugin_ExportFunction: Error - NULL argument! Plugin ID: %d.\n",pID);
+        Com_DPrintf(CON_CHANNEL_PLUGINS,"Plugin_ExportFunction: Error - NULL argument! Plugin ID: %d.\n",pID);
         return qfalse; // Null argument!
     }
 
@@ -91,7 +91,7 @@ P_P_F qboolean Plugin_ExportFunction(char *name, void *(*function)()){
 
     for(i=0;i<pluginFunctions.plugins[pID].exports;++i){
         if(strncmp(pluginFunctions.plugins[pID].exportedFunctions[i].name,name,PLUGIN_COM_MAXNAMELEN)!=0){
-            Com_Printf("^3WARNING^7: Plugin of ID %d tried to export function \"%s\" twice.\n",pID,name);
+            Com_Printf(CON_CHANNEL_PLUGINS,"^3WARNING^7: Plugin of ID %d tried to export function \"%s\" twice.\n",pID,name);
             return qfalse;
         }
     }
@@ -110,7 +110,7 @@ P_P_F void *Plugin_ImportFunction(char *pluginName, char *name){
     pID = PHandler_CallerID();
 
     if(pID<0){
-        Com_Printf("^1Plugin_ImportFunction: Error! Called from an unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1Plugin_ImportFunction: Error! Called from an unknown plugin!\n");
         return NULL;
     }
 
@@ -118,7 +118,7 @@ P_P_F void *Plugin_ImportFunction(char *pluginName, char *name){
         if(strncmp(pluginFunctions.plugins[i].name,pluginName,20)==0){
             for(j=0;j<pluginFunctions.plugins[i].exports;++j){
                 if(strncmp(pluginFunctions.plugins[i].exportedFunctions[j].name,name,PLUGIN_COM_MAXNAMELEN)==0){
-                    Com_DPrintf("^2Notice:^7 Plugin #%d imported plugin's #%d function \"%s\"\n.",pID,i,name);
+                    Com_DPrintf(CON_CHANNEL_PLUGINS,"^2Notice:^7 Plugin #%d imported plugin's #%d function \"%s\"\n.",pID,i,name);
                     return pluginFunctions.plugins[i].exportedFunctions[j].function;
                 }
             }

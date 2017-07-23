@@ -54,16 +54,16 @@ Sys_DestroySplashWindow:
 	nop
 
 
-;Zero initialized global or static variables of mac_splash:
-SECTION .bss
-
-
 ;Initialized global or static variables of mac_splash:
 SECTION .data
 
 
 ;Initialized constant data of mac_splash:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mac_splash:
+SECTION .bss
 
 
 ;All cstrings:

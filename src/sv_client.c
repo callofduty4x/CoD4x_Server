@@ -101,11 +101,11 @@ __optimize3 __regparm1 void SV_GetChallenge(netadr_t *from)
 		// look up the authorize server's IP
 		if(svse.authorizeAddress.type == NA_BAD)
 		{
-			Com_Printf( "Resolving %s\n", AUTHORIZE_SERVER_NAME );
+			Com_Printf(CON_CHANNEL_SERVER, "Resolving %s\n", AUTHORIZE_SERVER_NAME );
 			if (NET_StringToAdr(AUTHORIZE_SERVER_NAME, &svse.authorizeAddress, NA_IP))
 			{
 				svse.authorizeAddress.port = BigShort( PORT_AUTHORIZE );
-				Com_Printf( "%s resolved to %s\n", AUTHORIZE_SERVER_NAME, NET_AdrToString(&svse.authorizeAddress));
+				Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", AUTHORIZE_SERVER_NAME, NET_AdrToString(&svse.authorizeAddress));
 			}else{
 				svse.authorizeAddress.type = NA_DOWN;
 			}
@@ -188,7 +188,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			/*
 			reconnectTime = (svs.time - cl->lastConnectTime);
 			if (reconnectTime < (sv_reconnectlimit->integer * 1000)) {
-				Com_Printf("%s -> reconnect rejected : too soon\n", NET_AdrToString (from));
+				Com_Printf(CON_CHANNEL_SERVER,"%s -> reconnect rejected : too soon\n", NET_AdrToString (from));
 				NET_OutOfBandPrint( NS_SERVER, from, "print\nReconnect limit in effect... (%i)\n",
 							(sv_reconnectlimit->integer - (reconnectTime / 1000)));
 				return;
@@ -197,7 +197,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 				*/
 				SV_DropClient( cl, "silent" );
 				newcl = cl;
-				Com_Printf("reconnected: %s\n", NET_AdrToString(from));
+				Com_Printf(CON_CHANNEL_SERVER,"reconnected: %s\n", NET_AdrToString(from));
 				cl->lastConnectTime = svs.time;
 				break;
 /*			}*/
@@ -205,7 +205,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			NET_OutOfBandPrint( NS_SERVER, from,
 				"error\nConnection refused:\nAn uncompleted connection from %s has been detected\nPlease try again later\n",
 				NET_AdrToString(&cl->netchan.remoteAddress));
-			Com_DPrintf("Rejected connection from %s. This is a Fake-Player-DoS protection\n", NET_AdrToString(&cl->netchan.remoteAddress));
+			Com_DPrintf(CON_CHANNEL_SERVER,"Rejected connection from %s. This is a Fake-Player-DoS protection\n", NET_AdrToString(&cl->netchan.remoteAddress));
 			return;
 		}
 	}
@@ -221,7 +221,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	SV_PlayerBannedByip(from, denied, sizeof(denied));
 	if(denied[0]){
             NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", denied);
-		Com_Printf("Rejecting a connection from a banned network address: %s\n", NET_AdrToString(from));
+		Com_Printf(CON_CHANNEL_SERVER,"Rejecting a connection from a banned network address: %s\n", NET_AdrToString(from));
 	    return;
 	}
 
@@ -230,7 +230,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 #ifdef COD4X18UPDATE
 		if(version < 7)
 		{
-			Com_Printf("Have to fix up old client which reports version %d\n", version);
+			Com_Printf(CON_CHANNEL_SERVER,"Have to fix up old client which reports version %d\n", version);
 		}else{
 #endif
 			if(version < 8)
@@ -249,7 +249,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 							    "{OOBErrorParser protocolmismatch CoD4X" Q3_VERSION " %d}", sv_protocol->integer, sv_protocol->integer);
 #endif
 			}
-			Com_Printf("rejected connect from version %i\n", version);
+			Com_Printf(CON_CHANNEL_SERVER,"rejected connect from version %i\n", version);
 			return;
 
 #ifdef COD4X18UPDATE
@@ -305,7 +305,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		if(!sv_steamgroup || !sv_steamgroup->string[0]) //If server is in a Steamgroup we have to let him in and see later if he is a member of steam group
 		{
 			NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server has set a join-password\n^1Invalid Password\n");
-			Com_Printf("Connection rejected from %s - Invalid Password\n", NET_AdrToString(from));
+			Com_Printf(CON_CHANNEL_SERVER,"Connection rejected from %s - Invalid Password\n", NET_AdrToString(from));
 			return;
 		}
 	}
@@ -421,7 +421,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 
   if(denied[0]){
     NET_OutOfBandPrint( NS_SERVER, from, "error\n%s", denied);
-		Com_Printf("Rejecting a connection from a ? player\n");
+		Com_Printf(CON_CHANNEL_SERVER,"Rejecting a connection from a ? player\n");
 
     svse.connectqueue[i].lasttime = 0;
     svse.connectqueue[i].firsttime = 0;
@@ -452,7 +452,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 
 		if ( denied2 ) {
 			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", denied2 );
-			Com_Printf("Game rejected a connection: %s\n", denied2);
+			Com_Printf(CON_CHANNEL_SERVER,"Game rejected a connection: %s\n", denied2);
 			SV_FreeClientScriptId(newcl);
 			return;
 		}
@@ -479,12 +479,12 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		if(SV_SetupReliableMessageProtocol(newcl) == qfalse)
 		{
 			NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is out of memory\n");
-			Com_Printf("Server is out of memory. Refused to accept client %s\n", nick);
+			Com_Printf(CON_CHANNEL_SERVER,"Server is out of memory. Refused to accept client %s\n", nick);
 			SV_FreeClientScriptId(newcl);
 			return;
 		}
 
-		Com_Printf( "Going from CS_FREE to CS_CONNECTED for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
+		Com_Printf(CON_CHANNEL_SERVER, "Going from CS_FREE to CS_CONNECTED for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
 
 #ifdef COD4X18UPDATE
 	}
@@ -501,7 +501,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	if(newcl->needupdate)
 	{
 		newcl->state = CS_ZOMBIE;
-		Com_Printf( "Going from CS_FREE to CS_ZOMBIE for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
+		Com_Printf(CON_CHANNEL_SERVER, "Going from CS_FREE to CS_ZOMBIE for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
 		newcl->nextSnapshotTime = 0x7fffffff;
 
 	}else{
@@ -518,7 +518,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		if(svs.time - newcl->updateBeginTime > 18000)
 		{
 			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.me/clupdate");
-			Com_Printf("Rejected client %s because updatebackend is unavailable\n", nick);
+			Com_Printf(CON_CHANNEL_SERVER,"Rejected client %s because updatebackend is unavailable\n", nick);
 			SV_FreeClientScriptId(newcl);
 			Com_Memset(newcl, 0, sizeof(client_t));
 			return;
@@ -581,7 +581,7 @@ __optimize3 __regparm2 void SV_ReceiveStats(netadr_t *from, msg_t* msg){
 	cl = SV_ReadPackets(from, qport);
 	if(cl == NULL)
 	{
-		Com_DPrintf("SV_ReceiveStats: Received statspacket from disconnected remote client: %s qport: %d\n", NET_AdrToString(from), qport);
+		Com_DPrintf(CON_CHANNEL_SERVER,"SV_ReceiveStats: Received statspacket from disconnected remote client: %s qport: %d\n", NET_AdrToString(from), qport);
 		return;
 	}
 
@@ -662,7 +662,7 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 		}
 		rijndael_done(&skey);
 	}
-	Com_Printf("Received packet %i of stats data\n", 0);
+	Com_Printf(CON_CHANNEL_SERVER,"Received packet %i of stats data\n", 0);
 	cl->receivedstats = 1;
 }
 
@@ -882,7 +882,7 @@ __cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 		reason = "Unknown reason for dropping";
 
 
-	Com_Printf("Player %s^7, %i dropped: %s\n", clientName, clientnum, reason);
+	Com_Printf(CON_CHANNEL_SERVER,"Player %s^7, %i dropped: %s\n", clientName, clientnum, reason);
 	HL2Rcon_EventClientLeave(clientnum);
 
 	PHandler_Event(PLUGINS_ONPLAYERDC, drop, reason);	// Plugin event
@@ -896,11 +896,11 @@ __cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 		if(drop->netchan.remoteAddress.type == NA_BOT){
 			drop->state = CS_FREE;  // become free now
 			drop->netchan.remoteAddress.type = 0; //Reset the botflag
-			Com_DPrintf( "Going to CS_FREE for Bot %s\n", clientName );
+			Com_DPrintf(CON_CHANNEL_SERVER, "Going to CS_FREE for Bot %s\n", clientName );
 		}else{
 
 			drop->state = CS_ZOMBIE;        // become free in a few seconds
-			Com_DPrintf( "Going to CS_ZOMBIE for %s\n", clientName );
+			Com_DPrintf(CON_CHANNEL_SERVER, "Going to CS_ZOMBIE for %s\n", clientName );
 		}
 		return;
 	}
@@ -935,11 +935,11 @@ __cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 	if(drop->netchan.remoteAddress.type == NA_BOT){
 		drop->state = CS_FREE;  // become free now
 		drop->netchan.remoteAddress.type = 0; //Reset the botflag
-		Com_DPrintf( "Going to CS_FREE for Bot %s\n", clientName );
+		Com_DPrintf(CON_CHANNEL_SERVER, "Going to CS_FREE for Bot %s\n", clientName );
 	}else{
 
 		drop->state = CS_ZOMBIE;        // become free in a few seconds
-		Com_DPrintf( "Going to CS_ZOMBIE for %s\n", clientName );
+		Com_DPrintf(CON_CHANNEL_SERVER, "Going to CS_ZOMBIE for %s\n", clientName );
 	}
 
 
@@ -1013,12 +1013,12 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 	cmdCount = MSG_ReadByte( msg );
 
 	if ( cmdCount < 1 ) {
-		Com_Printf( "cmdCount < 1\n" );
+		Com_Printf(CON_CHANNEL_SERVER, "cmdCount < 1\n" );
 		return;
 	}
 
 	if ( cmdCount > MAX_PACKET_USERCMDS ) {
-		Com_Printf( "cmdCount > MAX_PACKET_USERCMDS\n" );
+		Com_Printf(CON_CHANNEL_SERVER, "cmdCount > MAX_PACKET_USERCMDS\n" );
 		return;
 	}
 
@@ -1074,7 +1074,7 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 	if ( sv_pure->integer != 0 && cl->pureAuthentic == 0 /*&& !cl->gotCP*/ ) {
 		if ( cl->state == CS_ACTIVE ) {
 			// we didn't get a cp yet, don't assume anything and just send the gamestate all over again
-			Com_DPrintf( "%s: didn't get cp command, resending gamestate\n", cl->name);
+			Com_DPrintf(CON_CHANNEL_SERVER, "%s: didn't get cp command, resending gamestate\n", cl->name);
 			SV_SendClientGameState( cl );
 		}
 		return;
@@ -1167,7 +1167,7 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	if(client->netchan.remoteAddress.type != NA_BOT && ((sv_pure->integer != 0 && client->pureAuthentic == 0) || !psvs.serverAuth))
 		return;
 */
-	Com_DPrintf( "Going from CS_PRIMED to CS_ACTIVE for %s\n", client->name );
+	Com_DPrintf(CON_CHANNEL_SERVER, "Going from CS_PRIMED to CS_ACTIVE for %s\n", client->name );
 	client->state = CS_ACTIVE;
 
 	// set up the entity for the client
@@ -1318,11 +1318,11 @@ gentity_t* SV_AddBotClient(){
 
 	denied = ClientConnect(i, cl->clscriptid);
 	if ( denied ) {
-		Com_Printf("Bot couldn't connect: %s\n", denied);
+		Com_Printf(CON_CHANNEL_SERVER,"Bot couldn't connect: %s\n", denied);
 		SV_FreeClientScriptId(cl);
 		return NULL;
 	}
-	Com_Printf( "Going from CS_FREE to CS_CONNECTED for %s num %i\n", name, i);
+	Com_Printf(CON_CHANNEL_SERVER, "Going from CS_FREE to CS_CONNECTED for %s num %i\n", name, i);
 
 	// save the addressgamestateMessageNum
 	// init the netchan queue
@@ -1432,7 +1432,7 @@ void SV_WWWRedirect(client_t *cl, msg_t *msg){
 
     Com_sprintf(cl->wwwDownloadURL, sizeof(cl->wwwDownloadURL), "%s/%s", sv_wwwBaseURL->string, cl->downloadName);
 
-    Com_Printf("Redirecting client '%s' to %s\n", cl->name, cl->wwwDownloadURL);
+    Com_Printf(CON_CHANNEL_SERVER,"Redirecting client '%s' to %s\n", cl->name, cl->wwwDownloadURL);
 
     cl->wwwDownloadStarted = qtrue;
 
@@ -1496,7 +1496,7 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 		if ( !sv_allowDownload->integer || ( cl->downloadSize = FS_SV_FOpenFileRead( cl->downloadName, &cl->download ) ) <= 0 ) {
 			// cannot auto-download file
 			if ( !sv_allowDownload->integer ) {
-				Com_Printf( "clientDownload: %d : \"%s\" download disabled", cl - svs.clients, cl->downloadName );
+				Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : \"%s\" download disabled", cl - svs.clients, cl->downloadName );
 
 				if ( sv_pure->integer ) {
 					Com_sprintf( errorMessage, sizeof( errorMessage ), "EXE_AUTODL_SERVERDISABLED_PURE\x15%s", cl->downloadName );
@@ -1505,7 +1505,7 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 				}
 
 			} else {
-				Com_Printf( "clientDownload: %d : \"%s\" file not found on server\n", cl - svs.clients, cl->downloadName );
+				Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : \"%s\" file not found on server\n", cl - svs.clients, cl->downloadName );
 				Com_sprintf( errorMessage, sizeof( errorMessage ), "EXE_AUTODL_FILENOTONSERVER\x15%s", cl->downloadName );
 			}
 			MSG_WriteByte( &msg, DLSUBCMD_FAIL ); //SubCommand
@@ -1522,7 +1522,7 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 			return;
 		}
 
-		Com_Printf( "clientDownload: %d : begining \"%s\"\n", cl - svs.clients, cl->downloadName );
+		Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : begining \"%s\"\n", cl - svs.clients, cl->downloadName );
 
 		if(sv_wwwDownload->boolean && cl->wwwDownload && !cl->wwwDl_failed){
 			MSG_WriteByte(&msg, DLSUBCMD_FILEINIT);
@@ -1601,7 +1601,7 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 	MSG_WriteShort( &msg, blockSize );
 	MSG_WriteData( &msg, downloadBlock, blockSize );
 
-	Com_DPrintf( "clientDownload: %d : writing position %d with %d bytes of %d bytes\n", cl - svs.clients, filepos, blockSize, cl->downloadSize);
+	Com_DPrintf(CON_CHANNEL_SERVER, "clientDownload: %d : writing position %d with %d bytes of %d bytes\n", cl - svs.clients, filepos, blockSize, cl->downloadSize);
 
 	cl->downloadSendTime = svs.time;
 	SV_SendReliableServerCommand(cl, &msg);
@@ -1724,8 +1724,8 @@ void SV_SendClientGameState( client_t *client ) {
 		Auth_ApplyUndercoverStatus( client );
 	}
 
-	Com_DPrintf( "SV_SendClientGameState() for %s\n", client->name );
-	Com_DPrintf( "Going from CS_CONNECTED to CS_PRIMED for %s\n", client->name );
+	Com_DPrintf(CON_CHANNEL_SERVER, "SV_SendClientGameState() for %s\n", client->name );
+	Com_DPrintf(CON_CHANNEL_SERVER, "Going from CS_CONNECTED to CS_PRIMED for %s\n", client->name );
 	client->state = CS_PRIMED;
 	client->pureAuthentic = 0;
 
@@ -1765,7 +1765,7 @@ void SV_SendClientGameState( client_t *client ) {
 	MSG_WriteLong( &msg, sv.checksumFeed );
 
 	// NERVE - SMF - debug info
-	Com_DPrintf( "Sending %i bytes in gamestate to client: %i\n", msg.cursize, client - svs.clients );
+	Com_DPrintf(CON_CHANNEL_SERVER, "Sending %i bytes in gamestate to client: %i\n", msg.cursize, client - svs.clients );
 
 	// deliver this to the client
 
@@ -1776,7 +1776,7 @@ void SV_SendClientGameState( client_t *client ) {
 	//Gamestate contains all the config updates. So we acknowledge here all old messages
 	client->configDataAcknowledge = svse.configDataSequence;
 
-	Com_DPrintf("configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svse.configDataSequence);
+	Com_DPrintf(CON_CHANNEL_SERVER,"configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svse.configDataSequence);
 
 	client->gamestateSent = 1;
 }
@@ -1838,7 +1838,7 @@ __optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) 
 	clnum = cl - svs.clients;
 
 	if ( sv_shownet->integer == clnum ) {
-		Com_Printf( "------------------\n" );
+		Com_Printf(CON_CHANNEL_SERVER, "------------------\n" );
 	}
 
 	serverId = cl->serverId;
@@ -1864,9 +1864,9 @@ __optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) 
 		if ( sv_shownet->integer == clnum )
 		{
 			if ( !clc_strings[c] ) {
-					Com_Printf( "%3i:BAD CMD %i\n", decompressMsg.readcount - 1, c );
+					Com_Printf(CON_CHANNEL_SERVER, "%3i:BAD CMD %i\n", decompressMsg.readcount - 1, c );
 			} else {
-				Com_Printf( "%3i:%s\n",  decompressMsg.readcount - 1, clc_strings[c] );
+				Com_Printf(CON_CHANNEL_SERVER, "%3i:%s\n",  decompressMsg.readcount - 1, clc_strings[c] );
 			}
 		}
 
@@ -1891,7 +1891,7 @@ __optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) 
 				break;
 
 			default:
-				Com_PrintWarning( "bad command byte %d for client %i\n", c, cl - svs.clients );
+				Com_PrintWarning(CON_CHANNEL_SERVER, "bad command byte %d for client %i\n", c, cl - svs.clients );
 				return;
 		}
 
@@ -2030,7 +2030,7 @@ Abort a download if in progress
 */
 void SV_StopDownload_f( client_t *cl ) {
 	if ( *cl->downloadName ) {
-		Com_DPrintf( "clientDownload: %d : file \"%s\" aborted\n", cl - svs.clients, cl->downloadName );
+		Com_DPrintf(CON_CHANNEL_SERVER, "clientDownload: %d : file \"%s\" aborted\n", cl - svs.clients, cl->downloadName );
 	}
 
 	SV_CloseDownload( cl );
@@ -2046,7 +2046,7 @@ Downloads are finished
 ==================
 */
 void SV_DoneDownload_f( client_t *cl ) {
-	Com_DPrintf( "clientDownload: %s Done\n", cl->name );
+	Com_DPrintf(CON_CHANNEL_SERVER, "clientDownload: %s Done\n", cl->name );
 	// resend the game state to update any clients that entered during the download
 	SV_CloseDownload( cl );
 	cl->wwwDl_var01 = 0;
@@ -2068,11 +2068,11 @@ void SV_NextDownload_f( client_t *cl ) {
 	int block = atoi( SV_Cmd_Argv( 1 ) );
 
 	if ( block == cl->downloadClientBlock ) {
-		Com_DPrintf( "clientDownload: %d : client acknowledge of block %d\n", cl - svs.clients, block );
+		Com_DPrintf(CON_CHANNEL_SERVER, "clientDownload: %d : client acknowledge of block %d\n", cl - svs.clients, block );
 
 		// Find out if we are done.  A zero-length block indicates EOF
 		if ( cl->downloadEOF ) {
-			Com_Printf( "clientDownload: %d : file \"%s\" completed\n", cl - svs.clients, cl->downloadName );
+			Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : file \"%s\" completed\n", cl - svs.clients, cl->downloadName );
 			SV_CloseDownload( cl );
 			return;
 		}
@@ -2117,7 +2117,7 @@ void SV_WWWDownload_BBL8R_f(client_t *cl)
 {
 	if(!cl->wwwDownloadStarted || !cl->wwwDlAck)
 	{
-		Com_PrintWarning("SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
+		Com_PrintWarning(CON_CHANNEL_SERVER,"SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
 	}
 
 	SV_DropClient(cl, "Client dropped to download files");
@@ -2128,7 +2128,7 @@ void SV_WWWDownload_Done_f(client_t *cl)
 {
 	if(!cl->wwwDownloadStarted || !cl->wwwDlAck)
 	{
-		Com_PrintWarning("SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
+		Com_PrintWarning(CON_CHANNEL_SERVER,"SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
 		SV_DropClient(cl, "Unexpected www download message.");
 		return;
 	}
@@ -2148,12 +2148,12 @@ void SV_WWWDownload_Fail_f(client_t *cl)
 {
 	if(!cl->wwwDownloadStarted || !cl->wwwDlAck)
 	{
-		Com_PrintWarning("SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
+		Com_PrintWarning(CON_CHANNEL_SERVER,"SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
 		SV_DropClient(cl, "Unexpected www download message.");
 		return;
 	}
 
-	Com_PrintWarning("Client '%s' reported that the http download of '%s' failed, falling back to a server download\n", cl->name, cl->downloadName);
+	Com_PrintWarning(CON_CHANNEL_SERVER,"Client '%s' reported that the http download of '%s' failed, falling back to a server download\n", cl->name, cl->downloadName);
 	cl->wwwDl_var01 = 0;
 	if ( cl->download ) {
 		FS_FCloseFile( cl->download );
@@ -2171,13 +2171,13 @@ void SV_WWWDownload_ChkFail_f(client_t *cl)
 {
 	if(!cl->wwwDownloadStarted || !cl->wwwDlAck)
 	{
-		Com_PrintWarning("SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
+		Com_PrintWarning(CON_CHANNEL_SERVER,"SV_WWWDownload: unexpected wwwdl for client '%s'\n", cl->name);
 		SV_DropClient(cl, "Unexpected www download message.");
 		return;
 	}
 
 
-	Com_PrintWarning("Client '%s' reports that the redirect download for '%s' had wrong checksum.\n        You should make sure that your files on your redirect are the same files you have on your server\n", cl->name, cl->downloadName);
+	Com_PrintWarning(CON_CHANNEL_SERVER,"Client '%s' reports that the redirect download for '%s' had wrong checksum.\n        You should make sure that your files on your redirect are the same files you have on your server\n", cl->name, cl->downloadName);
 
 	cl->wwwDl_var01 = 0;
 	if ( cl->download ) {
@@ -2222,7 +2222,7 @@ void SV_SelectDownloadBlocksX_f( client_t *cl, msg_t* msg )
 
 	if(cl->download == 0)
 	{
-		Com_DPrintf("SV_SelectDownloadBlocksX_f a serverdownload is no longer in progress - ignoring this command\n");
+		Com_DPrintf(CON_CHANNEL_SERVER,"SV_SelectDownloadBlocksX_f a serverdownload is no longer in progress - ignoring this command\n");
 		return;
 	}
 
@@ -2242,7 +2242,7 @@ void SV_SelectDownloadBlocksX_f( client_t *cl, msg_t* msg )
     }
     FS_Seek(cl->download, cl->downloadBeginOffset, FS_SEEK_SET);
     cl->downloadCount = cl->downloadBeginOffset;
-    Com_Printf("DL Get blocks: %d len %d\n", cl->downloadBeginOffset, cl->downloadNumBytes);
+    Com_Printf(CON_CHANNEL_SERVER,"DL Get blocks: %d len %d\n", cl->downloadBeginOffset, cl->downloadNumBytes);
     return;
 }
 
@@ -2412,11 +2412,11 @@ qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl) {
 		return qtrue;
 	}
 
-	Com_DPrintf( "clientCommand: %s : %i : %s\n", cl->name, seq, s );
+	Com_DPrintf(CON_CHANNEL_SERVER, "clientCommand: %s : %i : %s\n", cl->name, seq, s );
 
 	// drop the connection if we have somehow lost commands
 	if ( seq > cl->lastClientCommand + 1 ) {
-		Com_Printf( "Client %s lost %i clientCommands\n", cl->name, seq - cl->lastClientCommand + 1 );
+		Com_Printf(CON_CHANNEL_SERVER, "Client %s lost %i clientCommands\n", cl->name, seq - cl->lastClientCommand + 1 );
 		SV_DropClient( cl, "EXE_LOSTRELIABLECOMMANDS" );
 		return qfalse;
 	}
@@ -2424,7 +2424,7 @@ qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl) {
 	if(!sv_floodProtect->boolean || cl->state == CS_PRIMED || cl->netchan.remoteAddress.type == NA_LOOPBACK
 		// NERVE - SMF - some server game-only commands we cannot have flood protect
 		|| !Q_strncmp( "team", s, 4 ) || !Q_strncmp( "mr", s, 2 ) || !Q_strncmp( "score", s, 5 )){
-		//Com_DPrintf( "Skipping flood protection for: %s\n", s );
+		//Com_DPrintf(CON_CHANNEL_SERVER, "Skipping flood protection for: %s\n", s );
 		floodprotect = qfalse;
 	}
 
@@ -2437,7 +2437,7 @@ qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl) {
 	// normal to spam a lot of commands when downloading
 
 	if(inDl){
-		Com_DPrintf( "client text ignored for %s: %s\n", cl->name, SV_Cmd_Argv( 0 ) );
+		Com_DPrintf(CON_CHANNEL_SERVER, "client text ignored for %s: %s\n", cl->name, SV_Cmd_Argv( 0 ) );
 		clientOk = qfalse;
 	}
 
@@ -2447,7 +2447,7 @@ qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl) {
 		if(!inDl && !cl->floodprotect ){
 
 			if(svs.time < cl->nextReliableTime){
-				Com_DPrintf( "client text ignored for %s: %s\n", cl->name, SV_Cmd_Argv( 0 ) );
+				Com_DPrintf(CON_CHANNEL_SERVER, "client text ignored for %s: %s\n", cl->name, SV_Cmd_Argv( 0 ) );
 				clientOk = qfalse;
 			}
 		}
@@ -2530,7 +2530,7 @@ void SV_SendClientVoiceData(client_t *client)
     SV_WriteClientVoiceData(&msg, client);
     if ( msg.overflowed )
     {
-		Com_PrintWarning( "WARNING: voice msg overflowed for %s\n", client->name);
+		Com_PrintWarning(CON_CHANNEL_SERVER, "WARNING: voice msg overflowed for %s\n", client->name);
 		return;
     }
     NET_OutOfBandData(NS_SERVER, &client->netchan.remoteAddress, msg.data, msg.cursize);
@@ -2588,7 +2588,7 @@ client_t* SV_ReadPackets(netadr_t *from, unsigned short qport)
 		// some address translating routers periodically change UDP
 		// port assignments
 		if ( cl->netchan.remoteAddress.port != from->port ) {
-			Com_Printf( "SV_ReceiveStats: fixing up a translated port\n" );
+			Com_Printf(CON_CHANNEL_SERVER, "SV_ReceiveStats: fixing up a translated port\n" );
 			cl->netchan.remoteAddress.port = from->port;
 		}
 		return cl;
@@ -2627,7 +2627,7 @@ void SV_ExecuteReliableMessage(client_t* client)
 	msg_t* msg = &client->reliablemsg.recvbuffer;
 
 	command = MSG_ReadLong(msg);
-	Com_Printf("SV_ExecuteReliableMessage() cmd: %d\n", command);
+	Com_Printf(CON_CHANNEL_SERVER,"SV_ExecuteReliableMessage() cmd: %d\n", command);
 	switch(command)
 	{
 		case clc_steamcommands:
@@ -2646,7 +2646,7 @@ void SV_ExecuteReliableMessage(client_t* client)
 			SV_SApiProcessModules(client, msg);
 			break;
 		default:
-			Com_PrintWarning("Unknown clientcommand: %d\n", command);
+			Com_PrintWarning(CON_CHANNEL_SERVER,"Unknown clientcommand: %d\n", command);
 	}
 }
 
@@ -2683,7 +2683,7 @@ void SV_ReceiveReliableMessages(client_t* client)
 		{
 			return;
 		}
-//		Com_Printf("Received %d bytes of %d\n", msg->cursize - 4, messagesize);
+//		Com_Printf(CON_CHANNEL_SERVER,"Received %d bytes of %d\n", msg->cursize - 4, messagesize);
 		if(msg->cursize < messagesize + 4)
 		{	//Incomplete message
 			if(messagesize + 4 > msg->maxsize)
@@ -2708,7 +2708,7 @@ void SV_ReceiveReliableMessages(client_t* client)
 		    //Client got dropped in meantime
 		    return;
 		}
-		Com_Printf("^2Processed %d bytes for client %s\n", msg->cursize -4, client->name);
+		Com_Printf(CON_CHANNEL_SERVER,"^2Processed %d bytes for client %s\n", msg->cursize -4, client->name);
 		MSG_Clear(msg);
 	}
 

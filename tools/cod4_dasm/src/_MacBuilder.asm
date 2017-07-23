@@ -1326,19 +1326,19 @@ _ZN10MacBuilder24SetEditTextUppercaseHookEP15OpaqueWindowPtrl_10:
 	nop
 
 
-;Zero initialized global or static variables of MacBuilder:
-SECTION .bss
-sBuilderProcPtr: resb 0x4
-_ZZN10MacBuilder15SetEditTextHookEP15OpaqueWindowPtrlPFhP16OpaqueControlRefsEsE21sControlValidationUPP: resb 0x4
-_ZZN10MacBuilder15SetEditTextHookEP15OpaqueWindowPtrlPFhP16OpaqueControlRefsEsE20sControlKeyFilterUPP: resb 0x78
-
-
 ;Initialized global or static variables of MacBuilder:
 SECTION .data
 
 
 ;Initialized constant data of MacBuilder:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacBuilder:
+SECTION .bss
+sBuilderProcPtr: resb 0x4
+_ZZN10MacBuilder15SetEditTextHookEP15OpaqueWindowPtrlPFhP16OpaqueControlRefsEsE21sControlValidationUPP: resb 0x4
+_ZZN10MacBuilder15SetEditTextHookEP15OpaqueWindowPtrlPFhP16OpaqueControlRefsEsE20sControlKeyFilterUPP: resb 0x78
 
 
 ;All CFStrings:

@@ -2060,10 +2060,6 @@ SV_Trace_50:
 	nop
 
 
-;Zero initialized global or static variables of sv_world:
-SECTION .bss
-
-
 ;Initialized global or static variables of sv_world:
 SECTION .data
 actorLocationalMaxs: dd 0x42800000, 0x42800000, 0x42900000
@@ -2072,6 +2068,10 @@ actorLocationalMins: dd 0xc2800000, 0xc2800000, 0xc2000000, 0x0, 0x0
 
 ;Initialized constant data of sv_world:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of sv_world:
+SECTION .bss
 
 
 ;All cstrings:

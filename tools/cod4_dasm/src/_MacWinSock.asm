@@ -69,16 +69,16 @@ ioctlsocket:
 	nop
 
 
-;Zero initialized global or static variables of MacWinSock:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacWinSock:
 SECTION .data
 
 
 ;Initialized constant data of MacWinSock:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacWinSock:
+SECTION .bss
 
 
 ;All cstrings:

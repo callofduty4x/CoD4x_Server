@@ -545,16 +545,16 @@ __cxa_atexit:
 	ret
 
 
-;Zero initialized global or static variables of initobj:
-SECTION .bss
-
-
 ;Initialized global or static variables of initobj:
 SECTION .data
 
 
 ;Initialized constant data of initobj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of initobj:
+SECTION .bss
 
 
 ;All cstrings:

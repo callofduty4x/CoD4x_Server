@@ -801,12 +801,6 @@ CG_OffhandRegisterDvars:
 	ret
 
 
-;Zero initialized global or static variables of offhandweapons:
-SECTION .bss
-hud_flash_period_offhand: resb 0x4
-hud_flash_time_offhand: resb 0x7c
-
-
 ;Initialized global or static variables of offhandweapons:
 SECTION .data
 offhandStrings: dd _cstring_null, _cstring_weapon_fraggrena, _cstring_weapon_smokegren, _cstring_weapon_flashgren, 0x0, 0x0, 0x0, 0x0
@@ -814,6 +808,12 @@ offhandStrings: dd _cstring_null, _cstring_weapon_fraggrena, _cstring_weapon_smo
 
 ;Initialized constant data of offhandweapons:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of offhandweapons:
+SECTION .bss
+hud_flash_period_offhand: resb 0x4
+hud_flash_time_offhand: resb 0x7c
 
 
 ;All cstrings:

@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of redblackcache:
-SECTION .bss
-
-
 ;Initialized global or static variables of redblackcache:
 SECTION .data
 
 
 ;Initialized constant data of redblackcache:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of redblackcache:
+SECTION .bss
 
 
 ;All cstrings:

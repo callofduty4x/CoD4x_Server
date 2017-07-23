@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of collision_trimesh_distance:
-SECTION .bss
-
-
 ;Initialized global or static variables of collision_trimesh_distance:
 SECTION .data
 
 
 ;Initialized constant data of collision_trimesh_distance:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of collision_trimesh_distance:
+SECTION .bss
 
 
 ;All cstrings:

@@ -222,16 +222,16 @@ _ZN9CAETargetD1Ev_10:
 	ret
 
 
-;Zero initialized global or static variables of MacAppleEvents:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacAppleEvents:
 SECTION .data
 
 
 ;Initialized constant data of MacAppleEvents:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacAppleEvents:
+SECTION .bss
 
 
 ;All cstrings:

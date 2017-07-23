@@ -171,18 +171,18 @@ Win_ShutdownLocalization:
 	nop
 
 
-;Zero initialized global or static variables of win_localize:
-SECTION .bss
-localization: resb 0x20
-language_buffer: resb 0x1060
-
-
 ;Initialized global or static variables of win_localize:
 SECTION .data
 
 
 ;Initialized constant data of win_localize:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of win_localize:
+SECTION .bss
+localization: resb 0x20
+language_buffer: resb 0x1060
 
 
 ;All cstrings:

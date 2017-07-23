@@ -473,7 +473,7 @@ void Z_PrintZoneHeap( memzone_t *zone, char *name ) {
 	int size, allocSize, numBlocks;
 
 	size = allocSize = numBlocks = 0;
-	Com_Printf("\r\n================\r\n%s log\r\n================\r\n", name );
+	Com_Printf(CON_CHANNEL_SYSTEM,"\r\n================\r\n%s log\r\n================\r\n", name );
 	for ( block = zone->blocklist.next ; block->next != &zone->blocklist; block = block->next ) {
 		if ( block->tag ) {
 #ifdef ZONE_DEBUG
@@ -487,7 +487,7 @@ void Z_PrintZoneHeap( memzone_t *zone, char *name ) {
 				}
 			}
 			dump[j] = '\0';
-			Com_Printf("size = %8d: %s, line: %d (%s) [%s]\r\n", block->d.allocSize, block->d.file, block->d.line, block->d.label, dump );
+			Com_Printf(CON_CHANNEL_SYSTEM,"size = %8d: %s, line: %d (%s) [%s]\r\n", block->d.allocSize, block->d.file, block->d.line, block->d.label, dump );
 			allocSize += block->d.allocSize;
 #endif
 			size += block->size;
@@ -500,8 +500,8 @@ void Z_PrintZoneHeap( memzone_t *zone, char *name ) {
 #else
 	allocSize = numBlocks * sizeof( memblock_t ); // + 32 bit alignment
 #endif
-	Com_Printf( "%d %s memory in %d blocks\r\n", size, name, numBlocks );
-	Com_Printf( "%d %s memory overhead\r\n", size - allocSize, name );
+	Com_Printf(CON_CHANNEL_SYSTEM, "%d %s memory in %d blocks\r\n", size, name, numBlocks );
+	Com_Printf(CON_CHANNEL_SYSTEM, "%d %s memory overhead\r\n", size - allocSize, name );
 }
 
 /*
@@ -830,7 +830,7 @@ void Hunk_Log( void ) {
 
     fileHandle_t hunklogfile;
 
-	Com_Printf("Hunk_Log\n");
+	Com_Printf(CON_CHANNEL_SYSTEM,"Hunk_Log\n");
 
 	if ( !FS_Initialized() ) {
 		return;
@@ -839,7 +839,7 @@ void Hunk_Log( void ) {
     hunklogfile = FS_FOpenFileAppend("hunkdebug.log");
 
     if ( !hunklogfile ) {
-		Com_Printf("Error opening logfile\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Error opening logfile\n");
 		return;
 	}
 

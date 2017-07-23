@@ -942,16 +942,16 @@ R_AddAllBspDrawSurfacesCameraNonlit_60:
 	nop
 
 
-;Zero initialized global or static variables of r_add_bsp:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_add_bsp:
 SECTION .data
 
 
 ;Initialized constant data of r_add_bsp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_add_bsp:
+SECTION .bss
 
 
 ;All cstrings:

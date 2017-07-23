@@ -16,16 +16,16 @@ dprintf:
 	ret
 
 
-;Zero initialized global or static variables of MacDebug:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacDebug:
 SECTION .data
 
 
 ;Initialized constant data of MacDebug:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacDebug:
+SECTION .bss
 
 
 ;All cstrings:

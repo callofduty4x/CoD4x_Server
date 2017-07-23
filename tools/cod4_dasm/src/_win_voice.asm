@@ -458,6 +458,17 @@ Voice_IncomingVoiceData_40:
 	ret
 
 
+;Initialized global or static variables of win_voice:
+SECTION .data
+voice_current_scaler: dd 0x3f800000, 0x0, 0x0, 0x0
+g_voice_initialized: dd 0x0
+sampleCount: dd 0x0, 0x0
+
+
+;Initialized constant data of win_voice:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of win_voice:
 SECTION .bss
 currentRecordingSample: resb 0x4
@@ -475,17 +486,6 @@ winvoice_mic_mute: resb 0x4c
 winvoice_mic_reclevel: resb 0x4
 winvoice_mic_scaler: resb 0x8
 winvoice_save_voice: resb 0x4
-
-
-;Initialized global or static variables of win_voice:
-SECTION .data
-voice_current_scaler: dd 0x3f800000, 0x0, 0x0, 0x0
-g_voice_initialized: dd 0x0
-sampleCount: dd 0x0, 0x0
-
-
-;Initialized constant data of win_voice:
-SECTION .rdata
 
 
 ;All cstrings:

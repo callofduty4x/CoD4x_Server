@@ -4772,6 +4772,21 @@ Com_Frame_10:
 	nop
 
 
+;Initialized global or static variables of common:
+SECTION .data
+s_lockThreadNames: dd _cstring_none, _cstring_minimal, _cstring_all, 0x0, 0x0, 0x0
+noticeErrors: dd _cstring_exe_server_disco, _cstring_exe_disconnected1, _cstring_exe_serverisfull, _cstring_xboxlive_signedo, _cstring_xboxlive_cantjoi, _cstring_xboxlive_mpnotal, _cstring_xboxlive_mustlog, _cstring_menu_resetcustom, _cstring_xboxlive_netconn, _cstring_null, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+cl_cdkey: dd 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x0
+cl_cdkeychecksum: dd 0x20202020, 0x0, 0x0
+com_missingAssetOpenFailed: dd 0x0
+g_dedicatedEnumNames: dd _cstring_listen_server, _cstring_dedicated_lan_se, _cstring_dedicated_intern, 0x0
+com_consoleLogOpenFailed: dd 0x0
+
+
+;Initialized constant data of common:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of common:
 SECTION .bss
 weaponInfoSource: resb 0x4
@@ -4838,21 +4853,6 @@ sys_smp_allowed: resb 0x4
 ui_errorMessage: resb 0x4
 ui_errorTitle: resb 0x4
 version: resb 0x4
-
-
-;Initialized global or static variables of common:
-SECTION .data
-s_lockThreadNames: dd _cstring_none, _cstring_minimal, _cstring_all, 0x0, 0x0, 0x0
-noticeErrors: dd _cstring_exe_server_disco, _cstring_exe_disconnected1, _cstring_exe_serverisfull, _cstring_xboxlive_signedo, _cstring_xboxlive_cantjoi, _cstring_xboxlive_mpnotal, _cstring_xboxlive_mustlog, _cstring_menu_resetcustom, _cstring_xboxlive_netconn, _cstring_null, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-cl_cdkey: dd 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x0
-cl_cdkeychecksum: dd 0x20202020, 0x0, 0x0
-com_missingAssetOpenFailed: dd 0x0
-g_dedicatedEnumNames: dd _cstring_listen_server, _cstring_dedicated_lan_se, _cstring_dedicated_intern, 0x0
-com_consoleLogOpenFailed: dd 0x0
-
-
-;Initialized constant data of common:
-SECTION .rdata
 
 
 ;All cstrings:

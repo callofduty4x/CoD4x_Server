@@ -207,16 +207,16 @@ R_AddCellDynModelSurfacesInFrustumCmd_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_dpvs_dynmodel:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_dpvs_dynmodel:
 SECTION .data
 
 
 ;Initialized constant data of r_dpvs_dynmodel:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_dpvs_dynmodel:
+SECTION .bss
 
 
 ;All cstrings:

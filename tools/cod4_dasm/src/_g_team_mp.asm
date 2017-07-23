@@ -77,16 +77,16 @@ CheckTeamStatus_10:
 	ret
 
 
-;Zero initialized global or static variables of g_team_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_team_mp:
 SECTION .data
 
 
 ;Initialized constant data of g_team_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_team_mp:
+SECTION .bss
 
 
 ;All cstrings:

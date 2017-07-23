@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of fastldlt:
-SECTION .bss
-
-
 ;Initialized global or static variables of fastldlt:
 SECTION .data
 
 
 ;Initialized constant data of fastldlt:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fastldlt:
+SECTION .bss
 
 
 ;All cstrings:

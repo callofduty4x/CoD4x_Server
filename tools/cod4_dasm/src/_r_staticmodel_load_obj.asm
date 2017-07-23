@@ -1506,16 +1506,16 @@ R_SetStaticModelReflectionProbe_80:
 	ret
 
 
-;Zero initialized global or static variables of r_staticmodel_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_staticmodel_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of r_staticmodel_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_staticmodel_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

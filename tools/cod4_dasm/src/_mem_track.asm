@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of mem_track:
-SECTION .bss
-
-
 ;Initialized global or static variables of mem_track:
 SECTION .data
 
 
 ;Initialized constant data of mem_track:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mem_track:
+SECTION .bss
 
 
 ;All cstrings:

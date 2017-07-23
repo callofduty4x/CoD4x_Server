@@ -46,7 +46,7 @@ qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean d
 		if ( !strcmp( cmd_name, cmd->name )) {
 			// allow completion-only commands to be silently doubled
 			if ( function != NULL ) {
-				Com_PrintWarning("Scr_AddFunction: %s already defined\n", cmd_name);
+				Com_PrintWarning(CON_CHANNEL_SCRIPT,"Scr_AddFunction: %s already defined\n", cmd_name);
 			}
 			return qfalse;
 		}
@@ -149,7 +149,7 @@ qboolean Scr_AddMethod( const char *cmd_name, xfunction_t function, qboolean dev
 		if ( !strcmp( cmd_name, cmd->name )) {
 			// allow completion-only commands to be silently doubled
 			if ( function != NULL ) {
-				Com_PrintWarning( "Scr_AddMethod: %s already defined\n", cmd_name );
+				Com_PrintWarning(CON_CHANNEL_SCRIPT, "Scr_AddMethod: %s already defined\n", cmd_name );
 			}
 			return qfalse;
 		}

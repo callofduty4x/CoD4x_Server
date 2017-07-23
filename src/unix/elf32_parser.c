@@ -56,31 +56,31 @@ char** ELF32_GetStrTable(void *buff, int imagelen, sharedlib_data_t *text)
             if(hdr->e_shstrndx<=hdr->e_shnum)
                 strtable = buff + shdr[hdr->e_shstrndx].sh_offset;
             else{
-                Com_Printf("Error: the string table index is too big! String table index: %d, section headers: %d.\n",hdr->e_shstrndx,hdr->e_shnum);
+                Com_Printf(CON_CHANNEL_SYSTEM,"Error: the string table index is too big! String table index: %d, section headers: %d.\n",hdr->e_shstrndx,hdr->e_shnum);
 				return NULL;
             }
         }else{        // So called 'elf extended addressing'. Because 'simple' is too mainstream.
             if(shdr[0].sh_link<=hdr->e_shnum)
                 strtable = buff + shdr[shdr[0].sh_link].sh_offset;
             else{
-                Com_Printf("Error: the string table index is too big! String table index: %d, section headers: %d.\n",shdr[0].sh_link,hdr->e_shnum);
+                Com_Printf(CON_CHANNEL_SYSTEM,"Error: the string table index is too big! String table index: %d, section headers: %d.\n",shdr[0].sh_link,hdr->e_shnum);
 				return NULL;
             }
         }
     }
     else{
-        Com_Printf("Could not find the string table.\n");
+        Com_Printf(CON_CHANNEL_SYSTEM,"Could not find the string table.\n");
         return NULL;
     }
 
     strings = malloc(sizeof(char**) * MAX_SYM_STRINGS);
-    //Com_Printf("Debug2\n");
+    //Com_Printf(CON_CHANNEL_SYSTEM,"Debug2\n");
     for(j=0;j<hdr->e_shnum;++j){
         if(strcmp(&strtable[shdr[j].sh_name],".text")==0){
             textfound = qtrue;
             text->size = shdr[j].sh_size;
             text->offset = shdr[j].sh_addr;
-            //Com_Printf("Debug: .text section found! Size: %d, address: %d.\n",shdr[j].sh_size,shdr[j].sh_addr);
+            //Com_Printf(CON_CHANNEL_SYSTEM,"Debug: .text section found! Size: %d, address: %d.\n",shdr[j].sh_size,shdr[j].sh_addr);
             if(dynstrfound)
                 break;
         }

@@ -1749,10 +1749,6 @@ Eval_AnyMissingOperands_20:
 	add [eax], al
 
 
-;Zero initialized global or static variables of eval:
-SECTION .bss
-
-
 ;Initialized global or static variables of eval:
 SECTION .data
 s_rightToLeft: dd 0x1010000, 0x1010000, 0x0, 0x100, 0x100, 0x0
@@ -1764,6 +1760,10 @@ s_consumedOperandCount: dd 0x1, 0xffffffff, 0x2, 0x0, 0x1, 0x1, 0x0, 0x0, 0x1, 0
 
 ;Initialized constant data of eval:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of eval:
+SECTION .bss
 
 
 ;All cstrings:

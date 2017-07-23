@@ -178,16 +178,16 @@ SND_LoadSoundFile_10:
 	jmp SND_LoadSoundFile_50
 
 
-;Zero initialized global or static variables of snd_driver_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of snd_driver_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of snd_driver_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of snd_driver_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

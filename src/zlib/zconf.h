@@ -329,4 +329,15 @@ typedef uLong FAR uLongf;
 #   pragma map(inflate_copyright,"INCOPY")
 #endif
 
+
+
+#if defined(ZLIB_CONST) && !defined(z_const)
+#  define z_const const
+#else
+#  define z_const
+#endif
+
+
+
 #endif /* ZCONF_H */
+

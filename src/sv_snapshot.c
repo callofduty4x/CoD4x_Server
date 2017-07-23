@@ -132,7 +132,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
         var_x = 0;
 
     } else if(client->netchan.outgoingSequence - client->deltaMessage >= PACKET_BACKUP - 3) {
-        Com_DPrintf("%s: Delta request from out of date packet.\n", client->name);
+        Com_DPrintf(CON_CHANNEL_SERVER,"%s: Delta request from out of date packet.\n", client->name);
         oldframe = NULL;
         lastframe = 0;
         var_x = 0;
@@ -143,7 +143,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
         lastframe = 0;
         var_x = 0;
         client->demowaiting = qfalse;
-        Com_DPrintf("Force a nondelta frame for %s for demo recording\n", client->name);
+        Com_DPrintf(CON_CHANNEL_SERVER,"Force a nondelta frame for %s for demo recording\n", client->name);
 
         if(client->demoMaxDeltaFrames < 1024)
         {
@@ -159,7 +159,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
         client->demoDeltaFrameCount--;
 
         if(oldframe->first_entity <  svsHeader.nextSnapshotEntities - svsHeader.numSnapshotEntities) {
-            Com_PrintWarning("%s: Delta request from out of date entities - delta against entity %i, oldest is %i, current is %i.  Their old snapshot had %i entities in it\n",
+            Com_PrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date entities - delta against entity %i, oldest is %i, current is %i.  Their old snapshot had %i entities in it\n",
                             client->name, oldframe->first_entity, svs.nextSnapshotEntities - svs.numSnapshotEntities, svs.nextSnapshotEntities, oldframe->num_entities );
             oldframe = NULL;
             lastframe = 0;
@@ -167,7 +167,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 
         } else if(oldframe->first_client <  svsHeader.nextSnapshotClients - svsHeader.numSnapshotClients) {
 
-            Com_PrintWarning("%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n",
+            Com_PrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n",
                             client->name, oldframe->first_client, svs.nextSnapshotClients - svs.numSnapshotClients, svs.nextSnapshotClients, oldframe->num_clients);
             oldframe = NULL;
             lastframe = 0;
@@ -223,7 +223,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
     newindex = 0;
     oldindex = 0;
 
-//    Com_Printf("Delta client: %i:\n", snapInfo.clnum);
+//    Com_Printf(CON_CHANNEL_SERVER,"Delta client: %i:\n", snapInfo.clnum);
 
 
     while ( newindex < frame->num_entities || oldindex < from_num_entities)
@@ -248,7 +248,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 			// delta update from old position
 			// because the force parm is qfalse, this will not result
 			// in any bytes being emited if the entity has not changed at all
-	//		Com_Printf("^2Delta Update Entity - New delta: %i Old delta: %i\n", newent->number, oldent->number);
+	//		Com_Printf(CON_CHANNEL_SERVER,"^2Delta Update Entity - New delta: %i Old delta: %i\n", newent->number, oldent->number);
 			MSG_WriteDeltaEntity( &snapInfo, msg, svsHeader.time, oldent, newent, qfalse );
 			oldindex++;
 			newindex++;
@@ -258,7 +258,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 		if ( newnum < oldnum ) {
 			// this is a new entity, send it from the baseline
 			snapInfo.fromBaseline = 1;
-	//		Com_Printf("Delta Add Entity: %i\n", newent->number);
+	//		Com_Printf(CON_CHANNEL_SERVER,"Delta Add Entity: %i\n", newent->number);
 			MSG_WriteDeltaEntity( &snapInfo, msg, svsHeader.time, &svsHeader.svEntities[newnum].baseline.s, newent, qtrue );
 			snapInfo.fromBaseline = 0;
 			newindex++;
@@ -267,7 +267,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 
 		if ( newnum > oldnum ) {
 			// the old entity isn't present in the new message
-	//		Com_Printf("Delta Remove Entity: %i\n", oldent->number);
+	//		Com_Printf(CON_CHANNEL_SERVER,"Delta Remove Entity: %i\n", oldent->number);
 			MSG_WriteDeltaEntity( &snapInfo, msg, svsHeader.time, oldent, NULL, qtrue );
 			oldindex++;
 			continue;
@@ -368,7 +368,7 @@ void SV_UpdateConfigData(client_t* cl, msg_t* msg)
 
 	for(i = cl->configDataAcknowledge +1; i <= svse.configDataSequence; ++i)
 	{
-	//	Com_Printf("Write Data: %d, Sequence %d\n", i, svse.configDataSequence);
+	//	Com_Printf(CON_CHANNEL_SERVER,"Write Data: %d, Sequence %d\n", i, svse.configDataSequence);
 		index = svse.changedConfigData[i % MAX_CONFIGDATACACHE];
 
 		if(index < 64)
@@ -437,7 +437,7 @@ void SV_TrackHuffmanCompression(int compsize, int uncompsize)
 
     if(totalcompbytes > nextnotifybytes)
     {
-	Com_Printf("Huffman compressionrate: %.2f\n", (float)totaluncompbytes / (float)totalcompbytes);
+	Com_Printf(CON_CHANNEL_SERVER,"Huffman compressionrate: %.2f\n", (float)totaluncompbytes / (float)totalcompbytes);
 	nextnotifybytes += 1024*16;
     }
 }
@@ -589,7 +589,7 @@ void SV_EndClientSnapshot(client_t *client, msg_t *msg)
 
 	if ( msg->overflowed == qtrue)
 	{
-		Com_PrintWarning( "WARNING: msg overflowed for %s, trying to recover\n", client->name);
+		Com_PrintWarning(CON_CHANNEL_SERVER, "WARNING: msg overflowed for %s, trying to recover\n", client->name);
 
 		if ( client->state == CS_ACTIVE || client->state == CS_ZOMBIE )
 		{
@@ -605,7 +605,7 @@ void SV_EndClientSnapshot(client_t *client, msg_t *msg)
 		}
 		if ( msg->overflowed == qtrue)
 		{
-			Com_PrintWarning("WARNING: client disconnected for msg overflow: %s\n", client->name);
+			Com_PrintWarning(CON_CHANNEL_SERVER,"WARNING: client disconnected for msg overflow: %s\n", client->name);
 			NET_OutOfBandPrint(NS_SERVER, &client->netchan.remoteAddress, "disconnect");
 			SV_DropClient(client, "EXE_SERVERMESSAGEOVERFLOW");
 		}
@@ -845,8 +845,8 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 /*
 cachedSnapshot_t* REGPARM(1) SV_GetCachedSnapshotInternal(signed int snapTime)
 {
-	//Com_DPrintf("Archived SnapFrame: %d Current ServerFrame: %d\n", snapTime, (svs.time * sv_fps->integer)/1000);
-	Com_DPrintf("Archived SnapFrame %d behind\n", svs.nextArchivedSnapshotFrames - snapTime);
+	//Com_DPrintf(CON_CHANNEL_SERVER,"Archived SnapFrame: %d Current ServerFrame: %d\n", snapTime, (svs.time * sv_fps->integer)/1000);
+	Com_DPrintf(CON_CHANNEL_SERVER,"Archived SnapFrame %d behind\n", svs.nextArchivedSnapshotFrames - snapTime);
 	return NULL;
 }
 */
@@ -1193,7 +1193,7 @@ void SV_SendClientMessages( void ) {
 			sv.ucompAve += comp_ratio;
 			sv.ucompNum++;
 
-			Com_DPrintf( "bpspc(%2.0f) bps(%2.0f) pk(%i) ubps(%2.0f) upk(%i) cr(%2.2f) acr(%2.2f)\n",
+			Com_DPrintf(CON_CHANNEL_SERVER, "bpspc(%2.0f) bps(%2.0f) pk(%i) ubps(%2.0f) upk(%i) cr(%2.2f) acr(%2.2f)\n",
 						ave / (float)numclients, ave, sv.bpsMaxBytes, uave, sv.ubpsMaxBytes, comp_ratio, sv.ucompAve / sv.ucompNum );
 		}
 	}
@@ -1212,7 +1212,7 @@ void SV_SendClientMessages( void ) {
 
 	if ( msg.overflowed == qtrue )
 	{
-		Com_DPrintf("SV_ArchiveSnapshot: ignoring snapshot because it overflowed.\n");
+		Com_DPrintf(CON_CHANNEL_SERVER,"SV_ArchiveSnapshot: ignoring snapshot because it overflowed.\n");
 		return;
 	}
 

@@ -478,16 +478,16 @@ FX_SortNewElemsInEffect_30:
 	jmp FX_SortNewElemsInEffect_120
 
 
-;Zero initialized global or static variables of fx_sort:
-SECTION .bss
-
-
 ;Initialized global or static variables of fx_sort:
 SECTION .data
 
 
 ;Initialized constant data of fx_sort:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fx_sort:
+SECTION .bss
 
 
 ;All cstrings:

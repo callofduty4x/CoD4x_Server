@@ -11423,18 +11423,18 @@ CompareCaseInfo_10:
 	ret
 
 
-;Zero initialized global or static variables of scr_compiler:
-SECTION .bss
-scrCompileGlob: resb 0x200
-scrCompilePub: resb 0x21064
-
-
 ;Initialized global or static variables of scr_compiler:
 SECTION .data
 
 
 ;Initialized constant data of scr_compiler:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_compiler:
+SECTION .bss
+scrCompileGlob: resb 0x200
+scrCompilePub: resb 0x21064
 
 
 ;All cstrings:

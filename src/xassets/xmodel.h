@@ -147,8 +147,8 @@ typedef struct XSurface_s
 #elif defined XBOX
   int partBits[4];
 #endif
-}XSurface_t;
- 
+}XSurface;
+
 typedef struct BrushWrapper_s
 {
   float mins[3];
@@ -242,7 +242,7 @@ typedef struct XModel_s
   float *trans;
   char *partClassification;
   DObjAnimMat_t *baseMat;
-  XSurface_t *surfs;
+  XSurface *surfs;
   xMaterial_t **materialHandles;
   XModelLodInfo_t lodInfo[4];
   int field_88;

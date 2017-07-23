@@ -72,16 +72,16 @@ R_DebugFreeAll:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_debug_alloc:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_debug_alloc:
 SECTION .data
 
 
 ;Initialized constant data of r_debug_alloc:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_debug_alloc:
+SECTION .bss
 
 
 ;All cstrings:

@@ -1783,11 +1783,6 @@ _ZN6stPbCl10AddPbEventEiiPci_340:
 	jmp _ZN6stPbCl10AddPbEventEiiPci_550
 
 
-;Zero initialized global or static variables of pbcl:
-SECTION .bss
-pbcl: resb 0x200
-
-
 ;Initialized global or static variables of pbcl:
 SECTION .data
 exeInstance: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -1795,6 +1790,11 @@ exeInstance: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of pbcl:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of pbcl:
+SECTION .bss
+pbcl: resb 0x200
 
 
 ;All cstrings:

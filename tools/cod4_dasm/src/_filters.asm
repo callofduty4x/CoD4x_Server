@@ -1389,16 +1389,16 @@ iir_mem2_10:
 	nop
 
 
-;Zero initialized global or static variables of filters:
-SECTION .bss
-
-
 ;Initialized global or static variables of filters:
 SECTION .data
 
 
 ;Initialized constant data of filters:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of filters:
+SECTION .bss
 
 
 ;All cstrings:

@@ -729,6 +729,14 @@ Sys_Sleep:
 	nop
 
 
+;Initialized global or static variables of threads:
+SECTION .data
+
+
+;Initialized constant data of threads:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of threads:
 SECTION .bss
 s_threadLock: resb 0x4
@@ -744,14 +752,6 @@ databaseCompletedEvent: resb 0x4
 resumedDatabaseEvent: resb 0x4
 g_databaseThreadOwner: resb 0x4
 threadFunc: resb 0x3c
-
-
-;Initialized global or static variables of threads:
-SECTION .data
-
-
-;Initialized constant data of threads:
-SECTION .rdata
 
 
 ;All cstrings:

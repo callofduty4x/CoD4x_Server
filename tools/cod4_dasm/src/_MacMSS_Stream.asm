@@ -40,6 +40,10 @@
 	extern _Znwm
 	extern _ZSt17__throw_bad_allocv
 	extern _ZSt20__throw_length_errorPKc
+	extern _ZN12CSoundObject9TheadIdleEv
+	extern _ZN12CSoundObject13ChangedFormatEv
+	extern _ZN12CSoundObject17Changed3DPositionEv
+	extern _ZN12CSoundObject18Changed3DDistancesEv
 
 ;Exports of MacMSS_Stream:
 	global _GLOBAL__I__ZN12CStreamSound10sQTStreamsE
@@ -912,17 +916,19 @@ _ZNSt6vectorIP12CStreamSoundSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3
 	ret
 
 
-;Zero initialized global or static variables of MacMSS_Stream:
-SECTION .bss
-_ZN12CStreamSound10sQTStreamsE: resb 0x80
-
-
 ;Initialized global or static variables of MacMSS_Stream:
 SECTION .data
 
 
 ;Initialized constant data of MacMSS_Stream:
 SECTION .rdata
+;VTable for CStreamSound:
+_ZTV12CStreamSound: dd 0x0, 0x3b4f00, _ZN12CStreamSoundD1Ev, _ZN12CStreamSoundD0Ev, _ZN12CStreamSound7ReleaseEv, _ZN12CSoundObject9TheadIdleEv, _ZN12CStreamSound11stop_sampleEv, _ZN12CStreamSound13resume_sampleEv, _ZN12CStreamSound10end_sampleEv, _ZN12CStreamSound22get_sample_ms_positionEPiS0_, _ZN12CStreamSound22set_sample_ms_positionEi, _ZN12CStreamSound24set_sample_playback_rateEi, _ZN12CStreamSound11open_streamEPKc, _ZN12CStreamSound12close_streamEv, _ZN12CStreamSound13ChangedVolumeEv, _ZN12CSoundObject13ChangedFormatEv, _ZN12CSoundObject17Changed3DPositionEv, _ZN12CSoundObject18Changed3DDistancesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of MacMSS_Stream:
+SECTION .bss
+_ZN12CStreamSound10sQTStreamsE: resb 0x80
 
 
 ;All cstrings:

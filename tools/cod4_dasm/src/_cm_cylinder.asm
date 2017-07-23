@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of cm_cylinder:
-SECTION .bss
-
-
 ;Initialized global or static variables of cm_cylinder:
 SECTION .data
 
 
 ;Initialized constant data of cm_cylinder:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cm_cylinder:
+SECTION .bss
 
 
 ;All cstrings:

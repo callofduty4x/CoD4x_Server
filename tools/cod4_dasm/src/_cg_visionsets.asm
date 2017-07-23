@@ -1208,13 +1208,6 @@ CG_VisionSetConfigString_Night_20:
 	ret
 
 
-;Zero initialized global or static variables of cg_visionsets:
-SECTION .bss
-nightVisionPowerOnTime: resb 0x4
-nightVisionFadeInOutTime: resb 0x4
-nightVisionDisableEffects: resb 0x78
-
-
 ;Initialized global or static variables of cg_visionsets:
 SECTION .data
 visionDefFields: dd _cstring_r_glow, 0x0, 0x0, _cstring_r_glowbloomcutof, 0x4, 0x1, _cstring_r_glowbloomdesat, 0x8, 0x1, _cstring_r_glowbloominten, 0xc, 0x1, _cstring_r_glowbloominten1, 0x10, 0x1, _cstring_r_glowradius0, 0x14, 0x1, _cstring_r_glowradius1, 0x18, 0x1, _cstring_r_glowskybleedin, 0x1c, 0x1, _cstring_r_glowskybleedin1, 0x20, 0x1, _cstring_r_filmenable, 0x24, 0x0, _cstring_r_filmbrightness, 0x28, 0x1, _cstring_r_filmcontrast, 0x2c, 0x1, _cstring_r_filmdesaturati, 0x30, 0x1, _cstring_r_filminvert, 0x34, 0x0, _cstring_r_filmlighttint, 0x38, 0x2, _cstring_r_filmdarktint, 0x44, 0x2
@@ -1223,6 +1216,13 @@ _ZZ16SetDefaultVisioniE19MYDEFAULTVISIONNAME: dd _cstring_default, 0x0, 0x0, 0x0
 
 ;Initialized constant data of cg_visionsets:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_visionsets:
+SECTION .bss
+nightVisionPowerOnTime: resb 0x4
+nightVisionFadeInOutTime: resb 0x4
+nightVisionDisableEffects: resb 0x78
 
 
 ;All cstrings:

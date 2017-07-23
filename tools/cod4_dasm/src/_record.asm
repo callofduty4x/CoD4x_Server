@@ -298,12 +298,6 @@ Record_QueueAudioDataForEncoding_60:
 	nop
 
 
-;Zero initialized global or static variables of record:
-SECTION .bss
-enc_buffer: resb 0x1000
-partial_audio_buffer: resb 0x500
-
-
 ;Initialized global or static variables of record:
 SECTION .data
 enc_buffer_pos: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -312,6 +306,12 @@ samples_in_partial_audio_buffer: dd 0x0
 
 ;Initialized constant data of record:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of record:
+SECTION .bss
+enc_buffer: resb 0x1000
+partial_audio_buffer: resb 0x500
 
 
 ;All cstrings:

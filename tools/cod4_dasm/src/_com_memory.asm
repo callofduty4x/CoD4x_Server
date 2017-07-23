@@ -2035,6 +2035,14 @@ _ZN10LargeLocalD1Ev:
 	add [eax], al
 
 
+;Initialized global or static variables of com_memory:
+SECTION .data
+
+
+;Initialized constant data of com_memory:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of com_memory:
 SECTION .bss
 g_debugUser: resb 0x4
@@ -2049,14 +2057,6 @@ com_fileDataHashTable: resb 0x1000
 s_origHunkData: resb 0x4
 _ZZ18Com_InitHunkMemoryE17Com_Meminfo_f_VAR: resb 0x3c
 com_dedicated: resb 0x80
-
-
-;Initialized global or static variables of com_memory:
-SECTION .data
-
-
-;Initialized constant data of com_memory:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of array:
-SECTION .bss
-
-
 ;Initialized global or static variables of array:
 SECTION .data
 
 
 ;Initialized constant data of array:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of array:
+SECTION .bss
 
 
 ;All cstrings:

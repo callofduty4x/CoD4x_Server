@@ -1492,16 +1492,16 @@ CG_LocationalTraceEntitiesOnly:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cg_world:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_world:
 SECTION .data
 
 
 ;Initialized constant data of cg_world:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_world:
+SECTION .bss
 
 
 ;All cstrings:

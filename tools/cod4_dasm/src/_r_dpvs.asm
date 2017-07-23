@@ -8507,47 +8507,6 @@ R_AddCellDynBrushSurfacesInFrustumCmd_200:
 	nop
 
 
-;Zero initialized global or static variables of r_dpvs:
-SECTION .bss
-g_keepZ_dup_1: resb 0x10
-g_keepX_dup_1: resb 0x10
-g_keepZW_dup_1: resb 0x10
-g_keepXY_dup_1: resb 0x10
-g_keepXYZ_dup_1: resb 0x10
-g_keepXYW_dup_1: resb 0x10
-g_keepXZW_dup_1: resb 0x10
-g_keepYZW_dup_1: resb 0x10
-g_selectW_dup_1: resb 0x10
-g_selectZ_dup_1: resb 0x10
-g_selectY_dup_1: resb 0x10
-g_selectX_dup_1: resb 0x10
-g_swizzleWWWW_dup_1: resb 0x10
-g_swizzleZZZZ_dup_1: resb 0x10
-g_swizzleYYYY_dup_1: resb 0x10
-g_swizzleXXXX_dup_1: resb 0x10
-g_swizzleYZWA_dup_1: resb 0x10
-g_swizzleZWAW_dup_1: resb 0x10
-g_swizzleWABW_dup_1: resb 0x10
-g_swizzleZXYW_dup_1: resb 0x10
-g_swizzleYZXW_dup_1: resb 0x10
-g_swizzleXYZA_dup_1: resb 0x10
-g_swizzleZWCD_dup_1: resb 0x10
-g_swizzleXYAB_dup_1: resb 0x10
-g_swizzleYBWD_dup_1: resb 0x10
-g_swizzleXAZC_dup_1: resb 0x10
-g_swizzleYXWZ_dup_1: resb 0x10
-g_swizzleXZYW_dup_1: resb 0x10
-g_swizzleYXZW_dup_1: resb 0x10
-g_swizzleXYZW_dup_1: resb 0x10
-g_inc_dup_1: resb 0x10
-g_negativeZero_dup_1: resb 0x10
-g_fltMin_dup_1: resb 0x20
-dpvsGlob: resb 0xae78
-g_viewIndex: resb 0x4
-g_dpvsView: resb 0x4
-g_dynEntVisData: resb 0x60
-
-
 ;Initialized global or static variables of r_dpvs:
 SECTION .data
 
@@ -8589,6 +8548,47 @@ g_negativeZero__uint4_dup_1: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
 g_fltMin__uint4_dup_1: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x0, 0x0, 0x0, 0x0
 standardFrustumSidePlanes: dd 0xbf800000, 0x0, 0x0, 0x3f800000, 0x3f800000, 0x0, 0x0, 0x3f800000, 0x0, 0xbf800000, 0x0, 0x3f800000, 0x0, 0x3f800000, 0x0, 0x3f800000, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
 _ZZ14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_iE5color: dd 0x0, 0x3f800000, 0x3f800000, 0x3e800000, 0x80000000, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of r_dpvs:
+SECTION .bss
+g_keepZ_dup_1: resb 0x10
+g_keepX_dup_1: resb 0x10
+g_keepZW_dup_1: resb 0x10
+g_keepXY_dup_1: resb 0x10
+g_keepXYZ_dup_1: resb 0x10
+g_keepXYW_dup_1: resb 0x10
+g_keepXZW_dup_1: resb 0x10
+g_keepYZW_dup_1: resb 0x10
+g_selectW_dup_1: resb 0x10
+g_selectZ_dup_1: resb 0x10
+g_selectY_dup_1: resb 0x10
+g_selectX_dup_1: resb 0x10
+g_swizzleWWWW_dup_1: resb 0x10
+g_swizzleZZZZ_dup_1: resb 0x10
+g_swizzleYYYY_dup_1: resb 0x10
+g_swizzleXXXX_dup_1: resb 0x10
+g_swizzleYZWA_dup_1: resb 0x10
+g_swizzleZWAW_dup_1: resb 0x10
+g_swizzleWABW_dup_1: resb 0x10
+g_swizzleZXYW_dup_1: resb 0x10
+g_swizzleYZXW_dup_1: resb 0x10
+g_swizzleXYZA_dup_1: resb 0x10
+g_swizzleZWCD_dup_1: resb 0x10
+g_swizzleXYAB_dup_1: resb 0x10
+g_swizzleYBWD_dup_1: resb 0x10
+g_swizzleXAZC_dup_1: resb 0x10
+g_swizzleYXWZ_dup_1: resb 0x10
+g_swizzleXZYW_dup_1: resb 0x10
+g_swizzleYXZW_dup_1: resb 0x10
+g_swizzleXYZW_dup_1: resb 0x10
+g_inc_dup_1: resb 0x10
+g_negativeZero_dup_1: resb 0x10
+g_fltMin_dup_1: resb 0x20
+dpvsGlob: resb 0xae78
+g_viewIndex: resb 0x4
+g_dpvsView: resb 0x4
+g_dynEntVisData: resb 0x60
 
 
 ;All cstrings:

@@ -37,16 +37,16 @@ BG_VehiclesGetSlotTagName_20:
 	add [eax], al
 
 
-;Zero initialized global or static variables of bg_vehicles_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of bg_vehicles_mp:
 SECTION .data
 
 
 ;Initialized constant data of bg_vehicles_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of bg_vehicles_mp:
+SECTION .bss
 
 
 ;All cstrings:

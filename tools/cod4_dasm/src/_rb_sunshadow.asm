@@ -137,17 +137,17 @@ RB_SunShadowMaps_20:
 	jmp RB_SunShadowMaps_50
 
 
-;Zero initialized global or static variables of rb_sunshadow:
-SECTION .bss
-_ZZ16RB_SunShadowMapsPK14GfxBackEndDataPK11GfxViewInfoE4flip: resb 0x80
-
-
 ;Initialized global or static variables of rb_sunshadow:
 SECTION .data
 
 
 ;Initialized constant data of rb_sunshadow:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_sunshadow:
+SECTION .bss
+_ZZ16RB_SunShadowMapsPK14GfxBackEndDataPK11GfxViewInfoE4flip: resb 0x80
 
 
 ;All cstrings:

@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of com_stringtable_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of com_stringtable_obj:
 SECTION .data
 
 
 ;Initialized constant data of com_stringtable_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_stringtable_obj:
+SECTION .bss
 
 
 ;All cstrings:

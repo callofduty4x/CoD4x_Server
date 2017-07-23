@@ -110,17 +110,17 @@ VerifyKey_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of WrapAPI:
-SECTION .bss
-entries: resb 0x80
-
-
 ;Initialized global or static variables of WrapAPI:
 SECTION .data
 
 
 ;Initialized constant data of WrapAPI:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of WrapAPI:
+SECTION .bss
+entries: resb 0x80
 
 
 ;All cstrings:

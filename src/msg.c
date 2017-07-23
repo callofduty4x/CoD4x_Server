@@ -218,7 +218,7 @@ void MSG_WriteString( msg_t *sb, const char *s ) {
 
 		l = strlen( s );
 		if ( l >= MAX_STRING_CHARS ) {
-			Com_Printf( "MSG_WriteString: MAX_STRING_CHARS" );
+			Com_Printf(CON_CHANNEL_SYSTEM, "MSG_WriteString: MAX_STRING_CHARS" );
 			MSG_WriteData( sb, "", 1 );
 			return;
 		}
@@ -237,7 +237,7 @@ void MSG_WriteBigString( msg_t *sb, const char *s ) {
 
 		l = strlen( s );
 		if ( l >= BIG_INFO_STRING ) {
-			Com_Printf( "MSG_WriteString: BIG_INFO_STRING" );
+			Com_Printf(CON_CHANNEL_SYSTEM, "MSG_WriteString: BIG_INFO_STRING" );
 			MSG_WriteData( sb, "", 1 );
 			return;
 		}
@@ -747,15 +747,15 @@ void MSG_NUinitHuffman() {
 		Huff_addRef(&msgHuff.decompressor,	ch);			// Do update
 		array[ch]++;
 	}
-	Com_Printf("msg_hData {\n");
+	Com_Printf(CON_CHANNEL_SYSTEM,"msg_hData {\n");
 	for(i=0;i<256;i++) {
 		if (array[i] == 0) {
 			Huff_addRef(&msgHuff.compressor,	i);			// Do update
 			Huff_addRef(&msgHuff.decompressor,	i);			// Do update
 		}
-		Com_Printf("%d,			// %d\n", array[i], i);
+		Com_Printf(CON_CHANNEL_SYSTEM,"%d,			// %d\n", array[i], i);
 	}
-	Com_Printf("};\n");
+	Com_Printf(CON_CHANNEL_SYSTEM,"};\n");
 	FS_FreeFile( data );
 	Cbuf_AddText( "condump dump.txt\n" );
 }
@@ -1668,7 +1668,7 @@ void MSG_WriteReliableCommandToBuffer(const char *source, char *destination, int
   int requiredlen;
 
   if ( *source == '\0' )
-    Com_PrintWarning("WARNING: Empty reliable command\n");
+    Com_PrintWarning(CON_CHANNEL_SYSTEM,"WARNING: Empty reliable command\n");
 
   for(i = 0 ; i < (length -1) && source[i] != '\0'; i++)
   {
@@ -1685,7 +1685,7 @@ void MSG_WriteReliableCommandToBuffer(const char *source, char *destination, int
 	requiredlen = strlen(source) +1;
 	if(requiredlen > length)
 	{
-		Com_PrintWarning("WARNING: Reliable command is too long (%i/%i) and will be truncated: '%s'\n", requiredlen, length, source);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"WARNING: Reliable command is too long (%i/%i) and will be truncated: '%s'\n", requiredlen, length, source);
 	}
   }
 }
@@ -1722,7 +1722,7 @@ int MSG_ReadEntityIndex(msg_t *msg, int numBits)
   if ( MSG_ReadBit(msg) )
   {
     if ( (*msg_printEntityNums)->boolean )
-      Com_Printf("Entity num: 1 bit (inc)\n");
+      Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: 1 bit (inc)\n");
     ++msg->lastRefEntity;
   }
   else
@@ -1730,18 +1730,18 @@ int MSG_ReadEntityIndex(msg_t *msg, int numBits)
     if ( numBits != 10 || MSG_ReadBit(msg) )
     {
       if ( (*msg_printEntityNums)->boolean )
-        Com_Printf("Entity num: %i bits (full)\n", numBits + 2);
+        Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: %i bits (full)\n", numBits + 2);
       msg->lastRefEntity = MSG_ReadBits(msg, numBits);
     }
     else
     {
       if ( (*msg_printEntityNums)->boolean )
-        Com_Printf("Entity num: %i bits (delta)\n", 6);
+        Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: %i bits (delta)\n", 6);
       msg->lastRefEntity += MSG_ReadBits(msg, 4);
     }
   }
   if ( (*msg_printEntityNums)->boolean )
-    Com_Printf("Read entity num %i\n", msg->lastRefEntity);
+    Com_Printf(CON_CHANNEL_SYSTEM,"Read entity num %i\n", msg->lastRefEntity);
   return msg->lastRefEntity;
 }
 
@@ -2109,7 +2109,7 @@ void MSG_WriteEntityRemoval(struct snapshotInfo_s *snapInfo, msg_t *msg, byte *f
 	
 	if ( snapInfo->clnum == sv_shownet->integer )
 	{
-			Com_Printf("W|%3i: #%-3i remove\n", msg->cursize, *(uint32_t*)from);
+			Com_Printf(CON_CHANNEL_SYSTEM,"W|%3i: #%-3i remove\n", msg->cursize, *(uint32_t*)from);
 	}
 
 	

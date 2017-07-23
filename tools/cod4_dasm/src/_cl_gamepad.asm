@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of cl_gamepad:
-SECTION .bss
-
-
 ;Initialized global or static variables of cl_gamepad:
 SECTION .data
 
 
 ;Initialized constant data of cl_gamepad:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_gamepad:
+SECTION .bss
 
 
 ;All cstrings:

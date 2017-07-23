@@ -11528,6 +11528,26 @@ UI_SetMap_40:
 	nop
 
 
+;Initialized global or static variables of ui_main_mp:
+SECTION .data
+MonthAbbrev: dd _cstring_exe_month_abv_ja, _cstring_exe_month_abv_fe, _cstring_exe_month_abv_ma, _cstring_exe_month_abv_ap, _cstring_exe_month_abv_ma1, _cstring_exe_month_abv_ju, _cstring_exe_month_abv_ju1, _cstring_exe_month_abv_au, _cstring_exe_month_abv_se, _cstring_exe_month_abv_oc, _cstring_exe_month_abv_no, _cstring_exe_month_abv_de
+netSources: dd _cstring_exe_local, _cstring_exe_internet, _cstring_exe_favorites
+_ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10lastColumn: dd 0xffffffff
+_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE12tleEstimates: dd 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c
+_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE8xferText: dd 0x5f455845, 0x4e415254, 0x41525f53
+		db 0x54, 0x45, 0x0
+_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE7etaText: dd 0x5f455845, 0x5f545345, 0x454d4954, 0x46454c5f
+		db 0x54, 0x0
+_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE6dlText: dd 0x5f455845, 0x4e574f44, 0x44414f4c, 0x474e49, 0x0, 0x0, 0x0, 0x0
+		db 0x0, 0x0, 0x0
+serverStatusDvars: dd _cstring_sv_hostname, _cstring_exe_sv_info_serv, 0x0, _cstring_address, _cstring_exe_sv_info_addr, 0x0, _cstring_pswrd, _cstring_exe_sv_info_pass, 0x1, _cstring_gamename, _cstring_exe_sv_info_game, 0x0, _cstring_g_gametype, _cstring_exe_sv_info_game1, 0x2, _cstring_sv_pure, _cstring_exe_sv_info_pure, 0x1, _cstring_mapname, _cstring_exe_sv_info_map, 0x3, _cstring_shortversion, _cstring_exe_sv_info_vers, 0x0, _cstring_protocol, _cstring_exe_sv_info_prot, 0x0, _cstring_sv_maxping, _cstring_exe_sv_info_maxp, 0x0, _cstring_sv_minping, _cstring_exe_sv_info_minp, 0x0, _cstring_sv_maxrate, _cstring_exe_sv_info_maxr, 0x0, _cstring_sv_floodprotect, _cstring_exe_sv_info_floo, 0x1, _cstring_sv_allowanonymou, _cstring_exe_sv_info_allo, 0x0, _cstring_sv_maxclients, _cstring_exe_sv_info_maxc, 0x0, _cstring_sv_privateclient, _cstring_exe_sv_info_priv, 0x0, _cstring_scr_friendlyfire, _cstring_exe_sv_info_frie, 0x0, _cstring_fs_game, _cstring_exe_sv_info_mod, 0x0, _cstring_mod, _cstring_menu_mods, 0x1, _cstring_scr_killcam, _cstring_exe_sv_info_kill, 0x1, _cstring_g_antilag, _cstring_exe_sv_info_anti, 0x1, _cstring_g_compassshowene, _cstring_exe_sv_info_comp, 0x1, _cstring_sv_voice, _cstring_exe_sv_info_voic, 0x1, _cstring_sv_punkbuster, _cstring_mpui_punkbuster, 0x1, _cstring_sv_disableclient, _cstring_exe_sv_info_clie, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of ui_main_mp:
+SECTION .rdata
+serverFilters: dd _cstring_exe_all, _cstring_null, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
 ;Zero initialized global or static variables of ui_main_mp:
 SECTION .bss
 g_gametype_dup_1: resb 0x40
@@ -11595,26 +11615,6 @@ ui_smallFont: resb 0x4
 ui_uav_allies: resb 0x4
 ui_uav_axis: resb 0x4
 ui_uav_client: resb 0x4
-
-
-;Initialized global or static variables of ui_main_mp:
-SECTION .data
-MonthAbbrev: dd _cstring_exe_month_abv_ja, _cstring_exe_month_abv_fe, _cstring_exe_month_abv_ma, _cstring_exe_month_abv_ap, _cstring_exe_month_abv_ma1, _cstring_exe_month_abv_ju, _cstring_exe_month_abv_ju1, _cstring_exe_month_abv_au, _cstring_exe_month_abv_se, _cstring_exe_month_abv_oc, _cstring_exe_month_abv_no, _cstring_exe_month_abv_de
-netSources: dd _cstring_exe_local, _cstring_exe_internet, _cstring_exe_favorites
-_ZZ17UI_FeederItemTextiP9itemDef_sfiiPP8MaterialE10lastColumn: dd 0xffffffff
-_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE12tleEstimates: dd 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c, 0x3c
-_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE8xferText: dd 0x5f455845, 0x4e415254, 0x41525f53
-		db 0x54, 0x45, 0x0
-_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE7etaText: dd 0x5f455845, 0x5f545345, 0x454d4954, 0x46454c5f
-		db 0x54, 0x0
-_ZZ22UI_DisplayDownloadInfoPKcffP6Font_sfE6dlText: dd 0x5f455845, 0x4e574f44, 0x44414f4c, 0x474e49, 0x0, 0x0, 0x0, 0x0
-		db 0x0, 0x0, 0x0
-serverStatusDvars: dd _cstring_sv_hostname, _cstring_exe_sv_info_serv, 0x0, _cstring_address, _cstring_exe_sv_info_addr, 0x0, _cstring_pswrd, _cstring_exe_sv_info_pass, 0x1, _cstring_gamename, _cstring_exe_sv_info_game, 0x0, _cstring_g_gametype, _cstring_exe_sv_info_game1, 0x2, _cstring_sv_pure, _cstring_exe_sv_info_pure, 0x1, _cstring_mapname, _cstring_exe_sv_info_map, 0x3, _cstring_shortversion, _cstring_exe_sv_info_vers, 0x0, _cstring_protocol, _cstring_exe_sv_info_prot, 0x0, _cstring_sv_maxping, _cstring_exe_sv_info_maxp, 0x0, _cstring_sv_minping, _cstring_exe_sv_info_minp, 0x0, _cstring_sv_maxrate, _cstring_exe_sv_info_maxr, 0x0, _cstring_sv_floodprotect, _cstring_exe_sv_info_floo, 0x1, _cstring_sv_allowanonymou, _cstring_exe_sv_info_allo, 0x0, _cstring_sv_maxclients, _cstring_exe_sv_info_maxc, 0x0, _cstring_sv_privateclient, _cstring_exe_sv_info_priv, 0x0, _cstring_scr_friendlyfire, _cstring_exe_sv_info_frie, 0x0, _cstring_fs_game, _cstring_exe_sv_info_mod, 0x0, _cstring_mod, _cstring_menu_mods, 0x1, _cstring_scr_killcam, _cstring_exe_sv_info_kill, 0x1, _cstring_g_antilag, _cstring_exe_sv_info_anti, 0x1, _cstring_g_compassshowene, _cstring_exe_sv_info_comp, 0x1, _cstring_sv_voice, _cstring_exe_sv_info_voic, 0x1, _cstring_sv_punkbuster, _cstring_mpui_punkbuster, 0x1, _cstring_sv_disableclient, _cstring_exe_sv_info_clie, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of ui_main_mp:
-SECTION .rdata
-serverFilters: dd _cstring_exe_all, _cstring_null, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;All cstrings:

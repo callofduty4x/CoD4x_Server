@@ -14,7 +14,7 @@
 	extern parse_expression
 	extern atoi
 	extern Q_strncpyz
-	extern I_strlwr
+	extern Q_strlwr
 	extern Material_RegisterHandle
 	extern Item_IsEditFieldDef
 	extern Item_GetEditFieldDef
@@ -2776,7 +2776,7 @@ ItemParse_background_10:
 	mov [esp], ebx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_strlwr
+	call Q_strlwr
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x130]
 	mov [esp+0x4], eax
@@ -4774,7 +4774,7 @@ ItemParse_selectIcon_20:
 	mov [esp], ebx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_strlwr
+	call Q_strlwr
 	mov eax, [esi+0x130]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -4811,7 +4811,7 @@ MenuParse_name_10:
 	mov edx, [ebp+0x8]
 	mov [edx], eax
 	mov [esp], eax
-	call I_strlwr
+	call Q_strlwr
 	mov eax, 0x1
 	leave
 	ret
@@ -5821,7 +5821,7 @@ MenuParse_background_10:
 	mov [esp], ebx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_strlwr
+	call Q_strlwr
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0xe4]
 	mov [esp+0x4], eax
@@ -8627,7 +8627,7 @@ UI_MapLoadInfo_70:
 	call Com_sprintf
 	lea ecx, [ebp-0x60]
 	mov [esp], ecx
-	call I_strlwr
+	call Q_strlwr
 	lea eax, [ebp-0x60]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -8876,16 +8876,6 @@ Menu_SetupKeywordHash_20:
 	ret
 
 
-;Zero initialized global or static variables of ui_shared_obj:
-SECTION .bss
-menuBuf: resb 0x8000
-g_load_dup_1: resb 0xc20
-menuParseKeywordHash: resb 0x200
-itemParseKeywordHash: resb 0x400
-menuBuf1: resb 0x1000
-_ZZ14PC_SourceErroriPczE6string: resb 0x1060
-
-
 ;Initialized global or static variables of ui_shared_obj:
 SECTION .data
 
@@ -8894,6 +8884,16 @@ SECTION .data
 SECTION .rdata
 itemParseKeywords: dd _cstring_name, ItemParse_name, _cstring_text, ItemParse_text, _cstring_textfile, ItemParse_textfile, _cstring_textsavegame, ItemParse_textsavegame, _cstring_textcinematicsub, ItemParse_textcinematicsubtitle, _cstring_group, ItemParse_group, _cstring_rect, ItemParse_rect, _cstring_origin, ItemParse_origin, _cstring_style, ItemParse_style, _cstring_decoration, ItemParse_decoration, _cstring_notselectable, ItemParse_notselectable, _cstring_noscrollbars, ItemParse_noScrollBars, _cstring_usepaging, ItemParse_usePaging, _cstring_autowrapped, ItemParse_autowrapped, _cstring_horizontalscroll, ItemParse_horizontalscroll, _cstring_type, ItemParse_type, _cstring_elementwidth, ItemParse_elementwidth, _cstring_elementheight, ItemParse_elementheight, _cstring_feeder, ItemParse_feeder, _cstring_elementtype, ItemParse_elementtype, _cstring_columns, ItemParse_columns, _cstring_border, ItemParse_border, _cstring_bordersize, ItemParse_bordersize, _cstring_visible, ItemParse_visible, _cstring_ownerdraw, ItemParse_ownerdraw, _cstring_align, ItemParse_align, _cstring_textalign, ItemParse_textalign, _cstring_textalignx, ItemParse_textalignx, _cstring_textaligny, ItemParse_textaligny, _cstring_textscale, ItemParse_textscale, _cstring_textstyle, ItemParse_textstyle, _cstring_textfont, ItemParse_textfont, _cstring_backcolor, ItemParse_backcolor, _cstring_forecolor, ItemParse_forecolor, _cstring_bordercolor, ItemParse_bordercolor, _cstring_outlinecolor, ItemParse_outlinecolor, _cstring_background, ItemParse_background, _cstring_onfocus, ItemParse_onFocus, _cstring_leavefocus, ItemParse_leaveFocus, _cstring_mouseenter, ItemParse_mouseEnter, _cstring_mouseexit, ItemParse_mouseExit, _cstring_mouseentertext, ItemParse_mouseEnterText, _cstring_mouseexittext, ItemParse_mouseExitText, _cstring_action, ItemParse_action, _cstring_accept, ItemParse_accept, _cstring_special, ItemParse_special, _cstring_dvar, ItemParse_dvar, _cstring_maxchars, ItemParse_maxChars, _cstring_maxcharsgotonext, Item_Parse_maxCharsGotoNext, _cstring_maxpaintchars, ItemParse_maxPaintChars, _cstring_focussound, ItemParse_focusSound, _cstring_dvarfloat, ItemParse_dvarFloat, _cstring_dvarstrlist, ItemParse_dvarStrList, _cstring_dvarfloatlist, ItemParse_dvarFloatList, _cstring_dvarenumlist, ItemParse_dvarEnumList, _cstring_ownerdrawflag, ItemParse_ownerdrawFlag, _cstring_enabledvar, ItemParse_enableDvar, _cstring_dvartest, ItemParse_dvarTest, _cstring_disabledvar, ItemParse_disableDvar, _cstring_showdvar, ItemParse_showDvar, _cstring_hidedvar, ItemParse_hideDvar, _cstring_focusdvar, ItemParse_focusDvar, _cstring_doubleclick, ItemParse_doubleClick, _cstring_execkey, ItemParse_execKey, _cstring_execkeyint, ItemParse_execKeyInt, _cstring_exp, ItemParse_execExp, _cstring_gamemsgwindowind, ItemParse_gameMsgWindowIndex, _cstring_gamemsgwindowmod, ItemParse_gameMsgWindowMode, _cstring_selectborder, ItemParse_selectBorder, _cstring_disablecolor, ItemParse_disableColor, _cstring_selecticon, ItemParse_selectIcon, 0x0, 0x0
 menuParseKeywords: dd _cstring_name, MenuParse_name, _cstring_fullscreen, MenuParse_fullscreen, _cstring_rect, MenuParse_rect, _cstring_style, MenuParse_style, _cstring_visible, MenuParse_visible, _cstring_onopen, MenuParse_onOpen, _cstring_onclose, MenuParse_onClose, _cstring_onesc, MenuParse_onESC, _cstring_border, MenuParse_border, _cstring_bordersize1, MenuParse_borderSize, _cstring_backcolor, MenuParse_backcolor, _cstring_forecolor, MenuParse_forecolor, _cstring_bordercolor, MenuParse_bordercolor, _cstring_focuscolor, MenuParse_focuscolor, _cstring_disablecolor, MenuParse_disablecolor, _cstring_outlinecolor, MenuParse_outlinecolor, _cstring_background, MenuParse_background, _cstring_ownerdraw, MenuParse_ownerdraw, _cstring_ownerdrawflag, MenuParse_ownerdrawFlag, _cstring_outofboundsclick, MenuParse_outOfBounds, _cstring_soundloop, MenuParse_soundLoop, _cstring_itemdef, MenuParse_itemDef, _cstring_exp, MenuParse_execExp, _cstring_popup, MenuParse_popup, _cstring_fadeclamp, MenuParse_fadeClamp, _cstring_fadecycle, MenuParse_fadeCycle, _cstring_fadeamount, MenuParse_fadeAmount, _cstring_fadeinamount, MenuParse_fadeInAmount, _cstring_execkey, MenuParse_execKey, _cstring_execkeyint, MenuParse_execKeyInt, _cstring_blurworld, MenuParse_blurWorld, _cstring_legacysplitscree, MenuParse_legacySplitScreenScale, _cstring_hiddenduringscop, MenuParse_hiddenDuringScope, _cstring_hiddenduringflas, MenuParse_hiddenDuringFlashbang, _cstring_hiddenduringui, MenuParse_hiddenDuringUI, _cstring_allowedbinding, MenuParse_allowedBinding
+
+
+;Zero initialized global or static variables of ui_shared_obj:
+SECTION .bss
+menuBuf: resb 0x8000
+g_load_dup_1: resb 0xc20
+menuParseKeywordHash: resb 0x200
+itemParseKeywordHash: resb 0x400
+menuBuf1: resb 0x1000
+_ZZ14PC_SourceErroriPczE6string: resb 0x1060
 
 
 ;All cstrings:

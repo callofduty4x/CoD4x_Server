@@ -1088,15 +1088,6 @@ R_ReflectionProbeRegisterDvars_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_reflection_probe:
-SECTION .bss
-s_numColorCorrectionDataEntries: resb 0x20
-s_colorCorrectionDataEntries: resb 0x15000
-r_reflectionProbeGenerateExit: resb 0x4
-r_reflectionProbeRegenerateAll: resb 0x5c
-r_reflectionProbeGenerate: resb 0x7c
-
-
 ;Initialized global or static variables of r_reflection_probe:
 SECTION .data
 _ZZ18R_VerifyFieldNamesPPKcS0_E6fields: dd _cstring_name, _cstring_black_level, _cstring_white_level, _cstring_gamma, _cstring_saturation, 0x0, 0x0, 0x0
@@ -1104,6 +1095,15 @@ _ZZ18R_VerifyFieldNamesPPKcS0_E6fields: dd _cstring_name, _cstring_black_level, 
 
 ;Initialized constant data of r_reflection_probe:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_reflection_probe:
+SECTION .bss
+s_numColorCorrectionDataEntries: resb 0x20
+s_colorCorrectionDataEntries: resb 0x15000
+r_reflectionProbeGenerateExit: resb 0x4
+r_reflectionProbeRegenerateAll: resb 0x5c
+r_reflectionProbeGenerate: resb 0x7c
 
 
 ;All cstrings:

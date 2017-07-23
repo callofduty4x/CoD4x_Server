@@ -217,16 +217,16 @@ CG_DrawInformation_50:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cg_info:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_info:
 SECTION .data
 
 
 ;Initialized constant data of cg_info:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_info:
+SECTION .bss
 
 
 ;All cstrings:

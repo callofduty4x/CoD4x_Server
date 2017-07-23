@@ -56,16 +56,16 @@ StreamFileNameIsNullSound_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of streamfile:
-SECTION .bss
-
-
 ;Initialized global or static variables of streamfile:
 SECTION .data
 
 
 ;Initialized constant data of streamfile:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of streamfile:
+SECTION .bss
 
 
 ;All cstrings:

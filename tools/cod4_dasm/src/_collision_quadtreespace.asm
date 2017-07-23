@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of collision_quadtreespace:
-SECTION .bss
-
-
 ;Initialized global or static variables of collision_quadtreespace:
 SECTION .data
 
 
 ;Initialized constant data of collision_quadtreespace:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of collision_quadtreespace:
+SECTION .bss
 
 
 ;All cstrings:

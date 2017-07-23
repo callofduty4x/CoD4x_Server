@@ -137,6 +137,14 @@ FX_RegisterDvars:
 	add [eax], al
 
 
+;Initialized global or static variables of fx_dvars:
+SECTION .data
+
+
+;Initialized constant data of fx_dvars:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of fx_dvars:
 SECTION .bss
 fx_cull_elem_draw: resb 0x4
@@ -154,14 +162,6 @@ fx_marks_ents: resb 0x4
 fx_marks_smodels: resb 0x4
 fx_profile: resb 0x4
 fx_visMinTraceDist: resb 0x4
-
-
-;Initialized global or static variables of fx_dvars:
-SECTION .data
-
-
-;Initialized constant data of fx_dvars:
-SECTION .rdata
 
 
 ;All cstrings:

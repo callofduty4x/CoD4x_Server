@@ -83,17 +83,17 @@ dMessage_20:
 	add [eax], al
 
 
-;Zero initialized global or static variables of error:
-SECTION .bss
-message_function: resb 0x80
-
-
 ;Initialized global or static variables of error:
 SECTION .data
 
 
 ;Initialized constant data of error:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of error:
+SECTION .bss
+message_function: resb 0x80
 
 
 ;All cstrings:

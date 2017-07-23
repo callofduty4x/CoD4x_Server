@@ -2998,18 +2998,18 @@ CG_Draw2D_1140:
 	jmp CG_Draw2D_1180
 
 
-;Zero initialized global or static variables of cg_draw_mp:
-SECTION .bss
-overheadFade: resb 0x300
-s_centerPrint: resb 0x480
-
-
 ;Initialized global or static variables of cg_draw_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_draw_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_draw_mp:
+SECTION .bss
+overheadFade: resb 0x300
+s_centerPrint: resb 0x480
 
 
 ;All cstrings:

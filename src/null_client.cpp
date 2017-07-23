@@ -11,13 +11,20 @@
 #include "qcommon_mem.h"
 
 cvar_t* r_reflectionProbeGenerate;
+cvar_t* r_modelVertColor;
+
 
 
 extern "C"
 {
 
+void R_RegisterDvars()
+{
+	r_modelVertColor = Cvar_RegisterBool("r_modelVertColor", qfalse, CVAR_ROM, "Set to 0 to replace all model vertex colors with white when loaded");
+}
+
 void R_ReflectionProbeRegisterDvars()
-{	
+{
 	r_reflectionProbeGenerate = Cvar_RegisterBool("r_reflectionProbeGenerate", qfalse, CVAR_ROM, "Probe reflections");
 }
 
@@ -33,7 +40,7 @@ void *__cdecl R_AllocStaticVertexBuffer(IDirect3DVertexBuffer9 **a1, int a2)
 
 void R_ShowDirtyDiscError()
 {
-	Com_PrintError("Error reading fastfile?\n");
+	Com_PrintError(CON_CHANNEL_FILES,"Error reading fastfile?\n");
 }
 
 void *__cdecl R_AllocStaticIndexBuffer(IDirect3DIndexBuffer9 **ib, int sizeInBytes)
@@ -220,4 +227,27 @@ struct snd_alias_t* __cdecl Com_FindSoundAlias(const char *name)
 {
     return NULL;
 }
+
+void __cdecl CG_DebugLine(const float *start, const float *end, const float *color, int depthTest, int duration)
+{
 }
+
+void __cdecl CG_DebugBox(const float *origin, const float *mins, const float *maxs, float yaw, const float *color, int depthTest, int duration)
+{
+}
+
+void __cdecl CG_DrawStringExt(struct ScreenPlacement *scrPlace, float x, float y, const char *string, const float *setColor, int forceColor, int shadow, float charHeight)
+{
+}
+
+void PIXBeginNamedEvent(int Color, const char *Name, ...)
+{
+}
+
+void __cdecl CG_VisionSetMyChanges()
+{
+}
+
+
+}
+

@@ -1536,16 +1536,16 @@ G_GetPlayerViewOrigin_20:
 	jmp Com_Error
 
 
-;Zero initialized global or static variables of g_client_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_client_mp:
 SECTION .data
 
 
 ;Initialized constant data of g_client_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_client_mp:
+SECTION .bss
 
 
 ;All cstrings:

@@ -35,16 +35,16 @@ CG_CullIn:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cg_pose_utils:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_pose_utils:
 SECTION .data
 
 
 ;Initialized constant data of cg_pose_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_pose_utils:
+SECTION .bss
 
 
 ;All cstrings:

@@ -586,17 +586,17 @@ GScr_LoadConsts:
 	add [eax], al
 
 
-;Zero initialized global or static variables of scr_const:
-SECTION .bss
-scr_const: resb 0x184
-
-
 ;Initialized global or static variables of scr_const:
 SECTION .data
 
 
 ;Initialized constant data of scr_const:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_const:
+SECTION .bss
+scr_const: resb 0x184
 
 
 ;All cstrings:

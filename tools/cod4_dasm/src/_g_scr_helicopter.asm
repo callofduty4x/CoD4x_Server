@@ -19,6 +19,29 @@
 	extern DObjSetLocalBoneIndex
 	extern Cvar_RegisterFloat
 	extern Cvar_RegisterBool
+	extern CMD_VEH_SetSpeed
+	extern CMD_VEH_GetSpeed
+	extern CMD_VEH_GetSpeedMPH
+	extern CMD_VEH_ResumeSpeed
+	extern CMD_VEH_SetYawSpeed
+	extern CMD_VEH_SetMaxPitchRoll
+	extern CMD_VEH_SetTurningAbility
+	extern CMD_VEH_SetAirResitance
+	extern CMD_VEH_SetHoverParams
+	extern CMD_VEH_NearGoalNotifyDist
+	extern CMD_VEH_SetGoalPos
+	extern CMD_VEH_SetGoalYaw
+	extern CMD_VEH_ClearGoalYaw
+	extern CMD_VEH_SetTargetYaw
+	extern CMD_VEH_ClearTargetYaw
+	extern CMD_VEH_SetLookAtEnt
+	extern CMD_VEH_ClearLookAtEnt
+	extern CMD_VEH_SetWeapon
+	extern CMD_VEH_FireWeapon
+	extern CMD_VEH_SetTurretTargetVec
+	extern CMD_VEH_SetTurretTargetEnt
+	extern CMD_VEH_ClearTurretTargetEnt
+	extern CMD_VEH_SetVehicleTeam
 
 ;Exports of g_scr_helicopter:
 	global s_methods
@@ -693,6 +716,15 @@ Helicopter_RegisterDvars:
 	ret
 
 
+;Initialized global or static variables of g_scr_helicopter:
+SECTION .data
+
+
+;Initialized constant data of g_scr_helicopter:
+SECTION .rdata
+s_methods: dd _cstring_freehelicopter, CMD_Heli_FreeHelicopter, 0x0, _cstring_setspeed, CMD_VEH_SetSpeed, 0x0, _cstring_getspeed, CMD_VEH_GetSpeed, 0x0, _cstring_getspeedmph, CMD_VEH_GetSpeedMPH, 0x0, _cstring_resumespeed, CMD_VEH_ResumeSpeed, 0x0, _cstring_setyawspeed, CMD_VEH_SetYawSpeed, 0x0, _cstring_setmaxpitchroll, CMD_VEH_SetMaxPitchRoll, 0x0, _cstring_setturningabilit, CMD_VEH_SetTurningAbility, 0x0, _cstring_setairresistance, CMD_VEH_SetAirResitance, 0x0, _cstring_sethoverparams, CMD_VEH_SetHoverParams, 0x0, _cstring_setneargoalnotif, CMD_VEH_NearGoalNotifyDist, 0x0, _cstring_setvehgoalpos, CMD_VEH_SetGoalPos, 0x0, _cstring_setgoalyaw, CMD_VEH_SetGoalYaw, 0x0, _cstring_cleargoalyaw, CMD_VEH_ClearGoalYaw, 0x0, _cstring_settargetyaw, CMD_VEH_SetTargetYaw, 0x0, _cstring_cleartargetyaw, CMD_VEH_ClearTargetYaw, 0x0, _cstring_setlookatent, CMD_VEH_SetLookAtEnt, 0x0, _cstring_clearlookatent, CMD_VEH_ClearLookAtEnt, 0x0, _cstring_setvehweapon, CMD_VEH_SetWeapon, 0x0, _cstring_fireweapon, CMD_VEH_FireWeapon, 0x0, _cstring_setturrettargetv, CMD_VEH_SetTurretTargetVec, 0x0, _cstring_setturrettargete, CMD_VEH_SetTurretTargetEnt, 0x0, _cstring_clearturrettarge, CMD_VEH_ClearTurretTargetEnt, 0x0, _cstring_setvehicleteam, CMD_VEH_SetVehicleTeam, 0x0, _cstring_setdamagestage, CMD_Heli_SetDamageStage, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
 ;Zero initialized global or static variables of g_scr_helicopter:
 SECTION .bss
 vehHelicopterDecelerationFwd: resb 0x4
@@ -723,15 +755,6 @@ vehHelicopterTiltSpeed: resb 0x4
 vehHelicopterYawOnLeftStick: resb 0x4
 vehHelicopterHeadSwayDontSwayTheTurret: resb 0x4
 vehHelicopterInvertUpDown: resb 0x4
-
-
-;Initialized global or static variables of g_scr_helicopter:
-SECTION .data
-
-
-;Initialized constant data of g_scr_helicopter:
-SECTION .rdata
-s_methods: dd _cstring_freehelicopter, CMD_Heli_FreeHelicopter, 0x0, _cstring_setspeed, CMD_VEH_SetSpeed, 0x0, _cstring_getspeed, CMD_VEH_GetSpeed, 0x0, _cstring_getspeedmph, CMD_VEH_GetSpeedMPH, 0x0, _cstring_resumespeed, CMD_VEH_ResumeSpeed, 0x0, _cstring_setyawspeed, CMD_VEH_SetYawSpeed, 0x0, _cstring_setmaxpitchroll, CMD_VEH_SetMaxPitchRoll, 0x0, _cstring_setturningabilit, CMD_VEH_SetTurningAbility, 0x0, _cstring_setairresistance, CMD_VEH_SetAirResitance, 0x0, _cstring_sethoverparams, CMD_VEH_SetHoverParams, 0x0, _cstring_setneargoalnotif, CMD_VEH_NearGoalNotifyDist, 0x0, _cstring_setvehgoalpos, CMD_VEH_SetGoalPos, 0x0, _cstring_setgoalyaw, CMD_VEH_SetGoalYaw, 0x0, _cstring_cleargoalyaw, CMD_VEH_ClearGoalYaw, 0x0, _cstring_settargetyaw, CMD_VEH_SetTargetYaw, 0x0, _cstring_cleartargetyaw, CMD_VEH_ClearTargetYaw, 0x0, _cstring_setlookatent, CMD_VEH_SetLookAtEnt, 0x0, _cstring_clearlookatent, CMD_VEH_ClearLookAtEnt, 0x0, _cstring_setvehweapon, CMD_VEH_SetWeapon, 0x0, _cstring_fireweapon, CMD_VEH_FireWeapon, 0x0, _cstring_setturrettargetv, CMD_VEH_SetTurretTargetVec, 0x0, _cstring_setturrettargete, CMD_VEH_SetTurretTargetEnt, 0x0, _cstring_clearturrettarge, CMD_VEH_ClearTurretTargetEnt, 0x0, _cstring_setvehicleteam, CMD_VEH_SetVehicleTeam, 0x0, _cstring_setdamagestage, CMD_Heli_SetDamageStage, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;All cstrings:

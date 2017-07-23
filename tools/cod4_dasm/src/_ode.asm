@@ -1696,17 +1696,17 @@ dWorldSetQuickStepNumIterations:
 	add [eax], al
 
 
-;Zero initialized global or static variables of ode:
-SECTION .bss
-odeGlob: resb 0x2c6500
-
-
 ;Initialized global or static variables of ode:
 SECTION .data
 
 
 ;Initialized constant data of ode:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ode:
+SECTION .bss
+odeGlob: resb 0x2c6500
 
 
 ;All cstrings:

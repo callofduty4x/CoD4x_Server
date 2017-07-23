@@ -255,16 +255,16 @@ Ragdoll_BodyPrevBoneOrientations:
 	nop
 
 
-;Zero initialized global or static variables of ragdoll_controller:
-SECTION .bss
-
-
 ;Initialized global or static variables of ragdoll_controller:
 SECTION .data
 
 
 ;Initialized constant data of ragdoll_controller:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ragdoll_controller:
+SECTION .bss
 
 
 ;All cstrings:

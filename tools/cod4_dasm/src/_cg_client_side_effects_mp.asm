@@ -8,7 +8,7 @@
 	extern __maskrune
 	extern Q_strncmp
 	extern Com_FindSoundAlias
-	extern I_strcmp
+	extern strcmp
 	extern FX_Register
 	extern AnglesToAxis
 	extern FX_SpawnOrientedEffect
@@ -968,7 +968,7 @@ CG_ParseClientEffects_800:
 	shl eax, 0x7
 	mov [ebp-0x3e0], eax
 	mov [esp], esi
-	call I_strcmp
+	call strcmp
 	test eax, eax
 	jz CG_ParseClientEffects_790
 	add ebx, 0x1
@@ -1625,14 +1625,14 @@ CG_ParseClientEffectMapping_500:
 	lea edx, [edi+g_effectDefMap]
 	mov [ebp-0x11c], edx
 	mov [esp], edx
-	call I_strcmp
+	call strcmp
 	test eax, eax
 	jnz CG_ParseClientEffectMapping_520
 	lea esi, [edi+g_effectDefMap+0x40]
 	lea eax, [ebp-0x98]
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call I_strcmp
+	call strcmp
 	test eax, eax
 	jz CG_ParseClientEffectMapping_20
 	lea edx, [ebp-0x98]
@@ -1857,6 +1857,14 @@ CG_CopyClientSideSoundEntityOrientation:
 	nop
 
 
+;Initialized global or static variables of cg_client_side_effects_mp:
+SECTION .data
+
+
+;Initialized constant data of cg_client_side_effects_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of cg_client_side_effects_mp:
 SECTION .bss
 g_clientEntSounds: resb 0x800
@@ -1865,14 +1873,6 @@ g_effectDefMapEntries: resb 0x1c
 g_effectDefMap: resb 0x1000
 _ZZ39CG_CopyClientSideSoundEntityOrientationiPfPA3_fE8zeroVec3: resb 0x60
 cg_clientSideEffects: resb 0x80
-
-
-;Initialized global or static variables of cg_client_side_effects_mp:
-SECTION .data
-
-
-;Initialized constant data of cg_client_side_effects_mp:
-SECTION .rdata
 
 
 ;All cstrings:

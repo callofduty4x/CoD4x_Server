@@ -345,16 +345,16 @@ R_ComparePixelConsts_100:
 	nop
 
 
-;Zero initialized global or static variables of r_material_consts:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_material_consts:
 SECTION .data
 
 
 ;Initialized constant data of r_material_consts:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_material_consts:
+SECTION .bss
 
 
 ;All cstrings:

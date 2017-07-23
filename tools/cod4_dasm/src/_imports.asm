@@ -1116,7 +1116,7 @@
 	global _Znwm
 	global ForeColor
 	global DMGetFirstScreenDevice
-	global _Znam
+	global _Znaj
 	global HideMenuBar
 	global DrawThemeFocusRect
 	global GetCurrentKeyModifiers
@@ -5107,7 +5107,7 @@ DMGetFirstScreenDevice:
 
 
 ;operator new[](unsigned long)
-_Znam:
+_Znaj:
 	hlt
 	hlt
 	hlt
@@ -9893,16 +9893,16 @@ CFPropertyListCreateFromXMLData:
 	hlt
 
 
-;Zero initialized global or static variables of imports:
-SECTION .bss
-
-
 ;Initialized global or static variables of imports:
 SECTION .data
 
 
 ;Initialized constant data of imports:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of imports:
+SECTION .bss
 
 
 ;All cstrings:

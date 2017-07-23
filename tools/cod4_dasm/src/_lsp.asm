@@ -566,16 +566,16 @@ lsp_enforce_margin_30:
 	ret
 
 
-;Zero initialized global or static variables of lsp:
-SECTION .bss
-
-
 ;Initialized global or static variables of lsp:
 SECTION .data
 
 
 ;Initialized constant data of lsp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of lsp:
+SECTION .bss
 
 
 ;All cstrings:

@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of misc-D9DCBEBA:
-SECTION .bss
-
-
 ;Initialized global or static variables of misc-D9DCBEBA:
 SECTION .data
 
 
 ;Initialized constant data of misc-D9DCBEBA:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of misc-D9DCBEBA:
+SECTION .bss
 
 
 ;All cstrings:

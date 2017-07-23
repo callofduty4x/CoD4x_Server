@@ -6273,13 +6273,6 @@ PC_DollarDirective_evalfloat_50:
 	jmp PC_DollarDirective_evalfloat_70
 
 
-;Zero initialized global or static variables of l_precomp:
-SECTION .bss
-globaldefines: resb 0x4
-numtokens: resb 0x60
-sourceFiles: resb 0x100
-
-
 ;Initialized global or static variables of l_precomp:
 SECTION .data
 dollardirectives: dd _cstring_evalint, PC_DollarDirective_evalint, _cstring_evalfloat, PC_DollarDirective_evalfloat, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -6288,6 +6281,13 @@ dollardirectives: dd _cstring_evalint, PC_DollarDirective_evalint, _cstring_eval
 ;Initialized constant data of l_precomp:
 SECTION .rdata
 directives: dd _cstring_if, PC_Directive_if, _cstring_ifdef, PC_Directive_ifdef, _cstring_ifndef, PC_Directive_ifndef, _cstring_elif, PC_Directive_elif, _cstring_else, PC_Directive_else, _cstring_endif, PC_Directive_endif, _cstring_include, PC_Directive_include, _cstring_define, PC_Directive_define, _cstring_undef, PC_Directive_undef, _cstring_line, PC_Directive_line, _cstring_error, PC_Directive_error, _cstring_pragma, PC_Directive_pragma, _cstring_eval, PC_Directive_eval, _cstring_evalfloat, PC_Directive_evalfloat, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of l_precomp:
+SECTION .bss
+globaldefines: resb 0x4
+numtokens: resb 0x60
+sourceFiles: resb 0x100
 
 
 ;All cstrings:

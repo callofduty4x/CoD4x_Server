@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of rb_logfile:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_logfile:
 SECTION .data
 
 
 ;Initialized constant data of rb_logfile:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_logfile:
+SECTION .bss
 
 
 ;All cstrings:

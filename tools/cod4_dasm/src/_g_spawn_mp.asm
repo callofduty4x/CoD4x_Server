@@ -75,6 +75,26 @@
 	extern G_SetOrigin
 	extern G_SetAngle
 	extern G_FreeEntity
+	extern trigger_use
+	extern trigger_use_touch
+	extern SP_trigger_multiple
+	extern SP_trigger_disk
+	extern SP_trigger_hurt
+	extern SP_trigger_once
+	extern SP_trigger_damage
+	extern SP_trigger_lookat
+	extern SP_light
+	extern SP_turret
+	extern SP_script_brushmodel
+	extern G_VehSpawner
+	extern SP_info_notnull
+	extern SP_trigger_radius
+	extern SP_script_model
+	extern SP_script_origin
+	extern G_VehCollmapSpawner
+	extern Scr_SetOrigin
+	extern Scr_SetHealth
+	extern Scr_SetAngles
 
 ;Exports of g_spawn_mp:
 	global s_bspOnlySpawns
@@ -1917,10 +1937,6 @@ G_SpawnEntitiesFromString_250:
 	nop
 
 
-;Zero initialized global or static variables of g_spawn_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_spawn_mp:
 SECTION .data
 
@@ -1930,6 +1946,10 @@ SECTION .rdata
 s_bspOnlySpawns: dd _cstring_trigger_use, trigger_use, _cstring_trigger_use_touc, trigger_use_touch, _cstring_trigger_multiple, SP_trigger_multiple, _cstring_trigger_disk, SP_trigger_disk, _cstring_trigger_hurt, SP_trigger_hurt, _cstring_trigger_once, SP_trigger_once, _cstring_trigger_damage, SP_trigger_damage, _cstring_trigger_lookat, SP_trigger_lookat, _cstring_light, SP_light, _cstring_misc_mg42, SP_turret, _cstring_misc_turret, SP_turret, _cstring_script_brushmode, SP_script_brushmodel, _cstring_script_struct, G_FreeEntity, _cstring_script_vehicle_m, G_VehSpawner, 0x0, 0x0, 0x0, 0x0
 s_bspOrDynamicSpawns: dd _cstring_info_notnull, SP_info_notnull, _cstring_info_notnull_big, SP_info_notnull, _cstring_trigger_radius, SP_trigger_radius, _cstring_script_model, SP_script_model, _cstring_script_origin, SP_script_origin, _cstring_script_vehicle_c, G_VehCollmapSpawner, 0x0, 0x0, 0x0, 0x0
 fields_dup_1: dd _cstring_classname, 0x170, 0x3, Scr_ReadOnlyField, _cstring_origin, 0x13c, 0x4, Scr_SetOrigin, _cstring_model, 0x168, 0x9, Scr_ReadOnlyField, _cstring_spawnflags, 0x17c, 0x0, Scr_ReadOnlyField, _cstring_target, 0x172, 0x3, 0x0, _cstring_targetname, 0x174, 0x3, 0x0, _cstring_count, 0x1ac, 0x0, 0x0, _cstring_health, 0x1a0, 0x0, Scr_SetHealth, _cstring_dmg, 0x1a8, 0x0, 0x0, _cstring_angles, 0x148, 0x4, Scr_SetAngles, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of g_spawn_mp:
+SECTION .bss
 
 
 ;All cstrings:

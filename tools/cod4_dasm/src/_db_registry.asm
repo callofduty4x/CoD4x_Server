@@ -111,6 +111,10 @@
 	extern DB_ReleaseGeometryBuffers
 	extern Material_OriginalRemapTechniqueSet
 	extern Material_UploadShaders
+	extern cm
+	extern comWorld
+	extern gameWorldMp
+	extern s_world
 
 ;Exports of db_registry:
 	global g_zones
@@ -7901,6 +7905,22 @@ DB_Update_10:
 	jmp DB_PostLoadXZone
 
 
+;Initialized global or static variables of db_registry:
+SECTION .data
+DB_DynamicCloneXAssetHandler: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, DB_DynamicCloneMenu, 0x0, DB_DynamicCloneWeaponDef, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_defaultAssetName: dd _cstring_null, _cstring_default, _cstring_void, _cstring_void, _cstring_default1, _cstring_default, _cstring_white, _cstring_null1, _cstring_default, _cstring_nullwav, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_light_dynamic, _cstring_null, _cstring_fontsconsolefont, _cstring_uidefaultmenu, _cstring_default_menu, _cstring_cgame_unknown, _cstring_defaultweapon_mp, _cstring_null, _cstring_miscmissing_fx, _cstring_default, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_mpdefaultstringt, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+DB_RemoveXAssetHandler: dd 0x0, 0x0, 0x0, 0x0, 0x0, DB_RemoveTechniqueSet, DB_RemoveImage, 0x0, 0x0, DB_RemoveLoadedSound, DB_RemoveClipMap, DB_RemoveClipMap, DB_RemoveComWorld, 0x0, 0x0, 0x0, DB_RemoveGfxWorld, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+DB_XAssetPool: dd g_XModelPiecesPool, g_PhysPresetPool, g_XAnimPartsPool, g_XModelPool, g_MaterialPool, g_MaterialTechniqueSetPool, g_GfxImagePool, g_SoundPool, g_SndCurvePool, g_LoadedSoundPool, cm, cm, comWorld, 0x0, gameWorldMp, g_MapEntsPool, s_world, g_GfxLightDefPool, 0x0, g_FontPool, g_MenuListPool, g_MenuPool, g_LocalizeEntryPool, g_WeaponDefPool, 0x0, g_FxEffectDefPool, g_FxImpactTablePool, 0x0, 0x0, 0x0, 0x0, g_RawFilePool, g_StringTablePool, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+DB_FreeXAssetHeaderHandler: dd DB_FreeXAssetHeader_XModelPieces, DB_FreeXAssetHeader_PhysPreset, DB_FreeXAssetHeader_XAnimParts, DB_FreeXAssetHeader_XModel, DB_FreeMaterial, DB_FreeXAssetHeader_MaterialTechniqueSet, DB_FreeXAssetHeader_GfxImage, DB_FreeXAssetHeader_snd_alias_list_t, DB_FreeXAssetHeader_SndCurve, DB_FreeXAssetHeader_LoadedSound, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetHeader_MapEnts, DB_FreeXAssetSingleton, DB_FreeXAssetHeader_GfxLightDef, 0x0, DB_FreeXAssetHeader_Font_s, DB_FreeXAssetHeader_MenuList, DB_FreeXAssetHeader_menuDef_t, DB_FreeXAssetHeader_LocalizeEntry, DB_FreeXAssetHeader_WeaponDef, 0x0, DB_FreeXAssetHeader_FxEffectDef, DB_FreeXAssetHeader_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_FreeXAssetHeader_RawFile, DB_FreeXAssetHeader_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_poolSize: dd 0x40, 0x40, 0x1000, 0x3e8, 0x800, 0x400, 0x960, 0x3e80, 0x40, 0x4b0, 0x1, 0x1, 0x1, 0x1, 0x1, 0x2, 0x1, 0x20, 0x0, 0x10, 0x80, 0x280, 0x1800, 0x80, 0x1, 0x190, 0x4, 0x0, 0x0, 0x0, 0x0, 0x400, 0x32, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+DB_InitPoolHeaderHandler: dd DB_InitPool_XModelPieces, DB_InitPool_PhysPreset, DB_InitPool_XAnimParts, DB_InitPool_XModel, DB_InitPool_Material, DB_InitPool_MaterialTechniqueSet, DB_InitPool_GfxImage, DB_InitPool_snd_alias_list_t, DB_InitPool_SndCurve, DB_InitPool_LoadedSound, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitPool_MapEnts, DB_InitSingleton, DB_InitPool_GfxLightDef, 0x0, DB_InitPool_Font_s, DB_InitPool_MenuList, DB_InitPool_menuDef_t, DB_InitPool_LocalizeEntry, DB_InitPool_WeaponDef, 0x0, DB_InitPool_FxEffectDef, DB_InitPool_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_InitPool_RawFile, DB_InitPool_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+DB_AllocXAssetHeaderHandler: dd DB_AllocXAsset_XModelPieces, DB_AllocXAsset_PhysPreset, DB_AllocXAsset_XAnimParts, DB_AllocXAsset_XModel, DB_AllocMaterial, DB_AllocXAsset_MaterialTechniqueSet, DB_AllocXAsset_GfxImage, DB_AllocXAsset_snd_alias_list_t, DB_AllocXAsset_SndCurve, DB_AllocXAsset_LoadedSound, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAsset_MapEnts, DB_AllocXAssetSingleton, DB_AllocXAsset_GfxLightDef, 0x0, DB_AllocXAsset_Font_s, DB_AllocXAsset_MenuList, DB_AllocXAsset_menuDef_t, DB_AllocXAsset_LocalizeEntry, DB_AllocXAsset_WeaponDef, 0x0, DB_AllocXAsset_FxEffectDef, DB_AllocXAsset_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_AllocXAsset_RawFile, DB_AllocXAsset_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of db_registry:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of db_registry:
 SECTION .bss
 g_zones: resb 0x15c0
@@ -7950,22 +7970,6 @@ g_copyInfoCount: resb 0x20
 g_debugZoneName: resb 0x40
 g_missingAssetFile: resb 0x80
 g_mainThreadBlocked: resb 0x80
-
-
-;Initialized global or static variables of db_registry:
-SECTION .data
-DB_DynamicCloneXAssetHandler: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, DB_DynamicCloneMenu, 0x0, DB_DynamicCloneWeaponDef, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-g_defaultAssetName: dd _cstring_null, _cstring_default, _cstring_void, _cstring_void, _cstring_default1, _cstring_default, _cstring_white, _cstring_null1, _cstring_default, _cstring_nullwav, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_light_dynamic, _cstring_null, _cstring_fontsconsolefont, _cstring_uidefaultmenu, _cstring_default_menu, _cstring_cgame_unknown, _cstring_defaultweapon_mp, _cstring_null, _cstring_miscmissing_fx, _cstring_default, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_mpdefaultstringt, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_RemoveXAssetHandler: dd 0x0, 0x0, 0x0, 0x0, 0x0, DB_RemoveTechniqueSet, DB_RemoveImage, 0x0, 0x0, DB_RemoveLoadedSound, DB_RemoveClipMap, DB_RemoveClipMap, DB_RemoveComWorld, 0x0, 0x0, 0x0, DB_RemoveGfxWorld, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_XAssetPool: dd g_XModelPiecesPool, g_PhysPresetPool, g_XAnimPartsPool, g_XModelPool, g_MaterialPool, g_MaterialTechniqueSetPool, g_GfxImagePool, g_SoundPool, g_SndCurvePool, g_LoadedSoundPool, cm, cm, comWorld, 0x0, gameWorldMp, g_MapEntsPool, s_world, g_GfxLightDefPool, 0x0, g_FontPool, g_MenuListPool, g_MenuPool, g_LocalizeEntryPool, g_WeaponDefPool, 0x0, g_FxEffectDefPool, g_FxImpactTablePool, 0x0, 0x0, 0x0, 0x0, g_RawFilePool, g_StringTablePool, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_FreeXAssetHeaderHandler: dd DB_FreeXAssetHeader_XModelPieces, DB_FreeXAssetHeader_PhysPreset, DB_FreeXAssetHeader_XAnimParts, DB_FreeXAssetHeader_XModel, DB_FreeMaterial, DB_FreeXAssetHeader_MaterialTechniqueSet, DB_FreeXAssetHeader_GfxImage, DB_FreeXAssetHeader_snd_alias_list_t, DB_FreeXAssetHeader_SndCurve, DB_FreeXAssetHeader_LoadedSound, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetHeader_MapEnts, DB_FreeXAssetSingleton, DB_FreeXAssetHeader_GfxLightDef, 0x0, DB_FreeXAssetHeader_Font_s, DB_FreeXAssetHeader_MenuList, DB_FreeXAssetHeader_menuDef_t, DB_FreeXAssetHeader_LocalizeEntry, DB_FreeXAssetHeader_WeaponDef, 0x0, DB_FreeXAssetHeader_FxEffectDef, DB_FreeXAssetHeader_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_FreeXAssetHeader_RawFile, DB_FreeXAssetHeader_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-g_poolSize: dd 0x40, 0x40, 0x1000, 0x3e8, 0x800, 0x400, 0x960, 0x3e80, 0x40, 0x4b0, 0x1, 0x1, 0x1, 0x1, 0x1, 0x2, 0x1, 0x20, 0x0, 0x10, 0x80, 0x280, 0x1800, 0x80, 0x1, 0x190, 0x4, 0x0, 0x0, 0x0, 0x0, 0x400, 0x32, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_InitPoolHeaderHandler: dd DB_InitPool_XModelPieces, DB_InitPool_PhysPreset, DB_InitPool_XAnimParts, DB_InitPool_XModel, DB_InitPool_Material, DB_InitPool_MaterialTechniqueSet, DB_InitPool_GfxImage, DB_InitPool_snd_alias_list_t, DB_InitPool_SndCurve, DB_InitPool_LoadedSound, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitPool_MapEnts, DB_InitSingleton, DB_InitPool_GfxLightDef, 0x0, DB_InitPool_Font_s, DB_InitPool_MenuList, DB_InitPool_menuDef_t, DB_InitPool_LocalizeEntry, DB_InitPool_WeaponDef, 0x0, DB_InitPool_FxEffectDef, DB_InitPool_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_InitPool_RawFile, DB_InitPool_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_AllocXAssetHeaderHandler: dd DB_AllocXAsset_XModelPieces, DB_AllocXAsset_PhysPreset, DB_AllocXAsset_XAnimParts, DB_AllocXAsset_XModel, DB_AllocMaterial, DB_AllocXAsset_MaterialTechniqueSet, DB_AllocXAsset_GfxImage, DB_AllocXAsset_snd_alias_list_t, DB_AllocXAsset_SndCurve, DB_AllocXAsset_LoadedSound, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAsset_MapEnts, DB_AllocXAssetSingleton, DB_AllocXAsset_GfxLightDef, 0x0, DB_AllocXAsset_Font_s, DB_AllocXAsset_MenuList, DB_AllocXAsset_menuDef_t, DB_AllocXAsset_LocalizeEntry, DB_AllocXAsset_WeaponDef, 0x0, DB_AllocXAsset_FxEffectDef, DB_AllocXAsset_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_AllocXAsset_RawFile, DB_AllocXAsset_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of db_registry:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -1867,11 +1867,6 @@ Com_Parse_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of q_parse:
-SECTION .bss
-g_parse: resb 0x8c80
-
-
 ;Initialized global or static variables of q_parse:
 SECTION .data
 punctuation: dd _cstring_2, _cstring_3, _cstring_4, _cstring_5, _cstring_6, _cstring_7, _cstring_8, _cstring_9, _cstring_10, _cstring_11, _cstring_12, _cstring_13, _cstring_14, _cstring_15, 0x0, 0x0
@@ -1879,6 +1874,11 @@ punctuation: dd _cstring_2, _cstring_3, _cstring_4, _cstring_5, _cstring_6, _cst
 
 ;Initialized constant data of q_parse:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of q_parse:
+SECTION .bss
+g_parse: resb 0x8c80
 
 
 ;All cstrings:

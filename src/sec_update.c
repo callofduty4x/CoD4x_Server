@@ -295,17 +295,17 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 			return -1;	
 		}
 
-		Com_Printf("Downloading file: \"%s\"\n\n",currFile->name);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Downloading file: \"%s\"\n\n",currFile->name);
 
 		do {
 			transret = FileDownloadSendReceive( curfileobj );
 #ifndef _WIN32
-//				Com_Printf("%s", FileDownloadGenerateProgress( curfileobj ));
+//				Com_Printf(CON_CHANNEL_SYSTEM,"%s", FileDownloadGenerateProgress( curfileobj ));
 #endif
 			Sys_SleepUSec(20000);
 		} while (transret == 0);
 		
-		Com_Printf("\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"\n");
 
 		if(transret < 0)
 		{
@@ -317,14 +317,14 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 		Q_strncat(buff, sizeof(buff),".new");
 
 		if(curfileobj->code != 200){
-			Com_PrintError("Downloading has failed! Error code: %d. Update aborted.\n", curfileobj->code);
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Downloading has failed! Error code: %d. Update aborted.\n", curfileobj->code);
 			FileDownloadFreeRequest(curfileobj);
 			return -1;
 		}
 
 		if(curfileobj->contentLength != currFile->size)
 		{
-			Com_PrintError("Downloading has failed! Downloaded file has a different size %d expected %d.\n", curfileobj->contentLength, currFile->size);
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Downloading has failed! Downloaded file has a different size %d expected %d.\n", curfileobj->contentLength, currFile->size);
 			FileDownloadFreeRequest(curfileobj);
 			return -1;
 		}
@@ -332,18 +332,18 @@ int Sec_DownloadFile(const char* baseurl, sec_file_t *currFile)
 		isvalid = Sec_VerifyFile(curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength, currFile->hash);
 
 		if(isvalid){
-			Com_Printf("Successfully downloaded file \"%s\".\n", currFile->name);
+			Com_Printf(CON_CHANNEL_SYSTEM,"Successfully downloaded file \"%s\".\n", currFile->name);
 		}else{
 			FileDownloadFreeRequest(curfileobj);
-			Com_PrintError("File \"%s\" is corrupt!\nUpdate aborted.\n",currFile->name);
+			Com_PrintError(CON_CHANNEL_SYSTEM,"File \"%s\" is corrupt!\nUpdate aborted.\n",currFile->name);
 			return -1;
 		}
 		
-		Com_Printf("Writing file to %s\n", buff);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Writing file to %s\n", buff);
 		len = FS_WriteFileOSPath(buff, curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength);
 		if(len != curfileobj->contentLength)
 		{
-			Com_PrintError("Opening \"%s\" for writing! Update aborted.\n",buff);
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Opening \"%s\" for writing! Update aborted.\n",buff);
 			FileDownloadFreeRequest(curfileobj);
 			return -1;
 		}
@@ -373,7 +373,7 @@ sec_file_t* Sec_ParseLine(const char* line)
 	ptr2 = strchr(ptr,' ');
 	
 	if(ptr2 == NULL){
-		Com_PrintWarning("Sec_Update: Corrupt data from update server. Update aborted.\nDebug:\"%s\"\n",ptr);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt data from update server. Update aborted.\nDebug:\"%s\"\n",ptr);
 		Sec_FreeFileStruct(currFile);
 		return NULL;
 	}
@@ -386,7 +386,7 @@ sec_file_t* Sec_ParseLine(const char* line)
 	ptr2 = strchr(ptr,' ');
 	
 	if(ptr2 == NULL){
-		Com_PrintWarning("Sec_Update: Corrupt data from update server. Update aborted.\nDebug:\"%s\"\n",ptr);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt data from update server. Update aborted.\nDebug:\"%s\"\n",ptr);
 		Sec_FreeFileStruct(currFile);
 		return NULL;
 	}
@@ -394,7 +394,7 @@ sec_file_t* Sec_ParseLine(const char* line)
 	*ptr2++ = 0;
 	
 	if(!isInteger(ptr, 0)){
-		Com_PrintWarning("Sec_Update: Corrupt data from update server - size is not a number. Update aborted.\nDebug:\"%s\"\n",ptr);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt data from update server - size is not a number. Update aborted.\nDebug:\"%s\"\n",ptr);
 		Sec_FreeFileStruct(currFile);
 		return NULL;
 	}
@@ -417,15 +417,15 @@ qboolean Sec_MakeExecutable(sec_file_t *currFile)
 
 	if(FS_FileExistsOSPath(buff) == qfalse)
 	{
-		Com_PrintError("Can not find file %s\n", buff);
-		Com_PrintError("Update has failed!\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Can not find file %s\n", buff);
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed!\n");
 		return qfalse;
 	}
 
-	Com_Printf("Set permissions for: %s\n", buff);
+	Com_Printf(CON_CHANNEL_SYSTEM,"Set permissions for: %s\n", buff);
 	if(FS_SetPermissionsExec(buff) == qfalse)
 	{
-		Com_PrintError("CRITICAL ERROR: failed to change mode of the file \"%s\"! Aborting, manual installation might be required.\n", buff);
+		Com_PrintError(CON_CHANNEL_SYSTEM,"CRITICAL ERROR: failed to change mode of the file \"%s\"! Aborting, manual installation might be required.\n", buff);
 		return qfalse;
 	}
 	return qtrue;
@@ -450,11 +450,11 @@ qboolean Sec_RemoveOldInstallfiles(sec_file_t *currFile)
 
 		if(FS_FileExistsOSPath(name1))
 		{ // Old backupfile exists, delete it!
-			Com_Printf("Removing old install file %s...\n", name1);
+			Com_Printf(CON_CHANNEL_SYSTEM,"Removing old install file %s...\n", name1);
 			FS_RemoveOSPath( name1 );
 			if(FS_FileExistsOSPath(name1))
 			{
-				Com_PrintWarning("Couldn't remove install file: %s\n", name1);
+				Com_PrintWarning(CON_CHANNEL_SYSTEM,"Couldn't remove install file: %s\n", name1);
 				return qfalse;
 			}
 		}
@@ -477,11 +477,11 @@ qboolean Sec_RemoveOldBackupfiles(sec_file_t *currFile)
 
 		if(FS_FileExistsOSPath(name1))
 		{ // Old backupfile exists, delete it!
-			Com_Printf("Removing backup file %s...\n", name1);
+			Com_Printf(CON_CHANNEL_SYSTEM,"Removing backup file %s...\n", name1);
 			FS_RemoveOSPath( name1 );
 			if(FS_FileExistsOSPath(name1))
 			{
-				Com_PrintWarning("Couldn't remove backup file: %s\n", name1);
+				Com_PrintWarning(CON_CHANNEL_SYSTEM,"Couldn't remove backup file: %s\n", name1);
 				return qfalse;
 			}
 		}
@@ -508,7 +508,7 @@ qboolean Sec_Backupfiles(sec_file_t *currFile)
 		Q_strncpyz(name1, curfilename, sizeof(name1));
 		Q_strncat(name1, sizeof(name1), ".old");
 
-		Com_Printf("Backing up file %s...\n", curfilename);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Backing up file %s...\n", curfilename);
 
 		FS_RenameOSPath(curfilename, name1);
 		fexist = FS_FileExistsOSPath(curfilename);			
@@ -516,7 +516,7 @@ qboolean Sec_Backupfiles(sec_file_t *currFile)
 		// We couldn't back it up. Raise error
 		if(fexist)
 		{
-			Com_PrintError("Couldn't backup file %s\n", curfilename);
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Couldn't backup file %s\n", curfilename);
 			return qfalse;
 		}
 		currFile = currFile->next;
@@ -537,7 +537,7 @@ void Sec_UndoBackup(sec_file_t *currFile)
 			continue;
 		}
 		
-		Com_Printf("Undo backup file %s...\n", currFile->name);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Undo backup file %s...\n", currFile->name);
 
 		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
 
@@ -547,11 +547,11 @@ void Sec_UndoBackup(sec_file_t *currFile)
 		// Check if an backupfile exists with this name
 		if(FS_FileExistsOSPath(name1) == qfalse)
 		{
-			Com_Printf("Backupfile %s not found!\n", name1);
+			Com_Printf(CON_CHANNEL_SYSTEM,"Backupfile %s not found!\n", name1);
 		}else{
 			//Backupfile exists, rename it back
 			FS_RemoveOSPath(curfilename);
-			Com_Printf("Rename from %s to %s\n", name1, curfilename);
+			Com_Printf(CON_CHANNEL_SYSTEM,"Rename from %s to %s\n", name1, curfilename);
 			FS_RenameOSPath(name1, curfilename);
 		}
 		currFile = currFile->next;
@@ -570,7 +570,7 @@ qboolean Sec_InstallNewFiles(sec_file_t *currFile)
 			currFile = currFile->next;
 			continue;
 		}
-		Com_Printf("Install file %s...\n", currFile->name);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Install file %s...\n", currFile->name);
 
 		Sec_GetStoreFilename(currFile->name, curfilename, sizeof(curfilename));
 
@@ -581,8 +581,8 @@ qboolean Sec_InstallNewFiles(sec_file_t *currFile)
 
 		if(!FS_FileExistsOSPath(curfilename))
 		{
-			Com_PrintError("Failed to rename file %s to %s\n", name1, curfilename);
-			Com_PrintError("Update has failed!\n");
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Failed to rename file %s to %s\n", name1, curfilename);
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed!\n");
 			return qfalse;
 		}
 		currFile = currFile->next;
@@ -614,7 +614,7 @@ FILE* Sec_AutoaupdateLock()
 			return NULL;
 		}
 		h = fopen(lockfilename, "wb");
-		Com_Printf("Autoupdater: waiting for %s to unlock for %d more seconds\n", lockfilename, 240 - (now - start));
+		Com_Printf(CON_CHANNEL_SYSTEM,"Autoupdater: waiting for %s to unlock for %d more seconds\n", lockfilename, 240 - (now - start));
 		Sys_SleepSec(15);
 	}
 	fclose( h );
@@ -660,12 +660,12 @@ void Sec_Update( qboolean getbasefiles ){
 		return;
     }
 
-    Com_Printf("\n-----------------------------\n");
-    Com_Printf(" CoD4X Auto Update\n");
-    Com_Printf(" Current version: %g\n", SEC_VERSION);
-    Com_Printf(" Current subversion: %g\n", Sys_GetCommonVersion());
-    Com_Printf(" Current build: %d\n", Sys_GetBuild());
-    Com_Printf("-----------------------------\n\n");
+    Com_Printf(CON_CHANNEL_SYSTEM,"\n-----------------------------\n");
+    Com_Printf(CON_CHANNEL_SYSTEM," CoD4X Auto Update\n");
+    Com_Printf(CON_CHANNEL_SYSTEM," Current version: %g\n", SEC_VERSION);
+    Com_Printf(CON_CHANNEL_SYSTEM," Current subversion: %g\n", Sys_GetCommonVersion());
+    Com_Printf(CON_CHANNEL_SYSTEM," Current build: %d\n", Sys_GetBuild());
+    Com_Printf(CON_CHANNEL_SYSTEM,"-----------------------------\n\n");
 
 	Sec_SetupPaths();
 
@@ -695,17 +695,17 @@ void Sec_Update( qboolean getbasefiles ){
 //    FS_WriteFile("tmp2.txt", packet.header, packet.headerLength);
 //    FS_WriteFile("tmp3.txt", packet.content, packet.contentLength);
     if(filetransferobj->code <= 0){
-		Com_PrintError("Receiving data. Error code: %d.\n", filetransferobj->code);
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Receiving data. Error code: %d.\n", filetransferobj->code);
 		FileDownloadFreeRequest(filetransferobj);
 		return;
     }
     if(filetransferobj->code == 204){
-		Com_Printf("\nServer is up to date.\n\n"); //Should not happen anymore. Instead we want to verify all files
+		Com_Printf(CON_CHANNEL_SYSTEM,"\nServer is up to date.\n\n"); //Should not happen anymore. Instead we want to verify all files
 		FileDownloadFreeRequest(filetransferobj);
 		return;
     }
     else if(filetransferobj->code != 200){
-		Com_PrintWarning("The update server's malfunction.\nStatus code: %d.\n", filetransferobj->code);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"The update server's malfunction.\nStatus code: %d.\n", filetransferobj->code);
 		FileDownloadFreeRequest(filetransferobj);
 		return;
     }
@@ -725,7 +725,7 @@ void Sec_Update( qboolean getbasefiles ){
 	lockfile = Sec_AutoaupdateLock();
 	if(lockfile == NULL)
 	{
-		Com_PrintWarning("Sec_Update: Couldn't acquire a lock for autoupdate. Autoupdate will abort here\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Couldn't acquire a lock for autoupdate. Autoupdate will abort here\n");
 		FileDownloadFreeRequest(filetransferobj);
 		return;
 	}
@@ -735,7 +735,7 @@ void Sec_Update( qboolean getbasefiles ){
 
 	if(ptr == NULL || Q_stricmpn("version: ", ptr, 9))
 	{
-		Com_PrintWarning("Sec_Update: Corrupt data from update server. Update aborted.\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt data from update server. Update aborted.\n");
 		FileDownloadFreeRequest(filetransferobj);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
@@ -747,19 +747,19 @@ void Sec_Update( qboolean getbasefiles ){
 	
 	if(l1 != 2 || l2 != 2)
 	{
-		Com_PrintWarning("Sec_Update: Corrupt version strings. Update aborted.\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt version strings. Update aborted.\n");
 		FileDownloadFreeRequest(filetransferobj);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
 	}
 
-	Com_Printf("New subversion %d.%d\n", newversion.major, newversion.minor);
+	Com_Printf(CON_CHANNEL_SYSTEM,"New subversion %d.%d\n", newversion.major, newversion.minor);
 
     ptr = Sec_StrTok(buff,"\n",42); // Yes, 42.
 
 	if(ptr == NULL || Q_stricmpn("baseurl: ", ptr, 9))
 	{
-		Com_PrintWarning("Sec_Update: Corrupt data from update server. Update aborted.\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt data from update server. Update aborted.\n");
 		FileDownloadFreeRequest(filetransferobj);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
@@ -777,7 +777,7 @@ void Sec_Update( qboolean getbasefiles ){
 			Sec_FreeFileStruct(files.next);
 			FileDownloadFreeRequest(filetransferobj);
 			Sec_AutoaupdateUnlock(lockfile);
-			Com_PrintError("Update has failed with: Parser error\n");
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed with: Parser error\n");
 			return;
 		}
 	}
@@ -787,7 +787,7 @@ void Sec_Update( qboolean getbasefiles ){
 	//IF this is a custom build we want to bail out early if this is not really needed
 	if(currentversion.major >= newversion.major)
 	{
-		Com_Printf("Update rejected because it is not required.\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Update rejected because it is not required.\n");
 		Sec_FreeFileStruct(files.next);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
@@ -797,7 +797,7 @@ void Sec_Update( qboolean getbasefiles ){
 	//IF this is a custom build we want to bail out early if this is not really needed
 	if(currentversion.major > newversion.major || (currentversion.minor > newversion.minor && currentversion.major == newversion.major))
 	{
-		Com_Printf("Update rejected because updateserver reports older version.\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Update rejected because updateserver reports older version.\n");
 		Sec_FreeFileStruct(files.next);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
@@ -805,7 +805,7 @@ void Sec_Update( qboolean getbasefiles ){
 
 	if(Sec_RemoveOldInstallfiles(files.next) == qfalse)
 	{
-		Com_PrintError("Update has failed\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 		Sec_FreeFileStruct(files.next);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
@@ -813,7 +813,7 @@ void Sec_Update( qboolean getbasefiles ){
 
 	if(!Sec_BuildNeededList(files.next))
 	{
-		Com_Printf("Update not needed. All files are equal.\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Update not needed. All files are equal.\n");
 		Sec_FreeFileStruct(files.next);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
@@ -839,7 +839,7 @@ void Sec_Update( qboolean getbasefiles ){
 				FileDownloadFreeRequest(filetransferobj);
 				Sec_FreeFileStruct(files.next);
 				Sec_AutoaupdateUnlock(lockfile);
-				Com_PrintError("Update has failed\n");
+				Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 				return;
 		}
 		if(strstr(f->name, "run"))
@@ -848,7 +848,7 @@ void Sec_Update( qboolean getbasefiles ){
 			{
 				Sec_FreeFileStruct(files.next);
 				Sec_AutoaupdateUnlock(lockfile);
-				Com_PrintError("Update has failed\n");
+				Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 				return;
 			}
 		}
@@ -856,19 +856,19 @@ void Sec_Update( qboolean getbasefiles ){
 	}
 
 	//Everything is downloaded and parsed
-    Com_Printf("All files downloaded successfully. Applying update...\n");
+    Com_Printf(CON_CHANNEL_SYSTEM,"All files downloaded successfully. Applying update...\n");
 	//Installing the update files...
 
 	if(Sec_RemoveOldBackupfiles(files.next) == qfalse)
 	{
-		Com_PrintError("Update has failed\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 		Sec_FreeFileStruct(files.next);
 		Sec_AutoaupdateUnlock(lockfile);
 		return;
 	}
 	if(Sec_Backupfiles(files.next) == qfalse)
 	{
-		Com_PrintError("Update has failed. Trying to recover...\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed. Trying to recover...\n");
 		Sec_UndoBackup(files.next);
 		Sec_FreeFileStruct(files.next);
 		Sec_AutoaupdateUnlock(lockfile);
@@ -876,7 +876,7 @@ void Sec_Update( qboolean getbasefiles ){
 	}
 	if(Sec_InstallNewFiles(files.next) == qfalse)
 	{
-		Com_PrintError("Update has failed. Trying to recover...\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed. Trying to recover...\n");
 		Sec_UndoBackup(files.next);
 
 //		MessageBoxA(NULL, "Couldn't install update", "Couldn't install update", MB_OK);
@@ -892,7 +892,7 @@ void Sec_Update( qboolean getbasefiles ){
     Sec_FreeFileStruct(files.next);
 	Sec_AutoaupdateUnlock(lockfile);
 	
-    Com_Printf("Finalizing update...\n");
+    Com_Printf(CON_CHANNEL_SYSTEM,"Finalizing update...\n");
 
     Sys_Restart("System has been updated and will restart now.");
 

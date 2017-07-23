@@ -407,17 +407,17 @@ CG_AddLagometerSnapshotInfo_10:
 	nop
 
 
-;Zero initialized global or static variables of cg_draw_net_mp:
-SECTION .bss
-lagometer: resb 0x680
-
-
 ;Initialized global or static variables of cg_draw_net_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_draw_net_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_draw_net_mp:
+SECTION .bss
+lagometer: resb 0x680
 
 
 ;All cstrings:

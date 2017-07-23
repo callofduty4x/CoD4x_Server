@@ -345,16 +345,18 @@ _ZN20CDirect3DIndexBufferD1Ev:
 	nop
 
 
-;Zero initialized global or static variables of CDirect3DIndexBuffer:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DIndexBuffer:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DIndexBuffer:
 SECTION .rdata
+;VTable for CDirect3DIndexBuffer:
+_ZTV20CDirect3DIndexBuffer: dd 0x0, 0x3b48a0, _ZN20CDirect3DIndexBuffer14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DIndexBuffer6AddRefEv, _ZN20CDirect3DIndexBuffer7ReleaseEv, _ZN20CDirect3DIndexBuffer9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DIndexBuffer14SetPrivateDataERK5_GUIDPKvmm, _ZN20CDirect3DIndexBuffer14GetPrivateDataERK5_GUIDPvPm, _ZN20CDirect3DIndexBuffer15FreePrivateDataERK5_GUID, _ZN20CDirect3DIndexBuffer11SetPriorityEm, _ZN20CDirect3DIndexBuffer11GetPriorityEv, _ZN20CDirect3DIndexBuffer7PreLoadEv, _ZN20CDirect3DIndexBuffer7GetTypeEv, _ZN20CDirect3DIndexBuffer4LockEjjPPvm, _ZN20CDirect3DIndexBuffer6UnlockEv, _ZN20CDirect3DIndexBuffer7GetDescEP20_D3DINDEXBUFFER_DESC, _ZN20CDirect3DIndexBufferD1Ev, _ZN20CDirect3DIndexBufferD0Ev, 0xfffffffc, 0x3b48a0, 0x330c8c, 0x330c96, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DIndexBuffer:
+SECTION .bss
 
 
 ;All cstrings:

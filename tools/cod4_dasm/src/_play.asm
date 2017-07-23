@@ -89,16 +89,16 @@ Sound_DestroySample:
 	nop
 
 
-;Zero initialized global or static variables of play:
-SECTION .bss
-
-
 ;Initialized global or static variables of play:
 SECTION .data
 
 
 ;Initialized constant data of play:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of play:
+SECTION .bss
 
 
 ;All cstrings:

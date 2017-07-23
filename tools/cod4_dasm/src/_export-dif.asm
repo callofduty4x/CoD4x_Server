@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of export-dif:
-SECTION .bss
-
-
 ;Initialized global or static variables of export-dif:
 SECTION .data
 
 
 ;Initialized constant data of export-dif:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of export-dif:
+SECTION .bss
 
 
 ;All cstrings:

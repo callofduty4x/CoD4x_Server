@@ -139,6 +139,14 @@ R_UnregisterCmds:
 	ret
 
 
+;Initialized global or static variables of r_cmds:
+SECTION .data
+
+
+;Initialized constant data of r_cmds:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of r_cmds:
 SECTION .bss
 _ZZ14R_RegisterCmdsvE29R_StaticModelCacheFlush_f_VAR: resb 0x14
@@ -150,14 +158,6 @@ _ZZ14R_RegisterCmdsvE21R_Cmd_ApplyPicmip_VAR: resb 0x14
 _ZZ14R_RegisterCmdsvE17R_ImageList_f_VAR: resb 0x14
 _ZZ14R_RegisterCmdsvE24R_Cmd_ScreenshotJpeg_VAR: resb 0x14
 _ZZ14R_RegisterCmdsvE20R_Cmd_Screenshot_VAR: resb 0x60
-
-
-;Initialized global or static variables of r_cmds:
-SECTION .data
-
-
-;Initialized constant data of r_cmds:
-SECTION .rdata
 
 
 ;All cstrings:

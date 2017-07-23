@@ -1814,17 +1814,17 @@ R_Cinematic_DrawStretchPic_Letterboxed:
 	jmp R_Cinematic_DrawLetterbox_OptionalCinematic
 
 
-;Zero initialized global or static variables of r_cinematic:
-SECTION .bss
-cinematicGlob: resb 0x800
-
-
 ;Initialized global or static variables of r_cinematic:
 SECTION .data
 
 
 ;Initialized constant data of r_cinematic:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_cinematic:
+SECTION .bss
+cinematicGlob: resb 0x800
 
 
 ;All cstrings:

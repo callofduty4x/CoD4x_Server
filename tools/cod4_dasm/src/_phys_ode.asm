@@ -5236,6 +5236,17 @@ Phys_Init_20:
 	nop
 
 
+;Initialized global or static variables of phys_ode:
+SECTION .data
+g_phys_maxMsecStep: dd 0x43, 0x43, 0x22
+g_phys_minMsecStep: dd 0x11, 0x11, 0x11, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+g_phys_msecStep: dd 0x11, 0x11, 0x11
+
+
+;Initialized constant data of phys_ode:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of phys_ode:
 SECTION .bss
 physInited: resb 0x4
@@ -5280,17 +5291,6 @@ phys_narrowObjMaxLength: resb 0x4
 phys_qsi: resb 0x4
 phys_reorderConst: resb 0x4
 phys_visibleTris: resb 0x4
-
-
-;Initialized global or static variables of phys_ode:
-SECTION .data
-g_phys_maxMsecStep: dd 0x43, 0x43, 0x22
-g_phys_minMsecStep: dd 0x11, 0x11, 0x11, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-g_phys_msecStep: dd 0x11, 0x11, 0x11
-
-
-;Initialized constant data of phys_ode:
-SECTION .rdata
 
 
 ;All cstrings:

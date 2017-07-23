@@ -589,11 +589,6 @@ R_PixelCost_GetAccumulationMaterial_jumptab_0:
 	dd R_PixelCost_GetAccumulationMaterial_10
 
 
-;Zero initialized global or static variables of rb_pixelcost:
-SECTION .bss
-pixelCostGlob: resb 0x10080
-
-
 ;Initialized global or static variables of rb_pixelcost:
 SECTION .data
 pixelCostMode: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -601,6 +596,11 @@ pixelCostMode: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of rb_pixelcost:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_pixelcost:
+SECTION .bss
+pixelCostGlob: resb 0x10080
 
 
 ;All cstrings:

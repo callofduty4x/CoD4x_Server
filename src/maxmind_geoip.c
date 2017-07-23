@@ -66,7 +66,7 @@ unsigned int _GeoIP_seek_record ( unsigned long ipnum ) {
 	FS_SV_FOpenFileRead("GeoIP.dat", &file);
 
 	if(!file){
-		Com_Printf("File Read error.\n");
+		Com_Printf(CON_CHANNEL_SCRIPT,"File Read error.\n");
 		return 0;
 	}
 
@@ -130,7 +130,7 @@ unsigned int _GeoIP_seek_record ( unsigned long ipnum ) {
 		offset = x;
 	}
 	/* shouldn't reach here */
-	Com_PrintError("Traversing Database for ipnum = %lu - Perhaps database is corrupt?\n",ipnum);
+	Com_PrintError(CON_CHANNEL_SCRIPT,"Traversing Database for ipnum = %lu - Perhaps database is corrupt?\n",ipnum);
 	FS_FCloseFile(file);
 	return 0;
 }

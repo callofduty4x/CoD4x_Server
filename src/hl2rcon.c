@@ -67,7 +67,7 @@ void HL2Rcon_SourceRconStreaming_enable( int type, uint64_t steamid ){
 	char* ev;
 
 	if(sourceRcon.redirectUser < 1 || sourceRcon.redirectUser > MAX_RCONUSERS){
-		Com_Printf("This command can only be used from SourceRcon\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"This command can only be used from SourceRcon\n");
 		return;
 	}
 
@@ -78,7 +78,7 @@ void HL2Rcon_SourceRconStreaming_enable( int type, uint64_t steamid ){
 		user->streamlog = type & 1;
 
 	}else if(type & 1){
-		Com_Printf("Insufficient permissions to open console logfile!\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Insufficient permissions to open console logfile!\n");
 
 	}
 	user->streamgamelog = type & 2;
@@ -105,7 +105,7 @@ void HL2Rcon_SourceRconStreaming_enable( int type, uint64_t steamid ){
 	else
 		ev = "";
 
-	Com_Printf("Streaming turned on for: %s %s %s %s\n", c, cg, ch, ev);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Streaming turned on for: %s %s %s %s\n", c, cg, ch, ev);
 }
 
 void HL2Rcon_SourceRconDisconnect(netadr_t *from, int connectionId)
@@ -136,7 +136,7 @@ qboolean HL2Rcon_SourceRconIdentEvent(netadr_t *from, msg_t *msg, int *connectio
 
 	if(packetlen != msg->cursize - 4){//Not a source rcon packet
 
-		//Com_Printf("Not a source rcon packet: len %d size %d\n", packetlen, msg->cursize);
+		//Com_Printf(CON_CHANNEL_DONT_FILTER,"Not a source rcon packet: len %d size %d\n", packetlen, msg->cursize);
 
 		return qfalse;
 	}
@@ -229,14 +229,14 @@ qboolean HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, rconUser_t* user){
 			goto badrcon;
 		}
 
-		Com_Printf("Rcon login from: %s Name: %s\n", NET_AdrToString (from), username);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Rcon login from: %s Name: %s\n", NET_AdrToString (from), username);
 
 		Cmd_EndTokenizedString();
 		steamid = Auth_GetSteamID(username);
 	}else{
 		steamid = 0;
 		username = "console";
-		Com_Printf("Rcon login from: %s with rcon password\n", NET_AdrToString (from));
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Rcon login from: %s with rcon password\n", NET_AdrToString (from));
 	}
 
 	user->steamid = steamid;
@@ -256,7 +256,7 @@ qboolean HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, rconUser_t* user){
 
 badrcon:
 	Cmd_EndTokenizedString();
-	Com_Printf ("Bad rcon from %s using password %s\n", NET_AdrToString (from), loginstring);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Bad rcon from %s using password %s\n", NET_AdrToString (from), loginstring);
 	//Don't allow another attempt for 20 seconds
 
 	SV_PlayerAddBanByip(from, "You are banned from this server for a bad rcon attempt", Com_GetRealtime() + 20);
@@ -428,7 +428,7 @@ void HL2Rcon_SayToPlayers(int clientnum, int team, const char* chatline)
 	rconUser_t*	user;
 
 	if(sourceRcon.redirectUser < 1 || sourceRcon.redirectUser > MAX_RCONUSERS){
-		Com_Printf("This command can only be used from SourceRcon\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"This command can only be used from SourceRcon\n");
 		return;
 	}
 
@@ -495,7 +495,7 @@ void HL2Rcon_ExecuteConsoleCommand(const char* command, uint64_t steamid)
 		powercmd = Cmd_GetPower(cmd);
 		if(powercmd > power)
 		{
-			Com_Printf("Insufficient permissions!\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Insufficient permissions!\n");
 		}else{
 			Cmd_ExecuteSingleCommand(0,0, buffer);
 		}
@@ -588,7 +588,7 @@ int HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 		    //Pop the end of body byte
 		    MSG_ReadByte(msg);
 
-		    Com_Printf("Rcon from: %s command: %s\n", NET_AdrToString(from), command);
+		    Com_Printf(CON_CHANNEL_DONT_FILTER,"Rcon from: %s command: %s\n", NET_AdrToString(from), command);
 
 		    sourceRcon.redirectUser = connectionId+1;
 		    sourceRcon.writeerror = 0;
@@ -638,7 +638,7 @@ int HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 
 		default:
 		//Not a source rcon packet
-		Com_Printf("Not a valid source rcon packet from: %s received. Type: %d - Closing connection\n", NET_AdrToString(from), packettype);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Not a valid source rcon packet from: %s received. Type: %d - Closing connection\n", NET_AdrToString(from), packettype);
 		return -1; //Close it
 	}
     }
@@ -728,13 +728,13 @@ void HL2Rcon_StatusCommand()
     Q_strncpyz(cleanhostname, sv_hostname->string, sizeof(cleanhostname));
     Q_CleanStr(cleanhostname);
 
-    Com_Printf("hostname: %s\n", cleanhostname);
-    Com_Printf("version : %s\n", com_version->string);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"hostname: %s\n", cleanhostname);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"version : %s\n", com_version->string);
     netadr_t* outadr = NET_GetDefaultCommunicationSocket(NA_IP);
-    Com_Printf("udp/ip  : %s\n", NET_AdrToString(outadr));
-    Com_Printf("os      : %s\n", OS_STRING);
-    Com_Printf("type    : dedicated server\n");
-    Com_Printf("map     : %s\n", sv_mapname->string);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"udp/ip  : %s\n", NET_AdrToString(outadr));
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"os      : %s\n", OS_STRING);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"type    : dedicated server\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"map     : %s\n", sv_mapname->string);
 
     // don't count privateclients
     bots = humans = 0;
@@ -749,9 +749,9 @@ void HL2Rcon_StatusCommand()
 		}
 	}
     }
-    Com_Printf("players : %d humans, %d bots (%d/%d)\n\n", humans, bots, sv_maxclients->integer, humans + bots);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"players : %d humans, %d bots (%d/%d)\n\n", humans, bots, sv_maxclients->integer, humans + bots);
 
-    Com_Printf("# userid name uniqueid connected ping loss state rate adr\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"# userid name uniqueid connected ping loss state rate adr\n");
     for (i=0,cl=svs.clients; i < sv_maxclients->integer ; i++, cl++)
     {
 	if (!cl->state)
@@ -797,7 +797,7 @@ void HL2Rcon_StatusCommand()
 		default:
 			strcpy(state, "zombie");
 	}
-	Com_Printf("# %d \"%s\" %s %s %d %d %s %d %s\n", i, cl->name, psti, timestr, ping, 0, state, cl->rate, NET_AdrToString(&cl->netchan.remoteAddress));
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"# %d \"%s\" %s %s %d %d %s %d %s\n", i, cl->name, psti, timestr, ping, 0, state, cl->rate, NET_AdrToString(&cl->netchan.remoteAddress));
     }
-    Com_Printf("#end\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"#end\n");
 }

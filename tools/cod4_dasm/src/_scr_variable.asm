@@ -14086,12 +14086,6 @@ FreeValue_30:
 	nop
 
 
-;Zero initialized global or static variables of scr_variable:
-SECTION .bss
-scrVarPub: resb 0x20060
-scrVarGlob: resb 0x180020
-
-
 ;Initialized global or static variables of scr_variable:
 SECTION .data
 var_typename: dd _cstring_undefined, _cstring_object, _cstring_string, _cstring_localized_string, _cstring_vector, _cstring_float, _cstring_int, _cstring_codepos, _cstring_precodepos, _cstring_function, _cstring_stack, _cstring_animation, _cstring_developer_codepo, _cstring_include_codepos, _cstring_thread, _cstring_thread, _cstring_thread, _cstring_thread, _cstring_struct, _cstring_removed_entity, _cstring_entity, _cstring_array, _cstring_removed_thread, 0x0
@@ -14100,6 +14094,12 @@ g_classMap: dd 0x0, 0x65, _cstring_entity, 0x0, 0x68, _cstring_hudelem, 0x0, 0x7
 
 ;Initialized constant data of scr_variable:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_variable:
+SECTION .bss
+scrVarPub: resb 0x20060
+scrVarGlob: resb 0x180020
 
 
 ;All cstrings:

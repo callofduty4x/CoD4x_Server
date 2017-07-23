@@ -637,6 +637,14 @@ CG_ShutdownConsoleCommands:
 	ret
 
 
+;Initialized global or static variables of cg_consolecmds_mp:
+SECTION .data
+
+
+;Initialized constant data of cg_consolecmds_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of cg_consolecmds_mp:
 SECTION .bss
 _ZZ22CG_InitConsoleCommandsvE16unmuteplayer_VAR: resb 0x14
@@ -676,14 +684,6 @@ _ZZ22CG_InitConsoleCommandsvE19CG_NextWeapon_f_VAR: resb 0x14
 _ZZ22CG_InitConsoleCommandsvE17CG_ScoresUp_f_VAR: resb 0x14
 _ZZ22CG_InitConsoleCommandsvE19CG_ScoresDown_f_VAR: resb 0x14
 _ZZ22CG_InitConsoleCommandsvE16CG_Viewpos_f_VAR: resb 0x30
-
-
-;Initialized global or static variables of cg_consolecmds_mp:
-SECTION .data
-
-
-;Initialized constant data of cg_consolecmds_mp:
-SECTION .rdata
 
 
 ;All cstrings:

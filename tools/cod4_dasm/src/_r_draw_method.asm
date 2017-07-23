@@ -218,17 +218,17 @@ R_UpdateDrawMethod_10:
 	nop
 
 
-;Zero initialized global or static variables of r_draw_method:
-SECTION .bss
-gfxDrawMethod: resb 0x84
-
-
 ;Initialized global or static variables of r_draw_method:
 SECTION .data
 
 
 ;Initialized constant data of r_draw_method:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_draw_method:
+SECTION .bss
+gfxDrawMethod: resb 0x84
 
 
 ;All cstrings:

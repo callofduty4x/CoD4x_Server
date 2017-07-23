@@ -3465,6 +3465,14 @@ SV_UpdateServerCommandsToClient_20:
 	add [eax], al
 
 
+;Initialized global or static variables of sv_snapshot_mp:
+SECTION .data
+
+
+;Initialized constant data of sv_snapshot_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of sv_snapshot_mp:
 SECTION .bss
 g_archiveMsg: resb 0x80
@@ -3472,14 +3480,6 @@ tempSnapshotMsgBuf: resb 0x20000
 _ZZ22SV_SendMessageToClientP5msg_tP8client_tE15svCompressedBuf: resb 0x20000
 svsHeader: resb 0x100
 sv_clientArchive: resb 0x80
-
-
-;Initialized global or static variables of sv_snapshot_mp:
-SECTION .data
-
-
-;Initialized constant data of sv_snapshot_mp:
-SECTION .rdata
 
 
 ;All cstrings:

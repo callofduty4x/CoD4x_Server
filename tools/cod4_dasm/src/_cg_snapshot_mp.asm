@@ -1741,16 +1741,16 @@ CG_SetInitialSnapshot:
 	ret
 
 
-;Zero initialized global or static variables of cg_snapshot_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_snapshot_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_snapshot_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_snapshot_mp:
+SECTION .bss
 
 
 ;All cstrings:

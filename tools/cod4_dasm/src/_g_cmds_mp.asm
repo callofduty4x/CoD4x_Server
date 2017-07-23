@@ -3290,17 +3290,17 @@ G_setfog_10:
 	ret
 
 
-;Zero initialized global or static variables of g_cmds_mp:
-SECTION .bss
-_ZZ10ConcatArgsiE4line: resb 0x400
-
-
 ;Initialized global or static variables of g_cmds_mp:
 SECTION .data
 
 
 ;Initialized constant data of g_cmds_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_cmds_mp:
+SECTION .bss
+_ZZ10ConcatArgsiE4line: resb 0x400
 
 
 ;All cstrings:

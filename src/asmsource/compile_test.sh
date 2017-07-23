@@ -1,3 +1,0 @@
-echo Compiling NASM...
-
-nasm -f elf sv_game.asm        -o ../../bin/_sv_game.o

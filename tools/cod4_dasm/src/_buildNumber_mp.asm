@@ -1,5 +1,6 @@
 ;Imports of buildNumber_mp:
 	extern sprintf
+	extern buf
 
 ;Exports of buildNumber_mp:
 	global build_string_buffer_ptr
@@ -38,10 +39,6 @@ getBuildNumberAsInt:
 	ret
 
 
-;Zero initialized global or static variables of buildNumber_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of buildNumber_mp:
 SECTION .data
 build_string_buffer_ptr: dd buf, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -49,6 +46,10 @@ build_string_buffer_ptr: dd buf, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of buildNumber_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of buildNumber_mp:
+SECTION .bss
 
 
 ;All cstrings:

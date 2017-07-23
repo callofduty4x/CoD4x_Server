@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of fx_graph:
-SECTION .bss
-
-
 ;Initialized global or static variables of fx_graph:
 SECTION .data
 
 
 ;Initialized constant data of fx_graph:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fx_graph:
+SECTION .bss
 
 
 ;All cstrings:

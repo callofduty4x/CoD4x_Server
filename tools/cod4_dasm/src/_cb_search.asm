@@ -1585,16 +1585,16 @@ split_cb_shape_sign_unquant_20:
 	nop
 
 
-;Zero initialized global or static variables of cb_search:
-SECTION .bss
-
-
 ;Initialized global or static variables of cb_search:
 SECTION .data
 
 
 ;Initialized constant data of cb_search:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cb_search:
+SECTION .bss
 
 
 ;All cstrings:

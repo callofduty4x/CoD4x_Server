@@ -63,7 +63,6 @@
 	extern Com_SurfaceTypeToName
 	extern Scr_AddUndefined
 	extern G_LocationalTracePassed
-	extern g_clients
 	extern vec3_origin
 	extern G_TraceCapsule
 	extern playerMaxs
@@ -184,6 +183,7 @@
 	extern BG_AnimScriptEvent
 	extern G_ExplodeMissile
 	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern g_clients
 	extern Com_PrintWarning
 	extern SV_GetClientStat
 	extern Scr_LoadedImpureScript
@@ -203,7 +203,7 @@
 	extern FS_Read
 	extern Com_Parse
 	extern DB_FindXAssetHeader
-	extern I_strlwr
+	extern Q_strlwr
 	extern CanDamage
 	extern Player_GetMethod
 	extern ScriptEnt_GetMethod
@@ -237,6 +237,18 @@
 	extern __maskrune
 	extern loc_warnings
 	extern loc_warningsAsErrors
+	extern Scr_GetEnt
+	extern Scr_GetEntArray
+	extern Scr_AddStruct
+	extern Scr_MissileCreateAttractorEnt
+	extern Scr_MissileCreateAttractorOrigin
+	extern Scr_MissileCreateRepulsorEnt
+	extern Scr_MissileCreateRepulsorOrigin
+	extern Scr_MissileDeleteAttractor
+	extern GScr_NewHudElem
+	extern GScr_NewClientHudElem
+	extern GScr_NewTeamHudElem
+	extern Scr_ResetTimeout
 
 ;Exports of g_scr_main_mp:
 	global GScr_CreatePrintChannel
@@ -2664,7 +2676,7 @@ Scr_PhysicsTrace:
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x1
 	call Scr_GetVector
-	mov dword [esp+0x18], g_clients+0xb9e11
+	mov dword [esp+0x18], 0x820011
 	mov dword [esp+0x14], 0x3ff
 	mov [esp+0x10], ebx
 	mov eax, vec3_origin
@@ -2718,7 +2730,7 @@ Scr_PlayerPhysicsTrace:
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x1
 	call Scr_GetVector
-	mov dword [esp+0x18], g_clients+0xb9e11
+	mov dword [esp+0x18], 0x820011
 	mov dword [esp+0x14], 0x3ff
 	mov [esp+0x10], ebx
 	mov eax, playerMaxs
@@ -13651,7 +13663,7 @@ Scr_ParseGameTypeList_FastFile_20:
 	mov [esp], esi
 	call Q_strncpyz
 	mov [esp], esi
-	call I_strlwr
+	call Q_strlwr
 	mov [esp+0x4], ebx
 	mov dword [esp], _cstring_mapsmpgametypess
 	call va
@@ -16494,11 +16506,6 @@ GScr_DisableGrenadeTouchDamage_10:
 	jmp GScr_DisableGrenadeTouchDamage_30
 
 
-;Zero initialized global or static variables of g_scr_main_mp:
-SECTION .bss
-g_scr_data: resb 0x3800
-
-
 ;Initialized global or static variables of g_scr_main_mp:
 SECTION .data
 methods_dup_1: dd _cstring_attach, ScrCmd_attach, 0x0, _cstring_detach, ScrCmd_detach, 0x0, _cstring_detachall, ScrCmd_detachAll, 0x0, _cstring_getattachsize, ScrCmd_GetAttachSize, 0x0, _cstring_getattachmodelna, ScrCmd_GetAttachModelName, 0x0, _cstring_getattachtagname, ScrCmd_GetAttachTagName, 0x0, _cstring_getattachignorec, ScrCmd_GetAttachIgnoreCollision, 0x0, _cstring_getammocount, GScr_GetAmmoCount, 0x0, _cstring_getclanid, ScrCmd_GetClanId, 0x0, _cstring_getclanname, ScrCmd_GetClanName, 0x0, _cstring_hidepart, ScrCmd_hidepart, 0x0, _cstring_showpart, ScrCmd_showpart, 0x0, _cstring_showallparts, ScrCmd_showallparts, 0x0, _cstring_linkto, ScrCmd_LinkTo, 0x0, _cstring_unlink, ScrCmd_Unlink, 0x0, _cstring_enablelinkto, ScrCmd_EnableLinkTo, 0x0, _cstring_getorigin, ScrCmd_GetOrigin, 0x0, _cstring_geteye, ScrCmd_GetEye, 0x0, _cstring_useby, ScrCmd_UseBy, 0x0, _cstring_setstablemissile, Scr_SetStableMissile, 0x0, _cstring_istouching, ScrCmd_IsTouching, 0x0, _cstring_playsound, ScrCmd_PlaySound, 0x0, _cstring_playsoundasmaste1, ScrCmd_PlaySoundAsMaster, 0x0, _cstring_playsoundtoteam, ScrCmd_PlaySoundToTeam, 0x0, _cstring_playsoundtoplaye, ScrCmd_PlaySoundToPlayer, 0x0, _cstring_playloopsound, ScrCmd_PlayLoopSound, 0x0, _cstring_stoploopsound, ScrCmd_StopLoopSound, 0x0, _cstring_playrumbleonenti, ScrCmd_PlayRumbleOnEntity, 0x0, _cstring_playrumbleloopon, ScrCmd_PlayRumbleLoopOnEntity, 0x0, _cstring_stoprumble, ScrCmd_StopRumble, 0x0, _cstring_delete, ScrCmd_Delete, 0x0, _cstring_setmodel, ScrCmd_SetModel, 0x0, _cstring_getnormalhealth, ScrCmd_GetNormalHealth, 0x0, _cstring_setnormalhealth, ScrCmd_SetNormalHealth, 0x0, _cstring_show, ScrCmd_Show, 0x0, _cstring_hide, ScrCmd_Hide, 0x0, _cstring_laseron, ScrCmd_LaserOn, 0x0, _cstring_laseroff, ScrCmd_LaserOff, 0x0, _cstring_showtoplayer, ScrCmd_ShowToPlayer, 0x0, _cstring_setcontents, ScrCmd_SetContents, 0x0, _cstring_getstance, ScrCmd_GetStance, 0x0, _cstring_setcursorhint, GScr_SetCursorHint, 0x0, _cstring_sethintstring, GScr_SetHintString, 0x0, _cstring_usetriggerrequir, GScr_UseTriggerRequireLookAt, 0x0, _cstring_shellshock, GScr_ShellShock, 0x0, _cstring_gettagorigin, GScr_GetTagOrigin, 0x0, _cstring_gettagangles, GScr_GetTagAngles, 0x0, _cstring_stopshellshock, GScr_StopShellShock, 0x0, _cstring_setdepthoffield, GScr_SetDepthOfField, 0x0, _cstring_setviewmodeldept, GScr_SetViewModelDepthOfField, 0x0, _cstring_viewkick, GScr_ViewKick, 0x0, _cstring_localtoworldcoor, GScr_LocalToWorldCoords, 0x0, _cstring_setrightarc, GScr_SetRightArc, 0x0, _cstring_setleftarc, GScr_SetLeftArc, 0x0, _cstring_settoparc, GScr_SetTopArc, 0x0, _cstring_setbottomarc, GScr_SetBottomArc, 0x0, _cstring_radiusdamage, GScr_EntityRadiusDamage, 0x0, _cstring_detonate, GScr_Detonate, 0x0, _cstring_damageconetrace, GScr_DamageConeTrace, 0x0, _cstring_sightconetrace, GScr_SightConeTrace, 0x0, _cstring_getentitynumber, GScr_GetEntityNumber, 0x0, _cstring_enablegrenadetou, GScr_EnableGrenadeTouchDamage, 0x0, _cstring_disablegrenadeto, GScr_DisableGrenadeTouchDamage, 0x0, _cstring_enableaimassist, GScr_EnableAimAssist, 0x0, _cstring_disableaimassist, GScr_DisableAimAssist, 0x0, _cstring_placespawnpoint, GScr_PlaceSpawnPoint, 0x0, _cstring_setteamfortrigge2, GScr_SetTeamForTrigger, 0x0, _cstring_clientclaimtrigg2, GScr_ClientClaimTrigger, 0x0, _cstring_clientreleasetri2, GScr_ClientReleaseTrigger, 0x0, _cstring_releaseclaimedtr1, GScr_ReleaseClaimedTrigger, 0x0, _cstring_getstat, GScr_GetStat, 0x0, _cstring_setstat, GScr_SetStat, 0x0, _cstring_sendleaderboards, GScr_SendLeaderboards, 0x0, _cstring_setmovespeedscal, ScrCmd_SetMoveSpeedScale, 0x0, _cstring_logstring, ScrCmd_LogString, 0x0, _cstring_missile_settarge, GScr_MissileSetTarget, 0x0, _cstring_isonladder, GScr_IsOnLadder, 0x0, _cstring_ismantling, GScr_IsMantling, 0x0, _cstring_startragdoll, GScr_StartRagdoll, 0x0, _cstring_isragdoll, GScr_IsRagdoll, 0x0, _cstring_getcorpseanim, GScr_GetCorpseAnim, 0x0, _cstring_itemweaponsetamm, ScrCmd_ItemWeaponSetAmmo, 0x0, 0x0, 0x0
@@ -16507,6 +16514,11 @@ functions: dd _cstring_createprintchann, GScr_CreatePrintChannel, 0x1, _cstring_
 
 ;Initialized constant data of g_scr_main_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_scr_main_mp:
+SECTION .bss
+g_scr_data: resb 0x3800
 
 
 ;All cstrings:

@@ -7007,6 +7007,27 @@ Con_Close_30:
 	jmp Con_Close_60
 
 
+;Initialized global or static variables of cl_console:
+SECTION .data
+_ZZ24Con_DrawMessageLineOnHUDiPK15ScreenPlacementiiiiiP6Font_sPK13MessageWindowiPfifiE12MY_GLOWCOLOR: dd 0x0, 0x3e99999a, 0x0, 0x3f800000, 0x0
+con_inputMaxMatchesShown: dd 0x18
+g_console_char_height: dd 0x41800000
+g_console_field_width: dd 0x26c
+
+
+;Initialized constant data of cl_console:
+SECTION .rdata
+con_versionColor: dd 0x3f800000, 0x3f800000, 0x0, 0x3f800000
+con_inputDvarMatchColor: dd 0x3f800000, 0x3f800000, 0x3f4ccccd, 0x3f800000
+con_inputCommandMatchColor: dd 0x3f4ccccd, 0x3f4ccccd, 0x3f800000, 0x3f800000
+con_inputDvarValueColor: dd 0x3f800000, 0x3f800000, 0x3f800000, 0x3f800000
+con_inputDvarInfoColor: dd 0x3f4ccccd, 0x3f4ccccd, 0x3f800000, 0x3f800000
+con_inputDvarDescriptionColor: dd 0x3f800000, 0x3f800000, 0x3f800000, 0x3f800000
+con_inputDvarInactiveValueColor: dd 0x3f4ccccd, 0x3f4ccccd, 0x3f4ccccd, 0x3f800000
+defaultGameMessageWindowLineCounts: dd 0x4, 0x5, 0x7, 0x5
+defaultGameMessageTimes: dd 0x40a00000, 0x41000000, 0x40a00000, 0x40a00000, 0x0, 0x0, 0x0, 0x0
+
+
 ;Zero initialized global or static variables of cl_console:
 SECTION .bss
 con: resb 0x14acc
@@ -7053,27 +7074,6 @@ con_typewriterColorGlowUpdated: resb 0x4
 con_typewriterDecayDuration: resb 0x4
 con_typewriterDecayStartTime: resb 0x4
 con_typewriterPrintSpeed: resb 0x14
-
-
-;Initialized global or static variables of cl_console:
-SECTION .data
-_ZZ24Con_DrawMessageLineOnHUDiPK15ScreenPlacementiiiiiP6Font_sPK13MessageWindowiPfifiE12MY_GLOWCOLOR: dd 0x0, 0x3e99999a, 0x0, 0x3f800000, 0x0
-con_inputMaxMatchesShown: dd 0x18
-g_console_char_height: dd 0x41800000
-g_console_field_width: dd 0x26c
-
-
-;Initialized constant data of cl_console:
-SECTION .rdata
-con_versionColor: dd 0x3f800000, 0x3f800000, 0x0, 0x3f800000
-con_inputDvarMatchColor: dd 0x3f800000, 0x3f800000, 0x3f4ccccd, 0x3f800000
-con_inputCommandMatchColor: dd 0x3f4ccccd, 0x3f4ccccd, 0x3f800000, 0x3f800000
-con_inputDvarValueColor: dd 0x3f800000, 0x3f800000, 0x3f800000, 0x3f800000
-con_inputDvarInfoColor: dd 0x3f4ccccd, 0x3f4ccccd, 0x3f800000, 0x3f800000
-con_inputDvarDescriptionColor: dd 0x3f800000, 0x3f800000, 0x3f800000, 0x3f800000
-con_inputDvarInactiveValueColor: dd 0x3f4ccccd, 0x3f4ccccd, 0x3f4ccccd, 0x3f800000
-defaultGameMessageWindowLineCounts: dd 0x4, 0x5, 0x7, 0x5
-defaultGameMessageTimes: dd 0x40a00000, 0x41000000, 0x40a00000, 0x40a00000, 0x0, 0x0, 0x0, 0x0
 
 
 ;All cstrings:

@@ -40,17 +40,17 @@ ms_srand:
 	nop
 
 
-;Zero initialized global or static variables of ms_rand:
-SECTION .bss
-sRandSeed: resb 0x80
-
-
 ;Initialized global or static variables of ms_rand:
 SECTION .data
 
 
 ;Initialized constant data of ms_rand:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ms_rand:
+SECTION .bss
+sRandSeed: resb 0x80
 
 
 ;All cstrings:

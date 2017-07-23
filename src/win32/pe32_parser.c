@@ -100,38 +100,38 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 	
 	if(len < 0)
 	{
-		Com_Printf("Not a valid PE file\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Not a valid PE file\n");
 		return NULL;
 	}
 	// get dos header
 	IMAGE_DOS_HEADER *dosHeader = (IMAGE_DOS_HEADER*)(buff);
 	if( len <= sizeof(IMAGE_DOS_HEADER) || dosHeader->e_magic != dosMagic)
 	{
-		Com_Printf("Not a valid PE file\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Not a valid PE file\n");
 		return NULL;
 	}
 	if(dosHeader->e_lfanew < 0 || dosHeader->e_lfanew + sizeof(IMAGE_NT_HEADERS) > len)
 	{
-		Com_Printf("Not a valid PE file\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Not a valid PE file\n");
 		return NULL;
 	}
 	// get nt header
 	IMAGE_NT_HEADERS *ntHeader = (IMAGE_NT_HEADERS*)((DWORD)buff + dosHeader->e_lfanew);
 	if(ntHeader->Signature != peMagic)
 	{
-		Com_Printf("Not a valid PE file\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Not a valid PE file\n");
 		return NULL;
 	}
 	if((DWORD)(&(ntHeader->OptionalHeader)) < (DWORD)buff || (DWORD)(&(ntHeader->OptionalHeader)) + sizeof(IMAGE_OPTIONAL_HEADER) > len + (DWORD)buff)
 	{
-		Com_Printf("Not a valid PE file\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Not a valid PE file\n");
 		return NULL;
 	}
 	//get optional header
 	IMAGE_OPTIONAL_HEADER *OptionalHeader = &ntHeader->OptionalHeader;
 	if((DWORD)(&OptionalHeader->DataDirectory) < (DWORD)buff || (DWORD)(&OptionalHeader->DataDirectory) + 15*sizeof(IMAGE_DATA_DIRECTORY) > len + (DWORD)buff)
 	{
-		Com_Printf("Not a valid PE file\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Not a valid PE file\n");
 		return NULL;
 	}
 	//get the DataDirectory
@@ -141,7 +141,7 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 
 	if(dosHeader->e_lfanew + sizeof(IMAGE_NT_HEADERS) + nSections*sizeof(IMAGE_SECTION_HEADER) > len)
 	{
-		Com_Printf("Not a valid PE file\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Not a valid PE file\n");
 		return NULL;
 	}
 	
@@ -150,7 +150,7 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 	//DWORD importTabSize = DataDirectory[1].Size;
 	if(importTabRVA == 0)
 	{
-		Com_Printf("PE file has no importtable\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"PE file has no importtable\n");
 		return NULL;
 	}
 	
@@ -160,7 +160,7 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 	
 	if(imports == NULL)
 	{
-		Com_Printf("PE file has an invalid importtable\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"PE file has an invalid importtable\n");
 		return NULL;
 	}
 	
@@ -169,13 +169,13 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 	exefilenameptr = strrchr(exefilename, '\\');
 	if(exefilenameptr == NULL)
 	{
-		Com_Printf("An unexpected error in .exe filepath occurred while analysing the PE file\n");		
+		Com_Printf(CON_CHANNEL_SYSTEM,"An unexpected error in .exe filepath occurred while analysing the PE file\n");		
 		return NULL;
 	}
 	exefilenameptr++;
 	if(strlen(exefilenameptr) > MAX_QPATH || strlen(exefilenameptr) < 4)
 	{
-		Com_Printf("An unexpected error in .exe filepath occurred while analysing the PE file\n");		
+		Com_Printf(CON_CHANNEL_SYSTEM,"An unexpected error in .exe filepath occurred while analysing the PE file\n");		
 		return NULL;
 	}
 
@@ -191,14 +191,14 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 		char* modulname = PE32_FindFileOffset(buff, len ,imports->Name);
 		if(modulname == NULL)
 		{
-			Com_Printf("PE file has an invalid importtable\n");
+			Com_Printf(CON_CHANNEL_SYSTEM,"PE file has an invalid importtable\n");
 			return NULL;
 		}
 		if(!Q_stricmp(modulname, "_____________________________________________" EXECUTABLE_NAME ".exe"))
 		{
 			Q_strncpyz(modulname, exefilenameptr, strlen(modulname) +1);
 		}
-//		Com_Printf("Module: %s\n", modulname);
+//		Com_Printf(CON_CHANNEL_SYSTEM,"Module: %s\n", modulname);
 		if(imports->OriginalFirstThunk > 0)
 		{
 			Thunk = PE32_FindFileOffset(buff, len, imports->OriginalFirstThunk);
@@ -214,14 +214,14 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 			{
 				if(Thunk->u1.Ordinal & IMAGE_ORDINAL_FLAG32)
 				{
-//					Com_Printf("%d: Ordinal: %d\n", i, LOWORD(Thunk->u1.Ordinal));
+//					Com_Printf(CON_CHANNEL_SYSTEM,"%d: Ordinal: %d\n", i, LOWORD(Thunk->u1.Ordinal));
 				}else{
 					FuncNameRVA = Thunk->u1.AddressOfData;
 					/* Now we have the desired RVA */
 					FuncName = (char*)PE32_FindFileOffset(buff, len, FuncNameRVA);
 					if(FuncName == NULL)
 					{
-						Com_Printf("PE file has an invalid importtable\n");
+						Com_Printf(CON_CHANNEL_SYSTEM,"PE file has an invalid importtable\n");
 						free(strings);
 						return NULL;
 					}
@@ -230,7 +230,7 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 					if(nstrings < MAX_IMPORT_STRINGS -1)
 						strings[nstrings] = FuncName;
 						nstrings ++;
-//					Com_Printf("%d: FuncName: %s\n", i, FuncName);
+//					Com_Printf(CON_CHANNEL_SYSTEM,"%d: FuncName: %s\n", i, FuncName);
 				}
 				Thunk++;
 				i++;
@@ -241,7 +241,7 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 	
 	if((DWORD)imports + sizeof(IMAGE_IMPORT_DESCRIPTOR) >= (DWORD)buff + len)
 	{
-		Com_Printf("PE file has an invalid importtable\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"PE file has an invalid importtable\n");
 		free(strings);
 		return NULL;
 	}

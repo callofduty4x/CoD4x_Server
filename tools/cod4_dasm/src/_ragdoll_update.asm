@@ -22,7 +22,6 @@
 	extern ragdoll_rotvel_scale
 	extern Phys_ObjSetAngularVelocityRaw
 	extern Phys_ObjSetVelocity
-	extern g_fltMin__uint4_dup_1
 	extern Ragdoll_CountPhysicsBodies
 	extern ragdoll_max_simulating
 	extern ragdoll_max_life
@@ -1042,16 +1041,16 @@ Ragdoll_EnterTunnelTest_340:
 	jae Ragdoll_EnterTunnelTest_360
 	jp Ragdoll_EnterTunnelTest_360
 	movss xmm0, dword [ebx+0x10]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x1b0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x68], xmm0
 	movss xmm0, dword [ebx+0x14]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x1b0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x64], xmm0
 	movss xmm0, dword [ebx+0x18]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x1b0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x60], xmm0
 	movss xmm0, dword [ebx+0x1c]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x1b0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x5c], xmm0
 	jmp Ragdoll_EnterTunnelTest_370
 Ragdoll_EnterTunnelTest_320:
@@ -2360,7 +2359,7 @@ Ragdoll_CreateBodyPhysics_250:
 Ragdoll_CreateBodyPhysics_260:
 	movss xmm0, dword [ecx+0x30]
 	movaps xmm1, xmm0
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x150]
+	xorps xmm1, [_data16_80000000]
 	mov dword [ebp-0x48], 0x0
 	movss [ebp-0x44], xmm1
 	movss [ebp-0x40], xmm1
@@ -2556,7 +2555,7 @@ Ragdoll_SnapshotBaseLerpOffsets_20:
 	movaps xmm1, xmm4
 	mulss xmm1, xmm7
 	addss xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x180]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x64], xmm0
 	movaps xmm0, xmm2
 	mulss xmm0, [ebp-0x84]
@@ -2566,14 +2565,14 @@ Ragdoll_SnapshotBaseLerpOffsets_20:
 	movaps xmm1, xmm4
 	mulss xmm1, [ebp-0x6c]
 	addss xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x180]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x60], xmm0
 	mulss xmm2, [ebp-0x80]
 	mulss xmm3, [ebp-0x74]
 	addss xmm2, xmm3
 	mulss xmm4, [ebp-0x68]
 	addss xmm2, xmm4
-	xorps xmm2, [g_fltMin__uint4_dup_1+0x180]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x5c], xmm2
 	movss xmm1, dword [ebp-0x1c]
 	movaps xmm3, xmm1
@@ -2917,7 +2916,7 @@ Ragdoll_SnapshotBaseLerpBones_50:
 	movss xmm0, dword [eax+0x18]
 	mulss xmm0, xmm7
 	addss xmm1, xmm0
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x190]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0x98], xmm1
 	movss xmm1, dword [eax+0x10]
 	mulss xmm1, [ebp-0xb8]
@@ -2927,7 +2926,7 @@ Ragdoll_SnapshotBaseLerpBones_50:
 	movss xmm0, dword [eax+0x18]
 	mulss xmm0, xmm3
 	addss xmm1, xmm0
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x190]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0x94], xmm1
 	movss xmm1, dword [eax+0x10]
 	mulss xmm1, [ebp-0xb4]
@@ -2937,7 +2936,7 @@ Ragdoll_SnapshotBaseLerpBones_50:
 	movss xmm0, dword [eax+0x18]
 	mulss xmm0, [ebp-0x9c]
 	addss xmm1, xmm0
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x190]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0x90], xmm1
 	movss xmm1, dword [esi+0x1c]
 	movaps xmm3, xmm1
@@ -3667,7 +3666,7 @@ Ragdoll_ExplosionEvent_250:
 	mulss xmm2, xmm2
 	addss xmm1, xmm2
 	sqrtss xmm1, xmm1
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x1a0]
+	movss xmm4, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm4
 	ucomiss xmm0, xmm7
@@ -3697,7 +3696,7 @@ Ragdoll_ExplosionEvent_180:
 	mov [ebp-0x1c], eax
 	pxor xmm7, xmm7
 	movss xmm6, dword [_float_1_00000000]
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x1a0]
+	movss xmm4, dword [_data16_80000000]
 	movss xmm1, dword [ebp-0x1c]
 	movss xmm3, dword [ebp-0x24]
 	movss xmm0, dword [ebp-0x20]
@@ -3777,7 +3776,7 @@ Ragdoll_ValidatePrecalcBoneDef:
 	sub esp, 0x8
 	mov eax, [ebp+0xc]
 	movss xmm0, dword [eax+0x3c]
-	andps xmm0, [g_fltMin__uint4_dup_1+0x140]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	movsd xmm1, qword [_double_0_00000100]
 	xor eax, eax
@@ -3954,9 +3953,9 @@ Ragdoll_GenerateAllSelfCollisionContacts_160:
 	ucomiss xmm5, [ebp-0xac]
 	ja Ragdoll_GenerateAllSelfCollisionContacts_60
 	movaps xmm2, xmm4
-	andps xmm2, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm2, [_data16_7fffffff]
 	movaps xmm6, xmm5
-	andps xmm6, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm6, [_data16_7fffffff]
 Ragdoll_GenerateAllSelfCollisionContacts_180:
 	movss xmm0, dword [_float_0_00010000]
 	ucomiss xmm0, xmm2
@@ -4094,9 +4093,9 @@ Ragdoll_GenerateAllSelfCollisionContacts_60:
 	ucomiss xmm4, [ebp-0x9c]
 	ja Ragdoll_GenerateAllSelfCollisionContacts_200
 	movaps xmm2, xmm4
-	andps xmm2, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm2, [_data16_7fffffff]
 	movss xmm6, dword [ebp-0xac]
-	andps xmm6, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm6, [_data16_7fffffff]
 	movss xmm3, dword [ebp-0x9c]
 	movss xmm5, dword [ebp-0xac]
 	jmp Ragdoll_GenerateAllSelfCollisionContacts_180
@@ -4129,9 +4128,9 @@ Ragdoll_GenerateAllSelfCollisionContacts_150:
 	jmp Ragdoll_GenerateAllSelfCollisionContacts_230
 Ragdoll_GenerateAllSelfCollisionContacts_200:
 	movaps xmm2, xmm3
-	andps xmm2, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm2, [_data16_7fffffff]
 	movss xmm6, dword [ebp-0xac]
-	andps xmm6, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm6, [_data16_7fffffff]
 	movaps xmm4, xmm3
 	movss xmm5, dword [ebp-0xac]
 	jmp Ragdoll_GenerateAllSelfCollisionContacts_180
@@ -4186,18 +4185,18 @@ Ragdoll_GenerateAllSelfCollisionContacts_210:
 	jmp Ragdoll_GenerateAllSelfCollisionContacts_240
 Ragdoll_GenerateAllSelfCollisionContacts_190:
 	movss xmm6, dword [ebp-0xac]
-	andps xmm6, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm6, [_data16_7fffffff]
 	movss xmm5, dword [ebp-0xac]
 	movaps xmm4, xmm1
 	movaps xmm2, xmm1
 	jmp Ragdoll_GenerateAllSelfCollisionContacts_180
 Ragdoll_GenerateAllSelfCollisionContacts_170:
 	movaps xmm4, xmm6
-	xorps xmm4, [g_fltMin__uint4_dup_1+0x160]
+	xorps xmm4, [_data16_80000000]
 	ucomiss xmm4, [ebp-0x9c]
 	ja Ragdoll_GenerateAllSelfCollisionContacts_250
 	movaps xmm2, xmm4
-	andps xmm2, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm2, [_data16_7fffffff]
 	movss xmm3, dword [ebp-0x9c]
 	movaps xmm5, xmm1
 	movaps xmm6, xmm1
@@ -4211,16 +4210,12 @@ Ragdoll_GenerateAllSelfCollisionContacts_20:
 	ret
 Ragdoll_GenerateAllSelfCollisionContacts_250:
 	movaps xmm2, xmm3
-	andps xmm2, [g_fltMin__uint4_dup_1+0x170]
+	andps xmm2, [_data16_7fffffff]
 	movaps xmm4, xmm3
 	movaps xmm5, xmm1
 	movaps xmm6, xmm1
 	jmp Ragdoll_GenerateAllSelfCollisionContacts_180
 	nop
-
-
-;Zero initialized global or static variables of ragdoll_update:
-SECTION .bss
 
 
 ;Initialized global or static variables of ragdoll_update:
@@ -4232,6 +4227,10 @@ ragdollTime: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of ragdoll_update:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ragdoll_update:
+SECTION .bss
 
 
 ;All cstrings:
@@ -4249,11 +4248,13 @@ _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_1000_00000000:		dd 0x447a0000	; 1000
 _float_0_00000000:		dd 0x0	; 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_89999998:		dd 0x3f666666	; 0.9
 _float_0_10000000:		dd 0x3dcccccd	; 0.1
 _float_ inf:		dd 0x7f800000	; inf
 _float_15_00000000:		dd 0x41700000	; 15
 _float_400_00000000:		dd 0x43c80000	; 400
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double_0_00000100:		dq 0x3eb0c6f7a0b5ed8d	; 1e-06
 _float_0_00010000:		dd 0x38d1b717	; 0.0001
 _float_0_00200000:		dd 0x3b03126f	; 0.002

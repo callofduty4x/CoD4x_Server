@@ -863,16 +863,16 @@ R_SkinGfxEntityCmd_20:
 	ret
 
 
-;Zero initialized global or static variables of r_dobj_skin:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_dobj_skin:
 SECTION .data
 
 
 ;Initialized constant data of r_dobj_skin:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_dobj_skin:
+SECTION .bss
 
 
 ;All cstrings:

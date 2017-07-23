@@ -198,16 +198,16 @@ CL_Netchan_TransmitNextFragment:
 	nop
 
 
-;Zero initialized global or static variables of cl_net_chan_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of cl_net_chan_mp:
 SECTION .data
 
 
 ;Initialized constant data of cl_net_chan_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_net_chan_mp:
+SECTION .bss
 
 
 ;All cstrings:

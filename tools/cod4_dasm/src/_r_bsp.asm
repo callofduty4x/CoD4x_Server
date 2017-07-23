@@ -684,17 +684,17 @@ R_BspGenerateReflections:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_bsp:
-SECTION .bss
-s_world: resb 0x300
-
-
 ;Initialized global or static variables of r_bsp:
 SECTION .data
 
 
 ;Initialized constant data of r_bsp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_bsp:
+SECTION .bss
+s_world: resb 0x300
 
 
 ;All cstrings:

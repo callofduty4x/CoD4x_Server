@@ -106,16 +106,16 @@ R_ReleaseGpuFenceLock:
 	ret
 
 
-;Zero initialized global or static variables of r_setstate_d3d:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_setstate_d3d:
 SECTION .data
 
 
 ;Initialized constant data of r_setstate_d3d:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_setstate_d3d:
+SECTION .bss
 
 
 ;All cstrings:

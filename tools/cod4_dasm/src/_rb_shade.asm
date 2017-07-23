@@ -481,16 +481,16 @@ RB_ClearVertexShader_10:
 	ret
 
 
-;Zero initialized global or static variables of rb_shade:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_shade:
 SECTION .data
 
 
 ;Initialized constant data of rb_shade:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_shade:
+SECTION .bss
 
 
 ;All cstrings:

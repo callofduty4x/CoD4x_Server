@@ -35,7 +35,7 @@ void __cdecl ClientScr_GetName(gclient_t *pSelf)
 {
     if (pSelf->sess.cs.clientIndex < 0 || pSelf->sess.cs.clientIndex >= MAX_CLIENTS)
     {
-        Com_PrintError("ClientScr_GetName() Bad entity\n");
+        Com_PrintError(CON_CHANNEL_SCRIPT,"ClientScr_GetName() Bad entity\n");
         Scr_AddString("");
         return;
     }

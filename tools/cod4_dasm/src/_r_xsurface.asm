@@ -445,16 +445,16 @@ XSurfaceGetNumVerts:
 	ret
 
 
-;Zero initialized global or static variables of r_xsurface:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_xsurface:
 SECTION .data
 
 
 ;Initialized constant data of r_xsurface:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_xsurface:
+SECTION .bss
 
 
 ;All cstrings:

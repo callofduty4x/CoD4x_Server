@@ -2317,6 +2317,14 @@ Cbuf_Init:
 	nop
 
 
+;Initialized global or static variables of cmd:
+SECTION .data
+
+
+;Initialized constant data of cmd:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of cmd:
 SECTION .bss
 sv_cmd_argsPrivate: resb 0x2840
@@ -2335,14 +2343,6 @@ cmd_args: resb 0xc0
 sv_cmd_args: resb 0xa0
 cmd_insideCBufExecute: resb 0x4
 cmd_wait: resb 0x18
-
-
-;Initialized global or static variables of cmd:
-SECTION .data
-
-
-;Initialized constant data of cmd:
-SECTION .rdata
 
 
 ;All cstrings:

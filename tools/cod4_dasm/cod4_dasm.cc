@@ -128,6 +128,17 @@ static void TranslateFunctionName(char* fn)
     strcpy(fn, "Q_stricmpn");
     return;
   }
+  if(strcmp(fn, "I_strcmp") == 0)
+  {
+    strcpy(fn, "strcmp");
+    return;
+  }
+  if(strcmp(fn, "I_strlwr") == 0)
+  {
+    fn[0] = 'Q';
+    return;
+  }
+
   if(strncmp(fn, "Dvar_", 5) == 0)
   {
     fn[0] = 'C';
@@ -148,6 +159,12 @@ static void TranslateFunctionName(char* fn)
     strcpy(fn, "Cmd_AddCommand"); //3rd Argument gets just discarded
     return;
   }
+  if(strcmp(fn, "_Znam") == 0)
+  {
+    strcpy(fn, "_Znaj"); //3rd Argument gets just discarded
+    return;
+  }
+
 }
 
 
@@ -181,7 +198,9 @@ static const char* FunctionnameFromMangled(const char* mangledname)
   ++mangledname;
   if(!isdigit(mangledname[0]))
   {
-    return orgname;
+    strncpy(demangledname, orgname, sizeof(demangledname));
+    TranslateFunctionName(demangledname);
+    return demangledname;
   }
   int l = atoi(mangledname);
   if(l <= 0 || l > 50)
@@ -1381,7 +1400,7 @@ public:
   {
 
     int i;
-    uint32_t constants[] = {0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
+    uint32_t constants[] = {0x820011, 0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
                             0x463800, 0x463804, 0x463808, 0x463838, 
                             0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac,0x0};
     for(i = 0; constants[i]; ++i)
@@ -1586,6 +1605,48 @@ public:
       return addOWORDToTable((uint128_t*)address);
     }
     if(address == 0x3913e0 || address == 0x3913f0 || address == 0x391440 || address == 0x391460) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3924f0 && address < 0x3926c0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x390494 && address < 0x390500 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x390520 && address < 0x390820 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A12D0 && address < 0x3A1320 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A1380 && address < 0x3A13C0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x382D60 && address < 0x382DC0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x382DE0 && address < 0x382E60 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x382EE0) //xmm constants of rotation of d-engine
     {
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
@@ -1825,6 +1886,11 @@ public:
   dasmImportExports_t impexp;
   char codeOutputBuffer[16*1024*1024];
   int codeOutputBufferPos;
+  char dataOutputBuffer[16*1024*1024];
+  int dataOutputBufferPos;
+  char rdataOutputBuffer[16*1024*1024];
+  int rdataOutputBufferPos;
+
   stringTable_t stringtab;
   CFStringTable_t CFStringtab;
   floatTable_t floattab;
@@ -3068,6 +3134,8 @@ public:
     FILE* outputFileHandle;
 
     codeOutputBufferPos = 0;
+    dataOutputBufferPos = 0;
+    rdataOutputBufferPos = 0;
 
     //Reset imports/exports counter for new object
     impexp.numimports = 0;
@@ -3110,6 +3178,119 @@ public:
       return;
     }
 
+
+    //data:
+    for(j = 0; j < o->symbolcount; ++j)
+    {
+      if(o->symbols[j]->type == FileMap::SYM_DATAVAR)
+      {
+
+        dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "%s: ", o->symbols[j]->name.c_str());
+
+        int end = o->symbols[j]->size / 4;
+        if(end > 0)
+        {
+          dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "dd ");
+        }
+        for(i = 0; i < end; ++i)
+        {
+          uint32_t v = ((uint32_t*)o->symbols[j]->address)[i];
+          const char* sym_name = symbolResolver_rdata(v, (uint32_t)(((uint32_t*)o->symbols[j]->address) +i));
+          if(sym_name)
+          {
+            dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "%s", sym_name);
+          }else{
+            dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "0x%x", v);
+          }
+          if(i+1 < end)
+          {
+            dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, ", ");
+          }
+        }
+        if(o->symbols[j]->size & 3)
+        {
+          if(end > 0)
+          {
+            dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "\n\t\t");
+          }
+          dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "db ");
+
+          for(i = 0; (unsigned int)i < (o->symbols[j]->size & 3); ++i)
+          {
+            dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "0x%x", ((uint8_t*)o->symbols[j]->address)[4*end + i]);
+            if((unsigned int)(i+1) < (o->symbols[j]->size & 3))
+            {
+              dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, ", ");
+            }
+          }
+        }
+        dataOutputBufferPos += snprintf(dataOutputBuffer +dataOutputBufferPos, sizeof(dataOutputBuffer) - dataOutputBufferPos, "\n");
+      }
+    }
+
+
+    //rdata:
+    for(j = 0; j < o->symbolcount; ++j)
+    {
+      if(o->symbols[j]->type == FileMap::SYM_CONSTVAR || o->symbols[j]->type == FileMap::SYM_VTABLE)
+      {
+        if(o->symbols[j]->type == FileMap::SYM_VTABLE)
+        {
+            const char *tabname = o->symbols[j]->name.c_str();
+            if(strlen(tabname) >= 6)
+            {
+                tabname += 4;
+                while(isdigit(*tabname))
+                {
+                    ++tabname;
+                }
+            }
+            rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, ";VTable for %s:\n", tabname);
+        }
+        rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "%s: ", o->symbols[j]->name.c_str());
+
+        int end = o->symbols[j]->size / 4;
+        if(end > 0)
+        {
+          rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "dd ");
+        }
+        for(i = 0; i < end; ++i)
+        {
+          uint32_t v = ((uint32_t*)o->symbols[j]->address)[i];
+          const char* sym_name = symbolResolver_rdata(v, (uint32_t)(((uint32_t*)o->symbols[j]->address) +i));
+          if(sym_name)
+          {
+            rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos,"%s", sym_name);
+          }else{
+            rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "0x%x", v);
+          }
+          if(i+1 < end)
+          {
+            rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, ", ");
+          }
+        }
+        if(o->symbols[j]->size & 3)
+        {
+          if(end > 0)
+          {
+            rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "\n\t\t");
+          }
+          rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "db ");
+
+          for(i = 0; (unsigned int)i < (o->symbols[j]->size & 3); ++i)
+          {
+            rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "0x%x", ((uint8_t*)o->symbols[j]->address)[4*end + i]);
+            if((unsigned int)(i+1) < (o->symbols[j]->size & 3))
+            {
+              rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, ", ");
+            }
+          }
+        }
+        rdataOutputBufferPos += snprintf(rdataOutputBuffer +rdataOutputBufferPos, sizeof(rdataOutputBuffer) - rdataOutputBufferPos, "\n");
+      }
+    }
+
+
     fprintf(outputFileHandle, ";Imports of %s:\n", o->objectname.c_str());
     //Writing all import/exported objects
     for(i = 0; i < impexp.numimports; ++i)
@@ -3139,6 +3320,13 @@ public:
     fprintf(outputFileHandle, "\n\nSECTION .text\n");
     fwrite(codeOutputBuffer, 1, codeOutputBufferPos, outputFileHandle);
 
+    fprintf(outputFileHandle, "\n\n;Initialized global or static variables of %s:\n", o->objectname.c_str());
+    fprintf(outputFileHandle, "SECTION .data\n");
+    fwrite(dataOutputBuffer, 1, dataOutputBufferPos, outputFileHandle);
+
+    fprintf(outputFileHandle, "\n\n;Initialized constant data of %s:\n", o->objectname.c_str());
+    fprintf(outputFileHandle, "SECTION .rdata\n");
+    fwrite(rdataOutputBuffer, 1, rdataOutputBufferPos, outputFileHandle);
 
     fprintf(outputFileHandle, "\n\n;Zero initialized global or static variables of %s:\n", o->objectname.c_str());
     fprintf(outputFileHandle, "SECTION .bss\n");
@@ -3151,103 +3339,7 @@ public:
       }
     }
 
-    fprintf(outputFileHandle, "\n\n;Initialized global or static variables of %s:\n", o->objectname.c_str());
-    fprintf(outputFileHandle, "SECTION .data\n");
-    for(j = 0; j < o->symbolcount; ++j)
-    {
-      if(o->symbols[j]->type == FileMap::SYM_DATAVAR)
-      {
-        fprintf(outputFileHandle, "%s: ", o->symbols[j]->name.c_str());
 
-        int end = o->symbols[j]->size / 4;
-        if(end > 0)
-        {
-          fprintf(outputFileHandle, "dd ");
-        }
-        for(i = 0; i < end; ++i)
-        {
-          uint32_t v = ((uint32_t*)o->symbols[j]->address)[i];
-          const char* sym_name = symbolResolver_rdata(v, (uint32_t)(((uint32_t*)o->symbols[j]->address) +i));
-          if(sym_name)
-          {
-            fprintf(outputFileHandle, "%s", sym_name);
-          }else{
-            fprintf(outputFileHandle, "0x%x", v);
-          }
-          if(i+1 < end)
-          {
-            fprintf(outputFileHandle, ", ");
-          }
-        }
-        if(o->symbols[j]->size & 3)
-        {
-          if(end > 0)
-          {
-            fprintf(outputFileHandle, "\n\t\t");
-          }
-          fprintf(outputFileHandle, "db ");
-
-          for(i = 0; (unsigned int)i < (o->symbols[j]->size & 3); ++i)
-          {
-            fprintf(outputFileHandle, "0x%x", ((uint8_t*)o->symbols[j]->address)[4*end + i]);
-            if((unsigned int)(i+1) < (o->symbols[j]->size & 3))
-            {
-              fprintf(outputFileHandle, ", ");
-            }
-          }
-        }
-        fprintf(outputFileHandle, "\n");
-      }
-    }
-
-    fprintf(outputFileHandle, "\n\n;Initialized constant data of %s:\n", o->objectname.c_str());
-    fprintf(outputFileHandle, "SECTION .rdata\n");
-    for(j = 0; j < o->symbolcount; ++j)
-    {
-      if(o->symbols[j]->type == FileMap::SYM_CONSTVAR)
-      {
-        fprintf(outputFileHandle, "%s: ", o->symbols[j]->name.c_str());
-
-        int end = o->symbols[j]->size / 4;
-        if(end > 0)
-        {
-          fprintf(outputFileHandle, "dd ");
-        }
-        for(i = 0; i < end; ++i)
-        {
-          uint32_t v = ((uint32_t*)o->symbols[j]->address)[i];
-          const char* sym_name = symbolResolver_rdata(v, (uint32_t)(((uint32_t*)o->symbols[j]->address) +i));
-          if(sym_name)
-          {
-            fprintf(outputFileHandle, "%s", sym_name);
-          }else{
-            fprintf(outputFileHandle, "0x%x", v);
-          }
-          if(i+1 < end)
-          {
-            fprintf(outputFileHandle, ", ");
-          }
-        }
-        if(o->symbols[j]->size & 3)
-        {
-          if(end > 0)
-          {
-            fprintf(outputFileHandle, "\n\t\t");
-          }
-          fprintf(outputFileHandle, "db ");
-
-          for(i = 0; (unsigned int)i < (o->symbols[j]->size & 3); ++i)
-          {
-            fprintf(outputFileHandle, "0x%x", ((uint8_t*)o->symbols[j]->address)[4*end + i]);
-            if((unsigned int)(i+1) < (o->symbols[j]->size & 3))
-            {
-              fprintf(outputFileHandle, ", ");
-            }
-          }
-        }
-        fprintf(outputFileHandle, "\n");
-      }
-    }
 
     dumpCFStringtableToFile(outputFileHandle); //Needs to come first because this function will generate additional cstrings which needs to get dumped later
     dumpStringtableToFile(outputFileHandle);

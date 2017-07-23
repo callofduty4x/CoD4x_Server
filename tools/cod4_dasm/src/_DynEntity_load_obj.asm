@@ -944,10 +944,6 @@ DynEnt_GetClientModelPoseList:
 	ret
 
 
-;Zero initialized global or static variables of DynEntity_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of DynEntity_load_obj:
 SECTION .data
 dynEntClassNames: dd _cstring_dyn_brushmodel, _cstring_dyn_model, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -956,6 +952,10 @@ dynEntClassNames: dd _cstring_dyn_brushmodel, _cstring_dyn_model, 0x0, 0x0, 0x0,
 ;Initialized constant data of DynEntity_load_obj:
 SECTION .rdata
 dynEntProps: dd _cstring_invalid, 0x0, _cstring_clutter, 0x10001, _cstring_destruct, 0x1010001, 0x0, 0x0
+
+
+;Zero initialized global or static variables of DynEntity_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

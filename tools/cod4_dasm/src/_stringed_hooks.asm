@@ -1757,19 +1757,6 @@ SEH_VerifyLanguageSelection_20:
 	ret
 
 
-;Zero initialized global or static variables of stringed_hooks:
-SECTION .bss
-g_currentAsian: resb 0x20
-_ZZ23SEH_SafeTranslateStringPKcE13szErrorString: resb 0x400
-_ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE9szStrings: resb 0x2800
-_ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE11iCurrString: resb 0x60
-loc_warnings: resb 0x4
-loc_warningsAsErrors: resb 0x4
-loc_language: resb 0x70
-loc_forceEnglish: resb 0x4
-loc_translate: resb 0x4
-
-
 ;Initialized global or static variables of stringed_hooks:
 SECTION .data
 g_languages: dd _cstring_english, 0x0, _cstring_french, 0x0, _cstring_german, 0x0, _cstring_italian, 0x0, _cstring_spanish, 0x0, _cstring_british, 0x0, _cstring_russian, 0x0, _cstring_polish, 0x0, _cstring_korean, 0x0, _cstring_taiwanese, 0x0, _cstring_japanese, 0x0, _cstring_chinese, 0x0, _cstring_thai, 0x0, _cstring_leet, 0x0, _cstring_czech, 0x0
@@ -1797,6 +1784,19 @@ _ZZ21SE_GetString_FastFilePKcE9langIndex: dd 0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of stringed_hooks:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of stringed_hooks:
+SECTION .bss
+g_currentAsian: resb 0x20
+_ZZ23SEH_SafeTranslateStringPKcE13szErrorString: resb 0x400
+_ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE9szStrings: resb 0x2800
+_ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE11iCurrString: resb 0x60
+loc_warnings: resb 0x4
+loc_warningsAsErrors: resb 0x4
+loc_language: resb 0x70
+loc_forceEnglish: resb 0x4
+loc_translate: resb 0x4
 
 
 ;All cstrings:

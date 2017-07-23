@@ -512,16 +512,16 @@ _ZN14MacPreferences9PutStringEPKcS1_:
 	nop
 
 
-;Zero initialized global or static variables of MacPreferences:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacPreferences:
 SECTION .data
 
 
 ;Initialized constant data of MacPreferences:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacPreferences:
+SECTION .bss
 
 
 ;All cstrings:

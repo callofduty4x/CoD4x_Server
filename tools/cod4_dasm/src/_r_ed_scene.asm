@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of r_ed_scene:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_ed_scene:
 SECTION .data
 
 
 ;Initialized constant data of r_ed_scene:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_ed_scene:
+SECTION .bss
 
 
 ;All cstrings:

@@ -3278,16 +3278,16 @@ CG_PlayBoltedEffect_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cg_event:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_event:
 SECTION .data
 
 
 ;Initialized constant data of cg_event:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_event:
+SECTION .bss
 
 
 ;All cstrings:

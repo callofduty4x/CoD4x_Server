@@ -6134,14 +6134,6 @@ SV_UpdateLastTimeMasterServerCommunicated_10:
 	ret
 
 
-;Zero initialized global or static variables of sv_client_mp:
-SECTION .bss
-pbReason: resb 0x20000
-_ZZ22SV_SendClientGameStateP8client_tE9msgBuffer: resb 0x20000
-_ZZ23SV_ExecuteClientMessageP8client_tP5msg_tE17msgCompressed_buf: resb 0x800
-_ZZ16SV_AddTestClientvE7botport: resb 0x80
-
-
 ;Initialized global or static variables of sv_client_mp:
 SECTION .data
 ucmds: dd _cstring_userinfo, SV_UpdateUserinfo_f, 0x0, _cstring_disconnect, SV_Disconnect_f, 0x1, _cstring_cp, SV_VerifyIwds_f, 0x0, _cstring_vdr, SV_ResetPureClient_f, 0x0, _cstring_download, SV_BeginDownload_f, 0x0, _cstring_nextdl, SV_NextDownload_f, 0x0, _cstring_stopdl, SV_StopDownload_f, 0x0, _cstring_donedl, SV_DoneDownload_f, 0x0, _cstring_retransdl, SV_RetransmitDownload_f, 0x0, _cstring_wwwdl, SV_WWWDownload_f, 0x0, _cstring_muteplayer, SV_MutePlayer_f, 0x0, _cstring_unmuteplayer, SV_UnmutePlayer_f, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -6149,6 +6141,14 @@ ucmds: dd _cstring_userinfo, SV_UpdateUserinfo_f, 0x0, _cstring_disconnect, SV_D
 
 ;Initialized constant data of sv_client_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of sv_client_mp:
+SECTION .bss
+pbReason: resb 0x20000
+_ZZ22SV_SendClientGameStateP8client_tE9msgBuffer: resb 0x20000
+_ZZ23SV_ExecuteClientMessageP8client_tP5msg_tE17msgCompressed_buf: resb 0x800
+_ZZ16SV_AddTestClientvE7botport: resb 0x80
 
 
 ;All cstrings:

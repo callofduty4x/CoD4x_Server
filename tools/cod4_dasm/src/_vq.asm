@@ -287,16 +287,16 @@ vq_nbest_50:
 	nop
 
 
-;Zero initialized global or static variables of vq:
-SECTION .bss
-
-
 ;Initialized global or static variables of vq:
 SECTION .data
 
 
 ;Initialized constant data of vq:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of vq:
+SECTION .bss
 
 
 ;All cstrings:

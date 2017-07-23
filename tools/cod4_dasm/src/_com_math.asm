@@ -512,7 +512,7 @@ vectopitch_60:
 vectopitch_20:
 	jp vectopitch_10
 	movss xmm0, dword [eax+0x8]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x17c]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm2
 	jb vectopitch_40
 	mov eax, 0x42b40000
@@ -665,7 +665,7 @@ vectoangles_80:
 vectoangles_20:
 	jp vectoangles_10
 	movss xmm0, dword [ebx+0x8]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x19c]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm3
 	jb vectoangles_50
 	movss [ebp-0xc], xmm3
@@ -711,7 +711,7 @@ AxisToAngles:
 	movss xmm0, dword [eax+0x8]
 	movss [ebp-0x1c], xmm0
 	movss xmm0, dword [esi+0x4]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x36c]
+	xorps xmm0, [_data16_80000000]
 	cvtss2sd xmm0, xmm0
 	mulsd xmm0, [_double_0_01745329]
 	cvtsd2ss xmm0, xmm0
@@ -740,7 +740,7 @@ AxisToAngles:
 	addss xmm2, xmm1
 	movss [ebp-0xc], xmm2
 	movss xmm0, dword [esi]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x36c]
+	xorps xmm0, [_data16_80000000]
 	cvtss2sd xmm0, xmm0
 	mulsd xmm0, [_double_0_01745329]
 	cvtsd2ss xmm0, xmm0
@@ -770,7 +770,7 @@ AxisToAngles:
 	ucomiss xmm2, xmm3
 	jnz AxisToAngles_20
 	jp AxisToAngles_20
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x36c]
+	xorps xmm1, [_data16_80000000]
 	ucomiss xmm1, xmm3
 	jb AxisToAngles_30
 	movss xmm0, dword [_float_90_00000000]
@@ -812,7 +812,7 @@ AxisToAngles_70:
 	ucomiss xmm3, [ebp-0xc]
 	ja AxisToAngles_60
 AxisToAngles_40:
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x36c]
+	xorps xmm0, [_data16_80000000]
 	movss [esi+0x8], xmm0
 	add esp, 0x60
 	pop ebx
@@ -1208,7 +1208,7 @@ Vec2Normalize:
 	addss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x14c]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Vec2Normalize_10
 	movss xmm0, dword [_float_1_00000000]
@@ -1583,7 +1583,7 @@ DiffTrackAngle_30:
 	movaps xmm3, xmm0
 	mulss xmm3, [ebp+0x10]
 	mulss xmm3, [ebp+0x14]
-	movss xmm2, dword [g_fltMin__uint4_dup_1+0x25c]
+	movss xmm2, dword [_data16_7fffffff]
 	movaps xmm4, xmm0
 	andps xmm4, xmm2
 	ucomiss xmm4, [_float_0_00100000]
@@ -1988,7 +1988,7 @@ CullBoxFromCone_90:
 	ret
 CullBoxFromCone_40:
 	movaps xmm0, xmm3
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x1bc]
+	xorps xmm0, [_data16_80000000]
 	movss xmm1, dword [ebp-0x1c]
 	mulss xmm1, xmm0
 	addss xmm1, xmm2
@@ -2110,7 +2110,7 @@ IntersectPlanes:
 	addsd xmm1, xmm0
 	addsd xmm2, xmm1
 	movapd xmm0, xmm2
-	andpd xmm0, [g_fltMin__uint4_dup_1+0x6c]
+	andpd xmm0, [_data16_ffffffff]
 	ucomisd xmm0, [_double_0_00100000]
 	jb IntersectPlanes_10
 IntersectPlanes_20:
@@ -2217,7 +2217,7 @@ MatrixForViewer:
 	mov ebx, [ebp+0xc]
 	mov esi, [ebp+0x10]
 	lea eax, [esi+0xc]
-	movss xmm3, dword [g_fltMin__uint4_dup_1+0x5c]
+	movss xmm3, dword [_data16_80000000]
 	movss xmm0, dword [esi+0xc]
 	xorps xmm0, xmm3
 	movss [edx], xmm0
@@ -2946,7 +2946,7 @@ Vec2NormalizeTo:
 	addss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x16c]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Vec2NormalizeTo_10
 	movss xmm0, dword [_float_1_00000000]
@@ -2992,7 +2992,7 @@ Vec3NormalizeTo:
 	addss xmm0, xmm2
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x15c]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Vec3NormalizeTo_10
 	movss xmm2, dword [_float_1_00000000]
@@ -3096,7 +3096,7 @@ LinearTrackAngle_30:
 	movaps xmm3, xmm0
 	mulss xmm3, xmm6
 LinearTrackAngle_90:
-	movss xmm0, dword [g_fltMin__uint4_dup_1+0x27c]
+	movss xmm0, dword [_data16_7fffffff]
 	andps xmm1, xmm0
 	ucomiss xmm1, [_float_0_00100000]
 	jbe LinearTrackAngle_60
@@ -3130,7 +3130,7 @@ LinearTrackAngle_10:
 	jmp LinearTrackAngle_80
 LinearTrackAngle_50:
 	movaps xmm3, xmm0
-	xorps xmm3, [g_fltMin__uint4_dup_1+0x26c]
+	xorps xmm3, [_data16_80000000]
 	mulss xmm3, xmm6
 	jmp LinearTrackAngle_90
 
@@ -3671,7 +3671,7 @@ RadiusFromBounds:
 	mov esi, [ebp+0x8]
 	mov ebx, [ebp+0xc]
 	mov edx, 0x1
-	movss xmm2, dword [g_fltMin__uint4_dup_1+0x2bc]
+	movss xmm2, dword [_data16_7fffffff]
 	lea ecx, [ebp-0x14]
 RadiusFromBounds_10:
 	lea eax, [edx*4]
@@ -3858,7 +3858,7 @@ CullBoxFromSphere:
 	mov ecx, [ebp+0x14]
 	movss xmm0, dword [edx]
 	subss xmm0, [eax]
-	movss xmm1, dword [g_fltMin__uint4_dup_1+0xfc]
+	movss xmm1, dword [_data16_7fffffff]
 	andps xmm0, xmm1
 	subss xmm0, [ecx]
 	pxor xmm4, xmm4
@@ -4124,7 +4124,7 @@ CullSphereFromCone_20:
 	ret
 CullSphereFromCone_10:
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x1ec]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm6, xmm0
 	addss xmm3, xmm6
 	mulss xmm7, xmm0
@@ -4191,7 +4191,7 @@ RadiusFromBounds2D:
 	mov esi, [ebp+0x8]
 	mov ebx, [ebp+0xc]
 	mov edx, 0x1
-	movss xmm2, dword [g_fltMin__uint4_dup_1+0x2ac]
+	movss xmm2, dword [_data16_7fffffff]
 	lea ecx, [ebp-0x10]
 RadiusFromBounds2D_10:
 	lea eax, [edx*4]
@@ -4280,7 +4280,7 @@ PerpendicularVector:
 	ucomiss xmm0, xmm1
 	cmovbe edx, eax
 	shl edx, 0x2
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x2ec]
+	movss xmm4, dword [_data16_80000000]
 	movss xmm0, dword [ecx+edx]
 	xorps xmm0, xmm4
 	mulss xmm2, xmm0
@@ -4411,7 +4411,7 @@ ProjectPointOnPlane:
 	movss xmm0, dword [eax+0x8]
 	mulss xmm0, [edx+0x8]
 	addss xmm1, xmm0
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x12c]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm2, xmm1
 	addss xmm3, xmm2
 	movss [ecx], xmm3
@@ -4654,7 +4654,7 @@ Vec3Basis_RightHanded:
 	ucomiss xmm0, xmm1
 	cmovbe edx, eax
 	shl edx, 0x2
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x31c]
+	movss xmm4, dword [_data16_80000000]
 	movss xmm0, dword [ebx+edx]
 	xorps xmm0, xmm4
 	mulss xmm2, xmm0
@@ -4753,7 +4753,7 @@ FinitePerspectiveMatrix:
 	movaps xmm3, xmm4
 	subss xmm3, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x3c]
+	xorps xmm0, [_data16_80000000]
 	divss xmm0, xmm3
 	movss [eax+0x8], xmm0
 	movss [eax+0xc], xmm2
@@ -4916,7 +4916,7 @@ RotatePointAroundVector:
 	cmovbe edx, eax
 	shl edx, 0x2
 	movss xmm0, dword [ecx+edx]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x32c]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm6
 	mulss xmm1, xmm0
 	movss [ebp-0x24], xmm1
@@ -4941,7 +4941,7 @@ RotatePointAroundVector:
 	addss xmm1, xmm2
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x32c]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb RotatePointAroundVector_10
 RotatePointAroundVector_30:
@@ -5013,7 +5013,7 @@ RotatePointAroundVector_30:
 	call cosf
 	fst dword [ebp-0x54]
 	movss xmm0, dword [ebp-0xf4]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x32c]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x48], xmm0
 	fstp dword [ebp-0x44]
 	lea ebx, [ebp-0xc0]
@@ -5163,7 +5163,7 @@ ClosestApproachOfTwoLines:
 	movss xmm0, dword [ebp-0x28]
 	mulss xmm0, xmm2
 	addss xmm4, xmm0
-	movss xmm7, dword [g_fltMin__uint4_dup_1+0xcc]
+	movss xmm7, dword [_data16_80000000]
 	xorps xmm4, xmm7
 	mulss xmm3, [ebp-0x1c]
 	mulss xmm1, [ebp-0x20]
@@ -5179,7 +5179,7 @@ ClosestApproachOfTwoLines:
 	mulss xmm1, xmm5
 	movss xmm0, dword [ebp-0x34]
 	mulss xmm0, xmm4
-	andps xmm0, [g_fltMin__uint4_dup_1+0xdc]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [_float_0_00010000]
 	ucomiss xmm1, xmm0
 	jbe ClosestApproachOfTwoLines_10
@@ -5314,7 +5314,7 @@ InfinitePerspectiveMatrix:
 	lea eax, [edx+0x20]
 	movss [eax+0x8], xmm1
 	mov dword [eax+0xc], 0x3f800000
-	xorps xmm2, [g_fltMin__uint4_dup_1+0x4c]
+	xorps xmm2, [_data16_80000000]
 	mulss xmm2, xmm1
 	movss [edx+0x38], xmm2
 	add esp, 0x4
@@ -5425,7 +5425,7 @@ NearestPitchAndYawOnPlane:
 	movaps xmm1, xmm5
 	mulss xmm1, [ebx+0x8]
 	addss xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x2cc]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm2, xmm0
 	addss xmm3, xmm2
 	movss [ebp-0x20], xmm3
@@ -5474,7 +5474,7 @@ SnapPointToIntersectingPlanes_10:
 	movss xmm2, dword [ebp-0x58]
 	movaps xmm0, xmm1
 	subss xmm0, xmm2
-	andps xmm0, [g_fltMin__uint4_dup_1+0x21c]
+	andps xmm0, [_data16_7fffffff]
 	cmpss xmm0, [ebp+0x14], 0x5
 	andps xmm2, xmm0
 	andnps xmm0, xmm1
@@ -5522,7 +5522,7 @@ SnapPointToIntersectingPlanes_50:
 	mulss xmm0, xmm7
 	addss xmm1, xmm0
 	subss xmm1, xmm5
-	andps xmm1, [g_fltMin__uint4_dup_1+0x21c]
+	andps xmm1, [_data16_7fffffff]
 	ucomiss xmm1, [ebp-0x3c]
 	jbe SnapPointToIntersectingPlanes_40
 	movss [ebp-0x3c], xmm1
@@ -5533,7 +5533,7 @@ SnapPointToIntersectingPlanes_40:
 	mulss xmm4, [ebp-0x2c]
 	addss xmm2, xmm4
 	subss xmm2, xmm5
-	andps xmm2, [g_fltMin__uint4_dup_1+0x21c]
+	andps xmm2, [_data16_7fffffff]
 	maxss xmm2, xmm6
 	movaps xmm6, xmm2
 	add edx, 0x1
@@ -5642,7 +5642,7 @@ CullBoxFromConicSectionOfSphere:
 	movss [ebp-0x18], xmm0
 	movss xmm1, dword [ecx]
 	movss [ebp-0x30], xmm1
-	movss xmm6, dword [g_fltMin__uint4_dup_1+0x1cc]
+	movss xmm6, dword [_data16_7fffffff]
 	movaps xmm0, xmm5
 	andps xmm0, xmm6
 	subss xmm0, xmm1
@@ -5728,7 +5728,7 @@ CullBoxFromConicSectionOfSphere_40:
 	ret
 CullBoxFromConicSectionOfSphere_80:
 	movaps xmm0, xmm3
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x1dc]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x3c], xmm0
 	movss xmm2, dword [ebp-0x24]
 	mulss xmm2, xmm0
@@ -6227,7 +6227,7 @@ QuatLerp:
 	leave
 	ret
 QuatLerp_10:
-	movss xmm0, dword [g_fltMin__uint4_dup_1+0x24c]
+	movss xmm0, dword [_data16_80000000]
 	movaps xmm1, xmm2
 	xorps xmm1, xmm0
 	movss [ecx], xmm1
@@ -6403,7 +6403,7 @@ DiffTrack:
 	movaps xmm2, xmm0
 	mulss xmm2, [ebp+0x10]
 	mulss xmm2, [ebp+0x14]
-	movss xmm1, dword [g_fltMin__uint4_dup_1+0xbc]
+	movss xmm1, dword [_data16_7fffffff]
 	movaps xmm3, xmm0
 	andps xmm3, xmm1
 	ucomiss xmm3, [_float_0_00100000]
@@ -6585,7 +6585,7 @@ QuatSlerp_40:
 	pop ebp
 	ret
 QuatSlerp_20:
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x20c]
+	xorps xmm1, [_data16_80000000]
 	mov esi, 0x1
 	ucomiss xmm1, [_float_0_94999999]
 	ja QuatSlerp_50
@@ -6675,43 +6675,6 @@ YawToAxis_10:
 	ret
 
 
-;Zero initialized global or static variables of com_math:
-SECTION .bss
-g_keepZ_dup_1: resb 0x10
-g_keepX_dup_1: resb 0x10
-g_keepZW_dup_1: resb 0x10
-g_keepXY_dup_1: resb 0x10
-g_keepXYZ_dup_1: resb 0x10
-g_keepXYW_dup_1: resb 0x10
-g_keepXZW_dup_1: resb 0x10
-g_keepYZW_dup_1: resb 0x10
-g_selectW_dup_1: resb 0x10
-g_selectZ_dup_1: resb 0x10
-g_selectY_dup_1: resb 0x10
-g_selectX_dup_1: resb 0x10
-g_swizzleWWWW_dup_1: resb 0x10
-g_swizzleZZZZ_dup_1: resb 0x10
-g_swizzleYYYY_dup_1: resb 0x10
-g_swizzleXXXX_dup_1: resb 0x10
-g_swizzleYZWA_dup_1: resb 0x10
-g_swizzleZWAW_dup_1: resb 0x10
-g_swizzleWABW_dup_1: resb 0x10
-g_swizzleZXYW_dup_1: resb 0x10
-g_swizzleYZXW_dup_1: resb 0x10
-g_swizzleXYZA_dup_1: resb 0x10
-g_swizzleZWCD_dup_1: resb 0x10
-g_swizzleXYAB_dup_1: resb 0x10
-g_swizzleYBWD_dup_1: resb 0x10
-g_swizzleXAZC_dup_1: resb 0x10
-g_swizzleYXWZ_dup_1: resb 0x10
-g_swizzleXZYW_dup_1: resb 0x10
-g_swizzleYXZW_dup_1: resb 0x10
-g_swizzleXYZW_dup_1: resb 0x10
-g_inc_dup_1: resb 0x10
-g_negativeZero_dup_1: resb 0x10
-g_fltMin_dup_1: resb 0x80
-
-
 ;Initialized global or static variables of com_math:
 SECTION .data
 holdrand: dd 0x89abcdef, 0x0
@@ -6758,6 +6721,43 @@ vec2_origin: dd 0x0, 0x0
 identityMatrix44: dd 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0
 
 
+;Zero initialized global or static variables of com_math:
+SECTION .bss
+g_keepZ_dup_1: resb 0x10
+g_keepX_dup_1: resb 0x10
+g_keepZW_dup_1: resb 0x10
+g_keepXY_dup_1: resb 0x10
+g_keepXYZ_dup_1: resb 0x10
+g_keepXYW_dup_1: resb 0x10
+g_keepXZW_dup_1: resb 0x10
+g_keepYZW_dup_1: resb 0x10
+g_selectW_dup_1: resb 0x10
+g_selectZ_dup_1: resb 0x10
+g_selectY_dup_1: resb 0x10
+g_selectX_dup_1: resb 0x10
+g_swizzleWWWW_dup_1: resb 0x10
+g_swizzleZZZZ_dup_1: resb 0x10
+g_swizzleYYYY_dup_1: resb 0x10
+g_swizzleXXXX_dup_1: resb 0x10
+g_swizzleYZWA_dup_1: resb 0x10
+g_swizzleZWAW_dup_1: resb 0x10
+g_swizzleWABW_dup_1: resb 0x10
+g_swizzleZXYW_dup_1: resb 0x10
+g_swizzleYZXW_dup_1: resb 0x10
+g_swizzleXYZA_dup_1: resb 0x10
+g_swizzleZWCD_dup_1: resb 0x10
+g_swizzleXYAB_dup_1: resb 0x10
+g_swizzleYBWD_dup_1: resb 0x10
+g_swizzleXAZC_dup_1: resb 0x10
+g_swizzleYXWZ_dup_1: resb 0x10
+g_swizzleXZYW_dup_1: resb 0x10
+g_swizzleYXZW_dup_1: resb 0x10
+g_swizzleXYZW_dup_1: resb 0x10
+g_inc_dup_1: resb 0x10
+g_negativeZero_dup_1: resb 0x10
+g_fltMin_dup_1: resb 0x80
+
+
 ;All cstrings:
 SECTION .rdata
 
@@ -6773,6 +6773,7 @@ _float_2_00000000:		dd 0x40000000	; 2
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _double__180_00000000:		dq 0xc066800000000000	; -180
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_180_00000000:		dq 0x4066800000000000	; 180
 _float_90_00000000:		dd 0x42b40000	; 90
 _float_270_00000000:		dd 0x43870000	; 270
@@ -6781,10 +6782,12 @@ _float__90_00000000:		dd 0xc2b40000	; -90
 _float_180_00000000:		dd 0x43340000	; 180
 _double_57_29577951:		dq 0x404ca5dc1a63c1f8	; 57.2958
 _float_0_00000000:		dd 0x0	; 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00003052:		dd 0x38000000	; 3.05176e-05
 _double__2_00000000:		dq 0xc000000000000000	; -2
 _float__1_00000000:		dd 0xbf800000	; -1
+_data16_ffffffff:		dd 0xffffffff, 0x7fffffff, 0x0, 0x0	; OWORD
 _double_0_00100000:		dq 0x3f50624de0000000	; 0.001
 _double_1_00000000:		dq 0x3ff0000000000000	; 1
 _float_0_00000100:		dd 0x358637be	; 1e-06

@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of r_vertex_decl:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_vertex_decl:
 SECTION .data
 
 
 ;Initialized constant data of r_vertex_decl:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_vertex_decl:
+SECTION .bss
 
 
 ;All cstrings:

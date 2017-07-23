@@ -4124,6 +4124,14 @@ CL_Input_10:
 	ret
 
 
+;Initialized global or static variables of cl_input:
+SECTION .data
+
+
+;Initialized constant data of cl_input:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of cl_input:
 SECTION .bss
 playersKb: resb 0x258
@@ -4209,14 +4217,6 @@ cl_pitchspeed: resb 0x4
 cl_stanceHoldTime: resb 0x4
 cl_talking: resb 0x4
 cl_yawspeed: resb 0x10
-
-
-;Initialized global or static variables of cl_input:
-SECTION .data
-
-
-;Initialized constant data of cl_input:
-SECTION .rdata
 
 
 ;All cstrings:

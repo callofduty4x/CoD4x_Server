@@ -88,6 +88,19 @@
 	extern RB_Draw3DCommon
 	extern msecPerRawTimerTick
 	extern RB_Draw3DInternal
+	extern R_TessTrianglesList
+	extern R_TessTrianglesPreTessList
+	extern R_TessStaticModelRigidDrawSurfList
+	extern R_TessStaticModelPreTessList
+	extern R_TessStaticModelCachedList
+	extern R_TessStaticModelSkinnedDrawSurfList
+	extern R_TessBModel
+	extern R_TessXModelRigidDrawSurfList
+	extern R_TessXModelRigidSkinnedDrawSurfList
+	extern R_TessXModelSkinnedDrawSurfList
+	extern R_TessCodeMeshList
+	extern R_TessMarkMeshList
+	extern R_TessParticleCloudList
 
 ;Exports of rb_backend:
 	global _GLOBAL__I_backEndData
@@ -5858,46 +5871,6 @@ R_Resolve:
 	nop
 
 
-;Zero initialized global or static variables of rb_backend:
-SECTION .bss
-g_keepZ_dup_1: resb 0x10
-g_keepX_dup_1: resb 0x10
-g_keepZW_dup_1: resb 0x10
-g_keepXY_dup_1: resb 0x10
-g_keepXYZ_dup_1: resb 0x10
-g_keepXYW_dup_1: resb 0x10
-g_keepXZW_dup_1: resb 0x10
-g_keepYZW_dup_1: resb 0x10
-g_selectW_dup_1: resb 0x10
-g_selectZ_dup_1: resb 0x10
-g_selectY_dup_1: resb 0x10
-g_selectX_dup_1: resb 0x10
-g_swizzleWWWW_dup_1: resb 0x10
-g_swizzleZZZZ_dup_1: resb 0x10
-g_swizzleYYYY_dup_1: resb 0x10
-g_swizzleXXXX_dup_1: resb 0x10
-g_swizzleYZWA_dup_1: resb 0x10
-g_swizzleZWAW_dup_1: resb 0x10
-g_swizzleWABW_dup_1: resb 0x10
-g_swizzleZXYW_dup_1: resb 0x10
-g_swizzleYZXW_dup_1: resb 0x10
-g_swizzleXYZA_dup_1: resb 0x10
-g_swizzleZWCD_dup_1: resb 0x10
-g_swizzleXYAB_dup_1: resb 0x10
-g_swizzleYBWD_dup_1: resb 0x10
-g_swizzleXAZC_dup_1: resb 0x10
-g_swizzleYXWZ_dup_1: resb 0x10
-g_swizzleXZYW_dup_1: resb 0x10
-g_swizzleYXZW_dup_1: resb 0x10
-g_swizzleXYZW_dup_1: resb 0x10
-g_inc_dup_1: resb 0x10
-g_negativeZero_dup_1: resb 0x10
-g_fltMin_dup_1: resb 0x80
-backEnd: resb 0xc
-backEndData: resb 0x14
-tess: resb 0x22a960
-
-
 ;Initialized global or static variables of rb_backend:
 SECTION .data
 
@@ -5945,6 +5918,46 @@ _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E10MY_OFFSETS
 _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E25MY_ALTCOLOR_TWO_CINEMATIC: dd 0xdce6ffe6
 _ZZ10DrawText2DPKcffP6Font_sffff8GfxColoriiicfS3_iiiiPK8MaterialS6_E15MY_ALTCOLOR_TWO: dd 0xdce6ffe6, 0x0, 0x0, 0x0, 0x0, 0x0
 		db 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of rb_backend:
+SECTION .bss
+g_keepZ_dup_1: resb 0x10
+g_keepX_dup_1: resb 0x10
+g_keepZW_dup_1: resb 0x10
+g_keepXY_dup_1: resb 0x10
+g_keepXYZ_dup_1: resb 0x10
+g_keepXYW_dup_1: resb 0x10
+g_keepXZW_dup_1: resb 0x10
+g_keepYZW_dup_1: resb 0x10
+g_selectW_dup_1: resb 0x10
+g_selectZ_dup_1: resb 0x10
+g_selectY_dup_1: resb 0x10
+g_selectX_dup_1: resb 0x10
+g_swizzleWWWW_dup_1: resb 0x10
+g_swizzleZZZZ_dup_1: resb 0x10
+g_swizzleYYYY_dup_1: resb 0x10
+g_swizzleXXXX_dup_1: resb 0x10
+g_swizzleYZWA_dup_1: resb 0x10
+g_swizzleZWAW_dup_1: resb 0x10
+g_swizzleWABW_dup_1: resb 0x10
+g_swizzleZXYW_dup_1: resb 0x10
+g_swizzleYZXW_dup_1: resb 0x10
+g_swizzleXYZA_dup_1: resb 0x10
+g_swizzleZWCD_dup_1: resb 0x10
+g_swizzleXYAB_dup_1: resb 0x10
+g_swizzleYBWD_dup_1: resb 0x10
+g_swizzleXAZC_dup_1: resb 0x10
+g_swizzleYXWZ_dup_1: resb 0x10
+g_swizzleXZYW_dup_1: resb 0x10
+g_swizzleYXZW_dup_1: resb 0x10
+g_swizzleXYZW_dup_1: resb 0x10
+g_inc_dup_1: resb 0x10
+g_negativeZero_dup_1: resb 0x10
+g_fltMin_dup_1: resb 0x80
+backEnd: resb 0xc
+backEndData: resb 0x14
+tess: resb 0x22a960
 
 
 ;All cstrings:

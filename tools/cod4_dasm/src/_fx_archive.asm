@@ -489,16 +489,16 @@ FX_Save_10:
 	nop
 
 
-;Zero initialized global or static variables of fx_archive:
-SECTION .bss
-
-
 ;Initialized global or static variables of fx_archive:
 SECTION .data
 
 
 ;Initialized constant data of fx_archive:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fx_archive:
+SECTION .bss
 
 
 ;All cstrings:

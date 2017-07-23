@@ -288,16 +288,16 @@ R_AddEntitySurfacesInFrustumCmd_50:
 	ret
 
 
-;Zero initialized global or static variables of r_dpvs_entity:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_dpvs_entity:
 SECTION .data
 
 
 ;Initialized constant data of r_dpvs_entity:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_dpvs_entity:
+SECTION .bss
 
 
 ;All cstrings:

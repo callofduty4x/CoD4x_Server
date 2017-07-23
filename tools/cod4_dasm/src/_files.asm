@@ -56,7 +56,7 @@
 	extern fs_numServerReferencedIwds
 	extern fs_serverReferencedIwdNames
 	extern fs_serverReferencedIwds
-	extern I_strlwr
+	extern Q_strlwr
 	extern strstr
 	extern FS_FileClose
 	extern fs_numServerReferencedFFs
@@ -1341,7 +1341,7 @@ FS_CompareWithServerFiles_50:
 	call strcpy
 	lea ecx, [ebp-0x418]
 	mov [esp], ecx
-	call I_strlwr
+	call Q_strlwr
 	mov dword [esp+0x4], _cstring__svr_
 	lea eax, [ebp-0x418]
 	mov [esp], eax
@@ -2496,7 +2496,7 @@ FS_iwIwd_50:
 	call strcpy
 	lea eax, [ebp-0x58]
 	mov [esp], eax
-	call I_strlwr
+	call Q_strlwr
 	xor ebx, ebx
 	jmp FS_iwIwd_60
 FS_iwIwd_70:
@@ -2516,6 +2516,14 @@ FS_iwIwd_60:
 	jmp FS_iwIwd_80
 
 
+;Initialized global or static variables of files:
+SECTION .data
+
+
+;Initialized constant data of files:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of files:
 SECTION .bss
 info6: resb 0x2000
@@ -2531,14 +2539,6 @@ _ZZ14FS_AddCommandsvE12FS_Dir_f_VAR: resb 0x14
 _ZZ14FS_AddCommandsvE17FS_FullPath_f_VAR: resb 0x14
 _ZZ14FS_AddCommandsvE13FS_Path_f_VAR: resb 0x30
 _ZZ17FS_GetMapBaseNamePKcE8basename: resb 0x80
-
-
-;Initialized global or static variables of files:
-SECTION .data
-
-
-;Initialized constant data of files:
-SECTION .rdata
 
 
 ;All cstrings:

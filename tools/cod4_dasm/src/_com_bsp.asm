@@ -113,17 +113,17 @@ Com_CanPrimaryLightAffectPoint_30:
 	ret
 
 
-;Zero initialized global or static variables of com_bsp:
-SECTION .bss
-comWorld: resb 0x80
-
-
 ;Initialized global or static variables of com_bsp:
 SECTION .data
 
 
 ;Initialized constant data of com_bsp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_bsp:
+SECTION .bss
+comWorld: resb 0x80
 
 
 ;All cstrings:

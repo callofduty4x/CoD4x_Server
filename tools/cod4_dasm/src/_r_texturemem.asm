@@ -79,17 +79,17 @@ R_AvailableTextureMemory_20:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_texturemem:
-SECTION .bss
-s_maxReportedTexMem: resb 0x80
-
-
 ;Initialized global or static variables of r_texturemem:
 SECTION .data
 
 
 ;Initialized constant data of r_texturemem:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_texturemem:
+SECTION .bss
+s_maxReportedTexMem: resb 0x80
 
 
 ;All cstrings:

@@ -561,18 +561,18 @@ SV_MasterGameCompleteStatus_20:
 	nop
 
 
-;Zero initialized global or static variables of sv_main_pc_mp:
-SECTION .bss
-_ZZ16SV_MasterAddressvE3adr: resb 0xc
-_ZZ17SVC_RemoteCommand8netadr_tP5msg_tE8lasttime: resb 0x74
-
-
 ;Initialized global or static variables of sv_main_pc_mp:
 SECTION .data
 
 
 ;Initialized constant data of sv_main_pc_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of sv_main_pc_mp:
+SECTION .bss
+_ZZ16SV_MasterAddressvE3adr: resb 0xc
+_ZZ17SVC_RemoteCommand8netadr_tP5msg_tE8lasttime: resb 0x74
 
 
 ;All cstrings:

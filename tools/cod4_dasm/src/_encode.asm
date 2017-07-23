@@ -211,12 +211,6 @@ Encode_GetFrameSize:
 	ret
 
 
-;Zero initialized global or static variables of encode:
-SECTION .bss
-encodeBits: resb 0x24
-g_encoder: resb 0x5c
-
-
 ;Initialized global or static variables of encode:
 SECTION .data
 g_current_bandwidth_setting: dd 0x0
@@ -228,6 +222,12 @@ g_speex_initialized: dd 0x0
 
 ;Initialized constant data of encode:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of encode:
+SECTION .bss
+encodeBits: resb 0x24
+g_encoder: resb 0x5c
 
 
 ;All cstrings:

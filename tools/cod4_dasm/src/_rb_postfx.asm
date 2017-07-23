@@ -1032,16 +1032,16 @@ RB_ApplyColorManipulationSplitscreen_10:
 	ret
 
 
-;Zero initialized global or static variables of rb_postfx:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_postfx:
 SECTION .data
 
 
 ;Initialized constant data of rb_postfx:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_postfx:
+SECTION .bss
 
 
 ;All cstrings:

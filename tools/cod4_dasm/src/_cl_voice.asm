@@ -262,17 +262,17 @@ CL_WriteVoicePacket_40:
 	nop
 
 
-;Zero initialized global or static variables of cl_voice:
-SECTION .bss
-tempVoicePacketBuf: resb 0x800
-
-
 ;Initialized global or static variables of cl_voice:
 SECTION .data
 
 
 ;Initialized constant data of cl_voice:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_voice:
+SECTION .bss
+tempVoicePacketBuf: resb 0x800
 
 
 ;All cstrings:

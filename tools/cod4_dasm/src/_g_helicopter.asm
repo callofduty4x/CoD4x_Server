@@ -1489,16 +1489,16 @@ VEH_CheckForPredictedCrash_40:
 	nop
 
 
-;Zero initialized global or static variables of g_helicopter:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_helicopter:
 SECTION .data
 
 
 ;Initialized constant data of g_helicopter:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_helicopter:
+SECTION .bss
 
 
 ;All cstrings:

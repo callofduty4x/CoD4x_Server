@@ -198,16 +198,16 @@ _spx_lpc_110:
 	nop
 
 
-;Zero initialized global or static variables of lpc:
-SECTION .bss
-
-
 ;Initialized global or static variables of lpc:
 SECTION .data
 
 
 ;Initialized constant data of lpc:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of lpc:
+SECTION .bss
 
 
 ;All cstrings:

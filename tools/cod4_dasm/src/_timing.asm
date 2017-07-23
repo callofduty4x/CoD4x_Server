@@ -82,17 +82,17 @@ InitTiming:
 	ret
 
 
-;Zero initialized global or static variables of timing:
-SECTION .bss
-msecPerRawTimerTick: resb 0x84
-
-
 ;Initialized global or static variables of timing:
 SECTION .data
 
 
 ;Initialized constant data of timing:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of timing:
+SECTION .bss
+msecPerRawTimerTick: resb 0x84
 
 
 ;All cstrings:

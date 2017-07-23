@@ -228,16 +228,16 @@ R_DepthPrepass:
 	ret
 
 
-;Zero initialized global or static variables of rb_depthprepass:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_depthprepass:
 SECTION .data
 
 
 ;Initialized constant data of rb_depthprepass:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_depthprepass:
+SECTION .bss
 
 
 ;All cstrings:

@@ -253,11 +253,6 @@ R_RegisterOutdoorImage_20:
 	nop
 
 
-;Zero initialized global or static variables of r_outdoor:
-SECTION .bss
-outdoorGlob: resb 0x80
-
-
 ;Initialized global or static variables of r_outdoor:
 SECTION .data
 
@@ -265,6 +260,11 @@ SECTION .data
 ;Initialized constant data of r_outdoor:
 SECTION .rdata
 outdoorMapSize: dd 0x200, 0x200, 0x100, 0x0, 0x80000000, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of r_outdoor:
+SECTION .bss
+outdoorGlob: resb 0x80
 
 
 ;All cstrings:

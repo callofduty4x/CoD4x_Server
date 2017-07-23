@@ -187,16 +187,16 @@ CL_GetRankForXp_30:
 	nop
 
 
-;Zero initialized global or static variables of cl_rank:
-SECTION .bss
-
-
 ;Initialized global or static variables of cl_rank:
 SECTION .data
 
 
 ;Initialized constant data of cl_rank:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_rank:
+SECTION .bss
 
 
 ;All cstrings:

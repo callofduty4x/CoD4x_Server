@@ -528,16 +528,16 @@ R_AddCellSceneEntSurfacesInFrustumCmd_190:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_dpvs_sceneent:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_dpvs_sceneent:
 SECTION .data
 
 
 ;Initialized constant data of r_dpvs_sceneent:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_dpvs_sceneent:
+SECTION .bss
 
 
 ;All cstrings:

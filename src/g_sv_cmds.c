@@ -372,7 +372,7 @@ qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum)
 
     if (clientnum < 0 || clientnum >= level.maxclients)
     {
-        Com_Printf("Cmd_FollowClient_f: Bad clientnum %i\n", clientnum);
+        Com_Printf(CON_CHANNEL_SERVER,"Cmd_FollowClient_f: Bad clientnum %i\n", clientnum);
         return qfalse;
     }
 
@@ -641,7 +641,7 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
         return;
 
     // echo the text to the console
-    Com_Printf("Say %s: %s\n", name, text);
+    Com_Printf(CON_CHANNEL_SERVER,"Say %s: %s\n", name, text);
 
     // send it to all the apropriate clients
     for (j = 0; j < level.maxclients; j++)

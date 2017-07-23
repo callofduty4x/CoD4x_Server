@@ -69,12 +69,12 @@ static void SV_ConSay(client_t *cl, consaytype_t contype) {
 
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
-		Com_Printf( "Server is not running.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Server is not running.\n" );
 		return;
 	}
 
 	if ( Cmd_Argc () < 2 ) {
-		Com_Printf( "Usage: command text... \n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: command text... \n" );
 		return;
 	}
 	*text = 0;
@@ -166,7 +166,7 @@ static void SV_GetPlayerByHandleInternal( const char* s, clanduid_t* cl) {
 		if(!cl->cl){
 
 			if(strlen(s) < 3){ //Don't process too short names
-				Com_Printf( "Player %s is not on the server\n", s );
+				Com_Printf(CON_CHANNEL_DONT_FILTER, "Player %s is not on the server\n", s );
 				cl->cl = NULL;
 				return;
 			}
@@ -216,11 +216,11 @@ static void SV_GetPlayerByHandleInternal( const char* s, clanduid_t* cl) {
 			}
 
 			if(!lastfound){ //Still nothing found!
-				Com_Printf( "Player %s is not on the server\n", s );
+				Com_Printf(CON_CHANNEL_DONT_FILTER, "Player %s is not on the server\n", s );
 				cl->cl = NULL;
 				return;
 			}else if(playermatches != 1){
-				Com_Printf( "Dup player matches!\n", s );
+				Com_Printf(CON_CHANNEL_DONT_FILTER, "Dup player matches!\n", s );
 				cl->cl = NULL;
 				return;
 			}else{
@@ -263,12 +263,12 @@ static clanduid_t SV_Cmd_GetPlayerByHandle( void ) {
 
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
-		Com_Printf("Server is not running\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Server is not running\n");
 		return cl;
 	}
 
 	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "No player specified.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "No player specified.\n" );
 		return cl;
 	}
 
@@ -355,7 +355,7 @@ static client_t *SV_GetPlayerByNum( void ) {
 	}
 
 	if ( Cmd_Argc() < 2 ) {
-		Com_Printf( "No player specified.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "No player specified.\n" );
 		return NULL;
 	}
 
@@ -363,19 +363,19 @@ static client_t *SV_GetPlayerByNum( void ) {
 
 	for (i = 0; s[i]; i++) {
 		if (s[i] < '0' || s[i] > '9') {
-			Com_Printf( "Bad slot number: %s\n", s);
+			Com_Printf(CON_CHANNEL_DONT_FILTER, "Bad slot number: %s\n", s);
 			return NULL;
 		}
 	}
 	idnum = atoi( s );
 	if ( idnum < 0 || idnum >= sv_maxclients->integer ) {
-		Com_Printf( "Bad client slot: %i\n", idnum );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Bad client slot: %i\n", idnum );
 		return NULL;
 	}
 
 	cl = &svs.clients[idnum];
 	if ( !cl->state ) {
-		Com_Printf( "Client %i is not active\n", idnum );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Client %i is not active\n", idnum );
 		return NULL;
 	}
 	return cl;
@@ -423,7 +423,7 @@ static void SV_ConTell( consaytype_t contype) {
     client_t *cl;
 
     if ( Cmd_Argc() < 3 ) {
-	Com_Printf( "1. Usage: tellcommand clientnumber text... \n2. Usage: tellcommand \"client by name\" text...\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "1. Usage: tellcommand clientnumber text... \n2. Usage: tellcommand \"client by name\" text...\n" );
 	return;
     }
     cl = SV_Cmd_GetPlayerByHandle().cl;
@@ -476,19 +476,19 @@ static void SV_DumpUser_f( void ) {
 
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
-		Com_Printf( "Server is not running.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Server is not running.\n" );
 		return;
 	}
 
 	if ( Cmd_Argc() != 2 ) {
-		Com_Printf ("Usage: dumpuser <userid>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"Usage: dumpuser <userid>\n");
 		return;
 	}
 
 	cl = SV_Cmd_GetPlayerByHandle();
 
-	Com_Printf( "\nuserinfo\n" );
-	Com_Printf( "----------------------------------------------------\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "\nuserinfo\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "----------------------------------------------------\n" );
 
 	if(cl.cl){
 
@@ -497,18 +497,18 @@ static void SV_DumpUser_f( void ) {
     char psti[128];
     SV_SApiSteamIDToString(cl.cl->playerid, psti, sizeof(psti));
 
-		Com_Printf ("PlayerID             %s\n", psti);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"PlayerID             %s\n", psti);
 
 		if(cl.cl->steamid > 0)
     {
       char ssti[128];
       SV_SApiSteamIDToString(cl.cl->steamid, ssti, sizeof(ssti));
-			Com_Printf ("PlayerSteamID        %s\n", ssti);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"PlayerSteamID        %s\n", ssti);
 		}else{
-			Com_Printf ("PlayerSteamID        N/A\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"PlayerSteamID        N/A\n");
 		}
   } else {
-		    Com_Printf("Player is not on server.\n");
+		    Com_Printf(CON_CHANNEL_DONT_FILTER,"Player is not on server.\n");
   }
 
 }
@@ -531,80 +531,80 @@ static void SV_MiniStatus_f( void ) {
 
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
-		Com_Printf( "Server is not running.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Server is not running.\n" );
 		return;
 	}
 
-	Com_Printf ("map: %s\n", sv_mapname->string );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"map: %s\n", sv_mapname->string );
 
-	Com_Printf ("num score ping playerid            steamid           name                             address                                             FPS XVer\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"num score ping playerid            steamid           name                             address                                             FPS XVer\n");
 
-	Com_Printf ("--- ----- ---- ------------------- ----------------- -------------------------------- --------------------------------------------------- --- ----------- \n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"--- ----- ---- ------------------- ----------------- -------------------------------- --------------------------------------------------- --- ----------- \n");
 	for (i=0,cl=svs.clients, gclient = level.clients ; i < sv_maxclients->integer ; i++, cl++, gclient++)
 	{
 		if (!cl->state)
 			continue;
 
 		if(odd)
-			Com_Printf ("^1");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"^1");
 		else
-			Com_Printf ("^7");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"^7");
 
-		Com_Printf ("%3i ", i);
-		Com_Printf ("%5i ", gclient->sess.scoreboard.score);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%3i ", i);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%5i ", gclient->sess.scoreboard.score);
 		if (cl->state == CS_CONNECTED)
-			Com_Printf ("CNCT ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"CNCT ");
 		else if (cl->state == CS_ZOMBIE)
-			Com_Printf ("ZMBI ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"ZMBI ");
 		else if (cl->state == CS_PRIMED)
-			Com_Printf ("PRIM ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"PRIM ");
 		else
 		{
 			ping = cl->ping < 9999 ? cl->ping : 9999;
-			Com_Printf ("%4i ", ping);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%4i ", ping);
 		}
 
     SV_SApiSteamIDToString(cl->steamid, ssti, sizeof(ssti));
     SV_SApiSteamIDToString(cl->playerid, psti, sizeof(psti));
 
-    Com_Printf ("%s", psti );
+    Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", psti );
 
     l = 20 - strlen(psti);
     j = 0;
 
     do
     {
-      Com_Printf (" ");
+      Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
       j++;
     } while(j < l);
 
-    Com_Printf ("%s", ssti );
+    Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", ssti );
 
     l = 18 - strlen(ssti);
     j = 0;
 
     do
     {
-      Com_Printf (" ");
+      Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
       j++;
     } while(j < l);
 
-		Com_Printf ("%s", cl->name);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", cl->name);
 
 		// TTimo adding a ^7 to reset the color
 		// NOTE: colored names in status breaks the padding (WONTFIX)
 
 		if(odd)
-			Com_Printf ("^1");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"^1");
 		else
-			Com_Printf ("^7");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"^7");
 
 		l = 33 - Q_PrintStrlen(cl->name);
 		j = 0;
 
 		do
 		{
-			Com_Printf (" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
 			j++;
 		} while(j < l);
 		if(Cmd_GetInvokerPower() > 40)
@@ -613,35 +613,35 @@ static void SV_MiniStatus_f( void ) {
 		}else{
 			s = NET_AdrMaskToString( &cl->netchan.remoteAddress );
 		}
-		Com_Printf ("%s", s);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", s);
 		l = 52 - strlen(s);
 		j = 0;
 
 		do
 		{
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 			j++;
 		} while(j < l);
 
-		Com_Printf("%3i ", cl->clFPS);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"%3i ", cl->clFPS);
 
-		Com_Printf("%s ", cl->xversion);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"%s ", cl->xversion);
 
 		switch(cl->steamstatus)
 		{
 		    case 1:
-			Com_Printf("sa");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"sa");
 			break;
 		    case -1:
-			Com_Printf("sna");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"sna");
 			break;
 		    default:
-			Com_Printf("sni");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"sni");
 			break;
 		}
 
 		odd = ~odd;
-		Com_Printf ("\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"\n");
 	}
 }
 
@@ -663,46 +663,46 @@ static void SV_Status_f( void ) {
 
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
-		Com_Printf( "Server is not running.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Server is not running.\n" );
 		return;
 	}
 
 
   if(sv_legacymode->boolean)
   {
-	Com_Printf ("map: %s\n", sv_mapname->string );
-	Com_Printf ("num score ping guid                             name            lastmsg address                                              qport rate\n");
-	Com_Printf ("--- ----- ---- -------------------------------- --------------- ------- ---------------------------------------------------- ----- -----\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"map: %s\n", sv_mapname->string );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"num score ping guid                             name            lastmsg address                                              qport rate\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"--- ----- ---- -------------------------------- --------------- ------- ---------------------------------------------------- ----- -----\n");
   }else{
-	Com_Printf("hostname: %s\n", sv_hostname->string);
-	Com_Printf("version : %s\n", com_version->string);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"hostname: %s\n", sv_hostname->string);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"version : %s\n", com_version->string);
 	netadr_t* outadr = NET_GetDefaultCommunicationSocket(NA_IP);
-	Com_Printf("udp/ip  : %s\n", NET_AdrToString(outadr));
-	Com_Printf("os      : %s\n", OS_STRING);
-	Com_Printf("type    : dedicated server\n");
-	Com_Printf("map     : %s\n", sv_mapname->string);
-	Com_Printf("\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"udp/ip  : %s\n", NET_AdrToString(outadr));
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"os      : %s\n", OS_STRING);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"type    : dedicated server\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"map     : %s\n", sv_mapname->string);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 
-	Com_Printf ("num score ping playerid            steamid           name                             lastmsg address                                              qport rate\n");
-	Com_Printf ("--- ----- ---- ------------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"num score ping playerid            steamid           name                             lastmsg address                                              qport rate\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"--- ----- ---- ------------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
   }
 
 	for (i=0,cl=svs.clients, gclient = level.clients; i < sv_maxclients->integer ; i++, cl++, gclient++)
 	{
 		if (!cl->state)
 			continue;
-		Com_Printf ("%3i ", i);
-		Com_Printf ("%5i ", gclient->sess.scoreboard.score);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%3i ", i);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%5i ", gclient->sess.scoreboard.score);
 		if (cl->state == CS_CONNECTED)
-			Com_Printf ("CNCT ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"CNCT ");
 		else if (cl->state == CS_ZOMBIE)
-			Com_Printf ("ZMBI ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"ZMBI ");
 		else if (cl->state == CS_PRIMED)
-			Com_Printf ("PRIM ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"PRIM ");
 		else
 		{
 			ping = cl->ping < 9999 ? cl->ping : 9999;
-			Com_Printf ("%4i ", ping);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%4i ", ping);
 		}
 /*
     char psti[128];
@@ -710,28 +710,28 @@ static void SV_Status_f( void ) {
 */
     if(sv_legacymode->boolean)
     {
-        Com_Printf ("%s", cl->legacy_pbguid );
+        Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", cl->legacy_pbguid );
 
     		l = 33 - strlen(cl->legacy_pbguid);
     		j = 0;
 
     		do
     		{
-    			Com_Printf (" ");
+    			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
     			j++;
     		} while(j < l);
 
-        Com_Printf ("%s", cl->shortname);
+        Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", cl->shortname);
 
     		// TTimo adding a ^7 to reset the color
     		// NOTE: colored names in status breaks the padding (WONTFIX)
-    		Com_Printf ("^7");
+    		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"^7");
     		l = 16 - Q_PrintStrlen(cl->shortname);
     		j = 0;
 
     		do
     		{
-    			Com_Printf (" ");
+    			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
     			j++;
     		} while(j < l);
 
@@ -739,65 +739,65 @@ static void SV_Status_f( void ) {
       SV_SApiSteamIDToString(cl->steamid, ssti, sizeof(ssti));
       SV_SApiSteamIDToString(cl->playerid, psti, sizeof(psti));
 
-      Com_Printf ("%s", psti );
+      Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", psti );
 
       l = 20 - strlen(psti);
       j = 0;
 
       do
       {
-        Com_Printf (" ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
         j++;
       } while(j < l);
 
-      Com_Printf ("%s", ssti );
+      Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", ssti );
 
       l = 18 - strlen(ssti);
       j = 0;
 
       do
       {
-        Com_Printf (" ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
         j++;
       } while(j < l);
 
 
-      Com_Printf ("%s", cl->name);
+      Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", cl->name);
 
       // TTimo adding a ^7 to reset the color
       // NOTE: colored names in status breaks the padding (WONTFIX)
-      Com_Printf ("^7");
+      Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"^7");
       l = 33 - Q_PrintStrlen(cl->name);
       j = 0;
 
       do
       {
-        Com_Printf (" ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," ");
         j++;
       } while(j < l);
 
     }
 
-		Com_Printf ("%7i ", svs.time - cl->lastPacketTime );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%7i ", svs.time - cl->lastPacketTime );
 		/* Length must be: [0000:1111:2222:3333:4444:5555:6666:7777:8888]:65535 = 52 */
 		s = NET_AdrToString( &cl->netchan.remoteAddress );
-		Com_Printf ("%s", s);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"%s", s);
 		l = 52 - strlen(s);
 		j = 0;
 
 		do
 		{
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 			j++;
 		} while(j < l);
 
-		Com_Printf (" %5i", cl->netchan.qport);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," %5i", cl->netchan.qport);
 
-		Com_Printf (" %5i", cl->rate);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER," %5i", cl->rate);
 
-		Com_Printf ("\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"\n");
 	}
-	Com_Printf ("\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"\n");
 }
 
 /*
@@ -813,7 +813,7 @@ static void Cmd_UnbanPlayer_f() {
     char name[64];
 
     if ( Cmd_Argc() < 2) {
-            Com_Printf( "Usage: unban <id?>\n" );
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: unban <id?>\n" );
     }
 
     invokerSteamId = Cmd_GetInvokerSteamID();
@@ -852,7 +852,7 @@ static void Cmd_Undercover_f() {
 	gclient_t* gc;
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
-		Com_Printf( "Server is not running.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Server is not running.\n" );
 		return;
 	}
 
@@ -860,29 +860,29 @@ static void Cmd_Undercover_f() {
         if(invokerclnum < 64 && invokerclnum >= 0)
         {
 		if ( Cmd_Argc() != 1 ) {
-			Com_Printf ("Usage: undercover\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"Usage: undercover\n");
 			return;
 		}
 		client_t* cl = &svs.clients[invokerclnum];
 		gc = G_GetPlayerState(invokerclnum);
 		if(gc && gc->sess.sessionState == STATE_PLAYING)
 		{
-			Com_Printf("Error: You can not use the command \"undercover\" when you are alive\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You can not use the command \"undercover\" when you are alive\n");
 			return;
 		}
 		cl->undercover ^= 1;
 		if(cl->undercover)
 		{
-			Com_Printf("Undercover mode is now turned on\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Undercover mode is now turned on\n");
 		}else{
-			Com_Printf("Undercover mode is now turned off\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Undercover mode is now turned off\n");
 		}
 		Auth_StoreUndercoverStatus(cl);
 		return;
         }
 
 	if ( Cmd_Argc() != 3 ) {
-		Com_Printf ("Usage: undercover <slot> <0/1>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"Usage: undercover <slot> <0/1>\n");
 		return;
 	}
 
@@ -893,7 +893,7 @@ static void Cmd_Undercover_f() {
 	gc = G_GetPlayerState(cl - svs.clients);
 	if(gc && gc->sess.sessionState == STATE_PLAYING)
 	{
-		Com_Printf("Error: You can not use the command \"undercover\" when you are alive\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You can not use the command \"undercover\" when you are alive\n");
 		return;
 	}
 	if(Cmd_Argv(2)[0] == '0')
@@ -906,7 +906,7 @@ static void Cmd_Undercover_f() {
 	}
 	else
 	{
-		Com_Printf ("Usage: undercover <slot> <0/1>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,CON_CHANNEL_DONT_FILTER,"Usage: undercover <slot> <0/1>\n");
 	}
 
 }
@@ -962,17 +962,17 @@ static void Cmd_BanPlayer_f() {
     if(!Q_stricmp(Cmd_Argv(0), "banUser") || !Q_stricmp(Cmd_Argv(0), "banClient"))
 	  {
         if(Cmd_Argc() < 2){
-            Com_Printf( "Usage: banUser <user>\n" );
-			      Com_Printf( "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
-			      Com_Printf( "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: banUser <user>\n" );
+			      Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
+			      Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
             return;
         }
 
 	  }else{
 	     if ( Cmd_Argc() < 3) {
-            Com_Printf( "Usage: permban <user> <Reason for this ban (max 126 chars)>\n" );
-			      Com_Printf( "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
-			      Com_Printf( "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: permban <user> <Reason for this ban (max 126 chars)>\n" );
+			      Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
+			      Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
             return;
         }
     }
@@ -991,7 +991,7 @@ static void Cmd_BanPlayer_f() {
     }
   }
 
-	Com_Printf("Error: This player can not be banned, no such player\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player can not be banned, no such player\n");
 	return;
 
 gothandle:
@@ -1007,7 +1007,7 @@ gothandle:
   }
 
   if(strlen(banreason) > 126){
-      Com_Printf("Error: You have exceeded the maximum allowed length of 126 characters for the reason\n");
+      Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You have exceeded the maximum allowed length of 126 characters for the reason\n");
       return;
   }
 
@@ -1028,7 +1028,7 @@ gothandle:
   {
 
 		if(cl.cl->power > Cmd_GetInvokerPower() && Cmd_GetInvokerPower() > 1){
-			Com_Printf("Error: You cannot ban an admin with higher power!\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You cannot ban an admin with higher power!\n");
 			return;
 		}
 
@@ -1043,7 +1043,7 @@ gothandle:
     SV_SApiSteamIDToString(cl.cl->playerid, psti, sizeof(psti));
 
 		//Messages and kick
-		Com_Printf( "attempting to add Banrecord for player: %s id: %s\n", cl.cl->name, psti);
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "attempting to add Banrecord for player: %s id: %s\n", cl.cl->name, psti);
 		SV_PrintAdministrativeLog( "banned player: %s id: %s IP: %s with the following reason: %s", cl.cl->name, psti, NET_AdrToString ( &cl.cl->netchan.remoteAddress ), banreason);
 
     if(invokerSteamId)
@@ -1070,7 +1070,7 @@ gothandle:
 		//Banning
 		SV_AddBan(&baninfo);
 		//Messages
-		Com_Printf( "Banrecord added for id: %s\n", psti);
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Banrecord added for id: %s\n", psti);
 		SV_PrintAdministrativeLog( "banned player id: %s with the following reason: %s", psti, banreason);
 	}
 	//InsertPluginEvent
@@ -1103,12 +1103,12 @@ static void Cmd_TempBanPlayer_f() {
     char psti[128];
 
     if ( Cmd_Argc() < 4) {
-  		Com_Printf( "Usage: tempban <user> <time> <Reason for this ban (max. 126 chars)>\n" );
-  		Com_Printf( "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
-  		Com_Printf( "Where time is one of the following: ^2XX^7m | ^2XX^7h | ^2XX^7d\n" );
-  		Com_Printf( "Where reason for this ban is contains a description without the letters: \" ; %% / \\ \n" );
-  		Com_Printf( "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]" );
-  		Com_Printf( "XX is an integer representing the time of ban in minutes, hours or days\n" );
+  		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: tempban <user> <time> <Reason for this ban (max. 126 chars)>\n" );
+  		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
+  		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where time is one of the following: ^2XX^7m | ^2XX^7h | ^2XX^7d\n" );
+  		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where reason for this ban is contains a description without the letters: \" ; %% / \\ \n" );
+  		Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]" );
+  		Com_Printf(CON_CHANNEL_DONT_FILTER, "XX is an integer representing the time of ban in minutes, hours or days\n" );
   		return;
     }
   	/* Get the handle for this player */
@@ -1126,7 +1126,7 @@ static void Cmd_TempBanPlayer_f() {
       }
     }
 
-  	Com_Printf("Error: This player can not be banned, no such player\n");
+  	Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player can not be banned, no such player\n");
   	return;
 
 gothandle:
@@ -1134,7 +1134,7 @@ gothandle:
 	/* Get the time this ban should last */
     length = strlen(Cmd_Argv(2));
     if(length > 7){
-        Com_Printf("Error: Did not got a valid ban time\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: Did not got a valid ban time\n");
         return;
     }
 
@@ -1156,11 +1156,11 @@ gothandle:
         }
     }
     if(duration < 1){
-        Com_Printf("Error: Did not got a valid ban time\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: Did not got a valid ban time\n");
         return;
     }
     if(duration > 60*24*30){
-        Com_Printf("Error: Can not issue a temporary ban that lasts longer than 30 days\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: Can not issue a temporary ban that lasts longer than 30 days\n");
         return;
     }
 
@@ -1176,7 +1176,7 @@ gothandle:
         Q_strncat(banreason,256," ");
     }
     if(strlen(banreason) > 126){
-        Com_Printf("Error: You have exceeded the maximum allowed length of 126 for the reason\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You have exceeded the maximum allowed length of 126 for the reason\n");
         return;
     }
 
@@ -1198,7 +1198,7 @@ gothandle:
 	if(cl.cl){
 
 		if(cl.cl->power > Cmd_GetInvokerPower() && Cmd_GetInvokerPower() > 1){
-			Com_Printf("Error: You cannot tempban an admin with higher power!\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You cannot tempban an admin with higher power!\n");
 			return;
 		}
 
@@ -1219,7 +1219,7 @@ gothandle:
       strcpy(ssti, "System/Rcon");
     }
 
-		Com_Printf( "Banrecord added for player: %s id: %s\n", cl.cl->name, psti);
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Banrecord added for player: %s id: %s\n", cl.cl->name, psti);
 		SV_PrintAdministrativeLog( "temporarily banned player: %s id: %s IP: %s until %s with the following reason: %s", cl.cl->name, psti, NET_AdrToString ( &cl.cl->netchan.remoteAddress ), endtime, banreason);
 		Com_sprintf(dropmsg, sizeof(dropmsg), "You have been temporarily banned from this server\nYour ban will expire on: %s UTC\nYour id is: %s    Banning admin ID: %s\nReason for this ban:\n%s",
 				endtime, psti, ssti, banreason);
@@ -1237,7 +1237,7 @@ gothandle:
 
 		SV_AddBan(&baninfo);
 
-		Com_Printf( "Banrecord added for id: %s\n", psti);
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Banrecord added for id: %s\n", psti);
 		SV_PrintAdministrativeLog( "temporarily banned player id: %s until %s with the following reason: %s", psti, endtime, banreason);
 	}
 	//InsertPluginEvent
@@ -1264,12 +1264,12 @@ static void Cmd_KickPlayer_f()
 
 	if ( Cmd_Argc() < 2)
 	{
-		Com_Printf( "Usage:\n" );
-		Com_Printf( "\tkick <user> <reason>\n" );
-		Com_Printf( "\tkick all <reason>\n" );
-		Com_Printf( "Where user is one of the following: online-playername | online-playerslot\n" );
-		Com_Printf( "Where reason for this ban is contains a description without the characters: \" ; %% / \\ (max. 126 chars)\n" );
-		Com_Printf( "online-playername can be a fraction of the playername.\n\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage:\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "\tkick <user> <reason>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "\tkick all <reason>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where reason for this ban is contains a description without the characters: \" ; %% / \\ (max. 126 chars)\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername.\n\n" );
 		return;
 	}
 	// Generate kick and drop reason messages.
@@ -1290,7 +1290,7 @@ static void Cmd_KickPlayer_f()
 
 	if(strlen(kickreason) >= 256 )
 	{
-		Com_Printf("Error: You have exceeded the maximum allowed length of 126 for the reason\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You have exceeded the maximum allowed length of 126 for the reason\n");
 		return;
 	}
 
@@ -1314,7 +1314,7 @@ static void Cmd_KickPlayer_f()
 			if(c->state != CS_FREE && c->state != CS_ZOMBIE && c->power < Cmd_GetInvokerPower() && Cmd_GetInvokerPower() > 1)
 			{
 				SV_SApiSteamIDToString(c->playerid, psti, sizeof(psti));
-				Com_Printf( "Player kicked: %s ^7id: %s\nReason: %s\n", c->name, psti, kickreason);
+				Com_Printf(CON_CHANNEL_DONT_FILTER, "Player kicked: %s ^7id: %s\nReason: %s\n", c->name, psti, kickreason);
 				SV_PrintAdministrativeLog( "kicked player: %s^7 id: %s with the following reason: %s", c->name, psti, kickreason);
 
 				SV_DropClient(c, dropmsg);
@@ -1328,18 +1328,18 @@ static void Cmd_KickPlayer_f()
 
 		if(!cl.cl)
 		{
-			Com_Printf("Error: This player is not online and can not be kicked\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player is not online and can not be kicked\n");
 			return;
 		}
 
 		if(cl.cl->power > Cmd_GetInvokerPower() && Cmd_GetInvokerPower() > 1)
 		{
-			Com_Printf("Error: You cannot kick an admin with higher power!\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You cannot kick an admin with higher power!\n");
 			return;
 		}
 
 		SV_SApiSteamIDToString(cl.cl->playerid, psti, sizeof(psti));
-		Com_Printf( "Player kicked: %s ^7id: %s\nReason: %s\n", cl.cl->name, psti, kickreason);
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Player kicked: %s ^7id: %s\nReason: %s\n", cl.cl->name, psti, kickreason);
 		SV_PrintAdministrativeLog( "kicked player: %s^7 id: %s with the following reason: %s", cl.cl->name, psti, kickreason);
 
 		SV_DropClient(cl.cl, dropmsg);
@@ -1422,7 +1422,7 @@ static void Cmd_ExecuteTranslatedCommand_f(){
                     if(*cmdstring == ':' && *(cmdstring + 1) != ' '){ // Default argument in place!
                         ++cmdstring; // Just advance the pointer and read in the argument as any other part of the string
                     }else{
-                        Com_Printf("Not enough arguments to this command\n");
+                        Com_Printf(CON_CHANNEL_DONT_FILTER,"Not enough arguments to this command\n");
                         return;
                     }
                 } else{
@@ -1447,7 +1447,7 @@ static void Cmd_ExecuteTranslatedCommand_f(){
     }
 
     *tmp = 0;
-    Com_DPrintf("String to Execute: %s\n", outstr);
+    Com_DPrintf(CON_CHANNEL_DONT_FILTER,"String to Execute: %s\n", outstr);
     Cbuf_AddText( outstr);
 }
 
@@ -1467,7 +1467,7 @@ static void Cmd_AddTranslatedCommand_f() {
     int i;
 
     if ( Cmd_Argc() != 3) {
-        Com_Printf( "Usage: addCommand <commandname> <\"string to execute\"> String can contain: $uid $clnum $pow $arg $arg:default\n" );
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: addCommand <commandname> <\"string to execute\"> String can contain: $uid $clnum $pow $arg $arg:default\n" );
         return;
     }
 
@@ -1476,7 +1476,7 @@ static void Cmd_AddTranslatedCommand_f() {
 
     for(i=0, free = -1; i < MAX_TRANSCMDS; i++){
         if(!Q_stricmp(cmdname, psvs.translatedCmd[i].cmdname)){
-            Com_Printf("This command is already defined\n");
+            Com_Printf(CON_CHANNEL_DONT_FILTER,"This command is already defined\n");
             return;
         }
         if(!*psvs.translatedCmd[i].cmdname){
@@ -1485,7 +1485,7 @@ static void Cmd_AddTranslatedCommand_f() {
 
     }
     if(free == -1){
-        Com_Printf("Exceeded limit of custom commands\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Exceeded limit of custom commands\n");
         return;
     }
 
@@ -1493,7 +1493,7 @@ static void Cmd_AddTranslatedCommand_f() {
     Q_strncpyz(psvs.translatedCmd[free].cmdargument, string, sizeof(psvs.translatedCmd[free].cmdargument));
 
     Cmd_AddPCommand (psvs.translatedCmd[free].cmdname, Cmd_ExecuteTranslatedCommand_f, 100);
-    Com_Printf("Added custom command: %s -> %s\n", psvs.translatedCmd[free].cmdname, psvs.translatedCmd[free].cmdargument);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Added custom command: %s -> %s\n", psvs.translatedCmd[free].cmdname, psvs.translatedCmd[free].cmdargument);
 
 }
 
@@ -1510,7 +1510,7 @@ static void SV_StopRecord_f( void ) {
 	int i;
 
 	if ( Cmd_Argc() != 2) {
-		Com_Printf( "stoprecord <client>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "stoprecord <client>\n" );
 		return;
 	}
 
@@ -1527,7 +1527,7 @@ static void SV_StopRecord_f( void ) {
 
 	cl = SV_Cmd_GetPlayerByHandle();
 	if(!cl.cl){
-		Com_Printf("Error: This player is not online and can not be recorded\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player is not online and can not be recorded\n");
 		return;
 	}
 	SV_StopRecord(cl.cl);
@@ -1553,7 +1553,7 @@ static void SV_Record_f( void ) {
   char psti[128];
 
 	if ( Cmd_Argc() > 3 || Cmd_Argc() < 2) {
-		Com_Printf( "record <client> <demoname>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "record <client> <demoname>\n" );
 		return;
 	}
 
@@ -1578,7 +1578,7 @@ static void SV_Record_f( void ) {
 
 	cl = SV_Cmd_GetPlayerByHandle();
 	if(!cl.cl){
-		Com_Printf("Error: This player is not online and can not be recorded\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player is not online and can not be recorded\n");
 		return;
 	}
 
@@ -1623,7 +1623,7 @@ static void SV_ShowRules_f(){
 static void SV_AddRule_f(){
 
     if ( Cmd_Argc() != 2) {
-        Com_Printf( "Usage: addRuleMsg <\"text here in quotes\">\n" );
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: addRuleMsg <\"text here in quotes\">\n" );
         return;
     }
 
@@ -1633,7 +1633,7 @@ static void SV_AddRule_f(){
 static void SV_AddAdvert_f(){
 
     if ( Cmd_Argc() != 2) {
-        Com_Printf( "Usage: addAdvertMsg <\"text here in quotes\">\n" );
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: addAdvertMsg <\"text here in quotes\">\n" );
         return;
     }
     G_AddAdvert( Cmd_Argv(1));
@@ -1654,7 +1654,7 @@ Examine the serverinfo string
 ===========
 */
 static void SV_Serverinfo_f( void ) {
-	Com_Printf( "Server info settings:\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "Server info settings:\n" );
 	Info_Print( Cvar_InfoString( CVAR_SERVERINFO ) );
 }
 
@@ -1667,7 +1667,7 @@ Examine or change the serverinfo string
 ===========
 */
 static void SV_Systeminfo_f( void ) {
-	Com_Printf( "System info settings:\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "System info settings:\n" );
 	Info_Print( Cvar_InfoString( CVAR_SYSTEMINFO ) );
 }
 
@@ -1788,7 +1788,7 @@ static void SV_MixMapsInRotation()
 	}
 
 	Cvar_SetString(sv_mapRotationCurrent, mixedList);
-	Com_Printf("Picked random map rotation:\n%s\n", mixedList);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Picked random map rotation:\n%s\n", mixedList);
 }
 
 /*
@@ -1806,9 +1806,9 @@ static void SV_MapRotate_f( void ) {
 	int len;
 
 	// DHM - Nerve :: Check for invalid gametype
-	Com_Printf("map_rotate...\n");
-	Com_Printf("\"sv_mapRotation\" is: \"%s\"\n\n", sv_mapRotation->string);
-	Com_Printf("\"sv_mapRotationCurrent\" is: \"%s\"\n\n", sv_mapRotationCurrent->string);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"map_rotate...\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"\"sv_mapRotation\" is: \"%s\"\n\n", sv_mapRotation->string);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"\"sv_mapRotationCurrent\" is: \"%s\"\n\n", sv_mapRotationCurrent->string);
 
     if(sv_mapRotationCurrent->string[0] == '\0') // No maps in current rotation.
 	{
@@ -1824,10 +1824,10 @@ static void SV_MapRotate_f( void ) {
 
 	if(maplist == NULL){
 		if(com_sv_running->boolean){
-			Com_PrintError("\"sv_mapRotation\" is empty. Restarting current map\n");
+			Com_PrintError(CON_CHANNEL_DONT_FILTER,"\"sv_mapRotation\" is empty. Restarting current map\n");
 			SV_MapRestart( qfalse );
 		}else{
-			Com_PrintError("\"sv_mapRotation\" is empty. Can not start the server\n");
+			Com_PrintError(CON_CHANNEL_DONT_FILTER,"\"sv_mapRotation\" is empty. Can not start the server\n");
 		}
 		return;
 	}
@@ -1846,7 +1846,7 @@ static void SV_MapRotate_f( void ) {
 			len = Com_ParseTokenLength(maplist);
 			if(len >= sizeof(gametype)){
 				len = sizeof(gametype) -1;
-				Com_PrintWarning("Oversize gametype name length at: %s\n", maplist);
+				Com_PrintWarning(CON_CHANNEL_DONT_FILTER,"Oversize gametype name length at: %s\n", maplist);
 			}
 			Q_strncpyz(gametype, maplist, len+1);
 			Cvar_SetString(sv_g_gametype, gametype);
@@ -1861,7 +1861,7 @@ static void SV_MapRotate_f( void ) {
 			len = Com_ParseTokenLength(maplist);
 			if(len >= sizeof(map)){
 				len = sizeof(map) -1;
-				Com_PrintWarning("Oversize map name length at: %s\n", maplist);
+				Com_PrintWarning(CON_CHANNEL_DONT_FILTER,"Oversize map name length at: %s\n", maplist);
 			}
 			Q_strncpyz(map, maplist, len+1);
 
@@ -1873,22 +1873,22 @@ static void SV_MapRotate_f( void ) {
 			Cvar_SetString(sv_mapRotationCurrent, maplist); //Set the cvar with one map less
 
 			if(!SV_Map(map)){ //Load the level
-				Com_PrintError("Invalid mapname at %s %s\nRestarting current map\n", map, maplist);
+				Com_PrintError(CON_CHANNEL_DONT_FILTER,"Invalid mapname at %s %s\nRestarting current map\n", map, maplist);
 				SV_MapRestart( qfalse );
 			}
 			return;
 		}else{
-			Com_PrintError("Broken maprotation at: %s\n", maplist);
+			Com_PrintError(CON_CHANNEL_DONT_FILTER,"Broken maprotation at: %s\n", maplist);
 			maplist = Com_ParseGetToken(maplist); //Pop off the last argument
 		}
 	}
 
 
 	if(com_sv_running->boolean){
-		Com_PrintError("\"sv_mapRotation\" is broken at: %s.\nRestarting current map\n");
+		Com_PrintError(CON_CHANNEL_DONT_FILTER,"\"sv_mapRotation\" is broken at: %s.\nRestarting current map\n");
 		SV_MapRestart( qfalse );
 	}else{
-		Com_PrintError("\"sv_mapRotation\" is empty. Can not start the server\n");
+		Com_PrintError(CON_CHANNEL_DONT_FILTER,"\"sv_mapRotation\" is empty. Can not start the server\n");
 	}
 }
 
@@ -1916,12 +1916,12 @@ static void SV_SetPerk_f( void ){
         return;
 
     if(Cmd_Argc() < 3){
-        Com_DPrintf("Unknown Perk\n");
+        Com_DPrintf(CON_CHANNEL_DONT_FILTER,"Unknown Perk\n");
         return;
     }
     perkIndex = BG_GetPerkIndexForName(Cmd_Argv(2));
     if(perkIndex > 19){
-        Com_DPrintf("Unknown Perk: %s\n", Cmd_Argv(2));
+        Com_DPrintf(CON_CHANNEL_DONT_FILTER,"Unknown Perk: %s\n", Cmd_Argv(2));
         return;
     }
 
@@ -1947,7 +1947,7 @@ static void SV_TestTimeOverrun( void ){
 
 static void SV_GetCurrentServeTimer(){
 
-	Com_Printf("Server Time is : %x\n", svs.time);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Server Time is : %x\n", svs.time);
 }
 
 
@@ -1962,7 +1962,7 @@ static void SV_SetGravity_f( void ){
         return;
 
     if(Cmd_Argc() < 3){
-        Com_Printf("Bad args\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Bad args\n");
         return;
     }
 
@@ -1974,7 +1974,7 @@ static void SV_SetGravity_f( void ){
 
     ps->gravity = gravity;
 
-    Com_Printf("Gravity: %i\n", ps->gravity);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Gravity: %i\n", ps->gravity);
 
 }*/
 /*
@@ -1989,7 +1989,7 @@ static void SV_SetStance_f( void ){
         return;
 
     if(Cmd_Argc() < 3){
-        Com_Printf("Bad args\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Bad args\n");
         return;
     }
 
@@ -2001,7 +2001,7 @@ static void SV_SetStance_f( void ){
 
     ps->stance = gravity;
 
-    Com_Printf("Gravity: %i, Stance: %i\n", ps->gravity, ps->stance);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Gravity: %i, Stance: %i\n", ps->gravity, ps->stance);
 
 }
 */
@@ -2014,13 +2014,13 @@ static void SV_ShowConfigstring_f()
     buffer[0] = 0;
 
     if ( Cmd_Argc() != 2 ) {
-	Com_Printf( "Usage: showconfigstring <index>\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: showconfigstring <index>\n" );
 	return;
     }
 
     index = atoi(Cmd_Argv(1));
     SV_GetConfigstring(index, buffer, sizeof(buffer));
-    Com_Printf("CS len is %d CS is: %s\n", strlen(buffer), buffer);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"CS len is %d CS is: %s\n", strlen(buffer), buffer);
 }
 
 
@@ -2034,7 +2034,7 @@ qboolean SV_RunDownload(const char* url, const char* filename)
 	curfileobj = FileDownloadRequest(url);
 	if(curfileobj == NULL)
 	{
-		Com_Printf("Couldn't connect to download-server for downloading. Failed to download %s\n", filename);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Couldn't connect to download-server for downloading. Failed to download %s\n", filename);
 		return qfalse;
 	}
 
@@ -2047,14 +2047,14 @@ qboolean SV_RunDownload(const char* url, const char* filename)
 
 	if(transret < 0)
 	{
-		Com_Printf("Downloading of file: \"%s\" has failed\n", filename );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Downloading of file: \"%s\" has failed\n", filename );
 		FileDownloadFreeRequest(curfileobj);
 		return qfalse;
 	}
 
 	if(curfileobj->code != 200)
 	{
-		Com_Printf("Downloading of file: \"%s\" has failed with the following message: %d %s\n", filename, curfileobj->code, curfileobj->status);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Downloading of file: \"%s\" has failed with the following message: %d %s\n", filename, curfileobj->code, curfileobj->status);
 		FileDownloadFreeRequest(curfileobj);
 		return qfalse;
 
@@ -2066,7 +2066,7 @@ qboolean SV_RunDownload(const char* url, const char* filename)
 		len = FS_SV_HomeWriteFile(filename, curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength);
 		if(len != curfileobj->contentLength)
 		{
-			Com_PrintError("Opening of \"%s\" for writing has failed! Download aborted.\n", filename);
+			Com_PrintError(CON_CHANNEL_DONT_FILTER,"Opening of \"%s\" for writing has failed! Download aborted.\n", filename);
 			FileDownloadFreeRequest(curfileobj);
 			return qfalse;
 		}
@@ -2084,7 +2084,7 @@ void SV_MapCompletedExec(const char* mapname)
 
 	if(strstr(sv_mapDownloadCompletedCmd->string, ".."))
 	{
-		Com_PrintWarning("Commandlines containing \"..\" are not allowed");
+		Com_PrintWarning(CON_CHANNEL_DONT_FILTER,"Commandlines containing \"..\" are not allowed");
 		return;
 	}
 
@@ -2112,7 +2112,7 @@ void SV_DownloadMapThread(char *inurl)
 
 	if(downloadActive)
 	{
-		Com_Printf("There is already a map download running. Won't download this.\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"There is already a map download running. Won't download this.\n");
 		Sys_LeaveCriticalSection(CRITSECT_DL_MAP);
 		return;
 	}
@@ -2130,7 +2130,7 @@ void SV_DownloadMapThread(char *inurl)
 
 	if(mapname == NULL)
 	{
-		Com_Printf("Invalid map download path\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Invalid map download path\n");
 		downloadActive = qfalse;
 		return;
 	}
@@ -2141,15 +2141,15 @@ void SV_DownloadMapThread(char *inurl)
 	Com_sprintf(filename, sizeof(filename), "usermaps/%s/%s%s", mapname ,mapname, ".ff" );
 	Com_sprintf(dlurl, sizeof(dlurl), "%s/%s%s", url, mapname, ".ff");
 
-	Com_Printf("Begin downloading of file: \"%s\"\n", filename );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Begin downloading of file: \"%s\"\n", filename );
 
 	if(SV_RunDownload(dlurl, filename) == qfalse)
 	{
-		Com_Printf("Aborted map download\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Aborted map download\n");
 		downloadActive = qfalse;
 		return;
 	}
-	Com_Printf("Received file: %s\n", filename );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Received file: %s\n", filename );
 
 
 
@@ -2157,30 +2157,30 @@ void SV_DownloadMapThread(char *inurl)
 	Com_sprintf(filename, sizeof(filename), "usermaps/%s/%s%s", mapname ,mapname, "_load.ff" );
 	Com_sprintf(dlurl, sizeof(dlurl), "%s/%s%s", url, mapname, "_load.ff");
 
-	Com_Printf("Begin downloading of file: \"%s\"\n", filename );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Begin downloading of file: \"%s\"\n", filename );
 
 	if(SV_RunDownload(dlurl, filename) == qfalse)
 	{
-		Com_Printf("Aborted map download\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Aborted map download\n");
 		downloadActive = qfalse;
 		return;
 	}
-	Com_Printf("Received file: %s\n", filename );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Received file: %s\n", filename );
 
 
 
 	Com_sprintf(filename, sizeof(filename), "usermaps/%s/%s%s", mapname ,mapname, ".iwd" );
 	Com_sprintf(dlurl, sizeof(dlurl), "%s/%s%s", url, mapname, ".iwd");
 
-	Com_Printf("Begin downloading of file: \"%s\"\n", filename );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Begin downloading of file: \"%s\"\n", filename );
 
 	if(SV_RunDownload(dlurl, filename) == qfalse)
 	{
-		Com_Printf("File %s was not downloaded. This map has maybe no .iwd file\n", filename);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"File %s was not downloaded. This map has maybe no .iwd file\n", filename);
 	}else{
-		Com_Printf("Received file: %s\n", filename );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Received file: %s\n", filename );
         }
-	Com_Printf("Download of map \"%s\" has been completed\n", mapname);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Download of map \"%s\" has been completed\n", mapname);
 	downloadActive = qfalse;
 
 	Sys_SetupThreadCallback(SV_MapCompletedExec, mapname);
@@ -2195,7 +2195,7 @@ void SV_DownloadMap_f()
 
 	if ( Cmd_Argc() != 2 )
 	{
-		Com_Printf( "Usage: downloadmap <\"url\">\nFor example: downloadmap \"http://somehost/cod4/usermaps/mapname\"\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: downloadmap <\"url\">\nFor example: downloadmap \"http://somehost/cod4/usermaps/mapname\"\n" );
 		return;
     }
 
@@ -2205,14 +2205,14 @@ void SV_DownloadMap_f()
 
 	if(len < 3 || len > MAX_STRING_CHARS)
 	{
-		Com_Printf( "Usage: downloadmap <\"url\">\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: downloadmap <\"url\">\n" );
 		return;
 	}
 
 	url = S_Malloc(len +1);
 	if(url == NULL)
 	{
-		Com_PrintError("SV_DownloadMap_f(): Out of memory\n");
+		Com_PrintError(CON_CHANNEL_DONT_FILTER,"SV_DownloadMap_f(): Out of memory\n");
 		return;
 	}
 
@@ -2220,7 +2220,7 @@ void SV_DownloadMap_f()
 
 	if(Sys_CreateCallbackThread(SV_DownloadMapThread, url) == qfalse)
 	{
-		Com_PrintError("SV_DownloadMap_f(): Failed to start download thread\n");
+		Com_PrintError(CON_CHANNEL_DONT_FILTER,"SV_DownloadMap_f(): Failed to start download thread\n");
 		Z_Free(url);
 	}
 }
@@ -2233,7 +2233,7 @@ void SV_ChangeGametype_f()
 
     if(Cmd_Argc() != 2)
     {
-        Com_Printf( "Usage: gametype <gametypename>\n" );
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: gametype <gametypename>\n" );
         return;
     }
 
@@ -2262,11 +2262,11 @@ void SV_GetSS_f()
 
     if ( Cmd_Argc() < 2) {
 
-		Com_Printf( "Usage: getss <user> <filename>\n" );
-		Com_Printf( "Usage: getss <user>\n" );
-		Com_Printf( "Usage: getss all\n" );
-		Com_Printf( "Where user is one of the following: online-playername | online-playerslot\n" );
-		Com_Printf( "online-playername can be a fraction of the playername.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: getss <user> <filename>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: getss <user>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: getss all\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername.\n" );
 		return;
     }
 
@@ -2277,7 +2277,7 @@ void SV_GetSS_f()
         cl = SV_Cmd_GetPlayerByHandle();
         if(!cl.cl)
         {
-            Com_Printf("Error: This player is not online\n");
+            Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player is not online\n");
             return;
         }
     }
@@ -2302,7 +2302,7 @@ void BuildModuleRequests(client_t* cl)
 		SV_SApiSendModuleRequest(cl);
 	}
 
-	Com_Printf("Modules for %s requested\n", cl->name);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Modules for %s requested\n", cl->name);
 }
 
 void SV_GetModules_f()
@@ -2311,11 +2311,11 @@ void SV_GetModules_f()
 
     if ( Cmd_Argc() < 2) {
 
-		Com_Printf( "Usage: getmodules <user> <filename>\n" );
-		Com_Printf( "Usage: getmodules <user>\n" );
-		Com_Printf( "Usage: getmodules all\n" );
-		Com_Printf( "Where user is one of the following: online-playername | online-playerslot\n" );
-		Com_Printf( "online-playername can be a fraction of the playername.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: getmodules <user> <filename>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: getmodules <user>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: getmodules all\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername.\n" );
 		return;
     }
 
@@ -2326,7 +2326,7 @@ void SV_GetModules_f()
         cl = SV_Cmd_GetPlayerByHandle();
         if(!cl.cl)
         {
-            Com_Printf("Error: This player is not online\n");
+            Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player is not online\n");
             return;
         }
     }

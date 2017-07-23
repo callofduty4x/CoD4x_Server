@@ -355,10 +355,6 @@ _ZN21CDirect3DVertexBufferD1Ev:
 	nop
 
 
-;Zero initialized global or static variables of CDirect3DVertexBuffer:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DVertexBuffer:
 SECTION .data
 g_OptimizeVBTransfers: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -366,6 +362,12 @@ g_OptimizeVBTransfers: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of CDirect3DVertexBuffer:
 SECTION .rdata
+;VTable for CDirect3DVertexBuffer:
+_ZTV21CDirect3DVertexBuffer: dd 0x0, 0x3b4aa0, _ZN21CDirect3DVertexBuffer14QueryInterfaceERK5_GUIDPPv, _ZN21CDirect3DVertexBuffer6AddRefEv, _ZN21CDirect3DVertexBuffer7ReleaseEv, _ZN21CDirect3DVertexBuffer9GetDeviceEPP16IDirect3DDevice9, _ZN21CDirect3DVertexBuffer14SetPrivateDataERK5_GUIDPKvmm, _ZN21CDirect3DVertexBuffer14GetPrivateDataERK5_GUIDPvPm, _ZN21CDirect3DVertexBuffer15FreePrivateDataERK5_GUID, _ZN21CDirect3DVertexBuffer11SetPriorityEm, _ZN21CDirect3DVertexBuffer11GetPriorityEv, _ZN21CDirect3DVertexBuffer7PreLoadEv, _ZN21CDirect3DVertexBuffer7GetTypeEv, _ZN21CDirect3DVertexBuffer4LockEjjPPvm, _ZN21CDirect3DVertexBuffer6UnlockEv, _ZN21CDirect3DVertexBuffer7GetDescEP21_D3DVERTEXBUFFER_DESC, _ZN21CDirect3DVertexBufferD1Ev, _ZN21CDirect3DVertexBufferD0Ev, 0xfffffffc, 0x3b4aa0, 0x33102a, 0x331034, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DVertexBuffer:
+SECTION .bss
 
 
 ;All cstrings:

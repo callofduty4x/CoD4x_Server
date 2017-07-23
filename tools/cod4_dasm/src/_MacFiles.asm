@@ -378,16 +378,16 @@ _ZN8MacFiles9CleanPathEPch_50:
 	add [eax], al
 
 
-;Zero initialized global or static variables of MacFiles:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacFiles:
 SECTION .data
 
 
 ;Initialized constant data of MacFiles:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacFiles:
+SECTION .bss
 
 
 ;All cstrings:

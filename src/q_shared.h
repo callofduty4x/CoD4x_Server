@@ -43,6 +43,9 @@
 #include <string.h>
 #include <time.h>
 #include <math.h>
+#ifndef __cplusplus
+#include <stdbool.h>
+#endif
 
 
 #include "game/def.h"
@@ -323,6 +326,36 @@ SCRIPT PARSING
 =====================================================================================
 */
 
+
+
+enum ParseTokenType
+{
+  PARSE_TOKEN_UNKNOWN = 0x0,
+  PARSE_TOKEN_NUMBER = 0x1,
+  PARSE_TOKEN_STRING = 0x2,
+  PARSE_TOKEN_NAME = 0x3,
+  PARSE_TOKEN_HASH = 0x4,
+  PARSE_TOKEN_PUNCTUATION = 0x5
+};
+
+struct parseInfo_t{
+	char token[MAX_TOKEN_CHARS];
+	enum ParseTokenType tokenType;
+	int lines;
+	bool ungetToken;
+	bool spaceDelimited;
+	bool keepStringQuotes;
+	bool csv;
+	bool negativeNumbers;
+	const char *errorPrefix;
+	const char *warningPrefix;
+	int backup_lines;
+	const char *backup_text;
+	const char *parseFile;
+};
+
+
+
 // this just controls the comment printing, it doesn't actually load a file
 void Com_BeginParseSession( const char *filename );
 void Com_EndParseSession( void );
@@ -334,8 +367,8 @@ int Com_GetCurrentParseLine( void );
 // ParseOnLine will return empty if there isn't another token on this line
 
 // this funny typedef just means a moving pointer into a const char * buffer
-const char *Com_Parse( const char *( *data_p ) );
-const char *Com_ParseOnLine( const char *( *data_p ) );
+struct parseInfo_t *Com_Parse( const char *( *data_p ) );
+struct parseInfo_t *Com_ParseOnLine( const char *( *data_p ) );
 const char *Com_ParseRestOfLine( const char *( *data_p ) );
 
 void Com_UngetToken( void );
@@ -349,7 +382,7 @@ void Com_MatchToken( const char *( *buf_p ), const char *match, qboolean warning
 void Com_ScriptError( const char *msg, ... );
 void Com_ScriptWarning( const char *msg, ... );
 
-void Com_SkipBracedSection( const char *( *program ) );
+qboolean Com_SkipBracedSection( const char *( *program ), unsigned int startDepth, const int iMaxNesting );
 void Com_SkipRestOfLine( const char *( *data ) );
 
 float Com_ParseFloat( const char *( *buf_p ) );
@@ -667,4 +700,5 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
 #include "entity.h"
 
 #endif
+
 

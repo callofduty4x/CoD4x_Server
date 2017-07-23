@@ -909,8 +909,6 @@ int    gzclose OF((gzFile file));
    compression library.
 */
 
-static uLong adler32 OF((uLong adler, const Byte *buf, uInt len));
-
 /*
      Update a running Adler-32 checksum with the bytes buf[0..len-1] and
    return the updated checksum. If buf is NULL, this function returns
@@ -963,7 +961,7 @@ typedef unsigned char  uch;
 typedef unsigned short ush;
 typedef unsigned long  ulg;
 
-// static const char *z_errmsg[10]; /* indexed by 2-zlib_error */
+const char *z_errmsg[10]; /* indexed by 2-zlib_error */
 /* (size given to avoid silly warnings with Visual C++) */
 
 #define ERR_MSG(err) z_errmsg[Z_NEED_DICT-(err)]
@@ -1043,8 +1041,8 @@ typedef unsigned long  ulg;
 
 
 typedef uLong (*check_func) OF((uLong check, const Byte *buf, uInt len));
-static voidp zcalloc OF((voidp opaque, unsigned items, unsigned size));
-static void   zcfree  OF((voidp opaque, voidp ptr));
+voidp zcalloc OF((voidp opaque, unsigned items, unsigned size));
+void   zcfree  OF((voidp opaque, voidp ptr));
 
 #define ZALLOC(strm, items, size) \
            (*((strm)->zalloc))((strm)->opaque, (items), (size))
@@ -3977,7 +3975,7 @@ void inflate_codes_free(inflate_codes_statef *c, z_streamp z)
 #define DO16(buf)   DO8(buf,0); DO8(buf,8);
 
 /* ========================================================================= */
-static uLong adler32(uLong adler, const Byte *buf, uInt len)
+uLong adler32(uLong adler, const Byte *buf, uInt len)
 {
     unsigned long s1 = adler & 0xffff;
     unsigned long s2 = (adler >> 16) & 0xffff;

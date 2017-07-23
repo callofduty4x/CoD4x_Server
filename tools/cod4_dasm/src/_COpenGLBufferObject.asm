@@ -925,10 +925,6 @@ _ZNSt4listI15DirtyMarkerTypeSaIS0_EE5eraseESt14_List_iteratorIS0_E:
 	ret
 
 
-;Zero initialized global or static variables of COpenGLBufferObject:
-SECTION .bss
-
-
 ;Initialized global or static variables of COpenGLBufferObject:
 SECTION .data
 _ZZN19COpenGLBufferObject5FlushEjjE18sVBOFlushTolerance: dd 0x1000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -936,6 +932,12 @@ _ZZN19COpenGLBufferObject5FlushEjjE18sVBOFlushTolerance: dd 0x1000, 0x0, 0x0, 0x
 
 ;Initialized constant data of COpenGLBufferObject:
 SECTION .rdata
+;VTable for COpenGLBufferObject:
+_ZTV19COpenGLBufferObject: dd 0x0, 0x3b4f60, _ZN19COpenGLBufferObjectD1Ev, _ZN19COpenGLBufferObjectD0Ev, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of COpenGLBufferObject:
+SECTION .bss
 
 
 ;All cstrings:

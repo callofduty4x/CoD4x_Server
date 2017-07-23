@@ -1369,12 +1369,6 @@ G_TestEntityPosition_50:
 	add [eax], al
 
 
-;Zero initialized global or static variables of g_mover:
-SECTION .bss
-pushed: resb 0xb000
-pushed_p: resb 0x80
-
-
 ;Initialized global or static variables of g_mover:
 SECTION .data
 hintStrings: dd _cstring_null, _cstring_hint_noicon, _cstring_hint_activate, _cstring_hint_health, _cstring_hint_friendly, 0x0, 0x0, 0x0
@@ -1382,6 +1376,12 @@ hintStrings: dd _cstring_null, _cstring_hint_noicon, _cstring_hint_activate, _cs
 
 ;Initialized constant data of g_mover:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_mover:
+SECTION .bss
+pushed: resb 0xb000
+pushed_p: resb 0x80
 
 
 ;All cstrings:

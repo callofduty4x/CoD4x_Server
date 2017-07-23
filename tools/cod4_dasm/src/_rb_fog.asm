@@ -67,16 +67,16 @@ R_SetFrameFog_10:
 	ret
 
 
-;Zero initialized global or static variables of rb_fog:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_fog:
 SECTION .data
 
 
 ;Initialized constant data of rb_fog:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_fog:
+SECTION .bss
 
 
 ;All cstrings:

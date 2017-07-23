@@ -22,6 +22,7 @@
 	extern memmove
 	extern _ZSt17__throw_bad_allocv
 	extern _ZSt20__throw_length_errorPKc
+	extern _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv
 
 ;Exports of CDirect3DTexture:
 	global _ZN16CDirect3DTexture10UnlockRectEj
@@ -1232,16 +1233,18 @@ _ZNSt6vectorIP16CDirect3DSurfaceSaIS1_EE7reserveEm_30:
 	jmp _ZN16CDirect3DTextureD1Ev
 
 
-;Zero initialized global or static variables of CDirect3DTexture:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DTexture:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DTexture:
 SECTION .rdata
+;VTable for CDirect3DTexture:
+_ZTV16CDirect3DTexture: dd 0x0, 0x3b4a00, _ZN16CDirect3DTexture14QueryInterfaceERK5_GUIDPPv, _ZN16CDirect3DTexture6AddRefEv, _ZN16CDirect3DTexture7ReleaseEv, _ZN16CDirect3DTexture9GetDeviceEPP16IDirect3DDevice9, _ZN16CDirect3DTexture14SetPrivateDataERK5_GUIDPKvmm, _ZN16CDirect3DTexture14GetPrivateDataERK5_GUIDPvPm, _ZN16CDirect3DTexture15FreePrivateDataERK5_GUID, _ZN16CDirect3DTexture11SetPriorityEm, _ZN16CDirect3DTexture11GetPriorityEv, _ZN16CDirect3DTexture7PreLoadEv, _ZN16CDirect3DTexture7GetTypeEv, _ZN16CDirect3DTexture6SetLODEm, _ZN16CDirect3DTexture6GetLODEv, _ZN16CDirect3DTexture13GetLevelCountEv, _ZN16CDirect3DTexture20SetAutoGenFilterTypeE21_D3DTEXTUREFILTERTYPE, _ZN16CDirect3DTexture20GetAutoGenFilterTypeEv, _ZN16CDirect3DTexture20GenerateMipSubLevelsEv, _ZN16CDirect3DTexture12GetLevelDescEjP16_D3DSURFACE_DESC, _ZN16CDirect3DTexture15GetSurfaceLevelEjPP17IDirect3DSurface9, _ZN16CDirect3DTexture8LockRectEjP15_D3DLOCKED_RECTPK7tagRECTm, _ZN16CDirect3DTexture10UnlockRectEj, _ZN16CDirect3DTexture12AddDirtyRectEPK7tagRECT, _ZN16CDirect3DTextureD1Ev, _ZN16CDirect3DTextureD0Ev, 0xfffffffc, 0x3b4a00, 0x330fd8, 0x330de4, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DTexture:
+SECTION .bss
 
 
 ;All cstrings:

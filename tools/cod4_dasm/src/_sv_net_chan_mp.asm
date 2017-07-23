@@ -248,16 +248,16 @@ SV_Netchan_TransmitNextFragment_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of sv_net_chan_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of sv_net_chan_mp:
 SECTION .data
 
 
 ;Initialized constant data of sv_net_chan_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of sv_net_chan_mp:
+SECTION .bss
 
 
 ;All cstrings:

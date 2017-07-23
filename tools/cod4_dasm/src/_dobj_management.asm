@@ -462,6 +462,14 @@ Com_ClientDObjClearAllSkel_20:
 	nop
 
 
+;Initialized global or static variables of dobj_management:
+SECTION .data
+
+
+;Initialized constant data of dobj_management:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of dobj_management:
 SECTION .bss
 g_bDObjInited: resb 0x4
@@ -471,14 +479,6 @@ clientObjMap: resb 0x900
 objFreeCount: resb 0x20
 objAlloced: resb 0x800
 objBuf: resb 0x32040
-
-
-;Initialized global or static variables of dobj_management:
-SECTION .data
-
-
-;Initialized constant data of dobj_management:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -288,11 +288,6 @@ PhysPresetPrecache_20:
 	nop
 
 
-;Zero initialized global or static variables of physpreset_load_obj:
-SECTION .bss
-physAlloc: resb 0x80
-
-
 ;Initialized global or static variables of physpreset_load_obj:
 SECTION .data
 physPresetFields: dd _cstring_mass, 0x0, 0x6, _cstring_bounce, 0x4, 0x6, _cstring_friction, 0x8, 0x6, _cstring_isfrictioninfini, 0xc, 0x5, _cstring_bulletforcescale, 0x10, 0x6, _cstring_explosiveforcesc, 0x14, 0x6, _cstring_sndaliasprefix, 0x18, 0x0, _cstring_piecesspreadfrac, 0x1c, 0x6, _cstring_piecesupwardvelo, 0x20, 0x6, _cstring_tempdefaulttocyl, 0x24, 0x5, 0x0, 0x0
@@ -300,6 +295,11 @@ physPresetFields: dd _cstring_mass, 0x0, 0x6, _cstring_bounce, 0x4, 0x6, _cstrin
 
 ;Initialized constant data of physpreset_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of physpreset_load_obj:
+SECTION .bss
+physAlloc: resb 0x80
 
 
 ;All cstrings:

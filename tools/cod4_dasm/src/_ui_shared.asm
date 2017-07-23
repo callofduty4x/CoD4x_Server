@@ -98,7 +98,7 @@
 	extern UI_OwnerDrawVisible
 	extern GetExpressionFloat
 	extern colorGreen
-	extern I_strlwr
+	extern Q_strlwr
 	extern colorMagenta
 	extern sharedUiInfo
 	extern UI_FeederItemImage
@@ -10150,7 +10150,7 @@ Menu_Paint_320:
 	mov [esp], ebx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_strlwr
+	call Q_strlwr
 	mov eax, [esi+0x130]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -15352,19 +15352,6 @@ _ZSt4findISt16reverse_iteratorIPcEcET_S3_S3_RKT0_St26random_access_iterator_tag_
 	jmp _ZSt4findISt16reverse_iteratorIPcEcET_S3_S3_RKT0_St26random_access_iterator_tag_90
 
 
-;Zero initialized global or static variables of ui_shared:
-SECTION .bss
-itemCapture: resb 0x4
-g_debugMode: resb 0x4
-captureData: resb 0x4
-captureFunc: resb 0x4
-g_bindItem: resb 0x10
-scrollInfo: resb 0x20
-lastListBoxClickTime: resb 0x4
-_ZZ22Item_CorrectedTextRectiP9itemDef_sE4rect: resb 0x18
-_ZZ14Menu_HandleKeyP9UiContextP9menuDef_tiiE11inHandleKey: resb 0x24
-
-
 ;Initialized global or static variables of ui_shared:
 SECTION .data
 _ZZ15Item_Text_PaintP9UiContextP9itemDef_sE21MY_SUBTITLE_GLOWCOLOR: dd 0x0, 0x3e99999a, 0x0, 0x3f800000, 0x0
@@ -15376,6 +15363,19 @@ g_waitingForKey: dd 0x0
 ;Initialized constant data of ui_shared:
 SECTION .rdata
 commandList: dd _cstring_fadein, Script_FadeIn, _cstring_fadeout, Script_FadeOut, _cstring_show, Script_Show, _cstring_hide, Script_Hide, _cstring_showmenu, Script_ShowMenu, _cstring_hidemenu, Script_HideMenu, _cstring_setcolor, Script_SetColor, _cstring_open, Script_Open, _cstring_close, Script_Close, _cstring_ingameopen, Script_InGameOpen, _cstring_ingameclose, Script_InGameClose, _cstring_setbackground, Script_SetBackground, _cstring_setitemcolor, Script_SetItemColor, _cstring_focusfirst, Script_FocusFirstInMenu, _cstring_setfocus, Script_SetFocus, _cstring_setfocusbydvar, Script_SetFocusByDvar, _cstring_setdvar, Script_SetDvar, _cstring_exec, Script_Exec, _cstring_execnow, Script_ExecNow, _cstring_execondvarstring, Script_ExecOnDvarStringValue, _cstring_execondvarintval, Script_ExecOnDvarIntValue, _cstring_execondvarfloatv, Script_ExecOnDvarFloatValue, _cstring_execnowondvarstr, Script_ExecNowOnDvarStringValue, _cstring_execnowondvarint, Script_ExecNowOnDvarIntValue, _cstring_execnowondvarflo, Script_ExecNowOnDvarFloatValue, _cstring_play, Script_Play, _cstring_scriptmenurespon, Script_ScriptMenuResponse, _cstring_scriptmenurespon1, Script_RespondOnDvarStringValue, _cstring_scriptmenurespon2, Script_RespondOnDvarIntValue, _cstring_scriptmenurespon3, Script_RespondOnDvarFloatValue, _cstring_setlocalvarbool, Script_SetLocalVarBool, _cstring_setlocalvarint, Script_SetLocalVarInt, _cstring_setlocalvarfloat, Script_SetLocalVarFloat, _cstring_setlocalvarstrin, Script_SetLocalVarString, _cstring_feedertop, Script_FeederTop, _cstring_feederbottom, Script_FeederBottom, _cstring_openforgametype, Script_OpenForGameType, _cstring_closeforgametype, Script_CloseForGameType, _cstring_statclearperknew2, Script_StatClearPerkNew, _cstring_statsetusingtabl1, Script_StatSetUsingStatsTable, _cstring_statclearbitmask, Script_StatClearBitMask, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of ui_shared:
+SECTION .bss
+itemCapture: resb 0x4
+g_debugMode: resb 0x4
+captureData: resb 0x4
+captureFunc: resb 0x4
+g_bindItem: resb 0x10
+scrollInfo: resb 0x20
+lastListBoxClickTime: resb 0x4
+_ZZ22Item_CorrectedTextRectiP9itemDef_sE4rect: resb 0x18
+_ZZ14Menu_HandleKeyP9UiContextP9menuDef_tiiE11inHandleKey: resb 0x24
 
 
 ;All cstrings:

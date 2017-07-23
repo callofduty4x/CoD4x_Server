@@ -524,19 +524,19 @@ ScrPlace_SetupUnsafeViewport:
 	nop
 
 
-;Zero initialized global or static variables of screen_placement:
-SECTION .bss
-scrPlaceView: resb 0x60
-scrPlaceFull: resb 0x60
-scrPlaceFullUnsafe: resb 0xc0
-
-
 ;Initialized global or static variables of screen_placement:
 SECTION .data
 
 
 ;Initialized constant data of screen_placement:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of screen_placement:
+SECTION .bss
+scrPlaceView: resb 0x60
+scrPlaceFull: resb 0x60
+scrPlaceFullUnsafe: resb 0xc0
 
 
 ;All cstrings:

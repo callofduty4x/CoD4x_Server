@@ -131,7 +131,7 @@ void Sys_StartProcess( char *cmdline, qboolean doexit ) {
 			{
 				Com_Error( ERR_DROP, "Could not start process: '%s' ", cmdline );
 			}else{
-				Com_PrintError("Could not start process: '%s'\n", cmdline);
+				Com_PrintError(CON_CHANNEL_SYSTEM,"Could not start process: '%s'\n", cmdline);
 			}
 			return;
 		}
@@ -725,10 +725,10 @@ HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, v
 		if(lastError != 0)
 		{
 			FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT), (LPSTR)errMessageBuf, sizeof(errMessageBuf) -1, NULL);
-			Com_PrintError("Failed to start thread with error: %s\n", errMessageBuf);
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Failed to start thread with error: %s\n", errMessageBuf);
 
 		}else{
-			Com_PrintError("Failed to start thread!\n");
+			Com_PrintError(CON_CHANNEL_SYSTEM,"Failed to start thread!\n");
 		}
 		return NULL;
 	}

@@ -500,16 +500,16 @@ UILocalVar_FindOrCreate_30:
 	ret
 
 
-;Zero initialized global or static variables of ui_localvars:
-SECTION .bss
-
-
 ;Initialized global or static variables of ui_localvars:
 SECTION .data
 
 
 ;Initialized constant data of ui_localvars:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ui_localvars:
+SECTION .bss
 
 
 ;All cstrings:

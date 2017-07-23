@@ -19,6 +19,7 @@
 	extern strcmp
 	extern Image_SetupAndLoad
 	extern FS_FOpenFileRead
+	extern R_GenerateOutdoorImage
 
 ;Exports of r_image_load_obj:
 	global constructorTable
@@ -1449,12 +1450,6 @@ Image_ValidateHeader_20:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_image_load_obj:
-SECTION .bss
-s_imageLoadBuf: resb 0x4
-s_imageLoadBytesUsed: resb 0x7c
-
-
 ;Initialized global or static variables of r_image_load_obj:
 SECTION .data
 
@@ -1462,6 +1457,12 @@ SECTION .data
 ;Initialized constant data of r_image_load_obj:
 SECTION .rdata
 constructorTable: dd _cstring_white, Image_LoadWhite, _cstring_black, Image_LoadBlack, _cstring_black_3d, Image_LoadBlack3D, _cstring_black_cube, Image_LoadBlackCube, _cstring_gray, Image_LoadGray, _cstring_identitynormalma, Image_LoadIdentityNormalMap, _cstring_outdoor, R_GenerateOutdoorImage, _cstring_pixelcostcolorco, Image_LoadPixelCostColorCode
+
+
+;Zero initialized global or static variables of r_image_load_obj:
+SECTION .bss
+s_imageLoadBuf: resb 0x4
+s_imageLoadBytesUsed: resb 0x7c
 
 
 ;All cstrings:

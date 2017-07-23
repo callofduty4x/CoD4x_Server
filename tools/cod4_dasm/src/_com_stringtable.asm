@@ -168,16 +168,16 @@ StringTable_GetColumnValueForRow_20:
 	nop
 
 
-;Zero initialized global or static variables of com_stringtable:
-SECTION .bss
-
-
 ;Initialized global or static variables of com_stringtable:
 SECTION .data
 
 
 ;Initialized constant data of com_stringtable:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_stringtable:
+SECTION .bss
 
 
 ;All cstrings:

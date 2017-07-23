@@ -1085,11 +1085,6 @@ R_ShutdownRenderTargets_30:
 	ret
 
 
-;Zero initialized global or static variables of r_rendertarget:
-SECTION .bss
-gfxRenderTargets: resb 0x160
-
-
 ;Initialized global or static variables of r_rendertarget:
 SECTION .data
 s_renderTargetNames: dd _cstring_r_rendertarget_s, _cstring_r_rendertarget_f, _cstring_r_rendertarget_s1, _cstring_r_rendertarget_r, _cstring_r_rendertarget_r1, _cstring_r_rendertarget_f1, _cstring_r_rendertarget_d, _cstring_r_rendertarget_p, _cstring_r_rendertarget_p1, _cstring_r_rendertarget_s2, _cstring_r_rendertarget_s3, _cstring_r_rendertarget_p2, _cstring_r_rendertarget_p3, _cstring_r_rendertarget_s4, _cstring_r_rendertarget_s5, 0x0
@@ -1097,6 +1092,11 @@ s_renderTargetNames: dd _cstring_r_rendertarget_s, _cstring_r_rendertarget_f, _c
 
 ;Initialized constant data of r_rendertarget:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_rendertarget:
+SECTION .bss
+gfxRenderTargets: resb 0x160
 
 
 ;All cstrings:

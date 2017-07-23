@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of cl_devgui:
-SECTION .bss
-
-
 ;Initialized global or static variables of cl_devgui:
 SECTION .data
 
 
 ;Initialized constant data of cl_devgui:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_devgui:
+SECTION .bss
 
 
 ;All cstrings:

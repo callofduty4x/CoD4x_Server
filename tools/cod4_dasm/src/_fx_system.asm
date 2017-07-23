@@ -3967,20 +3967,20 @@ FX_PlayOrientedEffectWithMarkEntity_40:
 	jmp FX_PlayOrientedEffectWithMarkEntity_60
 
 
-;Zero initialized global or static variables of fx_system:
-SECTION .bss
-fx_systemBufferPool: resb 0x47480
-fx_systemPool: resb 0xa80
-fx_marksSystemPool: resb 0x48060
-fx_serverVisClient: resb 0x20
-
-
 ;Initialized global or static variables of fx_system:
 SECTION .data
 
 
 ;Initialized constant data of fx_system:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fx_system:
+SECTION .bss
+fx_systemBufferPool: resb 0x47480
+fx_systemPool: resb 0xa80
+fx_marksSystemPool: resb 0x48060
+fx_serverVisClient: resb 0x20
 
 
 ;All cstrings:

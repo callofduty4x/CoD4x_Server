@@ -144,7 +144,7 @@ qboolean Scr_FS_FOpenFile( const char *filename, fsMode_t mode, scr_fileHandle_t
 		ospath[strlen(ospath)-1] = '\0';
 
 	if ( fs_debug->boolean ) {
-		Com_Printf( "Scr_FS_FOpenFile (fs_homepath): %s\n", ospath );
+		Com_Printf(CON_CHANNEL_SCRIPT, "Scr_FS_FOpenFile (fs_homepath): %s\n", ospath );
 	}
 
         switch(mode){
@@ -176,7 +176,7 @@ qboolean Scr_FS_FOpenFile( const char *filename, fsMode_t mode, scr_fileHandle_t
                     ospath[strlen(ospath)-1] = '\0';
 
                 if ( fs_debug->boolean ){
-                    Com_Printf( "Scr_FS_FOpenFile (fs_basepath): %s\n", ospath );
+                    Com_Printf(CON_CHANNEL_SCRIPT, "Scr_FS_FOpenFile (fs_basepath): %s\n", ospath );
                 }
 
                 switch(mode){
@@ -393,13 +393,13 @@ int Scr_FS_Write( const void *buffer, int len, fileHandle_t h ) {
 			if (!tries) {
 				tries = 1;
 			} else {
-				Com_Printf( "Scr_FS_Write: 0 bytes written\n" );
+				Com_Printf(CON_CHANNEL_SCRIPT, "Scr_FS_Write: 0 bytes written\n" );
 				return 0;
 			}
 		}
 
 		if (written == -1) {
-			Com_Printf( "Scr_FS_Write: -1 bytes written\n" );
+			Com_Printf(CON_CHANNEL_SCRIPT, "Scr_FS_Write: -1 bytes written\n" );
 			return 0;
 		}
 

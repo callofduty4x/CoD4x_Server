@@ -185,16 +185,16 @@ CG_CheckDObjInfoMatches_10:
 	nop
 
 
-;Zero initialized global or static variables of cg_animtree_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_animtree_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_animtree_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_animtree_mp:
+SECTION .bss
 
 
 ;All cstrings:

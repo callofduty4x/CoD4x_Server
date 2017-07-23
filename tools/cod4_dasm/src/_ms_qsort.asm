@@ -320,16 +320,16 @@ ms_qsort_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of ms_qsort:
-SECTION .bss
-
-
 ;Initialized global or static variables of ms_qsort:
 SECTION .data
 
 
 ;Initialized constant data of ms_qsort:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ms_qsort:
+SECTION .bss
 
 
 ;All cstrings:

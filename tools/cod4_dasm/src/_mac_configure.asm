@@ -182,16 +182,16 @@ Sys_DetectCpuVendorAndName_10:
 	jmp Sys_DetectCpuVendorAndName_30
 
 
-;Zero initialized global or static variables of mac_configure:
-SECTION .bss
-
-
 ;Initialized global or static variables of mac_configure:
 SECTION .data
 
 
 ;Initialized constant data of mac_configure:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mac_configure:
+SECTION .bss
 
 
 ;All cstrings:

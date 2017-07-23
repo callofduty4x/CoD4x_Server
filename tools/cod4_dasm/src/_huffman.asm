@@ -344,17 +344,17 @@ Huff_Init:
 	add [eax], al
 
 
-;Zero initialized global or static variables of huffman:
-SECTION .bss
-bloc: resb 0x80
-
-
 ;Initialized global or static variables of huffman:
 SECTION .data
 
 
 ;Initialized constant data of huffman:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of huffman:
+SECTION .bss
+bloc: resb 0x80
 
 
 ;All cstrings:

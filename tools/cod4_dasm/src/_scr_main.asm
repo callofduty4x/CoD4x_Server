@@ -763,16 +763,16 @@ SL_TransferToCanonicalString_10:
 	ret
 
 
-;Zero initialized global or static variables of scr_main:
-SECTION .bss
-
-
 ;Initialized global or static variables of scr_main:
 SECTION .data
 
 
 ;Initialized constant data of scr_main:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_main:
+SECTION .bss
 
 
 ;All cstrings:

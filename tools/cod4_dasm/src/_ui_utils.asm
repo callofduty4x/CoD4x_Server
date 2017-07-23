@@ -837,11 +837,6 @@ Int_Parse_20:
 	ret
 
 
-;Zero initialized global or static variables of ui_utils:
-SECTION .bss
-g_strHandle: resb 0x2000
-
-
 ;Initialized global or static variables of ui_utils:
 SECTION .data
 _ZZ12String_AllocPKcE10staticNULL: dd _cstring_null, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -849,6 +844,11 @@ _ZZ12String_AllocPKcE10staticNULL: dd _cstring_null, 0x0, 0x0, 0x0, 0x0, 0x0, 0x
 
 ;Initialized constant data of ui_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ui_utils:
+SECTION .bss
+g_strHandle: resb 0x2000
 
 
 ;All cstrings:

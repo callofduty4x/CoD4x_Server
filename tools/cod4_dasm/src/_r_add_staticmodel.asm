@@ -1484,16 +1484,16 @@ R_SortAllStaticModelSurfacesSunShadow:
 	nop
 
 
-;Zero initialized global or static variables of r_add_staticmodel:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_add_staticmodel:
 SECTION .data
 
 
 ;Initialized constant data of r_add_staticmodel:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_add_staticmodel:
+SECTION .bss
 
 
 ;All cstrings:

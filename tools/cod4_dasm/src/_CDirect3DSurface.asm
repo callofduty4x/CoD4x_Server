@@ -702,16 +702,18 @@ _ZNK16CDirect3DSurface7IsDirtyEv_20:
 	nop
 
 
-;Zero initialized global or static variables of CDirect3DSurface:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DSurface:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DSurface:
 SECTION .rdata
+;VTable for CDirect3DSurface:
+_ZTV16CDirect3DSurface: dd 0x0, 0x3b4980, _ZN16CDirect3DSurface14QueryInterfaceERK5_GUIDPPv, _ZN16CDirect3DSurface6AddRefEv, _ZN16CDirect3DSurface7ReleaseEv, _ZN16CDirect3DSurface9GetDeviceEPP16IDirect3DDevice9, _ZN16CDirect3DSurface14SetPrivateDataERK5_GUIDPKvmm, _ZN16CDirect3DSurface14GetPrivateDataERK5_GUIDPvPm, _ZN16CDirect3DSurface15FreePrivateDataERK5_GUID, _ZN16CDirect3DSurface11SetPriorityEm, _ZN16CDirect3DSurface11GetPriorityEv, _ZN16CDirect3DSurface7PreLoadEv, _ZN16CDirect3DSurface7GetTypeEv, _ZN16CDirect3DSurface12GetContainerERK5_GUIDPPv, _ZN16CDirect3DSurface7GetDescEP16_D3DSURFACE_DESC, _ZN16CDirect3DSurface8LockRectEP15_D3DLOCKED_RECTPK7tagRECTm, _ZN16CDirect3DSurface10UnlockRectEv, _ZN16CDirect3DSurface5GetDCEPP5HDC__, _ZN16CDirect3DSurface9ReleaseDCEP5HDC__, _ZN16CDirect3DSurfaceD1Ev, _ZN16CDirect3DSurfaceD0Ev, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DSurface:
+SECTION .bss
 
 
 ;All cstrings:

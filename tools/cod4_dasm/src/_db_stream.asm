@@ -291,6 +291,14 @@ DB_AllocStreamPos:
 	nop
 
 
+;Initialized global or static variables of db_stream:
+SECTION .data
+
+
+;Initialized constant data of db_stream:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of db_stream:
 SECTION .bss
 g_streamPos: resb 0x20
@@ -301,14 +309,6 @@ g_streamDelayIndex: resb 0x4
 g_streamPosArray: resb 0x40
 g_streamPosIndex: resb 0x1c
 g_streamZoneMem: resb 0x1c
-
-
-;Initialized global or static variables of db_stream:
-SECTION .data
-
-
-;Initialized constant data of db_stream:
-SECTION .rdata
 
 
 ;All cstrings:

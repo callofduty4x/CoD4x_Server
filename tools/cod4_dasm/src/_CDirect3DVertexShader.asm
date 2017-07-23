@@ -160,16 +160,18 @@ _ZN21CDirect3DVertexShaderD1Ev:
 	nop
 
 
-;Zero initialized global or static variables of CDirect3DVertexShader:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DVertexShader:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DVertexShader:
 SECTION .rdata
+;VTable for CDirect3DVertexShader:
+_ZTV21CDirect3DVertexShader: dd 0x0, 0x3b4b60, _ZN21CDirect3DVertexShader14QueryInterfaceERK5_GUIDPPv, _ZN21CDirect3DVertexShader6AddRefEv, _ZN21CDirect3DVertexShader7ReleaseEv, _ZN21CDirect3DVertexShader9GetDeviceEPP16IDirect3DDevice9, _ZN21CDirect3DVertexShader11GetFunctionEPvPj, _ZN21CDirect3DVertexShaderD1Ev, _ZN21CDirect3DVertexShaderD0Ev, 0xfffffffc, 0x3b4b60, 0x3310f0, 0x3310fa, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DVertexShader:
+SECTION .bss
 
 
 ;All cstrings:

@@ -649,19 +649,19 @@ CG_SetCollWorldLocalClientNum:
 	nop
 
 
-;Zero initialized global or static variables of cg_colltree:
-SECTION .bss
-cgEntCollWorld: resb 0x4020
-cgEntCollNodes: resb 0x5000
-cgCollWorldLocalClientNum: resb 0x60
-
-
 ;Initialized global or static variables of cg_colltree:
 SECTION .data
 
 
 ;Initialized constant data of cg_colltree:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_colltree:
+SECTION .bss
+cgEntCollWorld: resb 0x4020
+cgEntCollNodes: resb 0x5000
+cgCollWorldLocalClientNum: resb 0x60
 
 
 ;All cstrings:

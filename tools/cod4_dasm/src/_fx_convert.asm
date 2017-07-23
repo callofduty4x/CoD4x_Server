@@ -4612,16 +4612,16 @@ FX_Convert_jumptab_1:
 	dd FX_Convert_1310
 
 
-;Zero initialized global or static variables of fx_convert:
-SECTION .bss
-
-
 ;Initialized global or static variables of fx_convert:
 SECTION .data
 
 
 ;Initialized constant data of fx_convert:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fx_convert:
+SECTION .bss
 
 
 ;All cstrings:

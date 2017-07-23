@@ -1632,16 +1632,16 @@ _ZSt16__introsort_loopIPPK22GfxStaticModelDrawInstiPFhS2_S2_EEvT_S6_T0_T1__60:
 	jmp _ZSt16__introsort_loopIPPK22GfxStaticModelDrawInstiPFhS2_S2_EEvT_S6_T0_T1__170
 
 
-;Zero initialized global or static variables of r_staticmodelcache_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_staticmodelcache_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of r_staticmodelcache_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_staticmodelcache_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

@@ -44,17 +44,17 @@ _ZN10MacGlobals14IsSystemLockedEv:
 	ret
 
 
-;Zero initialized global or static variables of MacGlobals:
-SECTION .bss
-sSystemLock: resb 0x80
-
-
 ;Initialized global or static variables of MacGlobals:
 SECTION .data
 
 
 ;Initialized constant data of MacGlobals:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacGlobals:
+SECTION .bss
+sSystemLock: resb 0x80
 
 
 ;All cstrings:

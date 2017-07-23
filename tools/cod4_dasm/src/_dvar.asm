@@ -8401,6 +8401,14 @@ _ZSt16__introsort_loopIPPK6dvar_siPFhS2_S2_EEvT_S6_T0_T1__60:
 	jmp _ZSt16__introsort_loopIPPK6dvar_siPFhS2_S2_EEvT_S6_T0_T1__170
 
 
+;Initialized global or static variables of dvar:
+SECTION .data
+
+
+;Initialized constant data of dvar:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of dvar:
 SECTION .bss
 dvarPool: resb 0x4c000
@@ -8414,14 +8422,6 @@ sortedDvars: resb 0x4000
 isSortingDvars: resb 0x40
 dvar_modifiedFlags: resb 0x18
 dvarCount: resb 0x4
-
-
-;Initialized global or static variables of dvar:
-SECTION .data
-
-
-;Initialized constant data of dvar:
-SECTION .rdata
 
 
 ;All cstrings:

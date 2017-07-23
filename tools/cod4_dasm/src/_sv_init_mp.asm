@@ -2358,10 +2358,6 @@ SV_Loaded:
 	nop
 
 
-;Zero initialized global or static variables of sv_init_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of sv_init_mp:
 SECTION .data
 sv_serverId_value: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -2369,6 +2365,10 @@ sv_serverId_value: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of sv_init_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of sv_init_mp:
+SECTION .bss
 
 
 ;All cstrings:

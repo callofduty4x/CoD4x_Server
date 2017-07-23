@@ -1268,16 +1268,16 @@ R_AddParticleCloudDrawSurf_10:
 	jmp R_AddParticleCloudDrawSurf_40
 
 
-;Zero initialized global or static variables of r_drawsurf:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_drawsurf:
 SECTION .data
 
 
 ;Initialized constant data of r_drawsurf:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_drawsurf:
+SECTION .bss
 
 
 ;All cstrings:

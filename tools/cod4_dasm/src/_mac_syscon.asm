@@ -552,6 +552,15 @@ Conbuf_AppendTextInMainThread_20:
 	nop
 
 
+;Initialized global or static variables of mac_syscon:
+SECTION .data
+gConsoleRunning: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of mac_syscon:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of mac_syscon:
 SECTION .bss
 sConsoleEditText: resb 0x4
@@ -562,15 +571,6 @@ sReturnedText: resb 0x200
 sConsoleText: resb 0x200
 sTimerRef: resb 0x4
 _ZZ17Conbuf_AppendTextPKcE12s_totalChars: resb 0x5c
-
-
-;Initialized global or static variables of mac_syscon:
-SECTION .data
-gConsoleRunning: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of mac_syscon:
-SECTION .rdata
 
 
 ;All CFStrings:

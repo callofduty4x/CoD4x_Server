@@ -439,17 +439,17 @@ R_ReserveMeshIndices_10:
 	ret
 
 
-;Zero initialized global or static variables of r_meshdata:
-SECTION .bss
-gfxMeshGlob: resb 0x184
-
-
 ;Initialized global or static variables of r_meshdata:
 SECTION .data
 
 
 ;Initialized constant data of r_meshdata:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_meshdata:
+SECTION .bss
+gfxMeshGlob: resb 0x184
 
 
 ;All cstrings:

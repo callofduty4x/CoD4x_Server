@@ -12,7 +12,6 @@
 	extern ragdoll_baselerp_time
 	extern SL_FindString
 	extern Q_stricmp
-	extern g_fltMin__uint4_dup_1
 	extern memset
 	extern Cmd_AddCommand
 
@@ -806,11 +805,11 @@ Ragdoll_Limit_f_100:
 	movss [edx+0x8], xmm2
 	cmp byte [ebp-0x1d], 0x0
 	jz Ragdoll_Limit_f_150
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x80]
+	xorps xmm0, [_data16_80000000]
 	movss [edx], xmm0
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x80]
+	xorps xmm1, [_data16_80000000]
 	movss [edx+0x4], xmm1
-	xorps xmm2, [g_fltMin__uint4_dup_1+0x80]
+	xorps xmm2, [_data16_80000000]
 	movss [edx+0x8], xmm2
 Ragdoll_Limit_f_150:
 	mov eax, [ebp-0x28]
@@ -1120,17 +1119,6 @@ Ragdoll_InitCommands:
 	ret
 
 
-;Zero initialized global or static variables of ragdoll_cmds:
-SECTION .bss
-_ZZ20Ragdoll_InitCommandsvE22Ragdoll_Selfpair_f_VAR: resb 0x14
-_ZZ20Ragdoll_InitCommandsvE19Ragdoll_Limit_f_VAR: resb 0x14
-_ZZ20Ragdoll_InitCommandsvE19Ragdoll_Joint_f_VAR: resb 0x14
-_ZZ20Ragdoll_InitCommandsvE21Ragdoll_PinBone_f_VAR: resb 0x14
-_ZZ20Ragdoll_InitCommandsvE26Ragdoll_BaseLerpBone_f_VAR: resb 0x14
-_ZZ20Ragdoll_InitCommandsvE18Ragdoll_Bone_f_VAR: resb 0x14
-_ZZ20Ragdoll_InitCommandsvE19Ragdoll_Clear_f_VAR: resb 0x88
-
-
 ;Initialized global or static variables of ragdoll_cmds:
 SECTION .data
 axisTable: dd _cstring_x, 0x3f800000, 0x0, 0x0, _cstring_y, 0x0, 0x3f800000, 0x0, _cstring_z, 0x0, 0x0, 0x3f800000, _cstring_n, 0x0, 0x0, 0x0
@@ -1140,6 +1128,17 @@ geomNames: dd _cstring_n, _cstring_box, _cstring_brushmodel, _cstring_brush, _cs
 
 ;Initialized constant data of ragdoll_cmds:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ragdoll_cmds:
+SECTION .bss
+_ZZ20Ragdoll_InitCommandsvE22Ragdoll_Selfpair_f_VAR: resb 0x14
+_ZZ20Ragdoll_InitCommandsvE19Ragdoll_Limit_f_VAR: resb 0x14
+_ZZ20Ragdoll_InitCommandsvE19Ragdoll_Joint_f_VAR: resb 0x14
+_ZZ20Ragdoll_InitCommandsvE21Ragdoll_PinBone_f_VAR: resb 0x14
+_ZZ20Ragdoll_InitCommandsvE26Ragdoll_BaseLerpBone_f_VAR: resb 0x14
+_ZZ20Ragdoll_InitCommandsvE18Ragdoll_Bone_f_VAR: resb 0x14
+_ZZ20Ragdoll_InitCommandsvE19Ragdoll_Clear_f_VAR: resb 0x88
 
 
 ;All cstrings:
@@ -1188,6 +1187,7 @@ _cstring_cap:		db "cap",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _float_3_14159274:		dd 0x40490fdb	; 3.14159
 _float__3_14159274:		dd 0xc0490fdb	; -3.14159

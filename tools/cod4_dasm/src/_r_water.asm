@@ -191,8 +191,8 @@ R_UploadWaterTextureInternal:
 	xor edi, edi
 	mov ebx, waterGlob
 	xorps xmm5, xmm5
-	movss xmm3, dword [g_fltMin__uint4_dup_1+0x10]
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x20]
+	movss xmm3, dword [_data16_4f000000]
+	movss xmm4, dword [_data16_4f800000]
 	jmp R_UploadWaterTextureInternal_20
 R_UploadWaterTextureInternal_40:
 	mov dword [ebx], 0x0
@@ -613,45 +613,6 @@ R_UploadWaterTextureInternal_50:
 	nop
 
 
-;Zero initialized global or static variables of r_water:
-SECTION .bss
-g_keepZ_dup_1: resb 0x10
-g_keepX_dup_1: resb 0x10
-g_keepZW_dup_1: resb 0x10
-g_keepXY_dup_1: resb 0x10
-g_keepXYZ_dup_1: resb 0x10
-g_keepXYW_dup_1: resb 0x10
-g_keepXZW_dup_1: resb 0x10
-g_keepYZW_dup_1: resb 0x10
-g_selectW_dup_1: resb 0x10
-g_selectZ_dup_1: resb 0x10
-g_selectY_dup_1: resb 0x10
-g_selectX_dup_1: resb 0x10
-g_swizzleWWWW_dup_1: resb 0x10
-g_swizzleZZZZ_dup_1: resb 0x10
-g_swizzleYYYY_dup_1: resb 0x10
-g_swizzleXXXX_dup_1: resb 0x10
-g_swizzleYZWA_dup_1: resb 0x10
-g_swizzleZWAW_dup_1: resb 0x10
-g_swizzleWABW_dup_1: resb 0x10
-g_swizzleZXYW_dup_1: resb 0x10
-g_swizzleYZXW_dup_1: resb 0x10
-g_swizzleXYZA_dup_1: resb 0x10
-g_swizzleZWCD_dup_1: resb 0x10
-g_swizzleXYAB_dup_1: resb 0x10
-g_swizzleYBWD_dup_1: resb 0x10
-g_swizzleXAZC_dup_1: resb 0x10
-g_swizzleYXWZ_dup_1: resb 0x10
-g_swizzleXZYW_dup_1: resb 0x10
-g_swizzleYXZW_dup_1: resb 0x10
-g_swizzleXYZW_dup_1: resb 0x10
-g_inc_dup_1: resb 0x10
-g_negativeZero_dup_1: resb 0x10
-g_fltMin_dup_1: resb 0x80
-waterGlobStatic: resb 0x1c00
-waterGlob: resb 0x9000
-
-
 ;Initialized global or static variables of r_water:
 SECTION .data
 
@@ -693,6 +654,45 @@ g_negativeZero__uint4_dup_1: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
 g_fltMin__uint4_dup_1: dd 0x800000, 0x800000, 0x800000, 0x800000, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x2891cb, 0x2891d4, 0x2891dd, 0x2891e6, 0x2891ef, 0x2891f8, 0x289201, 0x28920a, 0x289213, 0x28921e, 0x289227, 0x289230, 0x289239, 0x289242, 0x28925d, 0x28927b, 0x289284, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x4f000000, 0x0, 0x0, 0x0, 0x4f800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
+;Zero initialized global or static variables of r_water:
+SECTION .bss
+g_keepZ_dup_1: resb 0x10
+g_keepX_dup_1: resb 0x10
+g_keepZW_dup_1: resb 0x10
+g_keepXY_dup_1: resb 0x10
+g_keepXYZ_dup_1: resb 0x10
+g_keepXYW_dup_1: resb 0x10
+g_keepXZW_dup_1: resb 0x10
+g_keepYZW_dup_1: resb 0x10
+g_selectW_dup_1: resb 0x10
+g_selectZ_dup_1: resb 0x10
+g_selectY_dup_1: resb 0x10
+g_selectX_dup_1: resb 0x10
+g_swizzleWWWW_dup_1: resb 0x10
+g_swizzleZZZZ_dup_1: resb 0x10
+g_swizzleYYYY_dup_1: resb 0x10
+g_swizzleXXXX_dup_1: resb 0x10
+g_swizzleYZWA_dup_1: resb 0x10
+g_swizzleZWAW_dup_1: resb 0x10
+g_swizzleWABW_dup_1: resb 0x10
+g_swizzleZXYW_dup_1: resb 0x10
+g_swizzleYZXW_dup_1: resb 0x10
+g_swizzleXYZA_dup_1: resb 0x10
+g_swizzleZWCD_dup_1: resb 0x10
+g_swizzleXYAB_dup_1: resb 0x10
+g_swizzleYBWD_dup_1: resb 0x10
+g_swizzleXAZC_dup_1: resb 0x10
+g_swizzleYXWZ_dup_1: resb 0x10
+g_swizzleXZYW_dup_1: resb 0x10
+g_swizzleYXZW_dup_1: resb 0x10
+g_swizzleXYZW_dup_1: resb 0x10
+g_inc_dup_1: resb 0x10
+g_negativeZero_dup_1: resb 0x10
+g_fltMin_dup_1: resb 0x80
+waterGlobStatic: resb 0x1c00
+waterGlob: resb 0x9000
+
+
 ;All cstrings:
 SECTION .rdata
 
@@ -703,6 +703,8 @@ SECTION .rdata
 _float_0_35156250:		dd 0x3eb40000	; 0.351562
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _double_162_97466173:		dq 0x40645f306dc9c883	; 162.975
+_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; OWORD
+_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_255_99899292:		dd 0x437fffbe	; 255.999
 

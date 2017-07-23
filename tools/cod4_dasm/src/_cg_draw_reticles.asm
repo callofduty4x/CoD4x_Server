@@ -1373,16 +1373,16 @@ CG_DrawNightVisionOverlay_20:
 	nop
 
 
-;Zero initialized global or static variables of cg_draw_reticles:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_draw_reticles:
 SECTION .data
 
 
 ;Initialized constant data of cg_draw_reticles:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_draw_reticles:
+SECTION .bss
 
 
 ;All cstrings:

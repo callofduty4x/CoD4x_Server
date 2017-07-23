@@ -550,17 +550,17 @@ WaitForSingleObject_60:
 	jmp WaitForSingleObject_50
 
 
-;Zero initialized global or static variables of MacWin32x:
-SECTION .bss
-sLastError: resb 0x80
-
-
 ;Initialized global or static variables of MacWin32x:
 SECTION .data
 
 
 ;Initialized constant data of MacWin32x:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacWin32x:
+SECTION .bss
+sLastError: resb 0x80
 
 
 ;All cstrings:

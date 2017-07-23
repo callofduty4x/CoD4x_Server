@@ -247,7 +247,7 @@ qboolean Sys_SetupThreadCallback(void* callbackMain,...)
 	}
 	if(i == MAX_CALLBACKS)
 	{
-		Com_PrintError("Couldn't find this thread\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Couldn't find this thread\n");
 		return qfalse;
 	}
 
@@ -285,7 +285,7 @@ qboolean Sys_CreateCallbackThread(void* threadMain,...)
 	}
 	if(i == MAX_CALLBACKS)
 	{
-		Com_PrintError("Couldn't create a callback-thread. Max handles exceeded\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Couldn't create a callback-thread. Max handles exceeded\n");
 		return qfalse;
 	}
 
@@ -324,6 +324,30 @@ bool Sys_IsDatabaseThread()
   curtid = Sys_GetCurrentThreadId();
   return curtid == threadId[1];
 }
+
+bool Sys_IsServerThread()
+{
+/*
+  threadid_t curtid;
+
+  curtid = Sys_GetCurrentThreadId();
+  return curtid == threadId[2];
+*/
+    return false;
+}
+
+
+bool Sys_IsRenderThread()
+{
+/*
+  threadid_t curtid;
+
+  curtid = Sys_GetCurrentThreadId();
+  return curtid == threadId[3];
+*/
+    return false;
+}
+
 
 void Sys_WakeDatabase()
 {
@@ -383,11 +407,6 @@ void __cdecl Sys_WaitDatabaseThread()
   Sys_WaitForObject(resumedDatabaseEvent);
 }
 
-bool __cdecl Sys_IsRenderThread()
-{
- // return Sys_GetCurrentThreadId() == threadId[1];
-  return false;
-}
 
 void* __cdecl Sys_ThreadMain(void *parameter)
 {

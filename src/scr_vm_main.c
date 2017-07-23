@@ -677,7 +677,7 @@ int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qbool
         }
         else
         {
-            Com_DPrintf("Notice: Could not find script '%s' - this part will be disabled\n", scriptName);
+            Com_DPrintf(CON_CHANNEL_SCRIPT,"Notice: Could not find script '%s' - this part will be disabled\n", scriptName);
         }
         return 0;
     }
@@ -692,7 +692,7 @@ int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qbool
         }
         else
         {
-            Com_DPrintf("Notice: Could not find label '%s' in script '%s' - this part will be disabled\n", labelName, scriptName);
+            Com_DPrintf(CON_CHANNEL_SCRIPT,"Notice: Could not find label '%s' in script '%s' - this part will be disabled\n", labelName, scriptName);
         }
         return 0;
     }
@@ -738,8 +738,8 @@ void GScr_LoadGameTypeScript(void)
     g_scr_data.gametype = GScr_LoadScriptAndLabel(gametype_path, "main", 0);
     if (g_scr_data.gametype == 0)
     {
-        Com_PrintError("Could not find script: %s\n", gametype_path);
-        Com_Printf("The gametype %s is not available! Will load gametype dm\n", sv_g_gametype->string);
+        Com_PrintError(CON_CHANNEL_SCRIPT,"Could not find script: %s\n", gametype_path);
+        Com_Printf(CON_CHANNEL_SCRIPT,"The gametype %s is not available! Will load gametype dm\n", sv_g_gametype->string);
 
         Cvar_SetString(sv_g_gametype, "dm");
         Com_sprintf(gametype_path, sizeof(gametype_path), "maps/mp/gametypes/%s", sv_g_gametype->string);
@@ -899,10 +899,10 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
 
     if (callScriptStackPtr >= MAX_CALLSCRIPTSTACKDEPTH)
     {
-        Com_Printf("Called too many scripts in chain\nThe scripts are:\n");
+        Com_Printf(CON_CHANNEL_SCRIPT,"Called too many scripts in chain\nThe scripts are:\n");
         for (i = MAX_CALLSCRIPTSTACKDEPTH; i >= 0; --i)
         {
-            Com_Printf("*%d: %s\n", i, &callScriptStackNames[MAX_QPATH * i]);
+            Com_Printf(CON_CHANNEL_SCRIPT,"*%d: %s\n", i, &callScriptStackNames[MAX_QPATH * i]);
         }
         Com_Error(ERR_FATAL, "CallscriptStack overflowed");
         return 0;
@@ -1120,7 +1120,7 @@ void GetDeltaPlayerArray(){
 
     Com_sprintf(line, sizeof(line), "\tint\t\t%s; %i\n", ptr->name, ptr->offset);
     Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf("%s\n", line);
+    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
 
     }
 
@@ -1158,7 +1158,7 @@ void StringIndexArray(){
 
     for(j=0, ptr = (stringindexcmd_t*)0x80a396e; ptr->mov3 != 0x90 ; ptr++, j++){
 
-    Com_Printf("String: %s\n", ptr->string);
+    Com_Printf(CON_CHANNEL_SCRIPT,"String: %s\n", ptr->string);
     Com_sprintf(line, sizeof(line), "\tshort   %s;\n", ptr->string);
     Q_strncat(buffer, sizeof(buffer), line);
     }
@@ -1181,7 +1181,7 @@ void GetPlayerFieldArray(){
 
     Com_sprintf(line, sizeof(line), "\tScr_AddPlayerField(%s, %d, %d, %p, %p)\n", ptr->name, ptr->val1, ptr->val1, ptr->setfun, ptr->getfun);
     Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf("%s\n", line);
+    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
 
     }
 
@@ -1202,19 +1202,19 @@ void GetEntityFieldArray()
 
     Com_sprintf(line, sizeof(line), "entity_fields_t entityField[]");
     Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf("%s\n", line);
+    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
 
     for (j = 0, ptr = (ent_field_t *)0x82202a0; ptr->name != NULL; ptr++, j++)
     {
 
         Com_sprintf(line, sizeof(line), "\t{ \"%s\", %d, %d, (void*)%p) },\n", ptr->name, ptr->val1, ptr->val2, ptr->setfun);
         Q_strncat(buffer, sizeof(buffer), line);
-        Com_Printf("%s\n", line);
+        Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
     }
 
     Com_sprintf(line, sizeof(line), "};\n");
     Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf("%s\n", line);
+    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
 
     FS_WriteFile("array.txt", buffer, strlen(buffer));
     Com_Quit_f();
@@ -1262,7 +1262,7 @@ int GetArraySize(int aHandle)
 /* only for debug */
 __regparm3 void VM_Notify_Hook(int entid, int constString, VariableValue *arguments)
 {
-    Com_Printf("^2Notify Entitynum: %d, EventString: %s\n", entid, SL_ConvertToString(constString));
+    Com_Printf(CON_CHANNEL_SCRIPT,"^2Notify Entitynum: %d, EventString: %s\n", entid, SL_ConvertToString(constString));
     VM_Notify(entid, constString, arguments);
 }
 
@@ -1334,19 +1334,19 @@ void RuntimeError_Debug(char *msg, char *pos, int a4)
 {
     int i;
 
-    Com_Printf("\n^1******* script runtime error *******\n%s: ", msg);
+    Com_Printf(CON_CHANNEL_SCRIPT,"\n^1******* script runtime error *******\n%s: ", msg);
     Scr_PrintPrevCodePos(0, pos, a4);
     if (scrVmPub.function_count)
     {
         for (i = scrVmPub.function_count - 1; i > 0; --i)
         {
-            Com_Printf("^1called from:\n");
+            Com_Printf(CON_CHANNEL_SCRIPT,"^1called from:\n");
             Scr_PrintPrevCodePos(0, scrVmPub.function_frame_start[i].fs.pos, scrVmPub.function_frame_start[i].fs.localId == 0);
         }
-        Com_Printf("^1started from:\n");
+        Com_Printf(CON_CHANNEL_SCRIPT,"^1started from:\n");
         Scr_PrintPrevCodePos(0, scrVmPub.function_frame_start[0].fs.pos, 1);
     }
-    Com_Printf("^1************************************\n");
+    Com_Printf(CON_CHANNEL_SCRIPT,"^1************************************\n");
 }
 
 void RuntimeError(char *pos, int arg4, char *message, char *a4)
@@ -1360,7 +1360,7 @@ void RuntimeError(char *pos, int arg4, char *message, char *a4)
 
     if (scrVmPub.debugCode)
     {
-        Com_Printf("%s\n", message);
+        Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", message);
         if (!scrVmPub.terminal_error)
         {
             return;

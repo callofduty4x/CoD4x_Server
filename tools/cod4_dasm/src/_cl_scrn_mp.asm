@@ -877,12 +877,6 @@ SCR_Init:
 	nop
 
 
-;Zero initialized global or static variables of cl_scrn_mp:
-SECTION .bss
-s_lastUpdateScreenTime: resb 0x80
-scr_initialized: resb 0x4
-
-
 ;Initialized global or static variables of cl_scrn_mp:
 SECTION .data
 _ZZ16CL_CubemapShot_fvE10szShotName: dd _cstring__rt, _cstring__lf, _cstring__bk, _cstring__ft, _cstring__up, _cstring__dn, 0x0
@@ -891,6 +885,12 @@ updateScreenCalled: dd 0x0
 
 ;Initialized constant data of cl_scrn_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_scrn_mp:
+SECTION .bss
+s_lastUpdateScreenTime: resb 0x80
+scr_initialized: resb 0x4
 
 
 ;All cstrings:

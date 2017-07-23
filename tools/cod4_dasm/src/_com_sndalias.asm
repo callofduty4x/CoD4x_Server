@@ -23,7 +23,7 @@
 	extern Hunk_AllocInternal
 	extern Q_stricmpn
 	extern Com_StripExtension
-	extern I_strlwr
+	extern Q_strlwr
 	extern Hunk_HideTempMemory
 	extern Com_InitSoundAlias
 	extern Com_InitEntChannels
@@ -1183,7 +1183,7 @@ Com_LoadSoundAliases_130:
 Com_LoadSoundAliases_120:
 	lea eax, [ebp-0x60]
 	mov [esp], eax
-	call I_strlwr
+	call Q_strlwr
 	cmp dword [ebp+0x10], 0x1
 	jz Com_LoadSoundAliases_40
 Com_LoadSoundAliases_100:
@@ -1261,7 +1261,7 @@ Com_LoadSoundAliases_30:
 	call strcpy
 	lea eax, [ebp-0x60]
 	mov [esp], eax
-	call I_strlwr
+	call Q_strlwr
 	cmp dword [ebp+0x10], 0x1
 	jnz Com_LoadSoundAliases_100
 Com_LoadSoundAliases_40:
@@ -1930,19 +1930,19 @@ Com_GetDefaultSoundAliasVolumeFalloffCurve:
 	ret
 
 
-;Zero initialized global or static variables of com_sndalias:
-SECTION .bss
-g_sa: resb 0x2658
-_ZZ19Com_InitSpeakerMapsvE28Com_RefreshSpeakerMaps_f_VAR: resb 0x14
-_ZZ20Com_LoadSoundAliasesPKcS0_18snd_alias_system_tE19Com_SoundList_f_VAR: resb 0x14
-
-
 ;Initialized global or static variables of com_sndalias:
 SECTION .data
 
 
 ;Initialized constant data of com_sndalias:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_sndalias:
+SECTION .bss
+g_sa: resb 0x2658
+_ZZ19Com_InitSpeakerMapsvE28Com_RefreshSpeakerMaps_f_VAR: resb 0x14
+_ZZ20Com_LoadSoundAliasesPKcS0_18snd_alias_system_tE19Com_SoundList_f_VAR: resb 0x14
 
 
 ;All cstrings:

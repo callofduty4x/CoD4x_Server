@@ -2451,17 +2451,19 @@ _ZN9CDirect3DD1Ev:
 	ret
 
 
-;Zero initialized global or static variables of CDirect3D:
-SECTION .bss
-sDirect3DInterface: resb 0x80
-
-
 ;Initialized global or static variables of CDirect3D:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3D:
 SECTION .rdata
+;VTable for CDirect3D:
+_ZTV9CDirect3D: dd 0x0, 0x3b4660, _ZN9CDirect3D14QueryInterfaceERK5_GUIDPPv, _ZN9CDirect3D6AddRefEv, _ZN9CDirect3D7ReleaseEv, _ZN9CDirect3D22RegisterSoftwareDeviceEPv, _ZN9CDirect3D15GetAdapterCountEv, _ZN9CDirect3D20GetAdapterIdentifierEjmP23_D3DADAPTER_IDENTIFIER9, _ZN9CDirect3D19GetAdapterModeCountEj10_D3DFORMAT, _ZN9CDirect3D16EnumAdapterModesEj10_D3DFORMATjP15_D3DDISPLAYMODE, _ZN9CDirect3D21GetAdapterDisplayModeEjP15_D3DDISPLAYMODE, _ZN9CDirect3D15CheckDeviceTypeEj11_D3DDEVTYPE10_D3DFORMATS1_i, _ZN9CDirect3D17CheckDeviceFormatEj11_D3DDEVTYPE10_D3DFORMATm16_D3DRESOURCETYPES1_, _ZN9CDirect3D26CheckDeviceMultiSampleTypeEj11_D3DDEVTYPE10_D3DFORMATi20_D3DMULTISAMPLE_TYPEPm, _ZN9CDirect3D22CheckDepthStencilMatchEj11_D3DDEVTYPE10_D3DFORMATS1_S1_, _ZN9CDirect3D27CheckDeviceFormatConversionEj11_D3DDEVTYPE10_D3DFORMATS1_, _ZN9CDirect3D13GetDeviceCapsEj11_D3DDEVTYPEP9_D3DCAPS9, _ZN9CDirect3D17GetAdapterMonitorEj, _ZN9CDirect3D12CreateDeviceEj11_D3DDEVTYPEP6HWND__mP23_D3DPRESENT_PARAMETERS_PP16IDirect3DDevice9, _ZN9CDirect3DD1Ev, _ZN9CDirect3DD0Ev, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3D:
+SECTION .bss
+sDirect3DInterface: resb 0x80
 
 
 ;All cstrings:

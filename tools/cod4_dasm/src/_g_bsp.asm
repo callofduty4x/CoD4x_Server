@@ -7,17 +7,17 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of g_bsp:
-SECTION .bss
-gameWorldMp: resb 0x20
-
-
 ;Initialized global or static variables of g_bsp:
 SECTION .data
 
 
 ;Initialized constant data of g_bsp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_bsp:
+SECTION .bss
+gameWorldMp: resb 0x20
 
 
 ;All cstrings:

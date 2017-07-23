@@ -3946,43 +3946,6 @@ CG_UpdateBModelWorldBounds_10:
 	nop
 
 
-;Zero initialized global or static variables of cg_ents_mp:
-SECTION .bss
-g_keepZ_dup_1: resb 0x10
-g_keepX_dup_1: resb 0x10
-g_keepZW_dup_1: resb 0x10
-g_keepXY_dup_1: resb 0x10
-g_keepXYZ_dup_1: resb 0x10
-g_keepXYW_dup_1: resb 0x10
-g_keepXZW_dup_1: resb 0x10
-g_keepYZW_dup_1: resb 0x10
-g_selectW_dup_1: resb 0x10
-g_selectZ_dup_1: resb 0x10
-g_selectY_dup_1: resb 0x10
-g_selectX_dup_1: resb 0x10
-g_swizzleWWWW_dup_1: resb 0x10
-g_swizzleZZZZ_dup_1: resb 0x10
-g_swizzleYYYY_dup_1: resb 0x10
-g_swizzleXXXX_dup_1: resb 0x10
-g_swizzleYZWA_dup_1: resb 0x10
-g_swizzleZWAW_dup_1: resb 0x10
-g_swizzleWABW_dup_1: resb 0x10
-g_swizzleZXYW_dup_1: resb 0x10
-g_swizzleYZXW_dup_1: resb 0x10
-g_swizzleXYZA_dup_1: resb 0x10
-g_swizzleZWCD_dup_1: resb 0x10
-g_swizzleXYAB_dup_1: resb 0x10
-g_swizzleYBWD_dup_1: resb 0x10
-g_swizzleXAZC_dup_1: resb 0x10
-g_swizzleYXWZ_dup_1: resb 0x10
-g_swizzleXZYW_dup_1: resb 0x10
-g_swizzleYXZW_dup_1: resb 0x10
-g_swizzleXYZW_dup_1: resb 0x10
-g_inc_dup_1: resb 0x10
-g_negativeZero_dup_1: resb 0x10
-g_fltMin_dup_1: resb 0x80
-
-
 ;Initialized global or static variables of cg_ents_mp:
 SECTION .data
 g_entMoveTolVec: dd 0x41800000, 0x41800000, 0x41800000, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -4024,6 +3987,43 @@ g_inc__uint4_dup_1: dd 0x1, 0x1, 0x1, 0x1
 g_negativeZero__uint4_dup_1: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
 g_fltMin__uint4_dup_1: dd 0x800000, 0x800000, 0x800000, 0x800000
 g_zero: dd 0x0, 0x0, 0x0, 0x0, 0x6b051, 0x6b05c, 0x6b051, 0x6b051, 0x6b051, 0x6b051, 0x6b051, 0x6b051, 0x6b02d, 0x6b02d, 0x6b051, 0x6b097, 0x6b07f, 0x6b051, 0x6b07f, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x6d216, 0x6d82e, 0x6d842, 0x6d856, 0x6cf4e, 0x6d067, 0x6d17e, 0x6d649, 0x6d244, 0x6d76b, 0x6d30c, 0x6d572, 0x6d2e3, 0x6d169, 0x6d2e3, 0x0
+
+
+;Zero initialized global or static variables of cg_ents_mp:
+SECTION .bss
+g_keepZ_dup_1: resb 0x10
+g_keepX_dup_1: resb 0x10
+g_keepZW_dup_1: resb 0x10
+g_keepXY_dup_1: resb 0x10
+g_keepXYZ_dup_1: resb 0x10
+g_keepXYW_dup_1: resb 0x10
+g_keepXZW_dup_1: resb 0x10
+g_keepYZW_dup_1: resb 0x10
+g_selectW_dup_1: resb 0x10
+g_selectZ_dup_1: resb 0x10
+g_selectY_dup_1: resb 0x10
+g_selectX_dup_1: resb 0x10
+g_swizzleWWWW_dup_1: resb 0x10
+g_swizzleZZZZ_dup_1: resb 0x10
+g_swizzleYYYY_dup_1: resb 0x10
+g_swizzleXXXX_dup_1: resb 0x10
+g_swizzleYZWA_dup_1: resb 0x10
+g_swizzleZWAW_dup_1: resb 0x10
+g_swizzleWABW_dup_1: resb 0x10
+g_swizzleZXYW_dup_1: resb 0x10
+g_swizzleYZXW_dup_1: resb 0x10
+g_swizzleXYZA_dup_1: resb 0x10
+g_swizzleZWCD_dup_1: resb 0x10
+g_swizzleXYAB_dup_1: resb 0x10
+g_swizzleYBWD_dup_1: resb 0x10
+g_swizzleXAZC_dup_1: resb 0x10
+g_swizzleYXWZ_dup_1: resb 0x10
+g_swizzleXZYW_dup_1: resb 0x10
+g_swizzleYXZW_dup_1: resb 0x10
+g_swizzleXYZW_dup_1: resb 0x10
+g_inc_dup_1: resb 0x10
+g_negativeZero_dup_1: resb 0x10
+g_fltMin_dup_1: resb 0x80
 
 
 ;All cstrings:

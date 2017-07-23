@@ -11,7 +11,7 @@
 	extern _ZNSsC1ERKSs
 	extern _ZNSs6appendEPKcm
 	extern _Znwm
-	extern _Znam
+	extern _Znaj
 	extern memcpy
 	extern _ZdlPv
 	extern _ZNSt19basic_istringstreamIcSt11char_traitsIcESaIcEEC1ERKSsSt13_Ios_Openmode
@@ -225,7 +225,7 @@ D3DXCompileShader_10:
 	mov dword [eax+0x4], 0x0
 	mov [eax+0x8], esi
 	mov [esp], esi
-	call _Znam
+	call _Znaj
 	mov [ebx+0xc], eax
 	mov [esp+0x8], esi
 	mov [esp+0x4], edi
@@ -1104,7 +1104,7 @@ D3DXCompileShaderInit_170:
 	mov [esp], edi
 	call rewind
 	mov [esp], ebx
-	call _Znam
+	call _Znaj
 	mov esi, eax
 	lea eax, [eax+ebx]
 	mov [ebp-0x168], eax
@@ -3059,11 +3059,6 @@ _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3__10:
 	jmp _ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3__20
 
 
-;Zero initialized global or static variables of D3DXShader:
-SECTION .bss
-sPrograms: resb 0x80
-
-
 ;Initialized global or static variables of D3DXShader:
 SECTION .data
 EndToken: dd _cstring_end, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -3071,6 +3066,13 @@ EndToken: dd _cstring_end, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of D3DXShader:
 SECTION .rdata
+;VTable for CD3DXBuffer:
+_ZTV11CD3DXBuffer: dd 0x0, 0x3b4d60, _ZN11CD3DXBuffer14QueryInterfaceERK5_GUIDPPv, _ZN11CD3DXBuffer6AddRefEv, _ZN11CD3DXBuffer7ReleaseEv, _ZN11CD3DXBuffer16GetBufferPointerEv, _ZN11CD3DXBuffer13GetBufferSizeEv, _ZN11CD3DXBufferD1Ev, _ZN11CD3DXBufferD0Ev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of D3DXShader:
+SECTION .bss
+sPrograms: resb 0x80
 
 
 ;All cstrings:

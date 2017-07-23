@@ -264,16 +264,16 @@ speex_encoder_destroy:
 	jmp ecx
 
 
-;Zero initialized global or static variables of speex:
-SECTION .bss
-
-
 ;Initialized global or static variables of speex:
 SECTION .data
 
 
 ;Initialized constant data of speex:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of speex:
+SECTION .bss
 
 
 ;All cstrings:

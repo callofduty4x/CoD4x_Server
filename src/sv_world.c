@@ -252,7 +252,7 @@ void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
 				}
 				if ( ap->count == ap->maxcount )
 				{
-					Com_DPrintf("CM_AreaEntities: MAXCOUNT\n");
+					Com_DPrintf(CON_CHANNEL_SERVER,"CM_AreaEntities: MAXCOUNT\n");
 					return;
 				}
 				ap->list[ap->count] = gnum;

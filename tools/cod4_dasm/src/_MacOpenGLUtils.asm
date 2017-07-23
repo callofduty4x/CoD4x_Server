@@ -1066,18 +1066,18 @@ _ZN14MacOpenGLUtils34ConvertD3DProjectionMatrixToOpenGLEPfff:
 	nop
 
 
-;Zero initialized global or static variables of MacOpenGLUtils:
-SECTION .bss
-_ZN14MacOpenGLUtils14UseBufferHintsE: resb 0x78
-_ZN14MacOpenGLUtils15BufferFlushSizeE: resb 0x4
-
-
 ;Initialized global or static variables of MacOpenGLUtils:
 SECTION .data
 
 
 ;Initialized constant data of MacOpenGLUtils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacOpenGLUtils:
+SECTION .bss
+_ZN14MacOpenGLUtils14UseBufferHintsE: resb 0x78
+_ZN14MacOpenGLUtils15BufferFlushSizeE: resb 0x4
 
 
 ;All cstrings:

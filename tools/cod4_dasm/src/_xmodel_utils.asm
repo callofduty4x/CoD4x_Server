@@ -283,16 +283,16 @@ XModelGetStaticModelCacheVertCount:
 	ret
 
 
-;Zero initialized global or static variables of xmodel_utils:
-SECTION .bss
-
-
 ;Initialized global or static variables of xmodel_utils:
 SECTION .data
 
 
 ;Initialized constant data of xmodel_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of xmodel_utils:
+SECTION .bss
 
 
 ;All cstrings:

@@ -3859,13 +3859,6 @@ SND_SetStreamChannelPlaybackRate:
 	jmp AIL_set_sample_playback_rate
 
 
-;Zero initialized global or static variables of snd_driver:
-SECTION .bss
-milesGlob: resb 0x8cc
-snd_outputConfiguration: resb 0x4
-snd_khz: resb 0x30
-
-
 ;Initialized global or static variables of snd_driver:
 SECTION .data
 snd_outputConfigurationStrings: dd _cstring_windows_default, _cstring_mono, _cstring_stereo, _cstring_4_speakers, _cstring_51_speakers, 0x0
@@ -3874,6 +3867,13 @@ mss_spec: dd 0x10, 0x1, 0x20, 0x50, 0x60, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of snd_driver:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of snd_driver:
+SECTION .bss
+milesGlob: resb 0x8cc
+snd_outputConfiguration: resb 0x4
+snd_khz: resb 0x30
 
 
 ;All cstrings:

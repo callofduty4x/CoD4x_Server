@@ -3588,6 +3588,15 @@ CG_CompassDrawPlayerMapLocationSelector_50:
 	nop
 
 
+;Initialized global or static variables of cg_compass:
+SECTION .data
+
+
+;Initialized constant data of cg_compass:
+SECTION .rdata
+colorObjectiveText: dd 0x3f666666, 0x3f800000, 0x3dcccccd, 0x3f800000, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+
+
 ;Zero initialized global or static variables of cg_compass:
 SECTION .bss
 cg_hudMapBorderWidth: resb 0x4
@@ -3639,15 +3648,6 @@ compassRotation: resb 0x4
 compassSize: resb 0x4
 compassSoundPingFadeTime: resb 0x4
 compassTickertapeStretch: resb 0x4
-
-
-;Initialized global or static variables of cg_compass:
-SECTION .data
-
-
-;Initialized constant data of cg_compass:
-SECTION .rdata
-colorObjectiveText: dd 0x3f666666, 0x3f800000, 0x3dcccccd, 0x3f800000, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
 
 
 ;All cstrings:

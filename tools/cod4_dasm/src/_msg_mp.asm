@@ -11054,6 +11054,14 @@ MSG_Init_10:
 	ret
 
 
+;Initialized global or static variables of msg_mp:
+SECTION .data
+
+
+;Initialized constant data of msg_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of msg_mp:
 SECTION .bss
 msgInit: resb 0x20
@@ -11061,14 +11069,6 @@ _ZZ14MSG_ReadStringP5msg_tE6string: resb 0x400
 _ZZ17MSG_ReadBigStringP5msg_tE6string: resb 0x2000
 _ZZ18MSG_ReadStringLineP5msg_tE6string: resb 0x460
 msgHuff: resb 0x4c20
-
-
-;Initialized global or static variables of msg_mp:
-SECTION .data
-
-
-;Initialized constant data of msg_mp:
-SECTION .rdata
 
 
 ;All cstrings:

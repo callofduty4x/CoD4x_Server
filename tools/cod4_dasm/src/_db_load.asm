@@ -15777,6 +15777,14 @@ Load_Font_20:
 	jmp Load_Font_10
 
 
+;Initialized global or static variables of db_load:
+SECTION .data
+
+
+;Initialized constant data of db_load:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of db_load:
 SECTION .bss
 varScriptStringList: resb 0x4
@@ -16016,14 +16024,6 @@ varvec2_t: resb 0x8
 varvec3_t: resb 0x4
 varwater_t: resb 0x4
 varwindowDef_t: resb 0xc
-
-
-;Initialized global or static variables of db_load:
-SECTION .data
-
-
-;Initialized constant data of db_load:
-SECTION .rdata
 
 
 ;All cstrings:

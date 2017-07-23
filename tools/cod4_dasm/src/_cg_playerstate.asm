@@ -360,16 +360,16 @@ CG_ExtractTransPlayerState:
 	ret
 
 
-;Zero initialized global or static variables of cg_playerstate:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_playerstate:
 SECTION .data
 
 
 ;Initialized constant data of cg_playerstate:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_playerstate:
+SECTION .bss
 
 
 ;All cstrings:

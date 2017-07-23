@@ -1725,6 +1725,14 @@ NET_Sleep_10:
 	nop
 
 
+;Initialized global or static variables of win_net:
+SECTION .data
+
+
+;Initialized constant data of win_net:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of win_net:
 SECTION .bss
 ip_socket: resb 0x4
@@ -1745,14 +1753,6 @@ localIP: resb 0x40
 numIP: resb 0x20
 socksBuf: resb 0x1000
 ipx_socket: resb 0x20
-
-
-;Initialized global or static variables of win_net:
-SECTION .data
-
-
-;Initialized constant data of win_net:
-SECTION .rdata
 
 
 ;All cstrings:

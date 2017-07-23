@@ -8,10 +8,6 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of snd_utils:
-SECTION .bss
-
-
 ;Initialized global or static variables of snd_utils:
 SECTION .data
 snd_eqTypeStrings: dd _cstring_lowpass, _cstring_highpass, _cstring_lowshelf, _cstring_highshelf, _cstring_bell, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -20,6 +16,10 @@ snd_roomStrings: dd _cstring_generic, _cstring_paddedcell, _cstring_room, _cstri
 
 ;Initialized constant data of snd_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of snd_utils:
+SECTION .bss
 
 
 ;All cstrings:

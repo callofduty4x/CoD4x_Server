@@ -2162,6 +2162,14 @@ Cvar_WriteVariables:
 	nop
 
 
+;Initialized global or static variables of dvar_cmds:
+SECTION .data
+
+
+;Initialized constant data of dvar_cmds:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of dvar_cmds:
 SECTION .bss
 info2: resb 0x2000
@@ -2182,14 +2190,6 @@ _ZZ16Dvar_AddCommandsvE15Dvar_SetS_f_VAR: resb 0x14
 _ZZ16Dvar_AddCommandsvE14Dvar_Set_f_VAR: resb 0x14
 _ZZ16Dvar_AddCommandsvE22Dvar_TogglePrint_f_VAR: resb 0x14
 _ZZ16Dvar_AddCommandsvE17Dvar_Toggle_f_VAR: resb 0x64
-
-
-;Initialized global or static variables of dvar_cmds:
-SECTION .data
-
-
-;Initialized constant data of dvar_cmds:
-SECTION .rdata
 
 
 ;All cstrings:

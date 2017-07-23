@@ -152,10 +152,6 @@ RB_PixelCost_BuildColorCodeMap_20:
 	ret
 
 
-;Zero initialized global or static variables of r_pixelcost_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_pixelcost_load_obj:
 SECTION .data
 
@@ -163,6 +159,10 @@ SECTION .data
 ;Initialized constant data of r_pixelcost_load_obj:
 SECTION .rdata
 s_pixelCostColorCodeTable: dd 0x0, _cstring_black, 0xff0028, _cstring_green, 0xffff38, _cstring_yellow, 0x80ff48, _cstring_orange, 0xff80, _cstring_red, 0xffffffff, _cstring_white, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of r_pixelcost_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

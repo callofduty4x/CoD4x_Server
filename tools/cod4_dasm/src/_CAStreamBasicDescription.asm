@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of CAStreamBasicDescription:
-SECTION .bss
-
-
 ;Initialized global or static variables of CAStreamBasicDescription:
 SECTION .data
 
 
 ;Initialized constant data of CAStreamBasicDescription:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of CAStreamBasicDescription:
+SECTION .bss
 
 
 ;All cstrings:

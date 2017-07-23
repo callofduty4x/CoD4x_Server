@@ -370,15 +370,6 @@ DSOUNDRecord_DestroySample:
 	nop
 
 
-;Zero initialized global or static variables of mac_record_dsound:
-SECTION .bss
-sAudioRecorder: resb 0x4
-g_current_sample: resb 0x1c
-s_recordingSamples: resb 0x924
-s_recordingSamplePtr: resb 0x3c
-current_audioCallback: resb 0x80
-
-
 ;Initialized global or static variables of mac_record_dsound:
 SECTION .data
 g_currently_recording: db 0x0
@@ -390,6 +381,15 @@ g_sound_recordVolume: dd 0xff
 
 ;Initialized constant data of mac_record_dsound:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mac_record_dsound:
+SECTION .bss
+sAudioRecorder: resb 0x4
+g_current_sample: resb 0x1c
+s_recordingSamples: resb 0x924
+s_recordingSamplePtr: resb 0x3c
+current_audioCallback: resb 0x80
 
 
 ;All cstrings:

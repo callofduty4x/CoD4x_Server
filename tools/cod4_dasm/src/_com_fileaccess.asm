@@ -214,16 +214,16 @@ FS_FileWrite:
 	nop
 
 
-;Zero initialized global or static variables of com_fileaccess:
-SECTION .bss
-
-
 ;Initialized global or static variables of com_fileaccess:
 SECTION .data
 
 
 ;Initialized constant data of com_fileaccess:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_fileaccess:
+SECTION .bss
 
 
 ;All cstrings:

@@ -42,16 +42,16 @@ _ZN11StPortStateD1Ev:
 	add [eax], al
 
 
-;Zero initialized global or static variables of MacSavers:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacSavers:
 SECTION .data
 
 
 ;Initialized constant data of MacSavers:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacSavers:
+SECTION .bss
 
 
 ;All cstrings:

@@ -1107,6 +1107,16 @@ LiveStorage_ReadStatsIfDirChanged_10:
 	jmp LiveStorage_ReadStatsFromDir
 
 
+;Initialized global or static variables of win_storage:
+SECTION .data
+allowedDvarNames: dd _cstring_ui_primary_attac, _cstring_ui_primary_weapo, _cstring_ui_secondary_att, _cstring_ui_secondary_wea, _cstring_ui_perk1_slot, _cstring_ui_perk2_selecti, _cstring_ui_tempstorage
+uiStatDvarPrefix: dd _cstring_ui_stat_
+
+
+;Initialized constant data of win_storage:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of win_storage:
 SECTION .bss
 g_statsDir: resb 0x100
@@ -1116,16 +1126,6 @@ _ZZ16LiveStorage_InitvE30LiveStorage_UploadStatsCmd_VAR: resb 0x14
 _ZZ16LiveStorage_InitvE32LiveStorage_StatGetInDvarCmd_VAR: resb 0x14
 _ZZ16LiveStorage_InitvE26LiveStorage_StatSetCmd_VAR: resb 0x40
 stat_version: resb 0x80
-
-
-;Initialized global or static variables of win_storage:
-SECTION .data
-allowedDvarNames: dd _cstring_ui_primary_attac, _cstring_ui_primary_weapo, _cstring_ui_secondary_att, _cstring_ui_secondary_wea, _cstring_ui_perk1_slot, _cstring_ui_perk2_selecti, _cstring_ui_tempstorage
-uiStatDvarPrefix: dd _cstring_ui_stat_
-
-
-;Initialized constant data of win_storage:
-SECTION .rdata
 
 
 ;All cstrings:

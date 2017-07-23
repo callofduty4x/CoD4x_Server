@@ -1482,13 +1482,6 @@ AIL_UpdateAllSounds_20:
 	ret
 
 
-;Zero initialized global or static variables of MacMSS:
-SECTION .bss
-sSoundEngine: resb 0x4
-sHighQualityEngine: resb 0x1
-sPaused: resb 0x7b
-
-
 ;Initialized global or static variables of MacMSS:
 SECTION .data
 kHighQualityKey: dd _cstring_macsoundhighqual, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -1497,6 +1490,13 @@ gMinDataBufferSize: dd 0x0
 
 ;Initialized constant data of MacMSS:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacMSS:
+SECTION .bss
+sSoundEngine: resb 0x4
+sHighQualityEngine: resb 0x1
+sPaused: resb 0x7b
 
 
 ;All cstrings:

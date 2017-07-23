@@ -1,4 +1,38 @@
 ;Imports of modes:
+	extern vbr_uhb_thresh
+	extern lsp_quant_high
+	extern lsp_unquant_high
+	extern vbr_hb_thresh
+	extern split_cb_search_shape_sign
+	extern split_cb_shape_sign_unquant
+	extern lsp_quant_lbr
+	extern lsp_unquant_lbr
+	extern forced_pitch_quant
+	extern forced_pitch_unquant
+	extern noise_codebook_quant
+	extern noise_codebook_unquant
+	extern pitch_search_3tap
+	extern pitch_unquant_3tap
+	extern lsp_quant_nb
+	extern lsp_unquant_nb
+	extern nb_mode_query
+	extern nb_encoder_init
+	extern nb_encoder_destroy
+	extern nb_encode
+	extern nb_decoder_init
+	extern nb_decoder_destroy
+	extern nb_decode
+	extern nb_encoder_ctl
+	extern nb_decoder_ctl
+	extern wb_mode_query
+	extern sb_encoder_init
+	extern sb_encoder_destroy
+	extern sb_encode
+	extern sb_decoder_init
+	extern sb_decoder_destroy
+	extern sb_decode
+	extern sb_encoder_ctl
+	extern sb_decoder_ctl
 
 ;Exports of modes:
 	global sb_uwb_mode
@@ -61,10 +95,6 @@ speex_mode_query:
 	add [eax], al
 
 
-;Zero initialized global or static variables of modes:
-SECTION .bss
-
-
 ;Initialized global or static variables of modes:
 SECTION .data
 
@@ -111,6 +141,10 @@ exc_10_16_table: dd 0x2c0e2716, 0x17fe230b, 0xe42e06fc, 0xce9e50d, 0x9fb1404, 0x
 speex_nb_mode: dd nb_mode, nb_mode_query, _cstring_narrowband, 0x0, 0x4, nb_encoder_init, nb_encoder_destroy, nb_encode, nb_decoder_init, nb_decoder_destroy, nb_decode, nb_encoder_ctl, nb_decoder_ctl, 0x0, 0x0, 0x0
 speex_uwb_mode: dd sb_uwb_mode, wb_mode_query, _cstring_ultrawideband_su, 0x2, 0x4, sb_encoder_init, sb_encoder_destroy, sb_encode, sb_decoder_init, sb_decoder_destroy, sb_decode, sb_encoder_ctl, sb_decoder_ctl, 0x0, 0x0, 0x0
 speex_wb_mode: dd sb_wb_mode, wb_mode_query, _cstring_wideband_subband, 0x1, 0x4, sb_encoder_init, sb_encoder_destroy, sb_encode, sb_decoder_init, sb_decoder_destroy, sb_decode, sb_encoder_ctl, sb_decoder_ctl, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of modes:
+SECTION .bss
 
 
 ;All cstrings:

@@ -3,7 +3,6 @@
 	extern BG_AddPredictableEventToPlayerstate
 	extern BG_AnimScriptEvent
 	extern PM_GroundSurfaceType
-	extern red.137162
 	extern Cvar_RegisterFloat
 	extern Cvar_RegisterBool
 
@@ -160,7 +159,7 @@ Jump_Check_90:
 	pxor xmm1, xmm1
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
-	movss xmm7, dword [red.137162+0xa0]
+	movss xmm7, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm7
 	pxor xmm4, xmm4
@@ -529,6 +528,14 @@ Jump_IsPlayerAboveMax:
 	nop
 
 
+;Initialized global or static variables of bg_jump:
+SECTION .data
+
+
+;Initialized constant data of bg_jump:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of bg_jump:
 SECTION .bss
 jump_height: resb 0x4
@@ -536,14 +543,6 @@ jump_spreadAdd: resb 0x4
 jump_slowdownEnable: resb 0x4
 jump_ladderPushVel: resb 0x4
 jump_stepSize: resb 0x70
-
-
-;Initialized global or static variables of bg_jump:
-SECTION .data
-
-
-;Initialized constant data of bg_jump:
-SECTION .rdata
 
 
 ;All cstrings:
@@ -566,6 +565,7 @@ SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_0_75000000:		dd 0x3f400000	; 0.75
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_2_50000000:		dd 0x40200000	; 2.5
 _float_1_50000000:		dd 0x3fc00000	; 1.5
 _float_0_00058824:		dd 0x3a1a33cd	; 0.000588235

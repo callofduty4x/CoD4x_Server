@@ -2781,21 +2781,6 @@ CG_DrawPlayerWeaponAmmoClipGraphic_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cg_ammocounter:
-SECTION .bss
-actionSlotsHide: resb 0x4
-ammoCounterHide: resb 0x54
-lowAmmoWarningColor1: resb 0x4
-lowAmmoWarningColor2: resb 0x4
-lowAmmoWarningNoAmmoColor1: resb 0x4
-lowAmmoWarningNoAmmoColor2: resb 0x4
-lowAmmoWarningNoReloadColor1: resb 0x4
-lowAmmoWarningNoReloadColor2: resb 0x4
-lowAmmoWarningPulseFreq: resb 0x4
-lowAmmoWarningPulseMax: resb 0x4
-lowAmmoWarningPulseMin: resb 0x4
-
-
 ;Initialized global or static variables of cg_ammocounter:
 SECTION .data
 _ZZ9AmmoColorP4cg_sPfjE11MYFLASHTERM: dd 0x42200000
@@ -2815,6 +2800,21 @@ _ZZ27CG_DrawPlayerActionSlotDpadiPK9rectDef_sPKfP8MaterialE5MY_ST: dd 0x0, 0x0, 
 _ZZ27CG_DrawPlayerActionSlotDpadiPK9rectDef_sPKfP8MaterialE7MY_DIMS: dd 0x3f000000, 0x3e800000, 0x3f000000, 0x3e800000, 0x3e800000, 0x3f000000, 0x3e800000, 0x3f000000
 _ZZ27CG_DrawPlayerActionSlotDpadiPK9rectDef_sPKfP8MaterialE10MY_OFFSETS: dd 0x3e800000, 0x3df5c28f, 0x3e800000, 0x3f2147ae, 0x3df5c28f, 0x3e800000, 0x3f2147ae, 0x3e800000, 0x0
 _ZZ20DrawClipAmmoMagazineP4cg_sPKfjPK9WeaponDefPfE14TEST_bullet_wh: dd 0x40800000, 0x41000000, 0x4a669, 0x4a64b, 0x4a712, 0x4a6ef, 0x4a6cc, 0x4a6ac, 0x4a671, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of cg_ammocounter:
+SECTION .bss
+actionSlotsHide: resb 0x4
+ammoCounterHide: resb 0x54
+lowAmmoWarningColor1: resb 0x4
+lowAmmoWarningColor2: resb 0x4
+lowAmmoWarningNoAmmoColor1: resb 0x4
+lowAmmoWarningNoAmmoColor2: resb 0x4
+lowAmmoWarningNoReloadColor1: resb 0x4
+lowAmmoWarningNoReloadColor2: resb 0x4
+lowAmmoWarningPulseFreq: resb 0x4
+lowAmmoWarningPulseMax: resb 0x4
+lowAmmoWarningPulseMin: resb 0x4
 
 
 ;All cstrings:

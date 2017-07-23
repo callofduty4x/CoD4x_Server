@@ -146,16 +146,16 @@ R_ProcessCmd_UpdateFxNonDependent:
 	nop
 
 
-;Zero initialized global or static variables of r_workercmds_common:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_workercmds_common:
 SECTION .data
 
 
 ;Initialized constant data of r_workercmds_common:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_workercmds_common:
+SECTION .bss
 
 
 ;All cstrings:

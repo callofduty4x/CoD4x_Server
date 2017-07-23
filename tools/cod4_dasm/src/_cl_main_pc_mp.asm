@@ -2900,19 +2900,19 @@ CL_Rcon_f_150:
 	jmp CL_Rcon_f_90
 
 
-;Zero initialized global or static variables of cl_main_pc_mp:
-SECTION .bss
-s_playerMute: resb 0x40
-rconGlob: resb 0x40
-cl_serverStatusList: resb 0x20260
-
-
 ;Initialized global or static variables of cl_main_pc_mp:
 SECTION .data
 
 
 ;Initialized constant data of cl_main_pc_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_main_pc_mp:
+SECTION .bss
+s_playerMute: resb 0x40
+rconGlob: resb 0x40
+cl_serverStatusList: resb 0x20260
 
 
 ;All cstrings:

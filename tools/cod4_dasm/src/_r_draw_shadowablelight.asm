@@ -354,16 +354,16 @@ R_SetDrawSurfsShadowableLight_30:
 	jmp R_SetDrawSurfsShadowableLight_10
 
 
-;Zero initialized global or static variables of r_draw_shadowablelight:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_draw_shadowablelight:
 SECTION .data
 
 
 ;Initialized constant data of r_draw_shadowablelight:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_draw_shadowablelight:
+SECTION .bss
 
 
 ;All cstrings:

@@ -311,17 +311,17 @@ CG_ClearCameraShakes:
 	ret
 
 
-;Zero initialized global or static variables of cg_camerashake:
-SECTION .bss
-s_cameraShakeSet: resb 0x100
-
-
 ;Initialized global or static variables of cg_camerashake:
 SECTION .data
 
 
 ;Initialized constant data of cg_camerashake:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_camerashake:
+SECTION .bss
+s_cameraShakeSet: resb 0x100
 
 
 ;All cstrings:

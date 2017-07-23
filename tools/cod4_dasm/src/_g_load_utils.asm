@@ -387,20 +387,20 @@ vtos:
 	nop
 
 
-;Zero initialized global or static variables of g_load_utils:
-SECTION .bss
-g_entityEndParsePoint: resb 0x4
-g_entityBeginParsePoint: resb 0x1c
-_ZZ4vtosPKfE3str: resb 0x100
-_ZZ4vtosPKfE5index: resb 0x60
-
-
 ;Initialized global or static variables of g_load_utils:
 SECTION .data
 
 
 ;Initialized constant data of g_load_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_load_utils:
+SECTION .bss
+g_entityEndParsePoint: resb 0x4
+g_entityBeginParsePoint: resb 0x1c
+_ZZ4vtosPKfE3str: resb 0x100
+_ZZ4vtosPKfE5index: resb 0x60
 
 
 ;All cstrings:

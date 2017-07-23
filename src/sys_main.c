@@ -205,7 +205,7 @@ void Sys_SetExitCmdline(const char* cmdline)
 {
 	if(strlen(cmdline) >= sizeof(exit_cmdline))
 	{
-		Com_PrintError("Sys_SetExitCmdline: Exceeded length of %d characters.\n", sizeof(exit_cmdline) -1);
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Sys_SetExitCmdline: Exceeded length of %d characters.\n", sizeof(exit_cmdline) -1);
 	}
 	Q_strncpyz(exit_cmdline, cmdline, sizeof(exit_cmdline));
 }
@@ -238,18 +238,18 @@ void Sys_DoSignalAction( int signal, const char* sigstring )
 		return;
 	}
 #endif
-	Com_Printf( "Received signal: %s, exiting...\n", sigstring );
+	Com_Printf(CON_CHANNEL_SYSTEM, "Received signal: %s, exiting...\n", sigstring );
 
 	if( signalcaught )
 	{
-		Com_Printf( "DOUBLE SIGNAL FAULT: Received signal: %s, exiting...\n", sigstring);
+		Com_Printf(CON_CHANNEL_SYSTEM, "DOUBLE SIGNAL FAULT: Received signal: %s, exiting...\n", sigstring);
 	}
 
 	else
 	{
 		signalcaught = qtrue;
 		Sys_BeginShutdownWatchdog();
-		Com_Printf("Server received signal: %s\nShutting down server...\n", sigstring);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Server received signal: %s\nShutting down server...\n", sigstring);
 		Com_sprintf(termmsg, sizeof(termmsg), "\nServer received signal: %s\nTerminating server...", sigstring);
 		SV_Shutdown( termmsg );
 		SV_SApiShutdown();
@@ -501,7 +501,7 @@ void Sys_Restart(const char* reason)
 	SV_Shutdown( reason );
 	SV_SApiShutdown( );
 	Com_sprintf(commandline, sizeof(commandline), "%s %s", Sys_ExeFile(), Sys_GetCommandline());
-	Com_Printf("Restart commandline is: %s\n", commandline);
+	Com_Printf(CON_CHANNEL_SYSTEM,"Restart commandline is: %s\n", commandline);
 	Sys_SetExitCmdline(commandline);
 	Com_Quit_f();
 }

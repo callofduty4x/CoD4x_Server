@@ -2333,12 +2333,6 @@ CanDamage_140:
 	nop
 
 
-;Zero initialized global or static variables of g_combat_mp:
-SECTION .bss
-g_HitLocConstNames: resb 0x80
-g_fHitLocDamageMult: resb 0x80
-
-
 ;Initialized global or static variables of g_combat_mp:
 SECTION .data
 g_HitLocNames: dd _cstring_none, _cstring_helmet, _cstring_head, _cstring_neck, _cstring_torso_upper, _cstring_torso_lower, _cstring_right_arm_upper, _cstring_left_arm_upper, _cstring_right_arm_lower, _cstring_left_arm_lower, _cstring_right_hand, _cstring_left_hand, _cstring_right_leg_upper, _cstring_left_leg_upper, _cstring_right_leg_lower, _cstring_left_leg_lower, _cstring_right_foot, _cstring_left_foot, _cstring_gun, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -2351,6 +2345,12 @@ modNames: dd 0x1708cd8, 0x1708cda, 0x1708cdc, 0x1708cde, 0x1708ce0, 0x1708ce2, 0
 
 ;Initialized constant data of g_combat_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_combat_mp:
+SECTION .bss
+g_HitLocConstNames: resb 0x80
+g_fHitLocDamageMult: resb 0x80
 
 
 ;All cstrings:

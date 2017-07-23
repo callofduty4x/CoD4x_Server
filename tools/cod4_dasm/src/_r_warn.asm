@@ -114,15 +114,6 @@ R_WarnOncePerFrame_60:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_warn:
-SECTION .bss
-r_warningRepeatDelay: resb 0x20
-s_warnCount: resb 0xa0
-_ZZ17R_UpdateFrameRatevE8previous: resb 0x4
-_ZZ17R_UpdateFrameRatevE10frameCount: resb 0x4
-_ZZ17R_UpdateFrameRatevE9frameRate: resb 0x38
-
-
 ;Initialized global or static variables of r_warn:
 SECTION .data
 s_warnFormat: dd _cstring_entity_buffer_ex, _cstring_too_many_existin, _cstring_too_many_existin1, _cstring_model_light_cach, _cstring_too_many_scene_e, _cstring_temp_skin_buf_si, _cstring_r_max_skinned_ca, _cstring_max_scene_surfs_, _cstring_portal_plane_buf, _cstring_gfx_particle_clo, _cstring_max_added_dlight, _cstring_too_many_visible, _cstring_max_drawsurfs327, _cstring_gfx_code_mesh_li, _cstring_gfx_mark_mesh_li, _cstring_max_scene_drawsu, _cstring_max_fx_drawsurfs, _cstring_non_effect_mater, _cstring_non_impact_mark_, _cstring_prim_draw_surf_b, _cstring_command_buffer_o, _cstring_missing_decl_s_t, _cstring_max_dyn_ent_refs, _cstring_max_scene_dobj_r, _cstring_max_scene_model_, _cstring_max_scene_brush_, _cstring_gfx_code_mesh_in, _cstring_gfx_code_mesh_ve, _cstring_gfx_code_mesh_ar, _cstring_gfx_mark_mesh_in, _cstring_gfx_mark_mesh_ve, _cstring_out_of_debug_mem, _cstring_fx_spot_light_li, _cstring_fx_elem_limit204, _cstring_unknown_static_m, _cstring_unknown_xmodel_s, _cstring_dynamic_index_bu, _cstring_too_many_light_g, _cstring_fogable_material, _cstring_fogable_material1
@@ -130,6 +121,15 @@ s_warnFormat: dd _cstring_entity_buffer_ex, _cstring_too_many_existin, _cstring_
 
 ;Initialized constant data of r_warn:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_warn:
+SECTION .bss
+r_warningRepeatDelay: resb 0x20
+s_warnCount: resb 0xa0
+_ZZ17R_UpdateFrameRatevE8previous: resb 0x4
+_ZZ17R_UpdateFrameRatevE10frameCount: resb 0x4
+_ZZ17R_UpdateFrameRatevE9frameRate: resb 0x38
 
 
 ;All cstrings:

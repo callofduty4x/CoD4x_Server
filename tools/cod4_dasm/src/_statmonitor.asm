@@ -104,18 +104,18 @@ StatMon_GetStatsArray:
 	nop
 
 
-;Zero initialized global or static variables of statmonitor:
-SECTION .bss
-statCount: resb 0x20
-stats: resb 0x60
-
-
 ;Initialized global or static variables of statmonitor:
 SECTION .data
 
 
 ;Initialized constant data of statmonitor:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of statmonitor:
+SECTION .bss
+statCount: resb 0x20
+stats: resb 0x60
 
 
 ;All cstrings:

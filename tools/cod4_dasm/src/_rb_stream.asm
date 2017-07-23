@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of rb_stream:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_stream:
 SECTION .data
 
 
 ;Initialized constant data of rb_stream:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_stream:
+SECTION .bss
 
 
 ;All cstrings:

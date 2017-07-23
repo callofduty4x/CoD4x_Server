@@ -190,7 +190,7 @@ void G_AddRule(const char* newtext){
             break;
     }
     if(i == MAX_MESSAGES){
-        Com_PrintWarning("Exceeded the limit of %i rules\n", MAX_MESSAGES);
+        Com_PrintWarning(CON_CHANNEL_SERVER,"Exceeded the limit of %i rules\n", MAX_MESSAGES);
         return;
     }
 
@@ -215,7 +215,7 @@ void G_AddRule(const char* newtext){
     }
 
     if(newstrlen >= MAX_MSGBUFF - j){
-        Com_PrintWarning("Exceeded the maximum combined length of all advert and rules\n");
+        Com_PrintWarning(CON_CHANNEL_SERVER,"Exceeded the maximum combined length of all advert and rules\n");
         return;
     }
     //append the new text string to our buffer
@@ -246,7 +246,7 @@ void G_AddAdvert(const char* newtext){
             break;
     }
     if(i == MAX_MESSAGES){
-        Com_PrintWarning("Exceeded the limit of %i adverts\n", MAX_MESSAGES);
+        Com_PrintWarning(CON_CHANNEL_SERVER,"Exceeded the limit of %i adverts\n", MAX_MESSAGES);
         return;
     }
 
@@ -271,7 +271,7 @@ void G_AddAdvert(const char* newtext){
     }
 
     if(newstrlen >= MAX_MSGBUFF - j){
-        Com_PrintWarning("Exceeded the maximum combined length of all advert and rules\n");
+        Com_PrintWarning(CON_CHANNEL_SERVER,"Exceeded the maximum combined length of all advert and rules\n");
         return;
     }
     //append the new text string to our buffer
@@ -391,7 +391,6 @@ void G_ShowMotd(unsigned int clnum)
     color.i = 0xFFCCFFCC;
     glowcolor.i = 0x0A4C994C;
 
-    Com_DPrintf("Draw Message of the Day of client num: %i\n", clnum);
 
     hudelem1 = G_GetNewHudElem(clnum);
 

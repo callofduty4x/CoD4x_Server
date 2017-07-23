@@ -1120,20 +1120,20 @@ CG_ItemListLocalClientNum:
 	ret
 
 
-;Zero initialized global or static variables of cg_predict_mp:
-SECTION .bss
-cg_pmove: resb 0x110
-cg_itemEntityCount: resb 0x10
-cg_itemEntities: resb 0x800
-cg_itemLocalClientNum: resb 0x60
-
-
 ;Initialized global or static variables of cg_predict_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_predict_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_predict_mp:
+SECTION .bss
+cg_pmove: resb 0x110
+cg_itemEntityCount: resb 0x10
+cg_itemEntities: resb 0x800
+cg_itemLocalClientNum: resb 0x60
 
 
 ;All cstrings:

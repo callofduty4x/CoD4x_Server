@@ -1815,16 +1815,18 @@ _ZNK12CSoundObject9Is3DSoundEv:
 	ret
 
 
-;Zero initialized global or static variables of MacMSS_Object:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacMSS_Object:
 SECTION .data
 
 
 ;Initialized constant data of MacMSS_Object:
 SECTION .rdata
+;VTable for CSoundObject:
+_ZTV12CSoundObject: dd 0x0, 0x3b4ec0, _ZN12CSoundObjectD1Ev, _ZN12CSoundObjectD0Ev, _ZN12CSoundObject7ReleaseEv, _ZN12CSoundObject9TheadIdleEv, _ZN12CSoundObject11stop_sampleEv, _ZN12CSoundObject13resume_sampleEv, _ZN12CSoundObject10end_sampleEv, _ZN12CSoundObject22get_sample_ms_positionEPiS0_, _ZN12CSoundObject22set_sample_ms_positionEi, _ZN12CSoundObject24set_sample_playback_rateEi, _ZN12CSoundObject11open_streamEPKc, _ZN12CSoundObject12close_streamEv, _ZN12CSoundObject13ChangedVolumeEv, _ZN12CSoundObject13ChangedFormatEv, _ZN12CSoundObject17Changed3DPositionEv, _ZN12CSoundObject18Changed3DDistancesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of MacMSS_Object:
+SECTION .bss
 
 
 ;All cstrings:

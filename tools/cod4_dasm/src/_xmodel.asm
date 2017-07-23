@@ -1992,18 +1992,18 @@ XModelBad_10:
 	ret
 
 
-;Zero initialized global or static variables of xmodel:
-SECTION .bss
-g_materials: resb 0x80
-g_default: resb 0x60
-
-
 ;Initialized global or static variables of xmodel:
 SECTION .data
 
 
 ;Initialized constant data of xmodel:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of xmodel:
+SECTION .bss
+g_materials: resb 0x80
+g_default: resb 0x60
 
 
 ;All cstrings:

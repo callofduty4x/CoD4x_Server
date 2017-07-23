@@ -855,6 +855,14 @@ _ZN10MacFolders35GetApplicationSupportFolderItemPathEPKcPci_20:
 	add [eax], al
 
 
+;Initialized global or static variables of MacFolders:
+SECTION .data
+
+
+;Initialized constant data of MacFolders:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of MacFolders:
 SECTION .bss
 sDataFolderDirID: resb 0x4
@@ -862,14 +870,6 @@ sExecutableDirID: resb 0x4
 sAppFolderDirID: resb 0x4
 sAppFolderVRefNum: resb 0x14
 sAppBundleRef: resb 0x60
-
-
-;Initialized global or static variables of MacFolders:
-SECTION .data
-
-
-;Initialized constant data of MacFolders:
-SECTION .rdata
 
 
 ;All CFStrings:

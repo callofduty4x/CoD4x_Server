@@ -958,16 +958,16 @@ _ZN14CAudioRecorderD1Ev_10:
 	nop
 
 
-;Zero initialized global or static variables of CAudioRecorder:
-SECTION .bss
-
-
 ;Initialized global or static variables of CAudioRecorder:
 SECTION .data
 
 
 ;Initialized constant data of CAudioRecorder:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of CAudioRecorder:
+SECTION .bss
 
 
 ;All cstrings:

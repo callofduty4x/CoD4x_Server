@@ -901,6 +901,16 @@ Con_WriteFilterConfigString_10:
 	ret
 
 
+;Initialized global or static variables of con_channels:
+SECTION .data
+builtinChannels: dd _cstring_dontfilter, _cstring_error, _cstring_gamenotify, _cstring_boldgame, _cstring_subtitle, _cstring_obituary, _cstring_logfile_only, _cstring_console_only, _cstring_gfx, _cstring_sound, _cstring_files, _cstring_devgui, _cstring_profile, _cstring_ui, _cstring_client, _cstring_server, _cstring_system, _cstring_playerweap, _cstring_ai, _cstring_anim, _cstring_physics, _cstring_fx, _cstring_leaderboards, _cstring_parserscript, _cstring_script, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+defaultGameWindowFilters: dd _cstring_gamenotify_obitu, _cstring_boldgame, _cstring_subtitle, _cstring_null, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of con_channels:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of con_channels:
 SECTION .bss
 pcGlob: resb 0x21e0
@@ -912,16 +922,6 @@ _ZZ16Con_InitChannelsvE21Con_ChannelList_f_VAR: resb 0x60
 con_gameMsgWindowNFilter: resb 0x1c
 con_gameMsgWindowNFilter_Descs: resb 0x180
 con_gameMsgWindowNFilter_Names: resb 0x64
-
-
-;Initialized global or static variables of con_channels:
-SECTION .data
-builtinChannels: dd _cstring_dontfilter, _cstring_error, _cstring_gamenotify, _cstring_boldgame, _cstring_subtitle, _cstring_obituary, _cstring_logfile_only, _cstring_console_only, _cstring_gfx, _cstring_sound, _cstring_files, _cstring_devgui, _cstring_profile, _cstring_ui, _cstring_client, _cstring_server, _cstring_system, _cstring_playerweap, _cstring_ai, _cstring_anim, _cstring_physics, _cstring_fx, _cstring_leaderboards, _cstring_parserscript, _cstring_script, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-defaultGameWindowFilters: dd _cstring_gamenotify_obitu, _cstring_boldgame, _cstring_subtitle, _cstring_null, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of con_channels:
-SECTION .rdata
 
 
 ;All cstrings:

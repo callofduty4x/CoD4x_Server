@@ -35,16 +35,16 @@ R_ReadPrimDrawSurfData:
 	ret
 
 
-;Zero initialized global or static variables of r_draw_cmdbuf:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_draw_cmdbuf:
 SECTION .data
 
 
 ;Initialized constant data of r_draw_cmdbuf:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_draw_cmdbuf:
+SECTION .bss
 
 
 ;All cstrings:

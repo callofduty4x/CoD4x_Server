@@ -671,16 +671,16 @@ R_ConvertColorToBytes_30:
 	jmp R_ConvertColorToBytes_90
 
 
-;Zero initialized global or static variables of r_utils:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_utils:
 SECTION .data
 
 
 ;Initialized constant data of r_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_utils:
+SECTION .bss
 
 
 ;All cstrings:

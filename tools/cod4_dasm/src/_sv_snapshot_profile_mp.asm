@@ -93,6 +93,14 @@ SV_Netchan_PrintProfileStats:
 	ret
 
 
+;Initialized global or static variables of sv_snapshot_profile_mp:
+SECTION .data
+
+
+;Initialized constant data of sv_snapshot_profile_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of sv_snapshot_profile_mp:
 SECTION .bss
 s_compressedDataSinceLastPoll: resb 0x4
@@ -104,14 +112,6 @@ s_stdSnapshotDeviation: resb 0x4
 s_numSnapshotSamples: resb 0x4
 s_maxSnapshotSize: resb 0x64
 s_clientSnapshotData: resb 0x1100
-
-
-;Initialized global or static variables of sv_snapshot_profile_mp:
-SECTION .data
-
-
-;Initialized constant data of sv_snapshot_profile_mp:
-SECTION .rdata
 
 
 ;All cstrings:

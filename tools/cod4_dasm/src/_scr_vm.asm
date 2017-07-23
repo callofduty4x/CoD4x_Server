@@ -10007,6 +10007,15 @@ Scr_Error_10:
 	jmp Scr_Error_90
 
 
+;Initialized global or static variables of scr_vm:
+SECTION .data
+g_EndPos: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of scr_vm:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of scr_vm:
 SECTION .bss
 scrVmGlob: resb 0x201c
@@ -10018,15 +10027,6 @@ error_message: resb 0x440
 scrVmPub: resb 0x4320
 g_script_error: resb 0x9a0
 g_script_error_level: resb 0x20
-
-
-;Initialized global or static variables of scr_vm:
-SECTION .data
-g_EndPos: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of scr_vm:
-SECTION .rdata
 
 
 ;All cstrings:

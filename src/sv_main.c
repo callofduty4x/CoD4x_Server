@@ -191,7 +191,7 @@ void SV_DumpReliableCommands( client_t *client, const char* cmd) {
     Com_sprintf(msg, sizeof(msg), "Cl: %i, Seq: %i, Time: %i, NotAck: %i, Len: %i, Msg: %s\n",
         client - svs.clients, client->reliableSequence, svs.time ,client->reliableSequence - client->reliableAcknowledge, strlen(cmd), cmd);
 
-    Com_Printf("^5%s", msg);
+    Com_Printf(CON_CHANNEL_SERVER,"^5%s", msg);
 
     Sys_EnterCriticalSection(5);
 
@@ -345,13 +345,13 @@ void __cdecl SV_AddServerCommand(client_t *client, int type, const char *cmd)
 
     if ( client->reliableSequence - client->reliableAcknowledge == (MAX_RELIABLE_COMMANDS + 1) )
     {
-    Com_PrintNoRedirect("Client: %i lost reliable commands\n", client - svs.clients);
-        Com_PrintNoRedirect("===== pending server commands =====\n");
+        Com_PrintNoRedirect(CON_CHANNEL_SERVER,"Client: %i lost reliable commands\n", client - svs.clients);
+        Com_PrintNoRedirect(CON_CHANNEL_SERVER,"===== pending server commands =====\n");
         for ( j = client->reliableAcknowledge + 1; j <= client->reliableSequence; ++j )
     {
-        Com_PrintNoRedirect("cmd %5d: %8d: %s\n", j, client->reliableCommands[j & (MAX_RELIABLE_COMMANDS - 1)].cmdTime, &client->reliableCommands[j & (MAX_RELIABLE_COMMANDS - 1)].command);
+        Com_PrintNoRedirect(CON_CHANNEL_SERVER,"cmd %5d: %8d: %s\n", j, client->reliableCommands[j & (MAX_RELIABLE_COMMANDS - 1)].cmdTime, &client->reliableCommands[j & (MAX_RELIABLE_COMMANDS - 1)].command);
     }
-    Com_PrintNoRedirect("cmd %5d: %8d: %s\n", j, svs.time, cmd);
+    Com_PrintNoRedirect(CON_CHANNEL_SERVER,"cmd %5d: %8d: %s\n", j, svs.time, cmd);
 
     NET_OutOfBandPrint( NS_SERVER, &client->netchan.remoteAddress, "disconnect" );
     SV_DelayDropClient(client, "EXE_SERVERCOMMANDOVERFLOW");
@@ -365,7 +365,7 @@ void __cdecl SV_AddServerCommand(client_t *client, int type, const char *cmd)
     MSG_WriteReliableCommandToBuffer(cmd, client->reliableCommands[ index ].command, sizeof( client->reliableCommands[ index ].command ));
     client->reliableCommands[ index ].cmdTime = svs.time;
     client->reliableCommands[ index ].cmdType = type;
-//    Com_Printf("ReliableCommand: %s\n", cmd);
+//    Com_Printf(CON_CHANNEL_SERVER,"ReliableCommand: %s\n", cmd);
 }
 
 
@@ -398,7 +398,7 @@ void QDECL SV_SendServerCommandString(client_t *cl, int type, char *message)
 
     // hack to echo broadcast prints to console
     if ( !strncmp( (char *)message, "say", 3) ) {
-        Com_Printf("broadcast: %s\n", SV_ExpandNewlines((char *)message) );
+        Com_Printf(CON_CHANNEL_SERVER,"broadcast: %s\n", SV_ExpandNewlines((char *)message) );
     }
 
     // send the data to all relevent clients
@@ -507,7 +507,7 @@ static void SVC_RateLimitInit( ){
 
     if(!sv_queryIgnoreMegs->integer)
     {
-        Com_Printf("QUERY LIMIT: Querylimiting is disabled\n");
+        Com_Printf(CON_CHANNEL_SERVER,"QUERY LIMIT: Querylimiting is disabled\n");
         querylimit.queryLimitsEnabled = 0;
         return;
     }
@@ -523,12 +523,12 @@ static void SVC_RateLimitInit( ){
 
     if(!querylimit.buckets)
     {
-        Com_PrintError("QUERY LIMIT: System is out of memory. All queries are disabled\n");
+        Com_PrintError(CON_CHANNEL_SERVER,"QUERY LIMIT: System is out of memory. All queries are disabled\n");
         querylimit.queryLimitsEnabled = -1;
     }
 
     querylimit.bucketHashes = (leakyBucket_t**)&querylimit.buckets[querylimit.max_buckets];
-    Com_Printf("QUERY LIMIT: Querylimiting is enabled\n");
+    Com_Printf(CON_CHANNEL_SERVER,"QUERY LIMIT: Querylimiting is enabled\n");
     querylimit.queryLimitsEnabled = 1;
 }
 
@@ -735,7 +735,7 @@ __optimize3 __regparm1 void SVC_Status( netadr_t *from ) {
 
     // Prevent using getstatus as an amplifier
     if ( SVC_RateLimitAddress( from, 2, sv_queryIgnoreTime->integer*1000 ) ) {
-    //	Com_DPrintf( "SVC_Status: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
+    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Status: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
         return;
     }
 
@@ -743,7 +743,7 @@ __optimize3 __regparm1 void SVC_Status( netadr_t *from ) {
     // Allow getstatus to be DoSed relatively easily, but prevent
     // excess outbound bandwidth usage when being flooded inbound
     if ( SVC_RateLimit( &querylimit.statusBucket, 20, 20000 ) ) {
-    //	Com_DPrintf( "SVC_Status: overall rate limit exceeded, dropping request\n" );
+    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Status: overall rate limit exceeded, dropping request\n" );
         return;
     }
 
@@ -811,7 +811,7 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
 
     // Prevent using getstatus as an amplifier
     if ( SVC_RateLimitAddress( from, 4, sv_queryIgnoreTime->integer*1000 )) {
-    //	Com_DPrintf( "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
+    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
         return;
     }
 
@@ -819,7 +819,7 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
     // Allow getstatus to be DoSed relatively easily, but prevent
     // excess outbound bandwidth usage when being flooded inbound
     if ( SVC_RateLimit( &querylimit.infoBucket, 100, 100000 ) ) {
-    //	Com_DPrintf( "SVC_Info: overall rate limit exceeded, dropping request\n" );
+    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: overall rate limit exceeded, dropping request\n" );
         return;
     }
 
@@ -1061,7 +1061,7 @@ void CLC_SourceEngineQuery_ReadSplitMessage(msg_t* msg, querysplitmsg_t* query)
     receivedindex = MSG_ReadByte(msg);
     if(receivedindex > 31)
     {
-        Com_PrintWarning("CLC_SourceEngineQuery_ReadSplitMessage: Received out of range splitmessage index packet\n");
+        Com_PrintWarning(CON_CHANNEL_SERVER,"CLC_SourceEngineQuery_ReadSplitMessage: Received out of range splitmessage index packet\n");
         return;
     }
 
@@ -1070,12 +1070,12 @@ void CLC_SourceEngineQuery_ReadSplitMessage(msg_t* msg, querysplitmsg_t* query)
     splitsize = MSG_ReadShort(msg);
     if(query->numchunks * splitsize >= sizeof(query->splitmessage))
     {
-        Com_PrintWarning("CLC_SourceEngineQuery_ReadSplitMessage: Size of the splitmessage would exceed the splitbuffer size\n");
+        Com_PrintWarning(CON_CHANNEL_SERVER,"CLC_SourceEngineQuery_ReadSplitMessage: Size of the splitmessage would exceed the splitbuffer size\n");
         return;
     }
     if(receivedindex * splitsize >= (sizeof(query->splitmessage) - splitsize))
     {
-        Com_PrintWarning("CLC_SourceEngineQuery_ReadSplitMessage: Received out of range splitmessage buffer packet\n");
+        Com_PrintWarning(CON_CHANNEL_SERVER,"CLC_SourceEngineQuery_ReadSplitMessage: Received out of range splitmessage buffer packet\n");
         return;
     }
     MSG_ReadData(msg, &query->splitmessage[receivedindex * splitsize], splitsize);
@@ -1092,7 +1092,7 @@ void CLC_SourceEngineQuery_ReadPlayer(msg_t* msg, queryplayers_t* query)
 
     if(query->count > (  sizeof(query->players)/sizeof(query->players[0])))
     {
-        Com_PrintWarning("CLC_SourceEngineQuery_ReadPlayer: Received out of range player count\n");
+        Com_PrintWarning(CON_CHANNEL_SERVER,"CLC_SourceEngineQuery_ReadPlayer: Received out of range player count\n");
         query->count = 0;
         return;
     }
@@ -1117,7 +1117,7 @@ void CLC_SourceEngineQuery_ReadRules(msg_t* msg, queryrules_t* query)
 
     if(query->count > ( sizeof(query->rules)/sizeof(query->rules[0])))
     {
-        Com_PrintWarning("CLC_SourceEngineQuery_ReadPlayer: Received out of range player count\n");
+        Com_PrintWarning(CON_CHANNEL_SERVER,"CLC_SourceEngineQuery_ReadPlayer: Received out of range player count\n");
         query->count = sizeof(query->rules)/sizeof(query->rules[0]);
     }
     for ( i = 0; i < query->count ; i++)
@@ -1231,14 +1231,14 @@ void SVC_SourceEngineQuery_Info( netadr_t* from, const char* challengeStr)
 
     // Prevent using getstatus as an amplifier
     if ( SVC_RateLimitAddress( from, 4, sv_queryIgnoreTime->integer*1000 )) {
-        //	Com_DPrintf( "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
+        //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
         return;
     }
 
     // Allow getstatus to be DoSed relatively easily, but prevent
     // excess outbound bandwidth usage when being flooded inbound
     if ( SVC_RateLimit( &querylimit.infoBucket, 100, 100000 ) ) {
-        //	Com_DPrintf( "SVC_Info: overall rate limit exceeded, dropping request\n" );
+        //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: overall rate limit exceeded, dropping request\n" );
         return;
     }
 
@@ -1473,20 +1473,20 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
     if ( strcmp (SV_Cmd_Argv(1), sv_rconPassword->string )) {
         //Send only one deny answer out in 100 ms
         if ( SVC_RateLimit( &querylimit.rconBucket, 1, 100 ) ) {
-        //	Com_DPrintf( "SVC_RemoteCommand: rate limit exceeded for bad rcon\n" );
+        //	Com_Printf(CON_CHANNEL_SERVER, "SVC_RemoteCommand: rate limit exceeded for bad rcon\n" );
             return;
         }
 
-        Com_Printf ("Bad rcon from %s\n", NET_AdrToString (from) );
+        Com_Printf (CON_CHANNEL_SERVER,"Bad rcon from %s\n", NET_AdrToString (from) );
         Com_BeginRedirect (sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
-        Com_Printf ("Bad rcon");
+        Com_Printf (CON_CHANNEL_SERVER,"Bad rcon");
         Com_EndRedirect ();
         return;
     }
 
     if ( strlen( sv_rconPassword->string) < 8 ) {
         Com_BeginRedirect (sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
-        Com_Printf ("No rconpassword set on server or password is shorter than 8 characters.\n");
+        Com_Printf (CON_CHANNEL_SERVER,"No rconpassword set on server or password is shorter than 8 characters.\n");
         Com_EndRedirect ();
         return;
     }
@@ -1523,7 +1523,7 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
     while(cmd_aux[0] == ' ')//Skipping space after the password
         cmd_aux++;
 
-    Com_Printf ("Rcon from %s: %s\n", NET_AdrToString (from), cmd_aux );
+    Com_Printf (CON_CHANNEL_SERVER,"Rcon from %s: %s\n", NET_AdrToString (from), cmd_aux );
 
     Com_BeginRedirect (sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
 #ifdef PUNKBUSTER
@@ -1598,12 +1598,12 @@ void SV_UpdateProxyUpdateBadChallenge(netadr_t* from)
 
     if(!NET_CompareAdr(from, &update_connection.updateserveradr))
     {
-        Com_Printf("SV_UpdateProxyUpdateBadChallenge: Packet not from updateserver\n");
+        Com_Printf(CON_CHANNEL_SERVER,"SV_UpdateProxyUpdateBadChallenge: Packet not from updateserver\n");
         return;
     }
 
     update_connection.state = UPDCONN_CHALLENGING;
-    Com_Printf("SV_UpdateProxyUpdateBadChallenge: Will start challenging\n");
+    Com_Printf(CON_CHANNEL_SERVER,"SV_UpdateProxyUpdateBadChallenge: Will start challenging\n");
 }
 
 void SV_UpdateProxyChallengeResponse(netadr_t* from)
@@ -1622,13 +1622,13 @@ void SV_UpdateProxyChallengeResponse(netadr_t* from)
 
     if(mychallenge != update_connection.mychallenge)
     {
-        Com_Printf("SV_UpdateProxyChallengeResponse: Bad challenge\n");
+        Com_Printf(CON_CHANNEL_SERVER,"SV_UpdateProxyChallengeResponse: Bad challenge\n");
         return;
     }
 
     if(!NET_CompareAdr(from, &update_connection.updateserveradr))
     {
-        Com_Printf("SV_UpdateProxyChallengeResponse: Packet not from updateserver\n");
+        Com_Printf(CON_CHANNEL_SERVER,"SV_UpdateProxyChallengeResponse: Packet not from updateserver\n");
         return;
     }
 
@@ -1656,13 +1656,13 @@ void SV_UpdateProxyConnectResponse( netadr_t* from )
 
     if(mychallenge != update_connection.mychallenge)
     {
-//        Com_Printf("SV_UpdateProxyConnectResponse: Bad challenge\n");
+//        Com_Printf(CON_CHANNEL_SERVER,"SV_UpdateProxyConnectResponse: Bad challenge\n");
         return;
     }
 
     if(!NET_CompareAdr(from, &update_connection.updateserveradr))
     {
-//        Com_Printf("SV_UpdateProxyConnectResponse: Packet not from updateserver\n");
+//        Com_Printf(CON_CHANNEL_SERVER,"SV_UpdateProxyConnectResponse: Packet not from updateserver\n");
         return;
     }
 
@@ -1679,7 +1679,7 @@ void SV_UpdateProxyConnectResponse( netadr_t* from )
 
     if(i == sv_maxclients->integer)
     {
-//        Com_Printf("SV_UpdateProxyConnectResponse: Bad challenge for client\n");
+//        Com_Printf(CON_CHANNEL_SERVER,"SV_UpdateProxyConnectResponse: Bad challenge for client\n");
         return;
     }
 
@@ -1712,7 +1712,7 @@ void SV_ReceiveFromUpdateProxy( msg_t *msg )
 
     if(i == sv_maxclients->integer)
     {
-//        Com_Printf("SV_ReceiveFromUpdateProxy: Received packet for bad client\n");
+//        Com_Printf(CON_CHANNEL_SERVER,"SV_ReceiveFromUpdateProxy: Received packet for bad client\n");
         NET_OutOfBandPrint(NS_SERVER, &update_connection.updateserveradr, "disconnect %d %d", update_connection.serverchallenge, clchallenge);
         return;
     }
@@ -1760,13 +1760,13 @@ void SV_ConnectWithUpdateProxy(client_t *cl)
 
             if(update_connection.updateserveradr.type == NA_BAD || sv_updatebackendname->modified)
             {
-                Com_Printf("Resolving %s\n", sv_updatebackendname->string);
+                Com_Printf(CON_CHANNEL_SERVER,"Resolving %s\n", sv_updatebackendname->string);
                 Cvar_ClearModified(sv_updatebackendname);
                 res = NET_StringToAdr(sv_updatebackendname->string, &update_connection.updateserveradr, NA_IP);
                 defif = NET_GetDefaultCommunicationSocket(NA_IP);
                 if(defif == NULL)
                 {
-                    Com_Printf("Missing outgoing interface. Can not send data to updateserver\n");
+                    Com_Printf(CON_CHANNEL_SERVER,"Missing outgoing interface. Can not send data to updateserver\n");
                     update_connection.updateserveradr.type = NA_BAD;
                     return;
                 }
@@ -1778,9 +1778,9 @@ void SV_ConnectWithUpdateProxy(client_t *cl)
                 }
                 if(res)
                 {
-                    Com_Printf( "%s resolved to %s\n", sv_updatebackendname->string, NET_AdrToString(&update_connection.updateserveradr));
+                    Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", sv_updatebackendname->string, NET_AdrToString(&update_connection.updateserveradr));
                 }else{
-                    Com_Printf( "%s has no IPv4 address.\n", sv_updatebackendname->string);
+                    Com_Printf(CON_CHANNEL_SERVER, "%s has no IPv4 address.\n", sv_updatebackendname->string);
                     return;
                 }
             }
@@ -1845,7 +1845,7 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
     SV_Cmd_TokenizeString( s );
 
     c = SV_Cmd_Argv(0);
-    Com_DPrintf ("SV packet %s: %s\n", NET_AdrToString(from), s);
+    Com_Printf(CON_CHANNEL_SERVER,"SV packet %s: %s\n", NET_AdrToString(from), s);
     //Most sensitive OOB commands first
         if (!Q_stricmp(c, "getstatus")) {
         SVC_Status( from );
@@ -1895,9 +1895,9 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
         SVC_SourceEngineQuery_Challenge( from );
     } else if (!Q_stricmp(c, "error")) {
         char errbuf[256];
-        Com_Printf("Error: %s\n", MSG_ReadString(msg, errbuf, sizeof(errbuf)));
+        Com_Printf(CON_CHANNEL_SERVER,"Error: %s\n", MSG_ReadString(msg, errbuf, sizeof(errbuf)));
     } else {
-        Com_DPrintf ("bad connectionless packet from %s\n", NET_AdrToString (from));
+        Com_Printf(CON_CHANNEL_SERVER,"bad connectionless packet from %s\n", NET_AdrToString (from));
     }
     SV_Cmd_EndTokenizedString();
     return;
@@ -1984,13 +1984,13 @@ __optimize3 __regparm2 void SV_PacketEvent( netadr_t *from, msg_t *msg ) {
     cl->messageAcknowledge = MSG_ReadLong( msg );
 
     if(cl->messageAcknowledge < 0){
-        Com_Printf("Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
+        Com_Printf(CON_CHANNEL_SERVER,"Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
         return;
     }
     cl->reliableAcknowledge = MSG_ReadLong( msg );
 
     if((cl->reliableSequence - cl->reliableAcknowledge) > (MAX_RELIABLE_COMMANDS - 1)){
-        Com_Printf("Out of range reliableAcknowledge message from %s - reliableSequence is %i, reliableAcknowledge is %i\n",
+        Com_Printf(CON_CHANNEL_SERVER,"Out of range reliableAcknowledge message from %s - reliableSequence is %i, reliableAcknowledge is %i\n",
         cl->name, cl->reliableSequence, cl->reliableAcknowledge);
         cl->reliableAcknowledge = cl->reliableSequence;
         return;
@@ -2053,7 +2053,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
         int messagelen = MSG_ReadLong(msg);
         if(messagelen >= sizeof(databuf))
         {
-            Com_PrintError("Oversizemessage from masterserver\n");
+            Com_PrintError(CON_CHANNEL_SERVER,"Oversizemessage from masterserver\n");
             return;
         }
         MSG_ReadData(msg, databuf, messagelen);
@@ -2072,11 +2072,11 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                 ic = MSG_ReadLong(&singlemsg);
                 if(ic == 1)
                 {
-                    Com_DPrintf("Server is registered on the masterserver\n");
+                    Com_Printf(CON_CHANNEL_SERVER,"Server is registered on the masterserver\n");
                 }else if(ic == 0){
-                    Com_PrintError("Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
+                    Com_PrintError(CON_CHANNEL_SERVER,"Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
                 }else if(ic == 2){
-                    Com_PrintError("Failure registering server on masterserver. Server address is banned: %s\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+                    Com_PrintError(CON_CHANNEL_SERVER,"Failure registering server on masterserver. Server address is banned: %s\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
                 }
                 break;
             case 2:
@@ -2089,7 +2089,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                     {
                         Q_strncpyz(svse.sysrestartmessage, stringline, sizeof(svse.sysrestartmessage));
                     }else{
-                        Com_Printf("Received restart message from masterserver which is not authoritative. Ignoring\n");
+                        Com_Printf(CON_CHANNEL_SERVER,"Received restart message from masterserver which is not authoritative. Ignoring\n");
                     }
                 }
                 break;
@@ -2102,7 +2102,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                     {
                         SV_SendServerCommand(NULL, "h \"^5Broadcast^7: %s\"\n", stringline);
                     }else{
-                        Com_Printf("Received broadcast message from masterserver which is not authoritative. Ignoring\n");
+                        Com_Printf(CON_CHANNEL_SERVER,"Received broadcast message from masterserver which is not authoritative. Ignoring\n");
                     }
                 }
                 break;
@@ -2146,7 +2146,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
         if(socket >= 0)
         {
             NET_AdrToStringShortMT(&ip6announce, line, sizeof(line));
-            Com_Printf("Cvar net_ip6 is undefined. Announcing address %s!\n", line);
+            Com_Printf(CON_CHANNEL_SERVER,"Cvar net_ip6 is undefined. Announcing address %s!\n", line);
         }
     }
 
@@ -2209,22 +2209,22 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
                     MSG_ReadLong(&msg); //MessageID maybe future use but placeholder here
                     SV_HeartBeatMessageLoop(&msg, authoritative);
                 }else{
-                    Com_Printf("Corrupted Masterserver response\n");
+                    Com_Printf(CON_CHANNEL_SERVER,"Corrupted Masterserver response\n");
                 }
             }else{
-                Com_Printf("Corrupted Masterserver response\n");
+                Com_Printf(CON_CHANNEL_SERVER,"Corrupted Masterserver response\n");
             }
         }else{
             if(timeout < Sys_Milliseconds())
             {
-                Com_Printf("Connection to masterserver timeout\n");
+                Com_Printf(CON_CHANNEL_SERVER,"Connection to masterserver timeout\n");
             }else{
-                Com_Printf("Invalid or empty response from masterserver\n");
+                Com_Printf(CON_CHANNEL_SERVER,"Invalid or empty response from masterserver\n");
             }
         }
         NET_TcpCloseSocket(socket);
     }else{
-    //	Com_Printf("Network error while attempting to register on masterserver \n");
+    //	Com_Printf(CON_CHANNEL_SERVER,"Network error while attempting to register on masterserver \n");
     }
 }
 
@@ -2242,12 +2242,12 @@ void* SV_SendHeartbeatThread(void* arg)
         if(iplist[i].type == NA_IP && opts->adr4.type == NA_IP && iplist[i].ip[0] != 127 && iplist[i].ip[0] < 224)
         {
             //IPv4
-            Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
+            Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr4, adrstrdst, sizeof(adrstrdst)));
             SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
         }else	if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe){
             //IPv6
-            Com_DPrintf("Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
+            Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr6, adrstrdst, sizeof(adrstrdst)));
             SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
         }
@@ -2373,11 +2373,11 @@ void SV_MasterHeartbeatInit()
         Q_strncpyz(masterservers.servers[i].name, name, sizeof(masterservers.servers[i].name));
         Cmd_EndTokenizedString();
 
-        Com_Printf("Master%d: %s\n", i, masterservers.servers[i].name);
+        Com_Printf(CON_CHANNEL_SERVER,"Master%d: %s\n", i, masterservers.servers[i].name);
 
         if(strlen(masterservers.servers[i].name) > 3)
         {
-            Com_Printf("Resolving %s \n", masterservers.servers[i].name);
+            Com_Printf(CON_CHANNEL_SERVER,"Resolving %s \n", masterservers.servers[i].name);
             //NA_IPANY For broadcasting to all interfaces
             res = NET_StringToAdr(masterservers.servers[i].name, &masterservers.servers[i].i4, NA_IP);				
             if(res == 2)
@@ -2387,9 +2387,9 @@ void SV_MasterHeartbeatInit()
             masterservers.servers[i].i4.sock = 0;
             if(res)
             {
-                Com_Printf( "%s resolved to %s\n", masterservers.servers[i].name, NET_AdrToString(&masterservers.servers[i].i4));
+                Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", masterservers.servers[i].name, NET_AdrToString(&masterservers.servers[i].i4));
             }else{
-                Com_Printf( "Couldn't resolve(IPv4) %s\n", masterservers.servers[i].name);
+                Com_Printf(CON_CHANNEL_SERVER, "Couldn't resolve(IPv4) %s\n", masterservers.servers[i].name);
                 masterservers.servers[i].i4.type = NA_DOWN;
             }
             res = NET_StringToAdr(masterservers.servers[i].name, &masterservers.servers[i].i6, NA_IP6);				
@@ -2400,14 +2400,14 @@ void SV_MasterHeartbeatInit()
             masterservers.servers[i].i6.sock = 0;
             if(res)
             {
-                Com_Printf( "%s resolved to %s\n", masterservers.servers[i].name, NET_AdrToString(&masterservers.servers[i].i6));
+                Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", masterservers.servers[i].name, NET_AdrToString(&masterservers.servers[i].i6));
             }else{
-                Com_Printf( "Couldn't resolve(IPv6) %s\n", masterservers.servers[i].name);
+                Com_Printf(CON_CHANNEL_SERVER, "Couldn't resolve(IPv6) %s\n", masterservers.servers[i].name);
                 masterservers.servers[i].i6.type = NA_DOWN;
             }
             if(masterservers.servers[i].i4.type == NA_DOWN && masterservers.servers[i].i6.type == NA_DOWN)
             {
-                Com_PrintError("Couldn't resolve masterserver %s\n", masterservers.servers[i].name);
+                Com_PrintError(CON_CHANNEL_SERVER,"Couldn't resolve masterserver %s\n", masterservers.servers[i].name);
                 Com_Memset(&masterservers.servers[i], 0, sizeof(masterserver_t));
             }
         }
@@ -2455,18 +2455,18 @@ void SV_MasterHeartbeat(const char *message)
     {
         if(atvimaster.type == NA_BAD)
         {
-            Com_Printf("Resolving %s \n", MASTER_SERVER_NAME);
+            Com_Printf(CON_CHANNEL_SERVER,"Resolving %s \n", MASTER_SERVER_NAME);
             //NA_IPANY For broadcasting to all interfaces
             res = NET_StringToAdr(MASTER_SERVER_NAME, &atvimaster, NA_IP);
             atvimaster.port = BigShort(PORT_MASTER);
             atvimaster.sock = 0;
             if(res)
             {
-                Com_Printf( "%s resolved to %s\n", MASTER_SERVER_NAME, NET_AdrToString(&atvimaster));
+                Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", MASTER_SERVER_NAME, NET_AdrToString(&atvimaster));
                 netadr_t* defif = NET_GetDefaultCommunicationSocket(NA_IP);
                 atvimaster.sock = defif ? defif->sock : 0;
             }else{
-                Com_Printf( "Couldn't resolve %s\n", MASTER_SERVER_NAME);
+                Com_Printf(CON_CHANNEL_SERVER, "Couldn't resolve %s\n", MASTER_SERVER_NAME);
                 atvimaster.type = NA_DOWN;
             }
         }
@@ -2491,7 +2491,7 @@ void SV_MasterHeartbeat(const char *message)
 
             if(netenabled & NET_ENABLEV4)
             {
-                Com_Printf("Resolving %s (IPv4)\n", sv_master[i]->string);
+                Com_Printf(CON_CHANNEL_SERVER,"Resolving %s (IPv4)\n", sv_master[i]->string);
                 //NA_IPANY For broadcasting to all interfaces
                 res = NET_StringToAdr(sv_master[i]->string, &master_adr[i][0], NA_IP);
 
@@ -2503,14 +2503,14 @@ void SV_MasterHeartbeat(const char *message)
                 master_adr[i][0].sock = 0;
 
                 if(res)
-                    Com_Printf( "%s resolved to %s\n", sv_master[i]->string, NET_AdrToString(&master_adr[i][0]));
+                    Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", sv_master[i]->string, NET_AdrToString(&master_adr[i][0]));
                 else
-                    Com_Printf( "%s has no IPv4 address.\n", sv_master[i]->string);
+                    Com_Printf(CON_CHANNEL_SERVER, "%s has no IPv4 address.\n", sv_master[i]->string);
             }
 
             if(netenabled & NET_ENABLEV6)
             {
-                Com_Printf("Resolving %s (IPv6)\n", sv_master[i]->string);
+                Com_Printf(CON_CHANNEL_SERVER,"Resolving %s (IPv6)\n", sv_master[i]->string);
                 res = NET_StringToAdr(sv_master[i]->string, &master_adr[i][1], NA_IP6);
 
                 if(res == 2)
@@ -2522,22 +2522,22 @@ void SV_MasterHeartbeat(const char *message)
                 master_adr[i][1].sock = 0;
 
                 if(res)
-                    Com_Printf( "%s resolved to %s\n", sv_master[i]->string, NET_AdrToString(&master_adr[i][1]));
+                    Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", sv_master[i]->string, NET_AdrToString(&master_adr[i][1]));
                 else
-                    Com_Printf( "%s has no IPv6 address.\n", sv_master[i]->string);
+                    Com_Printf(CON_CHANNEL_SERVER, "%s has no IPv6 address.\n", sv_master[i]->string);
             }
 
             if(master_adr[i][0].type == NA_BAD && master_adr[i][1].type == NA_BAD)
             {
                 // if the address failed to resolve, clear it
                 // so we don't take repeated dns hits
-                Com_Printf("Couldn't resolve address: %s\n", sv_master[i]->string);
+                Com_Printf(CON_CHANNEL_SERVER,"Couldn't resolve address: %s\n", sv_master[i]->string);
                 Cvar_SetString(sv_master[i], "");
                 sv_master[i]->modified = qfalse;
                 continue;
             }
         }
-        Com_Printf ("Sending heartbeat to %s\n", sv_master[i]->string );
+        Com_Printf (CON_CHANNEL_SERVER,"Sending heartbeat to %s\n", sv_master[i]->string );
 
         if(master_adr[i][0].type != NA_BAD)
             NET_OutOfBandPrint( NS_SERVER, &master_adr[i][0], "heartbeat %s\n", message);
@@ -2670,8 +2670,8 @@ __cdecl void SV_Shutdown( const char *finalmsg ) {
         return;
     }
 
-    Com_Printf( "----- Server Shutdown -----\n" );
-    Com_Printf( "\nWith the reason: %s\n", finalmsg );
+    Com_Printf(CON_CHANNEL_SERVER, "----- Server Shutdown -----\n" );
+    Com_Printf(CON_CHANNEL_SERVER, "\nWith the reason: %s\n", finalmsg );
     if(SEH_StringEd_GetString(finalmsg)){
         SV_FinalMessage( finalmsg, qtrue );
     }else {
@@ -2703,7 +2703,7 @@ __cdecl void SV_Shutdown( const char *finalmsg ) {
     memset( &svs, 0, sizeof( svs ) );
     memset( &svse, 0, sizeof( svse ) );
 
-    Com_Printf( "---------------------------\n" );
+    Com_Printf(CON_CHANNEL_SERVER, "---------------------------\n" );
 
     // disconnect any local clients
 //	CL_Disconnect( qfalse );
@@ -2866,15 +2866,15 @@ void SV_InitServerId(){
 
     FS_SV_FOpenFileRead("server_id.dat", &file);
     if(!file){
-        Com_DPrintf("Couldn't open server_id.dat for reading\n");
+        Com_Printf(CON_CHANNEL_SERVER,"Couldn't open server_id.dat for reading\n");
         return;
     }
-    Com_Printf( "Loading file server_id.dat\n");
+    Com_Printf(CON_CHANNEL_SERVER, "Loading file server_id.dat\n");
 
     read = FS_ReadLine(buf,sizeof(buf),file);
 
     if(read == -1){
-        Com_Printf("Can not read from server_id.dat\n");
+        Com_Printf(CON_CHANNEL_SERVER,"Can not read from server_id.dat\n");
         FS_FCloseFile(file);
         loadconfigfiles = qfalse;
         return;
@@ -2927,7 +2927,7 @@ qboolean SV_TryDownloadAndExecGlobalConfig()
 
 	if(curfileobj->code != 200)
 	{
-		Com_Printf("Downloading of global config has failed with the following http code: %d\n", curfileobj->code);
+		Com_Printf(CON_CHANNEL_SERVER,"Downloading of global config has failed with the following http code: %d\n", curfileobj->code);
 		FileDownloadFreeRequest(curfileobj);
 		return result;
 	}
@@ -3557,21 +3557,6 @@ qboolean SV_Map( const char *levelname ) {
     char mapname[MAX_QPATH];
     char expanded[MAX_QPATH];
     char mapname_loadff[MAX_QPATH];
-    if(gamebinary_initialized == 0)
-    {
-        if(Com_LoadBinaryImage() == qfalse)
-        {
-            gamebinary_initialized = -1;
-            return qtrue;
-        }
-        gamebinary_initialized = 1;
-        }
-
-    if(gamebinary_initialized < 1)
-    {
-        Com_Error(ERR_FATAL, "Unable to load a level as the game has failed to load!\n");
-        return qtrue;
-    }
 
     map = FS_GetMapBaseName(levelname);
     Q_strncpyz(mapname, map, sizeof(mapname));
@@ -3581,21 +3566,21 @@ qboolean SV_Map( const char *levelname ) {
     {
         Com_sprintf(expanded, sizeof(expanded), "maps/mp/%s.d3dbsp", mapname);
         if ( FS_ReadFile( expanded, NULL ) == -1 ) {
-            Com_PrintError( "Can't find map %s\n", expanded );
+            Com_PrintError(CON_CHANNEL_SERVER, "Can't find map %s\n", expanded );
             return qfalse;
         }
     }
 
     if(!DB_FileExists(mapname, 0) && (!fs_gameDirVar->string[0] || !DB_FileExists(mapname, 2))){
-        Com_PrintError("Can't find map %s\n", mapname);
+        Com_PrintError(CON_CHANNEL_SERVER,"Can't find map %s\n", mapname);
         if(!fs_gameDirVar->string[0])
-            Com_PrintError("A mod is required to run custom maps\n");
+            Com_PrintError(CON_CHANNEL_SERVER,"A mod is required to run custom maps\n");
         return qfalse;
     }
     Com_sprintf(mapname_loadff, sizeof(mapname_loadff), "%s_load", mapname);
     if(!DB_FileExists(mapname_loadff, 0) && !DB_FileExists(mapname_loadff, 2))
     {
-        Com_PrintError("Can't find file %s.ff\n", mapname_loadff);
+        Com_PrintError(CON_CHANNEL_SERVER,"Can't find file %s.ff\n", mapname_loadff);
         return qfalse;
     }
 //	Cbuf_ExecuteBuffer(0, 0, "selectStringTableEntryInDvar mp/didyouknow.csv 0 didyouknow");
@@ -3629,7 +3614,7 @@ void SV_MapRestart( qboolean fastRestart ){
 
     // make sure server is running
     if ( !com_sv_running->boolean ) {
-        Com_Printf( "Server is not running.\n" );
+        Com_Printf(CON_CHANNEL_SERVER, "Server is not running.\n" );
         return;
     }
 
@@ -3716,7 +3701,7 @@ void SV_MapRestart( qboolean fastRestart ){
 
         if(denied){
             SV_DropClient(client, denied);
-            Com_Printf("SV_MapRestart: dropped client %i - denied!\n", i);
+            Com_Printf(CON_CHANNEL_SERVER,"SV_MapRestart: dropped client %i - denied!\n", i);
             continue;
         }
 
@@ -3778,7 +3763,7 @@ void SV_CheckTimeouts( void ) {
                 return;
             }
 
-            Com_DPrintf( "Going from CS_ZOMBIE to CS_FREE for client %d\n", i );
+            Com_Printf(CON_CHANNEL_SERVER, "Going from CS_ZOMBIE to CS_FREE for client %d\n", i );
             cl->state = CS_FREE;    // can now be reused
             continue;
         }
@@ -3885,10 +3870,10 @@ void SV_SetConfigValueForKey(int start, int max, const char *key, const char *va
 
   if ( i == max )
   {
-    Com_Printf("Overflow at config string start value of %i: key values printed below\n", start);
+    Com_Printf(CON_CHANNEL_SERVER,"Overflow at config string start value of %i: key values printed below\n", start);
     for(i = 0; i < max; ++i)
     {
-        Com_Printf("%i: %i ( %s )\n", i + start, SV_GetConfigstringIndex(start + i), SL_ConvertToString(SV_GetConfigstringIndex(start + i)));
+        Com_Printf(CON_CHANNEL_SERVER,"%i: %i ( %s )\n", i + start, SV_GetConfigstringIndex(start + i), SL_ConvertToString(SV_GetConfigstringIndex(start + i)));
     }
     Com_Error(ERR_FATAL, "SV_SetConfigValueForKey: overflow");
   }
@@ -3911,7 +3896,7 @@ void SV_SetSystemInfoConfig(void)
     }
     else
     {
-        Com_Printf("Info string length exceeded\nkey: fs_game\nInfo string:\n%s\n", buf);
+        Com_Printf(CON_CHANNEL_SERVER,"Info string length exceeded\nkey: fs_game\nInfo string:\n%s\n", buf);
     }
   }
 
@@ -3985,7 +3970,7 @@ void SV_BotUserMove(client_t *client)
             /* Calculate movement origin */
             vec2_copy(move_pos, g_botai[num].moveTo);
             vec2_substract(move_pos, ent->r.currentOrigin);
-            /* Com_Printf("move_pos: (%g, %g) ", move_pos[0], move_pos[1]); */
+            /* Com_Printf(CON_CHANNEL_SERVER,"move_pos: (%g, %g) ", move_pos[0], move_pos[1]); */
             distance = vec2_length(move_pos);
             g_botai[num].doMove = distance > 7.0 ? 1 : 0;
             /* Rotate vector according to current client pitch angle. */
@@ -4000,16 +3985,16 @@ void SV_BotUserMove(client_t *client)
             ucmd.forwardmove = ((int)move_pos[0]) & 0xFF;
             ucmd.rightmove    = ((int)move_pos[1]) & 0xFF;
 
-            //Com_Printf("val: (%3d, %3d), distance: %f ", ucmd.forwardmove, ucmd.rightmove, distance);
-            //Com_Printf("speed: (%d, %d)", ucmd.forwardmove, ucmd.leftmove);
-            //Com_Printf("origin: (%3.3f, %3.3f, %3.3f)", ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2]);
-            //Com_Printf("\n");
+            //Com_Printf(CON_CHANNEL_SERVER,"val: (%3d, %3d), distance: %f ", ucmd.forwardmove, ucmd.rightmove, distance);
+            //Com_Printf(CON_CHANNEL_SERVER,"speed: (%d, %d)", ucmd.forwardmove, ucmd.leftmove);
+            //Com_Printf(CON_CHANNEL_SERVER,"origin: (%3.3f, %3.3f, %3.3f)", ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2]);
+            //Com_Printf(CON_CHANNEL_SERVER,"\n");
 
             /* Notify only once */
             if (!g_botai[num].doMove)
             {
                 Scr_Notify(ent, stringIndex.movedone, 0);
-                Com_DPrintf("Bot movement done at (%3.3f, %3.3f)\n",
+                Com_Printf(CON_CHANNEL_SERVER,"Bot movement done at (%3.3f, %3.3f)\n",
                             ent->r.currentOrigin[0], ent->r.currentOrigin[1]);
             }
 
@@ -4215,11 +4200,11 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
         fabs(svs.clients[i].gentity->r.currentAngles[1] - e_spawns[i].direction1[1]) > 0.1 ||
         fabs(svs.clients[i].gentity->r.currentAngles[2] - e_spawns[i].direction1[2]) > 0.1)
         {
-            Com_Printf("^1Debug Spawn angles changed: ^7ent->r.currentAngles changed new: %.2f, %.2f, %.2f\n",
+            Com_Printf(CON_CHANNEL_SERVER,"^1Debug Spawn angles changed: ^7ent->r.currentAngles changed new: %.2f, %.2f, %.2f\n",
             svs.clients[i].gentity->r.currentAngles[0],
             svs.clients[i].gentity->r.currentAngles[1],
             svs.clients[i].gentity->r.currentAngles[2]);
-            Com_Printf("^1Old angles: ^7ent->r.currentAngles: %.2f, %.2f, %.2f\n",
+            Com_Printf(CON_CHANNEL_SERVER,"^1Old angles: ^7ent->r.currentAngles: %.2f, %.2f, %.2f\n",
             e_spawns[i].direction1[0],
             e_spawns[i].direction1[1],
             e_spawns[i].direction1[2]);
@@ -4234,11 +4219,11 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
         fabs(svs.clients[i].gentity->client->ps.viewangles[1] != e_spawns[i].direction2[1]) > 0.1 ||
         fabs(svs.clients[i].gentity->client->ps.viewangles[2] != e_spawns[i].direction2[2]) > 0.1)
         {
-            Com_Printf("^1Debug Spawn angles changed: ^7ent->client->ps.viewangles changed new: %.2f, %.2f, %.2f\n",
+            Com_Printf(CON_CHANNEL_SERVER,"^1Debug Spawn angles changed: ^7ent->client->ps.viewangles changed new: %.2f, %.2f, %.2f\n",
             svs.clients[i].gentity->client->ps.viewangles[0],
             svs.clients[i].gentity->client->ps.viewangles[1],
             svs.clients[i].gentity->client->ps.viewangles[2]);
-            Com_Printf("^1Old angles: ^7ent->client->ps.viewangles: %.2f, %.2f, %.2f\n",
+            Com_Printf(CON_CHANNEL_SERVER,"^1Old angles: ^7ent->client->ps.viewangles: %.2f, %.2f, %.2f\n",
             e_spawns[i].direction2[0],
             e_spawns[i].direction2[1],
             e_spawns[i].direction2[2]);
@@ -4462,15 +4447,15 @@ void SV_ShowClientUnAckCommands( client_t *client )
 {
     int i;
 
-    Com_Printf("-- Unacknowledged Server Commands for client %i:%s --\n", client - svs.clients, client->name);
+    Com_Printf(CON_CHANNEL_SERVER,"-- Unacknowledged Server Commands for client %i:%s --\n", client - svs.clients, client->name);
 
     for ( i = client->reliableAcknowledge + 1; i <= client->reliableSequence; ++i )
     {
-        Com_Printf("cmd %5d: %8d: %s\n", i, client->reliableCommands[i & (MAX_RELIABLE_COMMANDS -1)].cmdTime,
+        Com_Printf(CON_CHANNEL_SERVER,"cmd %5d: %8d: %s\n", i, client->reliableCommands[i & (MAX_RELIABLE_COMMANDS -1)].cmdTime,
                    client->reliableCommands[i & (MAX_RELIABLE_COMMANDS -1)].command );
     }
 
-    Com_Printf("-----------------------------------------------------\n");
+    Com_Printf(CON_CHANNEL_SERVER,"-----------------------------------------------------\n");
 }
 
 
@@ -4481,14 +4466,14 @@ void SV_CalculateChecksums()
     char* str;
     int len, crc32;
 
-    Com_Printf("^4Calculate referenced files checksums...\n");
+    Com_Printf(CON_CHANNEL_SERVER,"^4Calculate referenced files checksums...\n");
     Cmd_TokenizeString(sv_referencedIwdNames->string);
 
     for(i = 0; i < Cmd_Argc(); ++i)
     {
         Com_sprintf(filename, sizeof(filename), "%s.iwd", Cmd_Argv(i));
         len = FS_CalculateChecksumForFile(filename, &crc32);
-        Com_Printf("^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
+        Com_Printf(CON_CHANNEL_SERVER,"^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
     }
     Cmd_EndTokenizedString();
 
@@ -4509,7 +4494,7 @@ void SV_CalculateChecksums()
                 len = FS_CalculateChecksumForFile(filename, &crc32);
             }
         }
-        Com_Printf("^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
+        Com_Printf(CON_CHANNEL_SERVER,"^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
     }
 
     Cmd_EndTokenizedString();
@@ -4836,8 +4821,8 @@ void SV_SpawnServer(const char *mapname)
   CL_ShutdownAll();
 #endif
   SV_ShutdownGameProgs();
-  Com_Printf("------ Server Initialization ------\n");
-  Com_Printf("Server: %s\n", mapname);
+  Com_Printf(CON_CHANNEL_SERVER,"------ Server Initialization ------\n");
+  Com_Printf(CON_CHANNEL_SERVER,"Server: %s\n", mapname);
 
   SV_ClearServer(); //Inline on MACOS_X
 
@@ -4863,7 +4848,7 @@ void SV_SpawnServer(const char *mapname)
 
     // DO_LIGHT_DEDICATED
     // only comment out when you need a new pure checksum string and it's associated random feed
-    Com_DPrintf("SV_SpawnServer checksum feed: %p\n", sv.checksumFeed);
+    Com_Printf(CON_CHANNEL_SERVER,"SV_SpawnServer checksum feed: %p\n", sv.checksumFeed);
 
     FS_Restart( sv.checksumFeed );
 
@@ -4952,7 +4937,7 @@ void SV_SpawnServer(const char *mapname)
         if ( dropreason )
         {
             SV_DropClient(cl, dropreason);
-            Com_Printf("SV_SpawnServer: dropped client %i - denied!\n", i);
+            Com_Printf(CON_CHANNEL_SERVER,"SV_SpawnServer: dropped client %i - denied!\n", i);
         }else{
             cl->state = CS_CONNECTED;
             cl->gamestateSent = 0;
@@ -4966,7 +4951,7 @@ void SV_SpawnServer(const char *mapname)
     FS_LoadedPaks(outChkSums, outPathNames, sizeof(outPathNames)); //FS_LoadedIwds(&outChkSums, &outPathNames);
     if ( !*outChkSums )
     {
-      Com_PrintWarning("WARNING: sv_pure set but no IWD files loaded\n");
+      Com_PrintWarning(CON_CHANNEL_SERVER,"WARNING: sv_pure set but no IWD files loaded\n");
     }
     Cvar_SetString(sv_iwds, outChkSums);
     Cvar_SetString(sv_iwdNames, outPathNames);
@@ -4991,8 +4976,8 @@ void SV_SpawnServer(const char *mapname)
   sv.state = SS_GAME;
 
   SV_Heartbeat_f();
-  Com_Printf("By using this software you agree to the usage conditions you can find at https://github.com/callofduty4x/CoD4x_Server#usage-conditions-for-server-hosters\n");
-  Com_Printf("-----------------------------------\n");
+  Com_Printf(CON_CHANNEL_DONT_FILTER,"By using this software you agree to the usage conditions you can find at https://github.com/callofduty4x/CoD4x_Server#usage-conditions-for-server-hosters\n");
+  Com_Printf(CON_CHANNEL_SERVER,"-----------------------------------\n");
 
   Sys_EndLoadThreadPriorities();
 

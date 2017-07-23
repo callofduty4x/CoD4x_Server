@@ -377,6 +377,14 @@ DynEntPieces_RegisterDvars:
 	nop
 
 
+;Initialized global or static variables of DynEntity_pieces:
+SECTION .data
+
+
+;Initialized constant data of DynEntity_pieces:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of DynEntity_pieces:
 SECTION .bss
 g_breakablePieces: resb 0x4b0
@@ -384,14 +392,6 @@ numPieces: resb 0x4
 dynEntPieces_impactForce: resb 0x4
 dynEntPieces_angularVelocity: resb 0x4
 dynEntPieces_velocity: resb 0x44
-
-
-;Initialized global or static variables of DynEntity_pieces:
-SECTION .data
-
-
-;Initialized constant data of DynEntity_pieces:
-SECTION .rdata
 
 
 ;All cstrings:

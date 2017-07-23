@@ -131,7 +131,7 @@ void CM_DebugDoAll_f()
     f = FS_FOpenFileWrite("cm_debug.log");
     if(f < 1)
     {
-        Com_PrintError("Couldn't write file cm_debug.log");
+        Com_PrintError(CON_CHANNEL_DONT_FILTER,"Couldn't write file cm_debug.log");
         return;
     }
     CM_DebugViewBasicDetails();

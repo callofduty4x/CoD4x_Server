@@ -41,11 +41,11 @@ P_P_F void *Plugin_Malloc(size_t size)
     //Identify the calling plugin
     pID = PHandler_CallerID();
     if(pID<0){
-        Com_Printf("Plugins: Error! Tried allocating memory for unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"Plugins: Error! Tried allocating memory for unknown plugin!\n");
         return NULL;
     }
     if(pluginFunctions.plugins[pID].enabled==qfalse){
-        Com_Printf("^1WARNING^7: Tried allocating memory for a disabled plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1WARNING^7: Tried allocating memory for a disabled plugin!\n");
 
     }
     return PHandler_Malloc(pID,size);
@@ -56,7 +56,7 @@ P_P_F void Plugin_Free(void *ptr)
     //Identify the calling plugin
     volatile int pID = PHandler_CallerID();
     if(pID<0){
-        Com_Printf("Plugins: Error! Tried freeing memory for unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"Plugins: Error! Tried freeing memory for unknown plugin!\n");
         return;
     }
     PHandler_Free(pID,ptr);
@@ -69,7 +69,7 @@ P_P_F void Plugin_Error(int code, const char *fmt, ...)
     volatile int pID = PHandler_CallerID();
 
     if(pID<0){
-        Com_PrintError("Plugin Error called from unknown plugin!\n");
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin Error called from unknown plugin!\n");
         return;
     }
 
@@ -98,7 +98,7 @@ P_P_F int Plugin_Cmd_GetInvokerSlot()
 }
 P_P_F int Plugin_GetPlayerUid(int slot)
 {
-    Com_PrintError("Plugin_GetPlayerUID: This command is in CoD4X18+ deprecated. 0 returned\n");
+    Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_GetPlayerUID: This command is in CoD4X18+ deprecated. 0 returned\n");
     return 0;
 }
 P_P_F int Plugin_GetSlotCount()
@@ -121,21 +121,21 @@ P_P_F void Plugin_AddCommand(char *name, xcommand_t xcommand, int power)
     volatile int pID;
     pID = PHandler_CallerID();
     if(pID>=MAX_PLUGINS){
-        Com_PrintError("Tried adding a command for a plugin with non existent pID. pID supplied: %d.\n",pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Tried adding a command for a plugin with non existent pID. pID supplied: %d.\n",pID);
         return;
     }else if(pID<0){
-        Com_PrintError("Plugin_AddCommand called from not within a plugin or from a disabled plugin!\n");
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_AddCommand called from not within a plugin or from a disabled plugin!\n");
         return;
     }
     if(!pluginFunctions.plugins[pID].loaded){
-        Com_PrintError("Tried adding a command for not loaded plugin! PID: %d.\n",pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Tried adding a command for not loaded plugin! PID: %d.\n",pID);
     }
-    Com_DPrintf("Adding a plugin command for plugin %d, command name: %s.\n",pID,name);
+    Com_DPrintf(CON_CHANNEL_PLUGINS,"Adding a plugin command for plugin %d, command name: %s.\n",pID,name);
     Cmd_AddCommand(name,PHandler_CmdExecute_f);
     Cmd_SetPower(name, power);
     pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds].xcommand = xcommand;
     strcpy(pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds++].name,name);
-    Com_DPrintf("Command added.\n");
+    Com_DPrintf(CON_CHANNEL_PLUGINS,"Command added.\n");
    // pluginFunctions.plugins[pID].
 
 
@@ -147,23 +147,23 @@ P_P_F void Plugin_RemoveCommand(char *name)
     volatile int pID;
     pID = PHandler_CallerID();
     if(pID>=MAX_PLUGINS){
-        Com_PrintError("Tried removing a command for a plugin with non existent pID. pID supplied: %d.\n",pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Tried removing a command for a plugin with non existent pID. pID supplied: %d.\n",pID);
         return;
     }else if(pID<0){
-        Com_PrintError("Plugin_RemoveCommand called from not within a plugin or from a disabled plugin!\n");
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_RemoveCommand called from not within a plugin or from a disabled plugin!\n");
         return;
     }
     if(!pluginFunctions.plugins[pID].loaded){
-        Com_PrintError("Tried removing a command for not loaded plugin! PID: %d.\n",pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Tried removing a command for not loaded plugin! PID: %d.\n",pID);
     }
-    Com_DPrintf("Remove a plugin command for plugin %d, command name: %s.\n",pID,name);
+    Com_DPrintf(CON_CHANNEL_PLUGINS,"Remove a plugin command for plugin %d, command name: %s.\n",pID,name);
     Cmd_RemoveCommand( name );
 
   /* Leaving the command in list. Is not that good but will not make much trouble.
   for(i=0; i < )
     pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds].xcommand = xcommand;
     strcpy(pluginFunctions.plugins[pID].cmd[pluginFunctions.plugins[pID].cmds++].name,name);
-    */Com_DPrintf("Command removed.\n");
+    */Com_DPrintf(CON_CHANNEL_PLUGINS,"Command removed.\n");
    // pluginFunctions.plugins[pID].
 }
 
@@ -171,15 +171,15 @@ P_P_F void Plugin_RemoveCommand(char *name)
 P_P_F qboolean Plugin_TcpConnectMT( int pID, int connection, const char* remote)
 {
     if(pID<0){
-        Com_Printf("Plugins: Error! Tried open a TCP-Connection for unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"Plugins: Error! Tried open a TCP-Connection for unknown plugin!\n");
         return qfalse;
     }
     if(pluginFunctions.plugins[pID].enabled==qfalse){
-        Com_Printf("^1WARNING^7: Tried open a TCP-Connection for a disabled plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1WARNING^7: Tried open a TCP-Connection for a disabled plugin!\n");
         return qfalse;
     }
     if(connection >= PLUGIN_MAX_SOCKETS || connection < 0){
-        Com_PrintError("Plugin_TcpConnect: Second argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_TcpConnect: Second argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS);
         return qfalse;
     }
     return PHandler_TcpConnect(pID, remote, connection);
@@ -198,19 +198,19 @@ P_P_F qboolean Plugin_TcpConnect( int connection, const char* remote)
 P_P_F int Plugin_TcpGetDataMT(int pID, int connection, void* buf, int size)
 {
     if(pID<0 || pID >= MAX_PLUGINS){
-        Com_Printf("Plugin_TcpGetData: Error! Tried get TCP data for unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"Plugin_TcpGetData: Error! Tried get TCP data for unknown plugin!\n");
         return -1;
     }
     if(pluginFunctions.plugins[pID].enabled==qfalse){
-        Com_Printf("^1WARNING^7: Plugin_TcpGetData: Tried get TCP data for a disabled plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1WARNING^7: Plugin_TcpGetData: Tried get TCP data for a disabled plugin!\n");
         return -1;
     }
     if(connection >= PLUGIN_MAX_SOCKETS || connection < 0){
-        Com_PrintError("Plugin_TcpGetData: First argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS, pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_TcpGetData: First argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS, pID);
         return -1;
     }
     if(buf == NULL){
-        Com_PrintError("Plugin_TcpGetData: Third argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_TcpGetData: Third argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
         return -1;
     }
 
@@ -229,19 +229,19 @@ P_P_F int Plugin_TcpGetData(int connection, void* buf, int size)
 P_P_F qboolean Plugin_TcpSendDataMT(int pID, int connection, void* data, int len)
 {
     if(pID<0 || pID >= MAX_PLUGINS){
-        Com_Printf("Plugin_TcpSendData: Error! Tried get TCP data for unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"Plugin_TcpSendData: Error! Tried get TCP data for unknown plugin!\n");
         return qfalse;
     }
     if(pluginFunctions.plugins[pID].enabled==qfalse){
-        Com_Printf("^1WARNING^7: Plugin_TcpSendData: Tried get TCP data for a disabled plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1WARNING^7: Plugin_TcpSendData: Tried get TCP data for a disabled plugin!\n");
         return qfalse;
     }
     if(connection >= PLUGIN_MAX_SOCKETS || connection < 0){
-        Com_PrintError("Plugin_TcpSendData: Second argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS, pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_TcpSendData: Second argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS, pID);
         return qfalse;
     }
     if(data == NULL){
-        Com_PrintError("Plugin_TcpSendData: Second argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_TcpSendData: Second argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
         return qfalse;
     }
 
@@ -260,15 +260,15 @@ P_P_F void Plugin_TcpCloseConnectionMT(int pID, int connection)
 {
     //Identify the calling plugin
     if(pID<0 || pID >= MAX_PLUGINS){
-        Com_Printf("Plugin_TcpCloseConnection: Error! Tried get close a connection for unknown plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"Plugin_TcpCloseConnection: Error! Tried get close a connection for unknown plugin!\n");
         return;
     }
     if(pluginFunctions.plugins[pID].enabled==qfalse){
-        Com_Printf("^1WARNING^7: Plugin_TcpCloseConnection: Tried to close a connection for a disabled plugin!\n");
+        Com_Printf(CON_CHANNEL_PLUGINS,"^1WARNING^7: Plugin_TcpCloseConnection: Tried to close a connection for a disabled plugin!\n");
         return;
     }
     if(connection >= PLUGIN_MAX_SOCKETS || connection < 0){
-        Com_PrintError("Plugin_TcpCloseConnection: Second argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS, pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_TcpCloseConnection: Second argument can only be a value inside the range: 0...%d plugin ID: #%d\n", PLUGIN_MAX_SOCKETS, pID);
         return;
     }
     PHandler_TcpCloseConnection(pID, connection);
@@ -289,13 +289,13 @@ P_P_F qboolean Plugin_UdpSendData(netadr_t* to, void* data, int len)
 
     if(to == NULL){
         pID = PHandler_CallerID();
-        Com_PrintError("Plugin_UdpSendData: First argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_UdpSendData: First argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
         return qfalse;
     }
 
     if(data == NULL){
         pID = PHandler_CallerID();
-        Com_PrintError("Plugin_UdpSendData: First argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
+        Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_UdpSendData: First argument can not be a NULL-Pointer for plugin ID: #%d\n", pID);
         return qfalse;
     }
 
@@ -350,42 +350,42 @@ P_P_F uint64_t Plugin_GetPlayerID(unsigned int clientslot)
 
 P_P_F void Plugin_SetPlayerGUID(unsigned int clientslot, const char* guid)
 {
-  Com_PrintError("Plugin_SetPlayerGUID: This command is in CoD4X18+ deprecated. Nothing is set\n");
+  Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_SetPlayerGUID: This command is in CoD4X18+ deprecated. Nothing is set\n");
 }
 
 P_P_F void Plugin_SetPlayerUID(unsigned int clientslot, unsigned int uid)
 {
-	  Com_PrintError("Plugin_SetPlayerUID: This command is in CoD4X18+ deprecated. Nothing is set\n");
+	  Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_SetPlayerUID: This command is in CoD4X18+ deprecated. Nothing is set\n");
     return;
 }
 
 P_P_F unsigned int Plugin_GetPlayerUID(unsigned int clientslot)
 {
-  Com_PrintError("Plugin_GetPlayerUID: This command is in CoD4X18+ deprecated. 0 returned\n");
+  Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_GetPlayerUID: This command is in CoD4X18+ deprecated. 0 returned\n");
   return 0;
 }
 
 P_P_F const char* Plugin_GetPlayerGUID(unsigned int clientslot)
 {
-    Com_PrintError("Plugin_GetPlayerGUID: This command is in CoD4X18+ deprecated. No results\n");
+    Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_GetPlayerGUID: This command is in CoD4X18+ deprecated. No results\n");
     return "";
 }
 
 P_P_F void Plugin_SetPlayerNoPB(unsigned int clientslot)
 {
-  Com_PrintError("Plugin_SetPlayerNoPB: This command is in CoD4X18+ deprecated. Nothing is set\n");
+  Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_SetPlayerNoPB: This command is in CoD4X18+ deprecated. Nothing is set\n");
   return;
 }
 
 P_P_F int Plugin_DoesServerUseUids(void)
 {
-    Com_PrintError("Plugin_DoesServerUseUids: This command is in CoD4X18+ deprecated.\n");
+    Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_DoesServerUseUids: This command is in CoD4X18+ deprecated.\n");
     return 0;
 }
 
 P_P_F void Plugin_SetServerToUseUids(int useuids)
 {
-  Com_PrintError("Plugin_SetServerToUseUids: This command is in CoD4X18+ deprecated.\n");
+  Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_SetServerToUseUids: This command is in CoD4X18+ deprecated.\n");
   return;
 }
 
@@ -636,7 +636,7 @@ P_P_F void Plugin_BanClient( unsigned int clientnum, int duration, int invokerid
 
 	SV_AddBan(&baninfo);
   SV_SApiSteamIDToString(cl->playerid, playeridstring, sizeof(playeridstring));
-	Com_Printf("Banrecord added for player: %s id: %s\n", cl->name, playeridstring);
+	Com_Printf(CON_CHANNEL_PLUGINS,"Banrecord added for player: %s id: %s\n", cl->name, playeridstring);
 	SV_PrintAdministrativeLog( "Banned player: %s id: %s until %s with the following reason: %s", cl->name, playeridstring, endtime, banreason);
 
   SV_WriteBanTimelimit(duration * 60, timelimitmsg, sizeof(timelimitmsg));
@@ -692,7 +692,7 @@ P_P_F ftRequest_t* Plugin_HTTP_MakeHttpRequest(const char* url, const char* meth
 
   if(curfileobj == NULL)
   {
-    Com_Printf("Couldn't connect to server.\n");
+    Com_Printf(CON_CHANNEL_PLUGINS,"Couldn't connect to server.\n");
     return qfalse;
   }
 
@@ -724,7 +724,7 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
 
   if(curfileobj == NULL)
   {
-    Com_Printf("Couldn't connect to server.\n");
+    Com_Printf(CON_CHANNEL_PLUGINS,"Couldn't connect to server.\n");
     return qfalse;
   }
 
@@ -736,7 +736,7 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
 
   if(transret < 0)
   {
-    Com_Printf("Receiving data has failed\n");
+    Com_Printf(CON_CHANNEL_PLUGINS,"Receiving data has failed\n");
     FileDownloadFreeRequest(curfileobj);
     return qfalse;
   }
@@ -896,13 +896,13 @@ P_P_F qboolean Plugin_SetupThreadCallback(void* callbackMain,...)
 
 	if(Sys_IsMainThread() == qtrue)
 	{
-		Com_PrintError("Plugin_SetupThreadCallback: Can not call this function from the main-thread!\n");
+		Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_SetupThreadCallback: Can not call this function from the main-thread!\n");
 		return qfalse;
 	}
 
   if(pluginFunctions.plugins[pID].loaded == qfalse || pluginFunctions.plugins[pID].enabled == qfalse)
   {
-    Com_PrintError("Plugin_SetupThreadCallback: called from disabled or unknown plugin!\n");
+    Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_SetupThreadCallback: called from disabled or unknown plugin!\n");
     return qfalse;
   }
 
@@ -914,7 +914,7 @@ P_P_F qboolean Plugin_SetupThreadCallback(void* callbackMain,...)
 	}
 	if(i == MAX_PLUGINCALLBACKS)
 	{
-		Com_PrintError("Couldn't find this thread\n");
+		Com_PrintError(CON_CHANNEL_PLUGINS,"Couldn't find this thread\n");
 		return qfalse;
 	}
 
@@ -941,13 +941,13 @@ P_P_F qboolean Plugin_CreateCallbackThread(void* threadMain,...)
 
 	if(Sys_IsMainThread() == qfalse)
 	{
-		Com_PrintError("Plugin_CreateCallbackThread: Can only call this function from the main-thread!\n");
+		Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_CreateCallbackThread: Can only call this function from the main-thread!\n");
 		return qfalse;
 	}
 
   if(pluginFunctions.plugins[pID].loaded == qfalse || pluginFunctions.plugins[pID].enabled == qfalse)
   {
-    Com_PrintError("Plugin_CreateCallbackThread: called from disabled or unknown plugin!\n");
+    Com_PrintError(CON_CHANNEL_PLUGINS,"Plugin_CreateCallbackThread: called from disabled or unknown plugin!\n");
     return qfalse;
   }
 
@@ -960,7 +960,7 @@ P_P_F qboolean Plugin_CreateCallbackThread(void* threadMain,...)
 	}
 	if(i == MAX_PLUGINCALLBACKS)
 	{
-		Com_PrintError("Couldn't create a callback-thread. Max handles exceeded\n");
+		Com_PrintError(CON_CHANNEL_PLUGINS,"Couldn't create a callback-thread. Max handles exceeded\n");
 		return qfalse;
 	}
 
@@ -986,4 +986,98 @@ P_P_F int Plugin_GetPluginID() //Only from mainthread callable
 {
     int PID = PHandler_CallerID();
     return PID;
+}
+
+/*
+=============
+Com_Printf
+
+Both client and server can use this, and it will output
+to the apropriate place.
+
+A raw string should NEVER be passed as fmt, because of "%f" type crashers.
+=============
+*/
+P_P_F void Plugin_Printf( const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+
+	va_start (argptr,fmt);
+	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_PLUGINS, msg, MSG_DEFAULT);
+}
+
+
+/*
+=============
+Com_PrintWarning
+
+Server can use this, and it will output
+to the apropriate place.
+
+A raw string should NEVER be passed as fmt, because of "%f" type crashers.
+=============
+*/
+P_P_F void Plugin_PrintWarning( const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+
+	memcpy(msg,"^3Warning: ", sizeof(msg));
+
+	va_start (argptr,fmt);
+	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_PLUGINS, msg, MSG_WARNING);
+}
+
+
+/*
+=============
+Com_PrintError
+
+Server can use this, and it will output
+to the apropriate place.
+
+A raw string should NEVER be passed as fmt, because of "%f" type crashers.
+=============
+*/
+P_P_F void Plugin_PrintError( const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+
+	memcpy(msg,"^1Error: ", sizeof(msg));
+
+	va_start (argptr,fmt);
+	Q_vsnprintf (&msg[9], (sizeof(msg)-10), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_PLUGINS, msg, MSG_ERROR);
+}
+
+/*
+================
+Com_DPrintf
+
+A Com_Printf that only shows up if the "developer" cvar is set
+================
+*/
+P_P_F void Plugin_DPrintf( const char *fmt, ...) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+		
+	if ( !Com_IsDeveloper() ) {
+		return;			// don't confuse non-developers with techie stuff...
+	}
+	
+	msg[0] = '^';
+	msg[1] = '2';
+
+	va_start (argptr,fmt);	
+	Q_vsnprintf (&msg[2], (sizeof(msg)-3), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_PLUGINS, msg, MSG_DEFAULT);
 }

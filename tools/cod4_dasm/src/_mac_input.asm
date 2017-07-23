@@ -839,15 +839,6 @@ _ZN17CCallOfDutyEngine9DoMouseUpEt5Pointmm_10:
 	ret
 
 
-;Zero initialized global or static variables of mac_input:
-SECTION .bss
-in_appactive: resb 0x4
-s_wmv: resb 0x10
-window_center_y: resb 0x4
-window_center_x: resb 0x68
-in_mouse: resb 0x4
-
-
 ;Initialized global or static variables of mac_input:
 SECTION .data
 extendedVirtualKeyConvert: dd 0x81c080b5, 0x838882a7, 0x858a8487, 0x87be868c, 0x898f888d, 0x8b938a8e, 0x8d988c96, 0x8f9a8e97, 0x919d90bf, 0x939f929c, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -856,6 +847,15 @@ virtualKeyConvert: dd 0xc8c80000, 0xc9c9, 0xcbcbcaca, 0xcccc, 0x9097f7f, 0x0, 0x
 
 ;Initialized constant data of mac_input:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mac_input:
+SECTION .bss
+in_appactive: resb 0x4
+s_wmv: resb 0x10
+window_center_y: resb 0x4
+window_center_x: resb 0x68
+in_mouse: resb 0x4
 
 
 ;All cstrings:

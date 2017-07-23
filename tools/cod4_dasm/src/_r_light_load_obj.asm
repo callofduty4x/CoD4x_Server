@@ -3,7 +3,7 @@
 	extern FS_ReadFile
 	extern Hunk_AllocInternal
 	extern strcpy
-	extern I_strlwr
+	extern Q_strlwr
 	extern FS_FreeFile
 	extern Image_Register
 	extern Com_Error
@@ -75,7 +75,7 @@ R_LoadLightDef_50:
 	mov ecx, [ebp-0x2c]
 	mov eax, [ecx]
 	mov [esp], eax
-	call I_strlwr
+	call Q_strlwr
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
 	call FS_FreeFile
@@ -381,17 +381,17 @@ R_CopyLightDefAttenuationImage_100:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_light_load_obj:
-SECTION .bss
-s_lmapPixelsUsedForFalloff: resb 0x80
-
-
 ;Initialized global or static variables of r_light_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of r_light_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_light_load_obj:
+SECTION .bss
+s_lmapPixelsUsedForFalloff: resb 0x80
 
 
 ;All cstrings:

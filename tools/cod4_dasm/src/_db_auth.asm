@@ -45,16 +45,16 @@ DB_AuthLoad_InflateInit:
 	nop
 
 
-;Zero initialized global or static variables of db_auth:
-SECTION .bss
-
-
 ;Initialized global or static variables of db_auth:
 SECTION .data
 
 
 ;Initialized constant data of db_auth:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of db_auth:
+SECTION .bss
 
 
 ;All cstrings:

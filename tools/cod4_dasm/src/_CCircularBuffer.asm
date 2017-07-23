@@ -310,16 +310,16 @@ _ZN15CCircularBufferD1Ev_10:
 	ret
 
 
-;Zero initialized global or static variables of CCircularBuffer:
-SECTION .bss
-
-
 ;Initialized global or static variables of CCircularBuffer:
 SECTION .data
 
 
 ;Initialized constant data of CCircularBuffer:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of CCircularBuffer:
+SECTION .bss
 
 
 ;All cstrings:

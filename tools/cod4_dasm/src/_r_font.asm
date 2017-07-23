@@ -858,18 +858,18 @@ R_TextLineWrapPosition_240:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_font:
-SECTION .bss
-registeredFontCount: resb 0x20
-registeredFont: resb 0x60
-
-
 ;Initialized global or static variables of r_font:
 SECTION .data
 
 
 ;Initialized constant data of r_font:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_font:
+SECTION .bss
+registeredFontCount: resb 0x20
+registeredFont: resb 0x60
 
 
 ;All cstrings:

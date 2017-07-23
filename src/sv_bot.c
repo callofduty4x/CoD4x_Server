@@ -126,12 +126,12 @@ int SV_BotAllocateClient( void ) {
 	
 	denied = ClientConnect(i, cl->clscriptid);
 	if ( denied ) {
-		Com_Printf("Bot couldn't connect: %s\n", denied);
+		Com_Printf(CON_CHANNEL_AI,"Bot couldn't connect: %s\n", denied);
 		SV_FreeClientScriptId(cl);
 		return -1;
 	}
 	
-	Com_Printf( "Going from CS_FREE to CS_CONNECTED for %s num %i\n", name, i);
+	Com_Printf(CON_CHANNEL_AI, "Going from CS_FREE to CS_CONNECTED for %s num %i\n", name, i);
 
 	// save the addressgamestateMessageNum
 	// init the netchan queue
@@ -223,7 +223,7 @@ void BotDrawDebugPolygons( void ( *drawPoly )( int color, int numPoints, float *
 			continue;
 		}
 		drawPoly( poly->color, poly->numPoints, (float *) poly->points );
-		//Com_Printf("poly %i, numpoints = %d\n", i, poly->numPoints);
+		//Com_Printf(CON_CHANNEL_AI,"poly %i, numpoints = %d\n", i, poly->numPoints);
 	}
 }
 
@@ -242,19 +242,19 @@ void QDECL BotImport_Print( int type, char *fmt, ... ) {
 
 	switch ( type ) {
 	case PRT_MESSAGE: {
-		Com_Printf( "%s", str );
+		Com_Printf(CON_CHANNEL_AI, "%s", str );
 		break;
 	}
 	case PRT_WARNING: {
-		Com_Printf( S_COLOR_YELLOW "Warning: %s", str );
+		Com_Printf(CON_CHANNEL_AI, S_COLOR_YELLOW "Warning: %s", str );
 		break;
 	}
 	case PRT_ERROR: {
-		Com_Printf( S_COLOR_RED "Error: %s", str );
+		Com_Printf(CON_CHANNEL_AI, S_COLOR_RED "Error: %s", str );
 		break;
 	}
 	case PRT_FATAL: {
-		Com_Printf( S_COLOR_RED "Fatal: %s", str );
+		Com_Printf(CON_CHANNEL_AI, S_COLOR_RED "Fatal: %s", str );
 		break;
 	}
 	case PRT_EXIT: {
@@ -262,7 +262,7 @@ void QDECL BotImport_Print( int type, char *fmt, ... ) {
 		break;
 	}
 	default: {
-		Com_Printf( "unknown print type\n" );
+		Com_Printf(CON_CHANNEL_AI, "unknown print type\n" );
 		break;
 	}
 	}
@@ -585,7 +585,7 @@ int SV_BotLibSetup( void ) {
 	}
 
 	if ( !botlib_export ) {
-		Com_Printf( S_COLOR_RED "Error: SV_BotLibSetup without SV_BotInitBotLib\n" );
+		Com_Printf(CON_CHANNEL_AI, S_COLOR_RED "Error: SV_BotLibSetup without SV_BotInitBotLib\n" );
 		return -1;
 	}
 

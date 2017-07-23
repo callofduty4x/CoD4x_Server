@@ -165,6 +165,15 @@ BG_GetPerkIndexForName_10:
 	nop
 
 
+;Initialized global or static variables of bg_perks_mp:
+SECTION .data
+bg_perkNames: dd _cstring_specialty_gpsjam, _cstring_specialty_bullet, _cstring_specialty_fastre, _cstring_specialty_rof, _cstring_specialty_holdbr, _cstring_specialty_bullet1, _cstring_specialty_grenad, _cstring_specialty_pistol, _cstring_specialty_quiete, _cstring_specialty_parabo, _cstring_specialty_longer, _cstring_specialty_detect, _cstring_specialty_explos, _cstring_specialty_expose, _cstring_specialty_bullet2, _cstring_specialty_extraa, _cstring_specialty_twopri, _cstring_specialty_armorv, _cstring_specialty_fraggr, _cstring_specialty_specia, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of bg_perks_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of bg_perks_mp:
 SECTION .bss
 perk_sprintMultiplier: resb 0x4
@@ -177,15 +186,6 @@ perk_grenadeDeath: resb 0x4
 perk_parabolicAngle: resb 0x4
 perk_parabolicIcon: resb 0x4
 perk_parabolicRadius: resb 0x4
-
-
-;Initialized global or static variables of bg_perks_mp:
-SECTION .data
-bg_perkNames: dd _cstring_specialty_gpsjam, _cstring_specialty_bullet, _cstring_specialty_fastre, _cstring_specialty_rof, _cstring_specialty_holdbr, _cstring_specialty_bullet1, _cstring_specialty_grenad, _cstring_specialty_pistol, _cstring_specialty_quiete, _cstring_specialty_parabo, _cstring_specialty_longer, _cstring_specialty_detect, _cstring_specialty_explos, _cstring_specialty_expose, _cstring_specialty_bullet2, _cstring_specialty_extraa, _cstring_specialty_twopri, _cstring_specialty_armorv, _cstring_specialty_fraggr, _cstring_specialty_specia, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of bg_perks_mp:
-SECTION .rdata
 
 
 ;All cstrings:

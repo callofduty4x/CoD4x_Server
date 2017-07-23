@@ -3,7 +3,6 @@
 	extern scr_const
 	extern Com_GetClientDObj
 	extern CG_DObjGetWorldTagPos
-	extern red.137162
 	extern SL_ConvertToString
 	extern Com_Error
 	extern memset
@@ -78,7 +77,7 @@ AimTarget_GetTargetBounds_10:
 	jz AimTarget_GetTargetBounds_20
 AimTarget_GetTargetBounds_30:
 	mov edx, [aim_target_sentient_radius]
-	movss xmm1, dword [red.137162+0x20]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [edx+0xc]
 	xorps xmm0, xmm1
 	movss [esi], xmm0
@@ -628,18 +627,18 @@ AimTarget_UpdateClientTargets:
 	nop
 
 
-;Zero initialized global or static variables of aim_target_mp:
-SECTION .bss
-atGlobArray: resb 0x1608
-aim_target_sentient_radius: resb 0x78
-
-
 ;Initialized global or static variables of aim_target_mp:
 SECTION .data
 
 
 ;Initialized constant data of aim_target_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of aim_target_mp:
+SECTION .bss
+atGlobArray: resb 0x1608
+aim_target_sentient_radius: resb 0x78
 
 
 ;All cstrings:
@@ -652,6 +651,7 @@ _cstring_aim_target_senti:		db "aim_target_sentient_radius",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00010000:		dd 0x38d1b717	; 0.0001

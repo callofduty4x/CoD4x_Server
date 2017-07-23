@@ -836,18 +836,18 @@ CG_DrawDamageDirectionIndicators_30:
 	nop
 
 
-;Zero initialized global or static variables of cg_draw_indicators:
-SECTION .bss
-g_hudGrenades: resb 0x200
-g_hudGrenadeCount: resb 0x80
-
-
 ;Initialized global or static variables of cg_draw_indicators:
 SECTION .data
 
 
 ;Initialized constant data of cg_draw_indicators:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_draw_indicators:
+SECTION .bss
+g_hudGrenades: resb 0x200
+g_hudGrenadeCount: resb 0x80
 
 
 ;All cstrings:

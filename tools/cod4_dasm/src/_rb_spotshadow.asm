@@ -205,16 +205,16 @@ RB_SpotShadowMaps_40:
 	add [eax], al
 
 
-;Zero initialized global or static variables of rb_spotshadow:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_spotshadow:
 SECTION .data
 
 
 ;Initialized constant data of rb_spotshadow:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_spotshadow:
+SECTION .bss
 
 
 ;All cstrings:

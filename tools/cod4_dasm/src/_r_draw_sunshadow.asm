@@ -283,16 +283,16 @@ R_DrawSunShadowMap_130:
 	jmp R_DrawSunShadowMap_140
 
 
-;Zero initialized global or static variables of r_draw_sunshadow:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_draw_sunshadow:
 SECTION .data
 
 
 ;Initialized constant data of r_draw_sunshadow:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_draw_sunshadow:
+SECTION .bss
 
 
 ;All cstrings:

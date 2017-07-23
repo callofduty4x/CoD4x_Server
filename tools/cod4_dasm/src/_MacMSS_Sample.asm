@@ -49,6 +49,9 @@
 	extern usleep
 	extern _ZN12CSoundObjectD2Ev
 	extern _ZdlPv
+	extern _ZN12CSoundObject22get_sample_ms_positionEPiS0_
+	extern _ZN12CSoundObject22set_sample_ms_positionEi
+	extern _ZN12CSoundObject24set_sample_playback_rateEi
 
 ;Exports of MacMSS_Sample:
 	global _ZN12CSampleSound10InitSampleEmmmm
@@ -2195,10 +2198,6 @@ _ZN12CSampleSoundD1Ev_70:
 	nop
 
 
-;Zero initialized global or static variables of MacMSS_Sample:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacMSS_Sample:
 SECTION .data
 _ZN12CSampleSound13sOpenCallbackE: dd 0x0, 0x0, 0x0, 0x0, 0x0
@@ -2209,6 +2208,12 @@ _ZN12CSampleSound14sCloseCallbackE: dd 0x0
 
 ;Initialized constant data of MacMSS_Sample:
 SECTION .rdata
+;VTable for CSampleSound:
+_ZTV12CSampleSound: dd 0x0, 0x3b4ee0, _ZN12CSampleSoundD1Ev, _ZN12CSampleSoundD0Ev, _ZN12CSampleSound7ReleaseEv, _ZN12CSampleSound9TheadIdleEv, _ZN12CSampleSound11stop_sampleEv, _ZN12CSampleSound13resume_sampleEv, _ZN12CSampleSound10end_sampleEv, _ZN12CSoundObject22get_sample_ms_positionEPiS0_, _ZN12CSoundObject22set_sample_ms_positionEi, _ZN12CSoundObject24set_sample_playback_rateEi, _ZN12CSampleSound11open_streamEPKc, _ZN12CSampleSound12close_streamEv, _ZN12CSampleSound13ChangedVolumeEv, _ZN12CSampleSound13ChangedFormatEv, _ZN12CSampleSound17Changed3DPositionEv, _ZN12CSampleSound18Changed3DDistancesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of MacMSS_Sample:
+SECTION .bss
 
 
 ;All cstrings:

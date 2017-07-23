@@ -216,16 +216,18 @@ _ZN18CDirect3DSwapChainD1Ev_10:
 	ret
 
 
-;Zero initialized global or static variables of CDirect3DSwapChain:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DSwapChain:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DSwapChain:
 SECTION .rdata
+;VTable for CDirect3DSwapChain:
+_ZTV18CDirect3DSwapChain: dd 0x0, 0x3b49c0, _ZN18CDirect3DSwapChain14QueryInterfaceERK5_GUIDPPv, _ZN18CDirect3DSwapChain6AddRefEv, _ZN18CDirect3DSwapChain7ReleaseEv, _ZN18CDirect3DSwapChain7PresentEPK7tagRECTS2_P6HWND__PK8_RGNDATAm, _ZN18CDirect3DSwapChain18GetFrontBufferDataEP17IDirect3DSurface9, _ZN18CDirect3DSwapChain13GetBackBufferEj19_D3DBACKBUFFER_TYPEPP17IDirect3DSurface9, _ZN18CDirect3DSwapChain15GetRasterStatusEP17_D3DRASTER_STATUS, _ZN18CDirect3DSwapChain14GetDisplayModeEP15_D3DDISPLAYMODE, _ZN18CDirect3DSwapChain9GetDeviceEPP16IDirect3DDevice9, _ZN18CDirect3DSwapChain20GetPresentParametersEP23_D3DPRESENT_PARAMETERS_, _ZN18CDirect3DSwapChainD1Ev, _ZN18CDirect3DSwapChainD0Ev, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DSwapChain:
+SECTION .bss
 
 
 ;All cstrings:

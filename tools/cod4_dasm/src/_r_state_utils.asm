@@ -881,10 +881,6 @@ R_Set3D_10:
 	ret
 
 
-;Zero initialized global or static variables of r_state_utils:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_state_utils:
 SECTION .data
 
@@ -892,6 +888,10 @@ SECTION .data
 ;Initialized constant data of r_state_utils:
 SECTION .rdata
 g_identityMatrix44: dd 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x0, 0x3f800000, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of r_state_utils:
+SECTION .bss
 
 
 ;All cstrings:

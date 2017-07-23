@@ -644,18 +644,18 @@ Com_BuildPlayerProfilePathForPlayer_30:
 	nop
 
 
-;Zero initialized global or static variables of com_playerprofile:
-SECTION .bss
-com_playerProfile: resb 0x4
-ui_playerProfileAlreadyChosen: resb 0x4
-
-
 ;Initialized global or static variables of com_playerprofile:
 SECTION .data
 
 
 ;Initialized constant data of com_playerprofile:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_playerprofile:
+SECTION .bss
+com_playerProfile: resb 0x4
+ui_playerProfileAlreadyChosen: resb 0x4
 
 
 ;All cstrings:

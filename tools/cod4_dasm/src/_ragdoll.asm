@@ -734,6 +734,14 @@ Ragdoll_CreateRagdollForDObj_60:
 	add [eax], al
 
 
+;Initialized global or static variables of ragdoll:
+SECTION .data
+
+
+;Initialized constant data of ragdoll:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of ragdoll:
 SECTION .bss
 ragdollFirstInit: resb 0x80
@@ -755,14 +763,6 @@ ragdoll_max_life: resb 0x4
 ragdoll_max_simulating: resb 0x4
 ragdoll_rotvel_scale: resb 0x4
 ragdoll_self_collision_scale: resb 0x4
-
-
-;Initialized global or static variables of ragdoll:
-SECTION .data
-
-
-;Initialized constant data of ragdoll:
-SECTION .rdata
 
 
 ;All cstrings:

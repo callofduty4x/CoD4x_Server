@@ -204,19 +204,19 @@ DL_CancelDownload_10:
 	nop
 
 
-;Zero initialized global or static variables of mac_dl_main:
-SECTION .bss
-dl_isMotd: resb 0x4
-dl_running: resb 0x4
-dl_request: resb 0x78
-
-
 ;Initialized global or static variables of mac_dl_main:
 SECTION .data
 
 
 ;Initialized constant data of mac_dl_main:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mac_dl_main:
+SECTION .bss
+dl_isMotd: resb 0x4
+dl_running: resb 0x4
+dl_request: resb 0x78
 
 
 ;All cstrings:

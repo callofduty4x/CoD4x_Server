@@ -999,10 +999,6 @@ DB_GetXAssetHeaderName:
 	jmp ecx
 
 
-;Zero initialized global or static variables of db_assetnames:
-SECTION .bss
-
-
 ;Initialized global or static variables of db_assetnames:
 SECTION .data
 DB_GetXAssetSizeHandler: dd DB_SizeofXAsset_XModelPieces, DB_SizeofXAsset_PhysPreset, DB_SizeofXAsset_XAnimParts, DB_SizeofXAsset_XModel, DB_SizeofXAsset_Material, DB_SizeofXAsset_MaterialTechniqueSet, DB_SizeofXAsset_GfxImage, DB_SizeofXAsset_snd_alias_list_t, DB_SizeofXAsset_SndCurve, DB_SizeofXAsset_LoadedSound, DB_SizeofXAsset_clipMap_t, DB_SizeofXAsset_clipMap_t, DB_SizeofXAsset_ComWorld, DB_SizeofXAsset_GameWorldSp, DB_SizeofXAsset_GameWorldMp, DB_SizeofXAsset_MapEnts, DB_SizeofXAsset_GfxWorld, DB_SizeofXAsset_GfxLightDef, 0x0, DB_SizeofXAsset_Font_s, DB_SizeofXAsset_MenuList, DB_SizeofXAsset_menuDef_t, DB_SizeofXAsset_LocalizeEntry, DB_SizeofXAsset_WeaponDef, 0x0, DB_SizeofXAsset_FxEffectDef, DB_SizeofXAsset_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_SizeofXAsset_RawFile, DB_SizeofXAsset_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -1013,6 +1009,10 @@ g_assetNames: dd _cstring_xmodelpieces, _cstring_physpreset, _cstring_xanim, _cs
 
 ;Initialized constant data of db_assetnames:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of db_assetnames:
+SECTION .bss
 
 
 ;All cstrings:

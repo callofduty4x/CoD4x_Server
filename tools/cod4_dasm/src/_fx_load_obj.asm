@@ -7,7 +7,7 @@
 	extern Com_MatchToken
 	extern Com_UngetToken
 	extern Com_ScriptError
-	extern I_strcmp
+	extern strcmp
 	extern Com_Printf
 	extern Hunk_AllocInternal
 	extern DB_FindXAssetHeader
@@ -31,7 +31,6 @@
 	extern Com_BeginParseSession
 	extern Com_SetSpaceDelimited
 	extern Com_SetParseNegativeNumbers
-	extern strcmp
 	extern Com_EndParseSession
 
 ;Exports of fx_load_obj:
@@ -1771,7 +1770,7 @@ FX_ParseFlagsField_50:
 	jz FX_ParseFlagsField_30
 	mov [esp+0x4], edx
 	mov [esp], edi
-	call I_strcmp
+	call strcmp
 	test eax, eax
 	jz FX_ParseFlagsField_40
 FX_ParseFlagsField_30:
@@ -2886,11 +2885,6 @@ FX_LoadEditorEffectFromBuffer_170:
 	nop
 
 
-;Zero initialized global or static variables of fx_load_obj:
-SECTION .bss
-fx_load: resb 0x880
-
-
 ;Initialized global or static variables of fx_load_obj:
 SECTION .data
 
@@ -2900,6 +2894,11 @@ SECTION .rdata
 s_elemFields: dd _cstring_name, FX_ParseName, _cstring_editorflags, FX_ParseNonAtlasFlags, _cstring_flags, FX_ParseNonAtlasFlags, _cstring_spawnrange, FX_ParseSpawnRange, _cstring_fadeinrange, FX_ParseFadeInRange, _cstring_fadeoutrange, FX_ParseFadeOutRange, _cstring_spawnfrustumcull, FX_ParseSpawnFrustumCullRadius, _cstring_spawnlooping, FX_ParseSpawnDefLooping, _cstring_spawnoneshot, FX_ParseSpawnDefOneShot, _cstring_spawndelaymsec, FX_ParseSpawnDelayMsec, _cstring_lifespanmsec, FX_ParseLifeSpanMsec, _cstring_spawnorgx, FX_ParseSpawnOrgX, _cstring_spawnorgy, FX_ParseSpawnOrgY, _cstring_spawnorgz, FX_ParseSpawnOrgZ, _cstring_spawnoffsetradiu, FX_ParseSpawnOffsetRadius, _cstring_spawnoffsetheigh, FX_ParseSpawnOffsetHeight, _cstring_spawnanglepitch, FX_ParseSpawnAnglePitch, _cstring_spawnangleyaw, FX_ParseSpawnAngleYaw, _cstring_spawnangleroll, FX_ParseSpawnAngleRoll, _cstring_anglevelpitch, FX_ParseAngleVelPitch, _cstring_anglevelyaw, FX_ParseAngleVelYaw, _cstring_anglevelroll, FX_ParseAngleVelRoll, _cstring_initialrot, FX_ParseInitialRot, _cstring_gravity, FX_ParseGravity, _cstring_elasticity, FX_ParseElasticity, _cstring_atlasbehavior, FX_ParseAtlasBehavior, _cstring_atlasindex, FX_ParseAtlasIndex, _cstring_atlasfps, FX_ParseAtlasFps, _cstring_atlasloopcount, FX_ParseAtlasLoopCount, _cstring_atlascolindexbit, FX_ParseAtlasColIndexBits, _cstring_atlasrowindexbit, FX_ParseAtlasRowIndexBits, _cstring_atlasentrycount, FX_ParseAtlasEntryCount, _cstring_velgraph0x, FX_ParseVelGraph0X, _cstring_velgraph0y, FX_ParseVelGraph0Y, _cstring_velgraph0z, FX_ParseVelGraph0Z, _cstring_velgraph1x, FX_ParseVelGraph1X, _cstring_velgraph1y, FX_ParseVelGraph1Y, _cstring_velgraph1z, FX_ParseVelGraph1Z, _cstring_rotgraph, FX_ParseRotGraph, _cstring_sizegraph0, FX_ParseSizeGraph0, _cstring_sizegraph1, FX_ParseSizeGraph1, _cstring_scalegraph, FX_ParseScaleGraph, _cstring_colorgraph, FX_ParseColorGraph, _cstring_alphagraph, FX_ParseAlphaGraph, _cstring_lightingfrac, FX_ParseLightingFrac, _cstring_colloffset, FX_ParseCollOffset, _cstring_collradius, FX_ParseCollRadius, _cstring_fxonimpact, FX_ParseFxOnImpact, _cstring_fxondeath, FX_ParseFxOnDeath, _cstring_sortorder, FX_ParseSortOrder, _cstring_emission, FX_ParseEmission, _cstring_emitdist, FX_ParseEmitDist, _cstring_emitdistvariance, FX_ParseEmitDistVariance, _cstring_trailrepeattime, FX_ParseTrailRepeatTime, _cstring_trailsplitdist, FX_ParseTrailSplitDist, _cstring_trailscrolltime, FX_ParseTrailScrollTime, _cstring_trailrepeatdist, FX_ParseTrailRepeatDist, _cstring_traildef, FX_ParseTrailDef, _cstring_billboardsprite, FX_ParseBillboardSprite, _cstring_orientedsprite, FX_ParseOrientedSprite, _cstring_cloud, FX_ParseCloud, _cstring_tail, FX_ParseTail, _cstring_trail, FX_ParseTrail, _cstring_decal, FX_ParseDecal, _cstring_model, FX_ParseModel, _cstring_light, FX_ParseLight, _cstring_spotlight, FX_ParseSpotLight, _cstring_runner, FX_ParseRunner, _cstring_sound, FX_ParseSound
 typePrefixes.130273: dd _cstring_mc, _cstring_wc, 0x0, 0x0, 0x0, 0x0
 s_allFlagDefs: dd _cstring_looping, 0x0, 0x1, 0x1, _cstring_userandcolor, 0x0, 0x2, 0x2, _cstring_userandalpha, 0x0, 0x4, 0x4, _cstring_userandsize0, 0x0, 0x8, 0x8, _cstring_userandsize1, 0x0, 0x10, 0x10, _cstring_userandscale, 0x0, 0x20, 0x20, _cstring_userandrotdelta, 0x0, 0x40, 0x40, _cstring_modcolorbyalpha, 0x0, 0x80, 0x80, _cstring_userandvel0, 0x0, 0x100, 0x100, _cstring_userandvel1, 0x0, 0x200, 0x200, _cstring_usebackcompatvel, 0x0, 0x400, 0x400, _cstring_absvel0, 0x0, 0x800, 0x800, _cstring_absvel1, 0x0, 0x1000, 0x1000, _cstring_playontouch, 0x0, 0x2000, 0x2000, _cstring_playondeath, 0x0, 0x4000, 0x4000, _cstring_playonrun, 0x0, 0x8000, 0x8000, _cstring_boundingsphere, 0x0, 0x10000, 0x10000, _cstring_useitemclip, 0x0, 0x20000, 0x20000, _cstring_disabled, 0x0, 0x80000000, 0x80000000, _cstring_spawnrelative, 0x1, 0x2, 0x2, _cstring_spawnfrustumcull1, 0x1, 0x4, 0x4, _cstring_runnerusesrandro, 0x1, 0x8, 0x8, _cstring_spawnoffsetnone, 0x1, 0x30, 0x0, _cstring_spawnoffsetspher, 0x1, 0x30, 0x10, _cstring_spawnoffsetcylin, 0x1, 0x30, 0x20, _cstring_runreltoworld, 0x1, 0xc0, 0x0, _cstring_runreltospawn, 0x1, 0xc0, 0x40, _cstring_runreltoeffect, 0x1, 0xc0, 0x80, _cstring_runreltooffset, 0x1, 0xc0, 0xc0, _cstring_usecollision, 0x1, 0x100, 0x100, _cstring_dieontouch, 0x1, 0x200, 0x200, _cstring_drawpastfog, 0x1, 0x400, 0x400, _cstring_drawwithviewmode, 0x1, 0x800, 0x800, _cstring_blockssight, 0x1, 0x1000, 0x1000, _cstring_modelusesphysics, 0x1, 0x8000000, 0x8000000, _cstring_nonuniformscale, 0x1, 0x10000000, 0x10000000, _cstring_startfixed, 0x2, 0x3, 0x0, _cstring_startrandom, 0x2, 0x3, 0x1, _cstring_startindexed, 0x2, 0x3, 0x2, _cstring_playoverlife, 0x2, 0x4, 0x4, _cstring_looponlyntimes, 0x2, 0x8, 0x8, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of fx_load_obj:
+SECTION .bss
+fx_load: resb 0x880
 
 
 ;All cstrings:

@@ -560,10 +560,6 @@ DB_ReleaseGeometryBuffers_30:
 	ret
 
 
-;Zero initialized global or static variables of db_memory:
-SECTION .bss
-
-
 ;Initialized global or static variables of db_memory:
 SECTION .data
 g_block_mem_name: dd _cstring_temp, _cstring_runtime, _cstring_large_runtime, _cstring_physical_runtime, _cstring_virtual, _cstring_large, _cstring_physical, _cstring_vertex, _cstring_index, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -572,6 +568,10 @@ g_block_mem_type: dd 0x0, 0x1, 0x1, 0x2, 0x1, 0x1, 0x2, 0x2, 0x2, 0x0, 0x0, 0x0,
 
 ;Initialized constant data of db_memory:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of db_memory:
+SECTION .bss
 
 
 ;All cstrings:

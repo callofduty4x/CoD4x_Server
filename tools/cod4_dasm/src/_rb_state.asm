@@ -188,13 +188,6 @@ RB_InitSceneViewport:
 	nop
 
 
-;Zero initialized global or static variables of rb_state:
-SECTION .bss
-gfxCmdBufInput: resb 0x444
-gfxCmdBufSourceState: resb 0xf80
-gfxCmdBufState: resb 0xa20
-
-
 ;Initialized global or static variables of rb_state:
 SECTION .data
 
@@ -202,6 +195,13 @@ SECTION .data
 ;Initialized constant data of rb_state:
 SECTION .rdata
 gfxCmdBufContext: dd gfxCmdBufSourceState, gfxCmdBufState, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of rb_state:
+SECTION .bss
+gfxCmdBufInput: resb 0x444
+gfxCmdBufSourceState: resb 0xf80
+gfxCmdBufState: resb 0xa20
 
 
 ;All cstrings:

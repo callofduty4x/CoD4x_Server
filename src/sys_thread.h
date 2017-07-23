@@ -63,6 +63,10 @@ enum CriticalSection
   CRITSECT_COUNT = 23
 };
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 threadid_t Sys_GetCurrentThreadId( );
 void __cdecl Sys_EnterCriticalSection(int section);
 void __cdecl Sys_LeaveCriticalSection(int section);
@@ -72,6 +76,8 @@ void __cdecl Sys_InitializeCriticalSections( void );
 void __cdecl Sys_InitMainThread( void );
 qboolean __cdecl Sys_IsMainThread( void );
 bool __cdecl Sys_IsDatabaseThread( void );
+bool __cdecl Sys_IsServerThread( void );
+bool __cdecl Sys_IsRenderThread( void );
 void Sys_SyncDatabase();
 void Com_InitThreadData(int threadcontext);
 void* __cdecl Sys_GetValue(int key);
@@ -114,6 +120,12 @@ typedef struct
 unsigned int Sys_GetProcessAffinityMask();
 void** Sys_GetThreadLocalStorage();
 void Sys_SetThreadLocalStorage(void**);
+
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif
 

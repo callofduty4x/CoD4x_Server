@@ -1344,16 +1344,16 @@ Bullet_Endpos_130:
 	nop
 
 
-;Zero initialized global or static variables of bullet:
-SECTION .bss
-
-
 ;Initialized global or static variables of bullet:
 SECTION .data
 
 
 ;Initialized constant data of bullet:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of bullet:
+SECTION .bss
 
 
 ;All cstrings:

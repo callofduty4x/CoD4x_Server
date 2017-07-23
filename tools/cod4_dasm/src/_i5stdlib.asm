@@ -212,16 +212,16 @@ _getcwd:
 	nop
 
 
-;Zero initialized global or static variables of i5stdlib:
-SECTION .bss
-
-
 ;Initialized global or static variables of i5stdlib:
 SECTION .data
 
 
 ;Initialized constant data of i5stdlib:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of i5stdlib:
+SECTION .bss
 
 
 ;All cstrings:

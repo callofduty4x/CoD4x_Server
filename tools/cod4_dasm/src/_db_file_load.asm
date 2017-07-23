@@ -663,6 +663,14 @@ DB_ResetMinimumFastFileLoaded:
 	add [eax], al
 
 
+;Initialized global or static variables of db_file_load:
+SECTION .data
+
+
+;Initialized constant data of db_file_load:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of db_file_load:
 SECTION .bss
 g_minimumFastFileLoaded: resb 0x20
@@ -674,14 +682,6 @@ g_loadedSize: resb 0x4
 g_totalSize: resb 0x4
 g_varXAssetList: resb 0x64
 g_loadingAssets: resb 0x80
-
-
-;Initialized global or static variables of db_file_load:
-SECTION .data
-
-
-;Initialized constant data of db_file_load:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -151,16 +151,16 @@ R_DownsampleMipMapBilinear_10:
 	jmp R_DownsampleMipMapBilinear_30
 
 
-;Zero initialized global or static variables of r_image_utils:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_image_utils:
 SECTION .data
 
 
 ;Initialized constant data of r_image_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_image_utils:
+SECTION .bss
 
 
 ;All cstrings:

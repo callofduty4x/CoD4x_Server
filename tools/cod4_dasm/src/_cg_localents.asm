@@ -243,19 +243,19 @@ CG_AddLocalEntityTracerBeams_30:
 	jmp CG_AddLocalEntityTracerBeams_60
 
 
-;Zero initialized global or static variables of cg_localents:
-SECTION .bss
-cg_localEntities: resb 0x2800
-cg_activeLocalEntities: resb 0x60
-cg_freeLocalEntities: resb 0x1c
-
-
 ;Initialized global or static variables of cg_localents:
 SECTION .data
 
 
 ;Initialized constant data of cg_localents:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_localents:
+SECTION .bss
+cg_localEntities: resb 0x2800
+cg_activeLocalEntities: resb 0x60
+cg_freeLocalEntities: resb 0x1c
 
 
 ;All cstrings:

@@ -2,6 +2,21 @@
 #include "q_math.h"
 #include <math.h>
 
+
+vec4_t colorBlack  = {0, 0, 0, 1};
+vec4_t colorRed    = {1, 0, 0, 1};
+vec4_t colorGreen  = {0, 1, 0, 1};
+vec4_t colorBlue   = {0, 0, 1, 1};
+vec4_t colorYellow = {1, 1, 0, 1};
+vec4_t colorMagenta = {1, 0, 1, 1};
+vec4_t colorCyan   = {0, 1, 1, 1};
+vec4_t colorWhite  = {1, 1, 1, 1};
+vec4_t colorLtGrey = {0.75, 0.75, 0.75, 1};
+vec4_t colorMdGrey = {0.5, 0.5, 0.5, 1};
+vec4_t colorDkGrey = {0.25, 0.25, 0.25, 1};
+vec4_t colorLtGreen = { 0, 0.7, 0, 1 };
+
+
 void Math_VectorToAngles(vec3_t vector, vec3_t angles)
 {
     angles[0] = 0.0;
@@ -269,6 +284,23 @@ vec_t Vec3Normalize( vec3_t v ) {
 
 	return length;
 }
+
+vec_t Vec4Normalize( vec4_t v ) {
+	float length, ilength;
+
+	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3];
+	length = sqrt( length );
+
+	if ( length ) {
+		ilength = 1 / length;
+		v[0] *= ilength;
+		v[1] *= ilength;
+		v[2] *= ilength;
+		v[3] *= ilength;
+	}
+	return length;
+}
+
 
 vec_t VectorLength( const vec3_t v ) {
 	return sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
@@ -573,3 +605,430 @@ void __cdecl AnglesToQuat(const float *angles, float *quat)
   AxisToQuat(axis, quat);
 }
 
+qboolean __cdecl VecNCompareCustomEpsilon(const float *v0, const float *v1, float epsilon, int coordCount)
+{
+  int i;
+
+  for ( i = 0; i < coordCount; ++i )
+  {
+    if ( ((v0[i] - v1[i]) * (v0[i] - v1[i])) > (epsilon * epsilon) )
+        return 0;
+  }
+  return 1;
+}
+
+
+void __cdecl AxisTransformVec3(const float (*axes)[3], const float *vec, float *out)
+{
+  out[0] = ((*vec * (*axes)[0]) + (vec[1] * (*axes)[3])) + (vec[2] * (*axes)[6]);
+  out[1] = ((*vec * (*axes)[1]) + (vec[1] * (*axes)[4])) + (vec[2] * (*axes)[7]);
+  out[2] = ((*vec * (*axes)[2]) + (vec[1] * (*axes)[5])) + (vec[2] * (*axes)[8]);
+}
+
+
+
+float identityMatrix44[] =
+{  1.0, 0.0, 0.0, 0.0,
+   0.0, 1.0, 0.0, 0.0,
+   0.0, 0.0, 1.0, 0.0,
+   0.0, 0.0, 0.0, 1.0
+};
+
+float identityMatrix33[] =
+{  1.0, 0.0, 0.0,
+   0.0, 1.0, 0.0,
+   0.0, 0.0, 1.0,
+};
+
+
+void __cdecl MatrixIdentity44(float (*out)[4])
+{
+  assert(out != NULL);
+  memcpy(out, identityMatrix44, sizeof(identityMatrix44));
+}
+
+
+void __cdecl MatrixIdentity33(float (*out)[3])
+{
+  assert(out != NULL);
+  memcpy(out, identityMatrix33, sizeof(identityMatrix33));
+}
+
+
+void __cdecl QuatToAxis(const float *quat, float (*axis)[3])
+{
+  float scaledX;
+  float xy;
+  float xz;
+  float xw;
+  float scaledY;
+  float yz;
+  float yw;
+  float zw;
+  float yy;
+  float zz;
+  float xx;
+  float magSqr;
+  vec3_t v;
+
+  xx = quat[0] * quat[0];
+  yy = quat[1] * quat[1];
+  zz = quat[2] * quat[2];
+  magSqr = xx + yy + zz + (quat[3] * quat[3]);
+
+  assert(magSqr > 0.0f);
+
+  v[0] = xx * (2.0 / magSqr);
+  v[1] = yy * (2.0 / magSqr);
+  v[2] = zz * (2.0 / magSqr);
+  scaledX = (2.0 / magSqr) * quat[0];
+  xy = scaledX * quat[1];
+  xz = scaledX * quat[2];
+  xw = scaledX * quat[3];
+  scaledY = (2.0 / magSqr) * quat[1];
+  yz = scaledY * quat[2];
+  yw = scaledY * quat[3];
+  zw = (2.0 / magSqr) * quat[2] * quat[3];
+  (*axis)[0] = 1.0 - (v[1] + v[2]);
+  (*axis)[1] = xy + zw;
+  (*axis)[2] = xz - yw;
+  (*axis)[3] = xy - zw;
+  (*axis)[4] = 1.0 - (v[0] + v[2]);
+  (*axis)[5] = yz + xw;
+  (*axis)[6] = xz + yw;
+  (*axis)[7] = yz - xw;
+  (*axis)[8] = 1.0 - (v[0] + v[1]);
+}
+
+void __cdecl Vec4Lerp(const float *from, const float *to, float frac, float *result)
+{
+  result[0] = (to[0] - from[0]) * frac + from[0];
+  result[1] = (to[1] - from[1]) * frac + from[1];
+  result[2] = (to[2] - from[2]) * frac + from[2];
+  result[3] = (to[3] - from[3]) * frac + from[3];
+}
+
+void __cdecl QuatLerp(const float *qa, const float *qb, float frac, float *out)
+{
+  if ( DotProduct4(qa, qb) < 0.0 )
+  {
+    VectorNegate4(qb, out);
+    Vec4Lerp(qa, out, frac, out);
+  }
+  else
+  {
+    Vec4Lerp(qa, qb, frac, out);
+  }
+}
+
+
+static int sRandSeed;
+
+unsigned int __cdecl ms_rand()
+{
+  sRandSeed = 214013 * sRandSeed + 2531011;
+  return ((unsigned int)sRandSeed >> 16) & 0x7FFF;
+}
+
+void __cdecl ms_srand(int seed)
+{
+  sRandSeed = seed;
+}
+
+long double __cdecl randomf()
+{
+  return ((float)(signed int)ms_rand() * 0.000030517578f);
+}
+
+
+
+
+qboolean __cdecl IntersectPlanes(const float **plane, float *xyz)
+{
+  double determinant;
+
+  determinant = ((plane[1][1] * plane[2][2] - plane[2][1] * plane[1][2]) * plane[0][0])
+              + ((plane[2][1] * plane[0][2] - plane[0][1] * plane[2][2]) * plane[1][0])
+              + ((plane[0][1] * plane[1][2] - plane[1][1] * plane[0][2]) * plane[2][0]);
+
+  if ( fabs(determinant) >= 0.001000000047497451 )
+  {
+
+    double revdet = 1.0 / determinant;
+
+    xyz[0] = ((plane[1][1] * plane[2][2] - plane[2][1] * plane[1][2]) * plane[0][3])
+            + ((plane[2][1] * plane[0][2] - plane[0][1] * plane[2][2]) * plane[1][3])
+            + ((plane[0][1] * plane[1][2] - plane[1][1] * plane[0][2]) * plane[2][3]);
+
+    xyz[1] = ((plane[1][2] * plane[2][0] - plane[2][2] * plane[1][0]) * plane[0][3])
+            + ((plane[2][2] * plane[0][0] - plane[0][2] * plane[2][0]) * plane[1][3])
+            + ((plane[0][2] * plane[1][0] - plane[1][2] * plane[0][0]) * plane[2][3]);
+
+    xyz[2] = ((plane[1][0] * plane[2][1] - plane[2][0] * plane[1][1]) * plane[0][3])
+            + ((plane[2][0] * plane[0][1] - plane[0][0] * plane[2][1]) * plane[1][3])
+            + ((plane[0][0] * plane[1][1] - plane[1][0] * plane[0][1]) * plane[2][3]);
+
+    VectorScale(xyz, revdet, xyz);
+
+    return 1;
+  }
+  return 0;
+}
+
+
+void __cdecl Vec3Cross(const vec3_t v0, const vec3_t v1, vec3_t cross)
+{
+    assert(v0 != cross);
+    assert(v1 != cross);
+
+    cross[0] = v0[1] * v1[2] - v0[2] * v1[1];
+    cross[1] = v0[2] * v1[0] - v0[0] * v1[2];
+    cross[2] = v0[0] * v1[1] - v0[1] * v1[0];
+}
+
+
+qboolean __cdecl PlaneFromPoints(float *plane, const float *v0, const float *v1, const float *v2)
+{
+  vec3_t v2_v0;
+  vec3_t v1_v0;
+  float length;
+  float lengthSq;
+
+  VectorSubtract(v1, v0, v1_v0);
+  VectorSubtract(v2, v0, v2_v0);
+  Vec3Cross(v2_v0, v1_v0, plane);
+
+  lengthSq = VectorLengthSquared(plane);
+
+  if ( lengthSq == 0 ){
+    return 0;
+  }
+
+  if(lengthSq < 2.0 && (VectorLengthSquared(v2_v0) * VectorLengthSquared(v1_v0) * 0.0000010000001) >= lengthSq)
+  {
+    VectorSubtract(v2, v1, v1_v0);
+    VectorSubtract(v0, v1, v2_v0);
+    Vec3Cross(v2_v0, v1_v0, plane);
+    if((VectorLengthSquared(v2_v0) * VectorLengthSquared(v1_v0) * 0.0000010000001) >= lengthSq)
+    {
+        return 0;
+    }
+  }
+  length = sqrt(lengthSq);
+  plane[0] = plane[0] / length;
+  plane[1] = plane[1] / length;
+  plane[2] = plane[2] / length;
+  plane[3] = DotProduct(v0, plane);
+  return 1;
+}
+
+vec_t Q_rint( vec_t in ) {
+	return floor( in + 0.5 );
+}
+
+
+
+void __cdecl SnapPointToIntersectingPlanes(const float **planes, float *xyz, float snapGrid, float snapEpsilon)
+{
+  vec3_t snapped;
+  float baseError;
+  float maxBaseError;
+  float snapError;
+  float maxSnapError;
+  float rounded;
+  int axis;
+  int planeIndex;
+
+  for ( axis = 0; axis < 3; ++axis )
+  {
+    rounded = (signed int)((xyz[axis] / snapGrid) + 9.313225746154785e-10) * snapGrid;
+    if ( snapEpsilon <= (float)abs((unsigned int)(rounded - xyz[axis])))
+    {
+      snapped[axis] = xyz[axis];
+    }else{
+      snapped[axis] = rounded;
+    }
+  }
+
+  if ( !VectorCompare(xyz, snapped) )
+  {
+    maxSnapError = 0.0;
+    maxBaseError = snapEpsilon;
+    for ( planeIndex = 0; planeIndex < 3; ++planeIndex )
+    {
+
+      snapError = abs((unsigned int)(DotProduct(planes[planeIndex], snapped) - planes[planeIndex][3]));
+
+      if ( snapError > maxSnapError ){
+        maxSnapError = snapError;
+      }
+
+      baseError = abs((unsigned int)(DotProduct(planes[planeIndex], xyz) - planes[planeIndex][3]));
+
+      if ( baseError > maxBaseError ){
+        maxBaseError = baseError;
+      }
+    }
+    if ( maxBaseError > maxSnapError )
+    {
+      VectorCopy(snapped, xyz);
+    }
+  }
+}
+
+void __cdecl ShrinkBoundsToHeight(vec3_t mins, vec3_t maxs)
+{
+  vec3_t d;
+
+  VectorSubtract(maxs, mins, d);
+  if ( d[0] > d[2] )
+  {
+    mins[0] += (d[0] - d[2]) * 0.5;
+    maxs[0] -= (d[0] - d[2]) * 0.5;
+  }
+  if ( d[1] > d[2] )
+  {
+    mins[1] += (d[1] - d[2]) * 0.5;
+    maxs[1] -= (d[1] - d[2]) * 0.5;
+  }
+}
+
+
+void __cdecl ClearBounds(vec3_t mins, vec3_t maxs)
+{
+  mins[0] = 131072.0;
+  mins[1] = 131072.0;
+  mins[2] = 131072.0;
+  maxs[0] = -131072.0;
+  maxs[1] = -131072.0;
+  maxs[2] = -131072.0;
+}
+
+void __cdecl ExpandBounds(const vec3_t addedmins, const vec3_t addedmaxs, vec3_t mins, vec3_t maxs)
+{
+  if ( mins[0] > addedmins[0] )
+  {
+    mins[0] = addedmins[0];
+  }
+  if ( addedmaxs[0] > maxs[0] )
+  {
+    maxs[0] = addedmaxs[0];
+  }
+  if ( mins[1] > addedmins[1] )
+  {
+    mins[1] = addedmins[1];
+  }
+  if ( addedmaxs[1] > maxs[1] )
+  {
+    maxs[1] = addedmaxs[1];
+  }
+  if ( mins[2] > addedmins[2] )
+  {
+    mins[2] = addedmins[2];
+  }
+  if ( addedmaxs[2] > maxs[2] )
+  {
+    maxs[2] = addedmaxs[2];
+  }
+}
+
+
+void __cdecl AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs)
+{
+  if ( mins[0] > v[0] )
+  {
+    mins[0] = v[0];
+  }
+  if ( v[0] > maxs[0] )
+  {
+    maxs[0] = v[0];
+  }
+  if ( mins[1] > v[1] )
+  {
+    mins[1] = v[1];
+  }
+  if ( v[1] > maxs[1] )
+  {
+    maxs[1] = v[1];
+  }
+  if ( mins[2] > v[2] )
+  {
+    mins[2] = v[2];
+  }
+  if ( v[2] > maxs[2] )
+  {
+    maxs[2] = v[2];
+  }
+}
+
+
+
+/*
+=================
+AngleNormalize360
+
+returns angle normalized to the range [0 <= angle < 360]
+=================
+*/
+
+double __cdecl AngleNormalize360(const float angle)
+{
+  float sa;
+  float result;
+
+  sa = angle * 0.0027777778;
+  result = (sa - floor(sa)) * 360.0;
+
+  if ( (result - 360.0) < 0.0 )
+  {
+    return result;
+  }
+
+  return result - 360.0;
+}
+
+
+/*
+=================
+AngleNormalize180
+
+returns angle normalized to the range [-180 < angle <= 180]
+=================
+*/
+float AngleNormalize180 ( float angle ) {
+    angle = AngleNormalize360( angle );
+    if ( angle > 180.0 ) {
+	angle -= 360.0;
+    }
+    return angle;
+}
+
+double __cdecl AngleDelta(const float angle1, const float angle2)
+{
+  return AngleNormalize180(angle1 - angle2);
+}
+
+/*
+=====================
+Q_acos
+
+the msvc acos doesn't always return a value between -PI and PI:
+
+int i;
+i = 1065353246;
+acos(*(float*) &i) == -1.#IND0
+=====================
+*/
+float Q_acos( float c ) {
+        float angle;
+
+        angle = acos( c );
+
+        if ( angle > M_PI ) {
+                return (float)M_PI;
+        }
+        if ( angle < -M_PI ) {
+                return (float)M_PI;
+        }
+        return angle;
+}

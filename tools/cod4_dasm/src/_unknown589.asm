@@ -47,24 +47,6 @@ HIDReportError:F(0,1):
 	pop ebp
 
 
-;Zero initialized global or static variables of unknown589:
-SECTION .bss
-buf: resb 0x7f
-catch_exception_raise: resb 0x4
-catch_exception_raise_state: resb 0x4
-catch_exception_raise_state_identity: resb 0x4
-clock_alarm_reply: resb 0x4
-do_mach_notify_dead_name: resb 0x4
-do_mach_notify_no_senders: resb 0x4
-do_mach_notify_port_deleted: resb 0x4
-do_mach_notify_send_once: resb 0x4
-do_seqnos_mach_notify_dead_name: resb 0x4
-do_seqnos_mach_notify_no_senders: resb 0x4
-do_seqnos_mach_notify_port_deleted: resb 0x4
-do_seqnos_mach_notify_send_once: resb 0x4
-receive_samples: resb 0x50
-
-
 ;Initialized global or static variables of unknown589:
 SECTION .data
 NXArgc: dd 0x0, 0x0, 0x0, 0x0, 0x0
@@ -82,6 +64,24 @@ _length_code: dd 0x3020100, 0x7060504, 0x9090808, 0xb0b0a0a, 0xc0c0c0c, 0xd0d0d0
 jpeg_natural_order: dd 0x0, 0x1, 0x8, 0x10, 0x9, 0x2, 0x3, 0xa, 0x11, 0x18, 0x20, 0x19, 0x12, 0xb, 0x4, 0x5, 0xc, 0x13, 0x1a, 0x21, 0x28, 0x30, 0x29, 0x22, 0x1b, 0x14, 0xd, 0x6, 0x7, 0xe, 0x15, 0x1c, 0x23, 0x2a, 0x31, 0x38, 0x39, 0x32, 0x2b, 0x24, 0x1d, 0x16, 0xf, 0x17, 0x1e, 0x25, 0x2c, 0x33, 0x3a, 0x3b, 0x34, 0x2d, 0x26, 0x1f, 0x27, 0x2e, 0x35, 0x3c, 0x3d, 0x36, 0x2f, 0x37, 0x3e, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f, 0x3f
 jpeg_std_message_table: dd _cstring_bogus_message_co, _cstring_sorry_there_are_, _cstring_align_type_is_wr, _cstring_max_alloc_chunk_, _cstring_bogus_buffer_con, _cstring_invalid_componen, _cstring_dct_coefficient_, _cstring_idct_output_bloc, _cstring_bogus_huffman_ta, _cstring_bogus_input_colo, _cstring_bogus_jpeg_color, _cstring_bogus_marker_len, _cstring_wrong_jpeg_libra, _cstring_sampling_factors, _cstring_invalid_memory_p, _cstring_unsupported_jpeg, _cstring_invalid_progress, _cstring_invalid_progress1, _cstring_bogus_sampling_f, _cstring_invalid_scan_scr, _cstring_improper_call_to, _cstring_jpeg_parameter_s, _cstring_bogus_virtual_ar, _cstring_buffer_passed_to, _cstring_suspension_not_a, _cstring_ccir601_sampling, _cstring_too_many_color_c, _cstring_unsupported_colo, _cstring_bogus_dac_index_, _cstring_bogus_dac_value_, _cstring_bogus_dht_index_, _cstring_bogus_dqt_index_, _cstring_empty_jpeg_image, _cstring_read_from_ems_fa, _cstring_write_to_ems_fai, _cstring_didnt_expect_mor, _cstring_input_file_read_, _cstring_output_file_writ, _cstring_fractional_sampl, _cstring_huffman_code_siz, _cstring_missing_huffman_, _cstring_maximum_supporte, _cstring_empty_input_file, _cstring_premature_end_of, _cstring_cannot_transcode, _cstring_scan_script_does, _cstring_invalid_color_qu, _cstring_not_implemented_, _cstring_requested_featur, _cstring_backing_store_no, _cstring_huffman_table_0x, _cstring_jpeg_datastream_, _cstring_quantization_tab, _cstring_not_a_jpeg_file_, _cstring_insufficient_mem1, _cstring_cannot_quantize_, _cstring_cannot_quantize_1, _cstring_cannot_quantize_2, _cstring_invalid_jpeg_fil, _cstring_invalid_jpeg_fil1, _cstring_unsupported_jpeg1, _cstring_invalid_jpeg_fil2, _cstring_invalid_jpeg_fil3, _cstring_failed_to_create, _cstring_read_failed_on_t, _cstring_seek_failed_on_t, _cstring_write_failed_on_, _cstring_application_tran, _cstring_unsupported_mark, _cstring_virtual_array_co, _cstring_image_too_wide_f, _cstring_read_from_xms_fa, _cstring_write_to_xms_fai, _cstring_copyright_c_1998, _cstring_6b__27mar1998, _cstring_caution_quantiza, _cstring_adobe_app14_mark, _cstring_unknown_app0_mar, _cstring_unknown_app14_ma, _cstring_define_arithmeti, _cstring_define_huffman_t, _cstring_define_quantizat, _cstring_define_restart_i, _cstring_freed_ems_handle, _cstring_obtained_ems_han, _cstring_end_of_image, _cstring_________3d_3d_3d, _cstring_jfif_app0_marker, _cstring_warning_thumbnai, _cstring_jfif_extension_m, _cstring_____with_d_x_d_t, _cstring_miscellaneous_ma, _cstring_unexpected_marke, _cstring_________4u_4u_4u, _cstring_quantizing_to_d_, _cstring_quantizing_to_d_1, _cstring_selected_d_color, _cstring_at_marker_0x02x_, _cstring_rstd, _cstring_smoothing_not_su, _cstring_start_of_frame_0, _cstring_____component_d_, _cstring_start_of_image, _cstring_start_of_scan_d_, _cstring_____component_d_1, _cstring___ssd_sed_ahd_al, _cstring_closed_temporary, _cstring_opened_temporary, _cstring_jfif_extension_m1, _cstring_jfif_extension_m2, _cstring_jfif_extension_m3, _cstring_unrecognized_com, _cstring_freed_xms_handle, _cstring_obtained_xms_han, _cstring_unknown_adobe_co, _cstring_inconsistent_pro, _cstring_corrupt_jpeg_dat, _cstring_corrupt_jpeg_dat1, _cstring_corrupt_jpeg_dat2, _cstring_warning_unknown_, _cstring_premature_end_of1, _cstring_corrupt_jpeg_dat3, _cstring_invalid_sos_para, _cstring_application_tran1
 		db 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of unknown589:
+SECTION .bss
+buf: resb 0x7f
+catch_exception_raise: resb 0x4
+catch_exception_raise_state: resb 0x4
+catch_exception_raise_state_identity: resb 0x4
+clock_alarm_reply: resb 0x4
+do_mach_notify_dead_name: resb 0x4
+do_mach_notify_no_senders: resb 0x4
+do_mach_notify_port_deleted: resb 0x4
+do_mach_notify_send_once: resb 0x4
+do_seqnos_mach_notify_dead_name: resb 0x4
+do_seqnos_mach_notify_no_senders: resb 0x4
+do_seqnos_mach_notify_port_deleted: resb 0x4
+do_seqnos_mach_notify_send_once: resb 0x4
+receive_samples: resb 0x50
 
 
 ;All cstrings:

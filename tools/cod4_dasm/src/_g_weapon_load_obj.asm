@@ -245,10 +245,6 @@ G_ParseWeaponAccurayGraphs_140:
 	jmp G_ParseWeaponAccurayGraphs_30
 
 
-;Zero initialized global or static variables of g_weapon_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_weapon_load_obj:
 SECTION .data
 accuracyDirName: dd _cstring_aivsai, _cstring_aivsplayer, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -256,6 +252,10 @@ accuracyDirName: dd _cstring_aivsai, _cstring_aivsplayer, 0x0, 0x0, 0x0, 0x0, 0x
 
 ;Initialized constant data of g_weapon_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_weapon_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

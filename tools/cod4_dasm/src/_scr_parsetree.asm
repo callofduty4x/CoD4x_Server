@@ -391,17 +391,17 @@ node_pos:
 	ret
 
 
-;Zero initialized global or static variables of scr_parsetree:
-SECTION .bss
-g_allocNodeUser: resb 0x80
-
-
 ;Initialized global or static variables of scr_parsetree:
 SECTION .data
 
 
 ;Initialized constant data of scr_parsetree:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_parsetree:
+SECTION .bss
+g_allocNodeUser: resb 0x80
 
 
 ;All cstrings:

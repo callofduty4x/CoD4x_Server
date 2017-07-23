@@ -3968,11 +3968,6 @@ _ZNSt6vectorIP14COpenGLTextureSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_
 	ret
 
 
-;Zero initialized global or static variables of COpenGL:
-SECTION .bss
-_ZN7COpenGL7sOpenGLE: resb 0x904
-
-
 ;Initialized global or static variables of COpenGL:
 SECTION .data
 _ZZN7COpenGL12LoadTexImageE10_D3DFORMATjjjmlmmmPKvE2ft: dd 0x1, 0x0, 0x0, 0x0, 0x0
@@ -3981,6 +3976,15 @@ _ZN7COpenGL11sFrameCountE: dd 0x0
 
 ;Initialized constant data of COpenGL:
 SECTION .rdata
+;VTable for COpenGLVertexProgram:
+_ZTV20COpenGLVertexProgram: dd 0x0, 0x3b4be0, _ZN20COpenGLVertexProgramD1Ev, _ZN20COpenGLVertexProgramD0Ev
+;VTable for COpenGL:
+_ZTV7COpenGL: dd 0x0, 0x3b4c00, _ZN7COpenGLD1Ev, _ZN7COpenGLD0Ev
+
+
+;Zero initialized global or static variables of COpenGL:
+SECTION .bss
+_ZN7COpenGL7sOpenGLE: resb 0x904
 
 
 ;All cstrings:

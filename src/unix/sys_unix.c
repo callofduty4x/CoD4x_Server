@@ -96,9 +96,9 @@ void Sys_ReplaceProcess( char *cmdline )
 		argv[i] = NULL;
 
 		execv( argv[0], argv );
-		Com_PrintError( "Sys_ReplaceProcess: execv failed: %s\n", strerror( errno ) );
+		Com_PrintError(CON_CHANNEL_SYSTEM, "Sys_ReplaceProcess: execv failed: %s\n", strerror( errno ) );
 	}else{
-		Com_PrintError( "Sys_ReplaceProcess: Exceeded limit of 256 commandline arguments.\nCommandline is: %s\n", cmdline);
+		Com_PrintError(CON_CHANNEL_SYSTEM, "Sys_ReplaceProcess: Exceeded limit of 256 commandline arguments.\nCommandline is: %s\n", cmdline);
 	}
 	Cmd_EndTokenizedString();
 	_exit( 0 );
@@ -151,7 +151,7 @@ void Sys_InitCrashDumps(){
         core_limit.rlim_max = RLIM_INFINITY;
 
         if (setrlimit(RLIMIT_CORE, &core_limit) < 0)
-            Com_PrintWarning("setrlimit: %s\nCore dumps may be truncated or non-existant\n", strerror(errno));
+            Com_PrintWarning(CON_CHANNEL_SYSTEM,"setrlimit: %s\nCore dumps may be truncated or non-existant\n", strerror(errno));
 
 }
 
@@ -438,9 +438,9 @@ int main(int argc, char* argv[])
 
     uid_t uid = getuid();
     if( uid == 0 || uid != geteuid() ) { // warn user that he/she's operating as a privliged user
-        Com_Printf( "********************************************************\n" );
-        Com_Printf( "***** RUNNING SERVER AS A ROOT IS GENERALLY UNSAFE *****\n" );
-        Com_Printf( "********************************************************\n\n" );
+        Com_Printf(CON_CHANNEL_SYSTEM, "********************************************************\n" );
+        Com_Printf(CON_CHANNEL_SYSTEM, "***** RUNNING SERVER AS A ROOT IS GENERALLY UNSAFE *****\n" );
+        Com_Printf(CON_CHANNEL_SYSTEM, "********************************************************\n\n" );
     }
     // go back to real user for config loads
     seteuid( uid );
@@ -581,7 +581,7 @@ void* Sys_LoadLibrary(const char* dlfile)
 	currentLibHandle = handle;
 	if(handle == NULL)
 	{
-		Com_PrintError("Sys_LoadLibrary error: %s\n", dlerror());
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Sys_LoadLibrary error: %s\n", dlerror());
 	}
 	return handle;
 }
@@ -620,7 +620,7 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 	err = pthread_attr_init(&tattr);
 	if(err != 0)
 	{
-		Com_PrintError("pthread_attr_init(): Thread creation failed with the following error: %s\n", strerror(errno));
+		Com_PrintError(CON_CHANNEL_SYSTEM,"pthread_attr_init(): Thread creation failed with the following error: %s\n", strerror(errno));
 		return qfalse;
 	}
 
@@ -628,7 +628,7 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 	if(err != 0)
 	{
 		pthread_attr_destroy(&tattr);
-		Com_PrintError("pthread_attr_setdetachstate(): Thread creation failed with the following error: %s\n", strerror(errno));
+		Com_PrintError(CON_CHANNEL_SYSTEM,"pthread_attr_setdetachstate(): Thread creation failed with the following error: %s\n", strerror(errno));
 		return qfalse;
 	}
 
@@ -636,7 +636,7 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 	if(err != 0)
 	{
 		pthread_attr_destroy(&tattr);
-		Com_PrintError("pthread_attr_setstacksize(): Thread creation failed with the following error: %s\n", strerror(errno));
+		Com_PrintError(CON_CHANNEL_SYSTEM,"pthread_attr_setstacksize(): Thread creation failed with the following error: %s\n", strerror(errno));
 		return qfalse;
 	}
 
@@ -644,7 +644,7 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 	if(err != 0)
 	{
 		pthread_attr_destroy(&tattr);
-		Com_PrintError("pthread_create(): Thread creation failed with the following error: %s\n", strerror(errno));
+		Com_PrintError(CON_CHANNEL_SYSTEM,"pthread_create(): Thread creation failed with the following error: %s\n", strerror(errno));
 		return qfalse;
 	}
 	pthread_attr_destroy(&tattr);
@@ -765,7 +765,7 @@ void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int 
   if ( !address )
     return calloc(1, dwSize);
   else
-	Com_Printf("VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
+	Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
   return address;
 }
 

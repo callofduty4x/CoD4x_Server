@@ -542,10 +542,6 @@ CG_RegisterImpactEffects:
 	jmp ecx
 
 
-;Zero initialized global or static variables of cg_effects_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_effects_load_obj:
 SECTION .data
 
@@ -554,6 +550,10 @@ SECTION .data
 SECTION .rdata
 g_TypeName: dd _cstring_bullet_small_nor, _cstring_bullet_small_exi, _cstring_bullet_large_nor, _cstring_bullet_large_exi, _cstring_shotgun_normal, _cstring_shotgun_exit, _cstring_bullet_ap_normal, _cstring_bullet_ap_exit, _cstring_grenade_bounce, _cstring_grenade_explode, _cstring_rocket_explode, _cstring_projectile_dud
 g_FleshTypeName: dd _cstring_flesh_body_nonfa, _cstring_flesh_body_fatal, _cstring_flesh_head_nonfa, _cstring_flesh_head_fatal
+
+
+;Zero initialized global or static variables of cg_effects_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

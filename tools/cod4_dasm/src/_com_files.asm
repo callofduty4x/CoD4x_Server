@@ -26,7 +26,7 @@
 	extern unzGetCurrentFileInfo
 	extern unzGoToNextFile
 	extern unzGetCurrentFileInfoPosition
-	extern I_strlwr
+	extern Q_strlwr
 	extern tolower
 	extern Com_Printf
 	extern SEH_GetLanguageName
@@ -1398,7 +1398,7 @@ FS_AddIwdFilesForGameDirectory_450:
 FS_AddIwdFilesForGameDirectory_470:
 	lea eax, [ebp-0x278]
 	mov [esp], eax
-	call I_strlwr
+	call Q_strlwr
 	mov edx, [esi+0x318]
 	mov [ebp-0x1290], edx
 	movzx eax, byte [ebp-0x278]
@@ -7613,6 +7613,18 @@ FS_Rename_10:
 	nop
 
 
+;Initialized global or static variables of com_files:
+SECTION .data
+fs_iwdPureChecks: dd 0x0
+fs_numServerIwds: dd 0x0
+fs_searchpaths: dd 0x0, 0x0, 0x0, 0x0, 0x0
+fs_iwdFileCount: dd 0x0
+
+
+;Initialized constant data of com_files:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of com_files:
 SECTION .bss
 g_disablePureCheck: resb 0x4
@@ -7645,18 +7657,6 @@ fs_loadStack: resb 0x4
 fs_usedevdir: resb 0x4
 lastValidBase: resb 0x100
 lastValidGame: resb 0x100
-
-
-;Initialized global or static variables of com_files:
-SECTION .data
-fs_iwdPureChecks: dd 0x0
-fs_numServerIwds: dd 0x0
-fs_searchpaths: dd 0x0, 0x0, 0x0, 0x0, 0x0
-fs_iwdFileCount: dd 0x0
-
-
-;Initialized constant data of com_files:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -157,12 +157,6 @@ Decode_Shutdown_10:
 	ret
 
 
-;Zero initialized global or static variables of decode:
-SECTION .bss
-decodeBits: resb 0x80
-g_decode_frame_size: resb 0x20
-
-
 ;Initialized global or static variables of decode:
 SECTION .data
 g_current_decode_bandwidth_setting: dd 0x0
@@ -171,6 +165,12 @@ g_decoder: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of decode:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of decode:
+SECTION .bss
+decodeBits: resb 0x80
+g_decode_frame_size: resb 0x20
 
 
 ;All cstrings:

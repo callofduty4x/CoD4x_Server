@@ -75,16 +75,16 @@ R_LoadSun_10:
 	jmp R_LoadSun_40
 
 
-;Zero initialized global or static variables of r_sky_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_sky_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of r_sky_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_sky_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

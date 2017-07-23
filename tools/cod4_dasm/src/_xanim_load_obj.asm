@@ -2898,15 +2898,6 @@ GetDeltaTranslations_40:
 	jmp GetDeltaTranslations_50
 
 
-;Zero initialized global or static variables of xanim_load_obj:
-SECTION .bss
-g_simpleQuatBits: resb 0x4
-g_partTransArray: resb 0x4
-g_partQuatArray: resb 0x4
-g_animUser: resb 0x14
-g_highPrecisionPart: resb 0x260
-
-
 ;Initialized global or static variables of xanim_load_obj:
 SECTION .data
 g_highPrecisionParts: dd _cstring_j_ankle_le, _cstring_j_ankle_ri, _cstring_j_clavicle_le, _cstring_j_clavicle_ri, _cstring_j_elbow_le, _cstring_j_elbow_ri, _cstring_j_hip_le, _cstring_j_hip_ri, _cstring_j_knee_le, _cstring_j_knee_ri, _cstring_j_mainroot, _cstring_j_shoulder_le, _cstring_j_shoulder_ri, _cstring_j_spine4, _cstring_j_spinelower, _cstring_j_spineupper, _cstring_j_wrist_le, _cstring_j_wrist_ri, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -2914,6 +2905,15 @@ g_highPrecisionParts: dd _cstring_j_ankle_le, _cstring_j_ankle_ri, _cstring_j_cl
 
 ;Initialized constant data of xanim_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of xanim_load_obj:
+SECTION .bss
+g_simpleQuatBits: resb 0x4
+g_partTransArray: resb 0x4
+g_partQuatArray: resb 0x4
+g_animUser: resb 0x14
+g_highPrecisionPart: resb 0x260
 
 
 ;All cstrings:

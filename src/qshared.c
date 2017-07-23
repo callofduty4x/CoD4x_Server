@@ -467,7 +467,7 @@ int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...)
 	va_end (argptr);
 
 	if(len >= size)
-		Com_Printf("Com_sprintf: Output length %d too short, require %d bytes.\n", size, len + 1);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Com_sprintf: Output length %d too short, require %d bytes.\n", size, len + 1);
 
 	return len;
 }
@@ -524,7 +524,7 @@ char* QDECL va_replacement(char *dest, int size, const char *fmt, ...)
 	va_end (argptr);
 
 	if(len >= size)
-		Com_Printf("Com_sprintf: Output length %d too short, require %d bytes.\n", size, len + 1);
+		Com_Printf(CON_CHANNEL_SYSTEM,"Com_sprintf: Output length %d too short, require %d bytes.\n", size, len + 1);
 
 	return dest;
 }
@@ -595,7 +595,7 @@ void Info_RemoveKey( char *s, const char *key ) {
 	char	*o;
 
 	if ( strlen( s ) >= MAX_INFO_STRING ) {
-		Com_Printf(  "Error: Info_RemoveKey: oversize infostring" );
+		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_RemoveKey: oversize infostring" );
 	}
 
 	if (strchr (key, '\\')) {
@@ -651,7 +651,7 @@ void BigInfo_RemoveKey( char *s, const char *key ) {
 	char	*o;
 
 	if ( strlen( s ) >= BIG_INFO_STRING ) {
-		Com_Printf(  "Error: BigInfo_RemoveKey: oversize infostring" );
+		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: BigInfo_RemoveKey: oversize infostring" );
 	}
 
 	if (strchr (key, '\\')) {
@@ -716,7 +716,7 @@ char *Info_ValueForKey( const char *s, const char *key ) {
 	}
 
 	if ( strlen( s ) >= BIG_INFO_STRING ) {
-		Com_Printf(  "Error: Info_ValueForKey: oversize infostring" );
+		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_ValueForKey: oversize infostring" );
 	}
 
 	valueindex ^= 1;
@@ -765,47 +765,47 @@ void Info_SetValueForKey( char *s, const char *key, const char *value ) {
 	char	newi[MAX_INFO_STRING];
 
 	if ( strlen( s ) >= MAX_INFO_STRING ) {
-		Com_PrintWarning("Unexpected error - Info_SetValueForKey: oversize infostring" );
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Unexpected error - Info_SetValueForKey: oversize infostring" );
 	}
 
 	if (strchr (key, '\\'))
 	{
-		Com_PrintWarning ("Can't use keys with a \\\n");
-		Com_DPrintf("Bad key: %s value: %s\n", key, value);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use keys with a \\\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad key: %s value: %s\n", key, value);
 		return;
 	}
 
 	if (strchr (value, '\\'))
 	{
-		Com_PrintWarning ("Can't use values with a \\\n");
-		Com_DPrintf("Bad value: %s key: %s\n", value, key);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use values with a \\\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad value: %s key: %s\n", value, key);
 		return;
 	}
 
 	if (strchr (key, ';'))
 	{
-		Com_PrintWarning ("Can't use keys with a semicolon\n");
-		Com_DPrintf("Bad key: %s value: %s\n", key, value);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use keys with a semicolon\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad key: %s value: %s\n", key, value);
 		return;
 	}
 
 	if (strchr (value, ';'))
 	{
-		Com_PrintWarning ("Can't use values with a semicolon\n");
-		Com_DPrintf("Bad value: %s key: %s\n", value, key);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use values with a semicolon\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad value: %s key: %s\n", value, key);
 		return;
 	}
 
 	if (strchr (key, '\"'))
 	{
-		Com_PrintWarning ("Can't use keys with a \"\n");
-		Com_DPrintf("Bad key: %s value: %s\n", key, value);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use keys with a \"\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad key: %s value: %s\n", key, value);
 		return;
 	}
 	if (strchr (value, '\"'))
 	{
-		Com_PrintWarning ("Can't use values with a \"\n");
-		Com_DPrintf("Bad value: %s key: %s\n", value, key);
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use values with a \"\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad value: %s key: %s\n", value, key);
 		return;
 	}
 
@@ -818,7 +818,7 @@ void Info_SetValueForKey( char *s, const char *key, const char *value ) {
 
 	if (strlen(newi) + strlen(s) > MAX_INFO_STRING)
 	{
-		Com_PrintWarning ("Info string length exceeded\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Info string length exceeded\n");
 		return;
 	}
 
@@ -838,24 +838,24 @@ void BigInfo_SetValueForKey( char *s, const char *key, const char *value ) {
 	char	newi[BIG_INFO_STRING];
 
 	if ( strlen( s ) >= BIG_INFO_STRING ) {
-		Com_Printf(  "Error: Info_SetValueForKey: oversize infostring" );
+		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_SetValueForKey: oversize infostring" );
 	}
 
 	if (strchr (key, '\\') || strchr (value, '\\'))
 	{
-		Com_Printf("Error: Can't use keys or values with a \\\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Error: Can't use keys or values with a \\\n");
 		return;
 	}
 
 	if (strchr (key, ';') || strchr (value, ';'))
 	{
-		Com_Printf("Error: Can't use keys or values with a semicolon\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Error: Can't use keys or values with a semicolon\n");
 		return;
 	}
 
 	if (strchr (key, '\"') || strchr (value, '\"'))
 	{
-		Com_Printf("Error: Can't use keys or values with a \"\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Error: Can't use keys or values with a \"\n");
 		return;
 	}
 
@@ -867,7 +867,7 @@ void BigInfo_SetValueForKey( char *s, const char *key, const char *value ) {
 
 	if (strlen(newi) + strlen(s) > BIG_INFO_STRING)
 	{
-		Com_Printf( "Error: Info string length exceeded\n");
+		Com_Printf(CON_CHANNEL_SYSTEM, "Error: Info string length exceeded\n");
 		return;
 	}
 
@@ -898,11 +898,11 @@ void Info_Print( const char *s ) {
 		}
 		else
 			*o = 0;
-		Com_Printf ("%s ", key);
+		Com_Printf(CON_CHANNEL_SYSTEM,"%s ", key);
 
 		if (!*s)
 		{
-			Com_Printf ("MISSING VALUE\n");
+			Com_Printf(CON_CHANNEL_SYSTEM,"MISSING VALUE\n");
 			return;
 		}
 
@@ -914,7 +914,7 @@ void Info_Print( const char *s ) {
 
 		if (*s)
 			s++;
-		Com_Printf ("%s\n", value);
+		Com_Printf(CON_CHANNEL_SYSTEM,"%s\n", value);
 	}
 }
 
@@ -1227,7 +1227,7 @@ void XML_AppendToBuffer( xml_t *base, const char* s )
 
     if(len + base->bufposition + 1 >= base->buffersize )
     {
-        Com_Printf(  "Error: XML_AppendToBuffer: Overflow!\n" );
+        Com_Printf(CON_CHANNEL_SYSTEM,  "Error: XML_AppendToBuffer: Overflow!\n" );
         return;
     }
     Com_Memcpy(base->buffer + base->bufposition, s, len);
@@ -1255,7 +1255,7 @@ void XML_Init( xml_t *base, char *s, int size, char* encoding) {
 	base->encoding = encoding;
 	stack_init(base->stack,sizeof(base->stack));
 	if ( 256 > size ) {
-		Com_Printf(  "Error: XML_Init: too small infostring" );
+		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: XML_Init: too small infostring" );
 	}
 	Com_sprintf(version, sizeof(version), "<?xml version=\"1.0\" encoding=\"%s\"?>\n\0", base->encoding);
 	XML_AppendToBuffer( base, version );
@@ -1325,7 +1325,7 @@ qboolean QDECL XML_OpenTag( xml_t *base, char* root, int count,... ) {
 	buffer[0] = 0;
 	if(base->parents*6 +1 >= sizeof(smallbuff))
 	{
-		Com_Printf("^3Warning: XML_OpenTag would overflow. Too many open tags\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"^3Warning: XML_OpenTag would overflow. Too many open tags\n");
 		return qfalse;
 	}
 	Com_Memset(&smallbuff[1],' ',base->parents*6);
@@ -1335,7 +1335,7 @@ qboolean QDECL XML_OpenTag( xml_t *base, char* root, int count,... ) {
 	Com_sprintf(buffer,sizeof(buffer),"<%s",root);
 
 	if(!stack_push(base->stack,sizeof(base->stack), base->buffer + base->bufposition + 1)){
-		Com_Printf("^3Warning: XML_OpenTag called without prior initialization\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"^3Warning: XML_OpenTag called without prior initialization\n");
 		return qfalse;
 	}
 
@@ -1376,15 +1376,15 @@ void XML_CloseTag(xml_t *base) {
 
 	if(base->parents == 0)
 	{
-		Com_PrintError("XML_CloseTag: Invalid close attempt in XML. Attempt to close more elements than you have opened.\n");
-		Com_Printf("Printing up to 960 recent characters of XML as debug:\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"XML_CloseTag: Invalid close attempt in XML. Attempt to close more elements than you have opened.\n");
+		Com_Printf(CON_CHANNEL_SYSTEM,"Printing up to 960 recent characters of XML as debug:\n");
 		if(base->bufposition > 960)
 		{
-			Com_Printf("%s\n", &base->buffer[base->bufposition -960]);
+			Com_Printf(CON_CHANNEL_SYSTEM,"%s\n", &base->buffer[base->bufposition -960]);
 		}else{
-			Com_Printf("%s\n", base->buffer);
+			Com_Printf(CON_CHANNEL_SYSTEM,"%s\n", base->buffer);
 		}
-		Com_PrintError("You have errors in your XML code\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"You have errors in your XML code\n");
 		return;
 	}
 	base->parents--;
@@ -1741,16 +1741,14 @@ int Q_strLF2CRLF(const char* input, char* output, int outputlimit )
 int COM_Compress( char *data_p ) {
 	char *datai, *datao;
 	int c, size;
-	qboolean ws = qfalse;
 
 	size = 0;
 	datai = datao = data_p;
 	if ( datai ) {
 		while ( ( c = *datai ) != 0 ) {
-			if ( c == 13 || c == 10 ) {
+			if ( c == '\r' || c == '\n' ) {
 				*datao = c;
 				datao++;
-				ws = qfalse;
 				datai++;
 				size++;
 				// skip double slash comments
@@ -1758,7 +1756,6 @@ int COM_Compress( char *data_p ) {
 				while ( *datai && *datai != '\n' ) {
 					datai++;
 				}
-				ws = qfalse;
 				// skip /* */ comments
 			} else if ( c == '/' && datai[1] == '*' ) {
 				while ( *datai && ( *datai != '*' || datai[1] != '/' ) )
@@ -1768,16 +1765,10 @@ int COM_Compress( char *data_p ) {
 				if ( *datai ) {
 					datai += 2;
 				}
-				ws = qfalse;
 			} else {
-				if ( ws ) {
-					*datao = ' ';
-					datao++;
-				}
 				*datao = c;
 				datao++;
 				datai++;
-				ws = qfalse;
 				size++;
 			}
 		}

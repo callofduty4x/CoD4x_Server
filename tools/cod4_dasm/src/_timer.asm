@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of timer:
-SECTION .bss
-
-
 ;Initialized global or static variables of timer:
 SECTION .data
 
 
 ;Initialized constant data of timer:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of timer:
+SECTION .bss
 
 
 ;All cstrings:

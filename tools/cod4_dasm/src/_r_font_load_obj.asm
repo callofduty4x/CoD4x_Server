@@ -135,16 +135,16 @@ R_LoadFont_20:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_font_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_font_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of r_font_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_font_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

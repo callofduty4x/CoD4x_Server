@@ -425,16 +425,16 @@ RB_ShadowCookieOverlay_10:
 	nop
 
 
-;Zero initialized global or static variables of rb_shadowcookie:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_shadowcookie:
 SECTION .data
 
 
 ;Initialized constant data of rb_shadowcookie:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_shadowcookie:
+SECTION .bss
 
 
 ;All cstrings:

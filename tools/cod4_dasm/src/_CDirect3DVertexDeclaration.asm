@@ -696,10 +696,6 @@ _ZNSt6vectorI18_D3DVERTEXELEMENT9SaIS0_EEC1IPKS0_EET_S6_RKS1__50:
 	nop
 
 
-;Zero initialized global or static variables of CDirect3DVertexDeclaration:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DVertexDeclaration:
 SECTION .data
 
@@ -707,6 +703,12 @@ SECTION .data
 ;Initialized constant data of CDirect3DVertexDeclaration:
 SECTION .rdata
 _ZZNK26CDirect3DVertexDeclaration14GetNumElementsEPK18_D3DVERTEXELEMENT9E8EndToken: dd 0xff, 0x11, 0x15146, 0x15164, 0x15183, 0x15183, 0x15193, 0x151a3, 0x151b2, 0x15146, 0x15146, 0x15146, 0x151c2, 0x151d2, 0x1523e, 0x1524c, 0x1525a, 0x1529e, 0x1526b, 0x1527c, 0x1528d, 0x1529e, 0x1538c, 0x153aa, 0x153c9, 0x153c9, 0x153d9, 0x153e9, 0x153f8, 0x1538c, 0x1538c, 0x1538c, 0x15408, 0x15418, 0x15484, 0x15492, 0x154a0, 0x154e4, 0x154b1, 0x154c2, 0x154d3, 0x154e4, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x177b2, 0x17be6, 0x17bf0, 0x17bfa, 0x17c04, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTable for CDirect3DVertexDeclaration:
+_ZTV26CDirect3DVertexDeclaration: dd 0x0, 0x3b4b20, _ZN26CDirect3DVertexDeclaration14QueryInterfaceERK5_GUIDPPv, _ZN26CDirect3DVertexDeclaration6AddRefEv, _ZN26CDirect3DVertexDeclaration7ReleaseEv, _ZN26CDirect3DVertexDeclaration9GetDeviceEPP16IDirect3DDevice9, _ZN26CDirect3DVertexDeclaration14GetDeclarationEP18_D3DVERTEXELEMENT9Pj, _ZN26CDirect3DVertexDeclarationD1Ev, _ZN26CDirect3DVertexDeclarationD0Ev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DVertexDeclaration:
+SECTION .bss
 
 
 ;All cstrings:

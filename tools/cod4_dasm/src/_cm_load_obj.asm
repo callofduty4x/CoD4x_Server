@@ -2444,10 +2444,6 @@ CM_LoadMapFromBsp_330:
 	nop
 
 
-;Zero initialized global or static variables of cm_load_obj:
-SECTION .bss
-
-
 ;Initialized global or static variables of cm_load_obj:
 SECTION .data
 g_purgeableEnts: dd _cstring_misc_model, _cstring_misc_prefab, _cstring_dyn_brushmodel, _cstring_dyn_model, _cstring_reflection_probe, _cstring_info_null, _cstring_func_group, 0x0
@@ -2455,6 +2451,10 @@ g_purgeableEnts: dd _cstring_misc_model, _cstring_misc_prefab, _cstring_dyn_brus
 
 ;Initialized constant data of cm_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cm_load_obj:
+SECTION .bss
 
 
 ;All cstrings:

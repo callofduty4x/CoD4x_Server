@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of r_streamalloc:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_streamalloc:
 SECTION .data
 
 
 ;Initialized constant data of r_streamalloc:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_streamalloc:
+SECTION .bss
 
 
 ;All cstrings:

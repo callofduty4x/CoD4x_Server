@@ -2605,16 +2605,16 @@ unztell_10:
 	ret
 
 
-;Zero initialized global or static variables of unzip:
-SECTION .bss
-
-
 ;Initialized global or static variables of unzip:
 SECTION .data
 
 
 ;Initialized constant data of unzip:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of unzip:
+SECTION .bss
 
 
 ;All cstrings:

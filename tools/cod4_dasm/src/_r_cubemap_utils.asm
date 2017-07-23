@@ -1890,17 +1890,17 @@ CubeMap_GenerateMipMap32_jumptab_1:
 	dd CubeMap_GenerateMipMap32_190
 
 
-;Zero initialized global or static variables of r_cubemap_utils:
-SECTION .bss
-cubeMapUtilsGlob: resb 0x48080
-
-
 ;Initialized global or static variables of r_cubemap_utils:
 SECTION .data
 
 
 ;Initialized constant data of r_cubemap_utils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_cubemap_utils:
+SECTION .bss
+cubeMapUtilsGlob: resb 0x48080
 
 
 ;All cstrings:

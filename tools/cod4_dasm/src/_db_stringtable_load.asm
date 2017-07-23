@@ -46,16 +46,16 @@ Mark_ScriptStringCustom_10:
 	ret
 
 
-;Zero initialized global or static variables of db_stringtable_load:
-SECTION .bss
-
-
 ;Initialized global or static variables of db_stringtable_load:
 SECTION .data
 
 
 ;Initialized constant data of db_stringtable_load:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of db_stringtable_load:
+SECTION .bss
 
 
 ;All cstrings:

@@ -58,11 +58,6 @@ TranslateKeyCodeToVK_20:
 	jmp TranslateKeyCodeToVK_60
 
 
-;Zero initialized global or static variables of VK_Map:
-SECTION .bss
-_ZZ20TranslateKeyCodeToVKmE12sCachedVKMap: resb 0x80
-
-
 ;Initialized global or static variables of VK_Map:
 SECTION .data
 sANSI_VK_Map: dd 0x46445341, 0x585a4748, 0x42005643, 0x52455751, 0x32315459, 0x35363433, 0xbd3739bb, 0x4fdd3038, 0x5049db55, 0xde4a4c0d, 0xbcdcba4b, 0xbe4d4ebf, 0x8c02009, 0x13001b0d, 0x11121410, 0x0, 0x6a006e80, 0x90006b00, 0x6f000000, 0x816d000d, 0x61609282, 0x65646362, 0x68006766, 0x69, 0x72767574, 0x7a007877, 0x7d7f7c00, 0x7b007900, 0x242d7e00, 0x23732e21, 0x25702271, 0x262827
@@ -73,6 +68,11 @@ sItalian_ISO_VK_Map: dd 0x46445341, 0x585a4748, 0x42df5643, 0x52455751, 0x323154
 
 ;Initialized constant data of VK_Map:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of VK_Map:
+SECTION .bss
+_ZZ20TranslateKeyCodeToVKmE12sCachedVKMap: resb 0x80
 
 
 ;All cstrings:

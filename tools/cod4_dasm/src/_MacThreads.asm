@@ -478,17 +478,19 @@ _ZN7CThreadD2Ev:
 	call _Unwind_Resume
 
 
-;Zero initialized global or static variables of MacThreads:
-SECTION .bss
-sMPInitialized: resb 0x80
-
-
 ;Initialized global or static variables of MacThreads:
 SECTION .data
 
 
 ;Initialized constant data of MacThreads:
 SECTION .rdata
+;VTable for CThread:
+_ZTV7CThread: dd 0x0, 0x3b4c60, _ZN7CThreadD1Ev, _ZN7CThreadD0Ev, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of MacThreads:
+SECTION .bss
+sMPInitialized: resb 0x80
 
 
 ;All cstrings:

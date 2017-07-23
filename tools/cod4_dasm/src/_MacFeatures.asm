@@ -206,12 +206,6 @@ _ZN11MacFeatures19HasGestaltAttributeEmm_10:
 	nop
 
 
-;Zero initialized global or static variables of MacFeatures:
-SECTION .bss
-_ZZN11MacFeatures16GetSystemVersionEvE7sResult: resb 0x2
-_ZZN11MacFeatures16GetSystemVersionEvE7sTested: resb 0x7e
-
-
 ;Initialized global or static variables of MacFeatures:
 SECTION .data
 _ZZN11MacFeatures19GetKeyboardLanguageEvE17sKeyboardLanguage: dd 0xffffffff
@@ -220,6 +214,12 @@ _ZZN11MacFeatures13IsISOKeyboardEvE19sKeyboardLayoutType: dd 0x3f3f3f3f, 0x0, 0x
 
 ;Initialized constant data of MacFeatures:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacFeatures:
+SECTION .bss
+_ZZN11MacFeatures16GetSystemVersionEvE7sResult: resb 0x2
+_ZZN11MacFeatures16GetSystemVersionEvE7sTested: resb 0x7e
 
 
 ;All cstrings:

@@ -41,7 +41,7 @@
 	extern Com_AllocSoundMemory
 	extern Com_AddAliasList
 	extern Com_GetFilenameSubString
-	extern I_strlwr
+	extern Q_strlwr
 	extern SND_LoadSoundFile
 	extern fs_homepath
 	extern FS_BuildOSPath
@@ -3765,7 +3765,7 @@ Com_MakeSoundAliasesPermanent_250:
 Com_MakeSoundAliasesPermanent_400:
 	mov eax, [ebp-0x44]
 	mov [esp], eax
-	call I_strlwr
+	call Q_strlwr
 	mov edx, [ebp-0x44]
 	mov [esp], edx
 	call SND_LoadSoundFile
@@ -5101,14 +5101,6 @@ Com_InitDefaultSoundAliasVolumeFalloffCurve:
 	ret
 
 
-;Zero initialized global or static variables of com_sndalias_load_obj:
-SECTION .bss
-saLoadObjGlob: resb 0x1894
-g_spkrMapParseBuffer: resb 0xc
-_ZZ32Com_GetSubtitleStringEdReferencePKcE11szReference: resb 0x400
-_ZZ22Com_LoadSoundAliasFilePKcS0_S0_E32Com_RefreshVolumeModGroups_f_VAR: resb 0x60
-
-
 ;Initialized global or static variables of com_sndalias_load_obj:
 SECTION .data
 g_pszSndAliasKeyNames: dd 0x0, _cstring_name, _cstring_sequence, _cstring_file, _cstring_subtitle, _cstring_vol_min, _cstring_vol_max, _cstring_vol_mod, _cstring_pitch_min, _cstring_pitch_max, _cstring_dist_min, _cstring_dist_max, _cstring_channel, _cstring_type, _cstring_loop, _cstring_probability, _cstring_loadspec, _cstring_masterslave, _cstring_secondaryaliasna, _cstring_chainaliasname, _cstring_volumefalloffcur, _cstring_startdelay, _cstring_speakermap, _cstring_reverb, _cstring_lfe_percentage, _cstring_center_percentag, _cstring_envelop_min, _cstring_envelop_max, _cstring_envelop_percenta, 0x0, 0x0, 0x0
@@ -5118,6 +5110,14 @@ sa_spkrMapIdentifierStrings: dd _cstring_monosource, _cstring_leftsource, _cstri
 
 ;Initialized constant data of com_sndalias_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_sndalias_load_obj:
+SECTION .bss
+saLoadObjGlob: resb 0x1894
+g_spkrMapParseBuffer: resb 0xc
+_ZZ32Com_GetSubtitleStringEdReferencePKcE11szReference: resb 0x400
+_ZZ22Com_LoadSoundAliasFilePKcS0_S0_E32Com_RefreshVolumeModGroups_f_VAR: resb 0x60
 
 
 ;All cstrings:

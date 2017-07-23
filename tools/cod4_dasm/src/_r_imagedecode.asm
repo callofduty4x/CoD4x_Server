@@ -1511,16 +1511,16 @@ Image_FreeRawPixels:
 	jmp Z_FreeInternal
 
 
-;Zero initialized global or static variables of r_imagedecode:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_imagedecode:
 SECTION .data
 
 
 ;Initialized constant data of r_imagedecode:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_imagedecode:
+SECTION .bss
 
 
 ;All cstrings:

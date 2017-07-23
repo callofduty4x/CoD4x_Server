@@ -755,7 +755,7 @@ qboolean HTTPCreateWebadminMessage(ftRequest_t* request, msg_t* msg, char* sessi
 	buf = NULL;
 
 	MSG_Init(msg, buf, 0);
-	Com_Printf("URL: %s\n", request->url);
+	Com_Printf(CON_CHANNEL_SERVER,"URL: %s\n", request->url);
 	if(!Q_strncmp(request->url, "/files", 6))
 	{
 		if(request->url[6] != '/' || request->url[7] == '\0')
@@ -823,17 +823,17 @@ qboolean HTTPCreateWebadminMessage(ftRequest_t* request, msg_t* msg, char* sessi
 			session = Auth_GetSessionId(username, password);
 			if(session == NULL)
 			{
-				Com_Printf("^1Invalid login\n");
+				Com_Printf(CON_CHANNEL_SERVER,"^1Invalid login\n");
 				invalidlogin = qtrue;
 				SV_PlayerAddBanByip(&request->remote, "Invalid login attempt. You have to wait 20 seconds", Com_GetRealtime() + 10);
 				username = NULL;
 			}else {
-				Com_Printf("^2Successful login with username: %s\n", username);
+				Com_Printf(CON_CHANNEL_SERVER,"^2Successful login with username: %s\n", username);
 			}
 
 
 		}else {
-			Com_Printf("No login!\n");
+			Com_Printf(CON_CHANNEL_SERVER,"No login!\n");
 			session = NULL;
 			username = NULL;
 		}
@@ -844,7 +844,7 @@ qboolean HTTPCreateWebadminMessage(ftRequest_t* request, msg_t* msg, char* sessi
 			strcpy(sessionkey, session);
 		}
 	}else{
-		Com_Printf("Already logged in as: %s\n", username);
+		Com_Printf(CON_CHANNEL_SERVER,"Already logged in as: %s\n", username);
 	}
 
 	Webadmin_BuildMessage(msg, username, invalidlogin, NULL, request->url, values);

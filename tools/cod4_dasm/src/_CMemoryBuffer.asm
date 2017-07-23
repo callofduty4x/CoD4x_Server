@@ -1,7 +1,7 @@
 ;Imports of CMemoryBuffer:
 	extern glFinish
 	extern _ZdaPv
-	extern _Znam
+	extern _Znaj
 	extern _ZNSt15_List_node_base6unhookEv
 	extern _ZdlPv
 	extern _Znwm
@@ -104,7 +104,7 @@ _ZN13CMemoryBuffer6ResizeEjj_10:
 	and eax, ebx
 	lea eax, [edi+eax-0x1]
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [esi+0x4], eax
 	lea eax, [edi+eax-0x1]
 	and ebx, eax
@@ -184,7 +184,7 @@ _ZN13CMemoryBuffer8RecreateEv:
 	and eax, ecx
 	lea edx, [edx+eax-0x1]
 	mov [esp], edx
-	call _Znam
+	call _Znaj
 	mov [ebx+0x4], eax
 	mov edx, [ebx+0x14]
 	lea eax, [edx+eax-0x1]
@@ -280,7 +280,7 @@ _ZN13CMemoryBufferC1Ejj_10:
 	and eax, 0xffffffe0
 	add eax, 0x1f
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov edx, eax
 	mov [ebx+0x4], edx
 	mov [ebx+0xc], esi
@@ -380,11 +380,6 @@ _ZNSt10_List_baseIN13CMemoryBuffer11FreeRequestESaIS1_EE8_M_clearEv_20:
 	ret
 
 
-;Zero initialized global or static variables of CMemoryBuffer:
-SECTION .bss
-_ZN13CMemoryBuffer20sDelayedFreeRequestsE: resb 0x80
-
-
 ;Initialized global or static variables of CMemoryBuffer:
 SECTION .data
 _ZN13CMemoryBuffer31sMemoryDesignatedForDelayedFreeE: dd 0x0, 0x0
@@ -392,6 +387,13 @@ _ZN13CMemoryBuffer31sMemoryDesignatedForDelayedFreeE: dd 0x0, 0x0
 
 ;Initialized constant data of CMemoryBuffer:
 SECTION .rdata
+;VTable for CMemoryBuffer:
+_ZTV13CMemoryBuffer: dd 0x0, 0x3b4bc0, _ZN13CMemoryBufferD1Ev, _ZN13CMemoryBufferD0Ev, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CMemoryBuffer:
+SECTION .bss
+_ZN13CMemoryBuffer20sDelayedFreeRequestsE: resb 0x80
 
 
 ;All cstrings:

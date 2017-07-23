@@ -1955,11 +1955,6 @@ _ZSt16__introsort_loopIP15ShadowCandidateiPFhRKS0_S3_EEvT_S6_T0_T1__60:
 	jmp _ZSt16__introsort_loopIP15ShadowCandidateiPFhRKS0_S3_EEvT_S6_T0_T1__120
 
 
-;Zero initialized global or static variables of r_shadowcookie:
-SECTION .bss
-shadowCookieGlob: resb 0x80
-
-
 ;Initialized global or static variables of r_shadowcookie:
 SECTION .data
 
@@ -1967,6 +1962,11 @@ SECTION .data
 ;Initialized constant data of r_shadowcookie:
 SECTION .rdata
 shadowFrustumSidePlanes: dd 0xbf800000, 0x0, 0x0, 0x3f800000, 0x3f800000, 0x0, 0x0, 0x3f800000, 0x0, 0xbf800000, 0x0, 0x3f800000, 0x0, 0x3f800000, 0x0, 0x3f800000, 0x0, 0x0, 0x3f800000, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of r_shadowcookie:
+SECTION .bss
+shadowCookieGlob: resb 0x80
 
 
 ;All cstrings:

@@ -117,7 +117,7 @@ void SV_PlayerAddBanByip(netadr_t *remote, char *message, int expire){		//Gets c
 
     if(!remote)
     {
-        Com_PrintError("SV_PlayerAddBanByip: IP address is NULL\n");
+        Com_PrintError(CON_CHANNEL_SERVER,"SV_PlayerAddBanByip: IP address is NULL\n");
         return;
 
     }

@@ -572,18 +572,18 @@ Svcmd_EntityList_f_40:
 	jmp Svcmd_EntityList_f_50
 
 
-;Zero initialized global or static variables of g_svcmds:
-SECTION .bss
-numIPFilters: resb 0x20
-ipFilters: resb 0x2060
-
-
 ;Initialized global or static variables of g_svcmds:
 SECTION .data
 
 
 ;Initialized constant data of g_svcmds:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_svcmds:
+SECTION .bss
+numIPFilters: resb 0x20
+ipFilters: resb 0x2060
 
 
 ;All cstrings:

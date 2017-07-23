@@ -289,16 +289,16 @@ CG_Laser_Add_40:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cg_laser:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_laser:
 SECTION .data
 
 
 ;Initialized constant data of cg_laser:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_laser:
+SECTION .bss
 
 
 ;All cstrings:

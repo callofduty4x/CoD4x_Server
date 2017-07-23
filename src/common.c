@@ -47,7 +47,6 @@
 #include "sv_auth.h"
 #include "punkbuster.h"
 #include "sec_common.h"
-#include "sys_cod4loader.h"
 #include "httpftp.h"
 #include "huffman.h"
 #include "sapi.h"
@@ -84,7 +83,6 @@ qboolean com_securemode;
 
 char com_errorMessage[MAXPRINTMSG];
 qboolean com_errorEntered;
-int gamebinary_initialized = 0;
 qboolean com_fullyInitialized = qfalse;
 
 void Com_WriteConfig_f( void );
@@ -146,7 +144,7 @@ static int         timedEventHead = 0;
 
 void EventTimerTest(int time, int triggerTime, int value, char* s){
 
-	Com_Printf("^5Event exectuted: %i %i %i %i %s\n", time, triggerTime, Sys_Milliseconds(), value, s);
+	Com_Printf(CON_CHANNEL_SYSTEM,"^5Event exectuted: %i %i %i %i %s\n", time, triggerTime, Sys_Milliseconds(), value, s);
 
 }
 
@@ -189,7 +187,7 @@ int QDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, .
 
 	if ( timedEventHead >= MAX_TIMED_EVENTS )
 	{
-		Com_PrintWarning("Com_AddTimedEvent: overflow - Lost one event\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Com_AddTimedEvent: overflow - Lost one event\n");
 		// we are discarding an event, but don't leak memory
 		return -1;
 	}
@@ -269,7 +267,7 @@ void Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int p
 
 	if ( eventHead - eventTail >= MAX_QUEUED_EVENTS )
 	{
-		Com_PrintWarning("Com_QueueEvent: overflow\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Com_QueueEvent: overflow\n");
 		// we are discarding an event, but don't leak memory
 		if ( ev->evPtr )
 		{
@@ -473,7 +471,7 @@ static void Com_Freeze_f (void) {
 	int		start, now;
 
 	if ( Cmd_Argc() != 2 ) {
-		Com_Printf( "freeze <seconds>\n" );
+		Com_Printf(CON_CHANNEL_SYSTEM, "freeze <seconds>\n" );
 		return;
 	}
 	s = atof( Cmd_Argv(1) );
@@ -514,7 +512,7 @@ void Com_RandomBytes( byte *string, int len )
 	if( Sys_RandomBytes( string, len ) )
 		return;
 
-	Com_Printf( "Com_RandomBytes: using weak randomization\n" );
+	Com_Printf(CON_CHANNEL_SYSTEM, "Com_RandomBytes: using weak randomization\n" );
 	for( i = 0; i < len; i++ )
 		string[i] = (unsigned char)( rand() % 255 );
 }
@@ -561,20 +559,17 @@ do the apropriate things.
 */
 void Com_Quit_f( void ) {
 
-  Com_Printf("quitting...\n");
+  Com_Printf(CON_CHANNEL_SYSTEM,"quitting...\n");
 
 	// don't try to shutdown if we are in a recursive error
   PHandler_Event(PLUGINS_ONTERMINATE, NULL); //Notify all plugins to hold and stop threads now
 
-  Com_Printf("All plugins have terminated\n");
+  Com_Printf(CON_CHANNEL_SYSTEM,"All plugins have terminated\n");
 
 	Sys_EnterCriticalSection( 2 );
 
-	if(gamebinary_initialized == 1)
-	{
-		Scr_Cleanup();
-		GScr_Shutdown();
-	}
+	Scr_Cleanup();
+	GScr_Shutdown();
 
 	SV_SApiShutdown();
 
@@ -583,25 +578,20 @@ void Com_Quit_f( void ) {
 		// which would trigger an unload of active VM error.
 		// Sys_Quit will kill this process anyways, so
 		// a corrupt call stack makes no difference
-		if(gamebinary_initialized == 1)
-		{
-			Hunk_ClearTempMemory();
-			Hunk_ClearTempMemoryHigh();
-			SV_Shutdown("EXE_SERVERQUIT");
+		Hunk_ClearTempMemory();
+		Hunk_ClearTempMemoryHigh();
+		SV_Shutdown("EXE_SERVERQUIT");
+		Com_Close();
 
-			Com_Close();
-		}
 		Com_CloseLogFiles( );
 
 		FS_Shutdown(qtrue);
 
-		if(gamebinary_initialized == 1)
-		{
-			FS_ShutdownIwdPureCheckReferences();
-			FS_ShutdownServerIwdNames();
-			FS_ShutdownServerReferencedIwds();
-			FS_ShutdownServerReferencedFFs();
-		}
+		FS_ShutdownIwdPureCheckReferences();
+		FS_ShutdownServerIwdNames();
+		FS_ShutdownServerReferencedIwds();
+		FS_ShutdownServerReferencedFFs();
+
 		NET_Shutdown();
 	}
 
@@ -668,7 +658,6 @@ void Com_PatchError()
 	*(char**)0x81240A3 = com_errorMessage;
 }
 
-void Com_InitHunkMemoryLnx();
 
 void Com_InitGamefunctions()
 {
@@ -685,21 +674,19 @@ void Com_InitGamefunctions()
 
     if(useFastFile->boolean){
 
-        Mem_Init();
+        PMem_Init();
 
         DB_SetInitializing( qtrue );
 
-        Com_Printf("begin $init\n");
+        Com_Printf(CON_CHANNEL_SYSTEM,"begin $init\n");
 
         msec = Sys_Milliseconds();
 
-        Mem_BeginAlloc("$init", qtrue);
+        PMem_BeginAlloc("$init", qtrue);
     }
 //    Con_InitChannels();
 
     if(!useFastFile->boolean) SEH_UpdateLanguageInfo();
-
-    Com_InitHunkMemoryLnx();
 
     Com_InitHunkMemory();
 
@@ -715,9 +702,9 @@ void Com_InitGamefunctions()
 
     DObjInit();
 
-    Mem_EndAlloc("$init", qtrue);
+    PMem_EndAlloc("$init", qtrue);
     DB_SetInitializing( qfalse );
-    Com_Printf("end $init %d ms\n", Sys_Milliseconds() - msec);
+    Com_Printf(CON_CHANNEL_SYSTEM,"end $init %d ms\n", Sys_Milliseconds() - msec);
 
     SV_Cmd_Init();
     SV_AddOperatorCommands();
@@ -736,32 +723,12 @@ void Com_InitGamefunctions()
 #ifdef PUNKBUSTER
     Com_AddRedirect(PbCaptureConsoleOutput_wrapper);
     if(!PbServerInitialize()){
-        Com_Printf("Unable to initialize PunkBuster.  PunkBuster is disabled.\n");
+        Com_Printf(CON_CHANNEL_SYSTEM,"Unable to initialize PunkBuster.  PunkBuster is disabled.\n");
     }
 #endif
 
 }
 
-qboolean Com_LoadBinaryImage()
-{
-
-    if(gamebinary_initialized == 1)
-	return qtrue;
-
-    Com_Printf("--- Game binary initialization ---\n");
-
-    if(Sys_LoadImage() == qtrue)
-    {
-        Com_InitGamefunctions();
-        gamebinary_initialized = 1;
-        Com_Printf("--- Game Binary Initialization Complete ---\n");
-    }else{
-        Com_Printf("^1--- Game Binary Initialization Failed ---\n");
-        gamebinary_initialized = -1;
-        return qfalse;
-    }
-    return qtrue;
-}
 
 /*
 =================
@@ -785,7 +752,7 @@ void Com_Init(char* commandLine){
     if(setjmp(*abortframe)){
         Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
     }
-    Com_Printf("%s %s %s build %i %s\n", GAME_STRING,Q3_VERSION,PLATFORM_STRING, Sys_GetBuild(), __DATE__);
+    Com_Printf(CON_CHANNEL_SYSTEM,"%s %s %s build %i %s\n", GAME_STRING,Q3_VERSION,PLATFORM_STRING, Sys_GetBuild(), __DATE__);
 
 
     Cbuf_Init();
@@ -829,7 +796,7 @@ void Com_Init(char* commandLine){
         Cvar_SetStringByName("sv_mapDownloadCompletedCmd", "");
         Cvar_SetStringByName("sv_screenshotArrivedCmd", "");
         Cvar_SetBool(com_securemodevar, qtrue);
-        Com_Printf("Info: SecureMode is enabled on this server!\n");
+        Com_Printf(CON_CHANNEL_SYSTEM,"Info: SecureMode is enabled on this server!\n");
     }
 
     Com_StartupVariable(NULL);
@@ -900,7 +867,7 @@ void Com_Init(char* commandLine){
 
     NV_LoadConfig();
 
-    Com_Printf("--- Common Initialization Complete ---\n");
+    Com_Printf(CON_CHANNEL_SYSTEM,"--- Common Initialization Complete ---\n");
 
     Cbuf_Execute( 0, 0 );
 
@@ -923,7 +890,7 @@ void Com_Init(char* commandLine){
 
     AddRedirectLocations( );
 
-    Com_LoadBinaryImage( );
+    Com_InitGamefunctions();
 
     com_fullyInitialized = qtrue;
 
@@ -968,7 +935,7 @@ unsigned int Com_ModifyUsec( unsigned int usec ) {
 		if (usec > 500000)
 #endif
 		{
-			Com_Printf( "^5Hitch warning: %i msec frame time\n", usec / 1000 );
+			Com_Printf(CON_CHANNEL_SYSTEM, "^5Hitch warning: %i msec frame time\n", usec / 1000 );
 #ifdef _LAGDEBUG
 			Com_DPrintfLogfile("^5Hitch warning: %i msec frame time\n", usec / 1000);
 #endif
@@ -1139,7 +1106,7 @@ __optimize3 void Com_Frame( void ) {
 		sv -= time_game;
 		cl -= time_frontend + time_backend;
 
-		Com_Printf ("frame:%i all:%3i sv:%3i ev:%3i cl:%3i gm:%3i rf:%3i bk:%3i\n",
+		Com_Printf(CON_CHANNEL_SYSTEM,"frame:%i all:%3i sv:%3i ev:%3i cl:%3i gm:%3i rf:%3i bk:%3i\n",
 					 com_frameNumber, all, sv, ev, cl, time_game, time_frontend, time_backend );
 	}
 #endif
@@ -1152,7 +1119,7 @@ __optimize3 void Com_Frame( void ) {
 		extern	int c_traces, c_brush_traces, c_patch_traces;
 		extern	int	c_pointcontents;
 
-		Com_Printf ("%4i traces  (%ib %ip) %4i points\n", c_traces,
+		Com_Printf(CON_CHANNEL_SYSTEM,"%4i traces  (%ib %ip) %4i points\n", c_traces,
 			c_brush_traces, c_patch_traces, c_pointcontents);
 		c_traces = 0;
 		c_brush_traces = 0;
@@ -1427,7 +1394,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		mainThreadInError = qfalse;
 		longjmp(*abortframe, -1);
 	} else if (code == ERR_DROP) {
-		Com_Printf ("********************\nERROR: %s\n********************\n", com_errorMessage);
+		Com_Printf(CON_CHANNEL_SYSTEM,"********************\nERROR: %s\n********************\n", com_errorMessage);
 		SV_Shutdown (va("Server crashed: %s",  com_errorMessage));
 		/*FS_PureServerSetLoadedPaks("", "");*/
 		com_errorEntered = qfalse;
@@ -1454,7 +1421,7 @@ void Com_WriteConfigToFile( const char *filename ) {
 
 	f = FS_FOpenFileWrite( filename );
 	if ( !f ) {
-		Com_Printf ("Couldn't write %s.\n", filename );
+		Com_Printf(CON_CHANNEL_SYSTEM,"Couldn't write %s.\n", filename );
 		return;
 	}
 
@@ -1500,13 +1467,13 @@ void Com_WriteConfig_f( void ) {
 	char	filename[MAX_QPATH];
 
 	if ( Cmd_Argc() != 2 ) {
-		Com_Printf( "Usage: writeconfig <filename>\n" );
+		Com_Printf(CON_CHANNEL_SYSTEM, "Usage: writeconfig <filename>\n" );
 		return;
 	}
 
 	Q_strncpyz( filename, Cmd_Argv(1), sizeof( filename ) );
 	COM_DefaultExtension( filename, sizeof( filename ), ".cfg" );
-	Com_Printf( "Writing %s.\n", filename );
+	Com_Printf(CON_CHANNEL_SYSTEM, "Writing %s.\n", filename );
 	Com_WriteConfigToFile( filename );
 }
 

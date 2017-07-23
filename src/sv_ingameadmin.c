@@ -189,7 +189,7 @@ qboolean SV_ExecuteRemoteCmd(int clientnum, const char *msg){
   	}
   }
   SV_SApiSteamIDToString(cl->steamid, ssti, sizeof(ssti));
-  Com_Printf( "Command execution: %s   Invoked by: %s   InvokerSteamID: %s Power: %i\n", printPtr, cl->name, ssti, power);
+  Com_Printf(CON_CHANNEL_SERVER, "Command execution: %s   Invoked by: %s   InvokerSteamID: %s Power: %i\n", printPtr, cl->name, ssti, power);
 
 	Com_BeginRedirect(sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_ReliableSendRedirect);
 

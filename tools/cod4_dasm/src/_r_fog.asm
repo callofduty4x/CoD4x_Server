@@ -155,16 +155,16 @@ R_SetFogFromServer:
 	nop
 
 
-;Zero initialized global or static variables of r_fog:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_fog:
 SECTION .data
 
 
 ;Initialized constant data of r_fog:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_fog:
+SECTION .bss
 
 
 ;All cstrings:

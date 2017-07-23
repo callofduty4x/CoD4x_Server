@@ -1,6 +1,5 @@
 ;Imports of ragdoll_quat:
 	extern Vec4Normalize
-	extern g_fltMin__uint4_dup_1
 	extern Q_acos
 	extern sinf
 
@@ -272,7 +271,7 @@ Ragdoll_QuatPointRotate:
 	movss xmm0, dword [eax+0x8]
 	movss [ebp-0x20], xmm0
 	movss xmm5, dword [edx]
-	movss xmm3, dword [g_fltMin__uint4_dup_1+0x130]
+	movss xmm3, dword [_data16_80000000]
 	movaps xmm0, xmm5
 	xorps xmm0, xmm3
 	movss [ebp-0xc], xmm0
@@ -384,7 +383,7 @@ Ragdoll_QuatToAxisAngle:
 	call sinf
 	fstp dword [ebp-0x10]
 	movss xmm0, dword [ebp-0x10]
-	andps xmm0, [g_fltMin__uint4_dup_1+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	ucomisd xmm0, [_double_0_00000100]
 	jbe Ragdoll_QuatToAxisAngle_10
@@ -425,7 +424,7 @@ Ragdoll_QuatMulInvSecond:
 	mov edx, [ebp+0x8]
 	mov eax, [ebp+0xc]
 	mov ecx, [ebp+0x10]
-	movss xmm0, dword [g_fltMin__uint4_dup_1+0x100]
+	movss xmm0, dword [_data16_80000000]
 	movss xmm3, dword [eax]
 	xorps xmm3, xmm0
 	movss xmm4, dword [eax+0x4]
@@ -484,16 +483,16 @@ Ragdoll_QuatMulInvSecond:
 	add [eax], al
 
 
-;Zero initialized global or static variables of ragdoll_quat:
-SECTION .bss
-
-
 ;Initialized global or static variables of ragdoll_quat:
 SECTION .data
 
 
 ;Initialized constant data of ragdoll_quat:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ragdoll_quat:
+SECTION .bss
 
 
 ;All cstrings:
@@ -507,4 +506,6 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _double_0_00000100:		dq 0x3eb0c6f7a0b5ed8d	; 1e-06
 _float_0_25000000:		dd 0x3e800000	; 0.25
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 

@@ -827,16 +827,16 @@ G_GetFreePlayerCorpseIndex_10:
 	ret
 
 
-;Zero initialized global or static variables of g_player_corpse_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_player_corpse_mp:
 SECTION .data
 
 
 ;Initialized constant data of g_player_corpse_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_player_corpse_mp:
+SECTION .bss
 
 
 ;All cstrings:

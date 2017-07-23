@@ -840,16 +840,16 @@ RB_GaussianFilterImage_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of rb_imagefilter:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_imagefilter:
 SECTION .data
 
 
 ;Initialized constant data of rb_imagefilter:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_imagefilter:
+SECTION .bss
 
 
 ;All cstrings:

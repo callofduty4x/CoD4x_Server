@@ -91,7 +91,7 @@ game_hudelem_t* G_GetNewHudElem(unsigned int clientnum){
         element->teamNum = 0;
         return element;
     }
-    Com_PrintWarning("G_CreateHudElem: Exceeded limit of Hudelems\n");
+    Com_PrintWarning(CON_CHANNEL_SCRIPT,"G_CreateHudElem: Exceeded limit of Hudelems\n");
     return NULL;
 }
 
@@ -115,7 +115,7 @@ void G_HudSetFont(game_hudelem_t* element ,float fontscale, fonttype_t fonttype)
 
     if(fontscale > 4.6 || fontscale < 1.399999)
     {
-        Com_PrintWarning("Fontscale: %f is out of range. Range is 1.4 to 4.6\n", fontscale);
+        Com_PrintWarning(CON_CHANNEL_SCRIPT,"Fontscale: %f is out of range. Range is 1.4 to 4.6\n", fontscale);
         fontscale = 1.4;
     }
     element->fontScale = fontscale;
@@ -126,7 +126,7 @@ void G_HudSetMovingOverTime(game_hudelem_t* element ,int time, float newx, float
 
     if(time > 60000 || time < 0)
     {
-        Com_PrintWarning("G_HudSetMovingOverTime: time: %i is out of range. Range is 0 to 60000\n", time);
+        Com_PrintWarning(CON_CHANNEL_SCRIPT,"G_HudSetMovingOverTime: time: %i is out of range. Range is 0 to 60000\n", time);
         time = 0;
     }
 
@@ -145,7 +145,7 @@ void G_HudSetFadingOverTime(game_hudelem_t* element ,int time, ucolor_t newcolor
 
     if(time > 60000 || time < 0)
     {
-        Com_PrintWarning("G_HudSetFadeingOverTime: time: %i is out of range. Range is 0 to 60000\n", time);
+        Com_PrintWarning(CON_CHANNEL_SCRIPT,"G_HudSetFadeingOverTime: time: %i is out of range. Range is 0 to 60000\n", time);
         time = 0;
     }
 

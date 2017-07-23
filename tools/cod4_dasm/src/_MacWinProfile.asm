@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of MacWinProfile:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacWinProfile:
 SECTION .data
 
 
 ;Initialized constant data of MacWinProfile:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacWinProfile:
+SECTION .bss
 
 
 ;All cstrings:

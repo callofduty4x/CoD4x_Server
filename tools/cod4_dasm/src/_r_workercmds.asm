@@ -146,16 +146,16 @@ R_WaitWorkerCmds:
 	nop
 
 
-;Zero initialized global or static variables of r_workercmds:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_workercmds:
 SECTION .data
 
 
 ;Initialized constant data of r_workercmds:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_workercmds:
+SECTION .bss
 
 
 ;All cstrings:

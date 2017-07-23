@@ -1734,19 +1734,19 @@ Scr_SetLoadedImpureScript:
 	nop
 
 
-;Zero initialized global or static variables of scr_parser:
-SECTION .bss
-g_loadedImpureScript: resb 0x80
-scrParserPub: resb 0x1c
-scrParserGlob: resb 0x80
-
-
 ;Initialized global or static variables of scr_parser:
 SECTION .data
 
 
 ;Initialized constant data of scr_parser:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_parser:
+SECTION .bss
+g_loadedImpureScript: resb 0x80
+scrParserPub: resb 0x1c
+scrParserGlob: resb 0x80
 
 
 ;All cstrings:

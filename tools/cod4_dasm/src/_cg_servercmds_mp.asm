@@ -3204,17 +3204,17 @@ CG_CheckOpenWaitingScriptMenu_10:
 	nop
 
 
-;Zero initialized global or static variables of cg_servercmds_mp:
-SECTION .bss
-cg_waitingScriptMenu: resb 0x80
-
-
 ;Initialized global or static variables of cg_servercmds_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_servercmds_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_servercmds_mp:
+SECTION .bss
+cg_waitingScriptMenu: resb 0x80
 
 
 ;All cstrings:

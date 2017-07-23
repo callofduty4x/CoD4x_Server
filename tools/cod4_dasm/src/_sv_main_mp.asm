@@ -3478,6 +3478,14 @@ SV_Frame_150:
 	jmp SV_Frame_190
 
 
+;Initialized global or static variables of sv_main_mp:
+SECTION .data
+
+
+;Initialized constant data of sv_main_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of sv_main_mp:
 SECTION .bss
 tempServerCommandBuf: resb 0x20000
@@ -3535,14 +3543,6 @@ sv_wwwDlDisconnected: resb 0x4
 sv_wwwDownload: resb 0x4
 sv_zombietime: resb 0x4
 tempServerMsgBuf: resb 0x20004
-
-
-;Initialized global or static variables of sv_main_mp:
-SECTION .data
-
-
-;Initialized constant data of sv_main_mp:
-SECTION .rdata
 
 
 ;All cstrings:

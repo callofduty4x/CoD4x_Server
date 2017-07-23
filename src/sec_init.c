@@ -44,7 +44,7 @@ void Sec_Init(void)
 	ltc_mp = ltm_desc;
     //Cmd_AddCommand("createCert", Sec_MakeCert_f);
 
-    Com_Printf("--- Crypto Initializing ---\n");
+    Com_Printf(CON_CHANNEL_SYSTEM,"--- Crypto Initializing ---\n");
 
     if(register_hash(&sha1_desc) == -1)
     {
@@ -61,7 +61,7 @@ void Sec_Init(void)
 
     for(i = 0;i < 3; ++i){
     	result = hash_descriptor[i].test();
-    	Com_Printf("Testing %s hash function - %s.\n",hash_descriptor[i].name,result==CRYPT_OK ? "positive" : "negative");
+    	Com_Printf(CON_CHANNEL_SYSTEM,"Testing %s hash function - %s.\n",hash_descriptor[i].name,result==CRYPT_OK ? "positive" : "negative");
     	if(result != CRYPT_OK){
     	    Com_Error(ERR_FATAL, "Sec module failed to initialize! Error code: %s. Shutting down...\n", Sec_CryptErrStr(result));
         	return;
@@ -76,6 +76,6 @@ void Sec_Init(void)
       }
     }
     initialized = qtrue;
-    Com_Printf("--- Crypto Initialization Complete ---\n");
+    Com_Printf(CON_CHANNEL_SYSTEM,"--- Crypto Initialization Complete ---\n");
     return;
 }

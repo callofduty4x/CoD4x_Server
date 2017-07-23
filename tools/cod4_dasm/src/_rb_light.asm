@@ -4054,19 +4054,19 @@ R_GetAverageLightingAtPoint_110:
 	jmp R_GetAverageLightingAtPoint_270
 
 
-;Zero initialized global or static variables of rb_light:
-SECTION .bss
-s_vc_log: resb 0x8
-s_lightGridSliceDelta: resb 0x4
-s_lightGridRowDelta: resb 0x74
-
-
 ;Initialized global or static variables of rb_light:
 SECTION .data
 
 
 ;Initialized constant data of rb_light:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_light:
+SECTION .bss
+s_vc_log: resb 0x8
+s_lightGridSliceDelta: resb 0x4
+s_lightGridRowDelta: resb 0x74
 
 
 ;All cstrings:

@@ -56,7 +56,7 @@
 	extern PtInRect
 	extern CGGetActiveDisplayList
 	extern dprintf
-	extern _Znam
+	extern _Znaj
 	extern _ZdaPv
 	extern _ZN14MacPreferences10GetBooleanEPKcb
 	extern CGDisplayBounds
@@ -1387,7 +1387,7 @@ _ZN10MacDisplay10InitializeEv_130:
 _ZN10MacDisplay10InitializeEv_20:
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [ebp-0x1e0], eax
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
@@ -2277,13 +2277,13 @@ _ZN10MacDisplay12SetGammaRampEPK13_D3DGAMMARAMP_10:
 	ret
 _ZN10MacDisplay12SetGammaRampEPK13_D3DGAMMARAMP_20:
 	mov dword [esp], 0x400
-	call _Znam
+	call _Znaj
 	mov [sSystemGammaRed], eax
 	mov dword [esp], 0x400
-	call _Znam
+	call _Znaj
 	mov [sSystemGammaGreen], eax
 	mov dword [esp], 0x400
-	call _Znam
+	call _Znaj
 	mov [sSystemGammaBlue], eax
 	lea edx, [ebp-0x1c]
 	mov [esp+0x14], edx
@@ -2299,13 +2299,13 @@ _ZN10MacDisplay12SetGammaRampEPK13_D3DGAMMARAMP_20:
 	jmp _ZN10MacDisplay12SetGammaRampEPK13_D3DGAMMARAMP_50
 _ZN10MacDisplay12SetGammaRampEPK13_D3DGAMMARAMP_30:
 	mov dword [esp], 0x400
-	call _Znam
+	call _Znaj
 	mov [sCustomGammaRed], eax
 	mov dword [esp], 0x400
-	call _Znam
+	call _Znaj
 	mov [sCustomGammaGreen], eax
 	mov dword [esp], 0x400
-	call _Znam
+	call _Znaj
 	mov [sCustomGammaBlue], eax
 	mov esi, eax
 	jmp _ZN10MacDisplay12SetGammaRampEPK13_D3DGAMMARAMP_60
@@ -7867,6 +7867,19 @@ _ZSt9make_heapIN9__gnu_cxx17__normal_iteratorIP8CResInfoSt6vectorIS2_SaIS2_EEEEE
 	nop
 
 
+;Initialized global or static variables of MacDisplay:
+SECTION .data
+sEnableSwap: dd 0x1
+kInWindowModeKey: dd _cstring_macdisplaywindow
+kDisplayRectKey: dd _cstring_macdisplayrect
+kDisplayIndexKey: dd _cstring_macdisplayindex
+kFirstTimeKey: dd _cstring_macdisplayfirst, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of MacDisplay:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of MacDisplay:
 SECTION .bss
 sRectList: resb 0xc
@@ -7900,19 +7913,6 @@ sInitialized: resb 0x4
 sDisplayRect: resb 0x10
 sMainDisplayID: resb 0x4
 sMainRect: resb 0x2c
-
-
-;Initialized global or static variables of MacDisplay:
-SECTION .data
-sEnableSwap: dd 0x1
-kInWindowModeKey: dd _cstring_macdisplaywindow
-kDisplayRectKey: dd _cstring_macdisplayrect
-kDisplayIndexKey: dd _cstring_macdisplayindex
-kFirstTimeKey: dd _cstring_macdisplayfirst, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of MacDisplay:
-SECTION .rdata
 
 
 ;All CFStrings:

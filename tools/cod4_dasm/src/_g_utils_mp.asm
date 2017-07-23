@@ -50,7 +50,7 @@
 	extern vectoyaw
 	extern MatrixTransformVector43
 	extern strcpy
-	extern I_strlwr
+	extern Q_strlwr
 	extern SL_ConvertToString
 	extern useFastFile
 	extern DB_ReplaceModel
@@ -1623,7 +1623,7 @@ G_MaterialIndex:
 	mov [esp], ebx
 	call strcpy
 	mov [esp], ebx
-	call I_strlwr
+	call Q_strlwr
 	mov dword [esp+0x10], _cstring_material
 	mov eax, level
 	mov eax, [eax+0x1c]
@@ -3335,11 +3335,6 @@ G_crandom:
 	nop
 
 
-;Zero initialized global or static variables of g_utils_mp:
-SECTION .bss
-cached_models: resb 0x800
-
-
 ;Initialized global or static variables of g_utils_mp:
 SECTION .data
 _ZZ22G_LocalizedStringIndexPKcE12origErrorMsg: dd _cstring_localized_string, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -3348,6 +3343,11 @@ entityTypeNames_dup_1: dd _cstring_et_general, _cstring_et_player, _cstring_et_p
 
 ;Initialized constant data of g_utils_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_utils_mp:
+SECTION .bss
+cached_models: resb 0x800
 
 
 ;All cstrings:

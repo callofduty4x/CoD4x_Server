@@ -157,16 +157,16 @@ RB_TouchAllImages_10:
 	jmp RB_TouchAllImages_80
 
 
-;Zero initialized global or static variables of rb_imagetouch:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_imagetouch:
 SECTION .data
 
 
 ;Initialized constant data of rb_imagetouch:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_imagetouch:
+SECTION .bss
 
 
 ;All cstrings:

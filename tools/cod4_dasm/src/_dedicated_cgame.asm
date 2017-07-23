@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of dedicated_cgame:
-SECTION .bss
-
-
 ;Initialized global or static variables of dedicated_cgame:
 SECTION .data
 
 
 ;Initialized constant data of dedicated_cgame:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of dedicated_cgame:
+SECTION .bss
 
 
 ;All cstrings:

@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of cg_rumble:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_rumble:
 SECTION .data
 
 
 ;Initialized constant data of cg_rumble:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_rumble:
+SECTION .bss
 
 
 ;All cstrings:

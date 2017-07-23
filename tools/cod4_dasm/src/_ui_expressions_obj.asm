@@ -429,12 +429,6 @@ parse_expression_230:
 	add [eax], al
 
 
-;Zero initialized global or static variables of ui_expressions_obj:
-SECTION .bss
-s_tempOperandValueAsString_dup_1: resb 0x400
-currentTempOperand_dup_1: resb 0x80
-
-
 ;Initialized global or static variables of ui_expressions_obj:
 SECTION .data
 g_expOperatorNames: dd _cstring_noop, _cstring_1, _cstring_2, _cstring_3, _cstring_4, _cstring_5, _cstring_6, _cstring_7, _cstring_8, _cstring_9, _cstring_10, _cstring_11, _cstring_12, _cstring_13, _cstring_14, _cstring_15, _cstring_16, _cstring_17, _cstring_18, _cstring_19, _cstring_20, _cstring_21, _cstring_22, _cstring_sin, _cstring_cos, _cstring_min, _cstring_max, _cstring_milliseconds, _cstring_dvarint, _cstring_dvarbool, _cstring_dvarfloat, _cstring_dvarstring, _cstring_stat, _cstring_ui_active, _cstring_flashbanged, _cstring_scoped, _cstring_scoreboard_visib, _cstring_inkillcam, _cstring_player, _cstring_selecting_locati, _cstring_team, _cstring_otherteam, _cstring_marinesfield, _cstring_opforfield, _cstring_menuisopen, _cstring_writingdata, _cstring_inlobby, _cstring_inprivateparty, _cstring_privatepartyhost, _cstring_privatepartyhost1, _cstring_aloneinparty, _cstring_adsjavelin, _cstring_weaplockblink, _cstring_weapattacktop, _cstring_weapattackdirect, _cstring_secondsastime, _cstring_tablelookup, _cstring_locstring, _cstring_localvarint, _cstring_localvarbool, _cstring_localvarfloat, _cstring_localvarstring, _cstring_timeleft, _cstring_secondsascountdo, _cstring_gamemsgwndactive, _cstring_int, _cstring_string, _cstring_float, _cstring_gametypename, _cstring_gametype, _cstring_gametypedescript, _cstring_scoreatrank, _cstring_friendsonline, _cstring_spectatingclient, _cstring_statrangeanybits, _cstring_keybinding, _cstring_actionslotusable, _cstring_hudfade, _cstring_maxrecommendedpl, _cstring_acceptinginvite, _cstring_isintermission, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -442,6 +436,12 @@ g_expOperatorNames: dd _cstring_noop, _cstring_1, _cstring_2, _cstring_3, _cstri
 
 ;Initialized constant data of ui_expressions_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ui_expressions_obj:
+SECTION .bss
+s_tempOperandValueAsString_dup_1: resb 0x400
+currentTempOperand_dup_1: resb 0x80
 
 
 ;All cstrings:

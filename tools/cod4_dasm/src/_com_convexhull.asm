@@ -645,16 +645,16 @@ Com_ConvexHull_30:
 	add [eax], al
 
 
-;Zero initialized global or static variables of com_convexhull:
-SECTION .bss
-
-
 ;Initialized global or static variables of com_convexhull:
 SECTION .data
 
 
 ;Initialized constant data of com_convexhull:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_convexhull:
+SECTION .bss
 
 
 ;All cstrings:

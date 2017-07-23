@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of profile_mem:
-SECTION .bss
-
-
 ;Initialized global or static variables of profile_mem:
 SECTION .data
 
 
 ;Initialized constant data of profile_mem:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of profile_mem:
+SECTION .bss
 
 
 ;All cstrings:

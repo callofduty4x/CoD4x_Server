@@ -129,16 +129,16 @@ GraphFloat_Load_40:
 	nop
 
 
-;Zero initialized global or static variables of graph:
-SECTION .bss
-
-
 ;Initialized global or static variables of graph:
 SECTION .data
 
 
 ;Initialized constant data of graph:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of graph:
+SECTION .bss
 
 
 ;All cstrings:

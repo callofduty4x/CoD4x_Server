@@ -17,16 +17,16 @@ D3DXCreateBuffer:
 	add [eax], al
 
 
-;Zero initialized global or static variables of D3DXMesh:
-SECTION .bss
-
-
 ;Initialized global or static variables of D3DXMesh:
 SECTION .data
 
 
 ;Initialized constant data of D3DXMesh:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of D3DXMesh:
+SECTION .bss
 
 
 ;All cstrings:

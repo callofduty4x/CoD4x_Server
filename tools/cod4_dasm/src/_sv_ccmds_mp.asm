@@ -57,7 +57,7 @@
 	extern Cbuf_InsertText
 	extern Com_Error
 	extern FS_GetMapBaseName
-	extern I_strlwr
+	extern Q_strlwr
 	extern useFastFile
 	extern DB_FileExists
 	extern fs_gameDirVar
@@ -1617,7 +1617,7 @@ SV_Map_f_50:
 	mov [esp], ebx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_strlwr
+	call Q_strlwr
 	mov eax, useFastFile
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
@@ -2309,6 +2309,14 @@ SV_RemoveOperatorCommands:
 	nop
 
 
+;Initialized global or static variables of sv_ccmds_mp:
+SECTION .data
+
+
+;Initialized constant data of sv_ccmds_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of sv_ccmds_mp:
 SECTION .bss
 _ZZ23SV_AddDedicatedCommandsvE23SV_ConTell_f_VAR_SERVER: resb 0x14
@@ -2362,14 +2370,6 @@ _ZZ22SV_AddOperatorCommandsvE13SV_Drop_f_VAR: resb 0x14
 _ZZ22SV_AddOperatorCommandsvE25SV_Heartbeat_f_VAR_SERVER: resb 0x14
 _ZZ22SV_AddOperatorCommandsvE18SV_Heartbeat_f_VAR: resb 0x14
 _ZZ22SV_AddOperatorCommandsvE11initialized: resb 0x18
-
-
-;Initialized global or static variables of sv_ccmds_mp:
-SECTION .data
-
-
-;Initialized constant data of sv_ccmds_mp:
-SECTION .rdata
 
 
 ;All cstrings:

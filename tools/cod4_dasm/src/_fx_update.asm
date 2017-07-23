@@ -4948,16 +4948,16 @@ FX_SpawnAllFutureLooping_10:
 	ret
 
 
-;Zero initialized global or static variables of fx_update:
-SECTION .bss
-
-
 ;Initialized global or static variables of fx_update:
 SECTION .data
 
 
 ;Initialized constant data of fx_update:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fx_update:
+SECTION .bss
 
 
 ;All cstrings:

@@ -721,16 +721,16 @@ StopDLRequest_10:
 	ret
 
 
-;Zero initialized global or static variables of mac_downloader:
-SECTION .bss
-
-
 ;Initialized global or static variables of mac_downloader:
 SECTION .data
 
 
 ;Initialized constant data of mac_downloader:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mac_downloader:
+SECTION .bss
 
 
 ;All CFStrings:

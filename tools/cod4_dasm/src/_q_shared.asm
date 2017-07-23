@@ -3,7 +3,6 @@
 	extern vsnprintf
 	extern tolower
 	extern strchr
-	extern strcmp
 	extern Com_Error
 	extern strcpy
 	extern Sys_IsMainThread
@@ -73,8 +72,8 @@
 	global ParseConfigStringToStructCustomSize
 	global BigShort
 	global I_iscsym
-	global I_strcmp
-	global I_strlwr
+	global strcmp
+	global Q_strlwr
 	global I_strupr
 	global LongSwap
 	global I_isdigit
@@ -2533,7 +2532,7 @@ I_iscsym_10:
 
 
 ;I_strcmp(char const*, char const*)
-I_strcmp:
+strcmp:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2542,7 +2541,7 @@ I_strcmp:
 	mov edx, [ebp+0x8]
 	mov eax, [ebp+0xc]
 	mov esi, 0x7fffffff
-I_strcmp_30:
+strcmp_30:
 	movzx ecx, byte [edx]
 	movsx edi, cl
 	add edx, 0x1
@@ -2550,19 +2549,19 @@ I_strcmp_30:
 	add eax, 0x1
 	sub esi, 0x1
 	cmp esi, 0xffffffff
-	jz I_strcmp_10
+	jz strcmp_10
 	cmp edi, ebx
-	jnz I_strcmp_20
+	jnz strcmp_20
 	test cl, cl
-	jnz I_strcmp_30
-I_strcmp_10:
+	jnz strcmp_30
+strcmp_10:
 	xor eax, eax
 	pop ebx
 	pop esi
 	pop edi
 	pop ebp
 	ret
-I_strcmp_20:
+strcmp_20:
 	xor eax, eax
 	cmp ebx, edi
 	setle al
@@ -2576,28 +2575,28 @@ I_strcmp_20:
 
 
 ;I_strlwr(char*)
-I_strlwr:
+Q_strlwr:
 	push ebp
 	mov ebp, esp
 	push ebx
 	mov ebx, [ebp+0x8]
 	movzx edx, byte [ebx]
 	test dl, dl
-	jz I_strlwr_10
+	jz Q_strlwr_10
 	mov ecx, ebx
-I_strlwr_30:
+Q_strlwr_30:
 	movsx eax, dl
 	sub eax, 0x41
 	cmp eax, 0x19
-	ja I_strlwr_20
+	ja Q_strlwr_20
 	lea eax, [edx+0x20]
 	mov [ecx], al
-I_strlwr_20:
+Q_strlwr_20:
 	movzx edx, byte [ecx+0x1]
 	add ecx, 0x1
 	test dl, dl
-	jnz I_strlwr_30
-I_strlwr_10:
+	jnz Q_strlwr_30
+Q_strlwr_10:
 	mov eax, ebx
 	pop ebx
 	pop ebp
@@ -2928,22 +2927,6 @@ Swap_Init_10:
 	nop
 
 
-;Zero initialized global or static variables of q_shared:
-SECTION .bss
-value1: resb 0x8000
-g_com_error: resb 0xa0
-va_info: resb 0x1008
-_LittleFloatWrite: resb 0x4
-_LittleFloatRead: resb 0x4
-_LittleLong64: resb 0x4
-_LittleLong: resb 0x4
-_BigLong: resb 0x4
-_LittleShort: resb 0x4
-_BigShort: resb 0x4
-_ZZ16Info_ValueForKeyPKcS0_E10valueindex: resb 0x3c
-g_traceThreadInfo: resb 0x60
-
-
 ;Initialized global or static variables of q_shared:
 SECTION .data
 
@@ -2968,6 +2951,22 @@ colorLtCyan: dd 0x0, 0x3f400000, 0x3f400000, 0x3f800000
 colorLtGreen: dd 0x0, 0x3f333333, 0x0, 0x3f800000
 colorLtYellow: dd 0x3f400000, 0x3f400000, 0x0, 0x3f800000
 colorMdCyan: dd 0x0, 0x3f000000, 0x3f000000, 0x3f800000
+
+
+;Zero initialized global or static variables of q_shared:
+SECTION .bss
+value1: resb 0x8000
+g_com_error: resb 0xa0
+va_info: resb 0x1008
+_LittleFloatWrite: resb 0x4
+_LittleFloatRead: resb 0x4
+_LittleLong64: resb 0x4
+_LittleLong: resb 0x4
+_BigLong: resb 0x4
+_LittleShort: resb 0x4
+_BigShort: resb 0x4
+_ZZ16Info_ValueForKeyPKcS0_E10valueindex: resb 0x3c
+g_traceThreadInfo: resb 0x60
 
 
 ;All cstrings:

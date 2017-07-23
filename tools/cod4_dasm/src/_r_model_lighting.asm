@@ -1441,19 +1441,19 @@ R_SetStaticModelLightingCoordsForSource_10:
 	jmp R_SetStaticModelLightingCoordsForSource_20
 
 
-;Zero initialized global or static variables of r_model_lighting:
-SECTION .bss
-smodelLightGlob: resb 0xa080
-modelLightGlob: resb 0x80
-s_modelLightingSampleDelta: resb 0x100
-
-
 ;Initialized global or static variables of r_model_lighting:
 SECTION .data
 
 
 ;Initialized constant data of r_model_lighting:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_model_lighting:
+SECTION .bss
+smodelLightGlob: resb 0xa080
+modelLightGlob: resb 0x80
+s_modelLightingSampleDelta: resb 0x100
 
 
 ;All cstrings:

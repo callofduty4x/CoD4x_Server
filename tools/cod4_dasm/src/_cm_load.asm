@@ -253,19 +253,19 @@ CM_Unload_10:
 	ret
 
 
-;Zero initialized global or static variables of cm_load:
-SECTION .bss
-g_box_model: resb 0x60
-g_box_brush: resb 0xa0
-cm: resb 0x164
-
-
 ;Initialized global or static variables of cm_load:
 SECTION .data
 
 
 ;Initialized constant data of cm_load:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cm_load:
+SECTION .bss
+g_box_model: resb 0x60
+g_box_brush: resb 0xa0
+cm: resb 0x164
 
 
 ;All cstrings:

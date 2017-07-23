@@ -144,9 +144,9 @@ endif
 ###############################
 # A rule to link server binary.
 $(TARGET): $(OS_OBJ) $(C_OBJ) $(CPP_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o
-	@echo   $(CC)  $@
+	@echo   $(CPP)
 # CFLAGS for compiler, LFLAGS for linker.
-	@$(CC) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
+	@$(CPP) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
 
 ################################
 # A rule to make version module.

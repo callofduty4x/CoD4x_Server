@@ -989,11 +989,6 @@ Com_ShutdownWorld:
 	nop
 
 
-;Zero initialized global or static variables of com_bsp_load_obj:
-SECTION .bss
-comBspGlob: resb 0x80
-
-
 ;Initialized global or static variables of com_bsp_load_obj:
 SECTION .data
 _ZZ29Com_GetBspLumpCountForVersioniE15lumpsForVersion: dd 0x29, 0x29, 0x2a, 0x2b, 0x2b, 0x2b, 0x2b, 0x2c, 0x2c, 0x2c, 0x2e, 0x2e, 0x2f, 0x0, 0x0, 0x0
@@ -1001,6 +996,11 @@ _ZZ29Com_GetBspLumpCountForVersioniE15lumpsForVersion: dd 0x29, 0x29, 0x2a, 0x2b
 
 ;Initialized constant data of com_bsp_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_bsp_load_obj:
+SECTION .bss
+comBspGlob: resb 0x80
 
 
 ;All cstrings:

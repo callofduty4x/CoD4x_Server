@@ -16,7 +16,7 @@
 	extern Sys_InitializeCriticalSections
 	extern Sys_InitMainThread
 	extern Win_InitLocalization
-	extern _Znam
+	extern _Znaj
 	extern _ZN10MacFolders35GetApplicationSupportFolderItemPathEPKcPci
 	extern Com_InitParse
 	extern Cvar_Init
@@ -333,7 +333,7 @@ WinMain:
 	call Sys_InitMainThread
 	call Win_InitLocalization
 	mov dword [esp], 0x400
-	call _Znam
+	call _Znaj
 	mov [sys_processSemaphoreFile], eax
 	mov byte [eax], 0x0
 	mov dword [esp+0x8], 0x400
@@ -1425,6 +1425,17 @@ Sys_Print:
 	nop
 
 
+;Initialized global or static variables of mac_main:
+SECTION .data
+_ZZ24Sys_GetSemaphoreFileNamevE18sSemaphoreFileName: dd _cstring_cod4mp, 0x0, 0x0, 0x0, 0x0, 0x0
+eventHead: dd 0x0
+eventTail: dd 0x0
+
+
+;Initialized constant data of mac_main:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of mac_main:
 SECTION .bss
 sys_cmdline: resb 0x400
@@ -1440,17 +1451,6 @@ _ZZ8Sys_InitvE20Sys_In_Restart_f_VAR: resb 0x5c
 g_wv: resb 0x20
 eventQue: resb 0x1800
 sys_SSE: resb 0x60
-
-
-;Initialized global or static variables of mac_main:
-SECTION .data
-_ZZ24Sys_GetSemaphoreFileNamevE18sSemaphoreFileName: dd _cstring_cod4mp, 0x0, 0x0, 0x0, 0x0, 0x0
-eventHead: dd 0x0
-eventTail: dd 0x0
-
-
-;Initialized constant data of mac_main:
-SECTION .rdata
 
 
 ;All CFStrings:

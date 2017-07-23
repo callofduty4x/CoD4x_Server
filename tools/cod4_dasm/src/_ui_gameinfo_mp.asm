@@ -479,18 +479,18 @@ UI_ParseInfos_40:
 	nop
 
 
-;Zero initialized global or static variables of ui_gameinfo_mp:
-SECTION .bss
-ui_numArenas: resb 0x20
-ui_arenaInfos: resb 0x160
-
-
 ;Initialized global or static variables of ui_gameinfo_mp:
 SECTION .data
 
 
 ;Initialized constant data of ui_gameinfo_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ui_gameinfo_mp:
+SECTION .bss
+ui_numArenas: resb 0x20
+ui_arenaInfos: resb 0x160
 
 
 ;All cstrings:

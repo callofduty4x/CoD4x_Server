@@ -2423,10 +2423,6 @@ ScriptEntCmd_RotateVelocity_80:
 	jmp ScriptEntCmd_RotateVelocity_110
 
 
-;Zero initialized global or static variables of g_scr_mover:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_scr_mover:
 SECTION .data
 
@@ -2434,6 +2430,10 @@ SECTION .data
 ;Initialized constant data of g_scr_mover:
 SECTION .rdata
 methods_dup_1: dd _cstring_moveto, ScriptEntCmd_MoveTo, 0x0, _cstring_movex, ScriptEntCmd_MoveX, 0x0, _cstring_movey, ScriptEntCmd_MoveY, 0x0, _cstring_movez, ScriptEntCmd_MoveZ, 0x0, _cstring_movegravity, ScriptEntCmd_GravityMove, 0x0, _cstring_rotateto, ScriptEntCmd_RotateTo, 0x0, _cstring_rotatepitch, ScriptEntCmd_RotatePitch, 0x0, _cstring_rotateyaw, ScriptEntCmd_RotateYaw, 0x0, _cstring_rotateroll, ScriptEntCmd_RotateRoll, 0x0, _cstring_devaddpitch, ScriptEntCmd_DevAddPitch, 0x1, _cstring_devaddyaw, ScriptEntCmd_DevAddYaw, 0x1, _cstring_devaddroll, ScriptEntCmd_DevAddRoll, 0x1, _cstring_vibrate, ScriptEntCmd_Vibrate, 0x0, _cstring_rotatevelocity, ScriptEntCmd_RotateVelocity, 0x0, _cstring_solid, ScriptEntCmd_Solid, 0x0, _cstring_notsolid, ScriptEntCmd_NotSolid, 0x0, _cstring_setcandamage, ScriptEntCmd_SetCanDamage, 0x0, _cstring_physicslaunch, ScriptEntCmd_PhysicsLaunch, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of g_scr_mover:
+SECTION .bss
 
 
 ;All cstrings:

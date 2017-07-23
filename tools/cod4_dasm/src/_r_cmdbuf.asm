@@ -21,16 +21,16 @@ R_InitContext:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_cmdbuf:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_cmdbuf:
 SECTION .data
 
 
 ;Initialized constant data of r_cmdbuf:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_cmdbuf:
+SECTION .bss
 
 
 ;All cstrings:

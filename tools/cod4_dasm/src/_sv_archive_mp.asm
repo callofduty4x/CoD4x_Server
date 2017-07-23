@@ -794,16 +794,16 @@ SV_ArchiveSnapshot_470:
 	add [eax], al
 
 
-;Zero initialized global or static variables of sv_archive_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of sv_archive_mp:
 SECTION .data
 
 
 ;Initialized constant data of sv_archive_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of sv_archive_mp:
+SECTION .bss
 
 
 ;All cstrings:

@@ -94,7 +94,7 @@ PrintMatches
 */
 static void PrintMatches( const char *s ) {
 	if ( !Q_stricmpn( s, shortestMatch, strlen( shortestMatch ) ) ) {
-		Com_Printf( "    %s\n", s );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "    %s\n", s );
 	}
 }
 
@@ -110,7 +110,7 @@ static void PrintCvarMatches( const char *s ) {
 
 	if ( !Q_stricmpn( s, shortestMatch, strlen( shortestMatch ) ) ) {
 		Com_TruncateLongString( value, Cvar_VariableStringBuffer( s , c_str, sizeof(c_str)) );
-		Com_Printf( "    %s = \"%s\"\n", s, value );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "    %s = \"%s\"\n", s, value );
 	}
 }
 
@@ -159,7 +159,7 @@ static qboolean Field_Complete( void )
 		return qtrue;
 	}
 
-	Com_Printf( "]%s\n", completionField->buffer );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "]%s\n", completionField->buffer );
 
 	return qfalse;
 }

@@ -201,16 +201,16 @@ speex_memset_bytes:
 	add [eax], al
 
 
-;Zero initialized global or static variables of misc-4100EA72:
-SECTION .bss
-
-
 ;Initialized global or static variables of misc-4100EA72:
 SECTION .data
 
 
 ;Initialized constant data of misc-4100EA72:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of misc-4100EA72:
+SECTION .bss
 
 
 ;All cstrings:

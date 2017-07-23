@@ -568,6 +568,15 @@ R_LoadSunThroughDvars_10:
 	ret
 
 
+;Initialized global or static variables of r_sky:
+SECTION .data
+sunDvarNames: dd _cstring_r_sunsprite_shad, _cstring_r_sunsprite_size, _cstring_r_sunflare_shade, _cstring_r_sunflare_min_s, _cstring_r_sunflare_min_a, _cstring_r_sunflare_max_s, _cstring_r_sunflare_max_a, _cstring_r_sunflare_max_a1, _cstring_r_sunflare_fadei, _cstring_r_sunflare_fadeo, _cstring_r_sunblind_min_a, _cstring_r_sunblind_max_a, _cstring_r_sunblind_max_d, _cstring_r_sunblind_fadei, _cstring_r_sunblind_fadeo, _cstring_r_sunglare_min_a, _cstring_r_sunglare_max_a, _cstring_r_sunglare_max_l, _cstring_r_sunglare_fadei, _cstring_r_sunglare_fadeo, _cstring_r_sun_fx_positio, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of r_sky:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of r_sky:
 SECTION .bss
 r_sun_fx_position: resb 0x4
@@ -591,15 +600,6 @@ r_sunglare_max_lighten: resb 0x4
 r_sunglare_min_angle: resb 0x4
 r_sunsprite_shader: resb 0x2c
 r_sunsprite_size: resb 0x4
-
-
-;Initialized global or static variables of r_sky:
-SECTION .data
-sunDvarNames: dd _cstring_r_sunsprite_shad, _cstring_r_sunsprite_size, _cstring_r_sunflare_shade, _cstring_r_sunflare_min_s, _cstring_r_sunflare_min_a, _cstring_r_sunflare_max_s, _cstring_r_sunflare_max_a, _cstring_r_sunflare_max_a1, _cstring_r_sunflare_fadei, _cstring_r_sunflare_fadeo, _cstring_r_sunblind_min_a, _cstring_r_sunblind_max_a, _cstring_r_sunblind_max_d, _cstring_r_sunblind_fadei, _cstring_r_sunblind_fadeo, _cstring_r_sunglare_min_a, _cstring_r_sunglare_max_a, _cstring_r_sunglare_max_l, _cstring_r_sunglare_fadei, _cstring_r_sunglare_fadeo, _cstring_r_sun_fx_positio, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of r_sky:
-SECTION .rdata
 
 
 ;All cstrings:

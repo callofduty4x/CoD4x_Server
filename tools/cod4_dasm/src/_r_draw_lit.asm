@@ -252,16 +252,16 @@ R_DrawLit:
 	ret
 
 
-;Zero initialized global or static variables of r_draw_lit:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_draw_lit:
 SECTION .data
 
 
 ;Initialized constant data of r_draw_lit:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_draw_lit:
+SECTION .bss
 
 
 ;All cstrings:

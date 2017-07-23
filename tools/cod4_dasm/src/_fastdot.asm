@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of fastdot:
-SECTION .bss
-
-
 ;Initialized global or static variables of fastdot:
 SECTION .data
 
 
 ;Initialized constant data of fastdot:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of fastdot:
+SECTION .bss
 
 
 ;All cstrings:

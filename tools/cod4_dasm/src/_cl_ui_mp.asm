@@ -1352,16 +1352,16 @@ CL_InitUI:
 	nop
 
 
-;Zero initialized global or static variables of cl_ui_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of cl_ui_mp:
 SECTION .data
 
 
 ;Initialized constant data of cl_ui_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_ui_mp:
+SECTION .bss
 
 
 ;All cstrings:

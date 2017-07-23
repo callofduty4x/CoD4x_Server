@@ -48,11 +48,6 @@
 %endmacro
 
 
-ralias Plugin_Printf, Com_Printf
-ralias Plugin_PrintWarning, Com_PrintWarning
-ralias Plugin_PrintError, Com_PrintError
-ralias Plugin_DPrintf, Com_DPrintf
-
 ralias Plugin_RandomBytes, Com_RandomBytes
 
 ralias Plugin_GetRealtime, Com_GetRealtime

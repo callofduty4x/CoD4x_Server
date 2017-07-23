@@ -58,7 +58,7 @@ Usage: int = self getUid();
 void PlayerCmd_GetUid(scr_entref_t arg)
 {
 
-    Com_PrintError("Removed script function getuid called");
+    Com_PrintError(CON_CHANNEL_SCRIPT,"Removed script function getuid called");
     Scr_AddInt(0);
 }
 
@@ -299,7 +299,7 @@ Usage: int = self setUid(uid <integer>);
 
 void PlayerCmd_SetUid(scr_entref_t arg)
 {
-    Com_PrintError("Removed script function setuid called");
+    Com_PrintError(CON_CHANNEL_SCRIPT,"Removed script function setuid called");
     Scr_AddInt(0);
 }
 
@@ -1659,7 +1659,7 @@ void GScr_FS_FOpen()
 
     if (!fh)
     {
-        Com_DPrintf("Scr_FS_FOpen() failed\n");
+        Com_DPrintf(CON_CHANNEL_SCRIPT,"Scr_FS_FOpen() failed\n");
     }
     Scr_AddInt(fh);
 }
@@ -1801,7 +1801,7 @@ void GScr_FS_WriteLine()
 
     if (!ret)
     {
-        Com_DPrintf("^2Scr_FS_WriteLine() failed\n");
+        Com_DPrintf(CON_CHANNEL_SCRIPT,"^2Scr_FS_WriteLine() failed\n");
         Scr_AddBool(qfalse);
     }
     else
@@ -2633,7 +2633,7 @@ const char *Scr_GetPlayername(gentity_t *gent)
 {
     if (gent->s.number < 0 || gent->s.number >= MAX_CLIENTS)
     {
-        Com_PrintError("Scr_GetPlayername() Bad entity\n");
+        Com_PrintError(CON_CHANNEL_SCRIPT,"Scr_GetPlayername() Bad entity\n");
         return "";
     }
     return svs.clients[gent->s.number].name;
@@ -3093,7 +3093,7 @@ void PrintModelBonesInfo(gentity_t *ent)
         if (dobj)
             PrintDObjInfo(dobj);
         else
-            Com_Printf("no model.\n");
+            Com_Printf(CON_CHANNEL_SCRIPT,"no model.\n");
     }
 }
 

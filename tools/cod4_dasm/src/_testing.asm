@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of testing:
-SECTION .bss
-
-
 ;Initialized global or static variables of testing:
 SECTION .data
 
 
 ;Initialized constant data of testing:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of testing:
+SECTION .bss
 
 
 ;All cstrings:

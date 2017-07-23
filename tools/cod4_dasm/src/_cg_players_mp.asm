@@ -1775,16 +1775,16 @@ CG_Player_340:
 	jmp CG_Player_350
 
 
-;Zero initialized global or static variables of cg_players_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of cg_players_mp:
 SECTION .data
 
 
 ;Initialized constant data of cg_players_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cg_players_mp:
+SECTION .bss
 
 
 ;All cstrings:

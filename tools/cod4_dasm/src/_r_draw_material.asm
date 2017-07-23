@@ -426,16 +426,16 @@ R_UpdateMaterialTime_10:
 	ret
 
 
-;Zero initialized global or static variables of r_draw_material:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_draw_material:
 SECTION .data
 
 
 ;Initialized constant data of r_draw_material:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_draw_material:
+SECTION .bss
 
 
 ;All cstrings:

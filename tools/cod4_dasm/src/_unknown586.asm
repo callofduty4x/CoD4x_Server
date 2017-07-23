@@ -544,16 +544,16 @@ HIDReleaseAllDeviceQueues:F(0,17)_10:
 	add [eax], al
 
 
-;Zero initialized global or static variables of unknown586:
-SECTION .bss
-
-
 ;Initialized global or static variables of unknown586:
 SECTION .data
 
 
 ;Initialized constant data of unknown586:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of unknown586:
+SECTION .bss
 
 
 ;All cstrings:

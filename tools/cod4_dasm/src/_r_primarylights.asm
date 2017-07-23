@@ -2161,11 +2161,6 @@ R_IsEntityVisibleToAnyShadowedPrimaryLight_30:
 	ret
 
 
-;Zero initialized global or static variables of r_primarylights:
-SECTION .bss
-s_shadowHistory: resb 0x180
-
-
 ;Initialized global or static variables of r_primarylights:
 SECTION .data
 
@@ -2173,6 +2168,11 @@ SECTION .data
 ;Initialized constant data of r_primarylights:
 SECTION .rdata
 vec3_colorintensity: dd 0x3e991687, 0x3f1645a2, 0x3de978d5, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of r_primarylights:
+SECTION .bss
+s_shadowHistory: resb 0x180
 
 
 ;All cstrings:

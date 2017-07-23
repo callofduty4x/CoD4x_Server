@@ -264,16 +264,18 @@ _ZN14CDirect3DQueryD1Ev_10:
 	ret
 
 
-;Zero initialized global or static variables of CDirect3DQuery:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DQuery:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DQuery:
 SECTION .rdata
+;VTable for CDirect3DQuery:
+_ZTV14CDirect3DQuery: dd 0x0, 0x3b4f20, _ZN14CDirect3DQuery14QueryInterfaceERK5_GUIDPPv, _ZN14CDirect3DQuery6AddRefEv, _ZN14CDirect3DQuery7ReleaseEv, _ZN14CDirect3DQuery9GetDeviceEPP16IDirect3DDevice9, _ZN14CDirect3DQuery7GetTypeEv, _ZN14CDirect3DQuery11GetDataSizeEv, _ZN14CDirect3DQuery5IssueEm, _ZN14CDirect3DQuery7GetDataEPvmm, _ZN14CDirect3DQueryD1Ev, _ZN14CDirect3DQueryD0Ev, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DQuery:
+SECTION .bss
 
 
 ;All cstrings:

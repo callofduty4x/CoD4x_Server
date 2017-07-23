@@ -100,16 +100,16 @@ speex_default_user_handler:
 	add [eax], al
 
 
-;Zero initialized global or static variables of speex_callbacks:
-SECTION .bss
-
-
 ;Initialized global or static variables of speex_callbacks:
 SECTION .data
 
 
 ;Initialized constant data of speex_callbacks:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of speex_callbacks:
+SECTION .bss
 
 
 ;All cstrings:

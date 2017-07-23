@@ -1819,17 +1819,17 @@ SL_Init_10:
 	nop
 
 
-;Zero initialized global or static variables of scr_stringlist:
-SECTION .bss
-scrStringGlob: resb 0x27180
-
-
 ;Initialized global or static variables of scr_stringlist:
 SECTION .data
 
 
 ;Initialized constant data of scr_stringlist:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_stringlist:
+SECTION .bss
+scrStringGlob: resb 0x27180
 
 
 ;All cstrings:

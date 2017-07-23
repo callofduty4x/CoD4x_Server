@@ -237,10 +237,6 @@ CL_PlayUnskippableCinematic_f:
 	ret
 
 
-;Zero initialized global or static variables of cl_cin:
-SECTION .bss
-
-
 ;Initialized global or static variables of cl_cin:
 SECTION .data
 cin_skippable: dd 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -248,6 +244,10 @@ cin_skippable: dd 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of cl_cin:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_cin:
+SECTION .bss
 
 
 ;All cstrings:

@@ -3811,6 +3811,17 @@ CG_Init_90:
 	jmp CG_Init_360
 
 
+;Initialized global or static variables of cg_main_mp:
+SECTION .data
+cg_drawMaterialNames: dd _cstring_off, _cstring_contents_solid, _cstring_mask_shot, _cstring_mask_playersolid, 0x0
+snd_drawInfoStrings: dd _cstring_none, _cstring_3d, _cstring_stream, _cstring_2d, 0x0
+cg_drawFpsNames: dd _cstring_off, _cstring_simple, _cstring_simpleranges, _cstring_verbose, 0x0, 0x0
+
+
+;Initialized constant data of cg_main_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of cg_main_mp:
 SECTION .bss
 g_mapLoaded: resb 0x1
@@ -3972,17 +3983,6 @@ cg_weaponHintsCoD1Style: resb 0x4
 cg_weaponleftbone: resb 0x4
 cg_weaponrightbone: resb 0x4
 cg_youInKillCamSize: resb 0x4
-
-
-;Initialized global or static variables of cg_main_mp:
-SECTION .data
-cg_drawMaterialNames: dd _cstring_off, _cstring_contents_solid, _cstring_mask_shot, _cstring_mask_playersolid, 0x0
-snd_drawInfoStrings: dd _cstring_none, _cstring_3d, _cstring_stream, _cstring_2d, 0x0
-cg_drawFpsNames: dd _cstring_off, _cstring_simple, _cstring_simpleranges, _cstring_verbose, 0x0, 0x0
-
-
-;Initialized constant data of cg_main_mp:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -38,7 +38,7 @@
 	extern AUGraphOpen
 	extern AUGraphGetNodeInfo
 	extern AudioUnitSetProperty
-	extern _Znam
+	extern _Znaj
 	extern AUGraphUpdate
 	extern _ZN12CSampleSoundC1ER12CSoundEnginem
 	extern g_fileBuf
@@ -976,7 +976,7 @@ _ZN12CSoundEngineC1Emh_50:
 _ZN12CSoundEngineC1Emh_60:
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [esi+0x54], eax
 	mov ecx, [esi+0x50]
 	test ecx, ecx
@@ -1998,16 +1998,18 @@ _ZNSt6vectorIP12CSoundObjectSaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3
 	ret
 
 
-;Zero initialized global or static variables of MacMSS_Engine:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacMSS_Engine:
 SECTION .data
 
 
 ;Initialized constant data of MacMSS_Engine:
 SECTION .rdata
+;VTable for CSoundEngine:
+_ZTV12CSoundEngine: dd 0x0, 0x3b4ea0, _ZN12CSoundEngineD1Ev, _ZN12CSoundEngineD0Ev, _ZN12CSoundEngine7ExecuteEPv, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of MacMSS_Engine:
+SECTION .bss
 
 
 ;All cstrings:

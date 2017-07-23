@@ -38,6 +38,10 @@ typedef enum {
 	SE_PACKET   // evPtr is a netadr_t followed by data bytes to evPtrLength
 } sysEventType_t;
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 void Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int ptrLength, void *ptr );
 
 void __cdecl Com_InitParse( void );
@@ -68,7 +72,6 @@ int CCS_GetConstConfigStringIndex(const char *string);
 
 extern unsigned long long com_frameTime;
 extern unsigned long long com_uFrameTime;
-extern int gamebinary_initialized;
 extern cvar_t* com_dedicated;
 extern cvar_t* com_timescale;
 extern cvar_t* com_sv_running;
@@ -130,6 +133,10 @@ void Com_UnloadBsp();
 int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
 
 void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname);
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif

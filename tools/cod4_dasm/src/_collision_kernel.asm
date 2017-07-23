@@ -1317,20 +1317,22 @@ dInitUserGeom:
 	add [eax], al
 
 
-;Zero initialized global or static variables of collision_kernel:
-SECTION .bss
-num_user_classes: resb 0x4
-colliders_initialized: resb 0x1c
-user_classes: resb 0x80
-colliders: resb 0x860
-
-
 ;Initialized global or static variables of collision_kernel:
 SECTION .data
 
 
 ;Initialized constant data of collision_kernel:
 SECTION .rdata
+;VTable for dxUserGeom:
+_ZTV10dxUserGeom: dd 0x0, 0x3b4da0, _ZN10dxUserGeomD1Ev, _ZN10dxUserGeomD0Ev, _ZN10dxUserGeom11computeAABBEv, _ZN10dxUserGeom8AABBTestEP6dxGeomPf, 0x0, 0x0
+
+
+;Zero initialized global or static variables of collision_kernel:
+SECTION .bss
+num_user_classes: resb 0x4
+colliders_initialized: resb 0x1c
+user_classes: resb 0x80
+colliders: resb 0x860
 
 
 ;All cstrings:

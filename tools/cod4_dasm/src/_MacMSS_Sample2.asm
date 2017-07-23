@@ -365,16 +365,16 @@ _ZN12CSampleSound21Calculate3DAttributesERfS0_S0__70:
 	jmp _ZN12CSampleSound21Calculate3DAttributesERfS0_S0__270
 
 
-;Zero initialized global or static variables of MacMSS_Sample2:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacMSS_Sample2:
 SECTION .data
 
 
 ;Initialized constant data of MacMSS_Sample2:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacMSS_Sample2:
+SECTION .bss
 
 
 ;All cstrings:

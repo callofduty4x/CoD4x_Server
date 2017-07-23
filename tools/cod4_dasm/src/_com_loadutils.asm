@@ -259,16 +259,16 @@ Com_UnloadRawTextFile_10:
 	jmp FS_FreeFile
 
 
-;Zero initialized global or static variables of com_loadutils:
-SECTION .bss
-
-
 ;Initialized global or static variables of com_loadutils:
 SECTION .data
 
 
 ;Initialized constant data of com_loadutils:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_loadutils:
+SECTION .bss
 
 
 ;All cstrings:

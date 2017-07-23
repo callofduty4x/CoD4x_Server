@@ -5,7 +5,7 @@
 	extern CFStringCreateWithCString
 	extern CFStringGetBytes
 	extern CFRelease
-	extern _Znam
+	extern _Znaj
 	extern _ZdaPv
 	extern _Unwind_Resume
 
@@ -168,7 +168,7 @@ _ZN10MacStrings20TranslateToMacStringEPKc_20:
 	mov ebx, ecx
 	not ebx
 	mov [esp], ebx
-	call _Znam
+	call _Znaj
 	mov edi, eax
 	mov eax, ebx
 	movsx edx, bx
@@ -210,7 +210,7 @@ _ZN10MacStrings20TranslateToMacStringEPKc_30:
 _ZN10MacStrings20TranslateToMacStringEPKc_80:
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [_ZZN10MacStrings16TranslateCStringEPKcsmmE11sTempString], eax
 	mov dword [esp+0x10], 0x0
 	mov edx, [ebp-0x20]
@@ -293,7 +293,7 @@ _ZN10MacStrings21TranslateToUTF8StringEPKc_20:
 	not ecx
 	lea edi, [ecx+ecx]
 	mov [esp], edi
-	call _Znam
+	call _Znaj
 	mov esi, eax
 	mov eax, edi
 	movsx edx, di
@@ -335,7 +335,7 @@ _ZN10MacStrings21TranslateToUTF8StringEPKc_30:
 _ZN10MacStrings21TranslateToUTF8StringEPKc_80:
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [_ZZN10MacStrings16TranslateCStringEPKcsmmE11sTempString], eax
 	mov dword [esp+0x10], 0x8000100
 	mov edx, [ebp-0x20]
@@ -386,17 +386,17 @@ _ZN10MacStrings21TranslateToUTF8StringEPKc_130:
 	add [eax], al
 
 
-;Zero initialized global or static variables of MacStrings:
-SECTION .bss
-_ZZN10MacStrings16TranslateCStringEPKcsmmE11sTempString: resb 0x80
-
-
 ;Initialized global or static variables of MacStrings:
 SECTION .data
 
 
 ;Initialized constant data of MacStrings:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacStrings:
+SECTION .bss
+_ZZN10MacStrings16TranslateCStringEPKcsmmE11sTempString: resb 0x80
 
 
 ;All cstrings:

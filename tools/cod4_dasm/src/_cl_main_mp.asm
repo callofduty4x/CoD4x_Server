@@ -8144,6 +8144,16 @@ CL_Frame_210:
 	jmp CL_Frame_230
 
 
+;Initialized global or static variables of cl_main_mp:
+SECTION .data
+cl_shownet: dd 0x0, 0x0
+customClassDvars: dd _cstring_customclass1, _cstring_customclass2, _cstring_customclass3, _cstring_customclass4, _cstring_customclass5, 0x0
+
+
+;Initialized constant data of cl_main_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of cl_main_mp:
 SECTION .bss
 _ZZ21CL_GetServerIPAddressvE17szServerIPAddress: resb 0x80
@@ -8242,16 +8252,6 @@ motd: resb 0x4
 name: resb 0x4
 old_com_frameTime: resb 0x4
 onlinegame: resb 0x4
-
-
-;Initialized global or static variables of cl_main_mp:
-SECTION .data
-cl_shownet: dd 0x0, 0x0
-customClassDvars: dd _cstring_customclass1, _cstring_customclass2, _cstring_customclass3, _cstring_customclass4, _cstring_customclass5, 0x0
-
-
-;Initialized constant data of cl_main_mp:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -2865,12 +2865,6 @@ _ZSt16__introsort_loopIPP8GfxImageiPFiS1_S1_EEvT_S5_T0_T1__60:
 	jmp _ZSt16__introsort_loopIPP8GfxImageiPFiS1_S1_EEvT_S5_T0_T1__170
 
 
-;Zero initialized global or static variables of r_image:
-SECTION .bss
-g_imageProgs: resb 0x200
-imageGlobals: resb 0x2080
-
-
 ;Initialized global or static variables of r_image:
 SECTION .data
 imageTypeName: dd _cstring_misc__, _cstring_debug_, _cstring_tex, _cstring_ui____, _cstring_lmap__, _cstring_light_, _cstring_fx___, _cstring_hud___, _cstring_model_, _cstring_world_, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -2880,6 +2874,12 @@ g_platform_name: dd _cstring_current, _cstring__min_pc, 0x0, 0x0, 0x0, 0x0, 0x0,
 
 ;Initialized constant data of r_image:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_image:
+SECTION .bss
+g_imageProgs: resb 0x200
+imageGlobals: resb 0x2080
 
 
 ;All cstrings:

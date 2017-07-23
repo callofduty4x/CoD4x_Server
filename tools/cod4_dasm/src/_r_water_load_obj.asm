@@ -1,5 +1,4 @@
 ;Imports of r_water_load_obj:
-	extern g_fltMin__uint4_dup_1
 	extern memcpy
 	extern Material_Alloc
 	extern exp
@@ -43,7 +42,7 @@ R_LoadWaterSetup:
 	mov edx, [ebp+0x8]
 	mov ebx, [edx+0xc]
 	xor ecx, ecx
-	movss xmm6, dword [g_fltMin__uint4_dup_1+0x40]
+	movss xmm6, dword [_data16_7fffffff]
 	movsd xmm7, qword [_double_0_10000000]
 	mov esi, edx
 	add esi, 0x24
@@ -361,18 +360,18 @@ R_ShutdownLoadWater:
 	nop
 
 
-;Zero initialized global or static variables of r_water_load_obj:
-SECTION .bss
-sceneWaterMapSetupsCount: resb 0x20
-sceneWaterMapSetups: resb 0x460
-
-
 ;Initialized global or static variables of r_water_load_obj:
 SECTION .data
 
 
 ;Initialized constant data of r_water_load_obj:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_water_load_obj:
+SECTION .bss
+sceneWaterMapSetupsCount: resb 0x20
+sceneWaterMapSetups: resb 0x460
 
 
 ;All cstrings:
@@ -384,6 +383,7 @@ _cstring_error_map_uses_m:		db "ERROR: map uses more than %i waterMap textures",
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double_0_10000000:		dq 0x3fb999999999999a	; 0.1
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _double_0_00000000:		dq 0x3ddb7cdfd9d7bdbb	; 1e-10

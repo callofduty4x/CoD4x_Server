@@ -672,16 +672,20 @@ _ZN25COpenGLARBFragmentProgramD1Ev_90:
 	nop
 
 
-;Zero initialized global or static variables of CDirect3DPixelShader:
-SECTION .bss
-
-
 ;Initialized global or static variables of CDirect3DPixelShader:
 SECTION .data
 
 
 ;Initialized constant data of CDirect3DPixelShader:
 SECTION .rdata
+;VTable for CDirect3DPixelShader:
+_ZTV20CDirect3DPixelShader: dd 0x0, 0x3b4920, _ZN20CDirect3DPixelShader14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DPixelShader6AddRefEv, _ZN20CDirect3DPixelShader7ReleaseEv, _ZN20CDirect3DPixelShader9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DPixelShader11GetFunctionEPvPj, _ZN20CDirect3DPixelShaderD1Ev, _ZN20CDirect3DPixelShaderD0Ev, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTable for COpenGLARBFragmentProgram:
+_ZTV25COpenGLARBFragmentProgram: dd 0x0, 0x3b4960, _ZN20CDirect3DPixelShader14QueryInterfaceERK5_GUIDPPv, _ZN20CDirect3DPixelShader6AddRefEv, _ZN20CDirect3DPixelShader7ReleaseEv, _ZN20CDirect3DPixelShader9GetDeviceEPP16IDirect3DDevice9, _ZN20CDirect3DPixelShader11GetFunctionEPvPj, _ZN25COpenGLARBFragmentProgramD1Ev, _ZN25COpenGLARBFragmentProgramD0Ev, _ZN25COpenGLARBFragmentProgram6EnableEv, _ZN25COpenGLARBFragmentProgram7DisableEv, _ZN25COpenGLARBFragmentProgram12SetConstantsEjPKfjj, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of CDirect3DPixelShader:
+SECTION .bss
 
 
 ;All cstrings:

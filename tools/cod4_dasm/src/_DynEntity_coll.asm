@@ -1221,17 +1221,17 @@ DynEnt_GetCylindricalRadiusDistSqr_30:
 	nop
 
 
-;Zero initialized global or static variables of DynEntity_coll:
-SECTION .bss
-dynEntCollWorlds: resb 0xa080
-
-
 ;Initialized global or static variables of DynEntity_coll:
 SECTION .data
 
 
 ;Initialized constant data of DynEntity_coll:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of DynEntity_coll:
+SECTION .bss
+dynEntCollWorlds: resb 0xa080
 
 
 ;All cstrings:

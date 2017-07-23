@@ -527,16 +527,16 @@ LAN_GetServerAddressString_20:
 	jmp LAN_GetServerAddressString_60
 
 
-;Zero initialized global or static variables of cl_ui_pc_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of cl_ui_pc_mp:
 SECTION .data
 
 
 ;Initialized constant data of cl_ui_pc_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_ui_pc_mp:
+SECTION .bss
 
 
 ;All cstrings:

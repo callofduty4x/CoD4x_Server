@@ -201,19 +201,19 @@ _ZN9EntHandle8ShutdownEv:
 	nop
 
 
-;Zero initialized global or static variables of enthandle:
-SECTION .bss
-g_entitiesHandleList: resb 0x800
-g_entHandleInfoHead: resb 0x20
-g_entHandleInfoArray: resb 0x8060
-
-
 ;Initialized global or static variables of enthandle:
 SECTION .data
 
 
 ;Initialized constant data of enthandle:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of enthandle:
+SECTION .bss
+g_entitiesHandleList: resb 0x800
+g_entHandleInfoHead: resb 0x20
+g_entHandleInfoArray: resb 0x8060
 
 
 ;All cstrings:

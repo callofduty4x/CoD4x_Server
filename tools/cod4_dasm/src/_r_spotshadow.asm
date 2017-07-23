@@ -793,16 +793,16 @@ R_GenerateAllSortedSpotShadowDrawSurfs_70:
 	jmp R_GenerateAllSortedSpotShadowDrawSurfs_100
 
 
-;Zero initialized global or static variables of r_spotshadow:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_spotshadow:
 SECTION .data
 
 
 ;Initialized constant data of r_spotshadow:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_spotshadow:
+SECTION .bss
 
 
 ;All cstrings:

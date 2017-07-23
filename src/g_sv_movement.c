@@ -78,7 +78,7 @@ void Pmove_ExtendedTurnOn( void ){
         return;
     }
 
-    Com_DPrintf("Turning on per player based movement control. Default global cvars are now disabled\n");
+    Com_DPrintf(CON_CHANNEL_SERVER,"Turning on per player based movement control. Default global cvars are now disabled\n");
 
     for(cl = svs.clients, i = 0; i < MAX_CLIENTS; i++){
         Pmove_ExtendedInitForClient(cl);

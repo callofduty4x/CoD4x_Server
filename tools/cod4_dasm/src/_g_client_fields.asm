@@ -798,10 +798,6 @@ GScr_AddFieldsForClient_10:
 	nop
 
 
-;Zero initialized global or static variables of g_client_fields:
-SECTION .bss
-
-
 ;Initialized global or static variables of g_client_fields:
 SECTION .data
 
@@ -809,6 +805,10 @@ SECTION .data
 ;Initialized constant data of g_client_fields:
 SECTION .rdata
 fields: dd _cstring_name, 0x0, 0x2, ClientScr_ReadOnly, ClientScr_GetName, _cstring_sessionteam, 0x0, 0x3, ClientScr_SetSessionTeam, ClientScr_GetSessionTeam, _cstring_sessionstate, 0x0, 0x3, ClientScr_SetSessionState, ClientScr_GetSessionState, _cstring_maxhealth, 0x2fe8, 0x0, ClientScr_SetMaxHealth, 0x0, _cstring_score, 0x2f78, 0x0, ClientScr_SetScore, 0x0, _cstring_deaths, 0x2f7c, 0x0, 0x0, 0x0, _cstring_statusicon, 0x0, 0x3, ClientScr_SetStatusIcon, ClientScr_GetStatusIcon, _cstring_headicon, 0x0, 0x3, ClientScr_SetHeadIcon, ClientScr_GetHeadIcon, _cstring_headiconteam, 0x0, 0x3, ClientScr_SetHeadIconTeam, ClientScr_GetHeadIconTeam, _cstring_kills, 0x2f80, 0x0, 0x0, 0x0, _cstring_assists, 0x2f84, 0x0, 0x0, 0x0, _cstring_hasradar, 0x3178, 0x0, 0x0, 0x0, _cstring_spectatorclient, 0x2f68, 0x0, ClientScr_SetSpectatorClient, 0x0, _cstring_killcamentity, 0x2f6c, 0x0, ClientScr_SetKillCamEntity, 0x0, _cstring_archivetime, 0x2f74, 0x1, ClientScr_SetArchiveTime, ClientScr_GetArchiveTime, _cstring_psoffsettime, 0x3070, 0x0, ClientScr_SetPSOffsetTime, ClientScr_GetPSOffsetTime, _cstring_pers, 0x2f88, 0x8, ClientScr_ReadOnly, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of g_client_fields:
+SECTION .bss
 
 
 ;All cstrings:

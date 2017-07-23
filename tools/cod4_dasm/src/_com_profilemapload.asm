@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of com_profilemapload:
-SECTION .bss
-
-
 ;Initialized global or static variables of com_profilemapload:
 SECTION .data
 
 
 ;Initialized constant data of com_profilemapload:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_profilemapload:
+SECTION .bss
 
 
 ;All cstrings:

@@ -207,11 +207,6 @@ DSound_UpdateSample_10:
 	nop
 
 
-;Zero initialized global or static variables of mac_play_dsound:
-SECTION .bss
-dsoundplay_initialized: resb 0x80
-
-
 ;Initialized global or static variables of mac_play_dsound:
 SECTION .data
 COMFORTABLE_BUFFER_AMOUNT: dd 0x1770
@@ -219,6 +214,11 @@ COMFORTABLE_BUFFER_AMOUNT: dd 0x1770
 
 ;Initialized constant data of mac_play_dsound:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of mac_play_dsound:
+SECTION .bss
+dsoundplay_initialized: resb 0x80
 
 
 ;All cstrings:

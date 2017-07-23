@@ -112,7 +112,7 @@ void SV_ScreenshotClient( client_t* cl, const char* basename ) {
 	int i;
 
 	if ( cl && cl->state != CS_ACTIVE ) {
-		Com_Printf( "Client must be in a level to take a screenshot.\n" );
+		Com_Printf(CON_CHANNEL_SERVER, "Client must be in a level to take a screenshot.\n" );
 		return;
 	}
 
@@ -164,7 +164,7 @@ void SV_ScreenshotArrived( client_t* cl, const char* filename )
 
 	if(strstr(sv_screenshotArrivedCmd->string, ".."))
 	{
-		Com_PrintWarning("Commandlines containing \"..\" are not allowed\n");
+		Com_PrintWarning(CON_CHANNEL_SERVER,"Commandlines containing \"..\" are not allowed\n");
 		return;
 	}
 	Com_sprintf(cmdline, sizeof(cmdline), "\"%s/apps/%s\" \"%s/%s\"", fs_homepath->string, sv_screenshotArrivedCmd->string, fs_homepath->string, filename);

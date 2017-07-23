@@ -830,28 +830,28 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 	{
 		if(var->flags & CVAR_ROM)
 		{
-			Com_Printf ("%s is read only.\n", var->name);
+			Com_Printf(CON_CHANNEL_CVAR,"%s is read only.\n", var->name);
 			Sys_LeaveCriticalSection(CRITSECT_CVAR);
 			return 0;
 		}
 
 		if (var->flags & CVAR_INIT)
 		{
-			Com_Printf ("%s is write protected.\n", var->name);
+			Com_Printf(CON_CHANNEL_CVAR,"%s is write protected.\n", var->name);
 			Sys_LeaveCriticalSection(CRITSECT_CVAR);
 			return 0;
 		}
 
 		if ( (var->flags & CVAR_CHEAT) && !cvar_cheats->boolean )
 		{
-			Com_Printf ("%s is cheat protected.\n", var->name);
+			Com_Printf(CON_CHANNEL_CVAR,"%s is cheat protected.\n", var->name);
 			Sys_LeaveCriticalSection(CRITSECT_CVAR);
 			return 0;
 		}
 
 		if(var->flags & CVAR_LATCH)
 		{
-			Com_Printf ("%s will be changed upon restarting.\n", var->name);
+			Com_Printf(CON_CHANNEL_CVAR,"%s will be changed upon restarting.\n", var->name);
 			latched = 1;
 		}
 	}
@@ -884,8 +884,8 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 			}
 			if(value.floatval < var->fmin || value.floatval > var->fmax)
 			{
-				Com_Printf ("\'%g\' is not a valid value for cvar '%s'\n", value.floatval, var->name);
-				Com_Printf ("Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+				Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.floatval, var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
 			}
@@ -902,8 +902,8 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 				}
 				if(value.vec2[i] < var->fmin || value.vec2[i] > var->fmax)
 				{
-					Com_Printf ("\'%g\' is not a valid value for cvar '%s'\n", value.vec2[i], var->name);
-					Com_Printf ("Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+					Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.vec2[i], var->name);
+					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
@@ -924,8 +924,8 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 				}
 				if(value.vec3[i] < var->fmin || value.vec3[i] > var->fmax)
 				{
-					Com_Printf ("\'%g\' is not a valid value for cvar '%s'\n", value.vec3[i], var->name);
-					Com_Printf ("Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+					Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.vec3[i], var->name);
+					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
@@ -946,8 +946,8 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 				}
 				if(value.vec4[i] < var->fmin || value.vec4[i] > var->fmax)
 				{
-					Com_Printf ("\'%g\' is not a valid value for cvar '%s'\n", value.vec4[i], var->name);
-					Com_Printf ("Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+					Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.vec4[i], var->name);
+					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
@@ -976,10 +976,10 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 			for(i = 0; var->enumStr[i] != NULL && i != value.integer; i++ );
 			if(var->enumStr[i] == NULL)
 			{
-				Com_Printf ("\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
-				Com_Printf ("  Domain is one of the following:\n");
+				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"  Domain is one of the following:\n");
 				for(i = 0; var->enumStr[i] != NULL; i++ ){
-					Com_Printf ("   %d: %s\n",i, var->enumStr[i]);
+					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n",i, var->enumStr[i]);
 				}
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
@@ -995,8 +995,8 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 			}
 			if(value.integer < var->imin || value.integer > var->imax)
 			{
-				Com_Printf ("\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
-				Com_Printf ("  Domain is any integer in range between \'%d\' and \'%d\'\n", var->imin, var->imax);
+				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"  Domain is any integer in range between \'%d\' and \'%d\'\n", var->imin, var->imax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
 			}
@@ -1050,7 +1050,7 @@ void Cvar_Set2( const char *var_name, const char *valueStr, qboolean force ) {
 	vec4_t colorConv;
 
 	if ( !Cvar_ValidateString( var_name ) ) {
-		Com_Printf("invalid cvar name string: %s\n", var_name );
+		Com_Printf(CON_CHANNEL_CVAR,"invalid cvar name string: %s\n", var_name );
 		return;
 	}
 
@@ -1065,13 +1065,13 @@ void Cvar_Set2( const char *var_name, const char *valueStr, qboolean force ) {
 		if(!force){
 			if(var->flags & CVAR_ROM)
 			{
-				Com_Printf ("%s is read only.\n", var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"%s is read only.\n", var->name);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
 			if (var->flags & CVAR_INIT)
 			{
-				Com_Printf ("%s is write protected.\n", var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"%s is write protected.\n", var->name);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
@@ -1188,7 +1188,7 @@ void Cvar_SetWithType( const char *var_name, CvarValue value, cvarType_t type, q
 	CvarLimits limits;
 
 	if ( !Cvar_ValidateString( var_name ) ) {
-		Com_Printf("invalid cvar name string: %s\n", var_name );
+		Com_Printf(CON_CHANNEL_CVAR,"invalid cvar name string: %s\n", var_name );
 		return;
 	}
 
@@ -1679,12 +1679,12 @@ qboolean Cvar_Command( void ) {
 		Cvar_ValueToStr(v, value, sizeof(value), reset, sizeof(reset), latch, sizeof(latch));
 
 		if(v->description != NULL)
-			Com_Printf ("\"%s\" is: \"%s" S_COLOR_WHITE "\" default: \"%s" S_COLOR_WHITE "\" info: \"%s" S_COLOR_WHITE "\"\n", v->name, value, reset, v->description );
+			Com_Printf(CON_CHANNEL_CVAR,"\"%s\" is: \"%s" S_COLOR_WHITE "\" default: \"%s" S_COLOR_WHITE "\" info: \"%s" S_COLOR_WHITE "\"\n", v->name, value, reset, v->description );
 		else
-			Com_Printf ("\"%s\" is: \"%s" S_COLOR_WHITE "\" default: \"%s" S_COLOR_WHITE "\"\n", v->name, value, reset );
+			Com_Printf(CON_CHANNEL_CVAR,"\"%s\" is: \"%s" S_COLOR_WHITE "\" default: \"%s" S_COLOR_WHITE "\"\n", v->name, value, reset );
 
 		if ( Q_stricmp(value, latch) ) {
-			Com_Printf( "latched: \"%s\"\n", latch );
+			Com_Printf(CON_CHANNEL_CVAR, "latched: \"%s\"\n", latch );
 		}
 		Sys_LeaveCriticalSection(CRITSECT_CVAR);
 		return qtrue;
@@ -1709,7 +1709,7 @@ void Cvar_Toggle_f( void ) {
 	mvabuf;
 
 	if ( Cmd_Argc() != 2 ) {
-		Com_Printf ("usage: toggle <variable>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: toggle <variable>\n");
 		return;
 	}
 
@@ -1734,7 +1734,7 @@ void Cvar_Set_f( void ) {
 
 	c = Cmd_Argc();
 	if ( c < 3 ) {
-		Com_Printf ("usage: set <variable> <value>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: set <variable> <value>\n");
 		return;
 	}
 
@@ -1770,7 +1770,7 @@ void Cvar_SetFromCvar_f( void ) {
 
 	c = Cmd_Argc();
 	if ( c < 3 ) {
-		Com_Printf ("usage: setfromcvar <dest_cvar> <source_cvar>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: setfromcvar <dest_cvar> <source_cvar>\n");
 		return;
 	}
 
@@ -1780,7 +1780,7 @@ void Cvar_SetFromCvar_f( void ) {
 
 	if(!v)
 	{
-		Com_Printf ("cvar %s does not exist\n", Cmd_Argv( 2 ));
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"cvar %s does not exist\n", Cmd_Argv( 2 ));
 		Sys_LeaveCriticalSection(CRITSECT_CVAR);
 		return;
 	}
@@ -1805,7 +1805,7 @@ void Cvar_SetToTime_f( void ) {
 
 	c = Cmd_Argc();
 	if ( c != 2 ) {
-		Com_Printf ("usage: setcvartotime <variablename>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: setcvartotime <variablename>\n");
 		return;
 	}
 
@@ -1827,7 +1827,7 @@ void Cvar_SetU_f( void ) {
 	cvar_t	*v;
 
 	if ( Cmd_Argc() < 3 ) {
-		Com_Printf ("usage: setu <variable> <value>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: setu <variable> <value>\n");
 		return;
 	}
 	Cvar_Set_f();
@@ -1855,7 +1855,7 @@ void Cvar_SetS_f( void ) {
 	cvar_t	*v;
 
 	if ( Cmd_Argc() < 3 ) {
-		Com_Printf ("usage: sets <variable> <value>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: sets <variable> <value>\n");
 		return;
 	}
 	Cvar_Set_f();
@@ -1883,7 +1883,7 @@ void Cvar_SetA_f( void ) {
 	cvar_t	*v;
 
 	if ( Cmd_Argc() < 3 ) {
-		Com_Printf ("usage: seta <variable> <value>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: seta <variable> <value>\n");
 		return;
 	}
 	Cvar_Set_f();
@@ -1908,7 +1908,7 @@ Cvar_Reset_f
 */
 void Cvar_Reset_f( void ) {
 	if ( Cmd_Argc() != 2 ) {
-		Com_Printf ("usage: reset <variable>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: reset <variable>\n");
 		return;
 	}
 	Cvar_Reset( Cmd_Argv( 1 ) );
@@ -1940,14 +1940,14 @@ void Cvar_WriteVariables(fileHandle_t f)
 			// write the latched value, even if it hasn't taken effect yet
 			if ( bufferlatch[0] ) {
 				if( strlen( var->name ) + strlen( bufferlatch ) + 10 > sizeof( buffer ) ) {
-					Com_Printf( S_COLOR_YELLOW "WARNING: value of variable "
+					Com_Printf(CON_CHANNEL_CVAR, S_COLOR_YELLOW "WARNING: value of variable "
 							"\"%s\" too long to write to file\n", var->name );
 					continue;
 				}
 				Com_sprintf (buffer, sizeof(buffer), "seta %s \"%s\"\n", var->name, bufferlatch);
 			} else {
 				if( strlen( var->name ) + strlen( bufferval ) + 10 > sizeof( buffer ) ) {
-					Com_Printf( S_COLOR_YELLOW "WARNING: value of variable "
+					Com_Printf(CON_CHANNEL_CVAR, S_COLOR_YELLOW "WARNING: value of variable "
 							"\"%s\" too long to write to file\n", var->name );
 					continue;
 				}
@@ -1975,11 +1975,11 @@ void Cvar_List_f( void ) {
 
 	if ( Cmd_Argc() > 1 ) {
 		match = Cmd_Argv( 1 );
-		Com_Printf("Displaying all cvars starting with: %s\n", match);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Displaying all cvars starting with: %s\n", match);
 	} else {
 		match = NULL;
 	}
-	Com_Printf("====================================== Cvar List ======================================\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"====================================== Cvar List ======================================\n");
 
 	Sys_EnterCriticalSection(CRITSECT_CVAR);
 
@@ -1989,49 +1989,49 @@ void Cvar_List_f( void ) {
 		if (match && !Com_Filter(match, var->name, qfalse)) continue;
 
 		if (var->flags & CVAR_SERVERINFO) {
-			Com_Printf("S");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"S");
 		} else {
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		}
 		if (var->flags & CVAR_USERINFO) {
-			Com_Printf("U");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"U");
 		} else {
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		}
 		if (var->flags & CVAR_ROM) {
-			Com_Printf("R");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"R");
 		} else {
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		}
 		if (var->flags & CVAR_INIT) {
-			Com_Printf("I");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"I");
 		} else {
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		}
 		if (var->flags & CVAR_ARCHIVE) {
-			Com_Printf("A");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"A");
 		} else {
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		}
 		if (var->flags & CVAR_LATCH) {
-			Com_Printf("L");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"L");
 		} else {
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		}
 		if (var->flags & CVAR_CHEAT) {
-			Com_Printf("C");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"C");
 		} else {
-			Com_Printf(" ");
+			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		}
 		Cvar_ValueToStr(var, value, sizeof(value), NULL, 0, NULL, 0);
-		Com_Printf (" %s \"%s\"\n", var->name, value);
+		Com_Printf(CON_CHANNEL_DONT_FILTER," %s \"%s\"\n", var->name, value);
 	}
 
 	Sys_LeaveCriticalSection(CRITSECT_CVAR);
 
-	Com_Printf ("\n%i total cvars\n", i);
-	Com_Printf ("%i cvar indexes\n", cvar_numIndexes);
-	Com_Printf("==================================== End Cvar List ====================================\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"\n%i total cvars\n", i);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"%i cvar indexes\n", cvar_numIndexes);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"==================================== End Cvar List ====================================\n");
 }
 
 /*
@@ -2493,8 +2493,8 @@ void Cvar_ChangeResetValue(cvar_t* var, CvarValue value)
 			}
 			if(value.floatval < var->fmin || value.floatval > var->fmax)
 			{
-				Com_Printf ("\'%g\' is not a valid value for cvar '%s'\n", value.floatval, var->name);
-				Com_Printf ("Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+				Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.floatval, var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
@@ -2548,10 +2548,10 @@ void Cvar_ChangeResetValue(cvar_t* var, CvarValue value)
 			for(i = 0; var->enumStr[i] != NULL && i != value.integer; i++ );
 			if(var->enumStr[i] == NULL)
 			{
-				Com_Printf ("\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
-				Com_Printf ("  Domain is one of the following:\n");
+				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"  Domain is one of the following:\n");
 				for(i = 0; var->enumStr[i] != NULL; i++ )
-					Com_Printf ("   %d: %s\n", var->enumStr[i]);
+					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n", var->enumStr[i]);
 
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
@@ -2566,8 +2566,8 @@ void Cvar_ChangeResetValue(cvar_t* var, CvarValue value)
 			}
 			if(value.integer < var->imin || value.integer > var->imax)
 			{
-				Com_Printf ("\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
-				Com_Printf ("  Domain is any integer in range between \'%d\' and \'%d\'\n", var->imin, var->imax);
+				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
+				Com_Printf(CON_CHANNEL_CVAR,"  Domain is any integer in range between \'%d\' and \'%d\'\n", var->imin, var->imax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
@@ -2601,7 +2601,7 @@ void Cvar_AddFlagsByName(const char* var_name, unsigned short flags)
 	cvar_t	*var = Cvar_FindVar(var_name);
 	if(!var)
 	{
-		Com_PrintError("Cvar_AddFlagsByName: Cvar %s does not exist\n", var_name);
+		Com_PrintError(CON_CHANNEL_CVAR,"Cvar_AddFlagsByName: Cvar %s does not exist\n", var_name);
 	}
 	Cvar_AddFlags(var, flags);
 	Sys_LeaveCriticalSection(CRITSECT_CVAR);

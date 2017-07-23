@@ -58,18 +58,18 @@ Sys_MillisecondsRaw:
 	add [eax], al
 
 
-;Zero initialized global or static variables of win_shared:
-SECTION .bss
-_ZZ16Sys_MillisecondsvE11initialized: resb 0x80
-sys_timeBase: resb 0x1c
-
-
 ;Initialized global or static variables of win_shared:
 SECTION .data
 
 
 ;Initialized constant data of win_shared:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of win_shared:
+SECTION .bss
+_ZZ16Sys_MillisecondsvE11initialized: resb 0x80
+sys_timeBase: resb 0x1c
 
 
 ;All cstrings:

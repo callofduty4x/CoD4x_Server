@@ -1625,6 +1625,26 @@ R_CheckDvarModified_10:
 	ret
 
 
+;Initialized global or static variables of r_dvars:
+SECTION .data
+s_aspectRatioNames: dd _cstring_auto, _cstring_standard, _cstring_wide_1610, _cstring_wide_169, 0x0
+s_rendererNames: dd _cstring_shader_model_20, _cstring_shader_model_30, _cstring_default, 0x0
+r_forceLodNames: dd _cstring_high, _cstring_medium, _cstring_low, _cstring_lowest, _cstring_none, 0x0
+fbColorDebugNames: dd _cstring_none1, _cstring_screen, _cstring_feedback, 0x0
+r_clearNames: dd _cstring_never, _cstring_devonly_blink, _cstring_blink, _cstring_steady, _cstring_fog_color, 0x0
+s_aaAlphaNames: dd _cstring_off, _cstring_dither_fast, _cstring_supersample_nice, 0x0
+showPixelCostNames: dd _cstring_off, _cstring_timing, _cstring_use_depth, _cstring_ignore_depth, 0x0
+normalMapNames: dd _cstring_flat, _cstring_unchanged, 0x0
+colorMapNames: dd _cstring_black, _cstring_unchanged, _cstring_white, _cstring_gray, 0x0
+gpuSyncNames: dd _cstring_off, _cstring_adaptive, _cstring_aggressive, 0x0
+debugShaderNames: dd _cstring_none, _cstring_normal, _cstring_basistangent, _cstring_basisbinormal, _cstring_basisnormal, 0x0
+mipFilterNames: dd _cstring_unchanged, _cstring_force_trilinear, _cstring_force_bilinear, _cstring_force_mipmaps_of, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of r_dvars:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of r_dvars:
 SECTION .bss
 r_fullscreen: resb 0x4
@@ -1813,26 +1833,6 @@ sm_sunShadowCenter: resb 0x4
 sm_sunShadowScale: resb 0x4
 vid_xpos: resb 0x4
 vid_ypos: resb 0x4
-
-
-;Initialized global or static variables of r_dvars:
-SECTION .data
-s_aspectRatioNames: dd _cstring_auto, _cstring_standard, _cstring_wide_1610, _cstring_wide_169, 0x0
-s_rendererNames: dd _cstring_shader_model_20, _cstring_shader_model_30, _cstring_default, 0x0
-r_forceLodNames: dd _cstring_high, _cstring_medium, _cstring_low, _cstring_lowest, _cstring_none, 0x0
-fbColorDebugNames: dd _cstring_none1, _cstring_screen, _cstring_feedback, 0x0
-r_clearNames: dd _cstring_never, _cstring_devonly_blink, _cstring_blink, _cstring_steady, _cstring_fog_color, 0x0
-s_aaAlphaNames: dd _cstring_off, _cstring_dither_fast, _cstring_supersample_nice, 0x0
-showPixelCostNames: dd _cstring_off, _cstring_timing, _cstring_use_depth, _cstring_ignore_depth, 0x0
-normalMapNames: dd _cstring_flat, _cstring_unchanged, 0x0
-colorMapNames: dd _cstring_black, _cstring_unchanged, _cstring_white, _cstring_gray, 0x0
-gpuSyncNames: dd _cstring_off, _cstring_adaptive, _cstring_aggressive, 0x0
-debugShaderNames: dd _cstring_none, _cstring_normal, _cstring_basistangent, _cstring_basisbinormal, _cstring_basisnormal, 0x0
-mipFilterNames: dd _cstring_unchanged, _cstring_force_trilinear, _cstring_force_bilinear, _cstring_force_mipmaps_of, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of r_dvars:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -273,16 +273,16 @@ Unlock_Bink_textures_50:
 	add [eax], al
 
 
-;Zero initialized global or static variables of binktextures:
-SECTION .bss
-
-
 ;Initialized global or static variables of binktextures:
 SECTION .data
 
 
 ;Initialized constant data of binktextures:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of binktextures:
+SECTION .bss
 
 
 ;All cstrings:

@@ -31,16 +31,16 @@ zcfree:
 	jmp Z_FreeInternal
 
 
-;Zero initialized global or static variables of zutil:
-SECTION .bss
-
-
 ;Initialized global or static variables of zutil:
 SECTION .data
 
 
 ;Initialized constant data of zutil:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of zutil:
+SECTION .bss
 
 
 ;All cstrings:

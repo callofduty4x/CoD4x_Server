@@ -472,16 +472,16 @@ Com_FilterPath_70:
 	nop
 
 
-;Zero initialized global or static variables of com_shared:
-SECTION .bss
-
-
 ;Initialized global or static variables of com_shared:
 SECTION .data
 
 
 ;Initialized constant data of com_shared:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of com_shared:
+SECTION .bss
 
 
 ;All cstrings:

@@ -1511,16 +1511,16 @@ open_loop_nbest_pitch_30:
 	jmp open_loop_nbest_pitch_280
 
 
-;Zero initialized global or static variables of ltp:
-SECTION .bss
-
-
 ;Initialized global or static variables of ltp:
 SECTION .data
 
 
 ;Initialized constant data of ltp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ltp:
+SECTION .bss
 
 
 ;All cstrings:

@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of profile_display:
-SECTION .bss
-
-
 ;Initialized global or static variables of profile_display:
 SECTION .data
 
 
 ;Initialized constant data of profile_display:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of profile_display:
+SECTION .bss
 
 
 ;All cstrings:

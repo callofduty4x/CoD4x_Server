@@ -54,7 +54,6 @@
 	extern Com_GetBspVersion
 	extern R_GetBspMaterial
 	extern Material_IsDefault
-	extern I_strcmp
 	extern colorWhite
 	extern strncpy
 	extern useFastFile
@@ -3706,7 +3705,7 @@ Material_Load_720:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x670]
 	mov [esp], edx
-	call I_strcmp
+	call strcmp
 	cmp eax, 0x0
 	jge Material_Load_750
 	mov edi, ebx
@@ -6644,11 +6643,6 @@ _ZSt16__introsort_loopIPP8MaterialiPFhPKS0_S4_EEvT_S7_T0_T1__60:
 	jmp _ZSt16__introsort_loopIPP8MaterialiPFhPKS0_S4_EEvT_S7_T0_T1__170
 
 
-;Zero initialized global or static variables of r_material_load_obj:
-SECTION .bss
-mtlLoadGlob: resb 0x11080
-
-
 ;Initialized global or static variables of r_material_load_obj:
 SECTION .data
 g_materialTypeInfo: dd _cstring_null, _cstring_null, 0x0, _cstring_m, _cstring_m_, 0x2, _cstring_mc, _cstring_mc_, 0x3, _cstring_w, _cstring_w_, 0x2, _cstring_wc, _cstring_wc_, 0x3, 0x0
@@ -6695,6 +6689,11 @@ s_alphaTestBitNames: dd _cstring_always, 0x800, _cstring_ge128, 0x3000, _cstring
 s_stateMapSrcBitGroup: dd _cstring_mtlalphatest, s_alphaTestBitNames, 0x3800, 0x0, _cstring_mtlblendop, s_blendOpRgbBitNames, 0x700, 0x0, _cstring_mtlsrcblend, s_srcBlendRgbBitNames, 0xf, 0x0, _cstring_mtldestblend, s_dstBlendRgbBitNames, 0xf0, 0x0, _cstring_mtlblendopalpha, s_blendOpAlphaBitNames, 0x7000000, 0x0, _cstring_mtlsrcblendalpha, s_srcBlendAlphaBitNames, 0xf0000, 0x0, _cstring_mtldestblendalph, s_dstBlendAlphaBitNames, 0xf00000, 0x0, _cstring_mtlcullface, s_cullFaceBitNames, 0xc000, 0x0, _cstring_mtlcolorwritergb, s_colorWriteRgbBitNames, 0x8000000, 0x0, _cstring_mtlcolorwritealp, s_colorWriteAlphaBitNames, 0x10000000, 0x0, _cstring_mtldepthtest, s_depthTestBitNames, 0x0, 0xe, _cstring_mtldepthwrite, s_depthWriteBitNames, 0x0, 0x1, _cstring_mtlpolygonoffset, s_polygonOffsetBitNames, 0x0, 0x30, _cstring_mtlstencil, s_stencilBitNames, 0x0, 0xc0, _cstring_mtlstencilfuncfr, s_stencilFuncFrontBitNames, 0x0, 0xe0000, _cstring_mtlstencilopfron, s_stencilOpFrontPassBitNames, 0x0, 0x700, _cstring_mtlstencilopfron1, s_stencilOpFrontFailBitNames, 0x0, 0x3800, _cstring_mtlstencilopfron2, s_stencilOpFrontZFailBitNames, 0x0, 0x1c000, _cstring_mtlstencilfuncba, s_stencilFuncBackBitNames, 0x0, 0xe0000, _cstring_mtlstencilopback, s_stencilOpBackPassBitNames, 0x0, 0x700, _cstring_mtlstencilopback1, s_stencilOpBackFailBitNames, 0x0, 0x3800, _cstring_mtlstencilopback2, s_stencilOpBackZFailBitNames, 0x0, 0x1c000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 _ZZ29Material_TechniqueTypeForNamePKcE5C.439: dd _cstring_depth_prepass, _cstring_build_floatz, _cstring_build_shadowmap_, _cstring_build_shadowmap_1, _cstring_unlit, _cstring_emissive, _cstring_emissive_shadow, _cstring_lit, _cstring_lit_sun, _cstring_lit_sun_shadow, _cstring_lit_spot, _cstring_lit_spot_shadow, _cstring_lit_omni, _cstring_lit_omni_shadow, _cstring_lit_instanced, _cstring_lit_instanced_su, _cstring_lit_instanced_su1, _cstring_lit_instanced_sp, _cstring_lit_instanced_sp1, _cstring_lit_instanced_om, _cstring_lit_instanced_om1, _cstring_light_spot, _cstring_light_omni, _cstring_light_spot_shado, _cstring_fakelight_normal, _cstring_fakelight_view, _cstring_sunlight_preview, _cstring_case_texture, _cstring_solid_wireframe, _cstring_shaded_wireframe, _cstring_shadowcookie_cas, _cstring_shadowcookie_rec, _cstring_debug_bumpmap, _cstring_debug_bumpmap_in, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 s_codeConstUpdateFreq: dd 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x2, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of r_material_load_obj:
+SECTION .bss
+mtlLoadGlob: resb 0x11080
 
 
 ;All cstrings:

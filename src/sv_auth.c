@@ -213,14 +213,14 @@ static void Auth_SetAdmin_f() {
     power = atoi(Cmd_Argv(2));
 
     if ( Cmd_Argc() != 3 || power < 1 || power > 100) {
-        Com_Printf( "Usage: AdminAddAdmin <user> <power>\n" );
-        Com_Printf( "Where user is one of the following: online-playername | online-playerslot | SteamId\n" );
-				Com_Printf( "Where power is one of the following: Any number between 1 and 100\n" );
-				Com_Printf( "online-playername can be a fraction of the playername.\n" );
-        Com_Printf( "Note: This command can also be used to change the power of an admin\n" );
-				Com_Printf("^1IMPORTANT: ^7This command is for the high privileged admin only\n");
-				Com_Printf("Don't create non admin accounts (VIP) with a level of 10 or more points\n");
-				return;
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: AdminAddAdmin <user> <power>\n" );
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | SteamId\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "Where power is one of the following: Any number between 1 and 100\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername.\n" );
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Note: This command can also be used to change the power of an admin\n" );
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"^1IMPORTANT: ^7This command is for the high privileged admin only\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Don't create non admin accounts (VIP) with a level of 10 or more points\n");
+	return;
     }
 
     name = SV_GetPlayerNameByHandle(Cmd_Argv(1));
@@ -228,22 +228,22 @@ static void Auth_SetAdmin_f() {
 	if(steamid == 0)
 	{
 
-		Com_Printf("No such player with a valid SteamID found.\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"No such player with a valid SteamID found.\n");
 		return;
 	}
     if(Cmd_GetInvokerSteamID() == 0 && Cmd_GetInvokerSteamID() == steamid)
     {
     //If you attempt to manipulate your own power we don't let you :)
-        Com_PrintError("Modifiying your own powerpoints is forbidden :)\n");
-        Com_Printf("You should be able to use Rcon if you are permitted to do this.\n");
+        Com_PrintError(CON_CHANNEL_DONT_FILTER,"Modifiying your own powerpoints is forbidden :)\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"You should be able to use Rcon if you are permitted to do this.\n");
         return;
     }
 
     if(Cmd_GetInvokerPower() != 100 && power >= Cmd_GetInvokerPower())
     {
     //If you attempt to set an admin equal or above your own power we don't let you :)
-        Com_PrintError("Creating an admin which has more or equal to your own powerpoints is forbidden :)\n");
-        Com_Printf("You should be able to use Rcon if you are permitted to do this.\n");
+        Com_PrintError(CON_CHANNEL_DONT_FILTER,"Creating an admin which has more or equal to your own powerpoints is forbidden :)\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"You should be able to use Rcon if you are permitted to do this.\n");
         return;
     }
 	NV_ProcessBegin();
@@ -258,7 +258,7 @@ static void Auth_SetAdmin_f() {
 			}
 			char ssti[128];
 			SV_SApiSteamIDToString(user->steamid, ssti, sizeof(ssti));
-			Com_Printf("Updated an admin with name %s, SteamId %s and power %d\n", user->username, ssti, user->power);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Updated an admin with name %s, SteamId %s and power %d\n", user->username, ssti, user->power);
 			NV_ProcessEnd();
 			return;
 		}
@@ -270,7 +270,7 @@ static void Auth_SetAdmin_f() {
 	}
 
 	if(!free){
-		Com_Printf("Too many registered admins. Limit is: %d\n", MAX_AUTH_ADMINS);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Too many registered admins. Limit is: %d\n", MAX_AUTH_ADMINS);
 		return;
 	}
 
@@ -288,7 +288,7 @@ static void Auth_SetAdmin_f() {
 	free->steamid = steamid;
 	char ssti[128];
 	SV_SApiSteamIDToString(free->steamid, ssti, sizeof(ssti));
-	Com_Printf("Added a new admin with name %s, SteamId %s and power %d\n", free->username, ssti, free->power);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Added a new admin with name %s, SteamId %s and power %d\n", free->username, ssti, free->power);
 	NV_ProcessEnd();
 }
 
@@ -301,17 +301,17 @@ void Auth_UnsetAdmin_f( void ){
 	authData_admin_t* user;
 
 	if(Cmd_Argc() != 2){
-		Com_Printf("Usage: AdminRemoveAdmin <user>\n");
-		Com_Printf("Where user is one of the following: name of admin | steamid\n" );
-		Com_Printf("Name has to be the full known admin name.\n" );
-		Com_Printf("Note: Use the command \"AdminListAdmins\" to get a list of known admins\n");
-		Com_Printf("^1IMPORTANT: ^7This command is for the high privileged badmin only\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Usage: AdminRemoveAdmin <user>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Where user is one of the following: name of admin | steamid\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Name has to be the full known admin name.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Note: Use the command \"AdminListAdmins\" to get a list of known admins\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"^1IMPORTANT: ^7This command is for the high privileged badmin only\n");
 		return;
 	}
 
 	id = Auth_GetSteamID(Cmd_Argv(1));
   if(id == 0){
-		Com_Printf("Admin %s not found.\n", Cmd_Argv(1));
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Admin %s not found.\n", Cmd_Argv(1));
 		return;
   }
 
@@ -321,13 +321,13 @@ void Auth_UnsetAdmin_f( void ){
 
 		if(user->steamid == id)
 		{
-			Com_Printf("Removed %s from the list of admins\n", user->username);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Removed %s from the list of admins\n", user->username);
 			Com_Memset(user, 0, sizeof(authData_admin_t));
 			NV_ProcessEnd();
 			return;
 		}
 	}
-	Com_Printf("Admin %s not found. This should not happen\n", Cmd_Argv(1));
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Admin %s not found. This should not happen\n", Cmd_Argv(1));
 	NV_ProcessEnd();
 }
 
@@ -337,15 +337,15 @@ void Auth_ListAdmins_f( void ){
 	int i;
 	authData_admin_t* user;
 
-	Com_Printf("------- Admins: -------\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"------- Admins: -------\n");
 	for(i = 0, user = auth_admins.admins; i < MAX_AUTH_ADMINS; i++, user++){
 		if(*user->username)
 		{
 			SV_SApiSteamIDToString(user->steamid, ssti, sizeof(ssti));
-			Com_Printf("  %2d:   Name: %s, Power: %d, SteamId: %s\n", i+1, user->username, user->power, ssti);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"  %2d:   Name: %s, Power: %d, SteamId: %s\n", i+1, user->username, user->power, ssti);
 		}
 	}
-	Com_Printf("---------------------------------\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"---------------------------------\n");
 }
 
 authData_admin_t* Auth_GetAdminFromIndex( int index )
@@ -371,7 +371,7 @@ void Auth_ChangeAdminPassword( uint64_t steamid, const char* password ){
 	int i;
 
 	if(!password || strlen(password) < 6){
-		Com_Printf("Error: the new password must have at least 6 characters\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: the new password must have at least 6 characters\n");
 		return;
 	}
 
@@ -385,7 +385,7 @@ void Auth_ChangeAdminPassword( uint64_t steamid, const char* password ){
 	if(user == NULL){
 			char ssti[128];
 			SV_SApiSteamIDToString(steamid, ssti, sizeof(ssti));
-	    Com_Printf("Error: unknown admin %s!\n", ssti);
+	    Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: unknown admin %s!\n", ssti);
 	    NV_ProcessEnd();
 	    return;
 	}
@@ -397,7 +397,7 @@ void Auth_ChangeAdminPassword( uint64_t steamid, const char* password ){
 	size = sizeof(salt);
 	if(!Sec_HashMemory(SEC_HASH_SHA256,buff,sizeof(buff),salt,&size,qfalse))
 	{
-	    Com_PrintError("Auth_ChangeAdminPassword: Internal SHA error\n");
+	    Com_PrintError(CON_CHANNEL_DONT_FILTER,"Auth_ChangeAdminPassword: Internal SHA error\n");
 	}
 
 	Com_sprintf(pwsalt, sizeof(pwsalt), "%s.%s", password, salt);
@@ -405,7 +405,7 @@ void Auth_ChangeAdminPassword( uint64_t steamid, const char* password ){
 	size = sizeof(sha256);
 	if(!Sec_HashMemory(SEC_HASH_SHA256, pwsalt, strlen(pwsalt), sha256, &size, qfalse))
 	{
-	    Com_PrintError("Auth_ChangeAdminPassword: Internal SHA error\n");
+	    Com_PrintError(CON_CHANNEL_DONT_FILTER,"Auth_ChangeAdminPassword: Internal SHA error\n");
 	}
 
 	Q_strncpyz(user->sha256, sha256, sizeof(user->sha256));
@@ -413,7 +413,7 @@ void Auth_ChangeAdminPassword( uint64_t steamid, const char* password ){
 
 	NV_ProcessEnd();
 
-	Com_Printf("Password changed\n");
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"Password changed\n");
 }
 
 
@@ -422,17 +422,17 @@ void Auth_ChangePasswordByMasterAdmin_f()
     uint64_t id;
 
     if(Cmd_Argc()!= 3){
-		Com_Printf("Usage: AdminChangePassword <user> <newPassword>\n");
-		Com_Printf("Where user is one of the following: name of admin | steamid\n" );
-		Com_Printf("Name has to be the full known admin name.\n" );
-		Com_Printf("Note: Use the command \"AdminListAdmins\" to get a list of known admins\n");
-		Com_Printf("^1IMPORTANT: ^7This command is for the high privileged badmin only\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Usage: AdminChangePassword <user> <newPassword>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Where user is one of the following: name of admin | steamid\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Name has to be the full known admin name.\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Note: Use the command \"AdminListAdmins\" to get a list of known admins\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"^1IMPORTANT: ^7This command is for the high privileged badmin only\n");
 		return;
     }
 
     id = Auth_GetSteamID(Cmd_Argv(1));
     if(id == 0){
-			Com_Printf("Admin %s not found.\n",Cmd_Argv(1));
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Admin %s not found.\n",Cmd_Argv(1));
 			return;
     }
     Auth_ChangeAdminPassword( id, Cmd_Argv(2) );
@@ -447,8 +447,8 @@ void Auth_ChangeOwnPassword_f()
 
 
 	if(Cmd_Argc()!= 3){
-		Com_Printf("Usage: ChangePassword <oldPassword> <newPassword>\n");
-		Com_Printf("Use this command to change your current password to a new one\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Usage: ChangePassword <oldPassword> <newPassword>\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Use this command to change your current password to a new one\n");
 		return;
     }
 
@@ -456,7 +456,7 @@ void Auth_ChangeOwnPassword_f()
 
 	if(steamid < 1)
     {
-        Com_Printf("This command can not be used from this place\nYou have no account it seems\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"This command can not be used from this place\nYou have no account it seems\n");
 		return;
     }
 
@@ -465,13 +465,13 @@ void Auth_ChangeOwnPassword_f()
 
 	if(name == NULL)
 	{
-        Com_Printf("Error: No such name has been found. It seems like you aren't an admin.\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: No such name has been found. It seems like you aren't an admin.\n");
 		return;
 	}
 	id = Auth_Authorize(name, password);
 	if(id < 0 || id > MAX_AUTH_ADMINS)
 	{
-		Com_Printf("Error: Your old password doesn't match\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: Your old password doesn't match\n");
 		return;
 	}
 	Auth_ChangeAdminPassword( steamid, Cmd_Argv(2) );
@@ -546,14 +546,14 @@ static void Auth_Login_f(){
 
 
     if(Cmd_Argc() != 3){
-		Com_Printf("Usage: %s <loginname> <password>\n",Cmd_Argv(0));
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Usage: %s <loginname> <password>\n",Cmd_Argv(0));
 		return;
     }
 
     clientNum = Cmd_GetInvokerClnum();
     if(clientNum < 0)
     {
-        Com_Printf("This command can only be used from the ingame adminsystem\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"This command can only be used from the ingame adminsystem\n");
 		return;
     }
     if(clientNum < 0 || clientNum > 63){
@@ -563,7 +563,7 @@ static void Auth_Login_f(){
 
     if(Cmd_GetInvokerSteamID() > 0)
     {
-        Com_Printf("You have already an user id. You can not use this command (twice)\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"You have already an user id. You can not use this command (twice)\n");
         return;
     }
 
@@ -578,7 +578,7 @@ static void Auth_Login_f(){
 
     invoker->steamid = auth_admins.admins[id].steamid;
     invoker->power = auth_admins.admins[id].power;
-    Com_Printf("^2Successfully authorized. SteamID: %llu, name: %s, power: %d\n",
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"^2Successfully authorized. SteamID: %llu, name: %s, power: %d\n",
 			   auth_admins.admins[id].steamid, auth_admins.admins[id].username, invoker->power);
 }
 */
@@ -598,9 +598,9 @@ static void Auth_SetCommandPower_f() {
 
 
     if ( Cmd_Argc() != 3 || atoi(Cmd_Argv(2)) < 1 || atoi(Cmd_Argv(2)) > 100) {
-		Com_Printf( "Usage: AdminChangeCommandPower <command> <minpower>\n" );
-		Com_Printf( "Where power is one of the following: Any number between 1 and 100\n" );
-		Com_Printf( "Where command is any command you can invoke from console / rcon but no cvars\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: AdminChangeCommandPower <command> <minpower>\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where power is one of the following: Any number between 1 and 100\n" );
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "Where command is any command you can invoke from console / rcon but no cvars\n" );
 		return;
     }
 
@@ -611,9 +611,9 @@ static void Auth_SetCommandPower_f() {
 
     if(Cmd_SetPower(command, power))
     {
-        Com_Printf("changed required power of cmd: %s to new power: %i\n", command, power);
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"changed required power of cmd: %s to new power: %i\n", command, power);
     }else{
-        Com_Printf("Failed to change power of cmd: %s Maybe this is not a valid command.\n", command);
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Failed to change power of cmd: %s Maybe this is not a valid command.\n", command);
     }
     NV_ProcessEnd();
 
@@ -701,7 +701,7 @@ qboolean Auth_InfoAddAdmin(const char* line)
 					steamid = ((uint64_t)universe << 56) | ((uint64_t)accounttype << 52) | ((uint64_t)instance << 32) | uid;
 				}
         if(!Auth_AddAdminToList(username, password, salt, power, steamid, undercover)){
-            Com_Printf("Error: duplicated username or bad power or too many admins\n");
+            Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: duplicated username or bad power or too many admins\n");
             return qfalse;
         }
         return qtrue;
@@ -846,12 +846,12 @@ qboolean SV_RemoteCmdAddAdmin(int uid, char* guid, int power)
 	adminPower_t *admin;
 
 	if(uid < 1){
-		Com_Printf("Error: Invalid uid\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: Invalid uid\n");
 		return qfalse;
 	}
 
 	if(power < 1 || power > 100){
-		Com_Printf("Error: Invalid powerlevel(%i). Powerlevel can not be less than 1 or greater than 100.\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: Invalid powerlevel(%i). Powerlevel can not be less than 1 or greater than 100.\n");
 		return qfalse;
 	}
 

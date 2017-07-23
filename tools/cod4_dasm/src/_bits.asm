@@ -471,16 +471,16 @@ speex_bits_unpack_unsigned_40:
 	add [eax], al
 
 
-;Zero initialized global or static variables of bits:
-SECTION .bss
-
-
 ;Initialized global or static variables of bits:
 SECTION .data
 
 
 ;Initialized constant data of bits:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of bits:
+SECTION .bss
 
 
 ;All cstrings:

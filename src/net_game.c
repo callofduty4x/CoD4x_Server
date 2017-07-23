@@ -165,7 +165,7 @@ qboolean NET_TCPPacketEvent(netadr_t* from, byte* bufData, int len, int* connect
             return qfalse;
         }
     }
-    Com_PrintError("NET_TCPPacketEvent: Bad serviceId: %x\n", serviceId);
+    Com_PrintError(CON_CHANNEL_NETWORK,"NET_TCPPacketEvent: Bad serviceId: %x\n", serviceId);
     NET_TcpCloseSocket(from->sock);
     return qfalse; //Close connection
 }

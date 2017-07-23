@@ -365,16 +365,16 @@ R_MergeAndEmitDrawSurfLists_120:
 	nop
 
 
-;Zero initialized global or static variables of r_pretess:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_pretess:
 SECTION .data
 
 
 ;Initialized constant data of r_pretess:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_pretess:
+SECTION .bss
 
 
 ;All cstrings:

@@ -2327,6 +2327,16 @@ Netchan_TransmitNextFragment_10:
 	jmp Netchan_TransmitNextFragment_110
 
 
+;Initialized global or static variables of net_chan_mp:
+SECTION .data
+netsrcString: dd _cstring_client1, _cstring_server, 0x0, 0x0, 0x0, 0x0, 0x0
+g_qport: dd 0x0
+
+
+;Initialized constant data of net_chan_mp:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of net_chan_mp:
 SECTION .bss
 tempNetchanPacketBuf: resb 0x20000
@@ -2343,16 +2353,6 @@ msg_hudelemspew: resb 0x4
 msg_printEntityNums: resb 0x4
 packetDebug: resb 0x4
 showdrop: resb 0x4
-
-
-;Initialized global or static variables of net_chan_mp:
-SECTION .data
-netsrcString: dd _cstring_client1, _cstring_server, 0x0, 0x0, 0x0, 0x0, 0x0
-g_qport: dd 0x0
-
-
-;Initialized constant data of net_chan_mp:
-SECTION .rdata
 
 
 ;All cstrings:

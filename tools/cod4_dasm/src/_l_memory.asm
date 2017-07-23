@@ -87,16 +87,16 @@ GetMemory_10:
 	nop
 
 
-;Zero initialized global or static variables of l_memory:
-SECTION .bss
-
-
 ;Initialized global or static variables of l_memory:
 SECTION .data
 
 
 ;Initialized constant data of l_memory:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of l_memory:
+SECTION .bss
 
 
 ;All cstrings:

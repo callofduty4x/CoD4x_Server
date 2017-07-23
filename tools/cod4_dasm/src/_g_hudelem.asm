@@ -3306,11 +3306,6 @@ Scr_FreeHudElemConstStrings_10:
 	nop
 
 
-;Zero initialized global or static variables of g_hudelem:
-SECTION .bss
-g_hudelems: resb 0x2b000
-
-
 ;Initialized global or static variables of g_hudelem:
 SECTION .data
 g_he_vertalign: dd _cstring_subtop, _cstring_top, _cstring_middle, _cstring_bottom, _cstring_fullscreen, _cstring_noscale, _cstring_alignto480, _cstring_center_safearea
@@ -3324,6 +3319,11 @@ g_he_font: dd _cstring_default, _cstring_bigfixed, _cstring_smallfixed, _cstring
 SECTION .rdata
 methods: dd _cstring_settext, HECmd_SetText, 0x0, _cstring_clearalltextafte, HECmd_ClearAllTextAfterHudElem, 0x0, _cstring_setshader, HECmd_SetMaterial, 0x0, _cstring_settargetent, HECmd_SetTargetEnt, 0x0, _cstring_cleartargetent, HECmd_ClearTargetEnt, 0x0, _cstring_settimer1, HECmd_SetTimer, 0x0, _cstring_settimerup1, HECmd_SetTimerUp, 0x0, _cstring_settenthstimer1, HECmd_SetTenthsTimer, 0x0, _cstring_settenthstimerup1, HECmd_SetTenthsTimerUp, 0x0, _cstring_setclock1, HECmd_SetClock, 0x0, _cstring_setclockup1, HECmd_SetClockUp, 0x0, _cstring_setvalue, HECmd_SetValue, 0x0, _cstring_setwaypoint, HECmd_SetWaypoint, 0x0, _cstring_fadeovertime, HECmd_FadeOverTime, 0x0, _cstring_scaleovertime, HECmd_ScaleOverTime, 0x0, _cstring_moveovertime, HECmd_MoveOverTime, 0x0, _cstring_reset, HECmd_Reset, 0x0, _cstring_destroy, HECmd_Destroy, 0x0, _cstring_setpulsefx, HECmd_SetPulseFX, 0x0, _cstring_setplayernamestr, HECmd_SetPlayerNameString, 0x0, _cstring_setmapnamestring, HECmd_SetMapNameString, 0x0, _cstring_setgametypestrin, HECmd_SetGameTypeString, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 fields_dup_1: dd _cstring_x, 0x4, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_y, 0x8, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_z, 0xc, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_fontscale, 0x14, 0x1, 0xffffffff, 0x0, HudElem_SetFontScale, 0x0, _cstring_font, 0x18, 0x0, 0xffffffff, 0x0, HudElem_SetFont, HudElem_GetFont, _cstring_alignx, 0x1c, 0x0, 0x3, 0x2, HudElem_SetAlignX, HudElem_GetAlignX, _cstring_aligny, 0x1c, 0x0, 0x3, 0x0, HudElem_SetAlignY, HudElem_GetAlignY, _cstring_horzalign, 0x20, 0x0, 0x7, 0x3, HudElem_SetHorzAlign, HudElem_GetHorzAlign, _cstring_vertalign, 0x20, 0x0, 0x7, 0x0, HudElem_SetVertAlign, HudElem_GetVertAlign, _cstring_color, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetColor, HudElem_GetColor, _cstring_alpha, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetAlpha, HudElem_GetAlpha, _cstring_label, 0x34, 0x0, 0xffffffff, 0x0, HudElem_SetLocalizedString, 0x0, _cstring_sort, 0x80, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_foreground, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagForeground, HudElem_GetFlagForeground, _cstring_hidewhendead, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenDead, HudElem_GetFlagHideWhenDead, _cstring_hidewheninmenu, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenInMenu, HudElem_GetFlagHideWhenInMenu, _cstring_glowcolor, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowColor, HudElem_GetGlowColor, _cstring_glowalpha, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowAlpha, HudElem_GetGlowAlpha, _cstring_archived, 0xa8, 0x0, 0xffffffff, 0x0, HudElem_SetBoolean, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of g_hudelem:
+SECTION .bss
+g_hudelems: resb 0x2b000
 
 
 ;All cstrings:

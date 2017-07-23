@@ -2706,16 +2706,16 @@ RB_Draw3DInternal_130:
 	add [eax], al
 
 
-;Zero initialized global or static variables of rb_draw3d:
-SECTION .bss
-
-
 ;Initialized global or static variables of rb_draw3d:
 SECTION .data
 
 
 ;Initialized constant data of rb_draw3d:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of rb_draw3d:
+SECTION .bss
 
 
 ;All cstrings:

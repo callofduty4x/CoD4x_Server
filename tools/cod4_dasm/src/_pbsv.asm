@@ -32,7 +32,7 @@
 	extern mkdir
 	extern fseek
 	extern ftell
-	extern _Znam
+	extern _Znaj
 	extern fread
 	extern fwrite
 	extern _ZdlPv
@@ -1239,7 +1239,7 @@ _ZN6stPbSv6makefnEPcS0__120:
 	test eax, eax
 	jle _ZN6stPbSv6makefnEPcS0__150
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [ebp-0x530], eax
 	test eax, eax
 	jz _ZN6stPbSv6makefnEPcS0__150
@@ -1310,7 +1310,7 @@ _ZN6stPbSv6makefnEPcS0__110:
 	test eax, eax
 	jle _ZN6stPbSv6makefnEPcS0__180
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [ebp-0x53c], eax
 	test eax, eax
 	jz _ZN6stPbSv6makefnEPcS0__180
@@ -1382,7 +1382,7 @@ _ZN6stPbSv6makefnEPcS0__100:
 	test eax, eax
 	jle _ZN6stPbSv6makefnEPcS0__210
 	mov [esp], eax
-	call _Znam
+	call _Znaj
 	mov [ebp-0x548], eax
 	test eax, eax
 	jz _ZN6stPbSv6makefnEPcS0__210
@@ -1417,11 +1417,6 @@ _ZN6stPbSv6makefnEPcS0__200:
 	jmp _ZN6stPbSv6makefnEPcS0__190
 
 
-;Zero initialized global or static variables of pbsv:
-SECTION .bss
-pbsv: resb 0x180
-
-
 ;Initialized global or static variables of pbsv:
 SECTION .data
 g_ConsoleCaptureBuf: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -1430,6 +1425,11 @@ g_ConsoleCaptureBufLen: dd 0x0
 
 ;Initialized constant data of pbsv:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of pbsv:
+SECTION .bss
+pbsv: resb 0x180
 
 
 ;All cstrings:

@@ -4,7 +4,6 @@
 	extern VectorAngleMultiply
 	extern playerMaxs
 	extern va
-	extern red.137162
 	extern PM_trace
 	extern Com_Printf
 	extern vectoyaw
@@ -182,7 +181,7 @@ Mantle_CheckLedge:
 	jnz Mantle_CheckLedge_10
 Mantle_CheckLedge_70:
 	movss xmm0, dword [ebp-0xf0]
-	xorps xmm0, [red.137162+0xe0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x3c], xmm0
 	movss [ebp-0x38], xmm0
 	mov dword [ebp-0x34], 0x0
@@ -402,7 +401,7 @@ Mantle_CheckLedge_220:
 	subss xmm3, [esi+0x14]
 	movss xmm1, dword [s_mantleTrans+0x8]
 	subss xmm1, xmm3
-	movss xmm2, dword [red.137162+0xf0]
+	movss xmm2, dword [_data16_7fffffff]
 	andps xmm1, xmm2
 	xor ecx, ecx
 	mov eax, 0x1
@@ -908,7 +907,7 @@ Mantle_Check_60:
 	mov eax, playerMins
 	mov eax, [eax+0x8]
 	mov edx, [mantle_check_radius]
-	movss xmm5, dword [red.137162+0x100]
+	movss xmm5, dword [_data16_80000000]
 	movss xmm0, dword [edx+0xc]
 	xorps xmm0, xmm5
 	movss [ebp-0x24], xmm0
@@ -1026,7 +1025,7 @@ Mantle_Check_90:
 	divss xmm0, xmm6
 	jmp Mantle_Check_130
 Mantle_Check_120:
-	movss xmm2, dword [red.137162+0x100]
+	movss xmm2, dword [_data16_80000000]
 	movss xmm7, dword [ebp-0x70]
 	xorps xmm7, xmm2
 	movss xmm6, dword [ebp-0x6c]
@@ -1166,7 +1165,7 @@ Mantle_CapView_10:
 	mov eax, [mantle_view_yawcap]
 	movss xmm2, dword [eax+0xc]
 	movaps xmm3, xmm2
-	xorps xmm3, [red.137162+0xc0]
+	xorps xmm3, [_data16_80000000]
 	ucomiss xmm1, xmm3
 	jb Mantle_CapView_20
 	ucomiss xmm2, xmm1
@@ -1275,7 +1274,7 @@ Mantle_CreateAnims_90:
 	movss xmm1, dword [ebp-0x24]
 	movaps xmm0, xmm1
 	subss xmm0, [_float_16_00000000]
-	andps xmm0, [red.137162+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_1_00000000]
 	jbe Mantle_CreateAnims_30
 	mov dword [esp+0x14], 0x0
@@ -1290,7 +1289,7 @@ Mantle_CreateAnims_90:
 Mantle_CreateAnims_30:
 	movss xmm1, dword [ebp-0x20]
 	movaps xmm0, xmm1
-	andps xmm0, [red.137162+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_1_00000000]
 	jbe Mantle_CreateAnims_40
 	mov dword [esp+0x14], 0x0
@@ -1307,7 +1306,7 @@ Mantle_CreateAnims_40:
 	movss xmm1, dword [esi+0x8]
 	movaps xmm0, xmm2
 	subss xmm0, xmm1
-	andps xmm0, [red.137162+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_1_00000000]
 	jbe Mantle_CreateAnims_50
 	cvtss2sd xmm1, xmm1
@@ -1332,7 +1331,7 @@ Mantle_CreateAnims_50:
 	movss xmm1, dword [ebp-0x24]
 	movaps xmm0, xmm1
 	subss xmm0, [_float_31_00000000]
-	andps xmm0, [red.137162+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_1_00000000]
 	jbe Mantle_CreateAnims_60
 	mov dword [esp+0x14], 0x0
@@ -1347,7 +1346,7 @@ Mantle_CreateAnims_50:
 Mantle_CreateAnims_60:
 	movss xmm1, dword [ebp-0x20]
 	movaps xmm0, xmm1
-	andps xmm0, [red.137162+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_1_00000000]
 	jbe Mantle_CreateAnims_70
 	mov dword [esp+0x14], 0x0
@@ -1363,7 +1362,7 @@ Mantle_CreateAnims_70:
 	movss xmm1, dword [ebp-0x1c]
 	movaps xmm0, xmm1
 	addss xmm0, [_float_18_00000000]
-	andps xmm0, [red.137162+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_1_00000000]
 	jbe Mantle_CreateAnims_80
 	mov dword [esp+0x14], 0x0
@@ -1486,6 +1485,16 @@ Mantle_IsWeaponInactive_10:
 	nop
 
 
+;Initialized global or static variables of bg_mantle:
+SECTION .data
+s_mantleTrans: dd 0x1, 0x8, 0x42640000, 0x2, 0x8, 0x424c0000, 0x3, 0x9, 0x42340000, 0x4, 0x9, 0x421c0000, 0x5, 0x9, 0x42040000, 0x6, 0xa, 0x41d80000, 0x7, 0xa, 0x41a80000, 0x0, 0x0, 0x0
+s_mantleAnimNames: dd _cstring_mp_mantle_root, _cstring_mp_mantle_up_57, _cstring_mp_mantle_up_51, _cstring_mp_mantle_up_45, _cstring_mp_mantle_up_39, _cstring_mp_mantle_up_33, _cstring_mp_mantle_up_27, _cstring_mp_mantle_up_21, _cstring_mp_mantle_over_h, _cstring_mp_mantle_over_m, _cstring_player_mantle_ov, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of bg_mantle:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of bg_mantle:
 SECTION .bss
 mantle_enable: resb 0x4
@@ -1495,16 +1504,6 @@ mantle_debug: resb 0x4
 mantle_check_angle: resb 0x4
 mantle_check_range: resb 0x4
 mantle_check_radius: resb 0x68
-
-
-;Initialized global or static variables of bg_mantle:
-SECTION .data
-s_mantleTrans: dd 0x1, 0x8, 0x42640000, 0x2, 0x8, 0x424c0000, 0x3, 0x9, 0x42340000, 0x4, 0x9, 0x421c0000, 0x5, 0x9, 0x42040000, 0x6, 0xa, 0x41d80000, 0x7, 0xa, 0x41a80000, 0x0, 0x0, 0x0
-s_mantleAnimNames: dd _cstring_mp_mantle_root, _cstring_mp_mantle_up_57, _cstring_mp_mantle_up_51, _cstring_mp_mantle_up_45, _cstring_mp_mantle_up_39, _cstring_mp_mantle_up_33, _cstring_mp_mantle_up_27, _cstring_mp_mantle_up_21, _cstring_mp_mantle_over_h, _cstring_mp_mantle_over_m, _cstring_player_mantle_ov, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of bg_mantle:
-SECTION .rdata
 
 
 ;All cstrings:
@@ -1558,9 +1557,11 @@ _cstring_player_mantle_ov:		db "player_mantle_over_low",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_16_00000000:		dd 0x41800000	; 16
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_18_00000000:		dd 0x41900000	; 18
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_31_00000000:		dd 0x41f80000	; 31
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00010000:		dd 0x38d1b717	; 0.0001

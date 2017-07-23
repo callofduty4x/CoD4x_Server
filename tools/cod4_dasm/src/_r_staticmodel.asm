@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of r_staticmodel:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_staticmodel:
 SECTION .data
 
 
 ;Initialized constant data of r_staticmodel:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_staticmodel:
+SECTION .bss
 
 
 ;All cstrings:

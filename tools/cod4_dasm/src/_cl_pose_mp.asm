@@ -216,17 +216,17 @@ CL_DObjCreateSkelForBones_20:
 	ret
 
 
-;Zero initialized global or static variables of cl_pose_mp:
-SECTION .bss
-_ZZ25CL_DObjCreateSkelForBonesPK6DObj_sPiPP11DObjAnimMatE9warnCount: resb 0x80
-
-
 ;Initialized global or static variables of cl_pose_mp:
 SECTION .data
 
 
 ;Initialized constant data of cl_pose_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cl_pose_mp:
+SECTION .bss
+_ZZ25CL_DObjCreateSkelForBonesPK6DObj_sPiPP11DObjAnimMatE9warnCount: resb 0x80
 
 
 ;All cstrings:

@@ -6,6 +6,7 @@
 	extern _ZNSt15_List_node_base4hookEPS_
 	extern _ZdlPv
 	extern _Unwind_Resume
+	extern _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv
 
 ;Exports of COpenGLTexture:
 	global _ZN14COpenGLTexture16ReleaseResourcesEv
@@ -461,16 +462,20 @@ _ZN15TextureInfoTypeD1Ev:
 	ret
 
 
-;Zero initialized global or static variables of COpenGLTexture:
-SECTION .bss
-
-
 ;Initialized global or static variables of COpenGLTexture:
 SECTION .data
 
 
 ;Initialized constant data of COpenGLTexture:
 SECTION .rdata
+;VTable for COpenGLTexture:
+_ZTV14COpenGLTexture: dd 0x0, 0x3b4fa0, _ZN14COpenGLTextureD1Ev, _ZN14COpenGLTextureD0Ev, _ZN14COpenGLTexture20UpdateOpenGLSurfacesEv, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+;VTable for TextureInfoType:
+_ZTV15TextureInfoType: dd 0x0, 0x3b4f80, _ZN15TextureInfoTypeD1Ev, _ZN15TextureInfoTypeD0Ev
+
+
+;Zero initialized global or static variables of COpenGLTexture:
+SECTION .bss
 
 
 ;All cstrings:

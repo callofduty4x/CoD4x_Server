@@ -1410,16 +1410,16 @@ CM_TransformedPointContents_20:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cm_test:
-SECTION .bss
-
-
 ;Initialized global or static variables of cm_test:
 SECTION .data
 
 
 ;Initialized constant data of cm_test:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cm_test:
+SECTION .bss
 
 
 ;All cstrings:

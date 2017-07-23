@@ -1481,12 +1481,6 @@ Scr_LoadAnimTreeAtIndex_40:
 	add [eax], al
 
 
-;Zero initialized global or static variables of scr_animtree:
-SECTION .bss
-scrAnimGlob: resb 0x280
-scrAnimPub: resb 0x480
-
-
 ;Initialized global or static variables of scr_animtree:
 SECTION .data
 propertyNames: dd _cstring_loopsync, _cstring_nonloopsync, _cstring_complete, _cstring_additive, 0x0, 0x0, 0x0, 0x0
@@ -1494,6 +1488,12 @@ propertyNames: dd _cstring_loopsync, _cstring_nonloopsync, _cstring_complete, _c
 
 ;Initialized constant data of scr_animtree:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_animtree:
+SECTION .bss
+scrAnimGlob: resb 0x280
+scrAnimPub: resb 0x480
 
 
 ;All cstrings:

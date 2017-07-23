@@ -155,7 +155,7 @@ qboolean Sec_VerifyMemory(const char* expectedb64hash, void* memory, int lenmem)
 	dercertlen = sizeof(dercert);
 
 	if(Sec_Pem2Der(cod4xpem, strlen(cod4xpem), dercert, &dercertlen) != CRYPT_OK){
-		Com_PrintError("Pem to Der conversion failed\n");
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Pem to Der conversion failed\n");
 		return qfalse;
 	}
 	ciphertextlen = sizeof(ciphertext);
@@ -163,12 +163,12 @@ qboolean Sec_VerifyMemory(const char* expectedb64hash, void* memory, int lenmem)
 
 	if(base64_decode((byte*)expectedb64hash, strlen((char*)expectedb64hash), ciphertext, (long unsigned int*)&ciphertextlen) != CRYPT_OK)
 	{
-		Com_DPrintf("Not a valid base64 text\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Not a valid base64 text\n");
 		return qfalse;
 	}
 
 	if((sta = rsa_import(dercert, dercertlen, &rsakey)) != CRYPT_OK){
-		Com_PrintError("rsa_import failed with error code %d:%s\n", sta, Sec_CryptErrStr(sta));
+		Com_PrintError(CON_CHANNEL_SYSTEM,"rsa_import failed with error code %d:%s\n", sta, Sec_CryptErrStr(sta));
 		return qfalse;
 	}
 
@@ -179,7 +179,7 @@ qboolean Sec_VerifyMemory(const char* expectedb64hash, void* memory, int lenmem)
 	rsa_free(&rsakey);
 	
 	if(sta != CRYPT_OK || cleartextlen < 0 || cleartextlen > sizeof(cleartext) -1){
-		Com_PrintError("rsa_decrypt_puplickey_nnj failed with error code %d:%s\n", sta, Sec_CryptErrStr(sta));
+		Com_PrintError(CON_CHANNEL_SYSTEM,"rsa_decrypt_puplickey_nnj failed with error code %d:%s\n", sta, Sec_CryptErrStr(sta));
 		return qfalse;
 	}
 
@@ -188,7 +188,7 @@ qboolean Sec_VerifyMemory(const char* expectedb64hash, void* memory, int lenmem)
 	sizeofhash = sizeof(hash);
 	
 	if(!Sec_HashMemory(SEC_HASH_SHA256, memory, lenmem, hash, &sizeofhash, qfalse)){
-		Com_PrintError("Hashing has failed with errorcode %s\n", Sec_CryptErrStr(SecCryptErr));
+		Com_PrintError(CON_CHANNEL_SYSTEM,"Hashing has failed with errorcode %s\n", Sec_CryptErrStr(SecCryptErr));
 		return qfalse;
 	}
 

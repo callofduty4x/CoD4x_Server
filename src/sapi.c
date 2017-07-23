@@ -495,6 +495,106 @@ uint64_t SV_SApiGUID2PlayerID(const char* guid)
 
 }
 
+
+
+/*
+=============
+Com_Printf
+
+Both client and server can use this, and it will output
+to the apropriate place.
+
+A raw string should NEVER be passed as fmt, because of "%f" type crashers.
+=============
+*/
+void QDECL SApi_Printf( const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+
+	va_start (argptr,fmt);
+	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_STEAM, msg, MSG_DEFAULT);
+}
+
+
+/*
+=============
+Com_PrintWarning
+
+Server can use this, and it will output
+to the apropriate place.
+
+A raw string should NEVER be passed as fmt, because of "%f" type crashers.
+=============
+*/
+void QDECL SApi_PrintWarning( const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+
+	memcpy(msg,"^3Warning: ", sizeof(msg));
+
+	va_start (argptr,fmt);
+	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_STEAM, msg, MSG_WARNING);
+}
+
+
+/*
+=============
+Com_PrintError
+
+Server can use this, and it will output
+to the apropriate place.
+
+A raw string should NEVER be passed as fmt, because of "%f" type crashers.
+=============
+*/
+void QDECL SApi_PrintError( const char *fmt, ... ) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+
+	memcpy(msg,"^1Error: ", sizeof(msg));
+
+	va_start (argptr,fmt);
+	Q_vsnprintf (&msg[9], (sizeof(msg)-10), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_STEAM, msg, MSG_ERROR);
+}
+
+/*
+================
+Com_DPrintf
+
+A Com_Printf that only shows up if the "developer" cvar is set
+================
+*/
+void QDECL SApi_DPrintf( const char *fmt, ...) {
+	va_list		argptr;
+	char		msg[MAXPRINTMSG];
+		
+	if ( !Com_IsDeveloper() ) {
+		return;			// don't confuse non-developers with techie stuff...
+	}
+	
+	msg[0] = '^';
+	msg[1] = '2';
+
+	va_start (argptr,fmt);	
+	Q_vsnprintf (&msg[2], (sizeof(msg)-3), fmt, argptr);
+	va_end (argptr);
+
+        Com_PrintMessage( CON_CHANNEL_STEAM, msg, MSG_DEFAULT);
+}
+
+
+
+
+
 exports_t sapi_imp;
 
 
@@ -505,10 +605,10 @@ void SV_InitSApi()
 	char errormsg[1024];
 	void* hmodule;
 	imports_t exports;
-	exports.Com_Printf = Com_Printf;
-	exports.Com_DPrintf = Com_DPrintf;
-	exports.Com_PrintError = Com_PrintError;
-	exports.Com_PrintWarning = Com_PrintWarning;
+	exports.Com_Printf = SApi_Printf;
+	exports.Com_DPrintf = SApi_DPrintf;
+	exports.Com_PrintError = SApi_PrintError;
+	exports.Com_PrintWarning = SApi_PrintWarning;
 	exports.Com_Quit_f = Com_Quit_f;
 	exports.Com_Error = Com_Error;
 	exports.Cvar_VariableIntegerValue = Cvar_VariableIntegerValue;
@@ -534,14 +634,14 @@ void SV_InitSApi()
 	if(hmodule == NULL)
 	{
 		Sys_LoadLibraryError(errormsg, sizeof(errormsg));
-		Com_PrintError("steam_api" DLL_EXT " not found or it was not possible to load. Error is: %s. Steam is not going to work.\n", errormsg);
+		SApi_PrintError("steam_api" DLL_EXT " not found or it was not possible to load. Error is: %s. Steam is not going to work.\n", errormsg);
 		return;
 	}
 	Init = Sys_GetProcedure("Init");
 	if(Init == NULL)
 	{
 		Sys_CloseLibrary(hmodule);
-		Com_PrintError("Init entrypoint not found. Steam is not going to work.\n");
+		SApi_PrintError("Init entrypoint not found. Steam is not going to work.\n");
 		return;
 	}
 	if(Init(&exports, &sapi_imp))
@@ -628,3 +728,4 @@ qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uin
 
 	return qfalse;
 }
+

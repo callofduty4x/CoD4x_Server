@@ -6,16 +6,16 @@
 SECTION .text
 
 
-;Zero initialized global or static variables of ui_component:
-SECTION .bss
-
-
 ;Initialized global or static variables of ui_component:
 SECTION .data
 
 
 ;Initialized constant data of ui_component:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ui_component:
+SECTION .bss
 
 
 ;All cstrings:

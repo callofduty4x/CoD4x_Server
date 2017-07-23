@@ -2026,16 +2026,16 @@ R_SetupPassCriticalPixelShaderArgs_10:
 	nop
 
 
-;Zero initialized global or static variables of r_shade:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_shade:
 SECTION .data
 
 
 ;Initialized constant data of r_shade:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_shade:
+SECTION .bss
 
 
 ;All cstrings:

@@ -53,6 +53,17 @@
 	extern _ZN9__gnu_cxx18__exchange_and_addEPVii
 	extern _ZNSs4_Rep10_M_destroyERKSaIcE
 	extern _ZdlPv
+	extern _ZN14CMacGameEngine11HandleEventEP14OpaqueEventRef
+	extern _ZN17CCallOfDutyEngine11DoMouseDownEt5Pointmm
+	extern _ZN17CCallOfDutyEngine9DoMouseUpEt5Pointmm
+	extern _ZN17CCallOfDutyEngine12DoMouseMovedE5PointS0_m
+	extern _ZN17CCallOfDutyEngine12DoMouseWheelEl5Pointm
+	extern _ZN17CCallOfDutyEngine9DoKeyDownEhm
+	extern _ZN17CCallOfDutyEngine7DoKeyUpEhm
+	extern _ZN17CCallOfDutyEngine11DoTextInputEt
+	extern _ZN17CCallOfDutyEngine10DoActivateEv
+	extern _ZN17CCallOfDutyEngine12DoDeactivateEv
+	extern _ZN14CMacGameEngine15IsQuitAvailableEv
 
 ;Exports of GameMain:
 	global _ZGVZ16GetMacGameEnginevE13theGameEngine
@@ -745,18 +756,20 @@ _ZN17CCallOfDutyEngineD1Ev:
 	nop
 
 
-;Zero initialized global or static variables of GameMain:
-SECTION .bss
-_ZGVZ16GetMacGameEnginevE13theGameEngine: resb 0x20
-_ZZ16GetMacGameEnginevE13theGameEngine: resb 0x60
-
-
 ;Initialized global or static variables of GameMain:
 SECTION .data
 
 
 ;Initialized constant data of GameMain:
 SECTION .rdata
+;VTable for CCallOfDutyEngine:
+_ZTV17CCallOfDutyEngine: dd 0x0, 0x3b4c40, _ZN17CCallOfDutyEngineD1Ev, _ZN17CCallOfDutyEngineD0Ev, _ZN17CCallOfDutyEngine10InitializeEv, _ZN17CCallOfDutyEngine7MacMainEv, _ZN17CCallOfDutyEngine8GameMainEv, _ZN14CMacGameEngine11HandleEventEP14OpaqueEventRef, _ZN17CCallOfDutyEngine11DoMouseDownEt5Pointmm, _ZN17CCallOfDutyEngine9DoMouseUpEt5Pointmm, _ZN17CCallOfDutyEngine12DoMouseMovedE5PointS0_m, _ZN17CCallOfDutyEngine12DoMouseWheelEl5Pointm, _ZN17CCallOfDutyEngine9DoKeyDownEhm, _ZN17CCallOfDutyEngine7DoKeyUpEhm, _ZN17CCallOfDutyEngine11DoTextInputEt, _ZN17CCallOfDutyEngine10DoActivateEv, _ZN17CCallOfDutyEngine12DoDeactivateEv, _ZN14CMacGameEngine15IsQuitAvailableEv, _ZN17CCallOfDutyEngine6DoQuitEv, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of GameMain:
+SECTION .bss
+_ZGVZ16GetMacGameEnginevE13theGameEngine: resb 0x20
+_ZZ16GetMacGameEnginevE13theGameEngine: resb 0x60
 
 
 ;All CFStrings:

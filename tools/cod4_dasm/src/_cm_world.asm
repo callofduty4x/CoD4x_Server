@@ -2664,17 +2664,17 @@ CM_PointTraceStaticModelsComplete:
 	ret
 
 
-;Zero initialized global or static variables of cm_world:
-SECTION .bss
-cm_world: resb 0x7080
-
-
 ;Initialized global or static variables of cm_world:
 SECTION .data
 
 
 ;Initialized constant data of cm_world:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of cm_world:
+SECTION .bss
+cm_world: resb 0x7080
 
 
 ;All cstrings:

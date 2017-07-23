@@ -51,16 +51,16 @@ R_GetAdjustedLodDist:
 	add [eax], al
 
 
-;Zero initialized global or static variables of r_model_lod:
-SECTION .bss
-
-
 ;Initialized global or static variables of r_model_lod:
 SECTION .data
 
 
 ;Initialized constant data of r_model_lod:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_model_lod:
+SECTION .bss
 
 
 ;All cstrings:

@@ -76,11 +76,6 @@ RefreshQuitOnErrorCondition_20:
 	jmp RefreshQuitOnErrorCondition_40
 
 
-;Zero initialized global or static variables of assertive:
-SECTION .bss
-shouldQuitOnError: resb 0x80
-
-
 ;Initialized global or static variables of assertive:
 SECTION .data
 alwaysfails: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
@@ -88,6 +83,11 @@ alwaysfails: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Initialized constant data of assertive:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of assertive:
+SECTION .bss
+shouldQuitOnError: resb 0x80
 
 
 ;All cstrings:

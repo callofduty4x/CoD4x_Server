@@ -31,16 +31,16 @@ FxCurveIterator_Release:
 	add [eax], al
 
 
-;Zero initialized global or static variables of FxCurve:
-SECTION .bss
-
-
 ;Initialized global or static variables of FxCurve:
 SECTION .data
 
 
 ;Initialized constant data of FxCurve:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of FxCurve:
+SECTION .bss
 
 
 ;All cstrings:

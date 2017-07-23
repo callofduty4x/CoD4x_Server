@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#if 0
 __cdecl void ClientSpawn(gentity_t* ent, float* px, float* py)
 {
 
@@ -336,6 +337,8 @@ __asm__ __volatile__(
 		}
 	}*/
 }
+#endif
+
 
 /*
 ===========

@@ -1,5 +1,5 @@
 ;Imports of MacTools:
-	extern _Znam
+	extern _Znaj
 	extern FSOpenIterator
 	extern memcpy
 	extern _ZdlPv
@@ -100,10 +100,10 @@ SearchForApplication_40:
 	mov [ebp-0x178], edx
 	mov [ebp-0x179], cl
 	mov dword [esp], 0x1c20
-	call _Znam
+	call _Znaj
 	mov [ebp-0x170], eax
 	mov dword [esp], 0xfa0
-	call _Znam
+	call _Znaj
 	mov [ebp-0x16c], eax
 	mov dword [ebp-0x30], 0x0
 	mov dword [ebp-0x2c], 0x0
@@ -1417,16 +1417,16 @@ _ZNSt6vectorI5FSRefSaIS0_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS0_S2
 	call _ZSt20__throw_length_errorPKc
 
 
-;Zero initialized global or static variables of MacTools:
-SECTION .bss
-
-
 ;Initialized global or static variables of MacTools:
 SECTION .data
 
 
 ;Initialized constant data of MacTools:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of MacTools:
+SECTION .bss
 
 
 ;All cstrings:

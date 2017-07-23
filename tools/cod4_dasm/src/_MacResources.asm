@@ -463,6 +463,15 @@ _ZN12MacResources25GetMissingDataFolderErrorEv_40:
 	jmp _ZN12MacResources25GetMissingDataFolderErrorEv_80
 
 
+;Initialized global or static variables of MacResources:
+SECTION .data
+_ZZN12MacResources15GetLanguageCodeEvE7sResult: dd 0x7fff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+
+
+;Initialized constant data of MacResources:
+SECTION .rdata
+
+
 ;Zero initialized global or static variables of MacResources:
 SECTION .bss
 _ZZN12MacResources16GetProductFamilyEvE7sResult: resb 0x4
@@ -474,15 +483,6 @@ _ZZN12MacResources19GetNoQuickTimeErrorEvE7sResult: resb 0x4
 _ZZN12MacResources25GetMissingDataFolderErrorEvE7sResult: resb 0x8
 _ZZN12MacResources18GetNeeds32BitErrorEvE7sResult: resb 0x4
 _ZZN12MacResources23GetCantRunFromDiscErrorEvE7sResult: resb 0x50
-
-
-;Initialized global or static variables of MacResources:
-SECTION .data
-_ZZN12MacResources15GetLanguageCodeEvE7sResult: dd 0x7fff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of MacResources:
-SECTION .rdata
 
 
 ;All CFStrings:

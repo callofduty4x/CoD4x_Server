@@ -438,16 +438,16 @@ SV_ClientWantsVoiceData:
 	nop
 
 
-;Zero initialized global or static variables of sv_voice_mp:
-SECTION .bss
-
-
 ;Initialized global or static variables of sv_voice_mp:
 SECTION .data
 
 
 ;Initialized constant data of sv_voice_mp:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of sv_voice_mp:
+SECTION .bss
 
 
 ;All cstrings:

@@ -1118,14 +1118,6 @@ CG_DrawFullScreenDebugOverlays_70:
 	add [eax], al
 
 
-;Zero initialized global or static variables of cg_draw_debug:
-SECTION .bss
-rendererStats: resb 0x40
-fps_previousTimes: resb 0x80
-fps_index: resb 0x4
-_ZZ15CG_CalculateFPSvE8previous: resb 0x3c
-
-
 ;Initialized global or static variables of cg_draw_debug:
 SECTION .data
 
@@ -1133,6 +1125,14 @@ SECTION .data
 ;Initialized constant data of cg_draw_debug:
 SECTION .rdata
 traceMasks.138450: dd 0x0, 0x1, 0x2806831, 0x2810011, 0x7fffffff, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
+
+
+;Zero initialized global or static variables of cg_draw_debug:
+SECTION .bss
+rendererStats: resb 0x40
+fps_previousTimes: resb 0x80
+fps_index: resb 0x4
+_ZZ15CG_CalculateFPSvE8previous: resb 0x3c
 
 
 ;All cstrings:

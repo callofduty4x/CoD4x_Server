@@ -241,16 +241,16 @@ UI_FillRectPhysical_10:
 	nop
 
 
-;Zero initialized global or static variables of ui_atoms:
-SECTION .bss
-
-
 ;Initialized global or static variables of ui_atoms:
 SECTION .data
 
 
 ;Initialized constant data of ui_atoms:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ui_atoms:
+SECTION .bss
 
 
 ;All cstrings:

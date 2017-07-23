@@ -313,7 +313,7 @@ void DB_RelocateXAssetMem()
 			continue;
 		}
 
-		Com_Printf("^2Reallocate %d XAssets on request of type: %s\n", count, g_assetNames[i]);
+		Com_Printf(CON_CHANNEL_FILES,"^2Reallocate %d XAssets on request of type: %s\n", count, g_assetNames[i]);
 		DB_XAssetPool[i] = newmem;
 		g_poolSize[i] = count;
 	}
@@ -421,7 +421,7 @@ void DB_FreeXZoneMemory(XZoneMemory* zonemem)
 void DB_UnloadXAssetsMemoryInternal(XZone* zone)
 {
         DB_FreeXZoneMemory(&zone->zonememory);
-        Com_Printf("Unloaded fastfile %s\n", zone->zoneinfo.name);
+        Com_Printf(CON_CHANNEL_FILES,"Unloaded fastfile %s\n", zone->zoneinfo.name);
         PMem_Free(zone->zoneinfo.name, zone->index);
         zone->zoneinfo.name[0] = '\0';
 }
@@ -568,19 +568,19 @@ void DB_PrintXAsset(union XAssetHeader header, void *none)
 {
     XModel* xmodelhead = header.model;
 
-    Com_Printf("%s\n", xmodelhead->name);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"%s\n", xmodelhead->name);
 }
 
 void XModelList_f()
 {
 
-    Com_Printf("XModel list:\n");
-    Com_Printf("Name                          \n");
-    Com_Printf("------------------------------\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"XModel list:\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Name                          \n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"------------------------------\n");
 
     DB_EnumXAssets_FastFile(ASSET_TYPE_XMODEL, DB_PrintXAsset, NULL, qtrue);
 
-    Com_Printf("\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 }
 
 
@@ -674,29 +674,29 @@ void XAssetUsage_f()
     int countlist[ASSET_TYPE_COUNT];
 
 
-    Com_Printf("XAsset usage:\n");
-    Com_Printf("Name                 Used  Free \n");
-    Com_Printf("-------------------- ----- -----\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"XAsset usage:\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Name                 Used  Free \n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"-------------------- ----- -----\n");
 
     DB_CountXAssets(countlist, sizeof(countlist), qtrue);
 
     for(assettype = 0; assettype < ASSET_TYPE_COUNT; assettype++)
     {
-	Com_Printf("%s", g_assetNames[assettype]);
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", g_assetNames[assettype]);
 
 	l = 20 - strlen(g_assetNames[assettype]);
 	j = 0;
 
 	do
 	{
-		Com_Printf (" ");
+		Com_Printf(CON_CHANNEL_DONT_FILTER," ");
 		j++;
 	} while(j < l);
 
-	Com_Printf(" %5d %5d\n", countlist[assettype], g_poolSize[assettype] - countlist[assettype]);
+	Com_Printf(CON_CHANNEL_DONT_FILTER," %5d %5d\n", countlist[assettype], g_poolSize[assettype] - countlist[assettype]);
 
     }
-    Com_Printf("\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 
 }
 
@@ -710,9 +710,9 @@ void XAssetUsage_f()
 
     XAssetsHeaderCommon_t *header;
 
-    Com_Printf("XAsset usage:\n");
-    Com_Printf("Name                 Used  Free \n");
-    Com_Printf("-------------------- ----- -----\n");
+    Com_Printf(CON_CHANNEL_FILES,"XAsset usage:\n");
+    Com_Printf(CON_CHANNEL_FILES,"Name                 Used  Free \n");
+    Com_Printf(CON_CHANNEL_FILES,"-------------------- ----- -----\n");
 
     for(assettype = 0; assettype < NumXAssets; assettype++)
     {
@@ -728,23 +728,23 @@ void XAssetUsage_f()
 	        header = header->next;
 	}
 
-	Com_Printf("%s", g_assetNames[assettype]);
+	Com_Printf(CON_CHANNEL_FILES,"%s", g_assetNames[assettype]);
 
 	l = 20 - strlen(g_assetNames[assettype]);
 	j = 0;
 
 	do
 	{
-		Com_Printf (" ");
+		Com_Printf(CON_CHANNEL_FILES,CON_CHANNEL_FILES," ");
 		j++;
 	} while(j < l);
 
 
-	Com_Printf(" %5d %5d\n", g_poolSize[assettype] - i, i);
+	Com_Printf(CON_CHANNEL_FILES," %5d %5d\n", g_poolSize[assettype] - i, i);
 
 
     }
-    Com_Printf("\n");
+    Com_Printf(CON_CHANNEL_FILES,"\n");
 }
 
 */

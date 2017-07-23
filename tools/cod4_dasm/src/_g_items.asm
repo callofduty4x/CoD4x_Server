@@ -2911,17 +2911,17 @@ G_RunItem_140:
 	nop
 
 
-;Zero initialized global or static variables of g_items:
-SECTION .bss
-itemRegistered: resb 0x2064
-
-
 ;Initialized global or static variables of g_items:
 SECTION .data
 
 
 ;Initialized constant data of g_items:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of g_items:
+SECTION .bss
+itemRegistered: resb 0x2064
 
 
 ;All cstrings:

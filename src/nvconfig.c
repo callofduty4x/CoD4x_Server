@@ -54,27 +54,27 @@ qboolean NV_ParseConfigLine(char* line, int linenumber){
     if(!Q_stricmp(Info_ValueForKey(line, "type") , "cmdMinPower")){
 
         if(!Cmd_InfoSetPower( line )){
-            Com_DPrintf("Warning at line: %d\n", linenumber);
+            Com_DPrintf(CON_CHANNEL_SYSTEM,"Warning at line: %d\n", linenumber);
             return qtrue; //Don't rise errors here! This can happen for commands we add at a later stage
         }
         return qtrue;
 
     }else if(!Q_stricmp(Info_ValueForKey(line, "type") , "rconAdmin")){
 
-		Com_PrintWarning("HL2 Rcon admin is unsupported. Please use the general admin system instead\n");
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"HL2 Rcon admin is unsupported. Please use the general admin system instead\n");
         return qtrue;
 
     }else if(!Q_stricmp(Info_ValueForKey(line, "type") , "authAdmin")){
 
         if(!Auth_InfoAddAdmin( line ))
         {
-            Com_Printf("Error at line: %d\n", linenumber);
+            Com_Printf(CON_CHANNEL_SYSTEM,"Error at line: %d\n", linenumber);
             return qfalse;
         }
         return qtrue;
 
     }else{
-        Com_Printf("Error: unknown type (line: %d)\n", linenumber);
+        Com_Printf(CON_CHANNEL_SYSTEM,"Error: unknown type (line: %d)\n", linenumber);
         return qfalse;
     }
 }
@@ -113,11 +113,11 @@ void NV_LoadConfig(){
     }
 
     if(!file){
-        Com_DPrintf("Couldn't open %s for reading\n", filename);
+        Com_DPrintf(CON_CHANNEL_SYSTEM,"Couldn't open %s for reading\n", filename);
         nvEntered = qfalse;
         return;
     }
-    Com_Printf( "loading %s\n", filename);
+    Com_Printf(CON_CHANNEL_SYSTEM, "loading %s\n", filename);
 
     i = 0;
 
@@ -125,12 +125,12 @@ void NV_LoadConfig(){
         read = FS_ReadLine(buf,sizeof(buf),file);
         if(read == 0){
             FS_FCloseFile(file);
-            Com_Printf("Loaded %s %i errors\n", filename, error);
+            Com_Printf(CON_CHANNEL_SYSTEM,"Loaded %s %i errors\n", filename, error);
             nvEntered = qfalse;
             return;
         }
         if(read == -1){
-            Com_Printf("Can not read from %s\n", filename);
+            Com_Printf(CON_CHANNEL_SYSTEM,"Can not read from %s\n", filename);
             FS_FCloseFile(file);
             nvEntered = qfalse;
             return;
@@ -162,7 +162,7 @@ void NV_WriteConfig(){
 
     buffer = Hunk_AllocateTempMemory(MAX_NVCONFIG_SIZE);
     if(!buffer){
-        Com_Printf( "Error Updating NVConfig: Hunk_Alloc failed\n" );
+        Com_Printf(CON_CHANNEL_SYSTEM, "Error Updating NVConfig: Hunk_Alloc failed\n" );
         return;
     }
     Com_Memset(buffer,0,MAX_NVCONFIG_SIZE);
@@ -173,5 +173,5 @@ void NV_WriteConfig(){
 
     FS_SV_WriteFile(NV_CONFIGFILE, buffer, strlen(buffer));
     Hunk_FreeTempMemory( buffer );
-    Com_DPrintf("NV-Config Updated\n");
+    Com_DPrintf(CON_CHANNEL_SYSTEM,"NV-Config Updated\n");
 }

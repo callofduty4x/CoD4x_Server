@@ -3427,12 +3427,6 @@ _ZSt16__introsort_loopIPP10GfxSurfaceiPFhS1_S1_EEvT_S5_T0_T1__60:
 	jmp _ZSt16__introsort_loopIPP10GfxSurfaceiPFhS1_S1_EEvT_S5_T0_T1__170
 
 
-;Zero initialized global or static variables of r_light:
-SECTION .bss
-g_staticModelLightCallback: resb 0x80
-lightGlob: resb 0x180
-
-
 ;Initialized global or static variables of r_light:
 SECTION .data
 _ZZ22R_GetBspOmniLightSurfsPK8GfxLightiP18GfxBspDrawSurfDataE9allowSurf: dd R_AllowBspOmniLight
@@ -3441,6 +3435,12 @@ _ZZ22R_GetBspSpotLightSurfsPK8GfxLightiP18GfxBspDrawSurfDataE9allowSurf: dd R_Al
 
 ;Initialized constant data of r_light:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of r_light:
+SECTION .bss
+g_staticModelLightCallback: resb 0x80
+lightGlob: resb 0x180
 
 
 ;All cstrings:
