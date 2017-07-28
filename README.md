@@ -100,7 +100,7 @@ Aside from agreeing to the license, by making any use of CoD4X18 server you agre
 2. The developers reserve the right to reuse your content as long as it is not used commercially. You have a right for your name/clan/website getting mentioned if this is going to happen.
 They can also use it on their own servers.
 
-3. Maps you have installed on a server have to be either available on the internet already, or be made available to the community at the [Cod4X forums](https://cod4x.me/forum/forum-24.html), with all required assets, like scripts, within 20 weeks of installation. You have to annouce your map on the [forums](https://cod4x.me/forum/) on the same day you have installed it to gain the 20 weeks grace period. Not announced maps will have to be made available within 1 week.
+3. Maps you have installed on a server have to be either available on the internet already, or be made available to the community at the [Cod4X forums](https://cod4x.me/forums/), with all required assets, like scripts, within 20 weeks of installation. You have to annouce your map on the [forums](https://cod4x.me/forums/) on the same day you have installed it to gain the 20 weeks grace period. Not announced maps will have to be made available within 1 week.
 
 4. Plugins have to be made available as sourcecode so the user can interact with it
 
