@@ -16,7 +16,6 @@
 	extern CG_LocationalTrace
 	extern Trace_GetEntityHitId
 	extern cg_entitiesArray
-	extern dynEntCollWorlds
 	extern cg_weaponsArray
 	extern BG_GetWeaponDef
 	extern Com_SafeClientDObjFree
@@ -589,7 +588,7 @@ BulletTrace_40:
 	mov esi, [ebx+0x10]
 	test esi, esi
 	jnz BulletTrace_80
-	mov dword [ebx+0x10], dynEntCollWorlds+0x5a00
+	mov dword [ebx+0x10], 0x700000
 	jmp BulletTrace_80
 	nop
 
@@ -3077,7 +3076,7 @@ CG_FireWeapon_910:
 	addss xmm0, xmm2
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4+0x110]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb CG_FireWeapon_600
 	movss xmm1, dword [_float_1_00000000]
@@ -3193,13 +3192,13 @@ CG_FireWeapon_680:
 	mov [esp], ecx
 	call Com_Memcpy
 	movss xmm0, dword [ebp-0x104]
-	xorps xmm0, [g_fltMin__uint4+0x110]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0xc4], xmm0
 	movss xmm1, dword [ebp-0x100]
-	xorps xmm1, [g_fltMin__uint4+0x110]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0xc0], xmm1
 	movss xmm2, dword [ebp-0xfc]
-	xorps xmm2, [g_fltMin__uint4+0x110]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0xbc], xmm2
 	mov eax, [ebp-0x110]
 	mov [ebp-0xdc], eax
@@ -3223,13 +3222,13 @@ CG_FireWeapon_680:
 	mov [esp], edx
 	call Com_Memcpy
 	movss xmm0, dword [ebp-0x1f8]
-	xorps xmm0, [g_fltMin__uint4+0x110]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x1f8], xmm0
 	movss xmm0, dword [ebp-0x1f4]
-	xorps xmm0, [g_fltMin__uint4+0x110]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x1f4], xmm0
 	movss xmm0, dword [ebp-0x1f0]
-	xorps xmm0, [g_fltMin__uint4+0x110]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x1f0], xmm0
 	cmp byte [ebp-0x209], 0x0
 	jnz CG_FireWeapon_690
@@ -4992,7 +4991,7 @@ CG_BulletHitEvent_40:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4+0x100]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb CG_BulletHitEvent_50
 	movss xmm1, dword [_float_1_00000000]
@@ -6337,12 +6336,12 @@ CG_RandomEffectAxis:
 	lea eax, [esi+0x4]
 	mov [ebp-0x30], eax
 	movss xmm1, dword [esi+0x4]
-	xorps xmm1, [g_fltMin__uint4+0xc0]
+	xorps xmm1, [_data16_80000000]
 	movss xmm3, dword [esi]
 	lea eax, [esi+0x8]
 	mov [ebp-0x2c], eax
 	movss xmm4, dword [esi+0x8]
-	xorps xmm4, [g_fltMin__uint4+0xc0]
+	xorps xmm4, [_data16_80000000]
 	movss [ebp-0x20], xmm3
 	movss [ebp-0x1c], xmm1
 	movaps xmm0, xmm4
@@ -6352,7 +6351,7 @@ CG_RandomEffectAxis:
 	addss xmm0, xmm2
 	mulss xmm1, [esi+0x8]
 	addss xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4+0xc0]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm3, xmm0
 	addss xmm3, xmm4
 	movss [ebp-0x24], xmm3
@@ -6386,7 +6385,7 @@ CG_RandomEffectAxis:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4+0xc0]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb CG_RandomEffectAxis_10
 	movss xmm1, dword [_float_1_00000000]
@@ -7849,6 +7848,7 @@ _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _double_0_00000000:		dq 0x3e00000000200000	; 4.65661e-10
 _double_0_99999988:		dq 0x3fefffffbf935359	; 1
 _float_360_00000000:		dd 0x43b40000	; 360
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
 _float_0_99999988:		dd 0x3f7ffffe	; 1
 _float_30_00000000:		dd 0x41f00000	; 30

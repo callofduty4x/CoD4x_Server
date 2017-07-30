@@ -54,7 +54,6 @@
 	extern RB_SpotShadowMaps
 	extern R_Resolve
 	extern R_ConvertColorToBytes
-	extern g_fltMin__uint4_dup_1
 	extern floorf
 	extern ceilf
 	extern R_SetQuadMeshData
@@ -2392,7 +2391,7 @@ RB_Draw3DInternal_220:
 	sqrtss xmm0, xmm3
 	divss xmm1, xmm0
 	movss [ebp-0x777c], xmm1
-	movss xmm6, dword [g_fltMin__uint4_dup_1+0x20]
+	movss xmm6, dword [_data16_80000000]
 	xor dword [ebp-0x777c], 0x80000000
 	mov dword [ebp-0x7798], 0x3f800000
 	xor ebx, ebx
@@ -2735,5 +2734,6 @@ _cstring_resolve_distorti:		db "Resolve Distortion",0
 SECTION .rdata
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__1_00000000:		dd 0xbf800000	; -1
 

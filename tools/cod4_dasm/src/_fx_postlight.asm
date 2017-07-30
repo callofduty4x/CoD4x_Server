@@ -218,7 +218,7 @@ FX_PostLight_GenerateVerts_30:
 	mulss xmm0, [_float_1_41421354]
 	movss [ebp-0x5c], xmm0
 	movss xmm3, dword [ebp-0x78]
-	xorps xmm3, [g_fltMin__uint4_dup_1+0x10]
+	xorps xmm3, [_data16_80000000]
 	movss [ebp-0x58], xmm3
 	lea esi, [edi+0x114]
 	mov ebx, edi
@@ -507,6 +507,7 @@ SECTION .rdata
 _float_0_00010000:		dd 0x38d1b717	; 0.0001
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_1_41421354:		dd 0x3fb504f3	; 1.41421
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_3_14159274:		dd 0x40490fdb	; 3.14159
 _float_0_12500000:		dd 0x3e000000	; 0.125
 

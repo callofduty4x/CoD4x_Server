@@ -1541,7 +1541,7 @@ nb_decode_10:
 	mov edx, [edi+0x44]
 	xor eax, eax
 	pxor xmm1, xmm1
-	movss xmm2, dword [exc_gain_quant_scal3_bound+0x1c]
+	movss xmm2, dword [_data16_7fffffff]
 nb_decode_70:
 	movss xmm0, dword [ecx+eax*4]
 	subss xmm0, [edx+eax*4]
@@ -2328,7 +2328,7 @@ nb_decode_650:
 nb_decode_640:
 	movss xmm0, dword [ebp-0x28]
 	pxor xmm2, xmm2
-	andps xmm0, [exc_gain_quant_scal3_bound+0x1c]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	movss xmm1, dword [ebp-0x2c]
 	ucomiss xmm1, xmm2
@@ -4608,6 +4608,7 @@ _double_16384_00000000:		dq 0x40d0000000000000	; 16384
 _double_0_46000000:		dq 0x3fdd70a3d70a3d71	; 0.46
 _double_0_54000000:		dq 0x3fe147ae147ae148	; 0.54
 _double__0_46000000:		dq 0xbfdd70a3d70a3d71	; -0.46
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double__0_20000000:		dq 0xbfc999999999999a	; -0.2
 _double_0_60000000:		dq 0x3fe3333333333333	; 0.6
 _double_3_50000000:		dq 0x400c000000000000	; 3.5

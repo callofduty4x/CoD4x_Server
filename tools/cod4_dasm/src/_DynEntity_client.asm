@@ -26,7 +26,6 @@
 	extern cgArray
 	extern FX_PlayOrientedEffect
 	extern CG_PlaySoundAlias
-	extern g_clients
 	extern DynEnt_GetCylindricalRadiusDistSqr
 	extern DynEnt_GetRadiusDistSqr
 	extern DynEnt_UnlinkEntity
@@ -1560,7 +1559,7 @@ DynEntCl_ClipMoveTrace_r_30:
 	andps xmm2, xmm1
 	andnps xmm0, xmm3
 	orps xmm0, xmm2
-	movss xmm4, dword [g_zero_dup_1+0x10]
+	movss xmm4, dword [_data16_80000000]
 	movaps xmm1, xmm5
 	xorps xmm1, xmm4
 	ucomiss xmm1, xmm0
@@ -1667,7 +1666,7 @@ DynEntCl_ClipMoveTrace_r_70:
 	jmp DynEntCl_ClipMoveTrace_r_110
 DynEntCl_ClipMoveTrace_r_80:
 	movaps xmm2, xmm6
-	andps xmm2, [g_zero_dup_1+0x20]
+	andps xmm2, [_data16_7fffffff]
 	movaps xmm1, xmm3
 	xorps xmm1, xmm4
 	pxor xmm0, xmm0
@@ -1839,7 +1838,7 @@ DynEntCl_GetClosestEntities:
 	movzx edi, byte [ebp+0x10]
 	mov [ebp-0x34], edx
 	mov [ebp-0x30], ecx
-	mov dword [ebp-0x2c], g_clients+0x9be13
+	mov dword [ebp-0x2c], 0x802013
 	mov eax, [ebp+0xc]
 	mov [ebp-0x28], eax
 	mov word [ebp-0x24], 0x1000
@@ -2667,7 +2666,7 @@ DynEntCl_JitterEvent_110:
 	mov [ebp-0x4c], edx
 	lea eax, [ebp-0x38]
 	mov [ebp-0x48], eax
-	mov dword [ebp-0x44], g_clients+0x9be13
+	mov dword [ebp-0x44], 0x802013
 	lea edx, [ebp-0x204c]
 	mov [ebp-0x40], edx
 	mov word [ebp-0x3c], 0x1000
@@ -3658,7 +3657,7 @@ DynEntCl_ExplosionEvent_340:
 	mulss xmm2, xmm2
 	addss xmm1, xmm2
 	sqrtss xmm1, xmm1
-	movss xmm5, dword [_ZZ19DynEntCl_MeleeEventiiE12traceOffsets+0x30]
+	movss xmm5, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	ucomiss xmm0, xmm7
@@ -4122,7 +4121,7 @@ DynEntCl_DynEntImpactEvent_150:
 	mov [esp], ebx
 	call CM_CalcTraceExtents
 	mov dword [ebp-0xa8], 0x0
-	mov dword [ebp-0xa4], g_clients+0x9be13
+	mov dword [ebp-0xa4], 0x802013
 	mov dword [ebp-0xa0], 0x1
 	mov dword [ebp-0x9c], 0x0
 	lea edi, [ebp-0x6c]
@@ -4186,7 +4185,7 @@ DynEntCl_DynEntImpactEvent_150:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [g_zero_dup_1+0x50]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb DynEntCl_DynEntImpactEvent_60
 	movss xmm1, dword [_float_1_00000000]
@@ -4445,7 +4444,7 @@ DynEntCl_EntityImpactEvent_110:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [g_zero_dup_1+0x40]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb DynEntCl_EntityImpactEvent_60
 	movss xmm1, dword [_float_1_00000000]
@@ -4957,7 +4956,9 @@ _cstring_process_dyn_ents:		db "process dyn ents",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float__1_41421354:		dd 0xbfb504f3	; -1.41421
 _float_1_41421354:		dd 0x3fb504f3	; 1.41421

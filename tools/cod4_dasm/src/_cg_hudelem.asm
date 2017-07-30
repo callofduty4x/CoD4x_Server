@@ -340,7 +340,7 @@ DrawHudElemString:
 	mov edi, [ebp+0x18]
 	movss xmm2, dword [edi+0xc]
 	subss xmm2, [edi+0x220]
-	xorps xmm2, [s_alignScale+0x10]
+	xorps xmm2, [_data16_80000000]
 	mov eax, [edi+0x234]
 	mov edx, [esi+0x6c]
 	test edx, edx
@@ -1098,14 +1098,14 @@ DrawOffscreenViewableWaypoint_320:
 	movaps xmm0, xmm6
 	jmp DrawOffscreenViewableWaypoint_410
 DrawOffscreenViewableWaypoint_80:
-	movss xmm1, dword [s_alignScale+0x20]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [ebp-0x48]
 	xorps xmm0, xmm1
 	movss [ebp-0x3c], xmm0
 	movss xmm2, dword [ebp-0x44]
 	xorps xmm2, xmm1
 	movss [ebp-0x38], xmm2
-	movss xmm3, dword [s_alignScale+0x30]
+	movss xmm3, dword [_data16_7fffffff]
 	andps xmm0, xmm3
 	movss xmm1, dword [_float_0_00100000]
 	ucomiss xmm1, xmm0
@@ -1475,7 +1475,7 @@ CG_Draw2dHudElems_1360:
 CG_Draw2dHudElems_230:
 	movss xmm2, dword [ebp-0x390]
 	subss xmm2, xmm4
-	xorps xmm2, [s_alignScale+0x40]
+	xorps xmm2, [_data16_80000000]
 	mov ecx, [ebp-0x1404]
 	mov edx, [ecx+0x6c]
 	test edx, edx
@@ -2213,7 +2213,7 @@ CG_Draw2dHudElems_790:
 CG_Draw2dHudElems_1200:
 	movss xmm2, dword [ebp-0x390]
 	subss xmm2, xmm4
-	xorps xmm2, [s_alignScale+0x40]
+	xorps xmm2, [_data16_80000000]
 	mov edx, [ecx+0x6c]
 	test edx, edx
 	jle CG_Draw2dHudElems_830
@@ -3447,6 +3447,7 @@ _cstring_waypointplayerof2:		db "waypointPlayerOffsetStand",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_00000000:		dd 0x0	; 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00392157:		dd 0x3b808081	; 0.00392157
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
@@ -3454,6 +3455,7 @@ _float_0_10000000:		dd 0x3dcccccd	; 0.1
 _float_180_00000000:		dd 0x43340000	; 180
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
 _float__0_50000000:		dd 0xbf000000	; -0.5
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_360_00000000:		dd 0x43b40000	; 360
 _float_0_25000000:		dd 0x3e800000	; 0.25

@@ -538,7 +538,7 @@ Phys_ClipCylinderEndcapToPoly:
 	addss xmm2, xmm0
 	ucomiss xmm2, [_float_0_00000000]
 	jbe Phys_ClipCylinderEndcapToPoly_10
-	movss xmm1, dword [circleCoords.131667+0x40]
+	movss xmm1, dword [_data16_80000000]
 	xorps xmm5, xmm1
 	xorps xmm6, xmm1
 	xor dword [ebp-0xb4], 0x80000000
@@ -686,7 +686,7 @@ Phys_ClipCylinderEndcapToPoly_20:
 	movaps xmm0, xmm2
 	jmp Phys_ClipCylinderEndcapToPoly_40
 Phys_ClipCylinderEndcapToPoly_10:
-	movss xmm1, dword [circleCoords.131667+0x40]
+	movss xmm1, dword [_data16_80000000]
 	jmp Phys_ClipCylinderEndcapToPoly_50
 	nop
 
@@ -739,7 +739,7 @@ Phys_TestCircleToEdgeAxis_10:
 	mulss xmm0, xmm7
 	addss xmm6, xmm0
 	movaps xmm1, xmm6
-	andps xmm1, [circleCoords.131667+0x50]
+	andps xmm1, [_data16_7fffffff]
 	movss xmm0, dword [_float_0_00001000]
 	ucomiss xmm0, xmm1
 	ja Phys_TestCircleToEdgeAxis_20
@@ -866,7 +866,7 @@ Phys_TestCircleToEdgeAxis_30:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [circleCoords.131667+0x60]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb Phys_TestCircleToEdgeAxis_40
@@ -962,7 +962,7 @@ Phys_CollideCylinderWithFace:
 Phys_CollideCylinderWithFace_30:
 	mov dword [ebp-0x4c], 0x0
 	mov dword [ebp-0x50], 0x7f7fffff
-	movss xmm0, dword [circleCoords.131667+0x70]
+	movss xmm0, dword [_data16_80000000]
 	xorps xmm6, xmm0
 	movss [ebp-0x3c], xmm6
 	xorps xmm5, xmm0
@@ -1039,7 +1039,7 @@ Phys_CollideCylinderWithFace_280:
 	movaps xmm1, xmm5
 	mulss xmm1, [eax+0x8]
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x80]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_0_02000000]
 	ja Phys_CollideCylinderWithFace_60
 	mov ebx, [ebp-0x1928]
@@ -1085,7 +1085,7 @@ Phys_CollideCylinderWithFace_80:
 	mov ecx, [ebp-0x18e4]
 	mulss xmm1, [ecx]
 	addss xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm5, xmm0
 	addss xmm5, xmm2
 	movss [ebp-0x3c], xmm5
@@ -1104,7 +1104,7 @@ Phys_CollideCylinderWithFace_80:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Phys_CollideCylinderWithFace_90
 	movss xmm1, dword [_float_1_00000000]
@@ -1158,7 +1158,7 @@ Phys_CollideCylinderWithFace_70:
 	mov eax, [ebp-0x18f4]
 	addss xmm0, [eax]
 	movss [ebp-0x60], xmm0
-	xorps xmm1, [circleCoords.131667+0x70]
+	xorps xmm1, [_data16_80000000]
 	movaps xmm0, xmm1
 	mov edx, [ebp-0x18ec]
 	mulss xmm0, [edx]
@@ -1268,7 +1268,7 @@ Phys_CollideCylinderWithFace_180:
 	addss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
 	jb Phys_CollideCylinderWithFace_190
@@ -1349,10 +1349,10 @@ Phys_CollideCylinderWithFace_590:
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
 	jbe Phys_CollideCylinderWithFace_210
-	xorps xmm4, [circleCoords.131667+0x70]
+	xorps xmm4, [_data16_80000000]
 	xor dword [ebp-0x1894], 0x80000000
-	xorps xmm7, [circleCoords.131667+0x70]
-	xorps xmm1, [circleCoords.131667+0x70]
+	xorps xmm7, [_data16_80000000]
+	xorps xmm1, [_data16_80000000]
 Phys_CollideCylinderWithFace_210:
 	movaps xmm2, xmm1
 	mulss xmm2, xmm4
@@ -1457,7 +1457,7 @@ Phys_CollideCylinderWithFace_220:
 	mulss xmm0, xmm1
 	addss xmm0, xmm4
 	movss [ebp-0x60], xmm0
-	xorps xmm1, [circleCoords.131667+0x70]
+	xorps xmm1, [_data16_80000000]
 	movss xmm0, dword [ebp-0x188c]
 	mulss xmm0, xmm1
 	addss xmm2, xmm0
@@ -1506,13 +1506,13 @@ Phys_CollideCylinderWithFace_220:
 	test eax, eax
 	jz Phys_CollideCylinderWithFace_40
 	movss xmm0, dword [ebp-0xc68]
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x3c], xmm0
 	movss xmm0, dword [ebp-0xc64]
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x38], xmm0
 	movss xmm2, dword [ebp-0xc60]
-	xorps xmm2, [circleCoords.131667+0x70]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x34], xmm2
 	movss xmm1, dword [ebx]
 	mulss xmm1, [ebp-0x3c]
@@ -1656,11 +1656,11 @@ Phys_CollideCylinderWithFace_290:
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jbe Phys_CollideCylinderWithFace_310
-	xorps xmm4, [circleCoords.131667+0x70]
+	xorps xmm4, [_data16_80000000]
 	movss [ebp-0x3c], xmm4
-	xorps xmm3, [circleCoords.131667+0x70]
+	xorps xmm3, [_data16_80000000]
 	movss [ebp-0x38], xmm3
-	xorps xmm2, [circleCoords.131667+0x70]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x34], xmm2
 Phys_CollideCylinderWithFace_310:
 	movaps xmm3, xmm4
@@ -1690,7 +1690,7 @@ Phys_CollideCylinderWithFace_310:
 	addss xmm1, xmm2
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
 	jb Phys_CollideCylinderWithFace_320
@@ -1861,7 +1861,7 @@ Phys_CollideCylinderWithFace_130:
 	movaps xmm1, xmm7
 	mulss xmm1, [edx+0x8]
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x80]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	ucomisd xmm0, [_double_0_90000000]
 	jae Phys_CollideCylinderWithFace_390
@@ -1883,7 +1883,7 @@ Phys_CollideCylinderWithFace_130:
 	movaps xmm1, xmm7
 	mulss xmm1, xmm3
 	addss xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss xmm5, dword [ebp-0x18e0]
 	mulss xmm5, xmm0
 	addss xmm5, xmm4
@@ -1902,7 +1902,7 @@ Phys_CollideCylinderWithFace_130:
 	addss xmm0, xmm1
 	sqrtss xmm6, xmm0
 	movaps xmm0, xmm6
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Phys_CollideCylinderWithFace_400
 	movss xmm0, dword [_float_1_00000000]
@@ -1942,7 +1942,7 @@ Phys_CollideCylinderWithFace_410:
 	mulss xmm0, [edx]
 	addss xmm0, xmm4
 	movss [ebp-0xc60], xmm0
-	xorps xmm1, [circleCoords.131667+0x70]
+	xorps xmm1, [_data16_80000000]
 	movaps xmm0, xmm1
 	mulss xmm0, [ebx]
 	addss xmm2, xmm0
@@ -2316,18 +2316,18 @@ Phys_CollideCylinderWithFace_510:
 	jb Phys_CollideCylinderWithFace_520
 Phys_CollideCylinderWithFace_540:
 	movss xmm0, dword [edi+0x94]
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm3, xmm0
 	jb Phys_CollideCylinderWithFace_530
-	xorps xmm4, [circleCoords.131667+0x70]
+	xorps xmm4, [_data16_80000000]
 	movss [ebp-0x3c], xmm4
 	mov edx, [ebp-0x18d0]
 	movss xmm0, dword [edx]
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x38], xmm0
 	mov ecx, [ebp-0x18cc]
 	movss xmm0, dword [ecx]
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x34], xmm0
 	mov eax, [ebp+0x8]
 	mov [esp+0x10], eax
@@ -2389,7 +2389,7 @@ Phys_CollideCylinderWithFace_450:
 	jmp Phys_CollideCylinderWithFace_580
 Phys_CollideCylinderWithFace_200:
 	movss xmm0, dword [edi+0x94]
-	xorps xmm0, [circleCoords.131667+0x70]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm2, xmm4
 	mulss xmm2, xmm0
 	movss [ebp-0x1898], xmm2
@@ -2423,7 +2423,7 @@ Phys_CollideCylinderWithBrush:
 	mov eax, [ebp+0x8]
 	movss xmm0, dword [eax]
 	movss [ebp-0xd38], xmm0
-	xorps xmm0, [circleCoords.131667+0x90]
+	xorps xmm0, [_data16_80000000]
 	mov edx, 0xbf800000
 	mov [ebp-0x100], edx
 	movss [ebp-0xfc], xmm1
@@ -2439,7 +2439,7 @@ Phys_CollideCylinderWithBrush:
 	mov ecx, [ebp+0x8]
 	movss xmm0, dword [ecx+0x4]
 	movss [ebp-0xd3c], xmm0
-	xorps xmm0, [circleCoords.131667+0x90]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0xe0], xmm1
 	mov [ebp-0xdc], edx
 	movss [ebp-0xd8], xmm1
@@ -2452,7 +2452,7 @@ Phys_CollideCylinderWithBrush:
 	movss [ebp-0xc4], xmm0
 	movss xmm0, dword [ecx+0x8]
 	movss [ebp-0xd40], xmm0
-	xorps xmm0, [circleCoords.131667+0x90]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0xc0], xmm1
 	movss [ebp-0xbc], xmm1
 	mov [ebp-0xb8], edx

@@ -4,7 +4,6 @@
 	extern compassMaxRange
 	extern compassRadarLineThickness
 	extern cg_hudMapRadarLineThickness
-	extern g_fltMin__uint4
 	extern compassEnemyFootstepMaxRange
 	extern compassEnemyFootstepMaxZ
 	extern cg_entitiesArray
@@ -129,7 +128,7 @@ ActorUpdatePos_60:
 	mulss xmm1, [_float_0_50000000]
 	movss xmm3, dword [ecx+0x5049c]
 	movss xmm4, dword [ecx+0x50498]
-	xorps xmm4, [g_fltMin__uint4+0x190]
+	xorps xmm4, [_data16_80000000]
 	movaps xmm2, xmm3
 	mulss xmm2, [ecx+0x504a4]
 	movaps xmm0, xmm4
@@ -222,7 +221,7 @@ ActorUpdatePos_40:
 	mulss xmm1, xmm1
 	ucomiss xmm0, xmm1
 	ja ActorUpdatePos_30
-	andps xmm3, [g_fltMin__uint4+0x1a0]
+	andps xmm3, [_data16_7fffffff]
 	mov eax, compassEnemyFootstepMaxZ
 	mov eax, [eax]
 	ucomiss xmm3, [eax+0xc]
@@ -1488,7 +1487,7 @@ CG_CompassDrawFriendlies_190:
 	mov edx, [ebp-0x90]
 	cmp [eax+0xe8], edx
 	jz CG_CompassDrawFriendlies_70
-	movss xmm2, dword [g_fltMin__uint4+0x170]
+	movss xmm2, dword [_data16_7fffffff]
 	movss xmm1, dword [ebx+0x4]
 	movaps xmm0, xmm1
 	andps xmm0, xmm2
@@ -1694,7 +1693,7 @@ CG_CompassDrawRadarEffects_90:
 	mov edx, cgArray
 	movss xmm0, dword [edx+0x5049c]
 	movss xmm1, dword [edx+0x50498]
-	xorps xmm1, [g_fltMin__uint4+0x160]
+	xorps xmm1, [_data16_80000000]
 	movaps xmm3, xmm0
 	mulss xmm3, [edx+0x492e0]
 	movaps xmm2, xmm1
@@ -1809,7 +1808,7 @@ CG_CompassDrawRadarEffects_60:
 	movss [esp+0x24], xmm0
 	xor eax, eax
 	mov [esp+0x20], eax
-	xorps xmm3, [g_fltMin__uint4+0x160]
+	xorps xmm3, [_data16_80000000]
 	divss xmm3, xmm4
 	addss xmm3, [ebp-0x30]
 	movss [esp+0x1c], xmm3
@@ -2148,7 +2147,7 @@ CG_CompassRadarPingEnemyPlayers_110:
 	movss xmm0, dword [eax+0x5049c]
 	movss [ebp-0x1c], xmm0
 	movss xmm6, dword [eax+0x50498]
-	xorps xmm6, [g_fltMin__uint4+0x180]
+	xorps xmm6, [_data16_80000000]
 	movaps xmm4, xmm0
 	mulss xmm4, [eax+0x504a4]
 	movaps xmm0, xmm6
@@ -2290,6 +2289,8 @@ _cstring_g_compassshowene:		db "g_compassShowEnemies",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1

@@ -44,7 +44,6 @@
 	extern FX_SpawnAllFutureLooping
 	extern fx_enable
 	extern FX_GetBoneOrientation
-	extern g_fltMin__uint4_dup_1
 	extern fx_visMinTraceDist
 	extern InterlockedDecrement
 	extern FX_GetOriginForTrailElem
@@ -3274,7 +3273,7 @@ FX_GetClientVisibility_20:
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x30]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb FX_GetClientVisibility_30
 	movss xmm5, dword [_float_1_00000000]
@@ -3317,7 +3316,7 @@ FX_GetClientVisibility_60:
 	addss xmm3, xmm0
 	movaps xmm0, xmm3
 	subss xmm0, [ebp-0x1c]
-	andps xmm0, [g_fltMin__uint4_dup_1+0x20]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [ebp-0x1c]
 	ja FX_GetClientVisibility_50
 	movss xmm1, dword [ebp-0xc]
@@ -3993,9 +3992,11 @@ _cstring_failed_to_find_s:		db "Failed to find sound alias ",27h,"%s",27h,0ah,0
 SECTION .rdata
 _float_1000_00000000:		dd 0x447a0000	; 1000
 _float_360_00000000:		dd 0x43b40000	; 360
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_06250000:		dd 0x3d800000	; 0.0625
 _float_0_00001526:		dd 0x37800000	; 1.52588e-05
 _float_127_00000000:		dd 0x42fe0000	; 127

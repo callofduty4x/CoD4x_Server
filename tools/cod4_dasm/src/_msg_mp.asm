@@ -5,7 +5,7 @@
 	extern hudElemFields
 	extern numHudElemFields
 	extern memset
-	extern I_CleanChar
+	extern Q_CleanChar
 	extern Huff_Init
 	extern Sys_Milliseconds
 	extern msg_hData
@@ -1321,7 +1321,7 @@ MSG_ReadString_30:
 MSG_ReadString_40:
 	movsx eax, bl
 	mov [esp], eax
-	call I_CleanChar
+	call Q_CleanChar
 	mov [edi+_ZZ14MSG_ReadStringP5msg_tE6string], al
 	test ebx, ebx
 	jnz MSG_ReadString_80
@@ -1410,7 +1410,7 @@ MSG_WriteString_20:
 MSG_WriteString_40:
 	movsx eax, byte [esi+edi]
 	mov [esp], eax
-	call I_CleanChar
+	call Q_CleanChar
 	mov [edi+ebp-0x418], al
 	add edi, 0x1
 	cmp edi, ebx
@@ -1601,7 +1601,7 @@ MSG_ReadBigString_40:
 MSG_ReadBigString_50:
 	movsx eax, bl
 	mov [esp], eax
-	call I_CleanChar
+	call Q_CleanChar
 	mov [edi+_ZZ17MSG_ReadBigStringP5msg_tE6string], al
 	test ebx, ebx
 	jnz MSG_ReadBigString_90
@@ -4242,7 +4242,7 @@ MSG_ReadStringLine_40:
 MSG_ReadStringLine_50:
 	movsx eax, bl
 	mov [esp], eax
-	call I_CleanChar
+	call Q_CleanChar
 	mov [edi+_ZZ18MSG_ReadStringLineP5msg_tE6string], al
 	test ebx, ebx
 	jnz MSG_ReadStringLine_100
@@ -4348,7 +4348,7 @@ MSG_WriteBigString_50:
 	lea ebx, [edi+eax]
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call I_CleanChar
+	call Q_CleanChar
 	mov [ebx], al
 	add edi, 0x1
 	cmp esi, edi

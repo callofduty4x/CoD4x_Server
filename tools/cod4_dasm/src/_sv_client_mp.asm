@@ -32,7 +32,7 @@
 	extern sv_pure
 	extern Sys_Milliseconds
 	extern FS_FOpenFileByMode
-	extern I_CleanStr
+	extern Q_CleanStr
 	extern FS_Printf
 	extern FS_FCloseFile
 	extern SV_SendServerCommand
@@ -1058,7 +1058,7 @@ SV_BanClient_30:
 	mov [esp], ebx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_CleanStr
+	call Q_CleanStr
 	mov [esp+0xc], ebx
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_s_s
@@ -1585,7 +1585,7 @@ SV_UnbanClient:
 	call Q_strncpyz
 	lea ecx, [ebp-0x60]
 	mov [esp], ecx
-	call I_CleanStr
+	call Q_CleanStr
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax

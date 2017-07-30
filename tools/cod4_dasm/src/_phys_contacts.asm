@@ -1,6 +1,5 @@
 ;Imports of phys_contacts:
 	extern phys_drawcontacts
-	extern circleCoords.131667
 	extern physGlob
 	extern Com_Printf
 	extern Vec3NormalizeTo
@@ -376,7 +375,7 @@ Phys_ReduceContacts_150:
 	addss xmm1, xmm2
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0xc0]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
 	jb Phys_ReduceContacts_140
@@ -580,7 +579,7 @@ Phys_ReduceContacts_570:
 	fstp st0
 	movss xmm5, dword [ebp-0x2c]
 	movaps xmm0, xmm5
-	andps xmm0, [circleCoords.131667+0xd0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_0_50000000]
 	jb Phys_ReduceContacts_360
 	pxor xmm1, xmm1
@@ -612,7 +611,7 @@ Phys_ReduceContacts_580:
 	addss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0xc0]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
 	jb Phys_ReduceContacts_370
@@ -650,7 +649,7 @@ Phys_ReduceContacts_600:
 	addss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0xc0]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
 	jb Phys_ReduceContacts_380
@@ -1887,9 +1886,11 @@ _cstring_maximum_number_o:		db "Maximum number of ODE physics contact points exc
 SECTION .rdata
 _float__0_99000001:		dd 0xbf7d70a4	; -0.99
 _float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__3402823466385288_float__:		dd 0xff7fffff	; -3.40282e+38
 _float_0_99900001:		dd 0x3f7fbe77	; 0.999
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_0_01000000:		dd 0x3c23d70b	; 0.01
 _float_10_00000000:		dd 0x41200000	; 10

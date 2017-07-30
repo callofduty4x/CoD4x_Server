@@ -507,7 +507,7 @@ RB_StretchPicRotateXYCmd_20:
 	mulss xmm6, [ebp-0x44]
 	movss xmm1, dword [ebp-0x58]
 	movaps xmm3, xmm1
-	xorps xmm3, [_ZZ14RB_LookupColorhPhE11color_table+0x20]
+	xorps xmm3, [_data16_80000000]
 	mulss xmm3, [ebp-0x44]
 	mulss xmm2, xmm1
 	mov edi, [esi+0x28]
@@ -670,7 +670,7 @@ RB_StretchPicRotateSTCmd_20:
 	movss xmm3, dword [ebp-0x28]
 	mulss xmm3, xmm2
 	mulss xmm3, xmm0
-	xorps xmm2, [_ZZ14RB_LookupColorhPhE11color_table+0x30]
+	xorps xmm2, [_data16_80000000]
 	mulss xmm2, [ebp-0x28]
 	mulss xmm2, xmm1
 	mulss xmm4, xmm0
@@ -2126,7 +2126,7 @@ RB_DrawStretchPicRotate_20:
 	lea eax, [ecx+0x1]
 	mov [edx+edx+tess+0x2a94a], ax
 	movss xmm2, dword [ebp-0x28]
-	xorps xmm2, [_ZZ14RB_LookupColorhPhE11color_table+0x40]
+	xorps xmm2, [_data16_80000000]
 	mulss xmm2, [ebp+0x18]
 	movss xmm3, dword [ebp+0x1c]
 	mulss xmm3, [ebp-0x28]
@@ -5983,6 +5983,7 @@ _cstring_fontssmalldevfon:		db "fonts/smalldevfont",0
 SECTION .rdata
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_99000001:		dd 0x3f7d70a4	; 0.99
 _float_252_44999695:		dd 0x437c7333	; 252.45
 _float_255_00000000:		dd 0x437f0000	; 255

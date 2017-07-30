@@ -2,7 +2,6 @@
 	extern DynEnt_GetEntityDef
 	extern DynEnt_GetEntityColl
 	extern DynEnt_GetClientEntity
-	extern _ZZ19DynEntCl_MeleeEventiiE12traceOffsets
 	extern memset
 	extern CM_ModelBounds
 	extern UnitQuatToAxis
@@ -461,7 +460,7 @@ DynEnt_EntityInArea:
 	jz DynEnt_EntityInArea_10
 	movss xmm1, dword [edx+0x1c]
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ19DynEntCl_MeleeEventiiE12traceOffsets+0x80]
+	xorps xmm0, [_data16_80000000]
 	lea eax, [edx+0x10]
 	movss xmm4, dword [edx+0x10]
 	movss xmm3, dword [eax+0x4]
@@ -752,7 +751,7 @@ DynEnt_GetRadiusDistSqr:
 	mov esi, [ebp+0xc]
 	movss xmm4, dword [eax+0x1c]
 	movaps xmm1, xmm4
-	xorps xmm1, [_ZZ19DynEntCl_MeleeEventiiE12traceOffsets+0x60]
+	xorps xmm1, [_data16_80000000]
 	lea edx, [eax+0x10]
 	movss xmm3, dword [eax+0x10]
 	movaps xmm0, xmm1
@@ -1161,7 +1160,7 @@ DynEnt_GetCylindricalRadiusDistSqr:
 	mov esi, [ebp+0xc]
 	movss xmm4, dword [eax+0x1c]
 	movaps xmm1, xmm4
-	xorps xmm1, [_ZZ19DynEntCl_MeleeEventiiE12traceOffsets+0x70]
+	xorps xmm1, [_data16_80000000]
 	lea edx, [eax+0x10]
 	movss xmm3, dword [eax+0x10]
 	movaps xmm0, xmm1
@@ -1243,4 +1242,5 @@ SECTION .rdata
 SECTION .rdata
 _float_512_00000000:		dd 0x44000000	; 512
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

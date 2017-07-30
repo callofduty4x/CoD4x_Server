@@ -231,7 +231,7 @@ FX_ImpactMark_Generate_30:
 	cmp dword [ebp+0x14], 0x3ff
 	jz FX_ImpactMark_Generate_60
 	movss xmm0, dword [ebp-0x1208]
-	xorps xmm0, [g_zero_dup_1+0x10]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
 	mov edx, [ebp+0x8]
 	addss xmm1, [edx]
@@ -5899,7 +5899,7 @@ FX_GenerateMarkVertsForEntDObj_430:
 	movss xmm7, dword [ebp-0xe8]
 	mulss xmm7, xmm2
 	addss xmm0, xmm7
-	movss xmm7, dword [g_zero_dup_1+0x20]
+	movss xmm7, dword [_data16_80000000]
 	xorps xmm0, xmm7
 	movss [ebp-0x54], xmm0
 	mulss xmm3, xmm6
@@ -8685,6 +8685,7 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_127_00000000:		dd 0x42fe0000	; 127
 _float_127_50000000:		dd 0x42ff0000	; 127.5

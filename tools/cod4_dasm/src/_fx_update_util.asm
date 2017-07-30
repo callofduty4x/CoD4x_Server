@@ -45,7 +45,7 @@ FX_CullSphere:
 	movss xmm3, dword [edx+0x8]
 	movss xmm0, dword [ebp+0x14]
 	movaps xmm2, xmm0
-	xorps xmm2, [g_fltMin__uint4_dup_1+0x10]
+	xorps xmm2, [_data16_80000000]
 	movaps xmm0, xmm5
 	mulss xmm0, [ebx+0x10]
 	movaps xmm1, xmm4
@@ -174,7 +174,7 @@ FX_GetElemAxis:
 	movss xmm3, dword [ebp-0x14]
 	mulss xmm3, xmm5
 	movss xmm4, dword [ebp-0x1c]
-	xorps xmm4, [g_fltMin__uint4_dup_1+0x40]
+	xorps xmm4, [_data16_80000000]
 	movaps xmm0, xmm2
 	mulss xmm0, [ebx+0xc]
 	movaps xmm1, xmm3
@@ -414,7 +414,7 @@ FX_GetOrientation_10:
 	mulss xmm1, xmm1
 	addss xmm0, xmm1
 	sqrtss xmm2, xmm0
-	movss xmm5, dword [g_fltMin__uint4_dup_1+0x20]
+	movss xmm5, dword [_data16_80000000]
 	movaps xmm0, xmm2
 	xorps xmm0, xmm5
 	movss xmm3, dword [ebp-0x38]
@@ -442,7 +442,7 @@ FX_GetOrientation_90:
 	cmp eax, 0x10
 	jz FX_GetOrientation_60
 	movss xmm0, dword [ebx+0x14]
-	andps xmm0, [g_fltMin__uint4_dup_1+0x30]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_0_99900001]
 	jb FX_GetOrientation_70
 	movaps xmm2, xmm4
@@ -1199,9 +1199,11 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_16_00000000:		dd 0x41800000	; 16
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_65536_00000000:		dd 0x47800000	; 65536
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_99900001:		dd 0x3f7fbe77	; 0.999
 _float_1000_00000000:		dd 0x447a0000	; 1000
 _double_6_28318531:		dq 0x401921fb54442d18	; 6.28319

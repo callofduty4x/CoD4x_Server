@@ -33,13 +33,13 @@
 	global _BigShort
 	global _ZZ16Info_ValueForKeyPKcS0_E10valueindex
 	global ColorIndex
-	global I_CleanStr
+	global Q_CleanStr
 	global Q_strncpyz
 	global Q_stricmpn
 	global Long64Swap
 	global LongNoSwap
 	global Com_sprintf
-	global I_CleanChar
+	global Q_CleanChar
 	global ShortNoSwap
 	global I_DrawStrlen
 	global Long64NoSwap
@@ -127,7 +127,7 @@ ColorIndex_10:
 
 
 ;I_CleanStr(char*)
-I_CleanStr:
+Q_CleanStr:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -136,42 +136,42 @@ I_CleanStr:
 	mov edi, [ebp+0x8]
 	movzx edx, byte [edi]
 	test dl, dl
-	jz I_CleanStr_10
+	jz Q_CleanStr_10
 	mov eax, edi
 	mov esi, edi
-	jmp I_CleanStr_20
-I_CleanStr_50:
+	jmp Q_CleanStr_20
+Q_CleanStr_50:
 	lea ecx, [eax+0x1]
-I_CleanStr_60:
+Q_CleanStr_60:
 	lea eax, [edx-0x20]
 	cmp al, 0x5e
-	ja I_CleanStr_30
+	ja Q_CleanStr_30
 	mov [esi], dl
 	add esi, 0x1
-I_CleanStr_30:
+Q_CleanStr_30:
 	movzx edx, byte [ecx]
 	test dl, dl
-	jz I_CleanStr_40
-I_CleanStr_70:
+	jz Q_CleanStr_40
+Q_CleanStr_70:
 	mov eax, ecx
-I_CleanStr_20:
+Q_CleanStr_20:
 	cmp dl, 0x5e
-	jnz I_CleanStr_50
+	jnz Q_CleanStr_50
 	lea ecx, [eax+0x1]
 	movzx ebx, byte [eax+0x1]
 	test bl, bl
-	jz I_CleanStr_60
+	jz Q_CleanStr_60
 	cmp bl, 0x5e
-	jz I_CleanStr_60
+	jz Q_CleanStr_60
 	cmp bl, 0x2f
-	jle I_CleanStr_60
+	jle Q_CleanStr_60
 	cmp bl, 0x39
-	jg I_CleanStr_60
+	jg Q_CleanStr_60
 	lea ecx, [eax+0x2]
 	movzx edx, byte [ecx]
 	test dl, dl
-	jnz I_CleanStr_70
-I_CleanStr_40:
+	jnz Q_CleanStr_70
+Q_CleanStr_40:
 	mov byte [esi], 0x0
 	mov eax, edi
 	pop ebx
@@ -179,7 +179,7 @@ I_CleanStr_40:
 	pop edi
 	pop ebp
 	ret
-I_CleanStr_10:
+Q_CleanStr_10:
 	mov esi, edi
 	mov byte [esi], 0x0
 	mov eax, edi
@@ -412,16 +412,16 @@ Com_sprintf:
 
 
 ;I_CleanChar(char)
-I_CleanChar:
+Q_CleanChar:
 	push ebp
 	mov ebp, esp
 	movzx eax, byte [ebp+0x8]
 	cmp al, 0x92
-	jz I_CleanChar_10
+	jz Q_CleanChar_10
 	movsx eax, al
 	pop ebp
 	ret
-I_CleanChar_10:
+Q_CleanChar_10:
 	mov eax, 0x27
 	pop ebp
 	ret

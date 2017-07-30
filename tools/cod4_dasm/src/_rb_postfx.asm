@@ -18,7 +18,6 @@
 	extern r_dof_bias
 	extern pow
 	extern vidConfig
-	extern g_fltMin__uint4_dup_1
 	extern R_SetRenderTargetSize
 	extern R_SetRenderTarget
 	extern RB_GaussianFilterImage
@@ -415,7 +414,7 @@ RB_ProcessPostEffects_620:
 	add word [ebx+0xe4c], 0x1
 RB_ProcessPostEffects_630:
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x120]
+	xorps xmm0, [_data16_80000000]
 	divss xmm0, xmm2
 	divss xmm1, xmm5
 	movss xmm2, dword [_float_1_00000000]
@@ -1057,6 +1056,7 @@ _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_672_00000000:		dd 0x44280000	; 672
 _float_1728_00000000:		dd 0x44d80000	; 1728
 _float__1_00000000:		dd 0xbf800000	; -1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1440_00000000:		dd 0x44b40000	; 1440
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_0_25000000:		dd 0x3e800000	; 0.25

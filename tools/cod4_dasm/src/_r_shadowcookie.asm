@@ -610,7 +610,7 @@ R_GenerateShadowCookiesCmd_510:
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	lea edx, [eax+0x11e6e0]
-	movss xmm5, dword [shadowFrustumSidePlanes+0x50]
+	movss xmm5, dword [_data16_80000000]
 	movss xmm2, dword [eax+0x11e6e0]
 	xorps xmm2, xmm5
 	movss [ebp-0x74], xmm2
@@ -1980,6 +1980,7 @@ _cstring_cookie_casters:		db "cookie casters",0
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00000000:		dd 0x0	; 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_10000000:		dd 0x3dcccccd	; 0.1
 _float_2_00000000:		dd 0x40000000	; 2
 _float_0_93750000:		dd 0x3f700000	; 0.9375

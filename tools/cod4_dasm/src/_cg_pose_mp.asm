@@ -853,7 +853,7 @@ CG_VehPoseControllers_20:
 	movss [ebp-0x64], xmm0
 	movss xmm0, dword [ebp-0x194]
 	addss xmm0, [ebp-0x60]
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x10]
+	xorps xmm1, [_data16_80000000]
 	movss xmm2, dword [ebp-0x1a8]
 	mulss xmm2, xmm1
 	addss xmm2, [ebp-0x68]
@@ -1084,4 +1084,5 @@ _float_360_00000000:		dd 0x43b40000	; 360
 _float_0_00549316:		dd 0x3bb40000	; 0.00549316
 _float_40_00000000:		dd 0x42200000	; 40
 _float_0_00001526:		dd 0x37800080	; 1.5259e-05
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

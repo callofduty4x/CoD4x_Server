@@ -5,7 +5,6 @@
 	extern bulletPriorityMap
 	extern Trace_GetEntityHitId
 	extern g_entities
-	extern dynEntCollWorlds
 	extern sv_clientSideBullets
 	extern G_TempEntity
 	extern BG_GetWeaponIndex
@@ -26,7 +25,6 @@
 	extern BG_GetSurfacePenetrationDepth
 	extern perk_bulletPenetrationMultiplier
 	extern Com_Memcpy
-	extern g_fltMin__uint4_dup_1
 	extern bullet_penetrationMinFxDist
 	extern tan
 	extern cosf
@@ -183,7 +181,7 @@ Bullet_Trace_60:
 	mov edx, [edi+0x10]
 	test edx, edx
 	jnz Bullet_Trace_100
-	mov dword [edi+0x10], dynEntCollWorlds+0x5a00
+	mov dword [edi+0x10], 0x700000
 	jmp Bullet_Trace_100
 
 
@@ -741,13 +739,13 @@ Bullet_Fire_190:
 	mov [esp], ebx
 	call Com_Memcpy
 	movss xmm0, dword [ebp-0x2c]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x6c], xmm0
 	movss xmm1, dword [ebp-0x28]
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x70]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0x68], xmm1
 	movss xmm2, dword [ebp-0x24]
-	xorps xmm2, [g_fltMin__uint4_dup_1+0x70]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x64], xmm2
 	mov eax, [ebp-0x38]
 	mov [ebp-0x84], eax
@@ -770,13 +768,13 @@ Bullet_Fire_190:
 	mov [esp], eax
 	call Com_Memcpy
 	movss xmm0, dword [ebp-0xe0]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0xe0], xmm0
 	movss xmm0, dword [ebp-0xdc]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0xdc], xmm0
 	movss xmm0, dword [ebp-0xd8]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x70]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0xd8], xmm0
 	cmp byte [ebp-0x47d], 0x0
 	jnz Bullet_Fire_200
@@ -1307,7 +1305,7 @@ Bullet_Endpos_150:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x60]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Bullet_Endpos_130
 	movss xmm1, dword [_float_1_00000000]
@@ -1368,6 +1366,7 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00000000:		dd 0x0	; 0
 _float_8192_00000000:		dd 0x46000000	; 8192
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _double_0_00000000:		dq 0x3e00000000200000	; 4.65661e-10

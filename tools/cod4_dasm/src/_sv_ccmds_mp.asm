@@ -29,7 +29,7 @@
 	extern SV_AddServerCommand
 	extern ClientConnect
 	extern SV_ClientEnterWorld
-	extern I_CleanStr
+	extern Q_CleanStr
 	extern SV_SendServerCommand
 	extern sv_mapname
 	extern SV_GameClientNum
@@ -429,7 +429,7 @@ SV_KickClient:
 	mov [esp], edx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_CleanStr
+	call Q_CleanStr
 SV_KickClient_20:
 	lea edx, [edi+0xa0cf8]
 	mov eax, [edi+0xa0cf8]
@@ -1162,7 +1162,7 @@ SV_GetPlayerByName_40:
 	call Q_strncpyz
 	lea eax, [ebp-0x58]
 	mov [esp], eax
-	call I_CleanStr
+	call Q_CleanStr
 	mov eax, [ebp-0x5c]
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x58]

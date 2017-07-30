@@ -1,5 +1,4 @@
 ;Imports of lpc:
-	extern msg_hData
 
 ;Exports of lpc:
 	global _spx_autocorr
@@ -97,7 +96,7 @@ _spx_lpc_10:
 	mov [ebp-0x1c], ecx
 	mov edi, [ebp+0x8]
 	xor esi, esi
-	movss xmm4, dword [msg_hData+0x600]
+	movss xmm4, dword [_data16_80000000]
 	movsd xmm5, qword [_double_0_00300000]
 _spx_lpc_80:
 	movss xmm2, dword [ecx+0x4]
@@ -218,5 +217,6 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_10_00000000:		dd 0x41200000	; 10
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_0_00300000:		dq 0x3f689374bc6a7efa	; 0.003
 

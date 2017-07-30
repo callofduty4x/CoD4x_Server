@@ -1922,7 +1922,7 @@ R_CylinderSurfaces_r_150:
 	mov [ebp-0x2c], eax
 	mov eax, [ecx+0x8]
 	mov [ebp-0x28], eax
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x20]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x84], xmm0
 R_CylinderSurfaces_r_180:
 	movzx ecx, word [ebx]
@@ -1970,7 +1970,7 @@ R_CylinderSurfaces_r_30:
 	pxor xmm3, xmm3
 	ucomiss xmm0, xmm3
 	jbe R_CylinderSurfaces_r_20
-	movss xmm1, dword [g_fltMin__uint4_dup_1+0x10]
+	movss xmm1, dword [_data16_7fffffff]
 	movaps xmm0, xmm5
 	andps xmm0, xmm1
 	ucomiss xmm0, [ebp-0x80]
@@ -3720,7 +3720,7 @@ R_MarkFragments_Go_210:
 	movss xmm1, dword [ebp-0x804]
 	mulss xmm1, xmm2
 	addss xmm3, xmm1
-	xorps xmm3, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm3, [_data16_80000000]
 	movss [ebp-0xf0], xmm3
 	mulss xmm6, xmm4
 	movss xmm1, dword [ebp-0x970]
@@ -3728,7 +3728,7 @@ R_MarkFragments_Go_210:
 	addss xmm6, xmm1
 	mulss xmm7, xmm2
 	addss xmm6, xmm7
-	xorps xmm6, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm6, [_data16_80000000]
 	movss [ebp-0xec], xmm6
 	mulss xmm4, [ebp-0x7f8]
 	movss xmm3, dword [ebp-0x800]
@@ -3913,14 +3913,14 @@ R_MarkFragments_Go_240:
 	movss xmm7, dword [ebp-0x7f0]
 	mulss xmm7, xmm2
 	addss xmm0, xmm7
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x150], xmm0
 	mulss xmm3, xmm6
 	mulss xmm1, [ebp-0xa0]
 	addss xmm3, xmm1
 	mulss xmm5, xmm2
 	addss xmm3, xmm5
-	xorps xmm3, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm3, [_data16_80000000]
 	movss [ebp-0x14c], xmm3
 	mulss xmm4, xmm6
 	movss xmm0, dword [ebp-0x7ec]
@@ -3928,7 +3928,7 @@ R_MarkFragments_Go_240:
 	addss xmm4, xmm0
 	mulss xmm2, [ebp-0x7f4]
 	addss xmm4, xmm2
-	xorps xmm4, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm4, [_data16_80000000]
 	movss [ebp-0x148], xmm4
 	movss xmm0, dword [ebp-0x834]
 	addss xmm0, [ebp-0x828]
@@ -3989,7 +3989,7 @@ R_MarkFragments_Go_240:
 	mov eax, [ebp+0x8]
 	movss xmm2, dword [eax+0x48]
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
 	addss xmm1, [eax+0xc]
 	movss [ebp-0x28], xmm1
@@ -4635,7 +4635,7 @@ R_MarkFragments_Go_470:
 	lea ebx, [ebp-0x7d8]
 	mov [esp], ebx
 	call MatrixTranspose
-	movss xmm0, dword [g_fltMin__uint4_dup_1+0x50]
+	movss xmm0, dword [_data16_80000000]
 	movss xmm2, dword [ebp-0x7b4]
 	xorps xmm2, xmm0
 	movss xmm3, dword [ebp-0x7b0]
@@ -5160,7 +5160,7 @@ R_MarkFragments_Go_640:
 	mov edx, [ebp+0x8]
 	mulss xmm2, [edx+0x48]
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm3
 	addss xmm1, xmm0
 	movss [ebp-0x74], xmm1
@@ -5282,7 +5282,7 @@ R_MarkFragments_Begin:
 	lea ebx, [edi+0x30]
 	lea ecx, [edi+0x3c]
 	mov dword [ebp-0xac], 0x1
-	movss xmm2, dword [g_fltMin__uint4_dup_1+0x30]
+	movss xmm2, dword [_data16_7fffffff]
 R_MarkFragments_Begin_10:
 	movss xmm1, dword [esi]
 	andps xmm1, xmm2
@@ -5316,7 +5316,7 @@ R_MarkFragments_Begin_10:
 	lea eax, [edi+0x78]
 	lea ecx, [edi+0x88]
 	mov ebx, 0x3
-	movss xmm3, dword [g_fltMin__uint4_dup_1+0x40]
+	movss xmm3, dword [_data16_80000000]
 R_MarkFragments_Begin_20:
 	movss xmm0, dword [edx]
 	movss [eax], xmm0
@@ -5589,6 +5589,8 @@ _cstring_r_markfragments_:		db "R_MarkFragments: Too many triangles to mark, max
 SECTION .rdata
 _float__0_50000000:		dd 0xbf000000	; -0.5
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00000000:		dd 0x0	; 0
 _float_0_25000000:		dd 0x3e800000	; 0.25

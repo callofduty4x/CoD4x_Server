@@ -8,7 +8,6 @@
 	extern memset
 	extern Cvar_RegisterFloat
 	extern cgArray
-	extern g_clients
 	extern vec3_origin
 	extern CG_TraceCapsule
 	extern Trace_GetEntityHitId
@@ -283,7 +282,7 @@ AimTarget_ProcessEntity_100:
 	mov [ebp-0x2c], eax
 	mov eax, [edx+0x492e8]
 	mov [ebp-0x28], eax
-	mov dword [esp+0x18], g_clients+0x9ce03
+	mov dword [esp+0x18], 0x803003
 	mov eax, [edx+0x46218]
 	mov [esp+0x14], eax
 	mov [esp+0x10], esi

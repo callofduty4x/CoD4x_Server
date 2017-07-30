@@ -6,7 +6,6 @@
 	extern AudioUnitGetProperty
 	extern AudioUnitSetProperty
 	extern AudioUnitSetParameter
-	extern _ZZ15SND_PlayLocal_fvE7MYCOLOR
 	extern _ZN6CMutexC1Ev
 	extern _ZNK12CSoundEngine21GetDefaultMaxDistanceEv
 	extern _ZNK12CSoundEngine27GetDefaultReferenceDistanceEv
@@ -1230,10 +1229,10 @@ _ZN12CSoundObject22get_sample_ms_positionEPiS0__100:
 	movaps xmm0, xmm1
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x80]
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x90]
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -1265,10 +1264,10 @@ _ZN12CSoundObject22get_sample_ms_positionEPiS0__80:
 	movaps xmm0, xmm1
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x80]
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x90]
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -1354,10 +1353,10 @@ _ZN12CSoundObject22set_sample_ms_positionEi_50:
 	movaps xmm0, xmm1
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0xa0]
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0xb0]
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -1838,5 +1837,7 @@ SECTION .rdata
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_1000_00000000:		dd 0x447a0000	; 1000
+_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; OWORD
+_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 

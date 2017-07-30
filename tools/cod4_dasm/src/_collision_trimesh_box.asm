@@ -1,5 +1,4 @@
 ;Imports of collision_trimesh_box:
-	extern circleCoords.131667
 	extern dNormalize3
 
 ;Exports of collision_trimesh_box:
@@ -339,7 +338,7 @@ dCollideBoxTriangleList_40:
 	sqrtss xmm2, xmm2
 	movss [ebp-0x42c], xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb dCollideBoxTriangleList_60
@@ -424,7 +423,7 @@ dCollideBoxTriangleList_70:
 	movss xmm0, dword [ebp-0x400]
 	mulss xmm0, xmm7
 	addss xmm2, xmm0
-	andps xmm2, [circleCoords.131667+0x3b0]
+	andps xmm2, [_data16_7fffffff]
 	mulss xmm2, [ebp-0x304]
 	movss xmm0, dword [ebp-0x3ec]
 	mulss xmm0, xmm5
@@ -434,7 +433,7 @@ dCollideBoxTriangleList_70:
 	movss xmm1, dword [ebp-0x3f4]
 	mulss xmm1, xmm7
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x300]
 	addss xmm2, xmm0
 	movss xmm0, dword [ebp-0x3e0]
@@ -445,7 +444,7 @@ dCollideBoxTriangleList_70:
 	movss xmm1, dword [ebp-0x3e8]
 	mulss xmm1, xmm7
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x2fc]
 	addss xmm2, xmm0
 	addss xmm2, xmm3
@@ -467,13 +466,13 @@ dCollideBoxTriangleList_70:
 	movss xmm0, dword [ebp-0x2e4]
 	ucomiss xmm0, xmm2
 	jbe dCollideBoxTriangleList_80
-	xorps xmm5, [circleCoords.131667+0x3a0]
+	xorps xmm5, [_data16_80000000]
 	mulss xmm5, xmm1
 	movss [ebp-0x2f4], xmm5
-	xorps xmm6, [circleCoords.131667+0x3a0]
+	xorps xmm6, [_data16_80000000]
 	mulss xmm6, xmm1
 	movss [ebp-0x2f0], xmm6
-	xorps xmm7, [circleCoords.131667+0x3a0]
+	xorps xmm7, [_data16_80000000]
 	mulss xmm7, xmm1
 	movss [ebp-0x2ec], xmm7
 	mov dword [ebp-0x2e0], 0x1
@@ -539,11 +538,11 @@ dCollideBoxTriangleList_120:
 	ucomiss xmm0, xmm1
 	jbe dCollideBoxTriangleList_130
 	movss xmm5, dword [ebp-0x3f8]
-	xorps xmm5, [circleCoords.131667+0x3a0]
+	xorps xmm5, [_data16_80000000]
 	movss xmm1, dword [ebp-0x3fc]
-	xorps xmm1, [circleCoords.131667+0x3a0]
+	xorps xmm1, [_data16_80000000]
 	movss xmm4, dword [ebp-0x400]
-	xorps xmm4, [circleCoords.131667+0x3a0]
+	xorps xmm4, [_data16_80000000]
 	movaps xmm2, xmm3
 dCollideBoxTriangleList_690:
 	movss xmm0, dword [ebp-0x2e4]
@@ -615,11 +614,11 @@ dCollideBoxTriangleList_180:
 	ucomiss xmm0, xmm1
 	jbe dCollideBoxTriangleList_190
 	movss xmm5, dword [ebp-0x3ec]
-	xorps xmm5, [circleCoords.131667+0x3a0]
+	xorps xmm5, [_data16_80000000]
 	movss xmm1, dword [ebp-0x3f0]
-	xorps xmm1, [circleCoords.131667+0x3a0]
+	xorps xmm1, [_data16_80000000]
 	movss xmm4, dword [ebp-0x3f4]
-	xorps xmm4, [circleCoords.131667+0x3a0]
+	xorps xmm4, [_data16_80000000]
 	movaps xmm2, xmm3
 dCollideBoxTriangleList_700:
 	movss xmm0, dword [ebp-0x2e4]
@@ -691,11 +690,11 @@ dCollideBoxTriangleList_240:
 	ucomiss xmm0, xmm1
 	jbe dCollideBoxTriangleList_250
 	movss xmm5, dword [ebp-0x3e0]
-	xorps xmm5, [circleCoords.131667+0x3a0]
+	xorps xmm5, [_data16_80000000]
 	movss xmm1, dword [ebp-0x3e4]
-	xorps xmm1, [circleCoords.131667+0x3a0]
+	xorps xmm1, [_data16_80000000]
 	movss xmm4, dword [ebp-0x3e8]
-	xorps xmm4, [circleCoords.131667+0x3a0]
+	xorps xmm4, [_data16_80000000]
 	movaps xmm2, xmm3
 dCollideBoxTriangleList_710:
 	movss xmm0, dword [ebp-0x2e4]
@@ -758,7 +757,7 @@ dCollideBoxTriangleList_260:
 	movss xmm0, dword [ebp-0x3e8]
 	mulss xmm0, [ebp-0x438]
 	addss xmm2, xmm0
-	andps xmm2, [circleCoords.131667+0x3b0]
+	andps xmm2, [_data16_7fffffff]
 	mulss xmm2, [ebp-0x300]
 	movss xmm0, dword [ebp-0x3ec]
 	mulss xmm0, [ebp-0x430]
@@ -768,7 +767,7 @@ dCollideBoxTriangleList_260:
 	movss xmm1, dword [ebp-0x3f4]
 	mulss xmm1, [ebp-0x438]
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x2fc]
 	addss xmm2, xmm0
 	ucomiss xmm3, xmm4
@@ -789,9 +788,9 @@ dCollideBoxTriangleList_270:
 	ja dCollideBoxTriangleList_30
 	ucomiss xmm3, xmm0
 	jbe dCollideBoxTriangleList_280
-	xorps xmm6, [circleCoords.131667+0x3a0]
-	xorps xmm7, [circleCoords.131667+0x3a0]
-	xorps xmm5, [circleCoords.131667+0x3a0]
+	xorps xmm6, [_data16_80000000]
+	xorps xmm7, [_data16_80000000]
+	xorps xmm5, [_data16_80000000]
 	movaps xmm3, xmm0
 dCollideBoxTriangleList_280:
 	movaps xmm0, xmm6
@@ -866,7 +865,7 @@ dCollideBoxTriangleList_290:
 	movss xmm0, dword [ebp-0x3e8]
 	mulss xmm0, [ebp-0x444]
 	addss xmm2, xmm0
-	andps xmm2, [circleCoords.131667+0x3b0]
+	andps xmm2, [_data16_7fffffff]
 	mulss xmm2, [ebp-0x300]
 	movss xmm0, dword [ebp-0x3ec]
 	mulss xmm0, [ebp-0x43c]
@@ -876,7 +875,7 @@ dCollideBoxTriangleList_290:
 	movss xmm1, dword [ebp-0x3f4]
 	mulss xmm1, [ebp-0x444]
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x2fc]
 	addss xmm2, xmm0
 	ucomiss xmm4, xmm3
@@ -897,9 +896,9 @@ dCollideBoxTriangleList_300:
 	ja dCollideBoxTriangleList_30
 	ucomiss xmm4, xmm0
 	jbe dCollideBoxTriangleList_310
-	xorps xmm6, [circleCoords.131667+0x3a0]
-	xorps xmm7, [circleCoords.131667+0x3a0]
-	xorps xmm5, [circleCoords.131667+0x3a0]
+	xorps xmm6, [_data16_80000000]
+	xorps xmm7, [_data16_80000000]
+	xorps xmm5, [_data16_80000000]
 	movaps xmm4, xmm0
 dCollideBoxTriangleList_310:
 	movaps xmm0, xmm6
@@ -983,7 +982,7 @@ dCollideBoxTriangleList_320:
 	movss xmm0, dword [ebp-0x3e8]
 	mulss xmm0, xmm2
 	addss xmm5, xmm0
-	andps xmm5, [circleCoords.131667+0x3b0]
+	andps xmm5, [_data16_7fffffff]
 	mulss xmm5, [ebp-0x300]
 	movss xmm0, dword [ebp-0x3ec]
 	mulss xmm0, xmm4
@@ -993,7 +992,7 @@ dCollideBoxTriangleList_320:
 	movss xmm1, dword [ebp-0x3f4]
 	mulss xmm1, xmm2
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x2fc]
 	addss xmm5, xmm0
 	ucomiss xmm7, xmm6
@@ -1103,7 +1102,7 @@ dCollideBoxTriangleList_350:
 	movss xmm0, dword [ebp-0x3e8]
 	mulss xmm0, [ebp-0x438]
 	addss xmm5, xmm0
-	andps xmm5, [circleCoords.131667+0x3b0]
+	andps xmm5, [_data16_7fffffff]
 	mulss xmm5, [ebp-0x304]
 	movss xmm0, dword [ebp-0x3f8]
 	mulss xmm0, [ebp-0x430]
@@ -1113,7 +1112,7 @@ dCollideBoxTriangleList_350:
 	movss xmm1, dword [ebp-0x400]
 	mulss xmm1, [ebp-0x438]
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x2fc]
 	addss xmm5, xmm0
 	ucomiss xmm6, xmm7
@@ -1214,7 +1213,7 @@ dCollideBoxTriangleList_380:
 	movss xmm0, dword [ebp-0x3e8]
 	mulss xmm0, [ebp-0x444]
 	addss xmm5, xmm0
-	andps xmm5, [circleCoords.131667+0x3b0]
+	andps xmm5, [_data16_7fffffff]
 	mulss xmm5, [ebp-0x304]
 	movss xmm0, dword [ebp-0x3f8]
 	mulss xmm0, [ebp-0x43c]
@@ -1224,7 +1223,7 @@ dCollideBoxTriangleList_380:
 	movss xmm1, dword [ebp-0x400]
 	mulss xmm1, [ebp-0x444]
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x2fc]
 	addss xmm5, xmm0
 	ucomiss xmm7, xmm6
@@ -1328,7 +1327,7 @@ dCollideBoxTriangleList_410:
 	movss xmm0, dword [ebp-0x3e8]
 	mulss xmm0, xmm2
 	addss xmm5, xmm0
-	andps xmm5, [circleCoords.131667+0x3b0]
+	andps xmm5, [_data16_7fffffff]
 	mulss xmm5, [ebp-0x304]
 	movss xmm0, dword [ebp-0x3f8]
 	mulss xmm0, xmm4
@@ -1338,7 +1337,7 @@ dCollideBoxTriangleList_410:
 	movss xmm1, dword [ebp-0x400]
 	mulss xmm1, xmm2
 	addss xmm0, xmm1
-	andps xmm0, [circleCoords.131667+0x3b0]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [ebp-0x2fc]
 	addss xmm5, xmm0
 	ucomiss xmm7, xmm6
@@ -1448,7 +1447,7 @@ dCollideBoxTriangleList_440:
 	movss xmm0, dword [ebp-0x3f4]
 	mulss xmm0, [ebp-0x438]
 	addss xmm1, xmm0
-	andps xmm1, [circleCoords.131667+0x3b0]
+	andps xmm1, [_data16_7fffffff]
 	mulss xmm1, [ebp-0x304]
 	movss xmm0, dword [ebp-0x3f8]
 	mulss xmm0, [ebp-0x430]
@@ -1564,7 +1563,7 @@ dCollideBoxTriangleList_470:
 	movss xmm0, dword [ebp-0x3f4]
 	mulss xmm0, [ebp-0x444]
 	addss xmm1, xmm0
-	andps xmm1, [circleCoords.131667+0x3b0]
+	andps xmm1, [_data16_7fffffff]
 	mulss xmm1, [ebp-0x304]
 	movss xmm0, dword [ebp-0x3f8]
 	mulss xmm0, [ebp-0x43c]
@@ -1605,7 +1604,7 @@ dCollideBoxTriangleList_480:
 	jbe dCollideBoxTriangleList_490
 	xor dword [ebp-0x364], 0x80000000
 	xor dword [ebp-0x384], 0x80000000
-	xorps xmm7, [circleCoords.131667+0x3a0]
+	xorps xmm7, [_data16_80000000]
 	movaps xmm6, xmm0
 dCollideBoxTriangleList_490:
 	movss xmm0, dword [ebp-0x364]
@@ -1682,7 +1681,7 @@ dCollideBoxTriangleList_500:
 	movss xmm0, dword [ebp-0x3f4]
 	mulss xmm0, xmm2
 	addss xmm1, xmm0
-	andps xmm1, [circleCoords.131667+0x3b0]
+	andps xmm1, [_data16_7fffffff]
 	mulss xmm1, [ebp-0x304]
 	mulss xmm4, [ebp-0x3f8]
 	mulss xmm3, [ebp-0x3fc]
@@ -1715,9 +1714,9 @@ dCollideBoxTriangleList_510:
 	ja dCollideBoxTriangleList_30
 	ucomiss xmm2, xmm0
 	jbe dCollideBoxTriangleList_520
-	xorps xmm7, [circleCoords.131667+0x3a0]
+	xorps xmm7, [_data16_80000000]
 	xor dword [ebp-0x380], 0x80000000
-	xorps xmm6, [circleCoords.131667+0x3a0]
+	xorps xmm6, [_data16_80000000]
 	movaps xmm2, xmm0
 dCollideBoxTriangleList_520:
 	movaps xmm0, xmm7
@@ -1873,7 +1872,7 @@ dCollideBoxTriangleList_760:
 	addss xmm6, xmm1
 	mulss xmm2, xmm5
 	addss xmm6, xmm2
-	xorps xmm6, [circleCoords.131667+0x3a0]
+	xorps xmm6, [_data16_80000000]
 	movaps xmm0, xmm7
 	mulss xmm0, xmm7
 	movss xmm2, dword [_float_1_00000000]
@@ -1983,7 +1982,7 @@ dCollideBoxTriangleList_770:
 	mulss xmm7, [ebp-0x47c]
 	addss xmm2, xmm7
 	movss [ebp-0x38], xmm2
-	movss xmm0, dword [circleCoords.131667+0x3b0]
+	movss xmm0, dword [_data16_7fffffff]
 	andps xmm4, xmm0
 	andps xmm1, xmm0
 	andps xmm2, xmm0
@@ -2093,13 +2092,13 @@ dCollideBoxTriangleList_620:
 	cmp eax, 0x90
 	jnz dCollideBoxTriangleList_620
 	movss xmm0, dword [ebp-0x474]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x30], xmm0
 	movss xmm0, dword [ebp-0x478]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x2c], xmm0
 	movss xmm0, dword [ebp-0x47c]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x28], xmm0
 	lea eax, [ebp-0x30]
 	mov [esp], eax
@@ -2257,7 +2256,7 @@ dCollideBoxTriangleList_620:
 	test ebx, ebx
 	jle dCollideBoxTriangleList_30
 	xor ebx, ebx
-	movss xmm4, dword [circleCoords.131667+0x3a0]
+	movss xmm4, dword [_data16_80000000]
 	lea ecx, [ebp-0x280]
 	jmp dCollideBoxTriangleList_630
 dCollideBoxTriangleList_640:
@@ -2484,13 +2483,13 @@ dCollideBoxTriangleList_790:
 	cmp eax, 0x90
 	jnz dCollideBoxTriangleList_790
 	movss xmm0, dword [ebp-0x39c]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x30], xmm0
 	movss xmm0, dword [ebp-0x3a0]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x2c], xmm0
 	movss xmm0, dword [ebp-0x3a4]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x28], xmm0
 	mov edx, [ebp-0x424]
 	mov eax, [ebp+edx*4-0x304]
@@ -2534,11 +2533,11 @@ dCollideBoxTriangleList_790:
 	movss xmm1, dword [ebp+ebx*4-0x344]
 	mov ecx, [ebp-0x420]
 	movss xmm2, dword [ebp+ecx*4-0x344]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x30], xmm0
-	xorps xmm1, [circleCoords.131667+0x3a0]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0x2c], xmm1
-	xorps xmm2, [circleCoords.131667+0x3a0]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x28], xmm2
 	mov eax, [ebp+edx*4-0x304]
 	mov [ebp-0x24], eax
@@ -2581,11 +2580,11 @@ dCollideBoxTriangleList_790:
 	movss xmm1, dword [ebp+ebx*4-0x344]
 	mov ecx, [ebp-0x41c]
 	movss xmm2, dword [ebp+ecx*4-0x344]
-	xorps xmm0, [circleCoords.131667+0x3a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x30], xmm0
-	xorps xmm1, [circleCoords.131667+0x3a0]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0x2c], xmm1
-	xorps xmm2, [circleCoords.131667+0x3a0]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x28], xmm2
 	mov eax, [ebp+edx*4-0x304]
 	mov [ebp-0x24], eax
@@ -2630,7 +2629,7 @@ dCollideBoxTriangleList_800:
 	jge dCollideBoxTriangleList_770
 	imul edx, [ebp-0x294]
 	add edx, [ebp-0x298]
-	xorps xmm3, [circleCoords.131667+0x3a0]
+	xorps xmm3, [_data16_80000000]
 	movss [edx+0x20], xmm3
 	lea ecx, [edx+0x10]
 	mov eax, [ebp-0x2f4]
@@ -2699,7 +2698,9 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1_50000000:		dd 0x3fc00000	; 1.5
 _float__1_00000000:		dd 0xbf800000	; -1
 _float_0_50000000:		dd 0x3f000000	; 0.5

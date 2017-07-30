@@ -59,54 +59,25 @@ typedef enum{
     HUDDISPLAY_HIDEINMENU = 4
 }huddisplayoptions_t;
 
-typedef struct
-{
-    int type;
-    float x;
-    float y;
-    int var_03;
-    int targetEnt;
-    float fontScale;
-    fonttype_t fontType;
-    hudalign_t align;
-    hudscrnalign_t screenAlign;
-    ucolor_t color;
-    ucolor_t fadeColor;
-    int fadeStartTime;
-    int fadeTime;
-    int var_13;
-    int shaderWidth;
-    int shaderHeight;
-    int materialIndex;
-    int waypointMaterialIndex;
-    int shaderOldWidth;
-    int shaderOldHeight;
-    int scaleStartTime;
-    int scaleTime;
-    float moveX;
-    float moveY;
-    int moveAlign;
-    int moveScreenAlign;
-    int moveStartTime;
-    int movingTime;
-    int timeValue;
-    int duration;
-    float value;
-    int hudTextConfigStringIndex;
-    float sort;
-    ucolor_t glowColor;
-    int pulseStartTime;
-    int pulseSpeed;
-    int pulseDecayStart;
-    int pulseDecayDuration;
-    int var_38;
-    huddisplayoptions_t displayOption;
-    int entityNum;
-    int teamNum;
-    int archived;
-}game_hudelem_t; //Size: 0xac
 
-extern game_hudelem_t* g_hudelems;
+enum hudelem_update_t
+{
+  HUDELEM_UPDATE_ARCHIVAL = 0x1,
+  HUDELEM_UPDATE_CURRENT = 0x2,
+  HUDELEM_UPDATE_ARCHIVAL_AND_CURRENT = 0x3
+};
+
+
+typedef struct game_hudelem_s
+{
+  struct hudelem_s elem;
+  int clientNum;
+  int team;
+  int archived;
+}game_hudelem_t;
+
+
+extern struct game_hudelem_s g_hudelems[1024];
 
 qboolean OnSameTeam( gentity_t *ent1, gentity_t *ent2 );
 qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);

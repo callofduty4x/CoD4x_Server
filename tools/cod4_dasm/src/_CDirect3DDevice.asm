@@ -74,7 +74,6 @@
 	extern _ZN10MacDisplay30GetNeedsExplicitDepthComponentEv
 	extern _ZN7COpenGL16SetPolygonOffsetEff
 	extern glFramebufferTexture2DEXT
-	extern _GLOBAL__I_pbcl
 	extern glBindFramebufferEXT
 	extern glFramebufferRenderbufferEXT
 	extern glDeleteRenderbuffersEXT
@@ -5023,7 +5022,7 @@ _ZN15CDirect3DDevice29ValidateRenderTargetsPrologueEm_20:
 	mov edx, esi
 	mov ecx, 0x1
 	lea ebx, [ebp-0x60]
-	movss xmm1, dword [_GLOBAL__I_pbcl+0x802]
+	movss xmm1, dword [_data16_80000000]
 	lea edi, [ebp-0x40]
 _ZN15CDirect3DDevice29ValidateRenderTargetsPrologueEm_160:
 	lea eax, [ecx*4]
@@ -7586,4 +7585,5 @@ _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
 SECTION .rdata
 _float_0_00392157:		dd 0x3b808081	; 0.00392157
 _float_255_00000000:		dd 0x437f0000	; 255
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

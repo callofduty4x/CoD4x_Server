@@ -1,6 +1,5 @@
 ;Imports of mass:
 	extern dSetZero
-	extern circleCoords.131667
 
 ;Exports of mass:
 	global Phys_ComputeMassProperties
@@ -191,15 +190,15 @@ Phys_ComputeMassProperties_90:
 	movss [ebp-0x98], xmm1
 	movss [eax+0x8], xmm1
 	movss xmm1, dword [ebp-0x9c]
-	xorps xmm1, [circleCoords.131667+0x730]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm1, xmm0
 	movss [ebp-0x94], xmm1
 	movss xmm1, dword [ebp-0xa0]
-	xorps xmm1, [circleCoords.131667+0x730]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm1, xmm0
 	movss [ebp-0x90], xmm1
 	movss xmm1, dword [ebp-0xa4]
-	xorps xmm1, [circleCoords.131667+0x730]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm1, xmm0
 	movss [ebp-0x8c], xmm1
 	mov dword [ebp-0x74], 0x0
@@ -243,13 +242,13 @@ Phys_ComputeMassProperties_90:
 	movss [ebp-0x3c], xmm1
 	mov eax, [ebp+0x18]
 	movss xmm0, dword [eax+0x8]
-	xorps xmm0, [circleCoords.131667+0x730]
+	xorps xmm0, [_data16_80000000]
 	movss [esp+0xc], xmm0
 	movss xmm0, dword [eax+0x4]
-	xorps xmm0, [circleCoords.131667+0x730]
+	xorps xmm0, [_data16_80000000]
 	movss [esp+0x8], xmm0
 	movss xmm0, dword [eax]
-	xorps xmm0, [circleCoords.131667+0x730]
+	xorps xmm0, [_data16_80000000]
 	movss [esp+0x4], xmm0
 	mov [esp], ebx
 	call dMassTranslate
@@ -584,7 +583,7 @@ dMassTranslate:
 	lea eax, [ebp-0x78]
 	mov [esp], eax
 	call dSetZero
-	movss xmm6, dword [circleCoords.131667+0x720]
+	movss xmm6, dword [_data16_80000000]
 	mov eax, [ebp+0x8]
 	movss xmm2, dword [eax+0xc]
 	movaps xmm0, xmm2
@@ -864,6 +863,7 @@ SECTION .rdata
 _float_0_03125000:		dd 0x3d000000	; 0.03125
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_12_00000000:		dd 0x41400000	; 12
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
 _double_4_18879033:		dq 0x4010c152408e1c81	; 4.18879

@@ -5,7 +5,6 @@
 	extern g_entities
 	extern level
 	extern G_GeneralLink
-	extern _ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets
 	extern G_PlaySoundAlias
 	extern g_clients
 	extern memset
@@ -422,7 +421,7 @@ turret_think_90:
 	movss xmm2, dword [ebp-0x68]
 	ucomiss xmm0, xmm2
 	ja turret_think_80
-	xorps xmm2, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3e0]
+	xorps xmm2, [_data16_80000000]
 	maxss xmm2, xmm0
 turret_think_80:
 	addss xmm2, [ebp-0x34]
@@ -459,7 +458,7 @@ turret_think_100:
 	movss xmm1, dword [ebp-0x28]
 	ucomiss xmm0, xmm1
 	ja turret_think_130
-	xorps xmm1, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3e0]
+	xorps xmm1, [_data16_80000000]
 	maxss xmm1, xmm0
 turret_think_130:
 	movaps xmm0, xmm1
@@ -615,7 +614,7 @@ G_SpawnTurret_270:
 	mov [esi+0x10], eax
 G_SpawnTurret_280:
 	movss xmm0, dword [esi+0x10]
-	xorps xmm0, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3c0]
+	xorps xmm0, [_data16_80000000]
 	movss [esi+0x10], xmm0
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
@@ -639,7 +638,7 @@ G_SpawnTurret_380:
 	mov [esi+0xc], eax
 G_SpawnTurret_370:
 	movss xmm0, dword [esi+0xc]
-	xorps xmm0, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3c0]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm2
 	cmpss xmm1, xmm0, 0x5
 	andps xmm0, xmm1
@@ -952,7 +951,7 @@ G_IsTurretUsable:
 	test eax, eax
 	jz G_IsTurretUsable_10
 	movss xmm1, dword [eax+0x10]
-	movss xmm2, dword [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3f0]
+	movss xmm2, dword [_data16_7fffffff]
 	movaps xmm0, xmm1
 	andps xmm0, xmm2
 	movss [ebp-0x1c], xmm0
@@ -990,7 +989,7 @@ G_IsTurretUsable:
 	mulss xmm2, xmm2
 	addss xmm1, xmm2
 	sqrtss xmm1, xmm1
-	movss xmm5, dword [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x400]
+	movss xmm5, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	pxor xmm6, xmm6
@@ -2017,7 +2016,7 @@ turret_think_client_310:
 	movss [ebp-0x3c], xmm1
 	subss xmm0, [_float_60_00000000]
 	movss [ebp-0x48], xmm0
-	mov dword [esp+0x18], g_clients+0xa9e11
+	mov dword [esp+0x18], 0x810011
 	mov eax, [esi]
 	mov [esp+0x14], eax
 	lea eax, [ebp-0x50]
@@ -2404,13 +2403,13 @@ SP_light_70:
 	mov [edi+0x64], eax
 	lea eax, [esi+0x10]
 	movss xmm0, dword [esi+0x10]
-	xorps xmm0, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3d0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x28], xmm0
 	movss xmm0, dword [eax+0x4]
-	xorps xmm0, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3d0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x24], xmm0
 	movss xmm0, dword [eax+0x8]
-	xorps xmm0, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3d0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x20], xmm0
 	lea ebx, [ebp-0x34]
 	mov [esp+0x4], ebx
@@ -2425,7 +2424,7 @@ SP_light_70:
 	mov [esp], edi
 	call G_SetOrigin
 	movss xmm0, dword [esi+0x28]
-	xorps xmm0, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x3d0]
+	xorps xmm0, [_data16_80000000]
 	lea eax, [edi+0x108]
 	movss [edi+0x108], xmm0
 	movss [eax+0x4], xmm0
@@ -2537,7 +2536,9 @@ _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_360_00000000:		dd 0x43b40000	; 360
 _float_0_05000000:		dd 0x3d4ccccd	; 0.05
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float__1_00000000:		dd 0xbf800000	; -1
 _double_57_29577951:		dq 0x404ca5dc1a63c1f8	; 57.2958
 _float__90_00000000:		dd 0xc2b40000	; -90

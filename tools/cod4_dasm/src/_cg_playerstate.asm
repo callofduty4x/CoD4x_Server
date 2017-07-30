@@ -13,7 +13,6 @@
 	extern bg_viewKickMin
 	extern bg_viewKickMax
 	extern AngleVectors
-	extern s_alignScale
 	extern cg_hudDamageIconTime
 	extern randomf
 	extern AngleNormalize360
@@ -258,7 +257,7 @@ CG_TransitionPlayerState_120:
 	addss xmm2, xmm4
 	movss xmm5, dword [ebp-0x58]
 	movaps xmm0, xmm5
-	xorps xmm0, [s_alignScale+0xe0]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm2, xmm0
 	movss [edi+0x50404], xmm2
 	mulss xmm1, xmm5
@@ -326,7 +325,7 @@ CG_TransitionPlayerState_90:
 	jnz CG_TransitionPlayerState_120
 	mov edi, cgArray
 	mov dword [edi+0x50404], 0x0
-	xorps xmm5, [s_alignScale+0xe0]
+	xorps xmm5, [_data16_80000000]
 	movss [edi+0x50400], xmm5
 	jmp CG_TransitionPlayerState_130
 	add [eax], al
@@ -381,6 +380,7 @@ SECTION .rdata
 SECTION .rdata
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_360_00000000:		dd 0x43b40000	; 360
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_20_00000000:		dd 0x41a00000	; 20
 

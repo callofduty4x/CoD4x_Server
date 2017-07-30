@@ -1,7 +1,6 @@
 ;Imports of r_draw_shadowablelight:
 	extern r_diffuseColorScale
 	extern r_specularColorScale
-	extern g_fltMin__uint4_dup_1
 	extern R_SetShadowLookupMatrix
 	extern comWorld
 
@@ -99,7 +98,7 @@ R_SetLightProperties_10:
 	cvtsi2ss xmm1, dword [edi+0x34]
 	lea eax, [esi+0x8c0]
 	movss [esi+0x8c0], xmm0
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x20]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm2, xmm0
 	movss [eax+0x4], xmm2
 	movss [eax+0x8], xmm1
@@ -374,5 +373,6 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00195312:		dd 0x3b000000	; 0.00195312
 

@@ -50,7 +50,6 @@
 	extern __udivdi3
 	extern Sys_SuspendDatabaseThread
 	extern fx_systemBufferPool
-	extern g_useTechnique
 	extern BinkSetMixBinVolumes
 	extern BinkSetVolume
 
@@ -1642,10 +1641,10 @@ R_Cinematic_InitBinkVolumes:
 	mulss xmm0, [cinematicGlob+0x7a0]
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [g_useTechnique+0x80]
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [g_useTechnique+0x90]
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -1853,5 +1852,7 @@ SECTION .rdata
 _float_1_77777779:		dd 0x3fe38e39	; 1.77778
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_32768_00000000:		dd 0x47000000	; 32768
+_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; OWORD
+_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 

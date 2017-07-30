@@ -125,7 +125,7 @@ CG_PerturbCamera_10:
 	mulss xmm1, xmm1
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
-	movss xmm5, dword [cg_perturbations+0x420]
+	movss xmm5, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm5
 	ucomiss xmm0, xmm7
@@ -841,6 +841,7 @@ _cstring_shellshock_end_a:		db "shellshock_end_abort",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__2_00000000:		dd 0xc0000000	; -2
 _float_3_00000000:		dd 0x40400000	; 3
 _float_0_50000000:		dd 0x3f000000	; 0.5

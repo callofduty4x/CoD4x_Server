@@ -40,7 +40,7 @@ Vec3PackUnitVec:
 	movss [ebp-0x3c], xmm0
 	movss [ebp-0x40], xmm0
 	movss xmm7, dword [_float_127_00000000]
-	movss xmm6, dword [g_fltMin__uint4_dup_1+0x30]
+	movss xmm6, dword [_data16_7fffffff]
 	movzx esi, byte [ebp-0x1d]
 	jmp Vec3PackUnitVec_10
 Vec3PackUnitVec_60:
@@ -137,7 +137,7 @@ Vec3PackUnitVec_10:
 	addss xmm0, xmm1
 	sqrtss xmm5, xmm0
 	movaps xmm0, xmm5
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x20]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jae Vec3PackUnitVec_60
@@ -454,9 +454,11 @@ SECTION .rdata
 SECTION .rdata
 _float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
 _float_127_00000000:		dd 0x42fe0000	; 127
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_192_00000000:		dd 0x43400000	; 192
 _float_32385_00000000:		dd 0x46fd0200	; 32385
 _float_127_50000000:		dd 0x42ff0000	; 127.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

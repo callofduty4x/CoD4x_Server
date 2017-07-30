@@ -7,7 +7,6 @@
 	extern AudioUnitInitialize
 	extern AudioUnitGetProperty
 	extern AudioConverterNew
-	extern _ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156
 	extern malloc
 	extern _ZN15CCircularBuffer5AllocEm
 	extern __cxa_allocate_exception
@@ -248,13 +247,13 @@ _ZN14CAudioRecorder10InitializeEv_40:
 	cmovz edx, [ebp-0x1c]
 	mov [ebp-0x1c], edx
 	movsd xmm0, qword [ebp-0x90]
-	movsd xmm3, qword [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xa0]
+	movsd xmm3, qword [_data16_0]
 	cmpsd xmm3, xmm0, 0x2
-	minsd xmm0, qword [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xb0]
+	minsd xmm0, qword [_data16_ffe00000]
 	xorpd xmm1, xmm1
 	maxsd xmm0, xmm1
 	movapd xmm2, xmm3
-	andpd xmm2, [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xa0]
+	andpd xmm2, [_data16_0]
 	subpd xmm0, xmm2
 	cvttpd2dq xmm0, xmm0
 	psllq xmm3, 0x1f
@@ -275,12 +274,12 @@ _ZN14CAudioRecorder10InitializeEv_40:
 	call malloc
 	mov [edi+0x58], eax
 	movsd xmm0, qword [ebp-0x68]
-	movsd xmm2, qword [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xa0]
+	movsd xmm2, qword [_data16_0]
 	cmpsd xmm2, xmm0, 0x2
-	minsd xmm0, qword [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xb0]
+	minsd xmm0, qword [_data16_ffe00000]
 	xorpd xmm1, xmm1
 	maxsd xmm0, xmm1
-	movsd xmm1, qword [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xa0]
+	movsd xmm1, qword [_data16_0]
 	andpd xmm1, xmm2
 	subpd xmm0, xmm1
 	cvttpd2dq xmm0, xmm0
@@ -977,4 +976,6 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_0:		dd 0x0, 0x41e00000, 0x0, 0x0	; OWORD
+_data16_ffe00000:		dd 0xffe00000, 0x41efffff, 0x0, 0x0	; OWORD
 

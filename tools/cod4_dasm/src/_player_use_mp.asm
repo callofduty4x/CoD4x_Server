@@ -25,7 +25,6 @@
 	extern G_GetHintStringIndex
 	extern vec3_origin
 	extern G_TraceCapsuleComplete
-	extern _ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets
 	extern SV_EntityContact
 	extern player_throwbackInnerRadius
 	extern Vec2DistanceSq
@@ -739,7 +738,7 @@ Player_UpdateCursorHints_410:
 	addss xmm0, xmm1
 	sqrtss xmm6, xmm0
 	movaps xmm0, xmm6
-	xorps xmm0, [_ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets+0x1a0]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Player_UpdateCursorHints_280
 	movss xmm7, dword [_float_1_00000000]
@@ -1023,6 +1022,7 @@ _float_96_00000000:		dd 0x42c00000	; 96
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_10000_00000000:		dd 0x461c4000	; 10000
 _float_128_00000000:		dd 0x43000000	; 128
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__0_50000000:		dd 0xbf000000	; -0.5

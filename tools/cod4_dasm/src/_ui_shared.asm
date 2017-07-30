@@ -43,7 +43,6 @@
 	extern strchr
 	extern Q_strncmp
 	extern Cvar_GetVariantString
-	extern _ZZN16CStringEdPackage9ParseLineEPKchE5C.236
 	extern memset
 	extern UI_RunMenuScript
 	extern Item_GetEditFieldDef
@@ -3016,7 +3015,7 @@ Script_ExecIfFloatsEqual:
 	subsd xmm0, [ebp-0x10]
 	movsd [ebp-0x18], xmm0
 	cvtsd2ss xmm0, xmm0
-	andps xmm0, [_ZZN16CStringEdPackage9ParseLineEPKchE5C.236+0x580]
+	andps xmm0, [_data16_7fffffff]
 	movss xmm1, dword [_float_0_00001000]
 	xor eax, eax
 	ucomiss xmm1, xmm0
@@ -15482,6 +15481,7 @@ _cstring_statclearbitmask:		db "statclearbitmask",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00001000:		dd 0x3727c5ac	; 1e-05
 _float_5_00000000:		dd 0x40a00000	; 5
 _float_1_00000000:		dd 0x3f800000	; 1

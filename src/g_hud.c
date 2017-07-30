@@ -27,88 +27,99 @@
 #include "scr_vm.h"
 
 
-
-game_hudelem_t* g_hudelems = (game_hudelem_t*)(HUDELEM_ADDR);
-
+#ifndef NDEBUG
+static struct game_hudelem_s g_dummyHudCurrent;
+#endif
 
 game_hudelem_t* G_GetNewHudElem(unsigned int clientnum){
 
     int i;
-    game_hudelem_t* element = g_hudelems;
-
-    for(i = 0; i < MAX_HUDELEMS; i++, element++)
+    struct game_hudelem_s* elements = g_hudelems;
+    struct hudelem_s* element; 
+    for(i = 0; i < MAX_HUDELEMS; i++, elements++)
     {
+        element = &elements->elem;
         if(element->type)
             continue;
+
+        elements->archived = 1;
+        if(clientnum > 63)
+            elements->clientNum = 1023;
+        else
+            elements->clientNum = clientnum;
+
+        elements->team = 0;
+
 
         element->type = 1;
         element->x = 0;
         element->y = 0;
-        element->var_03 = 0;
-        element->targetEnt = 1023;
-        element->fontType = 0;
-        element->align = 0;
-        element->screenAlign = 0;
-
-        element->color.i = 0xFFFFFFFF;
-        element->glowColor.i = 0;
-        element->fadeColor.i = 0;
-
+        element->z = 0;
+        element->targetEntNum = 1023;
+        element->font = 0;
+        element->alignOrg = 0;
+        element->alignScreen = 0;
+        element->color.rgba = 0xFFFFFFFF;
+        element->glowColor.rgba = 0;
+        element->fromColor.rgba = 0;
         element->fadeStartTime = 0;
         element->fadeTime = 0;
-        element->var_13 = 0;
+        element->label = 0;
         element->sort = 0;
-        element->displayOption = 0;
-        element->pulseStartTime = 0;
-        element->pulseSpeed = 0;
-        element->pulseDecayStart = 0;
-        element->pulseDecayDuration = 0;
-        element->var_38 = 0;
+        element->flags = 0;
+        element->fxBirthTime = 0;
+        element->fxLetterTime = 0;
+        element->fxDecayStartTime = 0;
+        element->fxDecayDuration = 0;
+        element->soundID = 0;
         element->moveStartTime = 0;
-        element->movingTime = 0;
+        element->moveTime = 0;
         element->fontScale = 1.4;
-        element->archived = 1;
-        element->shaderWidth = 0;
-        element->shaderHeight = 0;
-        element->moveX = 0;
-        element->moveY = 0;
-        element->moveAlign = 0;
-        element->moveScreenAlign = 0;
-        element->shaderOldWidth = 0;
-        element->shaderOldHeight = 0;
+        element->width = 0;
+        element->height = 0;
+        element->fromX = 0;
+        element->fromY = 0;
+        element->fromAlignOrg = 0;
+        element->fromAlignScreen = 0;
+        element->fromWidth = 0;
+        element->fromHeight = 0;
         element->scaleStartTime = 0;
         element->scaleTime = 0;
-        element->timeValue = 0;
+        element->time = 0;
         element->duration = 0;
         element->value = 0;
-        element->hudTextConfigStringIndex = 0;
+        element->text = 0;
 
-        if(clientnum > 63)
-            element->entityNum = 1023;
-        else
-            element->entityNum = clientnum;
-
-        element->teamNum = 0;
-        return element;
+        return elements;
     }
     Com_PrintWarning(CON_CHANNEL_SCRIPT,"G_CreateHudElem: Exceeded limit of Hudelems\n");
     return NULL;
 }
 
+void __cdecl HudElem_Free(struct game_hudelem_s *hud)
+{
+  assert(hud != NULL);
+  assert(hud - g_hudelems < 1024);
+  assert(hud->elem.type > HE_TYPE_FREE && hud->elem.type < HE_TYPE_COUNT);
+
+  Scr_FreeHudElem(hud);
+  hud->elem.type = 0;
+}
+
 
 void G_HudSetColor(game_hudelem_t* element ,ucolor_t color,ucolor_t glowcolor){
 
-    element->color = color;
-    element->glowColor = glowcolor;
+    element->elem.color.rgba = color.i;
+    element->elem.glowColor.rgba = glowcolor.i;
 
 }
 
 void G_HudSetPosition(game_hudelem_t* element ,float x, float y, hudscrnalign_t scrnhalign,  hudscrnalign_t scrnvalign, hudalign_t alignx, hudalign_t aligny){
 
-    element->x = x;
-    element->y = y;
-    element->align = alignx | aligny;
-    element->screenAlign = scrnhalign + scrnvalign;
+    element->elem.x = x;
+    element->elem.y = y;
+    element->elem.alignOrg = alignx | aligny;
+    element->elem.alignScreen = scrnhalign + scrnvalign;
 }
 
 void G_HudSetFont(game_hudelem_t* element ,float fontscale, fonttype_t fonttype){
@@ -118,8 +129,8 @@ void G_HudSetFont(game_hudelem_t* element ,float fontscale, fonttype_t fonttype)
         Com_PrintWarning(CON_CHANNEL_SCRIPT,"Fontscale: %f is out of range. Range is 1.4 to 4.6\n", fontscale);
         fontscale = 1.4;
     }
-    element->fontScale = fontscale;
-    element->fontType = fonttype;
+    element->elem.fontScale = fontscale;
+    element->elem.font = fonttype;
 }
 
 void G_HudSetMovingOverTime(game_hudelem_t* element ,int time, float newx, float newy){
@@ -131,14 +142,14 @@ void G_HudSetMovingOverTime(game_hudelem_t* element ,int time, float newx, float
     }
 
 
-    element->moveStartTime = level.time;
-    element->moveX = element->x;
-    element->moveY = element->y;
-    element->x = newx;
-    element->y = newy;
-    element->moveAlign = element->align;
-    element->moveScreenAlign = element->screenAlign;
-    element->movingTime = time;
+    element->elem.moveStartTime = level.time;
+    element->elem.fromX = element->elem.x;
+    element->elem.fromY = element->elem.y;
+    element->elem.x = newx;
+    element->elem.y = newy;
+    element->elem.fromAlignOrg = element->elem.alignOrg;
+    element->elem.fromAlignScreen = element->elem.alignScreen;
+    element->elem.moveTime = time;
 }
 
 void G_HudSetFadingOverTime(game_hudelem_t* element ,int time, ucolor_t newcolor){
@@ -149,42 +160,150 @@ void G_HudSetFadingOverTime(game_hudelem_t* element ,int time, ucolor_t newcolor
         time = 0;
     }
 
-    element->fadeStartTime = level.time;
-    element->fadeColor = element->color;
-    element->fadeTime = time;
-    element->color = newcolor;
+    element->elem.fadeStartTime = level.time;
+    element->elem.fromColor = element->elem.color;
+    element->elem.fadeTime = time;
+    element->elem.color.rgba = newcolor.i;
 }
 
 
 void G_HudSetText(game_hudelem_t* element ,const char *text)
 {
-    element->shaderWidth = 0;
-    element->shaderHeight = 0;
-    element->materialIndex = 0;
+    element->elem.width = 0;
+    element->elem.height = 0;
+    element->elem.materialIndex = 0;
 
-    element->moveX = 0;
-    element->moveY = 0;
-    element->moveAlign = 0;
-    element->moveScreenAlign = 0;
+    element->elem.fromX = 0;
+    element->elem.fromY = 0;
+    element->elem.fromAlignOrg = 0;
+    element->elem.fromAlignScreen = 0;
 
-    element->shaderOldWidth = 0;
-    element->shaderOldHeight = 0;
-    element->scaleStartTime = 0;
-    element->scaleTime = 0;
+    element->elem.fromWidth = 0;
+    element->elem.fromHeight = 0;
+    element->elem.scaleStartTime = 0;
+    element->elem.scaleTime = 0;
 
-    element->timeValue = 0;
-    element->duration = 0;
-    element->value = 0;
+    element->elem.time = 0;
+    element->elem.duration = 0;
+    element->elem.value = 0;
 
-    element->hudTextConfigStringIndex = G_LocalizedStringIndex(text);
-    element->type = 1;
+    element->elem.text = G_LocalizedStringIndex(text);
+    element->elem.type = 1;
 
 }
 
 void G_HudDestroy(game_hudelem_t* element){
 
     Scr_FreeHudElem(element);
-    element->type = qfalse;
+    element->elem.type = 0;
 
 }
+
+void __cdecl HudElem_ClientDisconnect(struct gentity_s *ent)
+{
+  unsigned int i;
+
+  for ( i = 0; i < 1024; ++i )
+  {
+    if ( g_hudelems[i].elem.type )
+    {
+      if ( g_hudelems[i].clientNum == ent->s.number )
+      {
+        HudElem_Free(&g_hudelems[i]);
+      }
+    }
+  }
+}
+
+void __cdecl HudElem_DestroyAll()
+{
+  unsigned int i;
+
+  for ( i = 0; i < 1024; ++i )
+  {
+    if ( g_hudelems[i].elem.type )
+    {
+      HudElem_Free(&g_hudelems[i]);
+    }
+  }
+  memset(g_hudelems, 0, 1024*sizeof(struct hudelem_s));
+}
+
+
+
+void __cdecl HudElem_UpdateClient(struct gclient_s *client, int clientNum, enum hudelem_update_t which)
+{
+  int archivalCount;
+  int currentCount;
+  struct game_hudelem_s *hud;
+  unsigned int i;
+  struct hudelem_s *elem;
+
+  assert(clientNum >= 0 && clientNum < level.maxclients);
+
+  if (clientNum < 0 || clientNum >= level.maxclients)
+  {
+    return;
+  }
+  assert(level.gentities[clientNum].r.inuse);
+
+  assert(client != NULL);
+
+  for(i = 0, hud = g_hudelems, archivalCount = 0, currentCount = 0;i < 1024; ++i, ++hud)
+  {
+    if ( hud->elem.type && !(hud->elem.flags & 0x2000) && (!hud->team || hud->team == client->sess.cs.team) && (hud->clientNum == 1023 || hud->clientNum == clientNum) )
+    {
+      if ( hud->archived )
+      {
+        if ( which & 1 )
+        {
+          elem = &client->ps.hud.archival[archivalCount];
+          if ( archivalCount < 31 )
+          {
+            ++archivalCount;
+            memcpy(elem, hud, sizeof(struct hudelem_s));
+          }
+        }
+      }
+      else if ( which & 2 )
+      {
+        elem = &client->ps.hud.current[currentCount];
+        if ( currentCount < 31 )
+        {
+          ++currentCount;
+          memcpy(elem, hud, sizeof(struct hudelem_s));
+        }
+      }
+    }
+  }
+  if ( which & 1 )
+  {
+    while ( archivalCount < 31 && client->ps.hud.archival[archivalCount].type )
+    {
+      memset(&client->ps.hud.archival[archivalCount], 0, sizeof(client->ps.hud.archival[0]));
+      assert(client->ps.hud.archival[archivalCount].type == HE_TYPE_FREE);
+      ++archivalCount;
+    }
+    while ( archivalCount < 31 )
+    {
+      assert(!memcmp( &client->ps.hud.archival[archivalCount], &g_dummyHudCurrent, sizeof( g_dummyHudCurrent ) ));
+      ++archivalCount;
+    }
+  }
+  if ( which & 2 )
+  {
+    while ( currentCount < 31 && client->ps.hud.current[currentCount].type )
+    {
+      memset(&client->ps.hud.current[currentCount], 0, sizeof(client->ps.hud.current[0]));
+      assert(client->ps.hud.current[currentCount].type == HE_TYPE_FREE);
+      ++currentCount;
+    }
+    for (;currentCount < 31;++currentCount )
+    {
+      assert(!memcmp( &client->ps.hud.current[currentCount], &g_dummyHudCurrent, sizeof( g_dummyHudCurrent ) ));
+      ++currentCount;
+    }
+  }
+}
+
 

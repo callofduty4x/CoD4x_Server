@@ -13,7 +13,6 @@
 	extern CL_SendCmd
 	extern cg_nopredict
 	extern cg_synchronousClients
-	extern g_clients
 	extern cg_showmiss
 	extern Com_Printf
 	extern CG_GetWeapReticleZoom
@@ -28,7 +27,6 @@
 	extern cg_viewZSmoothingTime
 	extern Pmove
 	extern CL_SetStance
-	extern g_fltMin__uint4_dup_1
 	extern cg_viewZSmoothingMin
 	extern cg_viewZSmoothingMax
 	extern cg_predictItems
@@ -440,7 +438,7 @@ CG_PredictPlayerState_20:
 	cmp dword [eax+0x4], 0x6
 	jle CG_PredictPlayerState_50
 	mov ebx, cg_pmove+0x40
-	mov dword [edx+ebx+0x4], g_clients+0xa9e11
+	mov dword [edx+ebx+0x4], 0x810011
 CG_PredictPlayerState_160:
 	cmp dword [esi+0x4], 0x4
 	jz CG_PredictPlayerState_60
@@ -795,7 +793,7 @@ CG_PredictPlayerState_210:
 	jmp CG_PredictPlayerState_200
 CG_PredictPlayerState_260:
 	movaps xmm0, xmm2
-	andps xmm0, [g_fltMin__uint4_dup_1+0x20]
+	andps xmm0, [_data16_7fffffff]
 	mov eax, cg_viewZSmoothingMin
 	mov eax, [eax]
 	ucomiss xmm0, [eax+0xc]
@@ -1069,7 +1067,7 @@ CG_PredictPlayerState_390:
 	mov eax, cg_viewZSmoothingMax
 	mov eax, [eax]
 	movss xmm1, dword [eax+0xc]
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x30]
+	xorps xmm1, [_data16_80000000]
 	movaps xmm0, xmm1
 	subss xmm0, xmm3
 	cmpss xmm4, xmm0, 0x2
@@ -1154,6 +1152,8 @@ _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_360_00000000:		dd 0x43b40000	; 360
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
 _float_1000_00000000:		dd 0x447a0000	; 1000
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_10000000:		dd 0x3dcccccd	; 0.1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

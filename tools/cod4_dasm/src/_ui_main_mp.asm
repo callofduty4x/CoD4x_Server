@@ -11,7 +11,7 @@
 	extern memset
 	extern CL_GetClientName
 	extern Q_strncpyz
-	extern I_CleanStr
+	extern Q_CleanStr
 	extern LAN_CompareServers
 	extern Q_stricmp
 	extern Menu_SetFeederSelection
@@ -496,7 +496,7 @@ UI_BuildPlayerList_20:
 	shl eax, 0x5
 	add eax, sharedUiInfo+0x4c
 	mov [esp], eax
-	call I_CleanStr
+	call Q_CleanStr
 	add dword [sharedUiInfo+0x48], 0x1
 	jmp UI_BuildPlayerList_40
 
@@ -2410,7 +2410,7 @@ UI_BuildFindPlayerList_130:
 	mov [esp], ebx
 	call Q_strncpyz
 	mov [esp], ebx
-	call I_CleanStr
+	call Q_CleanStr
 	cmp byte [ebp-0x3a], 0x0
 	jz UI_BuildFindPlayerList_150
 	mov [ebp-0x1160], ebx

@@ -8,7 +8,6 @@
 	extern CM_ClipHandleToModel
 	extern dGeomGetRotation
 	extern dGeomGetPosition
-	extern circleCoords.131667
 	extern cm
 	extern Phys_CollideCapsuleWithTriangleList
 	extern Phys_CollideBoxWithTriangleList
@@ -274,7 +273,7 @@ Phys_GetCylinderAABB_10:
 	mov [ebp-0x6c], eax
 	mov [ebp+eax*4-0x30], ebx
 	mov edi, 0x1
-	movss xmm3, dword [circleCoords.131667+0x1e0]
+	movss xmm3, dword [_data16_7fffffff]
 	mov ebx, [ebp+0xc]
 	add ebx, 0x8
 Phys_GetCylinderAABB_30:
@@ -386,7 +385,7 @@ Phys_GetCapsuleAABB_10:
 	sub ecx, eax
 	movss [ebp+ecx*4-0x30], xmm1
 	mov di, 0x1
-	movss xmm3, dword [circleCoords.131667+0x1a0]
+	movss xmm3, dword [_data16_7fffffff]
 	mov ebx, [ebp+0xc]
 	add ebx, 0x8
 Phys_GetCapsuleAABB_30:
@@ -464,7 +463,7 @@ CM_PositionGeomTestInAabbTree_r_40:
 	addss xmm0, [esi+0xc]
 	movss xmm1, dword [ebx+0x38]
 	subss xmm1, [esi]
-	movss xmm2, dword [circleCoords.131667+0x1b0]
+	movss xmm2, dword [_data16_7fffffff]
 	andps xmm1, xmm2
 	ucomiss xmm1, xmm0
 	ja CM_PositionGeomTestInAabbTree_r_10
@@ -1166,7 +1165,7 @@ dCollideWorldGeom_340:
 	movss xmm0, dword [ebp-0x1b0]
 	subss xmm0, xmm4
 	movss [ebp-0x1b0], xmm0
-	movss xmm3, dword [circleCoords.131667+0x1f0]
+	movss xmm3, dword [_data16_7fffffff]
 	movss xmm0, dword [ecx+0x10]
 	andps xmm0, xmm3
 	maxss xmm0, [_float_0_00000000]
@@ -1265,7 +1264,7 @@ dCollideWorldGeom_320:
 	mulss xmm4, xmm1
 	movss [ebp-0x15c], xmm4
 	xor edi, edi
-	movss xmm1, dword [circleCoords.131667+0x1f0]
+	movss xmm1, dword [_data16_7fffffff]
 	lea ebx, [ebp-0x1f0]
 	add ebx, 0x40
 	xor esi, esi
@@ -1828,6 +1827,7 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_1_41421402:		dd 0x3fb504f7	; 1.41421

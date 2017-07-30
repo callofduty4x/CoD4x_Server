@@ -2,7 +2,6 @@
 	extern speex_bits_pack
 	extern syn_percep_zero
 	extern speex_bits_unpack_unsigned
-	extern msg_hData
 
 ;Exports of ltp:
 	global pitch_search_3tap
@@ -1074,7 +1073,7 @@ pitch_unquant_3tap_130:
 	cvtsd2ss xmm5, xmm0
 	jmp pitch_unquant_3tap_190
 pitch_unquant_3tap_150:
-	xorps xmm0, [msg_hData+0x5c0]
+	xorps xmm0, [_data16_80000000]
 	jmp pitch_unquant_3tap_200
 pitch_unquant_3tap_170:
 	cvtss2sd xmm0, xmm1
@@ -1549,6 +1548,7 @@ _double_0_00000000:		dq 0x3cd203af9ee75616	; 1e-15
 _double_0_95000000:		dq 0x3fee666666666666	; 0.95
 _float_0_94999999:		dd 0x3f733333	; 0.95
 _double_0_40000000:		dq 0x3fd999999999999a	; 0.4
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double__0_50000000:		dq 0xbfe0000000000000	; -0.5
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__16_00000000:		dd 0xc1800000	; -16

@@ -25,7 +25,6 @@
 	extern AxisToAngles
 	extern AngleVectors
 	extern CL_AddDebugStarWithText
-	extern g_fltMin__uint4_dup_1
 	extern colorLtCyan
 	extern colorWhiteFaded
 	extern CL_AddDebugString
@@ -1525,7 +1524,7 @@ DebugDrawWorldSound3D_130:
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x20]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb DebugDrawWorldSound3D_70
 	movss xmm5, dword [_float_1_00000000]
@@ -1991,7 +1990,7 @@ SND_FindReplaceableChannel_20:
 SND_FindReplaceableChannel_10:
 	mov eax, [ebp-0x50]
 	movss xmm3, dword [eax+0x1c]
-	xorps xmm3, [g_fltMin__uint4_dup_1+0x30]
+	xorps xmm3, [_data16_80000000]
 	mov edx, eax
 	mov eax, [edx]
 	mov eax, [eax+0x4]
@@ -2057,7 +2056,7 @@ SND_FindReplaceableChannel_90:
 	cmp byte [ebp-0x39], 0x0
 	jnz SND_FindReplaceableChannel_180
 	movss xmm2, dword [ebx+0x50]
-	xorps xmm2, [g_fltMin__uint4_dup_1+0x30]
+	xorps xmm2, [_data16_80000000]
 SND_FindReplaceableChannel_290:
 	ucomiss xmm2, xmm3
 	jbe SND_FindReplaceableChannel_140
@@ -2089,7 +2088,7 @@ SND_FindReplaceableChannel_160:
 	cmp byte [ebp-0x39], 0x0
 	jnz SND_FindReplaceableChannel_200
 	movss xmm3, dword [ebx+0x50]
-	xorps xmm3, [g_fltMin__uint4_dup_1+0x30]
+	xorps xmm3, [_data16_80000000]
 	mov [ebp-0x44], esi
 	mov [ebp-0x40], edi
 	jmp SND_FindReplaceableChannel_140
@@ -5331,7 +5330,7 @@ SND_StopMusic_10:
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
 	jbe SND_StopMusic_20
-	xorps xmm1, [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x10]
+	xorps xmm1, [_data16_80000000]
 	cvtsi2ss xmm0, ebx
 	divss xmm1, xmm0
 	movss [g_snd+0x4c4c], xmm1
@@ -5933,7 +5932,7 @@ SND_StopAmbient_10:
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
 	jbe SND_StopAmbient_20
-	xorps xmm1, [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x30]
+	xorps xmm1, [_data16_80000000]
 	cvtsi2ss xmm0, ebx
 	divss xmm1, xmm0
 	movss [g_snd+0x4c54], xmm1
@@ -5949,7 +5948,7 @@ SND_StopAmbient_20:
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
 	jbe SND_StopAmbient_40
-	xorps xmm1, [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x30]
+	xorps xmm1, [_data16_80000000]
 	cvtsi2ss xmm0, ebx
 	divss xmm1, xmm0
 	movss [g_snd+0x4c5c], xmm1
@@ -5965,7 +5964,7 @@ SND_StopAmbient_40:
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
 	jbe SND_StopAmbient_60
-	xorps xmm1, [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x30]
+	xorps xmm1, [_data16_80000000]
 	cvtsi2ss xmm0, ebx
 	divss xmm1, xmm0
 	movss [g_snd+0x4c64], xmm1
@@ -5981,7 +5980,7 @@ SND_StopAmbient_60:
 	pxor xmm2, xmm2
 	ucomiss xmm1, xmm2
 	jbe SND_StopAmbient_80
-	xorps xmm1, [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x30]
+	xorps xmm1, [_data16_80000000]
 	cvtsi2ss xmm0, ebx
 	divss xmm1, xmm0
 	movss [g_snd+0x4c6c], xmm1
@@ -7243,7 +7242,7 @@ SND_PlayAmbientAlias_140:
 	pxor xmm0, xmm0
 	ucomiss xmm1, xmm0
 	jbe SND_PlayAmbientAlias_80
-	xorps xmm1, [_ZZ15SND_PlayLocal_fvE7MYCOLOR+0x20]
+	xorps xmm1, [_data16_80000000]
 	cvtsi2ss xmm0, dword [ebp+0x10]
 	divss xmm1, xmm0
 	movss [eax+ebx*8+0xc], xmm1
@@ -10197,6 +10196,7 @@ _float_100_00000000:		dd 0x42c80000	; 100
 _float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
 _float_10_00000000:		dd 0x41200000	; 10
 _float_0_05000000:		dd 0x3d4ccccd	; 0.05
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_25000000:		dd 0x3fa00000	; 1.25
 _float__12_00000000:		dd 0xc1400000	; -12

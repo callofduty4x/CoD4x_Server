@@ -1,5 +1,4 @@
 ;Imports of r_utils:
-	extern g_shadowFrustumBound
 	extern acos
 	extern sin
 	extern asin
@@ -40,7 +39,7 @@ FresnelTerm:
 	mov ebp, esp
 	sub esp, 0x78
 	movss xmm0, dword [ebp+0x10]
-	andps xmm0, [g_shadowFrustumBound+0x50]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	movsd [esp], xmm0
 	call acos
@@ -508,7 +507,7 @@ R_CullPointAndRadius:
 	movss xmm3, dword [eax+0x8]
 	movss xmm0, dword [ebp+0xc]
 	movaps xmm2, xmm0
-	xorps xmm2, [g_shadowFrustumBound+0x40]
+	xorps xmm2, [_data16_80000000]
 	movaps xmm0, xmm5
 	mulss xmm0, [edx]
 	movaps xmm1, xmm4
@@ -693,6 +692,7 @@ _cstring_3nonsolid7:		db "^3nonsolid^7",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double_1_00000000:		dq 0x3ff0000000000000	; 1
 _double_0_50000000:		dq 0x3fe0000000000000	; 0.5
 _float_0_00000000:		dd 0x0	; 0
@@ -700,6 +700,7 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _double__1_00000000:		dq 0xbff0000000000000	; -1
 _float_262144_00000000:		dd 0x48800000	; 262144
 _float_0_00392157:		dd 0x3b808081	; 0.00392157
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_0_50000000:		dd 0x3f000000	; 0.5
 

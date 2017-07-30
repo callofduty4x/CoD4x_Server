@@ -665,7 +665,7 @@ CG_WorldPosToCompass:
 	movaps xmm0, xmm2
 	mulss xmm0, xmm4
 	subss xmm5, xmm0
-	xorps xmm3, [colorObjectiveText+0x10]
+	xorps xmm3, [_data16_80000000]
 	mulss xmm3, xmm2
 	mulss xmm1, xmm4
 	subss xmm3, xmm1
@@ -743,7 +743,7 @@ CG_WorldPosToCompass_10:
 	divss xmm5, dword [eax+0x504ac]
 	movss xmm0, dword [_float_0_50000000]
 	subss xmm5, xmm0
-	xorps xmm3, [colorObjectiveText+0x10]
+	xorps xmm3, [_data16_80000000]
 	mulss xmm3, xmm2
 	mulss xmm1, xmm4
 	subss xmm3, xmm1
@@ -874,7 +874,7 @@ CG_CompassDrawPlayerMap_20:
 	jnz CG_CompassDrawPlayerMap_40
 	mov ebx, cgArray
 	movss xmm4, dword [ebx+0x5049c]
-	movss xmm7, dword [colorObjectiveText+0x20]
+	movss xmm7, dword [_data16_80000000]
 	movss xmm3, dword [ebx+0x50498]
 	xorps xmm3, xmm7
 	movss xmm2, dword [ebx+0x492e0]
@@ -1781,7 +1781,7 @@ CG_CompassDrawTickertape_180:
 	subss xmm0, [eax+0x50494]
 	movss [ebp-0xc0], xmm0
 	movaps xmm1, xmm0
-	xorps xmm1, [colorObjectiveText+0x30]
+	xorps xmm1, [_data16_80000000]
 	divss xmm1, dword [_float_360_00000000]
 	mov eax, [compassTickertapeStretch]
 	movss xmm2, dword [eax+0xc]
@@ -1888,7 +1888,7 @@ CG_CompassDrawTickertape_130:
 	mov dword [ebp-0xb0], 0x0
 	mov edi, 0x650
 	movss xmm1, dword [ebp-0xac]
-	xorps xmm1, [colorObjectiveText+0x30]
+	xorps xmm1, [_data16_80000000]
 	movss [ebp-0xcc], xmm1
 	jmp CG_CompassDrawTickertape_40
 CG_CompassDrawTickertape_60:
@@ -1966,7 +1966,7 @@ CG_CompassDrawTickertape_90:
 	call AngleDelta
 	fstp dword [ebp-0x10c]
 	movss xmm0, dword [ebp-0x10c]
-	xorps xmm0, [colorObjectiveText+0x30]
+	xorps xmm0, [_data16_80000000]
 	movss xmm1, dword [ebp-0xcc]
 	ucomiss xmm1, xmm0
 	jbe CG_CompassDrawTickertape_110
@@ -3763,6 +3763,7 @@ _float__2_00000000:		dd 0xc0000000	; -2
 _float__0_50000000:		dd 0xbf000000	; -0.5
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_360_00000000:		dd 0x43b40000	; 360
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_25000000:		dd 0x3e800000	; 0.25
 _float_0_02540000:		dd 0x3cd013a9	; 0.0254
 _float_180_00000000:		dd 0x43340000	; 180

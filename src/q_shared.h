@@ -576,7 +576,7 @@ typedef struct hudelem_s
   int time;
   int duration;
   float value;
-  int text;
+  int text; //Configstring index
   float sort;
   hudelem_color_t glowColor; //0x84
   int fxBirthTime;

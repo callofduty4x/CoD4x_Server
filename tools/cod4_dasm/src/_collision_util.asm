@@ -1,5 +1,4 @@
 ;Imports of collision_util:
-	extern circleCoords.131667
 
 ;Exports of collision_util:
 	global dCollideSpheres
@@ -146,7 +145,7 @@ dLineClosestApproach:
 	addss xmm5, xmm3
 	mulss xmm4, [ebp-0x1c]
 	addss xmm5, xmm4
-	xorps xmm5, [circleCoords.131667+0x3c0]
+	xorps xmm5, [_data16_80000000]
 	movaps xmm0, xmm7
 	mulss xmm0, xmm7
 	movss xmm1, dword [_float_1_00000000]
@@ -301,7 +300,7 @@ dClosestLineBoxPoints:
 	movss [ebp-0x84], xmm3
 	mov ebx, 0x1
 	pxor xmm6, xmm6
-	movss xmm5, dword [circleCoords.131667+0x3f0]
+	movss xmm5, dword [_data16_80000000]
 	mov esi, 0x3f800000
 dClosestLineBoxPoints_20:
 	lea edx, [ebx*4]
@@ -940,7 +939,7 @@ dClosestLineSegmentPoints_100:
 	movss xmm1, dword [ebp-0x5c]
 	ucomiss xmm1, xmm0
 	jb dClosestLineSegmentPoints_170
-	movss xmm1, dword [circleCoords.131667+0x3d0]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [ebp-0x60]
 	xorps xmm0, xmm1
 	divss xmm0, xmm4
@@ -1084,7 +1083,7 @@ dClosestLineSegmentPoints_90:
 dClosestLineSegmentPoints_110:
 	ucomiss xmm3, xmm0
 	jb dClosestLineSegmentPoints_180
-	movss xmm1, dword [circleCoords.131667+0x3d0]
+	movss xmm1, dword [_data16_80000000]
 	movaps xmm0, xmm6
 	xorps xmm0, xmm1
 	divss xmm0, xmm4
@@ -1191,5 +1190,6 @@ SECTION .rdata
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00010000:		dd 0x38d1b717	; 0.0001
 

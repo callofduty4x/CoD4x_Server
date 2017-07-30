@@ -1,6 +1,5 @@
 ;Imports of rb_fog:
 	extern r_fog
-	extern g_fltMin__uint4_dup_1
 
 ;Exports of rb_fog:
 	global R_SetFrameFog
@@ -58,7 +57,7 @@ R_SetFrameFog_10:
 	lea eax, [esi+0x290]
 	mov dword [esi+0x290], 0x0
 	mov dword [eax+0x4], 0x3f800000
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x40]
+	xorps xmm0, [_data16_80000000]
 	movss [eax+0x8], xmm0
 	movss [eax+0xc], xmm1
 	pop ebx
@@ -87,4 +86,5 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_00392157:		dd 0x3b808081	; 0.00392157
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

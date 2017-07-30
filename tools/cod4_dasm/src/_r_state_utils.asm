@@ -171,7 +171,7 @@ R_BeginView_30:
 	movss [eax+0x8], xmm3
 	mov [eax+0xc], ebx
 	add word [edi+0xe3c], 0x1
-	xorps xmm1, [g_identityMatrix44+0x40]
+	xorps xmm1, [_data16_80000000]
 	movaps xmm2, xmm1
 	mulss xmm2, [edx+0x18]
 	movaps xmm0, xmm1
@@ -903,6 +903,7 @@ _cstring_olprio_pain:		db "olprio_pain",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__2_00000000:		dd 0xc0000000	; -2
 _float__1_00000000:		dd 0xbf800000	; -1
 

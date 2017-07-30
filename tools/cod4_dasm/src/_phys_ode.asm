@@ -9,7 +9,6 @@
 	extern dBodyGetRotation
 	extern dBodyGetPosition
 	extern AxisTransformVec3
-	extern circleCoords.131667
 	extern dBodySetPosition
 	extern dGeomGetClass
 	extern ODE_GeomTransformGetOffset
@@ -371,7 +370,7 @@ Phys_AdjustForNewCenterOfMass_10:
 	movss xmm0, dword [ebp-0x74]
 	addss xmm0, [ebp-0x34]
 	movss [ebp-0x74], xmm0
-	movss xmm1, dword [circleCoords.131667+0xf0]
+	movss xmm1, dword [_data16_80000000]
 	mov eax, [ebp-0x88]
 	movss xmm0, dword [eax]
 	movss [ebp-0x78], xmm0
@@ -526,7 +525,7 @@ Phys_PlayCollisionSound_40:
 	mulss xmm3, [ebp-0x78]
 	mov eax, [phys_minImpactMomentum]
 	movss xmm0, dword [eax+0xc]
-	xorps xmm0, [circleCoords.131667+0x100]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm3
 	jbe Phys_PlayCollisionSound_20
 	mov ecx, [ebp+0x8]
@@ -970,7 +969,7 @@ Phys_DoBodyOncePerRun_60:
 	ucomiss xmm0, [_float_0_00000000]
 	jb Phys_DoBodyOncePerRun_110
 	movaps xmm0, xmm1
-	xorps xmm0, [circleCoords.131667+0x110]
+	xorps xmm0, [_data16_80000000]
 Phys_DoBodyOncePerRun_130:
 	movss [ebp-0x44], xmm1
 	movss [ebp-0x40], xmm1
@@ -1480,7 +1479,7 @@ Phys_CreateBodyFromState_40:
 	mov ecx, [ebp-0xb4]
 	mov [esp], ecx
 	call dBodySetRotation
-	movss xmm2, dword [circleCoords.131667+0x150]
+	movss xmm2, dword [_data16_80000000]
 	mov eax, [ebp-0xbc]
 	movss xmm1, dword [eax+0x48]
 	movaps xmm0, xmm1
@@ -2077,7 +2076,7 @@ Phys_RunToTime_90:
 Phys_RunToTime_180:
 	mov eax, [phys_gravity]
 	movss xmm0, dword [eax+0xc]
-	xorps xmm0, [circleCoords.131667+0x120]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
 	mulss xmm1, [physGlob+0x23ccc]
 	movss [esp+0xc], xmm1
@@ -3183,7 +3182,7 @@ Phys_ObjBulletImpact:
 	addss xmm0, xmm1
 	sqrtss xmm3, xmm0
 	movaps xmm0, xmm3
-	xorps xmm0, [circleCoords.131667+0x160]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Phys_ObjBulletImpact_10
 	movss xmm0, dword [_float_1_00000000]
@@ -3266,7 +3265,7 @@ Phys_ObjBulletImpact_120:
 	addss xmm0, xmm1
 	sqrtss xmm7, xmm0
 	movaps xmm0, xmm7
-	xorps xmm0, [circleCoords.131667+0x160]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb Phys_ObjBulletImpact_20
 	movss xmm0, dword [_float_1_00000000]
@@ -4546,7 +4545,7 @@ Phys_GeomUserGetAAContainedBox:
 	addss xmm0, [eax+0x8]
 	minss xmm0, xmm1
 	movaps xmm1, xmm0
-	xorps xmm0, [circleCoords.131667+0xe0]
+	xorps xmm0, [_data16_80000000]
 	movss [esi], xmm0
 	movss [esi+0x4], xmm0
 	movss [esi+0x8], xmm0
@@ -4604,7 +4603,7 @@ Phys_GeomUserGetAAContainedBox_30:
 	movss xmm1, dword [eax+0x8]
 	minss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm1, [circleCoords.131667+0xe0]
+	xorps xmm1, [_data16_80000000]
 	movss [esi], xmm1
 	movss [esi+0x4], xmm1
 	movss [esi+0x8], xmm1
@@ -5388,6 +5387,7 @@ _cstring_phys_narrowobjma:		db "phys_narrowObjMaxLength",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_20000000:		dd 0x3e4ccccd	; 0.2

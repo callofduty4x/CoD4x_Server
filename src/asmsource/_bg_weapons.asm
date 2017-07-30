@@ -12,7 +12,6 @@
 	extern PM_AddEvent
 	extern PM_SetProneMovementOverride
 	extern BG_AddPredictableEventToPlayerstate
-	extern _ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable
 	extern BG_AnimScriptEvent
 	extern Trace_GetEntityHitId
 	extern BG_LoadDefaultWeaponDef
@@ -27,6 +26,7 @@
 	extern sinf
 	extern sin
 	extern bg_bobAmplitudeSprinting
+	extern _ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable
 	extern bg_bobAmplitudeDucked
 	extern memset
 	extern strcmp
@@ -558,7 +558,7 @@ BG_CalculateWeaponPosition_GunRecoil_SingleAngle:
 	movss xmm6, dword [ebp+0x8]
 	movss xmm3, dword [ebp+0xc]
 	movss xmm5, dword [eax]
-	movss xmm4, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x1d0]
+	movss xmm4, dword [_data16_7fffffff]
 	movaps xmm0, xmm5
 	andps xmm0, xmm4
 	ucomiss xmm0, [_float_0_25000000]
@@ -623,7 +623,7 @@ BG_CalculateWeaponPosition_GunRecoil_SingleAngle_120:
 	leave
 	ret
 BG_CalculateWeaponPosition_GunRecoil_SingleAngle_20:
-	xorps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x1e0]
+	xorps xmm1, [_data16_80000000]
 	ucomiss xmm1, xmm0
 	ja BG_CalculateWeaponPosition_GunRecoil_SingleAngle_80
 	pxor xmm4, xmm4
@@ -654,7 +654,7 @@ BG_CalculateWeaponPosition_GunRecoil_SingleAngle_50:
 	ja BG_CalculateWeaponPosition_GunRecoil_SingleAngle_120
 BG_CalculateWeaponPosition_GunRecoil_SingleAngle_70:
 	movss xmm3, dword [ebp-0xc]
-	xorps xmm3, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x1e0]
+	xorps xmm3, [_data16_80000000]
 	ucomiss xmm3, xmm0
 	jbe BG_CalculateWeaponPosition_GunRecoil_SingleAngle_130
 	movss [edx], xmm3
@@ -1727,7 +1727,7 @@ BG_AdvanceTrace_10:
 	movss xmm0, dword [eax+0x8]
 	mulss xmm0, [ebx+0x3c]
 	addss xmm1, xmm0
-	xorps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x200]
+	xorps xmm1, [_data16_80000000]
 	ucomiss xmm1, [_float_0_12500000]
 	jae BG_AdvanceTrace_30
 	jp BG_AdvanceTrace_30
@@ -2228,7 +2228,7 @@ BG_WeaponFireRecoil_70:
 BG_WeaponFireRecoil_80:
 	mulss xmm0, [ebp-0x1c]
 	mulss xmm1, [ebp-0x1c]
-	xorps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x1c0]
+	xorps xmm1, [_data16_80000000]
 	movss [esi], xmm1
 	movss [esi+0x4], xmm0
 	mulss xmm0, [_float__0_50000000]
@@ -3773,7 +3773,7 @@ PM_AdjustAimSpreadScale_230:
 	movss xmm0, dword [ebp-0x48]
 	subss xmm0, [ebp-0x30]
 	mulss xmm0, [_float_360_00000000]
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x210]
+	andps xmm0, [_data16_7fffffff]
 	mulss xmm0, [_float_0_01000000]
 	mulss xmm0, [ebp-0x28]
 	divss xmm0, dword [ebp-0x1c]
@@ -4202,7 +4202,7 @@ BG_CalculateWeaponAngles_820:
 	fstp dword [ebp-0x54]
 	movss xmm4, dword [ebp-0xc8]
 	mulss xmm4, [ebp-0x54]
-	xorps xmm4, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x290]
+	xorps xmm4, [_data16_80000000]
 	cvtss2sd xmm0, [ebp-0x40]
 	subsd xmm0, [_double_0_47123892]
 	cvtsd2ss xmm5, xmm0
@@ -6009,7 +6009,7 @@ BG_CalculateWeaponPosition_Sway_60:
 	movss [ebp-0x1c], xmm0
 	movss xmm6, dword [ebp-0x58]
 	movaps xmm4, xmm6
-	xorps xmm4, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x1f0]
+	xorps xmm4, [_data16_80000000]
 	movaps xmm0, xmm3
 	subss xmm0, xmm6
 	pxor xmm2, xmm2
@@ -8491,8 +8491,10 @@ _cstring_large:		db "large",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_25000000:		dd 0x3e800000	; 0.25
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_255_00000000:		dd 0x437f0000	; 255
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
 _double_6_28318531:		dq 0x401921fb54442d18	; 6.28319

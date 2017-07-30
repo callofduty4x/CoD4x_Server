@@ -9967,7 +9967,7 @@ R_ForEachPrimaryLightAffectingSurface_90:
 	movss [ebp-0x3c], xmm1
 	mov eax, [eax+0x4]
 	xor edx, edx
-	movss xmm5, dword [s_lightGridRotAxis+0x30]
+	movss xmm5, dword [_data16_7fffffff]
 R_ForEachPrimaryLightAffectingSurface_100:
 	movaps xmm0, xmm6
 	subss xmm0, [eax]
@@ -12697,4 +12697,5 @@ _float_255_00000000:		dd 0x437f0000	; 255
 _float_0_00000000:		dd 0x0	; 0
 _float_2_00000000:		dd 0x40000000	; 2
 _float_0_01568628:		dd 0x3c808081	; 0.0156863
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 

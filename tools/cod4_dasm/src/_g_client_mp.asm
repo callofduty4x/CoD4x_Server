@@ -45,7 +45,6 @@
 	extern voice_localEcho
 	extern OnSameTeam
 	extern AngleVectors
-	extern _ZZ15G_TouchTriggersP9gentity_sE5range
 	extern perk_parabolicAngle
 	extern cos
 	extern perk_parabolicRadius
@@ -62,6 +61,7 @@
 	extern G_DObjGetWorldTagPos
 	extern BG_GetPlayerViewOrigin
 	extern Com_Error
+	extern ClientUserinfoChanged
 
 ;Exports of g_client_mp:
 	global ClientBegin
@@ -70,7 +70,6 @@
 	global ClientDisconnect
 	global G_BroadcastVoice
 	global SetClientViewAngle
-	global ClientUserinfoChanged
 	global G_GetNonPVSPlayerInfo
 	global G_GetPlayerViewOrigin
 
@@ -755,7 +754,7 @@ G_BroadcastVoice_20:
 	addss xmm0, xmm1
 	sqrtss xmm0, xmm0
 	movss [ebp-0x2c], xmm0
-	xorps xmm0, [_ZZ15G_TouchTriggersP9gentity_sE5range+0x100]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb G_BroadcastVoice_130
 	movss xmm0, dword [_float_1_00000000]
@@ -891,7 +890,7 @@ SetClientViewAngle_20:
 	ucomiss xmm2, xmm1
 	ja SetClientViewAngle_50
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ15G_TouchTriggersP9gentity_sE5range+0x110]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm2
 	ja SetClientViewAngle_60
 SetClientViewAngle_110:
@@ -999,233 +998,6 @@ SetClientViewAngle_100:
 	fstp dword [ebp-0x20]
 	jmp SetClientViewAngle_110
 
-
-;ClientUserinfoChanged(int)
-ClientUserinfoChanged:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x83c
-	mov edx, [ebp+0x8]
-	lea eax, [edx+edx*8]
-	lea eax, [edx+eax*2]
-	mov edx, eax
-	shl edx, 0x5
-	add eax, edx
-	add eax, [ebp+0x8]
-	mov edx, g_entities
-	mov eax, [eax+edx+0x15c]
-	mov [ebp-0x82c], eax
-	mov dword [esp+0x8], 0x400
-	lea ebx, [ebp-0x818]
-	mov [esp+0x4], ebx
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call SV_GetUserinfo
-	mov [esp], ebx
-	call Info_Validate
-	test eax, eax
-	jz ClientUserinfoChanged_10
-ClientUserinfoChanged_200:
-	mov edx, [ebp+0x8]
-	mov [esp], edx
-	call SV_IsLocalClient
-	mov edx, [ebp-0x82c]
-	mov [edx+0x2fd0], eax
-	mov dword [esp+0x4], _cstring_cg_predictitems
-	mov [esp], ebx
-	call Info_ValueForKey
-	mov [esp], eax
-	call atoi
-	test eax, eax
-	setnz al
-	movzx eax, al
-	mov edx, [ebp-0x82c]
-	mov [edx+0x2fd4], eax
-	cmp dword [edx+0x2f8c], 0x2
-	jz ClientUserinfoChanged_20
-ClientUserinfoChanged_130:
-	mov esi, [ebp-0x82c]
-	add esi, 0x3048
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x418]
-	mov [esp], eax
-	call Q_strncpyz
-	mov dword [esp+0x4], _cstring_name
-	mov [esp], ebx
-	call Info_ValueForKey
-	mov edx, [ebp-0x82c]
-	mov byte [edx+0x3048], 0x0
-	mov ecx, esi
-	xor edi, edi
-	mov dword [ebp-0x820], 0x0
-	mov dword [ebp-0x81c], 0x0
-	movzx edx, byte [eax]
-	lea ebx, [eax+0x1]
-	test dl, dl
-	jz ClientUserinfoChanged_30
-ClientUserinfoChanged_80:
-	cmp byte [esi], 0x0
-	jnz ClientUserinfoChanged_40
-	cmp dl, 0x20
-	jz ClientUserinfoChanged_50
-ClientUserinfoChanged_40:
-	cmp dl, 0x5e
-	jz ClientUserinfoChanged_60
-	cmp dl, 0x20
-	jz ClientUserinfoChanged_70
-	mov dword [ebp-0x81c], 0x0
-ClientUserinfoChanged_110:
-	cmp edi, 0xe
-	jg ClientUserinfoChanged_30
-	mov [ecx], dl
-	add ecx, 0x1
-	add dword [ebp-0x820], 0x1
-	add edi, 0x1
-ClientUserinfoChanged_50:
-	mov eax, ebx
-ClientUserinfoChanged_100:
-	movzx edx, byte [eax]
-	lea ebx, [eax+0x1]
-	test dl, dl
-	jnz ClientUserinfoChanged_80
-ClientUserinfoChanged_30:
-	mov byte [ecx], 0x0
-	cmp byte [esi], 0x0
-	jz ClientUserinfoChanged_90
-	mov eax, [ebp-0x820]
-	test eax, eax
-	jz ClientUserinfoChanged_90
-ClientUserinfoChanged_120:
-	mov dword [esp+0x8], 0x10
-	mov [esp+0x4], esi
-	mov eax, [ebp-0x82c]
-	add eax, 0x2fd8
-	mov [esp], eax
-	call Q_strncpyz
-ClientUserinfoChanged_240:
-	mov edx, [ebp+0x8]
-	lea eax, [edx+edx*8]
-	mov edx, eax
-	shl edx, 0x4
-	add eax, edx
-	mov edx, [ebp+0x8]
-	lea eax, [edx+eax*2]
-	mov edx, level_bgs
-	lea eax, [edx+eax*4+0x99a00]
-	lea ebx, [eax+0x4]
-	mov edx, [ebp+0x8]
-	mov [ebx+0x8], edx
-	mov dword [esp+0x8], 0x10
-	mov [esp+0x4], esi
-	add eax, 0x10
-	mov [esp], eax
-	call Q_strncpyz
-	mov edx, [ebp-0x82c]
-	mov eax, [edx+0x3010]
-	mov [ebx+0x1c], eax
-	add esp, 0x83c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-ClientUserinfoChanged_60:
-	lea ebx, [eax+0x2]
-	mov eax, ebx
-	jmp ClientUserinfoChanged_100
-ClientUserinfoChanged_70:
-	add dword [ebp-0x81c], 0x1
-	cmp dword [ebp-0x81c], 0x3
-	jle ClientUserinfoChanged_110
-	mov eax, ebx
-	jmp ClientUserinfoChanged_100
-ClientUserinfoChanged_90:
-	mov dword [esp+0x8], 0xf
-	mov dword [esp+0x4], _cstring_unnamedplayer
-	mov [esp], esi
-	call Q_strncpyz
-	jmp ClientUserinfoChanged_120
-ClientUserinfoChanged_20:
-	mov eax, level
-	mov eax, [eax+0x218]
-	test eax, eax
-	jz ClientUserinfoChanged_130
-	mov dword [esp+0x4], _cstring_name
-	mov [esp], ebx
-	call Info_ValueForKey
-	mov esi, [ebp-0x82c]
-	add esi, 0x2fd8
-	mov edx, [ebp-0x82c]
-	mov byte [edx+0x2fd8], 0x0
-	mov ecx, esi
-	xor edi, edi
-	mov dword [ebp-0x828], 0x0
-	mov dword [ebp-0x824], 0x0
-ClientUserinfoChanged_190:
-	movzx edx, byte [eax]
-	lea ebx, [eax+0x1]
-	test dl, dl
-	jz ClientUserinfoChanged_140
-	cmp byte [esi], 0x0
-	jnz ClientUserinfoChanged_150
-	cmp dl, 0x20
-	jz ClientUserinfoChanged_160
-ClientUserinfoChanged_150:
-	cmp dl, 0x5e
-	jz ClientUserinfoChanged_170
-	cmp dl, 0x20
-	jz ClientUserinfoChanged_180
-	mov dword [ebp-0x824], 0x0
-ClientUserinfoChanged_210:
-	cmp edi, 0xe
-	jg ClientUserinfoChanged_140
-	mov [ecx], dl
-	add ecx, 0x1
-	add dword [ebp-0x828], 0x1
-	add edi, 0x1
-ClientUserinfoChanged_160:
-	mov eax, ebx
-	jmp ClientUserinfoChanged_190
-ClientUserinfoChanged_10:
-	mov dword [ebp-0x818], 0x6d616e5c
-	mov dword [ebp-0x814], 0x61625c65
-	mov dword [ebp-0x810], 0x666e6964
-	mov word [ebp-0x80c], 0x6f
-	jmp ClientUserinfoChanged_200
-ClientUserinfoChanged_170:
-	lea ebx, [eax+0x2]
-	mov eax, ebx
-	jmp ClientUserinfoChanged_190
-ClientUserinfoChanged_180:
-	add dword [ebp-0x824], 0x1
-	cmp dword [ebp-0x824], 0x3
-	jle ClientUserinfoChanged_210
-	mov eax, ebx
-	jmp ClientUserinfoChanged_190
-ClientUserinfoChanged_140:
-	mov byte [ecx], 0x0
-	cmp byte [esi], 0x0
-	jz ClientUserinfoChanged_220
-	mov eax, [ebp-0x828]
-	test eax, eax
-	jnz ClientUserinfoChanged_230
-ClientUserinfoChanged_220:
-	mov dword [esp+0x8], 0xf
-	mov dword [esp+0x4], _cstring_unnamedplayer
-	mov [esp], esi
-	call Q_strncpyz
-	mov eax, [ebp-0x82c]
-	lea esi, [eax+0x3048]
-	jmp ClientUserinfoChanged_240
-ClientUserinfoChanged_230:
-	mov eax, [ebp-0x82c]
-	lea esi, [eax+0x3048]
-	jmp ClientUserinfoChanged_240
-	nop
 
 
 ;G_GetNonPVSPlayerInfo(gentity_s*, float*, int)
@@ -1566,6 +1338,7 @@ _cstring_g_getplayerviewo:		db 15h,"G_GetPlayerViewOrigin: Couldn",27h,"t find [
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533

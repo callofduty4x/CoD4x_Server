@@ -123,6 +123,16 @@ static void TranslateFunctionName(char* fn)
     fn[0] = 'Q';
     return;
   }
+  if(strcmp(fn, "I_CleanChar") == 0)
+  {
+    fn[0] = 'Q';
+    return;
+  }
+  if(strcmp(fn, "I_CleanStr") == 0)
+  {
+    fn[0] = 'Q';
+    return;
+  }
   if(strcmp(fn, "I_strnicmp") == 0)
   {
     strcpy(fn, "Q_stricmpn");
@@ -1400,9 +1410,9 @@ public:
   {
 
     int i;
-    uint32_t constants[] = {0x820011, 0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
-                            0x463800, 0x463804, 0x463808, 0x463838, 
-                            0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac,0x0};
+    uint32_t constants[] = {0x900000, 0x1400000, 0x646162, 0x820011, 0x800811, 0x810011, 0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
+                            0x463800, 0x463804, 0x463808, 0x463838, 0xfe7fff, 0x7e8000, 0x802011, 0x802013, 0x803003, 0x806c31, 0x807fff, 0x810211, 0x700000, 0x600000, 0x600001, 0x400000,
+                            0x39294c, 0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac,0x0};
     for(i = 0; constants[i]; ++i)
     {
       if(constants[i] == address)
@@ -1594,17 +1604,12 @@ public:
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
-    if(address == 0x391900 || address == 0x388020) //xmm constants of Com_CanPrimaryLightAffectPoint & Com_LoadWorldLoadObj
-    {
-      //Not actually a float
-      return addOWORDToTable((uint128_t*)address);
-    }
     if(address < 0x391B60 && address >= 0x3918f0) //xmm constants of Multiple more functions
     {
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
-    if(address == 0x3913e0 || address == 0x3913f0 || address == 0x391440 || address == 0x391460) //xmm constants of Multiple more functions
+    if(address == 0x3913e0 || address == 0x3913f0) //xmm constants of Multiple more functions
     {
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
@@ -1636,21 +1641,509 @@ public:
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
+
+    if(address >= 0x390A30 && address < 0x390A60 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x382830) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x382B00) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x382CC0 && address < 0x382D30 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
     if(address >= 0x382D60 && address < 0x382DC0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
     {
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
+
     if(address >= 0x382DE0 && address < 0x382E60 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
     {
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
+
     if(address == 0x382EE0) //xmm constants of rotation of d-engine
     {
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
+
+    if(address >= 0x3831A0 && address < 0x3832B0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3832E0 && address < 0x383360 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address == 0x3833d0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x383500) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3836f0 && address < 0x383740 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x383990 && address < 0x3839C0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x3839D0 && address < 0x383A20 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x383A50) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x383CB0 && address < 0x383CF0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address == 0x383D80) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address == 0x3841C0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x3844A0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3844e0 && address < 0x3845c0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3848c0 && address < 0x3848e0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x384e30 && address < 0x384e60 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x385330 && address < 0x385350 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x385360 && address < 0x385390 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address == 0x3853b0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address == 0x3856c0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x3859a0 && address < 0x385a00 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x385a30 && address < 0x385aa0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x385df0 && address < 0x385da0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x386080 && address < 0x386140 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x386360 && address < 0x386380 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x386590) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3871d0 && address < 0x387240 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x387450 && address < 0x3874c0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address == 0x387520) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x387530 && address < 0x387580 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x387590) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3875B0 && address < 0x387660 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3877A0 && address < 0x3878A0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x387AF0 && address < 0x387BA0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x387AA0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x387950 && address < 0x387A50 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3878D0 && address < 0x387910 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x387C40 && address < 0x387CC0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x387CD0 && address < 0x387CF0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x387DC0 && address < 0x388040 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x388640 && address < 0x388690 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address == 0x388700) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x389E60 && address < 0x389ED0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x38f7e0 && address < 0x38f820 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address == 0x38FD00) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x38FE80) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x390C70 && address < 0x390CC0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x391440 && address < 0x391470 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+    if(address >= 0x391690 && address < 0x3916E0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x391BA0 && address < 0x391C90 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x391CB0 && address < 0x391CE0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x391D00 && address < 0x391D20 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x391D40 && address < 0x391D60 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x391DA0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x391DF0 && address < 0x391F60 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x392080) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x392180 && address < 0x392210 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x392240) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x392280 && address < 0x3922E0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x392910 && address < 0x392920 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x392980) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x392ae0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x392D60 && address < 0x392DA0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x392DB0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x393200) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x39F760 && address < 0x39F780 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x39F990 && address < 0x39F9E0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A00D0 && address < 0x3A0120 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A0570 && address < 0x3A05E0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A06E0 && address < 0x3A0700 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A0750 && address < 0x3A0780 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address == 0x3A0BC0) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A1090 && address < 0x3A10C0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A12D0 && address < 0x3A1320 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A1380 && address < 0x3A13C0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A1600 && address < 0x3A1640 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A1890 && address < 0x3A1920 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    //Check this when errors!!!
+    if(address >= 0x3A1960 && address < 0x3A19C0 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+    if(address >= 0x3A2010 && address < 0x3A2040 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A2050 && address < 0x3A2100 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+    if(address >= 0x3A2540 && address < 0x3A2560 && (address & 0xf) == 0) //xmm constants of Multiple more functions
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
+
+
+
+
 
 
     if(sec.type == FileMap::SYM_PROC)

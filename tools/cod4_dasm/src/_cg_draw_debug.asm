@@ -245,7 +245,7 @@ CG_DrawFPS_20:
 	movss [ebp-0x5c], xmm2
 	pxor xmm2, xmm2
 	mov eax, fps_previousTimes
-	movss xmm1, dword [traceMasks.138450+0x10]
+	movss xmm1, dword [_data16_7fffffff]
 CG_DrawFPS_30:
 	cvtsi2ss xmm0, dword [eax]
 	subss xmm0, [ebp-0x5c]
@@ -1172,6 +1172,7 @@ SECTION .rdata
 _float_0_75000000:		dd 0x3f400000	; 0.75
 _float_240_00000000:		dd 0x43700000	; 240
 _float_0_03125000:		dd 0x3d000000	; 0.03125
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1000_00000000:		dd 0x447a0000	; 1000
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_32000_00000000:		dd 0x46fa0000	; 32000

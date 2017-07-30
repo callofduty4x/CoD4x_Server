@@ -4,7 +4,6 @@
 	extern Image_CubemapFace
 	extern RB_PixelCost_BuildColorCodeMap
 	extern Image_CountMipmaps
-	extern g_XModelPool
 	extern Com_Error
 	extern Z_VirtualAllocInternal
 	extern Wavelet_DecompressLevel
@@ -503,7 +502,7 @@ Image_LoadWavelet_70:
 	jz Image_LoadWavelet_40
 Image_LoadWavelet_20:
 	lea eax, [esi+ecx]
-	cmp eax, g_XModelPool+0x16c20
+	cmp eax, 0x600000
 	jbe Image_LoadWavelet_50
 	test eax, eax
 	js Image_LoadWavelet_60
@@ -519,7 +518,7 @@ Image_LoadWavelet_130:
 	test eax, eax
 	jnz Image_LoadWavelet_70
 Image_LoadWavelet_30:
-	mov dword [esp], g_XModelPool+0x16c20
+	mov dword [esp], 0x600000
 	call Z_VirtualAllocInternal
 	mov [s_imageLoadBuf], eax
 	jmp Image_LoadWavelet_70
@@ -775,7 +774,7 @@ Image_LoadBitmap_10:
 	mov ebx, eax
 	mov edx, eax
 	add edx, [s_imageLoadBytesUsed]
-	cmp edx, g_XModelPool+0x16c20
+	cmp edx, 0x600000
 	ja Image_LoadBitmap_100
 Image_LoadBitmap_140:
 	mov esi, [s_imageLoadBuf]
@@ -802,7 +801,7 @@ Image_LoadBitmap_160:
 	call Com_Error
 	jmp Image_LoadBitmap_140
 Image_LoadBitmap_110:
-	mov dword [esp], g_XModelPool+0x16c20
+	mov dword [esp], 0x600000
 	call Z_VirtualAllocInternal
 	mov [s_imageLoadBuf], eax
 	mov edx, eax
@@ -949,13 +948,13 @@ Image_LoadFromFileWithReader_80:
 	mov [ebp-0x7c], eax
 	mov edx, eax
 	add edx, [s_imageLoadBytesUsed]
-	cmp edx, g_XModelPool+0x16c20
+	cmp edx, 0x600000
 	ja Image_LoadFromFileWithReader_90
 Image_LoadFromFileWithReader_130:
 	mov eax, [s_imageLoadBuf]
 	test eax, eax
 	jnz Image_LoadFromFileWithReader_100
-	mov dword [esp], g_XModelPool+0x16c20
+	mov dword [esp], 0x600000
 	call Z_VirtualAllocInternal
 	mov [s_imageLoadBuf], eax
 Image_LoadFromFileWithReader_100:

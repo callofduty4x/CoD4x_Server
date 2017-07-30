@@ -1037,7 +1037,7 @@ R_GetSidePlaneNormals_40:
 	jz R_GetSidePlaneNormals_50
 R_GetSidePlaneNormals_90:
 	xor ebx, ebx
-	movss xmm5, dword [standardFrustumSidePlanes+0x50]
+	movss xmm5, dword [_data16_80000000]
 	pxor xmm7, xmm7
 	movss xmm6, dword [_float_1_00000000]
 	mov edx, [ebp-0x630]
@@ -1109,7 +1109,7 @@ R_GetSidePlaneNormals_30:
 R_GetSidePlaneNormals_20:
 	mov ecx, [ebp-0x62c]
 	xor edi, edi
-	movss xmm5, dword [standardFrustumSidePlanes+0x50]
+	movss xmm5, dword [_data16_80000000]
 	pxor xmm7, xmm7
 	movss xmm6, dword [_float_1_00000000]
 	mov ebx, ecx
@@ -2146,7 +2146,7 @@ R_VisitPortals_450:
 	cmp ebx, [eax+0xc]
 	jz R_VisitPortals_50
 	movss xmm0, dword [ecx+0x18]
-	xorps xmm0, [_ZZ14R_VisitPortalsPK7GfxCellPK9DpvsPlaneS4_iE5color+0x10]
+	xorps xmm0, [_data16_80000000]
 	add ecx, 0xc
 	mov [ebp-0x17b4], ecx
 	movaps xmm4, xmm0
@@ -4834,7 +4834,7 @@ R_FilterDObjIntoCells_20:
 	jnz R_FilterDObjIntoCells_20
 R_FilterDObjIntoCells_10:
 	movaps xmm0, xmm2
-	xorps xmm0, [standardFrustumSidePlanes+0x60]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
 	addss xmm1, [edi]
 	movss [ebp-0x24], xmm1
@@ -5597,7 +5597,7 @@ R_SetupWorldSurfacesDpvs:
 	orps xmm5, xmm0
 	ucomiss xmm2, xmm5
 	jae R_SetupWorldSurfacesDpvs_10
-	movss xmm0, dword [standardFrustumSidePlanes+0x40]
+	movss xmm0, dword [_data16_80000000]
 	movss xmm2, dword [esi+0x110]
 	xorps xmm2, xmm0
 	movss [dpvsGlob+0x14], xmm2
@@ -7284,7 +7284,7 @@ R_GenerateShadowMapCasterCells:
 	jz R_GenerateShadowMapCasterCells_10
 	mov eax, [ecx+0xc8]
 	lea edx, [eax+0x10]
-	movss xmm1, dword [standardFrustumSidePlanes+0x70]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [eax+0x10]
 	xorps xmm0, xmm1
 	movss [dpvsGlob+0x38], xmm0
@@ -7388,7 +7388,7 @@ R_GenerateShadowMapCasterCells_170:
 	test ecx, ecx
 	jz R_GenerateShadowMapCasterCells_60
 	movss xmm0, dword [edi+0x18]
-	xorps xmm0, [standardFrustumSidePlanes+0x70]
+	xorps xmm0, [_data16_80000000]
 	lea esi, [edi+0xc]
 	mov [ebp-0x1350], esi
 	movaps xmm4, xmm0
@@ -8605,6 +8605,7 @@ _cstring_sort_surfs:		db "sort surfs",0
 SECTION .rdata
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float__0_00100000:		dd 0xba83126f	; -0.001
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__0_12500000:		dd 0xbe000000	; -0.125
 _float_0_00000000:		dd 0x0	; 0

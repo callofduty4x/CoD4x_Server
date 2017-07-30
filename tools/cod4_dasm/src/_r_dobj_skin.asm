@@ -14,7 +14,6 @@
 	extern gfxBuf
 	extern g_assetEntryPool
 	extern DObjGetRotTransArray
-	extern _ZZ13R_AddDebugBoxP12DebugGlobalsPKfS2_S2_E10iEdgePairs
 	extern Vec4Normalize
 	extern scene
 	extern Z_VirtualCommitInternal
@@ -559,7 +558,7 @@ R_SkinSceneDObjModels_110:
 	movss xmm1, dword [eax]
 	movss xmm2, dword [eax+0x4]
 	movss xmm3, dword [eax+0x8]
-	xorps xmm0, [_ZZ13R_AddDebugBoxP12DebugGlobalsPKfS2_S2_E10iEdgePairs+0x80]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm0, [eax+0xc]
 	mulss xmm1, [edx+0x4]
 	subss xmm0, xmm1
@@ -883,4 +882,5 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

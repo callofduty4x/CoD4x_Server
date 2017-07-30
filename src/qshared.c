@@ -2044,3 +2044,12 @@ void __cdecl Com_StripExtension(const char *in, char *out)
   }
   *out = 0;
 }
+
+
+double __cdecl GetLeanFraction(const float fFrac)
+{
+  float af;
+
+  af = fabs(fFrac);
+  return (2.0 - af) * fFrac;
+}

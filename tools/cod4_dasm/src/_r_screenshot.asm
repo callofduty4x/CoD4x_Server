@@ -1282,7 +1282,7 @@ R_SaveCubemapShot_30:
 	addss xmm3, xmm0
 	sqrtss xmm3, xmm3
 	movaps xmm0, xmm3
-	xorps xmm0, [cubemapShotAxis+0x110]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jae R_SaveCubemapShot_50
 	movss xmm0, dword [_float_1_00000000]
@@ -1893,7 +1893,7 @@ R_LightingFromCubemapShots_180:
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [cubemapShotAxis+0x100]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm5, xmm5
 	ucomiss xmm0, xmm5
 	jb R_LightingFromCubemapShots_60
@@ -2018,7 +2018,7 @@ R_LightingFromCubemapShots_70:
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [cubemapShotAxis+0x100]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm6, xmm6
 	ucomiss xmm0, xmm6
 	jae R_LightingFromCubemapShots_100
@@ -2453,6 +2453,7 @@ _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_255_00000000:		dd 0x437f0000	; 255
 _float__0_50000000:		dd 0xbf000000	; -0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_0_00392157:		dd 0x3b808081	; 0.00392157
 _float_0_06250000:		dd 0x3d800000	; 0.0625

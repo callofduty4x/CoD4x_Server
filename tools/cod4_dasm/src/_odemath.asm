@@ -1,5 +1,4 @@
 ;Imports of odemath:
-	extern circleCoords.131667
 	extern dMessage
 
 ;Exports of odemath:
@@ -23,7 +22,7 @@ dNormalize3:
 	movss xmm5, dword [eax+0x4]
 	lea ecx, [eax+0x8]
 	movss xmm6, dword [eax+0x8]
-	movss xmm0, dword [circleCoords.131667+0x760]
+	movss xmm0, dword [_data16_7fffffff]
 	movaps xmm1, xmm4
 	andps xmm1, xmm0
 	movaps xmm2, xmm5
@@ -207,7 +206,7 @@ dPlaneSpace:
 	mov ecx, [ebp+0x10]
 	movss xmm2, dword [eax+0x8]
 	movaps xmm0, xmm2
-	andps xmm0, [circleCoords.131667+0x740]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	ucomisd xmm0, [_double_0_70710678]
 	jbe dPlaneSpace_10
@@ -219,7 +218,7 @@ dPlaneSpace:
 	movss xmm2, dword [_float_1_00000000]
 	divss xmm2, xmm0
 	mov dword [edx], 0x0
-	movss xmm3, dword [circleCoords.131667+0x750]
+	movss xmm3, dword [_data16_80000000]
 	movss xmm0, dword [eax+0x8]
 	xorps xmm0, xmm3
 	mulss xmm0, xmm2
@@ -248,7 +247,7 @@ dPlaneSpace_10:
 	sqrtss xmm1, xmm2
 	movss xmm3, dword [_float_1_00000000]
 	divss xmm3, xmm1
-	movss xmm1, dword [circleCoords.131667+0x750]
+	movss xmm1, dword [_data16_80000000]
 	xorps xmm0, xmm1
 	mulss xmm0, xmm3
 	movss [edx], xmm0
@@ -290,8 +289,10 @@ _cstring_vector_has_zero_:		db "vector has zero size in %s()",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00000000:		dd 0x0	; 0
 _float__1_00000000:		dd 0xbf800000	; -1
 _double_0_70710678:		dq 0x3fe6a09e667f3bcd	; 0.707107
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

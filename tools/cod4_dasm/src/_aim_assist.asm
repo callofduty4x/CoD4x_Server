@@ -9,7 +9,6 @@
 	extern CL_DrawText
 	extern colorWhite
 	extern BG_GetViewmodelWeaponIndex
-	extern _ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156
 	extern player_meleeRange
 	extern vectoyaw
 	extern vectoangles
@@ -571,7 +570,7 @@ AimAssist_ApplyMeleeCharge:
 	movaps xmm1, xmm0
 	mulss xmm1, xmm0
 	xor ecx, ecx
-	movss xmm0, dword [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xd0]
+	movss xmm0, dword [_data16_80000000]
 	movaps xmm5, xmm2
 	xorps xmm5, xmm0
 	movaps xmm4, xmm3
@@ -728,7 +727,7 @@ AimAssist_ApplyAutoMelee_30:
 	movaps xmm1, xmm0
 	mulss xmm1, xmm0
 	xor ecx, ecx
-	movss xmm0, dword [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xe0]
+	movss xmm0, dword [_data16_80000000]
 	movaps xmm4, xmm2
 	xorps xmm4, xmm0
 	movaps xmm5, xmm3
@@ -1818,7 +1817,7 @@ AimAssist_UpdateScreenTargets_50:
 	divss xmm3, xmm4
 	movss [ebp-0x134], xmm3
 	divss xmm2, xmm4
-	xorps xmm2, [_ZZN14CMacGameEngine20InstallEventHandlersEvE5C.156+0xc0]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x130], xmm2
 	divss xmm1, xmm4
 	movss [ebp-0x12c], xmm1
@@ -2358,6 +2357,7 @@ SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_10_00000000:		dd 0x41200000	; 10
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_360_00000000:		dd 0x43b40000	; 360
 _float_0_47780272:		dd 0x3ef4a28f	; 0.477803

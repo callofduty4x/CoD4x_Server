@@ -14,7 +14,6 @@
 	extern DObjGetRadius
 	extern CM_BoxSightTrace
 	extern CM_PointSightTraceToEntities
-	extern yy_ec
 	extern CM_ClipSightTraceToEntities
 	extern CM_PointTraceStaticModelsComplete
 	extern CM_PointContents
@@ -522,7 +521,7 @@ SV_SightTrace_20:
 	movss [ebp-0x54], xmm1
 	movss [ebp-0x50], xmm2
 	movss [ebp-0x4c], xmm3
-	movss xmm7, dword [yy_ec+0x7c0]
+	movss xmm7, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm7
 	movss [ebp-0x60], xmm0
@@ -675,7 +674,7 @@ SV_TracePassed_30:
 	movss [ebp-0x54], xmm1
 	movss [ebp-0x50], xmm2
 	movss [ebp-0x4c], xmm3
-	movss xmm7, dword [yy_ec+0x7e0]
+	movss xmm7, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm7
 	movss [ebp-0x60], xmm0
@@ -2004,7 +2003,7 @@ SV_Trace_50:
 	movss [ebp-0x60], xmm1
 	movss [ebp-0x5c], xmm2
 	movss [ebp-0x58], xmm3
-	movss xmm7, dword [yy_ec+0x7d0]
+	movss xmm7, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm7
 	movss [ebp-0x6c], xmm0
@@ -2086,5 +2085,6 @@ _float_0_00000100:		dd 0x358637be	; 1e-06
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_32_00000000:		dd 0x42000000	; 32
 _float_0_00000000:		dd 0x0	; 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_69999999:		dd 0x3f333333	; 0.7
 

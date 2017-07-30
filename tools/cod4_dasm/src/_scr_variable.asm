@@ -27,8 +27,6 @@
 	extern GetEntityFieldValue
 	extern MT_Alloc
 	extern Scr_Error
-	extern g_clients
-	extern x1900ClearData1
 	extern SL_ConvertToString
 	extern SL_GetStringLen
 	extern SL_GetStringForVector
@@ -2577,8 +2575,8 @@ ClearArray_220:
 	jmp ClearArray_240
 ClearArray_180:
 	mov edx, [edx]
-	lea eax, [edx+g_clients+0x81e00]
-	cmp eax, x1900ClearData1+0xffcff
+	lea eax, [edx+0x7e8000]
+	cmp eax, 0xfe7fff
 	ja ClearArray_250
 	mov [ebp-0x34], esi
 	lea ebx, [edx+0x800000]
@@ -4462,8 +4460,8 @@ Scr_EvalArray_100:
 	jmp Scr_EvalArray_70
 Scr_EvalArray_120:
 	mov ecx, [esi]
-	lea eax, [ecx+g_clients+0x81e00]
-	cmp eax, x1900ClearData1+0xffcff
+	lea eax, [ecx+0x7e8000]
+	cmp eax, 0xfe7fff
 	ja Scr_EvalArray_220
 	lea ebx, [ecx+0x800000]
 	and ebx, 0xffffff
@@ -8309,8 +8307,8 @@ IsValidArrayIndex:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
-	add eax, g_clients+0x81e00
-	cmp eax, x1900ClearData1+0xffcff
+	add eax, 0x7e8000
+	cmp eax, 0xfe7fff
 	setbe al
 	movzx eax, al
 	pop ebp

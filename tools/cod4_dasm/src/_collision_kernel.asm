@@ -20,7 +20,6 @@
 	extern _Unwind_Resume
 	extern dSpaceRemove
 	extern dGeomBoxGetLengths
-	extern circleCoords.131667
 	extern ODE_GeomTransformGetAAContainedBox
 	extern Phys_GeomUserGetAAContainedBox
 	extern odeGlob
@@ -672,7 +671,7 @@ ODE_GeomGetAAContainedBox_20:
 	minss xmm0, xmm1
 	mulss xmm0, [_float_0_50000000]
 	movaps xmm1, xmm0
-	xorps xmm1, [circleCoords.131667+0x290]
+	xorps xmm1, [_data16_80000000]
 	mov eax, [ebp+0xc]
 	movss [eax], xmm1
 	movss [eax+0x4], xmm1
@@ -1031,7 +1030,7 @@ dCollide_40:
 	test eax, eax
 	jz dCollide_10
 	xor ebx, ebx
-	movss xmm1, dword [circleCoords.131667+0x240]
+	movss xmm1, dword [_data16_80000000]
 	mov ecx, [ebp-0x1c]
 dCollide_60:
 	movss xmm0, dword [ecx+0x10]
@@ -1343,4 +1342,5 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

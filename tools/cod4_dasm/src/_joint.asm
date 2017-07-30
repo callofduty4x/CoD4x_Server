@@ -433,7 +433,7 @@ getUniversalAngle2_30:
 	mov edx, edi
 	mov eax, ebx
 	call getHingeAngleFromRelativeQuat
-	xorps xmm0, [circleCoords.131667+0x650]
+	xorps xmm0, [_data16_80000000]
 getUniversalAngle2_10:
 	add esp, 0x9c
 	pop ebx
@@ -948,7 +948,7 @@ setFixedOrientation_40:
 	pop ebp
 	ret
 setFixedOrientation_30:
-	movss xmm0, dword [circleCoords.131667+0x6e0]
+	movss xmm0, dword [_data16_80000000]
 	movss xmm3, dword [ebp-0x24]
 	xorps xmm3, xmm0
 	movss [ebp-0x24], xmm3
@@ -1157,7 +1157,7 @@ jointGetInfo1_390:
 	call atan2f
 	fstp dword [ebp-0xdc]
 	movss xmm0, dword [ebp-0xdc]
-	xorps xmm0, [circleCoords.131667+0x6a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x28], xmm0
 	movss xmm3, dword [ebp-0x40]
 	movss xmm0, dword [ebp-0x44]
@@ -1197,7 +1197,7 @@ jointGetInfo1_390:
 	call atan2f
 	fstp dword [ebp-0xdc]
 	movss xmm0, dword [ebp-0xdc]
-	xorps xmm0, [circleCoords.131667+0x6a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x24], xmm0
 	movss xmm1, dword [ebp-0x70]
 	mulss xmm1, [ebp-0x6c]
@@ -1238,7 +1238,7 @@ jointGetInfo1_390:
 	call atan2f
 	fstp dword [ebp-0xdc]
 	movss xmm0, dword [ebp-0xdc]
-	xorps xmm0, [circleCoords.131667+0x6a0]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x20], xmm0
 	jmp jointGetInfo1_100
 jointGetInfo1_490:
@@ -4231,7 +4231,7 @@ _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_160:
 	mov eax, [edx+0x30]
 	test eax, eax
 	jz _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_40
-	movss xmm1, dword [circleCoords.131667+0x520]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [edi]
 	xorps xmm0, xmm1
 	movss [ebx+esi], xmm0
@@ -4328,7 +4328,7 @@ _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_60:
 	ucomiss xmm0, xmm2
 	jbe _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_100
 _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_280:
-	movss xmm1, dword [circleCoords.131667+0x520]
+	movss xmm1, dword [_data16_80000000]
 	xorps xmm3, xmm1
 _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_290:
 	cmp eax, 0x1
@@ -4383,7 +4383,7 @@ _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_220:
 	mov eax, [edx+0x1c]
 	movss xmm0, dword [edx]
 	mulss xmm0, [ebx+0x18]
-	movss xmm1, dword [circleCoords.131667+0x520]
+	movss xmm1, dword [_data16_80000000]
 	xorps xmm0, xmm1
 	mulss xmm0, [ebx+0x28]
 	movss [eax+ecx], xmm0
@@ -4627,7 +4627,7 @@ _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_100:
 	cmp eax, 0x2
 	jz _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_280
 _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_270:
-	movss xmm1, dword [circleCoords.131667+0x520]
+	movss xmm1, dword [_data16_80000000]
 	jmp _ZN17dxJointLimitMotor8addLimotEP7dxJointPNS0_5Info2EiPfi_290
 	nop
 	add [eax], al
@@ -5414,7 +5414,7 @@ dJointSetHingeAnchor_40:
 	mov [ecx+0x80], eax
 	mov eax, ecx
 	mov ebx, 0x1
-	movss xmm1, dword [circleCoords.131667+0x620]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [edx+ebx*4+0xf0]
 	xorps xmm0, xmm1
 	movss [eax+0x84], xmm0
@@ -5479,7 +5479,7 @@ dJointSetHingeAxis_20:
 	mov [ebx+0x80], eax
 	mov eax, ebx
 	mov ecx, 0x1
-	movss xmm1, dword [circleCoords.131667+0x640]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [edx+ecx*4+0xf0]
 	xorps xmm0, xmm1
 	movss [eax+0x84], xmm0
@@ -5836,6 +5836,7 @@ SECTION .rdata
 _float_0_00000000:		dd 0x0	; 0
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
 _double_6_28318531:		dq 0x401921fb54442d18	; 6.28319
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
 _float__3402823466385288_float__:		dd 0xff7fffff	; -3.40282e+38
 _double__3_14159265:		dq 0xc00921fb54442d18	; -3.14159

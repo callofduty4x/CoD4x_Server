@@ -2808,7 +2808,7 @@ CG_DrawPlayerStance_190:
 	call sin
 	fstp qword [ebp-0x60]
 	cvtsd2ss xmm0, [ebp-0x60]
-	andps xmm0, [pulseMags.138474+0x40]
+	andps xmm0, [_data16_7fffffff]
 	movss [ebp-0x1c], xmm0
 	mov ecx, [ebp+0xc]
 	mov [esp+0x28], ecx
@@ -2824,7 +2824,7 @@ CG_DrawPlayerStance_190:
 	mov [esp+0x14], eax
 	cvtsi2ss xmm0, esi
 	mulss xmm0, [_float_0_50000000]
-	xorps xmm0, [pulseMags.138474+0x50]
+	xorps xmm0, [_data16_80000000]
 	movss [esp+0x10], xmm0
 	mov eax, [ebp+0x8]
 	mov [esp+0xc], eax
@@ -5867,6 +5867,8 @@ _float_0_80000001:		dd 0x3f4ccccd	; 0.8
 _float_1500_00000000:		dd 0x44bb8000	; 1500
 _float_540_00000000:		dd 0x44070000	; 540
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_800_00000000:		dd 0x44480000	; 800
 _float_5_00000000:		dd 0x40a00000	; 5
 _float_28_00000000:		dd 0x41e00000	; 28

@@ -622,7 +622,7 @@ CG_MiniMapChanged:
 	fstp qword [ebp-0x20]
 	movss xmm5, dword [esi+0x5049c]
 	movss xmm4, dword [esi+0x50498]
-	xorps xmm4, [_ZZ12CG_DrawVLinePK15ScreenPlacementffffiiPKfP8MaterialE4sign+0x30]
+	xorps xmm4, [_data16_80000000]
 	cvtsd2ss xmm1, [ebp-0x28]
 	subss xmm1, [esi+0x504a4]
 	cvtsd2ss xmm3, [ebp-0x20]
@@ -1069,4 +1069,5 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _float__0_50000000:		dd 0xbf000000	; -0.5
 _float_0_80000001:		dd 0x3f4ccccd	; 0.8
 _float_48_00000000:		dd 0x42400000	; 48
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

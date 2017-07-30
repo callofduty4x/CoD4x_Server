@@ -49,7 +49,6 @@
 	extern glCompressedTexSubImage2D
 	extern glTexSubImage3D
 	extern glCompressedTexSubImage3D
-	extern _ZZNK26CDirect3DVertexDeclaration14GetNumElementsEPK18_D3DVERTEXELEMENT9E8EndToken
 	extern glPolygonOffset
 	extern glEnable
 	extern glDeleteBuffersARB
@@ -1499,7 +1498,7 @@ _ZN7COpenGL16SetPolygonOffsetEff:
 	mov ebx, [ebp+0x8]
 	movss xmm0, dword [ebp+0xc]
 	subss xmm0, [ebx+0xf0]
-	movss xmm1, dword [_ZZNK26CDirect3DVertexDeclaration14GetNumElementsEPK18_D3DVERTEXELEMENT9E8EndToken+0xc0]
+	movss xmm1, dword [_data16_7fffffff]
 	andps xmm0, xmm1
 	ucomiss xmm0, [_float_0_00000012]
 	ja _ZN7COpenGL16SetPolygonOffsetEff_10
@@ -4003,5 +4002,6 @@ _cstring_vector_m_insert_:		db "vector::_M_insert_aux",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000012:		dd 0x34000000	; 1.19209e-07
 

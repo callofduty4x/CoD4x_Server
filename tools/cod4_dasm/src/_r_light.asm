@@ -12,7 +12,6 @@
 	extern R_BoxSurfaces
 	extern R_EndCmdBuf
 	extern R_AddBspDrawSurfs
-	extern formats.160670
 	extern R_InitBspDrawSurf
 	extern frontEndDataOut
 	extern R_AddDObjSurfaces
@@ -759,7 +758,7 @@ R_CalcSpotLightPlanes:
 	lea eax, [eax+0x10]
 	mov [ebp-0x58], eax
 	movss xmm2, dword [ebx+0x10]
-	movss xmm6, dword [formats.160670+0x20]
+	movss xmm6, dword [_data16_80000000]
 	movaps xmm0, xmm2
 	xorps xmm0, xmm6
 	movss [ebp-0x3c], xmm0
@@ -803,7 +802,7 @@ R_CalcSpotLightPlanes:
 	mov eax, ebx
 	xor esi, esi
 	mov ecx, 0x1
-	movss xmm2, dword [formats.160670+0x30]
+	movss xmm2, dword [_data16_7fffffff]
 R_CalcSpotLightPlanes_10:
 	movss xmm1, dword [eax+0x14]
 	andps xmm1, xmm2
@@ -3456,4 +3455,6 @@ _cstring_cant_load_the_de:		db "Can",27h,"t load the default light def ",27h,"%s
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 

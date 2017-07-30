@@ -15,7 +15,6 @@
 	extern memset
 	extern strncpy
 	extern GetClearedMemory
-	extern _ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable
 	extern StripDoubleQuotes
 	extern PS_ReadToken
 	extern EndOfScript
@@ -2622,7 +2621,7 @@ PC_EvaluateTokens_60:
 	fld qword [ebp-0xb20]
 	fstp qword [ebp-0xb60]
 	movsd xmm0, qword [ebp-0xb60]
-	xorpd xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x3c0]
+	xorpd xmm0, [_data16_0]
 	movsd [edx+0x4], xmm0
 PC_EvaluateTokens_560:
 	mov eax, [ebp-0xb34]
@@ -5634,7 +5633,7 @@ PC_Directive_evalfloat_10:
 	mov [ebp-0x44], eax
 	mov dword [ebp-0x3c], 0x0
 	cvtsd2ss xmm0, [ebp-0x20]
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x5e0]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	movsd [esp+0x8], xmm0
 	mov dword [esp+0x4], _cstring_12f
@@ -6176,7 +6175,7 @@ PC_DollarDirective_evalfloat_10:
 	mov [ebp-0x44], eax
 	mov dword [ebp-0x3c], 0x0
 	cvtsd2ss xmm0, [ebp-0x20]
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x5b0]
+	andps xmm0, [_data16_7fffffff]
 	cvtss2sd xmm0, xmm0
 	movsd [esp+0x8], xmm0
 	mov dword [esp+0x4], _cstring_12f
@@ -6187,10 +6186,10 @@ PC_DollarDirective_evalfloat_10:
 	mov dword [ebp-0x64], 0x2808
 	movsd xmm0, qword [ebp-0x20]
 	movapd xmm1, xmm0
-	movsd xmm2, qword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x5c0]
+	movsd xmm2, qword [_data16_01]
 	movapd xmm4, xmm2
 	cmpsd xmm4, xmm1, 0x2
-	minsd xmm1, qword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x5d0]
+	minsd xmm1, qword [_data16_ffe00000]
 	xorpd xmm3, xmm3
 	maxsd xmm1, xmm3
 	andpd xmm2, xmm4
@@ -6397,5 +6396,9 @@ _cstring_eval:		db "eval",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_0:		dd 0x0, 0x80000000, 0x0, 0x0	; OWORD
 _double_1_00000000:		dq 0x3ff0000000000000	; 1
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
+_data16_01:		dd 0x0, 0x41e00000, 0x0, 0x0	; OWORD
+_data16_ffe00000:		dd 0xffe00000, 0x41efffff, 0x0, 0x0	; OWORD
 

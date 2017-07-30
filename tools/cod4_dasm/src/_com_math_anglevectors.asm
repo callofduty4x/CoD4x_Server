@@ -57,7 +57,7 @@ AngleVectors:
 	mulss xmm0, [ebp-0x28]
 	movss [ebx+0x4], xmm0
 	movss xmm0, dword [ebp-0x30]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x20]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x3c], xmm0
 	mov eax, [ebp-0x3c]
 	mov [ebx+0x8], eax
@@ -80,7 +80,7 @@ AngleVectors_50:
 	test edi, edi
 	jz AngleVectors_30
 	movss xmm3, dword [ebp-0x34]
-	xorps xmm3, [g_fltMin__uint4_dup_1+0x20]
+	xorps xmm3, [_data16_80000000]
 	movss xmm2, dword [ebp-0x30]
 	mulss xmm2, xmm3
 	movss xmm0, dword [ebp-0x24]
@@ -185,7 +185,7 @@ AnglesToAxis:
 	mulss xmm0, [ebp-0x10]
 	movss [ebx+0x4], xmm0
 	movss xmm0, dword [ebp-0xc]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x10]
+	xorps xmm0, [_data16_80000000]
 	movss [ebx+0x8], xmm0
 	cvtss2sd xmm0, [esi+0x8]
 	mulsd xmm0, xmm2
@@ -396,6 +396,7 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 

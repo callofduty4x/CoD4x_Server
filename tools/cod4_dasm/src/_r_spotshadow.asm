@@ -12,7 +12,6 @@
 	extern gfxRenderTargets
 	extern gfxMeshGlob
 	extern R_IsPrimaryLight
-	extern shadowFrustumSidePlanes
 	extern PerpendicularVector
 	extern MatrixForViewer
 	extern FinitePerspectiveMatrix
@@ -266,7 +265,7 @@ R_AddSpotShadowsForLight_250:
 	lea ebx, [esi+0x110]
 	mov eax, [ebp+0xc]
 	add eax, 0x10
-	movss xmm1, dword [shadowFrustumSidePlanes+0x60]
+	movss xmm1, dword [_data16_80000000]
 	mov edx, [ebp+0xc]
 	movss xmm0, dword [edx+0x10]
 	xorps xmm0, xmm1
@@ -821,6 +820,7 @@ _float__0_00024414:		dd 0xb9800000	; -0.000244141
 _float_0_00195312:		dd 0x3b000000	; 0.00195312
 _float_4_00000000:		dd 0x40800000	; 4
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__0_00012207:		dd 0xb9000000	; -0.00012207
 _float_0_00097656:		dd 0x3a800000	; 0.000976562
 _float_2_00000000:		dd 0x40000000	; 2

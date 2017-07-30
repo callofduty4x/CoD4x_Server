@@ -24,7 +24,6 @@
 	extern g_EndPos
 	extern Scr_IsInOpcodeMemory
 	extern FS_FOpenFileRead
-	extern g_XModelPool
 	extern memset
 
 ;Exports of scr_parser:
@@ -1427,7 +1426,7 @@ Scr_InitOpcodeLookup_10:
 	mov dword [scrParserGlob+0x4], 0x40000
 	mov dword [scrParserGlob+0x8], 0x0
 	mov dword [esp+0x4], _cstring_scr_initopcodelo
-	mov dword [esp], g_XModelPool+0x16c20
+	mov dword [esp], 0x600000
 	call Hunk_AllocDebugMem
 	mov [scrParserGlob], eax
 	mov edx, [scrParserGlob+0x4]

@@ -3,7 +3,6 @@
 	extern bg_maxGrenadeIndicatorSpeed
 	extern cgMedia
 	extern cg_hudGrenadeIconEnabledFlash
-	extern traceMasks.138450
 	extern CL_GetScreenDimensions
 	extern UI_FillRectPhysical
 	extern cgArray
@@ -184,7 +183,7 @@ CG_DrawFlashDamage:
 	cvtsi2ss xmm0, eax
 	mulss xmm0, [ecx+0x50400]
 	divss xmm0, dword [_float_500_00000000]
-	andps xmm0, [traceMasks.138450+0x20]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_5_00000000]
 	jbe CG_DrawFlashDamage_20
 	movss xmm0, dword [_float_1_00000000]
@@ -436,7 +435,7 @@ CG_DrawGrenadeIndicators_40:
 	movss xmm2, dword [ebp-0xb0]
 	subss xmm2, xmm1
 	movss xmm0, dword [ebp-0x70]
-	xorps xmm0, [traceMasks.138450+0x50]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm0, [ebp-0x94]
 	movss [ebp-0x48], xmm0
 	movss [ebp-0x60], xmm0
@@ -446,7 +445,7 @@ CG_DrawGrenadeIndicators_40:
 	movss [ebp-0x50], xmm0
 	movss [ebp-0x58], xmm0
 	movss xmm0, dword [ebp-0x74]
-	xorps xmm0, [traceMasks.138450+0x50]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm0, [esi+0x4]
 	movss [ebp-0x54], xmm0
 	movss [ebp-0x5c], xmm0
@@ -656,7 +655,7 @@ CG_AddHudGrenade_PositionCheck_30:
 	mov eax, cg_hudGrenadeIconMaxHeight
 	mov eax, [eax]
 	movss xmm0, dword [eax+0xc]
-	xorps xmm0, [traceMasks.138450+0x40]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm4
 	ja CG_AddHudGrenade_PositionCheck_20
 CG_AddHudGrenade_PositionCheck_40:
@@ -747,7 +746,7 @@ CG_DrawDamageDirectionIndicators_60:
 	movss [ebp-0x54], xmm1
 	movss [ebp-0x50], xmm0
 	movaps xmm2, xmm1
-	xorps xmm2, [traceMasks.138450+0x30]
+	xorps xmm2, [_data16_80000000]
 	movss [ebp-0x4c], xmm2
 	movss [ebp-0x48], xmm0
 	movss [ebp-0x44], xmm2
@@ -859,12 +858,14 @@ SECTION .rdata
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_500_00000000:		dd 0x43fa0000	; 500
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_5_00000000:		dd 0x40a00000	; 5
 _float_0_69999999:		dd 0x3f333333	; 0.7
 _float_10_00000000:		dd 0x41200000	; 10
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _double_0_00628319:		dq 0x3f79bc65b68b71c3	; 0.00628319
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__0_50000000:		dd 0xbf000000	; -0.5
 _float_0_00000000:		dd 0x0	; 0
 _float__2_00000000:		dd 0xc0000000	; -2

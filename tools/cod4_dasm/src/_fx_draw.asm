@@ -104,7 +104,7 @@ FX_DrawElem_BillboardSprite_40:
 FX_DrawElem_BillboardSprite_10:
 	mov eax, [ebx+0x40]
 	lea edx, [eax+0x70]
-	movss xmm1, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x40
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [eax+0x70]
 	xorps xmm0, xmm1
 	movss [ebp-0x20], xmm0
@@ -241,7 +241,7 @@ FX_DrawElem_Tail:
 	mulss xmm2, xmm2
 	addss xmm0, xmm2
 	sqrtss xmm1, xmm0
-	movss xmm7, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x50
+	movss xmm7, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm7
 	pxor xmm2, xmm2
@@ -479,7 +479,7 @@ FX_DrawElem_Cloud_10:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x20]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm4, xmm4
 	ucomiss xmm0, xmm4
 	jb FX_DrawElem_Cloud_20
@@ -959,7 +959,7 @@ FX_GenTrail_VertsForSegment:
 	mulss xmm0, xmm2
 	addss xmm0, [ebp-0x7c]
 	movss [ebp-0x7c], xmm0
-	xorps xmm1, [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x10]
+	xorps xmm1, [_data16_80000000]
 	movss xmm0, dword [ebp-0x9c]
 	mulss xmm0, xmm5
 	mulss xmm4, xmm1
@@ -1262,7 +1262,7 @@ FX_GenSpriteVerts_60:
 	mulss xmm0, xmm3
 	addss xmm0, xmm6
 	movss [ebp-0x6c], xmm0
-	xorps xmm1, [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x30]
+	xorps xmm1, [_data16_80000000]
 	movss xmm0, dword [edi+0x78]
 	movss xmm6, dword [ebp-0x64]
 	mulss xmm6, xmm0
@@ -1995,10 +1995,10 @@ FX_DrawSpotLight_200:
 	movaps xmm0, xmm1
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x60
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x70
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -2432,12 +2432,12 @@ FX_DrawSpriteElems_560:
 	addss xmm0, [_float_0_50000000]
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm2, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xa0
+	movss xmm2, dword [_data16_4f000000]
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xb0
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	movaps xmm1, xmm2
-	andps xmm1, [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xa0]
+	andps xmm1, [_data16_4f000000]
 	pslld xmm2, 0x1f
 	subps xmm0, xmm1
 	cvttps2dq xmm0, xmm0
@@ -2668,12 +2668,12 @@ FX_DrawSpriteElems_500:
 	addss xmm0, [_float_0_50000000]
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm2, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xa0
+	movss xmm2, dword [_data16_4f000000]
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xb0
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	movaps xmm1, xmm2
-	andps xmm1, [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xa0]
+	andps xmm1, [_data16_4f000000]
 	pslld xmm2, 0x1f
 	subps xmm0, xmm1
 	cvttps2dq xmm0, xmm0
@@ -3125,10 +3125,10 @@ FX_DrawSpriteElems_880:
 	addss xmm0, [_float_0_50000000]
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xa0
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0xb0
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -4031,10 +4031,10 @@ FX_DrawNonSpriteElems_210:
 	movaps xmm0, xmm1
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x80
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [_ZZ33FX_EvaluateVisualState_DoLightingP20FxElemPreVisualStateP17FxElemVisualStatePK9FxElemDefE7mapping+0x90
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -4569,6 +4569,7 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__2_00000000:		dd 0xc0000000	; -2
 _float_0_00392157:		dd 0x3b808081	; 0.00392157
@@ -4580,5 +4581,7 @@ _float_127_50000000:		dd 0x42ff0000	; 127.5
 _float_127_00000000:		dd 0x42fe0000	; 127
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; OWORD
+_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00787402:		dd 0x3c010204	; 0.00787402
 

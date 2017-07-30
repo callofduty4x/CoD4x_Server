@@ -802,7 +802,7 @@ R_CreateParticleCloudBuffer_30:
 	mov [esi], ax
 	add esi, 0x2
 	add edx, 0x2
-	cmp edx, quadIndices.154841+0xc
+	cmp edx, 0x39294c
 	jnz R_CreateParticleCloudBuffer_30
 	add dword [ebp-0x4c], 0x1
 	add dword [ebp-0x40], 0xc

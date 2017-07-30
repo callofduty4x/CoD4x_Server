@@ -1,5 +1,4 @@
 ;Imports of lsp:
-	extern msg_hData
 	extern acosf
 
 ;Exports of lsp:
@@ -156,7 +155,7 @@ lpc_to_lsp_70:
 lpc_to_lsp_60:
 	ucomiss xmm4, [_float__1_00000000]
 	jb lpc_to_lsp_80
-	movss xmm7, dword [msg_hData+0x5f0]
+	movss xmm7, dword [_data16_7fffffff]
 lpc_to_lsp_140:
 	cvtss2sd xmm0, xmm6
 	movapd xmm1, xmm0
@@ -355,7 +354,7 @@ lsp_to_lpc_10:
 	movss xmm6, dword [_float_0_49991244]
 	movss xmm5, dword [_float_0_99999332]
 	movsd xmm4, qword [_double_3_14159265]
-	movss xmm2, dword [msg_hData+0x5e0]
+	movss xmm2, dword [_data16_80000000]
 	jmp lsp_to_lpc_40
 lsp_to_lpc_60:
 	mulss xmm0, xmm0
@@ -587,6 +586,7 @@ SECTION .rdata
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__1_00000000:		dd 0xbf800000	; -1
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double__0_90000000:		dq 0xbfeccccccccccccd	; -0.9
 _double_1_00000000:		dq 0x3ff0000000000000	; 1
 _double_0_20000000:		dq 0x3fc999999999999a	; 0.2
@@ -596,6 +596,7 @@ _float_0_04148775:		dd 0x3d29ef0e	; 0.0414877
 _float_0_49991244:		dd 0x3efff486	; 0.499912
 _float_0_99999332:		dd 0x3f7fff90	; 0.999993
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__0_00127121:		dd 0xbaa69eb6	; -0.00127121
 _float__2_00000000:		dd 0xc0000000	; -2
 _double_0_50000000:		dq 0x3fe0000000000000	; 0.5

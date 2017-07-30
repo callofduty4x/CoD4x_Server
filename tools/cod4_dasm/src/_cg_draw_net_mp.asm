@@ -16,7 +16,6 @@
 	extern cgMedia
 	extern colorYellow
 	extern CL_DrawStretchPic
-	extern g_fltMin__uint4
 	extern colorBlue
 	extern colorGreen
 	extern colorRed
@@ -232,7 +231,7 @@ CG_DrawLagometer_50:
 	pxor xmm2, xmm2
 	ucomiss xmm2, xmm0
 	jbe CG_DrawLagometer_80
-	xorps xmm0, [g_fltMin__uint4+0x1c0]
+	xorps xmm0, [_data16_80000000]
 	movss xmm2, dword [_float_16_00000000]
 	movaps xmm1, xmm2
 	cmpss xmm1, xmm0, 0x5
@@ -435,6 +434,7 @@ _float__140_00000000:		dd 0xc30c0000	; -140
 _float__7_00000000:		dd 0xc0e00000	; -7
 _float_0_05333333:		dd 0x3d5a740e	; 0.0533333
 _float__124_00000000:		dd 0xc2f80000	; -124
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_02666667:		dd 0x3cda740e	; 0.0266667
 _float_24_00000000:		dd 0x41c00000	; 24
 _float__116_00000000:		dd 0xc2e80000	; -116

@@ -1,5 +1,4 @@
 ;Imports of vq:
-	extern exc_10_16_table
 
 ;Exports of vq:
 	global scal_quant
@@ -161,7 +160,7 @@ vq_nbest_sign_100:
 	jnz vq_nbest_sign_100
 	ucomiss xmm1, xmm3
 	jbe vq_nbest_sign_110
-	xorps xmm1, [exc_10_16_table+0x100]
+	xorps xmm1, [_data16_80000000]
 	mov dword [ebp-0x28], 0x0
 	jmp vq_nbest_sign_120
 vq_nbest_sign_50:
@@ -307,4 +306,5 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

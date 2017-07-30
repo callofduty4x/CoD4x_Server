@@ -842,12 +842,12 @@ R_RenderScene_140:
 	movaps xmm0, xmm2
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [g_fltMin__uint4_dup_1+0x20]
+	movss xmm1, dword [_data16_4f000000]
 	cmpss xmm1, xmm0, 0x2
-	movss xmm6, dword [g_fltMin__uint4_dup_1+0x30]
+	movss xmm6, dword [_data16_4f800000]
 	cmpss xmm6, xmm0, 0x2
 	movaps xmm2, xmm1
-	andps xmm2, [g_fltMin__uint4_dup_1+0x20]
+	andps xmm2, [_data16_4f000000]
 	pslld xmm1, 0x1f
 	subps xmm0, xmm2
 	cvttps2dq xmm0, xmm0
@@ -862,7 +862,7 @@ R_RenderScene_140:
 R_RenderScene_570:
 	divss xmm0, xmm3
 	subss xmm0, [ebp-0x130]
-	andps xmm0, [g_fltMin__uint4_dup_1+0x40]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [ebp-0x124]
 	jae R_RenderScene_110
 	mov edi, ebx
@@ -911,10 +911,10 @@ R_RenderScene_610:
 	movaps xmm0, xmm1
 	xorps xmm1, xmm1
 	maxss xmm0, xmm1
-	movss xmm1, dword [g_fltMin__uint4_dup_1+0x20]
+	movss xmm1, dword [_data16_4f000000]
 	movaps xmm2, xmm1
 	cmpss xmm2, xmm0, 0x2
-	movss xmm3, dword [g_fltMin__uint4_dup_1+0x30]
+	movss xmm3, dword [_data16_4f800000]
 	cmpss xmm3, xmm0, 0x2
 	andps xmm1, xmm2
 	pslld xmm2, 0x1f
@@ -1853,7 +1853,7 @@ R_RenderScene_1010:
 	mov eax, [ebp-0x104]
 	cmp byte [eax+0x5658], 0x0
 	jz R_RenderScene_700
-	xorps xmm7, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm7, [_data16_80000000]
 	addss xmm6, [_float_1_00000000]
 	mov eax, [ebp-0x104]
 R_RenderScene_700:
@@ -2885,7 +2885,7 @@ R_SetLodOrigin_80:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x60]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm4
 	jb R_SetLodOrigin_170
 R_SetLodOrigin_220:
@@ -3077,7 +3077,7 @@ R_AddDObjToScene_40:
 	call AnglesToQuat
 	mov dword [edi+0x28], 0x3f800000
 	movss xmm1, dword [ebp-0x38]
-	xorps xmm1, [g_fltMin__uint4_dup_1+0x70]
+	xorps xmm1, [_data16_80000000]
 	movss xmm3, dword [ebx+0x4c]
 	movaps xmm0, xmm1
 	addss xmm0, xmm3
@@ -3803,7 +3803,7 @@ R_AddSpotLightToScene_60:
 	mov eax, [esi+0x8]
 	mov [ebx+0x54], eax
 	lea eax, [ebx+0x40]
-	movss xmm1, dword [g_fltMin__uint4_dup_1+0x10]
+	movss xmm1, dword [_data16_80000000]
 	mov edi, [ebp-0x20]
 	movss xmm0, dword [edi]
 	xorps xmm0, xmm1
@@ -4609,6 +4609,9 @@ _float_0_01000000:		dd 0x3c23d70a	; 0.01
 _float_2_11867309:		dd 0x40079857	; 2.11867
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
+_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; OWORD
+_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; OWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_512_00000000:		dd 0x44000000	; 512
 _float_4_00000000:		dd 0x40800000	; 4
 _float_0_98437500:		dd 0x3f7c0000	; 0.984375
@@ -4616,6 +4619,7 @@ _float_1024_00000000:		dd 0x44800000	; 1024
 _float_0_00024414:		dd 0x39800000	; 0.000244141
 _float_4096_00000000:		dd 0x45800000	; 4096
 _float__0_50000000:		dd 0xbf000000	; -0.5
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_360_00000000:		dd 0x43b40000	; 360

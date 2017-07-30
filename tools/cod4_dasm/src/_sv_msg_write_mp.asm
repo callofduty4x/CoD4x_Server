@@ -14,7 +14,7 @@
 	extern svsHeader
 	extern MSG_WriteShort
 	extern Com_PrintWarning
-	extern I_CleanChar
+	extern Q_CleanChar
 
 ;Exports of sv_msg_write_mp:
 	global s_netFieldList
@@ -2928,7 +2928,7 @@ MSG_WriteReliableCommandToBuffer_40:
 MSG_WriteReliableCommandToBuffer_70:
 	movsx eax, al
 	mov [esp], eax
-	call I_CleanChar
+	call Q_CleanChar
 	mov edx, 0x2e
 	cmp al, 0x25
 	cmovnz edx, eax

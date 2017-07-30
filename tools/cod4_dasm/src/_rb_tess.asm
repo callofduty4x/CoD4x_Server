@@ -1763,7 +1763,7 @@ R_TessParticleCloudList_10:
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x10]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb R_TessParticleCloudList_120
 	movss xmm5, dword [_float_1_00000000]
@@ -1829,7 +1829,7 @@ R_TessParticleCloudList_130:
 R_TessParticleCloudList_140:
 	movss [ebp-0x4c], xmm1
 	movaps xmm0, xmm2
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x10]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x48], xmm0
 	movss [ebp-0x44], xmm2
 	movss [ebp-0x40], xmm1
@@ -3877,6 +3877,7 @@ _cstring_tree_chechnya_tr:		db "tree_chechnya_trunk_nml",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_00392157:		dd 0x3b808081	; 0.00392157
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00100000:		dd 0x3a83126f	; 0.001

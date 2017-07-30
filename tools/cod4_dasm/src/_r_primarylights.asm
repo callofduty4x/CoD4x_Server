@@ -257,7 +257,7 @@ R_ChooseShadowedLights_240:
 	mov eax, [ebp-0x74]
 	movss xmm6, dword [eax+0x28]
 	movaps xmm4, xmm6
-	xorps xmm4, [vec3_colorintensity+0x30]
+	xorps xmm4, [_data16_80000000]
 	mov eax, sm_lightScore_spotProjectFrac
 	mov eax, [eax]
 	mulss xmm4, [eax+0xc]
@@ -775,7 +775,7 @@ R_LinkDynEntToPrimaryLights_100:
 	movss [ebp-0x3c], xmm1
 	mov eax, [eax+0x4]
 	xor edx, edx
-	movss xmm5, dword [vec3_colorintensity+0x50]
+	movss xmm5, dword [_data16_7fffffff]
 R_LinkDynEntToPrimaryLights_70:
 	movaps xmm0, xmm6
 	subss xmm0, [eax]
@@ -1049,7 +1049,7 @@ R_GetNonSunPrimaryLightForBox_90:
 	movss xmm3, dword [edx]
 	mov eax, [eax+0x4]
 	xor edx, edx
-	movss xmm5, dword [vec3_colorintensity+0x10]
+	movss xmm5, dword [_data16_7fffffff]
 R_GetNonSunPrimaryLightForBox_70:
 	movaps xmm0, xmm6
 	subss xmm0, [eax]
@@ -1311,7 +1311,7 @@ R_LinkBoxEntityToPrimaryLights_110:
 	movss [ebp-0x40], xmm1
 	mov eax, [eax+0x4]
 	xor edx, edx
-	movss xmm5, dword [vec3_colorintensity+0x40]
+	movss xmm5, dword [_data16_7fffffff]
 R_LinkBoxEntityToPrimaryLights_100:
 	movaps xmm0, xmm6
 	subss xmm0, [eax]
@@ -1726,7 +1726,7 @@ R_GetNonSunPrimaryLightForSphere_110:
 	movss [ebp-0x30], xmm0
 	mov ecx, [eax+0x4]
 	xor esi, esi
-	movss xmm4, dword [vec3_colorintensity+0x20]
+	movss xmm4, dword [_data16_7fffffff]
 R_GetNonSunPrimaryLightForSphere_70:
 	movaps xmm0, xmm5
 	subss xmm0, [ecx]
@@ -2185,6 +2185,7 @@ _cstring_too_many_total_s:		db "Too many total shadowable lights (%d)",0ah,0
 SECTION .rdata
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_29899999:		dd 0x3e991687	; 0.299
 _float_0_58700001:		dd 0x3f1645a2	; 0.587
 _float_0_11400000:		dd 0x3de978d5	; 0.114
@@ -2192,4 +2193,5 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
 _float_0_00000000:		dd 0x0	; 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 

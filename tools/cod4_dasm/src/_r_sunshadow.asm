@@ -280,7 +280,7 @@ R_SetupSunShadowMaps:
 	mov eax, frontEndDataOut
 	mov eax, [eax]
 	lea edx, [eax+0x11e6e0]
-	movss xmm7, dword [g_shadowFrustumBound+0x30]
+	movss xmm7, dword [_data16_80000000]
 	movss xmm6, dword [eax+0x11e6e0]
 	xorps xmm6, xmm7
 	movss [ebp-0x9c], xmm6
@@ -470,7 +470,7 @@ R_SetupSunShadowMaps_60:
 	add ebx, 0x1
 	cmp ebx, 0x4
 	jz R_SetupSunShadowMaps_50
-	movss xmm7, dword [g_shadowFrustumBound+0x30]
+	movss xmm7, dword [_data16_80000000]
 	jmp R_SetupSunShadowMaps_60
 R_SetupSunShadowMaps_50:
 	movss xmm3, dword [ebp-0x20]
@@ -833,17 +833,17 @@ R_SetupSunShadowMaps_200:
 	addss xmm4, xmm5
 	movss [ebp-0x2c], xmm4
 	movss xmm0, dword [ebp-0x90]
-	xorps xmm0, [g_shadowFrustumBound+0x30]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+0x40], xmm0
 	movss xmm0, dword [ebp-0x8c]
-	xorps xmm0, [g_shadowFrustumBound+0x30]
+	xorps xmm0, [_data16_80000000]
 	mov eax, [ebp-0x270]
 	movss [eax+0x10], xmm0
 	movss xmm0, dword [ebp-0x88]
-	xorps xmm0, [g_shadowFrustumBound+0x30]
+	xorps xmm0, [_data16_80000000]
 	movss [eax+0x20], xmm0
 	movss xmm0, dword [ebp-0x28]
-	xorps xmm0, [g_shadowFrustumBound+0x30]
+	xorps xmm0, [_data16_80000000]
 	movss [eax+0x30], xmm0
 	mov eax, [ebp-0x84]
 	mov ecx, [ebp-0x270]
@@ -853,7 +853,7 @@ R_SetupSunShadowMaps_200:
 	mov eax, [ebp-0x7c]
 	mov [ecx+0x24], eax
 	movss xmm0, dword [ebp-0x24]
-	xorps xmm0, [g_shadowFrustumBound+0x30]
+	xorps xmm0, [_data16_80000000]
 	movss [ecx+0x34], xmm0
 	mov eax, [ebp-0x9c]
 	mov [ecx+0x8], eax
@@ -1128,7 +1128,7 @@ R_SetupSunShadowMaps_210:
 	movss [ebp-0x248], xmm3
 	subss xmm1, xmm5
 	movss [ebp-0x244], xmm1
-	movss xmm7, dword [g_shadowFrustumBound+0x30]
+	movss xmm7, dword [_data16_80000000]
 	xor dword [ebp-0x244], 0x80000000
 	mulss xmm3, [ebp-0x244]
 	movss [ebp-0x244], xmm3
@@ -1457,7 +1457,7 @@ R_SetupSunShadowMaps_230:
 	movss xmm1, dword [_float_1024_00000000]
 	jmp R_SetupSunShadowMaps_430
 R_SetupSunShadowMaps_280:
-	movss xmm7, dword [g_shadowFrustumBound+0x30]
+	movss xmm7, dword [_data16_80000000]
 	movss xmm6, dword [ebp-0x9c]
 	jmp R_SetupSunShadowMaps_440
 R_SetupSunShadowMaps_260:
@@ -1466,7 +1466,7 @@ R_SetupSunShadowMaps_260:
 	jnz R_SetupSunShadowMaps_450
 	xor edx, edx
 	mov dword [ebp-0x2a0], 0x0
-	movss xmm7, dword [g_shadowFrustumBound+0x30]
+	movss xmm7, dword [_data16_80000000]
 	jmp R_SetupSunShadowMaps_460
 R_SetupSunShadowMaps_470:
 	mov edx, ecx
@@ -1526,7 +1526,7 @@ R_SetupSunShadowMaps_270:
 	shl ebx, 0x4
 	mov dword [ebp-0x2f0], 0x0
 	mov ecx, g_shadowFrustumBound+0xc
-	movss xmm7, dword [g_shadowFrustumBound+0x30]
+	movss xmm7, dword [_data16_80000000]
 	mov eax, [ebp-0x2f0]
 R_SetupSunShadowMaps_540:
 	lea edx, [ebp-0x224]
@@ -1798,7 +1798,7 @@ R_SetupSunShadowMaps_450:
 	mov dword [ebp-0x2a0], 0x0
 	mov edi, rg
 	xor ebx, ebx
-	movss xmm2, dword [g_shadowFrustumBound+0x30]
+	movss xmm2, dword [_data16_80000000]
 	lea ecx, [ebp-0x224]
 R_SetupSunShadowMaps_820:
 	mov edx, [edi+0x22e0]
@@ -1940,6 +1940,7 @@ SECTION .rdata
 _float_0_00195312:		dd 0x3b000000	; 0.00195312
 _float_0_00097656:		dd 0x3a800000	; 0.000976562
 _float_2_00000000:		dd 0x40000000	; 2
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_10000000:		dd 0x3dcccccd	; 0.1
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_75000000:		dd 0x3f400000	; 0.75

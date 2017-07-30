@@ -1,5 +1,4 @@
 ;Imports of r_cubemap_utils:
-	extern cornerTexCoords.154840
 	extern cosf
 
 ;Exports of r_cubemap_utils:
@@ -61,7 +60,7 @@ Image_CubeMapDir_20:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [cornerTexCoords.154840+0x20]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm5
 	jb Image_CubeMapDir_30
 	movaps xmm1, xmm4
@@ -1911,6 +1910,7 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_3_00000000:		dd 0x40400000	; 3
 _float_6_00000000:		dd 0x40c00000	; 6

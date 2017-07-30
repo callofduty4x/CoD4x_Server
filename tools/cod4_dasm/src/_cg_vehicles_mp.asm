@@ -15,7 +15,6 @@
 	extern colorWhite
 	extern CG_DebugStarWithText
 	extern Vec3Basis_RightHanded
-	extern cls
 	extern cg_entitiesArray
 	extern Com_PrintWarning
 	extern cgsArray
@@ -505,7 +504,7 @@ VehicleFXTest_210:
 	call Vec3Basis_RightHanded
 	mov eax, [ebp-0x88]
 	and eax, 0x1f00000
-	cmp eax, cls+0x285400
+	cmp eax, 0x1400000
 	jz VehicleFXTest_260
 	mov eax, cgMedia
 	mov edx, [eax+0x2764]

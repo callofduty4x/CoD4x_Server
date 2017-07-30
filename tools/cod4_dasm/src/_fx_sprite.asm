@@ -143,7 +143,7 @@ FX_BuildSpriteCodeMeshVerts_20:
 	movss [ebp-0x38], xmm0
 	movss xmm1, dword [ebx+0x492f0]
 	movss [ebp-0x34], xmm1
-	movss xmm2, dword [g_fltMin__uint4_dup_1+0x10]
+	movss xmm2, dword [_data16_80000000]
 	movss xmm4, dword [_float_127_00000000]
 	mulss xmm0, xmm4
 	movss xmm3, dword [_float_127_50000000]
@@ -743,6 +743,7 @@ _cstring_null:		db 0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_127_00000000:		dd 0x42fe0000	; 127
 _float_127_50000000:		dd 0x42ff0000	; 127.5
 _double_0_00000100:		dq 0x3eb0c6f7a0b5ed8d	; 1e-06

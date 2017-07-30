@@ -89,7 +89,7 @@ RB_DrawDebugStrings_50:
 	mov [esp], eax
 	call R_ConvertColorToBytes
 	movss xmm0, dword [ebx+0x1c]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x10]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
 	mulss xmm1, [edi+0xdcc]
 	movss [ebp-0x28], xmm1
@@ -780,6 +780,7 @@ _cstring_i:		db "%i",0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_0_01256637:		dq 0x3f89bc65b68b71c3	; 0.0125664
 _float_4_00000000:		dd 0x40800000	; 4
 _float_0_06400000:		dd 0x3d83126f	; 0.064

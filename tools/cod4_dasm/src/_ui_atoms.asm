@@ -5,7 +5,6 @@
 	extern sharedUiInfo
 	extern CL_DrawStretchPic
 	extern useFastFile
-	extern _ZZN16CStringEdPackage9ParseLineEPKchE5C.236
 	extern CL_DrawStretchPicPhysical
 
 ;Exports of ui_atoms:
@@ -196,12 +195,12 @@ UI_DrawHandlePic_40:
 	pop ebp
 	ret
 UI_DrawHandlePic_30:
-	xorps xmm1, [_ZZN16CStringEdPackage9ParseLineEPKchE5C.236+0x400]
+	xorps xmm1, [_data16_80000000]
 	mov esi, edx
 	mov edx, eax
 	jmp UI_DrawHandlePic_40
 UI_DrawHandlePic_20:
-	xorps xmm2, [_ZZN16CStringEdPackage9ParseLineEPKchE5C.236+0x400]
+	xorps xmm2, [_data16_80000000]
 	mov ebx, 0x3f800000
 	mov edx, ebx
 	mov ecx, eax
@@ -262,4 +261,5 @@ SECTION .rdata
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00000000:		dd 0x0	; 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 

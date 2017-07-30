@@ -1,7 +1,6 @@
 ;Imports of rb_imagefilter:
 	extern floorf
 	extern expf
-	extern g_fltMin__uint4_dup_1
 	extern rgp
 	extern tess
 	extern gfxCmdBufSourceState
@@ -226,7 +225,7 @@ RB_GenerateGaussianFilter2D:
 	movss xmm0, dword [ebp-0x44]
 	call RB_GaussianFilterPoints1D
 	mov dword [ebp-0x40], 0x0
-	movss xmm1, dword [g_fltMin__uint4_dup_1+0x60]
+	movss xmm1, dword [_data16_80000000]
 	mov eax, [ebp-0x40]
 RB_GenerateGaussianFilter2D_20:
 	shl eax, 0x5
@@ -521,7 +520,7 @@ RB_GenerateGaussianFilterChain_100:
 RB_GenerateGaussianFilterChain_30:
 	movaps xmm0, xmm2
 	subss xmm0, xmm3
-	andps xmm0, [g_fltMin__uint4_dup_1+0x70]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_0_32950512]
 	jae RB_GenerateGaussianFilterChain_50
 	jp RB_GenerateGaussianFilterChain_50
@@ -863,9 +862,11 @@ _float_0_50000000:		dd 0x3f000000	; 0.5
 _float__0_50000000:		dd 0xbf000000	; -0.5
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_38956046:		dd 0x3fb1dd1e	; 1.38956
 _float_1_93087828:		dd 0x3ff72705	; 1.93088
 _float_0_32950512:		dd 0x3ea8b4e5	; 0.329505
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_6_49775028:		dd 0x40cfed92	; 6.49775
 _float_42_22076035:		dd 0x4228e20f	; 42.2208
 _float_0_25000000:		dd 0x3e800000	; 0.25

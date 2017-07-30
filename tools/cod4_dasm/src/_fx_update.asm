@@ -5,7 +5,6 @@
 	extern fx_randomTable
 	extern floorf
 	extern ceilf
-	extern g_fltMin__uint4_dup_1
 	extern FX_OrientationPosToWorldPos
 	extern CM_BoxTrace
 	extern FX_OrientationPosFromWorldPos
@@ -555,7 +554,7 @@ FX_IntegrateVelocity:
 	add edi, eax
 	lea edx, [ebx+0xc]
 	movss xmm0, dword [ebp-0x2c]
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x50]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x24], xmm0
 	mulss xmm0, xmm4
 	movss xmm1, dword [_float_0_50000000]
@@ -1828,7 +1827,7 @@ FX_UpdateElement_320:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movss [ebp-0x14c], xmm2
-	movss xmm2, dword [g_fltMin__uint4_dup_1+0x60]
+	movss xmm2, dword [_data16_80000000]
 	movss xmm0, dword [ebp-0x14c]
 	xorps xmm0, xmm2
 	ucomiss xmm0, xmm4
@@ -3741,7 +3740,7 @@ FX_SetNextUpdateCamera:
 	mulss xmm1, [esi+0x38]
 	addss xmm0, xmm1
 	movss [ebx+0x28], xmm0
-	movss xmm5, dword [g_fltMin__uint4_dup_1+0x40]
+	movss xmm5, dword [_data16_80000000]
 	xorps xmm2, xmm5
 	movaps xmm0, xmm4
 	mulss xmm0, [esi+0x24]
@@ -4967,6 +4966,7 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_800_00000000:		dd 0x44480000	; 800

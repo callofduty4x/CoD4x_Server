@@ -11820,7 +11820,7 @@ XAnimSetGoalWeightKnob_170:
 	mov ecx, ebx
 	pxor xmm5, xmm5
 	movaps xmm3, xmm5
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x10]
+	movss xmm4, dword [_data16_7fffffff]
 	jmp XAnimSetGoalWeightKnob_60
 XAnimSetGoalWeightKnob_80:
 	movaps xmm0, xmm3
@@ -12255,7 +12255,7 @@ XAnimSetGoalWeightKnobAll_230:
 	pxor xmm5, xmm5
 	movaps xmm3, xmm5
 	movss xmm6, dword [_float_1_00000000]
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x30]
+	movss xmm4, dword [_data16_7fffffff]
 	jmp XAnimSetGoalWeightKnobAll_100
 XAnimSetGoalWeightKnobAll_120:
 	movaps xmm0, xmm3
@@ -13011,4 +13011,5 @@ _float_0_00000100:		dd 0x358637be	; 1e-06
 _float_0_000000001:		dd 0x0	; 0
 _float_0_99999988:		dd 0x3f7ffffe	; 1
 _float_1000_00000000:		dd 0x447a0000	; 1000
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 

@@ -23,7 +23,6 @@
 	extern CG_GetPredictedPlayerState
 	extern AimAssist_UpdateMouseInput
 	extern m_yaw
-	extern g_color_table
 	extern m_pitch
 	extern floorf
 	extern m_forward
@@ -2560,7 +2559,7 @@ CL_CreateCmd_1780:
 	movaps xmm3, xmm1
 	andnps xmm3, xmm0
 	orps xmm3, xmm2
-	xorps xmm0, [g_color_table+0x180]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
 	subss xmm1, xmm3
 	cmpss xmm5, xmm1, 0x6
@@ -2614,7 +2613,7 @@ CL_CreateCmd_1790:
 	movaps xmm3, xmm0
 	andnps xmm3, xmm1
 	orps xmm3, xmm2
-	xorps xmm1, [g_color_table+0x180]
+	xorps xmm1, [_data16_80000000]
 	movaps xmm0, xmm1
 	subss xmm0, xmm3
 	ucomiss xmm0, xmm5
@@ -4322,5 +4321,6 @@ _float_182_04444885:		dd 0x43360b61	; 182.044
 _float_127_00000000:		dd 0x42fe0000	; 127
 _float_90_00000000:		dd 0x42b40000	; 90
 _float_0_00000000:		dd 0x0	; 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_255_00000000:		dd 0x437f0000	; 255
 

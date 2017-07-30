@@ -113,7 +113,6 @@
 	extern DObjDisplayAnim
 	extern Key_AddCatcher
 	extern AimAssist_GetScreenTargetCount
-	extern g_clients
 	extern vec3_origin
 	extern AimAssist_GetScreenTargetEntity
 	extern CL_ResetSkeletonCache
@@ -597,7 +596,7 @@ CalcViewValuesVehicleDriver:
 	mov eax, vehDriverViewHeightMax
 	mov eax, [eax]
 	movss xmm1, dword [eax+0xc]
-	andps xmm0, [_ZZ27CalcViewValuesVehicleDriveriE11TEMP_OFFSET+0x18]
+	andps xmm0, [_data16_7fffffff]
 	movaps xmm2, xmm1
 	subss xmm2, xmm0
 	movaps xmm0, xmm2
@@ -657,7 +656,7 @@ CalcViewValuesVehicleDriver_30:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ27CalcViewValuesVehicleDriveriE11TEMP_OFFSET+0x28]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb CalcViewValuesVehicleDriver_20
@@ -972,7 +971,7 @@ CG_CalcViewValues_300:
 	mov eax, cg_thirdPersonRange
 	mov eax, [eax]
 	movss xmm1, dword [eax+0xc]
-	xorps xmm1, [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x30]
+	xorps xmm1, [_data16_80000000]
 	movaps xmm0, xmm1
 	mulss xmm0, [ebp-0x24]
 	addss xmm0, [ebp-0x48]
@@ -2159,7 +2158,7 @@ CG_DrawActiveFrame_440:
 	test ecx, ecx
 	jnz CG_DrawActiveFrame_400
 	mov edx, [ebp-0x84]
-	movss xmm5, dword [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x60]
+	movss xmm5, dword [_data16_7fffffff]
 	mov esi, cgArray
 	add esi, 0xc
 	movss xmm7, dword [_float_10_00000000]
@@ -2411,7 +2410,7 @@ CG_DrawActiveFrame_970:
 	mulss xmm1, [edx+0x492f4]
 	addss xmm1, [edx+0x492e8]
 	movss [ebp-0x28], xmm1
-	mov dword [esp+0x18], g_clients+0xa0a31
+	mov dword [esp+0x18], 0x806c31
 	mov eax, [edx+0x46218]
 	mov [esp+0x14], eax
 	lea ecx, [ebp-0x30]
@@ -2918,7 +2917,7 @@ CG_DrawActiveFrame_950:
 	jmp CG_DrawActiveFrame_1170
 CG_DrawActiveFrame_1130:
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x60]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_10_00000000]
 	jbe CG_DrawActiveFrame_1140
 	movaps xmm0, xmm4
@@ -3266,7 +3265,7 @@ CG_UpdateAirstrikeKillCam_60:
 	mulss xmm0, xmm6
 	addss xmm1, xmm0
 	sqrtss xmm2, xmm1
-	movss xmm7, dword [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x20]
+	movss xmm7, dword [_data16_80000000]
 	movaps xmm0, xmm2
 	xorps xmm0, xmm7
 	ucomiss xmm0, [_float_0_00000000]
@@ -3520,7 +3519,7 @@ CG_UpdateHelicopterKillCam:
 	addss xmm0, xmm1
 	sqrtss xmm0, xmm0
 	movss [ebp-0x18], xmm0
-	xorps xmm0, [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x10]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb CG_UpdateHelicopterKillCam_10
@@ -3553,7 +3552,7 @@ CG_UpdateHelicopterKillCam_40:
 	addss xmm0, xmm1
 	sqrtss xmm0, xmm0
 	movss [ebp-0x3c], xmm0
-	xorps xmm0, [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x10]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb CG_UpdateHelicopterKillCam_20
@@ -3596,7 +3595,7 @@ CG_UpdateHelicopterKillCam_50:
 	addss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x10]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm2, xmm2
 	ucomiss xmm0, xmm2
 	jb CG_UpdateHelicopterKillCam_30
@@ -3611,7 +3610,7 @@ CG_UpdateHelicopterKillCam_60:
 	movss [eax], xmm1
 	mov edx, [cg_heliKillCamDist]
 	movss xmm0, dword [edx+0xc]
-	xorps xmm0, [_ZZ26CG_UpdateHelicopterKillCamiE2up+0x10]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm5, xmm0
 	addss xmm5, [ebp-0x10]
 	movss [ebx+0x492e0], xmm5
@@ -3805,6 +3804,8 @@ _float_55_00000000:		dd 0x425c0000	; 55
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_360_00000000:		dd 0x43b40000	; 360
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _double_0_50000000:		dq 0x3fe0000000000000	; 0.5
 _float_0_75000000:		dd 0x3f400000	; 0.75

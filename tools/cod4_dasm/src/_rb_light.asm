@@ -4,7 +4,6 @@
 	extern floorf
 	extern r_vc_makelog
 	extern r_showLightGrid
-	extern g_fltMin__uint4_dup_1
 	extern vec3_origin
 	extern CM_BoxSightTrace
 	extern memset
@@ -22,7 +21,6 @@
 	extern memcpy
 	extern Com_Error
 	extern r_showMissingLightGrid
-	extern g_XModelPool
 	extern Z_VirtualAllocInternal
 	extern Com_StripExtension
 	extern FS_ReadFile
@@ -1436,7 +1434,7 @@ R_LightGridLookup_200:
 	addss xmm0, xmm1
 	sqrtss xmm0, xmm0
 	movss [ebp-0x9c], xmm0
-	xorps xmm0, [g_fltMin__uint4_dup_1+0x90]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb R_LightGridLookup_210
@@ -2583,7 +2581,7 @@ R_InitLightVisHistory_20:
 	pop ebp
 	ret
 R_InitLightVisHistory_10:
-	mov dword [esp], g_XModelPool+0x16c20
+	mov dword [esp], 0x600000
 	call Z_VirtualAllocInternal
 	mov [s_vc_log], eax
 	mov eax, [edi]
@@ -2628,8 +2626,8 @@ R_InitLightVisHistory_50:
 	add edx, edx
 	cmp ecx, edx
 	jnz R_InitLightVisHistory_40
-	mov ebx, g_XModelPool+0x16c20
-	cmp ecx, g_XModelPool+0x16c21
+	mov ebx, 0x600000
+	cmp ecx, 0x600001
 	cmovl ebx, ecx
 	mov [esp+0x8], ebx
 	mov eax, [ebp-0x1c]
@@ -2908,7 +2906,7 @@ R_GetPrimaryLightForModel_240:
 	mov [ebp-0x54c], ecx
 	mov [ebp-0x56c], ebx
 	mov dword [ebp-0x57c], 0x0
-	movss xmm4, dword [g_fltMin__uint4_dup_1+0x80]
+	movss xmm4, dword [_data16_7fffffff]
 	mov eax, ecx
 R_GetPrimaryLightForModel_210:
 	movss xmm3, dword [eax]
@@ -4086,6 +4084,7 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_32_00000000:		dd 0x42000000	; 32
 _float_64_00000000:		dd 0x42800000	; 64
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_10000002:		dd 0x3f8ccccd	; 1.1
@@ -4093,4 +4092,5 @@ _float_0_89999998:		dd 0x3f666666	; 0.9
 _float_256_00000000:		dd 0x43800000	; 256
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_0_00000000:		dd 0x0	; 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 

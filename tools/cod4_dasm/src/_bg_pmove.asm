@@ -154,7 +154,7 @@ BG_CheckProneTurned:
 	fstp dword [ebp-0x3c]
 	movss xmm1, dword [ebp-0x3c]
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x60]
+	andps xmm0, [_data16_7fffffff]
 	divss xmm0, dword [_float_240_00000000]
 	movss xmm2, dword [_float_1_00000000]
 	subss xmm2, xmm0
@@ -832,7 +832,7 @@ PM_GroundTrace_170:
 PM_GroundTrace_140:
 	movss xmm5, dword [esi+0x7c]
 	cvtsi2ss xmm6, dword [eax+0x58]
-	movss xmm3, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x100]
+	movss xmm3, dword [_data16_80000000]
 	movaps xmm7, xmm6
 	xorps xmm7, xmm3
 	movaps xmm4, xmm7
@@ -1753,7 +1753,7 @@ PM_Footsteps_100:
 	movss xmm0, dword [eax+0xc]
 	ucomiss xmm1, xmm0
 	ja PM_Footsteps_110
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x110]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm1
 	ja PM_Footsteps_110
 	cmp byte [esi+0x1b], 0x0
@@ -3487,7 +3487,7 @@ PM_Accelerate_10:
 	addss xmm0, xmm1
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x120]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb PM_Accelerate_60
 	movss xmm0, dword [_float_1_00000000]
@@ -3660,7 +3660,7 @@ PM_AirMove_10:
 	pxor xmm3, xmm3
 	addss xmm1, xmm3
 	sqrtss xmm1, xmm1
-	movss xmm4, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x130]
+	movss xmm4, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm4
 	ucomiss xmm0, xmm3
@@ -3765,10 +3765,10 @@ PM_AirMove_130:
 	mulss xmm0, [esi+0x44]
 	addss xmm2, xmm0
 	movaps xmm1, xmm2
-	andps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x140]
+	andps xmm1, [_data16_7fffffff]
 	mulss xmm1, [_float__0_00100000]
 	addss xmm1, xmm2
-	xorps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x130]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm3, xmm1
 	addss xmm4, xmm3
 	movss [edi+0x28], xmm4
@@ -3971,7 +3971,7 @@ PM_UpdateLean_220:
 	fstp dword [ebp-0x6c]
 	movss xmm1, dword [esi+0x5c]
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x80]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [ebp-0x6c]
 	jbe PM_UpdateLean_90
 	ucomiss xmm1, [_float_0_00000000]
@@ -4033,7 +4033,7 @@ PM_UpdateLean_60:
 	jmp PM_UpdateLean_150
 PM_UpdateLean_120:
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x70]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm1, xmm0
 	jbe PM_UpdateLean_210
 	divss xmm3, dword [_float__350_00000000]
@@ -4259,10 +4259,10 @@ PM_ClipVelocity:
 	mulss xmm0, [eax+0x8]
 	addss xmm2, xmm0
 	movaps xmm1, xmm2
-	andps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xc0]
+	andps xmm1, [_data16_7fffffff]
 	mulss xmm1, [_float__0_00100000]
 	addss xmm1, xmm2
-	xorps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xd0]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm3, xmm1
 	addss xmm4, xmm3
 	movss [ecx], xmm4
@@ -4541,7 +4541,7 @@ PM_ProjectVelocity:
 	addss xmm2, xmm0
 	movss xmm1, dword [eax+0x8]
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xe0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_0_00100000]
 	jp PM_ProjectVelocity_10
 	jb PM_ProjectVelocity_20
@@ -4565,7 +4565,7 @@ PM_ProjectVelocity_30:
 	movaps xmm0, xmm4
 	mulss xmm0, [eax+0x4]
 	addss xmm5, xmm0
-	xorps xmm5, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xf0]
+	xorps xmm5, [_data16_80000000]
 	divss xmm5, xmm1
 	movss xmm6, dword [edx+0x8]
 	movaps xmm0, xmm6
@@ -4664,7 +4664,7 @@ PM_UpdatePronePitch_50:
 	movss xmm2, dword [_float_70_00000000]
 	mulss xmm2, [esi+0x24]
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xb0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, xmm2
 	jbe PM_UpdatePronePitch_70
 	movss xmm0, dword [ebx+0x590]
@@ -4709,7 +4709,7 @@ PM_UpdatePronePitch_100:
 	movss xmm2, dword [_float_70_00000000]
 	mulss xmm2, [esi+0x24]
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xb0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, xmm2
 	jbe PM_UpdatePronePitch_110
 	movss xmm0, dword [ebx+0x594]
@@ -4847,7 +4847,7 @@ PM_UpdateViewAngles:
 	mov esi, [ebp-0x54]
 	mov ebx, edi
 	mov dword [ebp-0x44], 0x0
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x90]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x74], xmm0
 PM_UpdateViewAngles_50:
 	cvtsi2ss xmm0, dword [esi+0x8]
@@ -4914,7 +4914,7 @@ PM_UpdateViewAngles_180:
 	ucomiss xmm1, xmm2
 	ja PM_UpdateViewAngles_90
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x90]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm1
 	jbe PM_UpdateViewAngles_70
 	addss xmm1, xmm2
@@ -5047,7 +5047,7 @@ PM_UpdateViewAngles_160:
 	subss xmm0, [_float_5_00000000]
 	ucomiss xmm2, xmm0
 	ja PM_UpdateViewAngles_200
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x90]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm2
 	ja PM_UpdateViewAngles_200
 	xor edx, edx
@@ -5070,7 +5070,7 @@ PM_UpdateViewAngles_230:
 	mulss xmm1, [_float_55_00000000]
 	mulss xmm1, [_float_0_00100000]
 	movaps xmm0, xmm2
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xa0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm1, xmm0
 	jbe PM_UpdateViewAngles_250
 	movss xmm0, dword [edi+0x10c]
@@ -5106,7 +5106,7 @@ PM_UpdateViewAngles_260:
 	fstp dword [ebp-0xac]
 	movss xmm1, dword [ebp-0xac]
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xa0]
+	andps xmm0, [_data16_7fffffff]
 	xor ebx, ebx
 	ucomiss xmm0, [_float_1_00000000]
 	seta bl
@@ -5170,7 +5170,7 @@ PM_UpdateViewAngles_400:
 	test esi, esi
 	jz PM_UpdateViewAngles_350
 	movaps xmm0, xmm1
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xa0]
+	andps xmm0, [_data16_7fffffff]
 	movss xmm2, dword [_float_1_00000000]
 	ucomiss xmm0, xmm2
 	seta al
@@ -5325,7 +5325,7 @@ PM_UpdateViewAngles_440:
 	jmp PM_UpdateViewAngles_490
 PM_UpdateViewAngles_410:
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x90]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm1
 	jbe PM_UpdateViewAngles_500
 	addss xmm1, xmm2
@@ -5357,7 +5357,7 @@ PM_UpdateViewAngles_520:
 	movss xmm3, dword [ebp-0xa8]
 	ja PM_UpdateViewAngles_530
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x90]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm2
 	jbe PM_UpdateViewAngles_540
 	addss xmm1, xmm2
@@ -5391,7 +5391,7 @@ PM_UpdateViewAngles_430:
 	call AngleDelta
 	fstp dword [ebp-0x2c]
 	movss xmm0, dword [ebp-0x2c]
-	andps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0xa0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_1_00000000]
 	ja PM_UpdateViewAngles_580
 	jp PM_UpdateViewAngles_580
@@ -6242,7 +6242,7 @@ Pmove_530:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb Pmove_540
@@ -6501,7 +6501,7 @@ Pmove_1380:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm1, xmm1
 	ucomiss xmm0, xmm1
 	jb Pmove_720
@@ -6723,7 +6723,7 @@ Pmove_840:
 	addss xmm0, xmm2
 	sqrtss xmm2, xmm0
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	pxor xmm4, xmm4
 	ucomiss xmm0, xmm4
 	jb Pmove_850
@@ -6825,7 +6825,7 @@ Pmove_900:
 	jz Pmove_950
 	movsx eax, al
 	cvtsi2ss xmm1, eax
-	movss xmm2, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x150]
+	movss xmm2, dword [_data16_7fffffff]
 	andps xmm1, xmm2
 	movsx eax, dl
 	cvtsi2ss xmm0, eax
@@ -6839,7 +6839,7 @@ Pmove_950:
 	jz Pmove_970
 	movsx eax, al
 	cvtsi2ss xmm1, eax
-	movss xmm2, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x150]
+	movss xmm2, dword [_data16_7fffffff]
 	andps xmm1, xmm2
 	movsx eax, dl
 	cvtsi2ss xmm0, eax
@@ -6942,7 +6942,7 @@ Pmove_1110:
 	addss xmm0, xmm4
 	sqrtss xmm1, xmm0
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm4
 	jb Pmove_1130
 	movss xmm0, dword [_float_1_00000000]
@@ -7030,7 +7030,7 @@ Pmove_2390:
 	sqrtss xmm4, xmm0
 	test cl, cl
 	js Pmove_1220
-	movss xmm0, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x150]
+	movss xmm0, dword [_data16_7fffffff]
 	movss xmm3, dword [ebp-0x114]
 	andps xmm3, xmm0
 Pmove_2510:
@@ -7068,7 +7068,7 @@ Pmove_1250:
 	mov eax, player_dmgtimer_minScale
 	mov eax, [eax]
 	movss xmm1, dword [eax+0xc]
-	xorps xmm1, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm1, [_data16_80000000]
 	divss xmm1, xmm0
 	cvtsi2ss xmm0, edx
 	mulss xmm1, xmm0
@@ -7353,7 +7353,7 @@ Pmove_1060:
 	addss xmm3, xmm1
 	sqrtss xmm3, xmm3
 	movaps xmm0, xmm3
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm5
 	jb Pmove_1590
 	movss xmm1, dword [_float_1_00000000]
@@ -7680,7 +7680,7 @@ Pmove_2530:
 	addss xmm1, xmm4
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, xmm4
 	jb Pmove_1740
 	movss xmm1, dword [ebp-0x16c]
@@ -7816,7 +7816,7 @@ Pmove_2450:
 	mov ebx, [ebp-0x12c]
 	mulss xmm1, [ebx+0x2c]
 	addss xmm0, xmm1
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	movaps xmm1, xmm0
 	mov ebx, [ebp-0x134]
 	mulss xmm1, [ebx]
@@ -8167,7 +8167,7 @@ Pmove_1180:
 	jmp Pmove_2120
 Pmove_1120:
 	lea eax, [ebx+0x74]
-	movss xmm0, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	movss xmm0, dword [_data16_80000000]
 	movss xmm4, dword [ebx+0x74]
 	xorps xmm4, xmm0
 	movss xmm5, dword [eax+0x4]
@@ -8369,7 +8369,7 @@ Pmove_1810:
 	jz Pmove_2450
 Pmove_2440:
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	xorps xmm0, [_data16_80000000]
 	mulss xmm2, xmm0
 	addss xmm2, [ebx+0x28]
 	movss [ebx+0x28], xmm2
@@ -8379,7 +8379,7 @@ Pmove_2440:
 	movaps xmm2, xmm1
 	mulss xmm2, [ebp-0xe4]
 	mulss xmm2, [_float_16_00000000]
-	movss xmm0, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x150]
+	movss xmm0, dword [_data16_7fffffff]
 	movaps xmm3, xmm2
 	andps xmm3, xmm0
 	andps xmm0, xmm1
@@ -8425,7 +8425,7 @@ Pmove_1220:
 	mov eax, [eax]
 	movss xmm3, dword [ebp-0x114]
 	mulss xmm3, [eax+0xc]
-	movss xmm0, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x150]
+	movss xmm0, dword [_data16_7fffffff]
 	andps xmm3, xmm0
 	jmp Pmove_2510
 Pmove_1740:
@@ -8513,7 +8513,7 @@ Pmove_2600:
 	movss [edx+0x4], xmm1
 	movss xmm2, dword [ebp-0x50]
 	movss [edx+0x8], xmm2
-	movss xmm3, dword [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x160]
+	movss xmm3, dword [_data16_80000000]
 	xorps xmm1, xmm3
 	xorps xmm2, xmm3
 	movss xmm0, dword [ebx+0x74]
@@ -8644,6 +8644,7 @@ _cstring_clamping_acceler:		db "clamping acceleration from %f to %f",0ah,0
 
 ;All constant floats and doubles:
 SECTION .rdata
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_240_00000000:		dd 0x43700000	; 240
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_45_00000000:		dd 0x42340000	; 45
@@ -8657,6 +8658,7 @@ _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00000000:		dd 0x0	; 0
 _float_10_00000000:		dd 0x41200000	; 10
 _float_0_01562500:		dd 0x3c800000	; 0.015625
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float__4_00000000:		dd 0xc0800000	; -4
 _float_100_00000000:		dd 0x42c80000	; 100

@@ -4,7 +4,6 @@
 	extern R_FinishGpuFence
 	extern R_InsertGpuFence
 	extern R_ReleaseGpuFenceLock
-	extern g_fltMin__uint4_dup_1
 	extern msecPerRawTimerTick
 	extern WinSleep
 	extern ceil
@@ -195,8 +194,8 @@ R_PixelCost_EndSurface_10:
 	movd xmm1, eax
 	movd xmm0, edx
 	punpckldq xmm0, xmm1
-	punpckldq xmm0, [g_fltMin__uint4_dup_1+0xe0]
-	subpd xmm0, [g_fltMin__uint4_dup_1+0xf0]
+	punpckldq xmm0, [_data16_45300000]
+	subpd xmm0, [_data16_0]
 	movapd [ebp-0x38], xmm0
 	movapd xmm2, xmm0
 	movhpd [ebp-0x38], xmm0
@@ -262,8 +261,8 @@ R_PixelCost_EndSurface_20:
 	movd xmm1, eax
 	movd xmm0, edx
 	punpckldq xmm0, xmm1
-	punpckldq xmm0, [g_fltMin__uint4_dup_1+0xe0]
-	subpd xmm0, [g_fltMin__uint4_dup_1+0xf0]
+	punpckldq xmm0, [_data16_45300000]
+	subpd xmm0, [_data16_0]
 	movapd [ebp-0x68], xmm0
 	movapd xmm2, xmm0
 	movhpd [ebp-0x68], xmm0
@@ -310,8 +309,8 @@ R_PixelCost_EndSurface_60:
 	movd xmm1, eax
 	pxor xmm0, xmm0
 	punpckldq xmm0, xmm1
-	punpckldq xmm0, [g_fltMin__uint4_dup_1+0xe0]
-	subpd xmm0, [g_fltMin__uint4_dup_1+0xf0]
+	punpckldq xmm0, [_data16_45300000]
+	subpd xmm0, [_data16_0]
 	movapd [ebp-0x48], xmm0
 	movapd xmm1, xmm0
 	movhpd [ebp-0x48], xmm0
@@ -611,6 +610,8 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _double_1_50000000:		dq 0x3ff8000000000000	; 1.5
+_data16_45300000:		dd 0x45300000, 0x43300000, 0x0, 0x0	; OWORD
+_data16_0:		dd 0x0, 0x45300000, 0x0, 0x43300000	; OWORD
 _double_3932_10000000:		dq 0x40aeb83333333333	; 3932.1
 _double_30_72000000:		dq 0x403eb851eb851eb8	; 30.72
 _double_4294967295_000000_double:		dq 0x41efffffffe00000	; 4.29497e+09

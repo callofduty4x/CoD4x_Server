@@ -1,5 +1,4 @@
 ;Imports of filters:
-	extern exc_10_16_table
 
 ;Exports of filters:
 	global fir_mem_up
@@ -625,7 +624,7 @@ comb_filter_160:
 	pop ebp
 	ret
 comb_filter_30:
-	xorps xmm0, [exc_10_16_table+0xd0]
+	xorps xmm0, [_data16_80000000]
 	mov eax, [ebp+0x20]
 	cvtss2sd xmm3, xmm0
 	movss xmm2, dword [eax]
@@ -654,7 +653,7 @@ comb_filter_50:
 	ucomiss xmm4, xmm6
 	jbe comb_filter_200
 comb_filter_60:
-	xorps xmm0, [exc_10_16_table+0xd0]
+	xorps xmm0, [_data16_80000000]
 	cvtss2sd xmm5, xmm0
 	movss xmm4, dword [esi+0x4]
 	pxor xmm0, xmm0
@@ -731,7 +730,7 @@ filter_mem2:
 	lea eax, [eax+edx-0x4]
 	mov [ebp-0x1c], eax
 	mov dword [ebp-0x2c], 0x0
-	movss xmm5, dword [exc_10_16_table+0xa0]
+	movss xmm5, dword [_data16_80000000]
 	mov ebx, [ebp-0x2c]
 filter_mem2_40:
 	mov eax, [ebp+0x8]
@@ -822,7 +821,7 @@ syn_percep_zero_10:
 	lea eax, [edi+eax-0x4]
 	mov [ebp-0x28], eax
 	xor ecx, ecx
-	movss xmm5, dword [exc_10_16_table+0xe0]
+	movss xmm5, dword [_data16_80000000]
 syn_percep_zero_60:
 	mov eax, [ebp+0x8]
 	movss xmm1, dword [eax+ecx*4]
@@ -880,7 +879,7 @@ syn_percep_zero_70:
 	lea eax, [esi+eax-0x4]
 	mov [ebp-0x1c], eax
 	mov dword [ebp-0x3c], 0x0
-	movss xmm5, dword [exc_10_16_table+0xe0]
+	movss xmm5, dword [_data16_80000000]
 	mov eax, [ebp-0x3c]
 syn_percep_zero_120:
 	mov edx, [ebp+0x18]
@@ -972,7 +971,7 @@ residue_percep_zero_10:
 	lea eax, [edx+eax-0x4]
 	mov [ebp-0x20], eax
 	mov dword [ebp-0x30], 0x0
-	movss xmm5, dword [exc_10_16_table+0xf0]
+	movss xmm5, dword [_data16_80000000]
 	mov esi, [ebp-0x30]
 residue_percep_zero_60:
 	mov eax, [ebp+0x8]
@@ -1166,7 +1165,7 @@ compute_impulse_response_40:
 	lea eax, [eax+edx-0x4]
 	mov [ebp-0x24], eax
 	mov dword [ebp-0x1c], 0x0
-	movss xmm3, dword [exc_10_16_table+0xc0]
+	movss xmm3, dword [_data16_80000000]
 	mov ecx, [ebp+0x14]
 	mov [ebp-0x40], ecx
 	mov ebx, ecx
@@ -1348,7 +1347,7 @@ iir_mem2:
 	lea eax, [eax+esi-0x4]
 	mov [ebp-0x1c], eax
 	xor eax, eax
-	movss xmm3, dword [exc_10_16_table+0xb0]
+	movss xmm3, dword [_data16_80000000]
 iir_mem2_40:
 	mov edx, [ebp+0x8]
 	movss xmm1, dword [edx+eax*4]
@@ -1416,5 +1415,6 @@ _float_0_50000000:		dd 0x3f000000	; 0.5
 _double_1_00000000:		dq 0x3ff0000000000000	; 1
 _double_0_04000000:		dq 0x3fa47ae147ae147b	; 0.04
 _double_0_96000000:		dq 0x3feeb851eb851eb8	; 0.96
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double__0_50000000:		dq 0xbfe0000000000000	; -0.5
 

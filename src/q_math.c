@@ -269,6 +269,22 @@ float vec2_maxabs(vec2_t v)
 vec3_t vec3_origin = {0,0,0};
 
 
+vec_t Vec2Normalize( vec3_t v ) {
+	float length, ilength;
+
+	length = v[0] * v[0] + v[1] * v[1];
+	length = sqrt( length );
+
+	if ( length ) {
+		ilength = 1 / length;
+		v[0] *= ilength;
+		v[1] *= ilength;
+	}
+
+	return length;
+}
+
+
 vec_t Vec3Normalize( vec3_t v ) {
 	float length, ilength;
 
@@ -611,7 +627,7 @@ qboolean __cdecl VecNCompareCustomEpsilon(const float *v0, const float *v1, floa
 
   for ( i = 0; i < coordCount; ++i )
   {
-    if ( ((v0[i] - v1[i]) * (v0[i] - v1[i])) > (epsilon * epsilon) )
+    if ( (v0[i] - v1[i]) * (v0[i] - v1[i]) > epsilon * epsilon )
         return 0;
   }
   return 1;
@@ -842,7 +858,7 @@ void __cdecl SnapPointToIntersectingPlanes(const float **planes, float *xyz, flo
   for ( axis = 0; axis < 3; ++axis )
   {
     rounded = (signed int)((xyz[axis] / snapGrid) + 9.313225746154785e-10) * snapGrid;
-    if ( snapEpsilon <= (float)abs((unsigned int)(rounded - xyz[axis])))
+    if ( snapEpsilon <= fabs(rounded - xyz[axis]))
     {
       snapped[axis] = xyz[axis];
     }else{
@@ -857,13 +873,13 @@ void __cdecl SnapPointToIntersectingPlanes(const float **planes, float *xyz, flo
     for ( planeIndex = 0; planeIndex < 3; ++planeIndex )
     {
 
-      snapError = abs((unsigned int)(DotProduct(planes[planeIndex], snapped) - planes[planeIndex][3]));
+      snapError = fabs(DotProduct(planes[planeIndex], snapped) - planes[planeIndex][3]);
 
       if ( snapError > maxSnapError ){
         maxSnapError = snapError;
       }
 
-      baseError = abs((unsigned int)(DotProduct(planes[planeIndex], xyz) - planes[planeIndex][3]));
+      baseError = fabs(DotProduct(planes[planeIndex], xyz) - planes[planeIndex][3]);
 
       if ( baseError > maxBaseError ){
         maxBaseError = baseError;
@@ -1031,4 +1047,157 @@ float Q_acos( float c ) {
                 return (float)M_PI;
         }
         return angle;
+}
+
+
+float vectoyaw( const vec3_t vec ) {
+        float yaw;
+
+        if ( vec[YAW] == 0 && vec[PITCH] == 0 ) {
+                return 0.0;
+        }
+        yaw = ( atan2( vec[YAW], vec[PITCH] ) * 180 / M_PI );
+
+        if(yaw >= 0.0)
+        {
+            return yaw;
+        }
+        return yaw + 360;
+}
+
+
+void __cdecl YawVectors2D(const float yaw, vec2_t forward, vec2_t right)
+{
+  float cy;
+  float angle;
+  float sy;
+
+  angle = yaw * 0.017453292;
+  cy = cos(angle);
+  sy = sin(angle);
+  if ( forward )
+  {
+    forward[0] = cy;
+    forward[1] = sy;
+  }
+  if ( right )
+  {
+    right[0] = sy;
+    right[1] = -cy;
+  }
+}
+
+
+void __cdecl YawVectors(const float yaw, vec3_t forward, vec3_t right)
+{
+  float cy;
+  float angle;
+  float sy;
+
+  angle = yaw * 0.017453292;
+  cy = cos(angle);
+  sy = sin(angle);
+  if ( forward )
+  {
+    forward[0] = cy;
+    forward[1] = sy;
+    forward[2] = 0.0;
+  }
+  if ( right )
+  {
+    right[0] = sy;
+    right[1] = -cy;
+    right[2] = 0.0;
+  }
+}
+
+
+double __cdecl DiffTrack(float tgt, float cur, float rate, float deltaTime)
+{
+  float step;
+  float d, ad;
+
+  d = tgt - cur;
+
+  step = rate * d * deltaTime;
+  ad = fabs(d);
+  if( ad <= 0.001 || fabs(step) > ad)
+  {
+    return tgt;
+  }
+  return cur + step;
+}
+
+
+
+double __cdecl PitchForYawOnNormal(const float fYaw, const vec3_t normal)
+{
+  vec3_t forward;
+
+  assert(normal[0] != 0.0 || normal[1] != 0.0 || normal[2] != 0.0);
+
+  YawVectors(fYaw, forward, 0);
+
+  if ( normal[2] != 0 )
+  {
+    forward[2] = (normal[0] * forward[0] + normal[1] * forward[1]) / normal[2];
+    return atan(forward[2]) * 180.0 / M_PI;
+  }
+  return 270.0;
+}
+
+
+void __cdecl AnglesSubtract(const vec3_t v1, const vec3_t v2, vec3_t v3)
+{
+  v3[0] = AngleNormalize180(v1[0] - v2[0]);
+  v3[1] = AngleNormalize180(v1[1] - v2[1]);
+  v3[2] = AngleNormalize180(v1[2] - v2[2]);
+}
+
+double __cdecl DiffTrackAngle(float tgt, float cur, float rate, float deltaTime)
+{
+  float angle;
+
+  while ( (tgt - cur) > 180.0 )
+  {
+    tgt = tgt - 360.0;
+  }
+  while ( (tgt - cur) < -180.0 )
+  {
+    tgt = tgt + 360.0;
+  }
+  angle = DiffTrack(tgt, cur, rate, deltaTime);
+  return AngleNormalize180(angle);
+}
+
+float Abs(const vec3_t v)
+{
+    return VectorLength(v);
+}
+
+bool __cdecl Vec3IsNormalized(const float *v)
+{
+  if(fabs(VectorLengthSquared(v) - 1.0) < 0.0020000001)
+  {
+    return true;
+  }
+  return false;
+}
+
+void __cdecl ProjectPointOnPlane(const float *p, const float *normal, float *dst)
+{
+  float d;
+
+  assertx(Vec3IsNormalized(normal), "(%g %g %g) len %g", normal[0], normal[1], normal[2], Abs(normal));
+
+  d = -(DotProduct(normal, p));
+  dst[0] = (d * normal[0]) + p[0];
+  dst[1] = (d * normal[1]) + p[1];
+  dst[2] = (d * normal[2]) + p[2];
+}
+
+//Lame?!
+void __cdecl Sys_SnapVector(vec3_t v)
+{
+    SnapVector(v);
 }

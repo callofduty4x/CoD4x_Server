@@ -5,7 +5,6 @@
 	extern AngleNormalize360
 	extern PitchForYawOnNormal
 	extern floorf
-	extern _ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs
 	extern G_random
 	extern vectoangles
 	extern AnglesToAxis
@@ -34,7 +33,6 @@
 	extern scr_const
 	extern Scr_Notify
 	extern Scr_AddUndefined
-	extern dynEntCollWorlds
 	extern G_AddEvent
 	extern G_CheckHitTriggerDamage
 	extern G_FreeEntityAfterEvent
@@ -65,8 +63,6 @@
 	extern sinf
 	extern bulletPriorityMap
 	extern G_LocationalTrace
-	extern cls
-	extern loopbacks
 	extern G_FreeEntity
 	extern G_RunThink
 	extern G_DebugCircleEx
@@ -220,7 +216,7 @@ MissileLandAngles_10:
 	movss xmm0, dword [_float_360_00000000]
 	mulss xmm0, xmm1
 	movss [ebp-0x24], xmm0
-	andps xmm0, [_ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs+0xa0]
+	andps xmm0, [_data16_7fffffff]
 	movss [ebp-0x20], xmm0
 	mov ebx, [ebp+0x8]
 	test ebx, ebx
@@ -246,7 +242,7 @@ MissileLandAngles_10:
 	addss xmm0, [_float_0_85000002]
 	movss xmm1, dword [ebp-0x58]
 	mulss xmm1, xmm0
-	xorps xmm1, [_ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs+0xb0]
+	xorps xmm1, [_data16_80000000]
 	movss [esi+0x48], xmm1
 MissileLandAngles_30:
 	movss xmm0, dword [_float_0_00277778]
@@ -269,7 +265,7 @@ MissileLandAngles_30:
 	jae MissileLandAngles_60
 	jp MissileLandAngles_60
 MissileLandAngles_50:
-	andps xmm0, [_ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs+0xa0]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_90_00000000]
 	ja MissileLandAngles_70
 	movss xmm1, dword [ebp-0x28]
@@ -970,7 +966,7 @@ BounceMissile_110:
 	mov ecx, [ebp-0x70]
 	mov eax, [ebp-0x7c]
 	movss xmm2, dword [eax+ecx*4+0x5c0]
-	xorps xmm0, [_ZZ16G_ExplodeMissileP9gentity_sE19MY_STRAIGHTUPNORMAL+0x10]
+	xorps xmm0, [_data16_80000000]
 	movss xmm1, dword [ebp-0x78]
 	divss xmm1, xmm0
 	movss xmm0, dword [eax+ecx*4+0x634]
@@ -1106,7 +1102,7 @@ CheckCrumpleMissile_40:
 	pop ebp
 	ret
 CheckCrumpleMissile_10:
-	cmp dword [esi+0x10], dynEntCollWorlds+0x5a00
+	cmp dword [esi+0x10], 0x700000
 	jz CheckCrumpleMissile_20
 	mov ecx, level
 	mov edx, [ecx+0x1f0]
@@ -1655,7 +1651,7 @@ MissileImpact_170:
 	jnz MissileImpact_510
 	jmp MissileImpact_520
 MissileImpact_90:
-	mov dword [eax+0x10], dynEntCollWorlds+0x5a00
+	mov dword [eax+0x10], 0x700000
 MissileImpact_80:
 	mov edx, [ebp+0xc]
 	mov eax, esi
@@ -1837,7 +1833,7 @@ MissileImpact_580:
 	mov [esp], eax
 	call Vec3NormalizeTo
 	fstp st0
-	movss xmm1, dword [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x10]
+	movss xmm1, dword [_data16_80000000]
 	movss xmm0, dword [ebp-0x54]
 	xorps xmm0, xmm1
 	movss [ebp-0x54], xmm0
@@ -2273,7 +2269,7 @@ MissileTrajectory_480:
 	mulss xmm0, [_float_20_00000000]
 	movss xmm1, dword [eax+0x6bc]
 	movaps xmm3, xmm1
-	xorps xmm3, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x30]
+	xorps xmm3, [_data16_80000000]
 	movaps xmm2, xmm0
 	subss xmm2, xmm1
 	movss xmm5, dword [ebp-0x118]
@@ -2352,7 +2348,7 @@ MissileTrajectory_460:
 	addss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x30]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb MissileTrajectory_310
 	movss xmm2, dword [_float_1_00000000]
@@ -2468,7 +2464,7 @@ MissileTrajectory_510:
 	jmp MissileTrajectory_70
 MissileTrajectory_230:
 	movaps xmm0, xmm6
-	andps xmm0, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x20]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm1, xmm0
 	ja MissileTrajectory_370
 	movss xmm0, dword [ebp-0xa0]
@@ -2476,7 +2472,7 @@ MissileTrajectory_230:
 	mulss xmm0, [ebp-0xa0]
 	divss xmm0, xmm6
 	movaps xmm4, xmm2
-	xorps xmm4, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x30]
+	xorps xmm4, [_data16_80000000]
 	movaps xmm1, xmm0
 	subss xmm1, xmm2
 	movaps xmm3, xmm5
@@ -2570,7 +2566,7 @@ MissileTrajectory_570:
 	cvtss2sd xmm0, [ebp-0xd0]
 	mulsd xmm0, [_double_57_29577951]
 	cvtsd2ss xmm0, xmm0
-	andps xmm0, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x20]
+	andps xmm0, [_data16_7fffffff]
 	movss xmm1, dword [ebp-0xc0]
 	ucomiss xmm1, xmm0
 	jbe MissileTrajectory_440
@@ -2587,7 +2583,7 @@ MissileTrajectory_450:
 	movss xmm0, dword [ebp-0x24]
 	jmp MissileTrajectory_460
 MissileTrajectory_220:
-	andps xmm6, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x20]
+	andps xmm6, [_data16_7fffffff]
 	addss xmm1, [_float_60_00000000]
 	ucomiss xmm1, xmm6
 	ja MissileTrajectory_370
@@ -2689,7 +2685,7 @@ MissileTrajectory_560:
 	mulss xmm2, [_float_20_00000000]
 	mov eax, [missileHellfireUpAccel]
 	movss xmm1, dword [eax+0xc]
-	xorps xmm3, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x30]
+	xorps xmm3, [_data16_80000000]
 	movaps xmm0, xmm2
 	subss xmm0, xmm1
 	movaps xmm6, xmm5
@@ -2715,7 +2711,7 @@ MissileTrajectory_530:
 	jmp MissileTrajectory_560
 MissileTrajectory_470:
 	movaps xmm1, xmm2
-	xorps xmm1, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x30]
+	xorps xmm1, [_data16_80000000]
 	movss xmm6, dword [ebp-0x90]
 	mulss xmm6, xmm1
 	movss xmm0, dword [_float_0_05000000]
@@ -2842,7 +2838,7 @@ G_FireRocket:
 	mulss xmm2, xmm2
 	addss xmm0, xmm2
 	sqrtss xmm1, xmm0
-	movss xmm4, dword [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x40]
+	movss xmm4, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm4
 	pxor xmm2, xmm2
@@ -3284,7 +3280,7 @@ G_RunMissile_260:
 	addss xmm2, xmm0
 	sqrtss xmm2, xmm2
 	movaps xmm0, xmm2
-	xorps xmm0, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x50]
+	xorps xmm0, [_data16_80000000]
 	ucomiss xmm0, [_float_0_00000000]
 	jb G_RunMissile_40
 	movss xmm1, dword [_float_1_00000000]
@@ -3301,7 +3297,7 @@ G_RunMissile_410:
 G_RunMissile_290:
 	mov edx, [ebp+0x8]
 	movss xmm0, dword [edx+0x2c]
-	andps xmm0, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x60]
+	andps xmm0, [_data16_7fffffff]
 	ucomiss xmm0, [_float_30_00000000]
 	ja G_RunMissile_60
 	mov ecx, edx
@@ -3328,11 +3324,11 @@ G_RunMissile_580:
 	mov edx, [ebp-0xac]
 	mov eax, edx
 	and eax, 0x1f00000
-	cmp eax, cls+0x285400
+	cmp eax, 0x1400000
 	jz G_RunMissile_90
 G_RunMissile_720:
 	and edx, 0x1f00000
-	cmp edx, loopbacks+0x4280
+	cmp edx, 0x900000
 	jz G_RunMissile_100
 G_RunMissile_740:
 	movss xmm3, dword [ebp-0xbc]
@@ -3891,7 +3887,7 @@ G_RunMissile_570:
 	ucomiss xmm0, xmm4
 	jae G_RunMissile_510
 	movaps xmm1, xmm4
-	xorps xmm1, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x50]
+	xorps xmm1, [_data16_80000000]
 	mulss xmm2, xmm1
 	addss xmm2, xmm3
 	movss [ebp-0x78], xmm2
@@ -4475,7 +4471,7 @@ G_RunMissile_710:
 	jmp G_RunMissile_820
 G_RunMissile_690:
 	jp G_RunMissile_830
-	xorps xmm0, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x50]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x4c], xmm0
 	jmp G_RunMissile_830
 G_RunMissile_650:
@@ -4508,7 +4504,7 @@ G_RunMissile_540:
 	mulss xmm1, [ebx+0x14]
 	movss [ebp-0xec], xmm1
 	movaps xmm0, xmm2
-	andps xmm0, [_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL+0x60]
+	andps xmm0, [_data16_7fffffff]
 	divss xmm0, xmm4
 	cvtss2sd xmm0, xmm0
 	movsd [esp], xmm0
@@ -6241,9 +6237,11 @@ _float_0_10000000:		dd 0x3dcccccd	; 0.1
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_360_00000000:		dd 0x43b40000	; 360
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_80_00000000:		dd 0x42a00000	; 80
 _float_0_30000001:		dd 0x3e99999a	; 0.3
 _float_0_85000002:		dd 0x3f59999a	; 0.85
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_45_00000000:		dd 0x42340000	; 45
 _float_90_00000000:		dd 0x42b40000	; 90
 _float_180_00000000:		dd 0x43340000	; 180

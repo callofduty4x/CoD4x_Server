@@ -1,6 +1,5 @@
 ;Imports of cg_world:
 	extern RadiusFromBounds
-	extern g_fltMin__uint4
 	extern CM_ModelBounds
 	extern CG_GetCollWorldLocalClientNum
 	extern CG_GetEntityCollSector
@@ -92,7 +91,7 @@ CG_GetEntityBModelBounds_20:
 	fstp dword [ebp-0x2c]
 	movss xmm0, dword [ebp-0x2c]
 	mov edx, [ebp-0x2c]
-	xorps xmm0, [g_fltMin__uint4+0x120]
+	xorps xmm0, [_data16_80000000]
 	movss [ebp-0x2c], xmm0
 	mov eax, [ebp-0x2c]
 	mov [esi], eax
@@ -666,7 +665,7 @@ CG_ClipMoveToEntities_r_100:
 	andps xmm2, xmm1
 	andnps xmm0, xmm3
 	orps xmm0, xmm2
-	movss xmm4, dword [g_fltMin__uint4+0x130]
+	movss xmm4, dword [_data16_80000000]
 	movaps xmm1, xmm5
 	xorps xmm1, xmm4
 	ucomiss xmm1, xmm0
@@ -877,7 +876,7 @@ CG_ClipMoveToEntities_r_130:
 	jmp CG_ClipMoveToEntities_r_190
 CG_ClipMoveToEntities_r_160:
 	movaps xmm2, xmm6
-	andps xmm2, [g_fltMin__uint4+0x140]
+	andps xmm2, [_data16_7fffffff]
 	movaps xmm1, xmm3
 	xorps xmm1, xmm4
 	movaps xmm0, xmm7
@@ -1119,7 +1118,7 @@ CG_Trace_50:
 	movss [ebp-0x8c], xmm1
 	movss [ebp-0x88], xmm2
 	movss [ebp-0x84], xmm3
-	movss xmm7, dword [g_fltMin__uint4+0x150]
+	movss xmm7, dword [_data16_80000000]
 	movaps xmm0, xmm1
 	xorps xmm0, xmm7
 	movss [ebp-0x98], xmm0
@@ -1514,6 +1513,8 @@ _cstring_loc_trace_entiti:		db "loc trace entities",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_69999999:		dd 0x3f333333	; 0.7
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 
