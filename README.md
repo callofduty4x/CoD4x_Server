@@ -61,7 +61,7 @@ First enter `/src/tomcrypt`, and run `./compile_linux.sh`. Then go to `/src/mbed
 Now compile the server:
 
 ```
-make linux32
+make
 ```
 
 If compilation was successful the binary will be placed in the `/bin/` folder.
@@ -77,7 +77,7 @@ First enter `/src/tomcrypt`, and run `compile_win32.cmd`. Then go to `/src/mbedt
 Now compile the server:
 
 ```
-mingw32-make win32
+mingw32-make
 ```
 
 If compilation was successful the binary will be placed in the `/bin/` folder.
