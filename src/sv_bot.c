@@ -677,7 +677,7 @@ SV_BotInitBotLib
 ==================
 */
 void SV_BotInitBotLib( void ) {
-	botlib_import_t botlib_import;
+	/*botlib_import_t botlib_import;
 
 	SV_BotInitCvars();
 
@@ -717,7 +717,7 @@ void SV_BotInitBotLib( void ) {
 	botlib_import.AICast_CheckAttackAtPos = BotImport_AICast_CheckAttackAtPos;
 	// done.
 
-	botlib_export = (botlib_export_t *)GetBotLibAPI( BOTLIB_API_VERSION, &botlib_import );
+	botlib_export = (botlib_export_t *)GetBotLibAPI( BOTLIB_API_VERSION, &botlib_import );*/
 }
 
 #if 0
