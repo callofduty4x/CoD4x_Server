@@ -37,7 +37,7 @@ build_script:
 - ps: >-
     Write-Host "Building server code:"
 
-    mingw32-make.exe -fmakefile2
+    mingw32-make.exe
 
     Write-Host "Done."
 test_script:

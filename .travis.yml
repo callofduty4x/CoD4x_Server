@@ -25,7 +25,7 @@ script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
   - echo $TRAVIS_TAG
-  - make -fmakefile2
+  - make
 deploy:
   skip_cleanup: true
   provider: releases
