@@ -72,6 +72,7 @@ DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
 INTERFACE_LIB=$(PLUGINS_DIR)/libcom_plugin.a
 ADDITIONAL_OBJ=$(INTERFACE_LIB)
 CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB))
+SECURITY=
 else
 #################
 # LINUX variables.
@@ -85,6 +86,7 @@ LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
 CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
+SECURITY=$(PAXCTL)
 endif
 
 
@@ -111,7 +113,7 @@ ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(OBJ_DIR)/%.o,$(ASSETS_SOURCES))
 
 ###############################
 # Default rule: rebuild server.
-all: notify $(EXTERNAL) $(TARGET) $(ADDITIONAL_OBJ)
+all: notify $(EXTERNAL) $(TARGET) $(ADDITIONAL_OBJ) $(SECURITY)
 	@echo Server done
 
 notify:
@@ -204,6 +206,12 @@ $(INTERFACE_LIB): $(DEF_FILE) $(TARGET)
 $(DEF_FILE): $(TARGET)
 	@echo   pexports  $@
 	@pexports $^ > $@
+
+####################################################
+# A rule for Linux to remove some memory protection.
+$(PAXCTL): $(TARGET)
+	@/sbin/paxctl -c $<
+	@/sbin/paxctl -em $<
 
 ############################
 # Delete built object files.
