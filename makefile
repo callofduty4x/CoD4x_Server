@@ -86,7 +86,7 @@ LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
 CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
-SECURITY=$(PAXCTL)
+SECURITY=do_paxctl
 endif
 
 
@@ -209,9 +209,9 @@ $(DEF_FILE): $(TARGET)
 
 ####################################################
 # A rule for Linux to remove some memory protection.
-$(PAXCTL): $(TARGET)
-	@/sbin/paxctl -c $<
-	@/sbin/paxctl -em $<
+do_paxctl: $(TARGET)
+	@paxctl -c $<
+	@paxctl -em $<
 
 ############################
 # Delete built object files.
