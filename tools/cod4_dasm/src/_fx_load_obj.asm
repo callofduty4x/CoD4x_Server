@@ -105,7 +105,6 @@
 	global FX_ParseRunner
 	global FX_ParseSound
 	global FX_ParseFlagsField
-	global Hunk_AllocPhysPresetPrecache
 	global FX_Register_FastFile
 	global FX_Register_LoadObj
 	global FX_RegisterAsset_SoundAliasName
@@ -1828,7 +1827,7 @@ FX_ParseFlagsField_10:
 	jmp FX_ParseFlagsField_100
 
 
-;_Z28Hunk_AllocPhysPresetPrecachei_dup_1
+;Hunk_AllocPhysPresetPrecache(int)
 Hunk_AllocPhysPresetPrecache:
 	push ebp
 	mov ebp, esp

@@ -130,7 +130,6 @@
 	global _ZZ8Sys_InitvE21Sys_Net_Restart_f_VAR
 	global _ZZ8Sys_InitvE20Sys_In_Restart_f_VAR
 	global _ZZ24Sys_GetSemaphoreFileNamevE18sSemaphoreFileName
-	global BuilderCallback
 	global Sys_ShouldUpdateForInfoChange
 	global WinMain
 	global Sys_GetInfo
@@ -250,7 +249,7 @@ Sys_Net_Restart_f:
 	nop
 
 
-;_Z15BuilderCallbackP15OpaqueWindowPtrm_dup_1
+;BuilderCallback(OpaqueWindowPtr*, unsigned long)
 BuilderCallback:
 	push ebp
 	mov ebp, esp

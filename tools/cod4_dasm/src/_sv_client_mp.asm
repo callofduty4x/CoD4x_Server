@@ -87,7 +87,7 @@
 	extern sv_reconnectlimit
 	extern fs_gameDirVar
 	extern Cvar_RegisterString
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern ClientBegin
 	extern sv_wwwBaseURL
 	extern MSG_WriteByte
@@ -4329,7 +4329,7 @@ SV_AuthorizeRequest_20:
 	mov dword [esp], 0xf
 	call Com_DPrintf
 	mov dword [esp], _cstring_sv_allowanonymou
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	mov edx, [ebp+0x18]
 	cmp byte [edx], 0x0
 	jz SV_AuthorizeRequest_40
@@ -4627,7 +4627,7 @@ SV_AuthorizeIpPacket_90:
 	test eax, eax
 	jnz SV_AuthorizeIpPacket_160
 	mov dword [esp], _cstring_fs_restrict
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz SV_AuthorizeIpPacket_170
 	mov eax, [ebp-0x4d4]

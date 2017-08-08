@@ -216,6 +216,7 @@ int Cvar_VariableIntegerValueInternal( const char *var_name ) {
 		return atoi(var->string);
 	return 0;
 }
+
 int Cvar_VariableIntegerValue( const char *var_name )
 {
 	Sys_EnterCriticalSection(CRITSECT_CVAR);
@@ -223,6 +224,8 @@ int Cvar_VariableIntegerValue( const char *var_name )
 	Sys_LeaveCriticalSection(CRITSECT_CVAR);
 	return i;
 }
+
+
 /*
 ============
 Cvar_VariableBooleanValue
@@ -2632,26 +2635,22 @@ qboolean Cvar_IsDefined(const char* cvarname)
 	return qfalse;
 }
 
-
-void Cvar_PatchModifiedFlags()
+bool __cdecl Cvar_IsValidName(const char *dvarName)
 {
+  char nameChar;
+  int index;
 
-	*(int**)0x8123187 = &cvar_modifiedFlags;
-	*(int**)0x81231B9 = &cvar_modifiedFlags;
-	*(int**)0x8123747 = &cvar_modifiedFlags;
-	*(int**)0x8123959 = &cvar_modifiedFlags;
-	*(int**)0x81742F2 = &cvar_modifiedFlags;
-	*(int**)0x817519D = &cvar_modifiedFlags;
-	*(int**)0x81751C3 = &cvar_modifiedFlags;
-	*(int**)0x81775B5 = &cvar_modifiedFlags;
-	*(int**)0x81775C1 = &cvar_modifiedFlags;
-	*(int**)0x81775EF = &cvar_modifiedFlags;
-	*(int**)0x817762C = &cvar_modifiedFlags;
-	*(int**)0x819E5BC = &cvar_modifiedFlags;
-	*(int**)0x819FBAE = &cvar_modifiedFlags;
-	*(int**)0x81A0A28 = &cvar_modifiedFlags;
-	*(int**)0x8208F2B = &cvar_modifiedFlags;
-	*(int**)0x820956C = &cvar_modifiedFlags;
-	*(int**)0x81775CA = (int*)(((char*)&cvar_modifiedFlags) +1);
-
+  if ( dvarName )
+  {
+    for ( index = 0; dvarName[index]; ++index )
+    {
+      nameChar = dvarName[index];
+      if ( !isalnum(nameChar) && nameChar != '_' )
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
 }

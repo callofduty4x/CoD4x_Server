@@ -86,7 +86,6 @@
 	global info5
 	global info4
 	global info3
-	global info2_dup_1
 	global _ZZ11FS_ShiftStrPKciE3buf
 	global _ZZ14FS_AddCommandsvE18FS_TouchFile_f_VAR
 	global _ZZ14FS_AddCommandsvE15FS_NewDir_f_VAR
@@ -626,7 +625,7 @@ FS_LoadedIwds:
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
-	mov byte [info2_dup_1], 0x0
+	mov byte [info2], 0x0
 	mov byte [info3], 0x0
 	mov eax, fs_searchpaths
 	mov ebx, [eax]
@@ -650,7 +649,7 @@ FS_LoadedIwds_10:
 	call va
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x2000
-	mov dword [esp], info2_dup_1
+	mov dword [esp], info2
 	call Q_strncat
 	cmp byte [info3], 0x0
 	jnz FS_LoadedIwds_40
@@ -666,7 +665,7 @@ FS_LoadedIwds_50:
 	jnz FS_LoadedIwds_10
 FS_LoadedIwds_20:
 	mov eax, [ebp+0x8]
-	mov dword [eax], info2_dup_1
+	mov dword [eax], info2
 	mov eax, [ebp+0xc]
 	mov dword [eax], info3
 	add esp, 0x14
@@ -2531,7 +2530,7 @@ info8: resb 0x2000
 info5: resb 0x2000
 info4: resb 0x2000
 info3: resb 0x2000
-info2_dup_1: resb 0x2000
+info2: resb 0x2000
 _ZZ11FS_ShiftStrPKciE3buf: resb 0x400
 _ZZ14FS_AddCommandsvE18FS_TouchFile_f_VAR: resb 0x14
 _ZZ14FS_AddCommandsvE15FS_NewDir_f_VAR: resb 0x14

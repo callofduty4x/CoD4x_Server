@@ -32,7 +32,6 @@
 
 ;Exports of db_file_load:
 	global g_minimumFastFileLoaded
-	global g_load
 	global g_trackLoadProgress
 	global g_loadedExternalBytes
 	global g_totalExternalBytes

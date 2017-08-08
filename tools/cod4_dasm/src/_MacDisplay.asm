@@ -22,6 +22,7 @@
 	extern CGDisplayCurrentMode
 	extern aglGetCurrentContext
 	extern glFinish
+	extern __cxa_atexit
 	extern _ZdlPv
 	extern _ZN9__gnu_cxx18__exchange_and_addEPVii
 	extern _ZNSs4_Rep10_M_destroyERKSaIcE
@@ -203,9 +204,6 @@
 	global sMainRect
 	global CenterWindowOnDisplay
 	global PseudoAGLSetFullscreen
-	global BuilderCallback
-	global _Z41__static_initialization_and_destruction_0ii
-	global __tcf_0
 	global __tcf_1
 	global __tcf_2
 	global __tcf_3
@@ -282,6 +280,16 @@
 
 
 SECTION .text
+
+
+;global constructors keyed to MacDisplay::Initialize()
+_GLOBAL__I__ZN10MacDisplay10InitializeEv:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
 
 
 ;CenterWindowOnDisplay()
@@ -559,6 +567,63 @@ BuilderCallback:
 	pop ebp
 	ret
 	nop
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	push ebx
+	sub esp, 0x14
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	add esp, 0x14
+	pop ebx
+	pop ebp
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov dword [sScreenContext], 0x0
+	mov dword [sScreenContext+0x4], 0x0
+	mov dword [sScreenContext+0x8], 0x0
+	mov dword [sScreenContext+0xc], 0x0
+	mov byte [sScreenContext+0x10], 0x0
+	mov dword [sScreenContext+0x14], 0x0
+	mov ebx, [0xd5cc00c]
+	mov [esp+0x8], ebx
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_0
+	call __cxa_atexit
+	mov dword [sSharedContext], 0x0
+	mov dword [sSharedContext+0x4], 0x0
+	mov dword [sSharedContext+0x8], 0x0
+	mov dword [sSharedContext+0xc], 0x0
+	mov byte [sSharedContext+0x10], 0x0
+	mov dword [sSharedContext+0x14], 0x0
+	mov [esp+0x8], ebx
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_1
+	call __cxa_atexit
+	mov dword [sDisplayList], 0x0
+	mov dword [sDisplayList+0x4], 0x0
+	mov dword [sDisplayList+0x8], 0x0
+	mov [esp+0x8], ebx
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_2
+	call __cxa_atexit
+	mov dword [sRectList], 0x0
+	mov dword [sRectList+0x4], 0x0
+	mov dword [sRectList+0x8], 0x0
+	mov [esp+0x8], ebx
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_3
+	call __cxa_atexit
+	add esp, 0x14
+	pop ebx
+	pop ebp
+	ret
 
 
 ;__tcf_0

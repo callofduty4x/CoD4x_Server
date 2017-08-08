@@ -1,7 +1,7 @@
 ;Imports of assertive:
 	extern Cvar_IsSystemActive
-	extern Cvar_GetBool
-	extern Cvar_GetInt
+	extern Cvar_VariableBooleanValue
+	extern Cvar_VariableIntegerValue
 
 ;Exports of assertive:
 	global shouldQuitOnError
@@ -26,7 +26,7 @@ QuitOnError:
 	ret
 QuitOnError_10:
 	mov dword [esp], _cstring_quitonerror
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz QuitOnError_20
 QuitOnError_30:
@@ -38,7 +38,7 @@ QuitOnError_40:
 	ret
 QuitOnError_20:
 	mov dword [esp], _cstring_r_vc_compile
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	cmp eax, 0x2
 	jz QuitOnError_30
 	xor eax, eax
@@ -58,7 +58,7 @@ RefreshQuitOnErrorCondition:
 	ret
 RefreshQuitOnErrorCondition_10:
 	mov dword [esp], _cstring_quitonerror
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz RefreshQuitOnErrorCondition_20
 RefreshQuitOnErrorCondition_30:
@@ -69,7 +69,7 @@ RefreshQuitOnErrorCondition_40:
 	ret
 RefreshQuitOnErrorCondition_20:
 	mov dword [esp], _cstring_r_vc_compile
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	cmp eax, 0x2
 	jz RefreshQuitOnErrorCondition_30
 	xor eax, eax

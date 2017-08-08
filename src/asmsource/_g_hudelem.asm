@@ -16,7 +16,7 @@
 	extern level
 	extern BG_LerpHudColors
 	extern floorf
-	extern HudElem_Free
+	extern Scr_FreeHudElem
 	extern Com_Printf
 	extern SV_MapExists
 	extern Scr_GetGameTypeNameForScript
@@ -32,6 +32,7 @@
 	extern ceilf
 	extern Scr_AddHudElem
 	extern strcmp
+	extern itemRegistered
 	extern memset
 	extern Scr_GetConstString
 	extern scr_const
@@ -42,7 +43,6 @@
 	extern Scr_SetString
 
 ;Exports of g_hudelem:
-	global methods
 	global HECmd_SetText
 	global HECmd_ClearAllTextAfterHudElem
 	global HECmd_SetMaterial
@@ -65,7 +65,6 @@
 	global HECmd_SetPlayerNameString
 	global HECmd_SetMapNameString
 	global HECmd_SetGameTypeString
-	global fields_dup_1
 	global HudElem_SetFontScale
 	global HudElem_SetFont
 	global HudElem_GetFont
@@ -103,10 +102,13 @@
 	global HECmd_SetClock_Internal
 	global GScr_NewHudElem
 	global HudElem_GetMethod
+	global HudElem_DestroyAll
 	global GScr_NewTeamHudElem
 	global Scr_GetHudElemField
 	global Scr_SetHudElemField
+	global HudElem_UpdateClient
 	global GScr_NewClientHudElem
+	global HudElem_ClientDisconnect
 	global GScr_AddFieldsForHudElems
 	global Scr_FreeHudElemConstStrings
 	global g_hudelems
@@ -894,7 +896,7 @@ HECmd_Destroy:
 	call Scr_ObjectError
 	xor ebx, ebx
 	mov [esp], ebx
-	call HudElem_Free
+	call Scr_FreeHudElem
 	mov dword [ebx], 0x0
 	add esp, 0x14
 	pop ebx
@@ -907,7 +909,7 @@ HECmd_Destroy_10:
 	lea eax, [edx+eax*2]
 	lea ebx, [eax*4+g_hudelems]
 	mov [esp], ebx
-	call HudElem_Free
+	call Scr_FreeHudElem
 	mov dword [ebx], 0x0
 	add esp, 0x14
 	pop ebx
@@ -1357,7 +1359,7 @@ HudElem_SetFont:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x6
 	mov ecx, g_he_font
 	pop ebp
@@ -1374,7 +1376,7 @@ HudElem_GetFont:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1399,7 +1401,7 @@ HudElem_SetAlignX:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x3
 	mov ecx, g_he_alignx
 	pop ebp
@@ -1416,7 +1418,7 @@ HudElem_GetAlignX:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1441,7 +1443,7 @@ HudElem_SetAlignY:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x3
 	mov ecx, g_he_aligny
 	pop ebp
@@ -1458,7 +1460,7 @@ HudElem_GetAlignY:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1483,7 +1485,7 @@ HudElem_SetHorzAlign:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x8
 	mov ecx, g_he_horzalign
 	pop ebp
@@ -1500,7 +1502,7 @@ HudElem_GetHorzAlign:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1525,7 +1527,7 @@ HudElem_SetVertAlign:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x8
 	mov ecx, g_he_vertalign
 	pop ebp
@@ -1542,7 +1544,7 @@ HudElem_GetVertAlign:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1773,7 +1775,7 @@ HudElem_SetLocalizedString:
 	lea edx, [ebx*4]
 	shl ebx, 0x5
 	sub ebx, edx
-	add esi, [ebx+fields_dup_1+0x4]
+	add esi, [ebx+fields+0x4]
 	mov [esp], eax
 	call G_LocalizedStringIndex
 	mov [esi], eax
@@ -1795,7 +1797,7 @@ HudElem_SetFlagForeground:
 	lea edx, [eax*4]
 	shl eax, 0x5
 	sub eax, edx
-	mov ebx, [eax+fields_dup_1+0x4]
+	mov ebx, [eax+fields+0x4]
 	add ebx, [ebp+0x8]
 	mov dword [esp], 0x0
 	call Scr_GetInt
@@ -1842,7 +1844,7 @@ HudElem_SetFlagHideWhenDead:
 	lea edx, [eax*4]
 	shl eax, 0x5
 	sub eax, edx
-	mov ebx, [eax+fields_dup_1+0x4]
+	mov ebx, [eax+fields+0x4]
 	add ebx, [ebp+0x8]
 	mov dword [esp], 0x0
 	call Scr_GetInt
@@ -1889,7 +1891,7 @@ HudElem_SetFlagHideWhenInMenu:
 	lea edx, [eax*4]
 	shl eax, 0x5
 	sub eax, edx
-	mov ebx, [eax+fields_dup_1+0x4]
+	mov ebx, [eax+fields+0x4]
 	add ebx, [ebp+0x8]
 	mov dword [esp], 0x0
 	call Scr_GetInt
@@ -2137,7 +2139,7 @@ HudElem_SetBoolean:
 	lea edx, [ebx*4]
 	shl ebx, 0x5
 	sub ebx, edx
-	mov ecx, [ebx+fields_dup_1+0x4]
+	mov ecx, [ebx+fields+0x4]
 	mov edx, [ebp+0x8]
 	mov [ecx+edx], eax
 	add esp, 0x14
@@ -2611,6 +2613,37 @@ HudElem_GetMethod_20:
 	ret
 
 
+;HudElem_DestroyAll()
+HudElem_DestroyAll:
+	push ebp
+	mov ebp, esp
+	push ebx
+	sub esp, 0x14
+	mov ebx, g_hudelems
+	jmp HudElem_DestroyAll_10
+HudElem_DestroyAll_30:
+	add ebx, 0xac
+	cmp ebx, itemRegistered
+	jz HudElem_DestroyAll_20
+HudElem_DestroyAll_10:
+	mov eax, [ebx]
+	test eax, eax
+	jz HudElem_DestroyAll_30
+	mov [esp], ebx
+	call Scr_FreeHudElem
+	mov dword [ebx], 0x0
+	add ebx, 0xac
+	cmp ebx, itemRegistered
+	jnz HudElem_DestroyAll_10
+HudElem_DestroyAll_20:
+	mov dword [esp+0x8], 0x2b000
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], g_hudelems
+	call memset
+	add esp, 0x14
+	pop ebx
+	pop ebp
+	ret
 
 
 ;GScr_NewTeamHudElem()
@@ -2735,7 +2768,7 @@ Scr_GetHudElemField:
 	mov eax, ebx
 	shl eax, 0x5
 	sub eax, ecx
-	lea esi, [eax+fields_dup_1]
+	lea esi, [eax+fields]
 	lea eax, [edx+edx*4]
 	lea eax, [edx+eax*4]
 	lea eax, [edx+eax*2]
@@ -2777,7 +2810,7 @@ Scr_SetHudElemField:
 	mov eax, ebx
 	shl eax, 0x5
 	sub eax, ecx
-	lea esi, [eax+fields_dup_1]
+	lea esi, [eax+fields]
 	lea eax, [edx+edx*4]
 	lea eax, [edx+eax*4]
 	lea eax, [edx+eax*2]
@@ -2803,6 +2836,254 @@ Scr_SetHudElemField_10:
 	pop esi
 	pop ebp
 	ret
+	nop
+
+
+;HudElem_UpdateClient(gclient_s*, int, hudelem_update_t)
+HudElem_UpdateClient:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x2c
+	mov eax, [ebp+0x10]
+	mov edx, eax
+	shr edx, 1
+	and eax, 0x1
+	mov [ebp-0x28], eax
+	and edx, 0x1
+	mov [ebp-0x24], edx
+	jz HudElem_UpdateClient_10
+	test eax, eax
+	jz HudElem_UpdateClient_20
+	mov dword [ebp-0x20], 0x0
+	mov dword [ebp-0x1c], 0x0
+	mov ebx, g_hudelems+0xa8
+	mov edi, [ebp+0x8]
+	add edi, 0x8a0
+	mov esi, [ebp+0x8]
+	add esi, 0x1c00
+	jmp HudElem_UpdateClient_30
+HudElem_UpdateClient_50:
+	add ebx, 0xac
+	cmp ebx, itemRegistered+0xa8
+	jz HudElem_UpdateClient_40
+HudElem_UpdateClient_30:
+	mov eax, [ebx-0xa8]
+	test eax, eax
+	jz HudElem_UpdateClient_50
+	mov eax, [ebx-0x4]
+	test eax, eax
+	jz HudElem_UpdateClient_60
+	mov edx, [ebp+0x8]
+	cmp eax, [edx+0x3010]
+	jnz HudElem_UpdateClient_50
+HudElem_UpdateClient_60:
+	mov eax, [ebx-0x8]
+	cmp eax, 0x3ff
+	jz HudElem_UpdateClient_70
+	cmp [ebp+0xc], eax
+	jnz HudElem_UpdateClient_50
+HudElem_UpdateClient_70:
+	mov eax, [ebx]
+	test eax, eax
+	jz HudElem_UpdateClient_80
+	lea edx, [esi+0x4]
+	cmp dword [ebp-0x20], 0x1e
+	jg HudElem_UpdateClient_50
+	add dword [ebp-0x20], 0x1
+	add esi, 0xa0
+HudElem_UpdateClient_130:
+	lea eax, [ebx-0xa8]
+	mov dword [esp+0x8], 0xa0
+	mov [esp+0x4], eax
+	mov [esp], edx
+	call memcpy
+	add ebx, 0xac
+	cmp ebx, itemRegistered+0xa8
+	jnz HudElem_UpdateClient_30
+HudElem_UpdateClient_40:
+	mov edi, [ebp-0x28]
+	test edi, edi
+	jz HudElem_UpdateClient_90
+	cmp dword [ebp-0x20], 0x1e
+	jle HudElem_UpdateClient_100
+HudElem_UpdateClient_90:
+	mov esi, [ebp-0x24]
+	test esi, esi
+	jz HudElem_UpdateClient_110
+	cmp dword [ebp-0x1c], 0x1e
+	jg HudElem_UpdateClient_110
+	mov edx, [ebp-0x1c]
+	lea eax, [edx+edx*4]
+	shl eax, 0x5
+	mov edx, [ebp+0x8]
+	mov ecx, [eax+edx+0x8a4]
+	test ecx, ecx
+	jnz HudElem_UpdateClient_120
+HudElem_UpdateClient_110:
+	add esp, 0x2c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+HudElem_UpdateClient_80:
+	lea edx, [edi+0x4]
+	cmp dword [ebp-0x1c], 0x1e
+	jg HudElem_UpdateClient_50
+	add dword [ebp-0x1c], 0x1
+	add edi, 0xa0
+	jmp HudElem_UpdateClient_130
+HudElem_UpdateClient_100:
+	mov edx, [ebp-0x20]
+	lea eax, [edx+edx*4]
+	shl eax, 0x5
+	mov edx, [ebp+0x8]
+	mov ebx, [eax+edx+0x1c04]
+	test ebx, ebx
+	jz HudElem_UpdateClient_90
+	lea esi, [eax+edx+0x1c04]
+	mov ebx, [ebp-0x20]
+HudElem_UpdateClient_140:
+	lea eax, [ebx+ebx*4]
+	shl eax, 0x5
+	mov edx, [ebp+0x8]
+	lea eax, [eax+edx+0x1c04]
+	mov dword [esp+0x8], 0xa0
+	mov dword [esp+0x4], 0x0
+	mov [esp], eax
+	call memset
+	add ebx, 0x1
+	cmp ebx, 0x1f
+	jz HudElem_UpdateClient_90
+	mov eax, [esi+0xa0]
+	add esi, 0xa0
+	test eax, eax
+	jnz HudElem_UpdateClient_140
+	jmp HudElem_UpdateClient_90
+HudElem_UpdateClient_120:
+	lea esi, [eax+edx+0x8a4]
+	mov ebx, [ebp-0x1c]
+HudElem_UpdateClient_150:
+	lea eax, [ebx+ebx*4]
+	shl eax, 0x5
+	mov edx, [ebp+0x8]
+	lea eax, [eax+edx+0x8a4]
+	mov dword [esp+0x8], 0xa0
+	mov dword [esp+0x4], 0x0
+	mov [esp], eax
+	call memset
+	add ebx, 0x1
+	cmp ebx, 0x1f
+	jz HudElem_UpdateClient_110
+	mov eax, [esi+0xa0]
+	add esi, 0xa0
+	test eax, eax
+	jnz HudElem_UpdateClient_150
+	add esp, 0x2c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+HudElem_UpdateClient_10:
+	mov eax, [ebp-0x28]
+	test eax, eax
+	jz HudElem_UpdateClient_160
+	mov dword [ebp-0x20], 0x0
+	mov ebx, g_hudelems+0xa8
+	mov esi, [ebp+0x8]
+	add esi, 0x1c04
+HudElem_UpdateClient_180:
+	mov eax, [ebx-0xa8]
+	test eax, eax
+	jnz HudElem_UpdateClient_170
+HudElem_UpdateClient_250:
+	add ebx, 0xac
+	cmp ebx, itemRegistered+0xa8
+	jnz HudElem_UpdateClient_180
+	mov dword [ebp-0x1c], 0x0
+	jmp HudElem_UpdateClient_40
+HudElem_UpdateClient_20:
+	mov dword [ebp-0x1c], 0x0
+	mov ebx, g_hudelems+0xa8
+	mov esi, [ebp+0x8]
+	add esi, 0x8a4
+HudElem_UpdateClient_200:
+	mov eax, [ebx-0xa8]
+	test eax, eax
+	jnz HudElem_UpdateClient_190
+HudElem_UpdateClient_220:
+	add ebx, 0xac
+	cmp ebx, itemRegistered+0xa8
+	jnz HudElem_UpdateClient_200
+	jmp HudElem_UpdateClient_90
+HudElem_UpdateClient_190:
+	mov eax, [ebx-0x4]
+	test eax, eax
+	jz HudElem_UpdateClient_210
+	mov edx, [ebp+0x8]
+	cmp eax, [edx+0x3010]
+	jnz HudElem_UpdateClient_220
+HudElem_UpdateClient_210:
+	mov eax, [ebx-0x8]
+	cmp eax, 0x3ff
+	jz HudElem_UpdateClient_230
+	cmp eax, [ebp+0xc]
+	jnz HudElem_UpdateClient_220
+HudElem_UpdateClient_230:
+	mov eax, [ebx]
+	test eax, eax
+	jnz HudElem_UpdateClient_220
+	mov edx, esi
+	cmp dword [ebp-0x1c], 0x1e
+	jg HudElem_UpdateClient_220
+	add dword [ebp-0x1c], 0x1
+	add esi, 0xa0
+	lea eax, [ebx-0xa8]
+	mov dword [esp+0x8], 0xa0
+	mov [esp+0x4], eax
+	mov [esp], edx
+	call memcpy
+	jmp HudElem_UpdateClient_220
+HudElem_UpdateClient_170:
+	mov eax, [ebx-0x4]
+	test eax, eax
+	jz HudElem_UpdateClient_240
+	mov edx, [ebp+0x8]
+	cmp eax, [edx+0x3010]
+	jnz HudElem_UpdateClient_250
+HudElem_UpdateClient_240:
+	mov eax, [ebx-0x8]
+	cmp eax, 0x3ff
+	jz HudElem_UpdateClient_260
+	cmp eax, [ebp+0xc]
+	jnz HudElem_UpdateClient_250
+HudElem_UpdateClient_260:
+	mov edi, [ebx]
+	test edi, edi
+	jz HudElem_UpdateClient_250
+	mov edx, esi
+	cmp dword [ebp-0x20], 0x1e
+	jg HudElem_UpdateClient_250
+	add dword [ebp-0x20], 0x1
+	add esi, 0xa0
+	lea eax, [ebx-0xa8]
+	mov dword [esp+0x8], 0xa0
+	mov [esp+0x4], eax
+	mov [esp], edx
+	call memcpy
+	jmp HudElem_UpdateClient_250
+HudElem_UpdateClient_160:
+	mov eax, g_hudelems+0xa8
+HudElem_UpdateClient_270:
+	add eax, 0xac
+	cmp eax, itemRegistered+0xa8
+	jnz HudElem_UpdateClient_270
+	mov dword [ebp-0x1c], 0x0
+	jmp HudElem_UpdateClient_90
 	nop
 
 
@@ -2900,6 +3181,44 @@ GScr_NewClientHudElem_30:
 	nop
 
 
+;HudElem_ClientDisconnect(gentity_s*)
+HudElem_ClientDisconnect:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x1c
+	mov edi, [ebp+0x8]
+	mov ebx, g_hudelems
+	mov esi, itemRegistered
+	jmp HudElem_ClientDisconnect_10
+HudElem_ClientDisconnect_30:
+	add ebx, 0xac
+	cmp esi, ebx
+	jz HudElem_ClientDisconnect_20
+HudElem_ClientDisconnect_10:
+	mov eax, [ebx]
+	test eax, eax
+	jz HudElem_ClientDisconnect_30
+	mov eax, [ebx+0xa0]
+	cmp eax, [edi]
+	jnz HudElem_ClientDisconnect_30
+	mov [esp], ebx
+	call Scr_FreeHudElem
+	mov dword [ebx], 0x0
+	add ebx, 0xac
+	cmp esi, ebx
+	jnz HudElem_ClientDisconnect_10
+HudElem_ClientDisconnect_20:
+	add esp, 0x1c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+
+
 ;GScr_AddFieldsForHudElems()
 GScr_AddFieldsForHudElems:
 	push ebp
@@ -2908,11 +3227,11 @@ GScr_AddFieldsForHudElems:
 	push esi
 	push ebx
 	sub esp, 0x1c
-	mov ebx, [fields_dup_1]
+	mov ebx, [fields]
 	test ebx, ebx
 	jz GScr_AddFieldsForHudElems_10
 	xor edi, edi
-	mov esi, fields_dup_1+0x1c
+	mov esi, fields+0x1c
 GScr_AddFieldsForHudElems_20:
 	mov ecx, edi
 	sar ecx, 0x2
@@ -2954,10 +3273,10 @@ Scr_FreeHudElemConstStrings:
 	push ebx
 	sub esp, 0x10
 	mov esi, [ebp+0x8]
-	mov ecx, [fields_dup_1]
+	mov ecx, [fields]
 	test ecx, ecx
 	jz Scr_FreeHudElemConstStrings_10
-	mov ebx, fields_dup_1+0x8
+	mov ebx, fields+0x8
 	jmp Scr_FreeHudElemConstStrings_20
 Scr_FreeHudElemConstStrings_30:
 	mov eax, [ebx+0x14]
@@ -2997,7 +3316,7 @@ g_he_font: dd _cstring_default, _cstring_bigfixed, _cstring_smallfixed, _cstring
 ;Initialized constant data of g_hudelem:
 SECTION .rdata
 methods: dd _cstring_settext, HECmd_SetText, 0x0, _cstring_clearalltextafte, HECmd_ClearAllTextAfterHudElem, 0x0, _cstring_setshader, HECmd_SetMaterial, 0x0, _cstring_settargetent, HECmd_SetTargetEnt, 0x0, _cstring_cleartargetent, HECmd_ClearTargetEnt, 0x0, _cstring_settimer1, HECmd_SetTimer, 0x0, _cstring_settimerup1, HECmd_SetTimerUp, 0x0, _cstring_settenthstimer1, HECmd_SetTenthsTimer, 0x0, _cstring_settenthstimerup1, HECmd_SetTenthsTimerUp, 0x0, _cstring_setclock1, HECmd_SetClock, 0x0, _cstring_setclockup1, HECmd_SetClockUp, 0x0, _cstring_setvalue, HECmd_SetValue, 0x0, _cstring_setwaypoint, HECmd_SetWaypoint, 0x0, _cstring_fadeovertime, HECmd_FadeOverTime, 0x0, _cstring_scaleovertime, HECmd_ScaleOverTime, 0x0, _cstring_moveovertime, HECmd_MoveOverTime, 0x0, _cstring_reset, HECmd_Reset, 0x0, _cstring_destroy, HECmd_Destroy, 0x0, _cstring_setpulsefx, HECmd_SetPulseFX, 0x0, _cstring_setplayernamestr, HECmd_SetPlayerNameString, 0x0, _cstring_setmapnamestring, HECmd_SetMapNameString, 0x0, _cstring_setgametypestrin, HECmd_SetGameTypeString, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-fields_dup_1: dd _cstring_x, 0x4, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_y, 0x8, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_z, 0xc, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_fontscale, 0x14, 0x1, 0xffffffff, 0x0, HudElem_SetFontScale, 0x0, _cstring_font, 0x18, 0x0, 0xffffffff, 0x0, HudElem_SetFont, HudElem_GetFont, _cstring_alignx, 0x1c, 0x0, 0x3, 0x2, HudElem_SetAlignX, HudElem_GetAlignX, _cstring_aligny, 0x1c, 0x0, 0x3, 0x0, HudElem_SetAlignY, HudElem_GetAlignY, _cstring_horzalign, 0x20, 0x0, 0x7, 0x3, HudElem_SetHorzAlign, HudElem_GetHorzAlign, _cstring_vertalign, 0x20, 0x0, 0x7, 0x0, HudElem_SetVertAlign, HudElem_GetVertAlign, _cstring_color, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetColor, HudElem_GetColor, _cstring_alpha, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetAlpha, HudElem_GetAlpha, _cstring_label, 0x34, 0x0, 0xffffffff, 0x0, HudElem_SetLocalizedString, 0x0, _cstring_sort, 0x80, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_foreground, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagForeground, HudElem_GetFlagForeground, _cstring_hidewhendead, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenDead, HudElem_GetFlagHideWhenDead, _cstring_hidewheninmenu, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenInMenu, HudElem_GetFlagHideWhenInMenu, _cstring_glowcolor, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowColor, HudElem_GetGlowColor, _cstring_glowalpha, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowAlpha, HudElem_GetGlowAlpha, _cstring_archived, 0xa8, 0x0, 0xffffffff, 0x0, HudElem_SetBoolean, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+fields: dd _cstring_x, 0x4, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_y, 0x8, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_z, 0xc, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_fontscale, 0x14, 0x1, 0xffffffff, 0x0, HudElem_SetFontScale, 0x0, _cstring_font, 0x18, 0x0, 0xffffffff, 0x0, HudElem_SetFont, HudElem_GetFont, _cstring_alignx, 0x1c, 0x0, 0x3, 0x2, HudElem_SetAlignX, HudElem_GetAlignX, _cstring_aligny, 0x1c, 0x0, 0x3, 0x0, HudElem_SetAlignY, HudElem_GetAlignY, _cstring_horzalign, 0x20, 0x0, 0x7, 0x3, HudElem_SetHorzAlign, HudElem_GetHorzAlign, _cstring_vertalign, 0x20, 0x0, 0x7, 0x0, HudElem_SetVertAlign, HudElem_GetVertAlign, _cstring_color, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetColor, HudElem_GetColor, _cstring_alpha, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetAlpha, HudElem_GetAlpha, _cstring_label, 0x34, 0x0, 0xffffffff, 0x0, HudElem_SetLocalizedString, 0x0, _cstring_sort, 0x80, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_foreground, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagForeground, HudElem_GetFlagForeground, _cstring_hidewhendead, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenDead, HudElem_GetFlagHideWhenDead, _cstring_hidewheninmenu, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenInMenu, HudElem_GetFlagHideWhenInMenu, _cstring_glowcolor, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowColor, HudElem_GetGlowColor, _cstring_glowalpha, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowAlpha, HudElem_GetGlowAlpha, _cstring_archived, 0xa8, 0x0, 0xffffffff, 0x0, HudElem_SetBoolean, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of g_hudelem:

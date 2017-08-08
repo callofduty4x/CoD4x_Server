@@ -36,7 +36,6 @@
 #include "sys_cod4defs.h"
 #include "cvar.h"
 #include "net_game_conf.h"
-#include "cm_public.h"
 
 #include "net_reliabletransport.h"
 
@@ -108,6 +107,23 @@ typedef struct archivedEntity_s
   entityState_t s;
   archivedEntityShared_t r;
 }archivedEntity_t;
+
+
+typedef struct svEntity_s {
+	uint16_t worldSector;
+	uint16_t nextEntityInWorldSector;
+	archivedEntity_t		baseline;		// 0x04  for delta compression of initial sighting
+	int			numClusters;		// if -1, use headnode instead
+	int			clusternums[MAX_ENT_CLUSTERS];
+	int			lastCluster;		// if all the clusters don't fit in clusternums
+	int			linkcontents;
+	float		linkmin[2];
+	float		linkmax[2];
+}svEntity_t; //size: 0x178
+
+#include "cm_public.h"
+
+
 
 typedef enum {
     UN_VERIFYNAME,
@@ -251,7 +267,7 @@ typedef struct client_s {//90b4f8c
 	int			serverId; //0xa0d28
 	voices_t		voicedata[40];
 	int			unsentVoiceData;//(0xa35f4)
-	byte			mutedClients[MAX_CLIENTS];
+	byte			muteList[MAX_CLIENTS];
 	byte			hasVoip;//(0xa3638)
 	stats_t			stats;		//(0xa3639)
 	byte			receivedstats;		//(0xa5639)
@@ -441,18 +457,6 @@ typedef enum {
 
 
 
-
-typedef struct svEntity_s {
-	uint16_t worldSector;
-	uint16_t nextEntityInWorldSector;
-	archivedEntity_t		baseline;		// 0x04  for delta compression of initial sighting
-	int			numClusters;		// if -1, use headnode instead
-	int			clusternums[MAX_ENT_CLUSTERS];
-	int			lastCluster;		// if all the clusters don't fit in clusternums
-	int			linkcontents;
-	float		linkmin[2];
-	float		linkmax[2];
-}svEntity_t; //size: 0x178
 
 #define MAX_BPS_WINDOW 20
 

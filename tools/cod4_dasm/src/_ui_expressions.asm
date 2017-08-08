@@ -20,7 +20,7 @@
 	extern Com_sprintf
 	extern __maskrune
 	extern va
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern SEH_LocalizeTextMessage
 	extern Com_Error
 	extern Com_PrintWarning
@@ -71,8 +71,6 @@
 ;Exports of ui_expressions:
 	global g_releaseBuildStatement
 	global s_operatorPrecedence
-	global s_tempOperandValueAsString
-	global currentTempOperand
 	global _ZZ25SecondsToCountdownDisplayiiP7OperandE12resultString
 	global GetHudFade
 	global _ZZ13GetKeyBindingiP7OperandS0_E12resultString
@@ -1023,7 +1021,7 @@ LocalizeString_100:
 	call va
 	mov ebx, eax
 	mov dword [esp], _cstring_loc_warnings
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz LocalizeString_140
 LocalizeString_70:
@@ -1103,7 +1101,7 @@ LocalizeString_390:
 	call va
 	mov ebx, eax
 	mov dword [esp], _cstring_loc_warnings
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz LocalizeString_250
 LocalizeString_240:
@@ -1127,7 +1125,7 @@ LocalizeString_310:
 	call va
 	mov ebx, eax
 	mov dword [esp], _cstring_loc_warnings
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz LocalizeString_290
 LocalizeString_280:
@@ -1221,7 +1219,7 @@ LocalizeString_200:
 	jmp LocalizeString_390
 LocalizeString_290:
 	mov dword [esp], _cstring_loc_warningsaser
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz LocalizeString_400
 	mov [esp+0x8], ebx
@@ -1262,7 +1260,7 @@ LocalizeString_400:
 	jmp LocalizeString_280
 LocalizeString_250:
 	mov dword [esp], _cstring_loc_warningsaser
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz LocalizeString_430
 	mov [esp+0x8], ebx
@@ -1272,7 +1270,7 @@ LocalizeString_250:
 	jmp LocalizeString_240
 LocalizeString_140:
 	mov dword [esp], _cstring_loc_warningsaser
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz LocalizeString_440
 	mov [esp+0x8], ebx

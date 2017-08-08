@@ -57,7 +57,6 @@
 
 ;Exports of ui_shared_obj:
 	global menuBuf
-	global g_load_dup_1
 	global menuParseKeywordHash
 	global itemParseKeywordHash
 	global itemParseKeywords
@@ -7453,9 +7452,9 @@ UI_LoadMenus_LoadObj:
 	mov edi, [ebp+0x8]
 	mov dword [esp+0x8], 0xc1c
 	mov dword [esp+0x4], 0x0
-	mov dword [esp], g_load_dup_1
+	mov dword [esp], g_load
 	call memset
-	mov dword [g_load_dup_1+0x18], g_load_dup_1+0x41c
+	mov dword [g_load+0x18], g_load+0x41c
 	mov dword [esp+0x8], 0x0
 	lea esi, [ebp-0x20]
 	mov [esp+0x4], esi
@@ -7511,7 +7510,7 @@ UI_LoadMenus_LoadObj_40:
 	jz UI_LoadMenus_LoadObj_50
 UI_LoadMenus_LoadObj_30:
 	call Com_EndParseSession
-	mov eax, g_load_dup_1+0x10
+	mov eax, g_load+0x10
 	add esp, 0x3c
 	pop ebx
 	pop esi
@@ -7578,16 +7577,16 @@ UI_LoadMenu_LoadObj:
 	mov ebx, [ebp+0xc]
 	mov dword [esp+0x8], 0xc1c
 	mov dword [esp+0x4], 0x0
-	mov dword [esp], g_load_dup_1
+	mov dword [esp], g_load
 	call memset
-	mov dword [g_load_dup_1+0x18], g_load_dup_1+0x41c
+	mov dword [g_load+0x18], g_load+0x41c
 	mov edx, ebx
 	mov eax, esi
 	call UI_ParseMenuInternal
 	test al, al
 	jz UI_LoadMenu_LoadObj_10
 UI_LoadMenu_LoadObj_20:
-	mov eax, g_load_dup_1+0x10
+	mov eax, g_load+0x10
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -7606,7 +7605,7 @@ UI_LoadMenu_LoadObj_10:
 	mov dword [esp+0x4], _cstring_defaultmenu_file
 	mov dword [esp], 0x2
 	call Com_Error
-	mov eax, g_load_dup_1+0x10
+	mov eax, g_load+0x10
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -8065,7 +8064,7 @@ UI_ParseMenuInternal_190:
 	call UI_Alloc
 	mov [esi+0x118], eax
 	mov [esp+0x8], ebx
-	mov dword [esp+0x4], g_load_dup_1+0x1c
+	mov dword [esp+0x4], g_load+0x1c
 	mov [esp], eax
 	call memcpy
 	mov eax, [esi+0xa0]
@@ -8080,16 +8079,16 @@ UI_ParseMenuInternal_30:
 	mov [esp+0x4], esi
 	mov dword [esp], 0x0
 	call Menu_UpdatePosition
-	cmp dword [g_load_dup_1+0x14], 0x1ff
+	cmp dword [g_load+0x14], 0x1ff
 	jle UI_ParseMenuInternal_40
 	mov dword [esp+0x4], _cstring_menu_new_exe_err
 	mov dword [esp], 0x2
 	call Com_Error
 UI_ParseMenuInternal_40:
-	mov edx, [g_load_dup_1+0x14]
-	mov eax, [g_load_dup_1+0x18]
+	mov edx, [g_load+0x14]
+	mov eax, [g_load+0x18]
 	mov [eax+edx*4], esi
-	add dword [g_load_dup_1+0x14], 0x1
+	add dword [g_load+0x14], 0x1
 UI_ParseMenuInternal_10:
 	lea eax, [ebp-0x840]
 	mov [esp+0x4], eax
@@ -8151,17 +8150,17 @@ UI_ParseMenuInternal_60:
 	mov [esp+0x4], esi
 	mov dword [esp], 0x0
 	call Menu_SetCursorItem
-	mov eax, [g_load_dup_1+0x8]
+	mov eax, [g_load+0x8]
 	mov [esi+0xb8], eax
-	mov eax, [g_load_dup_1+0xc]
+	mov eax, [g_load+0xc]
 	mov [esi+0xbc], eax
-	mov eax, [g_load_dup_1]
+	mov eax, [g_load]
 	mov [esi+0xb4], eax
-	mov eax, [g_load_dup_1+0x4]
+	mov eax, [g_load+0x4]
 	mov [esi+0xb0], eax
 	mov eax, [ebp-0xc60]
 	mov [esi+0xe4], eax
-	mov dword [esi+0x118], g_load_dup_1+0x1c
+	mov dword [esi+0x118], g_load+0x1c
 	mov dword [esp+0x8], 0x9c
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
@@ -8359,11 +8358,11 @@ UI_ParseMenuInternal_410:
 	cmp dword [ebp-0xc50], 0x3
 	jnz UI_ParseMenuInternal_290
 	mov eax, [ebp-0xc48]
-	mov [g_load_dup_1+0x4], eax
+	mov [g_load+0x4], eax
 	test edx, edx
 	jz UI_ParseMenuInternal_130
 	neg eax
-	mov [g_load_dup_1+0x4], eax
+	mov [g_load+0x4], eax
 	jmp UI_ParseMenuInternal_130
 UI_ParseMenuInternal_260:
 	mov dword [esp+0x4], _cstring_fadeamount
@@ -8391,7 +8390,7 @@ UI_ParseMenuInternal_430:
 	jz UI_ParseMenuInternal_340
 	mov eax, [ebp-0xc44]
 	xor eax, 0x80000000
-	mov [g_load_dup_1+0x8], eax
+	mov [g_load+0x8], eax
 	jmp UI_ParseMenuInternal_130
 UI_ParseMenuInternal_180:
 	mov dword [esp+0x4], _cstring_end_of_file_insi1
@@ -8424,14 +8423,14 @@ UI_ParseMenuInternal_440:
 	jz UI_ParseMenuInternal_380
 	mov eax, [ebp-0xc44]
 	xor eax, 0x80000000
-	mov [g_load_dup_1+0xc], eax
+	mov [g_load+0xc], eax
 	jmp UI_ParseMenuInternal_130
 UI_ParseMenuInternal_170:
 	test eax, eax
 	jz UI_ParseMenuInternal_390
 	mov eax, [ebp-0xc44]
 	xor eax, 0x80000000
-	mov [g_load_dup_1], eax
+	mov [g_load], eax
 	jmp UI_ParseMenuInternal_130
 UI_ParseMenuInternal_350:
 	lea eax, [ebp-0x420]
@@ -8449,7 +8448,7 @@ UI_ParseMenuInternal_290:
 	jmp UI_ParseMenuInternal_50
 UI_ParseMenuInternal_390:
 	mov eax, [ebp-0xc44]
-	mov [g_load_dup_1], eax
+	mov [g_load], eax
 	jmp UI_ParseMenuInternal_130
 UI_ParseMenuInternal_160:
 	lea eax, [ebp-0xc50]
@@ -8461,7 +8460,7 @@ UI_ParseMenuInternal_160:
 	mov eax, 0x1
 	jmp UI_ParseMenuInternal_400
 UI_ParseMenuInternal_150:
-	mov edx, g_load_dup_1
+	mov edx, g_load
 	mov eax, edi
 	call PC_Float_Expression_Parse
 	test eax, eax
@@ -8477,7 +8476,7 @@ UI_ParseMenuInternal_280:
 	mov edx, 0x1
 	jmp UI_ParseMenuInternal_410
 UI_ParseMenuInternal_270:
-	mov edx, g_load_dup_1+0x4
+	mov edx, g_load+0x4
 	mov eax, edi
 	call PC_Int_Expression_Parse
 	test eax, eax
@@ -8501,7 +8500,7 @@ UI_ParseMenuInternal_420:
 	jmp UI_ParseMenuInternal_230
 UI_ParseMenuInternal_340:
 	mov eax, [ebp-0xc44]
-	mov [g_load_dup_1+0x8], eax
+	mov [g_load+0x8], eax
 	jmp UI_ParseMenuInternal_130
 UI_ParseMenuInternal_320:
 	lea eax, [ebp-0xc50]
@@ -8514,7 +8513,7 @@ UI_ParseMenuInternal_320:
 	jmp UI_ParseMenuInternal_430
 UI_ParseMenuInternal_380:
 	mov eax, [ebp-0xc44]
-	mov [g_load_dup_1+0xc], eax
+	mov [g_load+0xc], eax
 	jmp UI_ParseMenuInternal_130
 UI_ParseMenuInternal_370:
 	lea eax, [ebp-0xc50]
@@ -8526,14 +8525,14 @@ UI_ParseMenuInternal_370:
 	mov eax, 0x1
 	jmp UI_ParseMenuInternal_440
 UI_ParseMenuInternal_360:
-	mov edx, g_load_dup_1+0xc
+	mov edx, g_load+0xc
 	mov eax, edi
 	call PC_Float_Expression_Parse
 	test eax, eax
 	jnz UI_ParseMenuInternal_130
 	jmp UI_ParseMenuInternal_50
 UI_ParseMenuInternal_310:
-	mov edx, g_load_dup_1+0x8
+	mov edx, g_load+0x8
 	mov eax, edi
 	call PC_Float_Expression_Parse
 	test eax, eax
@@ -8889,7 +8888,7 @@ menuParseKeywords: dd _cstring_name, MenuParse_name, _cstring_fullscreen, MenuPa
 ;Zero initialized global or static variables of ui_shared_obj:
 SECTION .bss
 menuBuf: resb 0x8000
-g_load_dup_1: resb 0xc20
+g_load: resb 0xc20
 menuParseKeywordHash: resb 0x200
 itemParseKeywordHash: resb 0x400
 menuBuf1: resb 0x1000

@@ -24,7 +24,6 @@
 	extern Scr_AddClassField
 
 ;Exports of g_client_fields:
-	global fields
 	global ClientScr_ReadOnly
 	global ClientScr_GetName
 	global ClientScr_SetSessionTeam

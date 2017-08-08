@@ -17,7 +17,7 @@
 	extern SND_PlayLocalSoundAliasByName
 	extern UI_AllowScriptMenuResponse
 	extern CL_GetConfigString
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern va
 	extern Cbuf_AddText
 	extern atoi
@@ -30,7 +30,7 @@
 	extern Item_GetListBoxDef
 	extern UI_FeederSelection
 	extern UI_FeederCount
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern useFastFile
 	extern Com_PrintWarning
 	extern Q_strncpyz
@@ -109,7 +109,7 @@
 	extern UILocalVar_Init
 	extern fs_gameDirVar
 	extern Com_ParseOnLine
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern ui_showList
 	extern PIXBeginNamedEvent
 	extern scrPlaceFull
@@ -1564,7 +1564,7 @@ Script_ScriptMenuResponse_30:
 	jnz Script_ScriptMenuResponse_50
 Script_ScriptMenuResponse_60:
 	mov dword [esp], _cstring_sv_serverid
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	lea edx, [ebp-0x418]
 	mov [esp+0xc], edx
 	mov [esp+0x8], ebx
@@ -1974,7 +1974,7 @@ Script_OpenForGameType:
 	mov edx, [ebp+0xc]
 	mov eax, [edx+0x10c]
 	mov [esp], eax
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call va
@@ -2017,7 +2017,7 @@ Script_CloseForGameType_10:
 	mov edx, [ebp+0xc]
 	mov eax, [edx+0x10c]
 	mov [esp], eax
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov [esp+0x4], eax
 	mov [esp], ebx
 	call va
@@ -2428,7 +2428,7 @@ Script_StatClearBitMask:
 	jz Script_StatClearBitMask_10
 Script_StatClearBitMask_60:
 	mov [esp], ebx
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [ebp-0x41c], eax
 	mov dword [esp+0x8], 0x400
 	mov [esp+0x4], ebx
@@ -2447,7 +2447,7 @@ Script_StatClearBitMask_20:
 	test eax, eax
 	jz Script_StatClearBitMask_30
 	mov [esp], ebx
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov edi, eax
 	mov dword [esp+0x8], 0x400
 	mov [esp+0x4], ebx
@@ -2942,7 +2942,7 @@ Script_ConditionalResponseHandler_30:
 	jnz Script_ConditionalResponseHandler_50
 Script_ConditionalResponseHandler_60:
 	mov dword [esp], _cstring_sv_serverid
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	lea edx, [ebp-0xc18]
 	mov [esp+0xc], edx
 	mov [esp+0x8], ebx
@@ -10094,7 +10094,7 @@ Menu_Paint_170:
 Menu_Paint_180:
 	mov eax, [esi+0x10c]
 	mov [esp], eax
-	call Cvar_GetString
+	call Cvar_VariableString
 	jmp Menu_Paint_320
 Menu_Paint_160:
 	lea eax, [esi+0x15c]
@@ -11969,11 +11969,11 @@ String_Parse_10:
 	ret
 String_Parse_30:
 	mov dword [esp], _cstring_loc_warnings
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz String_Parse_40
 	mov dword [esp], _cstring_loc_warningsaser
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz String_Parse_50
 	mov [esp+0x8], esi
@@ -12961,7 +12961,7 @@ Menu_HandleKey_290:
 	jmp Menu_HandleKey_300
 Menu_HandleKey_610:
 	mov dword [esp], _cstring_developer
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	test eax, eax
 	jz Menu_HandleKey_40
 	xor dword [g_debugMode], 0x1
@@ -13397,7 +13397,7 @@ Menu_HandleKey_660:
 	jmp Menu_HandleKey_40
 Menu_HandleKey_700:
 	mov dword [esp], _cstring_developer
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	test eax, eax
 	jz Menu_HandleKey_40
 	mov dword [esp+0x4], _cstring_screenshot

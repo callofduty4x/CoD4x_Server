@@ -1,5 +1,6 @@
 ;Imports of pbsv:
 	extern dlclose
+	extern __cxa_atexit
 	extern Cmd_ExecuteSingleCommand
 	extern strncasecmp
 	extern PbMsgToScreen
@@ -39,8 +40,6 @@
 
 ;Exports of pbsv:
 	global _GLOBAL__I_pbsv
-	global __tcf_0_dup_1
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
 	global EnablePbSv
 	global DisablePbSv
 	global PbSvGameMsg
@@ -66,8 +65,18 @@
 SECTION .text
 
 
-;__tcf_0_dup_1
-__tcf_0_dup_1:
+;global constructors keyed to pbsv
+_GLOBAL__I_pbsv:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
+
+
+;__tcf_0
+__tcf_0:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -79,26 +88,68 @@ __tcf_0_dup_1:
 	mov dword [pbsv+0x160], 0x0
 	mov eax, [pbsv+0x8]
 	test eax, eax
-	jz __tcf_0_dup_1_10
+	jz __tcf_0_10
 	mov [esp], eax
 	call dlclose
-__tcf_0_dup_1_10:
+__tcf_0_10:
 	mov dword [pbsv+0x8], 0x0
 	mov eax, [pbsv+0xc]
 	test eax, eax
-	jz __tcf_0_dup_1_20
+	jz __tcf_0_20
 	mov [esp], eax
 	call dlclose
-__tcf_0_dup_1_20:
+__tcf_0_20:
 	mov dword [pbsv+0xc], 0x0
 	mov dword [pbsv+0x164], 0x0
 	mov eax, [pbsv+0x10]
 	test eax, eax
-	jz __tcf_0_dup_1_30
+	jz __tcf_0_30
 	mov [esp], eax
 	call dlclose
-__tcf_0_dup_1_30:
+__tcf_0_30:
 	mov dword [pbsv+0x10], 0x0
+	leave
+	ret
+	nop
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	leave
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov dword [pbsv], 0x357afe32
+	mov dword [pbsv+0x14], 0x6b6e7550
+	mov dword [pbsv+0x18], 0x74737542
+	mov dword [pbsv+0x1c], 0x53207265
+	mov dword [pbsv+0x20], 0x65767265
+	mov word [pbsv+0x24], 0x72
+	mov dword [pbsv+0x8], 0x0
+	mov dword [pbsv+0x138], 0x1
+	mov dword [pbsv+0x13c], 0x0
+	mov dword [pbsv+0x140], 0x0
+	mov dword [pbsv+0x144], 0x0
+	mov dword [pbsv+0x148], 0x0
+	mov dword [pbsv+0x4], 0x0
+	mov dword [pbsv+0x14c], 0x0
+	mov dword [pbsv+0x150], 0x0
+	mov dword [pbsv+0x154], 0x0
+	mov dword [pbsv+0x158], 0x0
+	mov dword [pbsv+0x15c], 0x0
+	mov dword [pbsv+0x160], 0x0
+	mov eax, [0xd5cc00c]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_0
+	call __cxa_atexit
 	leave
 	ret
 	nop

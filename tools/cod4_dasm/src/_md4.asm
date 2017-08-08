@@ -3,7 +3,6 @@
 	extern memcpy
 
 ;Exports of md4:
-	global PADDING
 	global MD4Transform
 	global Com_BlockChecksum128
 	global Com_BlockChecksumKey32

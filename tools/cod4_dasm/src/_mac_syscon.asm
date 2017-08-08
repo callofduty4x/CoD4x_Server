@@ -44,7 +44,6 @@
 	global sConsoleText
 	global sTimerRef
 	global EditTextHook
-	global BuilderCallback
 	global TimerCallback
 	global _ZZ17Conbuf_AppendTextPKcE12s_totalChars
 	global Sys_ShowConsole
@@ -118,7 +117,7 @@ EditTextHook_20:
 	nop
 
 
-;_Z15BuilderCallbackP15OpaqueWindowPtrm_dup_1
+;BuilderCallback(OpaqueWindowPtr*, unsigned long)
 BuilderCallback:
 	push ebp
 	mov ebp, esp

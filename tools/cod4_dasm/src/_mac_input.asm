@@ -7,7 +7,7 @@
 	extern Cvar_RegisterBool
 	extern Cvar_ClearModified
 	extern Com_Printf
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern _ZN10MacDisplay8IsActiveEv
 	extern GetCursorPos
 	extern r_fullscreen
@@ -155,7 +155,7 @@ IN_Frame:
 	push ebx
 	sub esp, 0x3c
 	mov dword [esp], _cstring_clicktocontinue
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	cmp byte [s_wmv+0xd], 0x0
 	jz IN_Frame_10
 	mov eax, [in_appactive]

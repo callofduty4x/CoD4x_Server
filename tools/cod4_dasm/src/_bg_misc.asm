@@ -51,11 +51,9 @@
 	extern Cvar_EnumToString
 
 ;Exports of bg_misc:
-	global entityTypeNames
 	global bg_soundRoomTypes
 	global bg_ShockScreenTypeNames
 	global _ZZ22BG_SaveShellShockDvarsPKcE7filebuf
-	global Hunk_AllocXAnimPrecache
 	global WeaponEntCanBeGrabbed
 	global G_FindItem
 	global BG_CheckProne

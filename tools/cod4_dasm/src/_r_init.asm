@@ -98,11 +98,11 @@
 	extern Cvar_RegisterEnum
 	extern r_mode
 	extern r_displayRefresh
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern r_customMode
 	extern sscanf
 	extern Cvar_EnumToString
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern _ZN10MacDisplay13GetMainWindowEv
 	extern R_GetDepthStencilFormat
 	extern r_multiGpu
@@ -1889,7 +1889,7 @@ R_BeginRegistration_860:
 	mov [edx], eax
 R_BeginRegistration_540:
 	mov dword [esp], _cstring_r_fullscreen
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	mov [ebp-0x44], al
 	test al, al
 	jnz R_BeginRegistration_220
@@ -1928,10 +1928,10 @@ R_BeginRegistration_870:
 	mov dword [ebp-0x48], 0x3c
 R_BeginRegistration_490:
 	mov dword [esp], _cstring_vid_xpos
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [ebp-0x40], eax
 	mov dword [esp], _cstring_vid_ypos
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [ebp-0x3c], eax
 	mov dword [ebp-0x4c], 0x0
 	mov eax, r_aaSamples
@@ -2097,7 +2097,7 @@ R_BeginRegistration_520:
 	mov [esp], edx
 	call Cvar_SetInt
 	mov dword [esp], _cstring_r_fullscreen
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	mov [ebp-0x44], al
 	test al, al
 	jnz R_BeginRegistration_220

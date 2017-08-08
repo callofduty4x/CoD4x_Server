@@ -5,7 +5,7 @@
 	extern UI_DrawText
 	extern cgArray
 	extern UI_GetFontHandle
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern Material_RegisterHandle
 	extern Material_IsDefault
 	extern UI_DrawHandlePic
@@ -16,7 +16,7 @@
 	extern colorWhite
 	extern CL_IsPlayerMuted
 	extern Cvar_GetUnpackedColorByName
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern Cvar_GetUnpackedColor
 	extern CL_IsPlayerTalking
 	extern UI_SafeTranslateString
@@ -252,7 +252,7 @@ CG_DrawTeamOfClientScore:
 	test eax, eax
 	jnz CG_DrawTeamOfClientScore_60
 	mov dword [esp], _cstring_g_teamicon_free
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov ebx, eax
 	mov esi, _cstring_null
 CG_DrawTeamOfClientScore_220:
@@ -593,7 +593,7 @@ CG_DrawTeamOfClientScore_340:
 	jmp CG_DrawTeamOfClientScore_120
 CG_DrawTeamOfClientScore_60:
 	mov dword [esp], _cstring_g_teamicon_spect
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov ebx, eax
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_scoreboard_team_
@@ -865,10 +865,10 @@ CG_DrawTeamOfClientScore_380:
 	jmp CG_DrawTeamOfClientScore_340
 CG_DrawTeamOfClientScore_40:
 	mov dword [esp], _cstring_g_teamicon_axis
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov ebx, eax
 	mov dword [esp], _cstring_g_teamname_axis
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_scoreboard_team_
 	mov [esp], eax
@@ -879,10 +879,10 @@ CG_DrawTeamOfClientScore_70:
 	jmp CG_DrawTeamOfClientScore_360
 CG_DrawTeamOfClientScore_50:
 	mov dword [esp], _cstring_g_teamicon_allie
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov ebx, eax
 	mov dword [esp], _cstring_g_teamname_allie
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], _cstring_scoreboard_team_
 	mov [esp], eax
@@ -927,10 +927,10 @@ CG_DrawTeamOfClientScore_330:
 	mov [esp], eax
 	call UI_DrawHandlePic
 	mov dword [esp], _cstring_cg_scoresping_ma
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [ebp-0x9c], eax
 	mov dword [esp], _cstring_cg_scoresping_in
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov ebx, eax
 	mov dword [esp+0x4], 0x7
 	mov dword [esp], _cstring_white

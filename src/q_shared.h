@@ -430,6 +430,8 @@ void QDECL Com_Error( int a, const char *error, ...);
 #define PLANE_NON_AXIAL 3
 
 
+#define SOLID_BMODEL 0xffffff
+
 /*
 =================
 PlaneTypeForNormal
@@ -669,10 +671,10 @@ void    COM_MatchToken( char**buf_p, char *match );
 
 void    Swap_Init( void );
 
-
+/*
 #define random()    ( ( rand() & 0x7fff ) / ( (float)0x7fff ) )
 #define crandom()   ( 2.0 * ( random() - 0.5 ) )
-
+*/
 qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const char *function, const char *fmt, ...);
 
 

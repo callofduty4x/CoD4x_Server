@@ -69,7 +69,7 @@
 	global Com_GetExtensionSubString
 	global ParseConfigStringToStruct
 	global va
-	global ParseConfigStringToStructCustomSize
+	global ParseConfigStringToStruct
 	global BigShort
 	global I_iscsym
 	global strcmp
@@ -2230,7 +2230,7 @@ ParseConfigStringToStruct:
 	push ebp
 	mov ebp, esp
 	pop ebp
-	jmp ParseConfigStringToStructCustomSize
+	jmp ParseConfigStringToStruct
 	nop
 
 
@@ -2281,7 +2281,7 @@ va_10:
 
 
 ;ParseConfigStringToStructCustomSize(unsigned char*, cspField_t const*, int, char const*, int, int (*)(unsigned char*, char const*, int), void (*)(unsigned char*, char const*))
-ParseConfigStringToStructCustomSize:
+ParseConfigStringToStruct:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2289,9 +2289,9 @@ ParseConfigStringToStructCustomSize:
 	push ebx
 	sub esp, 0x203c
 	cmp dword [ebp+0x10], 0x0
-	jg ParseConfigStringToStructCustomSize_10
-	jz ParseConfigStringToStructCustomSize_20
-ParseConfigStringToStructCustomSize_60:
+	jg ParseConfigStringToStruct_10
+	jz ParseConfigStringToStruct_20
+ParseConfigStringToStruct_60:
 	xor eax, eax
 	add esp, 0x203c
 	pop ebx
@@ -2299,26 +2299,26 @@ ParseConfigStringToStructCustomSize_60:
 	pop edi
 	pop ebp
 	ret
-ParseConfigStringToStructCustomSize_80:
+ParseConfigStringToStruct_80:
 	mov ecx, [ebp+0x18]
 	test ecx, ecx
-	jle ParseConfigStringToStructCustomSize_30
+	jle ParseConfigStringToStruct_30
 	cmp eax, [ebp+0x18]
-	jl ParseConfigStringToStructCustomSize_40
-ParseConfigStringToStructCustomSize_30:
+	jl ParseConfigStringToStruct_40
+ParseConfigStringToStruct_30:
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_bad_field_type_i
 	mov dword [esp], 0x2
 	call Com_Error
-ParseConfigStringToStructCustomSize_70:
+ParseConfigStringToStruct_70:
 	add edi, 0x1
 	add esi, 0xc
 	cmp [ebp+0x10], edi
-	jnz ParseConfigStringToStructCustomSize_50
-ParseConfigStringToStructCustomSize_90:
+	jnz ParseConfigStringToStruct_50
+ParseConfigStringToStruct_90:
 	cmp byte [ebp-0x2019], 0x0
-	jnz ParseConfigStringToStructCustomSize_60
-ParseConfigStringToStructCustomSize_20:
+	jnz ParseConfigStringToStruct_60
+ParseConfigStringToStruct_20:
 	mov eax, 0x1
 	add esp, 0x203c
 	pop ebx
@@ -2326,11 +2326,11 @@ ParseConfigStringToStructCustomSize_20:
 	pop edi
 	pop ebp
 	ret
-ParseConfigStringToStructCustomSize_10:
+ParseConfigStringToStruct_10:
 	mov esi, [ebp+0xc]
 	xor edi, edi
 	mov byte [ebp-0x2019], 0x0
-ParseConfigStringToStructCustomSize_50:
+ParseConfigStringToStruct_50:
 	mov eax, [esi]
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x14]
@@ -2338,53 +2338,53 @@ ParseConfigStringToStructCustomSize_50:
 	call Info_ValueForKey
 	mov edx, eax
 	cmp byte [eax], 0x0
-	jz ParseConfigStringToStructCustomSize_70
+	jz ParseConfigStringToStruct_70
 	mov eax, [esi+0x8]
 	cmp eax, 0xb
-	jg ParseConfigStringToStructCustomSize_80
-	ja ParseConfigStringToStructCustomSize_70
-	jmp dword [eax*4+ParseConfigStringToStructCustomSize_jumptab_0]
-ParseConfigStringToStructCustomSize_40:
+	jg ParseConfigStringToStruct_80
+	ja ParseConfigStringToStruct_70
+	jmp dword [eax*4+ParseConfigStringToStruct_jumptab_0]
+ParseConfigStringToStruct_40:
 	mov [esp+0x8], eax
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	mov [esp], eax
 	call dword [ebp+0x1c]
 	test eax, eax
-	jz ParseConfigStringToStructCustomSize_60
+	jz ParseConfigStringToStruct_60
 	add edi, 0x1
 	add esi, 0xc
 	cmp [ebp+0x10], edi
-	jnz ParseConfigStringToStructCustomSize_50
-	jmp ParseConfigStringToStructCustomSize_90
-ParseConfigStringToStructCustomSize_100:
+	jnz ParseConfigStringToStruct_50
+	jmp ParseConfigStringToStruct_90
+ParseConfigStringToStruct_100:
 	mov [esp+0x4], edx
 	mov eax, [ebp+0x8]
 	add eax, [esi+0x4]
 	mov [esp], eax
 	call dword [ebp+0x20]
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_210:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_210:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov [esp], edx
 	call Com_FindSoundAlias
 	mov [ebx], eax
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_200:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_200:
 	mov eax, com_dedicated
 	mov eax, [eax]
 	mov ebx, [eax+0xc]
 	test ebx, ebx
-	jnz ParseConfigStringToStructCustomSize_70
+	jnz ParseConfigStringToStruct_70
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov dword [esp+0x4], 0x0
 	mov [esp], edx
 	call Material_RegisterHandle
 	mov [ebx], eax
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_190:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_190:
 	mov dword [esp+0x8], 0x1fff
 	mov [esp+0x4], edx
 	lea ebx, [ebp-0x2018]
@@ -2397,22 +2397,22 @@ ParseConfigStringToStructCustomSize_190:
 	mov ecx, [ebp+0x8]
 	mov [ecx+edx], eax
 	test eax, eax
-	jnz ParseConfigStringToStructCustomSize_70
+	jnz ParseConfigStringToStruct_70
 	mov byte [ebp-0x2019], 0x1
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_180:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_180:
 	mov eax, com_dedicated
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	test eax, eax
-	jnz ParseConfigStringToStructCustomSize_70
+	jnz ParseConfigStringToStruct_70
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov [esp], edx
 	call FX_Register
 	mov [ebx], eax
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_170:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_170:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov [esp], edx
@@ -2422,8 +2422,8 @@ ParseConfigStringToStructCustomSize_170:
 	mulss xmm0, [_float_1000_00000000]
 	cvttss2si eax, xmm0
 	mov [ebx], eax
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_160:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_160:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov [esp], edx
@@ -2431,8 +2431,8 @@ ParseConfigStringToStructCustomSize_160:
 	fstp qword [ebp-0x2030]
 	cvtsd2ss xmm0, [ebp-0x2030]
 	movss [ebx], xmm0
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_150:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_150:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov [esp], edx
@@ -2441,15 +2441,15 @@ ParseConfigStringToStructCustomSize_150:
 	setnz al
 	movzx eax, al
 	mov [ebx], eax
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_140:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_140:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov [esp], edx
 	call atoi
 	mov [ebx], eax
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_130:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_130:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov dword [esp+0x8], 0xff
@@ -2457,8 +2457,8 @@ ParseConfigStringToStructCustomSize_130:
 	mov [esp], ebx
 	call strncpy
 	mov byte [ebx+0xff], 0x0
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_120:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_120:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov dword [esp+0x8], 0x3f
@@ -2466,8 +2466,8 @@ ParseConfigStringToStructCustomSize_120:
 	mov [esp], ebx
 	call strncpy
 	mov byte [ebx+0x3f], 0x0
-	jmp ParseConfigStringToStructCustomSize_70
-ParseConfigStringToStructCustomSize_110:
+	jmp ParseConfigStringToStruct_70
+ParseConfigStringToStruct_110:
 	mov ebx, [ebp+0x8]
 	add ebx, [esi+0x4]
 	mov dword [esp+0x8], 0x3ff
@@ -2475,22 +2475,22 @@ ParseConfigStringToStructCustomSize_110:
 	mov [esp], ebx
 	call strncpy
 	mov byte [ebx+0x3ff], 0x0
-	jmp ParseConfigStringToStructCustomSize_70
+	jmp ParseConfigStringToStruct_70
 	
 	
-ParseConfigStringToStructCustomSize_jumptab_0:
-	dd ParseConfigStringToStructCustomSize_100
-	dd ParseConfigStringToStructCustomSize_110
-	dd ParseConfigStringToStructCustomSize_120
-	dd ParseConfigStringToStructCustomSize_130
-	dd ParseConfigStringToStructCustomSize_140
-	dd ParseConfigStringToStructCustomSize_150
-	dd ParseConfigStringToStructCustomSize_160
-	dd ParseConfigStringToStructCustomSize_170
-	dd ParseConfigStringToStructCustomSize_180
-	dd ParseConfigStringToStructCustomSize_190
-	dd ParseConfigStringToStructCustomSize_200
-	dd ParseConfigStringToStructCustomSize_210
+ParseConfigStringToStruct_jumptab_0:
+	dd ParseConfigStringToStruct_100
+	dd ParseConfigStringToStruct_110
+	dd ParseConfigStringToStruct_120
+	dd ParseConfigStringToStruct_130
+	dd ParseConfigStringToStruct_140
+	dd ParseConfigStringToStruct_150
+	dd ParseConfigStringToStruct_160
+	dd ParseConfigStringToStruct_170
+	dd ParseConfigStringToStruct_180
+	dd ParseConfigStringToStruct_190
+	dd ParseConfigStringToStruct_200
+	dd ParseConfigStringToStruct_210
 
 
 ;BigShort(short)

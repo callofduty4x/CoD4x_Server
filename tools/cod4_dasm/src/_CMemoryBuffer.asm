@@ -1,4 +1,5 @@
 ;Imports of CMemoryBuffer:
+	extern __cxa_atexit
 	extern glFinish
 	extern _ZdaPv
 	extern _Znaj
@@ -9,8 +10,6 @@
 
 ;Exports of CMemoryBuffer:
 	global _GLOBAL__I__ZN13CMemoryBuffer20sDelayedFreeRequestsE
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
-	global __tcf_0_dup_1
 	global _ZN13CMemoryBuffer5ResetEv
 	global _ZN13CMemoryBuffer6ResizeEjj
 	global _ZN13CMemoryBuffer6UpdateEv
@@ -28,8 +27,42 @@
 SECTION .text
 
 
-;__tcf_0_dup_1
-__tcf_0_dup_1:
+;global constructors keyed to CMemoryBuffer::sDelayedFreeRequests
+_GLOBAL__I__ZN13CMemoryBuffer20sDelayedFreeRequestsE:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	leave
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov dword [_ZN13CMemoryBuffer20sDelayedFreeRequestsE], _ZN13CMemoryBuffer20sDelayedFreeRequestsE
+	mov dword [_ZN13CMemoryBuffer20sDelayedFreeRequestsE+0x4], _ZN13CMemoryBuffer20sDelayedFreeRequestsE
+	mov eax, [0xd5cc00c]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_0
+	call __cxa_atexit
+	leave
+	ret
+
+
+;__tcf_0
+__tcf_0:
 	push ebp
 	mov ebp, esp
 	mov dword [ebp+0x8], _ZN13CMemoryBuffer20sDelayedFreeRequestsE

@@ -1,15 +1,13 @@
 ;Imports of sv_game:
 	extern Hunk_AllocInternal
-	extern pt_sv_maxclients
-	extern pt_svs
-	extern g_WeaponDefPool
+	extern sv_maxclients
+	extern svs
 	extern SV_GetMapBaseName
 	extern Com_GetBspFilename
 	extern FS_ReadFile
 	extern XModelPrecache
 	extern Com_GetServerDObj
-	extern pt_sv
-	extern g_assetEntryPool
+	extern sv
 	extern Com_Error
 	extern CM_PointLeafnum
 	extern CM_LeafCluster
@@ -18,26 +16,25 @@
 	extern BoxDistSqrdExceeds
 	extern DObjGetTree
 	extern ConsoleCommand
-	extern Dvar_RegisterString
-	extern pt_com_sv_running
+	extern Cvar_RegisterString
+	extern com_sv_running
 	extern G_GetSavePersist
-	extern pt_sv_gametype
-	extern I_strncpyz
+	extern sv_gametype
+	extern Q_strncpyz
 	extern Scr_IsValidGameType
 	extern Com_Printf
-	extern Dvar_SetString
-	extern __tolower
-	extern pt_com_developer
+	extern Cvar_SetString
+	extern tolower
+	extern com_developer
 	extern DObjDumpInfo
-	extern svs
 	extern va
 	extern SV_SetConfigstring
 	extern DObjGetBounds
 	extern Vec2DistanceSq
 	extern SV_ClipHandleForEntity
-	extern pt_vec3_origin
+	extern vec3_origin
 	extern CM_TransformedBoxTraceExternal
-	extern Dvar_InfoString
+	extern Cvar_InfoString
 	extern G_ResetEntityParsePoint
 	extern Sys_MillisecondsRaw
 	extern G_InitGame
@@ -52,7 +49,7 @@
 	extern DObjGetBoneIndex
 	extern Com_SyncThreads
 	extern G_ShutdownGame
-	extern pt_com_fixedConsolePosition
+	extern com_fixedConsolePosition
 	extern DObjNumBones
 	extern DObjGetBoneInfo
 	extern DObjGetRotTransArray
@@ -63,7 +60,6 @@
 	extern XModelNumBones
 	extern MatrixTransformVector43
 	extern CL_AddDebugLine
-	extern actorLocationalMaxs
 	extern Com_UnloadSoundAliases
 	extern DObjInitServerTime
 	extern DObjUpdateServerInfo
@@ -82,9 +78,11 @@
 	global SV_AllocXModelPrecache
 	global SV_AllocXModelPrecacheColl
 	global _ZZ18SV_AllocSkelMemoryjE9warnCount
+	global SV_GetGuid
 	global SV_MapExists
 	global SV_XModelGet
 	global SV_DObjExists
+	global SV_GentityNum
 	global SV_GetUsercmd
 	global SV_inSnapshot
 	global SV_DObjGetTree
@@ -94,6 +92,7 @@
 	global SV_SetMapCenter
 	global SV_DObjGetBounds
 	global SV_EntityContact
+	global SV_GameClientNum
 	global SV_GetClientPing
 	global SV_GetServerinfo
 	global SV_InitGameProgs
@@ -109,8 +108,12 @@
 	global SV_ShutdownGameProgs
 	global SV_DObjGetMatrixArray
 	global SV_DObjInitServerTime
+	global SV_GEntityForSvEntity
+	global SV_ResetSkeletonCache
+	global SV_SvEntityForGentity
 	global SV_DObjUpdateServerTime
 	global SV_DObjCreateSkelForBone
+	global SV_GameSendServerCommand
 	global SV_DObjCreateSkelForBones
 	global gameInitialized
 
@@ -133,6 +136,36 @@ SV_AllocXModelPrecacheColl:
 	mov ebp, esp
 	pop ebp
 	jmp Hunk_AllocInternal
+	nop
+
+
+;SV_GetGuid(int)
+SV_GetGuid:
+	push ebp
+	mov ebp, esp
+	mov ecx, [ebp+0x8]
+	test ecx, ecx
+	js SV_GetGuid_10
+	mov eax, sv_maxclients
+	mov eax, [eax]
+	cmp ecx, [eax+0xc]
+	jge SV_GetGuid_10
+	lea eax, [ecx+ecx*4]
+	shl eax, 0x7
+	add eax, ecx
+	lea eax, [ecx+eax*2]
+	mov edx, eax
+	shl edx, 0x5
+	add eax, edx
+	lea eax, [ecx+eax*4]
+	mov edx, svs
+	lea eax, [edx+eax*4+0x504504]
+	pop ebp
+	ret
+SV_GetGuid_10:
+	mov eax, _cstring_null
+	pop ebp
+	ret
 	nop
 
 
@@ -194,6 +227,19 @@ SV_DObjExists:
 	nop
 
 
+;SV_GentityNum(int)
+SV_GentityNum:
+	push ebp
+	mov ebp, esp
+	mov eax, [ebp+0x8]
+	mov edx, sv
+	imul eax, [edx+0x5fb34]
+	add eax, [edx+0x5fb30]
+	pop ebp
+	ret
+	nop
+
+
 ;SV_GetUsercmd(int, usercmd_s*)
 SV_GetUsercmd:
 	push ebp
@@ -210,8 +256,8 @@ SV_GetUsercmd:
 	add eax, edx
 	lea eax, [ecx+eax*4]
 	shl eax, 0x2
-	add eax, [pt_svs]
-	add eax, g_assetEntryPool+0x4d520
+	add eax, svs
+	add eax, 0x484660
 	mov edx, [eax+0xc]
 	mov [ebx], edx
 	mov edx, [eax+0x10]
@@ -243,7 +289,7 @@ SV_inSnapshot:
 	push ebx
 	sub esp, 0x2c
 	mov ebx, [ebp+0xc]
-	mov esi, [pt_sv]
+	mov esi, sv
 	imul ebx, [esi+0x5fb34]
 	add ebx, [esi+0x5fb30]
 	cmp byte [ebx+0xf4], 0x0
@@ -406,7 +452,7 @@ SV_DObjGetTree_10:
 SV_GameCommand:
 	push ebp
 	mov ebp, esp
-	mov eax, [pt_sv]
+	mov eax, sv
 	cmp dword [eax], 0x2
 	jz SV_GameCommand_10
 	xor eax, eax
@@ -429,8 +475,8 @@ SV_SetGametype:
 	mov dword [esp+0x8], 0x24
 	mov dword [esp+0x4], _cstring_war
 	mov dword [esp], _cstring_g_gametype
-	call Dvar_RegisterString
-	mov eax, [pt_com_sv_running]
+	call Cvar_RegisterString
+	mov eax, com_sv_running
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0
 	jz SV_SetGametype_10
@@ -439,13 +485,13 @@ SV_SetGametype:
 	jnz SV_SetGametype_20
 SV_SetGametype_10:
 	mov dword [esp+0x8], 0x40
-	mov eax, [pt_sv_gametype]
+	mov eax, sv_gametype
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	mov [esp+0x4], eax
 	lea esi, [ebp-0x48]
 	mov [esp], esi
-	call I_strncpyz
+	call Q_strncpyz
 SV_SetGametype_70:
 	movzx eax, byte [ebp-0x48]
 	test al, al
@@ -463,10 +509,10 @@ SV_SetGametype_60:
 	mov byte [ebp-0x46], 0x0
 SV_SetGametype_40:
 	mov [esp+0x4], esi
-	mov eax, [pt_sv_gametype]
+	mov eax, sv_gametype
 	mov eax, [eax]
 	mov [esp], eax
-	call Dvar_SetString
+	call Cvar_SetString
 	add esp, 0x50
 	pop ebx
 	pop esi
@@ -477,7 +523,7 @@ SV_SetGametype_30:
 SV_SetGametype_50:
 	movsx eax, al
 	mov [esp], eax
-	call __tolower
+	call tolower
 	mov [ebx], al
 	add ebx, 0x1
 	movzx eax, byte [ebx]
@@ -486,12 +532,12 @@ SV_SetGametype_50:
 	jmp SV_SetGametype_60
 SV_SetGametype_20:
 	mov dword [esp+0x8], 0x40
-	mov eax, [pt_sv]
+	mov eax, sv
 	add eax, 0x5fc08
 	mov [esp+0x4], eax
 	lea esi, [ebp-0x48]
 	mov [esp], esi
-	call I_strncpyz
+	call Q_strncpyz
 	jmp SV_SetGametype_70
 
 
@@ -501,7 +547,7 @@ SV_DObjDumpInfo:
 	mov ebp, esp
 	sub esp, 0x18
 	mov edx, [ebp+0x8]
-	mov eax, [pt_com_developer]
+	mov eax, com_developer
 	mov eax, [eax]
 	mov eax, [eax+0xc]
 	test eax, eax
@@ -531,7 +577,7 @@ SV_SetMapCenter:
 	mov ebp, esp
 	sub esp, 0x28
 	mov ecx, [ebp+0x8]
-	mov edx, [pt_svs]
+	mov edx, svs
 	mov eax, [ecx]
 	mov [edx+svs+0x9778e74], eax
 	mov eax, [ecx+0x4]
@@ -653,7 +699,7 @@ SV_EntityContact_10:
 	mov [esp+0x14], eax
 	mov [esp+0x10], esi
 	mov [esp+0xc], edi
-	mov eax, [pt_vec3_origin]
+	mov eax, vec3_origin
 	mov [esp+0x8], eax
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x4c]
@@ -699,6 +745,19 @@ SV_EntityContact_40:
 	ret
 
 
+;SV_GameClientNum(int)
+SV_GameClientNum:
+	push ebp
+	mov ebp, esp
+	mov eax, [ebp+0x8]
+	mov edx, sv
+	imul eax, [edx+0x5fb40]
+	add eax, [edx+0x5fb3c]
+	pop ebp
+	ret
+	nop
+
+
 ;SV_GetClientPing(int)
 SV_GetClientPing:
 	push ebp
@@ -713,8 +772,8 @@ SV_GetClientPing:
 	add eax, edx
 	lea eax, [ecx+eax*4]
 	shl eax, 0x2
-	add eax, [pt_svs]
-	mov eax, [eax+g_WeaponDefPool+0x165d0]
+	add eax, svs
+	mov eax, [eax+0x4e3cf0]
 	pop ebp
 	ret
 
@@ -731,12 +790,12 @@ SV_GetServerinfo:
 SV_GetServerinfo_20:
 	mov dword [esp+0x4], 0x404
 	mov dword [esp], 0x0
-	call Dvar_InfoString
+	call Cvar_InfoString
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call I_strncpyz
+	call Q_strncpyz
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -758,7 +817,7 @@ SV_InitGameProgs:
 	sub esp, 0x14
 	mov dword [gameInitialized], 0x1
 	call G_ResetEntityParsePoint
-	mov ecx, [pt_sv]
+	mov ecx, sv
 	mov eax, 0x1
 	mov edx, [ecx+0x5fb44]
 	add edx, 0x1
@@ -773,17 +832,17 @@ SV_InitGameProgs:
 	mov [esp+0xc], edx
 	mov dword [esp+0x8], 0x0
 	mov [esp+0x4], eax
-	mov ebx, [pt_svs]
-	mov eax, [ebx+g_assetEntryPool+0x2c6c4]
+	mov ebx, svs
+	mov eax, [ebx+0x463804]
 	mov [esp], eax
 	call G_InitGame
-	mov eax, [pt_sv_maxclients]
+	mov eax, sv_maxclients
 	mov eax, [eax]
 	mov ecx, [eax+0xc]
 	test ecx, ecx
 	jle SV_InitGameProgs_10
 	xor ecx, ecx
-	lea edx, [ebx+g_assetEntryPool+0x4d950]
+	lea edx, [ebx+0x484a90]
 SV_InitGameProgs_20:
 	mov dword [edx], 0x0
 	add ecx, 0x1
@@ -812,8 +871,8 @@ SV_IsLocalClient:
 	add eax, edx
 	lea eax, [ecx+eax*4]
 	shl eax, 0x2
-	add eax, [pt_svs]
-	add eax, g_assetEntryPool+0x2c6e0
+	add eax, svs
+	add eax, 0x463820
 	mov ecx, [eax+0xc]
 	mov [ebp-0x14], ecx
 	mov edx, [eax+0x10]
@@ -878,7 +937,7 @@ SV_GameDropClient:
 	mov ecx, [ebp+0x8]
 	test ecx, ecx
 	js SV_GameDropClient_10
-	mov eax, [pt_sv_maxclients]
+	mov eax, sv_maxclients
 	mov eax, [eax]
 	cmp ecx, [eax+0xc]
 	jl SV_GameDropClient_20
@@ -897,7 +956,7 @@ SV_GameDropClient_20:
 	shl edx, 0x5
 	add eax, edx
 	lea eax, [ecx+eax*4]
-	mov edx, [pt_svs]
+	mov edx, svs
 	add edx, 0x46380c
 	lea eax, [edx+eax*4]
 	mov [esp], eax
@@ -910,7 +969,7 @@ SV_GameDropClient_20:
 SV_LocateGameData:
 	push ebp
 	mov ebp, esp
-	mov edx, [pt_sv]
+	mov edx, sv
 	mov eax, [ebp+0x8]
 	mov [edx+0x5fb30], eax
 	mov eax, [ebp+0x10]
@@ -1029,10 +1088,10 @@ SV_RestartGameProgs:
 	call Com_SyncThreads
 	mov dword [esp], 0x0
 	call G_ShutdownGame
-	mov eax, [pt_com_fixedConsolePosition]
+	mov eax, com_fixedConsolePosition
 	mov dword [eax], 0x0
 	call G_ResetEntityParsePoint
-	mov ecx, [pt_sv]
+	mov ecx, sv
 	mov eax, 0x1
 	mov edx, [ecx+0x5fb44]
 	add edx, 0x1
@@ -1047,17 +1106,17 @@ SV_RestartGameProgs:
 	mov [esp+0xc], edx
 	mov dword [esp+0x8], 0x1
 	mov [esp+0x4], eax
-	mov ebx, [pt_svs]
-	mov eax, [ebx+g_assetEntryPool+0x2c6c4]
+	mov ebx, svs
+	mov eax, [ebx+0x463804]
 	mov [esp], eax
 	call G_InitGame
-	mov eax, [pt_sv_maxclients]
+	mov eax, sv_maxclients
 	mov eax, [eax]
 	mov edx, [eax+0xc]
 	test edx, edx
 	jle SV_RestartGameProgs_10
 	xor ecx, ecx
-	lea edx, [ebx+g_assetEntryPool+0x4d950]
+	lea edx, [ebx+0x484a90]
 SV_RestartGameProgs_20:
 	mov dword [edx], 0x0
 	add ecx, 0x1
@@ -1328,7 +1387,7 @@ SV_XModelDebugBoxes_50:
 	call CL_AddDebugLine
 	add esi, 0x18
 	add edi, 0x18
-	mov edx, actorLocationalMaxs
+	mov edx, boxVerts+0x120
 	cmp edx, esi
 	jnz SV_XModelDebugBoxes_50
 	add dword [ebp-0x2c4], 0x1
@@ -1347,7 +1406,7 @@ SV_ShutdownGameProgs:
 	mov ebp, esp
 	sub esp, 0x18
 	call Com_SyncThreads
-	mov eax, [pt_sv]
+	mov eax, sv
 	mov dword [eax], 0x0
 	mov dword [esp], 0x2
 	call Com_UnloadSoundAliases
@@ -1404,6 +1463,73 @@ SV_DObjInitServerTime_10:
 	ret
 	nop
 
+
+;SV_GEntityForSvEntity(svEntity_s*)
+SV_GEntityForSvEntity:
+	push ebp
+	mov ebp, esp
+	mov eax, [ebp+0x8]
+	mov edx, sv
+	add edx, 0x1b30
+	mov ecx, sv
+	sub eax, edx
+	sar eax, 0x3
+	imul eax, eax, 0x677d46cf
+	imul eax, [ecx+0x5fb34]
+	add eax, [ecx+0x5fb30]
+	pop ebp
+	ret
+	add [eax], al
+
+
+;SV_ResetSkeletonCache()
+SV_ResetSkeletonCache:
+	push ebp
+	mov ebp, esp
+	mov ecx, sv
+	mov eax, 0x1
+	mov edx, [ecx+0x5fb44]
+	add edx, 0x1
+	cmovnz eax, edx
+	mov [ecx+0x5fb44], eax
+	mov eax, g_sv_skel_memory+0xf
+	and eax, 0xfffffff0
+	mov [g_sv_skel_memory_start], eax
+	mov dword [ecx+0x5fb48], 0x0
+	pop ebp
+	ret
+	nop
+
+
+;SV_SvEntityForGentity(gentity_s const*)
+SV_SvEntityForGentity:
+	push ebp
+	mov ebp, esp
+	push ebx
+	sub esp, 0x14
+	mov ebx, [ebp+0x8]
+	test ebx, ebx
+	jz SV_SvEntityForGentity_10
+	cmp dword [ebx], 0x3ff
+	jle SV_SvEntityForGentity_20
+SV_SvEntityForGentity_10:
+	mov dword [esp+0x4], _cstring_sv_sventityforge
+	mov dword [esp], 0x2
+	call Com_Error
+SV_SvEntityForGentity_20:
+	mov edx, [ebx]
+	lea eax, [edx+edx*2]
+	shl eax, 0x4
+	sub eax, edx
+	mov edx, sv
+	lea eax, [edx+eax*8+0x1b30]
+	add esp, 0x14
+	pop ebx
+	pop ebp
+	ret
+	nop
+
+
 ;SV_DObjUpdateServerTime(gentity_s*, float, int)
 SV_DObjUpdateServerTime:
 	push ebp
@@ -1447,7 +1573,7 @@ SV_DObjCreateSkelForBone:
 	mov eax, [ebp+0x8]
 	mov [ebp-0x1c], eax
 	mov ebx, [ebp+0xc]
-	mov edi, [pt_sv]
+	mov edi, sv
 	mov eax, [edi+0x5fb44]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
@@ -1520,7 +1646,7 @@ SV_DObjCreateSkelForBone_70:
 	mov [g_sv_skel_memory_start], esi
 	mov [edi+0x5fb48], ebx
 SV_DObjCreateSkelForBone_20:
-	mov eax, [pt_sv]
+	mov eax, sv
 	mov eax, [eax+0x5fb44]
 	mov [esp+0x8], eax
 	mov [esp+0x4], esi
@@ -1536,6 +1662,56 @@ SV_DObjCreateSkelForBone_20:
 	ret
 
 
+;SV_GameSendServerCommand(int, svscmd_type, char const*)
+SV_GameSendServerCommand:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	mov ecx, [ebp+0x8]
+	cmp ecx, 0xffffffff
+	jz SV_GameSendServerCommand_10
+	test ecx, ecx
+	js SV_GameSendServerCommand_20
+	mov eax, sv_maxclients
+	mov eax, [eax]
+	cmp ecx, [eax+0xc]
+	jl SV_GameSendServerCommand_30
+SV_GameSendServerCommand_20:
+	leave
+	ret
+SV_GameSendServerCommand_30:
+	mov eax, [ebp+0x10]
+	mov [esp+0xc], eax
+	mov dword [esp+0x8], _cstring_s
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	lea eax, [ecx+ecx*4]
+	shl eax, 0x7
+	add eax, ecx
+	lea eax, [ecx+eax*2]
+	mov edx, eax
+	shl edx, 0x5
+	add eax, edx
+	lea eax, [ecx+eax*4]
+	mov edx, svs
+	add edx, 0x46380c
+	lea eax, [edx+eax*4]
+	mov [esp], eax
+	call SV_SendServerCommand
+	leave
+	ret
+SV_GameSendServerCommand_10:
+	mov eax, [ebp+0x10]
+	mov [esp+0xc], eax
+	mov dword [esp+0x8], _cstring_s
+	mov eax, [ebp+0xc]
+	mov [esp+0x4], eax
+	mov dword [esp], 0x0
+	call SV_SendServerCommand
+	leave
+	ret
+
+
 ;SV_DObjCreateSkelForBones(DObj_s*, int*)
 SV_DObjCreateSkelForBones:
 	push ebp
@@ -1547,7 +1723,7 @@ SV_DObjCreateSkelForBones:
 	mov eax, [ebp+0x8]
 	mov [ebp-0x1c], eax
 	mov ebx, [ebp+0xc]
-	mov edi, [pt_sv]
+	mov edi, sv
 	mov eax, [edi+0x5fb44]
 	mov [esp+0x4], eax
 	mov eax, [ebp-0x1c]
@@ -1620,7 +1796,7 @@ SV_DObjCreateSkelForBones_70:
 	mov [g_sv_skel_memory_start], esi
 	mov [edi+0x5fb48], ebx
 SV_DObjCreateSkelForBones_20:
-	mov eax, [pt_sv]
+	mov eax, sv
 	mov eax, [eax+0x5fb44]
 	mov [esp+0x8], eax
 	mov [esp+0x4], esi
@@ -1636,14 +1812,6 @@ SV_DObjCreateSkelForBones_20:
 	ret
 
 
-;Zero initialized global or static variables of sv_game:
-SECTION .bss
-g_sv_skel_memory_start: resb 0x20
-g_sv_skel_memory: resb 0x40000
-_ZZ18SV_AllocSkelMemoryjE9warnCount: resb 0x60
-gameInitialized: resb 0x7c
-
-
 ;Initialized global or static variables of sv_game:
 SECTION .data
 boxVerts: dd 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x1, 0x1, 0x0, 0x1, 0x0, 0x0, 0x1, 0x1, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x1, 0x1, 0x0, 0x1, 0x0, 0x0, 0x1, 0x0, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x0, 0x1, 0x1, 0x1, 0x1, 0x0, 0x1, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x1, 0x0, 0x0, 0x1, 0x0, 0x1, 0x0, 0x1, 0x0, 0x0, 0x1, 0x1, 0x1, 0x1, 0x0, 0x1, 0x1, 0x1
@@ -1653,20 +1821,28 @@ boxVerts: dd 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0x0, 0x1, 0x
 SECTION .rdata
 
 
+;Zero initialized global or static variables of sv_game:
+SECTION .bss
+g_sv_skel_memory_start: resb 0x20
+g_sv_skel_memory: resb 0x40000
+_ZZ18SV_AllocSkelMemoryjE9warnCount: resb 0x60
+gameInitialized: resb 0x7c
+
+
 ;All cstrings:
 SECTION .rdata
-_cstring_null:		db ""
-_cstring_game_type:		db "Game Type"
-_cstring_war:		db "war"
-_cstring_g_gametype:		db "g_gametype"
-_cstring_g_gametype_s_is_:		db "g_gametype %s is not a valid gametype, defaulting to dm\n"
-_cstring_no_model:		db "no model.\n"
-_cstring_f_f_f:		db "%f %f %f"
-_cstring_sv_getserverinfo:		db "\x15SV_GetServerinfo: bufferSize == %i"
-_cstring_i:		db "%i"
-_cstring_warning_sv_skel_:		db "WARNING: SV_SKEL_MEMORY_SIZE exceeded\n"
-_cstring_s:		db "%s"
-_cstring_sv_sventityforge:		db "\x15SV_SvEntityForGentity: bad gEnt"
+_cstring_null:		db 0
+_cstring_sv_sventityforge:		db 15h,"SV_SvEntityForGentity: bad gEnt",0
+_cstring_game_type:		db "Game Type",0
+_cstring_war:		db "war",0
+_cstring_g_gametype:		db "g_gametype",0
+_cstring_g_gametype_s_is_:		db "g_gametype %s is not a valid gametype, defaulting to dm",0ah,0
+_cstring_no_model:		db "no model.",0ah,0
+_cstring_f_f_f:		db "%f %f %f",0
+_cstring_sv_getserverinfo:		db 15h,"SV_GetServerinfo: bufferSize == %i",0
+_cstring_i:		db "%i",0
+_cstring_warning_sv_skel_:		db "WARNING: SV_SKEL_MEMORY_SIZE exceeded",0ah,0
+_cstring_s:		db "%s",0
 
 
 

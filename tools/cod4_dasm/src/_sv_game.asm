@@ -2,7 +2,6 @@
 	extern Hunk_AllocInternal
 	extern sv_maxclients
 	extern svs
-	extern g_WeaponDefPool
 	extern SV_GetMapBaseName
 	extern Com_GetBspFilename
 	extern FS_ReadFile
@@ -61,7 +60,6 @@
 	extern XModelNumBones
 	extern MatrixTransformVector43
 	extern CL_AddDebugLine
-	extern actorLocationalMaxs
 	extern Com_UnloadSoundAliases
 	extern DObjInitServerTime
 	extern DObjUpdateServerInfo
@@ -161,7 +159,7 @@ SV_GetGuid:
 	add eax, edx
 	lea eax, [ecx+eax*4]
 	mov edx, svs
-	lea eax, [edx+eax*4+g_WeaponDefPool+0x36de4]
+	lea eax, [edx+eax*4+0x504504]
 	pop ebp
 	ret
 SV_GetGuid_10:
@@ -775,7 +773,7 @@ SV_GetClientPing:
 	lea eax, [ecx+eax*4]
 	shl eax, 0x2
 	add eax, svs
-	mov eax, [eax+g_WeaponDefPool+0x165d0]
+	mov eax, [eax+0x4e3cf0]
 	pop ebp
 	ret
 
@@ -1389,7 +1387,7 @@ SV_XModelDebugBoxes_50:
 	call CL_AddDebugLine
 	add esi, 0x18
 	add edi, 0x18
-	mov edx, actorLocationalMaxs
+	mov edx, boxVerts+0x120
 	cmp edx, esi
 	jnz SV_XModelDebugBoxes_50
 	add dword [ebp-0x2c4], 0x1

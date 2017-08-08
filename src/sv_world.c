@@ -25,6 +25,10 @@
 #include "q_shared.h"
 #include "server.h"
 #include "cm_public.h"
+#include "dobj.h"
+
+vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
+vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 
 typedef struct moveclip_s{
 	vec3_t mins;	//0x00
@@ -332,3 +336,347 @@ int SV_PointContents( const vec3_t p, int passEntityNum, int contentmask )
 
 	return contents & contentmask;
 }
+
+
+signed int __cdecl SV_SightTraceToEntity(const float *start, const float *mins, const float *maxs, const float *end, int entityNum, int contentmask)
+{
+  struct gentity_s *touch;
+  signed int i;
+  unsigned int clipHandle;
+  const float *angles;
+  vec3_t bmin;
+  vec3_t bmax;
+
+  touch = SV_GentityNum(entityNum);
+  if ( !(contentmask & touch->r.contents) )
+  {
+    return 0;
+  }
+  for(i = 0; i < 3; ++i)
+  {
+    if ( end[i] <= start[i] )
+    {
+      bmax[i] = (end[i] + mins[i]) - 1.0;
+      bmin[i] = (start[i] + maxs[i]) + 1.0;
+    }
+    else
+    {
+      bmax[i] = (start[i] + mins[i]) - 1.0;
+      bmin[i] = (end[i] + maxs[i]) + 1.0;
+    }
+  }
+  if ( touch->r.absmin[0] > bmin[0] || touch->r.absmin[1] > bmin[1] || touch->r.absmin[2] > bmin[2] || bmax[0] > touch->r.absmax[0] || bmax[1] > touch->r.absmax[1] || bmax[2] > touch->r.absmax[2] )
+  {
+    return 0;
+  }
+  clipHandle = SV_ClipHandleForEntity(touch);
+
+  angles = touch->r.currentAngles;
+  if ( !touch->r.bmodel )
+  {
+    angles = vec3_origin;
+  }
+  if ( CM_TransformedBoxSightTrace(0, start, end, mins, maxs, clipHandle, contentmask, touch->r.currentOrigin, angles) )
+  {
+    return -1;
+  }
+  return 0;
+}
+
+
+
+
+void __cdecl SV_SightTrace(int *hitNum, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum0, int passEntityNum1, int contentmask)
+{
+  vec3_t temp;
+  struct sightpointtrace_t spt;
+  struct sightclip_t clip;
+  *hitNum = CM_BoxSightTrace(*hitNum, start, end, mins, maxs, 0, contentmask);
+
+  if ( *hitNum )
+  {
+    return;
+  }
+  if ( maxs[0] - mins[0] + maxs[1] - mins[1] + maxs[2] - mins[2] == 0.0 )
+  {
+      spt.contentmask = contentmask;
+      VectorCopy(start, spt.start);
+      VectorCopy(end, spt.end);
+      spt.passEntityNum[0] = passEntityNum0;
+      spt.passEntityNum[1] = passEntityNum1;
+      spt.locational = 0;
+      *hitNum = CM_PointSightTraceToEntities(&spt);
+  }
+  else
+  {
+      VectorSubtract(maxs, mins, clip.outerSize);
+      VectorScale(clip.outerSize, 0.5, clip.outerSize);
+      clip.contentmask = contentmask;
+      clip.passEntityNum[0] = passEntityNum0;
+      clip.passEntityNum[1] = passEntityNum1;
+
+      VectorCopy(clip.outerSize, clip.maxs);
+      VectorScale(clip.outerSize, -1.0, clip.mins);
+
+      clip.outerSize[0] = clip.outerSize[0] + 1.0;
+      clip.outerSize[1] = clip.outerSize[1] + 1.0;
+      clip.outerSize[2] = clip.outerSize[2] + 1.0;
+
+      VectorAdd(maxs, mins, temp);
+      VectorScale(temp, 0.5, temp);
+
+      VectorAdd(start, temp, clip.start); 
+      VectorAdd(end, temp, clip.end); 
+
+      *hitNum = CM_ClipSightTraceToEntities(&clip);
+  }
+}
+
+
+int __cdecl SV_TracePassed(const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum0, int passEntityNum1, int contentmask, int locational, char *priorityMap, int staticmodels)
+{
+    vec3_t temp;
+    struct sightpointtrace_t spt;
+    struct sightclip_t clip;
+
+
+    if ( CM_BoxSightTrace(0, start, end, mins, maxs, 0, contentmask))
+    {
+        return 0;
+    }
+    if(staticmodels)
+    {
+        if(!CM_PointTraceStaticModelsComplete(start, end, contentmask))
+        {
+            return 0;
+        }
+    }
+
+    if ( maxs[0] - mins[0] + maxs[1] - mins[1] + maxs[2] - mins[2] == 0.0 )
+    {
+      spt.contentmask = contentmask;
+      VectorCopy(start, spt.start);
+      VectorCopy(end, spt.end);
+      spt.passEntityNum[0] = passEntityNum0;
+      spt.passEntityNum[1] = passEntityNum1;
+      spt.locational = locational;
+      spt.priorityMap = priorityMap;
+      if(CM_PointSightTraceToEntities(&spt))
+      {
+        return 0;
+      }
+    }else{
+      VectorSubtract(maxs, mins, clip.outerSize);
+      VectorScale(clip.outerSize, 0.5, clip.outerSize);
+      clip.contentmask = contentmask;
+      clip.passEntityNum[0] = passEntityNum0;
+      clip.passEntityNum[1] = passEntityNum1;
+
+      VectorCopy(clip.outerSize, clip.maxs);
+      VectorScale(clip.outerSize, -1.0, clip.mins);
+
+      clip.outerSize[0] = clip.outerSize[0] + 1.0;
+      clip.outerSize[1] = clip.outerSize[1] + 1.0;
+      clip.outerSize[2] = clip.outerSize[2] + 1.0;
+
+      VectorAdd(maxs, mins, temp);
+      VectorScale(temp, 0.5, temp);
+
+      VectorAdd(start, temp, clip.start); 
+      VectorAdd(end, temp, clip.end); 
+
+      if(CM_ClipSightTraceToEntities(&clip))
+      {
+        return 0;
+      }
+    }
+
+    return 1;
+
+}
+
+
+
+
+
+/*
+===============
+SV_LinkEntity
+
+===============
+*/
+#define MAX_TOTAL_ENT_LEAFS     128
+void SV_LinkEntity( gentity_t *gEnt ) {
+	uint16_t leafs[MAX_TOTAL_ENT_LEAFS];
+	int cluster;
+	int num_leafs;
+	int i, j, k;
+	int lastLeaf;
+	float       *origin, *angles;
+	struct svEntity_s  *ent;
+	struct DObj_s* dobj;
+	vec3_t min, max;
+	clipHandle_t clip;
+
+	assert(gEnt->r.inuse);
+
+	ent = SV_SvEntityForGentity( gEnt );
+/*
+	// Ridah, sanity check for possible currentOrigin being reset bug
+	if ( !gEnt->r.bmodel && VectorCompare( gEnt->r.currentOrigin, vec3_origin ) ) {
+		Com_DPrintf( "WARNING: BBOX entity is being linked at world origin, this is probably a bug\n" );
+	}
+
+	if ( ent->worldSector ) {
+		SV_UnlinkEntity( gEnt );    // unlink from old position
+	}
+*/
+	// encode the size into the entityState_t for client prediction
+	if ( gEnt->r.bmodel ) {
+		gEnt->s.solid = SOLID_BMODEL;       // a solid_box will never create this value
+	} else if ( gEnt->r.contents & ( CONTENTS_SOLID | CONTENTS_BODY ) ) {
+		// assume that x/y are equal and symetric
+		i = gEnt->r.maxs[0];
+		if ( i < 1 ) {
+			i = 1;
+		}
+		if ( i > 255 ) {
+			i = 255;
+		}
+
+		// z is not symetric
+		j = ( 1.0 - gEnt->r.mins[2] );
+		if ( j < 1 ) {
+			j = 1;
+		}
+		if ( j > 255 ) {
+			j = 255;
+		}
+
+		// and z maxs can be negative...
+		k = ( gEnt->r.maxs[2] + 32 );
+		if ( k < 1 ) {
+			k = 1;
+		}
+		if ( k > 255 ) {
+			k = 255;
+		}
+		gEnt->s.solid = ( k << 16 ) | ( j << 8 ) | i;
+/*
+BLACKOPS
+		if ( gEnt->s.solid == 0xFFFFFF )
+		{
+			gEnt->s.solid = 1;
+		}
+*/
+	} else {
+		gEnt->s.solid = 0;
+	}
+
+	// get the position
+	origin = gEnt->r.currentOrigin;
+	angles = gEnt->r.currentAngles;
+
+	assert(!IS_NAN((angles)[0]) && !IS_NAN((angles)[1]) && !IS_NAN((angles)[2]));
+	assert(!IS_NAN((origin)[0]) && !IS_NAN((origin)[1]) && !IS_NAN((origin)[2]));
+
+	SnapAngles(angles);
+
+	// set the abs box
+	if ( gEnt->r.bmodel && ( angles[0] || angles[1] || angles[2] ) ) {
+		// expand for rotation
+		float max;
+		int i;
+
+		max = RadiusFromBounds( gEnt->r.mins, gEnt->r.maxs );
+		for ( i = 0 ; i < 3 ; i++ ) {
+			gEnt->r.absmin[i] = origin[i] - max;
+			gEnt->r.absmax[i] = origin[i] + max;
+		}
+	} else {
+		// normal
+		VectorAdd( origin, gEnt->r.mins, gEnt->r.absmin );
+		VectorAdd( origin, gEnt->r.maxs, gEnt->r.absmax );
+	}
+
+	// because movement is clipped an epsilon away from an actual edge,
+	// we must fully check even when bounding boxes don't quite touch
+	gEnt->r.absmin[0] -= 1;
+	gEnt->r.absmin[1] -= 1;
+	gEnt->r.absmin[2] -= 1;
+	gEnt->r.absmax[0] += 1;
+	gEnt->r.absmax[1] += 1;
+	gEnt->r.absmax[2] += 1;
+
+	// link to PVS leafs
+	ent->numClusters = 0;
+	ent->lastCluster = 0;
+
+	if ( !(gEnt->r.svFlags & 0x19) )
+	{
+		//get all leafs, including solids
+		num_leafs = CM_BoxLeafnums( gEnt->r.absmin, gEnt->r.absmax, leafs, MAX_TOTAL_ENT_LEAFS, &lastLeaf );
+
+		// if none of the leafs were inside the map, the
+		// entity is outside the world and can be considered unlinked
+		if ( !num_leafs ) {
+			CM_UnlinkEntity(ent);
+			return;
+		}
+
+		// store as many explicit clusters as we can
+		for ( i = 0 ; i < num_leafs ; i++ ) {
+			cluster = CM_LeafCluster( leafs[i] );
+			if ( cluster != -1 ) {
+				ent->clusternums[ent->numClusters++] = cluster;
+				if ( ent->numClusters == MAX_ENT_CLUSTERS ) {
+					break;
+				}
+			}
+		}
+
+		// store off a last cluster if we need to
+		if ( i != num_leafs ) {
+			ent->lastCluster = CM_LeafCluster( lastLeaf );
+		}
+	}
+	gEnt->r.linked = qtrue;
+
+	if ( !gEnt->r.contents )
+	{
+		CM_UnlinkEntity(ent);
+		return;
+	}
+	clip = SV_ClipHandleForEntity(gEnt);
+	dobj = Com_GetServerDObj(gEnt->s.number);
+	if ( dobj && gEnt->r.svFlags & 6 )
+	{
+		if ( gEnt->r.svFlags & 2 )
+		{
+			VectorAdd(origin, actorLocationalMins, min);
+			VectorAdd(origin, actorLocationalMaxs, max);
+		}
+		else
+		{
+			DObjGetBounds(dobj, min, max);
+			VectorAdd(origin, min, min);
+			VectorAdd(origin, max, max);
+		}
+		CM_LinkEntity(ent, min, max, clip);
+	}
+	else
+	{
+		CM_LinkEntity(ent, gEnt->r.absmin, gEnt->r.absmax, clip);
+	}
+}
+
+
+void __cdecl SV_UnlinkEntity(struct gentity_s *gEnt)
+{
+  svEntity_t *ent;
+
+  ent = SV_SvEntityForGentity(gEnt);
+  gEnt->r.linked = 0;
+  CM_UnlinkEntity(ent);
+}
+

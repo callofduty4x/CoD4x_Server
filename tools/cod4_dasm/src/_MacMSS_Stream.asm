@@ -1,4 +1,5 @@
 ;Imports of MacMSS_Stream:
+	extern __cxa_atexit
 	extern _ZdlPv
 	extern _ZN12CSoundObject10end_sampleEv
 	extern StopMovie
@@ -47,8 +48,6 @@
 
 ;Exports of MacMSS_Stream:
 	global _GLOBAL__I__ZN12CStreamSound10sQTStreamsE
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
-	global __tcf_0_dup_1
 	global _ZN12CStreamSound10end_sampleEv
 	global _ZN12CStreamSound11open_streamEPKc
 	global _ZN12CStreamSound11stop_sampleEv
@@ -72,26 +71,61 @@
 SECTION .text
 
 
-;__tcf_0_dup_1
-__tcf_0_dup_1:
+;global constructors keyed to CStreamSound::sQTStreams
+_GLOBAL__I__ZN12CStreamSound10sQTStreamsE:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	leave
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov dword [_ZN12CStreamSound10sQTStreamsE], 0x0
+	mov dword [_ZN12CStreamSound10sQTStreamsE+0x4], 0x0
+	mov dword [_ZN12CStreamSound10sQTStreamsE+0x8], 0x0
+	mov eax, [0xd5cc00c]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_0
+	call __cxa_atexit
+	leave
+	ret
+
+
+;__tcf_0
+__tcf_0:
 	push ebp
 	mov ebp, esp
 	mov edx, [_ZN12CStreamSound10sQTStreamsE+0x4]
 	mov ecx, [_ZN12CStreamSound10sQTStreamsE]
 	mov eax, ecx
 	cmp edx, ecx
-	jz __tcf_0_dup_1_10
-__tcf_0_dup_1_20:
+	jz __tcf_0_10
+__tcf_0_20:
 	add eax, 0x4
 	cmp edx, eax
-	jnz __tcf_0_dup_1_20
-__tcf_0_dup_1_10:
+	jnz __tcf_0_20
+__tcf_0_10:
 	test ecx, ecx
-	jz __tcf_0_dup_1_30
+	jz __tcf_0_30
 	mov [ebp+0x8], ecx
 	pop ebp
 	jmp _ZdlPv
-__tcf_0_dup_1_30:
+__tcf_0_30:
 	pop ebp
 	ret
 

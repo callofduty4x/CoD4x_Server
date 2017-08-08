@@ -21,7 +21,7 @@
 	extern Com_PrintError
 	extern AIL_shutdown
 	extern memset
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern AIL_allocate_sample_handle
 	extern AIL_init_sample
 	extern Com_Error
@@ -445,7 +445,7 @@ SND_InitDriver_40:
 	call memset
 SND_InitDriver_10:
 	mov dword [esp], _cstring_r_vc_compile
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	cmp eax, 0x2
 	jz SND_InitDriver_60
 	mov dword [esp+0x4], _cstring_miles_sound_syst

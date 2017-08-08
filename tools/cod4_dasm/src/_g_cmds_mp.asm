@@ -54,7 +54,7 @@
 	extern Cvar_RegisterString
 	extern Scr_VoteCalled
 	extern Scr_GetGameTypeNameForScript
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern Q_strncpyz
 	extern Q_CleanStr
 	extern SV_GetClientPing
@@ -70,7 +70,7 @@
 	extern SV_GetGuid
 	extern G_LogPrintf
 	extern g_dedicated
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern sscanf
 
 ;Exports of g_cmds_mp:
@@ -2186,7 +2186,7 @@ Cmd_CallVote_f_220:
 	mov eax, [esi+0x15c]
 	or dword [eax+0xb0], 0x100000
 	mov dword [esp], _cstring_sv_serverid
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [esp+0x8], eax
 	mov ebx, level
 	mov eax, [ebx+0xb20]
@@ -2657,7 +2657,7 @@ SendScoreboard_110:
 	call Com_sprintf
 	lea edx, [ebp-0xb28]
 	mov [esp], edx
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov ebx, eax
 	test eax, eax
 	jz SendScoreboard_90
@@ -2710,7 +2710,7 @@ SendScoreboard_90:
 	call Com_sprintf
 	lea edx, [ebp-0xb28]
 	mov [esp], edx
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov ebx, eax
 	jmp SendScoreboard_120
 SendScoreboard_100:
@@ -2996,7 +2996,7 @@ Cmd_MenuResponse_f_10:
 	call atoi
 	mov ebx, eax
 	mov dword [esp], _cstring_sv_serverid
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	cmp ebx, eax
 	jnz Cmd_MenuResponse_f_20
 	mov dword [esp+0x8], 0x400
@@ -3150,7 +3150,7 @@ G_Say_20:
 	cmp dword [eax+0x3010], 0x1
 	jz G_Say_80
 	mov dword [esp], _cstring_g_teamname_allie
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov [ebp-0xfc], eax
 	mov dword [ebp-0x100], 0x35
 	jmp G_Say_90
@@ -3182,7 +3182,7 @@ G_Say_50:
 	jmp G_Say_120
 G_Say_80:
 	mov dword [esp], _cstring_g_teamname_axis
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov [ebp-0xfc], eax
 	mov dword [ebp-0x100], 0x35
 	jmp G_Say_90

@@ -25,7 +25,6 @@
 	extern Scr_ParamError
 
 ;Exports of g_scr_mover:
-	global methods_dup_1
 	global ScriptMover_SetupMove
 	global ScriptMover_UpdateMove
 	global SP_script_model
@@ -1068,7 +1067,7 @@ ScriptEnt_GetMethod:
 	mov eax, [eax]
 	mov [ebp-0x1c], eax
 	xor esi, esi
-	mov ebx, methods_dup_1
+	mov ebx, methods
 	xor edi, edi
 	mov edx, eax
 	jmp ScriptEnt_GetMethod_10
@@ -1094,10 +1093,10 @@ ScriptEnt_GetMethod_10:
 	pop ebp
 	ret
 ScriptEnt_GetMethod_20:
-	mov eax, [edi+methods_dup_1]
+	mov eax, [edi+methods]
 	mov edx, [ebp+0x8]
 	mov [edx], eax
-	mov eax, [edi+methods_dup_1+0x4]
+	mov eax, [edi+methods+0x4]
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -2428,7 +2427,7 @@ SECTION .data
 
 ;Initialized constant data of g_scr_mover:
 SECTION .rdata
-methods_dup_1: dd _cstring_moveto, ScriptEntCmd_MoveTo, 0x0, _cstring_movex, ScriptEntCmd_MoveX, 0x0, _cstring_movey, ScriptEntCmd_MoveY, 0x0, _cstring_movez, ScriptEntCmd_MoveZ, 0x0, _cstring_movegravity, ScriptEntCmd_GravityMove, 0x0, _cstring_rotateto, ScriptEntCmd_RotateTo, 0x0, _cstring_rotatepitch, ScriptEntCmd_RotatePitch, 0x0, _cstring_rotateyaw, ScriptEntCmd_RotateYaw, 0x0, _cstring_rotateroll, ScriptEntCmd_RotateRoll, 0x0, _cstring_devaddpitch, ScriptEntCmd_DevAddPitch, 0x1, _cstring_devaddyaw, ScriptEntCmd_DevAddYaw, 0x1, _cstring_devaddroll, ScriptEntCmd_DevAddRoll, 0x1, _cstring_vibrate, ScriptEntCmd_Vibrate, 0x0, _cstring_rotatevelocity, ScriptEntCmd_RotateVelocity, 0x0, _cstring_solid, ScriptEntCmd_Solid, 0x0, _cstring_notsolid, ScriptEntCmd_NotSolid, 0x0, _cstring_setcandamage, ScriptEntCmd_SetCanDamage, 0x0, _cstring_physicslaunch, ScriptEntCmd_PhysicsLaunch, 0x0, 0x0, 0x0
+methods: dd _cstring_moveto, ScriptEntCmd_MoveTo, 0x0, _cstring_movex, ScriptEntCmd_MoveX, 0x0, _cstring_movey, ScriptEntCmd_MoveY, 0x0, _cstring_movez, ScriptEntCmd_MoveZ, 0x0, _cstring_movegravity, ScriptEntCmd_GravityMove, 0x0, _cstring_rotateto, ScriptEntCmd_RotateTo, 0x0, _cstring_rotatepitch, ScriptEntCmd_RotatePitch, 0x0, _cstring_rotateyaw, ScriptEntCmd_RotateYaw, 0x0, _cstring_rotateroll, ScriptEntCmd_RotateRoll, 0x0, _cstring_devaddpitch, ScriptEntCmd_DevAddPitch, 0x1, _cstring_devaddyaw, ScriptEntCmd_DevAddYaw, 0x1, _cstring_devaddroll, ScriptEntCmd_DevAddRoll, 0x1, _cstring_vibrate, ScriptEntCmd_Vibrate, 0x0, _cstring_rotatevelocity, ScriptEntCmd_RotateVelocity, 0x0, _cstring_solid, ScriptEntCmd_Solid, 0x0, _cstring_notsolid, ScriptEntCmd_NotSolid, 0x0, _cstring_setcandamage, ScriptEntCmd_SetCanDamage, 0x0, _cstring_physicslaunch, ScriptEntCmd_PhysicsLaunch, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of g_scr_mover:

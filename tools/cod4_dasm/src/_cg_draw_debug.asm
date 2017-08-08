@@ -32,7 +32,7 @@
 	extern CG_DrawStringExt
 	extern Scr_GetNumScriptThreads
 	extern SND_GetSoundOverlay
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern Phys_DrawDebugText
 
 ;Exports of cg_draw_debug:
@@ -998,7 +998,7 @@ CG_DrawFullScreenDebugOverlays_50:
 	test eax, eax
 	jle CG_DrawFullScreenDebugOverlays_90
 	mov dword [esp], _cstring_snd_khz
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [ebp-0x442c], eax
 	mov eax, [esi]
 	mov eax, [eax+0x40]

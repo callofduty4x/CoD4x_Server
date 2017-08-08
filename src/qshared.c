@@ -32,38 +32,6 @@
 #include "misc.h"
 
 
-short   ShortSwap (short l)
-{
-	byte    b1,b2;
-
-	b1 = l&255;
-	b2 = (l>>8)&255;
-
-	return (b1<<8) + b2;
-}
-
-short	ShortNoSwap (short l)
-{
-	return l;
-}
-
-int    LongSwap (int l)
-{
-	byte    b1,b2,b3,b4;
-
-	b1 = l&255;
-	b2 = (l>>8)&255;
-	b3 = (l>>16)&255;
-	b4 = (l>>24)&255;
-
-	return ((int)b1<<24) + ((int)b2<<16) + ((int)b3<<8) + b4;
-}
-
-int	LongNoSwap (int l)
-{
-	return l;
-}
-
 int Q_isprint( int c )
 {
 	if ( c >= 0x20 && c <= 0x7E )
@@ -2053,3 +2021,142 @@ double __cdecl GetLeanFraction(const float fFrac)
   af = fabs(fFrac);
   return (2.0 - af) * fFrac;
 }
+
+char __cdecl Q_CleanChar(char character)
+{
+  if ( character == 0x92 )
+  {
+    return '\'';
+  }
+  return character;
+}
+
+
+qboolean __cdecl I_iscsym(int c){
+    if(c == '_' || Q_isalpha( c ))
+    {
+        return qtrue;
+    }
+    return qfalse;
+}
+
+
+/*
+============================================================================
+
+					BYTE ORDER FUNCTIONS
+
+============================================================================
+*/
+
+// can't just use function pointers, or dll linkage can
+// mess up when qcommon is included in multiple places
+static short ( *_BigShort )( short l );
+static short ( *_LittleShort )( short l );
+static int ( *_BigLong )( int l );
+static int ( *_LittleLong )( int l );
+static int64_t ( *_BigLong64 )( int64_t l );
+static int64_t ( *_LittleLong64 )( int64_t l );
+static float ( *_BigFloat )( float l );
+static float ( *_LittleFloat )( float l );
+
+short   ShortSwap( short l ) {
+	byte b1,b2;
+
+	b1 = l & 255;
+	b2 = ( l >> 8 ) & 255;
+
+	return ( b1 << 8 ) + b2;
+}
+
+short   ShortNoSwap( short l ) {
+	return l;
+}
+
+int    LongSwap( int l ) {
+	byte b1,b2,b3,b4;
+
+	b1 = l & 255;
+	b2 = ( l >> 8 ) & 255;
+	b3 = ( l >> 16 ) & 255;
+	b4 = ( l >> 24 ) & 255;
+
+	return ( (int)b1 << 24 ) + ( (int)b2 << 16 ) + ( (int)b3 << 8 ) + b4;
+}
+
+int LongNoSwap( int l ) {
+	return l;
+}
+
+int64_t Long64Swap( int64_t llv ) {
+	byte result[8];
+	byte* ll = (byte*)&llv;
+
+	result[0] = ll[7];
+	result[1] = ll[6];
+	result[2] = ll[5];
+	result[3] = ll[4];
+	result[4] = ll[3];
+	result[5] = ll[2];
+	result[6] = ll[1];
+	result[7] = ll[0];
+
+	return *(int64_t*)result;
+}
+
+int64_t Long64NoSwap( int64_t ll ) {
+	return ll;
+}
+
+float FloatSwap( float f ) {
+	union
+	{
+		float f;
+		byte b[4];
+	} dat1, dat2;
+
+
+	dat1.f = f;
+	dat2.b[0] = dat1.b[3];
+	dat2.b[1] = dat1.b[2];
+	dat2.b[2] = dat1.b[1];
+	dat2.b[3] = dat1.b[0];
+	return dat2.f;
+}
+
+float FloatNoSwap( float f ) {
+	return f;
+}
+
+/*
+================
+Swap_Init
+================
+*/
+void Swap_Init( void ) {
+	byte swaptest[2] = {1,0};
+
+// set the byte swapping variables in a portable manner
+	if ( *(short *)swaptest == 1 ) {
+		_BigShort = ShortSwap;
+		_LittleShort = ShortNoSwap;
+		_BigLong = LongSwap;
+		_LittleLong = LongNoSwap;
+		_BigLong64 = Long64Swap;
+		_LittleLong64 = Long64NoSwap;
+		_BigFloat = FloatSwap;
+		_LittleFloat = FloatNoSwap;
+	} else
+	{
+		_BigShort = ShortNoSwap;
+		_LittleShort = ShortSwap;
+		_BigLong = LongNoSwap;
+		_LittleLong = LongSwap;
+		_BigLong64 = Long64NoSwap;
+		_LittleLong64 = Long64Swap;
+		_BigFloat = FloatNoSwap;
+		_LittleFloat = FloatSwap;
+	}
+
+}
+

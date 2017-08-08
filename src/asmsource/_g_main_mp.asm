@@ -37,7 +37,7 @@
 	extern Rand_Init
 	extern GScr_LoadConsts
 	extern G_SetupWeaponDef
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern G_ProcessIPBans
 	extern SV_XModelGet
 	extern FS_FOpenFileByMode
@@ -215,7 +215,6 @@
 	global g_fogColorReadOnly
 	global g_fogHalfDistReadOnly
 	global g_fogStartDistReadOnly
-	global g_gametype
 	global g_maxclients
 	global level_bgs
 	global g_debugDamage
@@ -1305,7 +1304,7 @@ G_InitGame:
 	jz G_InitGame_10
 G_InitGame_110:
 	mov dword [esp], _cstring_sv_cheats
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz G_InitGame_20
 	mov eax, [ebp+0x10]

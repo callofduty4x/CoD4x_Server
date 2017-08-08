@@ -207,7 +207,7 @@
 	extern FS_LoadedIwds
 	extern FS_Read
 	extern UI_AllowScriptMenuResponse
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern sv_voice
 	extern cl_talking
 	extern IN_IsTalkKeyHeld
@@ -227,7 +227,7 @@
 	extern PbClAddEvent
 	extern cl_cdkeychecksum
 	extern CL_CDKeyValidate
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern Sys_MillisecondsRaw
 	extern ms_srand
 	extern Con_Init
@@ -5619,7 +5619,7 @@ CL_OpenScriptMenu_f_50:
 	jnz CL_OpenScriptMenu_f_70
 CL_OpenScriptMenu_f_90:
 	mov dword [esp], _cstring_sv_serverid
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [esp+0xc], edi
 	mov [esp+0x8], ebx
 	mov [esp+0x4], eax
@@ -5804,7 +5804,7 @@ Voice_SendVoiceData_10:
 	ret
 Voice_SendVoiceData_20:
 	mov dword [esp], _cstring_rate
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	cmp eax, 0x1387
 	jle Voice_SendVoiceData_10
 	cmp dword [clientUIActives+0xc], 0x9
@@ -6636,7 +6636,7 @@ CL_RequestAuthorization:
 	jz CL_RequestAuthorization_30
 CL_RequestAuthorization_60:
 	mov dword [esp], _cstring_fs_restrict
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz CL_RequestAuthorization_40
 	mov dword [esp+0x8], 0x40

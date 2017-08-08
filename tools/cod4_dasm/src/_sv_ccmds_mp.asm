@@ -9,7 +9,7 @@
 	extern G_GetSavePersist
 	extern sv_maxclients
 	extern G_SetSavePersist
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern FS_ConvertPath
 	extern SV_SpawnServer
 	extern Q_stricmp
@@ -213,7 +213,7 @@ SV_MapRestart_30:
 	mov dword [esp], 0x0
 	call G_SetSavePersist
 	mov dword [esp], _cstring_mapname
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x64]

@@ -14,7 +14,7 @@
 	extern InterlockedDecrement
 	extern InterlockedIncrement
 	extern Com_Error
-	extern tolower_dup_1
+	extern tolower
 	extern snprintf
 	extern Com_LogFileOpen
 	extern Com_Printf
@@ -62,11 +62,11 @@
 	global Cvar_Reregister
 	global Cvar_FindMalleableVar
 	global Cvar_Reset
-	global Cvar_GetInt
+	global Cvar_VariableIntegerValue
 	global Cvar_SetInt
 	global Cvar_FindVar
 	global Cvar_ForEach
-	global Cvar_GetBool
+	global Cvar_VariableBooleanValue
 	global Cvar_SetBool
 	global Cvar_SetVec3
 	global Cvar_AddFlags
@@ -74,7 +74,7 @@
 	global Cvar_SetColor
 	global Cvar_SetFloat
 	global Cvar_Shutdown
-	global Cvar_GetString
+	global Cvar_VariableString
 	global Cvar_SetString
 	global Cvar_GetAtIndex
 	global Cvar_ResetDvars
@@ -1875,7 +1875,7 @@ Cvar_RegisterNew_100:
 Cvar_RegisterNew_160:
 	movsx eax, al
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	lea edx, [ebx+0x77]
 	imul eax, edx
 	add edi, eax
@@ -3327,7 +3327,7 @@ Cvar_FindMalleableVar_80:
 	lea ebx, [esi+0x77]
 	movsx eax, al
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	imul ebx, eax
 	add [ebp-0x1c], ebx
 	add esi, 0x1
@@ -3378,7 +3378,7 @@ Cvar_Reset:
 
 
 ;Dvar_GetInt(char const*)
-Cvar_GetInt:
+Cvar_VariableIntegerValue:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
@@ -3386,20 +3386,20 @@ Cvar_GetInt:
 	call Cvar_FindMalleableVar
 	mov edx, eax
 	test eax, eax
-	jz Cvar_GetInt_10
+	jz Cvar_VariableIntegerValue_10
 	movzx eax, byte [eax+0xa]
 	sub al, 0x5
 	cmp al, 0x1
-	jbe Cvar_GetInt_20
+	jbe Cvar_VariableIntegerValue_20
 	mov eax, [edx+0xc]
 	mov [ebp+0x8], eax
 	leave
 	jmp atoi
-Cvar_GetInt_20:
+Cvar_VariableIntegerValue_20:
 	mov eax, [edx+0xc]
 	leave
 	ret
-Cvar_GetInt_10:
+Cvar_VariableIntegerValue_10:
 	xor eax, eax
 	leave
 	ret
@@ -3532,21 +3532,21 @@ Cvar_ForEach_60:
 
 
 ;Dvar_GetBool(char const*)
-Cvar_GetBool:
+Cvar_VariableBooleanValue:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
 	mov eax, [ebp+0x8]
 	call Cvar_FindMalleableVar
 	test eax, eax
-	jz Cvar_GetBool_10
+	jz Cvar_VariableBooleanValue_10
 	cmp byte [eax+0xa], 0x0
-	jnz Cvar_GetBool_20
+	jnz Cvar_VariableBooleanValue_20
 	movzx eax, byte [eax+0xc]
-Cvar_GetBool_10:
+Cvar_VariableBooleanValue_10:
 	leave
 	ret
-Cvar_GetBool_20:
+Cvar_VariableBooleanValue_20:
 	mov eax, [eax+0xc]
 	mov [esp], eax
 	call atoi
@@ -3904,29 +3904,29 @@ Cvar_Shutdown_130:
 
 
 ;Dvar_GetString(char const*)
-Cvar_GetString:
+Cvar_VariableString:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x8
 	mov eax, [ebp+0x8]
 	call Cvar_FindMalleableVar
 	test eax, eax
-	jz Cvar_GetString_10
+	jz Cvar_VariableString_10
 	cmp byte [eax+0xa], 0x6
-	jz Cvar_GetString_20
+	jz Cvar_VariableString_20
 	mov eax, [eax+0xc]
 	leave
 	ret
-Cvar_GetString_20:
+Cvar_VariableString_20:
 	mov edx, [eax+0x3c]
 	test edx, edx
-	jz Cvar_GetString_10
+	jz Cvar_VariableString_10
 	mov edx, [eax+0xc]
 	mov eax, [eax+0x40]
 	mov eax, [eax+edx*4]
 	leave
 	ret
-Cvar_GetString_10:
+Cvar_VariableString_10:
 	mov eax, _cstring_null
 	leave
 	ret

@@ -87,8 +87,6 @@
 	extern SV_SetBrushModel
 
 ;Exports of g_vehicles_mp:
-	global s_phys_dup_1
-	global s_backup_dup_1
 	global s_vehicleFields
 	global s_vehicleTypeNames
 	global VEH_Strcpy
@@ -2154,7 +2152,7 @@ VEH_SlideMove:
 	addss xmm0, [ebx+0x80]
 	mulss xmm0, [_float_0_50000000]
 	movss [ebx+0x80], xmm0
-	mov eax, [s_phys_dup_1+0x2c]
+	mov eax, [s_phys+0x2c]
 	test eax, eax
 	jnz VEH_SlideMove_20
 VEH_SlideMove_330:
@@ -2532,7 +2530,7 @@ VEH_SlideMove_300:
 	jbe VEH_SlideMove_300
 	jmp VEH_SlideMove_310
 VEH_SlideMove_20:
-	movss xmm3, dword [s_phys_dup_1+0xc]
+	movss xmm3, dword [s_phys+0xc]
 	ucomiss xmm3, [_float_0_69999999]
 	jb VEH_SlideMove_320
 	movss xmm4, dword [edx+0x138]
@@ -2548,25 +2546,25 @@ VEH_SlideMove_20:
 	jb VEH_SlideMove_320
 	movaps xmm0, xmm4
 	xorps xmm0, [_data16_80000000]
-	mulss xmm0, [s_phys_dup_1+0x4]
+	mulss xmm0, [s_phys+0x4]
 	movaps xmm1, xmm5
-	mulss xmm1, [s_phys_dup_1+0x8]
+	mulss xmm1, [s_phys+0x8]
 	subss xmm0, xmm1
 	movss [edx+0x140], xmm0
-	mulss xmm4, [s_phys_dup_1+0xc]
+	mulss xmm4, [s_phys+0xc]
 	movss [edx+0x138], xmm4
-	mulss xmm5, [s_phys_dup_1+0xc]
+	mulss xmm5, [s_phys+0xc]
 	movss [edx+0x13c], xmm5
 VEH_SlideMove_10:
-	mov eax, [s_phys_dup_1+0x2c]
+	mov eax, [s_phys+0x2c]
 	test eax, eax
 	jz VEH_SlideMove_330
 VEH_SlideMove_550:
-	mov eax, [s_phys_dup_1+0x4]
+	mov eax, [s_phys+0x4]
 	mov [ebp-0xb0], eax
-	mov eax, [s_phys_dup_1+0x8]
+	mov eax, [s_phys+0x8]
 	mov [ebp-0xac], eax
-	mov eax, [s_phys_dup_1+0xc]
+	mov eax, [s_phys+0xc]
 	mov [ebp-0xa8], eax
 	mov edx, 0x1
 	mov dword [ebp-0xbc], 0x2
@@ -2870,10 +2868,10 @@ VEH_SlideMove_70:
 	ret
 VEH_SlideMove_320:
 	movss xmm1, dword [esi]
-	mulss xmm1, [s_phys_dup_1+0x4]
+	mulss xmm1, [s_phys+0x4]
 	mov edx, [ebp-0xd0]
 	movss xmm0, dword [edx]
-	mulss xmm0, [s_phys_dup_1+0x8]
+	mulss xmm0, [s_phys+0x8]
 	addss xmm1, xmm0
 	mov eax, [ebp-0xcc]
 	mulss xmm3, [eax]
@@ -2885,7 +2883,7 @@ VEH_SlideMove_610:
 	divss xmm2, dword [_float_1_00999999]
 VEH_SlideMove_620:
 	mov ecx, 0x1
-	mov edx, s_phys_dup_1
+	mov edx, s_phys
 	lea eax, [esi+0x4]
 VEH_SlideMove_540:
 	movaps xmm1, xmm2
@@ -2898,7 +2896,7 @@ VEH_SlideMove_540:
 	add edx, 0x4
 	cmp ecx, 0x4
 	jnz VEH_SlideMove_540
-	mov eax, [s_phys_dup_1+0x2c]
+	mov eax, [s_phys+0x2c]
 	test eax, eax
 	jz VEH_SlideMove_330
 	jmp VEH_SlideMove_550
@@ -3269,29 +3267,29 @@ IntegratePosAndRot_190:
 	mov [esp], ecx
 	call G_TraceCapsule
 	mov eax, [ebp-0x68]
-	mov [s_phys_dup_1], eax
+	mov [s_phys], eax
 	mov eax, [ebp-0x64]
-	mov [s_phys_dup_1+0x4], eax
+	mov [s_phys+0x4], eax
 	mov eax, [ebp-0x60]
-	mov [s_phys_dup_1+0x8], eax
+	mov [s_phys+0x8], eax
 	mov eax, [ebp-0x5c]
-	mov [s_phys_dup_1+0xc], eax
+	mov [s_phys+0xc], eax
 	mov eax, [ebp-0x58]
-	mov [s_phys_dup_1+0x10], eax
+	mov [s_phys+0x10], eax
 	mov eax, [ebp-0x54]
-	mov [s_phys_dup_1+0x14], eax
+	mov [s_phys+0x14], eax
 	mov eax, [ebp-0x50]
-	mov [s_phys_dup_1+0x18], eax
+	mov [s_phys+0x18], eax
 	mov eax, [ebp-0x4c]
-	mov [s_phys_dup_1+0x1c], eax
+	mov [s_phys+0x1c], eax
 	mov eax, [ebp-0x48]
-	mov [s_phys_dup_1+0x20], eax
+	mov [s_phys+0x20], eax
 	mov eax, [ebp-0x44]
-	mov [s_phys_dup_1+0x24], eax
+	mov [s_phys+0x24], eax
 	mov eax, [ebp-0x40]
-	mov [s_phys_dup_1+0x28], eax
-	mov dword [s_phys_dup_1+0x2c], 0x0
-	mov dword [s_phys_dup_1+0x30], 0x0
+	mov [s_phys+0x28], eax
+	mov dword [s_phys+0x2c], 0x0
+	mov dword [s_phys+0x30], 0x0
 	cmp byte [ebp-0x40], 0x0
 	jnz IntegratePosAndRot_20
 IntegratePosAndRot_400:
@@ -3300,7 +3298,7 @@ IntegratePosAndRot_400:
 	jp IntegratePosAndRot_30
 	jnz IntegratePosAndRot_30
 IntegratePosAndRot_210:
-	mov eax, [s_phys_dup_1+0x30]
+	mov eax, [s_phys+0x30]
 	mov [esi+0x50], eax
 	lea eax, [esi+0x54]
 	lea edx, [esi+0x78]
@@ -3330,7 +3328,7 @@ IntegratePosAndRot_40:
 	jnz IntegratePosAndRot_60
 	mov edx, [ebp+0x8]
 	mov eax, [edx+0x164]
-	mov ecx, [s_phys_dup_1+0x2c]
+	mov ecx, [s_phys+0x2c]
 	test ecx, ecx
 	jnz IntegratePosAndRot_70
 	mov eax, edx
@@ -3594,11 +3592,11 @@ IntegratePosAndRot_200:
 	movss xmm0, dword [_float_0_69999999]
 	ucomiss xmm0, [ebp-0x5c]
 	jbe IntegratePosAndRot_220
-	mov dword [s_phys_dup_1+0x2c], 0x1
+	mov dword [s_phys+0x2c], 0x1
 	jmp IntegratePosAndRot_210
 IntegratePosAndRot_70:
 	lea ebx, [eax+0x138]
-	movss xmm3, dword [s_phys_dup_1+0xc]
+	movss xmm3, dword [s_phys+0xc]
 	ucomiss xmm3, [_float_0_69999999]
 	jb IntegratePosAndRot_230
 	movss xmm4, dword [eax+0x138]
@@ -3614,14 +3612,14 @@ IntegratePosAndRot_70:
 	jb IntegratePosAndRot_230
 	movaps xmm0, xmm4
 	xorps xmm0, [_data16_80000000]
-	mulss xmm0, [s_phys_dup_1+0x4]
+	mulss xmm0, [s_phys+0x4]
 	movaps xmm1, xmm5
-	mulss xmm1, [s_phys_dup_1+0x8]
+	mulss xmm1, [s_phys+0x8]
 	subss xmm0, xmm1
 	movss [eax+0x140], xmm0
-	mulss xmm4, [s_phys_dup_1+0xc]
+	mulss xmm4, [s_phys+0xc]
 	movss [eax+0x138], xmm4
-	mulss xmm5, [s_phys_dup_1+0xc]
+	mulss xmm5, [s_phys+0xc]
 	movss [eax+0x13c], xmm5
 	mov eax, [ebp+0x8]
 	jmp IntegratePosAndRot_240
@@ -3656,9 +3654,9 @@ IntegratePosAndRot_180:
 	jmp IntegratePosAndRot_190
 IntegratePosAndRot_230:
 	movss xmm1, dword [ebx]
-	mulss xmm1, [s_phys_dup_1+0x4]
+	mulss xmm1, [s_phys+0x4]
 	movss xmm0, dword [ebx+0x4]
-	mulss xmm0, [s_phys_dup_1+0x8]
+	mulss xmm0, [s_phys+0x8]
 	addss xmm1, xmm0
 	mulss xmm3, [ebx+0x8]
 	addss xmm1, xmm3
@@ -3669,7 +3667,7 @@ IntegratePosAndRot_230:
 	divss xmm2, dword [_float_1_00999999]
 IntegratePosAndRot_550:
 	mov ecx, 0x1
-	mov edx, s_phys_dup_1
+	mov edx, s_phys
 	lea eax, [ebx+0x4]
 IntegratePosAndRot_300:
 	movaps xmm1, xmm2
@@ -3917,14 +3915,14 @@ IntegratePosAndRot_60:
 	movaps xmm0, xmm1
 	addss xmm0, xmm5
 	sqrtss xmm7, xmm0
-	movss xmm2, dword [s_phys_dup_1+0xc]
+	movss xmm2, dword [s_phys+0xc]
 	ucomiss xmm2, [_float_0_69999999]
 	jae IntegratePosAndRot_410
 IntegratePosAndRot_480:
 	movss xmm1, dword [ebx]
-	mulss xmm1, [s_phys_dup_1+0x4]
+	mulss xmm1, [s_phys+0x4]
 	movaps xmm0, xmm4
-	mulss xmm0, [s_phys_dup_1+0x8]
+	mulss xmm0, [s_phys+0x8]
 	addss xmm1, xmm0
 	mulss xmm2, xmm6
 	addss xmm1, xmm2
@@ -3935,7 +3933,7 @@ IntegratePosAndRot_480:
 	divss xmm2, dword [_float_1_00999999]
 IntegratePosAndRot_560:
 	mov ecx, 0x1
-	mov edx, s_phys_dup_1
+	mov edx, s_phys
 	lea eax, [ebx+0x4]
 IntegratePosAndRot_430:
 	movaps xmm1, xmm2
@@ -4011,24 +4009,24 @@ IntegratePosAndRot_460:
 	call VEH_StepSlideMove
 	jmp IntegratePosAndRot_470
 IntegratePosAndRot_220:
-	mov dword [s_phys_dup_1+0x2c], 0x1
-	mov dword [s_phys_dup_1+0x30], 0x1
+	mov dword [s_phys+0x2c], 0x1
+	mov dword [s_phys+0x30], 0x1
 	jmp IntegratePosAndRot_210
 IntegratePosAndRot_410:
 	ucomiss xmm1, xmm5
 	jb IntegratePosAndRot_480
 	movaps xmm0, xmm3
 	xorps xmm0, [_data16_80000000]
-	mulss xmm0, [s_phys_dup_1+0x4]
+	mulss xmm0, [s_phys+0x4]
 	movaps xmm1, xmm4
-	mulss xmm1, [s_phys_dup_1+0x8]
+	mulss xmm1, [s_phys+0x8]
 	subss xmm0, xmm1
 	movss [eax+0x140], xmm0
 	movaps xmm0, xmm3
-	mulss xmm0, [s_phys_dup_1+0xc]
+	mulss xmm0, [s_phys+0xc]
 	movss [eax+0x138], xmm0
 	movaps xmm0, xmm4
-	mulss xmm0, [s_phys_dup_1+0xc]
+	mulss xmm0, [s_phys+0xc]
 	movss [eax+0x13c], xmm0
 	jmp IntegratePosAndRot_490
 IntegratePosAndRot_250:
@@ -5570,14 +5568,14 @@ G_VehEntHandler_Think_10:
 	mov [ecx+0x8], eax
 	mov dword [esp+0x8], 0xc0
 	mov [esp+0x4], esi
-	mov dword [esp], s_backup_dup_1
+	mov dword [esp], s_backup
 	call memcpy
 	mov dword [esp+0x8], 0xf8
 	mov eax, [ebp-0xb8]
 	mov [esp+0x4], eax
-	mov dword [esp], s_backup_dup_1+0xc0
+	mov dword [esp], s_backup+0xc0
 	call memcpy
-	mov edi, s_phys_dup_1
+	mov edi, s_phys
 	cld
 	mov ecx, 0xd
 	xor eax, eax
@@ -6492,8 +6490,8 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of g_vehicles_mp:
 SECTION .bss
-s_phys_dup_1: resb 0x40
-s_backup_dup_1: resb 0x1c0
+s_phys: resb 0x40
+s_backup: resb 0x1c0
 s_vehicleInfos: resb 0x4e00
 s_numVehicleInfos: resb 0x1c
 s_vehicles: resb 0x1aa0

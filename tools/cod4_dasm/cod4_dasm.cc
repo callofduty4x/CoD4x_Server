@@ -149,6 +149,24 @@ static void TranslateFunctionName(char* fn)
     return;
   }
 
+  if(strcmp(fn, "Dvar_GetInt") == 0)
+  {
+    strcpy(fn, "Cvar_VariableIntegerValue");
+    return;
+  }
+
+  if(strcmp(fn, "Dvar_GetBool") == 0)
+  {
+    strcpy(fn, "Cvar_VariableBooleanValue");
+    return;
+  }
+
+  if(strcmp(fn, "Dvar_GetString") == 0)
+  {
+    strcpy(fn, "Cvar_VariableString");
+    return;
+  }
+
   if(strncmp(fn, "Dvar_", 5) == 0)
   {
     fn[0] = 'C';
@@ -174,6 +192,13 @@ static void TranslateFunctionName(char* fn)
     strcpy(fn, "_Znaj"); //3rd Argument gets just discarded
     return;
   }
+  if(strcmp(fn, "ParseConfigStringToStructCustomSize") == 0)
+  {
+    strcpy(fn, "ParseConfigStringToStruct"); //3rd Argument gets just discarded
+    return;
+  }
+
+
 
 }
 
@@ -293,6 +318,7 @@ class FileMap {
     uint8_t section;
     uint32_t size;
     SymbolType type;
+    bool _export;
     ObjectMap* object;
   };
 
@@ -435,6 +461,17 @@ class FileMap {
         name->assign("dx_ctx"); //dx is not allowed
         return;
     }
+    if(name->compare("fs") == 0)
+    {
+        name->assign("gFs"); //fs is not allowed. Use gFs like in BlackOps
+        return;
+    }
+    if(name->compare("_Z10VM_Executev") ==0)
+    {
+      name->assign("_Z18VM_ExecuteInternalv");
+      return;
+    }
+
   }
 
   void add(const MachO& mach, uintptr_t base) {
@@ -807,7 +844,7 @@ class FileMap {
       return;
     }
     int i;
-    bool dup = false;
+    //Find different symbols with same address
     for(i = 0; i < symbolcount; ++i)
     {
       if(symbols[i].address == address)
@@ -826,37 +863,48 @@ class FileMap {
         {
           name.assign("_Z17VEH_JoltBody_copyP9gentity_sPKffff");
         }
-        dup = true;
+
+//        dup = true;
       }
     }
-
+    if(currentobject->objectname.compare("imports") != 0)
+    {
+        //Find different address with same name in same object
+        for(i = 0; i < currentobject->symbolcount; ++i)
+        {
+          if(currentobject->symbols[i]->name.compare(name) == 0)
+          {
+            printf("FATAL: different symbol with same name detected in current module\n");
+            printf("module: %s ", currentobject->objectname.c_str());
+            printf("name: %s ", currentobject->symbols[i]->name.c_str());
+            printf("addresses: 0x%x 0x%x\n", currentobject->symbols[i]->address,  address);
+            exit(-1);
+          }
+        }
+    }
     SymbolRename(&name);
 
     aname = name;
     int dupcount = 0;
-    char dupstr[20];
-    while(dup)
+
+    if(currentobject->objectname.compare("imports") != 0)
     {
-      for(i = 0; i < symbolcount; ++i)
-      {
-        if(symbols[i].name.compare(aname) == 0)
+        for(i = 0; i < symbolcount; ++i)
         {
-          dupcount++;
-          dup = true;
-          aname = name;
-          sprintf(dupstr, "_dup_%d", dupcount);
-          aname.append(dupstr);
-          break;
+            if(symbols[i].name.compare(aname) == 0)
+            {
+              dupcount++;
+              symbols[i]._export = false;
+            }
         }
-      }
-      dup = false;
     }
     symbols[symbolcount].name = aname;
     symbols[symbolcount].address = address;
     symbols[symbolcount].section = section;
     symbols[symbolcount].type = type;
+    symbols[symbolcount]._export = dupcount == 0;
     symbols[symbolcount].object = currentobject;
-    
+
     symbolssorted[symbolcount].address = address;
     symbolssorted[symbolcount].symbol = &symbols[symbolcount];
     symbolssorted[symbolcount].obj = currentobject;
@@ -1002,6 +1050,7 @@ public:
     {
       select = 0;
     }
+
 
 
     if(address >= dasm_ptr->dasmCurrentSymbol->address && address < dasm_ptr->dasmCurrentSymbol->address + dasm_ptr->dasmCurrentSymbol->size)
@@ -1410,9 +1459,10 @@ public:
   {
 
     int i;
-    uint32_t constants[] = {0x900000, 0x1400000, 0x646162, 0x820011, 0x800811, 0x810011, 0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
-                            0x463800, 0x463804, 0x463808, 0x463838, 0xfe7fff, 0x7e8000, 0x802011, 0x802013, 0x803003, 0x806c31, 0x807fff, 0x810211, 0x700000, 0x600000, 0x600001, 0x400000,
-                            0x39294c, 0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac,0x0};
+    uint32_t constants[] = {0x900000, 0x1400000, 0x646162, 0x820011, 0x800811, 0x810011, 0x800000, 0x400208, 480000, 0x1600080, 0xffff00, 0x400000, 0xa00000, 0xa000000, 0xfffffe, 0xffffff, 0x1000000, 0xff00ff, 0x1f00000, 0x484c68, 0x46380c, 0x46382c, 0x504526, 0x48468c, 0x484660, 0x463840, 0x484a90, 0x463820,
+                            0x43c000, 0x463800, 0x463804, 0x463808, 0x463838, 0xfe7fff, 0x7e8000, 0x802011, 0x802013, 0x803003, 0x806c31, 0x807fff, 0x810211, 0x700000, 0x600000, 0x600001, 0x400000,
+                            0x39294c, 0x2dbc514, 0x2dbc518, 0x624451c, 0x8246aa0, 0x8246aa4, 0x8246aa8, 0x8246aac,
+                            0x504504, 0x4e3cf0, 0x0};
     for(i = 0; constants[i]; ++i)
     {
       if(constants[i] == address)
@@ -1460,7 +1510,14 @@ public:
     if(sec.type != FileMap::SYM_PROC && isConstant(address))
     {
       return NULL;
-    }    
+    }
+
+    if(ud_obj->insn_offset == 0x1839f5)
+    {
+        *offset = 0x120;
+        return "boxVerts";
+    }
+
 
     if(sec.type == FileMap::SYM_PROC)
     {
@@ -1935,6 +1992,12 @@ public:
       return addOWORDToTable((uint128_t*)address);
     }
 
+    if(address == 0x38B930) //xmm constants of rotation of d-engine
+    {
+      //Not actually a float
+      return addOWORDToTable((uint128_t*)address);
+    }
+
     if(address >= 0x389E60 && address < 0x389ED0 && (address & 0xf) == 0) //xmm constants of rotation of d-engine
     {
       //Not actually a float
@@ -2139,11 +2202,6 @@ public:
       //Not actually a float
       return addOWORDToTable((uint128_t*)address);
     }
-
-
-
-
-
 
 
     if(sec.type == FileMap::SYM_PROC)
@@ -3287,6 +3345,10 @@ public:
     {
       return true;
     }
+    if(procname.compare("_Z19GetEntityFieldValuejii") == 0) //Will generate junk. Needs to be external implemented
+    {
+      return true;
+    }
     return false; 
   }
 
@@ -3306,7 +3368,7 @@ public:
   }
 
 
-  void disassembleProcedure(const FileMap::Symbol* s, ud_t* ud_obj)
+  void disassembleProcedure(FileMap::Symbol* s, ud_t* ud_obj)
   {
     char demangledname[32768]; //would try realloc on failure. so it is really large so it won't happen
     int instructionLength;
@@ -3314,6 +3376,7 @@ public:
 
     if(donotdisassemble(s->name))
     {
+      s->_export = false;
       return;
     }
 
@@ -3645,12 +3708,17 @@ public:
 
     for(j = 0; j < o->symbolcount; ++j)
     {
-      if(o->symbols[j]->type == FileMap::SYM_PROC)
+      if(o->symbols[j]->type == FileMap::SYM_PROC || o->symbols[j]->type == FileMap::SYM_GLOBCONST)
       {
         codeOutputBuffer[codeOutputBufferPos] = '\n';
         codeOutputBuffer[codeOutputBufferPos +1] = '\n';
         codeOutputBufferPos += 2;
         disassembleProcedure(o->symbols[j], ud_obj);
+      }
+      if(o->symbols[j]->_export == false)
+      {
+        //Module internal
+        continue;
       }
       //printf("%s, %s, 0x%x, %d\n", o->symbols[j]->name.c_str(), symtypename(o->symbols[j]->type), o->symbols[j]->address, o->symbols[j]->size);
       if(o->symbols[j]->type == FileMap::SYM_PROC)

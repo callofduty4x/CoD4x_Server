@@ -13,7 +13,7 @@
 	extern AnglesToAxis
 	extern FX_SpawnOrientedEffect
 	extern CG_PlaySoundAlias
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern Com_sprintf
 	extern useFastFile
 	extern Cvar_RegisterBool
@@ -1775,7 +1775,7 @@ CG_StartClientSideEffects:
 	cmp byte [eax+0xc], 0x0
 	jz CG_StartClientSideEffects_10
 	mov dword [esp], _cstring_mapname
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov edi, eax
 	mov [esp+0xc], eax
 	mov dword [esp+0x8], _cstring_mapsmps_fxgsc

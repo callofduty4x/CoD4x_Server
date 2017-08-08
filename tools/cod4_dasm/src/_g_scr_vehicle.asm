@@ -68,8 +68,6 @@
 	extern Q_stricmp
 
 ;Exports of g_scr_vehicle:
-	global s_phys
-	global s_backup
 	global s_correctSolidDeltas
 	global CMD_VEH_Script_SetSpeed
 	global PushAttachedStickyMissile

@@ -155,16 +155,10 @@
 
 ;Exports of cg_weapons:
 	global _GLOBAL__I__Z13CG_JavelinADSi
-	global g_selectW
-	global g_selectZ
-	global g_selectY
-	global g_selectX
-	global g_inc
 	global g_animRateOffsets
 	global PlayADSAnim
 	global CG_CreateWeaponViewModelXAnim
 	global ActionParms
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
 	global BulletTrace
 	global ChangeViewmodelDobj
 	global StartWeaponAnim
@@ -218,6 +212,16 @@
 
 
 SECTION .text
+
+
+;global constructors keyed to CG_JavelinADS(int)
+_GLOBAL__I__Z13CG_JavelinADSi:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
 
 
 ;PlayADSAnim(float, int, DObj_s*, int)
@@ -451,6 +455,286 @@ ActionParms_10:
 	pop ebp
 	ret
 	nop
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	pop ebp
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov eax, [g_fltMin__uint4]
+	mov [g_fltMin], eax
+	mov eax, [g_fltMin__uint4+0x4]
+	mov [g_fltMin+0x4], eax
+	mov eax, [g_fltMin__uint4+0x8]
+	mov [g_fltMin+0x8], eax
+	mov eax, [g_fltMin__uint4+0xc]
+	mov [g_fltMin+0xc], eax
+	mov eax, [g_negativeZero__uint4]
+	mov [g_negativeZero], eax
+	mov eax, [g_negativeZero__uint4+0x4]
+	mov [g_negativeZero+0x4], eax
+	mov eax, [g_negativeZero__uint4+0x8]
+	mov [g_negativeZero+0x8], eax
+	mov eax, [g_negativeZero__uint4+0xc]
+	mov [g_negativeZero+0xc], eax
+	mov eax, [g_inc__uint4]
+	mov [g_inc], eax
+	mov eax, [g_inc__uint4+0x4]
+	mov [g_inc+0x4], eax
+	mov eax, [g_inc__uint4+0x8]
+	mov [g_inc+0x8], eax
+	mov eax, [g_inc__uint4+0xc]
+	mov [g_inc+0xc], eax
+	mov eax, [g_swizzleXYZW__uint4]
+	mov [g_swizzleXYZW], eax
+	mov eax, [g_swizzleXYZW__uint4+0x4]
+	mov [g_swizzleXYZW+0x4], eax
+	mov eax, [g_swizzleXYZW__uint4+0x8]
+	mov [g_swizzleXYZW+0x8], eax
+	mov eax, [g_swizzleXYZW__uint4+0xc]
+	mov [g_swizzleXYZW+0xc], eax
+	mov eax, [g_swizzleYXZW__uint4]
+	mov [g_swizzleYXZW], eax
+	mov eax, [g_swizzleYXZW__uint4+0x4]
+	mov [g_swizzleYXZW+0x4], eax
+	mov eax, [g_swizzleYXZW__uint4+0x8]
+	mov [g_swizzleYXZW+0x8], eax
+	mov eax, [g_swizzleYXZW__uint4+0xc]
+	mov [g_swizzleYXZW+0xc], eax
+	mov eax, [g_swizzleXZYW__uint4]
+	mov [g_swizzleXZYW], eax
+	mov eax, [g_swizzleXZYW__uint4+0x4]
+	mov [g_swizzleXZYW+0x4], eax
+	mov eax, [g_swizzleXZYW__uint4+0x8]
+	mov [g_swizzleXZYW+0x8], eax
+	mov eax, [g_swizzleXZYW__uint4+0xc]
+	mov [g_swizzleXZYW+0xc], eax
+	mov eax, [g_swizzleYXWZ__uint4]
+	mov [g_swizzleYXWZ], eax
+	mov eax, [g_swizzleYXWZ__uint4+0x4]
+	mov [g_swizzleYXWZ+0x4], eax
+	mov eax, [g_swizzleYXWZ__uint4+0x8]
+	mov [g_swizzleYXWZ+0x8], eax
+	mov eax, [g_swizzleYXWZ__uint4+0xc]
+	mov [g_swizzleYXWZ+0xc], eax
+	mov eax, [g_swizzleXAZC__uint4]
+	mov [g_swizzleXAZC], eax
+	mov eax, [g_swizzleXAZC__uint4+0x4]
+	mov [g_swizzleXAZC+0x4], eax
+	mov eax, [g_swizzleXAZC__uint4+0x8]
+	mov [g_swizzleXAZC+0x8], eax
+	mov eax, [g_swizzleXAZC__uint4+0xc]
+	mov [g_swizzleXAZC+0xc], eax
+	mov eax, [g_swizzleYBWD__uint4]
+	mov [g_swizzleYBWD], eax
+	mov eax, [g_swizzleYBWD__uint4+0x4]
+	mov [g_swizzleYBWD+0x4], eax
+	mov eax, [g_swizzleYBWD__uint4+0x8]
+	mov [g_swizzleYBWD+0x8], eax
+	mov eax, [g_swizzleYBWD__uint4+0xc]
+	mov [g_swizzleYBWD+0xc], eax
+	mov eax, [g_swizzleXYAB__uint4]
+	mov [g_swizzleXYAB], eax
+	mov eax, [g_swizzleXYAB__uint4+0x4]
+	mov [g_swizzleXYAB+0x4], eax
+	mov eax, [g_swizzleXYAB__uint4+0x8]
+	mov [g_swizzleXYAB+0x8], eax
+	mov eax, [g_swizzleXYAB__uint4+0xc]
+	mov [g_swizzleXYAB+0xc], eax
+	mov eax, [g_swizzleZWCD__uint4]
+	mov [g_swizzleZWCD], eax
+	mov eax, [g_swizzleZWCD__uint4+0x4]
+	mov [g_swizzleZWCD+0x4], eax
+	mov eax, [g_swizzleZWCD__uint4+0x8]
+	mov [g_swizzleZWCD+0x8], eax
+	mov eax, [g_swizzleZWCD__uint4+0xc]
+	mov [g_swizzleZWCD+0xc], eax
+	mov eax, [g_swizzleXYZA__uint4]
+	mov [g_swizzleXYZA], eax
+	mov eax, [g_swizzleXYZA__uint4+0x4]
+	mov [g_swizzleXYZA+0x4], eax
+	mov eax, [g_swizzleXYZA__uint4+0x8]
+	mov [g_swizzleXYZA+0x8], eax
+	mov eax, [g_swizzleXYZA__uint4+0xc]
+	mov [g_swizzleXYZA+0xc], eax
+	mov eax, [g_swizzleYZXW__uint4]
+	mov [g_swizzleYZXW], eax
+	mov eax, [g_swizzleYZXW__uint4+0x4]
+	mov [g_swizzleYZXW+0x4], eax
+	mov eax, [g_swizzleYZXW__uint4+0x8]
+	mov [g_swizzleYZXW+0x8], eax
+	mov eax, [g_swizzleYZXW__uint4+0xc]
+	mov [g_swizzleYZXW+0xc], eax
+	mov eax, [g_swizzleZXYW__uint4]
+	mov [g_swizzleZXYW], eax
+	mov eax, [g_swizzleZXYW__uint4+0x4]
+	mov [g_swizzleZXYW+0x4], eax
+	mov eax, [g_swizzleZXYW__uint4+0x8]
+	mov [g_swizzleZXYW+0x8], eax
+	mov eax, [g_swizzleZXYW__uint4+0xc]
+	mov [g_swizzleZXYW+0xc], eax
+	mov eax, [g_swizzleWABW__uint4]
+	mov [g_swizzleWABW], eax
+	mov eax, [g_swizzleWABW__uint4+0x4]
+	mov [g_swizzleWABW+0x4], eax
+	mov eax, [g_swizzleWABW__uint4+0x8]
+	mov [g_swizzleWABW+0x8], eax
+	mov eax, [g_swizzleWABW__uint4+0xc]
+	mov [g_swizzleWABW+0xc], eax
+	mov eax, [g_swizzleZWAW__uint4]
+	mov [g_swizzleZWAW], eax
+	mov eax, [g_swizzleZWAW__uint4+0x4]
+	mov [g_swizzleZWAW+0x4], eax
+	mov eax, [g_swizzleZWAW__uint4+0x8]
+	mov [g_swizzleZWAW+0x8], eax
+	mov eax, [g_swizzleZWAW__uint4+0xc]
+	mov [g_swizzleZWAW+0xc], eax
+	mov eax, [g_swizzleYZWA__uint4]
+	mov [g_swizzleYZWA], eax
+	mov eax, [g_swizzleYZWA__uint4+0x4]
+	mov [g_swizzleYZWA+0x4], eax
+	mov eax, [g_swizzleYZWA__uint4+0x8]
+	mov [g_swizzleYZWA+0x8], eax
+	mov eax, [g_swizzleYZWA__uint4+0xc]
+	mov [g_swizzleYZWA+0xc], eax
+	mov eax, [g_swizzleXXXX__uint4]
+	mov [g_swizzleXXXX], eax
+	mov eax, [g_swizzleXXXX__uint4+0x4]
+	mov [g_swizzleXXXX+0x4], eax
+	mov eax, [g_swizzleXXXX__uint4+0x8]
+	mov [g_swizzleXXXX+0x8], eax
+	mov eax, [g_swizzleXXXX__uint4+0xc]
+	mov [g_swizzleXXXX+0xc], eax
+	mov eax, [g_swizzleYYYY__uint4]
+	mov [g_swizzleYYYY], eax
+	mov eax, [g_swizzleYYYY__uint4+0x4]
+	mov [g_swizzleYYYY+0x4], eax
+	mov eax, [g_swizzleYYYY__uint4+0x8]
+	mov [g_swizzleYYYY+0x8], eax
+	mov eax, [g_swizzleYYYY__uint4+0xc]
+	mov [g_swizzleYYYY+0xc], eax
+	mov eax, [g_swizzleZZZZ__uint4]
+	mov [g_swizzleZZZZ], eax
+	mov eax, [g_swizzleZZZZ__uint4+0x4]
+	mov [g_swizzleZZZZ+0x4], eax
+	mov eax, [g_swizzleZZZZ__uint4+0x8]
+	mov [g_swizzleZZZZ+0x8], eax
+	mov eax, [g_swizzleZZZZ__uint4+0xc]
+	mov [g_swizzleZZZZ+0xc], eax
+	mov eax, [g_swizzleWWWW__uint4]
+	mov [g_swizzleWWWW], eax
+	mov eax, [g_swizzleWWWW__uint4+0x4]
+	mov [g_swizzleWWWW+0x4], eax
+	mov eax, [g_swizzleWWWW__uint4+0x8]
+	mov [g_swizzleWWWW+0x8], eax
+	mov eax, [g_swizzleWWWW__uint4+0xc]
+	mov [g_swizzleWWWW+0xc], eax
+	mov eax, [g_selectX__uint4]
+	mov [g_selectX], eax
+	mov eax, [g_selectX__uint4+0x4]
+	mov [g_selectX+0x4], eax
+	mov eax, [g_selectX__uint4+0x8]
+	mov [g_selectX+0x8], eax
+	mov eax, [g_selectX__uint4+0xc]
+	mov [g_selectX+0xc], eax
+	mov eax, [g_selectY__uint4]
+	mov [g_selectY], eax
+	mov eax, [g_selectY__uint4+0x4]
+	mov [g_selectY+0x4], eax
+	mov eax, [g_selectY__uint4+0x8]
+	mov [g_selectY+0x8], eax
+	mov eax, [g_selectY__uint4+0xc]
+	mov [g_selectY+0xc], eax
+	mov eax, [g_selectZ__uint4]
+	mov [g_selectZ], eax
+	mov eax, [g_selectZ__uint4+0x4]
+	mov [g_selectZ+0x4], eax
+	mov eax, [g_selectZ__uint4+0x8]
+	mov [g_selectZ+0x8], eax
+	mov eax, [g_selectZ__uint4+0xc]
+	mov [g_selectZ+0xc], eax
+	mov eax, [g_selectW__uint4]
+	mov [g_selectW], eax
+	mov eax, [g_selectW__uint4+0x4]
+	mov [g_selectW+0x4], eax
+	mov eax, [g_selectW__uint4+0x8]
+	mov [g_selectW+0x8], eax
+	mov eax, [g_selectW__uint4+0xc]
+	mov [g_selectW+0xc], eax
+	mov eax, [g_keepYZW__uint4]
+	mov [g_keepYZW], eax
+	mov eax, [g_keepYZW__uint4+0x4]
+	mov [g_keepYZW+0x4], eax
+	mov eax, [g_keepYZW__uint4+0x8]
+	mov [g_keepYZW+0x8], eax
+	mov eax, [g_keepYZW__uint4+0xc]
+	mov [g_keepYZW+0xc], eax
+	mov eax, [g_keepXZW__uint4]
+	mov [g_keepXZW], eax
+	mov eax, [g_keepXZW__uint4+0x4]
+	mov [g_keepXZW+0x4], eax
+	mov eax, [g_keepXZW__uint4+0x8]
+	mov [g_keepXZW+0x8], eax
+	mov eax, [g_keepXZW__uint4+0xc]
+	mov [g_keepXZW+0xc], eax
+	mov eax, [g_keepXYW__uint4]
+	mov [g_keepXYW], eax
+	mov eax, [g_keepXYW__uint4+0x4]
+	mov [g_keepXYW+0x4], eax
+	mov eax, [g_keepXYW__uint4+0x8]
+	mov [g_keepXYW+0x8], eax
+	mov eax, [g_keepXYW__uint4+0xc]
+	mov [g_keepXYW+0xc], eax
+	mov eax, [g_keepXYZ__uint4]
+	mov [g_keepXYZ], eax
+	mov eax, [g_keepXYZ__uint4+0x4]
+	mov [g_keepXYZ+0x4], eax
+	mov eax, [g_keepXYZ__uint4+0x8]
+	mov [g_keepXYZ+0x8], eax
+	mov eax, [g_keepXYZ__uint4+0xc]
+	mov [g_keepXYZ+0xc], eax
+	mov eax, [g_keepXY__uint4]
+	mov [g_keepXY], eax
+	mov eax, [g_keepXY__uint4+0x4]
+	mov [g_keepXY+0x4], eax
+	mov eax, [g_keepXY__uint4+0x8]
+	mov [g_keepXY+0x8], eax
+	mov eax, [g_keepXY__uint4+0xc]
+	mov [g_keepXY+0xc], eax
+	mov eax, [g_keepZW__uint4]
+	mov [g_keepZW], eax
+	mov eax, [g_keepZW__uint4+0x4]
+	mov [g_keepZW+0x4], eax
+	mov eax, [g_keepZW__uint4+0x8]
+	mov [g_keepZW+0x8], eax
+	mov eax, [g_keepZW__uint4+0xc]
+	mov [g_keepZW+0xc], eax
+	mov eax, [g_keepX__uint4]
+	mov [g_keepX], eax
+	mov eax, [g_keepX__uint4+0x4]
+	mov [g_keepX+0x4], eax
+	mov eax, [g_keepX__uint4+0x8]
+	mov [g_keepX+0x8], eax
+	mov eax, [g_keepX__uint4+0xc]
+	mov [g_keepX+0xc], eax
+	mov eax, [g_keepZ__uint4]
+	mov [g_keepZ], eax
+	mov eax, [g_keepZ__uint4+0x4]
+	mov [g_keepZ+0x4], eax
+	mov eax, [g_keepZ__uint4+0x8]
+	mov [g_keepZ+0x8], eax
+	mov eax, [g_keepZ__uint4+0xc]
+	mov [g_keepZ+0xc], eax
+	pop ebp
+	ret
 
 
 ;BulletTrace(int, BulletFireParams const*, WeaponDef const*, centity_s const*, BulletTraceResults*, int)

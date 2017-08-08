@@ -99,7 +99,6 @@
 ;Exports of g_spawn_mp:
 	global s_bspOnlySpawns
 	global s_bspOrDynamicSpawns
-	global fields_dup_1
 	global Scr_ReadOnlyField
 	global G_SetEntityScriptVariableInternal
 	global G_ParseEntityField
@@ -228,10 +227,10 @@ G_ParseEntityField:
 	mov esi, eax
 	mov edi, edx
 	mov [ebp-0x34], ecx
-	mov eax, [fields_dup_1]
+	mov eax, [fields]
 	test eax, eax
 	jz G_ParseEntityField_10
-	mov ebx, fields_dup_1
+	mov ebx, fields
 G_ParseEntityField_30:
 	mov [esp+0x4], esi
 	mov [esp], eax
@@ -413,7 +412,7 @@ Scr_GetEnt:
 	test eax, eax
 	js Scr_GetEnt_10
 	shl eax, 0x4
-	lea edi, [eax+fields_dup_1]
+	lea edi, [eax+fields]
 	cmp dword [edi+0x8], 0x3
 	jz Scr_GetEnt_20
 Scr_GetEnt_10:
@@ -837,10 +836,10 @@ Scr_FreeEntity:
 	push esi
 	push ebx
 	sub esp, 0x1c
-	mov ebx, [fields_dup_1]
+	mov ebx, [fields]
 	test ebx, ebx
 	jz Scr_FreeEntity_10
-	mov ebx, fields_dup_1+0x8
+	mov ebx, fields+0x8
 	jmp Scr_FreeEntity_20
 Scr_FreeEntity_30:
 	mov eax, [ebx+0x8]
@@ -986,7 +985,7 @@ Scr_GetEntArray_10:
 	test eax, eax
 	js Scr_GetEntArray_20
 	shl eax, 0x4
-	add eax, fields_dup_1
+	add eax, fields
 	mov [ebp-0x20], eax
 	cmp dword [eax+0x8], 0x3
 	jnz Scr_GetEntArray_20
@@ -1198,7 +1197,7 @@ Scr_GetObjectField_10:
 	cmp eax, 0xc000
 	jz Scr_GetObjectField_30
 	shl ebx, 0x4
-	lea eax, [ebx+fields_dup_1]
+	lea eax, [ebx+fields]
 	mov edx, [eax+0x4]
 	mov [ebp+0x10], edx
 	mov eax, [eax+0x8]
@@ -1260,7 +1259,7 @@ Scr_SetObjectField_10:
 	jz Scr_SetObjectField_30
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+fields_dup_1]
+	lea edx, [eax+fields]
 	mov eax, [edx+0xc]
 	test eax, eax
 	jz Scr_SetObjectField_40
@@ -1566,11 +1565,11 @@ GScr_AddFieldsForEntity:
 	push esi
 	push ebx
 	sub esp, 0x10
-	mov edx, [fields_dup_1]
+	mov edx, [fields]
 	test edx, edx
 	jz GScr_AddFieldsForEntity_10
 	xor esi, esi
-	mov ebx, fields_dup_1+0x10
+	mov ebx, fields+0x10
 GScr_AddFieldsForEntity_20:
 	mov eax, esi
 	sar eax, 0x4
@@ -1602,10 +1601,10 @@ G_DuplicateEntityFields:
 	sub esp, 0x1c
 	mov edi, [ebp+0x8]
 	mov esi, [ebp+0xc]
-	mov eax, [fields_dup_1]
+	mov eax, [fields]
 	test eax, eax
 	jz G_DuplicateEntityFields_10
-	mov ebx, fields_dup_1+0x8
+	mov ebx, fields+0x8
 G_DuplicateEntityFields_30:
 	cmp dword [ebx], 0x9
 	ja G_DuplicateEntityFields_20
@@ -1945,7 +1944,7 @@ SECTION .data
 SECTION .rdata
 s_bspOnlySpawns: dd _cstring_trigger_use, trigger_use, _cstring_trigger_use_touc, trigger_use_touch, _cstring_trigger_multiple, SP_trigger_multiple, _cstring_trigger_disk, SP_trigger_disk, _cstring_trigger_hurt, SP_trigger_hurt, _cstring_trigger_once, SP_trigger_once, _cstring_trigger_damage, SP_trigger_damage, _cstring_trigger_lookat, SP_trigger_lookat, _cstring_light, SP_light, _cstring_misc_mg42, SP_turret, _cstring_misc_turret, SP_turret, _cstring_script_brushmode, SP_script_brushmodel, _cstring_script_struct, G_FreeEntity, _cstring_script_vehicle_m, G_VehSpawner, 0x0, 0x0, 0x0, 0x0
 s_bspOrDynamicSpawns: dd _cstring_info_notnull, SP_info_notnull, _cstring_info_notnull_big, SP_info_notnull, _cstring_trigger_radius, SP_trigger_radius, _cstring_script_model, SP_script_model, _cstring_script_origin, SP_script_origin, _cstring_script_vehicle_c, G_VehCollmapSpawner, 0x0, 0x0, 0x0, 0x0
-fields_dup_1: dd _cstring_classname, 0x170, 0x3, Scr_ReadOnlyField, _cstring_origin, 0x13c, 0x4, Scr_SetOrigin, _cstring_model, 0x168, 0x9, Scr_ReadOnlyField, _cstring_spawnflags, 0x17c, 0x0, Scr_ReadOnlyField, _cstring_target, 0x172, 0x3, 0x0, _cstring_targetname, 0x174, 0x3, 0x0, _cstring_count, 0x1ac, 0x0, 0x0, _cstring_health, 0x1a0, 0x0, Scr_SetHealth, _cstring_dmg, 0x1a8, 0x0, 0x0, _cstring_angles, 0x148, 0x4, Scr_SetAngles, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+fields: dd _cstring_classname, 0x170, 0x3, Scr_ReadOnlyField, _cstring_origin, 0x13c, 0x4, Scr_SetOrigin, _cstring_model, 0x168, 0x9, Scr_ReadOnlyField, _cstring_spawnflags, 0x17c, 0x0, Scr_ReadOnlyField, _cstring_target, 0x172, 0x3, 0x0, _cstring_targetname, 0x174, 0x3, 0x0, _cstring_count, 0x1ac, 0x0, 0x0, _cstring_health, 0x1a0, 0x0, Scr_SetHealth, _cstring_dmg, 0x1a8, 0x0, 0x0, _cstring_angles, 0x148, 0x4, Scr_SetAngles, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of g_spawn_mp:

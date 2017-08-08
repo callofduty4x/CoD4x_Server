@@ -48,7 +48,7 @@ typedef struct DObj_s
 	int radius;
 	int hidePartBits[4];
 	XModel **models;
-} DObj_t;
+} DObj_t, DObj;
 
 
 DObj_t* GetDObjForEntity(int entNum);
@@ -57,6 +57,9 @@ void PrintDObjInfo(DObj_t* dobj);
 extern signed int __cdecl G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int tagName, float (*tagMat)[3]);
 extern void DObjInit();
 extern void DB_LoadDObjs();
+
+void __cdecl DObjGetBounds(DObj_t *obj, float *mins, float *maxs);
+DObj *__cdecl Com_GetServerDObj(int handle);
 
 #define SV_ENTITY_DOBJS ((WORD*)  0x088E8500)    // Max = 0x400
 #define SV_DOBJ         ((DObj_t*)0x088E8D20)    // Max = 0x800

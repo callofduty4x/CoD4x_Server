@@ -56,7 +56,7 @@
 	extern cl_paused
 	extern Con_TimeNudged
 	extern Q_stricmp
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern va
 	extern FS_FOpenFileWrite
 	extern FS_Printf
@@ -1069,7 +1069,7 @@ CL_SetCGameTime_490:
 	jmp CL_SetCGameTime_200
 CL_SetCGameTime_340:
 	mov dword [esp], _cstring_r_mode
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [ebp-0x20], eax
 	mov eax, clients
 	movzx edx, byte [eax+0x255e8]

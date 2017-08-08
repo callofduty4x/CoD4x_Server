@@ -1477,12 +1477,6 @@ MT_Alloc:
 	ret
 
 
-;Zero initialized global or static variables of scr_memorytree:
-SECTION .bss
-scrMemTreeGlob: resb 0xc0380
-scrMemTreePub: resb 0x80
-
-
 ;Initialized global or static variables of scr_memorytree:
 SECTION .data
 
@@ -1491,14 +1485,20 @@ SECTION .data
 SECTION .rdata
 
 
+;Zero initialized global or static variables of scr_memorytree:
+SECTION .bss
+scrMemTreeGlob: resb 0xc0380
+scrMemTreePub: resb 0x80
+
+
 ;All cstrings:
 SECTION .rdata
-_cstring_mt_getsize_max_a:		db "MT_GetSize: max allocation exceeded"
-_cstring_s_failed_memory_:		db "%s: failed memory allocation of %d bytes for script usage\n"
-_cstring_failed_memory_al:		db "failed memory allocation for script usage"
-_cstring_:		db "********************************\n"
-_cstring_d_subtree_has_d_:		db "%d subtree has %d * %d = %d free buckets\n"
-_cstring_mt_allocindex:		db "MT_AllocIndex"
+_cstring_mt_getsize_max_a:		db "MT_GetSize: max allocation exceeded",0
+_cstring_s_failed_memory_:		db "%s: failed memory allocation of %d bytes for script usage",0ah,0
+_cstring_failed_memory_al:		db "failed memory allocation for script usage",0
+_cstring_:		db "********************************",0ah,0
+_cstring_d_subtree_has_d_:		db "%d subtree has %d * %d = %d free buckets",0ah,0
+_cstring_mt_allocindex:		db "MT_AllocIndex",0
 
 
 

@@ -185,7 +185,6 @@
 	global CG_GetPredictedPlayerState
 	global CG_SubtitleSndLengthNotify
 	global CG_GetSoundEntityOrientation
-	global Hunk_AllocPhysPresetPrecache
 	global CG_PlayClientSoundAliasByName
 	global CG_StopClientSoundAliasByName
 	global CG_PlaySoundAliasAsMasterByName

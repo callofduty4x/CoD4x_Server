@@ -1,5 +1,7 @@
 ;Imports of pbcl:
 	extern dlclose
+	extern memset
+	extern __cxa_atexit
 	extern strncasecmp
 	extern PbMsgToScreen
 	extern Com_Printf
@@ -39,8 +41,6 @@
 
 ;Exports of pbcl:
 	global _GLOBAL__I_pbcl
-	global __tcf_0_dup_1
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
 	global EnablePbCl
 	global DisablePbCl
 	global PbClGameMsg
@@ -64,8 +64,17 @@
 SECTION .text
 
 
-;__tcf_0_dup_1
-__tcf_0_dup_1:
+;global constructors keyed to pbcl
+_GLOBAL__I_pbcl:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+
+
+;__tcf_0
+__tcf_0:
 	push ebp
 	mov ebp, esp
 	sub esp, 0x18
@@ -76,20 +85,68 @@ __tcf_0_dup_1:
 	mov dword [pbcl+0x1a0], 0x0
 	mov eax, [pbcl+0x8]
 	test eax, eax
-	jz __tcf_0_dup_1_10
+	jz __tcf_0_10
 	mov [esp], eax
 	call dlclose
 	mov dword [pbcl+0x8], 0x0
-__tcf_0_dup_1_10:
+__tcf_0_10:
 	mov eax, [pbcl+0xc]
 	test eax, eax
-	jz __tcf_0_dup_1_20
+	jz __tcf_0_20
 	mov [esp], eax
 	call dlclose
 	mov dword [pbcl+0xc], 0x0
-__tcf_0_dup_1_20:
+__tcf_0_20:
 	leave
 	ret
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	leave
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov dword [esp+0x8], 0x1a8
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], pbcl
+	call memset
+	mov dword [pbcl], 0x264b8bbd
+	mov dword [pbcl+0x35], 0x6b6e7550
+	mov dword [pbcl+0x39], 0x74737542
+	mov dword [pbcl+0x3d], 0x43207265
+	mov dword [pbcl+0x41], 0x6e65696c
+	mov word [pbcl+0x45], 0x74
+	mov dword [pbcl+0xc], 0x0
+	mov dword [pbcl+0x8], 0x0
+	mov dword [pbcl+0x10], 0x1
+	mov dword [pbcl+0x178], 0x0
+	mov dword [pbcl+0x17c], 0x0
+	mov dword [pbcl+0x180], 0x0
+	mov dword [pbcl+0x184], 0x0
+	mov dword [pbcl+0x4], 0x0
+	mov dword [pbcl+0x188], 0x0
+	mov dword [pbcl+0x18c], 0x0
+	mov dword [pbcl+0x190], 0x0
+	mov dword [pbcl+0x194], 0x0
+	mov dword [pbcl+0x198], 0x0
+	mov dword [pbcl+0x19c], 0x0
+	mov dword [pbcl+0x1a0], 0x0
+	mov eax, [0xd5cc00c]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_0
+	call __cxa_atexit
+	leave
+	ret
+	nop
 
 
 ;EnablePbCl()

@@ -46,6 +46,7 @@ typedef int fixed16_t;
 
 extern vec3_t vec3_origin;
 
+#define IS_NAN isnan
 
 #define DotProduct(a,b)         ((a)[0]*(b)[0]+(a)[1]*(b)[1]+(a)[2]*(b)[2])
 #define VectorSubtract(a,b,c)   ((c)[0]=(a)[0]-(b)[0],(c)[1]=(a)[1]-(b)[1],(c)[2]=(a)[2]-(b)[2])
@@ -134,6 +135,7 @@ int VectorCompare( const vec3_t v1, const vec3_t v2 );
 float VectorDistance( vec3_t v1, vec3_t v2 );
 vec_t Distance( const vec3_t p1, const vec3_t p2 ) ;
 void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
+void __cdecl SnapAngles(float *vAngles);
 
 float vec2_maxabs    (vec2_t v);
 

@@ -85,17 +85,17 @@ TempMallocAlignStrict:
 	ret
 
 
-;Zero initialized global or static variables of scr_tempmemory:
-SECTION .bss
-g_user: resb 0x80
-
-
 ;Initialized global or static variables of scr_tempmemory:
 SECTION .data
 
 
 ;Initialized constant data of scr_tempmemory:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of scr_tempmemory:
+SECTION .bss
+g_user: resb 0x80
 
 
 ;All cstrings:

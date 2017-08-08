@@ -15,7 +15,7 @@
 	extern LAN_CompareServers
 	extern Q_stricmp
 	extern Menu_SetFeederSelection
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern SEH_VerifyLanguageSelection
 	extern Cvar_SetIntByName
 	extern Cvar_SetBoolByName
@@ -37,7 +37,7 @@
 	extern Cvar_GetVariantString
 	extern CL_ControllerIndexFromClientNum
 	extern Cmd_ExecuteSingleCommand
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern LAN_WaitServerResponse
 	extern qsort
 	extern strcpy
@@ -67,7 +67,7 @@
 	extern scrPlaceView
 	extern getBuildNumberAsInt
 	extern colorMdGrey
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern UI_DrawHandlePic
 	extern Key_IsCatcherActive
 	extern Key_RemoveCatcher
@@ -187,7 +187,6 @@
 	extern DB_FileExists
 
 ;Exports of ui_main_mp:
-	global g_gametype_dup_1
 	global g_mapname
 	global g_ingameMenusLoaded
 	global serverFilters
@@ -635,10 +634,10 @@ UI_VerifyLanguage:
 	push ebx
 	sub esp, 0x10
 	mov dword [esp], _cstring_loc_language
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov esi, eax
 	mov dword [esp], _cstring_ui_language
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov ebx, eax
 	mov [esp], eax
 	call SEH_VerifyLanguageSelection
@@ -1323,7 +1322,7 @@ UI_BuildServerDisplayList_110:
 	xor ebx, ebx
 UI_BuildServerDisplayList_100:
 	mov dword [esp], _cstring_cl_motdstring
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov dword [esp+0x8], 0x400
 	mov [esp+0x4], eax
 	mov dword [esp], sharedUiInfo+0x1aba4
@@ -3602,7 +3601,7 @@ UI_Refresh_220:
 	jz UI_Refresh_10
 UI_Refresh_110:
 	mov dword [esp], _cstring_cl_bypassmousein
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz UI_Refresh_150
 	cmp dword [uiInfoArray+0x18a0], 0xa
@@ -3939,7 +3938,7 @@ UI_KeyEvent_10:
 	test eax, eax
 	jz UI_KeyEvent_20
 	mov dword [esp], _cstring_cl_bypassmousein
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz UI_KeyEvent_30
 UI_KeyEvent_80:
@@ -5424,10 +5423,10 @@ UI_RunMenuScript_10:
 	test eax, eax
 	jnz UI_RunMenuScript_30
 	mov dword [esp], _cstring_sv_punkbuster
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	mov ebx, eax
 	mov dword [esp], _cstring_cl_punkbuster
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test bl, bl
 	jz UI_RunMenuScript_30
 	test al, al
@@ -5534,7 +5533,7 @@ UI_RunMenuScript_50:
 	jnz UI_RunMenuScript_90
 	call UI_LoadArenas
 	mov dword [esp], _cstring_g_gametype
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov edi, eax
 	mov eax, [sharedUiInfo+0x114c]
 	test eax, eax
@@ -6646,7 +6645,7 @@ UI_RunMenuScript_970:
 	jmp UI_RunMenuScript_70
 UI_RunMenuScript_990:
 	mov dword [esp], _cstring_cl_punkbuster
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz UI_RunMenuScript_1010
 	mov dword [esp+0x4], _cstring_joinpb_popmenu
@@ -6994,7 +6993,7 @@ UI_RunMenuScript_1180:
 	test eax, eax
 	jnz UI_RunMenuScript_1200
 	mov dword [esp], _cstring_rate
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	cmp eax, 0x1387
 	jg UI_RunMenuScript_1210
 	cmp eax, 0xf9f
@@ -7013,7 +7012,7 @@ UI_RunMenuScript_1190:
 	test eax, eax
 	jnz UI_RunMenuScript_1230
 	mov dword [esp], _cstring_loc_language
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_ui_language
 	call Cvar_SetIntByName
@@ -7050,7 +7049,7 @@ UI_RunMenuScript_1200:
 	test eax, eax
 	jnz UI_RunMenuScript_70
 	mov [esp], ebx
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz UI_RunMenuScript_1250
 	mov dword [esp+0x4], 0x3cb43958
@@ -7064,7 +7063,7 @@ UI_RunMenuScript_1240:
 	test eax, eax
 	jnz UI_RunMenuScript_1260
 	mov dword [esp], _cstring_ui_language
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_loc_language
 	call Cvar_SetIntByName
@@ -7291,7 +7290,7 @@ UI_SetActiveMenu_70:
 	mov dword [esp], uiInfoArray
 	call Menus_OpenByName
 	mov dword [esp], _cstring_com_errormessage
-	call Cvar_GetString
+	call Cvar_VariableString
 	cmp byte [eax], 0x0
 	jnz UI_SetActiveMenu_40
 UI_SetActiveMenu_50:
@@ -7346,7 +7345,7 @@ UI_SetActiveMenu_100:
 	mov dword [esp], uiInfoArray
 	call Menus_OpenByName
 	mov dword [esp], _cstring_com_errormessage
-	call Cvar_GetString
+	call Cvar_VariableString
 	cmp byte [eax], 0x0
 	jnz UI_SetActiveMenu_60
 UI_SetActiveMenu_80:
@@ -7382,7 +7381,7 @@ UI_SetActiveMenu_160:
 	jmp UI_SetActiveMenu_70
 UI_SetActiveMenu_140:
 	mov dword [esp], _cstring_com_errormessage
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov dword [esp+0x4], 0x10
 	mov eax, [ebp+0x8]
 	mov [esp], eax
@@ -8794,7 +8793,7 @@ UI_DrawConnectScreen_50:
 	test eax, eax
 	jg UI_DrawConnectScreen_80
 UI_DrawConnectScreen_250:
-	mov edi, g_gametype_dup_1
+	mov edi, g_gametype
 UI_DrawConnectScreen_350:
 	mov esi, [ui_connectScreenTextGlowColor]
 	add esi, 0xc
@@ -9059,7 +9058,7 @@ UI_DrawConnectScreen_80:
 UI_DrawConnectScreen_240:
 	mov eax, [ebx+0x1150]
 	mov [esp+0x4], eax
-	mov dword [esp], g_gametype_dup_1
+	mov dword [esp], g_gametype
 	call Q_stricmp
 	test eax, eax
 	jz UI_DrawConnectScreen_230
@@ -11475,7 +11474,7 @@ UI_SetMap:
 	call Q_strncpyz
 	mov dword [esp+0x8], 0x40
 	mov [esp+0x4], ebx
-	mov dword [esp], g_gametype_dup_1
+	mov dword [esp], g_gametype
 	call Q_strncpyz
 	movzx eax, byte [esi]
 	test al, al
@@ -11550,7 +11549,7 @@ serverFilters: dd _cstring_exe_all, _cstring_null, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Zero initialized global or static variables of ui_main_mp:
 SECTION .bss
-g_gametype_dup_1: resb 0x40
+g_gametype: resb 0x40
 g_mapname: resb 0x40
 g_ingameMenusLoaded: resb 0x4
 ui_serverFilterType: resb 0x4

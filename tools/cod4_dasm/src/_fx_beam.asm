@@ -13,10 +13,7 @@
 ;Exports of fx_beam:
 	global _GLOBAL__I__Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd
 	global g_beamInfo
-	global g_unit
-	global g_zero_dup_1
 	global g_2xunit
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
 	global coeffZGtW.138963
 	global _ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE6wiggle
 	global _ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE15templateIndices
@@ -27,6 +24,296 @@
 
 
 SECTION .text
+
+
+;global constructors keyed to FX_Beam_GenerateVerts(FxGenerateVertsCmd*)
+_GLOBAL__I__Z21FX_Beam_GenerateVertsP18FxGenerateVertsCmd:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	pop ebp
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov eax, [g_fltMin__uint4]
+	mov [g_fltMin], eax
+	mov eax, [g_fltMin__uint4+0x4]
+	mov [g_fltMin+0x4], eax
+	mov eax, [g_fltMin__uint4+0x8]
+	mov [g_fltMin+0x8], eax
+	mov eax, [g_fltMin__uint4+0xc]
+	mov [g_fltMin+0xc], eax
+	mov eax, [g_negativeZero__uint4]
+	mov [g_negativeZero], eax
+	mov eax, [g_negativeZero__uint4+0x4]
+	mov [g_negativeZero+0x4], eax
+	mov eax, [g_negativeZero__uint4+0x8]
+	mov [g_negativeZero+0x8], eax
+	mov eax, [g_negativeZero__uint4+0xc]
+	mov [g_negativeZero+0xc], eax
+	mov eax, [g_inc__uint4]
+	mov [g_inc], eax
+	mov eax, [g_inc__uint4+0x4]
+	mov [g_inc+0x4], eax
+	mov eax, [g_inc__uint4+0x8]
+	mov [g_inc+0x8], eax
+	mov eax, [g_inc__uint4+0xc]
+	mov [g_inc+0xc], eax
+	mov eax, [g_swizzleXYZW__uint4]
+	mov [g_swizzleXYZW], eax
+	mov eax, [g_swizzleXYZW__uint4+0x4]
+	mov [g_swizzleXYZW+0x4], eax
+	mov eax, [g_swizzleXYZW__uint4+0x8]
+	mov [g_swizzleXYZW+0x8], eax
+	mov eax, [g_swizzleXYZW__uint4+0xc]
+	mov [g_swizzleXYZW+0xc], eax
+	mov eax, [g_swizzleYXZW__uint4]
+	mov [g_swizzleYXZW], eax
+	mov eax, [g_swizzleYXZW__uint4+0x4]
+	mov [g_swizzleYXZW+0x4], eax
+	mov eax, [g_swizzleYXZW__uint4+0x8]
+	mov [g_swizzleYXZW+0x8], eax
+	mov eax, [g_swizzleYXZW__uint4+0xc]
+	mov [g_swizzleYXZW+0xc], eax
+	mov eax, [g_swizzleXZYW__uint4]
+	mov [g_swizzleXZYW], eax
+	mov eax, [g_swizzleXZYW__uint4+0x4]
+	mov [g_swizzleXZYW+0x4], eax
+	mov eax, [g_swizzleXZYW__uint4+0x8]
+	mov [g_swizzleXZYW+0x8], eax
+	mov eax, [g_swizzleXZYW__uint4+0xc]
+	mov [g_swizzleXZYW+0xc], eax
+	mov eax, [g_swizzleYXWZ__uint4]
+	mov [g_swizzleYXWZ], eax
+	mov eax, [g_swizzleYXWZ__uint4+0x4]
+	mov [g_swizzleYXWZ+0x4], eax
+	mov eax, [g_swizzleYXWZ__uint4+0x8]
+	mov [g_swizzleYXWZ+0x8], eax
+	mov eax, [g_swizzleYXWZ__uint4+0xc]
+	mov [g_swizzleYXWZ+0xc], eax
+	mov eax, [g_swizzleXAZC__uint4]
+	mov [g_swizzleXAZC], eax
+	mov eax, [g_swizzleXAZC__uint4+0x4]
+	mov [g_swizzleXAZC+0x4], eax
+	mov eax, [g_swizzleXAZC__uint4+0x8]
+	mov [g_swizzleXAZC+0x8], eax
+	mov eax, [g_swizzleXAZC__uint4+0xc]
+	mov [g_swizzleXAZC+0xc], eax
+	mov eax, [g_swizzleYBWD__uint4]
+	mov [g_swizzleYBWD], eax
+	mov eax, [g_swizzleYBWD__uint4+0x4]
+	mov [g_swizzleYBWD+0x4], eax
+	mov eax, [g_swizzleYBWD__uint4+0x8]
+	mov [g_swizzleYBWD+0x8], eax
+	mov eax, [g_swizzleYBWD__uint4+0xc]
+	mov [g_swizzleYBWD+0xc], eax
+	mov eax, [g_swizzleXYAB__uint4]
+	mov [g_swizzleXYAB], eax
+	mov eax, [g_swizzleXYAB__uint4+0x4]
+	mov [g_swizzleXYAB+0x4], eax
+	mov eax, [g_swizzleXYAB__uint4+0x8]
+	mov [g_swizzleXYAB+0x8], eax
+	mov eax, [g_swizzleXYAB__uint4+0xc]
+	mov [g_swizzleXYAB+0xc], eax
+	mov eax, [g_swizzleZWCD__uint4]
+	mov [g_swizzleZWCD], eax
+	mov eax, [g_swizzleZWCD__uint4+0x4]
+	mov [g_swizzleZWCD+0x4], eax
+	mov eax, [g_swizzleZWCD__uint4+0x8]
+	mov [g_swizzleZWCD+0x8], eax
+	mov eax, [g_swizzleZWCD__uint4+0xc]
+	mov [g_swizzleZWCD+0xc], eax
+	mov eax, [g_swizzleXYZA__uint4]
+	mov [g_swizzleXYZA], eax
+	mov eax, [g_swizzleXYZA__uint4+0x4]
+	mov [g_swizzleXYZA+0x4], eax
+	mov eax, [g_swizzleXYZA__uint4+0x8]
+	mov [g_swizzleXYZA+0x8], eax
+	mov eax, [g_swizzleXYZA__uint4+0xc]
+	mov [g_swizzleXYZA+0xc], eax
+	mov eax, [g_swizzleYZXW__uint4]
+	mov [g_swizzleYZXW], eax
+	mov eax, [g_swizzleYZXW__uint4+0x4]
+	mov [g_swizzleYZXW+0x4], eax
+	mov eax, [g_swizzleYZXW__uint4+0x8]
+	mov [g_swizzleYZXW+0x8], eax
+	mov eax, [g_swizzleYZXW__uint4+0xc]
+	mov [g_swizzleYZXW+0xc], eax
+	mov eax, [g_swizzleZXYW__uint4]
+	mov [g_swizzleZXYW], eax
+	mov eax, [g_swizzleZXYW__uint4+0x4]
+	mov [g_swizzleZXYW+0x4], eax
+	mov eax, [g_swizzleZXYW__uint4+0x8]
+	mov [g_swizzleZXYW+0x8], eax
+	mov eax, [g_swizzleZXYW__uint4+0xc]
+	mov [g_swizzleZXYW+0xc], eax
+	mov eax, [g_swizzleWABW__uint4]
+	mov [g_swizzleWABW], eax
+	mov eax, [g_swizzleWABW__uint4+0x4]
+	mov [g_swizzleWABW+0x4], eax
+	mov eax, [g_swizzleWABW__uint4+0x8]
+	mov [g_swizzleWABW+0x8], eax
+	mov eax, [g_swizzleWABW__uint4+0xc]
+	mov [g_swizzleWABW+0xc], eax
+	mov eax, [g_swizzleZWAW__uint4]
+	mov [g_swizzleZWAW], eax
+	mov eax, [g_swizzleZWAW__uint4+0x4]
+	mov [g_swizzleZWAW+0x4], eax
+	mov eax, [g_swizzleZWAW__uint4+0x8]
+	mov [g_swizzleZWAW+0x8], eax
+	mov eax, [g_swizzleZWAW__uint4+0xc]
+	mov [g_swizzleZWAW+0xc], eax
+	mov eax, [g_swizzleYZWA__uint4]
+	mov [g_swizzleYZWA], eax
+	mov eax, [g_swizzleYZWA__uint4+0x4]
+	mov [g_swizzleYZWA+0x4], eax
+	mov eax, [g_swizzleYZWA__uint4+0x8]
+	mov [g_swizzleYZWA+0x8], eax
+	mov eax, [g_swizzleYZWA__uint4+0xc]
+	mov [g_swizzleYZWA+0xc], eax
+	mov eax, [g_swizzleXXXX__uint4]
+	mov [g_swizzleXXXX], eax
+	mov eax, [g_swizzleXXXX__uint4+0x4]
+	mov [g_swizzleXXXX+0x4], eax
+	mov eax, [g_swizzleXXXX__uint4+0x8]
+	mov [g_swizzleXXXX+0x8], eax
+	mov eax, [g_swizzleXXXX__uint4+0xc]
+	mov [g_swizzleXXXX+0xc], eax
+	mov eax, [g_swizzleYYYY__uint4]
+	mov [g_swizzleYYYY], eax
+	mov eax, [g_swizzleYYYY__uint4+0x4]
+	mov [g_swizzleYYYY+0x4], eax
+	mov eax, [g_swizzleYYYY__uint4+0x8]
+	mov [g_swizzleYYYY+0x8], eax
+	mov eax, [g_swizzleYYYY__uint4+0xc]
+	mov [g_swizzleYYYY+0xc], eax
+	mov eax, [g_swizzleZZZZ__uint4]
+	mov [g_swizzleZZZZ], eax
+	mov eax, [g_swizzleZZZZ__uint4+0x4]
+	mov [g_swizzleZZZZ+0x4], eax
+	mov eax, [g_swizzleZZZZ__uint4+0x8]
+	mov [g_swizzleZZZZ+0x8], eax
+	mov eax, [g_swizzleZZZZ__uint4+0xc]
+	mov [g_swizzleZZZZ+0xc], eax
+	mov eax, [g_swizzleWWWW__uint4]
+	mov [g_swizzleWWWW], eax
+	mov eax, [g_swizzleWWWW__uint4+0x4]
+	mov [g_swizzleWWWW+0x4], eax
+	mov eax, [g_swizzleWWWW__uint4+0x8]
+	mov [g_swizzleWWWW+0x8], eax
+	mov eax, [g_swizzleWWWW__uint4+0xc]
+	mov [g_swizzleWWWW+0xc], eax
+	mov eax, [g_selectX__uint4]
+	mov [g_selectX], eax
+	mov eax, [g_selectX__uint4+0x4]
+	mov [g_selectX+0x4], eax
+	mov eax, [g_selectX__uint4+0x8]
+	mov [g_selectX+0x8], eax
+	mov eax, [g_selectX__uint4+0xc]
+	mov [g_selectX+0xc], eax
+	mov eax, [g_selectY__uint4]
+	mov [g_selectY], eax
+	mov eax, [g_selectY__uint4+0x4]
+	mov [g_selectY+0x4], eax
+	mov eax, [g_selectY__uint4+0x8]
+	mov [g_selectY+0x8], eax
+	mov eax, [g_selectY__uint4+0xc]
+	mov [g_selectY+0xc], eax
+	mov eax, [g_selectZ__uint4]
+	mov [g_selectZ], eax
+	mov eax, [g_selectZ__uint4+0x4]
+	mov [g_selectZ+0x4], eax
+	mov eax, [g_selectZ__uint4+0x8]
+	mov [g_selectZ+0x8], eax
+	mov eax, [g_selectZ__uint4+0xc]
+	mov [g_selectZ+0xc], eax
+	mov eax, [g_selectW__uint4]
+	mov [g_selectW], eax
+	mov eax, [g_selectW__uint4+0x4]
+	mov [g_selectW+0x4], eax
+	mov eax, [g_selectW__uint4+0x8]
+	mov [g_selectW+0x8], eax
+	mov eax, [g_selectW__uint4+0xc]
+	mov [g_selectW+0xc], eax
+	mov eax, [g_keepYZW__uint4]
+	mov [g_keepYZW], eax
+	mov eax, [g_keepYZW__uint4+0x4]
+	mov [g_keepYZW+0x4], eax
+	mov eax, [g_keepYZW__uint4+0x8]
+	mov [g_keepYZW+0x8], eax
+	mov eax, [g_keepYZW__uint4+0xc]
+	mov [g_keepYZW+0xc], eax
+	mov eax, [g_keepXZW__uint4]
+	mov [g_keepXZW], eax
+	mov eax, [g_keepXZW__uint4+0x4]
+	mov [g_keepXZW+0x4], eax
+	mov eax, [g_keepXZW__uint4+0x8]
+	mov [g_keepXZW+0x8], eax
+	mov eax, [g_keepXZW__uint4+0xc]
+	mov [g_keepXZW+0xc], eax
+	mov eax, [g_keepXYW__uint4]
+	mov [g_keepXYW], eax
+	mov eax, [g_keepXYW__uint4+0x4]
+	mov [g_keepXYW+0x4], eax
+	mov eax, [g_keepXYW__uint4+0x8]
+	mov [g_keepXYW+0x8], eax
+	mov eax, [g_keepXYW__uint4+0xc]
+	mov [g_keepXYW+0xc], eax
+	mov eax, [g_keepXYZ__uint4]
+	mov [g_keepXYZ], eax
+	mov eax, [g_keepXYZ__uint4+0x4]
+	mov [g_keepXYZ+0x4], eax
+	mov eax, [g_keepXYZ__uint4+0x8]
+	mov [g_keepXYZ+0x8], eax
+	mov eax, [g_keepXYZ__uint4+0xc]
+	mov [g_keepXYZ+0xc], eax
+	mov eax, [g_keepXY__uint4]
+	mov [g_keepXY], eax
+	mov eax, [g_keepXY__uint4+0x4]
+	mov [g_keepXY+0x4], eax
+	mov eax, [g_keepXY__uint4+0x8]
+	mov [g_keepXY+0x8], eax
+	mov eax, [g_keepXY__uint4+0xc]
+	mov [g_keepXY+0xc], eax
+	mov eax, [g_keepZW__uint4]
+	mov [g_keepZW], eax
+	mov eax, [g_keepZW__uint4+0x4]
+	mov [g_keepZW+0x4], eax
+	mov eax, [g_keepZW__uint4+0x8]
+	mov [g_keepZW+0x8], eax
+	mov eax, [g_keepZW__uint4+0xc]
+	mov [g_keepZW+0xc], eax
+	mov eax, [g_keepX__uint4]
+	mov [g_keepX], eax
+	mov eax, [g_keepX__uint4+0x4]
+	mov [g_keepX+0x4], eax
+	mov eax, [g_keepX__uint4+0x8]
+	mov [g_keepX+0x8], eax
+	mov eax, [g_keepX__uint4+0xc]
+	mov [g_keepX+0xc], eax
+	mov eax, [g_keepZ__uint4]
+	mov [g_keepZ], eax
+	mov eax, [g_keepZ__uint4+0x4]
+	mov [g_keepZ+0x4], eax
+	mov eax, [g_keepZ__uint4+0x8]
+	mov [g_keepZ+0x8], eax
+	mov eax, [g_keepZ__uint4+0xc]
+	mov [g_keepZ+0xc], eax
+	pop ebp
+	ret
 
 
 ;FX_Beam_Add(FxBeam*)
@@ -203,23 +490,23 @@ FX_Beam_GenerateVerts:
 	mov [ebp-0x460], eax
 	mov eax, [ebp-0x39c]
 	mov [ebp-0x45c], eax
-	mov edi, [g_swizzleYZXW_dup_1]
+	mov edi, [g_swizzleYZXW]
 	mov [ebp-0x88], edi
-	mov eax, [g_swizzleYZXW_dup_1+0x4]
+	mov eax, [g_swizzleYZXW+0x4]
 	mov [ebp-0x84], eax
-	mov edi, [g_swizzleYZXW_dup_1+0x8]
+	mov edi, [g_swizzleYZXW+0x8]
 	mov [ebp-0x80], edi
-	mov edi, [g_swizzleYZXW_dup_1+0xc]
+	mov edi, [g_swizzleYZXW+0xc]
 	mov [ebp-0x7c], edi
 	mov [ebp-0x3c8], esi
 	mov [ebp-0x3c4], ebx
 	mov [ebp-0x3c0], ecx
 	mov [ebp-0x3bc], edx
-	mov eax, [g_swizzleYZXW_dup_1]
+	mov eax, [g_swizzleYZXW]
 	mov [ebp-0x248], eax
-	mov edx, [g_swizzleYZXW_dup_1+0x4]
+	mov edx, [g_swizzleYZXW+0x4]
 	mov [ebp-0x244], edx
-	mov ecx, [g_swizzleYZXW_dup_1+0x8]
+	mov ecx, [g_swizzleYZXW+0x8]
 	mov [ebp-0x240], ecx
 	mov [ebp-0x23c], edi
 	movzx eax, byte [ebp-0x245]
@@ -270,7 +557,7 @@ FX_Beam_GenerateVerts:
 	movzx eax, byte [ebp-0x23c]
 	movzx eax, byte [ebp+eax-0x3d8]
 	mov [ebp-0x409], al
-	mov ebx, [g_swizzleYZXW_dup_1]
+	mov ebx, [g_swizzleYZXW]
 	mov [ebp-0x78], ebx
 	mov [ebp-0x74], edx
 	mov [ebp-0x70], ecx
@@ -287,8 +574,8 @@ FX_Beam_GenerateVerts:
 	mov [ebp-0x3c4], edx
 	mov [ebp-0x3c0], ecx
 	mov [ebp-0x3bc], ebx
-	mov edx, [g_swizzleYZXW_dup_1+0x4]
-	mov ecx, [g_swizzleYZXW_dup_1+0x8]
+	mov edx, [g_swizzleYZXW+0x4]
+	mov ecx, [g_swizzleYZXW+0x8]
 	movzx eax, byte [ebp-0x245]
 	movzx eax, byte [ebp+eax-0x3d8]
 	mov [ebp-0x408], al
@@ -337,7 +624,7 @@ FX_Beam_GenerateVerts:
 	movzx eax, byte [ebp-0x23c]
 	movzx eax, byte [ebp+eax-0x3d8]
 	mov [ebp-0x3f9], al
-	mov ebx, [g_swizzleYZXW_dup_1]
+	mov ebx, [g_swizzleYZXW]
 	mov [ebp-0x68], ebx
 	mov [ebp-0x64], edx
 	mov [ebp-0x60], ecx
@@ -766,7 +1053,7 @@ FX_Beam_GenerateVerts_140:
 	mov [ebp-0x498], eax
 	movss xmm0, dword [ebp-0x354]
 	movss [ebp-0x520], xmm0
-	movss xmm1, dword [g_zero_dup_1+0x4]
+	movss xmm1, dword [g_zero+0x4]
 	xor eax, eax
 	ucomiss xmm1, xmm0
 	setbe al
@@ -774,14 +1061,14 @@ FX_Beam_GenerateVerts_140:
 	mov [ebp-0x494], eax
 	movss xmm2, dword [ebp-0x350]
 	movss [ebp-0x51c], xmm2
-	movss xmm0, dword [g_zero_dup_1+0x8]
+	movss xmm0, dword [g_zero+0x8]
 	xor eax, eax
 	ucomiss xmm0, xmm2
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x490], eax
 	movss xmm5, dword [ebp-0x34c]
-	movss xmm1, dword [g_zero_dup_1+0xc]
+	movss xmm1, dword [g_zero+0xc]
 	xor eax, eax
 	ucomiss xmm1, xmm5
 	setbe al
@@ -802,25 +1089,25 @@ FX_Beam_GenerateVerts_140:
 	movaps xmm0, xmm5
 	subss xmm0, xmm3
 	movss [ebp-0x2fc], xmm0
-	movss xmm0, dword [g_zero_dup_1]
+	movss xmm0, dword [g_zero]
 	xor eax, eax
 	ucomiss xmm0, xmm6
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x4d8], eax
-	movss xmm6, dword [g_zero_dup_1+0x4]
+	movss xmm6, dword [g_zero+0x4]
 	xor eax, eax
 	ucomiss xmm6, xmm1
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x4d4], eax
-	movss xmm0, dword [g_zero_dup_1+0x8]
+	movss xmm0, dword [g_zero+0x8]
 	xor eax, eax
 	ucomiss xmm0, xmm2
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x4d0], eax
-	movss xmm1, dword [g_zero_dup_1+0xc]
+	movss xmm1, dword [g_zero+0xc]
 	xor eax, eax
 	ucomiss xmm1, xmm3
 	setbe al
@@ -1091,28 +1378,28 @@ FX_Beam_GenerateVerts_150:
 	movss [ebp-0x2f0], xmm1
 	movss [ebp-0x2f4], xmm1
 	movss [ebp-0x2f8], xmm1
-	movss xmm0, dword [g_zero_dup_1]
+	movss xmm0, dword [g_zero]
 	xor eax, eax
 	ucomiss xmm0, xmm5
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x308], eax
 	movaps xmm2, xmm5
-	movss xmm6, dword [g_zero_dup_1+0x4]
+	movss xmm6, dword [g_zero+0x4]
 	xor eax, eax
 	ucomiss xmm6, xmm5
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x304], eax
 	movaps xmm3, xmm5
-	movss xmm0, dword [g_zero_dup_1+0x8]
+	movss xmm0, dword [g_zero+0x8]
 	xor eax, eax
 	ucomiss xmm0, xmm5
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x300], eax
 	movaps xmm4, xmm5
-	movss xmm6, dword [g_zero_dup_1+0xc]
+	movss xmm6, dword [g_zero+0xc]
 	xor eax, eax
 	ucomiss xmm6, xmm5
 	setbe al
@@ -1124,25 +1411,25 @@ FX_Beam_GenerateVerts_150:
 	movss [ebp-0x494], xmm0
 	movss [ebp-0x490], xmm0
 	movss [ebp-0x48c], xmm0
-	movss xmm6, dword [g_zero_dup_1]
+	movss xmm6, dword [g_zero]
 	xor eax, eax
 	ucomiss xmm6, xmm1
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x318], eax
-	movss xmm6, dword [g_zero_dup_1+0x4]
+	movss xmm6, dword [g_zero+0x4]
 	xor eax, eax
 	ucomiss xmm6, xmm1
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x314], eax
-	movss xmm6, dword [g_zero_dup_1+0x8]
+	movss xmm6, dword [g_zero+0x8]
 	xor eax, eax
 	ucomiss xmm6, xmm1
 	setbe al
 	sub eax, 0x1
 	mov [ebp-0x310], eax
-	movss xmm6, dword [g_zero_dup_1+0xc]
+	movss xmm6, dword [g_zero+0xc]
 	xor eax, eax
 	ucomiss xmm6, xmm1
 	setbe al
@@ -1365,13 +1652,13 @@ FX_Beam_GenerateVerts_20:
 	movss [ebp-0x538], xmm1
 	mov eax, [edi+0x2c]
 	mov [ebp-0x530], eax
-	mov eax, [g_zero_dup_1]
+	mov eax, [g_zero]
 	mov [ebp-0x188], eax
-	mov eax, [g_zero_dup_1+0x4]
+	mov eax, [g_zero+0x4]
 	mov [ebp-0x184], eax
-	mov eax, [g_zero_dup_1+0x8]
+	mov eax, [g_zero+0x8]
 	mov [ebp-0x180], eax
-	mov eax, [g_zero_dup_1+0xc]
+	mov eax, [g_zero+0xc]
 	mov [ebp-0x17c], eax
 	mov eax, [edi]
 	mov [ebp-0x1b8], eax
@@ -1616,7 +1903,7 @@ FX_Beam_GenerateVerts_20:
 	movss [ebp-0x410], xmm6
 	movss [ebp-0x414], xmm6
 	movss [ebp-0x418], xmm6
-	movss xmm0, dword [g_zero_dup_1]
+	movss xmm0, dword [g_zero]
 	ucomiss xmm0, xmm7
 	ja FX_Beam_GenerateVerts_130
 	xor eax, eax
@@ -1698,13 +1985,13 @@ FX_Beam_GenerateVerts_120:
 	subss xmm0, [ebp-0x270]
 	movss [ebp-0x290], xmm0
 	mov dword [ebp-0x28c], 0x0
-	mov edx, [g_keepXYW_dup_1]
+	mov edx, [g_keepXYW]
 	mov [ebp-0x158], edx
-	mov ecx, [g_keepXYW_dup_1+0x4]
+	mov ecx, [g_keepXYW+0x4]
 	mov [ebp-0x154], ecx
-	mov ebx, [g_keepXYW_dup_1+0x8]
+	mov ebx, [g_keepXYW+0x8]
 	mov [ebp-0x150], ebx
-	mov eax, [g_keepXYW_dup_1+0xc]
+	mov eax, [g_keepXYW+0xc]
 	mov [ebp-0x14c], eax
 	and edx, [ebp-0x298]
 	mov [ebp-0x298], edx
@@ -1774,13 +2061,13 @@ FX_Beam_GenerateVerts_120:
 	movss [ebp-0x2a4], xmm3
 	movss [ebp-0x2a0], xmm1
 	movss [ebp-0x29c], xmm2
-	mov ebx, [g_keepXYZ_dup_1]
+	mov ebx, [g_keepXYZ]
 	mov [ebp-0x138], ebx
-	mov eax, [g_keepXYZ_dup_1+0x4]
+	mov eax, [g_keepXYZ+0x4]
 	mov [ebp-0x134], eax
-	mov edx, [g_keepXYZ_dup_1+0x8]
+	mov edx, [g_keepXYZ+0x8]
 	mov [ebp-0x130], edx
-	mov ecx, [g_keepXYZ_dup_1+0xc]
+	mov ecx, [g_keepXYZ+0xc]
 	mov [ebp-0x12c], ecx
 	and ebx, [ebp-0x2a8]
 	mov [ebp-0x188], ebx
@@ -2015,13 +2302,13 @@ FX_Beam_GenerateVerts_260:
 	movss [ebp-0x1d4], xmm0
 	movss [ebp-0x1d0], xmm0
 	movss [ebp-0x1cc], xmm0
-	mov edx, [g_swizzleXYZA_dup_1]
+	mov edx, [g_swizzleXYZA]
 	mov [ebp-0xc8], edx
-	mov ecx, [g_swizzleXYZA_dup_1+0x4]
+	mov ecx, [g_swizzleXYZA+0x4]
 	mov [ebp-0xc4], ecx
-	mov esi, [g_swizzleXYZA_dup_1+0x8]
+	mov esi, [g_swizzleXYZA+0x8]
 	mov [ebp-0xc0], esi
-	mov edi, [g_swizzleXYZA_dup_1+0xc]
+	mov edi, [g_swizzleXYZA+0xc]
 	mov [ebp-0xbc], edi
 	mov eax, [ebp-0x208]
 	mov [ebp-0x3d8], eax
@@ -2453,41 +2740,41 @@ SECTION .data
 
 ;Initialized constant data of fx_beam:
 SECTION .rdata
-g_keepZ__uint4_dup_1: dd 0x0, 0x0, 0xffffffff, 0x0
-g_keepX__uint4_dup_1: dd 0xffffffff, 0x0, 0x0, 0x0
-g_keepZW__uint4_dup_1: dd 0x0, 0x0, 0xffffffff, 0xffffffff
-g_keepXY__uint4_dup_1: dd 0xffffffff, 0xffffffff, 0x0, 0x0
-g_keepXYZ__uint4_dup_1: dd 0xffffffff, 0xffffffff, 0xffffffff, 0x0
-g_keepXYW__uint4_dup_1: dd 0xffffffff, 0xffffffff, 0x0, 0xffffffff
-g_keepXZW__uint4_dup_1: dd 0xffffffff, 0x0, 0xffffffff, 0xffffffff
-g_keepYZW__uint4_dup_1: dd 0x0, 0xffffffff, 0xffffffff, 0xffffffff
-g_selectW__uint4_dup_1: dd 0x10203, 0x4050607, 0x8090a0b, 0x1c1d1e1f
-g_selectZ__uint4_dup_1: dd 0x10203, 0x4050607, 0x18191a1b, 0xc0d0e0f
-g_selectY__uint4_dup_1: dd 0x10203, 0x14151617, 0x8090a0b, 0xc0d0e0f
-g_selectX__uint4_dup_1: dd 0x10111213, 0x4050607, 0x8090a0b, 0xc0d0e0f
-g_swizzleWWWW__uint4_dup_1: dd 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f
-g_swizzleZZZZ__uint4_dup_1: dd 0x8090a0b, 0x8090a0b, 0x8090a0b, 0x8090a0b
-g_swizzleYYYY__uint4_dup_1: dd 0x4050607, 0x4050607, 0x4050607, 0x4050607
-g_swizzleXXXX__uint4_dup_1: dd 0x10203, 0x10203, 0x10203, 0x10203
-g_swizzleYZWA__uint4_dup_1: dd 0x4050607, 0x8090a0b, 0xc0d0e0f, 0x10111213
-g_swizzleZWAW__uint4_dup_1: dd 0x8090a0b, 0xc0d0e0f, 0x10111213, 0xc0d0e0f
-g_swizzleWABW__uint4_dup_1: dd 0xc0d0e0f, 0x10111213, 0x14151617, 0xc0d0e0f
-g_swizzleZXYW__uint4_dup_1: dd 0x8090a0b, 0x10203, 0x4050607, 0xc0d0e0f
-g_swizzleYZXW__uint4_dup_1: dd 0x4050607, 0x8090a0b, 0x10203, 0xc0d0e0f
-g_swizzleXYZA__uint4_dup_1: dd 0x10203, 0x4050607, 0x8090a0b, 0x10111213
-g_swizzleZWCD__uint4_dup_1: dd 0x8090a0b, 0xc0d0e0f, 0x18191a1b, 0x1c1d1e1f
-g_swizzleXYAB__uint4_dup_1: dd 0x10203, 0x4050607, 0x10111213, 0x14151617
-g_swizzleYBWD__uint4_dup_1: dd 0x4050607, 0x14151617, 0xc0d0e0f, 0x1c1d1e1f
-g_swizzleXAZC__uint4_dup_1: dd 0x10203, 0x10111213, 0x8090a0b, 0x18191a1b
-g_swizzleYXWZ__uint4_dup_1: dd 0x4050607, 0x10203, 0xc0d0e0f, 0x8090a0b
-g_swizzleXZYW__uint4_dup_1: dd 0x10203, 0x8090a0b, 0x4050607, 0xc0d0e0f
-g_swizzleYXZW__uint4_dup_1: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
-g_swizzleXYZW__uint4_dup_1: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
-g_inc__uint4_dup_1: dd 0x1, 0x1, 0x1, 0x1
-g_negativeZero__uint4_dup_1: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
-g_fltMin__uint4_dup_1: dd 0x800000, 0x800000, 0x800000, 0x800000
+g_keepZ__uint4: dd 0x0, 0x0, 0xffffffff, 0x0
+g_keepX__uint4: dd 0xffffffff, 0x0, 0x0, 0x0
+g_keepZW__uint4: dd 0x0, 0x0, 0xffffffff, 0xffffffff
+g_keepXY__uint4: dd 0xffffffff, 0xffffffff, 0x0, 0x0
+g_keepXYZ__uint4: dd 0xffffffff, 0xffffffff, 0xffffffff, 0x0
+g_keepXYW__uint4: dd 0xffffffff, 0xffffffff, 0x0, 0xffffffff
+g_keepXZW__uint4: dd 0xffffffff, 0x0, 0xffffffff, 0xffffffff
+g_keepYZW__uint4: dd 0x0, 0xffffffff, 0xffffffff, 0xffffffff
+g_selectW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0x1c1d1e1f
+g_selectZ__uint4: dd 0x10203, 0x4050607, 0x18191a1b, 0xc0d0e0f
+g_selectY__uint4: dd 0x10203, 0x14151617, 0x8090a0b, 0xc0d0e0f
+g_selectX__uint4: dd 0x10111213, 0x4050607, 0x8090a0b, 0xc0d0e0f
+g_swizzleWWWW__uint4: dd 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f, 0xc0d0e0f
+g_swizzleZZZZ__uint4: dd 0x8090a0b, 0x8090a0b, 0x8090a0b, 0x8090a0b
+g_swizzleYYYY__uint4: dd 0x4050607, 0x4050607, 0x4050607, 0x4050607
+g_swizzleXXXX__uint4: dd 0x10203, 0x10203, 0x10203, 0x10203
+g_swizzleYZWA__uint4: dd 0x4050607, 0x8090a0b, 0xc0d0e0f, 0x10111213
+g_swizzleZWAW__uint4: dd 0x8090a0b, 0xc0d0e0f, 0x10111213, 0xc0d0e0f
+g_swizzleWABW__uint4: dd 0xc0d0e0f, 0x10111213, 0x14151617, 0xc0d0e0f
+g_swizzleZXYW__uint4: dd 0x8090a0b, 0x10203, 0x4050607, 0xc0d0e0f
+g_swizzleYZXW__uint4: dd 0x4050607, 0x8090a0b, 0x10203, 0xc0d0e0f
+g_swizzleXYZA__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0x10111213
+g_swizzleZWCD__uint4: dd 0x8090a0b, 0xc0d0e0f, 0x18191a1b, 0x1c1d1e1f
+g_swizzleXYAB__uint4: dd 0x10203, 0x4050607, 0x10111213, 0x14151617
+g_swizzleYBWD__uint4: dd 0x4050607, 0x14151617, 0xc0d0e0f, 0x1c1d1e1f
+g_swizzleXAZC__uint4: dd 0x10203, 0x10111213, 0x8090a0b, 0x18191a1b
+g_swizzleYXWZ__uint4: dd 0x4050607, 0x10203, 0xc0d0e0f, 0x8090a0b
+g_swizzleXZYW__uint4: dd 0x10203, 0x8090a0b, 0x4050607, 0xc0d0e0f
+g_swizzleYXZW__uint4: dd 0x4050607, 0x10203, 0x8090a0b, 0xc0d0e0f
+g_swizzleXYZW__uint4: dd 0x10203, 0x4050607, 0x8090a0b, 0xc0d0e0f
+g_inc__uint4: dd 0x1, 0x1, 0x1, 0x1
+g_negativeZero__uint4: dd 0x80000000, 0x80000000, 0x80000000, 0x80000000
+g_fltMin__uint4: dd 0x800000, 0x800000, 0x800000, 0x800000
 g_unit: dd 0x0, 0x0, 0x0, 0x3f800000
-g_zero_dup_1: dd 0x0, 0x0, 0x0, 0x0
+g_zero: dd 0x0, 0x0, 0x0, 0x0
 g_2xunit: dd 0x0, 0x0, 0x0, 0x40000000
 coeffZGtW.138963: dd 0x0, 0x0, 0xbf800000, 0x3f800000, 0x0, 0x0, 0x0, 0x0
 _ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE6wiggle: dd 0x0, 0x3f800000, 0x0, 0x0, 0x3f35c28f, 0x3f35c28f, 0x0, 0x0, 0x3f800000, 0x0, 0x0, 0x0, 0x3f35c28f, 0xbf35c28f, 0x0, 0x0, 0x0, 0xbf800000, 0x0, 0x0, 0xbf35c28f, 0xbf35c28f, 0x0, 0x0, 0xbf800000, 0x0, 0x0, 0x0, 0xbf35c28f, 0x3f35c28f, 0x0, 0x0
@@ -2496,39 +2783,39 @@ _ZZ21FX_Beam_GenerateVertsP18FxGenerateVertsCmdE15templateIndices: dd 0x20000, 0
 
 ;Zero initialized global or static variables of fx_beam:
 SECTION .bss
-g_keepZ_dup_1: resb 0x10
-g_keepX_dup_1: resb 0x10
-g_keepZW_dup_1: resb 0x10
-g_keepXY_dup_1: resb 0x10
-g_keepXYZ_dup_1: resb 0x10
-g_keepXYW_dup_1: resb 0x10
-g_keepXZW_dup_1: resb 0x10
-g_keepYZW_dup_1: resb 0x10
-g_selectW_dup_1: resb 0x10
-g_selectZ_dup_1: resb 0x10
-g_selectY_dup_1: resb 0x10
-g_selectX_dup_1: resb 0x10
-g_swizzleWWWW_dup_1: resb 0x10
-g_swizzleZZZZ_dup_1: resb 0x10
-g_swizzleYYYY_dup_1: resb 0x10
-g_swizzleXXXX_dup_1: resb 0x10
-g_swizzleYZWA_dup_1: resb 0x10
-g_swizzleZWAW_dup_1: resb 0x10
-g_swizzleWABW_dup_1: resb 0x10
-g_swizzleZXYW_dup_1: resb 0x10
-g_swizzleYZXW_dup_1: resb 0x10
-g_swizzleXYZA_dup_1: resb 0x10
-g_swizzleZWCD_dup_1: resb 0x10
-g_swizzleXYAB_dup_1: resb 0x10
-g_swizzleYBWD_dup_1: resb 0x10
-g_swizzleXAZC_dup_1: resb 0x10
-g_swizzleYXWZ_dup_1: resb 0x10
-g_swizzleXZYW_dup_1: resb 0x10
-g_swizzleYXZW_dup_1: resb 0x10
-g_swizzleXYZW_dup_1: resb 0x10
-g_inc_dup_1: resb 0x10
-g_negativeZero_dup_1: resb 0x10
-g_fltMin_dup_1: resb 0x80
+g_keepZ: resb 0x10
+g_keepX: resb 0x10
+g_keepZW: resb 0x10
+g_keepXY: resb 0x10
+g_keepXYZ: resb 0x10
+g_keepXYW: resb 0x10
+g_keepXZW: resb 0x10
+g_keepYZW: resb 0x10
+g_selectW: resb 0x10
+g_selectZ: resb 0x10
+g_selectY: resb 0x10
+g_selectX: resb 0x10
+g_swizzleWWWW: resb 0x10
+g_swizzleZZZZ: resb 0x10
+g_swizzleYYYY: resb 0x10
+g_swizzleXXXX: resb 0x10
+g_swizzleYZWA: resb 0x10
+g_swizzleZWAW: resb 0x10
+g_swizzleWABW: resb 0x10
+g_swizzleZXYW: resb 0x10
+g_swizzleYZXW: resb 0x10
+g_swizzleXYZA: resb 0x10
+g_swizzleZWCD: resb 0x10
+g_swizzleXYAB: resb 0x10
+g_swizzleYBWD: resb 0x10
+g_swizzleXAZC: resb 0x10
+g_swizzleYXWZ: resb 0x10
+g_swizzleXZYW: resb 0x10
+g_swizzleYXZW: resb 0x10
+g_swizzleXYZW: resb 0x10
+g_inc: resb 0x10
+g_negativeZero: resb 0x10
+g_fltMin: resb 0x80
 g_beamInfo: resb 0x1400
 
 

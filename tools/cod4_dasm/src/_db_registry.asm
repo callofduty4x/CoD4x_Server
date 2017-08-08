@@ -53,7 +53,7 @@
 	extern SL_ConvertToString
 	extern DB_SetXAssetName
 	extern SL_ShutdownSystem
-	extern tolower_dup_1
+	extern tolower
 	extern DB_GetXAssetTypeSize
 	extern memcpy
 	extern Sys_Error
@@ -2590,7 +2590,7 @@ DB_CreateDefaultEntry_40:
 DB_CreateDefaultEntry_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz DB_CreateDefaultEntry_30
 	mov edx, 0x2f
@@ -2674,7 +2674,7 @@ DB_CreateDefaultEntry_150:
 DB_CreateDefaultEntry_120:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz DB_CreateDefaultEntry_140
 	mov edx, 0x2f
@@ -2795,7 +2795,7 @@ DB_LinkXAssetEntry_40:
 DB_LinkXAssetEntry_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz DB_LinkXAssetEntry_30
 	mov edx, 0x2f
@@ -3306,7 +3306,7 @@ DB_UnloadXZone_180:
 DB_UnloadXZone_150:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz DB_UnloadXZone_170
 	mov edx, 0x2f
@@ -4437,7 +4437,7 @@ Mark_FontAsset_40:
 Mark_FontAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_FontAsset_30
 	mov edx, 0x2f
@@ -4498,7 +4498,7 @@ Mark_MenuAsset_40:
 Mark_MenuAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_MenuAsset_30
 	mov edx, 0x2f
@@ -4728,7 +4728,7 @@ Mark_XModelAsset_40:
 Mark_XModelAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_XModelAsset_30
 	mov edx, 0x2f
@@ -4878,7 +4878,7 @@ Mark_ClipMapAsset_40:
 Mark_ClipMapAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_ClipMapAsset_30
 	mov edx, 0x2f
@@ -4939,7 +4939,7 @@ Mark_MapEntsAsset_40:
 Mark_MapEntsAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_MapEntsAsset_30
 	mov edx, 0x2f
@@ -5000,7 +5000,7 @@ Mark_RawFileAsset_40:
 Mark_RawFileAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_RawFileAsset_30
 	mov edx, 0x2f
@@ -5056,7 +5056,7 @@ DB_IsXAssetDefault_40:
 DB_IsXAssetDefault_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz DB_IsXAssetDefault_30
 	mov edx, 0x2f
@@ -5449,7 +5449,7 @@ Mark_ComWorldAsset_40:
 Mark_ComWorldAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_ComWorldAsset_30
 	mov edx, 0x2f
@@ -5510,7 +5510,7 @@ Mark_GfxImageAsset_40:
 Mark_GfxImageAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_GfxImageAsset_30
 	mov edx, 0x2f
@@ -5571,7 +5571,7 @@ Mark_GfxWorldAsset_40:
 Mark_GfxWorldAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_GfxWorldAsset_30
 	mov edx, 0x2f
@@ -5632,7 +5632,7 @@ Mark_LightDefAsset_40:
 Mark_LightDefAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_LightDefAsset_30
 	mov edx, 0x2f
@@ -5693,7 +5693,7 @@ Mark_MaterialAsset_40:
 Mark_MaterialAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_MaterialAsset_30
 	mov edx, 0x2f
@@ -5754,7 +5754,7 @@ Mark_MenuListAsset_40:
 Mark_MenuListAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_MenuListAsset_30
 	mov edx, 0x2f
@@ -5815,7 +5815,7 @@ Mark_SndCurveAsset_40:
 Mark_SndCurveAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_SndCurveAsset_30
 	mov edx, 0x2f
@@ -5879,7 +5879,7 @@ DB_FindXAssetHeader_50:
 DB_FindXAssetHeader_20:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz DB_FindXAssetHeader_40
 	mov edx, 0x2f
@@ -6083,7 +6083,7 @@ DB_FindXAssetHeader_340:
 DB_FindXAssetHeader_310:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz DB_FindXAssetHeader_330
 	mov edx, 0x2f
@@ -6330,7 +6330,7 @@ Mark_WeaponDefAsset_40:
 Mark_WeaponDefAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_WeaponDefAsset_30
 	mov edx, 0x2f
@@ -6470,7 +6470,7 @@ Mark_PhysPresetAsset_40:
 Mark_PhysPresetAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_PhysPresetAsset_30
 	mov edx, 0x2f
@@ -6531,7 +6531,7 @@ Mark_XAnimPartsAsset_40:
 Mark_XAnimPartsAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_XAnimPartsAsset_30
 	mov edx, 0x2f
@@ -6677,7 +6677,7 @@ Mark_FxEffectDefAsset_40:
 Mark_FxEffectDefAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_FxEffectDefAsset_30
 	mov edx, 0x2f
@@ -6738,7 +6738,7 @@ Mark_GameWorldMpAsset_40:
 Mark_GameWorldMpAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_GameWorldMpAsset_30
 	mov edx, 0x2f
@@ -6799,7 +6799,7 @@ Mark_GameWorldSpAsset_40:
 Mark_GameWorldSpAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_GameWorldSpAsset_30
 	mov edx, 0x2f
@@ -6860,7 +6860,7 @@ Mark_LoadedSoundAsset_40:
 Mark_LoadedSoundAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_LoadedSoundAsset_30
 	mov edx, 0x2f
@@ -6921,7 +6921,7 @@ Mark_StringTableAsset_40:
 Mark_StringTableAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_StringTableAsset_30
 	mov edx, 0x2f
@@ -7285,7 +7285,7 @@ Mark_FxImpactTableAsset_40:
 Mark_FxImpactTableAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_FxImpactTableAsset_30
 	mov edx, 0x2f
@@ -7346,7 +7346,7 @@ Mark_LocalizeEntryAsset_40:
 Mark_LocalizeEntryAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_LocalizeEntryAsset_30
 	mov edx, 0x2f
@@ -7660,7 +7660,7 @@ Mark_snd_alias_list_Asset_40:
 Mark_snd_alias_list_Asset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_snd_alias_list_Asset_30
 	mov edx, 0x2f
@@ -7855,7 +7855,7 @@ Mark_MaterialTechniqueSetAsset_40:
 Mark_MaterialTechniqueSetAsset_10:
 	movsx eax, byte [ebx]
 	mov [esp], eax
-	call tolower_dup_1
+	call tolower
 	cmp eax, 0x5c
 	jnz Mark_MaterialTechniqueSetAsset_30
 	mov edx, 0x2f

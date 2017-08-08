@@ -80,7 +80,7 @@
 	extern dvar_modifiedFlags
 	extern SV_SetConfig
 	extern SV_Heartbeat_f
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern EnablePbSv
 	extern Sys_EndLoadThreadPriorities
 	extern DisablePbSv
@@ -933,7 +933,7 @@ SV_SpawnServer_310:
 	mov dword [esp], 0xf
 	call Com_Printf
 	mov dword [esp], _cstring_sv_punkbuster
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jz SV_SpawnServer_300
 	call EnablePbSv

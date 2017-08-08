@@ -2311,7 +2311,7 @@ void SV_MutePlayer_f(client_t* cl){
 	if(muteClient > 63 || muteClient < 0)
 		return;
 
-	cl->mutedClients[muteClient] = 1;
+	cl->muteList[muteClient] = 1;
 }
 
 
@@ -2322,7 +2322,7 @@ void SV_UnmutePlayer_f(client_t* cl){
 	if(muteClient > 63 || muteClient < 0)
 		return;
 
-	cl->mutedClients[muteClient] = 0;
+	cl->muteList[muteClient] = 0;
 }
 
 
@@ -2845,4 +2845,12 @@ int SV_GetPredirectedOriginAndTimeForClientNum(int clientNum, float *origin)
 	origin[1] = client->predictedOrigin[1];
 	origin[2] = client->predictedOrigin[2];	
 	return client->predictedOriginServerTime;
+}
+
+
+bool __cdecl SV_ClientHasClientMuted(int listener, int talker)
+{
+    assert(listener < sv_maxclients->integer);
+    assert(talker < sv_maxclients->integer);
+    return svs.clients[listener].muteList[talker];
 }

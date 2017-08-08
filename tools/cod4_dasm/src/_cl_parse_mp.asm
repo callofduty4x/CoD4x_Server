@@ -35,7 +35,7 @@
 	extern BG_GetEntityTypeName
 	extern CL_GetConfigString
 	extern sscanf
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern Q_strncpyz
 	extern Sys_OpenURL
 	extern Cbuf_AddText
@@ -54,7 +54,7 @@
 	extern FS_ServerSetReferencedFFs
 	extern Info_NextPair
 	extern Cvar_SetFromStringByName
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern _ZN10LargeLocalD1Ev
 	extern Cvar_SetCheatState
 	extern _Unwind_Resume
@@ -1227,7 +1227,7 @@ CL_ParseWWWDownload:
 	sub esp, 0x13c
 	mov ebx, [ebp+0xc]
 	mov dword [esp], _cstring_fs_homepath
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov [ebp-0x11c], eax
 	mov dword [esp+0x8], 0x40
 	mov esi, cls
@@ -1456,7 +1456,7 @@ CL_SystemInfoChanged_60:
 	jnz CL_SystemInfoChanged_70
 CL_SystemInfoChanged_50:
 	mov dword [esp], _cstring_sv_pure
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	movzx eax, al
 	mov [cl_connectedToPureServer], eax
 	lea eax, [ebp-0x2c]

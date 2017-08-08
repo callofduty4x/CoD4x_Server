@@ -52,10 +52,10 @@
 	extern atoi
 	extern memset
 	extern Com_Memset
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern CL_GetServerList
 	extern MSG_ReadString
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern Com_DPrintf
 	extern NET_AdrToString
 	extern qsort
@@ -1297,7 +1297,7 @@ CL_GlobalServers_f_60:
 	jnz CL_GlobalServers_f_80
 CL_GlobalServers_f_50:
 	mov dword [esp], _cstring_fs_restrict
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz CL_GlobalServers_f_90
 CL_GlobalServers_f_110:
@@ -1477,7 +1477,7 @@ CL_ServerInfoPacket:
 	call atoi
 	mov ebx, eax
 	mov dword [esp], _cstring_debug_protocol
-	call Cvar_GetString
+	call Cvar_VariableString
 	cmp byte [eax], 0x0
 	jnz CL_ServerInfoPacket_20
 	mov eax, 0x6

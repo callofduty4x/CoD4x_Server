@@ -27,7 +27,7 @@
 	extern memset
 	extern FS_FCloseFile
 	extern Info_Validate
-	extern ParseConfigStringToStructCustomSize
+	extern ParseConfigStringToStruct
 	extern Q_strlwr
 
 ;Exports of bg_weapons_load_obj:
@@ -1456,7 +1456,7 @@ BG_LoadWeaponDefInternal_100:
 	mov dword [esp+0x4], weaponDefFields
 	mov ebx, [ebp-0x287c]
 	mov [esp], ebx
-	call ParseConfigStringToStructCustomSize
+	call ParseConfigStringToStruct
 	test eax, eax
 	jnz BG_LoadWeaponDefInternal_90
 BG_LoadWeaponDefInternal_240:

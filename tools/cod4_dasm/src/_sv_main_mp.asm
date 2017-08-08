@@ -6,10 +6,10 @@
 	extern strcpy
 	extern sv_cmd_args
 	extern Info_SetValueForKey
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern Com_sprintf
 	extern SV_GameClientNum
-	extern Cvar_GetString
+	extern Cvar_VariableString
 	extern va
 	extern NET_OutOfBandPrint
 	extern Info_ValueForKey
@@ -68,7 +68,7 @@
 	extern SVC_RemoteCommand
 	extern SV_UserVoice
 	extern fs_numServerIwds
-	extern Cvar_GetInt
+	extern Cvar_VariableIntegerValue
 	extern Q_strncpyz
 	extern Q_strncat
 	extern Com_Shutdown
@@ -268,7 +268,7 @@ SVC_Status_210:
 	mov [esp], edx
 	call Info_SetValueForKey
 	mov dword [esp], _cstring_fs_restrict
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz SVC_Status_20
 SVC_Status_140:
@@ -339,7 +339,7 @@ SVC_Status_40:
 	jmp SVC_Status_70
 SVC_Status_30:
 	mov dword [esp], _cstring_g_password
-	call Cvar_GetString
+	call Cvar_VariableString
 	test eax, eax
 	jz SVC_Status_80
 	cmp byte [eax], 0x0
@@ -352,7 +352,7 @@ SVC_Status_80:
 	call Info_SetValueForKey
 SVC_Status_150:
 	mov dword [esp], _cstring_fs_game
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov edx, eax
 	mov eax, [sv_pure]
 	cmp byte [eax+0xc], 0x0
@@ -363,7 +363,7 @@ SVC_Status_150:
 	jnz SVC_Status_100
 SVC_Status_110:
 	mov dword [esp], _cstring_sv_referencediwd
-	call Cvar_GetString
+	call Cvar_VariableString
 	cmp byte [eax], 0x0
 	jnz SVC_Status_120
 	xor ebx, ebx
@@ -1984,7 +1984,7 @@ SVC_GameCompleteStatus_70:
 	mov [esp], edx
 	call Info_SetValueForKey
 	mov dword [esp], _cstring_fs_restrict
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	test al, al
 	jnz SVC_GameCompleteStatus_20
 SVC_GameCompleteStatus_60:
@@ -2908,7 +2908,7 @@ SVC_Info_220:
 	jnz SVC_Info_80
 SVC_Info_230:
 	mov dword [esp], _cstring_fs_game
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov ebx, eax
 	cmp byte [eax], 0x0
 	jnz SVC_Info_90
@@ -2924,29 +2924,29 @@ SVC_Info_250:
 	jnz SVC_Info_110
 SVC_Info_260:
 	mov dword [esp], _cstring_g_password
-	call Cvar_GetString
+	call Cvar_VariableString
 	test eax, eax
 	jz SVC_Info_120
 	cmp byte [eax], 0x0
 	jnz SVC_Info_130
 SVC_Info_120:
 	mov dword [esp], _cstring_scr_team_fftype
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	test eax, eax
 	jnz SVC_Info_140
 SVC_Info_370:
 	mov dword [esp], _cstring_scr_game_allowki
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	test eax, eax
 	jnz SVC_Info_150
 SVC_Info_360:
 	mov dword [esp], _cstring_scr_hardcore
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	test eax, eax
 	jnz SVC_Info_160
 SVC_Info_350:
 	mov dword [esp], _cstring_scr_oldschool
-	call Cvar_GetInt
+	call Cvar_VariableIntegerValue
 	test eax, eax
 	jnz SVC_Info_170
 SVC_Info_340:
@@ -3064,7 +3064,7 @@ SVC_Info_80:
 	mov [esp], esi
 	call Info_SetValueForKey
 	mov dword [esp], _cstring_fs_game
-	call Cvar_GetString
+	call Cvar_VariableString
 	mov ebx, eax
 	cmp byte [eax], 0x0
 	jz SVC_Info_240
@@ -3142,7 +3142,7 @@ SVC_Info_300:
 	jmp SVC_Info_310
 SVC_Info_210:
 	mov dword [esp], _cstring_sv_referencediwd
-	call Cvar_GetString
+	call Cvar_VariableString
 	cmp byte [eax], 0x0
 	jnz SVC_Info_320
 	xor ebx, ebx

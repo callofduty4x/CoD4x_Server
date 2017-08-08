@@ -8,8 +8,6 @@
 	extern Com_sprintf
 
 ;Exports of ui_expressions_obj:
-	global s_tempOperandValueAsString_dup_1
-	global currentTempOperand_dup_1
 	global free_expression
 	global parse_expression
 	global g_expOperatorNames
@@ -306,16 +304,16 @@ parse_expression_150:
 	mov ecx, [eax+0x4]
 	mov ebx, [eax+0x8]
 	mov edi, ecx
-	mov eax, [currentTempOperand_dup_1]
+	mov eax, [currentTempOperand]
 	mov edx, eax
 	shl edx, 0x8
-	add edx, s_tempOperandValueAsString_dup_1
+	add edx, s_tempOperandValueAsString
 	mov [ebp-0x42c], edx
 	add eax, 0x1
 	and eax, 0x80000003
 	js parse_expression_200
 parse_expression_320:
-	mov [currentTempOperand_dup_1], eax
+	mov [currentTempOperand], eax
 	cmp edi, 0x2
 	jz parse_expression_210
 	test edi, edi
@@ -440,8 +438,8 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of ui_expressions_obj:
 SECTION .bss
-s_tempOperandValueAsString_dup_1: resb 0x400
-currentTempOperand_dup_1: resb 0x80
+s_tempOperandValueAsString: resb 0x400
+currentTempOperand: resb 0x80
 
 
 ;All cstrings:

@@ -1,7 +1,7 @@
 ;Imports of eval:
 	extern __cxa_allocate_exception
 	extern __cxa_throw
-	extern g_fltMin__uint4_dup_1
+	extern g_fltMin__uint4
 	extern floor
 	extern pow
 	extern stricmp
@@ -603,7 +603,7 @@ Eval_EvaluationStep_590:
 	test edx, edx
 	jnz Eval_EvaluationStep_260
 	movsd xmm0, qword [ecx+0x4]
-	xorpd xmm0, [g_fltMin__uint4_dup_1+0x380]
+	xorpd xmm0, [g_fltMin__uint4+0x380]
 	movsd [ecx+0x4], xmm0
 	mov eax, 0x1
 	jmp Eval_EvaluationStep_90
@@ -927,7 +927,7 @@ Eval_EvaluationStep_220:
 	lea eax, [ecx+ecx*2]
 	mov esi, [ebp-0x54]
 	movsd xmm0, qword [esi+eax*4+0xff8]
-	xorpd xmm0, [g_fltMin__uint4_dup_1+0x380]
+	xorpd xmm0, [g_fltMin__uint4+0x380]
 	movsd [esp+0x8], xmm0
 	mov dword [esp], 0x0
 	mov dword [esp+0x4], 0x40000000

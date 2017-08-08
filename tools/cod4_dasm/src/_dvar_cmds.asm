@@ -44,7 +44,6 @@
 	extern Cmd_AddCommand
 
 ;Exports of dvar_cmds:
-	global info2
 	global info1
 	global Cvar_WriteSingleVariable
 	global Cvar_WriteSingleDefault

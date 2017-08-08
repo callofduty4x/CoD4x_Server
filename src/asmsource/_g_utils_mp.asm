@@ -134,7 +134,6 @@
 	global G_flrand
 	global G_random
 	global G_crandom
-	global entityTypeNames_dup_1
 
 
 SECTION .text
@@ -2288,7 +2287,7 @@ G_GetEntityTypeName:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	mov eax, [eax+0x4]
-	mov eax, [eax*4+entityTypeNames_dup_1]
+	mov eax, [eax*4+entityTypeNames]
 	pop ebp
 	ret
 
@@ -3338,7 +3337,7 @@ G_crandom:
 ;Initialized global or static variables of g_utils_mp:
 SECTION .data
 _ZZ22G_LocalizedStringIndexPKcE12origErrorMsg: dd _cstring_localized_string, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-entityTypeNames_dup_1: dd _cstring_et_general, _cstring_et_player, _cstring_et_player_corpse, _cstring_et_item, _cstring_et_missile, _cstring_et_invisible, _cstring_et_scriptmover, _cstring_et_sound_blend, _cstring_et_fx, _cstring_et_loop_fx, _cstring_et_primary_light, _cstring_et_mg42, _cstring_et_helicopter, _cstring_et_plane, _cstring_et_vehicle, _cstring_et_vehicle_collm, _cstring_et_vehicle_corps
+entityTypeNames: dd _cstring_et_general, _cstring_et_player, _cstring_et_player_corpse, _cstring_et_item, _cstring_et_missile, _cstring_et_invisible, _cstring_et_scriptmover, _cstring_et_sound_blend, _cstring_et_fx, _cstring_et_loop_fx, _cstring_et_primary_light, _cstring_et_mg42, _cstring_et_helicopter, _cstring_et_plane, _cstring_et_vehicle, _cstring_et_vehicle_collm, _cstring_et_vehicle_corps
 
 
 ;Initialized constant data of g_utils_mp:

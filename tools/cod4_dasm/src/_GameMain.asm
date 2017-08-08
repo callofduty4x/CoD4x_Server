@@ -68,7 +68,6 @@
 ;Exports of GameMain:
 	global _ZGVZ16GetMacGameEnginevE13theGameEngine
 	global _ZZ16GetMacGameEnginevE13theGameEngine
-	global __tcf_0_dup_1
 	global ScreenSleepProc
 	global GetMacGameEngine
 	global _ZN17CCallOfDutyEngine10InitializeEv
@@ -84,8 +83,8 @@
 SECTION .text
 
 
-;__tcf_0_dup_1
-__tcf_0_dup_1:
+;__tcf_0
+__tcf_0:
 	push ebp
 	mov ebp, esp
 	mov dword [_ZZ16GetMacGameEnginevE13theGameEngine], _ZTV17CCallOfDutyEngine+0x8
@@ -132,7 +131,7 @@ GetMacGameEngine_10:
 	mov eax, [0xd5cc00c]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], 0x0
-	mov dword [esp], __tcf_0_dup_1
+	mov dword [esp], __tcf_0
 	call __cxa_atexit
 	mov eax, _ZZ16GetMacGameEnginevE13theGameEngine
 	add esp, 0x14

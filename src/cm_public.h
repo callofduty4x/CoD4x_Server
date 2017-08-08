@@ -24,21 +24,7 @@
 #ifndef __CM_PUBLIC_H__
 #define __CM_PUBLIC_H__
 
-
-int CM_BoxLeafnums( const vec3_t mins, const vec3_t maxs, uint16_t *list, int listsize, int *lastLeaf );
-byte *CM_ClusterPVS( int cluster );
-int CM_PointLeafnum( const vec3_t p );
-int CM_LeafCluster( int leafnum );
-char *CM_EntityString( void );
-void CM_ModelBounds( clipHandle_t model, vec3_t mins, vec3_t maxs );
-clipHandle_t CM_InlineModel( int index );
-int CM_NumInlineModels( void );
-int CM_PointContents(const float *p, unsigned int model);
-void SetPlaneSignbits( cplane_t *out );
-int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_t origin, const vec3_t angles );
-void CM_DebugInit();
-
-
+#include "server.h"
 
 /* 760 */
 typedef enum
@@ -86,6 +72,50 @@ typedef struct
 	vec3_t invDelta;
 }TraceExtents;
 
+struct sightclip_t
+{
+  vec3_t mins;
+  vec3_t maxs;
+  vec3_t outerSize;
+  vec3_t start;
+  vec3_t end;
+  int passEntityNum[2];
+  int contentmask;
+};
+
+
+struct sightpointtrace_t
+{
+  vec3_t start;
+  vec3_t end;
+  int passEntityNum[2];
+  int contentmask;
+  int locational;
+  char *priorityMap;
+};
+
+
+int CM_BoxLeafnums( const vec3_t mins, const vec3_t maxs, uint16_t *list, int listsize, int *lastLeaf );
+byte *CM_ClusterPVS( int cluster );
+int CM_PointLeafnum( const vec3_t p );
+int CM_LeafCluster( int leafnum );
+char *CM_EntityString( void );
+void CM_ModelBounds( clipHandle_t model, vec3_t mins, vec3_t maxs );
+clipHandle_t CM_InlineModel( int index );
+int CM_NumInlineModels( void );
+int CM_PointContents(const float *p, unsigned int model);
+void SetPlaneSignbits( cplane_t *out );
+int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_t origin, const vec3_t angles );
+int __cdecl CM_TransformedBoxSightTrace(int hitNum, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
+void CM_DebugInit();
+int __cdecl CM_BoxSightTrace(int oldHitNum, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask);
+int __cdecl CM_PointSightTraceToEntities(struct sightpointtrace_t *spt);
+int __cdecl CM_ClipSightTraceToEntities(struct sightclip_t *clip);
+int __cdecl CM_PointTraceStaticModelsComplete(const float *start, const float *end, int contentmask);
+void __cdecl CM_UnlinkEntity(svEntity_t *ent);
+void __cdecl CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
+
+
 // trace->entityNum can also be 0 to (MAX_GENTITIES-1)
 // or ENTITYNUM_NONE, ENTITYNUM_WORLD
 #ifndef CLIPHANDLE_DEFINED
@@ -101,4 +131,7 @@ void __cdecl CM_TransformedBoxTrace(trace_t* trace, const float* start, const fl
 void CM_BoxTrace( trace_t *results, const vec3_t start, const vec3_t end,
 				  const vec3_t mins, const vec3_t maxs,
 				  clipHandle_t model, int brushmask );
+
+
+
 #endif

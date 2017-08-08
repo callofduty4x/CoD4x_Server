@@ -1,4 +1,5 @@
 ;Imports of COpenGL:
+	extern __cxa_atexit
 	extern _ZNSsC1EPKcRKSaIcE
 	extern _ZNKSs4findEPKcmm
 	extern _ZNSsC1ERKSsmm
@@ -97,8 +98,6 @@
 ;Exports of COpenGL:
 	global _GLOBAL__I__ZNSt3tr177_GLOBAL__N__AspyrBuild_depot_CoD4_Mac_DirectX_9_COpenGL.cpp_00000000_FC9812DB6ignoreE
 	global _ZZN7COpenGL12LoadTexImageE10_D3DFORMATjjjmlmmmPKvE2ft
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
-	global __tcf_0_dup_1
 	global _ZN20COpenGLVertexProgramC2EP15CDirect3DDevicePKc
 	global _ZN20COpenGLVertexProgramD0Ev
 	global _ZN20COpenGLVertexProgramD1Ev
@@ -136,8 +135,42 @@
 SECTION .text
 
 
-;__tcf_0_dup_1
-__tcf_0_dup_1:
+;global constructors keyed to std::tr1::(anonymous namespace)::ignore
+_GLOBAL__I__ZNSt3tr177_GLOBAL__N__AspyrBuild_depot_CoD4_Mac_DirectX_9_COpenGL.cpp_00000000_FC9812DB6ignoreE:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	leave
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov dword [esp], _ZN7COpenGL7sOpenGLE
+	call _ZN7COpenGLC1Ev
+	mov eax, [0xd5cc00c]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_0
+	call __cxa_atexit
+	leave
+	ret
+
+
+;__tcf_0
+__tcf_0:
 	push ebp
 	mov ebp, esp
 	mov dword [ebp+0x8], _ZN7COpenGL7sOpenGLE

@@ -13,7 +13,7 @@
 	extern CG_FadeCompass
 	extern CG_CompassCalcDimensions
 	extern scrPlaceView
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern compassSoundPingFadeTime
 	extern compassRadarPingFadeTime
 	extern CG_WorldPosToCompass
@@ -39,7 +39,6 @@
 	global SQRT2
 	global s_compassVehicles
 	global s_compassActors
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
 	global ActorUpdatePos
 	global CG_CompassDrawEnemies
 	global CG_CompassDrawVehicles
@@ -54,6 +53,33 @@
 
 
 SECTION .text
+
+
+;global constructors keyed to CG_ClearCompassPingData()
+_GLOBAL__I__Z23CG_ClearCompassPingDatav:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	pop ebp
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov dword [SQRT2], 0x3fb504f3
+	pop ebp
+	ret
 
 
 ;ActorUpdatePos(int, CompassActor*, float const*, int)
@@ -388,7 +414,7 @@ CG_CompassDrawEnemies_10:
 	add eax, edx
 	mov [ebp-0x60], eax
 	mov dword [esp], _cstring_g_compassshowene
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	mov edi, eax
 	lea eax, [esi+esi*2]
 	shl eax, 0xa

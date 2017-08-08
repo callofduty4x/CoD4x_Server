@@ -1,13 +1,17 @@
 ;Imports of ode:
+	extern _ZN13dxSimpleSpaceC1Ev
+	extern dMassSetZero
+	extern _ZN6dxGeomC2EP7dxSpaceiP6dxBody
+	extern _ZTV10dxUserGeom
+	extern __cxa_atexit
+	extern _Unwind_Resume
 	extern Pool_Init
 	extern Sys_EnterCriticalSection
 	extern Pool_Alloc
 	extern Sys_LeaveCriticalSection
-	extern dMassSetZero
 	extern dMassSetParameters
 	extern dSetZero
 	extern dRSetIdentity
-	extern _Unwind_Resume
 	extern dGeomGetBodyNext
 	extern ODE_GeomDestruct
 	extern Pool_Free
@@ -24,8 +28,6 @@
 ;Exports of ode:
 	global _GLOBAL__I_odeGlob
 	global _ZZ12dBodySetMassE12__FUNCTION__
-	global _Z41__static_initialization_and_destruction_0ii_dup_1
-	global __tcf_0_dup_1
 	global ODE_WorldGetBodyCount
 	global ODE_Init
 	global dAreConnectedExcluding
@@ -78,8 +80,111 @@
 SECTION .text
 
 
-;__tcf_0_dup_1
-__tcf_0_dup_1:
+;global constructors keyed to odeGlob
+_GLOBAL__I_odeGlob:
+	push ebp
+	mov ebp, esp
+	mov edx, 0xffff
+	mov eax, 0x1
+	pop ebp
+	jmp __static_initialization_and_destruction_0
+
+
+;__static_initialization_and_destruction_0(int, int)
+__static_initialization_and_destruction_0:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x2c
+	cmp edx, 0xffff
+	jz __static_initialization_and_destruction_0_10
+__static_initialization_and_destruction_0_20:
+	add esp, 0x2c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+__static_initialization_and_destruction_0_10:
+	sub eax, 0x1
+	jnz __static_initialization_and_destruction_0_20
+	mov esi, odeGlob+0x30330
+	mov edi, 0x2
+	mov ebx, 0x1
+__static_initialization_and_destruction_0_30:
+	mov [esp], esi
+	call _ZN13dxSimpleSpaceC1Ev
+	add esi, 0x64
+	mov edi, ebx
+	lea ebx, [ebx-0x1]
+	cmp ebx, 0xfffffffe
+	jnz __static_initialization_and_destruction_0_30
+	mov ebx, odeGlob+0x234470
+__static_initialization_and_destruction_0_40:
+	lea eax, [ebx+0x20]
+	mov [esp], eax
+	call dMassSetZero
+	add ebx, 0x150
+	cmp ebx, odeGlob+0x25e470
+	jnz __static_initialization_and_destruction_0_40
+	mov dword [esp+0xc], 0x0
+	mov dword [esp+0x8], 0x0
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], odeGlob+0x2c6480
+	call _ZN6dxGeomC2EP7dxSpaceiP6dxBody
+	mov eax, _ZTV10dxUserGeom
+	add eax, 0x8
+	mov [odeGlob+0x2c6480], eax
+	mov eax, [0xd5cc00c]
+	mov [esp+0x8], eax
+	mov dword [esp+0x4], 0x0
+	mov dword [esp], __tcf_0
+	call __cxa_atexit
+	add esp, 0x2c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+	mov [ebp-0x1c], eax
+	mov eax, 0x2
+	sub eax, edi
+	lea eax, [eax+eax*4]
+	lea eax, [eax+eax*4]
+	lea eax, [eax*4+odeGlob+0x30330]
+	cmp eax, odeGlob+0x30330
+	jz __static_initialization_and_destruction_0_50
+	lea ebx, [eax-0x64]
+	mov esi, ebx
+__static_initialization_and_destruction_0_60:
+	mov eax, [esi]
+	mov [esp], ebx
+	call dword [eax]
+	sub esi, 0x64
+	cmp ebx, odeGlob+0x30330
+	jz __static_initialization_and_destruction_0_50
+	sub ebx, 0x64
+	jmp __static_initialization_and_destruction_0_60
+	mov [ebp-0x1c], eax
+	mov ebx, odeGlob+0x3045c
+__static_initialization_and_destruction_0_70:
+	sub ebx, 0x64
+	mov eax, [ebx]
+	mov [esp], ebx
+	call dword [eax]
+	cmp ebx, odeGlob+0x30330
+	jnz __static_initialization_and_destruction_0_70
+__static_initialization_and_destruction_0_50:
+	mov eax, [ebp-0x1c]
+	mov [esp], eax
+	call _Unwind_Resume
+	nop
+
+
+;__tcf_0
+__tcf_0:
 	push ebp
 	mov ebp, esp
 	push ebx
@@ -88,13 +193,13 @@ __tcf_0_dup_1:
 	add eax, 0x8
 	mov [odeGlob+0x2c6480], eax
 	mov ebx, odeGlob+0x3045c
-__tcf_0_dup_1_10:
+__tcf_0_10:
 	sub ebx, 0x64
 	mov eax, [ebx]
 	mov [esp], ebx
 	call dword [eax]
 	cmp ebx, odeGlob+0x30330
-	jnz __tcf_0_dup_1_10
+	jnz __tcf_0_10
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -1696,17 +1801,17 @@ dWorldSetQuickStepNumIterations:
 	add [eax], al
 
 
-;Zero initialized global or static variables of ode:
-SECTION .bss
-odeGlob: resb 0x2c6500
-
-
 ;Initialized global or static variables of ode:
 SECTION .data
 
 
 ;Initialized constant data of ode:
 SECTION .rdata
+
+
+;Zero initialized global or static variables of ode:
+SECTION .bss
+odeGlob: resb 0x2c6500
 
 
 ;All cstrings:

@@ -43,7 +43,6 @@
 	extern Scr_SetString
 
 ;Exports of g_hudelem:
-	global methods
 	global HECmd_SetText
 	global HECmd_ClearAllTextAfterHudElem
 	global HECmd_SetMaterial
@@ -66,7 +65,6 @@
 	global HECmd_SetPlayerNameString
 	global HECmd_SetMapNameString
 	global HECmd_SetGameTypeString
-	global fields_dup_1
 	global HudElem_SetFontScale
 	global HudElem_SetFont
 	global HudElem_GetFont
@@ -1361,7 +1359,7 @@ HudElem_SetFont:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x6
 	mov ecx, g_he_font
 	pop ebp
@@ -1378,7 +1376,7 @@ HudElem_GetFont:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1403,7 +1401,7 @@ HudElem_SetAlignX:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x3
 	mov ecx, g_he_alignx
 	pop ebp
@@ -1420,7 +1418,7 @@ HudElem_GetAlignX:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1445,7 +1443,7 @@ HudElem_SetAlignY:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x3
 	mov ecx, g_he_aligny
 	pop ebp
@@ -1462,7 +1460,7 @@ HudElem_GetAlignY:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1487,7 +1485,7 @@ HudElem_SetHorzAlign:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x8
 	mov ecx, g_he_horzalign
 	pop ebp
@@ -1504,7 +1502,7 @@ HudElem_GetHorzAlign:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1529,7 +1527,7 @@ HudElem_SetVertAlign:
 	lea ecx, [edx*4]
 	shl edx, 0x5
 	sub edx, ecx
-	add edx, fields_dup_1
+	add edx, fields
 	mov dword [ebp+0x8], 0x8
 	mov ecx, g_he_vertalign
 	pop ebp
@@ -1546,7 +1544,7 @@ HudElem_GetVertAlign:
 	lea eax, [edx*4]
 	shl edx, 0x5
 	sub edx, eax
-	add edx, fields_dup_1
+	add edx, fields
 	mov ecx, [edx+0x4]
 	mov ebx, [edx+0x10]
 	mov eax, [ebp+0x8]
@@ -1777,7 +1775,7 @@ HudElem_SetLocalizedString:
 	lea edx, [ebx*4]
 	shl ebx, 0x5
 	sub ebx, edx
-	add esi, [ebx+fields_dup_1+0x4]
+	add esi, [ebx+fields+0x4]
 	mov [esp], eax
 	call G_LocalizedStringIndex
 	mov [esi], eax
@@ -1799,7 +1797,7 @@ HudElem_SetFlagForeground:
 	lea edx, [eax*4]
 	shl eax, 0x5
 	sub eax, edx
-	mov ebx, [eax+fields_dup_1+0x4]
+	mov ebx, [eax+fields+0x4]
 	add ebx, [ebp+0x8]
 	mov dword [esp], 0x0
 	call Scr_GetInt
@@ -1846,7 +1844,7 @@ HudElem_SetFlagHideWhenDead:
 	lea edx, [eax*4]
 	shl eax, 0x5
 	sub eax, edx
-	mov ebx, [eax+fields_dup_1+0x4]
+	mov ebx, [eax+fields+0x4]
 	add ebx, [ebp+0x8]
 	mov dword [esp], 0x0
 	call Scr_GetInt
@@ -1893,7 +1891,7 @@ HudElem_SetFlagHideWhenInMenu:
 	lea edx, [eax*4]
 	shl eax, 0x5
 	sub eax, edx
-	mov ebx, [eax+fields_dup_1+0x4]
+	mov ebx, [eax+fields+0x4]
 	add ebx, [ebp+0x8]
 	mov dword [esp], 0x0
 	call Scr_GetInt
@@ -2141,7 +2139,7 @@ HudElem_SetBoolean:
 	lea edx, [ebx*4]
 	shl ebx, 0x5
 	sub ebx, edx
-	mov ecx, [ebx+fields_dup_1+0x4]
+	mov ecx, [ebx+fields+0x4]
 	mov edx, [ebp+0x8]
 	mov [ecx+edx], eax
 	add esp, 0x14
@@ -2770,7 +2768,7 @@ Scr_GetHudElemField:
 	mov eax, ebx
 	shl eax, 0x5
 	sub eax, ecx
-	lea esi, [eax+fields_dup_1]
+	lea esi, [eax+fields]
 	lea eax, [edx+edx*4]
 	lea eax, [edx+eax*4]
 	lea eax, [edx+eax*2]
@@ -2812,7 +2810,7 @@ Scr_SetHudElemField:
 	mov eax, ebx
 	shl eax, 0x5
 	sub eax, ecx
-	lea esi, [eax+fields_dup_1]
+	lea esi, [eax+fields]
 	lea eax, [edx+edx*4]
 	lea eax, [edx+eax*4]
 	lea eax, [edx+eax*2]
@@ -3229,11 +3227,11 @@ GScr_AddFieldsForHudElems:
 	push esi
 	push ebx
 	sub esp, 0x1c
-	mov ebx, [fields_dup_1]
+	mov ebx, [fields]
 	test ebx, ebx
 	jz GScr_AddFieldsForHudElems_10
 	xor edi, edi
-	mov esi, fields_dup_1+0x1c
+	mov esi, fields+0x1c
 GScr_AddFieldsForHudElems_20:
 	mov ecx, edi
 	sar ecx, 0x2
@@ -3275,10 +3273,10 @@ Scr_FreeHudElemConstStrings:
 	push ebx
 	sub esp, 0x10
 	mov esi, [ebp+0x8]
-	mov ecx, [fields_dup_1]
+	mov ecx, [fields]
 	test ecx, ecx
 	jz Scr_FreeHudElemConstStrings_10
-	mov ebx, fields_dup_1+0x8
+	mov ebx, fields+0x8
 	jmp Scr_FreeHudElemConstStrings_20
 Scr_FreeHudElemConstStrings_30:
 	mov eax, [ebx+0x14]
@@ -3318,7 +3316,7 @@ g_he_font: dd _cstring_default, _cstring_bigfixed, _cstring_smallfixed, _cstring
 ;Initialized constant data of g_hudelem:
 SECTION .rdata
 methods: dd _cstring_settext, HECmd_SetText, 0x0, _cstring_clearalltextafte, HECmd_ClearAllTextAfterHudElem, 0x0, _cstring_setshader, HECmd_SetMaterial, 0x0, _cstring_settargetent, HECmd_SetTargetEnt, 0x0, _cstring_cleartargetent, HECmd_ClearTargetEnt, 0x0, _cstring_settimer1, HECmd_SetTimer, 0x0, _cstring_settimerup1, HECmd_SetTimerUp, 0x0, _cstring_settenthstimer1, HECmd_SetTenthsTimer, 0x0, _cstring_settenthstimerup1, HECmd_SetTenthsTimerUp, 0x0, _cstring_setclock1, HECmd_SetClock, 0x0, _cstring_setclockup1, HECmd_SetClockUp, 0x0, _cstring_setvalue, HECmd_SetValue, 0x0, _cstring_setwaypoint, HECmd_SetWaypoint, 0x0, _cstring_fadeovertime, HECmd_FadeOverTime, 0x0, _cstring_scaleovertime, HECmd_ScaleOverTime, 0x0, _cstring_moveovertime, HECmd_MoveOverTime, 0x0, _cstring_reset, HECmd_Reset, 0x0, _cstring_destroy, HECmd_Destroy, 0x0, _cstring_setpulsefx, HECmd_SetPulseFX, 0x0, _cstring_setplayernamestr, HECmd_SetPlayerNameString, 0x0, _cstring_setmapnamestring, HECmd_SetMapNameString, 0x0, _cstring_setgametypestrin, HECmd_SetGameTypeString, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-fields_dup_1: dd _cstring_x, 0x4, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_y, 0x8, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_z, 0xc, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_fontscale, 0x14, 0x1, 0xffffffff, 0x0, HudElem_SetFontScale, 0x0, _cstring_font, 0x18, 0x0, 0xffffffff, 0x0, HudElem_SetFont, HudElem_GetFont, _cstring_alignx, 0x1c, 0x0, 0x3, 0x2, HudElem_SetAlignX, HudElem_GetAlignX, _cstring_aligny, 0x1c, 0x0, 0x3, 0x0, HudElem_SetAlignY, HudElem_GetAlignY, _cstring_horzalign, 0x20, 0x0, 0x7, 0x3, HudElem_SetHorzAlign, HudElem_GetHorzAlign, _cstring_vertalign, 0x20, 0x0, 0x7, 0x0, HudElem_SetVertAlign, HudElem_GetVertAlign, _cstring_color, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetColor, HudElem_GetColor, _cstring_alpha, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetAlpha, HudElem_GetAlpha, _cstring_label, 0x34, 0x0, 0xffffffff, 0x0, HudElem_SetLocalizedString, 0x0, _cstring_sort, 0x80, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_foreground, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagForeground, HudElem_GetFlagForeground, _cstring_hidewhendead, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenDead, HudElem_GetFlagHideWhenDead, _cstring_hidewheninmenu, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenInMenu, HudElem_GetFlagHideWhenInMenu, _cstring_glowcolor, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowColor, HudElem_GetGlowColor, _cstring_glowalpha, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowAlpha, HudElem_GetGlowAlpha, _cstring_archived, 0xa8, 0x0, 0xffffffff, 0x0, HudElem_SetBoolean, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+fields: dd _cstring_x, 0x4, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_y, 0x8, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_z, 0xc, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_fontscale, 0x14, 0x1, 0xffffffff, 0x0, HudElem_SetFontScale, 0x0, _cstring_font, 0x18, 0x0, 0xffffffff, 0x0, HudElem_SetFont, HudElem_GetFont, _cstring_alignx, 0x1c, 0x0, 0x3, 0x2, HudElem_SetAlignX, HudElem_GetAlignX, _cstring_aligny, 0x1c, 0x0, 0x3, 0x0, HudElem_SetAlignY, HudElem_GetAlignY, _cstring_horzalign, 0x20, 0x0, 0x7, 0x3, HudElem_SetHorzAlign, HudElem_GetHorzAlign, _cstring_vertalign, 0x20, 0x0, 0x7, 0x0, HudElem_SetVertAlign, HudElem_GetVertAlign, _cstring_color, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetColor, HudElem_GetColor, _cstring_alpha, 0x24, 0x0, 0xffffffff, 0x0, HudElem_SetAlpha, HudElem_GetAlpha, _cstring_label, 0x34, 0x0, 0xffffffff, 0x0, HudElem_SetLocalizedString, 0x0, _cstring_sort, 0x80, 0x1, 0x0, 0x0, 0x0, 0x0, _cstring_foreground, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagForeground, HudElem_GetFlagForeground, _cstring_hidewhendead, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenDead, HudElem_GetFlagHideWhenDead, _cstring_hidewheninmenu, 0x9c, 0x0, 0xffffffff, 0x0, HudElem_SetFlagHideWhenInMenu, HudElem_GetFlagHideWhenInMenu, _cstring_glowcolor, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowColor, HudElem_GetGlowColor, _cstring_glowalpha, 0x84, 0x0, 0xffffffff, 0x0, HudElem_SetGlowAlpha, HudElem_GetGlowAlpha, _cstring_archived, 0xa8, 0x0, 0xffffffff, 0x0, HudElem_SetBoolean, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of g_hudelem:

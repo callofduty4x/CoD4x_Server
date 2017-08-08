@@ -8,9 +8,9 @@
 	extern R_GetLightingAtPoint
 	extern R_WarnOncePerFrame
 	extern Com_Memset
-	extern Cvar_GetBool
+	extern Cvar_VariableBooleanValue
 	extern R_SetLightGridSampleDeltas
-	extern g_keepZ_dup_1
+	extern g_keepZ
 	extern dx_ctx
 	extern R_ApplyLightGridColorsPatch
 	extern Image_AllocProg
@@ -435,7 +435,7 @@ RB_PatchModelLighting:
 	ret
 RB_PatchModelLighting_10:
 	mov dword [esp], _cstring_r_altmodellighti
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	mov eax, [modelLightGlob+0x20]
 	mov [ebp-0x48], eax
 	cld
@@ -520,7 +520,7 @@ RB_PatchModelLighting_70:
 	cmp byte [edi+0x3], 0x0
 	jnz RB_PatchModelLighting_50
 	mov ecx, s_modelLightingSampleDelta
-	mov esi, g_keepZ_dup_1
+	mov esi, g_keepZ
 RB_PatchModelLighting_60:
 	mov edx, [ecx]
 	mov eax, [edi+0x4]
@@ -622,7 +622,7 @@ R_InitModelLightingImage:
 	mov ebp, esp
 	sub esp, 0x28
 	mov dword [esp], _cstring_r_altmodellighti
-	call Cvar_GetBool
+	call Cvar_VariableBooleanValue
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x4
 	mov dword [esp], 0xc
