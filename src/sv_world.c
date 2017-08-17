@@ -684,25 +684,19 @@ void __cdecl SV_UnlinkEntity(struct gentity_s *gEnt)
 
 void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_t *trace)
 {
-  unsigned int v3; // ST5C_4@54
-  char *v4; // eax@56
-  unsigned __int16 v5; // [sp+26h] [bp-126h]@94
-  unsigned __int16 v6; // [sp+4Ah] [bp-102h]@61
-  float *v7; // [sp+68h] [bp-E4h]@30
-  float *v8; // [sp+70h] [bp-DCh]@27
-  gentity_s *touch; // [sp+A0h] [bp-ACh]@1
-  float entAxis[4][3]; // [sp+A4h] [bp-A8h]@22
-  unsigned int clipHandle; // [sp+D4h] [bp-78h]@83
-  DObj *obj; // [sp+D8h] [bp-74h]@14
-  float absmin[3]; // [sp+DCh] [bp-70h]@22
-  float localStart[3]; // [sp+E8h] [bp-64h]@39
-  const float *angles; // [sp+F4h] [bp-58h]@83
-  DObjTrace_s objTrace; // [sp+F8h] [bp-54h]@39
-  float localEnd[3]; // [sp+118h] [bp-34h]@39
-  float absmax[3]; // [sp+124h] [bp-28h]@22
-  int entnum; // [sp+130h] [bp-1Ch]@1
-  int partBits[5]; // [sp+134h] [bp-18h]@40
-  float oldFraction; // [sp+148h] [bp-4h]@85
+  gentity_s *touch;
+  vec3_t entAxis[4];
+  unsigned int clipHandle;
+  DObj_s *obj;
+  vec3_t absmin;
+  vec3_t localStart;
+  const float *angles;
+  DObjTrace_s objTrace;
+  vec3_t localEnd;
+  vec3_t absmax;
+  int entnum;
+  int partBits[5];
+  float oldFraction;
 
   entnum = check - sv.svEntities;
   touch = SV_GentityNum(entnum);
@@ -726,18 +720,17 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
     }
     if(EntHandle::isDefined(&touch->r.ownerNum))
     {
-	if(clip->ignoreEntParams->ignoreSiblings && EntHandle::entnum(&touch->r.ownerNum) == clip->ignoreEntParams->parentEntity
-		&& entnum != clip->ignoreEntParams->baseEntity)
-	{
-		return;
-	}
-	if(clip->ignoreEntParams->ignoreChildren && EntHandle::entnum(&touch->r.ownerNum) == clip->ignoreEntParams->baseEntity)
-	{
-		return;
-	}
+      if(clip->ignoreEntParams->ignoreSiblings && EntHandle::entnum(&touch->r.ownerNum) == clip->ignoreEntParams->parentEntity
+        && entnum != clip->ignoreEntParams->baseEntity)
+      {
+        return;
+      }
+      if(clip->ignoreEntParams->ignoreChildren && EntHandle::entnum(&touch->r.ownerNum) == clip->ignoreEntParams->baseEntity)
+      {
+        return;
+      }
     }
   }
-
 
   obj = SV_LocationalTraceDObj(clip, touch);
   if ( obj )
@@ -747,63 +740,26 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
     {
       if ( !DObjHasContents(obj, clip->contentmask) )
       {
-        if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
-        {
-          D3DPERF_EndEvent();
-        }
         return;
       }
-      absmin[0] = touch->r.absmin[0];
-      absmin[1] = touch->r.absmin[1];
-      absmin[2] = touch->r.absmin[2];
-      absmax[0] = touch->r.absmax[0];
-      absmax[1] = touch->r.absmax[1];
-      absmax[2] = touch->r.absmax[2];
-      *(double *)entAxis[3] = *(double *)&touch->r.currentOrigin[0];
-      entAxis[3][2] = touch->r.currentOrigin[2];
+      radius = DObjGetRadius(obj);
+//      VectorCopy(touch->r.currentOrigin, axis[3]);
+      VectorSubtract(touch->r.currentOrigin, radius, absmin);
+      VectorAdd(touch->r.currentOrigin, radius, absmax);
     }
     else
     {
-      if ( !clip->priorityMap
-        && !(unsigned __int8)Assert_MyHandler(
-                               "C:\\projects_pc\\cod\\codsrc\\src\\server\\sv_world.cpp",
-                               485,
-                               0,
-                               "%s",
-                               "clip->priorityMap") )
-      {
-        __debugbreak();
-      }
-      *(double *)entAxis[3] = *(double *)&touch->r.currentOrigin[0];
-      entAxis[3][2] = touch->r.currentOrigin[2];
-      if ( touch->client )
-      {
-        v8 = (float *)&actorLocationalMinsBig;
-      }
-      else
-      {
-        v8 = actorLocationalMins;
-      }
-      absmin[0] = entAxis[3][0] + *v8;
-      absmin[1] = entAxis[3][1] + v8[1];
-      absmin[2] = entAxis[3][2] + v8[2];
-      if ( touch->client )
-      {
-        v7 = (float *)&actorLocationalMaxsBig;
-      }
-      else
-      {
-        v7 = actorLocationalMaxs;
-      }
-      absmax[0] = entAxis[3][0] + *v7;
-      absmax[1] = entAxis[3][1] + v7[1];
-      absmax[2] = entAxis[3][2] + v7[2];
+      assert(clip->priorityMap);
+
+//      VectorCopy(touch->r.currentOrigin, axis[3]);
+      VectorAdd(touch->r.currentOrigin, actorLocationalMins, absmin);
+      VectorAdd(touch->r.currentOrigin, actorLocationalMaxs, absmax);
     }
-    if ( intersect_extents_aabb(&clip->extents, absmin, absmax, trace->fraction) )
+    if ( !CM_TraceBox(&clip->extents, absmin, absmax, trace->fraction) )
     {
       AnglesToAxis(touch->r.currentAngles, entAxis);
-      MatrixTransposeTransformVector43(clip->extents.start.vec.v, entAxis, localStart);
-      MatrixTransposeTransformVector43(clip->extents.end.vec.v, entAxis, localEnd);
+      MatrixTransposeTransformVector43(clip->extents.start, entAxis, localStart);
+      MatrixTransposeTransformVector43(clip->extents.end, entAxis, localEnd);
       objTrace.fraction = trace->fraction;
       if ( touch->r.svFlags & 4 )
       {
@@ -817,163 +773,122 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
         G_DObjCalcPose(touch, partBits);
         DObjTraceline(obj, localStart, localEnd, clip->priorityMap, &objTrace);
       }
+      /*
       if ( g_debugLocDamage->current.integer == 2 )
       {
         SV_XModelDebugBoxes(touch, &colorWhite, partBits, 50);
       }
+      */
       if ( objTrace.fraction < trace->fraction )
       {
-        if ( (objTrace.fraction >= 1.0 || objTrace.fraction < 0.0)
-          && !(unsigned __int8)Assert_MyHandler(
-                                 "C:\\projects_pc\\cod\\codsrc\\src\\server\\sv_world.cpp",
-                                 526,
-                                 0,
-                                 "%s\n\t(objTrace.fraction) = %g",
-                                 "(objTrace.fraction < 1.0f && objTrace.fraction >= 0)",
-                                 objTrace.fraction) )
-        {
-          __debugbreak();
-        }
+        assert(objTrace.fraction < 1.0 && objTrace.fraction >= 0.0);
+        assert(trace != NULL);
+
         trace->fraction = objTrace.fraction;
         trace->sflags = objTrace.sflags;
         trace->modelIndex = objTrace.modelIndex;
         trace->partName = objTrace.partName;
-        trace->boneIndex = objTrace.localBoneIndex;
+//        trace->boneIndex = objTrace.localBoneIndex;
         trace->partGroup = objTrace.partGroup;
-        MatrixTransformVector(objTrace.normal, entAxis, trace->normal.vec.v);
-        *(float *)&v3 = Abs(trace->normal.vec.v) - 1.0;
-        if ( COERCE_FLOAT(_mm_and_ps((__m128)v3, (__m128)_mask__AbsFloat_)) >= 0.01 && Abs(trace->normal.vec.v) >= 0.01 )
-        {
-          v4 = va("%g %g %g", trace->normal.vec.v[0], trace->normal.vec.v[1], trace->normal.vec.v[2]);
-          if ( !(unsigned __int8)Assert_MyHandler(
-                                   "C:\\projects_pc\\cod\\codsrc\\src\\server\\sv_world.cpp",
-                                   535,
-                                   0,
-                                   "%s\n\t%s",
-                                   "(I_fabs( Vec3Length( trace->normal ) - 1.0f ) < 0.01) || (Vec3Length( trace->normal ) < 0.01)",
-                                   v4) )
-          {
-            __debugbreak();
-          }
-        }
-        trace->walkable = trace->normal.vec.v[2] >= 0.69999999;
-        if ( touch->s.number != LOWORD(touch->s.number)
-          && !(unsigned __int8)Assert_MyHandler(
-                                 "C:\\projects_pc\\cod\\codsrc\\src\\server\\sv_world.cpp",
-                                 538,
-                                 0,
-                                 "%s",
-                                 "touch->s.number == static_cast<unsigned short>( touch->s.number )") )
-        {
-          __debugbreak();
-        }
-        v6 = touch->s.number;
-        if ( !trace
-          && !(unsigned __int8)Assert_MyHandler(
-                                 "c:\\projects_pc\\cod\\codsrc\\src\\server_mp\\../qcommon/cm_public.h",
-                                 175,
-                                 0,
-                                 "%s",
-                                 "trace") )
-        {
-          __debugbreak();
-        }
+        MatrixTransformVector(objTrace.normal, entAxis, trace->normal);
+
+        assert(Q_fabs( Vec3Length( trace->normal ) - 1.0f ) < 0.01) || (Vec3Length( trace->normal ) < 0.01);
+
+        trace->walkable = trace->normal[2] >= 0.7;
+
+        assert(touch->s.number == (unsigned short)( touch->s.number ));
+
         trace->hitType = 1;
-        trace->hitId = v6;
+        trace->hitId = touch->s.number;
         trace->cflags = touch->r.contents;
+        trace->material = NULL;
+/*
         if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
         {
           D3DPERF_EndEvent();
         }
+*/
       }
+/*
       else if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
       {
         D3DPERF_EndEvent();
       }
+*/
     }
+/*
     else if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
     {
       D3DPERF_EndEvent();
     }
+*/
   }
   else
   {
     PIXBeginNamedEvent(-1, "SV_TracePointToEntity 2");
-    if ( touch->r.bmodel || touch->s.eType != 6 )
+    //if ( touch->r.bmodel || touch->s.eType != 6 )
     {
       if ( !(check->linkcontents & clip->contentmask) )
       {
+/*
         if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
         {
           D3DPERF_EndEvent();
         }
+*/
         return;
       }
-      if ( !intersect_extents_aabb(&clip->extents, touch->r.absmin, touch->r.absmax, trace->fraction) )
+      if ( CM_TraceBox(&clip->extents, touch->r.absmin, touch->r.absmax, trace->fraction) )
       {
+/*
         if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
         {
           D3DPERF_EndEvent();
         }
+*/
         return;
       }
       clipHandle = SV_ClipHandleForEntity(touch);
       angles = touch->r.currentAngles;
       if ( !touch->r.bmodel )
       {
-        angles = &vec3_origin;
+        angles = vec3_origin;
       }
       oldFraction = trace->fraction;
-      CM_TransformedBoxTrace(
-        trace,
-        clip->extents.start.vec.v,
-        clip->extents.end.vec.v,
-        &vec3_origin,
-        &vec3_origin,
-        clipHandle,
-        clip->contentmask,
-        touch->r.currentOrigin,
-        angles);
+ 
+      CM_TransformedBoxTrace(trace, clip->extents.start, clip->extents.end, vec3_origin, vec3_origin,
+        clipHandle, clip->contentmask, touch->r.currentOrigin, angles);
+ 
       if ( trace->fraction >= oldFraction )
       {
+/*
         if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
         {
           D3DPERF_EndEvent();
         }
+*/
         return;
       }
+
+      assert(trace != NULL);
+
       trace->modelIndex = 0;
       trace->partName = 0;
-      trace->boneIndex = 0;
+//      trace->boneIndex = 0;
       trace->partGroup = 0;
-      if ( touch->s.number != LOWORD(touch->s.number)
-        && !(unsigned __int8)Assert_MyHandler(
-                               "C:\\projects_pc\\cod\\codsrc\\src\\server\\sv_world.cpp",
-                               577,
-                               0,
-                               "%s",
-                               "touch->s.number == static_cast<unsigned short>( touch->s.number )") )
-      {
-        __debugbreak();
-      }
-      v5 = touch->s.number;
-      if ( !trace
-        && !(unsigned __int8)Assert_MyHandler(
-                               "c:\\projects_pc\\cod\\codsrc\\src\\server_mp\\../qcommon/cm_public.h",
-                               175,
-                               0,
-                               "%s",
-                               "trace") )
-      {
-        __debugbreak();
-      }
+      
+      assert(touch->s.number == (unsigned short)( touch->s.number ));
+
       trace->hitType = 1;
-      trace->hitId = v5;
+      trace->hitId = touch->s.number;
       trace->cflags = touch->r.contents;
+      trace->material = NULL;
     }
+/*
     if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
     {
       D3DPERF_EndEvent();
     }
+*/
   }
 }
