@@ -52,6 +52,8 @@
 	extern cosf
 	extern sinf
 	extern G_FireRocket
+	extern G_AntiLagRewindClientPos
+	extern G_AntiLag_RestoreClientPos
 
 ;Exports of g_weapon:
 	global _ZZ11Melee_TraceP9gentity_sP11weaponParmsifffP7trace_tPfE12traceOffsets
@@ -67,8 +69,6 @@
 	global G_SetEquippedOffHand
 	global Weapon_Throw_Grenade
 	global G_GetWeaponIndexForName
-	global G_AntiLagRewindClientPos
-	global G_AntiLag_RestoreClientPos
 	global Weapon_RocketLauncher_Fire
 	global Weapon_GrenadeLauncher_Fire
 
@@ -1325,186 +1325,6 @@ G_GetWeaponIndexForName_10:
 	leave
 	ret
 
-
-;G_AntiLagRewindClientPos(int, AntilagClientStore*)
-G_AntiLagRewindClientPos:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x4c
-	mov eax, g_antilag
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jnz G_AntiLagRewindClientPos_10
-G_AntiLagRewindClientPos_20:
-	add esp, 0x4c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-G_AntiLagRewindClientPos_10:
-	mov dword [esp+0x8], 0x340
-	mov dword [esp+0x4], 0x0
-	mov eax, [ebp+0xc]
-	mov [esp], eax
-	call memset
-	mov ebx, level
-	mov ecx, [ebx+0x1ec]
-	sub ecx, [ebp+0x8]
-	cmp ecx, 0x190
-	jg G_AntiLagRewindClientPos_20
-	mov eax, sv_fps
-	mov esi, [eax]
-	mov eax, 0x3e8
-	cdq
-	idiv dword [esi+0xc]
-	cmp ecx, eax
-	jle G_AntiLagRewindClientPos_20
-	mov edx, [ebx+0x1e4]
-	test edx, edx
-	jle G_AntiLagRewindClientPos_20
-	mov edx, [ebp+0xc]
-	mov [ebp-0x2c], edx
-	xor edi, edi
-	xor esi, esi
-	jmp G_AntiLagRewindClientPos_30
-G_AntiLagRewindClientPos_40:
-	add edi, 0x1
-	add esi, 0x3184
-	add dword [ebp-0x2c], 0x1
-	cmp edi, [ebx+0x1e4]
-	jge G_AntiLagRewindClientPos_20
-G_AntiLagRewindClientPos_30:
-	mov eax, esi
-	add eax, [ebx]
-	cmp dword [eax+0x2f8c], 0x2
-	jnz G_AntiLagRewindClientPos_40
-	mov eax, [eax+0x2f64]
-	test eax, eax
-	jnz G_AntiLagRewindClientPos_40
-	lea eax, [ebp-0x24]
-	mov [esp+0x8], eax
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov [esp], edi
-	call SV_GetClientPositionAtTime
-	test al, al
-	jnz G_AntiLagRewindClientPos_50
-	mov ebx, level
-	jmp G_AntiLagRewindClientPos_40
-G_AntiLagRewindClientPos_50:
-	lea ebx, [edi+edi*8]
-	lea ebx, [edi+ebx*2]
-	mov eax, ebx
-	shl eax, 0x5
-	add ebx, eax
-	add ebx, edi
-	mov ecx, g_entities
-	lea edx, [ebx+ecx+0x130]
-	mov [ebp-0x34], edx
-	add edx, 0xc
-	mov [ebp-0x30], edx
-	lea edx, [edi+edi*2]
-	mov eax, [ebp+0xc]
-	lea edx, [eax+edx*4]
-	mov eax, [ebp-0x34]
-	mov eax, [eax+0xc]
-	mov [edx], eax
-	mov eax, [ebp-0x30]
-	mov eax, [eax+0x4]
-	mov [edx+0x4], eax
-	mov eax, [ebp-0x30]
-	mov eax, [eax+0x8]
-	mov [edx+0x8], eax
-	add ebx, ecx
-	mov [esp], ebx
-	call SV_UnlinkEntity
-	mov eax, [ebp-0x24]
-	mov edx, [ebp-0x34]
-	mov [edx+0xc], eax
-	mov eax, [ebp-0x20]
-	mov edx, [ebp-0x30]
-	mov [edx+0x4], eax
-	mov eax, [ebp-0x1c]
-	mov [edx+0x8], eax
-	mov [esp], ebx
-	call SV_LinkEntity
-	mov eax, [ebp-0x2c]
-	mov byte [eax+0x300], 0x1
-	mov ebx, level
-	jmp G_AntiLagRewindClientPos_40
-	nop
-
-
-;G_AntiLag_RestoreClientPos(AntilagClientStore*)
-G_AntiLag_RestoreClientPos:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, g_antilag
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz G_AntiLag_RestoreClientPos_10
-	mov eax, level
-	mov ecx, [eax+0x1e4]
-	test ecx, ecx
-	jle G_AntiLag_RestoreClientPos_10
-	mov esi, [ebp+0x8]
-	xor edi, edi
-	jmp G_AntiLag_RestoreClientPos_20
-G_AntiLag_RestoreClientPos_30:
-	add edi, 0x1
-	add esi, 0x1
-	cmp edi, [eax+0x1e4]
-	jge G_AntiLag_RestoreClientPos_10
-G_AntiLag_RestoreClientPos_20:
-	cmp byte [esi+0x300], 0x0
-	jz G_AntiLag_RestoreClientPos_30
-	lea ebx, [edi+edi*8]
-	lea ebx, [edi+ebx*2]
-	mov eax, ebx
-	shl eax, 0x5
-	add ebx, eax
-	add ebx, edi
-	mov eax, g_entities
-	mov [ebp-0x20], eax
-	add eax, ebx
-	mov [ebp-0x1c], eax
-	mov [esp], eax
-	call SV_UnlinkEntity
-	mov edx, [ebp-0x20]
-	lea ebx, [ebx+edx+0x130]
-	lea ecx, [ebx+0xc]
-	lea eax, [edi+edi*2]
-	mov edx, [ebp+0x8]
-	lea eax, [edx+eax*4]
-	mov edx, [eax]
-	mov [ebx+0xc], edx
-	mov edx, [eax+0x4]
-	mov [ecx+0x4], edx
-	mov eax, [eax+0x8]
-	mov [ecx+0x8], eax
-	mov eax, [ebp-0x1c]
-	mov [esp], eax
-	call SV_LinkEntity
-	mov eax, level
-	add edi, 0x1
-	add esi, 0x1
-	cmp edi, [eax+0x1e4]
-	jl G_AntiLag_RestoreClientPos_20
-G_AntiLag_RestoreClientPos_10:
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
 
 
 ;Weapon_RocketLauncher_Fire(gentity_s*, unsigned int, float, weaponParms*, float const*, gentity_s*, float const*)

@@ -1883,7 +1883,7 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
 
 
     } else if (!strcmp(c, "v")) {
-        SV_GetVoicePacket(from, msg);
+        SV_VoicePacket(from, msg);
 
     } else if (!Q_strncmp("TSource Engine Query", (char *) &msg->data[4], 20)) {
         SVC_SourceEngineQuery_Info( from, SV_Cmd_Argv(3));
@@ -3430,7 +3430,7 @@ void SV_InitArchivedSnapshot(){
 
 
 void SV_RunFrame(){
-    SV_ResetSekeletonCache();
+    SV_ResetSkeletonCache();
     G_RunFrame(svs.time);
 }
 
@@ -3658,7 +3658,7 @@ void SV_MapRestart( qboolean fastRestart ){
         SV_SendServerCommandNoLoss( client, "%c", 'm' );
     }
 
-    SV_InitCvars();
+/*    SV_InitCvars();*/
     SV_InitArchivedSnapshot();
 
     svs.snapFlagServerBit ^= 4;
@@ -3697,7 +3697,7 @@ void SV_MapRestart( qboolean fastRestart ){
         SV_AddServerCommand(client, 1, cmd);
 
         // connect the client again, without the firstTime flag
-        denied = ClientConnect(i, client->clscriptid);
+        denied = ClientConnect(i, client->scriptId);
 
         if(denied){
             SV_DropClient(client, denied);
@@ -4024,16 +4024,6 @@ void SV_BotUserMove(client_t *client)
 
     client->deltaMessage = client->netchan.outgoingSequence - 1;
     SV_ClientThink(client, &ucmd);
-}
-
-void SV_ResetSkeletonCache()
-{
-    ++sv.skelTimeStamp;
-    if ( !sv.skelTimeStamp )
-        sv.skelTimeStamp = 1;
-
-    sv.skelMemPos = 0;
-    g_sv_skel_memory_start = (char*)((unsigned int)&g_sv_skel_memory[15] & 0xFFFFFFF0);
 }
 
 
@@ -4885,6 +4875,7 @@ void SV_SpawnServer(const char *mapname)
   svs.nextCachedSnapshotEntities = 0;
   svs.nextCachedSnapshotClients = 0;
   svs.nextCachedSnapshotFrames = 0;
+  svs.numCachedSnapshotEntities = sizeof(svs.cachedSnapshotEntities)/sizeof(svs.cachedSnapshotEntities[0]);
   SV_InitSnapshot();
   svs.snapFlagServerBit ^= 4u;
 
@@ -4933,7 +4924,7 @@ void SV_SpawnServer(const char *mapname)
             continue;
         }
 
-        dropreason = ClientConnect(i, cl->clscriptid);
+        dropreason = ClientConnect(i, cl->scriptId);
         if ( dropreason )
         {
             SV_DropClient(cl, dropreason);
@@ -5002,3 +4993,47 @@ void SV_GetMapCenterFromSVSHeader(float* center)
 	center[2] = svsHeader.mapCenter[2];
 }
 
+
+const char *__cdecl SV_GetMapBaseName(const char *mapname)
+{
+  return FS_GetMapBaseName(mapname);
+}
+
+
+
+
+void SV_VoicePacket(netadr_t *from, msg_t *msg)
+{
+	unsigned short qport;
+
+	client_t *cl;
+
+	qport = (unsigned short)MSG_ReadShort(msg);
+
+	cl = SV_ReadPackets(from, qport);
+
+	if ( cl && cl->state >= CS_CONNECTED)
+	{
+		cl->lastPacketTime = svs.time;
+		if(cl->mutelevel)
+		{
+			return;
+		}
+		if ( cl->state >= CS_ACTIVE )
+			SV_UserVoice(cl, msg);
+		else
+			SV_PreGameUserVoice(cl, msg);
+
+	}
+}
+
+
+void __cdecl SV_FreeClientScriptId(client_t *cl)
+{
+  Com_Printf(CON_CHANNEL_SERVER, "SV_FreeClientScriptId: %d, %d -> 0\n", cl - svs.clients, cl->scriptId);
+
+  assert(cl->scriptId);
+
+  Scr_FreeValue(cl->scriptId);
+  cl->scriptId = 0;
+}

@@ -122,9 +122,9 @@ int SV_BotAllocateClient( void ) {
 	cl->lastPacketTime = svs.time;
 	cl->netchan.remoteAddress.type = NA_BOT;
 	cl->rate = 16384;
-	cl->clscriptid = Scr_AllocArray();
+	cl->scriptId = Scr_AllocArray();
 	
-	denied = ClientConnect(i, cl->clscriptid);
+	denied = ClientConnect(i, cl->scriptId);
 	if ( denied ) {
 		Com_Printf(CON_CHANNEL_AI,"Bot couldn't connect: %s\n", denied);
 		SV_FreeClientScriptId(cl);
@@ -296,7 +296,7 @@ void BotImport_Trace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, vec3_t m
 	VectorCopy( trace.normal, bsptrace->plane.normal );
 	SetPlaneSignbits( &bsptrace->plane ); //And again stupid gussing how to solve: bsptrace->plane.signbits = trace.plane.signbits;
 	bsptrace->plane.type = PlaneTypeForNormal( bsptrace->plane.normal ); //Another guess bsptrace->plane.type = trace.plane.type;
-	bsptrace->surface.value = trace.surfaceFlags;
+	bsptrace->surface.value = trace.sflags;
 	bsptrace->ent = trace.hitId;
 	bsptrace->exp_dist = 0;
 	bsptrace->sidenum = 0;
@@ -327,7 +327,7 @@ void BotImport_EntityTrace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, ve
 	SetPlaneSignbits( &bsptrace->plane ); //And again stupid gussing how to solve: bsptrace->plane.signbits = trace.plane.signbits;
 	bsptrace->plane.type = PlaneTypeForNormal( bsptrace->plane.normal ); //Another guess bsptrace->plane.type = trace.plane.type;
 
-	bsptrace->surface.value = trace.surfaceFlags;
+	bsptrace->surface.value = trace.sflags;
 	bsptrace->ent = trace.hitId;
 	bsptrace->exp_dist = 0;
 	bsptrace->sidenum = 0;

@@ -30,18 +30,11 @@
 #include "player.h"
 
 #include <stdint.h>
-/*
-typedef struct snapshotInfo_s{
-	int clnum;
-	struct client_t* cl;
-	int var_01;
-	qboolean var_02;
-	byte var_03;
-}snapshotInfo_t;*/
+
 typedef struct snapshotInfo_s
 {
 	int clnum;
-	struct client_t* client;
+	struct client_s* client;
 	int snapshotDeltaTime;
 	byte fromBaseline;
 	byte archived;
@@ -75,6 +68,10 @@ struct playerState_s;
 struct usercmd_s;
 
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 void MSG_Init( msg_t *buf, byte *data, int length );
 void MSG_InitReadOnly( msg_t *buf, byte *data, int length );
 void MSG_InitReadOnlySplit( msg_t *buf, byte *data, int length, byte*, int );
@@ -119,6 +116,11 @@ void MSG_WriteBase64(msg_t* msg, byte* inbuf, int len);
 void MSG_ReadBase64(msg_t* msg, byte* outbuf, int len);
 void MSG_BeginWriteMessageLength(msg_t* msg);
 void MSG_EndWriteMessageLength(msg_t* msg);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif
 

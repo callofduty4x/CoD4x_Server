@@ -46,6 +46,50 @@ typedef int fixed16_t;
 
 extern vec3_t vec3_origin;
 
+
+extern vec4_t colorBlack;
+
+extern vec4_t colorRed;
+extern vec4_t colorMdRed;
+extern vec4_t colorDkRed;
+
+extern vec4_t colorGreen;
+extern vec4_t colorLtGreen;
+extern vec4_t colorMdGreen;
+extern vec4_t colorDkGreen;
+
+extern vec4_t colorBlue;
+extern vec4_t colorLtBlue;
+extern vec4_t colorMdBlue;
+
+extern vec4_t colorYellow;
+extern vec4_t colorDkYellow;
+extern vec4_t colorMdYellow;
+extern vec4_t colorLtYellow;
+
+extern vec4_t colorMagenta;
+
+extern vec4_t colorCyan;
+extern vec4_t colorLtCyan;
+extern vec4_t colorMdCyan;
+extern vec4_t colorDkCyan;
+
+extern vec4_t colorWhite;
+
+extern vec4_t colorLtGrey;
+extern vec4_t colorMdGrey;
+extern vec4_t colorDkGrey;
+
+extern vec4_t colorOrange;
+extern vec4_t colorLtOrange;
+
+extern vec4_t colorWhiteFaded;
+extern vec4_t colorGreenFaded;
+extern vec4_t colorRedFaded;
+extern vec4_t colorBlackBlank;
+
+
+
 #define IS_NAN isnan
 
 #define DotProduct(a,b)         ((a)[0]*(b)[0]+(a)[1]*(b)[1]+(a)[2]*(b)[2])
@@ -128,6 +172,7 @@ vec_t VectorNormalize2( const vec3_t v, vec3_t out );
 vec_t Vec3NormalizeTo( const vec3_t v, vec3_t out );
 
 void VectorInverse( vec3_t v );
+#define Vec3Length VectorLength
 vec_t VectorLength( const vec3_t v );
 vec_t VectorLengthSquared( const vec3_t v );
 
@@ -135,12 +180,19 @@ int VectorCompare( const vec3_t v1, const vec3_t v2 );
 float VectorDistance( vec3_t v1, vec3_t v2 );
 vec_t Distance( const vec3_t p1, const vec3_t p2 ) ;
 void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
-void __cdecl SnapAngles(float *vAngles);
+void  SnapAngles(float *vAngles);
 
 float vec2_maxabs    (vec2_t v);
 
 
 float Q_fabs(float f);
+
+void MatrixTransposeTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out);
+void MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out);
+void Vec3Lerp(const float *start, const float *end, const float fraction, float *endpos);
+double Vec2DistanceSq(const float *v0, const float *v1);
+void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out);
+
 
 #ifdef __cplusplus
 }
@@ -159,5 +211,3 @@ float Q_fabs(float f);
 #endif
 
 #endif
-
-

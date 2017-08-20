@@ -22,6 +22,7 @@
 
 
 #include "q_shared.h"
+#include "bg_public.h"
 #include "qcommon_io.h"
 #include "net_game_conf.h"
 #include "server.h"
@@ -1250,3 +1251,173 @@ void SV_SendClientMessages( void ) {
 	}
 
 }
+
+
+void __cdecl SV_GetClientPositionsFromCachedSnap(cachedSnapshot_t *cachedFrame, vec3_t *pos, vec3_t *angles, bool *success)
+{
+  struct archivedEntity_s *cachedEnt;
+  unsigned int i;
+  int clientNum;
+
+  for ( i = 0; i < cachedFrame->num_entities; ++i )
+  {
+    assertx(cachedFrame->first_entity >= 0, "cachedFrame->first_entity = %i", cachedFrame->first_entity);
+
+    cachedEnt = &svs.cachedSnapshotEntities[(i + cachedFrame->first_entity) % svs.numCachedSnapshotEntities];
+    clientNum = cachedEnt->s.number;
+    if ( cachedEnt->s.number >= MAX_CLIENTS )
+    {
+      break;
+    }
+    success[clientNum] = true;
+    BG_EvaluateTrajectory(&cachedEnt->s.lerp.pos, cachedFrame->time, pos[clientNum]);
+    angles[clientNum][0] = 0.0;
+    angles[clientNum][1] = cachedEnt->s.lerp.apos.trBase[1];
+    angles[clientNum][2] = 0.0;
+  }
+}
+
+
+bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angles, bool *success)
+{
+  vec3_t endPos[MAX_CLIENTS];
+  int startOffset;
+  int rewindDeltaTime;
+  vec3_t startAngles[MAX_CLIENTS];
+  bool foundStart;
+  int endOffset;
+  float progress;
+  vec3_t startPos[MAX_CLIENTS];
+  bool startSuccess[MAX_CLIENTS];
+  bool endSuccess[MAX_CLIENTS];
+  cachedSnapshot_t *frameStart;
+  vec3_t endAngles[MAX_CLIENTS];
+  bool foundEnd;
+  int clientNum;
+  cachedSnapshot_t *frameEnd;
+  int snapOffset;
+
+
+  rewindDeltaTime = svs.time - gametime;
+  int frametime = 1000 / sv_fps->integer;
+  int frameHistCount = rewindDeltaTime / frametime;
+  startOffset = frametime * (frameHistCount + 2);
+  endOffset = frametime * (frameHistCount + 1);
+  frameStart = SV_GetCachedSnapshot(&startOffset);
+  frameEnd = SV_GetCachedSnapshot(&endOffset);
+  if ( frameStart || frameEnd )
+  {
+    snapOffset = 1;
+    while ( frameEnd && frameEnd->time < gametime )
+    {
+      frameStart = frameEnd;
+      endOffset = frametime * (--snapOffset + frameHistCount);
+      frameEnd = SV_GetCachedSnapshot(&endOffset);
+    }
+    if ( frameEnd && snapOffset != 1 )
+    {
+      Com_Printf(CON_CHANNEL_SERVER, "Adjusted frameEnd by %i snaps\n", 1 - snapOffset);
+    }
+    snapOffset = 2;
+    while ( frameStart && frameStart->time > gametime )
+    {
+      frameStart = frameEnd;
+      startOffset = frametime * (++snapOffset + frameHistCount);
+      frameStart = SV_GetCachedSnapshot(&startOffset);
+    }
+    if ( frameStart && snapOffset != 2 )
+    {
+      Com_Printf(CON_CHANNEL_SERVER, "Adjusted frameStart by %i snaps\n", snapOffset - 2);
+    }
+    foundStart = frameStart != 0;
+    foundEnd = frameEnd != 0;
+
+    memset(startSuccess, 0, sizeof(startSuccess));
+    memset(endSuccess, 0, sizeof(endSuccess));
+
+    if ( frameStart )
+    {
+      assertx(frameStart->time <= gametime, "frameStart->time is %i for gametime %i", frameStart->time, gametime);
+
+      SV_GetClientPositionsFromCachedSnap(frameStart, startPos, startAngles, startSuccess);
+    }
+    if ( foundEnd )
+    {
+      assertx(frameEnd->time >= gametime, "frameEnd->time is %i for gametime %i", frameEnd->time, gametime);
+
+      SV_GetClientPositionsFromCachedSnap(frameEnd, endPos, endAngles, endSuccess);
+    }
+    if ( foundStart && foundEnd )
+    {
+      if ( startOffset == endOffset )
+      {
+        progress = 0.0;
+      }
+      else
+      {
+        progress = (float)(gametime - frameStart->time) / (float)(frameEnd->time - frameStart->time);
+      }
+      assert(progress >= 0);
+      assert(progress <= 1);
+    }
+    else
+    {
+      progress = 0.0;
+    }
+    for ( clientNum = 0; clientNum < MAX_CLIENTS; ++clientNum )
+    {
+      if ( startSuccess[clientNum] && endSuccess[clientNum] )
+      {
+	assertx(frameStart->time <= gametime, "%i > %i", frameStart->time, gametime);
+	assertx(frameEnd->time >= gametime, "%i < %i", frameEnd->time, gametime);
+
+        success[clientNum] = true;
+        Vec3Lerp(startPos[clientNum], endPos[clientNum], progress, pos[clientNum]);
+        Vec3Lerp(startAngles[clientNum], endAngles[clientNum], progress, angles[clientNum]);
+
+	assert(!IS_NAN( pos[clientNum][0] ));
+	assert(!IS_NAN( pos[clientNum][1] ));
+	assert(!IS_NAN( pos[clientNum][2] ));
+
+	assert(!IS_NAN( angles[clientNum][0] ));
+	assert(!IS_NAN( angles[clientNum][1] ));
+	assert(!IS_NAN( angles[clientNum][2] ));
+      }
+      else if ( startSuccess[clientNum] )
+      {
+        success[clientNum] = true;
+        VectorCopy(startPos[clientNum], pos[clientNum]);
+        VectorCopy(startAngles[clientNum], angles[clientNum]);
+
+        assert(!IS_NAN( pos[clientNum][0]));
+        assert(!IS_NAN( pos[clientNum][1]));
+        assert(!IS_NAN( pos[clientNum][2]));
+
+        assert(!IS_NAN( angles[clientNum][0]));
+        assert(!IS_NAN( angles[clientNum][1]));
+        assert(!IS_NAN( angles[clientNum][2]));
+
+      }
+      else if ( endSuccess[clientNum] )
+      {
+        success[clientNum] = true;
+
+        VectorCopy(endPos[clientNum], pos[clientNum]);
+        VectorCopy(endAngles[clientNum], angles[clientNum]);
+
+        assert(!IS_NAN( pos[clientNum][0]));
+        assert(!IS_NAN( pos[clientNum][1]));
+        assert(!IS_NAN( pos[clientNum][2]));
+
+        assert(!IS_NAN( angles[clientNum][0]));
+        assert(!IS_NAN( angles[clientNum][1]));
+        assert(!IS_NAN( angles[clientNum][2]));
+      }
+    }
+    return true;
+  }
+  Com_Printf(CON_CHANNEL_SERVER, "Failed to get a cached snapshot for antilag - offset is %i\n", rewindDeltaTime);
+  return false;
+}
+
+

@@ -46,6 +46,8 @@ These commands can only be entered from stdin or by a remote operator datagram
 #include "sys_thread.h"
 #include "sys_main.h"
 #include "sapi.h"
+#include "scr_vm.h"
+
 
 #include <string.h>
 #include <stdlib.h>
@@ -1933,6 +1935,17 @@ static void SV_SetPerk_f( void ){
 
     level.clients[clnum].sess.cs.perks |= (1 << perkIndex);
 
+}
+
+
+void __cdecl SV_StringUsage_f()
+{
+  MT_DumpTree( );
+}
+
+void __cdecl SV_ScriptUsage_f()
+{
+  Scr_DumpScriptThreads( );
 }
 
 

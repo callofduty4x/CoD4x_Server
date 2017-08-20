@@ -257,6 +257,8 @@ char	*SV_ExpandNewlines( char *in );
 
 
 
+void PIXBeginNamedEvent(int, const char*);
+
 
 #include "q_math.h"
 
@@ -412,6 +414,7 @@ typedef enum {
 } errorParm_t;
 
 void QDECL Com_Error( int a, const char *error, ...);
+
 
 #ifndef M_PI
 #define M_PI        3.14159265358979323846f // matches value in gcc v2 math.h

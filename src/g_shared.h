@@ -447,6 +447,7 @@ extern cvar_t *g_gravity;
 extern cvar_t *jump_height;
 extern cvar_t *jump_stepSize;
 extern cvar_t *jump_slowdownEnable;
+extern cvar_t *g_antilag;
 
 extern qboolean onExitLevelExecuted;
 
@@ -462,6 +463,7 @@ void __cdecl G_VehSpawner(gentity_t *ent);
 void __cdecl G_VehCollmapSpawner(gentity_t *ent);
 void __cdecl G_SetModel(gentity_t *ent, const char *modelname);
 /* void ClientSetUsername(int clientNum, const char *username); */
+void __cdecl G_DObjCalcPose(gentity_t *ent, int *partBits);
 
 //This defines Cvars directly related to executable file
 #ifndef getcvaradr

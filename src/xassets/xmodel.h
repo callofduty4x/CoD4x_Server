@@ -3,7 +3,7 @@
 
 #include "../q_shared.h"
 #include "../q_math.h"
-
+#include "../dobj.h"
 
 enum XModelLodRampType
 {
@@ -22,13 +22,6 @@ typedef struct cbrushside_s
   char edgeCount;
 }cbrushside_t;
 #pragma pack(pop)
- 
-typedef struct DObjAnimMat_s
-{
-  float quat[4];
-  float trans[3];
-  float transWeight;
-}DObjAnimMat_t;
  
 typedef struct XSurfaceVertexInfo_s
 {
@@ -188,13 +181,6 @@ typedef struct PhysGeomList_s
   PhysMass_t mass;
 }PhysGeomList_t;
  
-typedef struct XBoneInfo_s
-{
-  float bounds[2][3];
-  float offset[3];
-  float radiusSquared;
-}XBoneInfo_t;
- 
 typedef struct XModelHighMipBounds_s
 {
   float mins[3];
@@ -229,7 +215,7 @@ typedef struct XModelLodInfo_s
  typedef void  xMaterial_t;
  typedef void  xPhysPreset_t;
  
-typedef struct XModel_s
+typedef struct XModel
 {
   const char *name;
   char numBones;
@@ -241,7 +227,7 @@ typedef struct XModel_s
   short *quats;
   float *trans;
   char *partClassification;
-  DObjAnimMat_t *baseMat;
+  DObjAnimMat *baseMat;
   XSurface *surfs;
   xMaterial_t **materialHandles;
   XModelLodInfo_t lodInfo[4];
@@ -252,7 +238,7 @@ typedef struct XModel_s
   XModelCollSurf_t *collSurfs;
   int numCollSurfs;
   int contents;
-  XBoneInfo_t *boneInfo;
+  struct XBoneInfo *boneInfo;
   float radius;
   vec3_t mins;
   vec3_t maxs;
@@ -273,7 +259,7 @@ extern "C"{
 #endif
 
 XModel *__cdecl XModelPrecache(const char *name, void *(__cdecl *Alloc)(int), void *(__cdecl *AllocColl)(int));
-
+int __cdecl XModelNumBones(struct XModel *model);
 #ifdef __cplusplus
 }
 #endif

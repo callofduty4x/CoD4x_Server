@@ -885,6 +885,13 @@ void __cdecl Vec4Lerp(const float *from, const float *to, float frac, float *res
   result[3] = (to[3] - from[3]) * frac + from[3];
 }
 
+void __cdecl Vec3Lerp(const float *from, const float *to, float frac, float *result)
+{
+  result[0] = (to[0] - from[0]) * frac + from[0];
+  result[1] = (to[1] - from[1]) * frac + from[1];
+  result[2] = (to[2] - from[2]) * frac + from[2];
+}
+
 void __cdecl QuatLerp(const float *qa, const float *qb, float frac, float *out)
 {
   if ( DotProduct4(qa, qb) < 0.0 )
@@ -1922,3 +1929,5 @@ void __cdecl SnapAngles(float *vAngles)
     }
   }
 }
+
+

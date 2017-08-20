@@ -5,10 +5,28 @@
 
 #include "q_shared.h"
 #include "entity.h"
-#include "xassets/xmodel.h"
 #include "dobj_part_cache.h"
 #include "qcommon_io.h"
 #include "misc.h"
+
+
+#define DOBJ_MAX_PARTS 160
+
+typedef struct XBoneInfo
+{
+  float bounds[2][3];
+  float offset[3];
+  float radiusSquared;
+}XBoneInfo_t;
+
+
+typedef struct DObjAnimMat
+{
+  vec4_t quat;
+  vec3_t trans;
+  float transWeight;
+}DObjAnimMat;
+
 
 typedef struct DObjSkeletonPartMatrix_s // Same as DObjAnimMat_t? Need confirmation!
 {
@@ -47,8 +65,18 @@ typedef struct DObj_s
 	DSkel_t skel;
 	int radius;
 	int hidePartBits[4];
-	XModel **models;
+	struct XModel **models;
 } DObj_t, DObj;
+
+struct DObjTrace_s
+{
+  float fraction;
+  int sflags;
+  vec3_t normal;
+  uint16_t modelIndex;
+  uint16_t partName;
+  uint16_t partGroup;
+};
 
 
 DObj_t* GetDObjForEntity(int entNum);
@@ -60,8 +88,34 @@ extern void DB_LoadDObjs();
 
 void __cdecl DObjGetBounds(DObj_t *obj, float *mins, float *maxs);
 DObj *__cdecl Com_GetServerDObj(int handle);
+qboolean __cdecl DObjHasContents(DObj *obj, int contentmask);
+float __cdecl DObjGetRadius(DObj *obj);
+void __cdecl DObjGeomTracelinePartBits(DObj *obj, int contentmask, int *partBits);
+void __cdecl DObjGeomTraceline(DObj *obj, float *localStart, float *localEnd, int contentmask, struct DObjTrace_s *results);
+void __cdecl DObjTraceline(DObj *obj, float *start, float *end, char *priorityMap, struct DObjTrace_s *trace);
+void __cdecl DObjTracelinePartBits(DObj *obj, int *partBits);
+qboolean __cdecl DObjSkelExists(DObj *obj, int timeStamp);
+qboolean __cdecl DObjSkelAreBonesUpToDate(DObj *obj, int *partBits);
+int __cdecl DObjGetAllocSkelSize(DObj *obj);
+void __cdecl DObjCreateSkel(DObj *obj, char *buf, int timeStamp);
+int __cdecl DObjSkelIsBoneUpToDate(DObj *obj, int boneIndex);
+int __cdecl DObjGetBoneIndex(DObj *obj, unsigned int name, char *index, int modelNum);
+struct DObjAnimMat *__cdecl DObjGetRotTransArray(DObj *obj);
+void __cdecl DObjInitServerTime(DObj *obj, float dtime);
+void __cdecl DObjUpdateServerInfo(DObj *obj, float dtime, int notifyFlags);
+struct XAnimTree_s *__cdecl DObjGetTree(DObj *obj);
+void __cdecl DObjDisplayAnim(DObj *obj, const char *header);
+void __cdecl DObjDumpInfo(DObj *obj);
+int __cdecl DObjNumBones(DObj *obj);
+void __cdecl DObjGetBoneInfo(DObj *obj, struct XBoneInfo **boneInfo);
+int __cdecl DObjGetNumModels(DObj *obj);
+struct XModel *__cdecl DObjGetModel(DObj *obj, int modelIndex);
+bool __cdecl DObjIgnoreCollision(DObj *obj, int modelIndex);
+void __cdecl ConvertQuatToMat(struct DObjAnimMat *mat, vec3_t axis[3]);
 
 #define SV_ENTITY_DOBJS ((WORD*)  0x088E8500)    // Max = 0x400
 #define SV_DOBJ         ((DObj_t*)0x088E8D20)    // Max = 0x800
 
 #endif //__DOBJ_H__
+
+

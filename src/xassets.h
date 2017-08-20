@@ -82,7 +82,7 @@ union XAssetHeader
   struct XModelPieces *xmodelPieces;
   struct PhysPreset *physPreset;
   struct XAnimParts *parts;
-  XModel *model;
+  struct XModel *model;
   struct Material *material;
   struct MaterialPixelShader *pixelShader;
   struct MaterialVertexShader *vertexShader;

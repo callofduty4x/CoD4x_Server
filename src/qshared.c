@@ -2160,3 +2160,4 @@ void Swap_Init( void ) {
 
 }
 
+void PIXBeginNamedEvent(int v, const char* name);

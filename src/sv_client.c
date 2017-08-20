@@ -41,6 +41,7 @@
 #include "hl2rcon.h"
 #include "sv_auth.h"
 #include "sec_crypto.h"
+#include "g_public.h"
 
 #include "sapi.h"
 
@@ -430,10 +431,10 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		return;
   }
 
-	newcl->unsentVoiceData = 0;
-	newcl->hasVoip = 1;
+	newcl->voicePacketCount = 0;
+	newcl->sendVoice = 1;
 	newcl->gentity = SV_GentityNum(clientNum);
-	newcl->clscriptid = Scr_AllocArray();
+	newcl->scriptId = Scr_AllocArray();
 	newcl->protocol = version;
 
 #ifdef COD4X18UPDATE
@@ -448,7 +449,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	{
 #endif
 		// get the game a chance to reject this connection or modify the userinfo
-		denied2 = ClientConnect(clientNum, newcl->clscriptid);
+		denied2 = ClientConnect(clientNum, newcl->scriptId);
 
 		if ( denied2 ) {
 			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", denied2 );
@@ -763,7 +764,7 @@ void SV_UserinfoChanged( client_t *cl ) {
 		cl->snapshotMsec = 50;
 
 	val = Info_ValueForKey(cl->userinfo, "cl_voice");
-	cl->hasVoip = atoi(val);
+	cl->sendVoice = atoi(val);
 
 	// TTimo
 	// maintain the IP information
@@ -1311,12 +1312,12 @@ gentity_t* SV_AddBotClient(){
 	// save the userinfo
 	Q_strncpyz(cl->userinfo, userinfo, 1024 );
 
-	cl->unsentVoiceData = 0;
-	cl->hasVoip = 0;
+	cl->voicePacketCount = 0;
+	cl->sendVoice = 0;
   cl->gentity = SV_GentityNum(i);
-  cl->clscriptid = Scr_AllocArray();
+  cl->scriptId = Scr_AllocArray();
 
-	denied = ClientConnect(i, cl->clscriptid);
+	denied = ClientConnect(i, cl->scriptId);
 	if ( denied ) {
 		Com_Printf(CON_CHANNEL_SERVER,"Bot couldn't connect: %s\n", denied);
 		SV_FreeClientScriptId(cl);
@@ -2473,23 +2474,6 @@ qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl) {
 	return qtrue;       // continue procesing
 }
 
-const char* SV_GetGuid( unsigned int clnum, char* buffer, int len)
-{
-
-	if(clnum > sv_maxclients->integer)
-		return "";
-	if(sv_legacymode->boolean)
-	{
-	 	return svs.clients[clnum].legacy_pbguid;
-	}
-	Com_sprintf(buffer, len, "%llu", svs.clients[clnum].playerid);
-	return buffer;
-}
-const char* SV_GetGuidBin(int clnum)
-{
-	static char buf[33];
-	return SV_GetGuid( clnum, buf, sizeof(buf));
-}
 
 void SV_DelayDropClient(client_t *client, const char *dropmsg)
 {
@@ -2500,67 +2484,6 @@ void SV_DelayDropClient(client_t *client, const char *dropmsg)
 }
 
 
-void SV_WriteClientVoiceData(msg_t *msg, client_t *client)
-{
-	int i;
-
-	MSG_WriteByte(msg, client->unsentVoiceData);
-
-	for(i = 0; i < client->unsentVoiceData; i++)
-	{
-		MSG_WriteByte( msg, client->voicedata[i].num );
-		MSG_WriteByte( msg, client->voicedata[i].dataLen );
-		MSG_WriteData( msg, client->voicedata[i].data, client->voicedata[i].dataLen );
-	}
-
-}
-
-void SV_SendClientVoiceData(client_t *client)
-{
-
-	msg_t msg;
-	byte buff[0x20000];
-
-	if ( client->state < CS_ACTIVE || client->unsentVoiceData == 0)
-	{
-		return;
-	}
-    MSG_Init(&msg, buff, sizeof(buff));
-    MSG_WriteString(&msg, "v");
-    SV_WriteClientVoiceData(&msg, client);
-    if ( msg.overflowed )
-    {
-		Com_PrintWarning(CON_CHANNEL_SERVER, "WARNING: voice msg overflowed for %s\n", client->name);
-		return;
-    }
-    NET_OutOfBandData(NS_SERVER, &client->netchan.remoteAddress, msg.data, msg.cursize);
-    client->unsentVoiceData = 0;
-}
-
-void SV_GetVoicePacket(netadr_t *from, msg_t *msg)
-{
-	unsigned short qport;
-
-	client_t *cl;
-
-	qport = (unsigned short)MSG_ReadShort(msg);
-
-	cl = SV_ReadPackets(from, qport);
-
-	if ( cl && cl->state >= CS_CONNECTED)
-	{
-		cl->lastPacketTime = svs.time;
-		if(cl->mutelevel)
-		{
-			return;
-		}
-		if ( cl->state >= CS_ACTIVE )
-			SV_UserVoice(cl, msg);
-		else
-			SV_PreGameUserVoice(cl, msg);
-
-	}
-}
 
 client_t* SV_ReadPackets(netadr_t *from, unsigned short qport)
 {
@@ -2848,9 +2771,88 @@ int SV_GetPredirectedOriginAndTimeForClientNum(int clientNum, float *origin)
 }
 
 
-bool __cdecl SV_ClientHasClientMuted(int listener, int talker)
+void __cdecl SV_FreeClientScriptPers()
 {
-    assert(listener < sv_maxclients->integer);
-    assert(talker < sv_maxclients->integer);
-    return svs.clients[listener].muteList[talker];
+  client_t *cl;
+  int i;
+
+  for (i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl )
+  {
+    if ( cl->state >= CS_CONNECTED )
+    {
+      SV_FreeClientScriptId(cl);
+      cl->scriptId = Scr_AllocArray( );
+      Com_Printf(CON_CHANNEL_SERVER, "SV_FreeClientScriptPers: %d, 0 -> %d\n", cl - svs.clients, cl->scriptId);
+    }
+  }
 }
+
+void __cdecl SV_FreeClient(client_t *cl)
+{
+  assert(cl->state >= CS_CONNECTED);
+
+//  BG_EvalVehicleName();
+  SV_CloseDownload(cl);
+  if ( SV_Loaded() )
+  {
+    ClientDisconnect(cl - svs.clients);
+  }
+  SV_SetUserinfo(cl - svs.clients, "");
+  SV_FreeClientScriptId(cl);
+}
+
+void __cdecl SV_FreeClients()
+{
+  client_t *client;
+  int i;
+
+  for (i = 0, client = svs.clients; i < sv_maxclients->integer; ++i, ++client )
+  {
+    if ( client->state >= CS_CONNECTED )
+    {
+      SV_FreeClient(client);
+    }
+  }
+}
+
+
+void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
+{
+  char *Name;
+
+  Name = va("SV_ClientThink '%s'", cl->name);
+  PIXBeginNamedEvent(-1, Name);
+
+  if ( cmd->serverTime - svs.time <= 20000 )
+  {
+    memcpy(&cl->lastUsercmd, cmd, sizeof(cl->lastUsercmd));
+    if ( cl->state == CS_ACTIVE )
+    {
+      G_SetLastServerTime(cl - svs.clients, cmd->serverTime);
+      ClientThink(cl - svs.clients);
+/*
+      if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
+      {
+        D3DPERF_EndEvent();
+      }
+*/
+    }
+/*
+    else if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
+    {
+      D3DPERF_EndEvent();
+    }
+*/
+  }
+  else
+  {
+    Com_PrintError(CON_CHANNEL_SERVER, "Invalid command time %i from client %s, current server time is %i", cmd->serverTime, cl->name, svs.time);
+/*
+    if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
+    {
+      D3DPERF_EndEvent();
+    }
+*/
+  }
+}
+

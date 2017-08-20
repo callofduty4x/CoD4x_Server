@@ -1,3 +1,7 @@
+#ifndef __G_PUBLIC_H__
+#define __G_PUBLIC_H__
+
+
 // entity->svFlags
 // the server does not know how to interpret most of the values
 // in entityStates (level eType), so the game must explicitly flag
@@ -29,3 +33,23 @@
 #define SVF_NOTSINGLECLIENT     0x00002000  // send entity to everyone but one client
 											// (entityShared_t->singleClient)
 */
+#define MAX_VOICE_PACKET_DATA 256
+
+struct VoicePacket_t
+{
+  char talker;
+  char data[MAX_VOICE_PACKET_DATA];
+  int dataSize;
+};
+
+float __cdecl G_GetFogOpaqueDistSqrd();
+void __cdecl ClientDisconnect(int clientNum);
+void __cdecl G_SetLastServerTime(int clientNum, int lastServerTime);
+void __cdecl ClientThink(int clientNum);
+int __cdecl G_GetSavePersist();
+void __cdecl G_BroadcastVoice(struct gentity_s *talker, struct VoicePacket_t *voicePacket);
+void __cdecl G_ResetEntityParsePoint();
+void __cdecl G_InitGame(int levelTime, int randomSeed, int restart, int savepersist);
+void __cdecl G_ShutdownGame(int freeScripts);
+qboolean __cdecl ConsoleCommand();
+#endif

@@ -143,7 +143,9 @@ extern cvar_t*	fs_debug;
 extern cvar_t*	fs_basepath;
 extern cvar_t*	fs_gameDirVar;
 
-
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 void FS_CopyFile(char* FromOSPath,char* ToOSPath);
 int FS_Read(void* data, int length, fileHandle_t);
@@ -242,6 +244,11 @@ int FS_filelengthForOSPath( const char* ospath );
 FILE *__cdecl FS_FileOpenReadText(const char *filename);
 int __cdecl FS_FileGetFileSize(FILE *file);
 unsigned int __cdecl FS_FileRead(void *ptr, unsigned int len, FILE *stream);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif
 

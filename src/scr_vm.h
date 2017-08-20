@@ -628,7 +628,11 @@ void GScr_AddScriptCommand();
 void RuntimeError(char *a3, int arg4, char *message, char *a4);
 void ClientScr_GetName(gclient_t* gcl);
 const char* Scr_GetPlayername(gentity_t* gent);
+void Scr_FreeValue(unsigned int id);
+qboolean __cdecl Scr_IsValidGameType(const char *pszGameType);
 
+void __cdecl MT_DumpTree( );
+void __cdecl Scr_DumpScriptThreads( );
 
 // Safe function to get gentity for num passed by script call "ent function()"
 gentity_t* VM_GetGEntityForNum(scr_entref_t num);

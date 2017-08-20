@@ -79,6 +79,8 @@ cvar_t* com_logfile;
 cvar_t* com_sv_running;
 cvar_t* com_securemodevar;
 cvar_t* sv_webadmin;
+unsigned int com_expectedHunkUsage; //for map loading progress
+qboolean com_fixedConsolePosition;
 qboolean com_securemode;
 
 char com_errorMessage[MAXPRINTMSG];

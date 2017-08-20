@@ -41,8 +41,8 @@ typedef struct trace_s
 {
   float fraction;
   vec3_t normal;
-  int surfaceFlags;
-  int contents;
+  int sflags;
+  int cflags;
   const char *material;
   TraceHitType hitType;
   uint16_t hitId;
@@ -94,6 +94,27 @@ struct sightpointtrace_t
   char *priorityMap;
 };
 
+struct pointtrace_t
+{
+  TraceExtents extents;
+  IgnoreEntParams *ignoreEntParams;
+  int contentmask;
+  int bLocational;
+  char *priorityMap;
+};
+
+
+typedef struct moveclip_s{
+	vec3_t mins;	//0x00
+	vec3_t maxs;	//0x0c size of the moving object
+	vec3_t outerSize;
+	TraceExtents extents;
+	int passEntityNum;  //0x48
+	int passOwnerNum;   //0x4c
+	int contentmask;    //0x50
+} moveclip_t;
+
+
 
 int CM_BoxLeafnums( const vec3_t mins, const vec3_t maxs, uint16_t *list, int listsize, int *lastLeaf );
 byte *CM_ClusterPVS( int cluster );
@@ -132,6 +153,14 @@ void CM_BoxTrace( trace_t *results, const vec3_t start, const vec3_t end,
 				  const vec3_t mins, const vec3_t maxs,
 				  clipHandle_t model, int brushmask );
 
+void __cdecl CM_CalcTraceExtents(TraceExtents *extents);
+void __cdecl CM_ClipMoveToEntities(moveclip_t *clip, trace_t *trace);
+void __cdecl CM_PointTraceStaticModels(trace_t *results, const float *start, const float *end, int contentmask);
+void __cdecl CM_PointTraceToEntities(struct pointtrace_t *clip, trace_t *trace);
+qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle);
+int __cdecl CM_ContentsOfModel(unsigned int handle);
+void __cdecl CM_TransformedBoxTraceExternal(trace_t *results, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
 
 
 #endif
+

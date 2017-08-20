@@ -23,22 +23,13 @@
 
 
 #include "q_shared.h"
+#include "g_shared.h"
 #include "server.h"
 #include "cm_public.h"
 #include "dobj.h"
 
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
 vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
-
-typedef struct moveclip_s{
-	vec3_t mins;	//0x00
-	vec3_t maxs;	//0x0c size of the moving object
-	vec3_t outerSize;
-	TraceExtents extents;
-	int passEntityNum;  //0x48
-	int passOwnerNum;   //0x4c
-	int contentmask;    //0x50
-} moveclip_t;
 
 clipHandle_t SV_ClipHandleForEntity(gentity_t *touch)
 {
@@ -680,23 +671,53 @@ void __cdecl SV_UnlinkEntity(struct gentity_s *gEnt)
   CM_UnlinkEntity(ent);
 }
 
-
-
-void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_t *trace)
+DObj_t *__cdecl SV_LocationalTraceDObj(struct pointtrace_t *clip, gentity_t *touch)
 {
-  gentity_s *touch;
+  if ( clip->bLocational )
+  {
+    if ( touch->r.svFlags & 6 )
+    {
+      if ( !(touch->r.svFlags & 2) || clip->priorityMap )
+      {
+        return Com_GetServerDObj(touch->s.number);
+      }
+    }
+  }
+  return NULL;
+}
+
+DObj_t *__cdecl SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gentity_t *touch)
+{
+  if ( clip->locational )
+  {
+    if ( touch->r.svFlags & 6 )
+    {
+      if ( !(touch->r.svFlags & 2) || clip->priorityMap )
+      {
+        return Com_GetServerDObj(touch->s.number);
+      }
+    }
+  }
+  return NULL;
+}
+
+
+void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+{
+  gentity_t *touch;
   vec3_t entAxis[4];
   unsigned int clipHandle;
-  DObj_s *obj;
+  struct DObj_s *obj;
   vec3_t absmin;
   vec3_t localStart;
   const float *angles;
-  DObjTrace_s objTrace;
+  struct DObjTrace_s objTrace;
   vec3_t localEnd;
   vec3_t absmax;
   int entnum;
   int partBits[5];
   float oldFraction;
+  float radius;
 
   entnum = check - sv.svEntities;
   touch = SV_GentityNum(entnum);
@@ -704,7 +725,7 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
 
 //EntHandle::isDefined(&touch->r.ownerNum) --> touch->r.ownerNum != 0
 //EntHandle::entnum(&touch->r.ownerNum) --> touch->r.ownerNum -1
-  if ( !touch->r.contents & clip->contentmask )
+  if ( !(touch->r.contents & clip->contentmask) )
   {
     return;
   }
@@ -718,14 +739,14 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
     {
         return;
     }
-    if(EntHandle::isDefined(&touch->r.ownerNum))
+    if(touch->r.ownerNum != 0)
     {
-      if(clip->ignoreEntParams->ignoreSiblings && EntHandle::entnum(&touch->r.ownerNum) == clip->ignoreEntParams->parentEntity
+      if(clip->ignoreEntParams->ignoreSiblings && touch->r.ownerNum -1 == clip->ignoreEntParams->parentEntity
         && entnum != clip->ignoreEntParams->baseEntity)
       {
         return;
       }
-      if(clip->ignoreEntParams->ignoreChildren && EntHandle::entnum(&touch->r.ownerNum) == clip->ignoreEntParams->baseEntity)
+      if(clip->ignoreEntParams->ignoreChildren && touch->r.ownerNum -1 == clip->ignoreEntParams->baseEntity)
       {
         return;
       }
@@ -744,8 +765,13 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
       }
       radius = DObjGetRadius(obj);
 //      VectorCopy(touch->r.currentOrigin, axis[3]);
-      VectorSubtract(touch->r.currentOrigin, radius, absmin);
-      VectorAdd(touch->r.currentOrigin, radius, absmax);
+      absmin[0] = touch->r.currentOrigin[0] - radius;
+      absmin[1] = touch->r.currentOrigin[1] - radius;
+      absmin[2] = touch->r.currentOrigin[2] - radius;
+      absmax[0] = touch->r.currentOrigin[0] + radius;
+      absmax[1] = touch->r.currentOrigin[1] + radius;
+      absmax[2] = touch->r.currentOrigin[2] + radius;
+
     }
     else
     {
@@ -792,7 +818,7 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
         trace->partGroup = objTrace.partGroup;
         MatrixTransformVector(objTrace.normal, entAxis, trace->normal);
 
-        assert(Q_fabs( Vec3Length( trace->normal ) - 1.0f ) < 0.01) || (Vec3Length( trace->normal ) < 0.01);
+        assert(fabs( Vec3Length( trace->normal ) - 1.0f ) < 0.01 || Vec3Length( trace->normal ) < 0.01);
 
         trace->walkable = trace->normal[2] >= 0.7;
 
@@ -892,3 +918,228 @@ void __cdecl SV_TracePointToEntity(pointtrace_t *clip, svEntity_s *check, trace_
 */
   }
 }
+
+int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t *check)
+{
+  gentity_t *touch;
+  vec3_t entAxis[4];
+  unsigned int clipHandle;
+  struct DObj_s *obj;
+  vec3_t absmin;
+  vec3_t localStart;
+  const float *angles;
+  struct DObjTrace_s objTrace;
+  vec3_t localEnd;
+  vec3_t absmax;
+  int entnum;
+  int partBits[5];
+  float radius;
+  int i;
+  TraceExtents extents;
+
+  entnum = check - sv.svEntities;
+  touch = SV_GentityNum(entnum);
+
+
+//EntHandle::isDefined(&touch->r.ownerNum) --> touch->r.ownerNum != 0
+//EntHandle::entnum(&touch->r.ownerNum) --> touch->r.ownerNum -1
+  if ( !(touch->r.contents & clip->contentmask) )
+  {
+    return 0;
+  }
+
+  for(i = 0; i < 2; ++i)
+  {
+    if ( clip->passEntityNum[i] != 1023 && (entnum == clip->passEntityNum[i] ||
+         (touch->r.ownerNum && touch->r.ownerNum - 1 == clip->passEntityNum[i])) )
+    {
+      return 0;
+    }
+  }
+
+  obj = SV_LocationalSightTraceDObj(clip, touch);
+  if ( obj )
+  {
+    PIXBeginNamedEvent(-1, "SV_PointSightTraceToEntity 1");
+    if ( touch->r.svFlags & 4 )
+    {
+      if ( !DObjHasContents(obj, clip->contentmask) )
+      {
+        return 0;
+      }
+      radius = DObjGetRadius(obj);
+//      VectorCopy(touch->r.currentOrigin, axis[3]);
+      absmin[0] = touch->r.currentOrigin[0] - radius;
+      absmin[1] = touch->r.currentOrigin[1] - radius;
+      absmin[2] = touch->r.currentOrigin[2] - radius;
+      absmax[0] = touch->r.currentOrigin[0] + radius;
+      absmax[1] = touch->r.currentOrigin[1] + radius;
+      absmax[2] = touch->r.currentOrigin[2] + radius;
+
+    }
+    else
+    {
+      assert(clip->priorityMap);
+
+//      VectorCopy(touch->r.currentOrigin, axis[3]);
+      VectorAdd(touch->r.currentOrigin, actorLocationalMins, absmin);
+      VectorAdd(touch->r.currentOrigin, actorLocationalMaxs, absmax);
+    }
+
+    VectorCopy(clip->start, extents.start);
+    VectorCopy(clip->end, extents.end);
+    CM_CalcTraceExtents(&extents);
+
+    if ( !CM_TraceBox(&extents, absmin, absmax, 1.0) )
+    {
+      AnglesToAxis(touch->r.currentAngles, entAxis);
+      MatrixTransposeTransformVector43(extents.start, entAxis, localStart);
+      MatrixTransposeTransformVector43(extents.end, entAxis, localEnd);
+      objTrace.fraction = 1.0;
+      if ( touch->r.svFlags & 4 )
+      {
+        DObjGeomTracelinePartBits(obj, clip->contentmask, partBits);
+        G_DObjCalcPose(touch, partBits);
+        DObjGeomTraceline(obj, localStart, localEnd, clip->contentmask, &objTrace);
+      }
+      else
+      {
+        DObjTracelinePartBits(obj, partBits);
+        G_DObjCalcPose(touch, partBits);
+        DObjTraceline(obj, localStart, localEnd, clip->priorityMap, &objTrace);
+      }
+      if ( objTrace.fraction < 1.0 )
+      {
+        return -1;
+      }
+    }
+    return 0;
+
+  }
+  PIXBeginNamedEvent(-1, "SV_TracePointToEntity 2");
+  clipHandle = SV_ClipHandleForEntity(touch);
+  angles = touch->r.currentAngles;
+  if ( !touch->r.bmodel )
+  {
+	angles = vec3_origin;
+  }
+  if(CM_TransformedBoxSightTrace(0, clip->start, clip->end, vec3_origin, vec3_origin,
+        clipHandle, clip->contentmask, touch->r.currentOrigin, angles))
+  {
+    return -1;
+  }
+  return 0;
+}
+
+
+int __cdecl SV_ClipSightToEntity(struct sightclip_t *clip, svEntity_t *check)
+{
+
+  unsigned int clipHandle;
+  gentity_t* touch;
+  int entnum;
+  float* angles;
+
+  entnum = check - sv.svEntities;
+  touch = SV_GentityNum(entnum);
+
+  if ( !(touch->r.contents & clip->contentmask))
+  {
+    return 0;
+  }
+  if(clip->passEntityNum[0] != 1023 && (entnum == clip->passEntityNum[0] || (touch->r.ownerNum != 0 && touch->r.ownerNum - 1 == clip->passEntityNum[0])))
+  {
+    return 0;
+  }
+  if(clip->passEntityNum[1] != 1023 && (entnum == clip->passEntityNum[1] || (touch->r.ownerNum != 0 && touch->r.ownerNum - 1 == clip->passEntityNum[1])))
+  {
+    return 0;
+  }
+
+  PIXBeginNamedEvent(-1, "SV_TracePointToEntity 2");
+  clipHandle = SV_ClipHandleForEntity(touch);
+  angles = touch->r.currentAngles;
+  if ( !touch->r.bmodel )
+  {
+	angles = vec3_origin;
+  }
+  if(CM_TransformedBoxSightTrace(0, clip->start, clip->end, clip->mins, clip->maxs,
+        clipHandle, clip->contentmask, touch->r.currentOrigin, angles))
+  {
+    return -1;
+  }
+  return 0;
+}
+
+
+
+void __cdecl SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels)
+{
+  vec3_t temp;
+  struct pointtrace_t pt;
+  moveclip_t clip;
+  CM_BoxTrace(results, start, end, mins, maxs, 0, contentmask);
+  if ( 1.0 == results->fraction )
+  {
+    results->hitType = TRACE_HITTYPE_NONE;
+    results->hitId = 0;
+  }
+  else
+  {
+    results->hitType = TRACE_HITTYPE_ENTITY;
+    results->hitId = 1022;
+  }
+
+  if(results->fraction == 0)
+  {
+    return;
+  }
+
+  if ( maxs[0] - mins[0] + maxs[1] - mins[1] + maxs[2] - mins[2] == 0.0 )
+  {
+      if(staticmodels)
+      {
+        CM_PointTraceStaticModels(results, start, end, contentmask);
+        if(results->fraction == 0.0)
+        {
+            return;
+        }
+      }
+
+      pt.contentmask = contentmask;
+      VectorCopy(start, pt.extents.start);
+      VectorCopy(end, pt.extents.end);
+      CM_CalcTraceExtents(&pt.extents);
+      pt.ignoreEntParams = ignoreEntParams;
+      pt.bLocational = locational;
+      pt.priorityMap = priorityMap;
+      CM_PointTraceToEntities(&pt, results);
+  }else{
+      clip.contentmask = contentmask;
+      clip.passEntityNum = ignoreEntParams->baseEntity;
+      clip.passOwnerNum = ignoreEntParams->parentEntity;
+
+      VectorSubtract(maxs, mins, clip.outerSize);
+      VectorScale(clip.outerSize, 0.5, clip.outerSize);
+
+      VectorCopy(clip.outerSize, clip.maxs);
+      VectorScale(clip.outerSize, -1.0, clip.mins);
+
+      clip.outerSize[0] = clip.outerSize[0] + 1.0;
+      clip.outerSize[1] = clip.outerSize[1] + 1.0;
+      clip.outerSize[2] = clip.outerSize[2] + 1.0;
+
+      VectorAdd(maxs, mins, temp);
+      VectorScale(temp, 0.5, temp);
+
+      VectorAdd(start, temp, clip.extents.start);
+      VectorAdd(end, temp, clip.extents.end);
+
+      CM_CalcTraceExtents(&clip.extents);
+      CM_ClipMoveToEntities(&clip, results);
+
+  }
+
+}
+
+

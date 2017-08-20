@@ -81,9 +81,21 @@ extern cvar_t* useFastFile;
 extern cvar_t* com_animCheck;
 extern cvar_t* com_version;
 extern qboolean com_securemode;
-
+extern unsigned int com_expectedHunkUsage;
+extern qboolean com_fixedConsolePosition;
 int Com_IsDeveloper();
 qboolean Com_LoadBinaryImage();
+
+enum snd_alias_system_t
+{
+  SASYS_UI = 0x0,
+  SASYS_CGAME = 0x1,
+  SASYS_GAME = 0x2,
+  SASYS_COUNT = 0x3,
+};
+
+
+void __cdecl Com_UnloadSoundAliases(enum snd_alias_system_t type);
 
 void Com_SyncThreads();
 

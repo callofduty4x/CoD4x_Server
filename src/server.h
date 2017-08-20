@@ -33,6 +33,7 @@
 #include "player.h"
 #include "filesystem.h"
 #include "g_hud.h"
+#include "g_public.h"
 #include "sys_cod4defs.h"
 #include "cvar.h"
 #include "net_game_conf.h"
@@ -133,14 +134,8 @@ typedef enum {
 #pragma pack(1)
 
 
-typedef struct
-{
-	char num;
-	char data[256];
-	int dataLen;
-}voices_t;
-
-typedef struct client_s {//90b4f8c
+struct client_s
+{//90b4f8c
 	clientConnectState_t		state;
 	int			unksnapshotvar;		// must timeout a few frames in a row so debugging doesn't break
 	int			deltaMessage;		// (0x8) frame last client usercmd message
@@ -262,18 +257,20 @@ typedef struct client_s {//90b4f8c
 	byte			fragmentBuffer[NETCHAN_FRAGMENTBUFFER_SIZE]; //(0xa0500)
 	char			legacy_pbguid[33]; //0xa0d00
 	byte			pad;
-	short			clscriptid; //0xa0d22
+	short			scriptId; //0xa0d22
 	int			canNotReliable;
 	int			serverId; //0xa0d28
-	voices_t		voicedata[40];
-	int			unsentVoiceData;//(0xa35f4)
+	struct VoicePacket_t	voicePackets[40];
+	int			voicePacketCount;//(0xa35f4)
 	byte			muteList[MAX_CLIENTS];
-	byte			hasVoip;//(0xa3638)
+	byte			sendVoice;//(0xa3638)
 	stats_t			stats;		//(0xa3639)
 	byte			receivedstats;		//(0xa5639)
 	byte			gamestateSent;
 	byte			hasValidPassword;
-} client_t;//0x0a563c
+};//0x0a563c
+
+typedef struct client_s client_t;
 
 /*
 typedef struct {
@@ -361,8 +358,7 @@ typedef struct{
 	char guid[32];
 }banlist_t;
 
-
-#define	MAX_SNAPSHOT_ENTITIES	1024
+#define MAX_SNAPSHOT_ENTITIES	1024
 
 typedef struct {//0x8c51780
 
@@ -397,7 +393,7 @@ typedef struct {//0x8c51780
 	int nextCachedSnapshotFrames;
 	cachedClient_t cachedSnapshotClients[4096];
 
-	int nextHeartbeatTime;
+	int numCachedSnapshotEntities;
 
 	int nextStatusResponseTime;
 
@@ -641,16 +637,64 @@ typedef struct
 }baninfo_t;
 
 
-
-#define g_sv_skel_memory ((char*)(0x13F5A1C0))
-#define g_sv_skel_memory_start (*(char**)(0x13F5A1A8))
-
-
 int SV_NumForGentity( gentity_t *ent );
 gentity_t *SV_GentityNum( int num );
 playerState_t *SV_GameClientNum( int num );
 svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
 gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
+
+
+extern	serverStaticExt_t	svse;	// persistant server info across maps
+extern	permServerStatic_t	psvs;	// persistant even if server does shutdown
+
+struct moveclip_s;
+struct trace_s;
+
+
+extern cvar_t* sv_rconPassword;
+extern cvar_t* sv_protocol;
+extern cvar_t* sv_padPackets;
+extern cvar_t* sv_demoCompletedCmd;
+extern cvar_t* sv_screenshotArrivedCmd;
+extern cvar_t* sv_mapDownloadCompletedCmd;
+extern cvar_t* sv_wwwBaseURL;
+extern cvar_t* sv_maxPing;
+extern cvar_t* sv_minPing;
+extern cvar_t* sv_authorizemode;
+extern cvar_t* sv_privateClients;
+extern cvar_t* sv_privatePassword;
+extern cvar_t* sv_reconnectlimit;
+extern cvar_t* sv_wwwDlDisconnected;
+extern cvar_t* sv_allowDownload;
+extern cvar_t* sv_wwwDownload;
+extern cvar_t* sv_autodemorecord;
+extern cvar_t* sv_modStats;
+extern cvar_t* sv_password;
+extern cvar_t* sv_mapRotation;
+extern cvar_t* sv_mapRotationCurrent;
+extern cvar_t* sv_randomMapRotation;
+extern cvar_t* sv_cheats;
+extern cvar_t* sv_consayname;
+extern cvar_t* sv_contellname;
+extern cvar_t* sv_maxclients;
+extern cvar_t* sv_g_gametype;
+extern cvar_t* sv_pure;
+extern cvar_t* sv_fps;
+extern cvar_t* sv_serverid;
+extern cvar_t* sv_maxRate;
+extern cvar_t* sv_mapname;
+extern cvar_t* sv_floodProtect;
+extern cvar_t* sv_showAverageBPS;
+extern cvar_t* sv_hostname;
+extern cvar_t* sv_shownet;
+extern cvar_t* sv_legacymode;
+extern cvar_t* sv_steamgroup;
+extern cvar_t* sv_voice;
+
+
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 //
 // sv_client.c
@@ -667,7 +711,7 @@ void SV_SendClientSnapshot( client_t *cl );
 
 qboolean SV_Acceptclient(int);
 client_t* SV_ReadPackets(netadr_t *from, unsigned short qport);
-void SV_GetVoicePacket(netadr_t *from, msg_t* msg);
+void SV_VoicePacket(netadr_t *from, msg_t* msg);
 void SV_UserVoice(client_t* cl, msg_t* msg);
 void SV_PreGameUserVoice(client_t* cl, msg_t* msg);
 //void SV_BuildClientSnapshot(client_t* cl);
@@ -796,46 +840,6 @@ __cdecl qboolean SV_GameCommand(void);
 void SV_GetConfigstring( int index, char *buffer, int bufferSize );
 int SV_GetConfigstringIndex(int num);
 int SV_GetModelConfigstringIndex(int num);
-
-extern cvar_t* sv_rconPassword;
-extern cvar_t* sv_protocol;
-extern cvar_t* sv_padPackets;
-extern cvar_t* sv_demoCompletedCmd;
-extern cvar_t* sv_screenshotArrivedCmd;
-extern cvar_t* sv_mapDownloadCompletedCmd;
-extern cvar_t* sv_wwwBaseURL;
-extern cvar_t* sv_maxPing;
-extern cvar_t* sv_minPing;
-extern cvar_t* sv_authorizemode;
-extern cvar_t* sv_privateClients;
-extern cvar_t* sv_privatePassword;
-extern cvar_t* sv_reconnectlimit;
-extern cvar_t* sv_wwwDlDisconnected;
-extern cvar_t* sv_allowDownload;
-extern cvar_t* sv_wwwDownload;
-extern cvar_t* sv_autodemorecord;
-extern cvar_t* sv_modStats;
-extern cvar_t* sv_password;
-extern cvar_t* sv_mapRotation;
-extern cvar_t* sv_mapRotationCurrent;
-extern cvar_t* sv_randomMapRotation;
-extern cvar_t* sv_cheats;
-extern cvar_t* sv_consayname;
-extern cvar_t* sv_contellname;
-extern cvar_t* sv_maxclients;
-extern cvar_t* sv_g_gametype;
-extern cvar_t* sv_pure;
-extern cvar_t* sv_fps;
-extern cvar_t* sv_serverid;
-extern cvar_t* sv_maxRate;
-extern cvar_t* sv_mapname;
-extern cvar_t* sv_floodProtect;
-extern cvar_t* sv_showAverageBPS;
-extern cvar_t* sv_hostname;
-extern cvar_t* sv_shownet;
-extern cvar_t* sv_legacymode;
-extern cvar_t* sv_steamgroup;
-
 void __cdecl SV_StringUsage_f(void);
 void __cdecl SV_ScriptUsage_f(void);
 void __cdecl SV_BeginClientSnapshot( client_t *cl, msg_t* msg);
@@ -845,7 +849,6 @@ void SV_SpawnServer(const char* levelname);
 void __cdecl SV_SetGametype( void );
 void __cdecl SV_InitCvars( void );
 void __cdecl SV_RestartGameProgs( int savepersist );
-void __cdecl SV_ResetSekeletonCache(void);
 void SV_BotInitBotLib( void );
 int SV_BotLibSetup( void );
 int SV_BotLoadMap(const char* levelname);
@@ -885,11 +888,6 @@ const char* SV_FormatBanMessage(int timeleftminutes, char *outbuffer, int outbuf
 
 
 void SV_AddSafeCommands();
-extern	serverStaticExt_t	svse;	// persistant server info across maps
-extern	permServerStatic_t	psvs;	// persistant even if server does shutdown
-
-struct moveclip_s;
-struct trace_s;
 
 void SV_SetExpectedHunkUsage(const char* name);
 
@@ -925,12 +923,28 @@ void SV_ClientCalcFramerate();
 int SV_GetPredirectedOriginAndTimeForClientNum(int clientNum, float *origin);
 void SV_SetMapCenterInSVSHeader(float* center);
 void SV_GetMapCenterFromSVSHeader(float* center);
+qboolean SV_Loaded();
+bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angles, bool *success);
+clipHandle_t SV_ClipHandleForEntity(gentity_t *touch);
+
+const char *__cdecl SV_GetMapBaseName(const char *mapname);
+void __cdecl SV_ResetSkeletonCache();
+void __cdecl SV_SetUserinfo(int clientIndex, const char *val);
 
 #ifdef COD4X18UPDATE
 void SV_ConnectWithUpdateProxy(client_t *cl);
 #endif
 void SV_WriteChecksumInfo(msg_t* msg, const char* filename);
+
+#ifdef __cplusplus
+}
 #endif
+
+
+#endif
+
+
+
 
 /*
 
@@ -942,3 +956,4 @@ typedef struct{
 
 extern spawnerrortest_t e_spawns[64];
 */
+
