@@ -1,4 +1,4 @@
- -TARGET=libtomcrypt.a
+TARGET=libtomcrypt.a
 CFLAGS=-m32 -Wall -Os -s -I. -DLTC_NO_ROLC -DLTC_SOURCE
 
 CC=gcc
