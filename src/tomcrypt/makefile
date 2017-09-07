@@ -1,4 +1,4 @@
-TARGET=libtomcrypt.a
+ -TARGET=libtomcrypt.a
 CFLAGS=-m32 -Wall -Os -s -I. -DLTC_NO_ROLC -DLTC_SOURCE
 
 CC=gcc
@@ -29,8 +29,6 @@ SOURCES=$(wildcard ciphers/aes/aes.c \
 	math/*.c)
 
 OBJECTS=$(patsubst %.c,%.o,$(SOURCES))
-#MATHSOURCES=$(wildcard math/*.c)
-#MATHOBJECTS=$(patsubst %.c,%.o,$(MATHSOURCES))
 
 all: notify $(TARGETNAME)
 	@echo TomCrypt done
@@ -38,17 +36,17 @@ all: notify $(TARGETNAME)
 notify:
 	@echo TomCrypt start
 
-$(TARGETNAME): $(OBJECTS) #$(MATHOBJECTS)
+$(TARGETNAME): $(OBJECTS)
 	@echo   $(AR)  $@
 	@$(AR) cr $@ $^
 
 %.o: %.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) -o $@ $<
+	@$(CC) -c $(CFLAGS) -o $@ $< -I.
 
 math/%.o: math/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) -o $@ $< -Imath
+	@$(CC) -c $(CFLAGS) -o $@ $< -I. -Imath
 
 clean:
 ifeq ($(OS),Windows_NT)
