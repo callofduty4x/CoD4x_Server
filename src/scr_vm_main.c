@@ -598,6 +598,8 @@ void Scr_AddStockMethods()
     Scr_AddMethod("getcountedfps", PlayerCmd_GetCountedFPS, 0);
     Scr_AddMethod("getspectatorclient", PlayerCmd_GetSpectatorClient, 0);
 
+    // Clone script_brushmodel settings to script_model.
+    Scr_AddMethod("clonebrushmodeltoscriptmodel", GScr_CloneBrushModelToScriptModel, qfalse);
 }
 
 void Scr_InitFunctions()
