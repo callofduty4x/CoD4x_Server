@@ -3276,3 +3276,34 @@ void GScr_Float()
     else
         Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
 }
+
+void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
+{
+    // Common checks.
+    if (Scr_GetNumParam() != 1)
+        Scr_Error("usage: <scriptModelEnt> CloneBrushModelToScriptModel(<brushModelEnt>)");
+
+    // Object checks.
+    gentity_t* scriptEnt = VM_GetGEntityForNum(scriptModelEntNum);
+    if (scriptEnt->classname != stringIndex.script_model)
+        Scr_ObjectError("passed entity is not a script_model entity");
+
+    if (scriptEnt->s.eType != 6)
+        Scr_ObjectError("passed entity type is not 6 (TODO: what is it?)");
+
+    // Arguments checks.
+    gentity_t* brushEnt = Scr_GetEntity(0);
+    if (brushEnt->classname != stringIndex.script_brushmodel && brushEnt->classname != stringIndex.script_model && brushEnt->classname != stringIndex.script_origin && brushEnt->classname != stringIndex.light)
+        Scr_ParamError(0, "brush model entity classname must be one of {script_brushmodel, script_model, script_origin, light}");
+
+    if (!brushEnt->s.index)
+        Scr_ParamError(0, "brush model entity has no collision model");
+
+    // Let's do this...
+    SV_UnlinkEntity(scriptEnt);
+    scriptEnt->s.index = brushEnt->s.index;
+    int contents = scriptEnt->r.contents;
+    SV_SetBrushModel(scriptEnt);
+    scriptEnt->r.contents |= contents;
+    SV_LinkEntity(scriptEnt);
+}

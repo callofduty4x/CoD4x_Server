@@ -110,3 +110,8 @@ qboolean SV_inPVSIgnorePortals( const vec3_t p1, const vec3_t p2 ) {
 
 	return qtrue;
 }
+
+int SV_SetBrushModel(gentity_t* Entity_)
+{
+    return ((int(__cdecl*)(gentity_t*))0x0817CF08)(Entity_);
+}

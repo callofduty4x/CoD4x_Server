@@ -645,6 +645,7 @@ gentity_t *SV_GentityNum( int num );
 playerState_t *SV_GameClientNum( int num );
 svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
 gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
+int __cdecl SV_SetBrushModel(gentity_t* Entity_);
 
 //
 // sv_client.c

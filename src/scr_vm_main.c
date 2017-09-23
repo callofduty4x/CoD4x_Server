@@ -644,8 +644,11 @@ void Scr_AddStockMethods()
     Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
     Scr_AddMethod("setvelocity", PlayerCmd_SetVelocity, qfalse);
 
-        /* Bot movement */
-        Scr_AddBotsMovement();
+    /* Bot movement */
+    Scr_AddBotsMovement();
+
+    // Clone script_brushmodel settings to script_model.
+    Scr_AddMethod("clonebrushmodeltoscriptmodel", GScr_CloneBrushModelToScriptModel, qfalse);
 }
 
 void Scr_InitFunctions()
