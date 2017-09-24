@@ -44,7 +44,7 @@ windows:
 linux:
 	@echo [Linux] Building specific files...
 	@cd bin && \
-	$(CC) $(CFLAGS) -D _GNU_SOURCE -mtune=nocona $(CLIBS) ../src/unix/sys_unix.c ../src/unix/sys_linux.c ../src/unix/elf32_parser.c ../src/unix/sys_cod4linker_linux.c ../src/unix/sys_con_tty.c
+	$(CC) $(CFLAGS) -D _GNU_SOURCE -mtune=nocona $(CLIBS) ../src/unix/sys_unix.c ../src/unix/sys_linux.c ../src/unix/elf32_parser.c ../src/unix/sys_cod4linker_linux.c ../src/unix/sys_con_tty.c ../src/version/version.c
 
 common_win: 
 	@echo [Windows] Building common code...
