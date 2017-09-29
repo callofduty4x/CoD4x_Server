@@ -39,6 +39,7 @@
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
 #include "tomcrypt/tomcrypt_misc.h"
+#include "bg.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 
@@ -3306,4 +3307,23 @@ void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
     SV_SetBrushModel(scriptEnt);
     scriptEnt->r.contents |= contents;
     SV_LinkEntity(scriptEnt);
+}
+
+void PlayerCmd_SetStance(scr_entref_t playerEntNum)
+{
+    if (Scr_GetNumParam() != 1)
+    Scr_Error("usage: <client> setStance(<string stance>);");
+
+    // Object check.
+    gclient_t* cl = VM_GetGClientForEntityNumber(playerEntNum);
+    if (!cl)
+        Scr_ObjectError("entity is not a client");
+
+    // Param check.
+    short stanceIdx = Scr_GetConstString(0);
+    if (stanceIdx != stringIndex.stand && stanceIdx != stringIndex.crouch && stanceIdx != stringIndex.prone)
+        Scr_ParamError(0, "stance must be one of {stand, crouch, prone}");
+
+    BGEvent event = stanceIdx == stringIndex.stand ? EV_STANCE_FORCE_STAND : stanceIdx == stringIndex.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
+    BG_AddPredictableEventToPlayerstate(event, 0, cl);
 }

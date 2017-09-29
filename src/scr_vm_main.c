@@ -529,7 +529,6 @@ void Scr_AddStockMethods()
     Scr_AddMethod("showtoplayer", (void *)0x80c4252, 0);
     Scr_AddMethod("setcontents", (void *)0x80c41e4, 0);
     Scr_AddMethod("getstance", (void *)0x80c42d2, 0);
-    //	Scr_AddMethod("setstance", ScrCmd_SetStance, 0);
     Scr_AddMethod("setjumpheight", PlayerCmd_SetJumpHeight, 0);
     Scr_AddMethod("setgravity", PlayerCmd_SetGravity, 0);
     Scr_AddMethod("setgroundreferenceent", PlayerCmd_SetGroundReferenceEnt, 0);
@@ -649,6 +648,8 @@ void Scr_AddStockMethods()
 
     // Clone script_brushmodel settings to script_model.
     Scr_AddMethod("clonebrushmodeltoscriptmodel", GScr_CloneBrushModelToScriptModel, qfalse);
+    // Force player stance.
+    Scr_AddMethod("setstance", PlayerCmd_SetStance, qfalse);
 }
 
 void Scr_InitFunctions()
