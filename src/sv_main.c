@@ -30,7 +30,6 @@
 #include "msg.h"
 #include "server.h"
 #include "net_game_conf.h"
-#include "misc.h"
 #include "g_sv_shared.h"
 #include "g_shared.h"
 #include "q_platform.h"
@@ -46,6 +45,8 @@
 #include "q_math.h"
 #include "math.h"
 #include "httpftp.h"
+#include "allhooks.h"
+#include "misc.h"
 
 #include "sapi.h"
 

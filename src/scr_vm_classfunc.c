@@ -21,9 +21,9 @@
 
 #include "scr_vm_classfunc.h"
 #include "g_shared.h"
-#include "misc.h"
 #include "g_sv_shared.h"
 #include "hl2rcon.h"
+#include "misc.h"
 
 void __cdecl ClientScr_ReadOnly(gclient_t *pSelf, client_fields_t *pField)
 {

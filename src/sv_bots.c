@@ -3,9 +3,9 @@
 #include "sys_main.h"
 #include "q_math.h"
 #include "scr_vm_functions.h"
-#include "misc.h"
 #include "dobj_part_cache.h"
 #include "server.h"
+#include "misc.h"
 
 BotMovementInfo_t g_botai[MAX_CLIENTS];
 

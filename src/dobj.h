@@ -8,7 +8,6 @@
 #include "xassets/xmodel.h"
 #include "dobj_part_cache.h"
 #include "qcommon_io.h"
-#include "misc.h"
 
 typedef struct DObjSkeletonPartMatrix_s // Same as DObjAnimMat_t? Need confirmation!
 {

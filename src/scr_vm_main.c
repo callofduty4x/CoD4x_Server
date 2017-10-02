@@ -25,10 +25,11 @@
 #include "qcommon_io.h"
 #include "cvar.h"
 #include "cmd.h"
-#include "misc.h"
 #include "sys_main.h"
 #include "sv_bots.h"
 #include "scr_vm_classfunc.h"
+#include "allhooks.h"
+#include "misc.h"
 
 #include <stdarg.h>
 

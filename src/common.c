@@ -37,7 +37,6 @@
 #include "cmd.h"
 #include "sys_net.h"
 #include "xassets.h"
-#include "misc.h"
 #include "scr_vm.h"
 #include "netchan.h"
 #include "server.h"
@@ -53,6 +52,8 @@
 #include "dobj.h"
 #include "xassets/extractor.h"
 #include "sec_update.h"
+#include "allhooks.h"
+#include "misc.h"
 
 #include <string.h>
 #include <setjmp.h>

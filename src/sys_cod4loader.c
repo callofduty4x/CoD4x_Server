@@ -36,13 +36,13 @@
 #include "scr_vm_functions.h"
 #include "sys_thread.h"
 #include "filesystem.h"
-#include "misc.h"
 #include "sys_cod4loader.h"
 #include "sec_crypto.h"
 #include "cmd.h"
 #include "xassets.h"
 #include "xassets/extractor.h"
 #include "scr_vm_classfunc.h"
+#include "misc.h"
 
 
 #include <string.h>

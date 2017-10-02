@@ -1,4 +1,5 @@
 #include "dobj.h"
+#include "misc.h"
 
 void PrintDObjInfo(DObj_t* dobj)
 {

@@ -29,17 +29,6 @@
 
 #define STRBUFFBASEPTR_ADDR 0x897d780
 
-
-void __cdecl Swap_Init(void);
-void __cdecl CSS_InitConstantConfigStrings(void);
-void __cdecl Con_InitChannels(void);
-void __cdecl SEH_UpdateLanguageInfo(void);
-void __cdecl SetAnimCheck(int);
-qboolean __cdecl BG_IsWeaponValid( playerState_t *ps, unsigned int index);
-qboolean __cdecl SEH_StringEd_GetString( const char* input );
-
-void __cdecl SL_Init(void);
-void __cdecl SL_RemoveRefToString( unsigned int );
 char* SL_ConvertToString(unsigned int index);
 int SL_FindString(const char *string);
 unsigned int SL_FindLowercaseString(const char *upperstring);

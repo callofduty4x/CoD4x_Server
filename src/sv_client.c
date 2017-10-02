@@ -29,7 +29,6 @@
 #include "msg.h"
 #include "server.h"
 #include "net_game_conf.h"
-#include "misc.h"
 #include "g_sv_shared.h"
 #include "q_platform.h"
 #include "sys_main.h"
@@ -40,8 +39,8 @@
 #include "hl2rcon.h"
 #include "sv_auth.h"
 #include "sec_crypto.h"
-
 #include "sapi.h"
+#include "allhooks.h"
 
 
 #include <stdint.h>

@@ -30,7 +30,6 @@
 #include "q_platform.h"
 #include "g_sv_shared.h"
 #include "cvar.h"
-#include "misc.h"
 #include "sec_crypto.h"
 #include "sv_auth.h"
 #include "sapi.h"
@@ -39,6 +38,7 @@
 #include "scr_vm_functions.h"
 #include "tomcrypt/tomcrypt_misc.h"
 #include "bg.h"
+#include "misc.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 
