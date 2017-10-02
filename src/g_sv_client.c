@@ -25,7 +25,6 @@
 #include "q_shared.h"
 #include "entity.h"
 #include "player.h"
-#include "plugin_handler.h"
 #include "g_sv_shared.h"
 #include "cvar.h"
 #include "server.h"
@@ -302,7 +301,8 @@ __asm__ __volatile__(
 
 	if(svs.time - cl->enteredWorldTime > 800){
 	//First spawn after map reloading
-		PHandler_Event(PLUGINS_ONCLIENTSPAWN, ent);
+		// TODO PHANDLER
+		//PHandler_Event(PLUGINS_ONCLIENTSPAWN, ent);
 
 		if(!cl->firstSpawn){
 			//First spawn after connecting to server

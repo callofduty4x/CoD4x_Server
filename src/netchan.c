@@ -29,9 +29,9 @@
 #include "msg.h"
 #include "netchan.h"
 #include "q_platform.h"
-#include "plugin_handler.h"
 #include "net_game_conf.h"
 #include "sha.h"
+#include "qcommon.h"
 
 #include <string.h>
 #include <stdarg.h>
@@ -470,7 +470,8 @@ qboolean NET_SendPacket( netsrc_t sock, int length, const void *data, netadr_t *
 
 	qboolean returnNow = qfalse;
 
-	PHandler_Event(PLUGINS_ONUDPNETSEND, to, data, length, &returnNow);
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONUDPNETSEND, to, data, length, &returnNow);
 
 	if(returnNow){
 		return qtrue;

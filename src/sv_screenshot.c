@@ -27,7 +27,6 @@
 #include "server.h"
 #include "sys_main.h"
 #include "sapi.h"
-#include "plugin_handler.h"
 
 #include <stdint.h>
 #include <string.h>
@@ -156,7 +155,8 @@ void SV_ScreenshotArrived( client_t* cl, const char* filename )
 {
 	static char cmdline[1024];
 
-	PHandler_Event(PLUGINS_ONSCREENSHOTARRIVED, cl, filename);
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONSCREENSHOTARRIVED, cl, filename);
 
 
 	if(!*sv_screenshotArrivedCmd->string)
@@ -175,5 +175,6 @@ void SV_ScreenshotArrived( client_t* cl, const char* filename )
 
 void SV_ModuleArrived( client_t* cl, const char* modulePath, long checksum)
 {
-	PHandler_Event(PLUGINS_ONMODULELOADED, cl, modulePath, checksum);
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONMODULELOADED, cl, modulePath, checksum);
 }

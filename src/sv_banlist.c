@@ -30,7 +30,6 @@
 #include "sys_main.h"
 #include "server.h"
 #include "cmd.h"
-#include "plugin_handler.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -194,7 +193,8 @@ char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, cha
   message[0] = 0;
 
   //Iterate plugins while message is ""
-  PHandler_Event(PLUGINS_ONPLAYERGETBANSTATUS, &baninfo, message, len);
+  // TODO PHANDLER
+  //PHandler_Event(PLUGINS_ONPLAYERGETBANSTATUS, &baninfo, message, len);
   if(message[0])
   {
     return message;
@@ -222,7 +222,8 @@ void SV_AddBan(baninfo_t* baninfo)
   time_t aclock;
   time(&aclock);
   baninfo->created = aclock;
-  PHandler_Event(PLUGINS_ONPLAYERADDBAN, baninfo);
+  // TODO PHANDLER
+  //PHandler_Event(PLUGINS_ONPLAYERADDBAN, baninfo);
 }
 
 void SV_AddBanForClient(client_t* cl, int bantime, const char* banreason)
@@ -303,7 +304,8 @@ void SV_AddBanForPlayer(uint64_t steamid, uint64_t playerid, const char* name, i
 
 void SV_RemoveBan(baninfo_t* baninfo)
 {
-  PHandler_Event(PLUGINS_ONPLAYERREMOVEBAN, baninfo);
+  // TODO PHANDLER
+  //PHandler_Event(PLUGINS_ONPLAYERREMOVEBAN, baninfo);
 }
 
 const char* SV_FormatBanMessage(int timeleftsecs, char *outbuffer, int outbufferlen, const char* reasonfmt, ...)

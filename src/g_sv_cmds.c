@@ -26,7 +26,6 @@
 #include "player.h"
 #include "g_sv_shared.h"
 #include "g_shared.h"
-#include "plugin_handler.h"
 #include "cmd.h"
 #include "qcommon_io.h"
 #include "server.h"
@@ -626,7 +625,8 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
     }
 
     qboolean show = qtrue;
-    PHandler_Event(PLUGINS_ONMESSAGESENT, text, ent->s.number, &show, mode);
+    // TODO PHANDLER
+    //PHandler_Event(PLUGINS_ONMESSAGESENT, text, ent->s.number, &show, mode);
 
     if (!show)
         return;

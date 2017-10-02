@@ -37,7 +37,6 @@
 #include "cmd.h"
 #include "sys_net.h"
 #include "xassets.h"
-#include "plugin_handler.h"
 #include "misc.h"
 #include "scr_vm.h"
 #include "netchan.h"
@@ -564,7 +563,8 @@ void Com_Quit_f( void ) {
   Com_Printf("quitting...\n");
 
 	// don't try to shutdown if we are in a recursive error
-  PHandler_Event(PLUGINS_ONTERMINATE); //Notify all plugins to hold and stop threads now
+  // TODO PHANDLER
+  //PHandler_Event(PLUGINS_ONTERMINATE); //Notify all plugins to hold and stop threads now
 
   Com_Printf("All plugins have terminated\n");
 
@@ -888,16 +888,17 @@ void Com_Init(char* commandLine){
     Cmd_AddCommand ("quit", Com_Quit_f);
     Cmd_AddCommand ("writeconfig", Com_WriteConfig_f );
 
-//    Com_AddLoggingCommands();
-//    HL2Rcon_AddSourceAdminCommands();
+    //Com_AddLoggingCommands();
+    //HL2Rcon_AddSourceAdminCommands();
 
     Com_UpdateRealtime();
 
     Com_RandomBytes( (byte*)&qport, sizeof(int) );
     Netchan_Init( qport );
-	Huffman_InitMain();
+    Huffman_InitMain();
 
-    PHandler_Init();
+    // TODO PHANDLER
+    //PHandler_Init();
 
     SV_Init();
 
@@ -1111,15 +1112,17 @@ __optimize3 void Com_Frame( void ) {
 	if(!SV_Frame( usec ))
 		return;
 
-	PHandler_Event(PLUGINS_ONFRAME);
+    // TODO PHANDLER
+    //PHandler_Event(PLUGINS_ONFRAME);
 
-	Com_TimedEventLoop();
-	Cbuf_Execute (0 ,0);
-	NET_Sleep(0);
-	NET_TcpServerPacketEventLoop();
-	Sys_RunThreadCallbacks();
-  Plugin_RunThreadCallbacks();
-	Cbuf_Execute (0 ,0);
+    Com_TimedEventLoop();
+    Cbuf_Execute (0 ,0);
+    NET_Sleep(0);
+    NET_TcpServerPacketEventLoop();
+    Sys_RunThreadCallbacks();
+    // TODO PHANDLER
+    //Plugin_RunThreadCallbacks();
+    Cbuf_Execute (0 ,0);
 
 #ifdef TIMEDEBUG
 	if ( com_speeds->integer ) {

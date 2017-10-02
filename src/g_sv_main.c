@@ -26,7 +26,6 @@
 #include "cvar.h"
 #include "entity.h"
 #include "player.h"
-#include "plugin_handler.h"
 #include "g_shared.h"
 #include "g_sv_shared.h"
 #include "cmd.h"
@@ -345,7 +344,8 @@ __cdecl void ExitLevel( void ) {
 
 	onExitLevelExecuted = qtrue;
 
-        PHandler_Event(PLUGINS_ONEXITLEVEL,NULL);
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONEXITLEVEL,NULL);
 
 	if(*g_votedMapName->string){
 		if(*g_votedGametype->string)

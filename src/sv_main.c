@@ -29,7 +29,6 @@
 #include "cmd.h"
 #include "msg.h"
 #include "server.h"
-#include "plugin_handler.h"
 #include "net_game_conf.h"
 #include "misc.h"
 #include "g_sv_shared.h"
@@ -3475,7 +3474,8 @@ void SV_PreLevelLoad(){
 
     if(!onExitLevelExecuted)
     {
-        PHandler_Event(PLUGINS_ONEXITLEVEL, NULL);
+        // TODO PHANDLER
+        //PHandler_Event(PLUGINS_ONEXITLEVEL, NULL);
     }
     onExitLevelExecuted = qfalse;
 
@@ -3514,7 +3514,8 @@ void SV_PreLevelLoad(){
 }
 
 void SV_PostLevelLoad(){
-    PHandler_Event(PLUGINS_ONSPAWNSERVER, NULL);
+    // TODO PHANDLER
+    //PHandler_Event(PLUGINS_ONSPAWNSERVER, NULL);
     sv.frameusec = 1000000 / sv_fps->integer;
 }
 
@@ -3605,10 +3606,12 @@ qboolean SV_Map( const char *levelname ) {
 
 
 void SV_PreFastRestart(){
-    PHandler_Event(PLUGINS_ONPREFASTRESTART, NULL);
+    // TODO PHANDLER
+    //PHandler_Event(PLUGINS_ONPREFASTRESTART, NULL);
 }
 void SV_PostFastRestart(){
-    PHandler_Event(PLUGINS_ONPOSTFASTRESTART, NULL);
+    // TODO PHANDLER
+    //PHandler_Event(PLUGINS_ONPOSTFASTRESTART, NULL);
 }
 
 /*
@@ -4372,7 +4375,8 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 
         serverStatus_Write();
 
-            PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
+        // TODO PHANDLER
+        //PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
 /*		if(svs.time > svse.nextsecret){
             svse.nextsecret = svs.time+80000;
             Com_RandomBytes((byte*)&svse.secret,sizeof(int));

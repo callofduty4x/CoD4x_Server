@@ -31,7 +31,6 @@
 #include "sys_main.h"
 #include "server.h"
 #include "cmd.h"
-#include "plugin_handler.h"
 */
 #include "../pinc.h"
 #include "q_shared.h"

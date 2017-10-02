@@ -70,8 +70,8 @@ LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
 RESOURCE_FILE=src/win32/win_cod4.res
 DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
 INTERFACE_LIB=$(PLUGINS_DIR)/libcom_plugin.a
-ADDITIONAL_OBJ=$(INTERFACE_LIB)
-CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB))
+ADDITIONAL_OBJ=
+CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o $(DEF_FILE))
 SECURITY=
 else
 #################

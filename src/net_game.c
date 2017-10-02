@@ -29,7 +29,6 @@
 #include "server.h"
 #include "net_game.h"
 #include "net_game_conf.h"
-#include "plugin_handler.h"
 
 void NET_UDPPacketEvent(netadr_t* from, void* data, int len, int buflen)
 {
@@ -37,7 +36,8 @@ void NET_UDPPacketEvent(netadr_t* from, void* data, int len, int buflen)
         msg_t msg;
 
         qboolean returnNow = qfalse;
-        PHandler_Event(PLUGINS_ONUDPNETEVENT, from, data, len, &returnNow);
+        // TODO PHANDLER
+        //PHandler_Event(PLUGINS_ONUDPNETEVENT, from, data, len, &returnNow);
         if(returnNow)
         {
             return;

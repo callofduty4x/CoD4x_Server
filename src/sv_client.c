@@ -31,7 +31,6 @@
 #include "net_game_conf.h"
 #include "misc.h"
 #include "g_sv_shared.h"
-#include "plugin_handler.h"
 #include "q_platform.h"
 #include "sys_main.h"
 #include "punkbuster.h"
@@ -279,8 +278,8 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		}else{
 			canreserved = qfalse;
 		}
-
-		PHandler_Event(PLUGINS_ONPLAYERWANTRESERVEDSLOT, from, "", userinfo, 0, &canreserved);
+		// TODO PHANDLER
+		//PHandler_Event(PLUGINS_ONPLAYERWANTRESERVEDSLOT, from, "", userinfo, 0, &canreserved);
 		if ( canreserved == qtrue)
 		{
 			for ( j = 0; j < sv_privateClients->integer ; j++) {
@@ -417,7 +416,8 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
   // save the userinfo
   Q_strncpyz(newcl->userinfo, userinfo, sizeof(newcl->userinfo) );
 
-  PHandler_Event(PLUGINS_ONPLAYERCONNECT, clientNum, from, "", userinfo, 0, denied, sizeof(denied));
+  // TODO PHANDLER
+  //PHandler_Event(PLUGINS_ONPLAYERCONNECT, clientNum, from, "", userinfo, 0, denied, sizeof(denied));
 
   if(denied[0]){
     NET_OutOfBandPrint( NS_SERVER, from, "error\n%s", denied);
@@ -789,7 +789,8 @@ void SV_UserinfoChanged( client_t *cl ) {
 	if(Info_ValueForKey(cl->userinfo, "cl_wwwDownload"))
 		cl->wwwDownload = qtrue;
 
-	PHandler_Event(PLUGINS_ONCLIENTUSERINFOCHANGED, cl);
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONCLIENTUSERINFOCHANGED, cl);
 
 }
 
@@ -885,7 +886,8 @@ __cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 	Com_Printf("Player %s^7, %i dropped: %s\n", clientName, clientnum, reason);
 	HL2Rcon_EventClientLeave(clientnum);
 
-	PHandler_Event(PLUGINS_ONPLAYERDC, drop, reason);	// Plugin event
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONPLAYERDC, drop, reason);	// Plugin event
 
 	SV_CloseAllClientHandles(drop);
 
@@ -1116,7 +1118,8 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 
 		SV_ClientThink( cl, &cmds[ i ] );
 
-		PHandler_Event(PLUGINS_ONCLIENTMOVECOMMAND, cl, &cmds[ i ]);
+		// TODO PHANDLER
+		//PHandler_Event(PLUGINS_ONCLIENTMOVECOMMAND, cl, &cmds[ i ]);
 
 		if(cl->demorecording && !cl->demowaiting && cl->demofile.handleFiles.file.o)
 			SV_WriteDemoArchive(cl);
@@ -1223,7 +1226,8 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	client->pureAuthentic = 1;
 
 	HL2Rcon_EventClientEnterWorld( clientNum );
-	PHandler_Event(PLUGINS_ONCLIENTENTERWORLD, client);
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONCLIENTENTERWORLD, client);
 
 }
 
@@ -1698,7 +1702,8 @@ void SV_SendClientGameState( client_t *client ) {
 	returnNow = qfalse;
 	banrejectmsg[0] = '\0';
 
-	PHandler_Event(PLUGINS_ONPLAYERGOTAUTHINFO, &client->netchan.remoteAddress, &playerid, &steamid, banrejectmsg, &returnNow, client);
+	// TODO PHANDLER
+	//PHandler_Event(PLUGINS_ONPLAYERGOTAUTHINFO, &client->netchan.remoteAddress, &playerid, &steamid, banrejectmsg, &returnNow, client);
 	if(returnNow)
 	{
 		return;

@@ -207,7 +207,6 @@ or configs will never get loaded from disk!
 #include "sys_main.h"
 #include "cmd.h"
 #include "sys_thread.h"
-#include "plugin_handler.h"
 #include "crc.h"
 
 #include <sys/stat.h>
@@ -2995,7 +2994,8 @@ void FS_Startup(const char *gameName)
 
     Sys_LeaveCriticalSection(CRIT_FILESYSTEM);
 
-    PHandler_Event(PLUGINS_ONFSSTARTED, fs_searchpaths);
+    // TODO PHANDLER
+    //PHandler_Event(PLUGINS_ONFSSTARTED, fs_searchpaths);
 }
 
 void FS_AddIwdFilesForGameDirectory(const char *path, const char *dir);
