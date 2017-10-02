@@ -8,7 +8,7 @@
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1 ICON DISCARDABLE "cod4.ico"
+IDI_ICON1 ICON DISCARDABLE "cod4x.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
