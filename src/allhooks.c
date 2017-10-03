@@ -55,3 +55,18 @@ void SV_Cmd_EndTokenizedString()
     ((void (__cdecl*)())0x8110d8c)();
 }
 
+void FS_ShutdownServerReferencedIwds()
+{
+    ((void(__cdecl*)())0x818789c)();
+}
+
+void FS_ShutdownServerReferencedFFs()
+{
+    ((void(__cdecl*)())0x8187850)();
+}
+
+const char* FS_LoadedIwdPureChecksums()
+{
+    return ((const char*(__cdecl*)())0x81283f2)();
+}
+

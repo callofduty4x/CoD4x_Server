@@ -18,3 +18,9 @@ __cdecl void SL_RemoveRefToString(unsigned int);
 // cmd_hooks.asm
 __cdecl void SV_Cmd_TokenizeString(const char* string);
 __cdecl void SV_Cmd_EndTokenizedString();
+
+///////////////////////////////////////////////////////////////////////////////
+// filesystem_hooks.asm
+__cdecl void FS_ShutdownServerReferencedIwds();
+__cdecl void FS_ShutdownServerReferencedFFs();
+__cdecl const char* FS_LoadedIwdPureChecksums();
