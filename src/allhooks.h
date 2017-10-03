@@ -13,3 +13,8 @@ __cdecl void SetAnimCheck(int);
 __cdecl qboolean BG_IsWeaponValid(playerState_t *ps, unsigned int index);
 __cdecl qboolean SEH_StringEd_GetString(const char *input);
 __cdecl void SL_RemoveRefToString(unsigned int);
+
+///////////////////////////////////////////////////////////////////////////////
+// cmd_hooks.asm
+__cdecl void SV_Cmd_TokenizeString(const char* string);
+__cdecl void SV_Cmd_EndTokenizedString();

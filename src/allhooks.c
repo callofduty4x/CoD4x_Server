@@ -44,3 +44,14 @@ void SL_RemoveRefToString(unsigned int a1)
 {
     ((void (__cdecl*)(unsigned int))0x8150e24)(a1);
 }
+
+void SV_Cmd_TokenizeString(const char* string)
+{
+    ((void (__cdecl*)(const char*))0x811139c)(string);
+}
+
+void SV_Cmd_EndTokenizedString()
+{
+    ((void (__cdecl*)())0x8110d8c)();
+}
+

@@ -60,14 +60,10 @@ void	Cmd_ResetPower();
 
 
 /*
-#define SV_Cmd_TokenizeString Cmd_TokenizeString
-#define SV_Cmd_EndTokenizedString Cmd_EndTokenizedString
 #define SV_Cmd_Argc Cmd_Argc
 #define SV_Cmd_Argv Cmd_Argv
 #define SV_Cmd_ArgvBuffer Cmd_ArgvBuffer
 */
-void SV_Cmd_TokenizeString(const char* string);
-void SV_Cmd_EndTokenizedString();
 
 
 int	Cmd_Argc( void );
