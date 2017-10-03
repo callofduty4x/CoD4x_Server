@@ -25,8 +25,7 @@
 #include "g_shared.h"
 #include "g_sv_shared.h"
 #include "scr_vm.h"
-
-
+#include "allhooks.h"
 
 game_hudelem_t* g_hudelems = (game_hudelem_t*)(HUDELEM_ADDR);
 

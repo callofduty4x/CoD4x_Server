@@ -70,3 +70,64 @@ const char* FS_LoadedIwdPureChecksums()
     return ((const char*(__cdecl*)())0x81283f2)();
 }
 
+void G_RunFrame(int time)
+{
+    ((void(__cdecl*)(int))0x80b61fc)(time);
+}
+
+int G_LocalizedStringIndex(const char *String_)
+{
+    return ((int(__cdecl*)(const char*))0x80cb218)(String_);
+}
+
+void ClientCommand(int a1)
+{
+    ((void(__cdecl*)(int))0x80b070c)(a1);
+}
+
+const char *ClientConnect(int clnum, short clscriptid)
+{
+    return ((const char*(__cdecl*)(int, short))0x80a83d4)(clnum, clscriptid);
+}
+
+void ClientBegin(int clientNum)
+{
+    ((void(__cdecl*)(int))0x80a7700)(clientNum);
+}
+
+void StopFollowing(gentity_t *ent)
+{
+    ((void(__cdecl*)(gentity_t*))0x80af24c)(ent);
+}
+
+gentity_t *G_Spawn()
+{
+    return ((gentity_t*(__cdecl*)())0x80cbbe8)();
+}
+
+qboolean G_CallSpawnEntity(gentity_t *ent)
+{
+    return ((qboolean(__cdecl*)(gentity_t*))0x80c8af8)(ent);
+}
+
+void G_SpawnHelicopter(gentity_t *vehent, gentity_t *ownerent, const char *type, const char *model)
+{
+    ((void(__cdecl*)(gentity_t*,gentity_t*,const char*,const char*))0x80ba8d6)(vehent, ownerent, type, model);
+}
+
+void SpawnVehicle(gentity_t *ent, const char *vehtype)
+{
+    ((void(__cdecl*)(gentity_t*,const char*))0x80cd966)(ent, vehtype);
+}
+
+void G_SetModel(gentity_t *ent, const char *modelname)
+{
+    ((void(__cdecl*)(gentity_t*,const char*))0x80cae3a)(ent, modelname);
+}
+
+void G_ClientStopUsingTurret(gentity_t *ent)
+{
+    ((void(__cdecl*)(gentity_t*))0x80b7866)(ent);
+}
+
+

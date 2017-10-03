@@ -16,11 +16,26 @@ __cdecl void SL_RemoveRefToString(unsigned int);
 
 ///////////////////////////////////////////////////////////////////////////////
 // cmd_hooks.asm
-__cdecl void SV_Cmd_TokenizeString(const char* string);
+__cdecl void SV_Cmd_TokenizeString(const char *string);
 __cdecl void SV_Cmd_EndTokenizedString();
 
 ///////////////////////////////////////////////////////////////////////////////
 // filesystem_hooks.asm
 __cdecl void FS_ShutdownServerReferencedIwds();
 __cdecl void FS_ShutdownServerReferencedFFs();
-__cdecl const char* FS_LoadedIwdPureChecksums();
+__cdecl const char *FS_LoadedIwdPureChecksums();
+
+///////////////////////////////////////////////////////////////////////////////
+// g_sv_hooks.asm
+__cdecl void G_RunFrame(int time);
+__cdecl int G_LocalizedStringIndex(const char *String_);
+__cdecl void ClientCommand(int a1);
+__cdecl const char *ClientConnect(int clnum, short clscriptid); //Something simular to VM_Call
+__cdecl void ClientBegin(int clientNum);
+__cdecl void StopFollowing(gentity_t *ent);
+__cdecl gentity_t *G_Spawn();
+__cdecl qboolean G_CallSpawnEntity(gentity_t *ent);
+__cdecl void G_SpawnHelicopter(gentity_t *vehent, gentity_t *ownerent, const char *type, const char *model);
+__cdecl void SpawnVehicle(gentity_t *ent, const char *vehtype);
+__cdecl void G_SetModel(gentity_t *ent, const char *modelname);
+__cdecl void G_ClientStopUsingTurret(gentity_t *ent);

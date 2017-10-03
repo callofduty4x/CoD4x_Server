@@ -259,10 +259,4 @@ struct gentity_s {
 
 #define	MAX_ENT_CLUSTERS	16
 
-
-gentity_t* G_Spawn();
-void G_SpawnHelicopter( gentity_t* vehent, gentity_t* ownerent, const char* type, const char* model );
-qboolean G_CallSpawnEntity( gentity_t* ent );
-
-
 #endif

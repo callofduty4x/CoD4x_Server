@@ -30,7 +30,7 @@
 #include "qcommon_io.h"
 #include "server.h"
 #include "scr_vm.h"
-
+#include "allhooks.h"
 #include <string.h>
 
 extern cvar_t *g_deadChat;

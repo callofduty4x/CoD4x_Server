@@ -34,7 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "cm_public.h"
 #include "qcommon_mem.h"
 #include "game/botlib.h"
-//#include "../botai/botai.h"
+#include "allhooks.h"
 
 
 

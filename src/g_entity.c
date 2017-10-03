@@ -2,7 +2,7 @@
 #include "entity.h"
 #include "g_shared.h"
 #include "scr_vm.h"
-
+#include "allhooks.h"
 
 
 qboolean __cdecl G_SpawnString(SpawnVar *spawnVar, const char *key, const char *defaultString, const char **out)

@@ -41,7 +41,6 @@ __cdecl void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *cha
 __cdecl void ExitLevel( void );
 void G_RegisterCvars( );
 void QDECL G_LogPrintf( const char *fmt, ... );
-void __cdecl StopFollowing( gentity_t* ent );
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
 void __cdecl GScr_LoadScripts(void);
 
@@ -77,13 +76,6 @@ __cdecl __optimize3 qboolean Jump_GetStepHeight(playerState_t* ps, const vec3_t 
 __cdecl __optimize3 float Jump_CalcHeight( playerState_t* ps );
 __cdecl __optimize3 void StuckInClient( gentity_t* gen );
 
-void __cdecl G_RunFrame( int time );
-int __cdecl G_LocalizedStringIndex( const char* );
-
-void __cdecl ClientCommand( int );
-const char* __cdecl ClientConnect(int clnum, short clscriptid);  //Something simular to VM_Call
-void __cdecl ClientBegin( int clientNum );
-
 void G_PrintRuleForPlayer(client_t *cl);
 void G_PrintAdvertForPlayer(client_t *cl);
 void G_SetupHudMessagesForPlayer(client_t* cl);
@@ -96,6 +88,5 @@ int G_GetClientArchiveTime(int clientindex);
 void G_SetClientArchiveTime(int clindex, int time);
 clientState_t* G_GetClientState( int clnum );
 float G_GetFogOpaqueDistSqrd();
-void G_ClientStopUsingTurret(gentity_t* ent);
 void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
 #endif

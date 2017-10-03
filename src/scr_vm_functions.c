@@ -39,6 +39,7 @@
 #include "tomcrypt/tomcrypt_misc.h"
 #include "bg.h"
 #include "misc.h"
+#include "allhooks.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 

@@ -28,6 +28,7 @@
 #include "g_sv_shared.h"
 #include "cvar.h"
 #include "server.h"
+#include "allhooks.h"
 
 #include <string.h>
 #include <stdlib.h>
