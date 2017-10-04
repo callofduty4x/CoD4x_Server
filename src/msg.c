@@ -409,7 +409,7 @@ void MSG_WriteAngle16( msg_t *sb, float f ) {
 
 
 
-void MSG_WriteEntityIndex(struct snapshotInfo_s *snapInfo, msg_t *msg, const int index, const int indexBits)
+void MSG_WriteEntityIndex(snapshotInfo_t *snapInfo, msg_t *msg, const int index, const int indexBits)
 {
 
 	if ( index - msg->lastRefEntity == 1 )
@@ -1788,7 +1788,7 @@ float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
 #endif
 
 
-qboolean MSG_ValuesAreEqual(struct snapshotInfo_s *snapInfo, int bits, const int *fromF, const int *toF)
+qboolean MSG_ValuesAreEqual(snapshotInfo_t *snapInfo, int bits, const int *fromF, const int *toF)
 {
 	qboolean result;
 
@@ -1865,7 +1865,7 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
 }
 
 
-__regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
+__regparm3 void MSG_WriteDeltaField(snapshotInfo_t *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
 {
 	int nullfield;
 	int32_t timetodata;
@@ -2104,7 +2104,7 @@ __regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg,
 
 
 
-void MSG_WriteEntityRemoval(struct snapshotInfo_s *snapInfo, msg_t *msg, byte *from, int indexBits, byte changeBit)
+void MSG_WriteEntityRemoval(snapshotInfo_t *snapInfo, msg_t *msg, byte *from, int indexBits, byte changeBit)
 {
 	
 	if ( snapInfo->clnum == sv_shownet->integer )
@@ -2194,12 +2194,12 @@ int MSG_WriteDeltaStruct(snapshotInfo_t *snapInfo, msg_t *msg, const int time, c
 }
 
 
-int MSG_WriteEntityDelta(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, qboolean force, int numFields, int indexBits, netField_t *stateFields)
+int MSG_WriteEntityDelta(snapshotInfo_t *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, qboolean force, int numFields, int indexBits, netField_t *stateFields)
 {
 	return MSG_WriteDeltaStruct(snapInfo, msg, time, from, to, force, numFields, indexBits, stateFields, 0);
 }
 
-void MSG_WriteDeltaEntity(struct snapshotInfo_s *snapInfo, msg_t* msg, const int time, entityState_t* from, entityState_t* to, qboolean force){
+void MSG_WriteDeltaEntity(snapshotInfo_t *snapInfo, msg_t* msg, const int time, entityState_t* from, entityState_t* to, qboolean force){
 	// all fields should be 32 bits to avoid any compiler packing issues
 	// the "number" field is not part of the field list
 	// if this assert fails, someone added a field to the entityState_t
@@ -2455,7 +2455,7 @@ static netField_t objectiveFields[] =
 };
 
 
-void MSG_WriteDeltaObjective(struct snapshotInfo_s *snapInfo, msg_t *msg, int time, objective_t *from, objective_t *to)
+void MSG_WriteDeltaObjective(snapshotInfo_t *snapInfo, msg_t *msg, int time, objective_t *from, objective_t *to)
 {
 	int i, numStateFields;
 	int *fromF, *toF;
@@ -2543,7 +2543,7 @@ static netField_t hudElemFields[] =
 };
 
 
-void MSG_WriteDeltaHudElems(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, hudelem_t *from, hudelem_t *to, int count)
+void MSG_WriteDeltaHudElems(snapshotInfo_t *snapInfo, msg_t *msg, const int time, hudelem_t *from, hudelem_t *to, int count)
 {
 
 	int i, numHE, numFields, lc, k;
@@ -2600,7 +2600,7 @@ void MSG_WriteDeltaHudElems(struct snapshotInfo_s *snapInfo, msg_t *msg, const i
 
 
 
-qboolean MSG_ShouldSendPSField(struct snapshotInfo_s *snapInfo, byte sendOriginAndVel, playerState_t *ps, playerState_t *oldPs, netField_t *field)
+qboolean MSG_ShouldSendPSField(snapshotInfo_t *snapInfo, byte sendOriginAndVel, playerState_t *ps, playerState_t *oldPs, netField_t *field)
 {
   int *fromF, *toF;
   
@@ -2631,7 +2631,7 @@ qboolean MSG_ShouldSendPSField(struct snapshotInfo_s *snapInfo, byte sendOriginA
 }
 
 /* Broken implementation will not work: */
-void oMSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
+void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
 {
 
 	vec3_t org;
@@ -2872,7 +2872,7 @@ static netField_t clientStateFields[] =
 };
 
 
-void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force)
+void MSG_WriteDeltaClient(snapshotInfo_t *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force)
 {
   clientState_t nullstate; // [sp+2Ch] [bp-7Ch]@10
 

@@ -27,6 +27,7 @@
 #include "q_shared.h"
 #include "sys_net.h"
 #include "msg.h"
+#include "msg_types.h"
 
 
 //#define	MAC_STATIC			// be fragmented into multiple packets

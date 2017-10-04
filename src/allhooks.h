@@ -1,6 +1,7 @@
 #pragma once
 #include "q_shared.h"
 #include "player.h"
+#include "msg_types.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // misc_hooks.asm
@@ -39,3 +40,8 @@ __cdecl void G_SpawnHelicopter(gentity_t *vehent, gentity_t *ownerent, const cha
 __cdecl void SpawnVehicle(gentity_t *ent, const char *vehtype);
 __cdecl void G_SetModel(gentity_t *ent, const char *modelname);
 __cdecl void G_ClientStopUsingTurret(gentity_t *ent);
+
+///////////////////////////////////////////////////////////////////////////////
+// msg_hooks.asm
+__cdecl void MSG_WriteDeltaPlayerstate(snapshotInfo_t *a1, msg_t *a2, int a3, playerState_t *a4, playerState_t *a5);
+__cdecl void MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to);

@@ -130,4 +130,12 @@ void G_ClientStopUsingTurret(gentity_t *ent)
     ((void(__cdecl*)(gentity_t*))0x80b7866)(ent);
 }
 
+void MSG_WriteDeltaPlayerstate(snapshotInfo_t *a1, msg_t *a2, int a3, struct playerState_s *a4, struct playerState_s *a5)
+{
+    ((void (__cdecl*)(snapshotInfo_t*,msg_t*,int,playerState_t*,playerState_t*))0x813f5a6)(a1, a2, a3, a4, a5);
+}
 
+void MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to)
+{
+    ((void (__cdecl*)(msg_t*,int,usercmd_t*,usercmd_t*))0x81392ae)(msg, key, from, to);
+}
