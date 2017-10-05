@@ -5,9 +5,11 @@ CFLAGS=-c
 DEFINES=
 LFLAGS=-shared
 ADDITIONAL_OBJ=win_cod4.res
-#
-ARGS=MODULE="$(MODULE)" CFLAGS="$(CFLAGS)" DEFINES="$(DEFINES)" LFLAGS="$(LFLAGS)" ADDITIONAL_OBJ="$(ADDITIONAL_OBJ)"
-
+###############################################################################
+# Arguments shortcut.
+ARGS= MODULE="$(MODULE)" CFLAGS="$(CFLAGS)" DEFINES="$(DEFINES)" LFLAGS="$(LFLAGS)" ADDITIONAL_OBJ="$(ADDITIONAL_OBJ)"
+###############################################################################
+# Rules.
 all:
 	@$(MAKE) -s -f../../lib.makefile $(ARGS)
 
