@@ -4,6 +4,7 @@ MODULE=os_win32
 CFLAGS=-c
 DEFINES=
 LFLAGS=-shared
+ADDITIONAL_OBJ=win_cod4.res
 ###############################################################################
 # Setting up anything required to compile.
 # Rarely needs to be changed.
@@ -31,7 +32,7 @@ all: $(LIB)
 # Target
 $(LIB): $(OBJECTS)
 	@echo  $(AR) $(notdir $@)
-	@$(AR) rcs -o $@ $^ win_cod4.res
+	@$(AR) rcs -o $@ $^ $(ADDITIONAL_OBJ)
 
 # C rule.
 obj/%.o: %.c
