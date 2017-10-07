@@ -968,6 +968,8 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
             --callScriptStackPtr;
             return 0;
         }
+		
+		Scr_ScriptPreCompile( scr_buffer_handle, filepath );
 
         old_var08 = scrStruct.var_08;
         scrStruct.var_08 = 0;
@@ -1577,4 +1579,122 @@ unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvar
     while ( var->hash.u.prevSibling && scrVarGlob_high[var->hash.u.prevSibling].hash.id && i < maxvariables);
 
     return 0;//GetArraySize(ptr);
+}
+
+void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath )
+{
+	char * p = strstr( scr_buffer_handle, "#if" );
+	while( p != NULL )
+	{
+		if( *( p - 1 ) == '/' )
+		{
+			p = strstr( p + 1, "#if" );
+			continue;
+		}
+		
+		char * end = strchr( p, '\n' );
+		if( end )
+			*end = '\0';
+
+		Cmd_TokenizeString( p );
+		const char * func = Cmd_Argv( 1 );
+		const char * arg = Cmd_Argv( 2 );
+		
+		qboolean result = qfalse;
+		qboolean negated = qfalse;
+		
+		if( *func == '!' )
+		{
+			++func;
+			negated = qtrue;
+		}
+
+		if( !Q_stricmp( func, "isSyscallDefined" ) )
+		{
+			if( !negated )
+			{
+				if( Scr_IsSyscallDefined( arg ) )
+				{
+					strncpy( p, "//#", 3 );
+					result = qtrue;
+				}
+				else
+				{
+					strncpy( p, "/*#", 3 );
+				}
+			}
+			else
+			{
+				if( Scr_IsSyscallDefined( arg ) )
+				{
+					strncpy( p, "/*#", 3 );
+				}
+				else
+				{
+					strncpy( p, "//#", 3 );
+					result = qtrue;
+				}
+			}
+		}
+		else
+		{
+			Com_Error( ERR_SCRIPT, "****** Script Pre-Compile Error ******\nUnknown macro function: %s \n%s", func, filepath );
+		}
+			
+		Cmd_EndTokenizedString();
+
+		if( end )
+			*end = '\n';
+
+		char * el = strstr( p, "#else" );
+		p = strstr( p, "#endif" );
+			
+		if( p == NULL )
+		{
+			Com_Error( ERR_SCRIPT, "****** Script Pre-Compile Error ******\nExpected #endif, none found\n%s", filepath );
+		}
+			
+		int pos1, pos2;
+		if( el != NULL )
+		{
+			pos1 = p - (char *)scr_buffer_handle;
+			pos2 = el - (char *)scr_buffer_handle;
+			if( pos2 < pos1 )
+			{
+				if( result )
+				{
+					strncpy( el, "/*#el", 5 );
+				}
+				else
+				{
+					strncpy( el, "#el*/", 5 );
+				}
+			}
+		}
+			
+		if( el == NULL || pos2 > pos1 )
+		{
+			if( result )
+			{
+				strncpy( p, "//#eif", 6 );
+			}
+			else
+			{
+				strncpy( p, "#eif*/", 6 );
+			}
+		}
+		else
+		{
+			if( result )
+			{
+				strncpy( p, "#eif*/", 6 );
+			}
+			else
+			{
+				strncpy( p, "//#eif", 6 );
+			}
+		}
+
+		p = strstr( p, "#if" );
+	}
 }

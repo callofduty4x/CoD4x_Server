@@ -579,6 +579,7 @@ unsigned int Scr_LoadScript(const char* scriptname, PrecacheEntry *precache, int
 qboolean Scr_ExecuteMasterResponse(char* s);
 void Scr_AddStockFunctions();
 void Scr_AddStockMethods();
+void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath );
 
 qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean developer);
 qboolean Scr_RemoveFunction( const char *cmd_name );
@@ -588,6 +589,7 @@ qboolean Scr_AddMethod( const char *cmd_name, xfunction_t function, qboolean dev
 qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
 __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
+qboolean Scr_IsSyscallDefined( const char *name );
 void __regparm3 VM_Notify(int, int, VariableValue* val);
 int __cdecl FindEntityId(int, int);
 
