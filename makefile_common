@@ -8,7 +8,7 @@ CPP=g++
 SOURCES=$(wildcard *.c)
 OBJECTS=$(patsubst %.c,obj/%.o,$(SOURCES))
 CFLAGS+=$(addprefix -D,$(DEFINES))
-LIB=../../lib/libcod4x_$(MODULE).a
+LIB=../../$(MODULE)
 ###############################################################################
 # OS-specific stuff.
 ifeq ($(OS),Windows_NT)
