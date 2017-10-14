@@ -4,7 +4,7 @@ CFLAGS=-m32 -Wall -Os -s -I. -DLTC_NO_ROLC -DLTC_SOURCE
 CC=gcc
 TARGETDIR=../../lib
 TARGETNAME=$(TARGETDIR)/$(TARGET)
-SOURCES=$(wildcard ciphers/aes/aes.c \
+SOURCES=$(wildcard ciphers/aes/*.c \
 	hashes/*.c \
 	misc/crypt/*.c \
 	misc/base64/*.c \
