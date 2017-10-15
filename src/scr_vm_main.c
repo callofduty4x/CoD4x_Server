@@ -150,7 +150,6 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("assertex", (void *)0x80bb2e0, 1);
     Scr_AddFunction("assertmsg", (void *)0x80bb2b4, 1);
     Scr_AddFunction("isdefined", (void *)0x80bbf2c, 0);
-    Scr_AddFunction("isstring", (void *)0x80bbf06, 0);
     Scr_AddFunction("isalive", (void *)0x80bbeaa, 0);
     Scr_AddFunction("getdvar", GScr_GetCvar, 0);
     Scr_AddFunction("getdvarint", GScr_GetCvarInt, 0);
@@ -363,7 +362,7 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("base64decode", GScr_Base64Decode, 0);
     Scr_AddFunction("isentity", GScr_IsEntity, 0);
     Scr_AddFunction("isvector", GScr_IsVector, 0);
-    Scr_AddFunction("isstring", GScr_IsString, 0);
+    Scr_AddFunction("isstring", GScr_IsString, 0); // Ours is better than original one :P
     Scr_AddFunction("isfloat", GScr_IsFloat, 0);
     Scr_AddFunction("isint", GScr_IsInt, 0);
     Scr_AddFunction("float", GScr_Float, 0); // like int(...) but to convert to floating point number.
