@@ -26,7 +26,7 @@ endif
 CC=gcc
 WIN_DEFINES=WINVER=0x501
 LINUX_DEFINES=_GNU_SOURCE
-CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer
+CFLAGS = -m32 -Wall -O0 -g -fno-omit-frame-pointer -I$(SRCMOD_DIR)
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows -static-libgcc -static -lm
 WIN_LLIBS=ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
 LINUX_LFLAGS=-m32 -static-libgcc -rdynamic -Tlinkerscript.ld -Wl,-rpath=./
@@ -151,7 +151,7 @@ $(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) $(MODULES_TAR
 # -march=nocona
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $< -Isrc_mod
+	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
 
 ################################
 # A rule to build assemler code.
