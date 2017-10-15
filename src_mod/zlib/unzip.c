@@ -1111,7 +1111,9 @@ static int unzlocal_getShort (FILE* fin, uLong *pX)
 {
 	short	v;
 
-	fread( &v, sizeof(v), 1, fin );
+  const int readSize = fread( &v, sizeof(v), 1, fin );
+  if (readSize != sizeof(v))
+    return UNZ_BUFSIZE;
 
 	*pX = LittleShort( v);
 	return UNZ_OK;
@@ -1140,7 +1142,9 @@ static int unzlocal_getLong (FILE *fin, uLong *pX)
 {
 	int		v;
 
-	fread( &v, sizeof(v), 1, fin );
+  int readSize = fread( &v, sizeof(v), 1, fin );
+  if (readSize != sizeof(v))
+    return UNZ_BUFSIZE;
 
 	*pX = LittleLong( v);
 	return UNZ_OK;
@@ -1320,11 +1324,11 @@ extern unzFile unzOpen (const char* path)
 	uLong central_pos,uL;
 	FILE * fin ;
 
-	uLong number_disk;          /* number of the current dist, used for 
+	uLong number_disk = { 0 };     /* number of the current dist, used for 
 								   spaning ZIP, unsupported, always 0*/
-	uLong number_disk_with_CD;  /* number the the disk with central dir, used
-								   for spaning ZIP, unsupported, always 0*/
-	uLong number_entry_CD;      /* total number of entries in
+	uLong number_disk_with_CD = { 0 };  /* number the the disk with central dir, used
+                                        for spaning ZIP, unsupported, always 0*/
+	uLong number_entry_CD = { 0 }; /* total number of entries in
 	                               the central dir 
 	                               (same than number_entry on nospan) */
 
@@ -1485,7 +1489,7 @@ static int unzlocal_GetCurrentFileInfoInternal (unzFile file,
 {
 	unz_s* s;
 	unz_file_info file_info;
-	unz_file_info_internal file_info_internal;
+	unz_file_info_internal file_info_internal = { 0 };
 	int err=UNZ_OK;
 	uLong uMagic;
 	long lSeek=0;
@@ -1623,7 +1627,7 @@ static int unzlocal_GetCurrentFileInfoInternal (unzFile file,
 	if ((err==UNZ_OK) && (pfile_info!=NULL))
 		*pfile_info=file_info;
 
-	if ((err==UNZ_OK) && (pfile_info_internal!=NULL))
+	if ((err==UNZ_OK) && pfile_info_internal)
 		*pfile_info_internal=file_info_internal;
 
 	return err;
@@ -1847,7 +1851,8 @@ static int unzlocal_CheckCurrentFileCoherencyHeader (unz_s* s, uInt* piSizeVar,
 													uLong *poffset_local_extrafield,
 													uInt *psize_local_extrafield)
 {
-	uLong uMagic,uData,uFlags;
+    uLong uMagic,uData;
+    uLong uFlags = 0;
 	uLong size_filename;
 	uLong size_extra_field;
 	int err=UNZ_OK;

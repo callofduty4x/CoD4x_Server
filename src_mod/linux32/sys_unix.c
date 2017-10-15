@@ -442,7 +442,10 @@ int main(int argc, char* argv[])
         Com_Printf( "********************************************************\n\n" );
     }
     // go back to real user for config loads
-    seteuid( uid );
+    if (0 != seteuid( uid ))
+    {
+        return errno;
+    }
 
 
     char commandLine[MAX_STRING_CHARS];
@@ -733,8 +736,9 @@ void* Sys_RunNewProcess(void* arg)
 	char cmdline[4096];
 
 	Q_strncpyz(cmdline, (const char*)arg, sizeof(cmdline));
-	free(arg);
-	system(cmdline);
+    free(arg);
+    if (system(cmdline) == -1)
+        Com_Printf("Coundn't run new process, errno is %d", errno);
 	return NULL;
 }
 

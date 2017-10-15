@@ -103,14 +103,9 @@ send "\b \b"
 */
 static void CON_Back( void )
 {
-	char key;
-
-	key = '\b';
-	write(STDOUT_FILENO, &key, 1);
-	key = ' ';
-	write(STDOUT_FILENO, &key, 1);
-	key = '\b';
-	write(STDOUT_FILENO, &key, 1);
+    char key[3] = { '\b', ' ', '\b' };
+    if (sizeof(key) != write(STDOUT_FILENO, key, 3)) // Failed? I don't give a fuck :)
+        return;
 }
 
 /*
@@ -155,19 +150,17 @@ static void CON_Show( void )
 {
 	if( ttycon_on )
 	{
-		int i;
-
 		assert(ttycon_hide>0);
 		ttycon_hide--;
 		if (ttycon_hide == 0)
 		{
-			write(STDOUT_FILENO, "]", 1);
+            if (1 != write(STDOUT_FILENO, "]", 1))
+                return;
+
 			if (TTY_con.cursor)
 			{
-				for (i=0; i<TTY_con.cursor; i++)
-				{
-					write(STDOUT_FILENO, TTY_con.buffer+i, 1);
-				}
+                if (TTY_con.cursor != write(STDOUT_FILENO, TTY_con.buffer, TTY_con.cursor))
+                    return;
 			}
 		}
 	}
@@ -386,10 +379,10 @@ char *CON_Input( void )
 					// push it in history
 					Hist_Add(&TTY_con);
 					Q_strncpyz(text, TTY_con.buffer, sizeof(text));
-					Field_Clear(&TTY_con);
-					key = '\n';
-					write(STDOUT_FILENO, &key, 1);
-					write(STDOUT_FILENO, "]", 1);
+                    Field_Clear(&TTY_con);
+                    char keys[2] = { '\n', ']' };
+                    if (sizeof(keys) != write(STDOUT_FILENO, keys, 2))
+                        return text;
 					return text;
 				}
 				if (key == '\t')
@@ -453,7 +446,8 @@ char *CON_Input( void )
 			TTY_con.buffer[TTY_con.cursor] = key;
 			TTY_con.cursor++;
 			// print the current line (this is differential)
-			write(STDOUT_FILENO, &key, 1);
+            if (sizeof(key) != write(STDOUT_FILENO, &key, 1))
+                return NULL;
 		}
 
 		return NULL;
