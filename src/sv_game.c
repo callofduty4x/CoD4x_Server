@@ -26,9 +26,9 @@
 #include "cvar.h"
 #include "server.h"
 #include "cm_public.h"
-#include "game/botlib.h"
+//#include "game/botlib.h"
 
-botlib_export_t *botlib_export;
+//botlib_export_t *botlib_export;
 
 // sv_game.c -- interface to the game dll
 

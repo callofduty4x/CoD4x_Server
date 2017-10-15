@@ -25,7 +25,8 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-
+// T-Max - refactoring: removed all the file contents. Looks unused right now.
+#if 0
 // sv_bot.c
 #include "cvar.h"
 #include "server.h"
@@ -33,7 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "g_sv_shared.h"
 #include "cm_public.h"
 #include "qcommon_mem.h"
-#include "game/botlib.h"
+//#include "game/botlib.h"
 #include "allhooks.h"
 
 
@@ -50,7 +51,7 @@ typedef struct bot_debugpoly_s
 
 static bot_debugpoly_t debugpolygons[MAX_DEBUGPOLYS];
 
-extern botlib_export_t  *botlib_export;
+//extern botlib_export_t  *botlib_export;
 cvar_t* bot_enable;
 static cvar_t *bot_debug, *bot_groundonly, *bot_reachability, *bot_highlightarea;
 static cvar_t *bot_testhidepos;
@@ -212,10 +213,10 @@ void BotDrawDebugPolygons( void ( *drawPoly )( int color, int numPoints, float *
 		if ( bot_groundonly->integer ) {
 			parm0 |= 4;
 		}
-		botlib_export->BotLibVarSet( "bot_highlightarea", Cvar_DisplayableValueMT(bot_highlightarea, s, sizeof(s)) );
-		botlib_export->BotLibVarSet( "bot_testhidepos", Cvar_DisplayableValueMT(bot_testhidepos, s, sizeof(s)) );
-		botlib_export->Test( parm0, NULL, svs.clients[0].gentity->r.currentOrigin,
-							 svs.clients[0].gentity->r.currentAngles );
+		//botlib_export->BotLibVarSet( "bot_highlightarea", Cvar_DisplayableValueMT(bot_highlightarea, s, sizeof(s)) );
+		////botlib_export->BotLibVarSet( "bot_testhidepos", Cvar_DisplayableValueMT(bot_testhidepos, s, sizeof(s)) );
+		////botlib_export->Test( parm0, NULL, svs.clients[0].gentity->r.currentOrigin,
+		//					 svs.clients[0].gentity->r.currentAngles );
 	} //end if
 	for ( i = 0; i < MAX_DEBUGPOLYS; i++ ) {
 		poly = &debugpolygons[i];
@@ -584,17 +585,19 @@ int SV_BotLibSetup( void ) {
 		return 0;
 	}
 
-	if ( !botlib_export ) {
+	/*if ( !botlib_export ) {
 		Com_Printf( S_COLOR_RED "Error: SV_BotLibSetup without SV_BotInitBotLib\n" );
 		return -1;
 	}
 
-	return botlib_export->BotLibSetup();
+    return botlib_export->BotLibSetup();*/
+    return 0;
 }
 
 int SV_BotLoadMap(const char* levelname)
 {
-	return botlib_export->BotLibLoadMap( levelname );
+    //return botlib_export->BotLibLoadMap( levelname );
+    return 0;
 }
 /*
 ===============
@@ -606,11 +609,12 @@ it is changing to a different game directory.
 */
 int SV_BotLibShutdown( void ) {
 
-	if ( !botlib_export ) {
+	/*if ( !botlib_export ) {
 		return -1;
 	}
 
-	return botlib_export->BotLibShutdown();
+    return botlib_export->BotLibShutdown();*/
+    return 0;
 }
 
 
@@ -791,4 +795,5 @@ int SV_BotGetSnapshotEntity( int client, int sequence ) {
 	return svs.snapshotEntities[( frame->first_entity + sequence ) % svs.numSnapshotEntities].number;
 }
 
+#endif
 #endif

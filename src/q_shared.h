@@ -20,17 +20,6 @@
 ===========================================================================
 */
 
-
-
-// server.h
-
-//#include "../game/q_shared.h"
-//#include "../qcommon/qcommon.h"
-//#include "../game/g_public.h"
-//#include "../game/bg_public.h"
-
-//=============================================================================
-
 #ifndef __Q_SHARED_H__
 #define __Q_SHARED_H__
 
@@ -45,7 +34,7 @@
 #include <math.h>
 
 
-#include "game/def.h"
+//#include "game/def.h"
 
 #ifndef __stdcall
 #define __stdcall __attribute__((stdcall))

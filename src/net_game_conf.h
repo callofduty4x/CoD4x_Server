@@ -20,16 +20,6 @@
 ===========================================================================
 */
 
-
-// server.h
-
-//#include "../game/q_shared.h"
-//#include "../qcommon/qcommon.h"
-//#include "../game/g_public.h"
-//#include "../game/bg_public.h"
-
-//=============================================================================
-
 #ifndef __NET_GAMECONF_H__
 #define __NET_GAMECONF_H__
 
