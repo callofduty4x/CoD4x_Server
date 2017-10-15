@@ -121,5 +121,3 @@ Server => Client:
         1 byte: team
 
     See also cmd: 64
-
-}
