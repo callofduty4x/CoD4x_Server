@@ -10,12 +10,12 @@
 
 #define mbedtls_printf Com_Printf
 
-#include "mbedtls/net.h"
-#include "mbedtls/ssl.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/debug.h"
-#include "mbedtls/error.h"
+#include <mbedtls/net.h>
+#include <mbedtls/ssl.h>
+#include <mbedtls/entropy.h>
+#include <mbedtls/ctr_drbg.h>
+#include <mbedtls/debug.h>
+#include <mbedtls/error.h>
 
 typedef struct tlsstate_s
 {

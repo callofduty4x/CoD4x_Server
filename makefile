@@ -4,7 +4,7 @@
 ####################################################
 # By default, building OFFICIAL, non-DEBUG version.#
 # If you want to get a debug version, use          #
-# `make DEBUG=true`                                #
+# `make DEBUG=1`                                   #
 ####################################################
 ########################################################################
 # TODO: linux.                                                         #
@@ -18,10 +18,11 @@ TARGETNAME=cod4x18_dedrun
 
 ############################################
 # Configure type of build.
-ifeq ($(DEBUG), true)
-BUILD_TYPE=
-else
-BUILD_TYPE=OFFICIAL
+DEBUG ?= 0
+MODULE_PREFIX := libcod4x_
+
+ifeq ($(DEBUG), 0)
+COD4X_DEFINES += OFFICIAL
 endif
 
 ###################
@@ -31,14 +32,15 @@ WIN_DEFINES=WINVER=0x501
 LINUX_DEFINES=_GNU_SOURCE
 CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows -static-libgcc -static -lm
-WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
+WIN_LLIBS=ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
 LINUX_LFLAGS=-m32 -static-libgcc -rdynamic -Tlinkerscript.ld -Wl,-rpath=./
-LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
-COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE)
+LINUX_LLIBS=dl pthread m stdc++
+COD4X_DEFINES += COD4X18UPDATE
 
 ########################
 # Setup directory names.
 SRC_DIR=src
+SRCMOD_DIR := src_mod
 BIN_DIR=bin
 LIB_DIR=lib
 OBJ_DIR=obj
@@ -47,8 +49,7 @@ ZLIB_DIR=$(SRC_DIR)/zlib
 WIN_DIR=$(SRC_DIR)/win32
 LINUX_DIR=$(SRC_DIR)/unix
 ASSETS_DIR=$(SRC_DIR)/xassets
-#botlib
-EXTERNAL=mbedtls tomcrypt
+MODULES := mbedtls tomcrypt
 
 ##############################
 # Setup external applications.
@@ -65,7 +66,7 @@ NASMFLAGS=-f coff -dWin32 --prefix _
 OS_SOURCES=$(wildcard $(WIN_DIR)/*.c)
 OS_OBJ=$(patsubst $(WIN_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
 C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(WIN_DEFINES))
-LFLAGS=$(WIN_LFLAGS)
+LDFLAGS=$(WIN_LFLAGS)
 LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
 RESOURCE_FILE=src/win32/win_cod4.res
 DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
@@ -81,7 +82,7 @@ NASMFLAGS=-f elf
 OS_SOURCES=$(wildcard $(LINUX_DIR)/*.c)
 OS_OBJ=$(patsubst $(LINUX_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
 C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(LINUX_DEFINES))
-LFLAGS=$(LINUX_LFLAGS)
+LDFLAGS=$(LINUX_LFLAGS)
 LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
@@ -105,6 +106,10 @@ C_OBJ=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(C_SOURCES))
 ZLIB_OBJ=$(patsubst $(ZLIB_DIR)/%.c,$(OBJ_DIR)/%.o,$(ZLIB_SOURCES))
 ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(OBJ_DIR)/%.o,$(ASSETS_SOURCES))
 
+###############################################################################
+# Modules prerequesites.
+MODULES_TARGETPATH = $(patsubst %,$(LIB_DIR)/$(MODULE_PREFIX)%.a,$(MODULES))
+
 #############################################################
 #############################################################
 #############################################################
@@ -113,23 +118,20 @@ ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(OBJ_DIR)/%.o,$(ASSETS_SOURCES))
 
 ###############################
 # Default rule: rebuild server.
-all: notify $(EXTERNAL) $(TARGET) $(ADDITIONAL_OBJ) $(SECURITY)
-	@echo Server done
+all: notify $(TARGET) $(ADDITIONAL_OBJ) $(SECURITY)
 
 notify:
-	@echo Server start
+ifeq ($(DEBUG),1)
+	@echo === Building CoD4X Server (DEBUG) ===
+else
+	@echo === Building CoD4X Server ===
+endif
 
 #################################
-# A rule to make mbedtls library.
-mbedtls:
-	@echo   $(MAKE)  $@
-	@$(MAKE) -C $(SRC_DIR)/$@
-
-##################################
-# A rule to make tomcrypt library.
-tomcrypt:
-	@echo   $(MAKE)  $@
-	@$(MAKE) -C $(SRC_DIR)/$@
+# A rule to make modules.
+$(LIB_DIR)/$(MODULE_PREFIX)%.a: $(SRCMOD_DIR)/%
+	@echo  === $< ===
+	@$(MAKE) -s -C $< TARGETPATH="$@" DEBUG=$(DEBUG)
 
 ##################################
 # A rule to make bot library.
@@ -143,10 +145,10 @@ endif
 
 ###############################
 # A rule to link server binary.
-$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o
+$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o $(MODULES_TARGETPATH)
+	@echo === Linking binary ===
 	@echo   $(CC)  $@
-# CFLAGS for compiler, LFLAGS for linker.
-	@$(CC) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
+	@$(CC) $(LDFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
 
 ################################
 # A rule to make version module.
@@ -163,7 +165,7 @@ FORCE:
 # -march=nocona
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $< -Isrc_mod
 
 ################################
 # A rule to build assemler code.
@@ -215,11 +217,14 @@ do_paxctl: $(TARGET)
 
 ############################
 # Delete built object files.
-clean:
+clean_%: $(SRCMOD_DIR)/%
+	@echo $@
+	@$(MAKE) -C $< clean TARGETPATH="$(patsubst %,$(LIB_DIR)/$(MODULE_PREFIX)%.a,$(notdir $<))"
+
+clean: $(addprefix clean_,$(MODULES))
 	@echo   clean Server
 	@$(CLEAN)
-	@echo   clean Mbedtls
-	@$(MAKE) -C $(SRC_DIR)/mbedtls clean
-	@echo   clean Tomcrypt
-	@$(MAKE) -C $(SRC_DIR)/tomcrypt clean
 
+
+#TODO
+clean_all: 
