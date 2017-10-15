@@ -41,7 +41,7 @@ BIN_DIR=bin
 LIB_DIR=lib
 OBJ_DIR=obj
 PLUGINS_DIR=plugins
-WIN_DIR=$(SRC_DIR)/win32
+#WIN_DIR=$(SRC_DIR)/win32
 LINUX_DIR=$(SRC_DIR)/unix
 MODULES := mbedtls tomcrypt versioning xassets zlib
 
@@ -57,17 +57,17 @@ ifeq ($(OS),Windows_NT)
 # Windows variables.
 BIN_EXT=.exe
 NASMFLAGS=-f coff -dWin32 --prefix _
-OS_SOURCES=$(wildcard $(WIN_DIR)/*.c)
-OS_OBJ=$(patsubst $(WIN_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
 C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(WIN_DEFINES))
-LDFLAGS=$(WIN_LFLAGS)
+LDFLAGS=$(WIN_LFLAGS) src_mod/win32/win_cod4.res
 LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
-RESOURCE_FILE=src/win32/win_cod4.res
-DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
-INTERFACE_LIB=$(PLUGINS_DIR)/libcom_plugin.a
+#RESOURCE_FILE=src_mod/win32/win_cod4.res
+#DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
+#INTERFACE_LIB=$(PLUGINS_DIR)/libcom_plugin.a
 ADDITIONAL_OBJ=
-CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o $(DEF_FILE))
+#$(DEF_FILE)
+CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o)
 SECURITY=
+MODULES += win32
 else
 #################
 # LINUX variables.
@@ -80,8 +80,10 @@ LDFLAGS=$(LINUX_LFLAGS)
 LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
-CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
+# $(DEF_FILE) $(INTERFACE_LIB)
+CLEAN=rm $(OBJ_DIR)/*.o 
 SECURITY=do_paxctl
+MODULES +=
 endif
 
 
@@ -135,7 +137,7 @@ endif
 
 ###############################
 # A rule to link server binary.
-$(TARGET): $(OS_OBJ) $(C_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
+$(TARGET): $(C_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
 	@echo === Linking binary ===
 	@echo   $(CC)  $@
 	@$(CC) $(LDFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
@@ -154,9 +156,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
 
 ########################################
 # A rule to build Windows specific code.
-$(OBJ_DIR)/%.o: $(WIN_DIR)/%.c
-	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+#$(OBJ_DIR)/%.o: $(WIN_DIR)/%.c
+#	@echo   $(CC)  $@
+#	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################
 # A rule to build Linux specific code.
@@ -166,15 +168,15 @@ $(OBJ_DIR)/%.o: $(LINUX_DIR)/%.c
 
 ########################################################
 # A rule for Windows to create server interface library.
-$(INTERFACE_LIB): $(DEF_FILE) $(TARGET)
-	@echo   dlltool  $@
-	@dlltool -D $(TARGET) -d $(DEF_FILE) -l $@
+#$(INTERFACE_LIB): $(DEF_FILE) $(TARGET)
+#	@echo   dlltool  $@
+#	@dlltool -D $(TARGET) -d $(DEF_FILE) -l $@
 
 ####################################################################
 # A rule for Windows to create server module definition file (.def).
-$(DEF_FILE): $(TARGET)
-	@echo   pexports  $@
-	@pexports $^ > $@
+#$(DEF_FILE): $(TARGET)
+#	@echo   pexports  $@
+#	@pexports $^ > $@
 
 ####################################################
 # A rule for Linux to remove some memory protection.

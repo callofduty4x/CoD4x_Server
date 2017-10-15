@@ -19,8 +19,8 @@
 ===========================================================================
 */
 
-#include "../q_shared.h"
-#include "../objfile_parser.h"
+#include <q_shared.h>
+#include <objfile_parser.h>
 
 //#define WIN32_LEAN_AND_MEAN // Need to test if it works with it :P
 

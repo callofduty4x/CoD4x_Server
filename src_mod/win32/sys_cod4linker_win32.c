@@ -20,9 +20,9 @@
 */
 
 
-#include "../sys_patch.h"
-#include "../sys_cod4loader.h"
-#include "../sys_thread.h"
+#include <sys_patch.h>
+#include <sys_cod4loader.h>
+#include <sys_thread.h>
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -19,11 +19,11 @@
 ===========================================================================
 */
 
-#include "../q_shared.h"
-#include "../sys_main.h"
-#include "../qcommon.h"
-#include "../cmd.h"
-#include "../sys_cod4defs.h"
+#include <q_shared.h>
+#include <sys_main.h>
+#include <qcommon.h>
+#include <cmd.h>
+#include <sys_cod4defs.h>
 #include "sys_win32.h"
 
 
