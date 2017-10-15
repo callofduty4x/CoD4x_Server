@@ -45,7 +45,7 @@ ZLIB_DIR=$(SRC_DIR)/zlib
 WIN_DIR=$(SRC_DIR)/win32
 LINUX_DIR=$(SRC_DIR)/unix
 ASSETS_DIR=$(SRC_DIR)/xassets
-MODULES := mbedtls tomcrypt
+MODULES := mbedtls tomcrypt versioning
 
 ##############################
 # Setup external applications.
@@ -141,20 +141,10 @@ endif
 
 ###############################
 # A rule to link server binary.
-$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o $(MODULES_TARGETPATH)
+$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
 	@echo === Linking binary ===
 	@echo   $(CC)  $@
 	@$(CC) $(LDFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
-
-################################
-# A rule to make version module.
-obj/version.o: src/version/version.c FORCE
-	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) -o $@ $<
-
-############################################
-# An empty rule to force rebuild other rule.
-FORCE:
 
 #####################################
 # A rule to build common server code.
