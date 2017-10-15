@@ -7,9 +7,9 @@
  *
  *****************************************************************************/
 
-#include "../q_shared.h"
-#include "../qcommon_mem.h"
-#include "../q_platform.h"
+#include <q_shared.h>
+#include <qcommon_mem.h>
+#include <q_platform.h>
 #include "unzip.h"
 
 #include <string.h>

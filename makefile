@@ -41,11 +41,10 @@ BIN_DIR=bin
 LIB_DIR=lib
 OBJ_DIR=obj
 PLUGINS_DIR=plugins
-ZLIB_DIR=$(SRC_DIR)/zlib
 WIN_DIR=$(SRC_DIR)/win32
 LINUX_DIR=$(SRC_DIR)/unix
 ASSETS_DIR=$(SRC_DIR)/xassets
-MODULES := mbedtls tomcrypt versioning
+MODULES := mbedtls tomcrypt versioning zlib
 
 ##############################
 # Setup external applications.
@@ -92,14 +91,12 @@ endif
 TARGET=$(addprefix $(BIN_DIR)/,$(TARGETNAME)$(BIN_EXT))
 ASM_SOURCES=$(wildcard $(SRC_DIR)/*.asm)
 C_SOURCES=$(wildcard $(SRC_DIR)/*.c)
-ZLIB_SOURCES=$(wildcard $(ZLIB_DIR)/*.c)
 ASSETS_SOURCES=$(wildcard $(ASSETS_DIR)/*.c)
 
 #################################################################
 # Object files lists. (prefixes for rules may be required later).
 ASM_OBJ=$(patsubst $(SRC_DIR)/%.asm,$(OBJ_DIR)/%.o,$(ASM_SOURCES))
 C_OBJ=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(C_SOURCES))
-ZLIB_OBJ=$(patsubst $(ZLIB_DIR)/%.c,$(OBJ_DIR)/%.o,$(ZLIB_SOURCES))
 ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(OBJ_DIR)/%.o,$(ASSETS_SOURCES))
 
 ###############################################################################
@@ -141,7 +138,7 @@ endif
 
 ###############################
 # A rule to link server binary.
-$(TARGET): $(OS_OBJ) $(C_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
+$(TARGET): $(OS_OBJ) $(C_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
 	@echo === Linking binary ===
 	@echo   $(CC)  $@
 	@$(CC) $(LDFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
@@ -158,12 +155,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
 	@echo   $(NASM)  $@
 	@$(NASM) $(NASMFLAGS) $< -o $@
-
-###################################
-# A rule to build zlib source code.
-$(OBJ_DIR)/%.o: $(ZLIB_DIR)/%.c
-	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
 
 ######################################
 # A rule to build xassets source code.

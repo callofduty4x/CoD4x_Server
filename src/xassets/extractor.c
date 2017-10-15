@@ -6,7 +6,7 @@
 #include <time.h>
 /* CoD4X includes: */
 #include "extractor.h"
-#include "../zlib/unzip.h"
+#include <zlib/unzip.h>
 #include "../q_shared.h"
 #include "../cmd.h"
 #include "../qcommon_io.h"
