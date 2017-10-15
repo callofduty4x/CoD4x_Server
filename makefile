@@ -83,7 +83,7 @@ ADDITIONAL_OBJ=
 # $(DEF_FILE) $(INTERFACE_LIB)
 CLEAN=rm $(OBJ_DIR)/*.o 
 SECURITY=do_paxctl
-MODULES +=
+MODULES += linux32
 endif
 
 
@@ -113,11 +113,7 @@ MODULES_TARGETPATH = $(patsubst %,$(LIB_DIR)/$(MODULE_PREFIX)%.a,$(MODULES))
 all: notify $(TARGET) $(ADDITIONAL_OBJ) $(SECURITY)
 
 notify:
-ifeq ($(DEBUG),1)
-	@echo === Building CoD4X Server (DEBUG) ===
-else
 	@echo === Building CoD4X Server ===
-endif
 
 #################################
 # A rule to make modules.

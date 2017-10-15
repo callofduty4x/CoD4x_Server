@@ -24,9 +24,9 @@
 #include <string.h>
 #include <elf.h>
 #include <stdlib.h>
-#include "../qcommon_io.h" // Com_Printf
-#include "../q_shared.h"   // qboolean
-#include "../objfile_parser.h"
+#include <qcommon_io.h> // Com_Printf
+#include <q_shared.h>   // qboolean
+#include <objfile_parser.h>
 
 #define MAX_SYM_STRINGS 128 * 1024
 

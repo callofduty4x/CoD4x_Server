@@ -21,15 +21,15 @@
 */
 
 
-#include "../q_shared.h"
-#include "../q_platform.h"
-#include "../qcommon_mem.h"
-#include "../qcommon_io.h"
-#include "../qcommon.h"
-#include "../sys_main.h"
-#include "../cmd.h"
-#include "../sys_cod4defs.h"
-#include "../sys_thread.h"
+#include <q_shared.h>
+#include <q_platform.h>
+#include <qcommon_mem.h>
+#include <qcommon_io.h>
+#include <qcommon.h>
+#include <sys_main.h>
+#include <cmd.h>
+#include <sys_cod4defs.h>
+#include <sys_thread.h>
 
 #include <sys/resource.h>
 #include <libgen.h>

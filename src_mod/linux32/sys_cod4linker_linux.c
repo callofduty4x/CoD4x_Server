@@ -19,8 +19,8 @@
 ===========================================================================
 */
 
-#include "../sys_patch.h"
-#include "../sys_cod4loader.h"
+#include <sys_patch.h>
+#include <sys_cod4loader.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +36,6 @@
 #include <errno.h>
 #include <assert.h>
 #include <time.h>
-#include <mach/mach_time.h>
 #include <math.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -51,26 +50,7 @@
 #include <pwd.h>
 #include <fcntl.h>
 #include <semaphore.h>
-
-
-struct lnx_stat
-{
-	uint64_t      st_dev;      /* Device */
-	uint32_t      st_pad1;
-	uint32_t      st_ino;      /* INode */
-	uint32_t      st_mode;     /* Zugriffsrechte */
-	uint32_t      st_nlink;    /* Anzahl harter Links */
-	uint32_t      st_uid;      /* UID des Besitzers */
-	uint32_t      st_gid;      /* GID des Besitzers */
-	uint64_t      st_rdev;     /* Typ (wenn INode-Gerät) */
-	uint32_t      st_pad2;
-	uint32_t      st_size;     /* Größe in Bytes*/
-	uint32_t      st_blksize;  /* Blockgröße */
-	uint32_t      st_blocks;   /* Allozierte Blocks */
-	struct timespec st_atim;    /* Letzter Zugriff */
-	struct timespec st_mtim;    /* Letzte Modifikation */
-	struct timespec st_ctim;    /* Letzte Aenderung */
-};
+#include <malloc.h>
 
 #define __strtol_internal strtol
 #define __strtod_internal strtod
@@ -78,7 +58,7 @@ struct lnx_stat
 void _ZdlPv(void*);
 void* _Znwj(unsigned);
 void _ZdaPv(void*);
-void* _Znam(unsigned);
+void* _Znaj(unsigned);
 
 
 /* Dummy and wrong declarations: */
@@ -87,19 +67,19 @@ void ZNSs4_Rep10_M_destroyERKSaIcE();
 
 void _ZNSs12_M_leak_hardEv();
 void _ZNSsC1EPKcRKSaIcE();
-void _ZNSs7reserveEm();
+void _ZNSs7reserveEj();
 void _ZSt20__throw_out_of_rangePKc();
 void _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_();
 
 void _ZNSs4_Rep10_M_destroyERKSaIcE();
 void _ZN9__gnu_cxx18__exchange_and_addEPVii();
-void _ZNSs6appendEPKcm();
-void _ZNKSs4findEPKcmm();
+void _ZNSs6appendEPKcj();
+void _ZNKSs4findEPKcjj();
 void _ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base();
 void _ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base();
 void _ZNSsC1ERKSs();
-void _ZNSs6assignEPKcm();
-void _ZNSs9_M_mutateEmmm();
+void _ZNSs6assignEPKcj();
+void _ZNSs9_M_mutateEjjj();
 void _ZNSs6assignERKSs();
 
 
@@ -289,62 +269,20 @@ void _isdead()
 
 }
 
-void* _memalign(int align, int numbytes)
-{/* This can cause crash */
-    return calloc(1, numbytes + align);
-}
-
 int* ___errno_location()
 {
     static int _errorno = 0;
     return &_errorno;
 }
 
-int ___xstat(int __ver, const char *__filename, struct lnx_stat *__stat_buf)
+int ___xstat(int __ver, const char *__filename, struct stat *__stat_buf)
 {
-	struct stat mach_stat_buf;
-	struct stat *tran_stat = &mach_stat_buf;
-	int ret = stat(__filename, tran_stat);
-	
-	__stat_buf->st_dev = tran_stat->st_dev;
-	__stat_buf->st_ino = tran_stat->st_ino;	
-	__stat_buf->st_mode = tran_stat->st_mode;	
-	__stat_buf->st_nlink = tran_stat->st_nlink;	
-	__stat_buf->st_uid = tran_stat->st_uid;	
-	__stat_buf->st_gid = tran_stat->st_gid;	
-	__stat_buf->st_rdev = tran_stat->st_rdev;	
-	__stat_buf->st_size = tran_stat->st_size;	
-	__stat_buf->st_blksize = tran_stat->st_blksize;	
-	__stat_buf->st_blocks = tran_stat->st_blocks;
-    __stat_buf->st_atim = tran_stat->st_atimespec;
-	__stat_buf->st_mtim = tran_stat->st_mtimespec;
-	__stat_buf->st_ctim = tran_stat->st_ctimespec;
-
-	return ret;
+    return stat(__filename, __stat_buf);
 }
 
-int ___fxstat(int __ver, int __filedesc, struct lnx_stat *__stat_buf)
+int ___fxstat(int __ver, int __filedesc, struct stat *__stat_buf)
 {
-	struct stat mach_stat_buf;
-	struct stat *tran_stat = &mach_stat_buf;
-    int ret = fstat(__filedesc, tran_stat);
-	
-	
-	__stat_buf->st_dev = tran_stat->st_dev;
-	__stat_buf->st_ino = tran_stat->st_ino;	
-	__stat_buf->st_mode = tran_stat->st_mode;	
-	__stat_buf->st_nlink = tran_stat->st_nlink;	
-	__stat_buf->st_uid = tran_stat->st_uid;	
-	__stat_buf->st_gid = tran_stat->st_gid;	
-	__stat_buf->st_rdev = tran_stat->st_rdev;	
-	__stat_buf->st_size = tran_stat->st_size;	
-	__stat_buf->st_blksize = tran_stat->st_blksize;	
-	__stat_buf->st_blocks = tran_stat->st_blocks;
-	__stat_buf->st_atim = tran_stat->st_atimespec;
-	__stat_buf->st_mtim = tran_stat->st_mtimespec;
-	__stat_buf->st_ctim = tran_stat->st_ctimespec;
-
-	return ret;
+    return fstat(__filedesc, __stat_buf);
 }
 
 
@@ -359,7 +297,7 @@ void Sys_CoD4Linker()
      Sys_CoD4LinkObject(LD_isalpha , isalpha );
      Sys_CoD4LinkObject(LD_strerror , strerror );
      Sys_CoD4LinkObject(LD___cxa_atexit , _isdead );
-     Sys_CoD4LinkObject(LD__Znaj , _Znam );
+     Sys_CoD4LinkObject(LD__Znaj , _Znaj );
      Sys_CoD4LinkObject(LD_sysconf , sysconf );
      Sys_CoD4LinkObject(LD___cxa_begin_catch , _isdead_dbg );
      Sys_CoD4LinkObject(LD_qsort , qsort );
@@ -401,11 +339,11 @@ void Sys_CoD4Linker()
      Sys_CoD4LinkObject(LD_read , read );
      Sys_CoD4LinkObject(LD_asinf , asinf );
      Sys_CoD4LinkObject(LD___cxa_pure_virtual , _isdead_dbg );
-     Sys_CoD4LinkObject(LD_usleep , usleep );
+     Sys_CoD4LinkObject(LD_usleep, usleep);
      Sys_CoD4LinkObject(LD_readdir , readdir );
      Sys_CoD4LinkObject(LD_gettimeofday , gettimeofday );
      Sys_CoD4LinkObject(LD_free , free );
-     Sys_CoD4LinkObject(LD__ZNSs7reserveEj , _ZNSs7reserveEm );
+     Sys_CoD4LinkObject(LD__ZNSs7reserveEj , _ZNSs7reserveEj );
      Sys_CoD4LinkObject(LD_atan , atan );
      Sys_CoD4LinkObject(LD___cxa_allocate_exception , _isdead_dbg );
      Sys_CoD4LinkObject(LD_access , access );
@@ -425,9 +363,9 @@ void Sys_CoD4Linker()
      Sys_CoD4LinkObject(LD_pthread_mutexattr_destroy , _isdead_dbg );
      Sys_CoD4LinkObject(LD_fclose , fclose );
      Sys_CoD4LinkObject(LD__ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_ , _ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_ );
-     Sys_CoD4LinkObject(LD_memalign , _memalign );
+     Sys_CoD4LinkObject(LD_memalign , memalign );
      Sys_CoD4LinkObject(LD__setjmp , _setjmp );
-     Sys_CoD4LinkObject(LD__ZNKSs4findEPKcjj , _ZNKSs4findEPKcmm );
+     Sys_CoD4LinkObject(LD__ZNKSs4findEPKcjj , _ZNKSs4findEPKcjj );
      Sys_CoD4LinkObject(LD_acos , acos );
      Sys_CoD4LinkObject(LD_memcpy , memcpy );
      Sys_CoD4LinkObject(LD_cosf , cosf );
@@ -437,7 +375,7 @@ void Sys_CoD4Linker()
      Sys_CoD4LinkObject(LD_unlink , unlink );
      Sys_CoD4LinkObject(LD_getpwuid , getpwuid );
      Sys_CoD4LinkObject(LD___strtod_internal , __strtod_internal );
-     Sys_CoD4LinkObject(LD__ZNSs6appendEPKcj , _ZNSs6appendEPKcm );
+     Sys_CoD4LinkObject(LD__ZNSs6appendEPKcj , _ZNSs6appendEPKcj );
      Sys_CoD4LinkObject(LD_strcpy , strcpy );
      Sys_CoD4LinkObject(LD_dlopen , dlopen );
      Sys_CoD4LinkObject(LD_ftell , ftell );
@@ -512,7 +450,7 @@ void Sys_CoD4Linker()
      Sys_CoD4LinkObject(LD__ZNSsC1ERKSs , _ZNSsC1ERKSs );
      Sys_CoD4LinkObject(LD_sem_init , sem_init );
      Sys_CoD4LinkObject(LD_pthread_self , _isdead_dbg );
-     Sys_CoD4LinkObject(LD__ZNSs6assignEPKcj , _ZNSs6assignEPKcm );
-     Sys_CoD4LinkObject(LD__ZNSs9_M_mutateEjjj , _ZNSs9_M_mutateEmmm );
+     Sys_CoD4LinkObject(LD__ZNSs6assignEPKcj , _ZNSs6assignEPKcj );
+     Sys_CoD4LinkObject(LD__ZNSs9_M_mutateEjjj , _ZNSs9_M_mutateEjjj );
      Sys_CoD4LinkObject(LD_geteuid , geteuid );
 }
