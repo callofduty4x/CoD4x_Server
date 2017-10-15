@@ -7,12 +7,12 @@
 /* CoD4X includes: */
 #include "extractor.h"
 #include <zlib/unzip.h>
-#include "../q_shared.h"
-#include "../cmd.h"
-#include "../qcommon_io.h"
-#include "../sys_main.h"
-#include "../filesystem.h"
-#include "../qcommon.h"
+#include <q_shared.h>
+#include <cmd.h>
+#include <qcommon_io.h>
+#include <sys_main.h>
+#include <filesystem.h>
+#include <qcommon.h>
 /* Assets includes: */
 #include "rawfile.h"
 #include "localized_string.h"

@@ -43,8 +43,7 @@ OBJ_DIR=obj
 PLUGINS_DIR=plugins
 WIN_DIR=$(SRC_DIR)/win32
 LINUX_DIR=$(SRC_DIR)/unix
-ASSETS_DIR=$(SRC_DIR)/xassets
-MODULES := mbedtls tomcrypt versioning zlib
+MODULES := mbedtls tomcrypt versioning xassets zlib
 
 ##############################
 # Setup external applications.
@@ -91,13 +90,11 @@ endif
 TARGET=$(addprefix $(BIN_DIR)/,$(TARGETNAME)$(BIN_EXT))
 ASM_SOURCES=$(wildcard $(SRC_DIR)/*.asm)
 C_SOURCES=$(wildcard $(SRC_DIR)/*.c)
-ASSETS_SOURCES=$(wildcard $(ASSETS_DIR)/*.c)
 
 #################################################################
 # Object files lists. (prefixes for rules may be required later).
 ASM_OBJ=$(patsubst $(SRC_DIR)/%.asm,$(OBJ_DIR)/%.o,$(ASM_SOURCES))
 C_OBJ=$(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(C_SOURCES))
-ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(OBJ_DIR)/%.o,$(ASSETS_SOURCES))
 
 ###############################################################################
 # Modules prerequesites.
@@ -138,29 +135,22 @@ endif
 
 ###############################
 # A rule to link server binary.
-$(TARGET): $(OS_OBJ) $(C_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
+$(TARGET): $(OS_OBJ) $(C_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
 	@echo === Linking binary ===
 	@echo   $(CC)  $@
 	@$(CC) $(LDFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
 
 #####################################
 # A rule to build common server code.
-# -march=nocona
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -march=nocona -Isrc/ -c $(CFLAGS) $(C_DEFINES) -o $@ $< 
 
 ################################
 # A rule to build assemler code.
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
 	@echo   $(NASM)  $@
 	@$(NASM) $(NASMFLAGS) $< -o $@
-
-######################################
-# A rule to build xassets source code.
-$(OBJ_DIR)/%.o: $(ASSETS_DIR)/%.c
-	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################
 # A rule to build Windows specific code.
@@ -196,7 +186,7 @@ do_paxctl: $(TARGET)
 # Delete built object files.
 clean_%: $(SRCMOD_DIR)/%
 	@echo $@
-	@$(MAKE) -C $< clean TARGETPATH="$(patsubst %,$(LIB_DIR)/$(MODULE_PREFIX)%.a,$(notdir $<))"
+	@$(MAKE) -s -C $< clean TARGETPATH="$(patsubst %,$(LIB_DIR)/$(MODULE_PREFIX)%.a,$(notdir $<))"
 
 clean: $(addprefix clean_,$(MODULES))
 	@echo   clean Server

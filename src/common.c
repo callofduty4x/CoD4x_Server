@@ -50,7 +50,7 @@
 #include "huffman.h"
 #include "sapi.h"
 #include "dobj.h"
-#include "xassets/extractor.h"
+#include <xassets/extractor.h>
 #include "sec_update.h"
 #include "allhooks.h"
 #include "misc.h"

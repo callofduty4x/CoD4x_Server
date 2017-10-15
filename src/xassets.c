@@ -30,7 +30,7 @@
 #include "filesystem.h"
 #include "qcommon.h"
 #include "cmd.h"
-#include "xassets/xmodel.h"
+#include <xassets/xmodel.h>
 
 #include <string.h>
 #include <stdlib.h>

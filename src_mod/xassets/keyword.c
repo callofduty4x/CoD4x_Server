@@ -1,7 +1,7 @@
 #include "keyword.h"
 #include <stdio.h>
 #include <string.h>
-#include "../q_shared.h"
+#include <q_shared.h>
 
 /* Find a word for key in given table. Returns string idx. */
 const char *find_word(const KeyWord_t *table, const uint idx)

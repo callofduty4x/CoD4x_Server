@@ -40,7 +40,7 @@
 #include "sec_crypto.h"
 #include "cmd.h"
 #include "xassets.h"
-#include "xassets/extractor.h"
+#include <xassets/extractor.h>
 #include "scr_vm_classfunc.h"
 #include "misc.h"
 

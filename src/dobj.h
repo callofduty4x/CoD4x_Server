@@ -5,7 +5,7 @@
 
 #include "q_shared.h"
 #include "entity.h"
-#include "xassets/xmodel.h"
+#include <xassets/xmodel.h>
 #include "dobj_part_cache.h"
 #include "qcommon_io.h"
 

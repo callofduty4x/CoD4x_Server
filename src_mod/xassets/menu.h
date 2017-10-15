@@ -1,7 +1,7 @@
 /* Both MenuDef and ItemDef structures. */
 #pragma once
 #include "xassetfwd.h"
-#include "../q_math.h"
+#include <q_math.h>
 #include "keyword.h"
 
 typedef enum OperationEnum_t
