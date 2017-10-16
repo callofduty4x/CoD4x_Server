@@ -30,6 +30,7 @@
 #include "punkbuster.h"
 #include "hl2rcon.h"
 #include "cvar.h"
+#include "allhooks.h"
 
 #include <string.h>
 #include <stdarg.h>

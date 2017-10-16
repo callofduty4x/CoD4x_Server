@@ -32,7 +32,6 @@
 char* SL_ConvertToString(unsigned int index);
 int SL_FindString(const char *string);
 unsigned int SL_FindLowercaseString(const char *upperstring);
-int __cdecl SL_GetStringOfSize(const char *string, int, unsigned int len);
 unsigned int __cdecl SL_GetLowercaseString(const char *str, int type);
 unsigned int __cdecl SL_GetString(const char *str, int type);
 int REGPARM(2) FindStringOfSize(const char *string, unsigned int size);

@@ -43,19 +43,9 @@ typedef enum {
 } memtag_t;
 
 
-void __cdecl Com_InitHunkMemory(void);
-void __cdecl Hunk_InitDebugMemory(void);
-void __cdecl Hunk_ClearTempMemory(void);
-void __cdecl Hunk_ClearTempMemoryHigh(void);
-void* __cdecl Hunk_AllocateTempMemory(int size);
-void __cdecl Hunk_FreeTempMemory(void *buffer);
 void __cdecl Mem_Init(void);
-void __cdecl Mem_BeginAlloc(const char*, qboolean);
-void __cdecl Mem_EndAlloc(const char*, int);
-void* __cdecl TempMalloc( int );
 char *CopyString( const char *in );
 void FreeString( char *free );
-void __cdecl PMem_Free(const char*, unsigned int);
 void __cdecl Sys_OutOfMemError(const char* filename, int line);
 void Z_Free( void *ptr );
 void Z_FreeTags( int tag );

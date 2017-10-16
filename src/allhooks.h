@@ -45,3 +45,26 @@ __cdecl void G_ClientStopUsingTurret(gentity_t *ent);
 // msg_hooks.asm
 __cdecl void MSG_WriteDeltaPlayerstate(snapshotInfo_t *a1, msg_t *a2, int a3, playerState_t *a4, playerState_t *a5);
 __cdecl void MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to);
+
+///////////////////////////////////////////////////////////////////////////////
+// qcommon_hooks.asm
+__cdecl void Com_InitParse();
+__cdecl void Com_Restart();
+__cdecl void Com_InitHunkMemory();
+__cdecl void Hunk_InitDebugMemory();
+__cdecl void Hunk_ClearTempMemory();
+__cdecl void Hunk_ClearTempMemoryHigh();
+__cdecl void Com_Close();
+__cdecl void* Hunk_AllocateTempMemory(int size);
+__cdecl void Hunk_FreeTempMemory(void *buffer);
+__cdecl void Mem_BeginAlloc(const char* a1, qboolean a2);
+__cdecl void Mem_EndAlloc(const char* a1, int a2);
+__cdecl void* TempMalloc(int a1);
+__cdecl void PMem_Free(const char* a1, unsigned int a2);
+__cdecl void Com_LoadBsp(const char *bspname);
+__cdecl void Com_UnloadBsp();
+__cdecl void Com_LoadWorld(const char *name);
+__cdecl void CM_LoadMap(const char *name, int *checksum);
+__cdecl void CM_LinkWorld();
+__cdecl int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
+__cdecl int SL_GetStringOfSize(const char *string, int a2, unsigned int len);

@@ -31,6 +31,7 @@
 #include "cmd.h"
 #include "server.h"
 #include "sv_auth.h"
+#include "allhooks.h"
 
 #include <string.h>
 

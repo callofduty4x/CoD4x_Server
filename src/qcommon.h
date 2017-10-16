@@ -40,11 +40,8 @@ typedef enum {
 
 void Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int ptrLength, void *ptr );
 
-void __cdecl Com_InitParse( void );
-void __cdecl Com_Restart(void);
 void __cdecl Com_WriteConfig_f(void);
 void __cdecl Com_WriteDefaults_f(void);
-void __cdecl Com_Close(void);
 int __cdecl Com_Filter( char* filter, char *name, int casesensitive);
 
 void Com_Frame(void);
@@ -121,13 +118,6 @@ typedef struct
   int checksum;
   statData_t data;
 }stats_t;
-
-void Com_LoadWorld(const char *name);
-void CM_LinkWorld();
-void CM_LoadMap(const char *name, int *checksum);
-void Com_LoadBsp(const char *bspname);
-void Com_UnloadBsp();
-int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
 
 void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname);
 

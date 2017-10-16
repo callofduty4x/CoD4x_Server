@@ -31,6 +31,7 @@
 #include "qcommon.h"
 #include "cmd.h"
 #include <xassets/xmodel.h>
+#include "allhooks.h"
 
 #include <string.h>
 #include <stdlib.h>
