@@ -1,6 +1,3 @@
-############################################
-# A test makefile for incremental building.#
-############################################
 ####################################################
 # By default, building OFFICIAL, non-DEBUG version.#
 # If you want to get a debug version, use          #
@@ -41,8 +38,6 @@ BIN_DIR=bin
 LIB_DIR=lib
 OBJ_DIR=obj
 PLUGINS_DIR=plugins
-#WIN_DIR=$(SRC_DIR)/win32
-LINUX_DIR=$(SRC_DIR)/unix
 MODULES := mbedtls tomcrypt versioning xassets zlib
 
 ##############################
@@ -60,9 +55,6 @@ NASMFLAGS=-f coff -dWin32 --prefix _
 C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(WIN_DEFINES))
 LDFLAGS=$(WIN_LFLAGS) src_mod/win32/win_cod4.res
 LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
-#RESOURCE_FILE=src_mod/win32/win_cod4.res
-#DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
-#INTERFACE_LIB=$(PLUGINS_DIR)/libcom_plugin.a
 ADDITIONAL_OBJ=
 #$(DEF_FILE)
 CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o)
@@ -73,14 +65,11 @@ else
 # LINUX variables.
 BIN_EXT=
 NASMFLAGS=-f elf
-OS_SOURCES=$(wildcard $(LINUX_DIR)/*.c)
-OS_OBJ=$(patsubst $(LINUX_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
 C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(LINUX_DEFINES))
 LDFLAGS=$(LINUX_LFLAGS)
 LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
-# $(DEF_FILE) $(INTERFACE_LIB)
 CLEAN=rm $(OBJ_DIR)/*.o 
 SECURITY=do_paxctl
 MODULES += linux32
@@ -121,16 +110,6 @@ $(LIB_DIR)/$(MODULE_PREFIX)%.a: $(SRCMOD_DIR)/%
 	@echo  === $< ===
 	@$(MAKE) -s -C $< TARGETPATH="$@" DEBUG=$(DEBUG)
 
-##################################
-# A rule to make bot library.
-botlib:
-	@echo   sh  $@
-ifeq ($(OS),Windows_NT)
-	@cmd.exe /C "@cd $(SRC_DIR)/$@ && @comp.cmd"
-else
-	cd $(SRC_DIR)/$@ && ./comp.sh
-endif
-
 ###############################
 # A rule to link server binary.
 $(TARGET): $(C_OBJ) $(ASM_OBJ) $(MODULES_TARGETPATH)
@@ -149,30 +128,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm
 	@echo   $(NASM)  $@
 	@$(NASM) $(NASMFLAGS) $< -o $@
-
-########################################
-# A rule to build Windows specific code.
-#$(OBJ_DIR)/%.o: $(WIN_DIR)/%.c
-#	@echo   $(CC)  $@
-#	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
-
-########################################
-# A rule to build Linux specific code.
-$(OBJ_DIR)/%.o: $(LINUX_DIR)/%.c
-	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
-
-########################################################
-# A rule for Windows to create server interface library.
-#$(INTERFACE_LIB): $(DEF_FILE) $(TARGET)
-#	@echo   dlltool  $@
-#	@dlltool -D $(TARGET) -d $(DEF_FILE) -l $@
-
-####################################################################
-# A rule for Windows to create server module definition file (.def).
-#$(DEF_FILE): $(TARGET)
-#	@echo   pexports  $@
-#	@pexports $^ > $@
 
 ####################################################
 # A rule for Linux to remove some memory protection.
