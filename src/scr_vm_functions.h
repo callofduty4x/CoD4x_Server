@@ -121,3 +121,6 @@ void GScr_IsString();
 void GScr_IsFloat();
 void GScr_IsInt();
 void GScr_Float();
+
+void GScr_CloneBrushModelToScriptModel(scr_entref_t brushModelEnt);
+void PlayerCmd_SetStance(scr_entref_t playerEntNum);

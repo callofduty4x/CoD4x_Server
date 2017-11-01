@@ -127,10 +127,10 @@ typedef struct playerState_s {
 	int		eFlags;  // 176
 	int		eventSequence;  // 180
 
-	int events[4];
-	unsigned int eventParms[4];
+	int events[4];  // 184
+	unsigned int eventParms[4];  // 200
 
-	int		oldEventSequence;
+	int		oldEventSequence;  // 216
 
 	int		clientNum;  // 220
 	int		offHandIndex;  // 224

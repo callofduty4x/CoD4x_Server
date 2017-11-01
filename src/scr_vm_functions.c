@@ -39,6 +39,7 @@
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
 #include "tomcrypt/tomcrypt_misc.h"
+#include "bg.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 
@@ -3275,4 +3276,54 @@ void GScr_Float()
     }
     else
         Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
+}
+
+void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
+{
+    // Common checks.
+    if (Scr_GetNumParam() != 1)
+        Scr_Error("usage: <scriptModelEnt> CloneBrushModelToScriptModel(<brushModelEnt>)");
+
+    // Object checks.
+    gentity_t* scriptEnt = VM_GetGEntityForNum(scriptModelEntNum);
+    if (scriptEnt->classname != stringIndex.script_model)
+        Scr_ObjectError("passed entity is not a script_model entity");
+
+    if (scriptEnt->s.eType != 6)
+        Scr_ObjectError("passed entity type is not 6 (TODO: what is it?)");
+
+    // Arguments checks.
+    gentity_t* brushEnt = Scr_GetEntity(0);
+    if (brushEnt->classname != stringIndex.script_brushmodel && brushEnt->classname != stringIndex.script_model && brushEnt->classname != stringIndex.script_origin && brushEnt->classname != stringIndex.light)
+        Scr_ParamError(0, "brush model entity classname must be one of {script_brushmodel, script_model, script_origin, light}");
+
+    if (!brushEnt->s.index)
+        Scr_ParamError(0, "brush model entity has no collision model");
+
+    // Let's do this...
+    SV_UnlinkEntity(scriptEnt);
+    scriptEnt->s.index = brushEnt->s.index;
+    int contents = scriptEnt->r.contents;
+    SV_SetBrushModel(scriptEnt);
+    scriptEnt->r.contents |= contents;
+    SV_LinkEntity(scriptEnt);
+}
+
+void PlayerCmd_SetStance(scr_entref_t playerEntNum)
+{
+    if (Scr_GetNumParam() != 1)
+    Scr_Error("usage: <client> setStance(<string stance>);");
+
+    // Object check.
+    gclient_t* cl = VM_GetGClientForEntityNumber(playerEntNum);
+    if (!cl)
+        Scr_ObjectError("entity is not a client");
+
+    // Param check.
+    short stanceIdx = Scr_GetConstString(0);
+    if (stanceIdx != stringIndex.stand && stanceIdx != stringIndex.crouch && stanceIdx != stringIndex.prone)
+        Scr_ParamError(0, "stance must be one of {stand, crouch, prone}");
+
+    BGEvent event = stanceIdx == stringIndex.stand ? EV_STANCE_FORCE_STAND : stanceIdx == stringIndex.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
+    BG_AddPredictableEventToPlayerstate(event, 0, cl);
 }
