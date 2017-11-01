@@ -543,7 +543,7 @@ typedef struct{//13F18F80
 	int num_entities;
 	int maxClients;
 	int fps;
-	qboolean canArchiveData;
+	qboolean clientArchive;
 	gentity_t *gentities;
 	int gentitySize;
 	clientState_t *gclientstate;
