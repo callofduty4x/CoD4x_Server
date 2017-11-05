@@ -47,6 +47,7 @@ These commands can only be entered from stdin or by a remote operator datagram
 #include "sys_main.h"
 #include "sapi.h"
 #include "allhooks.h"
+#include <phandler/phandler.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -2335,81 +2336,77 @@ void SV_GetModules_f()
 	BuildModuleRequests(cl.cl);
 }
 
-void SV_AddOperatorCommands(){
+void SV_AddOperatorCommands()
+{
+    static qboolean initialized;
+    if (initialized)
+        return;
 
-	static qboolean	initialized;
+    initialized = qtrue;
+    Cmd_AddPCommand("getmodules", SV_GetModules_f, 45);
+    Cmd_AddCommand("killserver", SV_KillServer_f);
+    Cmd_AddCommand("setPerk", SV_SetPerk_f);
+    Cmd_AddPCommand("map_restart", SV_MapRestart_f, 50);
+    Cmd_AddCommand("fast_restart", SV_FastRestart_f);
+    Cmd_AddPCommand("rules", SV_ShowRules_f, 1);
+    Cmd_AddCommand("heartbeat", SV_Heartbeat_f);
+    Cmd_AddPCommand("kick", Cmd_KickPlayer_f, 35);
+    Cmd_AddCommand("clientkick", Cmd_KickPlayer_f);
+    Cmd_AddCommand("onlykick", Cmd_KickPlayer_f);
+    Cmd_AddPCommand("unban", Cmd_UnbanPlayer_f, 80);
+    Cmd_AddCommand("unbanUser", Cmd_UnbanPlayer_f);
+    Cmd_AddPCommand("permban", Cmd_BanPlayer_f, 80);
+    Cmd_AddPCommand("tempban", Cmd_TempBanPlayer_f, 50);
+    //	Cmd_AddCommand ("bpermban", Cmd_BanPlayer_f);
+    //	Cmd_AddCommand ("btempban", Cmd_TempBanPlayer_f);
+    Cmd_AddCommand("banUser", Cmd_BanPlayer_f);
+    Cmd_AddCommand("banClient", Cmd_BanPlayer_f);
+    Cmd_AddPCommand("ministatus", SV_MiniStatus_f, 1);
+    Cmd_AddPCommand("say", SV_ConSayChat_f, 70);
+    Cmd_AddCommand("consay", SV_ConSayConsole_f);
+    Cmd_AddPCommand("screensay", SV_ConSayScreen_f, 70);
+    Cmd_AddPCommand("tell", SV_ConTellChat_f, 70);
+    Cmd_AddCommand("contell", SV_ConTellConsole_f);
+    Cmd_AddPCommand("screentell", SV_ConTellScreen_f, 70);
+    Cmd_AddPCommand("dumpuser", SV_DumpUser_f, 50);
+    Cmd_AddCommand("stringUsage", SV_StringUsage_f);
+    Cmd_AddCommand("scriptUsage", SV_ScriptUsage_f);
+    Cmd_AddPCommand("undercover", Cmd_Undercover_f, 60);
 
-	if ( initialized ) {
-		return;
-	}
-	initialized = qtrue;
-	Cmd_AddPCommand ("getmodules", SV_GetModules_f, 45);
-	Cmd_AddCommand ("killserver", SV_KillServer_f);
-	Cmd_AddCommand ("setPerk", SV_SetPerk_f);
-	Cmd_AddPCommand ("map_restart", SV_MapRestart_f, 50);
-	Cmd_AddCommand ("fast_restart", SV_FastRestart_f);
-	Cmd_AddPCommand ("rules", SV_ShowRules_f, 1);
-	Cmd_AddCommand ("heartbeat", SV_Heartbeat_f);
-	Cmd_AddPCommand ("kick", Cmd_KickPlayer_f, 35);
-	Cmd_AddCommand ("clientkick", Cmd_KickPlayer_f);
-	Cmd_AddCommand ("onlykick", Cmd_KickPlayer_f);
-	Cmd_AddPCommand ("unban", Cmd_UnbanPlayer_f, 80);
-	Cmd_AddCommand ("unbanUser", Cmd_UnbanPlayer_f);
-	Cmd_AddPCommand ("permban", Cmd_BanPlayer_f, 80);
-	Cmd_AddPCommand ("tempban", Cmd_TempBanPlayer_f, 50);
-//	Cmd_AddCommand ("bpermban", Cmd_BanPlayer_f);
-//	Cmd_AddCommand ("btempban", Cmd_TempBanPlayer_f);
-	Cmd_AddCommand ("banUser", Cmd_BanPlayer_f);
-	Cmd_AddCommand ("banClient", Cmd_BanPlayer_f);
-	Cmd_AddPCommand ("ministatus", SV_MiniStatus_f, 1);
-	Cmd_AddPCommand ("say", SV_ConSayChat_f, 70);
-	Cmd_AddCommand ("consay", SV_ConSayConsole_f);
-	Cmd_AddPCommand ("screensay", SV_ConSayScreen_f, 70);
-	Cmd_AddPCommand ("tell", SV_ConTellChat_f, 70);
-	Cmd_AddCommand ("contell", SV_ConTellConsole_f);
-	Cmd_AddPCommand ("screentell", SV_ConTellScreen_f, 70);
-	Cmd_AddPCommand ("dumpuser", SV_DumpUser_f, 50);
-	Cmd_AddCommand ("stringUsage", SV_StringUsage_f);
-	Cmd_AddCommand ("scriptUsage", SV_ScriptUsage_f);
-	Cmd_AddPCommand ("undercover", Cmd_Undercover_f, 60);
+    Cmd_AddPCommand("stoprecord", SV_StopRecord_f, 70);
+    Cmd_AddPCommand("record", SV_Record_f, 50);
 
-	Cmd_AddPCommand("stoprecord", SV_StopRecord_f, 70);
-	Cmd_AddPCommand("record", SV_Record_f, 50);
-
-	if(Com_IsDeveloper()){
-		Cmd_AddCommand ("showconfigstring", SV_ShowConfigstring_f);
-		Cmd_AddCommand ("devmap", SV_Map_f);
-
-	}
-
+    if (Com_IsDeveloper())
+    {
+        Cmd_AddCommand("showconfigstring", SV_ShowConfigstring_f);
+        Cmd_AddCommand("devmap", SV_Map_f);
+    }
 }
 
-void SV_AddSafeCommands(){
+void SV_AddSafeCommands()
+{
+    static qboolean initialized;
+    if (initialized)
+    {
+        return;
+    }
+    initialized = qtrue;
 
-	static qboolean	initialized;
+    Cmd_AddPCommand("systeminfo", SV_Systeminfo_f, 1);
+    Cmd_AddPCommand("serverinfo", SV_Serverinfo_f, 1);
+    Cmd_AddPCommand("map", SV_Map_f, 60);
+    Cmd_AddCommand("map_rotate", SV_MapRotate_f);
+    Cmd_AddCommand("addAdvertMsg", SV_AddAdvert_f);
+    Cmd_AddCommand("addRuleMsg", SV_AddRule_f);
+    Cmd_AddCommand("clearAllMsg", SV_ClearAllMessages_f);
+    Cmd_AddCommand("writenvcfg", NV_WriteConfig);
+    Cmd_AddCommand("status", SV_Status_f);
+    Cmd_AddCommand("addCommand", Cmd_AddTranslatedCommand_f);
+    Cmd_AddCommand("downloadmap", SV_DownloadMap_f);
+    Cmd_AddPCommand("gametype", SV_ChangeGametype_f, 80);
 
-	if ( initialized ) {
-		return;
-	}
-	initialized = qtrue;
-
-	Cmd_AddPCommand ("systeminfo", SV_Systeminfo_f, 1);
-	Cmd_AddPCommand ("serverinfo", SV_Serverinfo_f, 1);
-	Cmd_AddPCommand ("map", SV_Map_f, 60);
-	Cmd_AddCommand ("map_rotate", SV_MapRotate_f);
-	Cmd_AddCommand ("addAdvertMsg", SV_AddAdvert_f);
-	Cmd_AddCommand ("addRuleMsg", SV_AddRule_f);
-	Cmd_AddCommand ("clearAllMsg", SV_ClearAllMessages_f);
-	Cmd_AddCommand ("writenvcfg", NV_WriteConfig);
-	Cmd_AddCommand ("status", SV_Status_f);
-	Cmd_AddCommand ("addCommand", Cmd_AddTranslatedCommand_f);
-	Cmd_AddCommand ("downloadmap", SV_DownloadMap_f);
-	Cmd_AddPCommand ("gametype", SV_ChangeGametype_f, 80);
-
+    SV_AddPluginHandlerConsoleCommands();
 }
-
-
-
 
 void SV_Cmd_Init( void ) {
 

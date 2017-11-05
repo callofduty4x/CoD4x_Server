@@ -38,7 +38,7 @@ BIN_DIR=bin
 LIB_DIR=lib
 OBJ_DIR=obj
 PLUGINS_DIR=plugins
-MODULES := mbedtls tomcrypt versioning xassets zlib
+MODULES := mbedtls tomcrypt versioning xassets zlib phandler
 
 ##############################
 # Setup external applications.

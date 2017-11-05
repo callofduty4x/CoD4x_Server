@@ -619,12 +619,15 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
 #define XASSERT(x, ...) (!(x) && ASSERT_HANDLER(#x, __FILE__, __LINE__, __func__, __VA_ARGS__) && (ASSERT_HALT(), 1))
 #define ASSERT(x) XASSERT(x, NULL)
 
-#ifdef __cplusplus
-#include <cstdlib>
-#define ASSERT_HALT() (std::abort())
-#else
+// These one causes some complile issues when using both gcc and g++ compilers with plugin handler.
+// So I have commented out C++ part and left only C part.
+// Worth looking at this if some problems with "abort" will be discovered.
+//#ifdef __cplusplus
+//#include <cstdlib>
+//#define ASSERT_HALT() (std::abort())
+//#else
 #define ASSERT_HALT() (abort())
-#endif
+//#endif
 
 
 #include "q_platform.h"
