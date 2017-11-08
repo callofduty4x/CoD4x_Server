@@ -2556,7 +2556,7 @@ static netField_t hudElemFields[] =
 
 
 
-void MSG_WriteDeltaHudElems(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, hudelem_t *from, hudelem_t *to, int count)
+void MSG_WriteDeltaHudElems(snapshotInfo_t *snapInfo, msg_t *msg, const int time, hudelem_t *from, hudelem_t *to, int count)
 {
 
 	int i, numHE, numFields, lc, k;
@@ -2643,7 +2643,7 @@ double __cdecl Vec3DistanceSq(const float *p1, const float *p2)
 }
 
 
-void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
+void MSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
 {
 	qboolean forceSend;
 	int statsbits, numFields;
@@ -2657,7 +2657,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 	int numEntries;
 	int predictedTime;
 	vec3_t predictedOrigin;
-	int startoffset = msg->cursize;
+	//int startoffset = msg->cursize;
 
 	if ( !from )
 	{
