@@ -313,7 +313,8 @@ typedef struct usercmd_s
     char rightmove;   /* Must be char, not byte */
     float meleeChargeYaw;
     byte meleeChargeDist;
-    byte pad[3];
+	byte selectedLocation[2];
+	byte pad;
 } usercmd_t;
 
 // client data that stays across multiple respawns, but is cleared
