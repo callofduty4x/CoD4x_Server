@@ -30,7 +30,6 @@
 #include "sys_main.h"
 #include "g_sv_shared.h"
 #include "cm_public.h"
-#include "allhooks.h"
 
 #include <stdint.h>
 #include <stdlib.h>

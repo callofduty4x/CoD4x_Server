@@ -1788,8 +1788,13 @@ float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
 #endif
 
 
-qboolean MSG_ValuesAreEqual(snapshotInfo_t *snapInfo, int bits, const int *fromF, const int *toF)
+qboolean MSG_ValuesAreEqual(int bits, const int *fromF, const int *toF)
 {
+	if(*fromF == *toF)
+	{
+		return qtrue;
+	}
+
 	qboolean result;
 
 	switch ( bits + 100 )
@@ -1811,7 +1816,33 @@ qboolean MSG_ValuesAreEqual(snapshotInfo_t *snapInfo, int bits, const int *fromF
 			result = 0;
 			break;
 	}
+
 	return result;
+}
+
+
+
+int __cdecl MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fields, int numFields)
+{
+	int j;
+	int lc;
+	int *fromF, *toF;
+
+	lc = -1;
+	for ( j = numFields -1; j >= 0; --j )
+	{
+		fromF = ( int * )( (byte *)from + fields[j].offset );
+		toF = ( int * )( (byte *)to + fields[j].offset );
+
+	
+		if ( !MSG_ValuesAreEqual(fields[j].bits, fromF, toF) )
+		{
+			lc = j;
+			break;
+		}
+	}
+	//assertx((lc+1 >= 0 && lc+1 < (int)( numFields )), "(lc) = %i", lc);
+	return lc;
 }
 
 
@@ -1893,7 +1924,7 @@ __regparm3 void MSG_WriteDeltaField(snapshotInfo_t *snapInfo, msg_t *msg, const 
 	}
 	if ( field->changeHints != 2 )
 	{
-		if ( !forceSend && (*(uint32_t* )fromdata == *(uint32_t* )todata || MSG_ValuesAreEqual(snapInfo, field->bits, (const int *)fromdata, (const int *)todata)))
+		if ( !forceSend && MSG_ValuesAreEqual(field->bits, (const int *)fromdata, (const int *)todata))
 		{
 			MSG_WriteBit0(msg);		
 			return;		
@@ -2147,11 +2178,7 @@ int MSG_WriteDeltaStruct(snapshotInfo_t *snapInfo, msg_t *msg, const int time, c
 		fromF = ( int * )( (byte *)from + field->offset );
 		toF = ( int * )( (byte *)to + field->offset );
 
-		if ( *fromF == *toF ) {
-			continue;
-		}
-
-		if(!MSG_ValuesAreEqual(snapInfo, field->bits, fromF, toF))
+		if(!MSG_ValuesAreEqual(field->bits, fromF, toF))
 		{
 			lc = i +1;
 		}
@@ -2457,29 +2484,14 @@ static netField_t objectiveFields[] =
 
 void MSG_WriteDeltaObjective(snapshotInfo_t *snapInfo, msg_t *msg, int time, objective_t *from, objective_t *to)
 {
-	int i, numStateFields;
-	int *fromF, *toF;
+	int i, lc, numStateFields;
 	netField_t* field;
 
   	numStateFields = sizeof(objectiveFields) / sizeof(objectiveFields[0]);
-	
-	for(i = 0,  field = objectiveFields; i < numStateFields; i++, field++)
-	{
 
-		fromF = ( int * )( (byte *)from + field->offset );
-		toF = ( int * )( (byte *)to + field->offset );
+	lc = MSG_WriteDelta_LastChangedField((byte*)from, (byte*)to, objectiveFields, numStateFields);
 
-		if ( *fromF == *toF ) {
-			continue;
-		}
-
-		if(!MSG_ValuesAreEqual(snapInfo, field->bits, fromF, toF))
-		{
-			break;
-		}
-	}
-	
-	if(i == numStateFields)
+	if(lc == -1)
 	{
 		MSG_WriteBit0( msg ); // no change
 		return;
@@ -2548,7 +2560,6 @@ void MSG_WriteDeltaHudElems(snapshotInfo_t *snapInfo, msg_t *msg, const int time
 
 	int i, numHE, numFields, lc, k;
   	netField_t* field;
-	int *fromF, *toF;
 	
 	for(i = 0; i < MAX_HUDELEMENTS; ++i)
 	{
@@ -2568,33 +2579,19 @@ void MSG_WriteDeltaHudElems(snapshotInfo_t *snapInfo, msg_t *msg, const int time
 	
 	for(k = 0; k < numHE; ++k)
 	{
-		lc = 0;
-		
-		for(i = 0,  field = hudElemFields; i < numFields; i++, field++)
+		lc = MSG_WriteDelta_LastChangedField((byte*)(from + k), (byte*)(to + k), hudElemFields, numFields);
+		if(lc == -1)
 		{
-
-			fromF = ( int * )( (byte *)from + field->offset );
-			toF = ( int * )( (byte *)to + field->offset );
-
-			if ( *fromF == *toF ) {
-				continue;
-			}
-
-			if(!MSG_ValuesAreEqual(snapInfo, field->bits, fromF, toF))
-			{
-				lc = i;
-			}
+			lc = 0; //First field gets written always in IW3 - bug with no functional effect
 		}
-		
 		MSG_WriteBits(msg, lc, GetMinBitCount(numFields)); //Write highest changed field
 		
-		for(i = 0, field = hudElemFields; i < numFields; i++, field++) //Write out the fields unit the last changed one
+		for(i = 0, field = hudElemFields; i <= lc; i++, field++) //Write out the fields unit the last changed one
 		{
-			MSG_WriteDeltaField(snapInfo, msg, time, (byte*)from, ( byte*)to, field, i, 0);
+			MSG_WriteDeltaField(snapInfo, msg, time, (byte*)(from + k), ( byte*)(to + k), field, i, 0);
 		}
 		
 	}
-
 }
 
 
@@ -2617,11 +2614,8 @@ qboolean MSG_ShouldSendPSField(snapshotInfo_t *snapInfo, byte sendOriginAndVel, 
 	{
 	  	fromF = ( int * )( (byte *)oldPs + field->offset );
 		toF = ( int * )( (byte *)ps + field->offset );
-		if ( *fromF == *toF )
-		{
-			return 0;
-		}
-		if(MSG_ValuesAreEqual(snapInfo, field->bits, (int *)(((byte *)oldPs) + field->offset), (int *)(((byte *)ps) + field->offset)))
+
+		if(MSG_ValuesAreEqual(field->bits, fromF, toF))
 		{
 			return 0;
 		}
@@ -2630,53 +2624,78 @@ qboolean MSG_ShouldSendPSField(snapshotInfo_t *snapInfo, byte sendOriginAndVel, 
 	return sendOriginAndVel;
 }
 
-/* Broken implementation will not work: */
-void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
+qboolean MSG_WithinAllowedPredictionError(float dist, playerState_t *to)
 {
+    if(dist <= 0.01)
+    {
+    	return qtrue;
+    }
+	return qfalse;
+}
 
-	vec3_t org;
+double __cdecl Vec3DistanceSq(const float *p1, const float *p2)
+{
+  vec3_t d;
+
+  VectorSubtract(p2, p1, d);
+  return VectorLengthSquared( d );
+}
+
+
+void MSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
+{
 	qboolean forceSend;
 	int statsbits, numFields;
 	int i, j, lc;
 	playerState_t dummy;
-	qboolean flag1;
+	qboolean sendOriginAndVel;
 	netField_t* field;
-	int ammobits[5];
+	int ammobits[8];
 	int clipbits;
 	int numObjective;
 	int numEntries;
 	int predictedTime;
 	vec3_t predictedOrigin;
-	
+	//int startoffset = msg->cursize; Unused.
+
 	if ( !from )
 	{
 		from = &dummy;
 		memset(&dummy, 0, sizeof(dummy));
 	}
 
-	predictedTime = SV_GetPredirectedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
-	
-	org[0] = to->origin[0] - predictedOrigin[0];
-	org[1] = to->origin[1] - predictedOrigin[1];
-	org[2] = to->origin[2] - predictedOrigin[2];
-	
-	if ( !snapInfo->archived  && from && svsHeader.canArchiveData  && (org[1] * org[1] + org[0] * org[0] + org[2] * org[2] <= 0.01)  && predictedTime == to->commandTime)
+
+
+	if ( snapInfo->archived )
 	{
-		flag1 = 0;
-		MSG_WriteBit0(msg);
-	}
-	else
-	{
-		flag1 = 1;
-		MSG_WriteBit1(msg);	
-	}
-	
+	    sendOriginAndVel = 1;
+	    MSG_WriteBit1(msg);
+  	}
+  	else
+  	{
+//	    assert(svsHeaderValid);
+
+		predictedTime = SV_GetPredirectedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
+	    float dist = Vec3DistanceSq(predictedOrigin, to->origin);
+
+	    if ( from && svsHeader.clientArchive && MSG_WithinAllowedPredictionError(dist, to) && predictedTime == to->commandTime )
+    	{
+      		sendOriginAndVel = 0;
+      		MSG_WriteBit0(msg);
+    	}
+    	else
+    	{
+    	  sendOriginAndVel = 1;
+    	  MSG_WriteBit1(msg);
+    	}
+  	}
+
 	numFields = sizeof( playerStateFields ) / sizeof( playerStateFields[0] );
 	
 	lc = 0;
 	for ( i = 0, field = playerStateFields ; i < numFields ; i++, field++ ) {
 
-		if ( MSG_ShouldSendPSField(snapInfo, flag1, to, from, field) )
+		if ( MSG_ShouldSendPSField(snapInfo, sendOriginAndVel, to, from, field) )
 		{
 			lc = i + 1;
 		}
@@ -2688,7 +2707,7 @@ void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int 
 	{
 		for(i = 0, field = playerStateFields; i < lc; i++, field++)
 		{      
-			if ( field->changeHints == 2 || MSG_ShouldSendPSField(snapInfo, flag1, to, from, field) )
+			if ( field->changeHints == 2 || MSG_ShouldSendPSField(snapInfo, sendOriginAndVel, to, from, field) )
 			{
 				if(!snapInfo->archived && field->changeHints == 3)
 				{
@@ -2704,25 +2723,24 @@ void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int 
 			}
 		}
 	}
-	
 	// send the arrays
 	//
+	
 	statsbits = 0;
 	for ( i = 0 ; i < 5 ; i++ ) {
 		if ( to->stats[i] != from->stats[i] ) {
 			statsbits |= 1 << i;
 		}
 	}
-	
+
 	if ( statsbits ) 
 	{
 		MSG_WriteBit1( msg ); // changed
 		MSG_WriteBits(msg, statsbits, 5);
-		for ( i = 0 ; i < 3 ; i++ )
-			if ( statsbits & ( 1 << i ) ) {
-				// RF, changed to long to allow more flexibility
-//				MSG_WriteLong (msg, to->stats[i]);
-				MSG_WriteShort( msg, to->stats[i] );  //----(SA)	back to short since weapon bits are handled elsewhere now
+			for ( i = 0 ; i < 3 ; i++ ){
+				if ( statsbits & ( 1 << i ) ) {
+					MSG_WriteShort( msg, to->stats[i] );
+				}
 			}
 			if ( statsbits & 8 )
 			{
@@ -2735,7 +2753,9 @@ void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int 
 	} else {
 		MSG_WriteBit0( msg ); // no change to stats
 	}
-	
+
+
+
 //----(SA)	I split this into two groups using shorts so it wouldn't have
 //			to use a long every time ammo changed for any weap.
 //			this seemed like a much friendlier option than making it
@@ -2775,7 +2795,7 @@ void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int 
 	} else {
 		MSG_WriteBit0( msg ); // no change
 	}
-	
+
 	// ammo in clip
 	for ( j = 0; j < 8; j++ ) {  //----(Ninja)	modified for 128 weaps (CoD4)
 		clipbits = 0;
@@ -2812,7 +2832,6 @@ void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int 
 		}
 	}
 	
-	
 	if ( !memcmp(&from->hud, &to->hud, sizeof(from->hud)) )
 	{
 		MSG_WriteBit0(msg); //No Hud-Element has changed
@@ -2825,7 +2844,7 @@ void oMSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int 
 	}
 	
 	numEntries = 128;
-	
+
 	if ( !memcmp(from->weaponmodels, to->weaponmodels, numEntries) )
 	{
 		MSG_WriteBit0(msg); //No weapon viewmodel has changed
@@ -2892,6 +2911,186 @@ void MSG_WriteDeltaClient(snapshotInfo_t *snapInfo, msg_t *msg, const int time, 
 }
 
 
+int kbitmask[33] =
+{
+  0,
+  1,
+  3,
+  7,
+  15,
+  31,
+  63,
+  127,
+  255,
+  511,
+  1023,
+  2047,
+  4095,
+  8191,
+  16383,
+  32767,
+  65535,
+  131071,
+  262143,
+  524287,
+  1048575,
+  2097151,
+  4194303,
+  8388607,
+  16777215,
+  33554431,
+  67108863,
+  134217727,
+  268435455,
+  536870911,
+  1073741823,
+  2147483647,
+  4294967295
+};
 
 
 
+unsigned int __cdecl MSG_ReadKey(msg_t *msg, int key, int bits)
+{
+  return kbitmask[bits] & (key ^ MSG_ReadBits(msg, bits));
+}
+
+int __cdecl MSG_ReadDeltaKeyShort(msg_t *msg, int key, int oldV)
+{
+  if ( MSG_ReadBit(msg) )
+  {
+    return (int16_t)(key ^ MSG_ReadShort(msg));
+  }
+  return oldV;
+}
+
+int __cdecl MSG_ReadDeltaKeyByte(msg_t *msg, int key, int oldV)
+{
+  if ( MSG_ReadBit(msg) )
+  {
+    return (uint8_t)(key ^ MSG_ReadByte(msg));
+  }
+  return oldV;
+}
+
+int __cdecl MSG_ReadDeltaKey(msg_t *msg, int key, int oldV, int bits)
+{
+  if ( MSG_ReadBit(msg) )
+  {
+    return kbitmask[bits] & (key ^ MSG_ReadBits(msg, bits));
+  }
+  return oldV;
+}
+
+void MSG_ReadForwardRightMove(msg_t* msg, usercmd_t* from, usercmd_t* to, int key)
+{
+	unsigned int mask = 0;
+	if ( from->forwardmove <= 10 )
+	{
+	  if ( from->forwardmove < -10 )
+	  {
+		  mask |= 2;
+	  }
+	}
+	else
+	{
+	  mask |= 1;
+	}
+	
+	if ( from->rightmove <= 10 )
+	{
+	  if ( from->rightmove < -10 )
+	  {
+		  mask |= 8u;
+	  }
+	}
+	else
+	{
+	  mask |= 4u;
+	}
+
+	unsigned int rfmove = MSG_ReadDeltaKey(msg, key, mask, 4);
+
+	if ( rfmove & 1 )
+	{
+	  to->forwardmove = 127;
+	}else{
+	  to->forwardmove = (rfmove & 2) != 0 ? -127 : 0;
+	}
+	if ( rfmove & 4 )
+	{
+	  to->rightmove = 127;
+	}else{
+	  to->rightmove = (rfmove & 8) != 0 ? -127 : 0;
+	}
+}
+
+
+void MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to)
+{
+	memcpy(to, from, sizeof(usercmd_t));
+	if ( MSG_ReadBit(msg) )
+	{
+		to->serverTime = from->serverTime + MSG_ReadByte(msg);
+	}
+	else
+	{
+		to->serverTime = MSG_ReadLong(msg);
+	}
+	
+	if ( !MSG_ReadKey(msg, key, 1) )
+	{
+		return;
+	}
+
+    to->buttons &= 0xFFFFFFFE;
+	
+	if ( MSG_ReadKey(msg, key, 1) )
+    {
+	  to->buttons |= MSG_ReadKey(msg, key, 1);
+      to->angles[0] = (uint16_t)MSG_ReadDeltaKeyShort(msg, key, from->angles[0]);
+      to->angles[1] = (uint16_t)MSG_ReadDeltaKeyShort(msg, key, from->angles[1]);
+
+	  MSG_ReadForwardRightMove(msg, from, to, key);
+
+	  key ^= to->serverTime;
+	  to->buttons &= 1u;
+      to->angles[2] = (uint16_t)MSG_ReadDeltaKeyShort(msg, key, from->angles[2]);
+	  to->buttons |= 2 * MSG_ReadDeltaKey(msg, key, from->buttons >> 1, 20);
+	  to->weapon = MSG_ReadDeltaKey(msg, key, from->weapon, 7);
+	  to->offHandIndex = MSG_ReadDeltaKey(msg, key, from->offHandIndex, 7);
+	  if(to->buttons & 0x10000)
+	  {
+        to->selectedLocation[0] = MSG_ReadDeltaKeyByte(msg, key, from->selectedLocation[0]);
+		to->selectedLocation[1] = MSG_ReadDeltaKeyByte(msg, key, from->selectedLocation[1]);
+	  }
+	  if ( to->buttons & 4 )
+      {
+        to->meleeChargeYaw = (float)MSG_ReadDeltaKeyShort(msg, key, (int16_t)(signed int)(from->meleeChargeYaw * 182.04445 + 0.5)) * 0.0054931641;
+        to->meleeChargeDist = MSG_ReadDeltaKey(msg, key, from->meleeChargeDist, 8);
+	  }
+      if ( to->buttons >= 0x200000 )
+      {
+        Com_PrintError( "client sent an invalid buttons value %i\n", to->buttons);
+        to->buttons = from->buttons;
+      }
+      if ( (uint8_t)to->weapon >= 0x80u )
+      {
+        Com_PrintError( "client sent an invalid weapon number %i\n", (uint8_t)to->weapon);
+        to->weapon = from->weapon;
+      }
+      if ( (uint8_t)to->offHandIndex >= 0x80u )
+      {
+        Com_PrintError( "client sent an invalid offhand index %i\n", (uint8_t)to->offHandIndex);
+        to->offHandIndex = from->offHandIndex;
+      }
+    }
+    else
+    {
+      key ^= to->serverTime;
+	  to->buttons |= MSG_ReadKey(msg, key, 1);
+      to->angles[0] = (uint16_t)MSG_ReadDeltaKeyShort(msg, key, from->angles[0]);
+	  to->angles[1] = (uint16_t)MSG_ReadDeltaKeyShort(msg, key, from->angles[1]);
+	  MSG_ReadForwardRightMove(msg, from, to, key);
+    }
+}

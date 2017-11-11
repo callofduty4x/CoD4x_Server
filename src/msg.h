@@ -77,5 +77,7 @@ void MSG_WriteBase64(msg_t* msg, byte* inbuf, int len);
 void MSG_ReadBase64(msg_t* msg, byte* outbuf, int len);
 void MSG_BeginWriteMessageLength(msg_t* msg);
 void MSG_EndWriteMessageLength(msg_t* msg);
+void __cdecl MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to);
+void __cdecl MSG_WriteDeltaPlayerstate(snapshotInfo_t *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to);
 
 #endif
