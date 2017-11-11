@@ -1109,16 +1109,16 @@ static int unzlocal_getByte(FILE *fin,int *pi)
 */
 static int unzlocal_getShort (FILE* fin, uLong *pX)
 {
-	short	v;
+    short v;
 
-  const int readSize = fread( &v, sizeof(v), 1, fin );
-  if (readSize != sizeof(v))
-    return UNZ_BUFSIZE;
+    const int readSize = fread(&v, sizeof(v), 1, fin);
+    if (readSize != 1)
+        return UNZ_BUFSIZE;
 
-	*pX = LittleShort( v);
-	return UNZ_OK;
+    *pX = LittleShort(v);
+    return UNZ_OK;
 
-/*
+    /*
     uLong x ;
     int i;
     int err;
@@ -1140,16 +1140,16 @@ static int unzlocal_getShort (FILE* fin, uLong *pX)
 
 static int unzlocal_getLong (FILE *fin, uLong *pX)
 {
-	int		v;
+    int v;
 
-  int readSize = fread( &v, sizeof(v), 1, fin );
-  if (readSize != sizeof(v))
-    return UNZ_BUFSIZE;
+    const int readSize = fread(&v, sizeof(v), 1, fin);
+    if (readSize != 1)
+        return UNZ_BUFSIZE;
 
-	*pX = LittleLong( v);
-	return UNZ_OK;
+    *pX = LittleLong(v);
+    return UNZ_OK;
 
-/*
+    /*
     uLong x ;
     int i;
     int err;
@@ -2034,7 +2034,7 @@ extern int unzOpenCurrentFile (unzFile file)
                 return UNZ_INTERNALERROR;
 
             suc = fread(source, 1, sizeof(source), s->file);
-            if(suc < 12)
+            if(suc < sizeof(source))
                 return UNZ_INTERNALERROR;
 
             for (i = 0; i < sizeof(source); i++)
