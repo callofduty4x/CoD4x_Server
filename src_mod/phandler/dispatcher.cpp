@@ -1,5 +1,14 @@
-#include <plugin/shared.h>
+#include "dispatcher.hpp"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <qcommon_io.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #define VARG(num, type) ((type)(((int*)&Code_)[1 + num]))
 

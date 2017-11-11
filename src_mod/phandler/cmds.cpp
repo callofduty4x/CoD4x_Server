@@ -1,7 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // cmds.c - definitions for plugin handler console commands.
 ///////////////////////////////////////////////////////////////////////////////
-#include "cmds.h"
+#include "cmds.hpp"
+#include "PluginHandler.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,40 +28,40 @@ extern "C" {
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Load plugin DLL/SO and prepare for usage. TODO
+// Load plugin DLL/SO and prepare for usage.
 static __cdecl void SV_LoadPlugin_f()
 {
     ASSERT_ARGS_COUNT(2);
 
-    //PluginHandler()->LoadPlugin(Cmd_Argv(1));
+    GetPluginHandler()->LoadPlugin(Cmd_Argv(1));
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Unloads plugin DLL/SO and cleans everything up. TODO
+// Unloads plugin DLL/SO and cleans everything up.
 static __cdecl void SV_UnloadPlugin_f()
 {
     ASSERT_ARGS_COUNT(2);
 
-    //PluginHandler()->UnloadPlugin(Cmd_Argv(1));
+    GetPluginHandler()->UnloadPlugin(Cmd_Argv(1));
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Print specified plugin info by its name. TODO
+// Print specified plugin info by its name.
 static __cdecl void SV_PluginInfo_f()
 {
     ASSERT_ARGS_COUNT(2);
 
-    //PluginHandler()->PrintPluginInfo(Cmd_Argv(1));
+    GetPluginHandler()->PrintPluginInfo(Cmd_Argv(1));
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// List all of loaded plugins. TODO
+// List all of loaded plugins.
 static __cdecl void SV_PluginList_f()
 {
-    //PluginHandler()->PrintPluginsSummary();
+    GetPluginHandler()->PrintPluginsSummary();
 }
 
 void SV_AddPluginHandlerConsoleCommands()

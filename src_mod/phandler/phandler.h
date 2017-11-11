@@ -4,4 +4,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "cmds.h" // Console commands.
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+__cdecl void PHandler_Init();
+
+#ifdef __cplusplus
+}
+#endif

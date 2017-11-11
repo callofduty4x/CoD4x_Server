@@ -54,6 +54,7 @@
 #include "sec_update.h"
 #include "allhooks.h"
 #include "misc.h"
+#include <phandler/phandler.h>
 
 #include <string.h>
 #include <setjmp.h>
@@ -898,8 +899,7 @@ void Com_Init(char* commandLine){
     Netchan_Init( qport );
     Huffman_InitMain();
 
-    // TODO PHANDLER
-    //PHandler_Init();
+    PHandler_Init();
 
     SV_Init();
 

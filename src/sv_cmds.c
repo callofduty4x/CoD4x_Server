@@ -2404,8 +2404,6 @@ void SV_AddSafeCommands()
     Cmd_AddCommand("addCommand", Cmd_AddTranslatedCommand_f);
     Cmd_AddCommand("downloadmap", SV_DownloadMap_f);
     Cmd_AddPCommand("gametype", SV_ChangeGametype_f, 80);
-
-    SV_AddPluginHandlerConsoleCommands();
 }
 
 void SV_Cmd_Init( void ) {
