@@ -42,10 +42,6 @@ __cdecl void G_SetModel(gentity_t *ent, const char *modelname);
 __cdecl void G_ClientStopUsingTurret(gentity_t *ent);
 
 ///////////////////////////////////////////////////////////////////////////////
-// msg_hooks.asm
-//__cdecl void MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to);
-
-///////////////////////////////////////////////////////////////////////////////
 // qcommon_hooks.asm
 __cdecl void Com_InitParse();
 __cdecl void Com_Restart();

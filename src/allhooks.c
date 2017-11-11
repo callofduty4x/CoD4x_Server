@@ -130,12 +130,6 @@ void G_ClientStopUsingTurret(gentity_t *ent)
     ((void(__cdecl*)(gentity_t*))0x80b7866)(ent);
 }
 
-/*
-void MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to)
-{
-    ((void (__cdecl*)(msg_t*,int,usercmd_t*,usercmd_t*))0x81392ae)(msg, key, from, to);
-}*/
-
 void Com_InitParse()
 {
     ((void(__cdecl*)())0x81a7a78)();
