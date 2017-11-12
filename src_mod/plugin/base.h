@@ -2,11 +2,11 @@
 #include "shared.h"
 
 // Static function to declare syscall storage variable.
-inline static TSysCall getSysCall()
+inline static TSysCall* getPSysCall()
 {
-    static TSysCall g_sysCall = 0;
-    return g_sysCall;
+    static TSysCall g_sysCall;
+    return &g_sysCall;
 }
 
 // Wrapper for a function call.
-#define syscall getSysCall() 
+#define syscall (*(getPSysCall()))

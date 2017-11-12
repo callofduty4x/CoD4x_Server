@@ -8,8 +8,8 @@
 #include "traps.h"
 
 // Define plugin entry point and its default action.
-DECL_IN_DLL inline void pluginEntry(const TSysCall SysCall_)
+DECL_IN_DLL inline void pluginEntry(const TSysCall Dispatcher_)
 {
-    static TSysCall g_sysCall = SysCall_;
-    (void)g_sysCall; // Get rid of unused variable warning because it's used in trap_* functions.
+    TSysCall* pSysCall = getPSysCall();
+    *pSysCall = Dispatcher_;
 }

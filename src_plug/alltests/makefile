@@ -7,10 +7,11 @@ rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst 
 
 CC := g++
 CFLAGS := -m32 -Wall -I../../src_mod/plugin
-LFLAGS := 
+# -static-libgcc required to prevent runtime error when server shuts down.
+LFLAGS := -static-libgcc
 
 ifeq ($(DEBUG), 1)
-CFLAGS += -g3 -O0
+CFLAGS += -g -O0
 else
 CFLAGS += -O2
 endif
@@ -51,9 +52,9 @@ $(CORETARGETPATH): $(ALLOBJ)
 $(OBJDIR)/%.c.o: %.c
 	@echo   $(CC)  $<
 	@$(call makedir,$@)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJDIR)/%.cpp.o: %.cpp
 	@echo   $(CC)  $<
 	@$(call makedir,$@)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<

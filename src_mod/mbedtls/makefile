@@ -1,6 +1,5 @@
 # Mandatory input variables:
 # DEBUG: 0 or 1
-# TARGETPATH: lib/libcod4x_***.a
 rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
 CC := gcc
@@ -12,11 +11,8 @@ else
 CFLAGS += -O2
 endif
 
-COREDIR ?= ../..
-CORETARGETPATH = $(COREDIR)/$(TARGETPATH)
-
 OBJDIR := obj
-ALLOBJ =$(patsubst %,$(OBJDIR)/%.o,$(call rwildcard, ,*.c))
+ALLOBJ =$(patsubst %,$(OBJDIR)/%.o,$(call rwildcard, ,*.c) $(call rwildcard, ,*.cpp))
 
 # if were running on Windows build for Windows
 ifeq ($(OS),Windows_NT)
@@ -30,21 +26,21 @@ endif
 
 .PHONY: all clean
 
-all: $(CORETARGETPATH)
+all: $(ALLOBJ)
 
 clean:
 ifdef WINDOWS_BUILD
-	@del /S $(OBJDIR)\\*.o $(subst /,\\,$(CORETARGETPATH))
+	@del /S $(OBJDIR)\\*.o
 else
-	@rm -f $(OBJDIR)/*.o $(CORETARGETPATH)
+	@rm -f $(OBJDIR)/*.o
 endif
-
-$(CORETARGETPATH): $(ALLOBJ)
-	@echo   $(AR)  $@
-	@$(AR) rcs $@ $^
 
 $(OBJDIR)/%.c.o: %.c
 	@echo   $(CC)  $<
 	@$(call makedir,$@)
 	@$(CC) $(CFLAGS) -o $@ -c $<
 
+$(OBJDIR)/%.cpp.o: %.cpp
+	@echo   $(CC)  $<
+	@$(call makedir,$@)
+	@$(CC) $(CFLAGS) -o $@ -c $<

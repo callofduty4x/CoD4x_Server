@@ -49,6 +49,10 @@ class CPluginHandler
     // Initializes plugin handler.
     void Init();
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Shut plugin handler down and free all resources.
+    void Shutdown();
+
     ////////////////////////
     // Plugin management. //
     ////////////////////////
@@ -122,10 +126,10 @@ class CPluginHandler
 
     ////////////////////////////
     // Returns plugin file path.
-    std::string getPluginFilePath(const char *LibName_) const;
+    std::string getPluginFilePath(const std::string& strPluginName_) const;
 
     bool m_Initialized;
-    std::map<const char *, CPlugin> m_Plugins;
+    std::map<std::string, CPlugin> m_Plugins;
     CPlugin *m_CurrentPlugin;
 };
 } // end of namespace phandler

@@ -1,4 +1,5 @@
 #include "PluginHandler.hpp"
+#include <plugin/shared.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,15 +11,6 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-
-/*#include "KnownPlugins.h"
-#include "Cmd_PluginHandler.h"
-#include "../cmd.h"
-#include "../qcommon.h"
-#include "../sec_crypto.h"
-#include "../sys_net_types.h"
-#include "phandler_shared_types.h"
-#include "macro.h"*/
 
 using namespace std;
 
@@ -49,76 +41,69 @@ void CPluginHandler::Init() // TODO PHANDLER : potential candidate to remove?
     Com_Printf("-------- Plugin handler initialization completed --------\n");
 }
 
+void CPluginHandler::Shutdown()
+{
+    Com_DPrintf("-------- Shutting down plugin handler --------\n");
+    m_Plugins.clear();
+    Com_Printf("-------- Plugin handler shut down --------\n");
+}
+
 void CPluginHandler::LoadPlugin(const char* LibName_)
 {
+    string pluginName = LibName_;
     // Checking if the plugin is not already loaded.
-    if (m_Plugins.find(LibName_) != m_Plugins.end())
+    if (m_Plugins.find(pluginName) != m_Plugins.end())
     {
-        Com_Printf("This plugin already loaded\n");
+        Com_Printf("Error: this plugin already loaded\n");
         return;
     }
 
-    string pluginPath = getPluginFilePath(LibName_);
+    string pluginPath = getPluginFilePath(pluginName);
     // Checking if we can load this plugin.
     if (!isLegacyPlugin(pluginPath))
     {
-        Com_Printf("This plugin can not be loaded in secure mode\n");
+        Com_Printf("Error: this plugin can not be loaded in secure mode\n");
         return;
     }
 
     // Begin loading new plugin.
-    m_Plugins.emplace(make_pair(LibName_, CPlugin()));
-    CPlugin& plugin = m_Plugins[LibName_];
-    plugin.LoadFromFile(pluginPath);
+    m_Plugins.emplace(pluginName, CPlugin());
+    CPlugin& plugin = m_Plugins[pluginName];
+    if (!plugin.LoadFromFile(pluginPath))
+        return;
 
-    Com_DPrintf("Fetching plugin information...");
+    Com_DPrintf("Fetching plugin information\n");
     SPluginInfo_t info;
-    m_CurrentPlugin = &plugin;
     if (!plugin.Event(eOnInfoRequest, &info))
     {
-        Com_PrintError("Plugin function '%s' not found\n", plugin.GetEventName(eOnInfoRequest));
-        plugin.Unload();
-        m_CurrentPlugin = nullptr;
-        m_Plugins.erase(LibName_);
+        Com_PrintError("Plugin event callback '%s' not found\n", plugin.GetEventName(eOnInfoRequest));
+        m_Plugins.erase(pluginName);
         return;
     }
+    Com_Printf("Plugin name: %s\nPlugin short description: %s\n", info.fullName, info.shortDescription);
 
-    // TODO: Get back with new plugin version check and add API initialization code.
-    /*if (info.handlerVersion.major != PLUGIN_HANDLER_VERSION_MAJOR || (info.handlerVersion.minor - info.handlerVersion.minor % 100) != (PLUGIN_HANDLER_VERSION_MINOR - PLUGIN_HANDLER_VERSION_MINOR % 100))
+
+    Com_DPrintf("Initializing plugin\n");
+    EPluginLoadingResult success = PLR_FAILED;
+    if (!plugin.Event(eOnPluginLoad, &success))
     {
-        Com_PrintError("This plugin might not be compatible with this server version! Requested plugin handler version: %d.%d, server's plugin handler version: %d.%d. Unloading the plugin...\n", info.handlerVersion.major, info.handlerVersion.minor, PLUGIN_HANDLER_VERSION_MAJOR, PLUGIN_HANDLER_VERSION_MINOR);
-        plugin.Unload();
-        m_Plugins.erase(LibName_);
-        return;
-    }*/
-    Com_DPrintf("done\n");
-
-
-    Com_DPrintf("Executing plugin's 'OnInit'...");
-    // plugin version mismatch.
-    int success = 0;
-    if (!plugin.Event(eOnInit, &success))
-    {
-        Com_PrintError("Plugin function '%s' not found\n", plugin.GetEventName(eOnInit));
-        plugin.Unload();
-        m_CurrentPlugin = nullptr;
-        m_Plugins.erase(LibName_);
+        Com_PrintError("Error: plugin function '%s' not found\n", plugin.GetEventName(eOnPluginLoad));
+        m_Plugins.erase(pluginName);
         return;
     }
-    m_CurrentPlugin = nullptr;
+    //m_CurrentPlugin = nullptr;
 
-    if (success < 0)
+    if (success != PLR_OK)
     {
-        Com_PrintError("Plugin initialization failed: %d\n", success);
-        plugin.Unload();
-        m_Plugins.erase(LibName_);
+        Com_PrintError("Warning: plugin initialization error: %d\n", success);
+        m_Plugins.erase(pluginName);
         return;
     }
-    Com_DPrintf("done\n");
+    Com_DPrintf("Plugin initialized successfully\n");
 
 
     plugin.SetInitialized(true);
-    // At this point plugin successfully initialized and when at unloading it will fire "OnTerminate" event.
+    // At this point plugin successfully initialized and when at unloading it will fire "OnPluginUnload" event.
     // Keep passed name as key instead of file path.
     Com_Printf("Plugin loaded successfully. Server is currently running %d plugins\n", m_Plugins.size());
 }
@@ -131,12 +116,9 @@ void CPluginHandler::UnloadPlugin(const char* LibName_)
         Com_Printf("Plugin '%s' is not loaded\n", LibName_);
         return;
     }
-    m_CurrentPlugin = &plugin->second;
-    plugin->second.Unload(); // May execute event.
-    m_CurrentPlugin = nullptr;
 
     m_Plugins.erase(plugin);
-    Com_Printf("Plugin '%s' has been unloaded\n", LibName_);
+    Com_Printf("Plugin '%s' has been unloaded\n", LibName_); // Newline because of possible plugin print.
 }
 
 void CPluginHandler::PrintPluginInfo(const char* LibName_)
@@ -169,7 +151,7 @@ void CPluginHandler::PrintPluginsSummary()
     for (auto& itPlugin : m_Plugins)
     {
         //const CPlugin& plugin = itPlugin.second;
-        Com_Printf("| %-21s| %-9s| %-19d| %-21d|\n", itPlugin.first, "yes", /*plugin.GetMemAllocs()*/ 0, /*plugin.GetMemAllocsSize()*/ 0);
+        Com_Printf("| %-21s| %-9s| %-19d| %-21d|\n", itPlugin.first.c_str(), "yes", /*plugin.GetMemAllocs()*/ 0, /*plugin.GetMemAllocsSize()*/ 0);
     }
     Com_Printf("+----------------------+----------+--------------------+----------------------+\n");
 }
@@ -246,9 +228,9 @@ bool CPluginHandler::isLegacyPlugin(const string& LibPath_) const
     return false;
 }
 
-string CPluginHandler::getPluginFilePath(const char* LibName_) const
+string CPluginHandler::getPluginFilePath(const std::string& strPluginName_) const
 {
-    Com_DPrintf("Checking if the plugin file exists and is of correct format...\n");
+    //Com_DPrintf("Checking if the plugin file exists and is of correct format...\n");
     // TODO
     #if 0
     //Additional test if a file is there
@@ -258,7 +240,7 @@ string CPluginHandler::getPluginFilePath(const char* LibName_) const
             return;
         }
     #endif
-    return string(LibName_);
+    return strPluginName_;
 }
 
 } // end of namespace phandler

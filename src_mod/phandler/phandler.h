@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 __cdecl void PHandler_Init();
+__cdecl void PHandler_Shutdown();
 
 #ifdef __cplusplus
 }

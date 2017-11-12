@@ -26,10 +26,10 @@ static struct PluginEventsInfo_t
     EPluginEvent EventIdx;
     const char* CallbackName;
 } g_PluginEventsInfo[PEV_Count] = {
-    EV(OnInit),
-    EV(OnInfoRequest),
-    EV(OnUnload),
-    EV(OnPlayerDisconnect),
+    EV(OnPluginLoad),
+    EV(OnPluginUnload),
+    EV(OnInfoRequest)
+    /*EV(OnPlayerDisconnect),
     EV(OnPlayerConnect),
     EV(OnExitLevel),
     EV(OnMessageSent),
@@ -63,7 +63,7 @@ static struct PluginEventsInfo_t
     EV(Script_OnPlayerDisconnected),
     EV(Script_OnPlayerDamage),
     EV(Script_OnPlayerKilled),
-    EV(Script_OnPlayerLastStand)
+    EV(Script_OnPlayerLastStand)*/
 };
 
 CPlugin::CPlugin() 
@@ -77,45 +77,61 @@ CPlugin::CPlugin()
 
 CPlugin::~CPlugin()
 {
-    Unload();
+    if (m_Initialized)
+        Unload();
 }
 
 CPlugin::CPlugin(CPlugin&& From_)
+    : CPlugin()
 {
+    // I am newly created CPlugin instance but I didn't hit my constructor.
+    if (m_Initialized)
+        Unload();
+
     // Always TODO: If you adding fields to this class, do not forget to add it here.
+    m_Initialized = false;
+    m_LibHandle = From_.m_LibHandle;
+
+    From_.m_Initialized = false;
+    From_.m_LibHandle = nullptr;
 }
 
-void CPlugin::LoadFromFile(const std::string &LibPath_)
+bool CPlugin::LoadFromFile(const std::string &LibPath_)
 {
     // We can't rely on filename, only it's hash.
     // That's why CPlugin not holds plugin name.
     // Plugin handler does that.
 
-    Com_DPrintf("Loading plugin from file '%s'...", LibPath_.c_str());
+    Com_DPrintf("Loading plugin from file '%s'\n", LibPath_.c_str());
     m_LibHandle = Sys_LoadLibrary(LibPath_.c_str());
     if (!m_LibHandle)
     {
-        Com_PrintError("failed to load the plugin\n");
-        return;
+        Com_PrintError("Error: plugin file not found\n");
+        return false;
     }
-    Com_DPrintf("done\n");
+    Com_DPrintf("Plugin binary file loaded successfully\n");
 
 
-    Com_DPrintf("Setting up plugin syscall dispatcher...");
+    Com_DPrintf("Setting up plugin syscall dispatcher\n");
     void* pPluginEntry = Sys_GetProcedure("pluginEntry");
     if (!pPluginEntry)
     {
-        Com_PrintError("plugin entry point not found\n");
-        return;
+        Com_PrintError("Error: plugin entry point not found\n");
+        return false;
     }
     ((void(*)(const TSysCall))pPluginEntry)(SysCallDispatcher);
-    Com_DPrintf("done\n");
+    Com_DPrintf("Syscall dispatcher has been set successfully\n");
 
     
-    Com_DPrintf("Loading events callbacks...");
+    Com_DPrintf("Loading plugin events callbacks:\n");
     for (int ev = PEV_Start; ev < PEV_Count; ++ev)
-        m_Events[ev] = Sys_GetProcedure(GetEventName((EPluginEvent)ev));
-    Com_DPrintf("done\n");
+    {
+        const char* const szEventName = GetEventName((EPluginEvent)ev);
+        m_Events[ev] = Sys_GetProcedure(szEventName);
+        Com_DPrintf("%s - %s\n", szEventName, m_Events[ev] ? "found" : "not found");
+    }
+    Com_DPrintf("Plugin events loaded\n");
+    return true;
 }
 
 void CPlugin::Unload()
@@ -139,11 +155,11 @@ void CPlugin::Unload()
     // Let plugin free its stuff.
     if (m_Initialized)
     {
-        Event(eOnTerminate);
+//        Event(eOnTerminate);
         m_Initialized = false;
     }
 
-    Event(eOnUnload);
+    Event(eOnPluginUnload);
 
     /*freeAllocatedMemory();
     removeAllCustomConsoleCommands();

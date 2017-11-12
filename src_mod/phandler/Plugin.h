@@ -29,7 +29,7 @@ public:
 
     ////////////////////////////////////////////////
     // Loads plugin from file specified by LibPath_.
-    void LoadFromFile(const std::string& LibPath_);
+    bool LoadFromFile(const std::string& LibPath_);
 
     /////////////////////////////////////////
     // Unloads and frees all the plugin data.

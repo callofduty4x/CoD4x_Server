@@ -4,7 +4,7 @@
 rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
 CC := gcc
-CFLAGS := -m32 -Wall -I../ -I../../src
+CFLAGS := -m32 -Wall -I../ -I../core
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g3 -O0
