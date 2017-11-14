@@ -10,6 +10,16 @@
 #include "PluginEvents.h"
 #include "phandler_shared_types.h"*/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <sys_main.h>
+
+#ifdef __cplusplus
+}
+#endif
+
 namespace phandler
 {
 ///////////////////////////////////////////////
@@ -136,7 +146,7 @@ public:
     // TODO networking callbacks
 
     void (*m_Events[PEV_Count]);
-    void* m_LibHandle;
+    libHandle_t m_LibHandle;
 
     ////////////////////////////////////////////////////////////////////
     // If set to true, plugin successfully loaded and initialized.

@@ -30,6 +30,7 @@
 #include <cmd.h>
 #include <sys_cod4defs.h>
 #include <sys_thread.h>
+#include <sys_main_libs.h>
 
 #include <sys/resource.h>
 #include <libgen.h>
@@ -577,40 +578,59 @@ void Sys_LoadLibraryError(char* errormessage, int maxlen)
 	Q_strncpyz(errormessage, pterror, maxlen);
 }
 
-void* Sys_LoadLibrary(const char* dlfile)
+libHandle_t Sys_LoadLibrary(const char *LibPath_)
 {
-	void* handle = dlopen(dlfile, RTLD_LAZY);
-	currentLibHandle = handle;
-	if(handle == NULL)
-	{
-		Com_PrintError("Sys_LoadLibrary error: %s\n", dlerror());
-	}
-	return handle;
+    if (!LibPath_)
+    {
+        Com_Error(ERR_FATAL, "Sys_LoadLibrary: NULL library path");
+        return INVALID_LIB_HANDLE;
+    }
+
+    void *handle = dlopen(LibPath_, RTLD_LAZY);
+    return AddLibraryHandle(handle);
 }
 
-void* Sys_GetProcedure(const char* lpProcName)
+void* Sys_GetProcedure(libHandle_t hModule_, const char* ProcName_)
 {
-	if(currentLibHandle == NULL)
-	{
-		Com_Error(ERR_FATAL, "Attempt to get ProcAddress from invalid or not loaded library");
-		return NULL;
-	}
-	void* procedure = dlsym( currentLibHandle, lpProcName );
-	return procedure;
+    if (hModule_ == INVALID_LIB_HANDLE)
+    {
+        Com_Error(ERR_FATAL, "Sys_GetProcedure: passed invalid library handle");
+        return NULL;
+    }
+
+    if (!ProcName_ || !ProcName_[0])
+    {
+        Com_Error(ERR_FATAL, "Sys_GetProcedure: NULL or empty procedure name");
+        return NULL;
+    }
+
+    void* hRealHandle = GetLibraryByHandle(hModule_);
+    if (!hRealHandle)
+    {
+        Com_Error(ERR_FATAL, "Sys_GetProcedure: invalid or not loaded library");
+        return NULL;
+    }
+
+    return dlsym(hRealHandle, lpProcName);
 }
 
-void Sys_CloseLibrary(void* hModule)
+void Sys_CloseLibrary(libHandle_t hModule_)
 {
-	if(hModule == NULL)
-	{
-		Com_Error(ERR_FATAL, "Attempt to close not loaded library");
-		return;
-	}
-	if(hModule == currentLibHandle)
-	{
-		currentLibHandle = NULL;
-	}
-	dlclose(hModule);
+	if (hModule_ == INVALID_LIB_HANDLE)
+    {
+        Com_Error(ERR_FATAL, "Sys_CloseLibrary: passed invalid library handle");
+        return;[]
+    }
+
+    void* hRealModule = GetLibraryByHandle(hModule_);
+    if (!hRealModule)
+    {
+        Com_Error(ERR_FATAL, "Sys_CloseLibrary: library not loaded");
+        return;
+    }
+
+    dlclose(hRealModule);
+    RemoveLibraryHandle(hModule_);
 }
 
 #define MIN_STACKSIZE 256*1024

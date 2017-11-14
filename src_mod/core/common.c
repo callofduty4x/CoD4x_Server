@@ -565,7 +565,6 @@ void Com_Quit_f( void ) {
   Com_Printf("quitting...\n");
 
 	// don't try to shutdown if we are in a recursive error
-    PHandler_Shutdown();
 
 	Sys_EnterCriticalSection( 2 );
 
@@ -575,7 +574,9 @@ void Com_Quit_f( void ) {
 		GScr_Shutdown();
 	}
 
-	SV_SApiShutdown();
+    SV_SApiShutdown();
+    PHandler_Shutdown();
+    Sys_CloseLibraries();
 
 	if ( !com_errorEntered ) {
 		// Some VMs might execute "quit" command directly,

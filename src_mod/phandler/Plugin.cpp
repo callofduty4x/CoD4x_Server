@@ -8,7 +8,6 @@ extern "C" {
 #endif
 
 #include <qcommon.h>
-#include <sys_main.h>
 
 #ifdef __cplusplus
 }
@@ -67,7 +66,7 @@ static struct PluginEventsInfo_t
 };
 
 CPlugin::CPlugin() 
-    : m_LibHandle(nullptr)
+    : m_LibHandle(INVALID_LIB_HANDLE)
     , m_Initialized(false)
     //, m_MemAllocs(0)
     //, m_AllocatedBytesCount(0)
@@ -93,7 +92,7 @@ CPlugin::CPlugin(CPlugin&& From_)
     m_LibHandle = From_.m_LibHandle;
 
     From_.m_Initialized = false;
-    From_.m_LibHandle = nullptr;
+    From_.m_LibHandle = INVALID_LIB_HANDLE;
 }
 
 bool CPlugin::LoadFromFile(const std::string &LibPath_)
@@ -104,7 +103,7 @@ bool CPlugin::LoadFromFile(const std::string &LibPath_)
 
     Com_DPrintf("Loading plugin from file '%s'\n", LibPath_.c_str());
     m_LibHandle = Sys_LoadLibrary(LibPath_.c_str());
-    if (!m_LibHandle)
+    if (m_LibHandle == INVALID_LIB_HANDLE)
     {
         Com_PrintError("Error: plugin file not found\n");
         return false;
@@ -113,7 +112,7 @@ bool CPlugin::LoadFromFile(const std::string &LibPath_)
 
 
     Com_DPrintf("Setting up plugin syscall dispatcher\n");
-    void* pPluginEntry = Sys_GetProcedure("pluginEntry");
+    void* pPluginEntry = Sys_GetProcedure(m_LibHandle, "pluginEntry");
     if (!pPluginEntry)
     {
         Com_PrintError("Error: plugin entry point not found\n");
@@ -127,7 +126,7 @@ bool CPlugin::LoadFromFile(const std::string &LibPath_)
     for (int ev = PEV_Start; ev < PEV_Count; ++ev)
     {
         const char* const szEventName = GetEventName((EPluginEvent)ev);
-        m_Events[ev] = Sys_GetProcedure(szEventName);
+        m_Events[ev] = Sys_GetProcedure(m_LibHandle, szEventName);
         Com_DPrintf("%s - %s\n", szEventName, m_Events[ev] ? "found" : "not found");
     }
     Com_DPrintf("Plugin events loaded\n");
@@ -179,7 +178,7 @@ void CPlugin::Unload()
     */
     // at end
     Sys_CloseLibrary(m_LibHandle);
-    m_LibHandle = nullptr; // Prevent unloading from destructor.
+    m_LibHandle = INVALID_LIB_HANDLE; // Prevent unloading from destructor.
 }
 
 void CPlugin::PrintPluginInfo() // const impossible because of "Event" call

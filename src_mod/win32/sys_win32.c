@@ -27,6 +27,7 @@
 #include <sys_cod4defs.h>
 #include "sys_win32.h"
 #include <sys_thread.h>
+#include <sys_main_libs.h>
 
 #include <windows.h>
 #include <wincrypt.h>
@@ -633,42 +634,59 @@ void Sys_LoadLibraryError(char* errormessage, int maxlen)
 }
 
 
-void* Sys_LoadLibrary(const char* dlfile)
+libHandle_t Sys_LoadLibrary(const char* LibPath_)
 {
-	HMODULE handle = LoadLibraryA(dlfile);
-	currentLibHandle = handle;
-/*
-	if(handle == NULL)
-	{
-		Sys_ShowErrorDialog("Sys_LoadLibrary");
-	}
-*/
-	return handle;
+    if (!LibPath_)
+    {
+        Com_Error(ERR_FATAL, "Sys_LoadLibrary: NULL library path");
+        return INVALID_LIB_HANDLE;
+    }
+
+    HMODULE handle = LoadLibraryA(LibPath_);
+    return AddLibraryHandle(handle);
 }
 
-void* Sys_GetProcedure(const char* lpProcName)
+void* Sys_GetProcedure(libHandle_t hModule_, const char* ProcName_)
 {
-	if(currentLibHandle == NULL)
-	{
-		Com_Error(ERR_FATAL, "Attempt to get ProcAddress from invalid or not loaded library");
-		return NULL;
-	}
-	FARPROC procedure = GetProcAddress( currentLibHandle, lpProcName );
-	return procedure;
+    if (hModule_ == INVALID_LIB_HANDLE)
+    {
+        Com_Error(ERR_FATAL, "Sys_GetProcedure: passed invalid library handle");
+        return NULL;
+    }
+
+    if (!ProcName_ || !ProcName_[0])
+    {
+        Com_Error(ERR_FATAL, "Sys_GetProcedure: NULL or empty procedure name");
+        return NULL;
+    }
+
+    void* hRealHandle = GetLibraryByHandle(hModule_);
+    if (!hRealHandle)
+    {
+        Com_Error(ERR_FATAL, "Sys_GetProcedure: invalid or not loaded library");
+        return NULL;
+    }
+
+    return (void*)GetProcAddress(hRealHandle, ProcName_);
 }
 
-void Sys_CloseLibrary(void* hModule)
+void Sys_CloseLibrary(libHandle_t hModule_)
 {
-	if(hModule == NULL)
-	{
-		Com_Error(ERR_FATAL, "Attempt to close not loaded library");
-		return;
-	}
-	if(hModule == currentLibHandle)
-	{
-		currentLibHandle = NULL;
-	}
-	FreeLibrary(hModule);
+    if (hModule_ == INVALID_LIB_HANDLE)
+    {
+        Com_Error(ERR_FATAL, "Sys_CloseLibrary: passed invalid library handle");
+        return;
+    }
+
+    void* hRealModule = GetLibraryByHandle(hModule_);
+    if (!hRealModule)
+    {
+        Com_Error(ERR_FATAL, "Sys_CloseLibrary: library not loaded");
+        return;
+    }
+
+    FreeLibrary(hRealModule);
+    RemoveLibraryHandle(hModule_);
 }
 
 static CRITICAL_SECTION crit_sections[CRIT_SIZE];

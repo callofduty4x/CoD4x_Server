@@ -29,6 +29,9 @@
 #include <setjmp.h>
 #include <inttypes.h>
 
+#define INVALID_LIB_HANDLE (-1)
+typedef int libHandle_t; // Internal DLL library/SO handle.
+
 unsigned int Sys_Milliseconds( void );
 unsigned long long Sys_MillisecondsLong( void );
 unsigned long long Sys_MicrosecondsLong( void );
@@ -89,9 +92,10 @@ int Sys_Backtrace(void** buffer, int size);
 void Sys_EventLoop(void);
 uint32_t Sys_MillisecondsRaw();
 void Sys_LoadLibraryError(char* errormessage, int maxlen);
-void* Sys_LoadLibrary(const char* dlfile);
-void Sys_CloseLibrary(void* dlhandle);
-void* Sys_GetProcedure(const char* procname);
+libHandle_t Sys_LoadLibrary(const char* LibPath_);
+void Sys_CloseLibrary(libHandle_t hModule_);
+void* Sys_GetProcedure(libHandle_t hModule_, const char* ProcName_);
+void Sys_CloseLibraries();
 
 /* Includes for system console */
 void CON_Shutdown( void );

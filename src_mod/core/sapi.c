@@ -503,7 +503,6 @@ void SV_GetSS_f();
 void SV_InitSApi()
 {
 	char errormsg[1024];
-	void* hmodule;
 	imports_t exports;
 	exports.Com_Printf = Com_Printf;
 	exports.Com_DPrintf = Com_DPrintf;
@@ -530,14 +529,14 @@ void SV_InitSApi()
 
 	sv_usesteam64id = Cvar_RegisterBool("sv_usesteam64id", qtrue, CVAR_ARCHIVE, "Display and log Steam64 id in most commands");
 
-	hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
-	if(hmodule == NULL)
+	libHandle_t hmodule = Sys_LoadLibrary("steam_api" DLL_EXT);
+	if(hmodule == INVALID_LIB_HANDLE)
 	{
 		Sys_LoadLibraryError(errormsg, sizeof(errormsg));
 		Com_PrintError("steam_api" DLL_EXT " not found or it was not possible to load. Error is: %s. Steam is not going to work.\n", errormsg);
 		return;
 	}
-	Init = Sys_GetProcedure("Init");
+	Init = Sys_GetProcedure(hmodule, "Init");
 	if(Init == NULL)
 	{
 		Sys_CloseLibrary(hmodule);

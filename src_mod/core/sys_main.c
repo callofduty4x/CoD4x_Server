@@ -38,6 +38,7 @@
 #include "sec_crypto.h"
 #include "cmd.h"
 #include "sapi.h"
+#include "sys_main_libs.h"
 #include <xassets/extractor.h>
 #include <libgen.h>
 #include <signal.h>
@@ -546,5 +547,16 @@ void Sys_BeginShutdownWatchdog()
 	}
 	watchdogActive = true;
 	Sys_CreateNewThread(Sys_ShutdownWatchdogThread, &tinfo, (void*)timeout);
+}
 
+void Sys_CloseLibraries()
+{
+    for (int i = 0; i < GetLibrariesMaxCount(); ++i)
+    {
+        libHandle_t hModule = (libHandle_t)i;
+        if (!GetLibraryByHandle(hModule))
+            continue;
+            
+        Sys_CloseLibrary(hModule);
+    }
 }
