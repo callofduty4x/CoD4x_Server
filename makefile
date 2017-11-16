@@ -113,7 +113,7 @@ ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(OBJ_DIR)/%.o,$(ASSETS_SOURCES))
 
 ###############################
 # Default rule: rebuild server.
-all: notify $(EXTERNAL) $(TARGET) $(ADDITIONAL_OBJ) $(SECURITY)
+all: notify version_make_progress $(EXTERNAL) $(TARGET) $(ADDITIONAL_OBJ) $(SECURITY)
 	@echo Server done
 
 notify:
@@ -139,6 +139,16 @@ ifeq ($(OS),Windows_NT)
 	@cmd.exe /C "@cd $(SRC_DIR)/$@ && @comp.cmd"
 else
 	cd $(SRC_DIR)/$@ && ./comp.sh
+endif
+
+##################################
+# Increase version number
+version_make_progress: FORCE
+	@echo   sh  $@
+ifeq ($(OS),Windows_NT)
+	@cmd.exe /C "cd /d $(SRC_DIR)/version && @version_make_progress.cmd"
+else
+	cd "$(SRC_DIR)/version/" && ./version_make_progress.sh
 endif
 
 ###############################
