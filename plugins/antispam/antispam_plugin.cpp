@@ -19,7 +19,7 @@ hence inheriting any legal licenses that it's parent has.
 using namespace std;
 
 PCL int OnInit();
-#define ANTISPAM_MAXMESSAGES
+#define ANTISPAM_MAXMESSAGES 5
 typedef struct
 {
     int lastMessage;
