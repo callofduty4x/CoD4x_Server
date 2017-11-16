@@ -16,6 +16,7 @@ before_install:
 
   # apparently this server doesnt host i386 packages
   - "sudo add-apt-repository --remove 'http://dl.hhvm.com/ubuntu trusty/main i386 Packages'"
+  - "sudo apt-get -qq update"
 
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
