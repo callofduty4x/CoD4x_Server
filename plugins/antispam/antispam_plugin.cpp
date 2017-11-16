@@ -19,11 +19,11 @@ hence inheriting any legal licenses that it's parent has.
 using namespace std;
 
 PCL int OnInit();
-#define max 8
+#define ANTISPAM_MAXMESSAGES
 typedef struct
 {
     int lastMessage;
-    int messages[max];
+    int messages[ANTISPAM_MAXMESSAGES];
 }userData_t;
 
 typedef struct
@@ -55,7 +55,7 @@ PCL int OnInit()   // Function called on server initiation
 
 	data.maxPlayers = Plugin_GetSlotCount();
 	data.maxMPM = Plugin_Cvar_RegisterFloat("antispam_maxMessagesPerMinute",8,0,30,0,"Count of maximum messages a player can send in a minute. 0 disables the chat completely.");
-	data.minAP = Plugin_Cvar_RegisterInt("antispam_minAdminPower",50,0,100,0,"Minimum power points which disable the spam-control. 0 means enabled for everyone.");
+	data.minAP = Plugin_Cvar_RegisterInt("antispam_minAdminPower",50,0,100,0,"Minimum power points to disable spam-control. 0 means enabled for everyone.");
 	data.minMD = Plugin_Cvar_RegisterInt("antispam_minMessageDelay",4,0,60,0,"Ammount of time after sending a message after which the player can chat again. 0 disables the limit.");
 	data.renMD = Plugin_Cvar_RegisterBool("antispam_renewedMessageDelay",qfalse,0,"Do messages sent before minMessageDelay which are in buffer make the delay prolonged?");
 	Antispam_Initialize();
@@ -94,25 +94,25 @@ PCL void OnMessageSent(char *message,int slot, qboolean *show, int type)
 
 	// Max messages per minute check
 	int i,j=0;
-	for (i=0;( i<max) && (data.players[slot].messages[i] != 0) && (t - data.players[slot].messages[i] > 60);++i);
+	for (i=0;( i<ANTISPAM_MAXMESSAGES) && (data.players[slot].messages[i] != 0) && (t - data.players[slot].messages[i] > 60);++i);
 	// the loop above iterates on the messages array until it's end, value of 0 or message older than 1 minute
 	// now the i value holds the number of messages in the messages array which are older than 60 seconds + 1
 	// we need to remove those
 	if(i!=0)
 	{
-	    for(j=0;j<max && (i < (max)) && data.players[slot].messages[j] != 0;++i,++j);
+	    for(j=0;j<ANTISPAM_MAXMESSAGES && (i < (ANTISPAM_MAXMESSAGES)) && data.players[slot].messages[j] != 0;++i,++j);
 		{
 		data.players[slot].messages[j] = data.players[slot].messages[i];
 		data.players[slot].messages[i] = 0;
 	    }
 	}
-	for(i=j;i<max;++i){
+	for(i=j;i<ANTISPAM_MAXMESSAGES;++i){
 	    data.players[slot].messages[i] = 0;
 	}
 
 	// j now holds the value of how many messages this player has sent in the last 60 seconds. If it is too much - dont show the msg
 	// if it is ok - show the message and add time to messages[j]
-	if(j<max)
+	if(j<ANTISPAM_MAXMESSAGES)
 	{
 	    data.players[slot].messages[j] = t;
 	    data.players[slot].lastMessage = t;
@@ -135,9 +135,9 @@ PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain informati
 
     // =====  OPTIONAL  FIELDS  =====
     info->pluginVersion.major = 2;
-    info->pluginVersion.minor = 1;	// Plugin version
-    strncpy(info->fullName,"Cod4X Antispam plugin by Usmania",sizeof(info->fullName)); //Full plugin name
+    info->pluginVersion.minor = 2;	// Plugin version
+    strncpy(info->fullName,"Cod4X Antispam By TheKelm IceOps",sizeof(info->fullName)); //Full plugin name
     strncpy(info->shortDescription,"This plugin is used to prevent spam in the ingame chat. ",sizeof(info->shortDescription)); // Short plugin description
-    strncpy(info->longDescription,"This plugin is used to prevent spam in the ingame chat. To personalize the settings, set corresponding cvars. Originally Made by TheKelm Copyright (c) 2013 IceOps",sizeof(info->longDescription));
+    strncpy(info->longDescription,"This plugin is used to prevent spam in the ingame chat. To personalize the settings, set corresponding cvars. Maintained by Usmania",sizeof(info->longDescription));
 }
 
