@@ -148,7 +148,7 @@ version_make_progress: FORCE
 ifeq ($(OS),Windows_NT)
 	@cmd.exe /C "cd /d $(SRC_DIR)/version && @version_make_progress.cmd"
 else
-	cd "$(SRC_DIR)/version/" && ./version_make_progress.sh
+	cd "$(SRC_DIR)/version/" && chmod +x version_make_progress.sh && ./version_make_progress.sh
 endif
 
 ###############################
