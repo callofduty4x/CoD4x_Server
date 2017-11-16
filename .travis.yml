@@ -13,11 +13,7 @@ before_install:
   # - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ universe'"
   # - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ multiverse'"
   # - "sudo apt-get -qq update"
-
-  # apparently this server doesnt host i386 packages
-  - "sudo add-apt-repository --remove 'http://dl.hhvm.com/ubuntu trusty/main i386 Packages'"
-  - "sudo apt-get -qq update"
-
+  
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
