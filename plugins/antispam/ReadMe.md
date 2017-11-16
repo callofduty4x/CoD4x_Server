@@ -1,16 +1,10 @@
-# Cod4X Antispam plugin
+     # Cod4X Antispam plugin
 
 #### Intelligently reduces chat spam in servers
 #
 ----------------------------------------------------------------------------
-#
-#
-#
-#
-#
-#
-#
-#
+
+
 
 CVAR | DESCRIPTION
 ------------- | --------------------------
