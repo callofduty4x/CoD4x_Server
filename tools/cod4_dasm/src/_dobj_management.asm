@@ -483,7 +483,7 @@ objBuf: resb 0x32040
 
 ;All cstrings:
 SECTION .rdata
-_cstring_no_free_dobjs:		db 15h,"No free DObjs",0
+_cstring_no_free_dobjs:		db 015h,"No free DObjs",0
 
 
 

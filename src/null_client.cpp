@@ -9,10 +9,14 @@
 #include "qcommon_io.h"
 #include "xassets.h"
 #include "qcommon_mem.h"
+#include "xassets/xmodel.h"
+#include "xassets/gfxworld.h"
+
 
 cvar_t* r_reflectionProbeGenerate;
 cvar_t* r_modelVertColor;
-
+struct GfxWorld s_world;
+byte cgMedia[0x27C0]; 
 
 
 extern "C"
@@ -268,4 +272,69 @@ int SND_GetEntChannelCount(void)
     return 0;
 }
 
+int __cdecl FS_GetModList(char *listbuf, int bufsize)
+{
+    return 0;
 }
+
+void CL_ShutdownHunkUsers()
+{
+}
+
+void SND_ShutdownChannels()
+{
+}
+
+void __cdecl CG_TraceCapsule(struct trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentMask)
+{
+
+}
+
+const char* SND_GetEntChannelName(int index)
+{
+    return "server";
+}
+
+void Com_UnloadSoundAliases()
+{
+
+}
+void Com_LoadSoundAliases()
+{
+
+}
+
+
+XAssetHeader* Com_TryFindSoundAlias(const char* name)
+{
+    return (XAssetHeader*)-1;
+}
+
+void SND_AddPhysicsSound(snd_alias_list_t *a1, float *a2)
+{
+
+}
+
+}
+
+class OpaqueContextRef
+{
+};
+
+class MacDisplay
+{
+    static OpaqueContextRef* GetSharedContext();
+    static void SetCurrentContext(OpaqueContextRef*);
+};
+
+
+OpaqueContextRef* MacDisplay::GetSharedContext()
+{
+    return NULL;
+}
+
+void MacDisplay::SetCurrentContext(OpaqueContextRef* ctx)
+{
+
+}
+

@@ -6,7 +6,7 @@
 	extern _ZN12CSoundEngine14GetSampleSoundEP7_SAMPLE
 	extern _ZN12CSoundObject11init_sampleEij
 	extern _ZN8MacFiles9CleanPathEPKcPci
-	extern strlwr
+	extern Q_strlwr
 	extern strstr
 	extern access
 	extern _ZN12CSoundEngine14NewStreamSoundEv
@@ -423,7 +423,7 @@ AIL_open_stream:
 	mov [esp], eax
 	call _ZN8MacFiles9CleanPathEPKcPci
 	mov [esp], esi
-	call strlwr
+	call Q_strlwr
 	mov dword [esp+0x4], _cstring_wav
 	mov [esp], esi
 	call strstr

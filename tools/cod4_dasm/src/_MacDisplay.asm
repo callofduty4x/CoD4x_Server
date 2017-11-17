@@ -108,7 +108,7 @@
 	extern GetMainDevice
 	extern aglSetCurrentContext
 	extern _ZNSsC1EPKcRKSaIcE
-	extern strlwr
+	extern Q_strlwr
 	extern aglChoosePixelFormat
 	extern aglCreateContext
 	extern HideMenuBar
@@ -2973,7 +2973,7 @@ _ZN10MacDisplay19CreateScreenContextEihiiihRh_330:
 	call _ZNSsC1EPKcRKSaIcE
 	mov eax, [ebp-0x20]
 	mov [esp], eax
-	call strlwr
+	call Q_strlwr
 	mov edx, [sDisplayIndex]
 	lea eax, [edx+edx*2]
 	lea eax, [edx+eax*4]
@@ -4796,10 +4796,10 @@ _ZN12CDisplayInfoC1EP18_CGDirectDisplayID_290:
 	call _ZNSsC1EPKcRKSaIcE
 	mov eax, [ebp-0x43c]
 	mov [esp], eax
-	call strlwr
+	call Q_strlwr
 	mov eax, [ebp-0x2c]
 	mov [esp], eax
-	call strlwr
+	call Q_strlwr
 	mov esi, [ebp-0x43c]
 	mov dword [esp+0x4], _cstring_nvidia
 	mov [esp], esi

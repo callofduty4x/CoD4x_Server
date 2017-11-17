@@ -138,6 +138,8 @@ FILE*		missingFiles = NULL;
 
 #define FileWrapper_GetFileSize FS_fplength
 
+
+
 extern cvar_t*	fs_homepath;
 extern cvar_t*	fs_debug;
 extern cvar_t*	fs_basepath;
@@ -244,6 +246,10 @@ int FS_filelengthForOSPath( const char* ospath );
 FILE *__cdecl FS_FileOpenReadText(const char *filename);
 int __cdecl FS_FileGetFileSize(FILE *file);
 unsigned int __cdecl FS_FileRead(void *ptr, unsigned int len, FILE *stream);
+
+void __cdecl FS_FreeFileList(const char **list);
+const char **__cdecl FS_ListFiles(const char *path, const char *extension, int behavior, int *numfiles);
+int __cdecl FS_GetModList(char *listbuf, int bufsize);
 
 #ifdef __cplusplus
 }

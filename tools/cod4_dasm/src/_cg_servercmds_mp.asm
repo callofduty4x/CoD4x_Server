@@ -3266,7 +3266,7 @@ _cstring_sv_hostname:		db "sv_hostname",0
 _cstring_g_gametype:		db "g_gametype",0
 _cstring_sv_maxclients:		db "sv_maxclients",0
 _cstring_mapname:		db "mapname",0
-_cstring_could_not_load_s:		db 15h,"Could not load script menu file ",27h,"%s",27h,0ah,0
+_cstring_could_not_load_s:		db 015h,"Could not load script menu file ",27h,"%s",27h,0ah,0
 
 
 

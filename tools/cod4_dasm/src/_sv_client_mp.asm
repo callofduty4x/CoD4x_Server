@@ -6175,8 +6175,8 @@ _cstring_s_s:		db "%s %s",0dh,0ah,0
 _cstring_exe_playerkicked:		db "EXE_PLAYERKICKED",0
 _cstring_c_exe_cannotkick:		db "%c ",22h,"EXE_CANNOTKICKHOSTPLAYER",22h,0
 _cstring_going_to_cs_zomb:		db "Going to CS_ZOMBIE from %i for %s",0ah,0
-_cstring_:		db 14h,0
-_cstring_c_s7_ss:		db "%c ",22h,15h,"%s^7 %s%s",22h,0
+_cstring_:		db 014h,0
+_cstring_c_s7_ss:		db "%c ",22h,015h,"%s^7 %s%s",22h,0
 _cstring_is_s:		db "%i:%s %s",0ah,0
 _cstring_c_d:		db "%c %d",0
 _cstring_disconnect_s:		db "disconnect %s",0
@@ -6188,13 +6188,13 @@ _cstring_no_banned_user_h:		db "no banned user has name %s",0ah,0
 _cstring_unbanned_i_users:		db "unbanned %i user(s) named %s",0ah,0
 _cstring_challengerespons:		db "challengeResponse %i",0
 _cstring_rejected_connect:		db "rejected connection from permanently banned GUID ",22h,"%s",22h,0ah,0
-_cstring_erroryou_are_per:		db "error",0ah,15h,"You are permanently banned from this server",0
+_cstring_erroryou_are_per:		db "error",0ah,015h,"You are permanently banned from this server",0
 _cstring_cod4masteractivi:		db "cod4master.activision.com",0
 _cstring_resolving_s:		db "Resolving %s",0ah,0
 _cstring_couldnt_resolve_:		db "Couldn",27h,"t resolve address",0ah,0
 _cstring_authorize_server:		db "authorize server timed out",0ah,0
 _cstring_rejected_connect1:		db "rejected connection from temporarily banned GUID ",22h,"%s",22h,0ah,0
-_cstring_erroryou_are_tem:		db "error",0ah,15h,"You are temporarily banned from this server",0
+_cstring_erroryou_are_tem:		db "error",0ah,015h,"You are temporarily banned from this server",0
 _cstring_s_resolved_to_ii:		db "%s resolved to %i.%i.%i.%i:%i",0ah,0
 _cstring_received_packet_:		db "Received packet %i of stats data",0ah,0
 _cstring_statresponse_i:		db "statResponse %i",0
@@ -6204,7 +6204,7 @@ _cstring_connect_cg_predi:		db "connect ",22h,5ch,"cg_predictItems",5ch,"1",5ch,
 _cstring_sv_directconnect:		db "SV_DirectConnect()",0ah,0
 _cstring_protocol:		db "protocol",0
 _cstring_17:		db "1.7",0
-_cstring_errorexe_server_:		db "error",0ah,"EXE_SERVER_IS_DIFFERENT_VER",15h,"%s",0ah,0
+_cstring_errorexe_server_:		db "error",0ah,"EXE_SERVER_IS_DIFFERENT_VER",015h,"%s",0ah,0
 _cstring_____rejected_con:		db "    rejected connect from protocol version %i (should be %i)",0ah,0
 _cstring_challenge:		db "challenge",0
 _cstring_qport:		db "qport",0
@@ -6283,15 +6283,15 @@ _cstring_warning_bad_comm:		db "WARNING: bad command byte %i for client %i",0ah,
 _cstring_exe_unpureclient:		db "EXE_UNPURECLIENTDETECTED",0
 _cstring_s__dropped_games:		db "%s : dropped gamestate, resending",0ah,0
 _cstring_clientdownload_d3:		db "clientDownload: %d : ",22h,"%s",22h," download disabled",0
-_cstring_exe_autodl_serve:		db "EXE_AUTODL_SERVERDISABLED_PURE",15h,"%s",0
+_cstring_exe_autodl_serve:		db "EXE_AUTODL_SERVERDISABLED_PURE",015h,"%s",0
 _cstring_clientdownload_d4:		db "clientDownload: %d : beginning ",22h,"%s",22h,0ah,0
 _cstring_clientdownload_d5:		db "clientDownload: %d : writing block %d",0ah,0
 _cstring_main:		db "main",0
 _cstring_clientdownload_d6:		db "clientDownload: %d : ",22h,"%s",22h," cannot download IW iwd files",0ah,0
-_cstring_exe_cantautodlga:		db "EXE_CANTAUTODLGAMEPAK",15h,"%s",0
-_cstring_exe_autodl_serve1:		db "EXE_AUTODL_SERVERDISABLED",15h,"%s",0
+_cstring_exe_cantautodlga:		db "EXE_CANTAUTODLGAMEPAK",015h,"%s",0
+_cstring_exe_autodl_serve1:		db "EXE_AUTODL_SERVERDISABLED",015h,"%s",0
 _cstring_clientdownload_d7:		db "clientDownload: %d : ",22h,"%s",22h," file not found on server",0ah,0
-_cstring_exe_autodl_filen:		db "EXE_AUTODL_FILENOTONSERVER",15h,"%s",0
+_cstring_exe_autodl_filen:		db "EXE_AUTODL_FILENOTONSERVER",015h,"%s",0
 _cstring_userinfo:		db "userinfo",0
 _cstring_disconnect:		db "disconnect",0
 _cstring_cp:		db "cp",0

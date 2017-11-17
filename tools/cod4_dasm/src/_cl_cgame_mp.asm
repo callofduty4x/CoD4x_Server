@@ -2645,15 +2645,15 @@ _cstring_mapname:		db "mapname",0
 _cstring_setting_state_to:		db "Setting state to CA_LOADING in CL_InitCGame",0ah,0
 _cstring_cl_initcgame_52f:		db "CL_InitCGame: %5.2f seconds",0ah,0
 _cstring_updatehunkusage:		db "updatehunkusage",0
-_cstring_cl_getusercmd_i_:		db 15h,"CL_GetUserCmd: %i >= %i",0
+_cstring_cl_getusercmd_i_:		db 015h,"CL_GetUserCmd: %i >= %i",0
 _cstring_code_warning_sna:		db "code_warning_snapshotents",0
-_cstring_cl_getsnapshot_s:		db 15h,"CL_GetSnapshot: snapshotNumber > cl->snapshot.messageNum",0
+_cstring_cl_getsnapshot_s:		db 015h,"CL_GetSnapshot: snapshotNumber > cl->snapshot.messageNum",0
 _cstring_cl_getsnapshot_t:		db "CL_GetSnapshot: truncated %i entities to %i",0ah,0
 _cstring_g_teamcolor_alli:		db "g_TeamColor_Allies",0
 _cstring_g_teamcolor_axis:		db "g_TeamColor_Axis",0
-_cstring_cl_setcgametime_:		db 15h,"CL_SetCGameTime: !cl->snap.valid",0
+_cstring_cl_setcgametime_:		db 015h,"CL_SetCGameTime: !cl->snap.valid",0
 _cstring_localhost:		db "localhost",0
-_cstring_clsnapservertime:		db 15h,"cl->snap.serverTime < cl->oldFrameServerTime",0
+_cstring_clsnapservertime:		db 015h,"cl->snap.serverTime < cl->oldFrameServerTime",0
 _cstring_r_mode:		db "r_mode",0
 _cstring_demostimedemo_s_:		db "demos/timedemo_%s_mode_%i.csv",0
 _cstring_extrapolating_sn:		db "Extrapolating snapshot!",0ah,0
@@ -2671,23 +2671,23 @@ _cstring_cmd_5d_s:		db "cmd %5d: ",27h,"%s",27h,0ah,0
 _cstring_hunkusagedat:		db "hunkusage.dat",0
 _cstring_space:		db " ",0
 _cstring_exe_err_hungusag:		db "EXE_ERR_HUNGUSAGE_CORRUPT",0
-_cstring_exe_err_cant_wri:		db "EXE_ERR_CANT_WRITE",15h,"%s",0
+_cstring_exe_err_cant_wri:		db "EXE_ERR_CANT_WRITE",015h,"%s",0
 _cstring_s_i:		db "%s %i",0ah,0
 _cstring_exe_err_hunkusag:		db "EXE_ERR_HUNKUSAGE_CANT_WRITE",0
-_cstring_exe_err_cant_cre:		db "EXE_ERR_CANT_CREATE",15h,"%s",0
+_cstring_exe_err_cant_cre:		db "EXE_ERR_CANT_CREATE",015h,"%s",0
 _cstring_warning_cl_skel_:		db "WARNING: CL_SKEL_MEMORY_SIZE exceeded - not calculating skeleton",0ah,0
 _cstring__cl_cgameneedsse:		db "===== CL_CGameNeedsServerCommand =====",0ah,0
 _cstring_servercommandnum:		db "serverCommandNumber: %d",0ah,0
-_cstring_cl_cgameneedsser:		db 15h,"CL_CGameNeedsServerCommand: ",14h,"EXE_ERR_RELIABLE_CYCLED_OUT",0
-_cstring_cl_cgameneedsser1:		db 15h,"CL_CGameNeedsServerCommand: ",14h,"EXE_ERR_NOT_RECEIVED",0
+_cstring_cl_cgameneedsser:		db 015h,"CL_CGameNeedsServerCommand: ",014h,"EXE_ERR_RELIABLE_CYCLED_OUT",0
+_cstring_cl_cgameneedsser1:		db 015h,"CL_CGameNeedsServerCommand: ",014h,"EXE_ERR_NOT_RECEIVED",0
 _cstring_servercommand_i_:		db "serverCommand: %i : %s",0ah,0
 _cstring_pb:		db "PB",0
 _cstring_exe_serverdiscon:		db "EXE_SERVERDISCONNECTREASON",0
-_cstring_s1:		db 15h,"%s",0
+_cstring_s1:		db 015h,"%s",0
 _cstring_c_s_s:		db "%c %s %s",0
-_cstring_max_gamestate_ch:		db 15h,"MAX_GAMESTATE_CHARS exceeded",0
-_cstring_bcs_exceeded_big:		db 15h,"bcs exceeded BIG_INFO_STRING",0
-_cstring_configstring__ma:		db 15h,"configstring > MAX_CONFIGSTRINGS",0
+_cstring_max_gamestate_ch:		db 015h,"MAX_GAMESTATE_CHARS exceeded",0
+_cstring_bcs_exceeded_big:		db 015h,"bcs exceeded BIG_INFO_STRING",0
+_cstring_configstring__ma:		db 015h,"configstring > MAX_CONFIGSTRINGS",0
 _cstring_exe_server_disco:		db "EXE_SERVER_DISCONNECTED",0
 
 

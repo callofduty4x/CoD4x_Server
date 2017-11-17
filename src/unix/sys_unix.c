@@ -113,12 +113,12 @@ Sys_Dirname
 /* Not changes passed path. */
 const char *Sys_Dirname(const char *path)
 {
-	char dir[MAX_OSPATH] = {'\0'};
+	static char dir[MAX_OSPATH];
 	mvabuf;
 
 	strncpy(dir, path, MAX_OSPATH);
 	dirname(dir);
-	return va("%s", dir);
+	return dir;
 }
 
 
@@ -1152,16 +1152,16 @@ void** Sys_GetThreadLocalStorage()
     return pthread_getspecific(g_dwTlsKey);
 }
 
-void Sys_SetThreadLocalStorage(void** localvar)
-{
-    pthread_setspecific(g_dwTlsKey, localvar);
-}
-
 void Sys_InitThreadContext()
 {
     pthread_key_create(&g_dwTlsKey, 0);
 }
 
+void Sys_SetThreadLocalStorage(void** localvar)
+{
+    Sys_InitThreadContext();
+    pthread_setspecific(g_dwTlsKey, localvar);
+}
 
 threadid_t Sys_GetThreadHandleFromID(threadid_t ti)
 {

@@ -74,10 +74,10 @@
 	global CMD_VEH_Script_SetSpeed
 	global PushAttachedStickyMissile
 	global VEH_JoltBody
-	global VEH_SetPosition
+	global _Z15VEH_SetPositionP9gentity_sPKfS2_S2_
 	global VEH_UpdateAngleAndAngularVel
 	global VEH_UpdateMoveToGoal
-	global VEH_SlideMove
+	global _Z13VEH_SlideMoveP9gentity_si
 	global VEH_InitEntity
 	global GScr_GetVehicle
 	global VEH_ClearGround
@@ -427,7 +427,7 @@ VEH_JoltBody:
 
 
 ;VEH_SetPosition(gentity_s*, float const*, float const*, float const*)
-VEH_SetPosition:
+_Z15VEH_SetPositionP9gentity_sPKfS2_S2_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -1883,7 +1883,7 @@ VEH_UpdateMoveToGoal_840:
 
 
 ;VEH_SlideMove(gentity_s*, int)
-VEH_SlideMove:
+_Z13VEH_SlideMoveP9gentity_si:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2924,7 +2924,7 @@ VEH_InitVehicle_10:
 	pop esi
 	pop edi
 	pop ebp
-	jmp VEH_SetPosition
+	jmp _Z15VEH_SetPositionP9gentity_sPKfS2_S2_
 	nop
 
 
@@ -3057,7 +3057,7 @@ Scr_Vehicle_Think_10:
 	mov [esp], eax
 	mov edx, esi
 	mov eax, [ebp+0x8]
-	call VEH_SetPosition
+	call _Z15VEH_SetPositionP9gentity_sPKfS2_S2_
 	mov ecx, [ebp-0x1108]
 	test byte [ecx+0x1c0], 0x2
 	jnz Scr_Vehicle_Think_50

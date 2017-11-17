@@ -2585,7 +2585,7 @@ _cstring_need_iwds_s:		db "Need iwds: %s",0ah,0
 _cstring_ff:		db ".ff",0
 _cstring__load:		db "_load",0
 _cstring__local_file_exis1:		db " (local file exists with wrong filesize)",0
-_cstring_invalid_iwd_info:		db 15h,"Invalid IWD info from server: %s",0
+_cstring_invalid_iwd_info:		db 015h,"Invalid IWD info from server: %s",0
 _cstring_iwd_sumname_mism:		db "iwd sum/name mismatch",0
 _cstring_connected_to_a_p:		db "Connected to a pure server.",0ah,0
 _cstring_directory_of_s_s:		db "Directory of %s %s",0ah,0

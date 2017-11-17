@@ -145,8 +145,8 @@ SECTION .bss
 SECTION .rdata
 _cstring_graph_float_file:		db "GRAPH_FLOAT_FILE",0
 _cstring_graph:		db "graph",0
-_cstring_graphfloat_parse:		db 15h,"GraphFloat_ParseBuffer: File [%s] has too many knots.  Max is [%d]",0ah,0
-_cstring_graphfloat_parse1:		db 15h,"GraphFloat_ParseBuffer: Error parsing graph file [%s]",0
+_cstring_graphfloat_parse:		db 015h,"GraphFloat_ParseBuffer: File [%s] has too many knots.  Max is [%d]",0ah,0
+_cstring_graphfloat_parse1:		db 015h,"GraphFloat_ParseBuffer: Error parsing graph file [%s]",0
 
 
 

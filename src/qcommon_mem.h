@@ -38,8 +38,9 @@ typedef enum {
 	TAG_RENDERER,
 	TAG_SMALL,
 	TAG_STATIC,
-    TAG_XZONE,
-    TAG_UNZIP
+	TAG_XZONE,
+	TAG_UNZIP,
+	TAG_STRINGED
 } memtag_t;
 
 

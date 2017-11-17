@@ -3748,7 +3748,7 @@ cg_airstrikeKillCamCloseXYDist: resb 0x64
 
 ;All cstrings:
 SECTION .rdata
-_cstring_turret_has_no_bo:		db 15h,"Turret has no bone: tag_player",0
+_cstring_turret_has_no_bo:		db 015h,"Turret has no bone: tag_player",0
 _cstring_update_ent_info:		db "update ent info",0
 _cstring_player_state:		db "player state",0
 _cstring_view_anim:		db "view anim",0

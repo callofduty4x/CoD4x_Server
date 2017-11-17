@@ -8082,14 +8082,14 @@ removeMeWhenMPStopsCrashingInHere: resb 0x80
 SECTION .rdata
 _cstring_viewmodel:		db "VIEWMODEL",0
 _cstring_root:		db "root",0
-_cstring_cg_registerweapo:		db 15h,"CG_RegisterWeapon: No idle anim specified for [%s]",0
-_cstring_cg_registerweapo1:		db 15h,"CG_RegisterWeapon: ADS anim [%s] cannot be looping",0
+_cstring_cg_registerweapo:		db 015h,"CG_RegisterWeapon: No idle anim specified for [%s]",0
+_cstring_cg_registerweapo1:		db 015h,"CG_RegisterWeapon: ADS anim [%s] cannot be looping",0
 _cstring_actionslot_numbe:		db "+/-actionslot; number given is out of range.  Was %i, expected 1 thru %i.",0ah,0
 _cstring_usage_actionslot:		db "USAGE: +/-actionslot <number>",0ah,0
 _cstring_player_is_holdin:		db "Player is holding alt-mode weapon ",22h,"%s",22h,", but does not posses it",27h,"s original, ",22h,"%s",22h,".",0ah,0
 _cstring_no_s_in_calcmuzz:		db "No %s in CalcMuzzlePoint on entity %d.",0ah,0
 _cstring_unknown_etype_i_:		db "Unknown eType %i in CG_DrawBulletImpacts()",0ah,0
-_cstring_cg_fireweapon_we:		db 15h,"CG_FireWeapon: weapon >= BG_GetNumWeapons()",0
+_cstring_cg_fireweapon_we:		db 015h,"CG_FireWeapon: weapon >= BG_GetNumWeapons()",0
 _cstring_cg_registerweapo2:		db "CG_RegisterWeapon: No such bone tag (%s) for weapon (%s)",0ah,0
 _cstring_weapon_s_could_n:		db "Weapon %s: Could not translate AI overlay description ",22h,"%s",22h,0
 _cstring_weapon_s_could_n1:		db "Weapon %s: Could not translate mode name ",22h,"%s",22h,0
@@ -8098,9 +8098,9 @@ _cstring_warning_weapon_s:		db "WARNING: Weapon %s: Could not translate AI overl
 _cstring_warning_weapon_s1:		db "WARNING: Weapon %s: Could not translate mode name ",22h,"%s",22h,0ah,0
 _cstring_warning_weapon_s2:		db "WARNING: Weapon %s: Could not translate display name ",22h,"%s",22h,0ah,0
 _cstring_weapon_index_mis:		db "Weapon index mismatch for ",27h,"%s",27h,0
-_cstring_cg_ejectweaponbr:		db 15h,"CG_EjectWeaponBrass: ent->weapon >= BG_GetNumWeapons()",0
-_cstring_cg_getplayerview:		db 15h,"CG_GetPlayerViewOrigin: Couldn",27h,"t find [tag_player] on turret",0ah,0
-_cstring_cg_getplayerview1:		db 15h,"CG_GetPlayerViewOrigin: Unable to get DObj for turret entity %i",0
+_cstring_cg_ejectweaponbr:		db 015h,"CG_EjectWeaponBrass: ent->weapon >= BG_GetNumWeapons()",0
+_cstring_cg_getplayerview:		db 015h,"CG_GetPlayerViewOrigin: Couldn",27h,"t find [tag_player] on turret",0ah,0
+_cstring_cg_getplayerview1:		db 015h,"CG_GetPlayerViewOrigin: Unable to get DObj for turret entity %i",0
 _cstring_weaponrunxmodela:		db "WeaponRunXModelAnims: Unknown weapon animation %i",0ah,0
 _cstring_end:		db "end",0
 _cstring_nvg_on_powerup:		db "NVG_on_powerup",0

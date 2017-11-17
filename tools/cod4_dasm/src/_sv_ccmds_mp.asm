@@ -2397,7 +2397,7 @@ _cstring_:		db 0ah,0
 _cstring_space:		db " ",0
 _cstring_zmbi_:		db "ZMBI ",0
 _cstring_cnct_:		db "CNCT ",0
-_cstring_c_s:		db "%c ",22h,15h,"%s",22h,0
+_cstring_c_s:		db "%c ",22h,015h,"%s",22h,0
 _cstring_server_info_sett:		db "Server info settings:",0ah,0
 _cstring_system_info_sett:		db "System info settings:",0ah,0
 _cstring_exe_serverkilled:		db "EXE_SERVERKILLED",0

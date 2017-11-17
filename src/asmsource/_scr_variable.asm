@@ -49,6 +49,7 @@
 	extern Com_Printf
 	extern Z_VirtualFreeInternal
 	extern Scr_PrintPrevCodePos
+	extern var_typename
 
 ;Exports of scr_variable:
 	global ThreadInfoCompare
@@ -190,7 +191,6 @@
 	global GetArray
 	global FreeValue
 	global scrVarPub
-	global var_typename
 	global g_classMap
 	global scrVarGlob
 
@@ -11345,881 +11345,881 @@ Scr_AllocGameVariable_110:
 
 ;Scr_DumpScriptThreads()
 Scr_DumpScriptThreads:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x14c
-	xor esi, esi
-	mov ebx, 0x8003
-	mov ecx, scrVarGlob+0x80030
+    push ebp
+    mov ebp, esp
+    push edi
+    push esi
+    push ebx
+    sub esp, 0x14c
+    xor esi, esi
+    mov ebx, 0x8003
+    mov ecx, scrVarGlob+0x80030
 Scr_DumpScriptThreads_20:
-	mov edx, [ecx+0x8]
-	test dl, 0x60
-	jz Scr_DumpScriptThreads_10
-	and edx, 0x1f
-	lea eax, [esi+0x1]
-	cmp edx, 0xa
-	cmovz esi, eax
+    mov edx, [ecx+0x8]
+    test dl, 0x60
+    jz Scr_DumpScriptThreads_10
+    and edx, 0x1f
+    lea eax, [esi+0x1]
+    cmp edx, 0xa
+    cmovz esi, eax
 Scr_DumpScriptThreads_10:
-	add ebx, 0x1
-	add ecx, 0x10
-	cmp ebx, 0x18000
-	jnz Scr_DumpScriptThreads_20
-	test esi, esi
-	jnz Scr_DumpScriptThreads_30
+    add ebx, 0x1
+    add ecx, 0x10
+    cmp ebx, 0x18000
+    jnz Scr_DumpScriptThreads_20
+    test esi, esi
+    jnz Scr_DumpScriptThreads_30
 Scr_DumpScriptThreads_670:
-	add esp, 0x14c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
+    add esp, 0x14c
+    pop ebx
+    pop esi
+    pop edi
+    pop ebp
+    ret
 Scr_DumpScriptThreads_30:
-	lea edx, [esi+esi*4]
-	lea eax, [edx*8]
-	sub eax, edx
-	shl eax, 0x2
-	mov [esp], eax
-	call Z_TryVirtualAllocInternal
-	mov [ebp-0x118], eax
-	test eax, eax
-	jz Scr_DumpScriptThreads_40
-	mov dword [ebp-0x114], 0x0
-	mov dword [ebp-0xbc], 0x8003
-	mov dword [ebp-0x120], scrVarGlob+0x80030
-	mov eax, [ebp-0x118]
-	mov [ebp-0x124], eax
-	jmp Scr_DumpScriptThreads_50
+    lea edx, [esi+esi*4]
+    lea eax, [edx*8]
+    sub eax, edx
+    shl eax, 0x2
+    mov [esp], eax
+    call Z_TryVirtualAllocInternal
+    mov [ebp-0x118], eax
+    test eax, eax
+    jz Scr_DumpScriptThreads_40
+    mov dword [ebp-0x114], 0x0
+    mov dword [ebp-0xbc], 0x8003
+    mov dword [ebp-0x120], scrVarGlob+0x80030
+    mov eax, [ebp-0x118]
+    mov [ebp-0x124], eax
+    jmp Scr_DumpScriptThreads_50
 Scr_DumpScriptThreads_70:
-	add dword [ebp-0xbc], 0x1
-	add dword [ebp-0x120], 0x10
-	cmp dword [ebp-0xbc], 0x18000
-	jz Scr_DumpScriptThreads_60
+    add dword [ebp-0xbc], 0x1
+    add dword [ebp-0x120], 0x10
+    cmp dword [ebp-0xbc], 0x18000
+    jz Scr_DumpScriptThreads_60
 Scr_DumpScriptThreads_50:
-	mov edx, [ebp-0x120]
-	mov eax, [edx+0x8]
-	test al, 0x60
-	jz Scr_DumpScriptThreads_70
-	and eax, 0x1f
-	cmp eax, 0xa
-	jnz Scr_DumpScriptThreads_70
-	mov ecx, [ebp-0x124]
-	mov [ebp-0xb4], ecx
-	add dword [ebp-0x114], 0x1
-	add ecx, 0x8c
-	mov [ebp-0x124], ecx
-	mov edi, [edx+0x4]
-	movzx eax, word [edi+0x4]
-	mov [ebp-0x11a], ax
-	movzx edx, ax
-	mov [ebp-0x108], edx
-	mov ecx, [edi]
-	mov [ebp-0x104], ecx
-	lea eax, [edi+0xb]
-	mov [ebp-0xac], eax
-	cmp word [ebp-0x11a], 0x0
-	jnz Scr_DumpScriptThreads_80
-	xor esi, esi
-	mov dword [ebp-0xd4], 0x1
+    mov edx, [ebp-0x120]
+    mov eax, [edx+0x8]
+    test al, 0x60
+    jz Scr_DumpScriptThreads_70
+    and eax, 0x1f
+    cmp eax, 0xa
+    jnz Scr_DumpScriptThreads_70
+    mov ecx, [ebp-0x124]
+    mov [ebp-0xb4], ecx
+    add dword [ebp-0x114], 0x1
+    add ecx, 0x8c
+    mov [ebp-0x124], ecx
+    mov edi, [edx+0x4]
+    movzx eax, word [edi+0x4]
+    mov [ebp-0x11a], ax
+    movzx edx, ax
+    mov [ebp-0x108], edx
+    mov ecx, [edi]
+    mov [ebp-0x104], ecx
+    lea eax, [edi+0xb]
+    mov [ebp-0xac], eax
+    cmp word [ebp-0x11a], 0x0
+    jnz Scr_DumpScriptThreads_80
+    xor esi, esi
+    mov dword [ebp-0xd4], 0x1
 Scr_DumpScriptThreads_600:
-	mov ecx, [ebp-0x104]
-	mov [ebp+esi*4-0xa4], ecx
-	mov eax, [ebp-0xb4]
-	add eax, 0x88
-	mov [ebp-0xf8], eax
-	mov edx, [ebp-0x108]
-	lea eax, [edx+edx*4]
-	add eax, [ebp-0xac]
-	mov [ebp-0xf0], eax
-	movzx ecx, word [edi+0x8]
-	mov eax, ecx
-	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_90
-	movss xmm3, dword [_float_1_00000000]
-	movss [ebp-0xec], xmm3
+    mov ecx, [ebp-0x104]
+    mov [ebp+esi*4-0xa4], ecx
+    mov eax, [ebp-0xb4]
+    add eax, 0x88
+    mov [ebp-0xf8], eax
+    mov edx, [ebp-0x108]
+    lea eax, [edx+edx*4]
+    add eax, [ebp-0xac]
+    mov [ebp-0xf0], eax
+    movzx ecx, word [edi+0x8]
+    mov eax, ecx
+    shl eax, 0x4
+    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_90
+    movss xmm3, dword [_float_1_00000000]
+    movss [ebp-0xec], xmm3
 Scr_DumpScriptThreads_120:
-	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
-	mov edx, [ebx+0x4]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jz Scr_DumpScriptThreads_100
+    shl edx, 0x4
+    lea ebx, [edx+scrVarGlob+0x80020]
+    mov edx, [ebx+0x4]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jz Scr_DumpScriptThreads_100
 Scr_DumpScriptThreads_300:
-	movaps xmm0, xmm3
+    movaps xmm0, xmm3
 Scr_DumpScriptThreads_310:
-	addss xmm0, [ebp-0xec]
-	movss [ebp-0xec], xmm0
-	movzx eax, word [ebx+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_110
-	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
-	movzx edx, ax
-	test ax, ax
-	jnz Scr_DumpScriptThreads_120
+    addss xmm0, [ebp-0xec]
+    movss [ebp-0xec], xmm0
+    movzx eax, word [ebx+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_110
+    shl edx, 0x4
+    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx edx, ax
+    test ax, ax
+    jnz Scr_DumpScriptThreads_120
 Scr_DumpScriptThreads_110:
-	movzx ecx, word [edi+0x8]
+    movzx ecx, word [edi+0x8]
 Scr_DumpScriptThreads_560:
-	lea esi, [ecx+0x10000]
-	lea ecx, [esi+esi*4]
-	lea ecx, [ecx+ecx*4]
-	lea ecx, [esi+ecx*4]
-	add ecx, [scrVarPub+0x1c]
-	mov edx, 0x80018005
-	mov eax, ecx
-	mul edx
-	shr edx, 0xf
-	mov eax, edx
-	shl eax, 0xe
-	sub eax, edx
-	lea eax, [edx+eax*4]
-	sub ecx, eax
-	add ecx, 0x8003
-	mov eax, ecx
-	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
-	mov [ebp-0xe8], edx
-	movzx eax, word [eax+scrVarGlob]
-	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
-	mov edx, [ebx+0x8]
-	mov eax, edx
-	and eax, 0x60
-	cmp eax, 0x40
-	jz Scr_DumpScriptThreads_130
+    lea esi, [ecx+0x10000]
+    lea ecx, [esi+esi*4]
+    lea ecx, [ecx+ecx*4]
+    lea ecx, [esi+ecx*4]
+    add ecx, [scrVarPub+0x1c]
+    mov edx, 0x80018005
+    mov eax, ecx
+    mul edx
+    shr edx, 0xf
+    mov eax, edx
+    shl eax, 0xe
+    sub eax, edx
+    lea eax, [edx+eax*4]
+    sub ecx, eax
+    add ecx, 0x8003
+    mov eax, ecx
+    shl eax, 0x4
+    lea edx, [eax+scrVarGlob]
+    mov [ebp-0xe8], edx
+    movzx eax, word [eax+scrVarGlob]
+    shl eax, 0x4
+    lea ebx, [eax+scrVarGlob+0x80020]
+    mov edx, [ebx+0x8]
+    mov eax, edx
+    and eax, 0x60
+    cmp eax, 0x40
+    jz Scr_DumpScriptThreads_130
 Scr_DumpScriptThreads_390:
-	mov ecx, 0x8002
+    mov ecx, 0x8002
 Scr_DumpScriptThreads_380:
-	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
-	movzx edx, ax
-	pxor xmm2, xmm2
-	test ax, ax
-	jz Scr_DumpScriptThreads_140
-	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
-	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
-	movzx edx, ax
-	test ax, ax
-	jnz Scr_DumpScriptThreads_150
-	movaps xmm2, xmm3
+    shl ecx, 0x4
+    movzx eax, word [ecx+scrVarGlob]
+    movzx edx, ax
+    pxor xmm2, xmm2
+    test ax, ax
+    jz Scr_DumpScriptThreads_140
+    shl edx, 0x4
+    mov eax, [edx+scrVarGlob+0x80024]
+    shl eax, 0x4
+    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx edx, ax
+    test ax, ax
+    jnz Scr_DumpScriptThreads_150
+    movaps xmm2, xmm3
 Scr_DumpScriptThreads_140:
-	mov ecx, [ebp-0xf8]
-	movss [ecx], xmm2
-	movzx edi, word [edi+0x8]
-	cmp word [ebp-0x11a], 0x0
-	jz Scr_DumpScriptThreads_160
-	mov dword [ebp-0xc0], 0x0
+    mov ecx, [ebp-0xf8]
+    movss [ecx], xmm2
+    movzx edi, word [edi+0x8]
+    cmp word [ebp-0x11a], 0x0
+    jz Scr_DumpScriptThreads_160
+    mov dword [ebp-0xc0], 0x0
 Scr_DumpScriptThreads_190:
-	mov eax, [ebp-0xf0]
-	mov edx, [eax-0x4]
-	sub eax, 0x5
-	mov [ebp-0xf0], eax
-	movzx eax, byte [eax]
-	cmp al, 0x7
-	jz Scr_DumpScriptThreads_170
-	sub al, 0x1
-	jz Scr_DumpScriptThreads_180
+    mov eax, [ebp-0xf0]
+    mov edx, [eax-0x4]
+    sub eax, 0x5
+    mov [ebp-0xf0], eax
+    movzx eax, byte [eax]
+    cmp al, 0x7
+    jz Scr_DumpScriptThreads_170
+    sub al, 0x1
+    jz Scr_DumpScriptThreads_180
 Scr_DumpScriptThreads_320:
-	pxor xmm0, xmm0
+    pxor xmm0, xmm0
 Scr_DumpScriptThreads_370:
-	addss xmm0, [ebp-0xec]
-	movss [ebp-0xec], xmm0
+    addss xmm0, [ebp-0xec]
+    movss [ebp-0xec], xmm0
 Scr_DumpScriptThreads_500:
-	add dword [ebp-0xc0], 0x1
-	mov eax, [ebp-0xc0]
-	cmp [ebp-0x108], eax
-	jnz Scr_DumpScriptThreads_190
+    add dword [ebp-0xc0], 0x1
+    mov eax, [ebp-0xc0]
+    cmp [ebp-0x108], eax
+    jnz Scr_DumpScriptThreads_190
 Scr_DumpScriptThreads_160:
-	movss xmm0, dword [ebp-0xec]
-	mov edx, [ebp-0xb4]
-	movss [edx+0x84], xmm0
-	mov eax, [ebp-0xd4]
-	mov [edx+0x80], eax
-	mov eax, [ebp-0xd4]
-	sub eax, 0x1
-	mov edi, [ebp-0xd4]
-	test edi, edi
-	jle Scr_DumpScriptThreads_70
-	lea ecx, [ebp+eax*4-0xa4]
-	mov edx, [ebp-0xb4]
-	xor ebx, ebx
+    movss xmm0, dword [ebp-0xec]
+    mov edx, [ebp-0xb4]
+    movss [edx+0x84], xmm0
+    mov eax, [ebp-0xd4]
+    mov [edx+0x80], eax
+    mov eax, [ebp-0xd4]
+    sub eax, 0x1
+    mov edi, [ebp-0xd4]
+    test edi, edi
+    jle Scr_DumpScriptThreads_70
+    lea ecx, [ebp+eax*4-0xa4]
+    mov edx, [ebp-0xb4]
+    xor ebx, ebx
 Scr_DumpScriptThreads_200:
-	mov eax, [ecx]
-	mov [edx], eax
-	add ebx, 0x1
-	sub ecx, 0x4
-	add edx, 0x4
-	cmp ebx, [ebp-0xd4]
-	jl Scr_DumpScriptThreads_200
-	add dword [ebp-0xbc], 0x1
-	add dword [ebp-0x120], 0x10
-	cmp dword [ebp-0xbc], 0x18000
-	jnz Scr_DumpScriptThreads_50
+    mov eax, [ecx]
+    mov [edx], eax
+    add ebx, 0x1
+    sub ecx, 0x4
+    add edx, 0x4
+    cmp ebx, [ebp-0xd4]
+    jl Scr_DumpScriptThreads_200
+    add dword [ebp-0xbc], 0x1
+    add dword [ebp-0x120], 0x10
+    cmp dword [ebp-0xbc], 0x18000
+    jnz Scr_DumpScriptThreads_50
 Scr_DumpScriptThreads_60:
-	mov dword [esp+0xc], ThreadInfoCompare
-	mov dword [esp+0x8], 0x8c
-	mov edx, [ebp-0x114]
-	mov [esp+0x4], edx
-	mov ecx, [ebp-0x118]
-	mov [esp], ecx
-	call qsort
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x17
-	call Com_Printf
-	mov esi, [ebp-0x114]
-	test esi, esi
-	jg Scr_DumpScriptThreads_210
-	xor esi, esi
-	xor ebx, ebx
+    mov dword [esp+0xc], ThreadInfoCompare
+    mov dword [esp+0x8], 0x8c
+    mov edx, [ebp-0x114]
+    mov [esp+0x4], edx
+    mov ecx, [ebp-0x118]
+    mov [esp], ecx
+    call qsort
+    mov dword [esp+0x4], _cstring_
+    mov dword [esp], 0x17
+    call Com_Printf
+    mov esi, [ebp-0x114]
+    test esi, esi
+    jg Scr_DumpScriptThreads_210
+    xor esi, esi
+    xor ebx, ebx
 Scr_DumpScriptThreads_810:
-	mov eax, [ebp-0x118]
-	mov [esp], eax
-	call Z_VirtualFreeInternal
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x17
-	call Com_Printf
-	mov [esp+0xc], esi
-	mov [esp+0x8], ebx
-	mov dword [esp+0x4], _cstring_var_usage_d_endo
-	mov dword [esp], 0x17
-	call Com_Printf
-	mov dword [esp+0x4], _cstring_1
-	mov dword [esp], 0x17
-	call Com_Printf
-	mov dword [ebp-0xd0], g_classMap
-	jmp Scr_DumpScriptThreads_220
+    mov eax, [ebp-0x118]
+    mov [esp], eax
+    call Z_VirtualFreeInternal
+    mov dword [esp+0x4], _cstring_
+    mov dword [esp], 0x17
+    call Com_Printf
+    mov [esp+0xc], esi
+    mov [esp+0x8], ebx
+    mov dword [esp+0x4], _cstring_var_usage_d_endo
+    mov dword [esp], 0x17
+    call Com_Printf
+    mov dword [esp+0x4], _cstring_1
+    mov dword [esp], 0x17
+    call Com_Printf
+    mov dword [ebp-0xd0], g_classMap
+    jmp Scr_DumpScriptThreads_220
 Scr_DumpScriptThreads_250:
-	mov dword [ebp-0xb0], 0x0
-	xor eax, eax
+    mov dword [ebp-0xb0], 0x0
+    xor eax, eax
 Scr_DumpScriptThreads_290:
-	mov [esp+0x10], eax
-	mov eax, [ebp-0xb0]
-	mov [esp+0xc], eax
-	mov edx, [ebp-0xd0]
-	mov eax, [edx+0x8]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_ent_type_s_count
-	mov dword [esp], 0x17
-	call Com_Printf
+    mov [esp+0x10], eax
+    mov eax, [ebp-0xb0]
+    mov [esp+0xc], eax
+    mov edx, [ebp-0xd0]
+    mov eax, [edx+0x8]
+    mov [esp+0x8], eax
+    mov dword [esp+0x4], _cstring_ent_type_s_count
+    mov dword [esp], 0x17
+    call Com_Printf
 Scr_DumpScriptThreads_240:
-	add dword [ebp-0xd0], 0xc
-	mov ecx, g_classMap+0x30
-	cmp ecx, [ebp-0xd0]
-	jz Scr_DumpScriptThreads_230
+    add dword [ebp-0xd0], 0xc
+    mov ecx, g_classMap+0x30
+    cmp ecx, [ebp-0xd0]
+    jz Scr_DumpScriptThreads_230
 Scr_DumpScriptThreads_220:
-	mov edx, [ebp-0xd0]
-	movzx eax, word [edx+0x2]
-	test ax, ax
-	jz Scr_DumpScriptThreads_240
-	movzx eax, ax
-	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_250
-	mov dword [ebp-0xb0], 0x0
-	pxor xmm0, xmm0
-	movss [ebp-0xd8], xmm0
+    mov edx, [ebp-0xd0]
+    movzx eax, word [edx+0x2]
+    test ax, ax
+    jz Scr_DumpScriptThreads_240
+    movzx eax, ax
+    shl eax, 0x4
+    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_250
+    mov dword [ebp-0xb0], 0x0
+    pxor xmm0, xmm0
+    movss [ebp-0xd8], xmm0
 Scr_DumpScriptThreads_280:
-	add dword [ebp-0xb0], 0x1
-	lea edi, [edx+0x8002]
-	mov edx, edi
-	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jz Scr_DumpScriptThreads_260
+    add dword [ebp-0xb0], 0x1
+    lea edi, [edx+0x8002]
+    mov edx, edi
+    shl edx, 0x4
+    mov eax, [edx+scrVarGlob+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jz Scr_DumpScriptThreads_260
 Scr_DumpScriptThreads_860:
-	shl edi, 0x4
-	movzx eax, word [edi+scrVarGlob+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_270
-	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
-	movzx edx, ax
-	test ax, ax
-	jnz Scr_DumpScriptThreads_280
+    shl edi, 0x4
+    movzx eax, word [edi+scrVarGlob+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_270
+    shl edx, 0x4
+    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx edx, ax
+    test ax, ax
+    jnz Scr_DumpScriptThreads_280
 Scr_DumpScriptThreads_270:
-	cvttss2si eax, [ebp-0xd8]
-	jmp Scr_DumpScriptThreads_290
+    cvttss2si eax, [ebp-0xd8]
+    jmp Scr_DumpScriptThreads_290
 Scr_DumpScriptThreads_100:
-	mov eax, edx
-	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x10]
-	mov eax, [esi+0x8]
-	and eax, 0x1f
-	cmp eax, 0x15
-	jnz Scr_DumpScriptThreads_300
-	mov eax, edx
-	call Scr_GetObjectUsage
-	movzx eax, word [esi+0x4]
-	cvtsi2ss xmm1, eax
-	movss xmm3, dword [_float_1_00000000]
-	addss xmm1, xmm3
-	divss xmm0, xmm1
-	addss xmm0, xmm3
-	jmp Scr_DumpScriptThreads_310
+    mov eax, edx
+    shl eax, 0x4
+    lea esi, [eax+scrVarGlob+0x10]
+    mov eax, [esi+0x8]
+    and eax, 0x1f
+    cmp eax, 0x15
+    jnz Scr_DumpScriptThreads_300
+    mov eax, edx
+    call Scr_GetObjectUsage
+    movzx eax, word [esi+0x4]
+    cvtsi2ss xmm1, eax
+    movss xmm3, dword [_float_1_00000000]
+    addss xmm1, xmm3
+    divss xmm0, xmm1
+    addss xmm0, xmm3
+    jmp Scr_DumpScriptThreads_310
 Scr_DumpScriptThreads_180:
-	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x10]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	cmp eax, 0x15
-	jnz Scr_DumpScriptThreads_320
-	movzx eax, word [ebx+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_330
-	movaps xmm2, xmm3
+    shl edx, 0x4
+    lea ebx, [edx+scrVarGlob+0x10]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    cmp eax, 0x15
+    jnz Scr_DumpScriptThreads_320
+    movzx eax, word [ebx+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_330
+    movaps xmm2, xmm3
 Scr_DumpScriptThreads_360:
-	shl edx, 0x4
-	lea esi, [edx+scrVarGlob+0x80020]
-	mov edx, [esi+0x4]
-	mov eax, [esi+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jz Scr_DumpScriptThreads_340
+    shl edx, 0x4
+    lea esi, [edx+scrVarGlob+0x80020]
+    mov edx, [esi+0x4]
+    mov eax, [esi+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jz Scr_DumpScriptThreads_340
 Scr_DumpScriptThreads_410:
-	movaps xmm0, xmm3
+    movaps xmm0, xmm3
 Scr_DumpScriptThreads_420:
-	addss xmm2, xmm0
-	movzx eax, word [esi+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_350
-	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
-	movzx edx, ax
-	test ax, ax
-	jnz Scr_DumpScriptThreads_360
+    addss xmm2, xmm0
+    movzx eax, word [esi+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_350
+    shl edx, 0x4
+    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx edx, ax
+    test ax, ax
+    jnz Scr_DumpScriptThreads_360
 Scr_DumpScriptThreads_350:
-	movzx eax, word [ebx+0x4]
-	cvtsi2ss xmm0, eax
-	addss xmm0, xmm3
-	divss xmm2, xmm0
-	movaps xmm0, xmm2
-	jmp Scr_DumpScriptThreads_370
+    movzx eax, word [ebx+0x4]
+    cvtsi2ss xmm0, eax
+    addss xmm0, xmm3
+    divss xmm2, xmm0
+    movaps xmm0, xmm2
+    jmp Scr_DumpScriptThreads_370
 Scr_DumpScriptThreads_130:
-	shr edx, 0x8
-	cmp esi, edx
-	jz Scr_DumpScriptThreads_380
-	movzx eax, word [ebx+0xc]
-	lea ecx, [eax+0x8002]
-	mov edx, ecx
-	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
-	cmp [ebp-0xe8], eax
-	jz Scr_DumpScriptThreads_390
+    shr edx, 0x8
+    cmp esi, edx
+    jz Scr_DumpScriptThreads_380
+    movzx eax, word [ebx+0xc]
+    lea ecx, [eax+0x8002]
+    mov edx, ecx
+    shl edx, 0x4
+    lea eax, [edx+scrVarGlob]
+    cmp [ebp-0xe8], eax
+    jz Scr_DumpScriptThreads_390
 Scr_DumpScriptThreads_400:
-	movzx eax, word [edx+scrVarGlob]
-	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
-	mov eax, [edx+0x8]
-	shr eax, 0x8
-	cmp eax, esi
-	jz Scr_DumpScriptThreads_380
-	movzx eax, word [edx+0xc]
-	lea ecx, [eax+0x8002]
-	mov edx, ecx
-	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
-	cmp [ebp-0xe8], eax
-	jnz Scr_DumpScriptThreads_400
-	jmp Scr_DumpScriptThreads_390
+    movzx eax, word [edx+scrVarGlob]
+    shl eax, 0x4
+    lea edx, [eax+scrVarGlob+0x80020]
+    mov eax, [edx+0x8]
+    shr eax, 0x8
+    cmp eax, esi
+    jz Scr_DumpScriptThreads_380
+    movzx eax, word [edx+0xc]
+    lea ecx, [eax+0x8002]
+    mov edx, ecx
+    shl edx, 0x4
+    lea eax, [edx+scrVarGlob]
+    cmp [ebp-0xe8], eax
+    jnz Scr_DumpScriptThreads_400
+    jmp Scr_DumpScriptThreads_390
 Scr_DumpScriptThreads_340:
-	mov eax, edx
-	shl eax, 0x4
-	add eax, scrVarGlob+0x10
-	mov [ebp-0xe4], eax
-	mov eax, [eax+0x8]
-	and eax, 0x1f
-	cmp eax, 0x15
-	jnz Scr_DumpScriptThreads_410
-	mov eax, edx
-	movss [ebp-0x138], xmm2
-	call Scr_GetObjectUsage
-	mov edx, [ebp-0xe4]
-	movzx eax, word [edx+0x4]
-	cvtsi2ss xmm1, eax
-	movss xmm3, dword [_float_1_00000000]
-	addss xmm1, xmm3
-	divss xmm0, xmm1
-	addss xmm0, xmm3
-	movss xmm2, dword [ebp-0x138]
-	jmp Scr_DumpScriptThreads_420
+    mov eax, edx
+    shl eax, 0x4
+    add eax, scrVarGlob+0x10
+    mov [ebp-0xe4], eax
+    mov eax, [eax+0x8]
+    and eax, 0x1f
+    cmp eax, 0x15
+    jnz Scr_DumpScriptThreads_410
+    mov eax, edx
+    movss [ebp-0x138], xmm2
+    call Scr_GetObjectUsage
+    mov edx, [ebp-0xe4]
+    movzx eax, word [edx+0x4]
+    cvtsi2ss xmm1, eax
+    movss xmm3, dword [_float_1_00000000]
+    addss xmm1, xmm3
+    divss xmm0, xmm1
+    addss xmm0, xmm3
+    movss xmm2, dword [ebp-0x138]
+    jmp Scr_DumpScriptThreads_420
 Scr_DumpScriptThreads_170:
-	shl edi, 0x4
-	mov edi, [edi+scrVarGlob+0x18]
-	shr edi, 0x8
-	mov eax, edi
-	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_430
-	movaps xmm2, xmm3
+    shl edi, 0x4
+    mov edi, [edi+scrVarGlob+0x18]
+    shr edi, 0x8
+    mov eax, edi
+    shl eax, 0x4
+    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_430
+    movaps xmm2, xmm3
 Scr_DumpScriptThreads_460:
-	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
-	mov edx, [ebx+0x4]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jz Scr_DumpScriptThreads_440
+    shl edx, 0x4
+    lea ebx, [edx+scrVarGlob+0x80020]
+    mov edx, [ebx+0x4]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jz Scr_DumpScriptThreads_440
 Scr_DumpScriptThreads_510:
-	movaps xmm0, xmm3
+    movaps xmm0, xmm3
 Scr_DumpScriptThreads_520:
-	addss xmm2, xmm0
-	movzx eax, word [ebx+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_450
-	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
-	movzx edx, ax
-	test ax, ax
-	jnz Scr_DumpScriptThreads_460
+    addss xmm2, xmm0
+    movzx eax, word [ebx+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_450
+    shl edx, 0x4
+    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx edx, ax
+    test ax, ax
+    jnz Scr_DumpScriptThreads_460
 Scr_DumpScriptThreads_450:
-	addss xmm2, [ebp-0xec]
-	movss [ebp-0xec], xmm2
-	mov ecx, [ebp-0xf8]
-	movss xmm0, dword [ecx]
-	movss [ebp-0xf4], xmm0
-	lea esi, [edi+0x10000]
-	lea ecx, [esi+esi*4]
-	lea ecx, [ecx+ecx*4]
-	lea ecx, [esi+ecx*4]
-	add ecx, [scrVarPub+0x1c]
-	mov edx, 0x80018005
-	mov eax, ecx
-	mul edx
-	shr edx, 0xf
-	mov eax, edx
-	shl eax, 0xe
-	sub eax, edx
-	lea eax, [edx+eax*4]
-	sub ecx, eax
-	add ecx, 0x8003
-	mov eax, ecx
-	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
-	mov [ebp-0xe0], edx
-	movzx eax, word [eax+scrVarGlob]
-	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
-	mov edx, [ebx+0x8]
-	mov eax, edx
-	and eax, 0x60
-	cmp eax, 0x40
-	jz Scr_DumpScriptThreads_470
+    addss xmm2, [ebp-0xec]
+    movss [ebp-0xec], xmm2
+    mov ecx, [ebp-0xf8]
+    movss xmm0, dword [ecx]
+    movss [ebp-0xf4], xmm0
+    lea esi, [edi+0x10000]
+    lea ecx, [esi+esi*4]
+    lea ecx, [ecx+ecx*4]
+    lea ecx, [esi+ecx*4]
+    add ecx, [scrVarPub+0x1c]
+    mov edx, 0x80018005
+    mov eax, ecx
+    mul edx
+    shr edx, 0xf
+    mov eax, edx
+    shl eax, 0xe
+    sub eax, edx
+    lea eax, [edx+eax*4]
+    sub ecx, eax
+    add ecx, 0x8003
+    mov eax, ecx
+    shl eax, 0x4
+    lea edx, [eax+scrVarGlob]
+    mov [ebp-0xe0], edx
+    movzx eax, word [eax+scrVarGlob]
+    shl eax, 0x4
+    lea ebx, [eax+scrVarGlob+0x80020]
+    mov edx, [ebx+0x8]
+    mov eax, edx
+    and eax, 0x60
+    cmp eax, 0x40
+    jz Scr_DumpScriptThreads_470
 Scr_DumpScriptThreads_540:
-	mov ecx, 0x8002
+    mov ecx, 0x8002
 Scr_DumpScriptThreads_530:
-	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
-	movzx edx, ax
-	pxor xmm2, xmm2
-	test ax, ax
-	jz Scr_DumpScriptThreads_480
-	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
-	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
-	movzx edx, ax
-	test ax, ax
-	jnz Scr_DumpScriptThreads_490
-	movaps xmm2, xmm3
+    shl ecx, 0x4
+    movzx eax, word [ecx+scrVarGlob]
+    movzx edx, ax
+    pxor xmm2, xmm2
+    test ax, ax
+    jz Scr_DumpScriptThreads_480
+    shl edx, 0x4
+    mov eax, [edx+scrVarGlob+0x80024]
+    shl eax, 0x4
+    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx edx, ax
+    test ax, ax
+    jnz Scr_DumpScriptThreads_490
+    movaps xmm2, xmm3
 Scr_DumpScriptThreads_480:
-	addss xmm2, [ebp-0xf4]
-	mov ecx, [ebp-0xf8]
-	movss [ecx], xmm2
-	jmp Scr_DumpScriptThreads_500
+    addss xmm2, [ebp-0xf4]
+    mov ecx, [ebp-0xf8]
+    movss [ecx], xmm2
+    jmp Scr_DumpScriptThreads_500
 Scr_DumpScriptThreads_440:
-	mov eax, edx
-	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x10]
-	mov eax, [esi+0x8]
-	and eax, 0x1f
-	cmp eax, 0x15
-	jnz Scr_DumpScriptThreads_510
-	mov eax, edx
-	movss [ebp-0x138], xmm2
-	call Scr_GetObjectUsage
-	movzx eax, word [esi+0x4]
-	cvtsi2ss xmm1, eax
-	movss xmm3, dword [_float_1_00000000]
-	addss xmm1, xmm3
-	divss xmm0, xmm1
-	addss xmm0, xmm3
-	movss xmm2, dword [ebp-0x138]
-	jmp Scr_DumpScriptThreads_520
+    mov eax, edx
+    shl eax, 0x4
+    lea esi, [eax+scrVarGlob+0x10]
+    mov eax, [esi+0x8]
+    and eax, 0x1f
+    cmp eax, 0x15
+    jnz Scr_DumpScriptThreads_510
+    mov eax, edx
+    movss [ebp-0x138], xmm2
+    call Scr_GetObjectUsage
+    movzx eax, word [esi+0x4]
+    cvtsi2ss xmm1, eax
+    movss xmm3, dword [_float_1_00000000]
+    addss xmm1, xmm3
+    divss xmm0, xmm1
+    addss xmm0, xmm3
+    movss xmm2, dword [ebp-0x138]
+    jmp Scr_DumpScriptThreads_520
 Scr_DumpScriptThreads_470:
-	shr edx, 0x8
-	cmp esi, edx
-	jz Scr_DumpScriptThreads_530
-	movzx eax, word [ebx+0xc]
-	lea ecx, [eax+0x8002]
-	mov edx, ecx
-	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
-	cmp [ebp-0xe0], eax
-	jz Scr_DumpScriptThreads_540
+    shr edx, 0x8
+    cmp esi, edx
+    jz Scr_DumpScriptThreads_530
+    movzx eax, word [ebx+0xc]
+    lea ecx, [eax+0x8002]
+    mov edx, ecx
+    shl edx, 0x4
+    lea eax, [edx+scrVarGlob]
+    cmp [ebp-0xe0], eax
+    jz Scr_DumpScriptThreads_540
 Scr_DumpScriptThreads_550:
-	movzx eax, word [edx+scrVarGlob]
-	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
-	mov eax, [edx+0x8]
-	shr eax, 0x8
-	cmp eax, esi
-	jz Scr_DumpScriptThreads_530
-	movzx eax, word [edx+0xc]
-	lea ecx, [eax+0x8002]
-	mov edx, ecx
-	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
-	cmp [ebp-0xe0], eax
-	jnz Scr_DumpScriptThreads_550
-	jmp Scr_DumpScriptThreads_540
+    movzx eax, word [edx+scrVarGlob]
+    shl eax, 0x4
+    lea edx, [eax+scrVarGlob+0x80020]
+    mov eax, [edx+0x8]
+    shr eax, 0x8
+    cmp eax, esi
+    jz Scr_DumpScriptThreads_530
+    movzx eax, word [edx+0xc]
+    lea ecx, [eax+0x8002]
+    mov edx, ecx
+    shl edx, 0x4
+    lea eax, [edx+scrVarGlob]
+    cmp [ebp-0xe0], eax
+    jnz Scr_DumpScriptThreads_550
+    jmp Scr_DumpScriptThreads_540
 Scr_DumpScriptThreads_430:
-	movaps xmm2, xmm3
-	jmp Scr_DumpScriptThreads_450
+    movaps xmm2, xmm3
+    jmp Scr_DumpScriptThreads_450
 Scr_DumpScriptThreads_90:
-	movss xmm3, dword [_float_1_00000000]
-	movss [ebp-0xec], xmm3
-	jmp Scr_DumpScriptThreads_560
+    movss xmm3, dword [_float_1_00000000]
+    movss [ebp-0xec], xmm3
+    jmp Scr_DumpScriptThreads_560
 Scr_DumpScriptThreads_80:
-	mov edx, eax
-	xor esi, esi
-	xor ecx, ecx
-	jmp Scr_DumpScriptThreads_570
+    mov edx, eax
+    xor esi, esi
+    xor ecx, ecx
+    jmp Scr_DumpScriptThreads_570
 Scr_DumpScriptThreads_590:
-	add ecx, 0x1
-	cmp [ebp-0x108], ecx
-	jz Scr_DumpScriptThreads_580
+    add ecx, 0x1
+    cmp [ebp-0x108], ecx
+    jz Scr_DumpScriptThreads_580
 Scr_DumpScriptThreads_570:
-	movzx eax, byte [edx]
-	mov ebx, [edx+0x1]
-	add edx, 0x5
-	cmp al, 0x7
-	jnz Scr_DumpScriptThreads_590
-	mov [ebp+esi*4-0xa4], ebx
-	add esi, 0x1
-	add ecx, 0x1
-	cmp [ebp-0x108], ecx
-	jnz Scr_DumpScriptThreads_570
+    movzx eax, byte [edx]
+    mov ebx, [edx+0x1]
+    add edx, 0x5
+    cmp al, 0x7
+    jnz Scr_DumpScriptThreads_590
+    mov [ebp+esi*4-0xa4], ebx
+    add esi, 0x1
+    add ecx, 0x1
+    cmp [ebp-0x108], ecx
+    jnz Scr_DumpScriptThreads_570
 Scr_DumpScriptThreads_580:
-	lea edx, [esi+0x1]
-	mov [ebp-0xd4], edx
-	jmp Scr_DumpScriptThreads_600
+    lea edx, [esi+0x1]
+    mov [ebp-0xd4], edx
+    jmp Scr_DumpScriptThreads_600
 Scr_DumpScriptThreads_490:
-	movaps xmm2, xmm3
-	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
-	mov edx, [ebx+0x4]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jz Scr_DumpScriptThreads_610
+    movaps xmm2, xmm3
+    shl edx, 0x4
+    lea ebx, [edx+scrVarGlob+0x80020]
+    mov edx, [ebx+0x4]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jz Scr_DumpScriptThreads_610
 Scr_DumpScriptThreads_620:
-	movaps xmm0, xmm3
+    movaps xmm0, xmm3
 Scr_DumpScriptThreads_630:
-	addss xmm2, xmm0
-	movzx eax, word [ebx+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_480
-	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_480
-	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
-	mov edx, [ebx+0x4]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jnz Scr_DumpScriptThreads_620
+    addss xmm2, xmm0
+    movzx eax, word [ebx+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_480
+    shl edx, 0x4
+    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_480
+    shl edx, 0x4
+    lea ebx, [edx+scrVarGlob+0x80020]
+    mov edx, [ebx+0x4]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jnz Scr_DumpScriptThreads_620
 Scr_DumpScriptThreads_610:
-	mov eax, edx
-	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x10]
-	mov eax, [esi+0x8]
-	and eax, 0x1f
-	cmp eax, 0x15
-	jnz Scr_DumpScriptThreads_620
-	mov eax, edx
-	movss [ebp-0x138], xmm2
-	call Scr_GetObjectUsage
-	movzx eax, word [esi+0x4]
-	cvtsi2ss xmm1, eax
-	movss xmm3, dword [_float_1_00000000]
-	addss xmm1, xmm3
-	divss xmm0, xmm1
-	addss xmm0, xmm3
-	movss xmm2, dword [ebp-0x138]
-	jmp Scr_DumpScriptThreads_630
+    mov eax, edx
+    shl eax, 0x4
+    lea esi, [eax+scrVarGlob+0x10]
+    mov eax, [esi+0x8]
+    and eax, 0x1f
+    cmp eax, 0x15
+    jnz Scr_DumpScriptThreads_620
+    mov eax, edx
+    movss [ebp-0x138], xmm2
+    call Scr_GetObjectUsage
+    movzx eax, word [esi+0x4]
+    cvtsi2ss xmm1, eax
+    movss xmm3, dword [_float_1_00000000]
+    addss xmm1, xmm3
+    divss xmm0, xmm1
+    addss xmm0, xmm3
+    movss xmm2, dword [ebp-0x138]
+    jmp Scr_DumpScriptThreads_630
 Scr_DumpScriptThreads_150:
-	movaps xmm2, xmm3
-	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
-	mov edx, [ebx+0x4]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jz Scr_DumpScriptThreads_640
+    movaps xmm2, xmm3
+    shl edx, 0x4
+    lea ebx, [edx+scrVarGlob+0x80020]
+    mov edx, [ebx+0x4]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jz Scr_DumpScriptThreads_640
 Scr_DumpScriptThreads_650:
-	movaps xmm0, xmm3
+    movaps xmm0, xmm3
 Scr_DumpScriptThreads_660:
-	addss xmm2, xmm0
-	movzx eax, word [ebx+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_140
-	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_140
-	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
-	mov edx, [ebx+0x4]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jnz Scr_DumpScriptThreads_650
+    addss xmm2, xmm0
+    movzx eax, word [ebx+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_140
+    shl edx, 0x4
+    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_140
+    shl edx, 0x4
+    lea ebx, [edx+scrVarGlob+0x80020]
+    mov edx, [ebx+0x4]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jnz Scr_DumpScriptThreads_650
 Scr_DumpScriptThreads_640:
-	mov eax, edx
-	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x10]
-	mov eax, [esi+0x8]
-	and eax, 0x1f
-	cmp eax, 0x15
-	jnz Scr_DumpScriptThreads_650
-	mov eax, edx
-	movss [ebp-0x138], xmm2
-	call Scr_GetObjectUsage
-	movzx eax, word [esi+0x4]
-	cvtsi2ss xmm1, eax
-	movss xmm3, dword [_float_1_00000000]
-	addss xmm1, xmm3
-	divss xmm0, xmm1
-	addss xmm0, xmm3
-	movss xmm2, dword [ebp-0x138]
-	jmp Scr_DumpScriptThreads_660
+    mov eax, edx
+    shl eax, 0x4
+    lea esi, [eax+scrVarGlob+0x10]
+    mov eax, [esi+0x8]
+    and eax, 0x1f
+    cmp eax, 0x15
+    jnz Scr_DumpScriptThreads_650
+    mov eax, edx
+    movss [ebp-0x138], xmm2
+    call Scr_GetObjectUsage
+    movzx eax, word [esi+0x4]
+    cvtsi2ss xmm1, eax
+    movss xmm3, dword [_float_1_00000000]
+    addss xmm1, xmm3
+    divss xmm0, xmm1
+    addss xmm0, xmm3
+    movss xmm2, dword [ebp-0x138]
+    jmp Scr_DumpScriptThreads_660
 Scr_DumpScriptThreads_330:
-	movaps xmm2, xmm3
-	movzx eax, word [ebx+0x4]
-	cvtsi2ss xmm0, eax
-	addss xmm0, xmm3
-	divss xmm2, xmm0
-	movaps xmm0, xmm2
-	jmp Scr_DumpScriptThreads_370
+    movaps xmm2, xmm3
+    movzx eax, word [ebx+0x4]
+    cvtsi2ss xmm0, eax
+    addss xmm0, xmm3
+    divss xmm2, xmm0
+    movaps xmm0, xmm2
+    jmp Scr_DumpScriptThreads_370
 Scr_DumpScriptThreads_40:
-	mov dword [esp+0x4], _cstring_cannot_dump_scri
-	mov dword [esp], 0x17
-	call Com_Printf
-	jmp Scr_DumpScriptThreads_670
+    mov dword [esp+0x4], _cstring_cannot_dump_scri
+    mov dword [esp], 0x17
+    call Com_Printf
+    jmp Scr_DumpScriptThreads_670
 Scr_DumpScriptThreads_230:
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x17
-	call Com_Printf
-	jmp Scr_DumpScriptThreads_670
+    mov dword [esp+0x4], _cstring_
+    mov dword [esp], 0x17
+    call Com_Printf
+    jmp Scr_DumpScriptThreads_670
 Scr_DumpScriptThreads_210:
-	mov dword [ebp-0x110], 0x0
-	pxor xmm0, xmm0
-	movss [ebp-0xfc], xmm0
-	movss [ebp-0x100], xmm0
+    mov dword [ebp-0x110], 0x0
+    pxor xmm0, xmm0
+    movss [ebp-0xfc], xmm0
+    movss [ebp-0x100], xmm0
 Scr_DumpScriptThreads_780:
-	mov eax, [ebp-0x110]
-	lea edx, [eax+eax*4]
-	lea eax, [edx*8]
-	sub eax, edx
-	mov edx, [ebp-0x118]
-	lea edi, [edx+eax*4]
-	mov [ebp-0xcc], edi
-	lea ecx, [edi+0x8c]
-	mov [ebp-0xc8], ecx
-	mov [ebp-0xc4], ecx
-	mov dword [ebp-0x10c], 0x0
-	movaps xmm1, xmm0
-	mov eax, edi
+    mov eax, [ebp-0x110]
+    lea edx, [eax+eax*4]
+    lea eax, [edx*8]
+    sub eax, edx
+    mov edx, [ebp-0x118]
+    lea edi, [edx+eax*4]
+    mov [ebp-0xcc], edi
+    lea ecx, [edi+0x8c]
+    mov [ebp-0xc8], ecx
+    mov [ebp-0xc4], ecx
+    mov dword [ebp-0x10c], 0x0
+    movaps xmm1, xmm0
+    mov eax, edi
 Scr_DumpScriptThreads_710:
-	add dword [ebp-0x10c], 0x1
-	addss xmm0, [eax+0x84]
-	addss xmm1, [eax+0x88]
-	add dword [ebp-0x110], 0x1
-	mov edx, [ebp-0x110]
-	cmp [ebp-0x114], edx
-	jle Scr_DumpScriptThreads_680
-	mov ecx, [edi+0x80]
-	mov [ebp-0xdc], ecx
-	test ecx, ecx
-	jle Scr_DumpScriptThreads_690
-	mov eax, [ebp-0xc4]
-	mov eax, [eax+0x80]
-	mov [ebp-0xb8], eax
-	test eax, eax
-	jle Scr_DumpScriptThreads_690
-	mov edx, [edi]
-	mov ecx, [ebp-0xc4]
-	mov eax, [ecx]
-	cmp edx, eax
-	jz Scr_DumpScriptThreads_700
+    add dword [ebp-0x10c], 0x1
+    addss xmm0, [eax+0x84]
+    addss xmm1, [eax+0x88]
+    add dword [ebp-0x110], 0x1
+    mov edx, [ebp-0x110]
+    cmp [ebp-0x114], edx
+    jle Scr_DumpScriptThreads_680
+    mov ecx, [edi+0x80]
+    mov [ebp-0xdc], ecx
+    test ecx, ecx
+    jle Scr_DumpScriptThreads_690
+    mov eax, [ebp-0xc4]
+    mov eax, [eax+0x80]
+    mov [ebp-0xb8], eax
+    test eax, eax
+    jle Scr_DumpScriptThreads_690
+    mov edx, [edi]
+    mov ecx, [ebp-0xc4]
+    mov eax, [ecx]
+    cmp edx, eax
+    jz Scr_DumpScriptThreads_700
 Scr_DumpScriptThreads_730:
-	sub edx, eax
-	mov eax, edx
-	add dword [ebp-0xcc], 0x8c
-	add dword [ebp-0xc8], 0x8c
-	add dword [ebp-0xc4], 0x8c
-	test eax, eax
-	jnz Scr_DumpScriptThreads_680
+    sub edx, eax
+    mov eax, edx
+    add dword [ebp-0xcc], 0x8c
+    add dword [ebp-0xc8], 0x8c
+    add dword [ebp-0xc4], 0x8c
+    test eax, eax
+    jnz Scr_DumpScriptThreads_680
 Scr_DumpScriptThreads_750:
-	mov eax, [ebp-0xcc]
-	jmp Scr_DumpScriptThreads_710
+    mov eax, [ebp-0xcc]
+    jmp Scr_DumpScriptThreads_710
 Scr_DumpScriptThreads_700:
-	mov ebx, edi
-	mov ecx, [ebp-0xc8]
-	xor esi, esi
-	jmp Scr_DumpScriptThreads_720
+    mov ebx, edi
+    mov ecx, [ebp-0xc8]
+    xor esi, esi
+    jmp Scr_DumpScriptThreads_720
 Scr_DumpScriptThreads_740:
-	cmp esi, [ebp-0xb8]
-	jz Scr_DumpScriptThreads_690
-	mov edx, [ebx+0x4]
-	mov eax, [ecx+0x4]
-	add ebx, 0x4
-	add ecx, 0x4
-	cmp edx, eax
-	jnz Scr_DumpScriptThreads_730
+    cmp esi, [ebp-0xb8]
+    jz Scr_DumpScriptThreads_690
+    mov edx, [ebx+0x4]
+    mov eax, [ecx+0x4]
+    add ebx, 0x4
+    add ecx, 0x4
+    cmp edx, eax
+    jnz Scr_DumpScriptThreads_730
 Scr_DumpScriptThreads_720:
-	add esi, 0x1
-	cmp esi, [ebp-0xdc]
-	jnz Scr_DumpScriptThreads_740
+    add esi, 0x1
+    cmp esi, [ebp-0xdc]
+    jnz Scr_DumpScriptThreads_740
 Scr_DumpScriptThreads_690:
-	mov eax, [ebp-0xdc]
-	mov edx, [ebp-0xc8]
-	sub eax, [edx+0x80]
-	add dword [ebp-0xcc], 0x8c
-	add dword [ebp-0xc8], 0x8c
-	add dword [ebp-0xc4], 0x8c
-	test eax, eax
-	jz Scr_DumpScriptThreads_750
+    mov eax, [ebp-0xdc]
+    mov edx, [ebp-0xc8]
+    sub eax, [edx+0x80]
+    add dword [ebp-0xcc], 0x8c
+    add dword [ebp-0xc8], 0x8c
+    add dword [ebp-0xc4], 0x8c
+    test eax, eax
+    jz Scr_DumpScriptThreads_750
 Scr_DumpScriptThreads_680:
-	movss xmm2, dword [ebp-0x100]
-	addss xmm2, xmm0
-	movss [ebp-0x100], xmm2
-	movss xmm2, dword [ebp-0xfc]
-	addss xmm2, xmm1
-	movss [ebp-0xfc], xmm2
-	cvttss2si eax, xmm1
-	mov [esp+0x10], eax
-	cvttss2si eax, xmm0
-	mov [esp+0xc], eax
-	mov eax, [ebp-0x10c]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_count_d_var_usag
-	mov dword [esp], 0x17
-	call Com_Printf
-	mov dword [esp+0x8], 0x0
-	mov eax, [edi]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x17
-	call Scr_PrintPrevCodePos
-	cmp dword [edi+0x80], 0x1
-	jg Scr_DumpScriptThreads_760
+    movss xmm2, dword [ebp-0x100]
+    addss xmm2, xmm0
+    movss [ebp-0x100], xmm2
+    movss xmm2, dword [ebp-0xfc]
+    addss xmm2, xmm1
+    movss [ebp-0xfc], xmm2
+    cvttss2si eax, xmm1
+    mov [esp+0x10], eax
+    cvttss2si eax, xmm0
+    mov [esp+0xc], eax
+    mov eax, [ebp-0x10c]
+    mov [esp+0x8], eax
+    mov dword [esp+0x4], _cstring_count_d_var_usag
+    mov dword [esp], 0x17
+    call Com_Printf
+    mov dword [esp+0x8], 0x0
+    mov eax, [edi]
+    mov [esp+0x4], eax
+    mov dword [esp], 0x17
+    call Scr_PrintPrevCodePos
+    cmp dword [edi+0x80], 0x1
+    jg Scr_DumpScriptThreads_760
 Scr_DumpScriptThreads_800:
-	mov ecx, [ebp-0x110]
-	cmp [ebp-0x114], ecx
-	jle Scr_DumpScriptThreads_770
-	pxor xmm0, xmm0
-	jmp Scr_DumpScriptThreads_780
+    mov ecx, [ebp-0x110]
+    cmp [ebp-0x114], ecx
+    jle Scr_DumpScriptThreads_770
+    pxor xmm0, xmm0
+    jmp Scr_DumpScriptThreads_780
 Scr_DumpScriptThreads_760:
-	mov esi, edi
-	mov ebx, 0x1
+    mov esi, edi
+    mov ebx, 0x1
 Scr_DumpScriptThreads_790:
-	mov dword [esp+0x4], _cstring_called_from
-	mov dword [esp], 0x17
-	call Com_Printf
-	mov dword [esp+0x8], 0x0
-	mov eax, [esi+0x4]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x17
-	call Scr_PrintPrevCodePos
-	add ebx, 0x1
-	add esi, 0x4
-	cmp ebx, [edi+0x80]
-	jl Scr_DumpScriptThreads_790
-	jmp Scr_DumpScriptThreads_800
+    mov dword [esp+0x4], _cstring_called_from
+    mov dword [esp], 0x17
+    call Com_Printf
+    mov dword [esp+0x8], 0x0
+    mov eax, [esi+0x4]
+    mov [esp+0x4], eax
+    mov dword [esp], 0x17
+    call Scr_PrintPrevCodePos
+    add ebx, 0x1
+    add esi, 0x4
+    cmp ebx, [edi+0x80]
+    jl Scr_DumpScriptThreads_790
+    jmp Scr_DumpScriptThreads_800
 Scr_DumpScriptThreads_770:
-	cvttss2si esi, [ebp-0xfc]
-	cvttss2si ebx, [ebp-0x100]
-	jmp Scr_DumpScriptThreads_810
+    cvttss2si esi, [ebp-0xfc]
+    cvttss2si ebx, [ebp-0x100]
+    jmp Scr_DumpScriptThreads_810
 Scr_DumpScriptThreads_260:
-	mov eax, [edx+scrVarGlob+0x4]
-	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_820
-	movss xmm2, dword [_float_1_00000000]
-	movaps xmm3, xmm2
+    mov eax, [edx+scrVarGlob+0x4]
+    shl eax, 0x4
+    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_820
+    movss xmm2, dword [_float_1_00000000]
+    movaps xmm3, xmm2
 Scr_DumpScriptThreads_850:
-	shl edx, 0x4
-	lea esi, [edx+scrVarGlob+0x80020]
-	mov edx, [esi+0x4]
-	mov eax, [esi+0x8]
-	and eax, 0x1f
-	sub eax, 0x1
-	jz Scr_DumpScriptThreads_830
+    shl edx, 0x4
+    lea esi, [edx+scrVarGlob+0x80020]
+    mov edx, [esi+0x4]
+    mov eax, [esi+0x8]
+    and eax, 0x1f
+    sub eax, 0x1
+    jz Scr_DumpScriptThreads_830
 Scr_DumpScriptThreads_870:
-	movaps xmm0, xmm3
+    movaps xmm0, xmm3
 Scr_DumpScriptThreads_880:
-	addss xmm2, xmm0
-	movzx eax, word [esi+0xe]
-	movzx edx, ax
-	test ax, ax
-	jz Scr_DumpScriptThreads_840
-	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
-	movzx edx, ax
-	test ax, ax
-	jnz Scr_DumpScriptThreads_850
-	jmp Scr_DumpScriptThreads_840
+    addss xmm2, xmm0
+    movzx eax, word [esi+0xe]
+    movzx edx, ax
+    test ax, ax
+    jz Scr_DumpScriptThreads_840
+    shl edx, 0x4
+    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx edx, ax
+    test ax, ax
+    jnz Scr_DumpScriptThreads_850
+    jmp Scr_DumpScriptThreads_840
 Scr_DumpScriptThreads_820:
-	movss xmm2, dword [_float_1_00000000]
+    movss xmm2, dword [_float_1_00000000]
 Scr_DumpScriptThreads_840:
-	addss xmm2, [ebp-0xd8]
-	movss [ebp-0xd8], xmm2
-	jmp Scr_DumpScriptThreads_860
+    addss xmm2, [ebp-0xd8]
+    movss [ebp-0xd8], xmm2
+    jmp Scr_DumpScriptThreads_860
 Scr_DumpScriptThreads_830:
-	mov eax, edx
-	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x10]
-	mov eax, [ebx+0x8]
-	and eax, 0x1f
-	cmp eax, 0x15
-	jnz Scr_DumpScriptThreads_870
-	mov eax, edx
-	movss [ebp-0x138], xmm2
-	call Scr_GetObjectUsage
-	movzx eax, word [ebx+0x4]
-	cvtsi2ss xmm1, eax
-	movss xmm3, dword [_float_1_00000000]
-	addss xmm1, xmm3
-	divss xmm0, xmm1
-	addss xmm0, xmm3
-	movss xmm2, dword [ebp-0x138]
-	jmp Scr_DumpScriptThreads_880
+    mov eax, edx
+    shl eax, 0x4
+    lea ebx, [eax+scrVarGlob+0x10]
+    mov eax, [ebx+0x8]
+    and eax, 0x1f
+    cmp eax, 0x15
+    jnz Scr_DumpScriptThreads_870
+    mov eax, edx
+    movss [ebp-0x138], xmm2
+    call Scr_GetObjectUsage
+    movzx eax, word [ebx+0x4]
+    cvtsi2ss xmm1, eax
+    movss xmm3, dword [_float_1_00000000]
+    addss xmm1, xmm3
+    divss xmm0, xmm1
+    addss xmm0, xmm3
+    movss xmm2, dword [ebp-0x138]
+    jmp Scr_DumpScriptThreads_880
 
 
 ;Scr_EvalVariableField(unsigned int)
@@ -14085,7 +14085,6 @@ FreeValue_30:
 
 ;Initialized global or static variables of scr_variable:
 SECTION .data
-var_typename: dd _cstring_undefined, _cstring_object, _cstring_string, _cstring_localized_string, _cstring_vector, _cstring_float, _cstring_int, _cstring_codepos, _cstring_precodepos, _cstring_function, _cstring_stack, _cstring_animation, _cstring_developer_codepo, _cstring_include_codepos, _cstring_thread, _cstring_thread, _cstring_thread, _cstring_thread, _cstring_struct, _cstring_removed_entity, _cstring_entity, _cstring_array, _cstring_removed_thread, 0x0
 g_classMap: dd 0x0, 0x65, _cstring_entity, 0x0, 0x68, _cstring_hudelem, 0x0, 0x70, _cstring_pathnode, 0x0, 0x76, _cstring_vehiclenode, 0x0, 0x0, 0x0, 0x0
 
 

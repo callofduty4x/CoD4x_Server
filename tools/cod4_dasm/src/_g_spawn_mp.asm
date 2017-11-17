@@ -1969,7 +1969,7 @@ _cstring_gravity:		db "gravity",0
 _cstring_northyaw:		db "northyaw",0
 _cstring_0:		db "0",0
 _cstring_spawnflags:		db "spawnflags",0
-_cstring_sp_worldspawn_th:		db 15h,"SP_worldspawn: The first entity isn",27h,"t ",27h,"worldspawn",27h,0
+_cstring_sp_worldspawn_th:		db 015h,"SP_worldspawn: The first entity isn",27h,"t ",27h,"worldspawn",27h,0
 _cstring_not_an_entity:		db "not an entity",0
 _cstring_g_callspawnentit:		db "G_CallSpawnEntity: NULL classname",0ah,0
 _cstring_weapon_:		db "weapon_",0
@@ -1978,7 +1978,7 @@ _cstring_txt:		db "txt",0
 _cstring_radiant:		db "radiant",0
 _cstring_dyn_:		db "dyn_",0
 _cstring_g_callspawn_null:		db "G_CallSpawn: NULL classname",0ah,0
-_cstring_spawnentities_no:		db 15h,"SpawnEntities: no entities",0
+_cstring_spawnentities_no:		db 015h,"SpawnEntities: no entities",0
 _cstring_trigger_use:		db "trigger_use",0
 _cstring_trigger_use_touc:		db "trigger_use_touch",0
 _cstring_trigger_multiple:		db "trigger_multiple",0

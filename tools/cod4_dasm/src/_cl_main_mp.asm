@@ -2,7 +2,7 @@
 	extern FS_Write
 	extern memset
 	extern cl_cdkey
-	extern strlwr
+	extern Q_strlwr
 	extern g_largeLocalBuf
 	extern MD5Init
 	extern MD5Update
@@ -645,7 +645,7 @@ CL_BuildMd5StrFromCDKey_90:
 CL_BuildMd5StrFromCDKey_100:
 	mov byte [ecx], 0x0
 	mov [esp], esi
-	call strlwr
+	call Q_strlwr
 	mov dword [esp+0x4], g_largeLocalBuf+0x74783
 	lea ebx, [ebp-0xc0]
 	mov [esp], ebx
@@ -8265,7 +8265,7 @@ _cstring_timedemo:		db "timedemo",0
 _cstring_null:		db 0
 _cstring_listen_server_ca:		db "listen server cannot play a demo.",0ah,0
 _cstring_demossdm_d:		db "demos/%s.dm_%d",0
-_cstring_exe_err_not_foun:		db "EXE_ERR_NOT_FOUND",15h,"%s",0
+_cstring_exe_err_not_foun:		db "EXE_ERR_NOT_FOUND",015h,"%s",0
 _cstring_quit:		db "quit",0
 _cstring_exe_serverdiscon:		db "EXE_SERVERDISCONNECTREASON",0
 _cstring_exe_server_disco:		db "EXE_SERVER_DISCONNECTED",0
@@ -8387,9 +8387,9 @@ _cstring_mod:		db "mod",0
 _cstring_current_game_is_:		db "Current game is an online game with stats, custom classes, unlocks",0
 _cstring_onlinegame:		db "onlinegame",0
 _cstring_nizml:		db "ni]Zm^l",0
-_cstring_s_is_different_f:		db 15h,"%s is different from the server",0ah,0
+_cstring_s_is_different_f:		db 015h,"%s is different from the server",0ah,0
 _cstring_need_files_s:		db "Need files: %s",0ah,0
-_cstring_you_are_missing_:		db 15h,"You are missing some files referenced by the server:",0ah,"%sGo to the Multiplayer options menu to allow downloads",0ah,0ah,0
+_cstring_you_are_missing_:		db 015h,"You are missing some files referenced by the server:",0ah,"%sGo to the Multiplayer options menu to allow downloads",0ah,0ah,0
 _cstring_listen_server_ca1:		db "Listen server cannot sound restart.",0ah,0
 _cstring_vdr:		db "vdr",0
 _cstring_the_current_lang:		db "The current language locale",0
@@ -8403,7 +8403,7 @@ _cstring_ui_mp:		db "ui_mp",0
 _cstring_listen_server_ca2:		db "Listen server cannot video restart.",0ah,0
 _cstring_mapname:		db "mapname",0
 _cstring_va_:		db "Va ",0
-_cstring_cl_checkforresen:		db 15h,"CL_CheckForResend: bad connstate",0
+_cstring_cl_checkforresen:		db 015h,"CL_CheckForResend: bad connstate",0
 _cstring_i:		db "%i",0
 _cstring_protocol:		db "protocol",0
 _cstring_challenge:		db "challenge",0
@@ -8418,7 +8418,7 @@ _cstring_not_connected_to:		db "Not connected to a server.",0ah,0
 _cstring_4i_s:		db "%4i: %s",0ah,0
 _cstring_opened_iwd_names:		db "Opened IWD Names: %s",0ah,0
 _cstring_demo_file_was_co:		db "Demo file was corrupt.",0ah,0
-_cstring_cl_readdemomessa:		db 15h,"CL_ReadDemoMessage: demoMsglen > MAX_MSGLEN",0
+_cstring_cl_readdemomessa:		db 015h,"CL_ReadDemoMessage: demoMsglen > MAX_MSGLEN",0
 _cstring_demo_file_was_tr:		db "Demo file was truncated.",0ah,0
 _cstring_usage_openscript:		db "USAGE: openscriptmenu <parent menu name> <script menu response>",0ah,0
 _cstring_example_openscri:		db "EXAMPLE: openscriptmenu ingame changeweapon",0ah,0

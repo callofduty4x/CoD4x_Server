@@ -2262,11 +2262,11 @@ _cstring_3is:		db "%3i:%s",0ah,0
 _cstring_packet_entities:		db "packet entities",0
 _cstring_packet_clients:		db "packet clients",0
 _cstring_delta_from_inval:		db "Delta from invalid frame (not supposed to happen!).",0ah,0
-_cstring_cl_parsepacketen:		db 15h,"CL_ParsePacketEntities: end of message",0
+_cstring_cl_parsepacketen:		db 015h,"CL_ParsePacketEntities: end of message",0
 _cstring_3i__unchanged_i:		db "%3i:  unchanged: %i",0ah,0
 _cstring_3i_unchanged_ent:		db "%3i: unchanged ent, eType %s at %f, %f, %f",0ah,0
 _cstring_entities_in_pack:		db "Entities in packet: %i",0ah,0
-_cstring_cl_parsepacketcl:		db 15h,"CL_ParsePacketClients: end of message",0
+_cstring_cl_parsepacketcl:		db 015h,"CL_ParsePacketClients: end of message",0
 _cstring_3i__baseline_i:		db "%3i:  baseline: %i",0ah,0
 _cstring_delta_parseentit:		db "Delta parseEntitiesNum too old.",0ah,0
 _cstring_3i__delta_i:		db "%3i:  delta: %i",0ah,0
@@ -2295,11 +2295,11 @@ _cstring_:		db "------------------",0ah,0
 _cstring_cl_parseserverme:		db "CL_ParseServerMessage: Illegible server message %d",0ah,0
 _cstring_compressed_msg_o:		db "Compressed msg overflow in CL_ParseServerMessage",0
 _cstring_3ibad_cmd_i:		db "%3i:BAD CMD %i",0ah,0
-_cstring_baseline_number_:		db 15h,"Baseline number out of range: %i",0
+_cstring_baseline_number_:		db 015h,"Baseline number out of range: %i",0
 _cstring_i_:		db "%i ",0
 _cstring_end_of_message:		db "END OF MESSAGE",0
-_cstring_configstring__ma:		db 15h,"configstring > MAX_CONFIGSTRINGS",0
-_cstring_max_gamestate_ch:		db 15h,"MAX_GAMESTATE_CHARS exceeded",0
+_cstring_configstring__ma:		db 015h,"configstring > MAX_CONFIGSTRINGS",0
+_cstring_max_gamestate_ch:		db 015h,"MAX_GAMESTATE_CHARS exceeded",0
 _cstring_cl_parsegamestat:		db "CL_ParseGamestate: bad command byte %d",0ah,0
 _cstring_couldnt_find_exa:		db "Couldn",27h,"t find exact match for servertime %i, using servertime %i",0ah,0
 _cstring_svc_nop:		db "svc_nop",0

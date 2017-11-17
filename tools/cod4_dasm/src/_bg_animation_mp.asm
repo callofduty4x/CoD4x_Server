@@ -6018,8 +6018,8 @@ globalScriptData: resb 0x78
 
 ;All cstrings:
 SECTION .rdata
-_cstring_bg_getanimationf:		db 15h,"BG_GetAnimationForIndex: index out of bounds",0
-_cstring_player_animation:		db 15h,"Player animation index out of range (%i): %i",0
+_cstring_bg_getanimationf:		db 015h,"BG_GetAnimationForIndex: index out of bounds",0
+_cstring_player_animation:		db 015h,"Player animation index out of range (%i): %i",0
 _cstring_death_animation_:		db "death animation ",27h,"%s",27h," is looping",0
 _cstring_:		db ",",0
 _cstring_none:		db "none",0
@@ -6043,7 +6043,7 @@ _cstring_2:		db "{",0
 _cstring_bg_animparseanim3:		db "BG_AnimParseAnimScript: expected condition define string",0
 _cstring_bg_animparseanim4:		db "BG_AnimParseAnimScript: expected condition type string",0
 _cstring_3:		db "}",0
-_cstring_couldnt_load_pla:		db 15h,"Couldn",27h,"t load player animation script %s",0ah,0
+_cstring_couldnt_load_pla:		db 015h,"Couldn",27h,"t load player animation script %s",0ah,0
 _cstring_state:		db "state",0
 _cstring_bg_animparseanim5:		db "BG_AnimParseAnimScript: expected ",27h,"state",27h,0
 _cstring_bg_animparseanim6:		db "BG_AnimParseAnimScript: expected ",27h,"{",27h,0
@@ -6064,8 +6064,8 @@ _cstring_legs:		db "legs",0
 _cstring_turning:		db "turning",0
 _cstring_root:		db "root",0
 _cstring_unused:		db "unused",0
-_cstring_player_animation1:		db 15h,"Player animation index %i out of 0 to %i range",0
-_cstring_could_not_find_a:		db 15h,"Could not find animation tree ",27h,"%s",27h,0
+_cstring_player_animation1:		db 015h,"Player animation index %i out of 0 to %i range",0
+_cstring_could_not_find_a:		db 015h,"Could not find animation tree ",27h,"%s",27h,0
 _cstring_bg_parsecommands:		db "BG_ParseCommands: expected animation",0
 _cstring_duration:		db "duration",0
 _cstring_bg_parsecommands1:		db "BG_ParseCommands: expected duration value",0
@@ -6079,8 +6079,8 @@ _cstring_bg_parsecommands5:		db "BG_ParseCommands: unknown parameter ",27h,"%s",
 _cstring_blendtime:		db "blendtime",0
 _cstring_bg_parsecommands6:		db "BG_ParseCommands: expected blendtime value",0
 _cstring_bg_parsecommands7:		db "BG_ParseCommands: exceeded maximum number of animations (%i)",0
-_cstring_s_s_line_i:		db 15h,"%s: (%s, line %i)",0
-_cstring_s:		db 15h,"%s",0
+_cstring_s_s_line_i:		db 015h,"%s: (%s, line %i)",0
+_cstring_s:		db 015h,"%s",0
 _cstring_bg_indexforstrin:		db "BG_IndexForString: unknown token ",27h,"%s",27h,0
 _cstring_bg_animationinde:		db "BG_AnimationIndexForString: unknown player animation ",27h,"%s",27h,0
 _cstring_pain:		db "PAIN",0

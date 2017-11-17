@@ -867,7 +867,7 @@ static void Cmd_Undercover_f() {
 		}
 		client_t* cl = &svs.clients[invokerclnum];
 		gc = G_GetPlayerState(invokerclnum);
-		if(gc && gc->sess.sessionState == STATE_PLAYING)
+		if(gc && gc->sess.sessionState == SESS_STATE_PLAYING)
 		{
 			Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You can not use the command \"undercover\" when you are alive\n");
 			return;
@@ -893,7 +893,7 @@ static void Cmd_Undercover_f() {
 		return;
 
 	gc = G_GetPlayerState(cl - svs.clients);
-	if(gc && gc->sess.sessionState == STATE_PLAYING)
+	if(gc && gc->sess.sessionState == SESS_STATE_PLAYING)
 	{
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You can not use the command \"undercover\" when you are alive\n");
 		return;
@@ -2347,14 +2347,29 @@ void SV_GetModules_f()
 	BuildModuleRequests(cl.cl);
 }
 
-void SV_AddOperatorCommands(){
 
+void SV_AddOperatorCommands()
+{
 	static qboolean	initialized;
 
-	if ( initialized ) {
-		return;
-	}
 	initialized = qtrue;
+
+	//Former safe commands
+	Cmd_AddPCommand ("systeminfo", SV_Systeminfo_f, 1);
+	Cmd_AddPCommand ("serverinfo", SV_Serverinfo_f, 1);
+	Cmd_AddPCommand ("map", SV_Map_f, 60);
+	Cmd_AddCommand ("map_rotate", SV_MapRotate_f);
+	Cmd_AddCommand ("addAdvertMsg", SV_AddAdvert_f);
+	Cmd_AddCommand ("addRuleMsg", SV_AddRule_f);
+	Cmd_AddCommand ("clearAllMsg", SV_ClearAllMessages_f);
+	Cmd_AddCommand ("writenvcfg", NV_WriteConfig);
+	Cmd_AddCommand ("status", SV_Status_f);
+	Cmd_AddCommand ("addCommand", Cmd_AddTranslatedCommand_f);
+	Cmd_AddCommand ("downloadmap", SV_DownloadMap_f);
+	Cmd_AddPCommand ("gametype", SV_ChangeGametype_f, 80);
+
+
+	//Other commands
 	Cmd_AddPCommand ("getmodules", SV_GetModules_f, 45);
 	Cmd_AddCommand ("killserver", SV_KillServer_f);
 	Cmd_AddCommand ("setPerk", SV_SetPerk_f);
@@ -2394,89 +2409,9 @@ void SV_AddOperatorCommands(){
 
 	}
 
-}
-
-void SV_AddSafeCommands(){
-
-	static qboolean	initialized;
-
-	if ( initialized ) {
-		return;
-	}
-	initialized = qtrue;
-
-	Cmd_AddPCommand ("systeminfo", SV_Systeminfo_f, 1);
-	Cmd_AddPCommand ("serverinfo", SV_Serverinfo_f, 1);
-	Cmd_AddPCommand ("map", SV_Map_f, 60);
-	Cmd_AddCommand ("map_rotate", SV_MapRotate_f);
-	Cmd_AddCommand ("addAdvertMsg", SV_AddAdvert_f);
-	Cmd_AddCommand ("addRuleMsg", SV_AddRule_f);
-	Cmd_AddCommand ("clearAllMsg", SV_ClearAllMessages_f);
-	Cmd_AddCommand ("writenvcfg", NV_WriteConfig);
-	Cmd_AddCommand ("status", SV_Status_f);
-	Cmd_AddCommand ("addCommand", Cmd_AddTranslatedCommand_f);
-	Cmd_AddCommand ("downloadmap", SV_DownloadMap_f);
-	Cmd_AddPCommand ("gametype", SV_ChangeGametype_f, 80);
 
 }
 
-
-
-
-void SV_Cmd_Init( void ) {
-
-	*(int*)0x8879a40 = -1;
-	*(int*)0x887eb40 = 0;
-	*(int*)0x887eb44 = 0;
-
-}
-
-
-/*
-============
-SV_Cmd_Argc	Returns count of commandline arguments
-============
-*/
-int	SV_Cmd_Argc( void ) {
-
-	int	cmd_argc;
-
-	__asm__ (
-	"mov	0x8879a40,%%eax			\n\t"
-	"mov	0x8879a84(,%%eax,4), %%eax	\n\t"
-	:"=a" (cmd_argc));
-
-	return cmd_argc;
-}
-
-
-/*
-============
-SV_Cmd_Argv	Returns commandline argument by number
-============
-*/
-
-char	*SV_Cmd_Argv( int arg ) {
-
-	char* cmd_argv;
-
-	__asm__ (
-	"mov	0x8879a40,%%eax			\n\t"
-	"mov    $0x822be98,%%edx		\n\t"
-	"cmpl   %%ecx,0x8879a84(,%%eax,4)	\n\t"
-	"jle	1f				\n\t"
-	"mov    0x8879aa4(,%%eax,4),%%eax	\n\t"
-	"lea	(%%eax,%%ecx,4),%%edx		\n\t"
-	"mov    0x4(%%eax),%%edx		\n\t"
-	"lea	(%%eax,%%ecx,4),%%edx		\n\t"
-	"mov	(%%edx),%%edx			\n\t"
-	"1:					\n\t"
-	"					\n\t"
-	:"=d" (cmd_argv)
-	:"c" (arg)
-	:"eax"					);
-	return (cmd_argv);
-}
 
 /*
 ============

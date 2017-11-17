@@ -1006,11 +1006,11 @@ comBspGlob: resb 0x80
 ;All cstrings:
 SECTION .rdata
 _cstring_no_primary_light:		db "no primary lights in bsp",0ah,0
-_cstring_exe_err_couldnt_:		db "EXE_ERR_COULDNT_LOAD",15h,"%s",0
-_cstring_exe_err_wrong_ma:		db "EXE_ERR_WRONG_MAP_VERSION_NUM",15h,"%s",0
+_cstring_exe_err_couldnt_:		db "EXE_ERR_COULDNT_LOAD",015h,"%s",0
+_cstring_exe_err_wrong_ma:		db "EXE_ERR_WRONG_MAP_VERSION_NUM",015h,"%s",0
 _cstring_failed_to_open_f:		db "Failed to open file %s for writing",0
-_cstring_loadmap_lump_i_h:		db 15h,"LoadMap: lump %i has funny size",0
-_cstring_loadmap_lump_i_e:		db 15h,"LoadMap: lump %i extends past end of file",0
+_cstring_loadmap_lump_i_h:		db 015h,"LoadMap: lump %i has funny size",0
+_cstring_loadmap_lump_i_e:		db 015h,"LoadMap: lump %i extends past end of file",0
 
 
 

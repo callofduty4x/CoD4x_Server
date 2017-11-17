@@ -405,12 +405,12 @@ _ZZ4vtosPKfE5index: resb 0x60
 
 ;All cstrings:
 SECTION .rdata
-_cstring_g_newstring_len_:		db 15h,"G_NewString: len = %i > %i",0ah,0
-_cstring_g_parsespawnvars:		db 15h,"G_ParseSpawnVars: found %s when expecting {",0
-_cstring_g_addspawnvartok:		db 15h,"G_AddSpawnVarToken: MAX_SPAWN_VARS",0
-_cstring_g_parsespawnvars1:		db 15h,"G_ParseSpawnVars: EOF without closing brace",0
-_cstring_g_parsespawnvars2:		db 15h,"G_ParseSpawnVars: closing brace without data",0
-_cstring_g_parsespawnvars3:		db 15h,"G_ParseSpawnVars: MAX_SPAWN_VARS",0
+_cstring_g_newstring_len_:		db 015h,"G_NewString: len = %i > %i",0ah,0
+_cstring_g_parsespawnvars:		db 015h,"G_ParseSpawnVars: found %s when expecting {",0
+_cstring_g_addspawnvartok:		db 015h,"G_AddSpawnVarToken: MAX_SPAWN_VARS",0
+_cstring_g_parsespawnvars1:		db 015h,"G_ParseSpawnVars: EOF without closing brace",0
+_cstring_g_parsespawnvars2:		db 015h,"G_ParseSpawnVars: closing brace without data",0
+_cstring_g_parsespawnvars3:		db 015h,"G_ParseSpawnVars: MAX_SPAWN_VARS",0
 _cstring_i_i_i:		db "(%i %i %i)",0
 
 

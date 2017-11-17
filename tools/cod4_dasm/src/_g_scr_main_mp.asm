@@ -195,13 +195,12 @@
 	extern G_DObjGetWorldTagMatrix
 	extern memset
 	extern FS_GetFileList
-	extern strlwr
+	extern Q_strlwr
 	extern FS_FOpenFileByMode
 	extern FS_FCloseFile
 	extern FS_Read
 	extern Com_Parse
 	extern DB_FindXAssetHeader
-	extern Q_strlwr
 	extern CanDamage
 	extern Player_GetMethod
 	extern ScriptEnt_GetMethod
@@ -13497,7 +13496,7 @@ Scr_ParseGameTypeList_LoadObj_50:
 	mov [esp], edi
 	call Q_strncpyz
 	mov [esp], edi
-	call strlwr
+	call Q_strlwr
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_mapsmpgametypess
 	call va
@@ -16577,7 +16576,7 @@ _cstring_ti:		db "t",5ch,"%i",0
 _cstring_ambientstop_fade:		db "ambientStop: fade time must be >= 0",0ah,0
 _cstring_model_name_strin:		db "Model name string is empty",0
 _cstring_precachemodel_mu:		db "precacheModel must be called before any wait statements in the gametype or level script",0ah,0
-_cstring_couldnt_find_she:		db 15h,"couldn",27h,"t find shell shock ",27h,"%s",27h," -- see console",0ah,0
+_cstring_couldnt_find_she:		db 015h,"couldn",27h,"t find shell shock ",27h,"%s",27h," -- see console",0ah,0
 _cstring_precacheshellsho:		db "precacheShellShock must be called before any wait statements in the gametype or level script",0ah,0
 _cstring_precacheitem_mus:		db "precacheItem must be called before any wait statements in the gametype or level script",0ah,0
 _cstring_unknown_item_s:		db "unknown item ",27h,"%s",27h,0
@@ -16733,8 +16732,8 @@ _cstring_entity_is_not_an:		db "Entity is not an item.",0
 _cstring_item_entity_is_n:		db "Item entity is not a weapon.",0
 _cstring_value_out_of_ran:		db "Value out of range.  Allowed values: 0 to %i",0
 _cstring_ammo_count_must_:		db "Ammo count must not be negative",0
-_cstring_could_not_find_l:		db 15h,"Could not find label ",27h,"%s",27h," in script ",27h,"%s",27h,0
-_cstring_could_not_find_s:		db 15h,"Could not find script ",27h,"%s",27h,0
+_cstring_could_not_find_l:		db 015h,"Could not find label ",27h,"%s",27h," in script ",27h,"%s",27h,0
+_cstring_could_not_find_s:		db 015h,"Could not find script ",27h,"%s",27h,0
 _cstring_illegal_characte:		db "Illegal character ",27h,"%c",27h,"(ascii %i) in objective icon name: %s",0ah,0
 _cstring_objective_icon_n:		db "Objective icon name is too long (> %i): %s",0ah,0
 _cstring_entity_has_no_mo1:		db "entity has no model defined (classname ",27h,"%s",27h,")",0

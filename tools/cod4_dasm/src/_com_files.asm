@@ -7661,7 +7661,7 @@ lastValidGame: resb 0x100
 
 ;All cstrings:
 SECTION .rdata
-_cstring_fs_buildospath_o:		db 15h,"FS_BuildOSPath: os path length exceeded",0ah,0
+_cstring_fs_buildospath_o:		db 015h,"FS_BuildOSPath: os path length exceeded",0ah,0
 _cstring_mods:		db "mods",0
 _cstring_error_invalid_se:		db "ERROR: Invalid server value ",27h,"%s",27h," for ",27h,"%s",27h,0ah,0ah,0
 _cstring_:		db "..",0
@@ -7700,7 +7700,7 @@ _cstring_menu:		db ".menu",0
 _cstring_arena:		db ".arena",0
 _cstring_str:		db ".str",0
 _cstring_fs_fopenfileread1:		db "FS_FOpenFileRead: %s (found in ",27h,"%s",27h,")",0ah,0
-_cstring_couldnt_reopen_s:		db 15h,"Couldn",27h,"t reopen %s",0
+_cstring_couldnt_reopen_s:		db 015h,"Couldn",27h,"t reopen %s",0
 _cstring_cant_find_s:		db "Can",27h,"t find %s",0ah,0
 _cstring_cfg1:		db "cfg",0
 _cstring_dm_network_proto:		db ".dm_NETWORK_PROTOCOL_VERSION",0
@@ -7713,7 +7713,7 @@ _cstring_temp:		db "temp",0
 _cstring_raw:		db "raw",0
 _cstring_raw_shared:		db "raw_shared",0
 _cstring_devraw:		db "devraw",0
-_cstring_fs_readfile_with:		db 15h,"FS_ReadFile with empty name",0ah,0
+_cstring_fs_readfile_with:		db 015h,"FS_ReadFile with empty name",0ah,0
 _cstring_default_mpcfg:		db "default_mp.cfg",0
 _cstring_config_mpcfg:		db "config_mp.cfg",0
 _cstring_exec_s:		db "exec %s",0ah,0
@@ -7744,8 +7744,8 @@ _cstring_2:		db "----------------------",0ah,0
 _cstring_d_files_in_iwd_f:		db "%d files in iwd files",0ah,0
 _cstring_devraw_shared:		db "devraw_shared",0
 _cstring_s_shared:		db "%s_shared",0
-_cstring_short_read_in_fs:		db 15h,"Short read in FS_CopyFile()",0ah,0
-_cstring_short_write_in_f:		db 15h,"Short write in FS_CopyFile()",0ah,0
+_cstring_short_read_in_fs:		db 015h,"Short read in FS_CopyFile()",0ah,0
+_cstring_short_write_in_f:		db 015h,"Short write in FS_CopyFile()",0ah,0
 _cstring_failed_to_open_s:		db "Failed to open %s",0ah,0
 _cstring_current_language:		db "Current language: %s",0ah,0
 _cstring_current_search_p:		db "Current search path:",0ah,0
@@ -7761,19 +7761,19 @@ _cstring_____localized_as2:		db "    localized assets are being ignored",0ah,0
 _cstring_modlist:		db "$modlist",0
 _cstring_file_2i_s_0xx:		db "FILE %2i: ",27h,"%s",27h," 0x%x",0ah,0
 _cstring_fs_handleforfile:		db "FS_HandleForFile: none free (%d)",0ah,0
-_cstring_fs_handleforfile1:		db 15h,"FS_HandleForFile: none free",0
+_cstring_fs_handleforfile1:		db 015h,"FS_HandleForFile: none free",0
 _cstring_loc_language:		db "loc_language",0
 _cstring_filesyscheckcfg:		db "fileSysCheck.cfg",0
 _cstring_mapsmpsd3dbsp:		db "maps/mp/%s.d3dbsp",0
 _cstring_fs_fopenfileappe:		db "FS_FOpenFileAppend: %s",0ah,0
-_cstring_fsh_fopenfile_ba:		db 15h,"FSH_FOpenFile: bad mode",0
+_cstring_fsh_fopenfile_ba:		db 015h,"FSH_FOpenFile: bad mode",0
 _cstring_s:		db "%s",0
 _cstring_3:		db ".",0
 _cstring_4:		db "/",0
 _cstring_fs_listfilteredf1:		db "FS_ListFilteredFiles",0
 _cstring_fs_fopenfileover:		db "FS_FOpenFileOverWrite: %s",0ah,0
 _cstring_fs_fopenfileover1:		db "FS_FOpenFileOverWrite: Failed to open %s for writing.  It either does not exist or is in a iwd file.",0
-_cstring_fs_read_1_bytes_:		db 15h,"FS_Read: -1 bytes read",0
+_cstring_fs_read_1_bytes_:		db 015h,"FS_Read: -1 bytes read",0
 _cstring_fs_rename_s__s:		db "FS_Rename: %s --> %s",0ah,0
 
 

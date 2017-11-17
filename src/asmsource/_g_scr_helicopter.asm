@@ -12,7 +12,7 @@
 	extern VEH_InitEntity
 	extern VEH_InitVehicle
 	extern G_DObjGetWorldBoneIndexPos
-	extern VEH_SetPosition
+	extern _Z15VEH_SetPositionP9gentity_sPKfS2_
 	extern strcmp
 	extern Com_GetServerDObj
 	extern vec3_origin
@@ -317,7 +317,7 @@ G_SpawnHelicopter_10:
 	mov [esp+0x4], edi
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call VEH_SetPosition
+	call _Z15VEH_SetPositionP9gentity_sPKfS2_
 	lea edx, [edi+0xc]
 	mov eax, [edi]
 	mov [edi+0xc], eax

@@ -69,7 +69,7 @@
 	global ClientSpawn
 	global ClientConnect
 	global ClientDisconnect
-	global G_BroadcastVoice
+	global _Z16G_BroadcastVoiceP9gentity_sP13VoicePacket_t
 	global SetClientViewAngle
 	global G_GetNonPVSPlayerInfo
 	global G_GetPlayerViewOrigin
@@ -602,7 +602,7 @@ ClientDisconnect_10:
 
 
 ;G_BroadcastVoice(gentity_s*, VoicePacket_t*)
-G_BroadcastVoice:
+_Z16G_BroadcastVoiceP9gentity_sP13VoicePacket_t:
 	push ebp
 	mov ebp, esp
 	push edi

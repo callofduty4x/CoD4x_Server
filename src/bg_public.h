@@ -4,7 +4,7 @@
 #include "entity.h"
 
 void __cdecl BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
-
+void __cdecl BG_ShutdownWeaponDefFiles();
 #endif
 
 

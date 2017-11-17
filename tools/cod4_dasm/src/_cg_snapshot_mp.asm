@@ -1760,8 +1760,8 @@ _cstring_j_spine4:		db "J_Spine4",0
 _cstring_cgame_playerrena:		db "CGAME_PLAYERRENAMES",0
 _cstring_s7_s_s:		db "%s^7 %s %s",0
 _cstring_process_snapshot:		db "process snapshots",0
-_cstring_cg_processsnapsh:		db 15h,"CG_ProcessSnapshots: n < cgameGlob->latestSnapshotNum",0
-_cstring_cg_processsnapsh1:		db 15h,"CG_ProcessSnapshots: Server time went backwards",0
+_cstring_cg_processsnapsh:		db 015h,"CG_ProcessSnapshots: n < cgameGlob->latestSnapshotNum",0
+_cstring_cg_processsnapsh1:		db 015h,"CG_ProcessSnapshots: Server time went backwards",0
 
 
 

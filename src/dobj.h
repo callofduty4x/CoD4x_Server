@@ -79,6 +79,12 @@ struct DObjTrace_s
 };
 
 
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+
 DObj_t* GetDObjForEntity(int entNum);
 qboolean EntHasDObj(gentity_t* ent);
 void PrintDObjInfo(DObj_t* dobj);
@@ -112,6 +118,13 @@ int __cdecl DObjGetNumModels(DObj *obj);
 struct XModel *__cdecl DObjGetModel(DObj *obj, int modelIndex);
 bool __cdecl DObjIgnoreCollision(DObj *obj, int modelIndex);
 void __cdecl ConvertQuatToMat(struct DObjAnimMat *mat, vec3_t axis[3]);
+void __cdecl DObjSetLocalTag(DObj *obj, int *partBits, unsigned int boneIndex, const float *trans, const float *angles);
+void __cdecl DObjSetControlTagAngles(DObj *obj, int *partBits, unsigned int boneIndex, float *angles);
+void Com_InitDObj();
+
+#ifdef __cplusplus
+}
+#endif
 
 #define SV_ENTITY_DOBJS ((WORD*)  0x088E8500)    // Max = 0x400
 #define SV_DOBJ         ((DObj_t*)0x088E8D20)    // Max = 0x800

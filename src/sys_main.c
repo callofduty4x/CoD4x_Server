@@ -31,7 +31,6 @@
 #include "qcommon_mem.h"
 #include "sys_cod4defs.h"
 #include "filesystem.h"
-#include "sys_cod4loader.h"
 #include "sys_thread.h"
 #include "punkbuster.h"
 #include "server.h"
@@ -474,6 +473,7 @@ int Sys_Main(char* commandLine){
     Sys_InitializeCriticalSections();
 
     Sys_InitMainThread();
+//    Sys_ThreadMain();
 
     Com_InitSmallZoneMemory( );
 

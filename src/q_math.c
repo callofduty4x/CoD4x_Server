@@ -1931,3 +1931,15 @@ void __cdecl SnapAngles(float *vAngles)
 }
 
 
+void __cdecl NearestPitchAndYawOnPlane(const float *angles, const float *normal, float *result)
+{
+  vec3_t projected;
+  vec3_t forward;
+
+  assert(normal[0] != 0.0 || normal[1] != 0.0 || normal[2] != 0.0);
+
+  AngleVectors(angles, forward, 0, 0);
+  ProjectPointOnPlane(forward, normal, projected);
+  vectoangles(projected, result);
+}
+

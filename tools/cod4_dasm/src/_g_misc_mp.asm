@@ -2508,10 +2508,10 @@ turretInfo: resb 0x900
 ;All cstrings:
 SECTION .rdata
 _cstring_g_spawnturret_we:		db "G_SpawnTurret: weapon ",27h,"%s",27h," isn",27h,"t a turret. This usually indicates that the weapon failed to load.",0
-_cstring_g_spawnturret_ma:		db 15h,"G_SpawnTurret: max number of turrets (%d) exceeded",0
+_cstring_g_spawnturret_ma:		db 015h,"G_SpawnTurret: max number of turrets (%d) exceeded",0
 _cstring_null:		db 0
 _cstring_rightarc:		db "rightarc",0
-_cstring_bad_weaponinfo_s:		db 15h,"bad weaponinfo ",27h,"%s",27h," specified for turret",0
+_cstring_bad_weaponinfo_s:		db 015h,"bad weaponinfo ",27h,"%s",27h," specified for turret",0
 _cstring_turret_s_not_pre:		db "turret ",27h,"%s",27h," not precached",0
 _cstring_1:		db "1",0
 _cstring_playerspread:		db "playerSpread",0
@@ -2520,13 +2520,13 @@ _cstring_damage:		db "damage",0
 _cstring_bottomarc:		db "bottomarc",0
 _cstring_toparc:		db "toparc",0
 _cstring_leftarc:		db "leftarc",0
-_cstring_player_anim_s_ha:		db 15h,"Player anim ",27h,"%s",27h," has no children",0
+_cstring_player_anim_s_ha:		db 015h,"Player anim ",27h,"%s",27h," has no children",0
 _cstring_warning_aborting:		db "WARNING: aborting player positioning on turret since ",27h,"tag_weapon",27h," does not exist",0ah,0
 _cstring_tag_flash:		db "tag_flash",0
-_cstring_couldnt_find_s_o:		db 15h,"Couldn",27h,"t find %s on turret (entity %d, classname ",27h,"%s",27h,").",0ah,0
+_cstring_couldnt_find_s_o:		db 015h,"Couldn",27h,"t find %s on turret (entity %d, classname ",27h,"%s",27h,").",0ah,0
 _cstring_pl:		db "pl#",0
 _cstring_weaponinfo:		db "weaponinfo",0
-_cstring_no_weaponinfo_sp:		db 15h,"no weaponinfo specified for turret",0
+_cstring_no_weaponinfo_sp:		db 015h,"no weaponinfo specified for turret",0
 
 
 

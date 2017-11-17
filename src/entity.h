@@ -236,9 +236,14 @@ struct gentity_s {
 	int flags;
 	int eventTime;
 
-    char pad_188[24]; /* 0x188 */
-    int healthPoints; /* 0x1A0 */
-	char unknown[208];
+	char pad_188[24]; /* 0x188 */
+	int health; /* 0x1A0 */
+	int maxHealth;
+	int damage;
+	int count;
+	char unknown[104];
+	struct tagInfo_s* tagInfo;
+	char unknown2[88];
 }; /* Size: 0x274 */
 
 /***************** Verified *******************************/

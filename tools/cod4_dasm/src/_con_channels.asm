@@ -1,8 +1,7 @@
 ;Imports of con_channels:
 	extern Com_Printf
-	extern I_stricmpwild
-	extern cmd_args
-	extern dvar_modifiedFlags
+	extern Q_stricmpwild
+	extern cvar_modifiedFlags
 	extern memcpy
 	extern Com_Error
 	extern Q_stricmp
@@ -13,6 +12,7 @@
 	extern sprintf
 	extern Cmd_AddCommand
 	extern FS_Printf
+	extern Con_FilterAdd
 
 ;Exports of con_channels:
 	global pcGlob
@@ -22,7 +22,6 @@
 	global con_gameMsgWindowNFilter_BaseName
 	global Con_ChannelList_f
 	global Con_FilterShowChannel
-	global Con_FilterAdd
 	global Con_FilterRemove_f
 	global Con_FilterAdd_f
 	global Con_InitChannelsForDestFromList
@@ -183,74 +182,6 @@ Con_FilterShowChannel_40:
 	call Com_Printf
 	add dword [ebp-0x1c], 0x1
 	jmp Con_FilterShowChannel_30
-
-
-;Con_FilterAdd(unsigned char)
-Con_FilterAdd:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov edx, cmd_args
-	mov ebx, [edx]
-	mov edi, [edx+ebx*4+0x44]
-	cmp edi, 0x1
-	jle Con_FilterAdd_10
-	movzx esi, al
-	mov ebx, 0x1
-	jmp Con_FilterAdd_20
-Con_FilterAdd_40:
-	mov edx, _cstring_null
-	mov ecx, esi
-	xor eax, eax
-	call Con_FilterShowChannel
-	add ebx, 0x1
-	cmp edi, ebx
-	jz Con_FilterAdd_30
-Con_FilterAdd_50:
-	mov edx, cmd_args
-Con_FilterAdd_20:
-	mov eax, [edx]
-	cmp ebx, [edx+eax*4+0x44]
-	jge Con_FilterAdd_40
-	mov eax, [edx+eax*4+0x64]
-	mov edx, [eax+ebx*4]
-	mov ecx, esi
-	xor eax, eax
-	call Con_FilterShowChannel
-	add ebx, 0x1
-	cmp edi, ebx
-	jnz Con_FilterAdd_50
-Con_FilterAdd_30:
-	mov eax, dvar_modifiedFlags
-	or dword [eax], 0x1
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Con_FilterAdd_10:
-	jz Con_FilterAdd_60
-	mov eax, _cstring_null
-Con_FilterAdd_70:
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_usage_s_channelc
-	mov dword [esp], 0x0
-	call Com_Printf
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Con_FilterAdd_60:
-	mov eax, [edx+ebx*4+0x64]
-	mov eax, [eax]
-	jmp Con_FilterAdd_70
-	nop
 
 
 ;Con_FilterRemove_f()

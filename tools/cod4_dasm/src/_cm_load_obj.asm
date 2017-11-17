@@ -2461,33 +2461,33 @@ SECTION .bss
 SECTION .rdata
 _cstring_null:		db 0
 _cstring_cmod_partionleaf:		db "CMod_PartionLeafBrushes_r",0
-_cstring_cmod_partionleaf1:		db 15h,"CMod_PartionLeafBrushes_r: child exceeded",0
-_cstring_cmod_partionleaf2:		db 15h,"CMod_PartionLeafBrushes_r: leafBrushCount exceeded",0
+_cstring_cmod_partionleaf1:		db 015h,"CMod_PartionLeafBrushes_r: child exceeded",0
+_cstring_cmod_partionleaf2:		db 015h,"CMod_PartionLeafBrushes_r: leafBrushCount exceeded",0
 _cstring_cmod_loadentitys:		db "CMod_LoadEntityString",0
 _cstring_classname:		db "classname",0
 _cstring_light:		db "light",0
 _cstring_pl:		db "pl#",0
 _cstring_cmod_loadplanes:		db "CMod_LoadPlanes",0
-_cstring_map_with_no_plan:		db 15h,"Map with no planes",0
-_cstring_number_of_planes:		db 15h,"Number of planes exceeds 65536",0
+_cstring_map_with_no_plan:		db 015h,"Map with no planes",0
+_cstring_number_of_planes:		db 015h,"Number of planes exceeds 65536",0
 _cstring_cm_loadmapfrombs:		db "CM_LoadMapFromBsp",0
 _cstring_cmod_loadmateria:		db "CMod_LoadMaterials",0
-_cstring_cmod_loadbrushes:		db 15h,"CMod_LoadBrushes: bad number of side edge counts: %i != %i",0
+_cstring_cmod_loadbrushes:		db 015h,"CMod_LoadBrushes: bad number of side edge counts: %i != %i",0
 _cstring_cmod_loadbrushes1:		db "CMod_LoadBrushes",0
-_cstring_cmod_loadbrushes2:		db 15h,"CMod_LoadBrushes: cm.numBrushes exceeded",0
-_cstring_cmod_loadbrushes3:		db 15h,"CMod_LoadBrushes: axialMaterialNum exceeded",0
-_cstring_cmod_loadbrushes4:		db 15h,"CMod_LoadBrushes: maximum edge offset exceeded",0
-_cstring_cmod_loadbrushes5:		db 15h,"CMod_LoadBrushes: bad materialNum: %brushIter",0
+_cstring_cmod_loadbrushes2:		db 015h,"CMod_LoadBrushes: cm.numBrushes exceeded",0
+_cstring_cmod_loadbrushes3:		db 015h,"CMod_LoadBrushes: axialMaterialNum exceeded",0
+_cstring_cmod_loadbrushes4:		db 015h,"CMod_LoadBrushes: maximum edge offset exceeded",0
+_cstring_cmod_loadbrushes5:		db 015h,"CMod_LoadBrushes: bad materialNum: %brushIter",0
 _cstring_cmod_loadleafbru:		db "CMod_LoadLeafBrushes",0
-_cstring_cmod_loadleafbru1:		db 15h,"CMod_LoadLeafBrushes: brushIndex exceeded",0
+_cstring_cmod_loadleafbru1:		db 015h,"CMod_LoadLeafBrushes: brushIndex exceeded",0
 _cstring_cmod_loadcollisi:		db "CMod_LoadCollisionAabbTrees",0
 _cstring_cmod_loadleafs:		db "CMod_LoadLeafs",0
 _cstring_cmod_loadsubmode:		db "CMod_LoadSubmodels",0
-_cstring_cmod_loadsubmode1:		db 15h,"CMod_LoadSubmodels: collAabbCount exceeded",0
-_cstring_cmod_loadsubmode2:		db 15h,"CMod_LoadSubmodels: firstCollAabbIndex exceeded",0
+_cstring_cmod_loadsubmode1:		db 015h,"CMod_LoadSubmodels: collAabbCount exceeded",0
+_cstring_cmod_loadsubmode2:		db 015h,"CMod_LoadSubmodels: firstCollAabbIndex exceeded",0
 _cstring_cmod_loadbrushre:		db "CMod_LoadBrushRelated",0
 _cstring_cmod_loadnodes:		db "CMod_LoadNodes",0
-_cstring_cmod_loadnodes_c:		db 15h,"CMod_LoadNodes: children exceeded",0
+_cstring_cmod_loadnodes_c:		db 015h,"CMod_LoadNodes: children exceeded",0
 _cstring_cmod_loadleafsur:		db "CMod_LoadLeafSurfaces",0
 _cstring_cmod_loadcollisi1:		db "CMod_LoadCollisionVerts",0
 _cstring_cmod_loadcollisi2:		db "CMod_LoadCollisionTriangles",0
@@ -2495,18 +2495,18 @@ _cstring_cmod_loadcollisi3:		db "CMod_LoadCollisionEdgeWalkable",0
 _cstring_cmod_loadcollisi4:		db "CMod_LoadCollisionBorders",0
 _cstring_cmod_loadcollisi5:		db "CMod_LoadCollisionPartitions",0
 _cstring_cmod_loadvisibil:		db "CMod_LoadVisibility",0
-_cstring_cmod_loadleafs_c:		db 15h,"CMod_LoadLeafs: cluster exceeded",0
-_cstring_cmod_loadleafs_f:		db 15h,"CMod_LoadLeafs: firstCollAabbIndex exceeded",0
-_cstring_cmod_loadleafs_c1:		db 15h,"CMod_LoadLeafs: collAabbCount exceeded",0
-_cstring_map_with_no_brus:		db 15h,"Map with no brush models (should at least have the world model)",0
+_cstring_cmod_loadleafs_c:		db 015h,"CMod_LoadLeafs: cluster exceeded",0
+_cstring_cmod_loadleafs_f:		db 015h,"CMod_LoadLeafs: firstCollAabbIndex exceeded",0
+_cstring_cmod_loadleafs_c1:		db 015h,"CMod_LoadLeafs: collAabbCount exceeded",0
+_cstring_map_with_no_brus:		db 015h,"Map with no brush models (should at least have the world model)",0
 _cstring_in_single_player:		db "In single player, do not compile the bsp with visibility",0
-_cstring_map_with_no_mate:		db 15h,"Map with no materials",0
-_cstring_map_has_no_nodes:		db 15h,"Map has no nodes",0
+_cstring_map_with_no_mate:		db 015h,"Map with no materials",0
+_cstring_map_has_no_nodes:		db 015h,"Map has no nodes",0
 _cstring_cmod_loadsubmode3:		db "CMod_LoadSubmodelBrushNodes",0
-_cstring_cmod_loadsubmode4:		db 15h,"CMod_LoadSubmodelBrushNodes: leafBrushes exceeded",0
+_cstring_cmod_loadsubmode4:		db 015h,"CMod_LoadSubmodelBrushNodes: leafBrushes exceeded",0
 _cstring_cmod_loadbrushsi:		db "CMod_LoadBrushSides",0
-_cstring_max_submodels_ex:		db 15h,"MAX_SUBMODELS exceeded",0
-_cstring_map_with_no_leaf:		db 15h,"Map with no leafs",0
+_cstring_max_submodels_ex:		db 015h,"MAX_SUBMODELS exceeded",0
+_cstring_map_with_no_leaf:		db 015h,"Map with no leafs",0
 _cstring_misc_model:		db "misc_model",0
 _cstring_misc_prefab:		db "misc_prefab",0
 _cstring_dyn_brushmodel:		db "dyn_brushmodel",0

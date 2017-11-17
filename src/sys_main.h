@@ -36,6 +36,12 @@ bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType);
 #include "unix/sys_unix.h"
 #endif
 
+
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 unsigned int Sys_Milliseconds( void );
 unsigned long long Sys_MillisecondsLong( void );
 unsigned long long Sys_MicrosecondsLong( void );
@@ -112,6 +118,9 @@ void Sys_BeginLoadThreadPriorities();
 void Sys_EndLoadThreadPriorities();
 void Sys_BeginShutdownWatchdog();
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

@@ -1559,7 +1559,7 @@ _cstring_1:		db "-1",0
 _cstring_cg_predictitems:		db "cg_predictItems",0
 _cstring_name:		db "name",0
 _cstring_unnamedplayer:		db "UnnamedPlayer",0
-_cstring_g_getplayerviewo:		db 15h,"G_GetPlayerViewOrigin: Couldn",27h,"t find [tag_player] on turret",0ah,0
+_cstring_g_getplayerviewo:		db 015h,"G_GetPlayerViewOrigin: Couldn",27h,"t find [tag_player] on turret",0ah,0
 
 
 

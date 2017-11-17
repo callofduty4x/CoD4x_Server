@@ -2991,7 +2991,7 @@ g_empty: resb 0x80
 SECTION .rdata
 _cstring_model_s:		db "Model ",27h,"%s",27h,":",0ah,0
 _cstring_bone_d_s:		db "Bone %d: ",27h,"%s",27h,0ah,0
-_cstring_dobj_for_xmodel_:		db 15h,"dobj for xmodel ",27h,"%s",27h," has more than %d bones (see console for details)",0
+_cstring_dobj_for_xmodel_:		db 015h,"dobj for xmodel ",27h,"%s",27h," has more than %d bones (see console for details)",0
 _cstring_warning_attempti:		db "WARNING: Attempting to meld model, but root part ",27h,"%s",27h," of model ",27h,"%s",27h," not found in model ",27h,"%s",27h," or any of its descendants",0ah,0
 _cstring_warning_part_s_n:		db "WARNING: Part ",27h,"%s",27h," not found in model ",27h,"%s",27h," or any of its descendants",0ah,0
 _cstring_models:		db 0ah,"Models:",0ah,0

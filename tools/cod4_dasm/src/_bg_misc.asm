@@ -4044,15 +4044,15 @@ _cstring_seconds_after_a_:		db "Seconds after a burst fire before weapons can be
 _cstring_player_burstfire:		db "player_burstFireCooldown",0
 _cstring_min_distance_a_p:		db "Min distance a penetrated bullet must travel before it",27h,"ll trigger the effects",0
 _cstring_bullet_penetrati:		db "bullet_penetrationMinFxDist",0
-_cstring_bg_canitembegrab:		db 15h,"BG_CanItemBeGrabbed: index out of range (index is %i, eType is %i)",0
+_cstring_bg_canitembegrab:		db 015h,"BG_CanItemBeGrabbed: index out of range (index is %i, eType is %i)",0
 _cstring_event_s_i:		db "Event %s (%i)",0
-_cstring_bg_evaluatetraje:		db 15h,"BG_EvaluateTrajectory: unknown trType: %i",0
+_cstring_bg_evaluatetraje:		db 015h,"BG_EvaluateTrajectory: unknown trType: %i",0
 _cstring_shocksshock:		db "shock/%s.shock",0
 _cstring_couldnt_open_s:		db "couldn",27h,"t open ",27h,"%s",27h,".",0ah,0
 _cstring_shockdefaultshoc:		db "shock/default.shock",0
 _cstring_couldnt_open_sho:		db "couldn",27h,"t open ",27h,"shock/default.shock",27h,". This is a default shock file that you should have.",0ah,0
-_cstring_bg_evaluatetraje1:		db 15h,"BG_EvaluateTrajectoryDelta: unknown trType: %i",0
-_cstring_bg_playerhasroom:		db 15h,"BG_PlayerHasRoomForAllAmmoTypesOfEnt: index out of range (index is %i, eType is %i)",0
+_cstring_bg_evaluatetraje1:		db 015h,"BG_EvaluateTrajectoryDelta: unknown trType: %i",0
+_cstring_bg_playerhasroom:		db 015h,"BG_PlayerHasRoomForAllAmmoTypesOfEnt: index out of range (index is %i, eType is %i)",0
 _cstring_general:		db "General",0
 _cstring_player:		db "Player",0
 _cstring_corpse:		db "Corpse",0

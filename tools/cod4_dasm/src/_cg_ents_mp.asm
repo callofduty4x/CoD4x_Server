@@ -4316,9 +4316,9 @@ g_fltMin: resb 0x80
 
 ;All cstrings:
 SECTION .rdata
-_cstring_bad_entity_type_:		db 15h,"Bad entity type: %i",0ah,0
-_cstring_bad_item_index_i:		db 15h,"Bad item index %i on entity",0
-_cstring_no_xmodel_loaded:		db 15h,"No XModel loaded for item index %i, weap index %i, model %i (%s)",0
+_cstring_bad_entity_type_:		db 015h,"Bad entity type: %i",0ah,0
+_cstring_bad_item_index_i:		db 015h,"Bad item index %i on entity",0
+_cstring_no_xmodel_loaded:		db 015h,"No XModel loaded for item index %i, weap index %i, model %i (%s)",0
 _cstring_add_packet_ents:		db "add packet ents",0
 _cstring_mg42:		db "MG42",0
 _cstring_root:		db "root",0

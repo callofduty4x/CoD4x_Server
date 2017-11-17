@@ -394,6 +394,8 @@ typedef struct {//0x8c51780
 	cachedClient_t cachedSnapshotClients[4096];
 
 	int numCachedSnapshotEntities;
+	int numCachedSnapshotClients;
+	int archivedEntityCount;
 
 	int nextStatusResponseTime;
 
@@ -512,36 +514,39 @@ typedef struct {//0x13e78d00
 
 
 typedef struct{//13F18F80
-	client_t	*clients;
-	int			time;
-	int			snapFlagServerBit;// ^= SNAPFLAG_SERVERCOUNT every SV_SpawnServer()
-	int			numSnapshotEntities;	//0x13f18f8c sv_maxclients->integer*PACKET_BACKUP*MAX_PACKET_ENTITIES
-	int			numSnapshotClients;
-	int			nextSnapshotEntities;	//0x13f18f94 next snapshotEntities to use
-	int			nextSnapshotClients;	//0x13f18f98
-	entityState_t	*snapshotEntities;	//0x13f18f9c
-	clientState_t	*snapshotClients;	//0x13f18fa0
-	svEntity_t		*svEntities;		//0x13f18fa4
+    client_t	*clients;
+    int			time;
+    int			snapFlagServerBit;// ^= SNAPFLAG_SERVERCOUNT every SV_SpawnServer()
+    int			numSnapshotEntities;	//sv_maxclients->integer*PACKET_BACKUP*MAX_PACKET_ENTITIES
+    int			numSnapshotClients;
+    int			nextSnapshotEntities;	//next snapshotEntities to use
+    int			nextSnapshotClients;
+    entityState_t	*snapshotEntities;
+    clientState_t	*snapshotClients;
+    svEntity_t		*svEntities;	
 
-	vec3_t mapCenter;
-	archivedEntity_t *cachedSnapshotEntities;
-	cachedClient_t *cachedSnapshotClients;
-	byte *archivedSnapshotBuffer;
-	cachedSnapshot_t *cachedSnapshotFrames;
-	int nextCachedSnapshotFrames;
-	int nextArchivedSnapshotFrames;
-	int nextCachedSnapshotEntities;
-	int nextCachedSnapshotClients;
-	int num_entities;
-	int maxClients;
-	int fps;
-	qboolean canArchiveData;
-	gentity_t *gentities;
-	int gentitySize;
-	clientState_t *gclientstate;
-	gclient_t *gplayerstate;
-	int gclientSize;
-
+    vec3_t mapCenter;
+    archivedEntity_t *cachedSnapshotEntities;
+    cachedClient_t *cachedSnapshotClients;
+    byte *archivedSnapshotBuffer;
+    cachedSnapshot_t *cachedSnapshotFrames;
+    int nextCachedSnapshotFrames;
+    int nextArchivedSnapshotFrames;
+    int nextCachedSnapshotEntities;
+    int nextCachedSnapshotClients;
+    int numCachedSnapshotEntities;
+    int numCachedSnapshotClients;
+    int num_entities;
+    int archivedEntityCount;
+    int maxclients;
+    int fps;
+    qboolean clientArchive;
+    gentity_t *gentities;
+    int gentitySize;
+    clientState_t *firstClientState;
+    playerState_t *firstPlayerState;
+    int physicsTime;
+    int clientSize;
 }svsHeader_t;
 
 
@@ -646,7 +651,7 @@ gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
 
 extern	serverStaticExt_t	svse;	// persistant server info across maps
 extern	permServerStatic_t	psvs;	// persistant even if server does shutdown
-
+extern	qboolean		svsHeaderValid;
 struct moveclip_s;
 struct trace_s;
 
@@ -891,11 +896,12 @@ void SV_AddSafeCommands();
 
 void SV_SetExpectedHunkUsage(const char* name);
 
-__cdecl void SV_UpdateServerCommandsToClient( client_t *client, msg_t *msg );
-__cdecl void SV_SendMessageToClient( msg_t *msg, client_t *client );
-__cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg);
-__cdecl cachedSnapshot_t* SV_GetCachedSnapshotInternal(int snapTime);
-__cdecl void SV_ClipMoveToEntity(struct moveclip_s *clip, svEntity_t *entity, struct trace_s *trace);
+void SV_UpdateServerCommandsToClient( client_t *client, msg_t *msg );
+void SV_SendMessageToClient( msg_t *msg, client_t *client );
+void SV_WriteSnapshotToClient(client_t* client, msg_t* msg);
+cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, bool expectedToSucceed);
+
+void SV_ClipMoveToEntity(struct moveclip_s *clip, svEntity_t *entity, struct trace_s *trace);
 void SV_Cmd_Init();
 void SV_CopyCvars();
 void SV_SteamData(client_t* cl, msg_t* msg);
@@ -930,6 +936,10 @@ clipHandle_t SV_ClipHandleForEntity(gentity_t *touch);
 const char *__cdecl SV_GetMapBaseName(const char *mapname);
 void __cdecl SV_ResetSkeletonCache();
 void __cdecl SV_SetUserinfo(int clientIndex, const char *val);
+
+bool MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, enum DeltaFlags flags);
+int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number);
+
 
 #ifdef COD4X18UPDATE
 void SV_ConnectWithUpdateProxy(client_t *cl);

@@ -27,7 +27,7 @@
 	extern node7
 	extern Scr_ScanFile
 	extern realloc
-
+	extern yy_create_buffer
 ;Exports of scr_yacc:
 	global yaccResult
 	global yy_start
@@ -61,7 +61,6 @@
 	global yy_accept
 	global yy_ec
 	global ScriptParse
-	global yy_create_buffer
 	global yyparse
 	global yychar
 	global yyin
@@ -119,73 +118,6 @@ ScriptParse_10:
 	mov byte [yy_hold_char], 0x0
 	jmp ScriptParse_20
 	add [eax], al
-
-
-;yy_create_buffer(__sFILE*, int)
-yy_create_buffer:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov esi, [ebp+0xc]
-	mov dword [esp], 0x28
-	call malloc
-	mov ebx, eax
-	test eax, eax
-	jz yy_create_buffer_10
-	mov [eax+0xc], esi
-	lea eax, [esi+0x2]
-	mov [esp], eax
-	call malloc
-	mov [ebx+0x4], eax
-	test eax, eax
-	jz yy_create_buffer_10
-	mov dword [ebx+0x14], 0x1
-	mov dword [ebx+0x10], 0x0
-	mov byte [eax], 0x0
-	mov byte [eax+0x1], 0x0
-	mov [ebx+0x8], eax
-	mov dword [ebx+0x1c], 0x1
-	mov dword [ebx+0x24], 0x0
-	cmp ebx, [yy_current_buffer]
-	jz yy_create_buffer_20
-	mov eax, [ebp+0x8]
-	mov [ebx], eax
-	mov dword [ebx+0x20], 0x1
-	mov dword [ebx+0x18], 0x0
-	mov eax, ebx
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-yy_create_buffer_20:
-	mov dword [yy_n_chars], 0x0
-	mov [yy_c_buf_p], eax
-	mov [yytext], eax
-	mov eax, [ebx]
-	mov [yyin], eax
-	mov byte [yy_hold_char], 0x0
-	mov eax, [ebp+0x8]
-	mov [ebx], eax
-	mov dword [ebx+0x20], 0x1
-	mov dword [ebx+0x18], 0x0
-	mov eax, ebx
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-yy_create_buffer_10:
-	mov dword [esp+0x8], _cstring_out_of_dynamic_m
-	mov dword [esp+0x4], _cstring_s
-	mov eax, [0xd5cc920]
-	add eax, 0xb0
-	mov [esp], eax
-	call fprintf
-	mov dword [esp], 0x2
-	call exit
 
 
 ;yyparse()

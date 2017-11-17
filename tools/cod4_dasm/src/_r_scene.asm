@@ -4880,7 +4880,7 @@ _cstring_glow:		db "GLOW",0
 _cstring_dof:		db "DOF",0
 _cstring_depth_of_field_u:		db "Depth of field used (enabled via r_dof_enable or r_dof_tweak) with no float-z buffer (r_floatz wasn",27h,"t enabled when the renderer was started.)",0ah,0
 _cstring_renderer_attempt:		db "Renderer attempted to use technique that uses floatz buffer, but it wasn",27h,"t created.",0ah,0
-_cstring_r_renderscene_nu:		db 15h,"R_RenderScene: NULL worldmodel",0
+_cstring_r_renderscene_nu:		db 015h,"R_RenderScene: NULL worldmodel",0
 _cstring_scene_ent_surfac:		db "scene ent surfaces",0
 _cstring_max_fps_spin:		db "max fps spin",0
 _cstring_r_adddobjsurface:		db "R_AddDObjSurfaces",0

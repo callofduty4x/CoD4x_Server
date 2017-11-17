@@ -98,7 +98,7 @@
 	global G_DObjCalcBone
 	global G_DObjCalcPose
 	global G_EntDetachAll
-	global G_SafeDObjFree
+	global _Z14G_SafeDObjFreeP9gentity_s
 	global G_SetFixedLink
 	global G_MaterialIndex
 	global G_OverrideModel
@@ -114,7 +114,6 @@
 	global G_SoundAliasIndex
 	global G_SpawnPlayerClone
 	global G_CalcTagParentAxis
-	global G_GetEntityTypeName
 	global G_DObjGetWorldTagPos
 	global G_AddPredictableEvent
 	global G_EntLinkToWithOffset
@@ -1502,7 +1501,7 @@ G_EntDetachAll_10:
 
 
 ;G_SafeDObjFree(gentity_s*)
-G_SafeDObjFree:
+_Z14G_SafeDObjFreeP9gentity_s:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -2279,17 +2278,6 @@ G_CalcTagParentAxis_10:
 	pop ebp
 	ret
 	nop
-
-
-;G_GetEntityTypeName(gentity_s const*)
-G_GetEntityTypeName:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov eax, [eax+0x4]
-	mov eax, [eax*4+entityTypeNames]
-	pop ebp
-	ret
 
 
 ;G_DObjGetWorldTagPos(gentity_s*, unsigned int, float*)

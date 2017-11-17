@@ -1504,7 +1504,7 @@ _cstring_unable_to_initia:		db "Unable to initialize punkbuster.  Punkbuster is 
 _cstring_mpui_nopunkbuste:		db "MPUI_NOPUNKBUSTER",0
 _cstring_quit:		db "quit",0ah,0
 _cstring_sys_queevent_ove:		db "Sys_QueEvent: overflow",0ah,0
-_cstring_:		db 0ah,0dh,08h,0
+_cstring_:		db 0ah,0dh,008h,0
 _cstring_rb:		db "rb",0
 _cstring_wb:		db "wb",0
 _cstring_0c65b5a5399d11dc:		db "0C65B5A5399D11DCA265000A95675086",0
@@ -1533,7 +1533,7 @@ _cstring_not_:		db "not ",0
 _cstring_streaming_simd_e:		db "Streaming SIMD Extensions (SSE) %ssupported",0ah,0
 _cstring_1:		db 0ah,0
 _cstring_3sp:		db "3sp",0
-_cstring_exe_err_couldnt_:		db "EXE_ERR_COULDNT_START_PROCESS",15h,"%s",0ah,"%08x",0
+_cstring_exe_err_couldnt_:		db "EXE_ERR_COULDNT_START_PROCESS",015h,"%s",0ah,"%08x",0
 _cstring_3mp:		db "3mp",0
 _cstring_2:		db 0ah,0ah,0
 _cstring_cod4mp:		db "CoD4-MP",0

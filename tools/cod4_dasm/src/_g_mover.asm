@@ -1390,7 +1390,7 @@ _cstring_null:		db 0
 _cstring_cursorhint:		db "cursorhint",0
 _cstring_hintstring:		db "hintstring",0
 _cstring_hint_inherit:		db "HINT_INHERIT",0
-_cstring_too_many_differe:		db 15h,"Too many different hintstring key values on trigger_use entities. Max allowed is %i different strings",0
+_cstring_too_many_differe:		db 015h,"Too many different hintstring key values on trigger_use entities. Max allowed is %i different strings",0
 _cstring_hint_noicon:		db "HINT_NOICON",0
 _cstring_hint_activate:		db "HINT_ACTIVATE",0
 _cstring_hint_health:		db "HINT_HEALTH",0

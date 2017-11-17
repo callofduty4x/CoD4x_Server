@@ -78,6 +78,10 @@ typedef struct {
 	int			unsentBufferSize;
 } netchan_t;
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 
 void Netchan_Init( int port );
 void Netchan_Setup( netsrc_t sock, netchan_t *chan, netadr_t adr, unsigned int qport , byte* unsentBuffer, int unsentBufferSize, byte* fragmentBuffer, int fragmentBufferSize);
@@ -86,7 +90,6 @@ qboolean Netchan_TransmitNextFragment( netchan_t *chan );
 qboolean Netchan_Transmit( netchan_t *chan, int length, const byte *data );
 qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, msg_t *net_message);
 void NET_SendLoopPacket (netsrc_t sock, int length, const void *data, netadr_t to);
-qboolean NET_SendPacket( netsrc_t sock, int length, const void *data, netadr_t *to );
 __cdecl void QDECL NET_OutOfBandPrint( netsrc_t sock, netadr_t *adr, const char *format, ... );
 void NET_OutOfBandData( netsrc_t sock, netadr_t *adr, byte *format, int len );
 void QDECL NET_PrintData( int sock, const char *format, ... );
@@ -94,4 +97,9 @@ qboolean NET_SendData( int sock, msg_t* msg);
 int NET_TcpReceiveData( int sock, msg_t* msg);
 void NET_CookieInit();
 int NET_CookieHash(netadr_t*);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

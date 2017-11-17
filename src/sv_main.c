@@ -137,6 +137,9 @@ svsHeader_t		svsHeader;
 serverStaticExt_t	svse;	// persistant server info across maps
 permServerStatic_t	psvs;	// persistant even if server does shutdown
 
+qboolean svsHeaderValid;
+
+
 #define SV_OUTPUTBUF_LENGTH 1024
 
 /*
@@ -3096,7 +3099,7 @@ void SV_InitCvarsOnce(void){
 
 
 void SV_Init(){
-    SV_AddSafeCommands();
+    SV_AddOperatorCommands();
     SV_InitCvarsOnce();
     SVC_RateLimitInit( );
     SV_InitBanlist();
@@ -3375,10 +3378,15 @@ void SV_WriteRconStatus( msg_t* msg ) {
     MSG_WriteByte( msg, -1 );	//Terminating ClientIndex
 }
 
+
+
 void SV_GetServerStaticHeader(){
     svs.nextCachedSnapshotFrames = svsHeader.nextCachedSnapshotFrames;
     svs.nextCachedSnapshotEntities = svsHeader.nextCachedSnapshotEntities;
     svs.nextCachedSnapshotClients = svsHeader.nextCachedSnapshotClients;
+    svs.archivedEntityCount = svsHeader.archivedEntityCount;
+    
+    svsHeaderValid = 0;
 }
 
 void SV_SetServerStaticHeader()
@@ -3406,17 +3414,24 @@ void SV_SetServerStaticHeader()
     svsHeader.archivedSnapshotBuffer = svs.archivedSnapshotBuffer;
     svsHeader.cachedSnapshotFrames = svs.cachedSnapshotFrames;
 
-    svsHeader.maxClients = sv_maxclients->integer;
+    svsHeader.maxclients = sv_maxclients->integer;
     svsHeader.fps = sv_fps->integer;
     svsHeader.gentitySize = sv.gentitySize;
-    svsHeader.canArchiveData = sv_clientArchive->integer;
+    svsHeader.clientArchive = sv_clientArchive->integer;
 
     svsHeader.gentities = sv.gentities;
-    svsHeader.gclientstate = G_GetClientState( 0 );
-    svsHeader.gplayerstate = G_GetPlayerState( 0 );
-    svsHeader.gclientSize = G_GetClientSize();
+    svsHeader.firstClientState = G_GetClientState( 0 );
+    svsHeader.firstPlayerState = G_GetPlayerState( 0 );
+    svsHeader.clientSize = G_GetClientSize();
 
+    svsHeader.numCachedSnapshotEntities = svs.numCachedSnapshotEntities;
+    svsHeader.numCachedSnapshotClients = svs.numCachedSnapshotClients;
+    svsHeader.archivedEntityCount = svs.archivedEntityCount;
+
+    svsHeaderValid = 1;
 }
+
+
 
 
 void SV_InitArchivedSnapshot(){
@@ -4398,22 +4413,6 @@ void SV_SayToPlayers(int clnum, int team, char* text)
 
         SV_SendServerCommand(cl, "h \"%s\"", text);
     }
-}
-
-/*
-===============
-SV_GetUserinfo
-
-===============
-*/
-void SV_GetUserinfo( int index, char *buffer, int bufferSize ) {
-    if ( bufferSize < 1 ) {
-        Com_Error( ERR_DROP, "SV_GetUserinfo: bufferSize == %i", bufferSize );
-    }
-    if ( index < 0 || index >= sv_maxclients->integer ) {
-        Com_Error( ERR_DROP, "SV_GetUserinfo: bad index %i\n", index );
-    }
-    Q_strncpyz( buffer, svs.clients[ index ].userinfo, bufferSize );
 }
 
 

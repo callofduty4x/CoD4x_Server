@@ -2930,7 +2930,7 @@ _cstring_usage_connect_se:		db "usage: connect [server]",0ah,0
 _cstring_null:		db 0
 _cstring_muteplayer_i:		db "muteplayer %i",0
 _cstring_unmuteplayer_i:		db "unmuteplayer %i",0
-_cstring_download_failure:		db 15h,"Download failure while getting ",27h,"%s",27h,0ah,0
+_cstring_download_failure:		db 015h,"Download failure while getting ",27h,"%s",27h,0ah,0
 _cstring_wwwdl_fail:		db "wwwdl fail",0
 _cstring_motdtxt:		db "motd.txt",0
 _cstring_motd:		db "motd",0

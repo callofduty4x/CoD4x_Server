@@ -11711,9 +11711,9 @@ _cstring_cl_paused:		db "cl_paused",0
 _cstring_exe_gettinginfof:		db "EXE_GETTINGINFOFORSERVERS",0
 _cstring_1:		db "&&1",0
 _cstring_exe_all:		db "EXE_ALL",0
-_cstring_exe_netsources:		db "EXE_NETSOURCE",14h,"%s",0
+_cstring_exe_netsources:		db "EXE_NETSOURCE",014h,"%s",0
 _cstring_net_source:		db "net source",0
-_cstring_exe_serverfilter:		db "EXE_SERVERFILTER",14h,"%s",0
+_cstring_exe_serverfilter:		db "EXE_SERVERFILTER",014h,"%s",0
 _cstring_server_filter:		db "server filter",0
 _cstring_exe_keywait:		db "EXE_KEYWAIT",0
 _cstring_exe_keychange:		db "EXE_KEYCHANGE",0
@@ -11744,7 +11744,7 @@ _cstring_startpb_popmenu:		db "startpb_popmenu",0
 _cstring_exe_cdkeyinvalid:		db "EXE_CDKEYINVALID",0
 _cstring_loadgameinfo:		db "loadGameInfo",0
 _cstring_all:		db "All",0
-_cstring_no_game_type_scr:		db 15h,"No game type scripts found in maps/mp/gametypes folder",0
+_cstring_no_game_type_scr:		db 015h,"No game type scripts found in maps/mp/gametypes folder",0
 _cstring_loadmods:		db "LoadMods",0
 _cstring_modlist:		db "$modlist",0
 _cstring_votetypemap:		db "voteTypeMap",0

@@ -2376,11 +2376,11 @@ SECTION .rdata
 _cstring__server_shutdown:		db "----- Server Shutdown -----",0ah,0
 _cstring_exe_disconnected:		db "EXE_DISCONNECTED",0
 _cstring_:		db "---------------------------",0ah,0
-_cstring_sv_getuserinfo_b:		db 15h,"SV_GetUserinfo: bad index %i",0ah,0
-_cstring_sv_getuserinfo_b1:		db 15h,"SV_GetUserinfo: bufferSize == %i",0
+_cstring_sv_getuserinfo_b:		db 015h,"SV_GetUserinfo: bad index %i",0ah,0
+_cstring_sv_getuserinfo_b1:		db 015h,"SV_GetUserinfo: bufferSize == %i",0
 _cstring_null:		db 0
 _cstring_name:		db "name",0
-_cstring_sv_setuserinfo_b:		db 15h,"SV_SetUserinfo: bad index %i",0ah,0
+_cstring_sv_setuserinfo_b:		db 015h,"SV_SetUserinfo: bad index %i",0ah,0
 _cstring_mapname:		db "mapname",0
 _cstring__server_initiali:		db "------ Server Initialization ------",0ah,0
 _cstring_server_s:		db "Server: %s",0ah,0
@@ -2396,15 +2396,15 @@ _cstring_s_load:		db "%s_load",0
 _cstring_loadingnewmapss:		db "loadingnewmap",0ah,"%s",0ah,"%s",0
 _cstring_all_mp:		db "all_mp",0
 _cstring_0:		db "0",0
-_cstring_sv_getconfigstri:		db 15h,"SV_GetConfigstring: bad index %i",0ah,0
-_cstring_sv_getconfigstri1:		db 15h,"SV_GetConfigstring: bufferSize == %i",0
+_cstring_sv_getconfigstri:		db 015h,"SV_GetConfigstring: bad index %i",0ah,0
+_cstring_sv_getconfigstri1:		db 015h,"SV_GetConfigstring: bufferSize == %i",0
 _cstring_i:		db "%i",0
 _cstring_c_i_s:		db "%c %i %s",0
-_cstring_sv_setconfigstri:		db 15h,"SV_SetConfigstring: bad index %i",0ah,0
-_cstring_info_string_leng:		db 15h,"Info string length exceeded",0ah,"key: fs_game",0ah,"Info string:",0ah,"%s",0ah,0
+_cstring_sv_setconfigstri:		db 015h,"SV_SetConfigstring: bad index %i",0ah,0
+_cstring_info_string_leng:		db 015h,"Info string length exceeded",0ah,"key: fs_game",0ah,"Info string:",0ah,"%s",0ah,0
 _cstring_fs_game:		db 5ch,"fs_game",5ch,5ch,0
 _cstring_overflow_at_conf:		db "Overflow at config string start value of %i: key values printed below",0ah,0
-_cstring_sv_setconfigvalu:		db 15h,"SV_SetConfigValueForKey: overflow",0
+_cstring_sv_setconfigvalu:		db 015h,"SV_SetConfigValueForKey: overflow",0
 _cstring_i_i__s_:		db "%i: %i ( %s )",0ah,0
 _cstring_hunkusagedat:		db "hunkusage.dat",0
 _cstring_current_game_typ:		db "Current game type",0

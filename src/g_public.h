@@ -42,6 +42,21 @@ struct VoicePacket_t
   int dataSize;
 };
 
+
+struct clientControllers_t
+{
+  vec3_t angles[6];
+  vec3_t tag_origin_angles;
+  vec3_t tag_origin_offset;
+};
+
+struct CEntPlayerInfo
+{
+  struct clientControllers_t *control;
+  byte tag[6];
+};
+
+
 float __cdecl G_GetFogOpaqueDistSqrd();
 void __cdecl ClientDisconnect(int clientNum);
 void __cdecl G_SetLastServerTime(int clientNum, int lastServerTime);

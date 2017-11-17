@@ -7,7 +7,7 @@
 
 ;Exports of i5stdlib:
 	global itoa
-	global strlwr
+	global Q_strlwr
 	global strupr
 	global stricmp
 	global strnicmp
@@ -111,7 +111,7 @@ itoa_10:
 
 
 ;strlwr(char*)
-strlwr:
+Q_strlwr:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -120,16 +120,16 @@ strlwr:
 	mov esi, [ebp+0x8]
 	movzx eax, byte [esi]
 	test al, al
-	jnz strlwr_10
+	jnz Q_strlwr_10
 	mov eax, esi
 	add esp, 0x10
 	pop ebx
 	pop esi
 	pop ebp
 	ret
-strlwr_10:
+Q_strlwr_10:
 	mov ebx, esi
-strlwr_20:
+Q_strlwr_20:
 	movsx eax, al
 	mov [esp], eax
 	call tolower
@@ -137,7 +137,7 @@ strlwr_20:
 	add ebx, 0x1
 	movzx eax, byte [ebx]
 	test al, al
-	jnz strlwr_20
+	jnz Q_strlwr_20
 	mov eax, esi
 	add esp, 0x10
 	pop ebx

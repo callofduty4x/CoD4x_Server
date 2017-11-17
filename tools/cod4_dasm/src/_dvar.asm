@@ -8437,7 +8437,7 @@ _cstring_g_g:		db "%g %g",0
 _cstring_g:		db "%g",0
 _cstring__g_g_g_:		db "( %g, %g, %g )",0
 _cstring_cant_create_dvar:		db "Can",27h,"t create dvar ",27h,"%s",27h,": %i dvars already exist",0
-_cstring_null_name_in_gen:		db 15h,"null name in generateHashValue",0
+_cstring_null_name_in_gen:		db 015h,"null name in generateHashValue",0
 _cstring_domain_is_0_or_1:		db "Domain is 0 or 1",0
 _cstring_domain_is_any_4c:		db "Domain is any 4-component color, in RGBA format",0
 _cstring_domain_is_any_te:		db "Domain is any text",0

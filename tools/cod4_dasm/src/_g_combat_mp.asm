@@ -2357,7 +2357,7 @@ _cstring_addscrteamname_u:		db "AddScrTeamName(): Unhandled team name %i.",0ah,0
 _cstring_locdmgtable:		db "LOCDMGTABLE",0
 _cstring_hitloc_damage_ta:		db "hitloc damage table",0
 _cstring_infomp_lochit_dm:		db "info/mp_lochit_dmgtable",0
-_cstring_error_parsing_hi:		db 15h,"Error parsing hitloc damage table %s",0ah,0
+_cstring_error_parsing_hi:		db 015h,"Error parsing hitloc damage table %s",0ah,0
 _cstring_unknown_means_of:		db "Unknown means of death ",22h,"%s",22h,0ah,0
 _cstring_null:		db 0
 _cstring_targeti_healthi_:		db "target:%i health:%i damage:%i",0ah,0

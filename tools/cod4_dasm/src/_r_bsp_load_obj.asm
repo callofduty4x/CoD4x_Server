@@ -12900,9 +12900,9 @@ rgl: resb 0x2e0
 ;All cstrings:
 SECTION .rdata
 _cstring_light_grid_verti:		db "light grid vertical variation is too extreme -- ignoring light grid",0
-_cstring_max_planes_excee:		db 15h,"Max planes exceeded",0
-_cstring_max_cells_exceed:		db 15h,"Max cells exceeded",0
-_cstring_loadmap_funny_lu:		db 15h,"LoadMap: funny lump size in %s",0
+_cstring_max_planes_excee:		db 015h,"Max planes exceeded",0
+_cstring_max_cells_exceed:		db 015h,"Max cells exceeded",0
+_cstring_loadmap_funny_lu:		db 015h,"LoadMap: funny lump size in %s",0
 _cstring_i_merged_lightma:		db "%i merged lightmaps from %i original lightmaps",0ah,0
 _cstring_olprio_pain:		db "olprio_pain",0
 _cstring_lightmapi_primar:		db "*lightmap%i_primary",0
@@ -12910,28 +12910,28 @@ _cstring_lightmapi_second:		db "*lightmap%i_secondary",0
 _cstring_null:		db 0
 _cstring_classname:		db "classname",0
 _cstring_misc_model:		db "misc_model",0
-_cstring_r_loadentities_m:		db 15h,"R_LoadEntities: MAX_SPAWN_VARS (%i) reached",0ah,0
-_cstring_r_loadentities_e:		db 15h,"R_LoadEntities: entity without a classname",0ah,0
+_cstring_r_loadentities_m:		db 015h,"R_LoadEntities: MAX_SPAWN_VARS (%i) reached",0ah,0
+_cstring_r_loadentities_e:		db 015h,"R_LoadEntities: entity without a classname",0ah,0
 _cstring_0_0_0:		db "0 0 0",0
 _cstring_f_f_f:		db "%f %f %f",0
 _cstring_model:		db "model",0
-_cstring_r_checkvalidstat:		db 15h,"R_CheckValidStaticModel: no model specified in misc_model at (%.0f %.0f %.0f)",0
+_cstring_r_checkvalidstat:		db 015h,"R_CheckValidStaticModel: no model specified in misc_model at (%.0f %.0f %.0f)",0
 _cstring_bad_static_model:		db "bad static model ",27h,"%s",27h," at (%.0f %.0f %.0f)",0ah,0
 _cstring_default_static_m:		db "default_static_model",0
-_cstring_r_checkvalidstat1:		db 15h,"R_CheckValidStaticModel: could not find xmodel ",27h,"default_static_model",27h,0
+_cstring_r_checkvalidstat1:		db 015h,"R_CheckValidStaticModel: could not find xmodel ",27h,"default_static_model",27h,0
 _cstring_ff00000000:		db "FF00000000",0
 _cstring_02x02x02x02x02x:		db "%02x%02x%02x%02x%02x",0
-_cstring_r_vec4forkeyhex_:		db 15h,"R_Vec4ForKeyHex: invalid value",0ah,0
+_cstring_r_vec4forkeyhex_:		db 015h,"R_Vec4ForKeyHex: invalid value",0ah,0
 _cstring_angle:		db "angle",0
 _cstring_angles:		db "angles",0
 _cstring_modelscale:		db "modelscale",0
 _cstring_spawnflags:		db "spawnflags",0
-_cstring_r_checkvalidstat2:		db 15h,"R_CheckValidStaticModel: no origin specified",0
+_cstring_r_checkvalidstat2:		db 015h,"R_CheckValidStaticModel: no origin specified",0
 _cstring_origin:		db "origin",0
 _cstring_gndlt:		db "gndLt",0
 _cstring_bsp_compiled_wit:		db "Bsp compiled with old version of cod2map.",0ah,0
-_cstring_loadmap_no_surfa:		db 15h,"LoadMap: no surfaces in %s",0
-_cstring_loadmap_no_verti:		db 15h,"LoadMap: no vertices in %s",0
+_cstring_loadmap_no_surfa:		db 015h,"LoadMap: no surfaces in %s",0
+_cstring_loadmap_no_verti:		db 015h,"LoadMap: no vertices in %s",0
 _cstring_colormap:		db "colorMap",0
 _cstring_colormap_s_for_s:		db "colorMap ",27h,"%s",27h," for sky material ",27h,"%s",27h," is not a cubemap",0ah,0
 _cstring_default:		db "$default",0

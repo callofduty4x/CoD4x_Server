@@ -4441,12 +4441,12 @@ _cstring___game_media_don:		db " - game media done",0
 _cstring_clients:		db "clients",0
 _cstring_ui_mphudtxt:		db "ui_mp/hud.txt",0
 _cstring_compass_mp:		db "Compass_mp",0
-_cstring_couldnt_register:		db 15h,"couldn",27h,"t register shell shock ",27h,"%s",27h," -- see console",0ah,0
+_cstring_couldnt_register:		db 015h,"couldn",27h,"t register shell shock ",27h,"%s",27h," -- see console",0ah,0
 _cstring_sound_aliases:		db "sound aliases",0
-_cstring_clientserver_gam:		db 15h,"Client/Server game mismatch: %s/%s",0
+_cstring_clientserver_gam:		db 015h,"Client/Server game mismatch: %s/%s",0
 _cstring_compass:		db "Compass",0
 _cstring_couldnt_find_sho:		db "Couldn",27h,"t find shock file [hold_breath.shock]",0ah,0
-_cstring_error_reading_cs:		db 15h,"Error reading CSV files in the fx directory to identify impact effects",0
+_cstring_error_reading_cs:		db 015h,"Error reading CSV files in the fx directory to identify impact effects",0
 _cstring_off:		db "Off",0
 _cstring_contents_solid:		db "CONTENTS_SOLID",0
 _cstring_mask_shot:		db "MASK_SHOT",0

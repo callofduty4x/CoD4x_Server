@@ -1498,7 +1498,7 @@ scrAnimPub: resb 0x480
 
 ;All cstrings:
 SECTION .rdata
-_cstring_duplicate_animat:		db 15h,"duplicate animation ",27h,"%s",27h," in ",27h,"animtrees/%s.atr",27h,0
+_cstring_duplicate_animat:		db 015h,"duplicate animation ",27h,"%s",27h," in ",27h,"animtrees/%s.atr",27h,0
 _cstring_unknown_anim_pro:		db "unknown anim property",0
 _cstring_s:		db "%s",0
 _cstring_bad_token:		db "bad token",0
@@ -1517,7 +1517,7 @@ _cstring_animtreessatr:		db "animtrees/%s.atr",0
 _cstring_scr_animtreepars:		db "Scr_AnimTreeParse",0
 _cstring_root:		db "root",0
 _cstring_animation_s_not_:		db "animation ",27h,"%s",27h," not defined in anim tree ",27h,"%s",27h,0
-_cstring_s1:		db 15h,"%s",0
+_cstring_s1:		db 015h,"%s",0
 _cstring_unknown_anim_tre:		db "unknown anim tree ",27h,"%s",27h,0
 _cstring_loopsync:		db "loopsync",0
 _cstring_nonloopsync:		db "nonloopsync",0

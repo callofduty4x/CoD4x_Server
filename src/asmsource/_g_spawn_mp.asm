@@ -104,7 +104,6 @@
 	global G_ParseEntityField
 	global G_SpawnInt
 	global Scr_GetEnt
-	global Scr_Notify
 	global G_SpawnFloat
 	global G_LoadStructs
 	global SP_worldspawn
@@ -116,12 +115,10 @@
 	global Scr_GetEntArray
 	global G_CallSpawnEntity
 	global Scr_ExecEntThread
-	global G_LevelSpawnString
 	global Scr_GetObjectField
 	global Scr_SetObjectField
 	global Scr_GetGenericField
 	global Scr_SetGenericField
-	global GScr_AddFieldsForEntity
 	global G_DuplicateEntityFields
 	global GScr_AddFieldsForRadiant
 	global G_SpawnEntitiesFromString
@@ -468,23 +465,6 @@ Scr_GetEnt_60:
 	mov edx, ebx
 	jmp Scr_GetEnt_30
 
-
-;Scr_Notify(gentity_s*, unsigned short, unsigned int)
-Scr_Notify:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	movzx eax, word [ebp+0xc]
-	mov edx, [ebp+0x10]
-	mov [esp+0xc], edx
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], 0x0
-	mov eax, [ebp+0x8]
-	mov eax, [eax]
-	mov [esp], eax
-	call Scr_NotifyNum
-	leave
-	ret
 
 
 ;G_SpawnFloat(char const*, char const*, float*)
@@ -1148,26 +1128,6 @@ Scr_ExecEntThread:
 	ret
 
 
-;G_LevelSpawnString(char const*, char const*, char const**)
-G_LevelSpawnString:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov eax, [ebp+0x10]
-	mov [esp+0xc], eax
-	mov eax, [ebp+0xc]
-	mov [esp+0x8], eax
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov eax, level
-	add eax, 0xb34
-	mov [esp], eax
-	call G_SpawnString
-	leave
-	ret
-	nop
-
-
 ;Scr_GetObjectField(unsigned int, int, int)
 Scr_GetObjectField:
 	push ebp
@@ -1556,39 +1516,6 @@ Scr_SetGenericField_jumptab_0:
 	dd Scr_SetGenericField_110
 	dd Scr_SetGenericField_120
 	dd Scr_SetGenericField_130
-
-
-;GScr_AddFieldsForEntity()
-GScr_AddFieldsForEntity:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov edx, [fields]
-	test edx, edx
-	jz GScr_AddFieldsForEntity_10
-	xor esi, esi
-	mov ebx, fields+0x10
-GScr_AddFieldsForEntity_20:
-	mov eax, esi
-	sar eax, 0x4
-	movzx eax, ax
-	mov [esp+0x8], eax
-	mov [esp+0x4], edx
-	mov dword [esp], 0x0
-	call Scr_AddClassField
-	mov edx, [ebx]
-	add esi, 0x10
-	add ebx, 0x10
-	test edx, edx
-	jnz GScr_AddFieldsForEntity_20
-GScr_AddFieldsForEntity_10:
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	jmp GScr_AddFieldsForClient
 
 
 ;G_DuplicateEntityFields(gentity_s*, gentity_s const*)

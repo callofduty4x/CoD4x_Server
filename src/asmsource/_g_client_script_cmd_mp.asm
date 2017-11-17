@@ -83,7 +83,6 @@
 	extern Q_strncpyz
 	extern G_SoundAliasIndex
 	extern g_voiceChatTalkingDuration
-	extern SV_GetGuid
 	extern Scr_AddString
 	extern Q_stricmp
 	extern BG_FindWeaponIndexForName
@@ -101,6 +100,8 @@
 	extern Scr_MakeArray
 	extern Scr_AddArray
 	extern G_SetEquippedOffHand
+	extern PlayerCmd_spawn
+	extern PlayerCmd_GetGuid
 
 ;Exports of g_client_script_cmd_mp:
 	global PlayerCmd_setOrigin
@@ -136,7 +137,6 @@
 	global PlayerCmd_AnyAmmoForWeaponModes
 	global iclientprintln
 	global iclientprintlnbold
-	global PlayerCmd_spawn
 	global PlayerCmd_setEnterTime
 	global PlayerCmd_ClonePlayer
 	global PlayerCmd_SetClientDvar
@@ -145,7 +145,6 @@
 	global ScrCmd_StopLocalSound
 	global PlayerCmd_IsTalking
 	global PlayerCmd_AllowSpectateTeam
-	global PlayerCmd_GetGuid
 	global PlayerCmd_GetXuid
 	global PlayerCmd_SetActionSlot
 	global PlayerCmd_SetPerk
@@ -3083,63 +3082,6 @@ iclientprintlnbold_20:
 	nop
 
 
-;PlayerCmd_spawn(scr_entref_t)
-PlayerCmd_spawn:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x3c
-	mov eax, [ebp+0x8]
-	mov edx, eax
-	shr eax, 0x10
-	test ax, ax
-	jnz PlayerCmd_spawn_10
-	movzx ecx, dx
-	lea eax, [ecx+ecx*8]
-	lea eax, [ecx+eax*2]
-	mov edx, eax
-	shl edx, 0x5
-	add eax, edx
-	lea edi, [eax+ecx]
-	add edi, g_entities
-	mov eax, [edi+0x15c]
-	test eax, eax
-	jz PlayerCmd_spawn_20
-PlayerCmd_spawn_30:
-	lea esi, [ebp-0x24]
-	mov [esp+0x4], esi
-	mov dword [esp], 0x0
-	call Scr_GetVector
-	lea ebx, [ebp-0x30]
-	mov [esp+0x4], ebx
-	mov dword [esp], 0x1
-	call Scr_GetVector
-	mov [esp+0x8], ebx
-	mov [esp+0x4], esi
-	mov [esp], edi
-	call ClientSpawn
-	add esp, 0x3c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-PlayerCmd_spawn_10:
-	mov dword [esp], _cstring_not_an_entity
-	call Scr_ObjectError
-	xor edi, edi
-	jmp PlayerCmd_spawn_30
-PlayerCmd_spawn_20:
-	mov [esp+0x4], ecx
-	mov dword [esp], _cstring_entity_i_is_not_
-	call va
-	mov [esp], eax
-	call Scr_ObjectError
-	jmp PlayerCmd_spawn_30
-	nop
-
 
 ;PlayerCmd_setEnterTime(scr_entref_t)
 PlayerCmd_setEnterTime:
@@ -3943,56 +3885,6 @@ PlayerCmd_AllowSpectateTeam_20:
 	mov [esp], eax
 	call Scr_ObjectError
 	jmp PlayerCmd_AllowSpectateTeam_110
-
-
-;PlayerCmd_GetGuid(scr_entref_t)
-PlayerCmd_GetGuid:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov eax, [ebp+0x8]
-	mov ebx, eax
-	shr eax, 0x10
-	test ax, ax
-	jnz PlayerCmd_GetGuid_10
-	movzx ebx, bx
-	lea eax, [ebx+ebx*8]
-	lea eax, [ebx+eax*2]
-	mov edx, eax
-	shl edx, 0x5
-	add eax, edx
-	add eax, ebx
-	mov edx, g_entities
-	mov eax, [edx+eax+0x15c]
-	test eax, eax
-	jz PlayerCmd_GetGuid_20
-PlayerCmd_GetGuid_40:
-	call Scr_GetNumParam
-	test eax, eax
-	jz PlayerCmd_GetGuid_30
-	mov dword [esp], _cstring_usage_self_getgu
-	call Scr_Error
-PlayerCmd_GetGuid_30:
-	mov [esp], ebx
-	call SV_GetGuid
-	mov [ebp+0x8], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	jmp Scr_AddString
-PlayerCmd_GetGuid_10:
-	mov dword [esp], _cstring_not_an_entity
-	call Scr_ObjectError
-	movzx ebx, bx
-	jmp PlayerCmd_GetGuid_40
-PlayerCmd_GetGuid_20:
-	mov [esp+0x4], ebx
-	mov dword [esp], _cstring_entity_i_is_not_
-	call va
-	mov [esp], eax
-	call Scr_ObjectError
-	jmp PlayerCmd_GetGuid_40
 
 
 ;PlayerCmd_GetXuid(scr_entref_t)

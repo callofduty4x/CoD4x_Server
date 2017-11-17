@@ -3352,7 +3352,7 @@ cached_models: resb 0x800
 ;All cstrings:
 SECTION .rdata
 _cstring_model_s_not_prec:		db "model ",27h,"%s",27h," not precached",0
-_cstring_g_modelindex_ove:		db 15h,"G_ModelIndex: overflow",0
+_cstring_g_modelindex_ove:		db 015h,"G_ModelIndex: overflow",0
 _cstring_warning_abandoni:		db "Warning: abandoning const config string model slot for string %s",0ah,0
 _cstring_effect:		db "effect",0
 _cstring_material:		db "material",0
@@ -3362,9 +3362,9 @@ _cstring_warning_s_s_not_:		db "WARNING: %s ",22h,"%s",22h," not precached",0ah,
 _cstring_s_s_not_precache:		db "%s ",22h,"%s",22h," not precached",0
 _cstring_g_findconfigstri:		db "G_FindConfigstringIndex: overflow...",0ah,0
 _cstring_dumping_these_i_:		db "Dumping these %i Config Strings:",0ah,0
-_cstring_g_findconfigstri1:		db 15h,"G_FindConfigstringIndex: overflow (%d): ",27h,"%s",27h,0
+_cstring_g_findconfigstri1:		db 015h,"G_FindConfigstringIndex: overflow (%d): ",27h,"%s",27h,0
 _cstring_i_s:		db "%i: %s",0ah,0
-_cstring_g_spawn_no_free_:		db 15h,"G_Spawn: no free entities",0
+_cstring_g_spawn_no_free_:		db 015h,"G_Spawn: no free entities",0
 _cstring_localized_string:		db "localized string",0
 _cstring_et_general:		db "ET_GENERAL",0
 _cstring_et_player:		db "ET_PLAYER",0

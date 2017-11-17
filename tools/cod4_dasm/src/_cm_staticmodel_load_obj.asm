@@ -416,8 +416,8 @@ _cstring_origin:		db "origin",0
 _cstring_f_f_f:		db "%f %f %f",0
 _cstring_angles:		db "angles",0
 _cstring_modelscale:		db "modelscale",0
-_cstring_static_model_s_h:		db 15h,"Static model [%s] has scale of 0.0",0
-_cstring_missing_model_na:		db 15h,"Missing model name at %.0f %.0f %.0f",0
+_cstring_static_model_s_h:		db 015h,"Static model [%s] has scale of 0.0",0
+_cstring_missing_model_na:		db 015h,"Missing model name at %.0f %.0f %.0f",0
 
 
 

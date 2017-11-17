@@ -564,6 +564,14 @@ int	Cmd_Argc( void ) {
 	return tokenStrings.cmd_argcList[tokenStrings.currentString -1];
 }
 
+int	SV_Cmd_Argc( void ) {
+
+	if(sv_tokenStrings.currentString == 0)
+		return 0;
+
+	return sv_tokenStrings.cmd_argcList[sv_tokenStrings.currentString -1];
+}
+
 /*
 ============
 Cmd_Argv	Returns commandline argument by number
@@ -589,6 +597,28 @@ char	*Cmd_Argv( int arg ) {
 	    return "";
 
 	return tokenStrings.cmd_argv[final_argc];
+}
+
+
+char	*SV_Cmd_Argv( int arg ) {
+
+	int cmd_argc;
+	int final_argc;
+
+	cmd_argc = SV_Cmd_Argc();
+
+	if(cmd_argc == 0)
+	    return "";
+
+	if(cmd_argc - arg <= 0)
+            return "";
+
+        final_argc = sv_tokenStrings.cmd_argc - cmd_argc + arg;
+
+	if(sv_tokenStrings.cmd_argv[final_argc] == NULL)
+	    return "";
+
+	return sv_tokenStrings.cmd_argv[final_argc];
 }
 
 
@@ -653,6 +683,22 @@ char	*Cmd_Argsv( int arg, char* buff, int bufsize ) {
 
 	return buff;
 }
+
+char	*SV_Cmd_Argsv( int arg, char* buff, int bufsize ) {
+
+	int		i;
+	int		cmd_argc = SV_Cmd_Argc();
+	buff[0] = 0;
+	for ( i = arg ; i < cmd_argc ; i++ ) {
+		Q_strncat( buff, bufsize, SV_Cmd_Argv(i) );
+		if ( i != cmd_argc-1 ) {
+			Q_strncat( buff, bufsize, " " );
+		}
+	}
+
+	return buff;
+}
+
 
 typedef struct{
 	int cmd_argc;

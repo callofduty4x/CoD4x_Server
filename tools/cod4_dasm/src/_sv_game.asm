@@ -1832,14 +1832,14 @@ gameInitialized: resb 0x7c
 ;All cstrings:
 SECTION .rdata
 _cstring_null:		db 0
-_cstring_sv_sventityforge:		db 15h,"SV_SvEntityForGentity: bad gEnt",0
+_cstring_sv_sventityforge:		db 015h,"SV_SvEntityForGentity: bad gEnt",0
 _cstring_game_type:		db "Game Type",0
 _cstring_war:		db "war",0
 _cstring_g_gametype:		db "g_gametype",0
 _cstring_g_gametype_s_is_:		db "g_gametype %s is not a valid gametype, defaulting to dm",0ah,0
 _cstring_no_model:		db "no model.",0ah,0
 _cstring_f_f_f:		db "%f %f %f",0
-_cstring_sv_getserverinfo:		db 15h,"SV_GetServerinfo: bufferSize == %i",0
+_cstring_sv_getserverinfo:		db 015h,"SV_GetServerinfo: bufferSize == %i",0
 _cstring_i:		db "%i",0
 _cstring_warning_sv_skel_:		db "WARNING: SV_SKEL_MEMORY_SIZE exceeded",0ah,0
 _cstring_s:		db "%s",0

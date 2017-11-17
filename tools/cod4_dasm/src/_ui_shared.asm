@@ -15387,7 +15387,7 @@ _cstring_focusfirst_no_it:		db "focusFirst: no itemDefs in %s were selectable",0
 _cstring_itemdefs_unnamed:		db "itemDef",27h,"s unnamed menu",0
 _cstring_setfocus_could_n:		db "setFocus: could not find widget named ",27h,"%s",27h,0ah,0
 _cstring_setfocus_error_f:		db "setFocus: error focusing widget ",27h,"%s",27h," (widget was found but could not accept focus)",0ah,0
-_cstring_script_setfocusb:		db 15h,"Script_SetFocusByDvar: Item",27h,"s dvarTest field is empty.",0
+_cstring_script_setfocusb:		db 015h,"Script_SetFocusByDvar: Item",27h,"s dvarTest field is empty.",0
 _cstring_:		db 0ah,0
 _cstring_sv_serverid:		db "sv_serverId",0
 _cstring_cmd_mr_i_i_s:		db "cmd mr %i %i %s",0ah,0
@@ -15416,7 +15416,7 @@ _cstring_exe_yes:		db "EXE_YES",0
 _cstring_dvarstrlist_or_d:		db "<dvarStrList or dvarFloatList not set>",0
 _cstring_game_message_win1:		db "Game message window index %d is not valid. Must be in [0, %d).",0
 _cstring_menu_bind_key_pe:		db "@MENU_BIND_KEY_PENDING",0
-_cstring_too_many_menus_o:		db 15h,"Too many menus opened",0
+_cstring_too_many_menus_o:		db 015h,"Too many menus opened",0
 _cstring_mini_map2_overla:		db "mini_map2_overlay",0
 _cstring_loc_warnings:		db "loc_warnings",0
 _cstring_loc_warningsaser:		db "loc_warningsAsErrors",0
@@ -15429,7 +15429,7 @@ _cstring_developer:		db "developer",0
 _cstring_screenshot:		db "screenshot",0ah,0
 _cstring_unnamed:		db "unnamed",0
 _cstring_hiding_the_s_men:		db "hiding the %s menu becuase the ",27h,"visible when",27h," expression was false",0ah,0
-_cstring_ui_addmenu_exe_e:		db 15h,"UI_AddMenu: ",14h,"EXE_ERR_OUT_OF_MEMORY",0
+_cstring_ui_addmenu_exe_e:		db 015h,"UI_AddMenu: ",014h,"EXE_ERR_OUT_OF_MEMORY",0
 _cstring_could_not_find_m:		db "Could not find menu ",27h,"%s",27h,0ah,0
 _cstring_options_graphics:		db "options_graphics",0
 _cstring_options_sound:		db "options_sound",0

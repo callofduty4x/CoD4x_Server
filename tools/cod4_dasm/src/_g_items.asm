@@ -2926,14 +2926,14 @@ itemRegistered: resb 0x2064
 
 ;All cstrings:
 SECTION .rdata
-_cstring_c_game_pickup_cl:		db "%c ",22h,"GAME_PICKUP_CLIPONLY_AMMO",14h,"%s",22h,0
-_cstring_c_game_pickup_am:		db "%c ",22h,"GAME_PICKUP_AMMO",14h,"%s",22h,0
+_cstring_c_game_pickup_cl:		db "%c ",22h,"GAME_PICKUP_CLIPONLY_AMMO",014h,"%s",22h,0
+_cstring_c_game_pickup_am:		db "%c ",22h,"GAME_PICKUP_AMMO",014h,"%s",22h,0
 _cstring_c_game_cant_get_:		db "%c ",22h,"GAME_CANT_GET_PRIMARY_WEAP_MESSAGE",22h,0
 _cstring_weaponsdss:		db "Weapon;%s;%d;%s;%s",0ah,0
-_cstring_c_game_pickup_ca:		db "%c ",22h,"GAME_PICKUP_CANTCARRYMOREAMMO",14h,"%s",22h,0
+_cstring_c_game_pickup_ca:		db "%c ",22h,"GAME_PICKUP_CANTCARRYMOREAMMO",014h,"%s",22h,0
 _cstring_drop_weapon_tryi:		db "Drop_Weapon(): Trying to drop alt-type weapon, ",22h,"%s",22h,", but it has no corresponding altWeapon set.",0ah,0
 _cstring_defaultweapon:		db "defaultweapon",0
-_cstring_too_many_differe:		db 15h,"Too many different hintstring values on weapons. Max allowed is %i different strings",0
+_cstring_too_many_differe:		db 015h,"Too many different hintstring values on weapons. Max allowed is %i different strings",0
 _cstring_finishspawningit:		db "FinishSpawningItem: %s startsolid at %s",0ah,0
 _cstring_weapon_s:		db "weapon_%s",0
 _cstring_space:		db " ",0

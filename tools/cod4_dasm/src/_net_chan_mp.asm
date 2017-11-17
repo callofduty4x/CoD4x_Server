@@ -2394,7 +2394,7 @@ _cstring_s_recv_4i__si:		db "[%s] recv %4i : s=%i",0ah,0
 _cstring_sfragmentlength_:		db "%s:fragmentLength %i > msg->maxsize",0ah,0
 _cstring_sillegal_fragmen:		db "%s:illegal fragment length",0ah,0
 _cstring_s_senduuuu_4i_by:		db "[%s] send->%u.%u.%u.%u (%4i bytes) : s=%i ack=%i",0ah,0
-_cstring_netchan_transmit:		db 15h,"Netchan_Transmit: length = %i",0
+_cstring_netchan_transmit:		db 015h,"Netchan_Transmit: length = %i",0
 _cstring_s_sends_i:		db "[%s] send%s: %i",0ah,0
 _cstring_adding_i_byte_pa:		db "Adding %i byte payload to packet",0ah,0
 _cstring_sending_i_byte_p:		db "Sending %i byte packet",0ah,0

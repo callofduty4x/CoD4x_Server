@@ -200,6 +200,49 @@ int Q_stricmp (const char *s1, const char *s2) {
 }
 
 
+int __cdecl Q_stricmpwild(const char *wild, const char *s)
+{
+  char charWild;
+  int delta;
+  char charRef;
+
+  assert( wild );
+  assert( s );
+  do
+  {
+    charWild = *wild++;
+    if ( charWild == '*' )
+    {
+      if ( !*wild )
+      {
+        return 0;
+      }
+      if ( *s && !Q_stricmpwild(wild - 1, s + 1) )
+      {
+        return 0;
+      }
+    }
+    else
+    {
+      charRef = *s++;
+      if ( charWild != charRef && charWild != '?' )
+      {
+        delta = tolower(charWild) - tolower(charRef);
+        if ( delta != 0 )
+        {
+          return 1;
+        }
+      }
+    }
+  }
+  while ( charWild );
+  return 0;
+}
+
+
+
+
+
 char *Q_strlwr( char *s1 ) {
     char	*s;
 
@@ -2161,3 +2204,13 @@ void Swap_Init( void ) {
 }
 
 void PIXBeginNamedEvent(int v, const char* name);
+
+
+
+double __cdecl UnGetLeanFraction(const float fFrac)
+{
+
+  assert(fFrac >= 0);
+  assert(fFrac <= 1.f);
+  return 1.0 - sqrt(1.0 - fFrac);
+}

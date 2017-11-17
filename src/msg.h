@@ -67,6 +67,11 @@ struct clientState_s;
 struct playerState_s;
 struct usercmd_s;
 
+enum DeltaFlags
+{
+  DELTA_FLAGS_NONE = 0x1,
+  DELTA_FLAGS_FORCE = 0x0,
+};
 
 #ifdef __cplusplus
 extern "C"
@@ -106,9 +111,11 @@ void MSG_WriteBits(msg_t*, int bits, int bitcount);
 int MSG_ReadBits(msg_t *msg, int numBits);
 void MSG_WriteReliableCommandToBuffer(const char *source, char *destination, int length);
 
+int MSG_ReadDeltaClient(msg_t *msg, const int time, clientState_t *from, clientState_t *to, int number);
 void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force);
 //void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend);
 void __cdecl MSG_WriteDeltaPlayerstate(struct snapshotInfo_s* , msg_t* , int , struct playerState_s* , struct playerState_s*);
+void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, const int time, playerState_t *from, playerState_t *to, bool predictedFieldsIgnoreXor);
 void __cdecl MSG_WriteEntityIndex(struct snapshotInfo_s*, msg_t*, int, int);
 void __cdecl MSG_ReadDeltaUsercmdKey( msg_t *msg, int key, struct usercmd_s *from, struct usercmd_s *to );
 void __cdecl MSG_SetDefaultUserCmd( struct playerState_s *ps, struct usercmd_s *ucmd );
@@ -116,6 +123,11 @@ void MSG_WriteBase64(msg_t* msg, byte* inbuf, int len);
 void MSG_ReadBase64(msg_t* msg, byte* outbuf, int len);
 void MSG_BeginWriteMessageLength(msg_t* msg);
 void MSG_EndWriteMessageLength(msg_t* msg);
+
+int MSG_ReadBit(msg_t *msg);
+int MSG_ReadEntityIndex(msg_t *msg, int numBits);
+void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force);
+
 
 #ifdef __cplusplus
 }

@@ -40,7 +40,6 @@
 
 ;Exports of scr_main:
 	global Scr_ScanFile
-	global Scr_LoadScript
 	global Scr_FreeScripts
 	global Scr_IsIdentifier
 	global Scr_EndLoadScripts
@@ -142,21 +141,6 @@ Scr_ScanFile_50:
 	jz Scr_ScanFile_60
 	jmp Scr_ScanFile_90
 	nop
-
-
-;Scr_LoadScript(char const*)
-Scr_LoadScript:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x2018
-	mov dword [esp+0x8], 0x0
-	lea eax, [ebp-0x2008]
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Scr_LoadScriptInternal
-	leave
-	ret
 
 
 ;Scr_FreeScripts(unsigned char)

@@ -1803,7 +1803,7 @@ _cstring_net_opensocks_re3:		db "NET_OpenSocks: request denied: %i",0ah,0
 _cstring_ip_iiii:		db "IP: %i.%i.%i.%i",0ah,0
 _cstring_oversize_packet_:		db "Oversize packet from %s",0ah,0
 _cstring_net_getpacket_s:		db "NET_GetPacket: %s",0ah,0
-_cstring_sys_sendpacket_b:		db 15h,"Sys_SendPacket: bad address type",0
+_cstring_sys_sendpacket_b:		db 015h,"Sys_SendPacket: bad address type",0
 _cstring_sys_sendpacket_s:		db "Sys_SendPacket: %s",0ah,0
 _cstring_warning_network_:		db "WARNING: Network initialization failed, returned %d",0ah,0
 _cstring_network_initiali:		db "Network Initialized",0ah,0

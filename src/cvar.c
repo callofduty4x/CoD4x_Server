@@ -2654,3 +2654,42 @@ bool __cdecl Cvar_IsValidName(const char *dvarName)
   }
   return false;
 }
+
+
+void __cdecl Cvar_SetFromStringByName(const char* name, const char* value)
+{
+    Cvar_Set(name, value);
+}
+
+const char* __cdecl Cvar_EnumToString(cvar_t* var)
+{
+	return Cvar_DisplayableValue(var);
+}
+
+
+int __cdecl Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize)
+{
+  const char *string;
+  int ret;
+  int written;
+  unsigned int i;
+  cvar_t *dvar;
+
+  ret = 1;
+  for ( i = 0; i < numDvars; ++i )
+  {
+    dvar = Cvar_FindVar(dvarnames[i]);
+
+    assert(dvar);
+
+    string = Cvar_DisplayableValue(dvar);
+    written = Com_sprintf(buffer, bufsize, "%s \"%s\"\n", dvar->name, string);
+    if ( written < 0 )
+    {
+      return 0;
+    }
+    buffer += written;
+    bufsize -= written;
+  }
+  return ret;
+}

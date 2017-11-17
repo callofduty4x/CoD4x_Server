@@ -1108,15 +1108,15 @@ r_reflectionProbeGenerate: resb 0x7c
 
 ;All cstrings:
 SECTION .rdata
-_cstring_r_findcolorcorre:		db 15h,"R_FindColorCorrectionData: failed to find color correction entry ",27h,"%s",27h,".  Using ",27h,"%s",27h," instead.",0ah,0
+_cstring_r_findcolorcorre:		db 015h,"R_FindColorCorrectionData: failed to find color correction entry ",27h,"%s",27h,".  Using ",27h,"%s",27h," instead.",0ah,0
 _cstring_default:		db "default",0
 _cstring_you_can_only_gen:		db "You can only generate reflections for BSP version %i, but the BSP is version %i.  You need to recompile the map.",0
 _cstring_reflection_probe:		db "*reflection_probe%i",0
 _cstring_reflectionsrefle:		db "reflections/reflections.csv",0
-_cstring_r_parsecolorcorr:		db 15h,"R_ParseColorCorrectionData: file ",27h,"%s",27h," truncating name because ",27h,"%s",27h," is too longer than %d.",0ah,0
-_cstring_r_parsecolorcorr1:		db 15h,"R_ParseColorCorrectionData: file ",27h,"%s",27h," column header %d was ",27h,"%s",27h," instead of ",27h,"%s",27h,0ah,0
-_cstring_r_parsecolorcorr2:		db 15h,"R_ParseColorCorrectionData: file ",27h,"%s",27h," max color correction entires [%d] exceeded.  Ignoring the rest of the file ",27h,"%s",27h,0ah,0
-_cstring_r_loadcolorcorre:		db 15h,"R_LoadColorCorrectionData: failed to open ",27h,"%s",27h,0ah,0
+_cstring_r_parsecolorcorr:		db 015h,"R_ParseColorCorrectionData: file ",27h,"%s",27h," truncating name because ",27h,"%s",27h," is too longer than %d.",0ah,0
+_cstring_r_parsecolorcorr1:		db 015h,"R_ParseColorCorrectionData: file ",27h,"%s",27h," column header %d was ",27h,"%s",27h," instead of ",27h,"%s",27h,0ah,0
+_cstring_r_parsecolorcorr2:		db 015h,"R_ParseColorCorrectionData: file ",27h,"%s",27h," max color correction entires [%d] exceeded.  Ignoring the rest of the file ",27h,"%s",27h,0ah,0
+_cstring_r_loadcolorcorre:		db 015h,"R_LoadColorCorrectionData: failed to open ",27h,"%s",27h,0ah,0
 _cstring_generate_cube_ma:		db "Generate cube maps for reflection probes.",0
 _cstring_r_reflectionprob:		db "r_reflectionProbeGenerate",0
 _cstring_regenerate_cube_:		db "Regenerate cube maps for all reflection probes.",0

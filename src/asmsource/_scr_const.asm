@@ -1,9 +1,9 @@
 ;Imports of scr_const:
 	extern GScr_AllocString
+	extern scr_const
 
 ;Exports of scr_const:
 	global GScr_LoadConsts
-	global scr_const
 
 
 SECTION .text
@@ -596,7 +596,6 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of scr_const:
 SECTION .bss
-scr_const: resb 0x184
 
 
 ;All cstrings:

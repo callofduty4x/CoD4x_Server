@@ -1127,14 +1127,14 @@ int G_GetClientSize()
 	return sizeof(gclient_t);
 }
 
-gclient_t* G_GetPlayerState(int num)
+playerState_t* G_GetPlayerState(int num)
 {
-	return &level.clients[num];
+    return &level.clients[num].ps;
 }
 
 clientState_t* G_GetClientState(int num)
 {
-	return &level.clients[num].sess.cs;
+    return &level.clients[num].sess.cs;
 }
 
 int G_GetClientArchiveTime(int clnum)

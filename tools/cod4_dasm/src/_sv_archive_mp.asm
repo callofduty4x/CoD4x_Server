@@ -808,9 +808,9 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
-_cstring_svsheadernextcac:		db 15h,"svsHeader.nextCachedSnapshotFrames wrapped",0
-_cstring_svsheadernextcac1:		db 15h,"svsHeader.nextCachedSnapshotClients wrapped",0
-_cstring_svsheadernextcac2:		db 15h,"svsHeader.nextCachedSnapshotEntities wrapped",0
+_cstring_svsheadernextcac:		db 015h,"svsHeader.nextCachedSnapshotFrames wrapped",0
+_cstring_svsheadernextcac1:		db 015h,"svsHeader.nextCachedSnapshotClients wrapped",0
+_cstring_svsheadernextcac2:		db 015h,"svsHeader.nextCachedSnapshotEntities wrapped",0
 
 
 

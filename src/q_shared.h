@@ -257,7 +257,7 @@ char	*SV_ExpandNewlines( char *in );
 
 
 
-void PIXBeginNamedEvent(int, const char*);
+void PIXBeginNamedEvent(int, const char*,...);
 
 
 #include "q_math.h"
@@ -512,6 +512,8 @@ typedef struct
 
 
 #define MAX_HUDELEMENTS 31
+#define MAX_HUDELEMS_ARCHIVAL MAX_HUDELEMENTS
+#define MAX_HUDELEMS_CURRENT MAX_HUDELEMENTS
 
 typedef enum
 {
@@ -673,6 +675,8 @@ typedef struct pc_token_s
 void    COM_MatchToken( char**buf_p, char *match );
 
 void    Swap_Init( void );
+
+#define POF_PLAYER 4
 
 /*
 #define random()    ( ( rand() & 0x7fff ) / ( (float)0x7fff ) )

@@ -323,7 +323,7 @@ __asm__ __volatile__(
 		}
 	}
 
-	if(ent->client->sess.sessionState == STATE_PLAYING)
+	if(ent->client->sess.sessionState == SESS_STATE_PLAYING)
 	{
 		cl->undercover = 0;
 	}

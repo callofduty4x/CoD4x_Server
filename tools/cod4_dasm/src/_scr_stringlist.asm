@@ -1834,13 +1834,13 @@ scrStringGlob: resb 0x27180
 
 ;All cstrings:
 SECTION .rdata
-_cstring_exceeded_maximum:		db 15h,"exceeded maximum number of script strings (increase STRINGLIST_SIZE)",0ah,0
-_cstring_exceeded_maximum1:		db 15h,"exceeded maximum number of script strings",0ah,0
+_cstring_exceeded_maximum:		db 015h,"exceeded maximum number of script strings (increase STRINGLIST_SIZE)",0ah,0
+_cstring_exceeded_maximum1:		db 015h,"exceeded maximum number of script strings",0ah,0
 _cstring_i:		db "%i",0
 _cstring_g:		db "%g",0
 _cstring_max_string_lengt:		db "max string length exceeded: ",22h,"%s",22h,0
 _cstring_g_g_g:		db "(%g, %g, %g)",0
-_cstring_filename_s_excee:		db 15h,"Filename ",27h,"%s",27h," exceeds maximum length of %d",0
+_cstring_filename_s_excee:		db 015h,"Filename ",27h,"%s",27h," exceeds maximum length of %d",0
 
 
 

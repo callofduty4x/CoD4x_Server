@@ -10072,22 +10072,22 @@ snd_volume: resb 0xc
 
 ;All cstrings:
 SECTION .rdata
-_cstring_tried_to_blend_b:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same sound file",0ah,0
-_cstring_tried_to_blend_b1:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same volume falloff curve",0ah,0
-_cstring_tried_to_blend_b2:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same looping status",0ah,0
-_cstring_tried_to_blend_b3:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they are not both loaded or both streamed",0ah,0
-_cstring_tried_to_blend_b4:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same channel",0ah,0
-_cstring_tried_to_blend_b5:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but only one of them is a ",27h,"master",27h," alias",0ah,0
-_cstring_tried_to_blend_b6:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but only one of them is a ",27h,"slave",27h," alias",0ah,0
-_cstring_tried_to_blend_b7:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same fulldrylevel setting",0ah,0
-_cstring_tried_to_blend_b8:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same nowetlevel setting",0ah,0
-_cstring_tried_to_blend_b9:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same slave percentages.",0ah,0
-_cstring_tried_to_blend_b10:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same start delay.",0ah,0
-_cstring_tried_to_blend_b11:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they are looping and at least one of them has a random pitch",0ah,0
-_cstring_tried_to_blend_b12:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but one or both has a secondary alias.",0ah,0
-_cstring_tried_to_blend_b13:		db 15h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they are looping and at least one of them has a random volume",0ah,0
-_cstring_alias_s_sound_s_:		db 15h,"alias %s sound %s played as an ambient / music track is not streamed; type must be ",27h,"streamed",27h,0ah,0
-_cstring_alias_s_sound_s_1:		db 15h,"alias %s sound %s played as an ambient / music track uses a 3D channel type; should probably be channel ",27h,"local",27h,0ah,0
+_cstring_tried_to_blend_b:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same sound file",0ah,0
+_cstring_tried_to_blend_b1:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same volume falloff curve",0ah,0
+_cstring_tried_to_blend_b2:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same looping status",0ah,0
+_cstring_tried_to_blend_b3:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they are not both loaded or both streamed",0ah,0
+_cstring_tried_to_blend_b4:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same channel",0ah,0
+_cstring_tried_to_blend_b5:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but only one of them is a ",27h,"master",27h," alias",0ah,0
+_cstring_tried_to_blend_b6:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but only one of them is a ",27h,"slave",27h," alias",0ah,0
+_cstring_tried_to_blend_b7:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same fulldrylevel setting",0ah,0
+_cstring_tried_to_blend_b8:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they don",27h,"t use the same nowetlevel setting",0ah,0
+_cstring_tried_to_blend_b9:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same slave percentages.",0ah,0
+_cstring_tried_to_blend_b10:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they do not have the same start delay.",0ah,0
+_cstring_tried_to_blend_b11:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they are looping and at least one of them has a random pitch",0ah,0
+_cstring_tried_to_blend_b12:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but one or both has a secondary alias.",0ah,0
+_cstring_tried_to_blend_b13:		db 015h,"tried to blend between sound aliases ",27h,"%s",27h," and ",27h,"%s",27h,", but they are looping and at least one of them has a random volume",0ah,0
+_cstring_alias_s_sound_s_:		db 015h,"alias %s sound %s played as an ambient / music track is not streamed; type must be ",27h,"streamed",27h,0ah,0
+_cstring_alias_s_sound_s_1:		db 015h,"alias %s sound %s played as an ambient / music track uses a 3D channel type; should probably be channel ",27h,"local",27h,0ah,0
 _cstring_null:		db 0
 _cstring_invalid_eqindex_:		db "invalid ",27h,"eqIndex",27h," %i, must be >= 0 and < %i",0ah,0
 _cstring_invalid_band_i_m:		db "invalid ",27h,"band",27h," %i, must be >= 0 and < %i",0ah,0

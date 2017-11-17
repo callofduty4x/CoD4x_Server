@@ -598,7 +598,7 @@ _cstring_removeip:		db "removeip",0
 _cstring_listip:		db "listip",0
 _cstring_usage__addip_ipm:		db "Usage:  addip <ip-mask>",0ah,0
 _cstring_say:		db "say",0
-_cstring_c_game_server_s:		db "%c ",22h,"GAME_SERVER",15h,": %s",22h,0
+_cstring_c_game_server_s:		db "%c ",22h,"GAME_SERVER",015h,": %s",22h,0
 _cstring_g_banips:		db "g_banIPs",0ah,0
 _cstring_removed:		db "Removed.",0ah,0
 _cstring_didnt_find_s:		db "Didn",27h,"t find %s.",0ah,0

@@ -13263,19 +13263,19 @@ _cstring_space:		db " ",0
 _cstring_ss_weight_2f__2f4:		db "%s%s: (weight) %.2f -> %.2f",0ah,0
 _cstring_ss_weight_2f__2f5:		db "%s%s: (weight) %.2f -> %.2f, ",27h,"%s",27h,0ah,0
 _cstring_void_loop:		db "void_loop",0
-_cstring_duplicate_specif:		db 15h,"duplicate specification of animation sync in ",27h,"%s",27h,", %d nodes above ",27h,"%s",27h,0
-_cstring_animation_s_in_s:		db 15h,"animation ",27h,"%s",27h," in ",27h,"%s",27h," cannot be sync nonlooping and looping",0
-_cstring_animation_s_in_s1:		db 15h,"animation ",27h,"%s",27h," in ",27h,"%s",27h," cannot be sync looping and nonlooping",0
-_cstring_cannot_find_xani:		db 15h,"Cannot find ",27h,"xanim/%s",27h,".",0ah,"This is a default xanim file that you should have.",0ah,0
-_cstring_animation_cannot:		db 15h,"animation cannot be sync looping and sync nonlooping",0
-_cstring_exceeded_maximum:		db 15h,"exceeded maximum number of anim info",0
+_cstring_duplicate_specif:		db 015h,"duplicate specification of animation sync in ",27h,"%s",27h,", %d nodes above ",27h,"%s",27h,0
+_cstring_animation_s_in_s:		db 015h,"animation ",27h,"%s",27h," in ",27h,"%s",27h," cannot be sync nonlooping and looping",0
+_cstring_animation_s_in_s1:		db 015h,"animation ",27h,"%s",27h," in ",27h,"%s",27h," cannot be sync looping and nonlooping",0
+_cstring_cannot_find_xani:		db 015h,"Cannot find ",27h,"xanim/%s",27h,".",0ah,"This is a default xanim file that you should have.",0ah,0
+_cstring_animation_cannot:		db 015h,"animation cannot be sync looping and sync nonlooping",0
+_cstring_exceeded_maximum:		db 015h,"exceeded maximum number of anim info",0
 _cstring_xanimblend:		db "XAnimBlend",0
-_cstring_do_not_nest_addi:		db 15h,"Do not nest additives",0
+_cstring_do_not_nest_addi:		db 015h,"Do not nest additives",0
 _cstring_xanimcreate:		db "XAnimCreate",0
-_cstring_cannot_find_xani1:		db 15h,"Cannot find xanim ",27h,"%s",27h,0
+_cstring_cannot_find_xani1:		db 015h,"Cannot find xanim ",27h,"%s",27h,0
 _cstring_void:		db "void",0
 _cstring_warning_couldnt_:		db "WARNING: Couldn",27h,"t find xanim ",27h,"%s",27h,", using default xanim ",27h,"%s",27h," instead",0ah,0
-_cstring_cannot_find_xani2:		db 15h,"Cannot find xanim ",27h,"%s",27h,".",0
+_cstring_cannot_find_xani2:		db 015h,"Cannot find xanim ",27h,"%s",27h,".",0
 _cstring_sno_tree:		db "%sNO TREE",0ah,0
 _cstring_s:		db "%s",0
 _cstring_:		db 0ah,0

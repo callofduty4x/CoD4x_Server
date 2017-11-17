@@ -143,9 +143,9 @@ static void TranslateFunctionName(char* fn)
     strcpy(fn, "strcmp");
     return;
   }
-  if(strcmp(fn, "I_strlwr") == 0)
+  if(strcmp(fn, "I_strlwr") == 0 || strcmp(fn, "strlwr") == 0)
   {
-    fn[0] = 'Q';
+    strcpy(fn, "Q_strlwr");
     return;
   }
 
@@ -2906,7 +2906,7 @@ public:
             *inquotes = false;
           }
           char idx[12];
-          sprintf(idx, "%02x", (uint32_t)c);
+          sprintf(idx, "%02x", (unsigned char)c);
           escapestring[k+0] = idx[0];
           escapestring[k+1] = idx[1];
           escapestring[k+2] = 'h';          
@@ -2932,12 +2932,13 @@ public:
             *inquotes = false;
           }
 
-          char idx[12];
-          sprintf(idx, "%02x", (uint32_t)c);
+          char idx[13];
+          sprintf(idx, "0%02x", (unsigned char)c);
           escapestring[k+0] = idx[0];
           escapestring[k+1] = idx[1];
-          escapestring[k+2] = 'h';          
-          k += 3;
+          escapestring[k+2] = idx[2];
+          escapestring[k+3] = 'h';
+          k += 4;
         }
     }
     *outstringcount = k;

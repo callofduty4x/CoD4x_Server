@@ -43,7 +43,7 @@
 	extern colorYellow
 	extern CL_AddDebugStarWithText
 	extern SV_SetConfigstring
-	extern G_SafeDObjFree
+	extern _Z14G_SafeDObjFreeP9gentity_s
 	extern turret_think_client
 	extern memset
 	extern Pmove
@@ -90,6 +90,7 @@
 	extern SV_GameDropClient
 	extern SV_GetArchivedClientInfo
 	extern HudElem_UpdateClient
+	extern StuckInClient
 
 ;Exports of g_active_mp:
 	global _ZZ15G_TouchTriggersP9gentity_sE5range
@@ -97,7 +98,6 @@
 	global G_RunClient
 	global ClientImpacts
 	global G_PlayerEvent
-	global StuckInClient
 	global ClientEndFrame
 	global SpectatorThink
 	global G_TouchTriggers
@@ -107,7 +107,6 @@
 	global G_PlayerController
 	global G_SetClientContents
 	global G_SetLastServerTime
-	global GetFollowPlayerState
 	global ClientInactivityTimer
 	global G_ClientCanSpectateTeam
 	global SpectatorClientEndFrame
@@ -422,193 +421,6 @@ G_PlayerEvent_20:
 	ret
 
 
-;StuckInClient(gentity_s*)
-StuckInClient:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x4c
-	mov ebx, [ebp+0x8]
-	mov eax, [ebx+0x15c]
-	test byte [eax+0x14], 0x4
-	jz StuckInClient_10
-	mov edx, [eax+0x2f64]
-	test edx, edx
-	jnz StuckInClient_10
-	mov eax, [ebx+0x120]
-	cmp eax, 0x2000000
-	jz StuckInClient_20
-	cmp eax, 0x4000000
-	jz StuckInClient_20
-StuckInClient_10:
-	xor eax, eax
-StuckInClient_90:
-	add esp, 0x4c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-StuckInClient_20:
-	mov eax, level
-	mov edi, [eax+0x1e4]
-	test edi, edi
-	jle StuckInClient_10
-	xor ecx, ecx
-	mov edx, g_entities
-	mov esi, edx
-	add edx, 0x100
-StuckInClient_50:
-	cmp byte [edx], 0x0
-	jz StuckInClient_30
-	mov eax, [edx+0x5c]
-	test byte [eax+0x14], 0x4
-	jz StuckInClient_30
-	mov eax, [eax+0x2f64]
-	test eax, eax
-	jnz StuckInClient_30
-	cmp ebx, esi
-	jz StuckInClient_30
-	mov eax, [edx+0xa0]
-	test eax, eax
-	jle StuckInClient_30
-	mov eax, [edx+0x20]
-	cmp eax, 0x2000000
-	jz StuckInClient_40
-	cmp eax, 0x4000000
-	jz StuckInClient_40
-StuckInClient_30:
-	add ecx, 0x1
-	add esi, 0x274
-	add edx, 0x274
-	cmp ecx, edi
-	jnz StuckInClient_50
-	jmp StuckInClient_10
-StuckInClient_40:
-	movss xmm0, dword [edx+0x24]
-	ucomiss xmm0, [ebx+0x130]
-	ja StuckInClient_30
-	movss xmm0, dword [ebx+0x124]
-	ucomiss xmm0, [edx+0x30]
-	ja StuckInClient_30
-	movss xmm0, dword [edx+0x28]
-	ucomiss xmm0, [ebx+0x134]
-	ja StuckInClient_30
-	movss xmm0, dword [ebx+0x128]
-	ucomiss xmm0, [edx+0x34]
-	ja StuckInClient_30
-	movss xmm0, dword [edx+0x2c]
-	ucomiss xmm0, [ebx+0x138]
-	ja StuckInClient_30
-	movss xmm0, dword [ebx+0x12c]
-	ucomiss xmm0, [edx+0x38]
-	ja StuckInClient_30
-	movss xmm0, dword [esi+0x13c]
-	subss xmm0, [ebx+0x13c]
-	movss [ebp-0x20], xmm0
-	movss xmm1, dword [esi+0x140]
-	subss xmm1, [ebx+0x140]
-	movss [ebp-0x1c], xmm1
-	movss xmm2, dword [ebx+0x114]
-	addss xmm2, [edx+0x14]
-	mulss xmm0, xmm0
-	mulss xmm1, xmm1
-	addss xmm0, xmm1
-	mulss xmm2, xmm2
-	ucomiss xmm0, xmm2
-	ja StuckInClient_30
-	movss xmm1, dword [esi+0x13c]
-	subss xmm1, [ebx+0x13c]
-	movss [ebp-0x20], xmm1
-	movss xmm0, dword [esi+0x140]
-	subss xmm0, [ebx+0x140]
-	movss [ebp-0x1c], xmm0
-	movss [ebp-0x48], xmm1
-	call crandom
-	fstp dword [ebp-0x34]
-	movss xmm1, dword [ebp-0x48]
-	addss xmm1, [ebp-0x34]
-	movss [ebp-0x20], xmm1
-	movss xmm0, dword [ebp-0x1c]
-	movss [ebp-0x30], xmm0
-	call crandom
-	fstp dword [ebp-0x2c]
-	movss xmm0, dword [ebp-0x30]
-	addss xmm0, [ebp-0x2c]
-	movss [ebp-0x1c], xmm0
-	lea eax, [ebp-0x20]
-	mov [esp], eax
-	call Vec2Normalize
-	fstp st0
-	mov ecx, [esi+0x15c]
-	lea edi, [ecx+0x28]
-	movss xmm0, dword [ecx+0x28]
-	movss xmm1, dword [edi+0x4]
-	mulss xmm0, xmm0
-	mulss xmm1, xmm1
-	addss xmm0, xmm1
-	sqrtss xmm0, xmm0
-	pxor xmm3, xmm3
-	ucomiss xmm0, xmm3
-	jbe StuckInClient_60
-	mov eax, g_playerCollisionEjectSpeed
-	mov eax, [eax]
-	cvtsi2ss xmm2, dword [eax+0xc]
-StuckInClient_110:
-	mov edx, [ebx+0x15c]
-	movss xmm0, dword [edx+0x28]
-	movss xmm1, dword [edx+0x2c]
-	mulss xmm0, xmm0
-	mulss xmm1, xmm1
-	addss xmm0, xmm1
-	sqrtss xmm0, xmm0
-	ucomiss xmm0, xmm3
-	jbe StuckInClient_70
-	mov eax, g_playerCollisionEjectSpeed
-	mov eax, [eax]
-	cvtsi2ss xmm1, dword [eax+0xc]
-StuckInClient_100:
-	ucomiss xmm2, [_float_0_00010000]
-	jae StuckInClient_80
-	jp StuckInClient_80
-	movss xmm0, dword [_float_0_00010000]
-	ucomiss xmm0, xmm1
-	jbe StuckInClient_80
-	cvtsi2ss xmm2, dword [ecx+0x60]
-	cvtsi2ss xmm1, dword [edx+0x60]
-StuckInClient_80:
-	movaps xmm0, xmm2
-	mulss xmm0, [ebp-0x20]
-	movss [edi], xmm0
-	mulss xmm2, [ebp-0x1c]
-	movss [edi+0x4], xmm2
-	mov eax, [esi+0x15c]
-	mov dword [eax+0x18], 0x12c
-	mov eax, [esi+0x15c]
-	or dword [eax+0xc], 0x80
-	mov eax, [ebx+0x15c]
-	movaps xmm0, xmm1
-	xorps xmm0, [_data16_80000000]
-	movaps xmm1, xmm0
-	mulss xmm1, [ebp-0x20]
-	movss [eax+0x28], xmm1
-	mulss xmm0, [ebp-0x1c]
-	movss [eax+0x2c], xmm0
-	mov eax, [ebx+0x15c]
-	mov dword [eax+0x18], 0x12c
-	mov eax, [ebx+0x15c]
-	or dword [eax+0xc], 0x80
-	mov eax, 0x1
-	jmp StuckInClient_90
-StuckInClient_70:
-	movaps xmm1, xmm3
-	jmp StuckInClient_100
-StuckInClient_60:
-	movaps xmm2, xmm3
-	jmp StuckInClient_110
-	nop
 
 
 ;ClientEndFrame(gentity_s*)
@@ -1199,7 +1011,7 @@ ClientEndFrame_150:
 ClientEndFrame_320:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call G_SafeDObjFree
+	call _Z14G_SafeDObjFreeP9gentity_s
 	jmp ClientEndFrame_450
 ClientEndFrame_380:
 	mov eax, [ebp+0x8]
@@ -2720,74 +2532,6 @@ G_SetLastServerTime_20:
 	pop ebp
 	ret
 	nop
-
-
-;GetFollowPlayerState(int, playerState_s*)
-GetFollowPlayerState:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov ecx, [ebp+0x8]
-	mov ebx, [ebp+0xc]
-	lea eax, [ecx+ecx*2]
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	lea edx, [eax+ecx]
-	mov eax, level
-	add edx, [eax]
-	test byte [edx+0x14], 0x4
-	jz GetFollowPlayerState_10
-	mov dword [esp+0x8], 0x2f64
-	mov [esp+0x4], edx
-	mov [esp], ebx
-	call memcpy
-	mov esi, ebx
-	xor edi, edi
-	lea ebx, [ebx+0x8a4]
-	jmp GetFollowPlayerState_20
-GetFollowPlayerState_40:
-	mov dword [esp+0x8], 0xa0
-	mov dword [esp+0x4], 0x0
-	mov [esp], ebx
-	call memset
-	add edi, 0x1
-	add ebx, 0xa0
-	add esi, 0xa0
-	cmp edi, 0x1f
-	jz GetFollowPlayerState_30
-GetFollowPlayerState_20:
-	mov eax, [esi+0x8a4]
-	test eax, eax
-	jnz GetFollowPlayerState_40
-GetFollowPlayerState_30:
-	mov eax, 0x1
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GetFollowPlayerState_10:
-	mov dword [esp+0x8], 0x2f64
-	mov dword [esp+0x4], 0x0
-	mov [esp], ebx
-	call memset
-	xor eax, eax
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
 
 ;ClientInactivityTimer(gclient_s*)
 ClientInactivityTimer:

@@ -14101,18 +14101,18 @@ scrVarGlob: resb 0x180020
 
 ;All cstrings:
 SECTION .rdata
-_cstring_cannot_find_s:		db 15h,"cannot find ",27h,"%s",27h,0
+_cstring_cannot_find_s:		db 015h,"cannot find ",27h,"%s",27h,0
 _cstring_keys:		db "keys",0
 _cstring_sss:		db "%s/%s.%s",0
 _cstring_ss:		db "%s/%s",0
 _cstring_scr_addfields:		db "Scr_AddFields",0
 _cstring_float:		db "float",0
 _cstring_int:		db "int",0
-_cstring_duplicate_key_s_:		db 15h,"duplicate key ",27h,"%s",27h," in ",27h,"%s",27h,0
-_cstring_missing_field_na:		db 15h,"missing field name in ",27h,"%s",27h,0
+_cstring_duplicate_key_s_:		db 015h,"duplicate key ",27h,"%s",27h," in ",27h,"%s",27h,0
+_cstring_missing_field_na:		db 015h,"missing field name in ",27h,"%s",27h,0
 _cstring_string:		db "string",0
 _cstring_vector:		db "vector",0
-_cstring_unknown_type_s_i:		db 15h,"unknown type ",27h,"%s",27h," in ",27h,"%s",27h,0
+_cstring_unknown_type_s_i:		db 015h,"unknown type ",27h,"%s",27h," in ",27h,"%s",27h,0
 _cstring_exceeded_maximum:		db "exceeded maximum number of script variables",0
 _cstring_s_is_not_an_arra:		db "%s is not an array",0
 _cstring_s_is_not_an_arra1:		db "%s is not an array index",0

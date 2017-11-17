@@ -1768,7 +1768,7 @@ SECTION .bss
 
 ;All cstrings:
 SECTION .rdata
-_cstring_unknown_weapon_t:		db 15h,"Unknown weapon type %i for %s",0ah,0
+_cstring_unknown_weapon_t:		db 015h,"Unknown weapon type %i for %s",0ah,0
 _cstring_:		db "----------------------",0ah,0
 _cstring_game_g_setupweap:		db "Game: G_SetupWeaponDef",0ah,0
 _cstring_defaultweapon_mp:		db "defaultweapon_mp",0

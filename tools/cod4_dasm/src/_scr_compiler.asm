@@ -11452,7 +11452,7 @@ _cstring_illegal_continue:		db "illegal continue statement",0
 _cstring_illegal_break_st:		db "illegal break statement",0
 _cstring_return_value_of_:		db "return value of developer command can not be accessed if not in a /# ... #/ comment",0
 _cstring_parameter_count_:		db "parameter count exceeds 256",0
-_cstring_scr_func_table_s:		db 15h,"SCR_FUNC_TABLE_SIZE exceeded",0
+_cstring_scr_func_table_s:		db 015h,"SCR_FUNC_TABLE_SIZE exceeded",0
 _cstring_value_stack_size:		db "VALUE_STACK_SIZE exceeded",0
 _cstring_using_animtree_w:		db "#using_animtree was not specified",0
 _cstring_illegal_function:		db "illegal function name",0

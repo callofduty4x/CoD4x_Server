@@ -260,7 +260,7 @@ cg_freeLocalEntities: resb 0x1c
 
 ;All cstrings:
 SECTION .rdata
-_cstring_cg_freelocalenti:		db 15h,"CG_FreeLocalEntity: not active",0
+_cstring_cg_freelocalenti:		db 015h,"CG_FreeLocalEntity: not active",0
 
 
 

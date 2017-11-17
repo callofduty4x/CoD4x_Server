@@ -270,7 +270,7 @@ cm: resb 0x164
 
 ;All cstrings:
 SECTION .rdata
-_cstring_cm_loadmap_null_:		db 15h,"CM_LoadMap: NULL name",0
+_cstring_cm_loadmap_null_:		db 015h,"CM_LoadMap: NULL name",0
 _cstring_cannot_unload_co:		db "Cannot unload collision while it is in use",0
 
 

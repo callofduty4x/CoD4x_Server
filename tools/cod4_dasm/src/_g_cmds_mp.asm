@@ -3304,16 +3304,16 @@ _ZZ10ConcatArgsiE4line: resb 0x400
 ;All cstrings:
 SECTION .rdata
 _cstring_null:		db 0
-_cstring_sgame_dead:		db 15h,"%s(",14h,"GAME_DEAD",15h,")",0
+_cstring_sgame_dead:		db 015h,"%s(",014h,"GAME_DEAD",015h,")",0
 _cstring_7:		db "^7",0
 _cstring_sss_:		db "%s%s%s: ",0
-_cstring_c_sccs:		db "%c ",22h,15h,"%s%c%c%s",22h,0
+_cstring_c_sccs:		db "%c ",22h,015h,"%s%c%c%s",22h,0
 _cstring_8:		db "^8",0
 _cstring_9:		db "^9",0
-_cstring_s:		db 15h,"%s",0
-_cstring_ssss_:		db "%s(",14h,"%s",15h,")%s%s: ",0
+_cstring_s:		db 015h,"%s",0
+_cstring_ssss_:		db "%s(",014h,"%s",015h,")%s%s: ",0
 _cstring_sss_1:		db "%s[%s]%s: ",0
-_cstring_game_spectator:		db 15h,"(",14h,"GAME_SPECTATOR",15h,")",0
+_cstring_game_spectator:		db 015h,"(",014h,"GAME_SPECTATOR",015h,")",0
 _cstring_all:		db "all",0
 _cstring_allammo:		db "allammo",0
 _cstring_health:		db "health",0
@@ -3352,14 +3352,14 @@ _cstring_kill:		db "kill",0
 _cstring_follownext:		db "follownext",0
 _cstring_followprev:		db "followprev",0
 _cstring_where:		db "where",0
-_cstring_c_s1:		db "%c ",22h,15h,"%s",0ah,22h,0
+_cstring_c_s1:		db "%c ",22h,015h,"%s",0ah,22h,0
 _cstring_callvote:		db "callvote",0
 _cstring_vote:		db "vote",0
 _cstring_setviewpos:		db "setviewpos",0
 _cstring_entitycount:		db "entitycount",0
 _cstring_entity_count__i:		db "entity count = %i",0ah,0
 _cstring_printentities:		db "printentities",0
-_cstring_c_game_unknowncl:		db "%c ",22h,"GAME_UNKNOWNCLIENTCOMMAND",15h,"%s",22h,0
+_cstring_c_game_unknowncl:		db "%c ",22h,"GAME_UNKNOWNCLIENTCOMMAND",015h,"%s",22h,0
 _cstring_c_game_invalidvo:		db "%c ",22h,"GAME_INVALIDVOTESTRING",22h,0
 _cstring_c_game_votingnot:		db "%c ",22h,"GAME_VOTINGNOTENABLED",22h,0
 _cstring_c_game_votealrea1:		db "%c ",22h,"GAME_VOTEALREADYINPROGRESS",22h,0
@@ -3375,8 +3375,8 @@ _cstring_c_game_nospectat1:		db "%c ",22h,"GAME_NOSPECTATORCALLVOTE",22h,0
 _cstring_c_game_invalidga:		db "%c ",22h,"GAME_INVALIDGAMETYPE",22h,0
 _cstring_g_gametype:		db "g_gametype",0
 _cstring_s_s_map_restart:		db "%s %s; map_restart",0
-_cstring_game_vote_gamety:		db "GAME_VOTE_GAMETYPE",14h,"%s",0
-_cstring_c_game_calledavo:		db "%c ",22h,"GAME_CALLEDAVOTE",15h,"%s",22h,0
+_cstring_game_vote_gamety:		db "GAME_VOTE_GAMETYPE",014h,"%s",0
+_cstring_c_game_calledavo:		db "%c ",22h,"GAME_CALLEDAVOTE",015h,"%s",22h,0
 _cstring_sv_serverid:		db "sv_serverId",0
 _cstring_i_i:		db "%i %i",0
 _cstring_fast_restart:		db "fast_restart",0
@@ -3387,20 +3387,20 @@ _cstring_kick:		db "kick",0
 _cstring_clientkick:		db "clientkick",0
 _cstring_tempbanuser:		db "tempBanUser",0
 _cstring_tempbanclient:		db "tempBanClient",0
-_cstring_c_game_votecomma:		db "%c ",22h,"GAME_VOTECOMMANDSARE",15h," map_restart, map_rotate, map <mapname>, g_gametype <typename>, typemap <typename> <mapname>, kick <player>, clientkick <clientnum>, tempBanUser <player>, tempBanClient <clientNum>",22h,0
+_cstring_c_game_votecomma:		db "%c ",22h,"GAME_VOTECOMMANDSARE",015h," map_restart, map_rotate, map <mapname>, g_gametype <typename>, typemap <typename> <mapname>, kick <player>, clientkick <clientnum>, tempBanUser <player>, tempBanClient <clientNum>",22h,0
 _cstring_g_gametype_s_map:		db "g_gametype %s; map %s",0
-_cstring_game_vote_gamety1:		db "GAME_VOTE_GAMETYPE",14h,"%s",15h," - ",14h,"GAME_VOTE_MAP",15h,"%s",0
+_cstring_game_vote_gamety1:		db "GAME_VOTE_GAMETYPE",014h,"%s",015h," - ",014h,"GAME_VOTE_MAP",015h,"%s",0
 _cstring_s2:		db "%s",0
 _cstring_game_vote_nextma:		db "GAME_VOTE_NEXTMAP",0
 _cstring_map_s:		db "map %s",0
-_cstring_game_vote_maps:		db "GAME_VOTE_MAP",15h,"%s",0
+_cstring_game_vote_maps:		db "GAME_VOTE_MAP",015h,"%s",0
 _cstring_g_gametype_s_map1:		db "g_gametype %s; map_restart",0
-_cstring_c_the_server_doe:		db "%c ",22h,15h,"the server doesn",27h,"t have that map",22h,0
+_cstring_c_the_server_doe:		db "%c ",22h,015h,"the server doesn",27h,"t have that map",22h,0
 _cstring_s_s:		db "%s %s",0
 _cstring_c_game_clientnot:		db "%c ",22h,"GAME_CLIENTNOTONSERVER",22h,0
 _cstring_0:		db "0",0
 _cstring_s_d:		db "%s ",22h,"%d",22h,0
-_cstring_game_vote_kickis:		db "GAME_VOTE_KICK",15h,"(%i)%s",0
+_cstring_game_vote_kickis:		db "GAME_VOTE_KICK",015h,"(%i)%s",0
 _cstring__i_i_i_i_i_i_i:		db " %i %i %i %i %i %i %i",0
 _cstring_scr_s_scorelimit:		db "scr_%s_scorelimit",0
 _cstring_c_i_i_i_is:		db "%c %i %i %i %i%s",0
@@ -3408,9 +3408,9 @@ _cstring_scr_s_roundlimit:		db "scr_%s_roundlimit",0
 _cstring_scoreboard_messa:		db "Scoreboard message too large > %i.  Message not sent.",0ah,0
 _cstring_scoreboard_messa1:		db "Scoreboard message too large: %i",0ah,0
 _cstring_ss:		db "%s",0ah,"%s",0ah,0
-_cstring_c_game_usage_set:		db "%c ",22h,"GAME_USAGE",15h,": setviewpos x y z yaw",22h,0
+_cstring_c_game_usage_set:		db "%c ",22h,"GAME_USAGE",015h,": setviewpos x y z yaw",22h,0
 _cstring_c_game_cheatsnot:		db "%c ",22h,"GAME_CHEATSNOTENABLED",22h,0
-_cstring_cmd_followcycle_:		db 15h,"Cmd_FollowCycle_f: bad dir %i",0
+_cstring_cmd_followcycle_:		db 015h,"Cmd_FollowCycle_f: bad dir %i",0
 _cstring_saysdss:		db "say;%s;%d;%s;%s",0ah,0
 _cstring_sayteamsdss:		db "sayteam;%s;%d;%s;%s",0ah,0
 _cstring_g_teamname_allie:		db "g_TeamName_Allies",0

@@ -3484,10 +3484,10 @@ sv_clientArchive: resb 0x80
 
 ;All cstrings:
 SECTION .rdata
-_cstring_sv_getcachedsnap:		db 15h,"SV_GetCachedSnapshot: end of message",0
-_cstring_svsnextcachedsna:		db 15h,"svs.nextCachedSnapshotClients wrapped",0
-_cstring_svsnextcachedsna1:		db 15h,"svs.nextCachedSnapshotEntities wrapped",0
-_cstring_svsnextcachedsna2:		db 15h,"svs.nextCachedSnapshotFrames wrapped",0
+_cstring_sv_getcachedsnap:		db 015h,"SV_GetCachedSnapshot: end of message",0
+_cstring_svsnextcachedsna:		db 015h,"svs.nextCachedSnapshotClients wrapped",0
+_cstring_svsnextcachedsna1:		db 015h,"svs.nextCachedSnapshotEntities wrapped",0
+_cstring_svsnextcachedsna2:		db 015h,"svs.nextCachedSnapshotFrames wrapped",0
 _cstring_warning_msg_over:		db "WARNING: msg overflowed for %s, trying to recover",0ah,0
 _cstring_warning_client_d:		db "WARNING: client disconnected for msg overflow: %s",0ah,0
 _cstring_disconnect:		db "disconnect",0
@@ -3496,13 +3496,13 @@ _cstring__unacknowledged_:		db "-- Unacknowledged Server Commands for client %i:
 _cstring_:		db "----------",0
 _cstring_cmd_5d_8d_s:		db "cmd %5d: %8d: %s",0ah,0
 _cstring_bpspc20f_bps20f_:		db "bpspc(%2.0f) bps(%2.0f) pk(%i) ubps(%2.0f) upk(%i) cr(%2.2f) acr(%2.2f)",0ah,0
-_cstring_svsnextarchiveds:		db 15h,"svs.nextArchivedSnapshotFrames wrapped",0
+_cstring_svsnextarchiveds:		db 015h,"svs.nextArchivedSnapshotFrames wrapped",0
 _cstring_it_would_take_im:		db "It would take %ims to send %i bytes to client %s (rate %i)",0ah,0
 _cstring_sv_archivesnapsh:		db "SV_ArchiveSnapshot: ignoring snapshot because it overflowed.",0ah,0
-_cstring_svsnextarchiveds1:		db 15h,"svs.nextArchivedSnapshotBuffer wrapped",0
-_cstring_svsnextsnapshotc:		db 15h,"svs.nextSnapshotClients wrapped",0
-_cstring_sv_buildclientsn:		db 15h,"SV_BuildClientSnapshot: bad gEnt",0
-_cstring_svsnextsnapshote:		db 15h,"svs.nextSnapshotEntities wrapped",0
+_cstring_svsnextarchiveds1:		db 015h,"svs.nextArchivedSnapshotBuffer wrapped",0
+_cstring_svsnextsnapshotc:		db 015h,"svs.nextSnapshotClients wrapped",0
+_cstring_sv_buildclientsn:		db 015h,"SV_BuildClientSnapshot: bad gEnt",0
+_cstring_svsnextsnapshote:		db 015h,"svs.nextSnapshotEntities wrapped",0
 _cstring_s_delta_request_:		db "%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it",0ah,0
 _cstring_s_delta_request_1:		db "%s: Delta request from out of date packet.",0ah,0
 _cstring_s_delta_request_2:		db "%s: Delta request from out of date entities - delta against entity %i, oldest is %i, current is %i.  Their old snapshot had %i entities in it",0ah,0

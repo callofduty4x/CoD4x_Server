@@ -4044,8 +4044,8 @@ nextHistoryLine: resb 0x4
 ;All cstrings:
 SECTION .rdata
 _cstring_____s:		db "    %s",0ah,0
-_cstring_say_team_s:		db "say_team ",22h,15h,"%s",22h,0ah,0
-_cstring_say_s:		db "say ",22h,15h,"%s",22h,0ah,0
+_cstring_say_team_s:		db "say_team ",22h,015h,"%s",22h,0ah,0
+_cstring_say_s:		db "say ",22h,015h,"%s",22h,0ah,0
 _cstring_null:		db 0
 _cstring_space:		db " ",0
 _cstring_s_isnt_a_valid_k:		db 22h,"%s",22h," isn",27h,"t a valid key",0ah,0
@@ -4079,15 +4079,15 @@ _cstring_unbindall:		db "unbindall",0
 _cstring_bindlist:		db "bindlist",0
 _cstring_out_of_range:		db "<OUT OF RANGE>",0
 _cstring_key_not_found:		db "<KEY NOT FOUND>",0
-_cstring_2:		db ffh,0
+_cstring_2:		db 0e0h,0
 _cstring_3:		db "&",0
-_cstring_4:		db ffh,0
+_cstring_4:		db 0e9h,0
 _cstring_5:		db 27h,0
 _cstring_6:		db "(",0
-_cstring_7:		db ffh,0
-_cstring_8:		db ffh,0
+_cstring_7:		db 0a7h,0
+_cstring_8:		db 0e8h,0
 _cstring_9:		db "!",0
-_cstring_10:		db ffh,0
+_cstring_10:		db 0e7h,0
 _cstring_tab:		db "TAB",0
 _cstring_return:		db "RETURN",0
 _cstring_escape:		db "ESCAPE",0
@@ -4263,22 +4263,22 @@ _cstring_key_kp_equals:		db "KEY_KP_EQUALS",0
 _cstring_key_pause:		db "KEY_PAUSE",0
 _cstring_key_semicolon:		db "KEY_SEMICOLON",0
 _cstring_key_command:		db "KEY_COMMAND",0
-_cstring_11:		db ffh,0
-_cstring_12:		db ffh,0
-_cstring_13:		db ffh,0
-_cstring_14:		db ffh,0
-_cstring_15:		db ffh,0
-_cstring_16:		db ffh,0
-_cstring_17:		db ffh,0
-_cstring_18:		db ffh,0
-_cstring_19:		db ffh,0
-_cstring_20:		db ffh,0
-_cstring_21:		db ffh,0
-_cstring_22:		db ffh,0
-_cstring_23:		db ffh,0
-_cstring_24:		db ffh,0
-_cstring_25:		db ffh,0
-_cstring_26:		db ffh,0
+_cstring_11:		db 0b5h,0
+_cstring_12:		db 0bfh,0
+_cstring_13:		db 0dfh,0
+_cstring_14:		db 0e1h,0
+_cstring_15:		db 0e4h,0
+_cstring_16:		db 0e5h,0
+_cstring_17:		db 0e6h,0
+_cstring_18:		db 0ech,0
+_cstring_19:		db 0f1h,0
+_cstring_20:		db 0f2h,0
+_cstring_21:		db 0f3h,0
+_cstring_22:		db 0f6h,0
+_cstring_23:		db 0f8h,0
+_cstring_24:		db 0f9h,0
+_cstring_25:		db 0fah,0
+_cstring_26:		db 0fch,0
 
 
 

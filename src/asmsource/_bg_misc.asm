@@ -48,7 +48,7 @@
 	extern PM_GetEffectiveStance
 	extern PM_GetViewHeightLerpTime
 	extern strncpy
-	extern Cvar_EnumToString
+	extern Cvar_DisplayableValue
 
 ;Exports of bg_misc:
 	global bg_soundRoomTypes
@@ -3512,7 +3512,7 @@ BG_SetShellShockParmsFromDvars_60:
 	mov [edx+0x24c], eax
 	mov eax, [bg_shock_soundRoomType]
 	mov [esp], eax
-	call Cvar_EnumToString
+	call Cvar_DisplayableValue
 	mov dword [esp+0x8], 0xf
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]

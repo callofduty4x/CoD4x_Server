@@ -4,38 +4,10 @@
 	extern g_entities
 
 ;Exports of g_team_mp:
-	global OnSameTeam
 	global CheckTeamStatus
 
 
 SECTION .text
-
-
-;OnSameTeam(gentity_s*, gentity_s*)
-OnSameTeam:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov eax, [eax+0x15c]
-	test eax, eax
-	jz OnSameTeam_10
-	mov ecx, [ebp+0xc]
-	mov edx, [ecx+0x15c]
-	test edx, edx
-	jz OnSameTeam_10
-	mov eax, [eax+0x3010]
-	test eax, eax
-	jz OnSameTeam_10
-	cmp eax, [edx+0x3010]
-	jz OnSameTeam_20
-OnSameTeam_10:
-	xor eax, eax
-	pop ebp
-	ret
-OnSameTeam_20:
-	mov eax, 0x1
-	pop ebp
-	ret
 
 
 ;CheckTeamStatus()

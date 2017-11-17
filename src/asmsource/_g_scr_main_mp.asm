@@ -141,7 +141,6 @@
 	extern Cbuf_AddText
 	extern SV_MatchEnd
 	extern ExitLevel
-	extern SV_AddTestClient
 	extern Cvar_RegisterString
 	extern SV_MapExists
 	extern Cvar_VariableIntegerValue
@@ -195,7 +194,6 @@
 	extern G_DObjGetWorldTagMatrix
 	extern memset
 	extern FS_GetFileList
-	extern strlwr
 	extern FS_FOpenFileByMode
 	extern FS_FCloseFile
 	extern FS_Read
@@ -247,6 +245,8 @@
 	extern GScr_NewClientHudElem
 	extern GScr_NewTeamHudElem
 	extern Scr_ResetTimeout
+	extern Scr_ConstructMessageString
+	extern GScr_LoadScriptAndLabel
 
 ;Exports of g_scr_main_mp:
 	global GScr_CreatePrintChannel
@@ -258,11 +258,9 @@
 	global GScr_print3d
 	global GScr_line
 	global Scr_LogString
-	global GScr_Spawn
 	global GScr_SpawnPlane
 	global GScr_SpawnTurret
 	global GScr_PrecacheTurret
-	global GScr_SpawnHelicopter
 	global assertCmd
 	global assertexCmd
 	global assertmsgCmd
@@ -392,7 +390,6 @@
 	global GScr_PrecacheLocationSelector
 	global GScr_MapRestart
 	global GScr_ExitLevel
-	global GScr_AddTestClient
 	global GScr_MakeDvarServerInfo
 	global GScr_SetArchive
 	global GScr_AllClientsPrint
@@ -505,7 +502,6 @@
 	global ScrCmd_SetMoveSpeedScale
 	global ScrCmd_LogString
 	global ScrCmd_ItemWeaponSetAmmo
-	global GScr_LoadScriptAndLabel
 	global SetObjectiveIcon
 	global GScr_RadiusDamageInternal
 	global GScr_UpdateTagInternal
@@ -524,7 +520,6 @@
 	global Scr_SetOrigin
 	global GScr_AddEntity
 	global GScr_IsRagdoll
-	global Scr_PlayerVote
 	global Scr_VoteCalled
 	global GScr_IsMantling
 	global GScr_IsOnLadder
@@ -533,7 +528,6 @@
 	global GScr_FreeScripts
 	global GScr_GetNumParts
 	global GScr_GetPartName
-	global GScr_LoadScripts
 	global G_InitObjectives
 	global Scr_LoadGameType
 	global Scr_PlayerDamage
@@ -560,12 +554,9 @@
 	global Scr_VerifyWeaponIndex
 	global GScr_GetScriptMenuIndex
 	global GScr_GetStatusIconIndex
-	global GScr_LoadGameTypeScript
-	global Scr_ConstructMessageString
 	global Scr_GetGameTypeNameForScript
 	global GScr_EnableGrenadeTouchDamage
 	global GScr_DisableGrenadeTouchDamage
-	global functions
 	global g_scr_data
 
 
@@ -1052,73 +1043,6 @@ Scr_LogString:
 	nop
 
 
-;GScr_Spawn()
-GScr_Spawn:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov dword [esp], 0x0
-	call Scr_GetConstString
-	mov esi, eax
-	lea eax, [ebp-0x24]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x1
-	call Scr_GetVector
-	call Scr_GetNumParam
-	cmp eax, 0x2
-	ja GScr_Spawn_10
-	xor edi, edi
-GScr_Spawn_30:
-	call G_Spawn
-	mov ebx, eax
-	movzx esi, si
-	mov [esp+0x4], esi
-	lea eax, [eax+0x170]
-	mov [esp], eax
-	call Scr_SetString
-	lea edx, [ebx+0x13c]
-	mov eax, [ebp-0x24]
-	mov [ebx+0x13c], eax
-	mov eax, [ebp-0x20]
-	mov [edx+0x4], eax
-	mov eax, [ebp-0x1c]
-	mov [edx+0x8], eax
-	mov [ebx+0x17c], edi
-	mov [esp], ebx
-	call G_CallSpawnEntity
-	test eax, eax
-	jz GScr_Spawn_20
-	mov [esp], ebx
-	call Scr_AddEntity
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_Spawn_20:
-	mov [esp], esi
-	call SL_ConvertToString
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_unable_to_spawn_
-	call va
-	mov [esp], eax
-	call Scr_Error
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_Spawn_10:
-	mov dword [esp], 0x2
-	call Scr_GetInt
-	mov edi, eax
-	jmp GScr_Spawn_30
-
 
 ;GScr_SpawnPlane()
 GScr_SpawnPlane:
@@ -1282,79 +1206,6 @@ GScr_PrecacheTurret_10:
 	call G_GetWeaponIndexForName
 	leave
 	ret
-
-
-;GScr_SpawnHelicopter()
-GScr_SpawnHelicopter:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x4c
-	mov dword [esp], 0x0
-	call Scr_GetEntity
-	mov [ebp-0x3c], eax
-	mov esi, [eax+0x15c]
-	test esi, esi
-	jz GScr_SpawnHelicopter_10
-GScr_SpawnHelicopter_20:
-	lea eax, [ebp-0x24]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x1
-	call Scr_GetVector
-	lea eax, [ebp-0x30]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x2
-	call Scr_GetVector
-	mov dword [esp], 0x3
-	call Scr_GetString
-	mov edi, eax
-	mov dword [esp], 0x4
-	call Scr_GetString
-	mov esi, eax
-	call G_Spawn
-	mov ebx, eax
-	mov eax, scr_const
-	movzx eax, word [eax+0xf8]
-	mov [esp+0x4], eax
-	lea eax, [ebx+0x170]
-	mov [esp], eax
-	call Scr_SetString
-	lea edx, [ebx+0x13c]
-	mov eax, [ebp-0x24]
-	mov [ebx+0x13c], eax
-	mov eax, [ebp-0x20]
-	mov [edx+0x4], eax
-	mov eax, [ebp-0x1c]
-	mov [edx+0x8], eax
-	lea edx, [ebx+0x148]
-	mov eax, [ebp-0x30]
-	mov [ebx+0x148], eax
-	mov eax, [ebp-0x2c]
-	mov [edx+0x4], eax
-	mov eax, [ebp-0x28]
-	mov [edx+0x8], eax
-	mov [esp+0xc], esi
-	mov [esp+0x8], edi
-	mov eax, [ebp-0x3c]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call G_SpawnHelicopter
-	mov [esp], ebx
-	call Scr_AddEntity
-	add esp, 0x4c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_SpawnHelicopter_10:
-	mov dword [esp+0x4], _cstring_owner_entity_is_
-	mov dword [esp], 0x0
-	call Scr_ParamError
-	jmp GScr_SpawnHelicopter_20
-	nop
 
 
 ;assertCmd()
@@ -7730,22 +7581,6 @@ GScr_ExitLevel_20:
 	nop
 
 
-;GScr_AddTestClient()
-GScr_AddTestClient:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	call SV_AddTestClient
-	test eax, eax
-	jz GScr_AddTestClient_10
-	mov [esp], eax
-	call Scr_AddEntity
-GScr_AddTestClient_10:
-	leave
-	ret
-	nop
-
-
 ;GScr_MakeDvarServerInfo()
 GScr_MakeDvarServerInfo:
 	push ebp
@@ -13090,69 +12925,6 @@ ScrCmd_ItemWeaponSetAmmo_50:
 	nop
 
 
-;GScr_LoadScriptAndLabel(char const*, char const*, int)
-GScr_LoadScriptAndLabel:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov esi, eax
-	mov [ebp-0x1c], edx
-	mov edi, ecx
-	call G_ExitAfterConnectPaths
-	test al, al
-	jz GScr_LoadScriptAndLabel_10
-GScr_LoadScriptAndLabel_50:
-	xor ebx, ebx
-GScr_LoadScriptAndLabel_40:
-	mov eax, ebx
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_LoadScriptAndLabel_10:
-	mov [esp], esi
-	call Scr_LoadScript
-	test eax, eax
-	jnz GScr_LoadScriptAndLabel_20
-	test edi, edi
-	jnz GScr_LoadScriptAndLabel_30
-GScr_LoadScriptAndLabel_20:
-	mov eax, [ebp-0x1c]
-	mov [esp+0x4], eax
-	mov [esp], esi
-	call Scr_GetFunctionHandle
-	mov ebx, eax
-	test eax, eax
-	jnz GScr_LoadScriptAndLabel_40
-	test edi, edi
-	jz GScr_LoadScriptAndLabel_50
-	mov [esp+0xc], esi
-	mov eax, [ebp-0x1c]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_could_not_find_l
-	mov dword [esp], 0x2
-	call Com_Error
-	mov eax, ebx
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_LoadScriptAndLabel_30:
-	mov [esp+0x8], esi
-	mov dword [esp+0x4], _cstring_could_not_find_s
-	mov dword [esp], 0x2
-	call Com_Error
-	jmp GScr_LoadScriptAndLabel_20
-	nop
-
-
 ;SetObjectiveIcon(objective_t*, int)
 SetObjectiveIcon:
 	push ebp
@@ -13497,7 +13269,7 @@ Scr_ParseGameTypeList_LoadObj_50:
 	mov [esp], edi
 	call Q_strncpyz
 	mov [esp], edi
-	call strlwr
+	call Q_strlwr
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_mapsmpgametypess
 	call va
@@ -14101,74 +13873,6 @@ GScr_Shutdown_10:
 	ret
 
 
-;Scr_GetMethod(char const**, int*)
-Scr_GetMethod:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov ebx, [ebp+0x8]
-	mov esi, [ebp+0xc]
-	mov dword [esi], 0x0
-	mov [esp], ebx
-	call Player_GetMethod
-	test eax, eax
-	jz Scr_GetMethod_10
-Scr_GetMethod_20:
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_GetMethod_10:
-	mov [esp], ebx
-	call ScriptEnt_GetMethod
-	test eax, eax
-	jnz Scr_GetMethod_20
-	mov [esp], ebx
-	call HudElem_GetMethod
-	test eax, eax
-	jnz Scr_GetMethod_20
-	mov [esp], ebx
-	call Helicopter_GetMethod
-	test eax, eax
-	jnz Scr_GetMethod_20
-	mov eax, [ebx]
-	mov [ebp-0x1c], eax
-	mov dword [ebp-0x20], 0x0
-	mov edi, methods
-	mov dword [ebp-0x24], 0x0
-	mov edx, eax
-	jmp Scr_GetMethod_30
-Scr_GetMethod_50:
-	add dword [ebp-0x20], 0x1
-	add dword [ebp-0x24], 0xc
-	add edi, 0xc
-	cmp dword [ebp-0x20], 0x52
-	jz Scr_GetMethod_40
-	mov edx, [ebp-0x1c]
-Scr_GetMethod_30:
-	mov eax, [edi]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call strcmp
-	test eax, eax
-	jnz Scr_GetMethod_50
-	mov edx, [ebp-0x24]
-	mov eax, [edx+methods]
-	mov [ebx], eax
-	mov eax, [edx+methods+0x8]
-	mov [esi], eax
-	mov eax, [edx+methods+0x4]
-	jmp Scr_GetMethod_20
-Scr_GetMethod_40:
-	xor eax, eax
-	jmp Scr_GetMethod_20
-
-
 ;Scr_LoadLevel()
 Scr_LoadLevel:
 	push ebp
@@ -14322,25 +14026,6 @@ GScr_IsRagdoll_10:
 	jmp Scr_AddInt
 
 
-;Scr_PlayerVote(gentity_s*, char*)
-Scr_PlayerVote:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov eax, [ebp+0xc]
-	mov [esp], eax
-	call Scr_AddString
-	mov dword [esp+0x8], 0x1
-	mov eax, scr_const
-	movzx eax, word [eax+0x142]
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Scr_Notify
-	leave
-	ret
-
-
 ;Scr_VoteCalled(gentity_s*, char*, char*, char*)
 Scr_VoteCalled:
 	push ebp
@@ -14480,55 +14165,6 @@ GScr_IsOnLadder_20:
 	nop
 
 
-;Scr_GetFunction(char const**, int*)
-Scr_GetFunction:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, [ebp+0x8]
-	mov eax, [eax]
-	mov [ebp-0x1c], eax
-	xor esi, esi
-	mov ebx, functions
-	xor edi, edi
-	mov edx, eax
-	jmp Scr_GetFunction_10
-Scr_GetFunction_30:
-	add esi, 0x1
-	add edi, 0xc
-	add ebx, 0xc
-	cmp esi, 0xcd
-	jz Scr_GetFunction_20
-	mov edx, [ebp-0x1c]
-Scr_GetFunction_10:
-	mov eax, [ebx]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call strcmp
-	test eax, eax
-	jnz Scr_GetFunction_30
-	mov eax, [edi+functions]
-	mov edx, [ebp+0x8]
-	mov [edx], eax
-	mov eax, [edi+functions+0x8]
-	mov edx, [ebp+0xc]
-	mov [edx], eax
-	mov eax, [edi+functions+0x4]
-Scr_GetFunction_40:
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_GetFunction_20:
-	xor eax, eax
-	jmp Scr_GetFunction_40
-
-
 ;GScr_AllocString(char const*)
 GScr_AllocString:
 	push ebp
@@ -14626,64 +14262,6 @@ GScr_GetPartName_10:
 	mov dword [esp], 0x1
 	call Scr_ParamError
 	jmp GScr_GetPartName_30
-
-
-;GScr_LoadScripts()
-GScr_LoadScripts:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x54
-	call Scr_BeginLoadScripts
-	mov ecx, 0x1
-	mov edx, _cstring_main
-	mov eax, _cstring_codescriptsdelet
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x10b0], eax
-	mov ecx, 0x1
-	mov edx, _cstring_initstructs
-	mov eax, _cstring_codescriptsstruc
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x10b4], eax
-	mov ecx, 0x1
-	mov edx, _cstring_createstruct
-	mov eax, _cstring_codescriptsstruc
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x10b8], eax
-	call GScr_LoadGameTypeScript
-	mov dword [esp+0xc], _cstring_the_current_map_
-	mov dword [esp+0x8], 0x44
-	mov dword [esp+0x4], _cstring_null
-	mov dword [esp], _cstring_mapname
-	call Cvar_RegisterString
-	mov eax, [eax+0xc]
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_mapsmps
-	mov dword [esp+0x4], 0x40
-	lea ebx, [ebp-0x48]
-	mov [esp], ebx
-	call Com_sprintf
-	xor ecx, ecx
-	mov edx, _cstring_main
-	mov eax, ebx
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data], eax
-	call Scr_PostCompileScripts
-	xor ebx, ebx
-GScr_LoadScripts_10:
-	mov [esp], ebx
-	call Scr_SetClassMap
-	add ebx, 0x1
-	cmp ebx, 0x4
-	jnz GScr_LoadScripts_10
-	call GScr_AddFieldsForEntity
-	call GScr_AddFieldsForHudElems
-	call GScr_AddFieldsForRadiant
-	call Scr_EndLoadScripts
-	add esp, 0x54
-	pop ebx
-	pop ebp
-	ret
 
 
 ;G_InitObjectives()
@@ -16015,373 +15593,6 @@ GScr_GetStatusIconIndex_20:
 	nop
 
 
-;GScr_LoadGameTypeScript()
-GScr_LoadGameTypeScript:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x54
-	mov eax, g_gametype
-	mov eax, [eax]
-	mov eax, [eax+0xc]
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_mapsmpgametypess1
-	mov dword [esp+0x4], 0x40
-	lea ebx, [ebp-0x48]
-	mov [esp], ebx
-	call Com_sprintf
-	mov ecx, 0x1
-	mov edx, _cstring_main
-	mov eax, ebx
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x8], eax
-	mov ecx, 0x1
-	mov edx, _cstring_codecallback_sta
-	mov eax, _cstring_mapsmpgametypes_1
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0xc], eax
-	mov ecx, 0x1
-	mov edx, _cstring_codecallback_pla
-	mov eax, _cstring_mapsmpgametypes_1
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x10], eax
-	mov ecx, 0x1
-	mov edx, _cstring_codecallback_pla1
-	mov eax, _cstring_mapsmpgametypes_1
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x14], eax
-	mov ecx, 0x1
-	mov edx, _cstring_codecallback_pla2
-	mov eax, _cstring_mapsmpgametypes_1
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x18], eax
-	mov ecx, 0x1
-	mov edx, _cstring_codecallback_pla3
-	mov eax, _cstring_mapsmpgametypes_1
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x1c], eax
-	mov ecx, 0x1
-	mov edx, _cstring_codecallback_pla4
-	mov eax, _cstring_mapsmpgametypes_1
-	call GScr_LoadScriptAndLabel
-	mov [g_scr_data+0x28], eax
-	add esp, 0x54
-	pop ebx
-	pop ebp
-	ret
-
-
-;Scr_ConstructMessageString(int, int, char const*, char*, unsigned int)
-Scr_ConstructMessageString:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, [ebp+0x8]
-	cmp eax, [ebp+0xc]
-	jle Scr_ConstructMessageString_10
-	xor eax, eax
-	mov edx, [ebp+0x14]
-	mov byte [edx+eax], 0x0
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_ConstructMessageString_10:
-	mov [ebp-0x24], eax
-	mov dword [ebp-0x20], 0x0
-	mov [esp], eax
-	call Scr_GetType
-	cmp eax, 0x3
-	jz Scr_ConstructMessageString_20
-Scr_ConstructMessageString_150:
-	sub eax, 0x1
-	jz Scr_ConstructMessageString_30
-Scr_ConstructMessageString_250:
-	mov eax, [ebp-0x24]
-	mov [esp], eax
-	call Scr_GetString
-	mov [ebp-0x1c], eax
-	cld
-	mov ecx, 0xffffffff
-	mov edi, eax
-	xor eax, eax
-	repne scasb
-	not ecx
-	mov esi, ecx
-	sub esi, 0x1
-	jz Scr_ConstructMessageString_40
-	xor ebx, ebx
-	jmp Scr_ConstructMessageString_50
-Scr_ConstructMessageString_80:
-	movsx edx, byte [edi]
-	test edx, 0xffffff80
-	jnz Scr_ConstructMessageString_60
-Scr_ConstructMessageString_90:
-	mov eax, [0xd5cc084]
-	mov eax, [eax+edx*4+0x34]
-	shr eax, 0x8
-	and eax, 0x1
-	test eax, eax
-	jnz Scr_ConstructMessageString_70
-Scr_ConstructMessageString_100:
-	add ebx, 0x1
-	cmp esi, ebx
-	jz Scr_ConstructMessageString_40
-Scr_ConstructMessageString_50:
-	mov edi, [ebp-0x1c]
-	add edi, ebx
-	movzx edx, byte [edi]
-	lea eax, [edx-0x14]
-	cmp al, 0x2
-	ja Scr_ConstructMessageString_80
-	movsx eax, dl
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_bad_escape_chara
-	call va
-	mov [esp+0x4], eax
-	mov edx, [ebp-0x24]
-	mov [esp], edx
-	call Scr_ParamError
-	movsx edx, byte [edi]
-	test edx, 0xffffff80
-	jz Scr_ConstructMessageString_90
-Scr_ConstructMessageString_60:
-	mov dword [esp+0x4], 0x100
-	mov [esp], edx
-	call __maskrune
-	test eax, eax
-	setnz al
-	movzx eax, al
-	test eax, eax
-	jz Scr_ConstructMessageString_100
-Scr_ConstructMessageString_70:
-	mov eax, loc_warnings
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz Scr_ConstructMessageString_40
-	mov eax, loc_warningsAsErrors
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz Scr_ConstructMessageString_110
-	mov edx, [ebp-0x1c]
-	mov [esp+0x8], edx
-	mov eax, [ebp+0x10]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_nonlocalized_s_s
-	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x7
-	call Com_Error
-Scr_ConstructMessageString_40:
-	mov edx, [ebp-0x20]
-	lea eax, [edx+esi+0x1]
-	cmp eax, [ebp+0x18]
-	jae Scr_ConstructMessageString_120
-Scr_ConstructMessageString_270:
-	test esi, esi
-	jnz Scr_ConstructMessageString_130
-Scr_ConstructMessageString_310:
-	add dword [ebp-0x24], 0x1
-	mov edx, [ebp-0x24]
-	cmp [ebp+0xc], edx
-	jl Scr_ConstructMessageString_140
-Scr_ConstructMessageString_240:
-	mov eax, edx
-	mov [esp], eax
-	call Scr_GetType
-	cmp eax, 0x3
-	jnz Scr_ConstructMessageString_150
-Scr_ConstructMessageString_20:
-	mov edx, [ebp-0x24]
-	mov [esp], edx
-	call Scr_GetIString
-	mov [ebp-0x1c], eax
-	cld
-	mov ecx, 0xffffffff
-	mov edi, eax
-	xor eax, eax
-	repne scasb
-	not ecx
-	lea esi, [ecx-0x1]
-	cmp esi, 0x1
-	jle Scr_ConstructMessageString_160
-	xor edi, edi
-	jmp Scr_ConstructMessageString_170
-Scr_ConstructMessageString_190:
-	mov eax, [0xd5cc084]
-	test dword [eax+edx*4+0x34], 0x500
-	setnz al
-	movzx eax, al
-Scr_ConstructMessageString_200:
-	test eax, eax
-	jnz Scr_ConstructMessageString_180
-	cmp byte [ebx], 0x5f
-	jz Scr_ConstructMessageString_180
-	mov eax, [ebp-0x1c]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_illegal_localize
-	call va
-	mov [esp+0x4], eax
-	mov edx, [ebp-0x24]
-	mov [esp], edx
-	call Scr_ParamError
-Scr_ConstructMessageString_180:
-	add edi, 0x1
-	cmp esi, edi
-	jz Scr_ConstructMessageString_160
-Scr_ConstructMessageString_170:
-	mov edx, [ebp-0x1c]
-	lea ebx, [edi+edx]
-	movsx edx, byte [ebx]
-	test edx, 0xffffff80
-	jz Scr_ConstructMessageString_190
-	mov dword [esp+0x4], 0x500
-	mov [esp], edx
-	call __maskrune
-	test eax, eax
-	setnz al
-	movzx eax, al
-	jmp Scr_ConstructMessageString_200
-Scr_ConstructMessageString_130:
-	mov edx, [ebp+0x14]
-	mov eax, [ebp-0x20]
-	mov byte [edx+eax], 0x15
-	add eax, 0x1
-	mov [ebp-0x20], eax
-Scr_ConstructMessageString_300:
-	mov ecx, [ebp+0x14]
-	add ecx, [ebp-0x20]
-	xor edi, edi
-	jmp Scr_ConstructMessageString_210
-Scr_ConstructMessageString_230:
-	mov [ecx], dl
-	add edi, 0x1
-	add ecx, 0x1
-	cmp esi, edi
-	jz Scr_ConstructMessageString_220
-Scr_ConstructMessageString_210:
-	mov eax, [ebp-0x1c]
-	movzx edx, byte [eax+edi]
-	lea eax, [edx-0x14]
-	cmp al, 0x2
-	ja Scr_ConstructMessageString_230
-	mov byte [ecx], 0x2e
-	add edi, 0x1
-	add ecx, 0x1
-	cmp esi, edi
-	jnz Scr_ConstructMessageString_210
-Scr_ConstructMessageString_220:
-	add [ebp-0x20], edi
-	add dword [ebp-0x24], 0x1
-	mov edx, [ebp-0x24]
-	cmp [ebp+0xc], edx
-	jge Scr_ConstructMessageString_240
-Scr_ConstructMessageString_140:
-	mov eax, [ebp-0x20]
-	mov edx, [ebp+0x14]
-	mov byte [edx+eax], 0x0
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_ConstructMessageString_30:
-	mov edx, [ebp-0x24]
-	mov [esp], edx
-	call Scr_GetPointerType
-	cmp eax, 0x14
-	jnz Scr_ConstructMessageString_250
-	mov edx, [ebp-0x24]
-	mov [esp], edx
-	call Scr_GetEntity
-	mov ebx, eax
-	mov edi, [eax+0x15c]
-	test edi, edi
-	jz Scr_ConstructMessageString_260
-Scr_ConstructMessageString_330:
-	mov eax, [ebx+0x15c]
-	add eax, 0x3048
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s7
-	call va
-	mov [ebp-0x1c], eax
-	cld
-	mov ecx, 0xffffffff
-	mov edi, eax
-	xor eax, eax
-	repne scasb
-	not ecx
-	lea esi, [ecx-0x1]
-	mov edx, [ebp-0x20]
-	lea eax, [edx+esi+0x1]
-	cmp [ebp+0x18], eax
-	ja Scr_ConstructMessageString_270
-Scr_ConstructMessageString_120:
-	mov eax, [ebp+0x18]
-	mov [esp+0x8], eax
-	mov edx, [ebp+0x10]
-	mov [esp+0x4], edx
-	mov dword [esp], _cstring_s_is_too_long_ma
-	call va
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x24]
-	mov [esp], eax
-	call Scr_ParamError
-	jmp Scr_ConstructMessageString_270
-Scr_ConstructMessageString_160:
-	mov edx, [ebp-0x20]
-	lea eax, [edx+esi+0x1]
-	cmp [ebp+0x18], eax
-	jbe Scr_ConstructMessageString_280
-Scr_ConstructMessageString_320:
-	mov eax, [ebp-0x20]
-	test eax, eax
-	jz Scr_ConstructMessageString_290
-	mov edx, [ebp+0x14]
-	mov eax, [ebp-0x20]
-	mov byte [edx+eax], 0x14
-	add eax, 0x1
-	mov [ebp-0x20], eax
-Scr_ConstructMessageString_290:
-	test esi, esi
-	jnz Scr_ConstructMessageString_300
-	jmp Scr_ConstructMessageString_310
-Scr_ConstructMessageString_110:
-	mov eax, [ebp-0x1c]
-	mov [esp+0xc], eax
-	mov edx, [ebp+0x10]
-	mov [esp+0x8], edx
-	mov dword [esp+0x4], _cstring_warning_nonlocal
-	mov dword [esp], 0x11
-	call Com_PrintWarning
-	jmp Scr_ConstructMessageString_40
-Scr_ConstructMessageString_280:
-	mov eax, [ebp+0x18]
-	mov [esp+0x8], eax
-	mov edx, [ebp+0x10]
-	mov [esp+0x4], edx
-	mov dword [esp], _cstring_s_is_too_long_ma
-	call va
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x24]
-	mov [esp], eax
-	call Scr_ParamError
-	jmp Scr_ConstructMessageString_320
-Scr_ConstructMessageString_260:
-	mov dword [esp+0x4], _cstring_entity_is_not_a_2
-	mov eax, [ebp-0x24]
-	mov [esp], eax
-	call Scr_ParamError
-	jmp Scr_ConstructMessageString_330
-	nop
-
-
 ;Scr_GetGameTypeNameForScript(char const*)
 Scr_GetGameTypeNameForScript:
 	push ebp
@@ -16501,12 +15712,6 @@ GScr_DisableGrenadeTouchDamage_10:
 	call Scr_ObjectError
 	xor ebx, ebx
 	jmp GScr_DisableGrenadeTouchDamage_30
-
-
-;Initialized global or static variables of g_scr_main_mp:
-SECTION .data
-methods: dd _cstring_attach, ScrCmd_attach, 0x0, _cstring_detach, ScrCmd_detach, 0x0, _cstring_detachall, ScrCmd_detachAll, 0x0, _cstring_getattachsize, ScrCmd_GetAttachSize, 0x0, _cstring_getattachmodelna, ScrCmd_GetAttachModelName, 0x0, _cstring_getattachtagname, ScrCmd_GetAttachTagName, 0x0, _cstring_getattachignorec, ScrCmd_GetAttachIgnoreCollision, 0x0, _cstring_getammocount, GScr_GetAmmoCount, 0x0, _cstring_getclanid, ScrCmd_GetClanId, 0x0, _cstring_getclanname, ScrCmd_GetClanName, 0x0, _cstring_hidepart, ScrCmd_hidepart, 0x0, _cstring_showpart, ScrCmd_showpart, 0x0, _cstring_showallparts, ScrCmd_showallparts, 0x0, _cstring_linkto, ScrCmd_LinkTo, 0x0, _cstring_unlink, ScrCmd_Unlink, 0x0, _cstring_enablelinkto, ScrCmd_EnableLinkTo, 0x0, _cstring_getorigin, ScrCmd_GetOrigin, 0x0, _cstring_geteye, ScrCmd_GetEye, 0x0, _cstring_useby, ScrCmd_UseBy, 0x0, _cstring_setstablemissile, Scr_SetStableMissile, 0x0, _cstring_istouching, ScrCmd_IsTouching, 0x0, _cstring_playsound, ScrCmd_PlaySound, 0x0, _cstring_playsoundasmaste1, ScrCmd_PlaySoundAsMaster, 0x0, _cstring_playsoundtoteam, ScrCmd_PlaySoundToTeam, 0x0, _cstring_playsoundtoplaye, ScrCmd_PlaySoundToPlayer, 0x0, _cstring_playloopsound, ScrCmd_PlayLoopSound, 0x0, _cstring_stoploopsound, ScrCmd_StopLoopSound, 0x0, _cstring_playrumbleonenti, ScrCmd_PlayRumbleOnEntity, 0x0, _cstring_playrumbleloopon, ScrCmd_PlayRumbleLoopOnEntity, 0x0, _cstring_stoprumble, ScrCmd_StopRumble, 0x0, _cstring_delete, ScrCmd_Delete, 0x0, _cstring_setmodel, ScrCmd_SetModel, 0x0, _cstring_getnormalhealth, ScrCmd_GetNormalHealth, 0x0, _cstring_setnormalhealth, ScrCmd_SetNormalHealth, 0x0, _cstring_show, ScrCmd_Show, 0x0, _cstring_hide, ScrCmd_Hide, 0x0, _cstring_laseron, ScrCmd_LaserOn, 0x0, _cstring_laseroff, ScrCmd_LaserOff, 0x0, _cstring_showtoplayer, ScrCmd_ShowToPlayer, 0x0, _cstring_setcontents, ScrCmd_SetContents, 0x0, _cstring_getstance, ScrCmd_GetStance, 0x0, _cstring_setcursorhint, GScr_SetCursorHint, 0x0, _cstring_sethintstring, GScr_SetHintString, 0x0, _cstring_usetriggerrequir, GScr_UseTriggerRequireLookAt, 0x0, _cstring_shellshock, GScr_ShellShock, 0x0, _cstring_gettagorigin, GScr_GetTagOrigin, 0x0, _cstring_gettagangles, GScr_GetTagAngles, 0x0, _cstring_stopshellshock, GScr_StopShellShock, 0x0, _cstring_setdepthoffield, GScr_SetDepthOfField, 0x0, _cstring_setviewmodeldept, GScr_SetViewModelDepthOfField, 0x0, _cstring_viewkick, GScr_ViewKick, 0x0, _cstring_localtoworldcoor, GScr_LocalToWorldCoords, 0x0, _cstring_setrightarc, GScr_SetRightArc, 0x0, _cstring_setleftarc, GScr_SetLeftArc, 0x0, _cstring_settoparc, GScr_SetTopArc, 0x0, _cstring_setbottomarc, GScr_SetBottomArc, 0x0, _cstring_radiusdamage, GScr_EntityRadiusDamage, 0x0, _cstring_detonate, GScr_Detonate, 0x0, _cstring_damageconetrace, GScr_DamageConeTrace, 0x0, _cstring_sightconetrace, GScr_SightConeTrace, 0x0, _cstring_getentitynumber, GScr_GetEntityNumber, 0x0, _cstring_enablegrenadetou, GScr_EnableGrenadeTouchDamage, 0x0, _cstring_disablegrenadeto, GScr_DisableGrenadeTouchDamage, 0x0, _cstring_enableaimassist, GScr_EnableAimAssist, 0x0, _cstring_disableaimassist, GScr_DisableAimAssist, 0x0, _cstring_placespawnpoint, GScr_PlaceSpawnPoint, 0x0, _cstring_setteamfortrigge2, GScr_SetTeamForTrigger, 0x0, _cstring_clientclaimtrigg2, GScr_ClientClaimTrigger, 0x0, _cstring_clientreleasetri2, GScr_ClientReleaseTrigger, 0x0, _cstring_releaseclaimedtr1, GScr_ReleaseClaimedTrigger, 0x0, _cstring_getstat, GScr_GetStat, 0x0, _cstring_setstat, GScr_SetStat, 0x0, _cstring_sendleaderboards, GScr_SendLeaderboards, 0x0, _cstring_setmovespeedscal, ScrCmd_SetMoveSpeedScale, 0x0, _cstring_logstring, ScrCmd_LogString, 0x0, _cstring_missile_settarge, GScr_MissileSetTarget, 0x0, _cstring_isonladder, GScr_IsOnLadder, 0x0, _cstring_ismantling, GScr_IsMantling, 0x0, _cstring_startragdoll, GScr_StartRagdoll, 0x0, _cstring_isragdoll, GScr_IsRagdoll, 0x0, _cstring_getcorpseanim, GScr_GetCorpseAnim, 0x0, _cstring_itemweaponsetamm, ScrCmd_ItemWeaponSetAmmo, 0x0, 0x0, 0x0
-functions: dd _cstring_createprintchann, GScr_CreatePrintChannel, 0x1, _cstring_setprintchannel, GScr_printChannelSet, 0x1, _cstring_print, print, 0x1, _cstring_println, println, 0x1, _cstring_iprintln, iprintln, 0x0, _cstring_iprintlnbold, iprintlnbold, 0x0, _cstring_print3d, GScr_print3d, 0x1, _cstring_line, GScr_line, 0x1, _cstring_logstring, Scr_LogString, 0x0, _cstring_getent, Scr_GetEnt, 0x0, _cstring_getentarray, Scr_GetEntArray, 0x0, _cstring_spawn, GScr_Spawn, 0x0, _cstring_spawnplane, GScr_SpawnPlane, 0x0, _cstring_spawnturret, GScr_SpawnTurret, 0x0, _cstring_precacheturret, GScr_PrecacheTurret, 0x0, _cstring_spawnstruct, Scr_AddStruct, 0x0, _cstring_spawnhelicopter, GScr_SpawnHelicopter, 0x0, _cstring_assert, assertCmd, 0x1, _cstring_assertex, assertexCmd, 0x1, _cstring_assertmsg, assertmsgCmd, 0x1, _cstring_isdefined, GScr_IsDefined, 0x0, _cstring_isstring, GScr_IsString, 0x0, _cstring_isalive, GScr_IsAlive, 0x0, _cstring_getdvar, GScr_GetDvar, 0x0, _cstring_getdvarint, GScr_GetDvarInt, 0x0, _cstring_getdvarfloat, GScr_GetDvarFloat, 0x0, _cstring_setdvar, GScr_SetDvar, 0x0, _cstring_gettime, GScr_GetTime, 0x0, _cstring_getentbynum, Scr_GetEntByNum, 0x1, _cstring_getweaponmodel, Scr_GetWeaponModel, 0x0, _cstring_getanimlength, GScr_GetAnimLength, 0x0, _cstring_animhasnotetrack, GScr_AnimHasNotetrack, 0x0, _cstring_getnotetracktime, GScr_GetNotetrackTimes, 0x0, _cstring_getbrushmodelcen, GScr_GetBrushModelCenter, 0x0, _cstring_objective_add, Scr_Objective_Add, 0x0, _cstring_objective_delete, Scr_Objective_Delete, 0x0, _cstring_objective_state, Scr_Objective_State, 0x0, _cstring_objective_icon, Scr_Objective_Icon, 0x0, _cstring_objective_positi, Scr_Objective_Position, 0x0, _cstring_objective_onenti, Scr_Objective_OnEntity, 0x0, _cstring_objective_curren, Scr_Objective_Current, 0x0, _cstring_missile_createat, Scr_MissileCreateAttractorEnt, 0x0, _cstring_missile_createat1, Scr_MissileCreateAttractorOrigin, 0x0, _cstring_missile_createre, Scr_MissileCreateRepulsorEnt, 0x0, _cstring_missile_createre1, Scr_MissileCreateRepulsorOrigin, 0x0, _cstring_missile_deleteat, Scr_MissileDeleteAttractor, 0x0, _cstring_bullettrace, Scr_BulletTrace, 0x0, _cstring_bullettracepasse, Scr_BulletTracePassed, 0x0, _cstring_sighttracepassed, Scr_SightTracePassed, 0x0, _cstring_physicstrace, Scr_PhysicsTrace, 0x0, _cstring_playerphysicstra, Scr_PlayerPhysicsTrace, 0x0, _cstring_getmovedelta, GScr_GetMoveDelta, 0x0, _cstring_getangledelta, GScr_GetAngleDelta, 0x0, _cstring_getnorthyaw, GScr_GetNorthYaw, 0x0, _cstring_randomint, Scr_RandomInt, 0x0, _cstring_randomfloat, Scr_RandomFloat, 0x0, _cstring_randomintrange, Scr_RandomIntRange, 0x0, _cstring_randomfloatrange, Scr_RandomFloatRange, 0x0, _cstring_sin, GScr_sin, 0x0, _cstring_cos, GScr_cos, 0x0, _cstring_tan, GScr_tan, 0x0, _cstring_asin, GScr_asin, 0x0, _cstring_acos, GScr_acos, 0x0, _cstring_atan, GScr_atan, 0x0, _cstring_int, GScr_CastInt, 0x0, _cstring_abs, GScr_abs, 0x0, _cstring_min, GScr_min, 0x0, _cstring_max, GScr_max, 0x0, _cstring_floor, GScr_floor, 0x0, _cstring_ceil, GScr_ceil, 0x0, _cstring_sqrt, GScr_sqrt, 0x0, _cstring_vectorfromlineto, GScr_VectorFromLineToPoint, 0x0, _cstring_pointonsegmentne, GScr_PointOnSegmentNearestToPoint, 0x0, _cstring_distance, Scr_Distance, 0x0, _cstring_distance2d, Scr_Distance2D, 0x0, _cstring_distancesquared, Scr_DistanceSquared, 0x0, _cstring_length, Scr_Length, 0x0, _cstring_lengthsquared, Scr_LengthSquared, 0x0, _cstring_closer, Scr_Closer, 0x0, _cstring_vectordot, Scr_VectorDot, 0x0, _cstring_vectornormalize, Scr_VectorNormalize, 0x0, _cstring_vectortoangles, Scr_VectorToAngles, 0x0, _cstring_vectorlerp, Scr_VectorLerp, 0x0, _cstring_anglestoup, Scr_AnglesToUp, 0x0, _cstring_anglestoright, Scr_AnglesToRight, 0x0, _cstring_anglestoforward, Scr_AnglesToForward, 0x0, _cstring_combineangles, Scr_CombineAngles, 0x0, _cstring_issubstr, Scr_IsSubStr, 0x0, _cstring_getsubstr, Scr_GetSubStr, 0x0, _cstring_tolower, Scr_ToLower, 0x0, _cstring_strtok, Scr_StrTok, 0x0, _cstring_musicplay, Scr_MusicPlay, 0x0, _cstring_musicstop, Scr_MusicStop, 0x0, _cstring_soundfade, Scr_SoundFade, 0x0, _cstring_ambientplay, Scr_AmbientPlay, 0x0, _cstring_ambientstop, Scr_AmbientStop, 0x0, _cstring_precachemodel, Scr_PrecacheModel, 0x0, _cstring_precacheshellsho1, Scr_PrecacheShellShock, 0x0, _cstring_precacheitem, Scr_PrecacheItem, 0x0, _cstring_precacheshader, Scr_PrecacheShader, 0x0, _cstring_precachestring, Scr_PrecacheString, 0x0, _cstring_precacherumble, Scr_PrecacheRumble, 0x0, _cstring_loadfx, Scr_LoadFX, 0x0, _cstring_playfx, Scr_PlayFX, 0x0, _cstring_playfxontag, Scr_PlayFXOnTag, 0x0, _cstring_playloopedfx, Scr_PlayLoopedFX, 0x0, _cstring_spawnfx, Scr_SpawnFX, 0x0, _cstring_triggerfx, Scr_TriggerFX, 0x0, _cstring_physicsexplosion, Scr_PhysicsExplosionSphere, 0x0, _cstring_physicsexplosion1, Scr_PhysicsExplosionCylinder, 0x0, _cstring_physicsjolt, Scr_PhysicsRadiusJolt, 0x0, _cstring_physicsjitter, Scr_PhysicsRadiusJitter, 0x0, _cstring_setexpfog1, Scr_SetExponentialFog, 0x0, _cstring_grenadeexplosion, Scr_GrenadeExplosionEffect, 0x0, _cstring_radiusdamage, GScr_RadiusDamage, 0x0, _cstring_setplayerignorer, GScr_SetPlayerIgnoreRadiusDamage, 0x0, _cstring_getnumparts, GScr_GetNumParts, 0x0, _cstring_getpartname, GScr_GetPartName, 0x0, _cstring_earthquake, GScr_Earthquake, 0x0, _cstring_newhudelem, GScr_NewHudElem, 0x0, _cstring_newclienthudelem, GScr_NewClientHudElem, 0x0, _cstring_newteamhudelem, GScr_NewTeamHudElem, 0x0, _cstring_resettimeout, Scr_ResetTimeout, 0x0, _cstring_weaponfiretime, GScr_WeaponFireTime, 0x0, _cstring_isweaponcliponly, GScr_IsWeaponClipOnly, 0x0, _cstring_isweapondetonati, GScr_IsWeaponDetonationTimed, 0x0, _cstring_weaponfiretime, GScr_WeaponFireTime, 0x0, _cstring_weaponclipsize, GScr_WeaponClipSize, 0x0, _cstring_weaponissemiauto, GScr_WeaponIsSemiAuto, 0x0, _cstring_weaponisboltacti, GScr_WeaponIsBoltAction, 0x0, _cstring_weapontype, GScr_WeaponType, 0x0, _cstring_weaponclass, GScr_WeaponClass, 0x0, _cstring_weaponinventoryt, GScr_WeaponInventoryType, 0x0, _cstring_weaponstartammo, GScr_WeaponStartAmmo, 0x0, _cstring_weaponmaxammo, GScr_WeaponMaxAmmo, 0x0, _cstring_weaponaltweaponn, GScr_WeaponAltWeaponName, 0x0, _cstring_isplayer, GScr_IsPlayer, 0x0, _cstring_isplayernumber, GScr_IsPlayerNumber, 0x0, _cstring_setwinningplayer, GScr_SetWinningPlayer, 0x0, _cstring_setwinningteam, GScr_SetWinningTeam, 0x0, _cstring_announcement1, GScr_Announcement, 0x0, _cstring_clientannounceme, GScr_ClientAnnouncement, 0x0, _cstring_getteamscore, GScr_GetTeamScore, 0x0, _cstring_setteamscore, GScr_SetTeamScore, 0x0, _cstring_setclientnamemod, GScr_SetClientNameMode, 0x0, _cstring_updateclientname, GScr_UpdateClientNames, 0x0, _cstring_getteamplayersal, GScr_GetTeamPlayersAlive, 0x0, _cstring_objective_team, GScr_Objective_Team, 0x0, _cstring_logprint, GScr_LogPrint, 0x0, _cstring_worldentnumber, GScr_WorldEntNumber, 0x0, _cstring_obituary, GScr_Obituary, 0x0, _cstring_positionwouldtel, GScr_positionWouldTelefrag, 0x0, _cstring_getstarttime, GScr_getStartTime, 0x0, _cstring_precachemenu, GScr_PrecacheMenu, 0x0, _cstring_precachestatusic, GScr_PrecacheStatusIcon, 0x0, _cstring_precacheheadicon, GScr_PrecacheHeadIcon, 0x0, _cstring_precachelocation, GScr_PrecacheLocationSelector, 0x0, _cstring_map_restart, GScr_MapRestart, 0x0, _cstring_exitlevel, GScr_ExitLevel, 0x0, _cstring_addtestclient, GScr_AddTestClient, 0x0, _cstring_makedvarserverin, GScr_MakeDvarServerInfo, 0x0, _cstring_setarchive, GScr_SetArchive, 0x0, _cstring_allclientsprint, GScr_AllClientsPrint, 0x0, _cstring_clientprint, GScr_ClientPrint, 0x0, _cstring_mapexists, GScr_MapExists, 0x0, _cstring_isvalidgametype, GScr_IsValidGameType, 0x0, _cstring_matchend, GScr_MatchEnd, 0x0, _cstring_setplayerteamran, GScr_SetPlayerTeamRank, 0x0, _cstring_sendranks, GScr_SendXboxLiveRanks, 0x0, _cstring_endparty, GScr_EndXboxLiveLobby, 0x0, _cstring_setteamradar, GScr_SetTeamRadar, 0x0, _cstring_getteamradar, GScr_GetTeamRadar, 0x0, _cstring_getassignedteam, GScr_GetAssignedTeam, 0x0, _cstring_setvotestring, GScr_SetVoteString, 0x0, _cstring_setvotetime, GScr_SetVoteTime, 0x0, _cstring_setvoteyescount, GScr_SetVoteYesCount, 0x0, _cstring_setvotenocount, GScr_SetVoteNoCount, 0x0, _cstring_openfile, GScr_OpenFile, 0x1, _cstring_closefile, GScr_CloseFile, 0x1, _cstring_fprintln, GScr_FPrintln, 0x1, _cstring_fprintfields, GScr_FPrintFields, 0x1, _cstring_freadln, GScr_FReadLn, 0x1, _cstring_fgetarg, GScr_FGetArg, 0x1, _cstring_kick, GScr_KickPlayer, 0x0, _cstring_ban, GScr_BanPlayer, 0x0, _cstring_map, GScr_LoadMap, 0x0, _cstring_playrumbleonposi, Scr_PlayRumbleOnPosition, 0x0, _cstring_playrumbleloopon1, Scr_PlayRumbleLoopOnPosition, 0x0, _cstring_stopallrumbles, Scr_StopAllRumbles, 0x0, _cstring_soundexists, ScrCmd_SoundExists, 0x0, _cstring_issplitscreen, Scr_IsSplitscreen, 0x0, _cstring_setminimap, GScr_SetMiniMap, 0x0, _cstring_setmapcenter, GScr_SetMapCenter, 0x0, _cstring_setgameendtime, GScr_SetGameEndTime, 0x0, _cstring_getarraykeys, GScr_GetArrayKeys, 0x0, _cstring_searchforonlineg, GScr_SearchForOnlineGames, 0x0, _cstring_quitlobby, GScr_QuitLobby, 0x0, _cstring_quitparty, GScr_QuitParty, 0x0, _cstring_startparty, GScr_StartParty, 0x0, _cstring_startprivatematc, GScr_StartPrivateMatch, 0x0, _cstring_visionsetnaked, Scr_VisionSetNaked, 0x0, _cstring_visionsetnight, Scr_VisionSetNight, 0x0, _cstring_tablelookup, Scr_TableLookup, 0x0, _cstring_tablelookupistri, Scr_TableLookupIString, 0x0, _cstring_endlobby, GScr_EndLobby, 0x0, 0x0
 
 
 ;Initialized constant data of g_scr_main_mp:
@@ -17025,7 +16230,6 @@ _cstring_precacheheadicon:		db "precacheheadicon",0
 _cstring_precachelocation:		db "precachelocationselector",0
 _cstring_map_restart:		db "map_restart",0
 _cstring_exitlevel:		db "exitlevel",0
-_cstring_addtestclient:		db "addtestclient",0
 _cstring_makedvarserverin:		db "makedvarserverinfo",0
 _cstring_setarchive:		db "setarchive",0
 _cstring_allclientsprint:		db "allclientsprint",0

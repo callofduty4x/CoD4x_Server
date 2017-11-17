@@ -5136,7 +5136,7 @@ _cstring_error_spkrmap_pa2:		db "ERROR: spkrMap parse failure on file ",22h,"%s"
 _cstring_soundaliasessubt:		db "soundaliases/subtitle.st",0
 _cstring_reference:		db "REFERENCE",0
 _cstring_lang_english:		db "LANG_ENGLISH",0
-_cstring_stringed_file_s_:		db 15h,"StringEd file %s has bad syntax",0
+_cstring_stringed_file_s_:		db 015h,"StringEd file %s has bad syntax",0
 _cstring_warning_could_no:		db "WARNING: Could not read local copy of StringEd file %s",0ah,0
 _cstring_reference_______:		db "REFERENCE           ",0
 _cstring_lang_english____:		db 0dh,0ah,"LANG_ENGLISH        ",22h,0
@@ -5151,7 +5151,7 @@ _cstring_streamed:		db "streamed",0
 _cstring_error_sound_alia8:		db "ERROR: Sound alias file %s: Unknown sound channel ",27h,"%s",27h,"; should be %s",0ah,0
 _cstring_looping:		db "looping",0
 _cstring_error_sound_alia9:		db "ERROR: Sound alias file %s: Subtitle ",27h,"%s",27h," has invalid character ",27h,"%c",27h," ascii %i",0ah,0
-_cstring_sound_alias_file:		db 15h,"Sound alias file %s: Volume Mod Group ",27h,"%s",27h," not found.",0
+_cstring_sound_alias_file:		db 015h,"Sound alias file %s: Volume Mod Group ",27h,"%s",27h," not found.",0
 _cstring_error_sound_alia10:		db "ERROR: Sound alias file %s: SlavePercentage",27h,"%f",27h," is not within the range of ",27h,"%f",27h,"-",27h,"%f",27h,".",0ah,0
 _cstring_rlooping:		db "rlooping",0
 _cstring_loaded:		db "loaded",0
@@ -5217,8 +5217,8 @@ _cstring_csv:		db "csv",0
 _cstring_soundaliases:		db "soundaliases",0
 _cstring_warning_cant_fin:		db "WARNING: can",27h,"t find any sound alias files (soundaliases/*.csv)",0ah,0
 _cstring_warning_could_no1:		db "WARNING: Could not make local copy of StringEd file %s",0ah,0
-_cstring_short_read_in_co:		db 15h,"Short read in COM_WriteFinalStringEdFile()",0ah,0
-_cstring_short_write_in_c:		db 15h,"Short write in COM_WriteFinalStringEdFile()",0ah,0
+_cstring_short_read_in_co:		db 015h,"Short read in COM_WriteFinalStringEdFile()",0ah,0
+_cstring_short_write_in_c:		db 015h,"Short write in COM_WriteFinalStringEdFile()",0ah,0
 _cstring_done:		db "done",0ah,0
 _cstring_warning_can_not_:		db "WARNING: Can not write to StringEd file %s",0ah,0
 _cstring_processing_sound:		db "Processing sound alias file %s..",0ah,0
@@ -5227,11 +5227,11 @@ _cstring_chateau:		db "#Chateau",0
 _cstring_warning_could_no2:		db "WARNING: Could not open output file %s for writing",0ah,0
 _cstring_1:		db 0dh,0ah,0
 _cstring_localized_i_soun:		db "Localized %i sound alias subtitles",0ah,0
-_cstring_sound_alias_file1:		db 15h,"Sound alias file %s: missing ",27h,"name",27h," and/or ",27h,"file",27h," columns",0ah,0
+_cstring_sound_alias_file1:		db 015h,"Sound alias file %s: missing ",27h,"name",27h," and/or ",27h,"file",27h," columns",0ah,0
 _cstring_subtitle_:		db "SUBTITLE_",0
 _cstring_s1:		db 22h,"%s",22h,",",0
 _cstring_2:		db ",",0
-_cstring_sound_alias_file2:		db 15h,"Sound alias file %s: alias entry missing name and/or file",0ah,0
+_cstring_sound_alias_file2:		db 015h,"Sound alias file %s: alias entry missing name and/or file",0ah,0
 _cstring_3:		db 0dh,0
 _cstring_warning_can_not_1:		db "WARNING: Can not write to sound alias file %s",0ah,0
 _cstring_warning_could_no3:		db "WARNING: Could not read sound alias file %s",0ah,0

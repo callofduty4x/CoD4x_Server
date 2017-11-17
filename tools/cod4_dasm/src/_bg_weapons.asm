@@ -8468,18 +8468,18 @@ penetrationDepthTable: resb 0x1e0
 ;All cstrings:
 SECTION .rdata
 _cstring_s_s:		db "%s_%s",0
-_cstring_bullet_penetrati:		db 15h,"Bullet penetration table param name [%s_%s] is to long.",0ah,0
-_cstring_error_parsing_bu:		db 15h,"Error parsing bullet penetration table [%s].",0ah,0
+_cstring_bullet_penetrati:		db 015h,"Bullet penetration table param name [%s_%s] is to long.",0ah,0
+_cstring_error_parsing_bu:		db 015h,"Error parsing bullet penetration table [%s].",0ah,0
 _cstring_mp:		db "mp",0
 _cstring_defaultweapon_mp:		db "defaultweapon_mp",0
-_cstring_bg_loadweapondef:		db 15h,"BG_LoadWeaponDef: Could not find default weapon",0
+_cstring_bg_loadweapondef:		db 015h,"BG_LoadWeaponDef: Could not find default weapon",0
 _cstring_s_s1:		db "%s: %s",0ah,0
-_cstring_shared_ammo_cap_:		db 15h,"Shared ammo cap mismatch for ",22h,"%s",22h," shared ammo cap: ",27h,"%s",22h," set it to %i, but ",22h,"%s",22h," already set it to %i.",0ah,0
+_cstring_shared_ammo_cap_:		db 015h,"Shared ammo cap mismatch for ",22h,"%s",22h," shared ammo cap: ",27h,"%s",22h," set it to %i, but ",22h,"%s",22h," already set it to %i.",0ah,0
 _cstring_s_only_grenades_:		db "[%s] Only grenades are currently supported for off hand use",0ah,0
 _cstring_s_no_offhand_cla:		db "[%s] No offhand class set",0ah,0
 _cstring_none:		db "none",0
 _cstring_couldnt_find_wea:		db "Couldn",27h,"t find weapon ",22h,"%s",22h,0ah,0
-_cstring_could_not_find_a:		db 15h,"could not find altWeapon ",27h,"%s",27h," for weapon ",27h,"%s",27h,0
+_cstring_could_not_find_a:		db 015h,"could not find altWeapon ",27h,"%s",27h," for weapon ",27h,"%s",27h,0
 _cstring_bullet_pen_table:		db "BULLET_PEN_TABLE",0
 _cstring_bullet_penetrati1:		db "bullet penetration table",0
 _cstring_infobullet_penet:		db "info/bullet_penetration_mp",0

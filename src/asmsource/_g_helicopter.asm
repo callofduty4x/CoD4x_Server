@@ -26,7 +26,7 @@
 	extern floorf
 	extern vehHelicopterSoftCollisions
 	extern vehHelicopterLookaheadTime
-	extern VEH_SlideMove
+	extern _Z13VEH_SlideMoveP9gentity_si
 	extern vec3_origin
 	extern VEH_ClearGround
 	extern vehHelicopterStrafeDeadzone
@@ -829,7 +829,7 @@ VEH_UpdateClientChopper_200:
 	movss [ebp-0x248], xmm5
 	movss [ebp-0x258], xmm6
 	movss [ebp-0x268], xmm7
-	call VEH_SlideMove
+	call _Z13VEH_SlideMoveP9gentity_si
 	movss xmm2, dword [ebx+0xc0]
 	movss xmm3, dword [ebx+0xc4]
 	movss xmm4, dword [ebx+0xc8]
@@ -974,7 +974,7 @@ VEH_UpdateClientChopper_240:
 	mov dword [esp+0x4], 0x0
 	mov edx, [ebp+0x8]
 	mov [esp], edx
-	call VEH_SlideMove
+	call _Z13VEH_SlideMoveP9gentity_si
 	test eax, eax
 	jnz VEH_UpdateClientChopper_260
 VEH_UpdateClientChopper_460:

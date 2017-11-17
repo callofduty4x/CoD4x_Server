@@ -2069,16 +2069,16 @@ _cstring_8i_high_permanen:		db "%8i high permanent",0ah,0
 _cstring_8i_high_temp:		db "%8i high temp",0ah,0
 _cstring_8i_total_hunk_in:		db "%8i total hunk in use",0ah,0
 _cstring_meminfo:		db "meminfo",0
-_cstring_hunk_initializat:		db 15h,"Hunk initialization failed. File system load stack not zero",0
+_cstring_hunk_initializat:		db 015h,"Hunk initialization failed. File system load stack not zero",0
 _cstring_aspyrbuilddepotc:		db "/AspyrBuild/depot/CoD4/PC/src/universal/com_memory.cpp",0
-_cstring_hunk_allocatetem:		db 15h,"Hunk_AllocateTempMemoryHigh: failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
-_cstring_hunk_allocatetem1:		db 15h,"Hunk_AllocateTempMemory: failed on %i bytes (total %i MB, low %i MB, high %i MB), needs %i more hunk bytes",0
+_cstring_hunk_allocatetem:		db 015h,"Hunk_AllocateTempMemoryHigh: failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
+_cstring_hunk_allocatetem1:		db 015h,"Hunk_AllocateTempMemory: failed on %i bytes (total %i MB, low %i MB, high %i MB), needs %i more hunk bytes",0
 _cstring_failed_to_z_mall:		db "Failed to Z_Malloc %i bytes",0ah,0
-_cstring_hunk_freetempmem:		db 15h,"Hunk_FreeTempMemory: bad magic",0
+_cstring_hunk_freetempmem:		db 015h,"Hunk_FreeTempMemory: bad magic",0
 _cstring_hunk_useralloc_o:		db "Hunk_UserAlloc: out of memory",0
 _cstring_hunk_initdebugme:		db "Hunk_InitDebugMemory",0
-_cstring_hunk_allocalign_:		db 15h,"Hunk_AllocAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
-_cstring_hunk_alloclowali:		db 15h,"Hunk_AllocLowAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
+_cstring_hunk_allocalign_:		db 015h,"Hunk_AllocAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
+_cstring_hunk_alloclowali:		db 015h,"Hunk_AllocLowAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
 
 
 

@@ -3203,7 +3203,7 @@ _cstring_g_fogcolorreadon:		db "g_fogColorReadOnly",0
 _cstring_fog_start_distan:		db "Fog start distance that was set in the most recent call to ",22h,"setexpfog",22h,0
 _cstring_g_fogstartdistre:		db "g_fogStartDistReadOnly",0
 _cstring_g_foghalfdistrea:		db "g_fogHalfDistReadOnly",0
-_cstring_null_entthink:		db 15h,"NULL ent->think",0
+_cstring_null_entthink:		db 015h,"NULL ent->think",0
 _cstring_i_s:		db "#%i; ",22h,"%s",22h,0
 _cstring_ground_i:		db "ground: #%i",0
 _cstring_s_i__i:		db "%s (%i + %i)",0

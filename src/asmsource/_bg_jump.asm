@@ -15,12 +15,9 @@
 	global Jump_Check
 	global Jump_ClearState
 	global Jump_ApplySlowdown
-	global Jump_ClampVelocity
-	global Jump_GetStepHeight
 	global Jump_RegisterDvars
 	global Jump_ReduceFriction
 	global Jump_ActivateSlowdown
-	global Jump_IsPlayerAboveMax
 
 
 SECTION .text
@@ -324,82 +321,6 @@ Jump_ApplySlowdown_40:
 	nop
 
 
-;Jump_ClampVelocity(playerState_s*, float const*)
-Jump_ClampVelocity:
-	push ebp
-	mov ebp, esp
-	mov edx, [ebp+0x8]
-	movss xmm2, dword [edx+0x24]
-	mov eax, [ebp+0xc]
-	movaps xmm0, xmm2
-	subss xmm0, [eax+0x8]
-	pxor xmm3, xmm3
-	ucomiss xmm0, xmm3
-	jbe Jump_ClampVelocity_10
-	movss xmm1, dword [edx+0x84]
-	mov eax, [jump_height]
-	addss xmm1, [eax+0xc]
-	subss xmm1, xmm2
-	ucomiss xmm1, [_float_0_10000000]
-	jae Jump_ClampVelocity_20
-	jp Jump_ClampVelocity_20
-	movss [edx+0x30], xmm3
-Jump_ClampVelocity_10:
-	pop ebp
-	ret
-Jump_ClampVelocity_20:
-	addss xmm1, xmm1
-	cvtsi2ss xmm0, dword [edx+0x58]
-	mulss xmm1, xmm0
-	sqrtss xmm1, xmm1
-	movss xmm0, dword [edx+0x30]
-	ucomiss xmm0, xmm1
-	jbe Jump_ClampVelocity_10
-	movss [edx+0x30], xmm1
-	pop ebp
-	ret
-	nop
-
-
-;Jump_GetStepHeight(playerState_s*, float const*, float*)
-Jump_GetStepHeight:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	mov ebx, [ebp+0x8]
-	mov ecx, [ebp+0xc]
-	mov esi, [ebp+0x10]
-	mov edx, [jump_height]
-	movss xmm0, dword [ebx+0x84]
-	addss xmm0, [edx+0xc]
-	ucomiss xmm0, [ecx+0x8]
-	jbe Jump_GetStepHeight_10
-	mov eax, [jump_stepSize]
-	movss xmm0, dword [eax+0xc]
-	movss [esi], xmm0
-	movss xmm2, dword [ecx+0x8]
-	movss xmm1, dword [ebx+0x84]
-	addss xmm1, [edx+0xc]
-	addss xmm0, xmm2
-	ucomiss xmm0, xmm1
-	jbe Jump_GetStepHeight_20
-	subss xmm1, xmm2
-	movss [esi], xmm1
-Jump_GetStepHeight_20:
-	mov eax, 0x1
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-Jump_GetStepHeight_10:
-	xor eax, eax
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-	nop
-
 
 ;Jump_RegisterDvars()
 Jump_RegisterDvars:
@@ -506,23 +427,6 @@ Jump_ActivateSlowdown:
 	or dword [eax+0xc], 0x4000
 	mov dword [eax+0x18], 0x708
 Jump_ActivateSlowdown_10:
-	pop ebp
-	ret
-	nop
-
-
-;Jump_IsPlayerAboveMax(playerState_s*)
-Jump_IsPlayerAboveMax:
-	push ebp
-	mov ebp, esp
-	mov edx, [ebp+0x8]
-	movss xmm0, dword [edx+0x84]
-	mov eax, [jump_height]
-	addss xmm0, [eax+0xc]
-	movss xmm1, dword [edx+0x24]
-	xor eax, eax
-	ucomiss xmm1, xmm0
-	setae al
 	pop ebp
 	ret
 	nop

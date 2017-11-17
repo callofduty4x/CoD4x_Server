@@ -1947,12 +1947,12 @@ _ZZ20Com_LoadSoundAliasesPKcS0_18snd_alias_system_tE19Com_SoundList_f_VAR: resb 
 
 ;All cstrings:
 SECTION .rdata
-_cstring_failed_to_load_s:		db 15h,"Failed to load speaker map ",27h,"%s",27h,0
+_cstring_failed_to_load_s:		db 015h,"Failed to load speaker map ",27h,"%s",27h,0
 _cstring_spkrmap:		db "spkrmap",0
 _cstring_soundaliases:		db "soundaliases",0
 _cstring_snd_refreshspeak:		db "snd_refreshSpeakerMaps",0
-_cstring_speaker_map_s_na:		db 15h,"Speaker map ",27h,"%s",27h," name too long",0
-_cstring_snd_alias_curve_:		db 15h,"Snd_Alias Curve initialization: ",27h,".vfcurve",27h," file count (%d) exceeds maximum (%d)",0
+_cstring_speaker_map_s_na:		db 015h,"Speaker map ",27h,"%s",27h," name too long",0
+_cstring_snd_alias_curve_:		db 015h,"Snd_Alias Curve initialization: ",27h,".vfcurve",27h," file count (%d) exceeds maximum (%d)",0
 _cstring_missing_soundali:		db "Missing soundalias ",22h,"%s",22h,".",0ah,0
 _cstring_________________:		db 0ah,"________________________________________",0ah,"currently streamed menu sounds:",0ah,0
 _cstring_________________1:		db 0ah,"________________________________________",0ah,"currently streamed in-game sounds:",0ah,0
@@ -1967,15 +1967,15 @@ _cstring_64s_file_not_fou:		db "%-64s FILE NOT FOUND",0ah,0
 _cstring_sound_not_loaded:		db "Sound not loaded: ",22h,"%s",22h,0ah,0
 _cstring_mapsmp:		db "maps/mp/",0
 _cstring_csv:		db "csv",0
-_cstring_i_sound_files_ar:		db 15h,"%i sound file(s) are missing or in a bad format",0ah,0
+_cstring_i_sound_files_ar:		db 015h,"%i sound file(s) are missing or in a bad format",0ah,0
 _cstring_maps:		db "maps/",0
 _cstring_snd_list:		db "snd_list",0
 _cstring_warning_cant_fin:		db "WARNING: can",27h,"t find any sound alias files (soundaliases/*.csv)",0ah,0
 _cstring_vfcurve:		db "vfcurve",0
-_cstring_failed_to_load_s1:		db 15h,"Failed to load sndcurve file ",27h,"%s",27h,0
+_cstring_failed_to_load_s1:		db 015h,"Failed to load sndcurve file ",27h,"%s",27h,0
 _cstring_snd_getaliaswith:		db "SND_GetAliasWithOffset: could not find sound alias ",27h,"%s",27h," with offset %d",0
-_cstring_sound_alias_file:		db 15h,"Sound alias file %s: Speaker Map ",27h,"%s",27h," not found.",0
-_cstring_sound_alias_file1:		db 15h,"Sound alias file %s: Volume Falloff Curve ",27h,"%s",27h," not found.",0
+_cstring_sound_alias_file:		db 015h,"Sound alias file %s: Speaker Map ",27h,"%s",27h," not found.",0
+_cstring_sound_alias_file1:		db 015h,"Sound alias file %s: Volume Falloff Curve ",27h,"%s",27h," not found.",0
 
 
 

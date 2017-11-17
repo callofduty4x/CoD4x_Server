@@ -25,22 +25,17 @@
 	global SL_GetString_
 	global SL_TransferRefToUser
 	global SL_Shutdown
-	global SL_GetString
-	global SL_FindString
 	global Scr_SetString
 	global SL_GetStringLen
 	global Scr_AllocString
 	global SL_AddRefToString
 	global SL_ShutdownSystem
 	global SL_TransferSystem
-	global SL_ConvertToString
 	global SL_GetStringForInt
 	global SL_ConvertFromString
 	global SL_GetStringForFloat
 	global SL_RemoveRefToString
-	global SL_GetLowercaseString
 	global SL_GetStringForVector
-	global SL_FindLowercaseString
 	global SL_GetLowercaseString_
 	global Scr_ShutdownGameStrings
 	global SL_RemoveRefToStringOfSize
@@ -974,54 +969,6 @@ SL_Shutdown:
 	ret
 
 
-;SL_GetString(char const*, unsigned int)
-SL_GetString:
-	push ebp
-	mov ebp, esp
-	push edi
-	sub esp, 0x14
-	mov edx, [ebp+0x8]
-	mov dword [esp+0xc], 0x6
-	mov edi, edx
-	cld
-	mov ecx, 0xffffffff
-	xor eax, eax
-	repne scasb
-	not ecx
-	mov [esp+0x8], ecx
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call SL_GetStringOfSize
-	add esp, 0x14
-	pop edi
-	pop ebp
-	ret
-	nop
-
-
-;SL_FindString(char const*)
-SL_FindString:
-	push ebp
-	mov ebp, esp
-	push edi
-	push ebx
-	mov ebx, [ebp+0x8]
-	mov edi, ebx
-	cld
-	mov ecx, 0xffffffff
-	xor edx, edx
-	mov eax, edx
-	repne scasb
-	not ecx
-	mov edx, ecx
-	mov eax, ebx
-	pop ebx
-	pop edi
-	pop ebp
-	jmp FindStringOfSize
-
-
 ;Scr_SetString(unsigned short*, unsigned int)
 Scr_SetString:
 	push ebp
@@ -1304,24 +1251,6 @@ SL_TransferSystem_10:
 	jmp Sys_LeaveCriticalSection
 
 
-;SL_ConvertToString(unsigned int)
-SL_ConvertToString:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	test eax, eax
-	jz SL_ConvertToString_10
-	lea eax, [eax+eax*2]
-	mov edx, scrMemTreePub
-	mov edx, [edx]
-	lea eax, [edx+eax*4+0x4]
-SL_ConvertToString_10:
-	pop ebp
-	ret
-	nop
-	add [eax], al
-
-
 ;SL_GetStringForInt(int)
 SL_GetStringForInt:
 	push ebp
@@ -1457,65 +1386,6 @@ SL_RemoveRefToString_20:
 	nop
 
 
-;SL_GetLowercaseString(char const*, unsigned int)
-SL_GetLowercaseString:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x201c
-	mov esi, [ebp+0x8]
-	cld
-	mov ecx, 0xffffffff
-	xor eax, eax
-	mov edi, esi
-	repne scasb
-	mov ebx, ecx
-	not ebx
-	cmp ebx, 0x2000
-	ja SL_GetLowercaseString_10
-	test ebx, ebx
-	jnz SL_GetLowercaseString_20
-SL_GetLowercaseString_40:
-	mov dword [esp+0xc], 0x6
-	mov [esp+0x8], ebx
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	lea eax, [ebp-0x2018]
-	mov [esp], eax
-	call SL_GetStringOfSize
-	add esp, 0x201c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-SL_GetLowercaseString_20:
-	xor edi, edi
-SL_GetLowercaseString_30:
-	movsx eax, byte [esi+edi]
-	mov [esp], eax
-	call tolower
-	mov [edi+ebp-0x2018], al
-	add edi, 0x1
-	cmp ebx, edi
-	jnz SL_GetLowercaseString_30
-	jmp SL_GetLowercaseString_40
-SL_GetLowercaseString_10:
-	mov [esp+0x8], esi
-	mov dword [esp+0x4], _cstring_max_string_lengt
-	mov dword [esp], 0x2
-	call Com_Error
-	xor eax, eax
-	add esp, 0x201c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-
-
 ;SL_GetStringForVector(float const*)
 SL_GetStringForVector:
 	push ebp
@@ -1547,57 +1417,6 @@ SL_GetStringForVector:
 	call SL_GetStringOfSize
 	add esp, 0xa0
 	pop ebx
-	pop edi
-	pop ebp
-	ret
-
-
-;SL_FindLowercaseString(char const*)
-SL_FindLowercaseString:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x201c
-	mov esi, [ebp+0x8]
-	cld
-	mov ecx, 0xffffffff
-	xor eax, eax
-	mov edi, esi
-	repne scasb
-	mov ebx, ecx
-	not ebx
-	cmp ebx, 0x2000
-	jg SL_FindLowercaseString_10
-	test ebx, ebx
-	jg SL_FindLowercaseString_20
-SL_FindLowercaseString_40:
-	mov edx, ebx
-	lea eax, [ebp-0x2018]
-	call FindStringOfSize
-	add esp, 0x201c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-SL_FindLowercaseString_20:
-	xor edi, edi
-SL_FindLowercaseString_30:
-	movsx eax, byte [esi+edi]
-	mov [esp], eax
-	call tolower
-	mov [edi+ebp-0x2018], al
-	add edi, 0x1
-	cmp ebx, edi
-	jnz SL_FindLowercaseString_30
-	jmp SL_FindLowercaseString_40
-SL_FindLowercaseString_10:
-	xor eax, eax
-	add esp, 0x201c
-	pop ebx
-	pop esi
 	pop edi
 	pop ebp
 	ret

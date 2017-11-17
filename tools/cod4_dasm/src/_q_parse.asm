@@ -1890,11 +1890,11 @@ _cstring_sfile_s_line_i_s:		db "%sFile %s, line %i: %s",0
 _cstring_s:		db "%s",0
 _cstring_:		db "(",0
 _cstring_1:		db ")",0
-_cstring_com_endparsesess:		db 15h,"Com_EndParseSession: session underflow",0
-_cstring_sfile_s_line_i_s1:		db 15h,"%sFile %s, line %i: %s",0
-_cstring_s1:		db 15h,"%s",0
+_cstring_com_endparsesess:		db 015h,"Com_EndParseSession: session underflow",0
+_cstring_sfile_s_line_i_s1:		db 015h,"%sFile %s, line %i: %s",0
+_cstring_s1:		db 015h,"%s",0
 _cstring_already_parsing:		db "Already parsing:",0ah,0
-_cstring_com_beginparsese:		db 15h,"Com_BeginParseSession: session overflow trying to parse %s",0ah,0
+_cstring_com_beginparsese:		db 015h,"Com_BeginParseSession: session overflow trying to parse %s",0ah,0
 _cstring_i_s:		db "%i. %s",0ah,0
 _cstring_2:		db "+=",0
 _cstring_3:		db "-=",0

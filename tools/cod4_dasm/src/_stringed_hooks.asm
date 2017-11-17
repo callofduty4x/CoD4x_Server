@@ -1867,16 +1867,16 @@ _cstring_thai:		db "thai",0
 _cstring_leet:		db "leet",0
 _cstring_czech:		db "czech",0
 _cstring_press_return_or_:		db "Press RETURN or CLICK to change",0
-_cstring_appuyez_sur_reto:		db "Appuyez sur RETOUR ARRI",ffh,"RE ou CLIQUEZ pour modifier la Config. de l",27h,"affichage.",0
-_cstring_zum_ndern_der_an:		db "Zum ",ffh,"ndern der Anzeigekonfiguration ENTER dr",ffh,"cken oder KLICKEN.",0
+_cstring_appuyez_sur_reto:		db "Appuyez sur RETOUR ARRI",0c8h,"RE ou CLIQUEZ pour modifier la Config. de l",27h,"affichage.",0
+_cstring_zum_ndern_der_an:		db "Zum ",0c4h,"ndern der Anzeigekonfiguration ENTER dr",0fch,"cken oder KLICKEN.",0
 _cstring_premi_invio_o__f:		db "Premi INVIO o  FAI CLIC per modificare la configurazione dello schermo",0
 _cstring_waiting_for_new_:		db "Waiting for new key. Press ESCAPE to cancel or DELETE to clear.",0
 _cstring_attente_nouvelle:		db "Attente nouvelle touche. ESC pr annuler, DELETE pr effacer.",0
-_cstring_neuer_key_erford:		db "Neuer Key erforderlich. Abbruch mit ESCAPE, Neustart mit L",ffh,"SCHEN.",0
+_cstring_neuer_key_erford:		db "Neuer Key erforderlich. Abbruch mit ESCAPE, Neustart mit L",0d6h,"SCHEN.",0
 _cstring_in_attesa_di_nuo:		db "In attesa di nuovo codice. Premi ESC per annullare o CANC per cancellare.",0
 _cstring_clear:		db "Clear",0
 _cstring_verr_num:		db "Verr. num.",0
-_cstring_lschen:		db "L",ffh,"schen",0
+_cstring_lschen:		db "L",0f6h,"schen",0
 _cstring_elimina:		db "Elimina",0
 _cstring_kp_:		db "KP .",0
 _cstring_pn_:		db "PN .",0
@@ -1925,7 +1925,7 @@ _cstring_alt1:		db "Alt",0
 _cstring_opzione:		db "Opzione",0
 _cstring_delete:		db "Delete",0
 _cstring_effacement:		db "Effacement",0
-_cstring_rckschritt:		db "R",ffh,"ckschritt",0
+_cstring_rckschritt:		db "R",0fch,"ckschritt",0
 _cstring_cancella:		db "Cancella",0
 _cstring_return:		db "Return",0
 _cstring_retour:		db "Retour",0

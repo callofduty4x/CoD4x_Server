@@ -3024,7 +3024,7 @@ _cstring_toggleads:		db "toggleads",0
 _cstring_melee:		db "+melee",0
 _cstring_melee_breath:		db "+melee_breath",0
 _cstring_spectator_follow:		db "spectator follow string",0
-_cstring_cgame_following:		db "CGAME_FOLLOWING",15h,0
+_cstring_cgame_following:		db "CGAME_FOLLOWING",015h,0
 _cstring_vote_yes:		db "vote yes",0
 _cstring_vote_no:		db "vote no",0
 _cstring_cgame_vote:		db "CGAME_VOTE",0

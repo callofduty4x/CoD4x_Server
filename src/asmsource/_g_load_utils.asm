@@ -14,7 +14,6 @@
 	global _ZZ4vtosPKfE3str
 	global _ZZ4vtosPKfE5index
 	global G_NewString
-	global G_SpawnString
 	global G_ParseSpawnVars
 	global G_GetEntityParsePoint
 	global G_SetEntityParsePoint
@@ -91,54 +90,6 @@ G_NewString_60:
 	mov byte [ecx], 0xa
 	add ecx, 0x1
 	jmp G_NewString_70
-
-
-;G_SpawnString(SpawnVar const*, char const*, char const*, char const**)
-G_SpawnString:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov edi, [ebp+0x8]
-	mov eax, [edi+0x4]
-	test eax, eax
-	jg G_SpawnString_10
-G_SpawnString_30:
-	mov edx, [ebp+0x10]
-	mov eax, [ebp+0x14]
-	mov [eax], edx
-	xor eax, eax
-G_SpawnString_50:
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-G_SpawnString_10:
-	mov ebx, edi
-	xor esi, esi
-	jmp G_SpawnString_20
-G_SpawnString_40:
-	add esi, 0x1
-	add ebx, 0x8
-	cmp esi, [edi+0x4]
-	jge G_SpawnString_30
-G_SpawnString_20:
-	mov eax, [ebx+0x8]
-	mov [esp+0x4], eax
-	mov eax, [ebp+0xc]
-	mov [esp], eax
-	call Q_stricmp
-	test eax, eax
-	jnz G_SpawnString_40
-	mov eax, [edi+esi*8+0xc]
-	mov edx, [ebp+0x14]
-	mov [edx], eax
-	mov eax, 0x1
-	jmp G_SpawnString_50
 
 
 ;G_ParseSpawnVars(SpawnVar*)

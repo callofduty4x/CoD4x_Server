@@ -3293,19 +3293,19 @@ SECTION .bss
 ;All cstrings:
 SECTION .rdata
 _cstring_cg_entityeventze:		db "CG_EntityEvent:ZERO EVENT",0ah,0
-_cstring_unknown_event_s:		db 15h,"Unknown event: ",27h,"%s",27h,0
+_cstring_unknown_event_s:		db 015h,"Unknown event: ",27h,"%s",27h,0
 _cstring_ent3i__event3i_:		db "ent:%3i  event:%3i ",0
 _cstring_cg_entityevents:		db "CG_EntityEvent:%s",0ah,0
 _cstring_playing_smoke_gr:		db "Playing smoke grenade at %i at ( %f, %f, %f )",0ah,0
 _cstring_event_s_just_for:		db "Event %s just for client %i was sent to other clients",0ah,0
 _cstring_error_cg_playfx_:		db "ERROR: CG_PlayFx called with invalid effect id %i",0ah,0
 _cstring_killicondied:		db "killicondied",0
-_cstring_cg_obituary_targ:		db 15h,"CG_Obituary: target out of range",0
-_cstring_cgame_youwerekil:		db "CGAME_YOUWEREKILLED",15h,"%s",0
-_cstring_cgame_youkilleds:		db "CGAME_YOUKILLED",15h,"%s",0
+_cstring_cg_obituary_targ:		db 015h,"CG_Obituary: target out of range",0
+_cstring_cgame_youwerekil:		db "CGAME_YOUWEREKILLED",015h,"%s",0
+_cstring_cgame_youkilleds:		db "CGAME_YOUKILLED",015h,"%s",0
 _cstring_cgame_teammate:		db "CGAME_TEAMMATE",0
-_cstring_cgame_youwerekil1:		db "CGAME_YOUWEREKILLED",15h,"^1&&2^7 %s^7",14h,"%s",0
-_cstring_cgame_youkilled1:		db "CGAME_YOUKILLED",15h,"^1&&2^7 %s^7",14h,"%s",0
+_cstring_cgame_youwerekil1:		db "CGAME_YOUWEREKILLED",015h,"^1&&2^7 %s^7",014h,"%s",0
+_cstring_cgame_youkilled1:		db "CGAME_YOUKILLED",015h,"^1&&2^7 %s^7",014h,"%s",0
 _cstring_killiconheadshot:		db "killiconheadshot",0
 _cstring_killiconcrush:		db "killiconcrush",0
 _cstring_killiconfalling:		db "killiconfalling",0

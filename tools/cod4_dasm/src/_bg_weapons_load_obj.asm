@@ -1775,35 +1775,35 @@ SECTION .rdata
 _cstring_null:		db 0
 _cstring_none:		db "none",0
 _cstring_noweaponaccu:		db "noweapon.accu",0
-_cstring_bad_field_type_i:		db 15h,"Bad field type %i in %s",0ah,0
-_cstring_unknown_weapon_t:		db 15h,"Unknown weapon type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_weapon_c:		db 15h,"Unknown weapon class ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_weapon_o:		db 15h,"Unknown weapon overlay reticle ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_penetrat:		db 15h,"Unknown penetration type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_weapon_s:		db 15h,"Unknown weapon stance ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_projecti:		db 15h,"Unknown projectile explosion ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_impact_t:		db 15h,"Unknown impact type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_offhand_:		db 15h,"Unknown offhand class ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_playeran:		db 15h,"Unknown playerAnimType ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_weapon_f:		db 15h,"Unknown weapon fire type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_ammocoun:		db 15h,"Unknown ammoCounter clip type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_weapon_s1:		db 15h,"Unknown weapon stickiness ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_icon_rat:		db 15h,"Unknown icon ratio type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_activere:		db 15h,"Unknown activeReticleType ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_guided_m:		db 15h,"Unknown guided missile type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_weapon_a:		db 15h,"Unknown weapon ads overlay interface ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_unknown_weapon_i:		db 15h,"Unknown weapon inventory type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
-_cstring_maximum_hide_tag:		db 15h,"maximum hide tags (%s) exceeded: %i > %i",0
+_cstring_bad_field_type_i:		db 015h,"Bad field type %i in %s",0ah,0
+_cstring_unknown_weapon_t:		db 015h,"Unknown weapon type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_weapon_c:		db 015h,"Unknown weapon class ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_weapon_o:		db 015h,"Unknown weapon overlay reticle ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_penetrat:		db 015h,"Unknown penetration type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_weapon_s:		db 015h,"Unknown weapon stance ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_projecti:		db 015h,"Unknown projectile explosion ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_impact_t:		db 015h,"Unknown impact type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_offhand_:		db 015h,"Unknown offhand class ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_playeran:		db 015h,"Unknown playerAnimType ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_weapon_f:		db 015h,"Unknown weapon fire type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_ammocoun:		db 015h,"Unknown ammoCounter clip type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_weapon_s1:		db 015h,"Unknown weapon stickiness ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_icon_rat:		db 015h,"Unknown icon ratio type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_activere:		db 015h,"Unknown activeReticleType ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_guided_m:		db 015h,"Unknown guided missile type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_weapon_a:		db 015h,"Unknown weapon ads overlay interface ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_unknown_weapon_i:		db 015h,"Unknown weapon inventory type ",22h,"%s",22h," in ",22h,"%s",22h,0ah,0
+_cstring_maximum_hide_tag:		db 015h,"maximum hide tags (%s) exceeded: %i > %i",0
 _cstring_notetracktosound:		db "Notetrack-to-Sound: Weapon ",27h,"%s",27h," has bad entry; notetrack ",27h,"%s",27h," doesn",27h,"t have a corresponding sound.",0ah,0
-_cstring_max_notetracktos:		db 15h,"Max notetrack-to-sound mappings (%i) exceeded with entry ",22h,"%s",22h,".",0ah,0
-_cstring_notetracktosound1:		db 15h,"Notetrack-to-sound: keyname ",22h,"%s",22h," is too long (length %i/%i).",0ah,0
+_cstring_max_notetracktos:		db 015h,"Max notetrack-to-sound mappings (%i) exceeded with entry ",22h,"%s",22h,".",0ah,0
+_cstring_notetracktosound1:		db 015h,"Notetrack-to-sound: keyname ",22h,"%s",22h," is too long (length %i/%i).",0ah,0
 _cstring_s_default:		db "%s_default",0
 _cstring_s_s:		db "%s_%s",0
-_cstring_exceeded_max_sur:		db 15h,"Exceeded MAX_SURFACE_TYPE_SOUND_LISTS (%d)",0
+_cstring_exceeded_max_sur:		db 015h,"Exceeded MAX_SURFACE_TYPE_SOUND_LISTS (%d)",0
 _cstring_mpplayeranimtype:		db "mp/playeranimtypes.txt",0
 _cstring_bg_animparseanim:		db "BG_AnimParseAnimScript",0
-_cstring_player_anim_type:		db 15h,"Player anim type array size exceeded",0
-_cstring_couldnt_load_fil:		db 15h,"Couldn",27h,"t load file ",27h,"%s",27h,0
+_cstring_player_anim_type:		db 015h,"Player anim type array size exceeded",0
+_cstring_couldnt_load_fil:		db 015h,"Couldn",27h,"t load file ",27h,"%s",27h,0
 _cstring_weaponsss:		db "weapons/%s/%s",0
 _cstring_weaponfile:		db "WEAPONFILE",0
 _cstring_warning_s_is_not:		db "WARNING: ",22h,"%s",22h," is not a valid weapon file",0ah,0

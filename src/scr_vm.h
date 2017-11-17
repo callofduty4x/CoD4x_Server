@@ -24,6 +24,7 @@
 #ifndef __SCR_VM_H__
 #define __SCR_VM_H__
 
+
 #define SCRSTRUCT_ADDR 0x895bf08
 #define STRINGINDEX_ADDR 0x836fe20
 #define stringIndex (*((stringIndex_t*)(STRINGINDEX_ADDR)))
@@ -41,6 +42,7 @@
 #include "g_hud.h"
 #include "filesystem.h"
 #include "g_sv_shared.h"
+
 
 typedef struct{
 	short   emptystring;
@@ -233,6 +235,9 @@ typedef struct{
 	short   back_right;
 	short   tag_gunner_pov;
 }stringIndex_t;
+
+extern stringIndex_t scr_const;
+
 
 typedef void (*xfunction_t)();
 
@@ -475,6 +480,15 @@ typedef struct
   VariableValue stack[2048];
 }scrVmPub_t;
 
+struct scrVmGlob_t
+{
+  VariableValue eval_stack[2];
+  const char *dialog_error_message;
+  int loading;
+  int starttime;
+  unsigned int localVarsStack[2048];
+};
+
 #pragma pack(pop)
 
 
@@ -496,6 +510,8 @@ unsigned int __cdecl Scr_GetType( unsigned int );
 unsigned int __cdecl Scr_GetPointerType( unsigned int );
 void __cdecl Scr_GetVector( unsigned int, float* );
 unsigned int __cdecl Scr_GetObject( unsigned int );
+void __cdecl Scr_GetObjectField(unsigned int classnum, int entnum, int offset);
+const char *__cdecl Scr_GetIString(unsigned int index);
 
 int Scr_GetFunc(unsigned int paramnum);
 extern char* (__cdecl *Scr_GetLocalizedString)(unsigned int arg);
@@ -640,7 +656,10 @@ gclient_t* VM_GetGClientForEntity(gentity_t* ent);
 gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
 client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
 
+void __cdecl CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
 ent_field_t* __internalGet_fields_1();
+
+extern struct scrVmGlob_t scrVmGlob;
 
 #endif

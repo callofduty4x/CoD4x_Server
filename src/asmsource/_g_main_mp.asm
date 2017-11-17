@@ -38,7 +38,6 @@
 	extern GScr_LoadConsts
 	extern G_SetupWeaponDef
 	extern Cvar_VariableBooleanValue
-	extern G_ProcessIPBans
 	extern SV_XModelGet
 	extern FS_FOpenFileByMode
 	extern Com_PrintWarning
@@ -151,6 +150,7 @@
 	extern Helicopter_Pain
 	extern Helicopter_Die
 	extern Helicopter_Controller
+	extern G_LogPrintf
 
 ;Exports of g_main_mp:
 	global g_clients
@@ -159,36 +159,25 @@
 	global G_RegisterDvars
 	global G_CreateDObj
 	global G_GetDObj
-	global G_SafeDObjFree
+	global _Z14G_SafeDObjFreeii
 	global SortRanks
 	global G_RunFrameForEntity
 	global ShowEntityInfo
 	global G_InitGame
 	global G_RunFrame
 	global G_RunThink
-	global G_LogPrintf
 	global G_SightTrace
 	global CalculateRanks
 	global G_ShutdownGame
-	global G_TraceCapsule
-	global G_GetClientSize
 	global G_AddDebugString
 	global G_GetClientScore
-	global G_GetClientState
-	global G_GetPlayerState
-	global G_GetSavePersist
-	global G_SetSavePersist
 	global G_LocationalTrace
 	global Hunk_AllocXAnimServer
-	global G_GetClientArchiveTime
-	global G_GetFogOpaqueDistSqrd
-	global G_SetClientArchiveTime
 	global G_TraceCapsuleComplete
 	global G_ExitAfterConnectPaths
 	global G_LocationalTracePassed
 	global G_LocationalTraceAllowChildren
 	global CheckVote
-	global ExitLevel
 	global g_compassShowEnemies
 	global bullet_penetrationEnabled
 	global g_debugLocDamage
@@ -904,7 +893,7 @@ G_GetDObj:
 
 
 ;G_SafeDObjFree(int, int)
-G_SafeDObjFree:
+_Z14G_SafeDObjFreeii:
 	push ebp
 	mov ebp, esp
 	pop ebp
@@ -1311,7 +1300,6 @@ G_InitGame_110:
 	test eax, eax
 	jz G_InitGame_30
 G_InitGame_20:
-	call G_ProcessIPBans
 	mov eax, SV_XModelGet
 	mov [level_bgs+0x999ec], eax
 	mov dword [level_bgs+0x999f0], 0x126fb6
@@ -2141,88 +2129,6 @@ G_RunThink_20:
 	add [eax], al
 
 
-;G_LogPrintf(char const*, ...)
-G_LogPrintf:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x83c
-	mov edx, [level+0x18]
-	test edx, edx
-	jz G_LogPrintf_10
-	lea eax, [ebp+0xc]
-	mov [ebp-0x1c], eax
-	mov [esp+0xc], eax
-	mov eax, [ebp+0x8]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], 0x400
-	lea ebx, [ebp-0x81c]
-	mov [esp], ebx
-	call vsnprintf
-	mov ecx, [level+0x1ec]
-	mov esi, 0x10624dd3
-	mov eax, ecx
-	imul esi
-	mov esi, edx
-	sar esi, 0x6
-	mov eax, ecx
-	sar eax, 0x1f
-	sub esi, eax
-	mov ecx, 0x88888889
-	mov eax, ecx
-	imul esi
-	lea edi, [edx+esi]
-	sar edi, 0x5
-	mov eax, esi
-	sar eax, 0x1f
-	sub edi, eax
-	lea ecx, [edi*4]
-	mov eax, edi
-	shl eax, 0x6
-	sub eax, ecx
-	sub esi, eax
-	mov eax, 0x66666667
-	imul esi
-	mov ecx, edx
-	sar ecx, 0x2
-	mov eax, esi
-	sar eax, 0x1f
-	sub ecx, eax
-	mov [esp+0x18], ebx
-	lea eax, [ecx+ecx*4]
-	add eax, eax
-	sub esi, eax
-	mov [esp+0x14], esi
-	mov [esp+0x10], ecx
-	mov [esp+0xc], edi
-	mov dword [esp+0x8], _cstring_3iii_s
-	mov dword [esp+0x4], 0x400
-	lea ebx, [ebp-0x41c]
-	mov [esp], ebx
-	call Com_sprintf
-	mov eax, [level+0x18]
-	mov [esp+0x8], eax
-	cld
-	mov ecx, 0xffffffff
-	xor eax, eax
-	mov edi, ebx
-	repne scasb
-	not ecx
-	sub ecx, 0x1
-	mov [esp+0x4], ecx
-	mov [esp], ebx
-	call FS_Write
-G_LogPrintf_10:
-	add esp, 0x83c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
 
 ;G_SightTrace(int*, float const*, float const*, int, int)
 G_SightTrace:
@@ -2453,48 +2359,6 @@ G_ShutdownGame_80:
 	jmp G_ShutdownGame_70
 
 
-;G_TraceCapsule(trace_t*, float const*, float const*, float const*, float const*, int, int)
-G_TraceCapsule:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x44
-	mov eax, [ebp+0x1c]
-	mov [esp+0x4], eax
-	lea ebx, [ebp-0x14]
-	mov [esp], ebx
-	call SV_SetupIgnoreEntParams
-	mov dword [esp+0x24], 0x0
-	mov dword [esp+0x20], 0x0
-	mov dword [esp+0x1c], 0x0
-	mov eax, [ebp+0x20]
-	mov [esp+0x18], eax
-	mov [esp+0x14], ebx
-	mov eax, [ebp+0x18]
-	mov [esp+0x10], eax
-	mov eax, [ebp+0x14]
-	mov [esp+0xc], eax
-	mov eax, [ebp+0x10]
-	mov [esp+0x8], eax
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call SV_Trace
-	add esp, 0x44
-	pop ebx
-	pop ebp
-	ret
-	nop
-
-
-;G_GetClientSize()
-G_GetClientSize:
-	push ebp
-	mov ebp, esp
-	mov eax, 0x3184
-	pop ebp
-	ret
 
 
 ;G_AddDebugString(float const*, float const*, float, char const*, int)
@@ -2538,64 +2402,6 @@ G_GetClientScore:
 	ret
 
 
-;G_GetClientState(int)
-G_GetClientState:
-	push ebp
-	mov ebp, esp
-	mov ecx, [ebp+0x8]
-	lea eax, [ecx+ecx*2]
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	add eax, ecx
-	add eax, [level]
-	add eax, 0x300c
-	pop ebp
-	ret
-
-
-;G_GetPlayerState(int)
-G_GetPlayerState:
-	push ebp
-	mov ebp, esp
-	mov ecx, [ebp+0x8]
-	lea eax, [ecx+ecx*2]
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	add eax, ecx
-	add eax, [level]
-	pop ebp
-	ret
-	nop
-
-
-;G_GetSavePersist()
-G_GetSavePersist:
-	push ebp
-	mov ebp, esp
-	mov eax, [level+0x1540]
-	pop ebp
-	ret
-
-
-;G_SetSavePersist(int)
-G_SetSavePersist:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov [level+0x1540], eax
-	pop ebp
-	ret
-	nop
-
-
 ;G_LocationalTrace(trace_t*, float const*, float const*, int, int, unsigned char*)
 G_LocationalTrace:
 	push ebp
@@ -2637,56 +2443,6 @@ Hunk_AllocXAnimServer:
 	mov ebp, esp
 	pop ebp
 	jmp Hunk_AllocLowInternal
-	nop
-
-
-;G_GetClientArchiveTime(int)
-G_GetClientArchiveTime:
-	push ebp
-	mov ebp, esp
-	mov ecx, [ebp+0x8]
-	lea eax, [ecx+ecx*2]
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	add eax, ecx
-	mov edx, [level]
-	mov eax, [eax+edx+0x2f74]
-	pop ebp
-	ret
-
-
-;G_GetFogOpaqueDistSqrd()
-G_GetFogOpaqueDistSqrd:
-	push ebp
-	mov ebp, esp
-	fld dword [level+0x15c8]
-	pop ebp
-	ret
-	nop
-
-
-;G_SetClientArchiveTime(int, int)
-G_SetClientArchiveTime:
-	push ebp
-	mov ebp, esp
-	mov ecx, [ebp+0x8]
-	lea eax, [ecx+ecx*2]
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	mov edx, eax
-	shl edx, 0x6
-	add eax, edx
-	add eax, ecx
-	mov ecx, [ebp+0xc]
-	mov edx, [level]
-	mov [eax+edx+0x2f74], ecx
-	pop ebp
-	ret
 	nop
 
 
@@ -2876,73 +2632,6 @@ CheckVote_20:
 	mov dword [esp], 0x0
 	call Cbuf_AddText
 	jmp CheckVote_10
-
-
-;ExitLevel()
-ExitLevel:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov dword [esp+0x4], _cstring_map_rotate
-	mov dword [esp], 0x0
-	call Cbuf_AddText
-	mov dword [level+0x200], 0x0
-	mov dword [level+0x204], 0x0
-	mov ebx, [g_maxclients]
-	mov eax, [ebx+0xc]
-	test eax, eax
-	jle ExitLevel_10
-	xor ecx, ecx
-	xor edx, edx
-	jmp ExitLevel_20
-ExitLevel_40:
-	add ecx, 0x1
-	add edx, 0x3184
-	cmp ecx, [ebx+0xc]
-	jge ExitLevel_30
-ExitLevel_20:
-	mov eax, edx
-	add eax, [level]
-	cmp dword [eax+0x2f8c], 0x2
-	jnz ExitLevel_40
-	mov dword [eax+0x2f78], 0x0
-	mov ebx, [g_maxclients]
-	add ecx, 0x1
-	add edx, 0x3184
-	cmp ecx, [ebx+0xc]
-	jl ExitLevel_20
-ExitLevel_30:
-	mov ecx, [ebx+0xc]
-	test ecx, ecx
-	jle ExitLevel_10
-	xor ecx, ecx
-	xor edx, edx
-	jmp ExitLevel_50
-ExitLevel_60:
-	add ecx, 0x1
-	add edx, 0x3184
-	cmp ecx, [ebx+0xc]
-	jge ExitLevel_10
-ExitLevel_50:
-	mov eax, edx
-	add eax, [level]
-	cmp dword [eax+0x2f8c], 0x2
-	jnz ExitLevel_60
-	mov dword [eax+0x2f8c], 0x1
-	mov ebx, [g_maxclients]
-	add ecx, 0x1
-	add edx, 0x3184
-	cmp ecx, [ebx+0xc]
-	jl ExitLevel_50
-ExitLevel_10:
-	mov dword [esp], _cstring_exitlevel_execut
-	call G_LogPrintf
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-	nop
 
 
 ;Initialized global or static variables of g_main_mp:

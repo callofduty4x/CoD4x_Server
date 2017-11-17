@@ -1797,7 +1797,7 @@ _cstring_team_free:		db "TEAM_FREE",0
 _cstring_i_resetplayerent:		db "%i ResetPlayerEntity yaw=%i",0ah,0
 _cstring_weapon_visibilit:		db "weapon visibility",0
 _cstring_warning_aborting:		db "WARNING: aborting player positioning on turret since ",27h,"tag_weapon",27h," does not exist",0ah,0
-_cstring_player_anim_s_ha:		db 15h,"Player anim ",27h,"%s",27h," has no children",0
+_cstring_player_anim_s_ha:		db 015h,"Player anim ",27h,"%s",27h," has no children",0
 
 
 

@@ -29,6 +29,7 @@
 #include "sys_main.h"
 #include "sv_bots.h"
 #include "scr_vm_classfunc.h"
+#include "stringed_interface.h"
 
 #include <stdarg.h>
 
@@ -119,6 +120,8 @@ ent_field_t fields_1[] = {
     {"angles", 0x148, F_VECTOR, Scr_SetAngles},
     {0, 0, 0, 0}
 };
+
+stringIndex_t scr_const;
 
 ent_field_t* __internalGet_fields_1()
 {
@@ -1567,10 +1570,6 @@ unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvar
     return 0;//GetArraySize(ptr);
 }
 
-void Scr_DumpScriptThreads( ){}; //Dummy
-void Scr_DumpScriptVariablesDefault( ){}; //Dummy
-
-
 void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
 {
 /*
@@ -1584,4 +1583,150 @@ void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
   scrVmPub.terminal_error = 1;
   Scr_Error(error);
 
+}
+
+
+VariableValue __cdecl GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
+{
+  VariableValue result;
+
+  assert ( !scrVmPub.inparamcount );
+  assert(!scrVmPub.outparamcount);
+
+  scrVmPub.top = scrVmGlob.eval_stack - 1;
+  scrVmGlob.eval_stack[0].type = 0;
+  Scr_GetObjectField(classnum, entnum, offset);
+
+  assert(!scrVmPub.inparamcount || scrVmPub.inparamcount == 1);
+  assert(!scrVmPub.outparamcount);
+  assert(scrVmPub.top - scrVmPub.inparamcount == scrVmGlob.eval_stack - 1);
+
+  scrVmPub.inparamcount = 0;
+  result.u.intValue = scrVmGlob.eval_stack[0].u.intValue;
+  result.type = scrVmGlob.eval_stack[0].type;
+  return result;
+}
+
+void __cdecl Scr_LocalizationError(int iParm, const char *pszErrorMessage)
+{
+  Scr_ParamError(iParm, pszErrorMessage);
+}
+
+void __cdecl Scr_ValidateLocalizedStringRef(int parmIndex, const char *token, int tokenLen)
+{
+  int charIter;
+
+  assert( token != 0 );
+  assert( tokenLen >= 0 );
+
+  if ( tokenLen > 1 )
+  {
+    for ( charIter = 0; charIter < tokenLen; ++charIter )
+    {
+      if ( !isalnum(token[charIter]) && token[charIter] != '_' )
+      {
+        Scr_ParamError(parmIndex, va("Illegal localized string reference: %s must contain only alpha-numeric characters and underscores", token));
+      }
+    }
+  }
+}
+
+
+void __cdecl Scr_ConstructMessageString(int firstParmIndex, int lastParmIndex, const char *errorContext, char *string, unsigned int stringLimit)
+{
+  unsigned int charIndex;
+  unsigned int tokenLen;
+  int type;
+  gentity_t *ent;
+  int parmIndex;
+  char *token;
+  unsigned int stringLen;
+
+  stringLen = 0;
+  for ( parmIndex = firstParmIndex; parmIndex <= lastParmIndex; ++parmIndex )
+  {
+    type = Scr_GetType(parmIndex);
+    if ( type == 3 )
+    {
+      token = (char *)Scr_GetIString(parmIndex);
+      tokenLen = strlen(token);
+      Scr_ValidateLocalizedStringRef(parmIndex, token, tokenLen);
+      if ( stringLen + tokenLen + 1 >= stringLimit )
+      {
+        Scr_ParamError(parmIndex, va("%s is too long. Max length is %i\n", errorContext, stringLimit));
+      }
+      if ( stringLen )
+      {
+        string[stringLen++] = 20;
+      }
+    }
+    else if ( type != 1 || Scr_GetPointerType(parmIndex) != 19 )
+    {
+      token = (char *)Scr_GetString(parmIndex);
+      tokenLen = strlen(token);
+      for ( charIndex = 0; charIndex < tokenLen; ++charIndex )
+      {
+        if ( token[charIndex] == 20 || token[charIndex] == 21 || token[charIndex] == 22 )
+        {
+          Scr_ParamError(parmIndex, va("bad escape character (%i) present in string", token[charIndex]));
+        }
+        if ( isalpha(token[charIndex]) )
+        {
+          if ( loc_warnings->boolean )
+          {
+            if ( loc_warningsAsErrors->boolean )
+            {
+              Scr_LocalizationError(parmIndex, va("non-localized %s strings are not allowed to have letters in them: \"%s\"", errorContext, token));
+            }
+            else
+            {
+              Com_PrintWarning(CON_CHANNEL_PLAYERWEAP,
+                "WARNING: Non-localized %s string is not allowed to have letters in it. Must be changed over to a localized string: \"%s\"\n",
+                errorContext, token);
+            }
+          }
+          break;
+        }
+      }
+      if ( stringLen + tokenLen + 1 >= stringLimit )
+      {
+        Scr_ParamError(parmIndex, va("%s is too long. Max length is %i\n", errorContext, stringLimit));
+      }
+      if ( tokenLen )
+      {
+        string[stringLen++] = 21;
+      }
+    }
+    else
+    {
+      ent = Scr_GetEntity(parmIndex);
+      if ( !ent->client )
+      {
+        Scr_ParamError(parmIndex, "Entity is not a player");
+      }
+      token = va("%s^7", CS_DisplayName(&ent->client->sess.cs, 3));
+      tokenLen = strlen(token);
+      if ( stringLen + tokenLen + 1 >= stringLimit )
+      {
+        Scr_ParamError(parmIndex, va("%s is too long. Max length is %i\n", errorContext, stringLimit));
+      }
+      if ( tokenLen )
+      {
+        string[stringLen++] = 21;
+      }
+    }
+    for ( charIndex = 0; charIndex < tokenLen; ++charIndex )
+    {
+      if ( token[charIndex] != 20 && token[charIndex] != 21 && token[charIndex] != 22 )
+      {
+        string[stringLen] = token[charIndex];
+      }
+      else
+      {
+        string[stringLen] = '.';
+      }
+      ++stringLen;
+    }
+  }
+  string[stringLen] = 0;
 }

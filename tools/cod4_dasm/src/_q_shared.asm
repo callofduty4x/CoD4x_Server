@@ -2971,24 +2971,24 @@ g_traceThreadInfo: resb 0x60
 
 ;All cstrings:
 SECTION .rdata
-_cstring_info_removekey_o:		db 15h,"Info_RemoveKey: oversize infostring",0
-_cstring_info_valueforkey:		db 15h,"Info_ValueForKey: oversize key %d",0
+_cstring_info_removekey_o:		db 015h,"Info_RemoveKey: oversize infostring",0
+_cstring_info_valueforkey:		db 015h,"Info_ValueForKey: oversize key %d",0
 _cstring_null:		db 0
-_cstring_info_removekey_b:		db 15h,"Info_RemoveKey_Big: oversize infostring",0
-_cstring_cant_use_keys_wi:		db 15h,"Can",27h,"t use keys with a ",5ch,0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0
-_cstring_info_setvaluefor:		db 15h,"Info_SetValueForKey: oversize infostring",0
-_cstring_cant_use_keys_wi1:		db 15h,"Can",27h,"t use keys with a semicolon",0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0
-_cstring_cant_use_keys_wi2:		db 15h,"Can",27h,"t use keys with a ",22h,0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0
+_cstring_info_removekey_b:		db 015h,"Info_RemoveKey_Big: oversize infostring",0
+_cstring_cant_use_keys_wi:		db 015h,"Can",27h,"t use keys with a ",5ch,0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0
+_cstring_info_setvaluefor:		db 015h,"Info_SetValueForKey: oversize infostring",0
+_cstring_cant_use_keys_wi1:		db 015h,"Can",27h,"t use keys with a semicolon",0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0
+_cstring_cant_use_keys_wi2:		db 015h,"Can",27h,"t use keys with a ",22h,0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0
 _cstring_ss:		db 5ch,"%s",5ch,"%s",0
-_cstring_info_string_leng:		db 15h,"Info string length exceeded",0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0ah,"Info string:",0ah,"%s",0ah,0
-_cstring_info_buffer_leng:		db 15h,"Info buffer length exceeded, not including key/value pair in response",0ah,0
+_cstring_info_string_leng:		db 015h,"Info string length exceeded",0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0ah,"Info string:",0ah,"%s",0ah,0
+_cstring_info_buffer_leng:		db 015h,"Info buffer length exceeded, not including key/value pair in response",0ah,0
 _cstring_filepath_sss_is_:		db "filepath ",27h,"%s%s%s",27h," is longer than %i characters",0
 _cstring_ss1:		db "%s%s",0
 _cstring_xmodel:		db "xmodel",0
-_cstring_big_info_string_:		db 15h,"Big info string length exceeded",0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0ah,"Info string:",0ah,"%s",0ah,0
-_cstring_attempted_to_ove:		db 15h,"Attempted to overrun string in call to va()",0
-_cstring_bad_field_type_i:		db 15h,"Bad field type %i",0ah,0
-_cstring_i_strncat_alread:		db 15h,"I_strncat: already overflowed",0
+_cstring_big_info_string_:		db 015h,"Big info string length exceeded",0ah,"key: ",27h,"%s",27h,0ah,"value: ",27h,"%s",27h,0ah,"Info string:",0ah,"%s",0ah,0
+_cstring_attempted_to_ove:		db 015h,"Attempted to overrun string in call to va()",0
+_cstring_bad_field_type_i:		db 015h,"Bad field type %i",0ah,0
+_cstring_i_strncat_alread:		db 015h,"I_strncat: already overflowed",0
 
 
 

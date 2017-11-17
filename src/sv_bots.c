@@ -313,7 +313,7 @@ void Scr_AddBotsMovement()
 qboolean shouldSpamUseButton(gentity_t *bot)
 {
     BotMovementInfo_t *ai = &g_botai[bot->s.number];
-    qboolean is_alive = bot->healthPoints > 0 ? qtrue : qfalse;
+    qboolean is_alive = bot->health > 0 ? qtrue : qfalse;
 
     if (ai->useSpamDelay)
         --ai->useSpamDelay;

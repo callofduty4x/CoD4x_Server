@@ -4070,7 +4070,7 @@ s_lightGridRowDelta: resb 0x74
 ;All cstrings:
 SECTION .rdata
 _cstring_modellightingpat:		db "modelLightingPatchList ran out of elements.",0
-_cstring_light_grid_log_f:		db 15h,"light grid log filename ",27h,"%s.grid",27h," is too long",0ah,0
+_cstring_light_grid_log_f:		db 015h,"light grid log filename ",27h,"%s.grid",27h," is too long",0ah,0
 _cstring_:		db ".",0
 
 

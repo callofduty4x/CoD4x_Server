@@ -257,30 +257,6 @@ static int fs_serverIwds[1024];
 static char *fs_serverIwdNames[1024];
 
 
-#define FS_ListFiles( dir, extension, nfiles ) Sys_ListFiles(dir, extension, 0, nfiles, 0)
-#define FS_FreeFileList Sys_FreeFileList
-
-/*
-typedef void (__cdecl *tFS_WriteFile)(const char* qpath, const void *buffer, int size);
-tFS_WriteFile FS_WriteFile = (tFS_WriteFile)(0x818a58c);
-
-typedef void (__cdecl *tFS_FreeFile)(void *buffer);
-tFS_FreeFile FS_FreeFile = (tFS_FreeFile)(0x8187430);
-
-typedef void (__cdecl *tFS_SV_Rename)(const char* from,const char* to);
-tFS_SV_Rename FS_SV_Rename = (tFS_SV_Rename)(0x81287da);
-
-typedef int (__cdecl *tFS_Write)(void const* data,int length, fileHandle_t);
-tFS_Write FS_Write = (tFS_Write)(0x8186ec4);
-
-typedef int (__cdecl *tFS_Read)(void const* data,int length, fileHandle_t);
-tFS_Read FS_Read = (tFS_Read)(0x8186f64);
-*/
-
-
-
-
-
 /*
 ==============
 FS_Initialized
@@ -1587,7 +1563,7 @@ FS_Dir_f
 void FS_Dir_f( void ) {
 	char	*path;
 	char	*extension;
-	char	**dirnames;
+	const char	**dirnames;
 	int		ndirs;
 	int		i;
 
@@ -1607,7 +1583,7 @@ void FS_Dir_f( void ) {
 	Com_Printf(CON_CHANNEL_DONT_FILTER, "Directory of %s %s\n", path, extension );
 	Com_Printf(CON_CHANNEL_DONT_FILTER, "---------------\n" );
 
-	dirnames = FS_ListFiles( path, extension, &ndirs );
+	dirnames = FS_ListFiles( path, extension, 0, &ndirs );
 
 	for ( i = 0; i < ndirs; i++ ) {
 		Com_Printf(CON_CHANNEL_DONT_FILTER, "%s\n", dirnames[i] );
@@ -2600,32 +2576,6 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename ) {
 }
 
 
-
-
-
-
-void FS_CopyCvars()
-{
-    //SEH
-    *(cvar_t**)0x13f9a1e0 = loc_language;
-    *(cvar_t**)0x13f9a1e4 = loc_forceEnglish;
-    *(cvar_t**)0x13f9a1e8 = loc_translate;
-    *(cvar_t**)0x13f9a1ec = loc_warnings;
-    *(cvar_t**)0x13f9a1f0 = loc_warningsAsErrors;
-    //FS
-    *(cvar_t**)0x13f9da00 = fs_debug;
-    *(cvar_t**)0x13f9da14 = fs_copyfiles;
-    *(cvar_t**)0x13f9da10 = fs_cdpath;
-    *(cvar_t**)0x13f9da08 = fs_basepath;
-    *(cvar_t**)0x13f9da0C = fs_basegame;
-    *(cvar_t**)0x13f9da18 = fs_gameDirVar;
-    *(cvar_t**)0x13f9da24 = fs_ignoreLocalized;
-    *(cvar_t**)0x13f9da04 = fs_homepath;
-    *(cvar_t**)0x13f9da1C = fs_restrict;
-    *(cvar_t**)0x13f9da20 = fs_usedevdir;
-}
-
-
 void SEH_InitLanguage()
 {
   loc_language = Cvar_RegisterInt("loc_language", 0, 0, 14, 0x21u, "Language");
@@ -3292,235 +3242,6 @@ void __cdecl FS_AddUserMapDirIWDs(const char *pszGameFolder)
 
 
 
-void FS_PatchFileHandleData()
-{
-	/* Copy the our fsh handle */
-	*(fileHandleData_t**)0x8128977 = fsh;
-	*(fileHandleData_t**)0x81289FA = fsh;
-	*(fileHandleData_t**)0x8128A66 = fsh;
-	*(fileHandleData_t**)0x8128AED = fsh;
-	*(fileHandleData_t**)0x8128E8C = fsh;
-	*(fileHandleData_t**)0x8128EC0 = fsh;
-	*(fileHandleData_t**)0x81865A3 = fsh;
-	*(fileHandleData_t**)0x8186955 = fsh;
-	*(fileHandleData_t**)0x8186963 = fsh;
-	*(fileHandleData_t**)0x8186A02 = fsh;
-	*(fileHandleData_t**)0x8186EE2 = fsh;
-	*(fileHandleData_t**)0x8186FA5 = fsh;
-	*(fileHandleData_t**)0x8186FBB = fsh;
-	*(fileHandleData_t**)0x81870E8 = fsh;
-	*(fileHandleData_t**)0x81870F4 = fsh;
-	*(fileHandleData_t**)0x8187299 = fsh;
-	*(fileHandleData_t**)0x81872DA = fsh;
-	*(fileHandleData_t**)0x8187304 = fsh;
-	*(fileHandleData_t**)0x818731B = fsh;
-	*(fileHandleData_t**)0x818732C = fsh;
-	*(fileHandleData_t**)0x8187451 = fsh;
-	*(fileHandleData_t**)0x818747E = fsh;
-	*(fileHandleData_t**)0x818748E = fsh;
-	*(fileHandleData_t**)0x8187619 = fsh;
-	*(fileHandleData_t**)0x8187627 = fsh;
-	*(fileHandleData_t**)0x818765C = fsh;
-	*(fileHandleData_t**)0x818768E = fsh;
-	*(fileHandleData_t**)0x81876BC = fsh;
-	*(fileHandleData_t**)0x8187703 = fsh;
-	*(fileHandleData_t**)0x8187733 = fsh;
-	*(fileHandleData_t**)0x8187741 = fsh;
-	*(fileHandleData_t**)0x818775D = fsh;
-	*(fileHandleData_t**)0x8187775 = fsh;
-	*(fileHandleData_t**)0x8187797 = fsh;
-	*(fileHandleData_t**)0x81877A8 = fsh;
-	*(fileHandleData_t**)0x81877E4 = fsh;
-	*(fileHandleData_t**)0x81877F8 = fsh;
-	*(fileHandleData_t**)0x818780B = fsh;
-	*(fileHandleData_t**)0x818782B = fsh;
-	*(fileHandleData_t**)0x818783C = fsh;
-	*(fileHandleData_t**)0x8188DFD = fsh;
-	*(fileHandleData_t**)0x8188E98 = fsh;
-	*(fileHandleData_t**)0x818A21C = fsh;
-	*(fileHandleData_t**)0x818A22A = fsh;
-	*(fileHandleData_t**)0x818A2D2 = fsh;
-	*(fileHandleData_t**)0x818A350 = fsh;
-	*(fileHandleData_t**)0x818A47F = fsh;
-	*(fileHandleData_t**)0x818A5BF = fsh;
-	*(fileHandleData_t**)0x818A71C = fsh;
-	*(fileHandleData_t**)0x818A72A = fsh;
-	*(fileHandleData_t**)0x818A7CB = fsh;
-	*(fileHandleData_t**)0x818A950 = fsh;
-	*(fileHandleData_t**)0x818AB46 = fsh;
-	*(fileHandleData_t**)0x818AB75 = fsh;
-	*(fileHandleData_t**)0x818ACF0 = fsh;
-	*(fileHandleData_t**)0x818ACFE = fsh;
-	*(fileHandleData_t**)0x818ADA6 = fsh;
-	*(fileHandleData_t**)0x818B0D0 = fsh;
-	*(fileHandleData_t**)0x818B0E7 = fsh;
-	*(fileHandleData_t**)0x818B1C0 = fsh;
-	*(fileHandleData_t**)0x818B233 = fsh;
-	*(fileHandleData_t**)0x818B28C = fsh;
-	*(fileHandleData_t**)0x818B2ED = fsh;
-	*(fileHandleData_t**)0x818B4A6 = fsh;
-	*(fileHandleData_t**)0x818B4BD = fsh;
-	*(fileHandleData_t**)0x818B8FF = fsh;
-	*(fileHandleData_t**)0x818BC49 = fsh;
-	*(fileHandleData_t**)0x818BC5A = fsh;
-	*(fileHandleData_t**)0x818BDE8 = fsh;
-
-	*(qboolean**)0x8187288 = &fsh[0].handleFiles.unique;
-	*(qboolean**)0x81872A7 = &fsh[0].handleFiles.unique;
-	*(qboolean**)0x818B212 = &fsh[0].handleFiles.unique;
-	*(qboolean**)0x818B479 = &fsh[0].handleFiles.unique;
-
-	*(qboolean**)0x812897E = &fsh[0].handleSync;
-	*(qboolean**)0x8128A6D = &fsh[0].handleSync;
-	*(qboolean**)0x8128AF4 = &fsh[0].handleSync;
-	*(qboolean**)0x8128EB5 = &fsh[0].handleSync;
-	*(qboolean**)0x8186F49 = &fsh[0].handleSync;
-	*(qboolean**)0x8188E5F = &fsh[0].handleSync;
-	*(qboolean**)0x8188EFF = &fsh[0].handleSync;
-	*(qboolean**)0x818A376 = &fsh[0].handleSync;
-	*(qboolean**)0x818A55C = &fsh[0].handleSync;
-	*(qboolean**)0x818A69C = &fsh[0].handleSync;
-	*(qboolean**)0x818A957 = &fsh[0].handleSync;
-	*(qboolean**)0x818AB6A = &fsh[0].handleSync;
-	*(qboolean**)0x818BB1C = &fsh[0].handleSync;
-	*(qboolean**)0x818BE0B = &fsh[0].handleSync;
-
-	*(int**)0x818BAF6 = &fsh[0].fileSize;
-
-	*(int**)0x818760F = &fsh[0].zipFilePos;
-	*(int**)0x8187729 = &fsh[0].zipFilePos;
-	*(int**)0x818778D = &fsh[0].zipFilePos;
-	*(int**)0x8187821 = &fsh[0].zipFilePos;
-	*(int**)0x818B314 = &fsh[0].zipFilePos;
-
-	*(qboolean**)0x81288ED = &fsh[0].zipFile;
-	*(qboolean**)0x8128E36 = &fsh[0].zipFile;
-	*(qboolean**)0x8186F91 = &fsh[0].zipFile;
-	*(qboolean**)0x81870DD = &fsh[0].zipFile;
-	*(qboolean**)0x8187473 = &fsh[0].zipFile;
-	*(qboolean**)0x81875E8 = &fsh[0].zipFile;
-	*(qboolean**)0x818767F = &fsh[0].zipFile;
-	*(qboolean**)0x81876AD = &fsh[0].zipFile;
-	*(qboolean**)0x818774F = &fsh[0].zipFile;
-	*(qboolean**)0x818A33F = &fsh[0].zipFile;
-	*(qboolean**)0x818A829 = &fsh[0].zipFile;
-	*(qboolean**)0x818A9A6 = &fsh[0].zipFile;
-	*(qboolean**)0x818B147 = &fsh[0].zipFile;
-	*(qboolean**)0x818B1B1 = &fsh[0].zipFile;
-	*(qboolean**)0x818B27B = &fsh[0].zipFile;
-	*(qboolean**)0x818BC33 = &fsh[0].zipFile;
-	*(qboolean**)0x818BDD7 = &fsh[0].zipFile;
-
-	*(qboolean**)0x818BB07 = &fsh[0].streamed;
-
-	*(char**)0x8128905 = fsh[0].name;
-	*(char**)0x8128EA6 = fsh[0].name;
-	*(char**)0x8186A0C = fsh[0].name;
-	*(char**)0x818A2DC = fsh[0].name;
-	*(char**)0x818A367 = fsh[0].name;
-	*(char**)0x818A7D5 = fsh[0].name;
-	*(char**)0x818A841 = fsh[0].name;
-	*(char**)0x818AB5B = fsh[0].name;
-	*(char**)0x818ADB0 = fsh[0].name;
-	*(char**)0x818B128 = fsh[0].name;
-	*(char**)0x818B256 = fsh[0].name;
-	*(char**)0x818BDFC = fsh[0].name;
-
-	/* 2nd element of fsh */
-
-	*(fileHandleData_t**)0x81869A0 = &fsh[1];
-	*(fileHandleData_t**)0x8187B9E = &fsh[1];
-	*(fileHandleData_t**)0x818A26D = &fsh[1];
-	*(fileHandleData_t**)0x818A766 = &fsh[1];
-	*(fileHandleData_t**)0x818A993 = &fsh[1];
-	*(fileHandleData_t**)0x818AA47 = &fsh[1];
-	*(fileHandleData_t**)0x818AA97 = &fsh[1];
-	*(fileHandleData_t**)0x818AD41 = &fsh[1];
-	*(fileHandleData_t**)0x818BDC0 = &fsh[1];
-	*(fileHandleData_t**)0x818BE4B = &fsh[1];
-	*(fileHandleData_t**)0x818BE9B = &fsh[1];
-
-	*(int**)0x8187360 = &fsh[1].fileSize;
-	*(int**)0x818E766 = &fsh[1].fileSize;
-
-	*(int**)0x818699A = &fsh[1].zipFilePos;
-	*(int**)0x8187B98 = &fsh[1].zipFilePos;
-	*(int**)0x818A267 = &fsh[1].zipFilePos;
-	*(int**)0x818A760 = &fsh[1].zipFilePos;
-	*(int**)0x818AA41 = &fsh[1].zipFilePos;
-	*(int**)0x818AD3B = &fsh[1].zipFilePos;
-	*(int**)0x818BE45 = &fsh[1].zipFilePos;
-
-	*(char**)0x818AAA3 = fsh[1].name;
-	*(char**)0x818BEA7 = fsh[1].name;
-
-	/* Done with fsh patch */
-
-	*(searchpath_t***)0x81280DA = &fs_searchpaths;
-	*(searchpath_t***)0x8128297 = &fs_searchpaths;
-	*(searchpath_t***)0x8128402 = &fs_searchpaths;
-	*(searchpath_t***)0x8128477 = &fs_searchpaths;
-	*(searchpath_t***)0x812857E = &fs_searchpaths;
-	*(searchpath_t***)0x8129018 = &fs_searchpaths;
-	*(searchpath_t***)0x8129657 = &fs_searchpaths;
-	*(searchpath_t***)0x81864E7 = &fs_searchpaths;
-	*(searchpath_t***)0x818656B = &fs_searchpaths;
-	*(searchpath_t***)0x818663E = &fs_searchpaths;
-	*(searchpath_t***)0x818737F = &fs_searchpaths;
-	*(searchpath_t***)0x818738A = &fs_searchpaths;
-	*(searchpath_t***)0x8187ABC = &fs_searchpaths;
-	*(searchpath_t***)0x8187CDE = &fs_searchpaths;
-	*(searchpath_t***)0x8188826 = &fs_searchpaths;
-	*(searchpath_t***)0x8188B18 = &fs_searchpaths;
-	*(searchpath_t***)0x8188B97 = &fs_searchpaths;
-	*(searchpath_t***)0x8188CCA = &fs_searchpaths;
-	*(searchpath_t***)0x8189690 = &fs_searchpaths;
-	*(searchpath_t***)0x818969C = &fs_searchpaths;
-	*(searchpath_t***)0x818998A = &fs_searchpaths;
-	*(searchpath_t***)0x8189B41 = &fs_searchpaths;
-	*(searchpath_t***)0x8189B4D = &fs_searchpaths;
-	*(searchpath_t***)0x8189BCF = &fs_searchpaths;
-	*(searchpath_t***)0x818AE36 = &fs_searchpaths;
-	*(searchpath_t***)0x818B6BF = &fs_searchpaths;
-	*(searchpath_t***)0x818E785 = &fs_searchpaths;
-	*(searchpath_t***)0x818E790 = &fs_searchpaths;
-	*(searchpath_t***)0x818E7A4 = &fs_searchpaths;
-
-	*(char**)0x8186B14 = fs_gamedir;
-	*(char**)0x818790F = fs_gamedir;
-	*(char**)0x818799C = fs_gamedir;
-	*(char**)0x8187A37 = fs_gamedir;
-	*(char**)0x8189BB4 = fs_gamedir;
-	*(char**)0x818A3EC = fs_gamedir;
-	*(char**)0x818A431 = fs_gamedir;
-	*(char**)0x818A50B = fs_gamedir;
-	*(char**)0x818A59E = fs_gamedir;
-	*(char**)0x818A64B = fs_gamedir;
-	*(char**)0x818A86A = fs_gamedir;
-	*(char**)0x818A9CB = fs_gamedir;
-	*(char**)0x818BB2C = fs_gamedir;
-	*(char**)0x819C381 = fs_gamedir;
-	*(char**)0x819C64D = fs_gamedir;
-	*(char**)0x819C679 = fs_gamedir;
-	*(char**)0x819CEFD = fs_gamedir;
-	*(char**)0x819CF27 = fs_gamedir;
-	*(char**)0x819D09A = fs_gamedir;
-
-	*(int**)0x818655E = &fs_loadStack;
-	*(int**)0x81865FD = &fs_loadStack;
-	*(int**)0x8187435 = &fs_loadStack;
-	*(int**)0x818BBCE = &fs_loadStack;
-
-	*(int**)0x818819d = &fs_numServerIwds;
-	*(int**)0x81885fc = &fs_numServerIwds;
-
-	*(int**)0x81881b8 = fs_serverIwds;
-	*(int**)0x81881c7 = fs_serverIwds;
-
-}
-
-
-
 /*
 ================
 FS_Shutdown
@@ -4182,8 +3903,18 @@ void FS_ShutdownServerIwdNames()
     FS_ShutdownReferencedFiles(&fs_numServerIwds, fs_serverIwdNames);
 }
 
+int fs_numServerReferencedFFs, fs_numServerReferencedIwds;
+char* fs_serverReferencedFFNames, *fs_serverReferencedIwdNames;
 
+void __cdecl FS_ShutdownServerReferencedIwds()
+{
+  FS_ShutdownReferencedFiles(&fs_numServerReferencedIwds, &fs_serverReferencedIwdNames);
+}
 
+void __cdecl FS_ShutdownServerReferencedFFs()
+{
+  FS_ShutdownReferencedFiles(&fs_numServerReferencedFFs, &fs_serverReferencedFFNames);
+}
 
 
 /*
@@ -4891,3 +4622,193 @@ unsigned int __cdecl FS_FileRead(void *ptr, unsigned int len, FILE *stream)
 //  ProfLoad_EndTrackedValue(MAP_PROFILE_FILE_READ);
   return read_size;
 }
+
+
+const char **__cdecl FS_ListFiles(const char *path, const char *extension, int behavior, int *numfiles)
+{
+    return (const char**)Sys_ListFiles(path, extension, 0, numfiles, qfalse);
+}
+
+void FS_FreeFileList(const char** list)
+{
+    Sys_FreeFileList((char**)list);
+}
+
+/*
+int __cdecl FS_GetModList(char *listbuf, int bufsize)
+{
+  char v2; // ST47_1@4
+  _iobuf *file; // ST64_4@7
+  char v4; // ST27_1@13
+  char v5; // ST17_1@15
+  char *v7; // [sp+8h] [bp-17Ch]@14
+  char *v8; // [sp+Ch] [bp-178h]@14
+  char *v9; // [sp+18h] [bp-16Ch]@12
+  char *v10; // [sp+1Ch] [bp-168h]@12
+  char *v11; // [sp+38h] [bp-14Ch]@3
+  char *v12; // [sp+3Ch] [bp-148h]@3
+  int nMods; // [sp+54h] [bp-130h]@1
+  int nDescLen; // [sp+58h] [bp-12Ch]@7 MAPDST
+  int descHandle; // [sp+5Ch] [bp-128h]@5
+  const char *basepath; // [sp+60h] [bp-124h]@1
+  int dummy; // [sp+64h] [bp-120h]@1
+  char *name; // [sp+68h] [bp-11Ch]@3
+  char descPath[256]; // [sp+6Ch] [bp-118h]@1
+  int nPotential; // [sp+170h] [bp-14h]@1
+  int nLen; // [sp+174h] [bp-10h]@3
+  int nTotal; // [sp+178h] [bp-Ch]@1
+  int i; // [sp+17Ch] [bp-8h]@1
+  char **pFiles; // [sp+180h] [bp-4h]@1
+  char *listbufa; // [sp+18Ch] [bp+8h]@14
+
+  pFiles = 0;
+  *listbuf = 0;
+  nTotal = 0;
+  nPotential = 0;
+  nMods = 0;
+  basepath = fs_homepath->current.string;
+  Com_sprintf(descPath, 256, "%s/%s", basepath, "mods");
+  pFiles = Sys_ListFiles(descPath, 0, 0, &dummy, 1);
+  nPotential = Sys_CountFileList(pFiles);
+  for ( i = 0; i < nPotential; ++i )
+  {
+    name = pFiles[i];
+    nLen = strlen(name) + 1;
+    v12 = name;
+    v11 = descPath;
+    do
+    {
+      v2 = *v12;
+      *v11++ = *v12++;
+    }
+    while ( v2 );
+    I_strncat(descPath, 256, "/description.txt");
+    if ( FS_SV_FOpenFileRead(descPath, "mods", &descHandle) > 0 && descHandle )
+    {
+      file = FS_FileForHandle(descHandle);
+      Com_Memset(descPath, 0, 256);
+      nDescLen = FS_FileRead(descPath, 0x30u, file);
+      if ( nDescLen >= 0 )
+      {
+        descPath[nDescLen] = 0;
+      }
+      FS_FCloseFile(descHandle);
+    }
+    else
+    {
+      Com_Printf(CON_CHANNEL_FILES, "FS_GetModList: failed to open %s\n", descPath);
+      descPath[0] = 0;
+    }
+    nDescLen = strlen(descPath) + 1;
+    if ( nLen + nTotal + nDescLen + 2 >= bufsize )
+    {
+      break;
+    }
+    v10 = name;
+    v9 = listbuf;
+    do
+    {
+      v4 = *v10;
+      *v9++ = *v10++;
+    }
+    while ( v4 );
+    listbufa = &listbuf[nLen];
+    v8 = descPath;
+    v7 = listbufa;
+    do
+    {
+      v5 = *v8;
+      *v7++ = *v8++;
+    }
+    while ( v5 );
+    listbuf = &listbufa[nDescLen];
+    nTotal += nDescLen + nLen;
+    ++nMods;
+  }
+  FS_FreeFileList((const char **)pFiles);
+  return nMods;
+}
+*/
+
+int __cdecl FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize)
+{
+  int result;
+  const char **fileNames;
+  int nLen;
+  int nTotal;
+  int i;
+  int fileCount;
+
+  *listbuf = 0;
+  fileCount = 0;
+  nTotal = 0;
+  if ( Q_stricmp(path, "$modlist") )
+  {
+    fileNames = FS_ListFiles(path, extension, behavior, &fileCount);
+    for ( i = 0; i < fileCount; ++i )
+    {
+      nLen = strlen(fileNames[i]) + 1;
+      if ( nTotal + nLen + 1 >= bufsize )
+      {
+        fileCount = i;
+        break;
+      }
+      strcpy(listbuf, fileNames[i]);
+      listbuf += nLen;
+      nTotal += nLen;
+    }
+    FS_FreeFileList(fileNames);
+    result = fileCount;
+  }
+  else
+  {
+    result = FS_GetModList(listbuf, bufsize);
+  }
+  return result;
+}
+
+qboolean __cdecl FS_LanguageHasAssets(int iLanguage)
+{
+  searchpath_t *pSearch;
+
+  for ( pSearch = fs_searchpaths; pSearch; pSearch = pSearch->next )
+  {
+    if ( pSearch->localized && pSearch->langIndex == iLanguage )
+    {
+      return qtrue;
+    }
+  }
+  return qfalse;
+}
+
+
+char *__cdecl FS_GetMapBaseName(const char *mapname)
+{
+  int c;
+  int len;
+  static char basename[MAX_QPATH];
+
+  assert(mapname != NULL);
+
+  if ( !Q_stricmpn(mapname, "maps/mp/", 8) )
+  {
+    mapname += 8;
+  }
+  len = strlen(mapname);
+  if(len >= sizeof(basename))
+  if ( !Q_stricmp(&mapname[len - 3], "bsp") )
+  {
+    len = len - 7;
+  }
+  memcpy(basename, (char *)mapname, len);
+  basename[len] = 0;
+  for ( c = 0; c < len; ++c )
+  {
+    if ( basename[c] == '%' )
+    {
+      basename[c] = '_';
+    }
+  }
+  return basename;
+}
+

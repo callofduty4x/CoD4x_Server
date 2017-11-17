@@ -74,6 +74,7 @@ int	Cmd_Argc( void );
 char	*Cmd_Argv( int arg );
 char	*Cmd_Args( char* buff, int bufsize );
 char	*Cmd_Argsv( int arg, char* buff, int bufsize );
+char	*SV_Cmd_Argsv( int arg, char* buff, int bufsize );
 void	Cmd_ArgvBuffer( int arg, char *buffer, int bufferLength );
 void	Cmd_CommandCompletion( void(*callback)(const char *s), const char* curstring );
 void	Cmd_CompleteArgument( const char *command, char *args, int argNum );

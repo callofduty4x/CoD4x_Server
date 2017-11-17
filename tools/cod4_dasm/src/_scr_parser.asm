@@ -1762,11 +1762,11 @@ _cstring_1:		db 0ah,0
 _cstring__script_compile_:		db "******* script compile error *******",0ah,0
 _cstring_s_:		db "%s: ",0
 _cstring_2:		db "************************************",0ah,0
-_cstring_script_compile_e:		db 15h,"script compile error",0ah,"%s",0ah,"%s",0ah,"(see console for details)",0ah,0
+_cstring_script_compile_e:		db 015h,"script compile error",0ah,"%s",0ah,"%s",0ah,"(see console for details)",0ah,0
 _cstring_s1:		db "%s",0
 _cstring_addopcodepos:		db "AddOpcodePos",0
 _cstring__script_runtime_:		db 0ah,"******* script runtime error *******",0ah,"%s: ",0
-_cstring_script_runtime_e:		db 15h,"script runtime error",0ah,"(see console for details)",0ah,"%s%s%s",0
+_cstring_script_runtime_e:		db 015h,"script runtime error",0ah,"(see console for details)",0ah,"%s%s%s",0
 _cstring_called_from:		db "called from:",0ah,0
 _cstring_started_from:		db "started from:",0ah,0
 _cstring_scr_initopcodelo:		db "Scr_InitOpcodeLookup",0

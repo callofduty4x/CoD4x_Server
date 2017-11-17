@@ -3887,7 +3887,7 @@ _cstring_attempting_i_khz:		db "Attempting %i kHz %i bit [%s] sound",0ah,0
 _cstring_error_couldnt_in:		db "ERROR: Couldn",27h,"t initialize digital driver: %s",0ah,0
 _cstring_r_vc_compile:		db "r_vc_compile",0
 _cstring_miles_sound_syst:		db "Miles sound system initialization failed",0ah,0
-_cstring_miles_sound_samp:		db 15h,"MILES sound sample allocation failed on channel %i",0ah,0
+_cstring_miles_sound_samp:		db 015h,"MILES sound sample allocation failed on channel %i",0ah,0
 _cstring_sounds:		db "sound/%s",0
 _cstring_mp3:		db ".mp3",0
 _cstring_tried_to_play_st:		db "Tried to play streamed sound ",27h,"%s",27h," from alias ",27h,"%s",27h,", but it was not found at load time.",0ah,0

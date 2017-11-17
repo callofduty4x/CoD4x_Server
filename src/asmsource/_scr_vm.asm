@@ -151,7 +151,6 @@
 	global VM_Resume
 	global VM_Execute
 	global Scr_AddInt
-	global Scr_GetInt
 	global Scr_AddAnim
 	global Scr_AddBool
 	global Scr_Cleanup
@@ -167,16 +166,13 @@
 	global Scr_AddString
 	global Scr_AddStruct
 	global Scr_AddVector
-	global Scr_GetObject
 	global Scr_GetString
 	global Scr_GetVector
 	global Scr_MakeArray
-	global Scr_NotifyNum
 	global Scr_AddIString
 	global Scr_ExecThread
 	global Scr_FreeThread
 	global Scr_GetIString
-	global Scr_InitSystem
 	global Scr_ParamError
 	global Scr_SetLoading
 	global Scr_GetNumParam
@@ -188,7 +184,6 @@
 	global Scr_GetEntityRef
 	global Scr_ResetTimeout
 	global Scr_AddExecThread
-	global Scr_TerminalError
 	global Scr_AddConstString
 	global Scr_GetConstString
 	global Scr_GetDebugString
@@ -5760,147 +5755,6 @@ Scr_AddInt_20:
 	ret
 
 
-;Scr_GetInt(unsigned int)
-Scr_GetInt:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov ecx, [ebp+0x8]
-	cmp [scrVmPub+0x1c], ecx
-	jbe Scr_GetInt_10
-	lea eax, [ecx*8]
-	mov edx, [scrVmPub+0x10]
-	sub edx, eax
-	cmp dword [edx+0x4], 0x6
-	jz Scr_GetInt_20
-	lea ebx, [ecx+0x1]
-	mov esi, scrVarPub
-	mov [esi+0x10], ebx
-	mov eax, [edx+0x4]
-	mov edx, var_typename
-	mov eax, [edx+eax*4]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_type_s_is_not_an
-	call va
-	mov edx, [esi+0xc]
-	test edx, edx
-	jz Scr_GetInt_30
-Scr_GetInt_150:
-	cmp byte [esi+0x8], 0x0
-	jnz Scr_GetInt_40
-	mov eax, scrCompilePub
-	cmp byte [eax+0x20020], 0x0
-	jnz Scr_GetInt_40
-	cmp byte [esi+0x6], 0x0
-	jnz Scr_GetInt_50
-Scr_GetInt_140:
-	mov ecx, [scrVmPub+0x8]
-	test ecx, ecx
-	jnz Scr_GetInt_60
-	cmp byte [scrVmPub+0x14], 0x0
-	jnz Scr_GetInt_60
-	mov eax, scrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-Scr_GetInt_110:
-	mov [esp+0x4], ebx
-	mov dword [esp], _cstring_parameter_d_does
-	call va
-	mov ebx, scrVarPub
-	mov edx, [ebx+0xc]
-	test edx, edx
-	jz Scr_GetInt_70
-Scr_GetInt_130:
-	cmp byte [ebx+0x8], 0x0
-	jnz Scr_GetInt_80
-	mov eax, scrCompilePub
-	cmp byte [eax+0x20020], 0x0
-	jnz Scr_GetInt_80
-	cmp byte [ebx+0x6], 0x0
-	jz Scr_GetInt_90
-	mov eax, 0x1
-	mov esi, [scrVmGlob+0x14]
-	test esi, esi
-	movzx edx, byte [scrVmPub+0x16]
-	cmovz eax, edx
-	mov [scrVmPub+0x16], al
-Scr_GetInt_90:
-	mov ebx, [scrVmPub+0x8]
-	test ebx, ebx
-	jnz Scr_GetInt_60
-	cmp byte [scrVmPub+0x14], 0x0
-	jz Scr_GetInt_100
-Scr_GetInt_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
-Scr_GetInt_20:
-	mov eax, [edx]
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-Scr_GetInt_40:
-	cmp byte [scrVmPub+0x16], 0x0
-	jz Scr_GetInt_110
-	mov eax, scrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-	jmp Scr_GetInt_110
-Scr_GetInt_80:
-	cmp byte [scrVmPub+0x16], 0x0
-	jz Scr_GetInt_120
-Scr_GetInt_100:
-	mov eax, scrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-Scr_GetInt_120:
-	xor eax, eax
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-Scr_GetInt_10:
-	lea ebx, [ecx+0x1]
-	jmp Scr_GetInt_110
-Scr_GetInt_70:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], eax
-	mov dword [esp], error_message
-	call Q_strncpyz
-	mov dword [ebx+0xc], error_message
-	jmp Scr_GetInt_130
-Scr_GetInt_50:
-	mov eax, 0x1
-	mov esi, [scrVmGlob+0x14]
-	test esi, esi
-	movzx edx, byte [scrVmPub+0x16]
-	cmovz eax, edx
-	mov [scrVmPub+0x16], al
-	jmp Scr_GetInt_140
-Scr_GetInt_30:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], eax
-	mov dword [esp], error_message
-	call Q_strncpyz
-	mov dword [esi+0xc], error_message
-	jmp Scr_GetInt_150
-	nop
-
-
 ;Scr_AddAnim(scr_anim_s)
 Scr_AddAnim:
 	push ebp
@@ -6819,146 +6673,6 @@ Scr_AddVector_20:
 	nop
 
 
-;Scr_GetObject(unsigned int)
-Scr_GetObject:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov ecx, [ebp+0x8]
-	cmp [scrVmPub+0x1c], ecx
-	jbe Scr_GetObject_10
-	lea eax, [ecx*8]
-	mov edx, [scrVmPub+0x10]
-	sub edx, eax
-	cmp dword [edx+0x4], 0x1
-	jz Scr_GetObject_20
-	lea ebx, [ecx+0x1]
-	mov esi, scrVarPub
-	mov [esi+0x10], ebx
-	mov eax, [edx+0x4]
-	mov edx, var_typename
-	mov eax, [edx+eax*4]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_type_s_is_not_an2
-	call va
-	mov ecx, [esi+0xc]
-	test ecx, ecx
-	jz Scr_GetObject_30
-Scr_GetObject_150:
-	cmp byte [esi+0x8], 0x0
-	jnz Scr_GetObject_40
-	mov eax, scrCompilePub
-	cmp byte [eax+0x20020], 0x0
-	jnz Scr_GetObject_40
-	cmp byte [esi+0x6], 0x0
-	jnz Scr_GetObject_50
-Scr_GetObject_140:
-	mov eax, [scrVmPub+0x8]
-	test eax, eax
-	jnz Scr_GetObject_60
-	cmp byte [scrVmPub+0x14], 0x0
-	jnz Scr_GetObject_60
-	mov eax, scrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-Scr_GetObject_110:
-	mov [esp+0x4], ebx
-	mov dword [esp], _cstring_parameter_d_does
-	call va
-	mov ebx, scrVarPub
-	mov esi, [ebx+0xc]
-	test esi, esi
-	jz Scr_GetObject_70
-Scr_GetObject_130:
-	cmp byte [ebx+0x8], 0x0
-	jnz Scr_GetObject_80
-	mov eax, scrCompilePub
-	cmp byte [eax+0x20020], 0x0
-	jnz Scr_GetObject_80
-	cmp byte [ebx+0x6], 0x0
-	jz Scr_GetObject_90
-	mov eax, 0x1
-	mov ebx, [scrVmGlob+0x14]
-	test ebx, ebx
-	movzx edx, byte [scrVmPub+0x16]
-	cmovz eax, edx
-	mov [scrVmPub+0x16], al
-Scr_GetObject_90:
-	mov ecx, [scrVmPub+0x8]
-	test ecx, ecx
-	jnz Scr_GetObject_60
-	cmp byte [scrVmPub+0x14], 0x0
-	jz Scr_GetObject_100
-Scr_GetObject_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
-Scr_GetObject_20:
-	mov eax, [edx]
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-Scr_GetObject_40:
-	cmp byte [scrVmPub+0x16], 0x0
-	jz Scr_GetObject_110
-	mov eax, scrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-	jmp Scr_GetObject_110
-Scr_GetObject_80:
-	cmp byte [scrVmPub+0x16], 0x0
-	jz Scr_GetObject_120
-Scr_GetObject_100:
-	mov eax, scrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-Scr_GetObject_120:
-	xor eax, eax
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-Scr_GetObject_10:
-	lea ebx, [ecx+0x1]
-	jmp Scr_GetObject_110
-Scr_GetObject_70:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], eax
-	mov dword [esp], error_message
-	call Q_strncpyz
-	mov dword [ebx+0xc], error_message
-	jmp Scr_GetObject_130
-Scr_GetObject_50:
-	mov eax, 0x1
-	mov edx, [scrVmGlob+0x14]
-	test edx, edx
-	movzx edx, byte [scrVmPub+0x16]
-	cmovz eax, edx
-	mov [scrVmPub+0x16], al
-	jmp Scr_GetObject_140
-Scr_GetObject_30:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], eax
-	mov dword [esp], error_message
-	call Q_strncpyz
-	mov dword [esi+0xc], error_message
-	jmp Scr_GetObject_150
-
-
 ;Scr_GetString(unsigned int)
 Scr_GetString:
 	push ebp
@@ -7166,84 +6880,6 @@ Scr_MakeArray_20:
 	mov edx, [scrVmPub+0x10]
 	jmp Scr_MakeArray_40
 	add [eax], al
-
-
-;Scr_NotifyNum(int, unsigned int, unsigned int, unsigned int)
-Scr_NotifyNum:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov ebx, [ebp+0x14]
-	mov edx, [scrVmPub+0x1c]
-	test edx, edx
-	jnz Scr_NotifyNum_10
-	mov edx, [scrVmPub+0x10]
-Scr_NotifyNum_60:
-	lea eax, [ebx*8]
-	mov esi, edx
-	sub esi, eax
-	mov edi, [scrVmPub+0x18]
-	sub edi, ebx
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call FindEntityId
-	test eax, eax
-	jnz Scr_NotifyNum_20
-Scr_NotifyNum_70:
-	mov edx, [scrVmPub+0x10]
-	cmp esi, edx
-	jz Scr_NotifyNum_30
-Scr_NotifyNum_40:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	cmp esi, edx
-	jnz Scr_NotifyNum_40
-Scr_NotifyNum_30:
-	mov [scrVmPub+0x18], edi
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_NotifyNum_10:
-	mov edx, [scrVmPub+0x10]
-Scr_NotifyNum_50:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_NotifyNum_50
-	jmp Scr_NotifyNum_60
-Scr_NotifyNum_20:
-	mov ebx, [esi+0x4]
-	mov dword [esi+0x4], 0x8
-	mov dword [scrVmPub+0x18], 0x0
-	mov ecx, [scrVmPub+0x10]
-	mov edx, [ebp+0x10]
-	call VM_Notify
-	mov [esi+0x4], ebx
-	jmp Scr_NotifyNum_70
-	nop
 
 
 ;Scr_AddIString(char const*)
@@ -7497,29 +7133,6 @@ Scr_GetIString_30:
 	call Q_strncpyz
 	mov dword [esi+0xc], error_message
 	jmp Scr_GetIString_150
-
-
-;Scr_InitSystem(int)
-Scr_InitSystem:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x4
-	call AllocObject
-	mov ebx, scrVarPub
-	mov [ebx+0x18], eax
-	call Scr_AllocArray
-	mov [ebx+0x1c], eax
-	call AllocObject
-	mov [ebx+0x20], eax
-	call AllocObject
-	mov [ebx+0x28], eax
-	mov dword [ebx+0x14], 0x0
-	mov dword [g_script_error_level], 0xffffffff
-	add esp, 0x4
-	pop ebx
-	pop ebp
-	ret
 
 
 ;Scr_ParamError(unsigned int, char const*)

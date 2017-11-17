@@ -3620,13 +3620,13 @@ _cstring_exe_serverkilled:		db "EXE_SERVERKILLED",0
 _cstring_cod4:		db "COD-4",0
 _cstring_exe_serverrestar:		db "EXE_SERVERRESTARTTIMEWRAP",0
 _cstring_map_s:		db "map %s",0ah,0
-_cstring_exe_serverrestar1:		db "EXE_SERVERRESTARTMISC",15h,"nextCachedSnapshotClients",0
-_cstring_exe_serverrestar2:		db "EXE_SERVERRESTARTMISC",15h,"numSnapshotEntities",0
-_cstring_exe_serverrestar3:		db "EXE_SERVERRESTARTMISC",15h,"nextCachedSnapshotEntities",0
-_cstring_exe_serverrestar4:		db "EXE_SERVERRESTARTMISC",15h,"nextArchivedSnapshotFrames",0
-_cstring_exe_serverrestar5:		db "EXE_SERVERRESTARTMISC",15h,"nextArchivedSnapshotBuffer",0
-_cstring_exe_serverrestar6:		db "EXE_SERVERRESTARTMISC",15h,"nextCachedSnapshotFrames",0
-_cstring_exe_serverrestar7:		db "EXE_SERVERRESTARTMISC",15h,"numSnapshotClients",0
+_cstring_exe_serverrestar1:		db "EXE_SERVERRESTARTMISC",015h,"nextCachedSnapshotClients",0
+_cstring_exe_serverrestar2:		db "EXE_SERVERRESTARTMISC",015h,"numSnapshotEntities",0
+_cstring_exe_serverrestar3:		db "EXE_SERVERRESTARTMISC",015h,"nextCachedSnapshotEntities",0
+_cstring_exe_serverrestar4:		db "EXE_SERVERRESTARTMISC",015h,"nextArchivedSnapshotFrames",0
+_cstring_exe_serverrestar5:		db "EXE_SERVERRESTARTMISC",015h,"nextArchivedSnapshotBuffer",0
+_cstring_exe_serverrestar6:		db "EXE_SERVERRESTARTMISC",015h,"nextCachedSnapshotFrames",0
+_cstring_exe_serverrestar7:		db "EXE_SERVERRESTARTMISC",015h,"numSnapshotClients",0
 
 
 

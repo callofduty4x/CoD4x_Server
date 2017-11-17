@@ -53,6 +53,7 @@
 #include "dobj.h"
 #include "xassets/extractor.h"
 #include "sec_update.h"
+#include "bg_public.h"
 
 #include <string.h>
 #include <setjmp.h>
@@ -86,6 +87,7 @@ qboolean com_securemode;
 char com_errorMessage[MAXPRINTMSG];
 qboolean com_errorEntered;
 qboolean com_fullyInitialized = qfalse;
+qboolean com_missingAssetOpenFailed;
 
 void Com_WriteConfig_f( void );
 void Com_WriteConfiguration( void );
@@ -635,103 +637,6 @@ static void Com_InitCvars( void ){
 }
 
 
-void Com_CopyCvars()
-{
-    *(cvar_t**)0x88a6170 = useFastFile;
-    *(cvar_t**)0x88a6184 = com_developer;
-    *(cvar_t**)0x88a6188 = com_developer_script;
-    *(cvar_t**)0x88a61b0 = com_logfile;
-    *(cvar_t**)0x88a61a8 = com_sv_running;
-
-}
-
-void Com_PatchError()
-{
-	*(char**)0x8121C28 = com_errorMessage;
-	*(char**)0x81225C5 = com_errorMessage;
-	*(char**)0x812262C = com_errorMessage;
-	*(char**)0x812265A = com_errorMessage;
-	*(char**)0x8123CFB = com_errorMessage;
-	*(char**)0x8123D45 = com_errorMessage;
-	*(char**)0x8123DAB = com_errorMessage;
-	*(char**)0x8123E40 = com_errorMessage;
-	*(char**)0x8123EBA = com_errorMessage;
-	*(char**)0x8123F1E = com_errorMessage;
-	*(char**)0x81240A3 = com_errorMessage;
-}
-
-
-void Com_InitGamefunctions()
-{
-    int msec = 0;
-
-    FS_CopyCvars();
-    Com_CopyCvars();
-    SV_CopyCvars();
-//    XAssets_PatchLimits();  //Patch several asset-limits to higher values
-    SL_Init();
-    Swap_Init();
-
-    CSS_InitConstantConfigStrings();
-
-    if(useFastFile->boolean){
-
-        PMem_Init();
-
-        DB_SetInitializing( qtrue );
-
-        Com_Printf(CON_CHANNEL_SYSTEM,"begin $init\n");
-
-        msec = Sys_Milliseconds();
-
-        PMem_BeginAlloc("$init", qtrue);
-    }
-//    Con_InitChannels();
-
-    if(!useFastFile->boolean) SEH_UpdateLanguageInfo();
-
-    Com_InitHunkMemory();
-
-    Hunk_InitDebugMemory();
-
-    Scr_InitVariables();
-
-    Scr_Init(); //VM_Init
-
-    Scr_Settings(com_logfile->integer || com_developer->integer ,com_developer_script->integer, com_developer->integer);
-
-    XAnimInit();
-
-    DObjInit();
-
-    PMem_EndAlloc("$init", qtrue);
-    DB_SetInitializing( qfalse );
-    Com_Printf(CON_CHANNEL_SYSTEM,"end $init %d ms\n", Sys_Milliseconds() - msec);
-
-    SV_Cmd_Init();
-    SV_AddOperatorCommands();
-    SV_RemoteCmdInit();
-
-    cvar_t **msg_dumpEnts = (cvar_t**)(0x8930c1c);
-    cvar_t **msg_printEntityNums = (cvar_t**)(0x8930c18);
-    *msg_dumpEnts = Cvar_RegisterBool( "msg_dumpEnts", qfalse, CVAR_TEMP, "Print snapshot entity info");
-    *msg_printEntityNums = Cvar_RegisterBool( "msg_printEntityNums", qfalse, CVAR_TEMP, "Print entity numbers");
-
-    if(useFastFile->boolean)
-        R_Init();
-
-    Com_InitParse();
-
-#ifdef PUNKBUSTER
-    Com_AddRedirect(PbCaptureConsoleOutput_wrapper);
-    if(!PbServerInitialize()){
-        Com_Printf(CON_CHANNEL_SYSTEM,"Unable to initialize PunkBuster.  PunkBuster is disabled.\n");
-    }
-#endif
-
-}
-
-
 /*
 =================
 Com_Init
@@ -892,7 +797,70 @@ void Com_Init(char* commandLine){
 
     AddRedirectLocations( );
 
-    Com_InitGamefunctions();
+
+    int msec = 0;
+
+    SV_CopyCvars();
+//    XAssets_PatchLimits();  //Patch several asset-limits to higher values
+    SL_Init();
+    Swap_Init();
+
+    CCS_InitConstantConfigStrings();
+
+    if(useFastFile->boolean){
+
+        PMem_Init();
+
+        DB_SetInitializing( qtrue );
+
+        Com_Printf(CON_CHANNEL_SYSTEM,"begin $init\n");
+
+        msec = Sys_Milliseconds();
+
+        PMem_BeginAlloc("$init", qtrue);
+    }
+//    Con_InitChannels();
+
+    if(!useFastFile->boolean) SEH_UpdateLanguageInfo();
+
+    Com_InitHunkMemory();
+
+    Hunk_InitDebugMemory();
+
+    Scr_InitVariables();
+
+    Scr_Init(); //VM_Init
+
+    Scr_Settings(com_logfile->integer || com_developer->integer ,com_developer_script->integer, com_developer->integer);
+
+    XAnimInit();
+
+    DObjInit();
+
+    PMem_EndAlloc("$init", qtrue);
+    DB_SetInitializing( qfalse );
+    Com_Printf(CON_CHANNEL_SYSTEM,"end $init %d ms\n", Sys_Milliseconds() - msec);
+
+    SV_RemoteCmdInit();
+
+    cvar_t **msg_dumpEnts = (cvar_t**)(0x8930c1c);
+    cvar_t **msg_printEntityNums = (cvar_t**)(0x8930c18);
+    *msg_dumpEnts = Cvar_RegisterBool( "msg_dumpEnts", qfalse, CVAR_TEMP, "Print snapshot entity info");
+    *msg_printEntityNums = Cvar_RegisterBool( "msg_printEntityNums", qfalse, CVAR_TEMP, "Print entity numbers");
+
+    if(useFastFile->boolean)
+        R_Init();
+
+    Com_InitParse();
+
+#ifdef PUNKBUSTER
+    Com_AddRedirect(PbCaptureConsoleOutput_wrapper);
+    if(!PbServerInitialize()){
+        Com_Printf(CON_CHANNEL_SYSTEM,"Unable to initialize PunkBuster.  PunkBuster is disabled.\n");
+    }
+#endif
+
+
 
     com_fullyInitialized = qtrue;
 
@@ -1492,3 +1460,106 @@ void __cdecl Com_ErrorAbort()
 {
   Sys_Error("%s", &com_errorMessage);
 }
+
+
+void __cdecl Com_SetScriptSettings()
+{
+  int abort_on_error;
+  int deven;
+
+  deven = com_developer->integer || com_logfile->integer;
+  abort_on_error = com_developer->integer;
+  Scr_Settings(deven, com_developer_script->boolean, abort_on_error);
+//  Scr_Settings(deven, com_developer_script->current.enabled, abort_on_error, SCRIPTINSTANCE_CLIENT);
+}
+
+void __cdecl Com_Restart()
+{
+  XZoneInfo zoneInfo[1];
+
+//  com_codeTimeScale = 1.0;
+  CL_ShutdownHunkUsers();
+  SV_ShutdownGameProgs();
+  Com_ShutdownDObj();
+  DObjShutdown();
+  XAnimShutdown();
+  Com_ShutdownWorld();
+  CM_Shutdown();
+  SND_ShutdownChannels();
+  Hunk_Clear();
+  Hunk_ResetDebugMem();
+  if ( useFastFile->boolean )
+  {
+    DB_ReleaseXAssets();
+  }
+  Com_SetScriptSettings();
+  com_fixedConsolePosition = 0;
+  XAnimInit();
+  DObjInit();
+  Com_InitDObj();
+}
+
+void Com_Close()
+{
+  Com_ShutdownDObj();
+  DObjShutdown();
+  XAnimShutdown();
+  Com_ShutdownWorld();
+  CM_Shutdown();
+  SND_ShutdownChannels();
+  Hunk_Clear();
+  if ( useFastFile->boolean )
+  {
+    DB_ShutdownXAssets();
+  }
+  Scr_Shutdown( );
+  Hunk_ShutdownDebugMemory();
+}
+
+int weaponInfoSource;
+
+void __cdecl Com_SetWeaponInfoMemory(int source)
+{
+  weaponInfoSource = source;
+}
+
+void __cdecl Com_FreeWeaponInfoMemory(int source)
+{
+  if ( source == weaponInfoSource )
+  {
+    weaponInfoSource = 0;
+    BG_ShutdownWeaponDefFiles();
+  }
+}
+
+const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, int type)
+{
+  const char *result;
+
+  if ( !*clanAbbrev )
+  {
+    type &= 0xFFFFFFFD;
+  }
+  switch ( type )
+  {
+    case 3:
+      result = va("[%s]%s", clanAbbrev, name);
+      break;
+    case 1:
+      result = name;
+      break;
+    case 2:
+      result = va("[%s]", clanAbbrev);
+      break;
+    default:
+      result = "";
+      break;
+  }
+  return result;
+}
+
+const char *__cdecl CS_DisplayName(clientState_t *cs, int type)
+{
+  return Com_DisplayName(cs->netname, /*cs->clanAbbrev*/ "", type);
+}
+

@@ -8941,13 +8941,13 @@ _cstring_attempting_to_ch:		db "Attempting to change type from %d to %d.",0ah,"M
 _cstring_loadmenu:		db "loadmenu",0
 _cstring_3warning_menu_fi:		db "^3WARNING: menu file not found: %s",0ah,0
 _cstring_uidefaultmenu:		db "ui/default.menu",0
-_cstring_defaultmenu_file:		db 15h,"default.menu file not found. This is a default menu that you should have.",0ah,0
-_cstring_1menu_file_too_l:		db 15h,"^1menu file too large: %s is %i, max allowed is %i",0
+_cstring_defaultmenu_file:		db 015h,"default.menu file not found. This is a default menu that you should have.",0ah,0
+_cstring_1menu_file_too_l:		db 015h,"^1menu file too large: %s is %i, max allowed is %i",0
 _cstring_warning_menu_fil:		db "WARNING: menu file not found: %s",0ah,0
 _cstring_pc:		db "PC",0
 _cstring_loading_s:		db 09h,"Loading ",27h,"%s",27h,"...",0ah,0
 _cstring_couldnt_find_men:		db "Couldn",27h,"t find menu file ",27h,"%s",27h,0ah,0
-_cstring_menu_new_exe_err:		db 15h,"Menu_New: ",14h,"EXE_ERR_OUT_OF_MEMORY",0
+_cstring_menu_new_exe_err:		db 015h,"Menu_New: ",014h,"EXE_ERR_OUT_OF_MEMORY",0
 _cstring_assetglobaldef:		db "assetGlobalDef",0
 _cstring_menudef:		db "menudef",0
 _cstring_unknown_token_s_:		db "Unknown token %s in menu file.  Expected ",22h,"menudef",22h," or ",22h,"assetglobaldef",22h,".",0ah,0

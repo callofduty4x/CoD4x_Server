@@ -313,7 +313,8 @@ typedef struct usercmd_s
     char rightmove;   /* Must be char, not byte */
     float meleeChargeYaw;
     byte meleeChargeDist;
-    byte pad[3];
+    byte selectedLocation[2];
+    byte pad;
 } usercmd_t;
 
 // client data that stays across multiple respawns, but is cleared
@@ -321,13 +322,13 @@ typedef struct usercmd_s
 typedef struct {
 
     enum
-	{	STATE_PLAYING, STATE_DEAD,
-		STATE_SPECTATOR, STATE_INTERMISSION
+	{	SESS_STATE_PLAYING, SESS_STATE_DEAD,
+		SESS_STATE_SPECTATOR, SESS_STATE_INTERMISSION
 	}sessionState;//0x2f64
 
 	int forceSpectatorClient;
-	int unk2;
-	int unk3; // These 2 are between int status_icon;
+	int killCamEntity;      //unk2
+	int killCamTargetEntity; //unk3 These 2 are between int status_icon;
 	int archiveTime;			//0x2f74
 
 

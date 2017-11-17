@@ -42,6 +42,18 @@
 #define MAX_SPAWN_VARS 64
 #define MAX_SPAWN_VARS_CHARS 2048
 
+/*enum sessionState_t{
+SESS_STATE_PLAYING = 0,
+SESS_STATE_DEAD = 1,
+SESS_STATE_SPECTATOR = 2,
+SESS_STATE_INTERMISSION = 3
+};*/
+
+#define SAY_ALL 0
+#define SAY_TEAM 1
+#define SAY_TELL 2
+
+
 typedef struct
 {
     const char *key;
@@ -206,6 +218,9 @@ typedef struct
 #define CS_VOTE_STRING 14
 #define CS_VOTE_YES 15
 #define CS_VOTE_NO 16
+
+#define POF_PLAYER 4
+
 /*
 #define CS_GAME_VERSION         12
 #define CS_LEVEL_START_TIME     13      // so the timer only shows the current level
@@ -353,6 +368,29 @@ static const char *g_HitLocNames[] =
 };
 
 */
+enum hitLocation_t
+{
+  HITLOC_NONE = 0x0,
+  HITLOC_HELMET = 0x1,
+  HITLOC_HEAD = 0x2,
+  HITLOC_NECK = 0x3,
+  HITLOC_TORSO_UPR = 0x4,
+  HITLOC_TORSO_LWR = 0x5,
+  HITLOC_R_ARM_UPR = 0x6,
+  HITLOC_L_ARM_UPR = 0x7,
+  HITLOC_R_ARM_LWR = 0x8,
+  HITLOC_L_ARM_LWR = 0x9,
+  HITLOC_R_HAND = 0xA,
+  HITLOC_L_HAND = 0xB,
+  HITLOC_R_LEG_UPR = 0xC,
+  HITLOC_L_LEG_UPR = 0xD,
+  HITLOC_R_LEG_LWR = 0xE,
+  HITLOC_L_LEG_LWR = 0xF,
+  HITLOC_R_FOOT = 0x10,
+  HITLOC_L_FOOT = 0x11,
+  HITLOC_GUN = 0x12,
+  HITLOC_NUM = 0x13,
+};
 
 /*
 // --- COD4: raw\maps\mp\gametypes\_hud.gsc --- //
@@ -448,6 +486,8 @@ extern cvar_t *jump_height;
 extern cvar_t *jump_stepSize;
 extern cvar_t *jump_slowdownEnable;
 extern cvar_t *g_antilag;
+extern cvar_t *g_cheats;
+extern cvar_t *g_oldVoting;
 
 extern qboolean onExitLevelExecuted;
 
@@ -456,7 +496,7 @@ int G_GetSavePersist(void);
 void G_SetSavePersist(int val);
 
 int G_GetClientSize();
-gclient_t *G_GetPlayerState(int num);
+playerState_t *G_GetPlayerState(int num);
 clientState_t *G_GetClientState(int num);
 void SpawnVehicle(gentity_t *ent, const char *vehtype);
 void __cdecl G_VehSpawner(gentity_t *ent);
@@ -464,7 +504,20 @@ void __cdecl G_VehCollmapSpawner(gentity_t *ent);
 void __cdecl G_SetModel(gentity_t *ent, const char *modelname);
 /* void ClientSetUsername(int clientNum, const char *username); */
 void __cdecl G_DObjCalcPose(gentity_t *ent, int *partBits);
-
+void __cdecl player_die(struct gentity_s *self, struct gentity_s *inflictor, struct gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, enum hitLocation_t hitLoc, int psTimeOffset);
+void SendScoreboard(struct gentity_s*);
+void __cdecl G_PrintEntities();
+void __cdecl TeleportPlayer(struct gentity_s *player, float *origin, float *angles);
+void __cdecl Cmd_Give_f(struct gentity_s *ent);
+void __cdecl Cmd_Take_f(struct gentity_s *ent);
+const char *__cdecl G_GetEntityTypeName(gentity_t *ent);
+int __cdecl G_ClientCanSpectateTeam(gclient_t *client, team_t team);
+int __cdecl G_ClientCanSpectateTeamOrLocalPlayer(gclient_t *client, clientState_t *cs);
+void __cdecl G_GetPlayerViewOrigin(playerState_t *ps, float *origin);
+void __cdecl BG_GetPlayerViewDirection(playerState_t *ps, float *forward, float *right, float *up);
+void __cdecl G_SetOrigin(gentity_t *ent, const float *origin);
+void __cdecl SetClientViewAngle(gentity_t *ent, const float *angle);
+qboolean GetFollowPlayerState(int clientNum, playerState_t *ps);
 //This defines Cvars directly related to executable file
 #ifndef getcvaradr
 #define getcvaradr(adr) ((cvar_t *)(*(int *)(adr)))

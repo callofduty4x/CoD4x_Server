@@ -420,13 +420,6 @@ static int SV_RateMsec( client_t *client, int messageSize ) {
 }
 
 
-int irand()
-{
-
-    return svs.time ^ rand();
-
-}
-
 void SV_TrackHuffmanCompression(int compsize, int uncompsize)
 {
     static int totaluncompbytes = 0;
@@ -495,16 +488,8 @@ __cdecl void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 	// added sv_lanForceRate check
 
 	if(client->state == CS_ACTIVE && client->deltaMessage >= 0 && client->netchan.outgoingSequence - client->deltaMessage > 28){
-
-		client->nextSnapshotTime = svs.time + client->snapshotMsec * irand();
-
-		if(client->unknown6 +1 > 8)
-		{
-			client->unknown6 = 8;
-		}
+		client->nextSnapshotTime = svs.time + 3000 + client->snapshotMsec;
 	}
-
-	client->unknown6 = 0;
 
 	if ( client->netchan.remoteAddress.type == NA_LOOPBACK || Sys_IsLANAddress( &client->netchan.remoteAddress )) {
 		client->nextSnapshotTime = svs.time - 1;
@@ -879,7 +864,8 @@ static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
 
   for( ; snapTime < svs.nextArchivedSnapshotFrames; ++snapTime)
   {
-	cachedSnap = SV_GetCachedSnapshotInternal(snapTime);
+    cachedSnap = SV_GetCachedSnapshotInternal(snapTime, 0, 1);
+
     if ( cachedSnap )
 	{
       return cachedSnap;
@@ -1421,3 +1407,812 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
 }
 
 
+
+
+
+clientState_t * G_GetClientStateLocal(int clientNum)
+{
+  //assert(svsHeaderValid);
+
+  return (clientState_t *)((byte*)svsHeader.firstClientState + clientNum * svsHeader.clientSize);
+}
+
+int GetFollowPlayerStateLocal(int clientNum, playerState_t *ps)
+{
+  unsigned int index;
+
+  assert(svsHeaderValid);
+
+  if ( *(int *)((char *)&svsHeader.firstPlayerState->otherFlags + clientNum * svsHeader.clientSize) & 4 )
+  {
+    memcpy(ps, svsHeader.firstPlayerState + clientNum * svsHeader.clientSize, sizeof(*ps));
+    for ( index = 0; index < 0x1F && ps->hud.current[index].type; ++index )
+    {
+      memset(&ps->hud.current[index], 0, sizeof(ps->hud.current[0]));
+      assert(ps->hud.current[index].type == HE_TYPE_FREE);
+    }
+/*
+    while ( index < 0x1F )
+    {
+      assert(!memcmp( &ps->hud.current[index], &g_dummyHudCurrent, sizeof( g_dummyHudCurrent ) ));
+      ++index;
+    }
+*/
+    return 1;
+  }
+  memset(ps, 0, sizeof(*ps));
+  return 0;
+}
+
+gentity_t *__cdecl SV_GentityNumLocal(int num)
+{
+    assert(svsHeaderValid);
+    return (gentity_t *)((char *)svsHeader.gentities + num * svsHeader.gentitySize);
+}
+
+
+
+void SV_ArchiveSnapshot(msg_t *msg)
+{
+//  struct MatchState *matchState; 
+  clientState_t *cs2;
+  clientState_t *cs3; 
+  clientState_t *lcs;
+  cachedClient_t *cachedClient2;
+  int e;
+  client_t *client;
+  int clientNum;
+  snapshotInfo_t snapInfo = { 0 };
+  archivedEntity_t *archEnt;
+  int j;
+  int x;
+  cachedSnapshot_t *cachedSnap;
+  gentity_t *gent;
+  int n;
+  int lastEntityNum;
+  archivedEntity_t to;
+  int i;
+  playerState_t ps;
+//  struct MatchState *from;
+  archivedEntity_t *baseline;
+  cachedSnapshot_t *cachedFrame;
+  cachedClient_t *cachedCl;
+
+//  assert(svsHeaderValid);
+  assert(svsHeader.cachedSnapshotEntities);
+  assert(svsHeader.cachedSnapshotClients);
+  assert(svsHeader.archivedSnapshotBuffer);
+  assert(svsHeader.cachedSnapshotFrames);
+
+//  assert(Sys_IsServerThread() || !sv.smp);
+
+  n = svsHeader.nextCachedSnapshotFrames - 512;
+  if ( svsHeader.nextCachedSnapshotFrames - 512 < 0 )
+  {
+    n = 0;
+  }
+  svsHeader.archivedEntityCount = 0;
+  for ( i = svsHeader.nextCachedSnapshotFrames - 1; i >= n; --i )
+  {
+    cachedFrame = &svsHeader.cachedSnapshotFrames[i % 512];
+    if ( cachedFrame->archivedFrame >= svsHeader.nextArchivedSnapshotFrames - svsHeader.fps && !cachedFrame->usesDelta )
+    {
+      if ( cachedFrame->first_entity >= svsHeader.nextCachedSnapshotEntities - svsHeader.numCachedSnapshotEntities
+        && cachedFrame->first_client >= svsHeader.nextCachedSnapshotClients - svsHeader.numCachedSnapshotClients )
+      {
+        MSG_WriteBit0(msg);
+        MSG_WriteLong(msg, cachedFrame->archivedFrame);
+        MSG_WriteLong(msg, svsHeader.time);
+//        MSG_WriteLong(msg, svsHeader.physicsTime);
+        MSG_ClearLastReferencedEntity(msg);
+/*
+        from = &svsHeader.cachedSnapshotMatchStates[cachedFrame->matchState % svsHeader.numCachedSnapshotMatchStates];
+        matchState = G_GetMatchStateLocal();
+        MSG_WriteDeltaMatchState(&snapInfo, msg, svsHeader.time, from, matchState);
+	MSG_ClearLastReferencedEntity(msg);
+	*/
+        cachedCl = 0;
+        clientNum = 0;
+        j = 0;
+        //PIXBeginNamedEvent(3158271, "clients");
+        while ( clientNum < svsHeader.maxclients || j < cachedFrame->num_clients )
+        {
+          if ( clientNum >= svsHeader.maxclients || svsHeader.clients[clientNum].state >= CS_PRIMED )
+          {
+            if ( j < cachedFrame->num_clients )
+            {
+              cachedClient2 = &svsHeader.cachedSnapshotClients[(j + cachedFrame->first_client)
+                                                             % svsHeader.numCachedSnapshotClients];
+              x = cachedClient2->cs.clientIndex;
+            }
+            else
+            {
+              cachedClient2 = 0;
+              x = 9999;
+            }
+            snapInfo.clnum = clientNum;
+            if ( clientNum == x )
+            {
+	      assert(cachedClient2);
+
+              cs2 = G_GetClientStateLocal(clientNum);
+              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, &cachedClient2->cs, cs2, 1);
+              if ( GetFollowPlayerStateLocal(clientNum, &ps) )
+              {
+                MSG_WriteBit1(msg);
+                if ( cachedClient2->playerStateExists )
+                {
+                  MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, &cachedClient2->ps, &ps);
+                }
+                else
+                {
+                  MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, 0, &ps);
+                }
+              }
+              else
+              {
+                MSG_WriteBit0(msg);
+              }
+              ++j;
+              ++clientNum;
+            }
+            else if ( clientNum >= x )
+            {
+              if ( clientNum > x )
+              {
+                ++j;
+              }
+            }
+            else
+            {
+              cs3 = G_GetClientStateLocal(clientNum);
+              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, 0, cs3, 1);
+              if ( GetFollowPlayerStateLocal(clientNum, &ps) )
+              {
+                MSG_WriteBit1(msg);
+                MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, 0, &ps);
+              }
+              else
+              {
+                MSG_WriteBit0(msg);
+              }
+              ++clientNum;
+            }
+          }
+          else
+          {
+            ++clientNum;
+          }
+        }
+/*
+        if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
+        {
+          D3DPERF_EndEvent();
+        }
+*/
+	MSG_WriteBit0(msg);
+        MSG_ClearLastReferencedEntity(msg);
+        lastEntityNum = -1;
+        //PIXBeginNamedEvent(3158271, "entities");
+        for ( e = 0; e < svsHeader.num_entities; ++e )
+        {
+          gent = SV_GentityNumLocal(e);
+          if ( gent->r.linked )
+          {
+            assertx ( gent->s.number == e, "entnum: %d vs %d, eType: %d, origin: %f %f %f", gent->s.number, e, gent->s.eType, gent->r.currentOrigin[0], gent->r.currentOrigin[1], gent->r.currentOrigin[2]);
+
+	    if ( gent->r.broadcastTime /*|| gent->s.clientLinkInfo.flags & 1*/
+		 || ( !(gent->r.svFlags & 1) &&
+	    (gent->r.svFlags & 0x18 || svsHeader.svEntities[gent->s.number].numClusters))
+	    /* && !(gent->r.svFlags & 0x80)*/
+	    )
+            {
+              baseline = &svsHeader.svEntities[gent->s.number].baseline;
+              assert( baseline );
+              memcpy(&to.s, &gent->s, sizeof(entityState_t));
+              to.r.svFlags = gent->r.svFlags;
+              if ( gent->r.broadcastTime )
+              {
+                to.r.svFlags |= 8u;
+              }
+	      to.r.clientMask[0] = gent->r.clientMask[0];
+	      VectorCopy(gent->r.absmin, to.r.absmin);
+	      VectorCopy(gent->r.absmax, to.r.absmax);
+
+	      assertx(lastEntityNum != gent->s.number, "lastEntityNum is %i, cur entnum is %i", lastEntityNum, gent->s.number);
+
+              snapInfo.fromBaseline = 1;
+              if ( MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, &to, 0) )
+              {
+                ++svsHeader.archivedEntityCount;
+              }
+              snapInfo.fromBaseline = 0;
+              lastEntityNum = gent->s.number;
+            }
+          }
+	}
+	/*
+        if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
+        {
+          D3DPERF_EndEvent();
+	}
+	*/
+        goto skipDelta;
+      }
+      break;
+    }
+  }
+  //PIXBeginNamedEvent(3158271, "write delta");
+  MSG_WriteBit1(msg);
+  MSG_WriteLong(msg, svsHeader.time);
+//  MSG_WriteLong(msg, svsHeader.physicsTime);
+  MSG_ClearLastReferencedEntity(msg);
+  cachedSnap = &svsHeader.cachedSnapshotFrames[svsHeader.nextCachedSnapshotFrames % 512];
+  svsHeader.cachedSnapshotFrames[svsHeader.nextCachedSnapshotFrames % 512].archivedFrame = svsHeader.nextArchivedSnapshotFrames;
+//  cachedSnap->matchState = svsHeader.nextCachedSnapshotMatchStates;
+  cachedSnap->num_entities = 0;
+  cachedSnap->first_entity = svsHeader.nextCachedSnapshotEntities;
+  cachedSnap->num_clients = 0;
+  cachedSnap->first_client = svsHeader.nextCachedSnapshotClients;
+  cachedSnap->usesDelta = 0;
+  cachedSnap->time = svsHeader.time;
+  //cachedSnap->physicsTime = svsHeader.physicsTime;
+  MSG_ClearLastReferencedEntity(msg);
+/*
+  matchState = &svsHeader.cachedSnapshotMatchStates[svsHeader.nextCachedSnapshotMatchStates
+                                                  % svsHeader.numCachedSnapshotMatchStates];
+  memcpy(matchState, G_GetMatchStateLocal(), sizeof(MatchState));
+  MSG_WriteDeltaMatchState(v1, &snapInfo, msg, svsHeader.time, 0, matchState);
+  if ( ++svsHeader.nextCachedSnapshotMatchStates >= 0x7FFFFFFE )
+  {
+    Com_Error(ERR_FATAL, "svsHeader.nextCachedSnapshotMatchStates wrapped");
+  }
+  MSG_ClearLastReferencedEntity(msg);
+*/  
+  for ( i = 0, client = svsHeader.clients; i < svsHeader.maxclients; ++i, ++client)
+  {
+    if ( client->state >= CS_PRIMED )
+    {
+      cachedCl = &svsHeader.cachedSnapshotClients[svsHeader.nextCachedSnapshotClients
+                                                % svsHeader.numCachedSnapshotClients];
+      lcs = G_GetClientStateLocal(i);
+      memcpy(&cachedCl->cs, lcs, sizeof(cachedCl->cs));
+      MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, 0, &cachedCl->cs, 1);
+      cachedCl->playerStateExists = GetFollowPlayerStateLocal(i, &cachedCl->ps);
+      if ( cachedCl->playerStateExists )
+      {
+        MSG_WriteBit1(msg);
+        MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, 0, &cachedCl->ps);
+      }
+      else
+      {
+        MSG_WriteBit0(msg);
+      }
+      if ( ++svsHeader.nextCachedSnapshotClients >= 0x7FFFFFFE )
+      {
+        Com_Error(ERR_FATAL, "svsHeader.nextCachedSnapshotClients wrapped");
+      }
+      ++cachedSnap->num_clients;
+    }
+  }
+  MSG_WriteBit0(msg);
+  MSG_ClearLastReferencedEntity(msg);
+  for ( e = 0; e < svsHeader.num_entities; ++e )
+  {
+    gent = SV_GentityNumLocal(e);
+    if ( gent->r.linked )
+    {
+      assertx ( gent->s.number == e, "entnum: %d vs %d, eType: %d, origin: %f %f %f", gent->s.number, e, gent->s.eType, gent->r.currentOrigin[0], gent->r.currentOrigin[1], gent->r.currentOrigin[2] );
+
+      if ( gent->r.broadcastTime
+	/* || gent->s.clientLinkInfo.flags & 1*/
+	|| (!(gent->r.svFlags & 1)
+        && (gent->r.svFlags & 0x18 || svsHeader.svEntities[gent->s.number].numClusters))
+        /*&& !(gent->r.svFlags & 0x80)*/ )
+      {
+	baseline = &svsHeader.svEntities[gent->s.number].baseline;
+	
+	assert(baseline);
+
+        archEnt = &svsHeader.cachedSnapshotEntities[svsHeader.nextCachedSnapshotEntities % svsHeader.numCachedSnapshotEntities];
+        memcpy(&svsHeader.cachedSnapshotEntities[svsHeader.nextCachedSnapshotEntities % svsHeader.numCachedSnapshotEntities],
+          gent, sizeof(svsHeader.cachedSnapshotEntities[0]));
+        archEnt->r.svFlags = gent->r.svFlags;
+        if ( gent->r.broadcastTime )
+        {
+          archEnt->r.svFlags |= 8u;
+        }
+        archEnt->r.clientMask[0] = gent->r.clientMask[0];
+
+	VectorCopy(gent->r.absmax, archEnt->r.absmax);
+	VectorCopy(gent->r.absmin, archEnt->r.absmin);
+	
+        snapInfo.fromBaseline = 1;
+        MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, archEnt, 0);
+        ++svsHeader.archivedEntityCount;
+        snapInfo.fromBaseline = 0;
+        if ( ++svsHeader.nextCachedSnapshotEntities >= 0x7FFFFFFE )
+        {
+          Com_Error(ERR_FATAL, "svsHeader.nextCachedSnapshotEntities wrapped");
+        }
+        ++cachedSnap->num_entities;
+      }
+    }
+  }
+  if ( ++svsHeader.nextCachedSnapshotFrames >= 0x7FFFFFFE )
+  {
+    Com_Error(ERR_FATAL, "svsHeader.nextCachedSnapshotFrames wrapped");
+  }
+/*
+  if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
+  {
+    D3DPERF_EndEvent();
+  }
+*/
+skipDelta:
+  MSG_WriteEntityIndex(&snapInfo, msg, 1023, 10);
+}
+
+bool SV_FrameIsStillInArchivedSnapshotBuffer(const int frameStart)
+{
+  int bufferStart;
+
+  assert(frameStart >= 0);
+  bufferStart = svs.nextArchivedSnapshotBuffer - 0x1000000;
+  if ( svs.nextArchivedSnapshotBuffer - 0x1000000 >= 0 )
+  {
+    return frameStart >= bufferStart && frameStart < svs.nextArchivedSnapshotBuffer;
+  }
+  if ( frameStart >= svs.nextArchivedSnapshotBuffer )
+  {
+    return frameStart >= bufferStart + 0x28000000;
+  }
+  return true;
+}
+
+
+cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, bool expectedToSucceed)
+{
+  int startIndex;
+  archivedSnapshot_t *frame;
+  signed int oldArchivedFrame;
+  int newnum;
+  int oldindex;
+  signed int oldnum;
+  msg_t msg;
+  cachedSnapshot_t *cachedFrame;
+  cachedClient_t *oldCachedClient;
+  int partSize;
+  int firstCachedSnapshotFrame;
+  int i;
+  cachedSnapshot_t *oldCachedFrame;
+  cachedClient_t *cachedClient;
+
+  frame = &svs.archivedSnapshotFrames[archivedFrame % 1200];
+  assertx(frame->size, "(archivedFrame) = %i", archivedFrame);
+
+  if ( !SV_FrameIsStillInArchivedSnapshotBuffer(frame->start) )
+  {
+    if ( expectedToSucceed )
+    {
+      Com_Printf(CON_CHANNEL_SERVER, "Failed to get archived snapshot for archived frame %i - frame->start is too old - %i < %i - %i\n",
+        archivedFrame, frame->start, svs.nextArchivedSnapshotBuffer, 0x1000000);
+    }
+    return 0;
+  }
+  firstCachedSnapshotFrame = svs.nextCachedSnapshotFrames - 512;
+  if ( svs.nextCachedSnapshotFrames - 512 < 0 )
+  {
+    firstCachedSnapshotFrame = 0;
+  }
+  for ( i = svs.nextCachedSnapshotFrames - 1; i >= firstCachedSnapshotFrame; --i )
+  {
+    cachedFrame = &svs.cachedSnapshotFrames[i % 512];
+    if ( cachedFrame->archivedFrame == archivedFrame )
+    {
+      assertx(cachedFrame->first_entity >= 0, "(cachedFrame->first_entity) = %i", cachedFrame->first_entity);
+
+      if (/* cachedFrame->matchState > depth + svs.nextCachedSnapshotMatchStates - svs.numCachedSnapshotMatchStates
+	&& */
+	cachedFrame->first_entity > 160 * depth + svs.nextCachedSnapshotEntities - svs.numCachedSnapshotEntities
+        && cachedFrame->first_client > 32 * depth + svs.nextCachedSnapshotClients - svs.numCachedSnapshotClients )
+      {
+        return cachedFrame;
+      }
+      break;
+    }
+  }
+  startIndex = frame->start % 0x1000000;
+  partSize = 0x1000000 - startIndex;
+  if ( frame->size > 0x1000000 - startIndex )
+  {
+    MSG_InitReadOnlySplit( &msg, &svs.archivedSnapshotBuffer[startIndex], partSize, svs.archivedSnapshotBuffer, frame->size - partSize);
+  }
+  else
+  {
+    MSG_InitReadOnly(&msg, &svs.archivedSnapshotBuffer[startIndex], frame->size);
+  }
+  MSG_BeginReading(&msg);
+  if ( MSG_ReadBit(&msg) )
+  {
+    assert ( !msg.overflowed );
+    
+    cachedFrame = &svs.cachedSnapshotFrames[svs.nextCachedSnapshotFrames % 512];
+    cachedFrame->archivedFrame = archivedFrame;
+ //   cachedFrame->matchState = svs.nextCachedSnapshotMatchStates;
+    cachedFrame->num_entities = 0;
+    cachedFrame->first_entity = svs.nextCachedSnapshotEntities;
+    cachedFrame->num_clients = 0;
+    cachedFrame->first_client = svs.nextCachedSnapshotClients;
+    cachedFrame->usesDelta = 0;
+    cachedFrame->time = MSG_ReadLong(&msg);
+//    cachedFrame->physicsTime = MSG_ReadLong(&msg);
+    
+    MSG_ClearLastReferencedEntity(&msg);
+/*
+    MSG_ReadDeltaMatchState(&msg, cachedFrame->time, 0, &svs.cachedSnapshotMatchStates[svs.nextCachedSnapshotMatchStates % svs.numCachedSnapshotMatchStates]);
+    
+    ++svs.nextCachedSnapshotMatchStates;
+    
+    MSG_ClearLastReferencedEntity(&msg);
+*/
+    while ( MSG_ReadBit(&msg) )
+    {
+      newnum = MSG_ReadEntityIndex(&msg, 5);
+      if ( msg.overflowed )
+      {
+        Com_Error(ERR_DROP, "SV_GetCachedSnapshot: end of message");
+      }
+      cachedClient = &svs.cachedSnapshotClients[svs.nextCachedSnapshotClients % svs.numCachedSnapshotClients];
+      MSG_ReadDeltaClient(&msg, cachedFrame->time, 0, &svs.cachedSnapshotClients[svs.nextCachedSnapshotClients % svs.numCachedSnapshotClients].cs, newnum);
+      cachedClient->playerStateExists = MSG_ReadBit(&msg);
+      if ( cachedClient->playerStateExists )
+      {
+        MSG_ReadDeltaPlayerstate(0, &msg, cachedFrame->time, 0, &cachedClient->ps, 0);
+      }
+
+      assert ( !svsHeaderValid );
+
+      if ( ++svs.nextCachedSnapshotClients >= 0x7FFFFFFE )
+      {
+        Com_Error(ERR_FATAL, "svs.nextCachedSnapshotClients wrapped");
+      }
+      ++cachedFrame->num_clients;
+    }
+    MSG_ClearLastReferencedEntity(&msg);
+    while ( 1 )
+    {
+      newnum = MSG_ReadEntityIndex(&msg, 10);
+      if ( newnum == 1023 )
+      {
+        break;
+      }
+      if ( msg.overflowed )
+      {
+        Com_Error(ERR_DROP, "SV_GetCachedSnapshot: end of message");
+      }
+      MSG_ReadDeltaArchivedEntity( &msg, cachedFrame->time, &sv.svEntities[newnum].baseline,
+	&svs.cachedSnapshotEntities[svs.nextCachedSnapshotEntities % svs.numCachedSnapshotEntities], newnum);
+	
+      if ( ++svs.nextCachedSnapshotEntities >= 0x7FFFFFFE )
+      {
+        Com_Error(ERR_FATAL, "svs.nextCachedSnapshotEntities wrapped");
+      }
+      ++cachedFrame->num_entities;
+    }
+    if ( ++svs.nextCachedSnapshotFrames >= 0x7FFFFFFE )
+    {
+      Com_Error(ERR_FATAL, "svs.nextCachedSnapshotFrames wrapped");
+    }
+  }
+  else
+  {
+    assert ( !msg.overflowed );
+
+    oldArchivedFrame = MSG_ReadLong(&msg);
+    if ( oldArchivedFrame < svs.nextArchivedSnapshotFrames - 1200 )
+    {
+      if ( expectedToSucceed )
+      {
+        Com_Printf(CON_CHANNEL_SERVER, "getting archive snapshot failed for time %i - oldArchiveFrame(%i) < svs.nextArchivedSnapshotFrames(%i) - NUM_ARCHIVED_FRAMES(%i)\n",
+          archivedFrame, oldArchivedFrame, svs.nextArchivedSnapshotFrames, 1200);
+      }
+      return 0;
+    }
+    frame = &svs.archivedSnapshotFrames[oldArchivedFrame % 1200];
+    if ( !SV_FrameIsStillInArchivedSnapshotBuffer(frame->start) )
+    {
+      if ( expectedToSucceed )
+      {
+	Com_Printf(CON_CHANNEL_SERVER, "getting archive snapshot failed for time %i - frame->start(%i) < svs.nextArchivedSnapshotBuffer(%i) - ARCHIVED_SNAPSHOT_BUFFER_SIZE(%i)\n",
+	  archivedFrame, frame->start, svs.nextArchivedSnapshotBuffer, 0x1000000);
+      }
+      return 0;
+    }
+    oldCachedFrame = SV_GetCachedSnapshotInternal(oldArchivedFrame, depth + 1, expectedToSucceed);
+    if ( !oldCachedFrame )
+    {
+      if ( expectedToSucceed )
+      {
+        Com_Printf(CON_CHANNEL_SERVER, "failed to get snapshot for time %i - it was delta'd off time %i, and we couldn't get that snapshot\n",
+          archivedFrame, oldArchivedFrame);
+      }
+      return 0;
+    }
+
+    assert(!oldCachedFrame->usesDelta);
+
+    cachedFrame = &svs.cachedSnapshotFrames[svs.nextCachedSnapshotFrames % 512];
+    cachedFrame->archivedFrame = archivedFrame;
+//    cachedFrame->matchState = svs.nextCachedSnapshotMatchStates;
+    cachedFrame->num_entities = 0;
+    cachedFrame->first_entity = svs.nextCachedSnapshotEntities;
+    cachedFrame->num_clients = 0;
+    cachedFrame->first_client = svs.nextCachedSnapshotClients;
+    cachedFrame->usesDelta = 1;
+    cachedFrame->time = MSG_ReadLong(&msg);
+//    cachedFrame->physicsTime = MSG_ReadLong(&msg);
+    MSG_ClearLastReferencedEntity(&msg);
+/*	
+    MSG_ReadDeltaMatchState( &msg, cachedFrame->time, 
+      &svs.cachedSnapshotMatchStates[oldCachedFrame->matchState % svs.numCachedSnapshotMatchStates],
+      &svs.cachedSnapshotMatchStates[svs.nextCachedSnapshotMatchStates % svs.numCachedSnapshotMatchStates]);
+
+    ++svs.nextCachedSnapshotMatchStates;
+*/
+    MSG_ClearLastReferencedEntity(&msg);
+    oldindex = 0;
+    oldCachedClient = 0;
+    if ( oldCachedFrame->num_clients > 0 )
+    {
+      oldCachedClient = &svs.cachedSnapshotClients[oldCachedFrame->first_client % svs.numCachedSnapshotClients];
+      oldnum = oldCachedClient->cs.clientIndex;
+    }
+    else
+    {
+      oldnum = 99999;
+    }
+    while ( MSG_ReadBit(&msg) )
+    {
+      newnum = MSG_ReadEntityIndex(&msg, 5);
+      
+      assert(newnum >= 0);
+     
+      if ( msg.overflowed )
+      {
+        Com_Error(ERR_DROP, "SV_GetCachedSnapshot: end of message");
+      }
+      while ( oldnum < newnum )
+      {
+        if ( ++oldindex < oldCachedFrame->num_clients )
+        {
+          oldCachedClient = &svs.cachedSnapshotClients[(oldindex + oldCachedFrame->first_client)
+                                                     % svs.numCachedSnapshotClients];
+          oldnum = oldCachedClient->cs.clientIndex;
+        }
+        else
+        {
+          oldnum = 99999;
+        }
+      }
+      if ( oldnum == newnum )
+      {
+        cachedClient = &svs.cachedSnapshotClients[svs.nextCachedSnapshotClients % svs.numCachedSnapshotClients];
+	assert(cachedClient != oldCachedClient);		
+        MSG_ReadDeltaClient(&msg, cachedFrame->time, &oldCachedClient->cs, &cachedClient->cs, newnum);
+        cachedClient->playerStateExists = MSG_ReadBit(&msg);
+        if ( cachedClient->playerStateExists )
+        {
+          if ( oldCachedClient->playerStateExists )
+          {
+            MSG_ReadDeltaPlayerstate(0, &msg, cachedFrame->time, &oldCachedClient->ps, &cachedClient->ps, 0);
+          }
+          else
+          {
+            MSG_ReadDeltaPlayerstate(0, &msg, cachedFrame->time, 0, &cachedClient->ps, 0);
+          }
+        }
+	assert(!svsHeaderValid);
+        if ( ++svs.nextCachedSnapshotClients >= 0x7FFFFFFE )
+        {
+          Com_Error(ERR_FATAL, "svs.nextCachedSnapshotClients wrapped");
+        }
+        ++cachedFrame->num_clients;
+        if ( ++oldindex < oldCachedFrame->num_clients )
+        {
+          oldCachedClient = &svs.cachedSnapshotClients[(oldindex + oldCachedFrame->first_client) % svs.numCachedSnapshotClients];
+          oldnum = oldCachedClient->cs.clientIndex;
+        }
+        else
+        {
+          oldnum = 99999;
+        }
+      }
+      else
+      {
+	assert(oldnum > newnum);
+        cachedClient = &svs.cachedSnapshotClients[svs.nextCachedSnapshotClients % svs.numCachedSnapshotClients];
+        MSG_ReadDeltaClient(&msg, cachedFrame->time, 0, &svs.cachedSnapshotClients[svs.nextCachedSnapshotClients % svs.numCachedSnapshotClients].cs, newnum);
+        cachedClient->playerStateExists = MSG_ReadBit(&msg);
+        if ( cachedClient->playerStateExists )
+        {
+          MSG_ReadDeltaPlayerstate(0, &msg, cachedFrame->time, 0, &cachedClient->ps, 0);
+        }
+
+	assert( !svsHeaderValid );
+
+	if ( ++svs.nextCachedSnapshotClients >= 0x7FFFFFFE )
+        {
+          Com_Error(ERR_FATAL, "svs.nextCachedSnapshotClients wrapped");
+        }
+        ++cachedFrame->num_clients;
+      }
+    }
+    MSG_ClearLastReferencedEntity(&msg);
+    while ( 1 )
+    {
+      newnum = MSG_ReadEntityIndex(&msg, 10);
+      if ( newnum == 1023 )
+      {
+        break;
+      }
+      if ( msg.overflowed )
+      {
+        Com_Error(ERR_DROP, "SV_GetCachedSnapshot: end of message");
+      }
+      MSG_ReadDeltaArchivedEntity(
+        &msg, cachedFrame->time, &sv.svEntities[newnum].baseline,
+        &svs.cachedSnapshotEntities[svs.nextCachedSnapshotEntities % svs.numCachedSnapshotEntities], newnum);
+      if ( ++svs.nextCachedSnapshotEntities >= 0x7FFFFFFE )
+      {
+        Com_Error(ERR_FATAL, "svs.nextCachedSnapshotEntities wrapped");
+      }
+      ++cachedFrame->num_entities;
+    }
+    if ( ++svs.nextCachedSnapshotFrames >= 0x7FFFFFFE )
+    {
+      Com_Error(ERR_FATAL, "svs.nextCachedSnapshotFrames wrapped");
+    }
+  }
+  assertx(cachedFrame->num_entities < svs.numCachedSnapshotEntities, "(cachedFrame->num_entities) = %i", cachedFrame->num_entities);
+  assertx(cachedFrame->num_clients < svs.numCachedSnapshotClients, "(cachedFrame->num_clients) = %i", cachedFrame->num_clients);
+//  assert(cachedFrame->matchState >= svs.nextCachedSnapshotMatchStates - svs.numCachedSnapshotMatchStates);
+  assert(cachedFrame->first_entity >= svs.nextCachedSnapshotEntities - svs.numCachedSnapshotEntities);
+  assert(cachedFrame->first_client >= svs.nextCachedSnapshotClients - svs.numCachedSnapshotClients);
+  return cachedFrame;
+}
+
+
+
+int SV_GetCurrentClientInfo(int clientNum, playerState_t *ps, clientState_t *cs)
+{
+    assert(clientNum < sv_maxclients->integer);
+
+  if ( svs.clients[clientNum].state == CS_ACTIVE )
+  {
+    if ( GetFollowPlayerState(clientNum, ps) )
+    {
+      memcpy(cs, G_GetClientState(clientNum), sizeof(clientState_t));
+      return 1;
+    }
+  }
+  return 0;
+}
+
+
+
+
+int SV_GetArchivedClientInfo(int clientNum, int *pArchiveTime, playerState_t *ps, clientState_t *cs, float *origin, int *health, int *otherFlags)
+{
+  cachedSnapshot_t *cachedSnapshot;
+  unsigned int i;
+  int offsettime;
+  cachedClient_t *cachedClient;
+    playerState_t backupPs;
+
+    assert(health);
+    assert(otherFlags);
+
+  cachedSnapshot = SV_GetCachedSnapshot(pArchiveTime);
+  if ( cachedSnapshot )
+  {
+	assert(*pArchiveTime > 0);
+    offsettime = svs.time - cachedSnapshot->time;
+    cachedClient = 0;
+    for ( i = 0; ; ++i )
+    {
+      if ( i >= cachedSnapshot->num_clients )
+      {
+        return 0;
+      }
+      cachedClient = &svs.cachedSnapshotClients[(i + cachedSnapshot->first_client) % svs.numCachedSnapshotClients];
+      if ( cachedClient->cs.clientIndex == clientNum )
+      {
+        break;
+      }
+    }
+    if ( !cachedClient->playerStateExists )
+    {
+      return 0;
+    }
+
+	assert(cachedClient);
+	assert(cachedClient->ps.otherFlags & POF_PLAYER);
+
+    if ( origin )
+    {
+	    VectorCopy(cachedClient->ps.origin, origin);
+    }
+    if ( cs )
+    {
+      Com_Memcpy(cs, &cachedClient->cs, sizeof(clientState_t));
+    }
+    *health = cachedClient->ps.stats[0];
+    *otherFlags = cachedClient->ps.otherFlags;
+    if ( ps )
+    {
+      Com_Memcpy(ps, &cachedClient->ps, sizeof(playerState_t));
+      if ( ps->commandTime )
+      {
+        ps->commandTime += offsettime;
+      }
+      if ( ps->pm_time )
+      {
+        ps->pm_time += offsettime;
+      }
+      if ( ps->foliageSoundTime )
+      {
+        ps->foliageSoundTime += offsettime;
+      }
+      if ( ps->jumpTime )
+      {
+        ps->jumpTime += offsettime;
+      }
+      if ( ps->viewHeightLerpTime )
+      {
+        ps->viewHeightLerpTime += offsettime;
+      }
+      if ( ps->shellshockTime )
+      {
+        ps->shellshockTime += offsettime;
+      }
+      for ( i = 0; i < 0x1F && ps->hud.archival[i].type; ++i )
+      {
+        if ( ps->hud.archival[i].time )
+        {
+          ps->hud.archival[i].time += offsettime;
+        }
+        if ( ps->hud.archival[i].fadeStartTime )
+        {
+		    ps->hud.archival[i].fadeStartTime += offsettime;
+		    assertx(ps->hud.archival[i].fadeStartTime <= svs.time, "%i, %i", ps->hud.archival[i].fadeStartTime, svs.time);
+        }
+        if ( ps->hud.archival[i].scaleStartTime )
+        {
+          ps->hud.archival[i].scaleStartTime += offsettime;
+        }
+        if ( ps->hud.archival[i].moveStartTime )
+        {
+          ps->hud.archival[i].moveStartTime += offsettime;
+        }
+      }
+      ps->deltaTime += offsettime;
+    }
+    return 1;
+  }
+  if ( !ps )
+  {
+      ps = &backupPs;
+  }
+  if ( *pArchiveTime <= 0 && SV_GetCurrentClientInfo(clientNum, ps, cs) )
+  {
+      *health = ps->stats[0];
+      *otherFlags = ps->otherFlags;
+      if ( origin )
+      {
+		VectorCopy(ps->origin, origin);
+      }
+      return 1;
+  }
+  return 0;
+}

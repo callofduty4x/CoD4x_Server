@@ -906,7 +906,7 @@ _cstring__if_fresnel_is_s:		db "* If ",27h,"fresnel",27h," is specified, the alp
 _cstring___n0_and_n1_are_:		db "  n0 and n1 are the index of refraction of the ",27h,"air",27h," and ",27h,"water",27h," surfaces, respectively.",0ah,0
 _cstring___the_index_of_r:		db "  The index of refraction must always be 1 or greater.",0ah,0
 _cstring___this_is_always:		db "  This is always calculated, and defaults to air-water interface (n0 = 1, n1 = 1.333).",0ah,0
-_cstring_scr_drawscreenfi:		db 15h,"SCR_DrawScreenField: bad clcState",0
+_cstring_scr_drawscreenfi:		db 015h,"SCR_DrawScreenField: bad clcState",0
 _cstring_recording_s_ik:		db "RECORDING %s: %ik",0
 _cstring_envsstga:		db "env/%s%s.tga",0
 _cstring_must_be_in_a_map:		db "must be in a map to use this command",0ah,0

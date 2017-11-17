@@ -99,20 +99,18 @@
 	global VEH_TouchEntities
 	global VEH_GroundPlant
 	global InitFirstThink
-	global VEH_SlideMove
+	global _Z13VEH_SlideMoveP9gentity_sif
 	global VEH_StepSlideMove
 	global IntegratePosAndRot
 	global G_VehUsable
-	global G_VehSpawner
 	global SpawnVehicle
 	global VEH_JoltBody_copy
 	global G_VehiclesInit
 	global G_VehFreeEntity
-	global VEH_SetPosition
+	global _Z15VEH_SetPositionP9gentity_sPKfS2_
 	global G_VehUnlinkPlayer
 	global G_VehRegisterDvars
 	global VEH_GetVehicleInfo
-	global G_VehCollmapSpawner
 	global G_VehEntHandler_Die
 	global G_VehEntHandler_Use
 	global G_VehImmuneToDamage
@@ -2040,7 +2038,7 @@ InitFirstThink_20:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call VEH_SetPosition
+	call _Z15VEH_SetPositionP9gentity_sPKfS2_
 	mov edx, [ebp-0x4c]
 	add edx, 0xc
 	mov ecx, [ebp-0x4c]
@@ -2120,7 +2118,7 @@ InitFirstThink_10:
 
 
 ;VEH_SlideMove(gentity_s*, int, float)
-VEH_SlideMove:
+_Z13VEH_SlideMoveP9gentity_sif:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2962,7 +2960,7 @@ VEH_StepSlideMove:
 	movss [ebp-0x74], xmm0
 	movss xmm0, dword [ebp-0x90]
 	mov eax, esi
-	call VEH_SlideMove
+	call _Z13VEH_SlideMoveP9gentity_sif
 	test eax, eax
 	jnz VEH_StepSlideMove_10
 VEH_StepSlideMove_40:
@@ -3062,7 +3060,7 @@ VEH_StepSlideMove_20:
 	mov edx, [ebp-0x8c]
 	mov eax, esi
 	movss [ebp-0xa8], xmm1
-	call VEH_SlideMove
+	call _Z13VEH_SlideMoveP9gentity_sif
 	mov eax, [ebx+0xc0]
 	mov [ebp-0x3c], eax
 	mov eax, [ebx+0xc4]
@@ -4159,27 +4157,6 @@ G_VehUsable_30:
 	nop
 
 
-;G_VehSpawner(gentity_s*)
-G_VehSpawner:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x28
-	lea eax, [ebp-0xc]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], 0x0
-	mov dword [esp], _cstring_vehicletype
-	call G_LevelSpawnString
-	mov dword [esp+0x8], 0x1
-	mov eax, [ebp-0xc]
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call SpawnVehicle
-	leave
-	ret
-	nop
-	add [eax], al
-
 
 ;SpawnVehicle(gentity_s*, char const*, int)
 SpawnVehicle:
@@ -4405,7 +4382,7 @@ SpawnVehicle_90:
 	mov edx, [ebp-0x34]
 	mov [esp+0x4], edx
 	mov [esp], edi
-	call VEH_SetPosition
+	call _Z15VEH_SetPositionP9gentity_sPKfS2_
 	mov ecx, [edi+0x164]
 	mov [ebp-0x20], ecx
 	xor esi, esi
@@ -4821,7 +4798,7 @@ G_VehFreeEntity:
 
 
 ;VEH_SetPosition(gentity_s*, float const*, float const*)
-VEH_SetPosition:
+_Z15VEH_SetPositionP9gentity_sPKfS2_:
 	push ebp
 	mov ebp, esp
 	push esi
@@ -5044,18 +5021,6 @@ VEH_GetVehicleInfo:
 	sub eax, edx
 	shl eax, 0x4
 	add eax, s_vehicleInfos
-	pop ebp
-	ret
-	nop
-
-
-;G_VehCollmapSpawner(gentity_s*)
-G_VehCollmapSpawner:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov dword [eax+0x120], 0x0
-	mov dword [eax+0x4], 0xf
 	pop ebp
 	ret
 	nop
@@ -5645,7 +5610,7 @@ G_VehEntHandler_Think_70:
 	mov [esp+0x4], edx
 	mov ecx, [ebp+0x8]
 	mov [esp], ecx
-	call VEH_SetPosition
+	call _Z15VEH_SetPositionP9gentity_sPKfS2_
 	movss xmm0, dword [ebp-0xb0]
 	movss [esp+0x4], xmm0
 	mov eax, [ebp+0x8]

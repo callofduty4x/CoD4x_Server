@@ -6504,25 +6504,25 @@ vehTextureScrollScale: resb 0x4
 
 ;All cstrings:
 SECTION .rdata
-_cstring_bad_vehicle_fiel:		db 15h,"Bad vehicle field type %i",0ah,0
-_cstring_unknown_vehicle_:		db 15h,"Unknown vehicle type [s]",0ah,0
+_cstring_bad_vehicle_fiel:		db 015h,"Bad vehicle field type %i",0ah,0
+_cstring_unknown_vehicle_:		db 015h,"Unknown vehicle type [s]",0ah,0
 _cstring_vehicless:		db "vehicles/%s",0
 _cstring_vehiclefile:		db "VEHICLEFILE",0
 _cstring_vehicle_file:		db "vehicle file",0
 _cstring_warning_couldnt_:		db "WARNING: couldn",27h,"t find vehicle info for ",27h,"%s",27h,", attempting to use ",27h,"defaultvehicle",27h,".",0ah,0
 _cstring_defaultvehicle_m:		db "defaultvehicle_mp",0
-_cstring_cannot_find_vehi:		db 15h,"Cannot find vehicle info for ",27h,"defaultvehicle",27h,". This is a default vehicle info that you should have.",0ah,0
-_cstring_script_vehicle_s:		db 15h,"Script vehicle [%s] needs [%s]",0ah,0
+_cstring_cannot_find_vehi:		db 015h,"Cannot find vehicle info for ",27h,"defaultvehicle",27h,". This is a default vehicle info that you should have.",0ah,0
+_cstring_script_vehicle_s:		db 015h,"Script vehicle [%s] needs [%s]",0ah,0
 _cstring_vehicle_damage_t:		db "Vehicle damage to ent #%i: %.2f",0ah,0
 _cstring_1f_mph_2f_dps:		db "%.1f MPH, %.2f DPS",0
 _cstring_vehicletype:		db "vehicletype",0
-_cstring_hit_max_vehicle_:		db 15h,"Hit max vehicle count [%d]",0ah,0
+_cstring_hit_max_vehicle_:		db 015h,"Hit max vehicle count [%d]",0ah,0
 _cstring_vehicle_s_not_pr:		db "vehicle ",27h,"%s",27h," not precached",0
-_cstring_cant_find_info_f:		db 15h,"Can",27h,"t find info for script vehicle [%s]",0ah,0
+_cstring_cant_find_info_f:		db 015h,"Can",27h,"t find info for script vehicle [%s]",0ah,0
 _cstring_warning_vehicle_:		db "WARNING: vehicle ",27h,"%s",27h," is missing a required tag! switching to default vehicle model and info.",0ah,0
 _cstring_error_default_ve:		db "ERROR: default vehicle is missing a required tag!",0
-_cstring_vehicleclearride:		db 15h,"VehicleClearRideSlotForPlayer(): player ent #%i was not using vehicle.",0ah,0
-_cstring_g_vehunlinkplaye:		db 15h,"G_VehUnlinkPlayer: Player is not using a vehicle",0ah,0
+_cstring_vehicleclearride:		db 015h,"VehicleClearRideSlotForPlayer(): player ent #%i was not using vehicle.",0ah,0
+_cstring_g_vehunlinkplaye:		db 015h,"G_VehUnlinkPlayer: Player is not using a vehicle",0ah,0
 _cstring_turn_on_debug_in:		db "Turn on debug information for vehicles",0
 _cstring_vehdebugserver:		db "vehDebugServer",0
 _cstring_scale_vehicle_te:		db "Scale vehicle texture scroll scale by this amount (debug only)",0
@@ -6532,14 +6532,14 @@ _cstring_vehtesthorsepowe:		db "vehTestHorsepower",0
 _cstring_lbs:		db "lbs",0
 _cstring_vehtestweight:		db "vehTestWeight",0
 _cstring_vehtestmaxmph:		db "vehTestMaxMPH",0
-_cstring_linkplayertovehi:		db 15h,"LinkPlayerToVehicle: Vehicle has all seats filled",0ah,0
-_cstring_linkplayertovehi1:		db 15h,"LinkPlayerToVehicle: Player already has an owner",0ah,0
-_cstring_linkplayertovehi2:		db 15h,"LinkPlayerToVehicle: Cannot link to vehicle bone ",22h,"%s",22h,0ah,0
-_cstring_linkplayertovehi3:		db 15h,"LinkPlayerToVehicle: Tried to mount player on a full vehicle.",0ah,0
-_cstring_vehiclegetplayer:		db 15h,"VehicleGetPlayerRideSlot(): player ent #%i was not using vehicle.",0ah,0
+_cstring_linkplayertovehi:		db 015h,"LinkPlayerToVehicle: Vehicle has all seats filled",0ah,0
+_cstring_linkplayertovehi1:		db 015h,"LinkPlayerToVehicle: Player already has an owner",0ah,0
+_cstring_linkplayertovehi2:		db 015h,"LinkPlayerToVehicle: Cannot link to vehicle bone ",22h,"%s",22h,0ah,0
+_cstring_linkplayertovehi3:		db 015h,"LinkPlayerToVehicle: Tried to mount player on a full vehicle.",0ah,0
+_cstring_vehiclegetplayer:		db 015h,"VehicleGetPlayerRideSlot(): player ent #%i was not using vehicle.",0ah,0
 _cstring_tag_flash:		db "tag_flash",0
-_cstring_couldnt_find_tag:		db 15h,"Couldn",27h,"t find tag ",22h,"%s",22h," on vehicle (entity %d).",0ah,0
-_cstring_fireturret_weapd:		db 15h,"FireTurret(): WeapDef is not a bullet type.",0ah,0
+_cstring_couldnt_find_tag:		db 015h,"Couldn",27h,"t find tag ",22h,"%s",22h," on vehicle (entity %d).",0ah,0
+_cstring_fireturret_weapd:		db 015h,"FireTurret(): WeapDef is not a bullet type.",0ah,0
 _cstring_warning_cannot_f:		db "WARNING: Cannot find vehicle collmap for [%s]",0ah,0
 _cstring_warning_cannot_u:		db "WARNING: Cannot use empty vehicle collmap for [%s]",0ah,0
 _cstring_type:		db "type",0
