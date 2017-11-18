@@ -1,10 +1,9 @@
 #!/bin/bash
 
 echo Compiling: release
-gcc -m32 -Wall -O1 -g -fvisibility=hidden -fpermissive -mtune=core2 -c *.cpp
+g++ -std=c++17 -m32 -Wall -s -O1 -mtune=core2 -c *.cpp
 
 echo Linking
-gcc -m32 -g -shared -o antispam.so *.o
+g++ -std=c++17 -m32 -Wall -s -shared -o antispam.so *.o
 echo Cleaning up
 rm *.o
-
