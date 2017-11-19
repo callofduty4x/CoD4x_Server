@@ -2,7 +2,9 @@
 
 enum EAPICode
 {
-    AC_Com_Printf = 0
+    AC_Com_Printf = 0,
+	AC_Com_Error = 1,
+	AC_Com_PrintError = 2
 };
 
 typedef void (*TSysCall)(const EAPICode Code_, ...);

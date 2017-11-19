@@ -19,3 +19,27 @@ inline void trap_Com_Printf(const char* const Format_, ...)
 
     syscall(AC_Com_Printf, msg);
 }
+
+inline void trap_Com_Error(const char* const Error, ... ) {
+	
+	char msg[1024];
+    va_list ap;
+    va_start(ap, Error);
+
+    vsnprintf(msg, sizeof(msg), Error, ap);
+    va_end(ap);
+
+	syscall(AC_Com_Error, msg);
+}
+
+inline void trap_Com_PrintError(const char* const Fmt, ... ) {
+	
+	char msg[1024];
+    va_list ap;
+    va_start(ap, Fmt);
+
+    vsnprintf(msg, sizeof(msg), Fmt, ap);
+    va_end(ap);
+
+	syscall(AC_Com_PrintError, msg);
+}
