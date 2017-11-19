@@ -1,7 +1,7 @@
 #pragma once
 #include "xassetfwd.h"
-#include <q_shared.h>
-#include <q_math.h>
+#include ".\core\q_shared.h"
+#include ".\core\q_math.h"
 
 typedef ushort ScriptString_t;
 
