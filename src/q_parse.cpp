@@ -51,34 +51,6 @@ char toastPopupTitle[1] = { "" };
 
 #define MAX_PARSE_INFO  16
 
-
-enum ParseTokenType
-{
-  PARSE_TOKEN_UNKNOWN = 0x0,
-  PARSE_TOKEN_NUMBER = 0x1,
-  PARSE_TOKEN_STRING = 0x2,
-  PARSE_TOKEN_NAME = 0x3,
-  PARSE_TOKEN_HASH = 0x4,
-  PARSE_TOKEN_PUNCTUATION = 0x5
-};
-
-struct parseInfo_t{
-	char token[MAX_TOKEN_CHARS];
-	enum ParseTokenType tokenType;
-	int lines;
-	bool ungetToken;
-	bool spaceDelimited;
-	bool keepStringQuotes;
-	bool csv;
-	bool negativeNumbers;
-	const char *errorPrefix;
-	const char *warningPrefix;
-	int backup_lines;
-	const char *backup_text;
-	const char *parseFile;
-};
-
-
 struct ParseThreadInfo
 {
   parseInfo_t parseInfo[MAX_PARSE_INFO];

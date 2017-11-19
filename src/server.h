@@ -39,6 +39,7 @@
 #include "net_game_conf.h"
 
 #include "net_reliabletransport.h"
+#include "cm_public.h"
 
 #include <time.h>
 
@@ -939,6 +940,9 @@ void __cdecl SV_SetUserinfo(int clientIndex, const char *val);
 bool MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, enum DeltaFlags flags);
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number);
 
+
+void __cdecl CM_UnlinkEntity(svEntity_t *ent);
+void __cdecl CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
 
 #ifdef COD4X18UPDATE
 void SV_ConnectWithUpdateProxy(client_t *cl);

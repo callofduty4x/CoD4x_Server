@@ -24,8 +24,6 @@
 #ifndef __CM_PUBLIC_H__
 #define __CM_PUBLIC_H__
 
-#include "server.h"
-
 /* 760 */
 typedef enum
 {
@@ -133,9 +131,6 @@ int __cdecl CM_BoxSightTrace(int oldHitNum, const float *start, const float *end
 int __cdecl CM_PointSightTraceToEntities(struct sightpointtrace_t *spt);
 int __cdecl CM_ClipSightTraceToEntities(struct sightclip_t *clip);
 int __cdecl CM_PointTraceStaticModelsComplete(const float *start, const float *end, int contentmask);
-void __cdecl CM_UnlinkEntity(svEntity_t *ent);
-void __cdecl CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
-
 
 // trace->entityNum can also be 0 to (MAX_GENTITIES-1)
 // or ENTITYNUM_NONE, ENTITYNUM_WORLD

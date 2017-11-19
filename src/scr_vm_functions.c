@@ -2117,72 +2117,12 @@ void PlayerCmd_spawn(scr_entref_t arg)
     ClientSpawn(gentity, position, direction);
 }
 
+
 void GScr_NewHudElem()
 {
-
-    int i;
-    game_hudelem_t *element = g_hudelems;
-
-    for (i = 0; i < MAX_HUDELEMS; i++, element++)
+    game_hudelem_t *element = HudElem_Alloc(1023, 0);
+    if(element)
     {
-        if (element->type)
-            continue;
-
-        element->type = 1;
-        element->x = 0;
-        element->y = 0;
-        element->var_03 = 0;
-        element->targetEnt = 1023;
-        element->fontType = 0;
-        element->align = 0;
-        element->screenAlign = 0;
-        element->color.i = 0xFFFFFFFF;
-        /*element->color.red = 255;
-        element->color.green = 255;
-        element->color.blue = 255;
-        element->color.alpha = 255;*/
-        element->glowColor.i = 0x00000000;
-        /*element->glowColor.red = 0;
-        element->glowColor.green = 0;
-        element->glowColor.blue = 0;
-        element->glowColor.alpha = 0;*/
-        element->fadeColor.i = 0x00000000;
-        /*element->fadeColor.red = 0;
-        element->fadeColor.green = 0;
-        element->fadeColor.blue = 0;
-        element->fadeColor.alpha = 0;*/
-
-        element->fadeStartTime = 0;
-        element->fadeTime = 0;
-        element->var_13 = 0;
-        element->sort = 0;
-        element->displayOption = 0;
-        element->pulseStartTime = 0;
-        element->pulseSpeed = 0;
-        element->pulseDecayStart = 0;
-        element->pulseDecayDuration = 0;
-        element->var_38 = 0;
-        element->moveStartTime = 0;
-        element->movingTime = 0;
-        element->fontScale = 0;
-        element->archived = 1;
-        element->shaderWidth = 0;
-        element->shaderHeight = 0;
-        element->materialIndex = 0;
-        element->moveX = 0;
-        element->moveY = 0;
-        element->moveAlign = 0;
-        element->moveScreenAlign = 0;
-        element->shaderOldWidth = 0;
-        element->shaderOldHeight = 0;
-        element->scaleStartTime = 0;
-        element->scaleTime = 0;
-        element->timeValue = 0;
-        element->duration = 0;
-        element->value = 0;
-        element->hudTextConfigStringIndex = 0;
-        element->entityNum = 1023;
-        element->teamNum = 0;
         Scr_AddHudElem(element);
         return;
     }
@@ -2191,69 +2131,19 @@ void GScr_NewHudElem()
 
 void GScr_NewClientHudElem()
 {
-
-    int i;
     gentity_t *ent = Scr_GetEntity(0);
-    game_hudelem_t *element = g_hudelems;
 
     if (ent->client == NULL)
     {
         Scr_ParamError(0, "GScr_NewClientHudElem: Entity is not a client");
     }
-
-    for (i = 0; i < MAX_HUDELEMS; i++, element++)
+    game_hudelem_t *element = HudElem_Alloc(ent->s.number, 0);
+    if(element)
     {
-        if (element->type)
-            continue;
-
-        element->type = qtrue;
-        element->x = 0;
-        element->y = 0;
-        element->var_03 = 0;
-        element->targetEnt = 1023;
-        element->fontType = 0;
-        element->align = 0;
-        element->screenAlign = 0;
-
-        element->color.i = 0xFFFFFFFF;
-        element->glowColor.i = 0x00000000;
-        element->fadeColor.i = 0x00000000;
-
-        element->fadeStartTime = 0;
-        element->fadeTime = 0;
-        element->var_13 = 0;
-        element->sort = 0;
-        element->displayOption = 0;
-        element->pulseStartTime = 0;
-        element->pulseSpeed = 0;
-        element->pulseDecayStart = 0;
-        element->pulseDecayDuration = 0;
-        element->var_38 = 0;
-        element->moveStartTime = 0;
-        element->movingTime = 0;
-        element->fontScale = 0;
-        element->archived = 1;
-        element->shaderWidth = 0;
-        element->shaderHeight = 0;
-        element->materialIndex = 0;
-        element->moveX = 0;
-        element->moveY = 0;
-        element->moveAlign = 0;
-        element->moveScreenAlign = 0;
-        element->shaderOldWidth = 0;
-        element->shaderOldHeight = 0;
-        element->scaleStartTime = 0;
-        element->scaleTime = 0;
-        element->timeValue = 0;
-        element->duration = 0;
-        element->value = 0;
-        element->hudTextConfigStringIndex = 0;
-        element->entityNum = ent->s.number;
-        element->teamNum = 0;
         Scr_AddHudElem(element);
         return;
     }
-    Scr_Error("GScr_NewHudElem: Exceeded limit of Hudelems");
+    Scr_Error("GScr_NewClientHudElem: Exceeded limit of Hudelems");
 }
 
 static qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
@@ -2281,8 +2171,8 @@ static qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
     while (i < 1024)
     {
         game_hudelem_t *elem = &g_hudelems[i];
-        if (elem->hudTextConfigStringIndex &&
-            elem->hudTextConfigStringIndex == index)
+        if (elem->elem.text &&
+            elem->elem.text == index)
             return qfalse;
         ++i;
     }
@@ -2302,36 +2192,20 @@ void HECmd_SetText(scr_entref_t entnum)
 
     game_hudelem_t *element = &g_hudelems[LOWORD(entnum)];
 
-    element->shaderWidth = 0;
-    element->shaderHeight = 0;
-    element->materialIndex = 0;
+    HudElem_ClearTypeSettings(element);
 
-    element->moveX = 0;
-    element->moveY = 0;
-    element->moveAlign = 0;
-    element->moveScreenAlign = 0;
-
-    element->shaderOldWidth = 0;
-    element->shaderOldHeight = 0;
-    element->scaleStartTime = 0;
-    element->scaleTime = 0;
-
-    element->timeValue = 0;
-    element->duration = 0;
-    element->value = 0;
-
-    int cs_index = element->hudTextConfigStringIndex;
+    int cs_index = element->elem.text;
 
     /* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
-    element->hudTextConfigStringIndex = 0;
+    element->elem.text = 0;
 
     /* Attempt to avoid CS overflow using "SetText()" */
     if (Scr_CanFreeLocalizedConfigString(cs_index))
         SV_SetConfigstring(cs_index + CS_LOCALIZEDSTRINGS, "");
 
-    Scr_ConstructMessageString(0, 0, "Hud Elem String", buffer, sizeof(buffer));
-    element->type = qtrue;
-    element->hudTextConfigStringIndex = G_LocalizedStringIndex(buffer);
+    Scr_ConstructMessageString(0, Scr_GetNumParam() -1, "Hud Elem String", buffer, sizeof(buffer));
+    element->elem.type = HE_TYPE_TEXT;
+    element->elem.text = G_LocalizedStringIndex(buffer);
 }
 
 void GScr_MakeCvarServerInfo(void)
@@ -3058,17 +2932,17 @@ void Scr_Destroy_f(scr_entref_t hud_elem_num)
 
     game_hudelem_t *hud_elem = &g_hudelems[LOWORD(hud_elem_num)];
 
-    int cs_index = hud_elem->hudTextConfigStringIndex;
+    int cs_index = hud_elem->elem.text;
 
     /* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
-    hud_elem->hudTextConfigStringIndex = 0;
+    hud_elem->elem.text = 0;
 
     /* Keep CS clear if assigned using 'settext' script command */
     if (Scr_CanFreeLocalizedConfigString(cs_index))
         SV_SetConfigstring(CS_LOCALIZEDSTRINGS + cs_index, "");
 
     Scr_FreeHudElem(hud_elem);
-    hud_elem->type = 0;
+    hud_elem->elem.type = 0;
 }
 
 void Scr_IsArray_f()

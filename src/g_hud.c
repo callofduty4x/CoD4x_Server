@@ -31,69 +31,87 @@
 static struct game_hudelem_s g_dummyHudCurrent;
 #endif
 
-game_hudelem_t* G_GetNewHudElem(unsigned int clientnum){
 
-    int i;
-    struct game_hudelem_s* elements = g_hudelems;
-    struct hudelem_s* element; 
-    for(i = 0; i < MAX_HUDELEMS; i++, elements++)
+void __cdecl HudElem_ClearTypeSettings(game_hudelem_t *hud)
+{
+  hud->elem.width = 0;
+  hud->elem.height = 0;
+  hud->elem.materialIndex = 0;
+  hud->elem.fromX = 0.0;
+  hud->elem.fromY = 0.0;
+  hud->elem.fromAlignOrg = 0;
+  hud->elem.fromAlignScreen = 0;
+  hud->elem.fromWidth = 0;
+  hud->elem.fromHeight = 0;
+  hud->elem.scaleStartTime = 0;
+  hud->elem.scaleTime = 0;
+  hud->elem.time = 0;
+  hud->elem.duration = 0;
+  hud->elem.value = 0.0;
+  hud->elem.text = 0;
+}
+
+
+void __cdecl HudElem_SetDefaults(game_hudelem_t *hud)
+{
+  assert(hud);
+
+  hud->elem.type = HE_TYPE_TEXT;
+  hud->elem.x = 0.0;
+  hud->elem.y = 0.0;
+  hud->elem.z = 0.0;
+  hud->elem.targetEntNum = 1023;
+  hud->elem.font = 0;
+  hud->elem.alignOrg = 0;
+  hud->elem.alignScreen = 0;
+  hud->elem.color.rgba = -1;
+  hud->elem.glowColor.rgba = 0;
+  hud->elem.fromColor.rgba = 0;
+  hud->elem.fadeStartTime = 0;
+  hud->elem.fadeTime = 0;
+  hud->elem.label = 0;
+  hud->elem.sort = 0.0;
+  hud->elem.flags = 0;
+  hud->elem.fxBirthTime = 0;
+  hud->elem.fxLetterTime = 0;
+  hud->elem.fxDecayStartTime = 0;
+  hud->elem.fxDecayDuration = 0;
+  hud->elem.soundID = 0;
+  hud->elem.moveStartTime = 0;
+  hud->elem.moveTime = 0;
+  hud->elem.fontScale = 1.0;
+  hud->archived = 1;
+  HudElem_ClearTypeSettings(hud);
+}
+
+
+game_hudelem_t *HudElem_Alloc(int clientNum, int teamNum)
+{
+  unsigned int i;
+
+  for ( i = 0; i < sizeof(g_hudelems)/sizeof(g_hudelems[0]); ++i )
+  {
+    if ( g_hudelems[i].elem.type == HE_TYPE_FREE )
     {
-        element = &elements->elem;
-        if(element->type)
-            continue;
-
-        elements->archived = 1;
-        if(clientnum > 63)
-            elements->clientNum = 1023;
-        else
-            elements->clientNum = clientnum;
-
-        elements->team = 0;
-
-
-        element->type = 1;
-        element->x = 0;
-        element->y = 0;
-        element->z = 0;
-        element->targetEntNum = 1023;
-        element->font = 0;
-        element->alignOrg = 0;
-        element->alignScreen = 0;
-        element->color.rgba = 0xFFFFFFFF;
-        element->glowColor.rgba = 0;
-        element->fromColor.rgba = 0;
-        element->fadeStartTime = 0;
-        element->fadeTime = 0;
-        element->label = 0;
-        element->sort = 0;
-        element->flags = 0;
-        element->fxBirthTime = 0;
-        element->fxLetterTime = 0;
-        element->fxDecayStartTime = 0;
-        element->fxDecayDuration = 0;
-        element->soundID = 0;
-        element->moveStartTime = 0;
-        element->moveTime = 0;
-        element->fontScale = 1.4;
-        element->width = 0;
-        element->height = 0;
-        element->fromX = 0;
-        element->fromY = 0;
-        element->fromAlignOrg = 0;
-        element->fromAlignScreen = 0;
-        element->fromWidth = 0;
-        element->fromHeight = 0;
-        element->scaleStartTime = 0;
-        element->scaleTime = 0;
-        element->time = 0;
-        element->duration = 0;
-        element->value = 0;
-        element->text = 0;
-
-        return elements;
+      HudElem_SetDefaults(&g_hudelems[i]);
+      g_hudelems[i].clientNum = clientNum;
+      g_hudelems[i].team = teamNum;
+      return &g_hudelems[i];
     }
+  }
+  return NULL;
+}
+
+
+game_hudelem_t* G_GetNewHudElem(unsigned int clientnum)
+{
+  game_hudelem_t *hud;
+  hud = HudElem_Alloc(1023, 0);
+  if ( !hud )
+  {
     Com_PrintWarning(CON_CHANNEL_SCRIPT,"G_CreateHudElem: Exceeded limit of Hudelems\n");
-    return NULL;
+  }
+  return hud;
 }
 
 void __cdecl HudElem_Free(struct game_hudelem_s *hud)

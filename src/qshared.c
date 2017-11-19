@@ -2203,10 +2203,6 @@ void Swap_Init( void ) {
 
 }
 
-void PIXBeginNamedEvent(int v, const char* name);
-
-
-
 double __cdecl UnGetLeanFraction(const float fFrac)
 {
 

@@ -18,7 +18,7 @@ int				SE_BuildFileList		( const char *psStartDir, string &strResults );
 
 #endif
 
-cvar_t *loc_warningsAsErrors;
-cvar_t *loc_warnings;
+extern cvar_t *loc_warningsAsErrors;
+extern cvar_t *loc_warnings;
 
 ////////////////// eof ///////////////////

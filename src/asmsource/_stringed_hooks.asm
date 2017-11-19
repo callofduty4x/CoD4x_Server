@@ -21,6 +21,8 @@
 	extern va
 	extern Q_strncat
 	extern Q_stricmp
+	extern loc_warnings
+	extern loc_warningsAsErrors
 
 ;Exports of stringed_hooks:
 	global g_languages
@@ -1667,8 +1669,6 @@ g_currentAsian: resb 0x20
 _ZZ23SEH_SafeTranslateStringPKcE13szErrorString: resb 0x400
 _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE9szStrings: resb 0x2800
 _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE11iCurrString: resb 0x60
-loc_warnings: resb 0x4
-loc_warningsAsErrors: resb 0x4
 loc_language: resb 0x70
 loc_forceEnglish: resb 0x4
 loc_translate: resb 0x4
