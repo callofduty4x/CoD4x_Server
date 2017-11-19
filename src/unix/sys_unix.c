@@ -48,6 +48,9 @@
 #include <sys/time.h>
 #include <pthread.h>
 #include <stdatomic.h>
+
+void Sys_InitThreadContext();
+
 /*
 ==================
 Sys_RandomBytes
@@ -475,6 +478,7 @@ int main(int argc, char* argv[])
 	}
 	/* This function modifies argv[ 0 ] :S */
     Sys_SetBinaryPath( Sys_Dirname( argv[ 0 ] ) );
+    Sys_InitThreadContext();
 
     return Sys_Main(commandLine);
 }
@@ -908,6 +912,7 @@ FILE* NixFOpen(const char* filen, const char* mode)
             filename[i] = '/';
         }
     }
+    filename[i] = '\0';
     return fopen(filename, mode);
 }
 
@@ -923,13 +928,13 @@ HANDLE __cdecl CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShar
     if(ho == NULL)
     {
         fclose(fh);
-        return (HANDLE)NULL;
+        return (HANDLE)-1;
     }
     ho->type = 'File';
     ho->fh = fh;
     return (HANDLE)ho;
   }
-  return (HANDLE)NULL;
+  return (HANDLE)-1;
 }
 
 
@@ -1155,11 +1160,11 @@ void** Sys_GetThreadLocalStorage()
 void Sys_InitThreadContext()
 {
     pthread_key_create(&g_dwTlsKey, 0);
+    mainthread = Sys_GetCurrentThreadId( );
 }
 
 void Sys_SetThreadLocalStorage(void** localvar)
 {
-    Sys_InitThreadContext();
     pthread_setspecific(g_dwTlsKey, localvar);
 }
 

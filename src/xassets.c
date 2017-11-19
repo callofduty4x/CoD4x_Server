@@ -756,5 +756,58 @@ void DB_SyncXAssets()
     DB_PostLoadXZone();
 }
 
+extern const char *(__cdecl *DB_XAssetGetNameHandler[ASSET_TYPE_COUNT])(union XAssetHeader *);
+
 char g_zoneNameList[2080];
 
+const char *__cdecl DB_GetXAssetHeaderName(int type, union XAssetHeader *header)
+{
+    const char *name;
+
+    assert(header);
+    assert(DB_XAssetGetNameHandler[type]);
+    assert(header->data);
+    name = DB_XAssetGetNameHandler[type](header);
+
+    assertx(name, "Name not found for asset type %s\n", g_assetNames[type]);
+
+    return name;
+}
+
+const char *__cdecl DB_GetXAssetName(XAsset *asset)
+{
+    assert(asset);
+    return DB_GetXAssetHeaderName(asset->type, &asset->header);
+}
+/*
+void CheckXAssetEntryTab()
+{
+    int i;
+    const char* name;
+  union XAssetEntryPoolEntry *existingEntry;
+  for ( i = 0; i < 0x8000; ++i )
+  {
+    existingEntry = &g_assetEntryPool[i];
+    if ( existingEntry->entry.asset.type > 0 && existingEntry->entry.asset.type < 40)
+    {
+	XAsset *asset = &existingEntry->entry.asset;
+	name = DB_XAssetGetNameHandler[asset->type](&asset->header);
+	
+        if(name < (const char*)0xFFFF)
+        {
+
+		Com_Printf(0, "Invalid %d!!!\n", i);
+	Com_Printf(0, "Name b: %x\n", (int)name);
+
+//		__builtin_trap();
+        }
+    }
+  }
+}
+*/
+
+void __cdecl DB_MaterialSetName(union XAssetHeader *xasset, const char *name)
+{
+//  xasset->material->info.name = name;
+    *(const char**)xasset->data = name;
+}

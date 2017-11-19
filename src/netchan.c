@@ -70,8 +70,8 @@ to the new value before sending out any replies.
 cvar_t      *showpackets;
 cvar_t      *showdrop;
 cvar_t      *qport;
-cvar_t      **msg_dumpEnts = (cvar_t**)(0x8930c1c);
-cvar_t      **msg_printEntityNums = (cvar_t**)(0x8930c18);
+cvar_t      *msg_dumpEnts;
+cvar_t      *msg_printEntityNums;
 
 static char *netsrcString[2] = {
 	"client",

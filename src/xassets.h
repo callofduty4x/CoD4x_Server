@@ -110,6 +110,13 @@ union XAssetHeader
   void *data;
 };
 
+typedef struct
+{
+  enum XAssetType type;
+  union XAssetHeader header;
+}XAsset;
+
+
 
 extern char*** varXStringPtr;
 

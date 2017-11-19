@@ -903,7 +903,6 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
 
 void SV_ClipMoveToEntity(struct moveclip_s *clip, svEntity_t *entity, struct trace_s *trace);
 void SV_Cmd_Init();
-void SV_CopyCvars();
 void SV_SteamData(client_t* cl, msg_t* msg);
 void __cdecl SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels); //0817D9F8
 void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int entityNum, int contentmask, int capsule );

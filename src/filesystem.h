@@ -250,7 +250,10 @@ unsigned int __cdecl FS_FileRead(void *ptr, unsigned int len, FILE *stream);
 void __cdecl FS_FreeFileList(const char **list);
 const char **__cdecl FS_ListFiles(const char *path, const char *extension, int behavior, int *numfiles);
 int __cdecl FS_GetModList(char *listbuf, int bufsize);
-
+void __cdecl FS_FileClose(FILE *stream);
+qboolean SEH_GetLanguageIndexForName(const char* language, int *langindex);
+const char* SEH_GetLanguageName(unsigned int langindex);
+int SEH_GetCurrentLanguage( );
 #ifdef __cplusplus
 }
 #endif

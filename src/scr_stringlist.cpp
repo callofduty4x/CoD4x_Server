@@ -20,8 +20,6 @@
 */
 
 
-
-
 #include "misc.h"
 #include "q_shared.h"
 #include "qcommon.h"
@@ -36,31 +34,52 @@
 #include <ctype.h>
 
 
-typedef struct
+#define MT_NODE_SIZE 12
+#define MT_SIZE 0x100000 //Most likely smaller!
+
+#pragma pack(push, 4)
+struct RefString
 {
-    short word_0;
-    byte byte_2;
-    byte numbytes;
-    byte datastart;
-}slHeader_t;
+    volatile int data;
+    char str[1];
+};
+#pragma pack(pop)
 
-typedef union
+struct scrMemTreePub_t
 {
-    slHeader_t header;
-    char data[12];
-}slTree_t;
+  char *mt_buffer;
+};
 
-extern slTree_t** scrMemTreePub;
+extern scrMemTreePub_t scrMemTreePub;
 
 
-char* SL_ConvertToString(unsigned int location)
+RefString *__cdecl GetRefString(unsigned int stringValue)
 {
-    char* string;
+  assert(stringValue);
+  assert(stringValue * MT_NODE_SIZE < MT_SIZE);
+  return (RefString *)&scrMemTreePub.mt_buffer[MT_NODE_SIZE * stringValue];
+}
 
-    slTree_t** ptr = (slTree_t**)scrMemTreePub;
-    slTree_t* base = *ptr;
-    string = (char*)&base[location].header.datastart;
+extern "C"{
+
+const char* SL_ConvertToString(unsigned int stringValue)
+{
+  const char* string;
+  RefString* rf;
+//    assert(!stringValue || !gScrStringDebugGlob || gScrStringDebugGlob->refCount[stringValue]);
+  if ( stringValue )
+  {
+    rf = GetRefString(stringValue);
+    string = rf->str;
+
+    if(string < (char*)0x4000)
+    {
+        Com_Printf(CON_CHANNEL_SYSTEM,"SL_ConvertToString error: 0x%x Location:%d\n", (int)string, stringValue);
+    }
+
     return string;
+  }
+  return NULL;
 }
 
 
@@ -75,11 +94,11 @@ unsigned int SL_GetLowercaseString(const char *upperstring, int type)
 {
 	unsigned int size;
 	char lwrstr[8192];
-	int i;
+	unsigned int i;
 
 	size = strlen(upperstring) + 1;
 	
-	if ( (signed int)size >= sizeof(lwrstr) )
+	if ( size >= sizeof(lwrstr) )
 	{
 		Com_Error(2, "SL_GetLowercaseString(): max string length exceeded: \"%s\"", upperstring);
 		return 0;
@@ -97,11 +116,11 @@ unsigned int SL_FindLowercaseString(const char *upperstring)
 {
 	unsigned int size;
 	char lwrstr[8192];
-	int i;
+	unsigned int i;
 
 	size = strlen(upperstring) + 1;
 	
-	if ( (signed int)size >= sizeof(lwrstr) )
+	if ( size >= sizeof(lwrstr) )
 	{
 		return 0;
 	}
@@ -118,3 +137,4 @@ int SL_FindString(const char *string)
   return FindStringOfSize(string, strlen(string) + 1);
 }
 
+}

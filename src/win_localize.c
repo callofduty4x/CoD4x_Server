@@ -49,6 +49,10 @@ void __cdecl Win_InitLocalization()
     {
       localization.language = 0;
     }
+  }else{
+    const char* lang = SEH_GetLanguageName(SEH_GetCurrentLanguage());
+    Q_strncpyz(language_buffer, lang, sizeof(language_buffer));
+    localization.language = language_buffer;
   }
 }
 
@@ -115,3 +119,4 @@ char *__cdecl Win_LocalizeRef(const char *ref)
 */
   return Win_CopyLocalizationString(ref);
 }
+

@@ -6922,9 +6922,11 @@ DB_EnumXAssets_FastFile:
 	test eax, eax
 	jnz DB_EnumXAssets_FastFile_10
 DB_EnumXAssets_FastFile_60:
-	mov edi, db_hashTable
+	xor edi, edi
 DB_EnumXAssets_FastFile_70:
-	movzx eax, word [edi]
+	mov eax, db_hashTable
+	add eax, edi
+	movzx eax, word [eax]
 	movzx edx, ax
 	test ax, ax
 	jz DB_EnumXAssets_FastFile_20
@@ -6974,7 +6976,7 @@ DB_EnumXAssets_FastFile_10:
 	jmp DB_EnumXAssets_FastFile_60
 DB_EnumXAssets_FastFile_20:
 	add edi, 0x2
-	mov eax, g_freeAssetEntryHead
+	mov eax, 131072
 	cmp eax, edi
 	jnz DB_EnumXAssets_FastFile_70
 	mov dword [esp], db_hashCritSect

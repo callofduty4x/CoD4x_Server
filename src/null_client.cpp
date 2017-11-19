@@ -155,6 +155,11 @@ void __cdecl Load_SndAliasCustom(snd_alias_list_t **name)
   {
     varXStringPtr = (char***)name;
     Load_XStringPtr(0);
+    if(**varXStringPtr < (char*)0x1000)
+    {
+	__asm__("int $3");
+    }
+    Com_Printf(CON_CHANNEL_SYSTEM, "Load_SndAliasCustom NAme: %s\n", **varXStringPtr);
     XAssetHeader xah = DB_FindXAssetHeader(ASSET_TYPE_SOUND, **varXStringPtr);
     *name = xah.sound;
   }

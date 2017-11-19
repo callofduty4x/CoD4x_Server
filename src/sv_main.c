@@ -2972,36 +2972,6 @@ void SV_DownloadAndExecGlobalConfig()
 }
 
 
-void SV_CopyCvars()
-{
-
-    *(cvar_t**)0x13ed89bc = sv_g_gametype;
-    *(cvar_t**)0x13ed8974 = sv_mapname;
-    *(cvar_t**)0x13ed8960 = sv_maxclients;
-    *(cvar_t**)0x13ed89c8 = sv_clientSideBullets;
-    *(cvar_t**)0x13ed89e4 = sv_floodProtect;
-    *(cvar_t**)0x13ed89ec = sv_showcommands;
-    *(cvar_t**)0x13ed899c = sv_iwds;
-    *(cvar_t**)0x13ed89a0 = sv_iwdNames;
-    *(cvar_t**)0x13ed89a4 = sv_referencedIwds;
-    *(cvar_t**)0x13ed89a8 = sv_referencedIwdNames;
-    *(cvar_t**)0x13ed89ac = sv_FFCheckSums;
-    *(cvar_t**)0x13ed89b0 = sv_FFNames;
-    *(cvar_t**)0x13ed89b4 = sv_referencedFFCheckSums;
-    *(cvar_t**)0x13ed89b8 = sv_referencedFFNames;
-    *(cvar_t**)0x13ed8978 = sv_serverid;
-    *(cvar_t**)0x13ed89d0 = sv_pure;
-    *(cvar_t**)0x13ed8950 = sv_fps;
-    *(cvar_t**)0x13ed8a04 = sv_botsPressAttackBtn;
-    *(cvar_t**)0x13ed89c0 = sv_debugRate;
-    *(cvar_t**)0x13ed89c4 = sv_debugReliableCmds;
-    *(cvar_t**)0x13f19004 = sv_clientArchive;
-    *(cvar_t**)0x13ed8a08 = sv_voice;
-    *(cvar_t**)0x13ed8a0c = sv_voiceQuality;
-}
-
-
-
 void SV_InitCvarsOnce(void){
 
     sv_paused = Cvar_RegisterBool("sv_paused", qfalse, CVAR_ROM, "True if the server is paused");

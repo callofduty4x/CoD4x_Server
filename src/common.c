@@ -659,6 +659,8 @@ void Com_Init(char* commandLine){
     if(setjmp(*abortframe)){
         Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
     }
+    if(com_errorEntered) Com_Error(ERR_FATAL,"Recursive error");
+
     Com_Printf(CON_CHANNEL_SYSTEM,"%s %s %s build %i %s\n", GAME_STRING,Q3_VERSION,PLATFORM_STRING, Sys_GetBuild(), __DATE__);
 
 
@@ -687,6 +689,8 @@ void Com_Init(char* commandLine){
     Sec_Update( qfalse );
 
     FS_InitFilesystem();
+
+    Win_InitLocalization();
 
     if(FS_SV_FileExists("securemode"))
     {
@@ -773,17 +777,8 @@ void Com_Init(char* commandLine){
     com_frameTime = Sys_Milliseconds();
 
     NV_LoadConfig();
-
-    Com_Printf(CON_CHANNEL_SYSTEM,"--- Common Initialization Complete ---\n");
-
     Cbuf_Execute( 0, 0 );
 
-    abortframe = (jmp_buf*)Sys_GetValue(2);
-
-    if(setjmp(*abortframe)){
-        Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
-    }
-    if(com_errorEntered) Com_Error(ERR_FATAL,"Recursive error");
 
 
     HL2Rcon_Init( );
@@ -800,7 +795,6 @@ void Com_Init(char* commandLine){
 
     int msec = 0;
 
-    SV_CopyCvars();
 //    XAssets_PatchLimits();  //Patch several asset-limits to higher values
     SL_Init();
     Swap_Init();
@@ -818,6 +812,7 @@ void Com_Init(char* commandLine){
         msec = Sys_Milliseconds();
 
         PMem_BeginAlloc("$init", qtrue);
+        DB_InitThread();
     }
 //    Con_InitChannels();
 
@@ -843,11 +838,6 @@ void Com_Init(char* commandLine){
 
     SV_RemoteCmdInit();
 
-    cvar_t **msg_dumpEnts = (cvar_t**)(0x8930c1c);
-    cvar_t **msg_printEntityNums = (cvar_t**)(0x8930c18);
-    *msg_dumpEnts = Cvar_RegisterBool( "msg_dumpEnts", qfalse, CVAR_TEMP, "Print snapshot entity info");
-    *msg_printEntityNums = Cvar_RegisterBool( "msg_printEntityNums", qfalse, CVAR_TEMP, "Print entity numbers");
-
     if(useFastFile->boolean)
         R_Init();
 
@@ -861,11 +851,19 @@ void Com_Init(char* commandLine){
 #endif
 
 
+    Com_Printf(CON_CHANNEL_SYSTEM,"--- Common Initialization Complete ---\n");
+
+
 
     com_fullyInitialized = qtrue;
 
     Com_AddStartupCommands( );
 
+    abortframe = (jmp_buf*)Sys_GetValue(2);
+
+    if(setjmp(*abortframe)){
+        Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
+    }
 
 }
 
