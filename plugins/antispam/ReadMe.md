@@ -13,7 +13,7 @@ __antispam_maxMessagesPerMinute__ | ```Count of maximum messages a player can se
 |__antispam_minAdminPower__ | ```Minimum power points which disable the spam-control. 0 means enabled for everyone. Value Range : (0 - 100)```|
 |__antispam_minMessageDelay__ | ```Amount of time after sending a message after which the player can chat again. 0 disables the limit``` Value Range : (0 - 60)|
 |__antispam_renewedMessageDelay__ | ```Penalize players and add penalty time if player chats before minMessageDelay. Value Range : (0 - 1)```|
-|__antispam_bindedspamLimit__ | ```Amount of detected bind spams for which player is chatbanned for messages sent in the last 2 minutes. Value Range : (3 - 30)```|
+|__antispam_bindspamLimit__ | ```Amount of detected bind spams for which player is chatbanned for messages sent in the last 2 minutes. Value Range : (3 - 30)```|
 |__antispam_chatBanDuration__ | ```The duration of a chat ban in seconds. Value Range : (0 - 3600)```|
 
 
