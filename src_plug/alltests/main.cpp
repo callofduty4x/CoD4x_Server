@@ -10,7 +10,7 @@ void OnPluginLoad(EPluginLoadingResult* pResult_)
     trap_Com_Printf("[alltests]: Hello, %s world!\n", "formatted");
     *pResult_ = PLR_OK;
 	trap_Com_PrintError("[alltests]: Com_PrintError(): Test Com_PrintError %d\n", 1);
-	trap_Com_Error("[alltests]: Com_Error(): Test Com_Error %d\n", 2);
+	//trap_Com_Error("[alltests]: Com_Error(): Test Com_Error %d\n", 2);
 }
 
 void OnPluginUnload()

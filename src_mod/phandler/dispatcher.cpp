@@ -19,13 +19,13 @@ void SysCallDispatcher(const EAPICode Code_, ...)
         case AC_Com_Printf:
             Com_Printf(VARG(0, const char*));
             break;
-	case AC_Com_Error:
-		Com_Error(0, VARG(0, const char*));
-		break;
-	case AC_Com_PrintError:
-		Com_PrintError(VARG(0, const char*));
-		break;
-        default: 
+		case AC_Com_Error:
+			Com_Error(0, VARG(0, const char*));
+			break;
+		case AC_Com_PrintError:
+			Com_PrintError(VARG(0, const char*));
+			break;
+			default: 
             Com_Error(0, "Unknown system call index: %d", Code_);
     }
 }
