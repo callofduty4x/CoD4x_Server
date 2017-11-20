@@ -7,3 +7,4 @@ echo Linking
 g++ -std=c++17 -m32 -Wall -s -shared -o antispam.so *.o
 echo Cleaning up
 rm *.o
+
