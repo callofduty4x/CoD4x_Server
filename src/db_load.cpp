@@ -361,7 +361,8 @@ void __cdecl Load_Stream(bool atStreamStart, const void *ptr, int size)
           assert(g_streamDelayIndex < ARRAY_COUNT( g_streamDelayArray ));
 
           g_streamDelayArray[g_streamDelayIndex].ptr = ptr;
-          g_streamDelayArray[g_streamDelayIndex++].size = size;
+          g_streamDelayArray[g_streamDelayIndex].size = size;
+          ++g_streamDelayIndex;
         }
     }
     else

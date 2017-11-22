@@ -49,11 +49,7 @@
 
 /* @(#) $Id$ */
 
-#include "unzip.h"
-
 #include "deflate.h"
-
-//#define ZLIB_VERSION "1.2.11"
 
 const char deflate_copyright[] =
    " deflate 1.2.11 Copyright 1995-2017 Jean-loup Gailly and Mark Adler ";
@@ -2165,4 +2161,3 @@ local block_state deflate_huff(s, flush)
         FLUSH_BLOCK(s, 0);
     return block_done;
 }
-

@@ -118,8 +118,10 @@ struct XAsset
 };
 
 extern char*** varXStringPtr;
-
-
+extern struct XModel** varXModelPtr;
+extern struct Material **varMaterialHandle;
+extern uint16_t* varScriptString;
+extern struct FxEffectDef** varFxEffectDefHandle;
 
 #ifdef __cplusplus
 extern "C"
@@ -154,6 +156,17 @@ void Load_XAssetListCustom();
 void __cdecl Load_XAsset(bool atStreamStart);
 void __cdecl Load_XStringCustom(const char **str);
 void __cdecl Load_ScriptStringList(bool atStreamStart);
+void __cdecl DB_IncStreamPos(int size);
+void __cdecl DB_PushStreamPos(unsigned int index);
+void __cdecl DB_PopStreamPos();
+void __cdecl Load_MaterialHandle(bool atStreamStart);
+void __cdecl Load_FxEffectDefHandle(bool atStreamStart);
+void __cdecl Load_ScriptStringCustom(uint16_t *var);
+void __cdecl Load_XModelPtr(bool atStreamStart);
+void __cdecl Load_XString(bool atStreamStart);
+void __cdecl Load_XAssetHeader(bool atStreamStart);
+
+
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For GCC
 void* __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);

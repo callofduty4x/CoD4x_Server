@@ -19,6 +19,8 @@
 #  define ZLIB_INTERNAL
 #endif
 
+#include "zlib.h"
+
 #if defined(STDC) && !defined(Z_SOLO)
 #  if !(defined(_WIN32_WCE) && defined(_MSC_VER))
 #    include <stddef.h>
@@ -231,14 +233,6 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
    void ZLIB_INTERNAL zmemzero OF((Bytef* dest, uInt len));
 #endif
 
-#ifndef Z_SOLO
-   voidpf ZLIB_INTERNAL zcalloc OF((voidpf opaque, unsigned items,
-                                    unsigned size));
-   void ZLIB_INTERNAL zcfree  OF((voidpf opaque, voidpf ptr));
-#endif
-
-
-
 /* Diagnostic functions */
 #ifdef ZLIB_DEBUG
 #  include <stdio.h>
@@ -259,7 +253,11 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
 #  define Tracecv(c,x)
 #endif
 
-
+#ifndef Z_SOLO
+   voidpf ZLIB_INTERNAL zcalloc OF((voidpf opaque, unsigned items,
+                                    unsigned size));
+   void ZLIB_INTERNAL zcfree  OF((voidpf opaque, voidpf ptr));
+#endif
 
 #define ZALLOC(strm, items, size) \
            (*((strm)->zalloc))((strm)->opaque, (items), (size))
