@@ -20,7 +20,7 @@ before_install:
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-6 g++-6 gcc-6-multilib paxctl:i386 libtommath-dev:i386
+  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
 script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
@@ -34,7 +34,7 @@ script:
   - cd plugins/pchat && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/sourcebansplugin && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/warn && chmod +x makedll.sh && ./makedll.sh && cd ../..
-  - cd plugins/antispam && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  # - cd plugins/antispam && chmod +x makedll.sh && ./makedll.sh && cd ../..
   # missing: webapibanlist, 
 deploy:
   skip_cleanup: true
@@ -51,7 +51,7 @@ deploy:
     - ./plugins/pchat/pchat.so
     - ./plugins/sourcebansplugin/sourcebansplugin.so
     - ./plugins/warn/warn.so
-    - ./plugins/antispam/antispam.so
+    # - ./plugins/antispam/antispam.so
   on:
     tags: true
     #condition: "$DODEPLOY = YES"
