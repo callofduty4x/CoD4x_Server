@@ -32,6 +32,7 @@ script:
   - cd plugins/simplebanlist && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/example_cpp_plugin && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/pchat && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/sourcebans && chmod +x makedll.sh && ./makedll.sh && cd ../..
 deploy:
   skip_cleanup: true
   provider: releases
@@ -45,6 +46,7 @@ deploy:
     - ./plugins/simplebanlist/simplebanlist.so
     - ./plugins/example_cpp_plugin/cpptest.so
     - ./plugins/pchat/pchat.so
+    - ./plugins/sourcebans/sourcebansplugin.so
   on:
     tags: true
     #condition: "$DODEPLOY = YES"
