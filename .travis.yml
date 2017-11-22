@@ -59,6 +59,7 @@ script:
   - cd plugins/pchat && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/sourcebansplugin && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/warn && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ..
   # - cd plugins/antispam && chmod +x makedll.sh && ./makedll.sh && cd ../..
   # missing: webapibanlist,   - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..
 deploy:
