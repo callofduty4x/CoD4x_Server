@@ -1,5 +1,5 @@
 ;Imports of com_bsp_load_obj:
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern comWorld
 	extern Hunk_AllocInternal
 	extern strcmp
@@ -48,7 +48,7 @@ Com_LoadWorld_FastFile:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0xc
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	leave
 	ret
 	nop

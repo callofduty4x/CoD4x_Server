@@ -6,6 +6,11 @@ typedef enum{FALSE, TRUE}BOOL;
 typedef unsigned int HANDLE;
 typedef pthread_t threadid_t;
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+
 BOOL __cdecl CloseHandle(HANDLE handle);
 signed int __cdecl Sys_ResetEvent(HANDLE handle);
 signed int __cdecl Sys_SetEvent(HANDLE handle);
@@ -18,7 +23,28 @@ threadid_t Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *ti
 int __cdecl GetFileAttributesA(const char* lpFileName);
 BOOL __cdecl SetFileAttributesA(const char* lpFileName, unsigned int dwFileAttributes);
 
+struct _OVERLAPPED
+{
+  unsigned int Internal;
+  unsigned int InternalHigh;
+  unsigned int Offset;
+  unsigned int OffsetHigh;
+  HANDLE hEvent;
+};
+
+BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(unsigned int,  unsigned int,  struct _OVERLAPPED *));
+int __cdecl SleepEx(int dwMilliseconds, BOOL alert);
+DWORD __cdecl GetLastError();
+
+DWORD __cdecl InterlockedDecrement(DWORD volatile *Addend);
+DWORD __cdecl InterlockedIncrement(DWORD volatile *Addend);
+DWORD __cdecl InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand);
+DWORD __cdecl InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value);
+DWORD __cdecl GetFileSize(HANDLE handle, DWORD *lpFileSizeHigh);
+
+#ifdef __cplusplus
+}
 #endif
 
-
+#endif
 

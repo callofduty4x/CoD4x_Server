@@ -4,7 +4,7 @@
 	extern Com_Memcpy
 	extern Hunk_FreeDebugMem
 	extern useFastFile
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern FS_FOpenFileByMode
 	extern fs_gameDirVar
 	extern Hunk_AllocateTempMemoryHigh
@@ -224,7 +224,7 @@ Scr_ReadFile_FastFile:
 	jz Scr_ReadFile_FastFile_10
 	mov [esp+0x4], esi
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	test eax, eax
 	jz Scr_ReadFile_FastFile_10
 	mov eax, [eax+0x8]
@@ -1198,7 +1198,7 @@ Scr_AddSourceBuffer_70:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	test eax, eax
 	jz Scr_AddSourceBuffer_120
 	mov esi, [eax+0x8]

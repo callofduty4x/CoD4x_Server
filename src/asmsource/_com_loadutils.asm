@@ -1,6 +1,6 @@
 ;Imports of com_loadutils:
 	extern FS_ReadFile
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern useFastFile
 	extern strncmp
 	extern Info_Validate
@@ -51,7 +51,7 @@ Com_LoadRawTextFile_FastFile:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	test eax, eax
 	jz Com_LoadRawTextFile_FastFile_10
 	mov eax, [eax+0x8]
@@ -78,7 +78,7 @@ Com_LoadInfoString:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	mov edi, eax
 	test eax, eax
 	jz Com_LoadInfoString_20

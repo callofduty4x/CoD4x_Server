@@ -5,7 +5,7 @@
 	extern FS_FCloseFile
 	extern va
 	extern Com_Error
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern TempMalloc
 	extern sprintf
 	extern FS_ListFiles
@@ -316,7 +316,7 @@ Scr_GetSourceFile_FastFile:
 	mov esi, [ebp+0x8]
 	mov [esp+0x4], esi
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	mov ebx, eax
 	test eax, eax
 	jz Scr_GetSourceFile_FastFile_10

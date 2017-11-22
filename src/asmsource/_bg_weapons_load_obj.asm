@@ -1,6 +1,6 @@
 ;Imports of bg_weapons_load_obj:
 	extern G_ParseWeaponAccurayGraphs
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern Hunk_AllocLowAlignInternal
 	extern strcpy
 	extern Com_Error
@@ -108,7 +108,7 @@ BG_LoadDefaultWeaponDef_FastFile:
 	sub esp, 0x18
 	mov dword [esp+0x4], _cstring_none
 	mov dword [esp], 0x17
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	leave
 	ret
 

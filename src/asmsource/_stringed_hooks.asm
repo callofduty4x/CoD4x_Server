@@ -1,5 +1,5 @@
 ;Imports of stringed_hooks:
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern strdup
 	extern SE_LoadLanguage
 	extern fs_ignoreLocalized
@@ -136,7 +136,7 @@ SE_GetString_FastFile_60:
 SE_GetString_FastFile_170:
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x16
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	test eax, eax
 	jz SE_GetString_FastFile_80
 	mov eax, [eax]

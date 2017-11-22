@@ -198,7 +198,7 @@
 	extern FS_FCloseFile
 	extern FS_Read
 	extern Com_Parse
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern Q_strlwr
 	extern CanDamage
 	extern Player_GetMethod
@@ -13378,7 +13378,7 @@ Scr_ParseGameTypeList_FastFile:
 	call memset
 	mov dword [esp+0x4], _cstring_mapsmpgametypes_
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	test eax, eax
 	jz Scr_ParseGameTypeList_FastFile_10
 	mov eax, [eax+0x8]
@@ -13438,7 +13438,7 @@ Scr_ParseGameTypeList_FastFile_20:
 	call va
 	mov [esp+0x4], eax
 	mov dword [esp], 0x1f
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	test eax, eax
 	jnz Scr_ParseGameTypeList_FastFile_70
 Scr_ParseGameTypeList_FastFile_40:

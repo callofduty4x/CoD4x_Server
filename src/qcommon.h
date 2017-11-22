@@ -28,7 +28,6 @@
 #include <time.h>
 #include "cvar.h"
 #include "qcommon_io.h"
-
 #define DEDICATEDONLY
 
 typedef enum {
@@ -85,17 +84,6 @@ extern unsigned int com_expectedHunkUsage;
 extern qboolean com_fixedConsolePosition;
 int Com_IsDeveloper();
 qboolean Com_LoadBinaryImage();
-
-enum snd_alias_system_t
-{
-  SASYS_UI = 0x0,
-  SASYS_CGAME = 0x1,
-  SASYS_GAME = 0x2,
-  SASYS_COUNT = 0x3,
-};
-
-
-void __cdecl Com_UnloadSoundAliases(enum snd_alias_system_t type);
 
 void Com_SyncThreads();
 

@@ -3,7 +3,7 @@
 	extern Com_Error
 	extern Com_PrintError
 	extern useFastFile
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 
 ;Exports of com_stringtable:
 	global StringTable_Lookup
@@ -125,7 +125,7 @@ StringTable_GetAsset_10:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x20
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	mov edx, [ebp+0xc]
 	mov [edx], eax
 	leave

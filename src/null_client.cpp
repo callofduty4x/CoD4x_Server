@@ -155,11 +155,7 @@ void __cdecl Load_SndAliasCustom(snd_alias_list_t **name)
   {
     varXStringPtr = (char***)name;
     Load_XStringPtr(0);
-    if(**varXStringPtr < (char*)0x1000)
-    {
-	__asm__("int $3");
-    }
-    Com_Printf(CON_CHANNEL_SYSTEM, "Load_SndAliasCustom NAme: %s\n", **varXStringPtr);
+    Com_Printf(CON_CHANNEL_SYSTEM, "Load_SndAliasCustom: %s\n", **varXStringPtr);
     XAssetHeader xah = DB_FindXAssetHeader(ASSET_TYPE_SOUND, **varXStringPtr);
     *name = xah.sound;
   }
@@ -232,7 +228,7 @@ struct FxEffectDef *__cdecl FX_Register(const char *name)
     return NULL;
 }
 
-struct snd_alias_t* __cdecl Com_FindSoundAlias(const char *name)
+struct snd_alias_list_t* __cdecl Com_FindSoundAlias(const char *name)
 {
     return NULL;
 }
@@ -300,7 +296,7 @@ const char* SND_GetEntChannelName(int index)
     return "server";
 }
 
-void Com_UnloadSoundAliases()
+void __cdecl Com_UnloadSoundAliases(snd_alias_system_t type)
 {
 
 }

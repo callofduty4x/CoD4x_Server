@@ -1,6 +1,6 @@
 ;Imports of xanim:
 	extern Hunk_FindDataForFile
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern SL_RemoveRefToString
 	extern SL_ConvertToString
 	extern SL_RemoveRefToStringOfSize
@@ -153,7 +153,7 @@ XAnimFindData_FastFile:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x2
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	leave
 	ret
 	nop

@@ -6,7 +6,7 @@
 	extern XModelCopyXModelParts
 	extern memset
 	extern Material_RegisterHandle
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern useFastFile
 	extern SL_RemoveRefToString
 	extern CM_CalcTraceExtents
@@ -147,7 +147,7 @@ XModelPrecache_FastFile:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x3
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	leave
 	ret
 	nop

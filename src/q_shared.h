@@ -186,6 +186,8 @@ void Com_Memcpy(void*, const void*, int);
 #define NET_CONNRESET -0x7002
 #define NET_ERROR -0x7003
 
+#define ARRAY_COUNT(array) (sizeof((array))/sizeof((array)[0]))
+
 short   ShortSwap (short l);
 short	ShortNoSwap (short l);
 int    LongSwap (int l);
@@ -703,11 +705,20 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
 #endif
 
 
+typedef enum
+{
+  SASYS_UI = 0x0,
+  SASYS_CGAME = 0x1,
+  SASYS_GAME = 0x2,
+  SASYS_COUNT = 0x3,
+}snd_alias_system_t;
+
+
+
 #include "q_platform.h"
 #include "q_math.h"
 #include "sys_cod4defs.h"
 #include "entity.h"
 
 #endif
-
 

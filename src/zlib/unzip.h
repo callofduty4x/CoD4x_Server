@@ -175,6 +175,11 @@ typedef struct
 #define UNZ_NOTCASESENSITIVE	2
 #define UNZ_OSDEFAULTCASE		0
 
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 extern int unzStringFileNameCompare (const char* fileName1, const char* fileName2, int iCaseSensitivity);
 
 /*
@@ -443,3 +448,21 @@ uLong adler32 OF((uLong adler, const Byte *buf, uInt len));
 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR * buf, unsigned len);
 
 
+int inflate(z_streamp z, int f);
+int inflateEnd(z_streamp z);
+int inflateInit_(z_streamp z, const char *version, int stream_size);
+#define ZLIB_VERSION "1.1.3"
+
+#define deflateInit(strm, level) \
+        deflateInit_((strm), (level),       ZLIB_VERSION, sizeof(z_stream))
+#define inflateInit(strm) \
+        inflateInit_((strm),                ZLIB_VERSION, sizeof(z_stream))
+#define deflateInit2(strm, level, method, windowBits, memLevel, strategy) \
+        deflateInit2_((strm),(level),(method),(windowBits),(memLevel),\
+                      (strategy),           ZLIB_VERSION, sizeof(z_stream))
+#define inflateInit2(strm, windowBits) \
+        inflateInit2_((strm), (windowBits), ZLIB_VERSION, sizeof(z_stream))
+
+#ifdef __cplusplus
+}
+#endif

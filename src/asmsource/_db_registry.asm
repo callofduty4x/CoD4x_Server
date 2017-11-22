@@ -296,7 +296,7 @@
 	global Mark_MaterialAsset
 	global Mark_MenuListAsset
 	global Mark_SndCurveAsset
-	global DB_FindXAssetHeader
+	global DB_FindXAssetHeaderReal
 	global Load_WeaponDefAsset
 	global Mark_WeaponDefAsset
 	global DB_LoadDelayedImages
@@ -4442,7 +4442,7 @@ DB_ReplaceModel:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x3
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	mov [ebp-0x1c], eax
 	lea edi, [ebp-0x20]
 	mov [esp], edi
@@ -4451,7 +4451,7 @@ DB_ReplaceModel:
 	mov eax, [ebp+0xc]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x3
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	mov ebx, eax
 	mov edx, [ebp-0x1c]
 	mov eax, [ebp-0x20]
@@ -5747,8 +5747,8 @@ Mark_SndCurveAsset_50:
 	nop
 
 
-;DB_FindXAssetHeader(XAssetType, char const*)
-DB_FindXAssetHeader:
+;DB_FindXAssetHeaderReal(XAssetType, char const*)
+DB_FindXAssetHeaderReal:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -7182,7 +7182,7 @@ Load_FxEffectDefFromName:
 	mov eax, [ebx]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x19
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	mov [ebx], eax
 Load_FxEffectDefFromName_10:
 	add esp, 0x14

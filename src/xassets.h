@@ -26,7 +26,8 @@
 
 #include "q_shared.h"
 #include "dobj.h"
-
+#include "xassets/weapondef.h"
+#include "xassets/material.h"
 #ifndef __cplusplus
 #include <stdbool.h>
 #endif
@@ -110,15 +111,15 @@ union XAssetHeader
   void *data;
 };
 
-typedef struct
+struct XAsset
 {
   enum XAssetType type;
   union XAssetHeader header;
-}XAsset;
-
-
+};
 
 extern char*** varXStringPtr;
+
+
 
 #ifdef __cplusplus
 extern "C"
@@ -143,7 +144,35 @@ void DB_PostLoadXZone();
 void DB_UpdateDebugZone();
 void DB_AddUserMapDir(const char *dir);
 void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsize);
-union XAssetHeader __cdecl DB_FindXAssetHeader(enum XAssetType type, const char *name);
+int __cdecl DB_GetAllXAssetOfType(enum XAssetType type, union XAssetHeader *assets, int maxCount);
+void __cdecl DB_ConvertOffsetToPointer(void *data);
+void __cdecl Load_Stream(bool atStreamStart, const void *ptr, int size);
+byte *__cdecl DB_AllocStreamPos(int alignment);
+void __cdecl DB_LoadXFileData(byte *pos, int count);
+void __cdecl DB_LoadDelayedImages();
+void Load_XAssetListCustom();
+void __cdecl Load_XAsset(bool atStreamStart);
+void __cdecl Load_XStringCustom(const char **str);
+void __cdecl Load_ScriptStringList(bool atStreamStart);
+#if defined( __GNUC__ ) && !defined( __MINGW32__ )
+//For GCC
+void* __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);
+static inline __attribute__((always_inline)) union XAssetHeader DB_FindXAssetHeader(enum XAssetType type, const char *name)
+{
+    union XAssetHeader r;
+
+    r.data = DB_FindXAssetHeaderReal(type, name);
+    return r;
+}
+
+#else
+
+//For MSVC & MinGW
+union XAssetHeader __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);
+#define DB_FindXAssetHeader DB_FindXAssetHeaderReal
+
+#endif
+
 void __cdecl Load_XStringPtr(bool atStreamstart);
 
 
@@ -156,28 +185,32 @@ void __cdecl Load_XStringPtr(bool atStreamstart);
 
 
 
+struct ScriptStringList
+{
+  int count;
+  const char **strings;
+};
 
 
+struct XAssetList
+{
+  struct ScriptStringList stringList;
+  int assetCount;
+  struct XAsset *assets;
+};
 
+
+extern struct XAssetList* varXAssetList;
+extern struct XAsset* varXAsset;
+extern union XAssetHeader *varXAssetHeader;
+extern int g_poolSize[ASSET_TYPE_COUNT];
+extern const char* g_assetNames[ASSET_TYPE_COUNT];
 
 /*
 ------------------------------------------------------------------------
 Just structures here I am too lazy to create headerfiles for now
 ------------------------------------------------------------------------
 */
-
-typedef struct _AILSOUNDINFO
-{
-  signed int format;
-  const void *data_ptr;
-  unsigned int data_len;
-  unsigned int rate;
-  signed int bits;
-  signed int channels;
-  unsigned int samples;
-  unsigned int block_size;
-  const void *initial_ptr;
-}AILSOUNDINFO;
 
 typedef struct
 {
@@ -187,4 +220,5 @@ typedef struct
 
 
 #endif
+
 

@@ -845,19 +845,6 @@ BOOL __cdecl CloseHandle(HANDLE handle)
   return FALSE;
 }
 
-struct _OVERLAPPED
-{
-  DWORD* Internal;
-  DWORD* InternalHigh;
-  union{
-    union{
-      DWORD Offset;
-      DWORD OffsetHigh;
-    };
-    void* Pointer;
-  };
-  HANDLE hEvent;
-};
 
 DWORD sLastError;
 
@@ -875,7 +862,7 @@ void __cdecl SetLastError(DWORD error_val)
   sLastError = error_val;
 }
 
-BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(DWORD, DWORD, void *))
+BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(unsigned int, unsigned int, struct _OVERLAPPED*))
 {
   sLastError = 0;
   hObject_t *hObject = (hObject_t*)handle;

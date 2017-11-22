@@ -20,14 +20,14 @@
 	extern R_FinishStaticVertexBuffer
 	extern R_FinishStaticIndexBuffer
 	extern memcpy
+	extern g_block_mem_name
+	extern g_block_mem_type
 
 ;Exports of db_memory:
 	global DB_EnumXAssets_LoadObj
 	global DB_EnumXAssets
 	global DB_GetAllXAssetOfType_LoadObj
 	global DB_GetAllXAssetOfType
-	global g_block_mem_name
-	global g_block_mem_type
 	global DB_AllocXZoneMemory
 	global DB_FinishGeometryBlocks
 	global DB_RecoverGeometryBuffers
@@ -516,9 +516,6 @@ SECTION .bss
 
 ;Initialized global or static variables of db_memory:
 SECTION .data
-g_block_mem_name: dd _cstring_temp, _cstring_runtime, _cstring_large_runtime, _cstring_physical_runtime, _cstring_virtual, _cstring_large, _cstring_physical, _cstring_vertex, _cstring_index, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-g_block_mem_type: dd 0x0, 0x1, 0x1, 0x2, 0x1, 0x1, 0x2, 0x2, 0x2, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
 
 ;Initialized constant data of db_memory:
 SECTION .rdata
@@ -528,15 +525,6 @@ SECTION .rdata
 SECTION .rdata
 _cstring_db_allocxzonemem:		db "DB_AllocXZoneMemory",0
 _cstring_could_not_alloca:		db "Could not allocate %.2f MB of type ",27h,"%s",27h," for zone ",27h,"%s",27h," needed an additional %.2f MB",0
-_cstring_temp:		db "temp",0
-_cstring_runtime:		db "runtime",0
-_cstring_large_runtime:		db "large_runtime",0
-_cstring_physical_runtime:		db "physical_runtime",0
-_cstring_virtual:		db "virtual",0
-_cstring_large:		db "large",0
-_cstring_physical:		db "physical",0
-_cstring_vertex:		db "vertex",0
-_cstring_index:		db "index",0
 
 
 

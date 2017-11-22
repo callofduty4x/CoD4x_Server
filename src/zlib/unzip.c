@@ -142,8 +142,6 @@
 
 #endif /* _ZCONF_H */
 
-#define ZLIB_VERSION "1.1.3"
-
 /* 
      The 'zlib' compression library provides in-memory compression and
   decompression functions, including integrity checks of the uncompressed

@@ -93,7 +93,7 @@ void Sys_SleepUSec(int usec);
 
 signed int __cdecl Sys_WaitForObject(HANDLE handle);
 signed int __cdecl Sys_IsObjectSignaled(HANDLE handle);
-
+void Sys_WaitDatabaseThread();
 #define MAX_VASTRINGS 2
 
 struct va_info_t

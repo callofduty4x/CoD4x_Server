@@ -32,6 +32,7 @@
 #include "cmd.h"
 #include "xassets/xmodel.h"
 #include "sys_thread.h"
+#include "zlib/unzip.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -83,12 +84,6 @@ void R_Init(){
 #define MAX_WEAPON 196
 //#define MAX_FX 680
 
-
-struct XAsset
-{
-  enum XAssetType type;
-  union XAssetHeader header;
-};
 
 struct XAssetEntry
 {
@@ -774,7 +769,7 @@ const char *__cdecl DB_GetXAssetHeaderName(int type, union XAssetHeader *header)
     return name;
 }
 
-const char *__cdecl DB_GetXAssetName(XAsset *asset)
+const char *__cdecl DB_GetXAssetName(struct XAsset *asset)
 {
     assert(asset);
     return DB_GetXAssetHeaderName(asset->type, &asset->header);
@@ -806,8 +801,305 @@ void CheckXAssetEntryTab()
 }
 */
 
+
 void __cdecl DB_MaterialSetName(union XAssetHeader *xasset, const char *name)
 {
 //  xasset->material->info.name = name;
     *(const char**)xasset->data = name;
 }
+
+extern byte* g_streamPos;
+//extern XBlock* g_streamBlocks;
+extern unsigned int g_streamPosIndex;
+
+
+extern char* varConstChar;
+extern char** varXString;
+extern char*** varXStringPtr;
+
+void __cdecl Load_XStringCustom(const char **str)
+{
+  int numBytesLoaded;
+  const char* string = *str;
+  for ( numBytesLoaded = 1; ; ++numBytesLoaded )
+  {
+    DB_LoadXFileData((byte *)string, 1);
+    if ( !*string )
+    {
+      break;
+    }
+    ++string;
+  }
+  DB_IncStreamPos((int)numBytesLoaded);
+}
+
+void __cdecl Load_XStringPtr(bool atStreamstart)
+{
+    Load_Stream(atStreamstart, varXStringPtr, 4);
+    if ( !*varXStringPtr )
+    {
+        return;
+    }
+    if ( (signed int)*varXStringPtr != -1 )
+    {
+      DB_ConvertOffsetToPointer(varXStringPtr);
+      return;
+    }
+    *varXStringPtr = (char**)DB_AllocStreamPos(3);
+    varXString = *varXStringPtr;
+    Load_Stream(1u, varXString, 4);
+    if ( !*varXString )
+    {
+        return;
+    }
+    if ( (int)*varXString != -1 )
+    {
+        DB_ConvertOffsetToPointer(varXString);
+        return;
+
+    }
+    *varXString = (char*)DB_AllocStreamPos(0);
+    varConstChar = *varXString;
+    Load_XStringCustom(varXString);
+
+}
+
+/*
+void __cdecl Load_ScriptStringCustom(uint16_t *var)
+{
+  *var = (uint16_t)varXAssetList->stringList.strings[*var];
+}
+*/
+
+extern struct WeaponDef* varWeaponDef;
+extern snd_alias_list_name* varsnd_alias_list_name;
+
+void __cdecl Load_WeaponDefSounds()
+{
+  int i;
+  Com_Printf(0, "Weapon sounds for %s\n", varWeaponDef->szInternalName);
+  varsnd_alias_list_name = &varWeaponDef->pickupSound;
+  Load_Stream(0, &varWeaponDef->pickupSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->pickupSoundPlayer;
+  Load_Stream(0, &varWeaponDef->pickupSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->ammoPickupSound;
+  Load_Stream(0, &varWeaponDef->ammoPickupSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->ammoPickupSoundPlayer;
+  Load_Stream(0, &varWeaponDef->ammoPickupSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->projectileSound;
+  Load_Stream(0, &varWeaponDef->projectileSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->pullbackSound;
+  Load_Stream(0, &varWeaponDef->pullbackSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->pullbackSoundPlayer;
+  Load_Stream(0, &varWeaponDef->pullbackSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireSound;
+  Load_Stream(0, &varWeaponDef->fireSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireLoopSound;
+  Load_Stream(0, &varWeaponDef->fireLoopSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireLoopSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireLoopSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireStopSound;
+  Load_Stream(0, &varWeaponDef->fireStopSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireStopSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireStopSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireLastSound;
+  Load_Stream(0, &varWeaponDef->fireLastSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->fireLastSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireLastSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->emptyFireSound;
+  Load_Stream(0, &varWeaponDef->emptyFireSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->emptyFireSoundPlayer;
+  Load_Stream(0, &varWeaponDef->emptyFireSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->meleeSwipeSound;
+  Load_Stream(0, &varWeaponDef->meleeSwipeSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->meleeSwipeSoundPlayer;
+  Load_Stream(0, &varWeaponDef->meleeSwipeSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->meleeHitSound;
+  Load_Stream(0, &varWeaponDef->meleeHitSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->meleeMissSound;
+  Load_Stream(0, &varWeaponDef->meleeMissSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->rechamberSound;
+  Load_Stream(0, &varWeaponDef->rechamberSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->rechamberSoundPlayer;
+  Load_Stream(0, &varWeaponDef->rechamberSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadSound;
+  Load_Stream(0, &varWeaponDef->reloadSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadSoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadEmptySound;
+  Load_Stream(0, &varWeaponDef->reloadEmptySound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadEmptySoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadEmptySoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadStartSound;
+  Load_Stream(0, &varWeaponDef->reloadStartSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadStartSoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadStartSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadEndSound;
+  Load_Stream(0, &varWeaponDef->reloadEndSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->reloadEndSoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadEndSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->detonateSound;
+  Load_Stream(0, &varWeaponDef->detonateSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->detonateSoundPlayer;
+  Load_Stream(0, &varWeaponDef->detonateSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->nightVisionWearSound;
+  Load_Stream(0, &varWeaponDef->nightVisionWearSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->nightVisionWearSoundPlayer;
+  Load_Stream(0, &varWeaponDef->nightVisionWearSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->nightVisionRemoveSound;
+  Load_Stream(0, &varWeaponDef->nightVisionRemoveSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->nightVisionRemoveSoundPlayer;
+  Load_Stream(0, &varWeaponDef->nightVisionRemoveSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->altSwitchSound;
+  Load_Stream(0, &varWeaponDef->altSwitchSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->altSwitchSoundPlayer;
+  Load_Stream(0, &varWeaponDef->altSwitchSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->raiseSound;
+  Load_Stream(0, &varWeaponDef->raiseSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->raiseSoundPlayer;
+  Load_Stream(0, &varWeaponDef->raiseSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->firstRaiseSound;
+  Load_Stream(0, &varWeaponDef->firstRaiseSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->firstRaiseSoundPlayer;
+  Load_Stream(0, &varWeaponDef->firstRaiseSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->putawaySound;
+  Load_Stream(0, &varWeaponDef->putawaySound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  varsnd_alias_list_name = &varWeaponDef->putawaySoundPlayer;
+  Load_Stream(0, &varWeaponDef->putawaySoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+
+  if ( varWeaponDef->bounceSound )
+  {
+    if ( varWeaponDef->bounceSound == (struct snd_alias_list_t **)-1 )
+    {
+      varWeaponDef->bounceSound = (struct snd_alias_list_t **)DB_AllocStreamPos(3);
+      varsnd_alias_list_name = varWeaponDef->bounceSound;
+      Load_Stream(1, varsnd_alias_list_name, 116);
+      i = 29;
+      do
+      {
+        Load_Stream(0, varsnd_alias_list_name, 4);
+        Load_SndAliasCustom(varsnd_alias_list_name);
+        ++varsnd_alias_list_name;
+        --i;
+      }
+      while ( i );
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&varWeaponDef->bounceSound);
+    }
+  }
+}
+
+extern void* varScriptStringList;
+
+void Load_XAssetListCustom()
+{
+  static struct XAssetList* g_varXAssetList;
+
+  varXAssetList = (void*)&g_varXAssetList;
+  DB_LoadXFileData((byte *)&g_varXAssetList, 16);
+  DB_PushStreamPos(4u);
+  varScriptStringList = varXAssetList;
+  Load_ScriptStringList(0);
+  DB_PopStreamPos();
+}
+
+void __cdecl Load_XAsset(bool atStreamStart)
+{
+  Load_Stream(atStreamStart, varXAsset, 8);
+  varXAssetHeader = &varXAsset->header;
+  Load_XAssetHeader(0);
+}
+

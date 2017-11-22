@@ -4,7 +4,7 @@
 	extern Com_sprintf
 	extern Com_Error
 	extern ParseConfigStringToStruct
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern BG_LoadWeaponDefInternal
 	extern SetConfigString
 	extern Com_DPrintf
@@ -251,7 +251,7 @@ BG_LoadWeaponDef_FastFile:
 BG_LoadWeaponDef_FastFile_10:
 	mov [esp+0x4], eax
 	mov dword [esp], 0x17
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	leave
 	ret
 
@@ -4888,7 +4888,7 @@ BG_GetWeaponIndexForName_40:
 BG_GetWeaponIndexForName_60:
 	mov [esp+0x4], edi
 	mov dword [esp], 0x17
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	mov [esp+0x4], edi
 	mov dword [esp], 0x17
 	call DB_IsXAssetDefault

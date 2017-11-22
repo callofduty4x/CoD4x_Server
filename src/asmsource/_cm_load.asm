@@ -3,7 +3,7 @@
 	extern CM_LoadMapFromBsp
 	extern CM_LoadStaticModels
 	extern DynEnt_LoadEntities
-	extern DB_FindXAssetHeader
+	extern DB_FindXAssetHeaderReal
 	extern useFastFile
 	extern g_traceThreadInfo
 	extern Hunk_AllocInternal
@@ -74,7 +74,7 @@ CM_LoadMapData_FastFile:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0xb
-	call DB_FindXAssetHeader
+	call DB_FindXAssetHeaderReal
 	leave
 	ret
 	nop

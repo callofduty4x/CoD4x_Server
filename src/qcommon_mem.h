@@ -88,6 +88,9 @@ void *Z_Malloc( int size );			// returns 0 filled memory
 void *S_Malloc( int size );			// NOT 0 filled memory only for small allocations
 #endif
 
+int __cdecl PMem_GetOverAllocatedSize();
+byte *__cdecl PMem_Alloc(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType);
+
 #ifdef __cplusplus
 }
 #endif
