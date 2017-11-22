@@ -452,7 +452,7 @@ PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain informati
 
     // =====  OPTIONAL  FIELDS  =====
     info->pluginVersion.major = 2;
-    info->pluginVersion.minor = 5;	// Plugin version
+    info->pluginVersion.minor = 4;	// Plugin version
     strncpy(info->fullName,"Cod4X Antispam 2017",sizeof(info->fullName)); //Full plugin name
     strncpy(info->shortDescription,"This plugin is used to prevent spam in the ingame chat. Made by Usmania ",sizeof(info->shortDescription)); // Short plugin description
     strncpy(info->longDescription,"This plugin is used to prevent spam in the ingame chat. To personalize the settings, set corresponding cvars.",sizeof(info->longDescription));
