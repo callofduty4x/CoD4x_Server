@@ -8,9 +8,11 @@
 void OnPluginLoad(EPluginLoadingResult* pResult_)
 {
     trap_Com_Printf("[alltests]: Hello, %s world!\n", "formatted");
+    trap_Com_PrintError("[alltests]: Com_PrintError(): Test Com_PrintError %d\n", 1);
+    trap_Com_DPrintf("[alltests]: Com_DPrintf(): Com_DPrintf %s !\n", "test");
+    trap_Com_PrintWarning("[alltests]: Com_PrintWarning(): Com_PrintWarning %s !\n", "test");
+    //trap_Com_Error("[alltests]: Com_Error(): Test Com_Error %d\n", 2);
     *pResult_ = PLR_OK;
-	trap_Com_PrintError("[alltests]: Com_PrintError(): Test Com_PrintError %d\n", 1);
-	//trap_Com_Error("[alltests]: Com_Error(): Test Com_Error %d\n", 2);
 }
 
 void OnPluginUnload()
