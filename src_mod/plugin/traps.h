@@ -67,3 +67,8 @@ inline void trap_Com_PrintWarning(const char* const Fmt, ... )
 
     syscall(AC_Com_PrintWarning, msg);
 }
+
+inline void trap_Cbuf_AddText(const char* text)
+{
+    syscall(AC_Cbuf_AddText, text);
+}
