@@ -43,7 +43,9 @@
 #define XBLOCK_COUNT XBLOCK_COUNT_IW3
 #define DM_MEMORY_PHYSICAL 2
 #define DEFLATE_BUFFER_SIZE 0x8000
+#define DBFILE_BUFFER_SIZE 0x80000
 #define FASTFILE_VERSION 5
+
 
 struct XBlock
 {
@@ -180,6 +182,7 @@ struct DB_LoadData
   int flags;
   int startTime;
   bool abort;
+  byte deflateBuffer[DEFLATE_BUFFER_SIZE];
 };
 
 struct StreamPosInfo
@@ -404,7 +407,7 @@ qboolean __cdecl DB_ReadData()
   {
     g_load.interrupt();
   }
-  fileBuffer = &g_load.compressBufferStart[g_load.overlapped.Offset % 0x80000];
+  fileBuffer = &g_load.compressBufferStart[g_load.overlapped.Offset % DBFILE_BUFFER_SIZE];
 
   Sys_WaitDatabaseThread();
 
@@ -454,10 +457,155 @@ void DB_WaitXFileStage()
     g_load.stream.avail_in += 0x40000;
 }
 
+
+#define INVALID_DBFILE -1
+
+void __cdecl DB_CancelLoadXFile()
+{
+  if ( g_load.compressBufferStart )
+  {
+    while ( g_load.outstandingReads )
+    {
+      DB_WaitXFileStage();
+    }
+
+    DB_AuthLoad_InflateEnd(&g_load.stream);
+
+    assert ( g_load.f );
+    assert ( (signed int)g_load.f != INVALID_DBFILE );
+
+    CloseHandle(g_load.f);
+  }
+}
+
+
+
+void __cdecl DB_LoadXFileData(byte *pos, int size)
+{
+  signed int lastAvailOutSize;
+  int lastDeflateRemainingFileSize;
+  int bytesToCopy;
+  int err;
+
+  assert(size);
+  assert(g_load.f);
+  assert(!g_load.stream.avail_out);
+  if ( size <= 0 )
+  {
+    return;
+  }
+  while( size + g_load.deflateBufferPos > DEFLATE_BUFFER_SIZE && size > 0)
+  {
+      assert(g_load.deflateBufferPos <= DEFLATE_BUFFER_SIZE);
+
+      if ( g_load.deflateBufferPos < DEFLATE_BUFFER_SIZE )
+      {
+        bytesToCopy = DEFLATE_BUFFER_SIZE - g_load.deflateBufferPos;
+        if ( g_load.deflateBufferPos == DEFLATE_BUFFER_SIZE -1 )
+        {
+          *pos = g_load.deflateBuffer[g_load.deflateBufferPos];
+        }
+        else
+        {
+          memcpy(pos, &g_load.deflateBuffer[g_load.deflateBufferPos], bytesToCopy);
+        }
+        g_load.deflateBufferPos += bytesToCopy;
+        pos += bytesToCopy;
+        size -= bytesToCopy;
+      }
+      if ( g_load.deflateRemainingFileSize < DEFLATE_BUFFER_SIZE )
+      {
+        lastDeflateRemainingFileSize = g_load.deflateRemainingFileSize;
+      }
+      else
+      {
+        lastDeflateRemainingFileSize = DEFLATE_BUFFER_SIZE;
+      }
+      g_load.stream.avail_out = lastDeflateRemainingFileSize;
+      g_load.deflateBufferPos = DEFLATE_BUFFER_SIZE - lastDeflateRemainingFileSize;
+      g_load.stream.next_out = &g_load.deflateBuffer[DEFLATE_BUFFER_SIZE - lastDeflateRemainingFileSize];
+      if ( lastDeflateRemainingFileSize < size )
+      {
+        lastAvailOutSize = g_load.stream.avail_out;
+      }
+      else
+      {
+        lastAvailOutSize = size;
+      }
+      size -= lastAvailOutSize;
+      g_load.deflateRemainingFileSize -= g_load.stream.avail_out;
+      do
+      {
+        if ( !g_load.stream.avail_in )
+        {
+          DB_WaitXFileStage();
+          DB_ReadXFileStage();
+          continue;
+        }
+        err = DB_AuthLoad_Inflate(&g_load.stream, 2);
+        if ( err && err != 1)
+        {
+          //R_ShowDirtyDiscError();
+          DB_CancelLoadXFile();
+          Com_Error(ERR_DROP, "Fastfile for zone '%s' appears corrupt or unreadable (code %i.)", g_load.filename, err + 110);
+        }
+        if ( g_load.f)
+        {
+          assert((unsigned int)( g_load.stream.next_in - (byte*)g_load.compressBufferStart ) <= DBFILE_BUFFER_SIZE);
+          if( g_load.stream.next_in == (byte*)g_load.compressBufferEnd)
+          {
+            g_load.stream.next_in = (byte*)g_load.compressBufferStart;
+          }
+        }
+        assertx(err == Z_OK, "Invalid fast file '%s' (%d != Z_OK)", g_load.filename, err);
+        if ( g_load.stream.avail_out )
+        {
+          DB_WaitXFileStage();
+          DB_ReadXFileStage();
+        }
+      }while(g_load.stream.avail_out);
+      assert(lastAvailOutSize <= DEFLATE_BUFFER_SIZE);
+      if ( lastAvailOutSize == 1 )
+      {
+        *pos = g_load.deflateBuffer[g_load.deflateBufferPos];
+      }
+      else
+      {
+        memcpy(pos, &g_load.deflateBuffer[g_load.deflateBufferPos], lastAvailOutSize);
+      }
+      g_load.deflateBufferPos += lastAvailOutSize;
+      pos += lastAvailOutSize;
+  }
+  if ( size == 1 )
+  {
+    *pos = g_load.deflateBuffer[g_load.deflateBufferPos];
+  }
+  else
+  {
+    memcpy(pos, &g_load.deflateBuffer[g_load.deflateBufferPos], size);
+  }
+  g_load.deflateBufferPos += size;
+}
+
+
+
+
+
+
+
+
+
+
+
+#if 0
 void __cdecl DB_LoadXFileData(byte *pos, int count)
 {
   unsigned int err;
   int i;
+
+  assert( size );
+  assert( g_load.f );
+  assert ( !g_load.stream.avail_out );
 
   g_load.stream.next_out = (byte *)pos;
   g_load.stream.avail_out = count;
@@ -496,6 +644,8 @@ void __cdecl DB_LoadXFileData(byte *pos, int count)
     DB_ReadXFileStage();
   }
 }
+#endif
+
 
 void __cdecl DB_LoadXFileSetSize(int size)
 {
@@ -503,25 +653,6 @@ void __cdecl DB_LoadXFileSetSize(int size)
   g_load.deflateRemainingFileSize = size;
 }
 
-#define INVALID_DBFILE -1
-
-void __cdecl DB_CancelLoadXFile()
-{
-  if ( g_load.compressBufferStart )
-  {
-    while ( g_load.outstandingReads )
-    {
-      DB_WaitXFileStage();
-    }
-
-    DB_AuthLoad_InflateEnd(&g_load.stream);
-
-    assert ( g_load.f );
-    assert ( (signed int)g_load.f != INVALID_DBFILE );
-
-    CloseHandle(g_load.f);
-  }
-}
 
 
 bool s_usageUpToDate[ASSET_TYPE_COUNT];
@@ -574,6 +705,7 @@ void __cdecl Load_XAssetArrayCustom(int count)
   {
     varXAsset = var;
     Load_XAsset(0);
+    Com_Printf(CON_CHANNEL_SYSTEM, "Loaded %s\n", DB_GetXAssetName(varXAsset));
     ++var;
     if ( g_load.abort )
     {
@@ -720,15 +852,15 @@ bool __cdecl DB_LoadXFile(const char *path, HANDLE f, const char *filename, XBlo
   g_load.allocType = allocType;
   g_load.startTime = Sys_Milliseconds();
 
-  assert ( !g_load.compressBufferStart );
+  assert( !g_load.compressBufferStart );
   assert( g_load.f);
   assert( buf);
 
   g_load.compressBufferStart = buf;
-  g_load.compressBufferEnd = buf + 0x80000;
+  g_load.compressBufferEnd = buf + DBFILE_BUFFER_SIZE;
   g_load.stream.next_in = (byte*)buf;
   g_load.stream.avail_in = 0;
-  g_load.deflateBufferPos = 0x8000;
+  g_load.deflateBufferPos = DEFLATE_BUFFER_SIZE;
   //DB_LoadXFileInternal();
   return 1;
 }

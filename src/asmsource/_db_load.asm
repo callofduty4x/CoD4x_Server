@@ -73,13 +73,13 @@
 	extern Load_WeaponDefSounds
 	extern Load_WeaponDef
 
+
 ;Exports of db_load:
 	global Load_XModel
 	global Mark_XAsset
 	global Load_GfxCell
 	global Load_MapEnts
 	global Load_RawFile
-	global Load_XString
 	global Load_water_t
 	global Load_ComWorld
 	global Load_GfxWorld
@@ -1090,48 +1090,6 @@ Load_RawFile_20:
 	mov [esp], edx
 	call Load_XStringCustom
 	jmp Load_RawFile_10
-
-
-;Load_XString(unsigned char)
-Load_XString:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov dword [esp+0x8], 0x4
-	mov eax, [varXString]
-	mov [esp+0x4], eax
-	movzx eax, byte [ebp+0x8]
-	mov [esp], eax
-	call Load_Stream
-	mov ebx, [varXString]
-	mov eax, [ebx]
-	test eax, eax
-	jz Load_XString_10
-	add eax, 0x1
-	jz Load_XString_20
-	mov [ebp+0x8], ebx
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	jmp DB_ConvertOffsetToPointer
-Load_XString_20:
-	mov dword [esp], 0x0
-	call DB_AllocStreamPos
-	mov [ebx], eax
-	mov edx, [varXString]
-	mov eax, [edx]
-	mov [varConstChar], eax
-	mov [ebp+0x8], edx
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	jmp Load_XStringCustom
-Load_XString_10:
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
 
 
 ;Load_water_t(unsigned char)

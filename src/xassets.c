@@ -760,8 +760,13 @@ const char *__cdecl DB_GetXAssetHeaderName(int type, union XAssetHeader *header)
     const char *name;
 
     assert(header);
-    assert(DB_XAssetGetNameHandler[type]);
+//    assert(DB_XAssetGetNameHandler[type]);
     assert(header->data);
+    if(DB_XAssetGetNameHandler[type] == NULL)
+    {
+        return "Name not found for asset";
+    }
+
     name = DB_XAssetGetNameHandler[type](header);
 
     assertx(name, "Name not found for asset type %s\n", g_assetNames[type]);
@@ -1274,6 +1279,34 @@ void __cdecl Load_XAsset(bool atStreamStart)
   Load_XAssetHeader(0);
 }
 
+struct ComBurnableSample
+{
+  char state;
+};
+
+
+struct ComBurnableSample *__cdecl AllocLoad_raw_byte()
+{
+  return (struct ComBurnableSample *)DB_AllocStreamPos(0);
+}
+
+void __cdecl Load_XString(bool atStreamStart)
+{
+  Load_Stream(atStreamStart, varXString, 4);
+  if ( *varXString )
+  {
+    if ( (signed int)*varXString == -1 )
+    {
+      *varXString = (char *)AllocLoad_raw_byte();
+      varConstChar = *varXString;
+      Load_XStringCustom((const char **)varXString);
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(varXString);
+    }
+  }
+}
 
 
 void __cdecl Load_WeaponDef(bool atStreamStart)
@@ -1301,8 +1334,9 @@ void __cdecl Load_WeaponDef(bool atStreamStart)
   struct snd_alias_list_t **v21; // ebx@31
   signed int v22; // esi@31
   vec2_t *varvec2_t;
+  int i;
 
-  Load_Stream(atStreamStart, varWeaponDef, 2168);
+  Load_Stream(atStreamStart, varWeaponDef, sizeof(struct WeaponDef));
   DB_PushStreamPos(4);
   varXString = &varWeaponDef->szInternalName;
   Load_XString(0);
@@ -1324,18 +1358,13 @@ void __cdecl Load_WeaponDef(bool atStreamStart)
   while ( v2 );
   varXModelPtr = &varWeaponDef->handXModel;
   Load_XModelPtr(0);
+
   varXString = varWeaponDef->szXAnims;
   Load_Stream(0, varWeaponDef->szXAnims, 132);
-  v3 = varXString;
-  v4 = 33;
-  do
+  for(i = 0; i < ARRAY_COUNT(varWeaponDef->szXAnims); ++i, ++varXString)
   {
-    varXString = v3;
     Load_XString(0);
-    ++v3;
-    --v4;
   }
-  while ( v4 );
   varXString = &varWeaponDef->szModeName;
   Load_XString(0);
   varScriptString = varWeaponDef->hideTags;

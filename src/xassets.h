@@ -165,7 +165,7 @@ void __cdecl Load_ScriptStringCustom(uint16_t *var);
 void __cdecl Load_XModelPtr(bool atStreamStart);
 void __cdecl Load_XString(bool atStreamStart);
 void __cdecl Load_XAssetHeader(bool atStreamStart);
-
+const char* DB_GetXAssetName(struct XAsset*);
 
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For GCC
