@@ -83,9 +83,11 @@ inline void trap_SV_GetConfigString(int index, char *buffer, int bufferSize)
     syscall(AC_SV_GetConfigString, index, buffer, bufferSize);
 }
 
-inline void trap_SV_GetStat(int clientNum, signed int index, int *ret)
+inline int trap_SV_GetStat(int clientNum, signed int index)
 {
-    syscall(AC_SV_GetStat, clientNum, index, ret);
+    int ret = 0;
+    syscall(AC_SV_GetStat, clientNum, index, &ret);
+    return ret;
 }
 
 inline void trap_SV_SetStat(int clientNum, signed int index, int value)

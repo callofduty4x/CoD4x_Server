@@ -14,8 +14,6 @@ extern "C" {
 
 #define VARG(num, type) ((type)(((int*)&Code_)[1 + num]))
 
-void SV_GetStat(int clientNum, signed int index, int *ret);
-
 void SysCallDispatcher(const EAPICode Code_, ...)
 {
     switch(Code_)
@@ -45,17 +43,15 @@ void SysCallDispatcher(const EAPICode Code_, ...)
             SV_GetConfigstring(VARG(0, int), VARG(1, char*), VARG(2, int));
             break;
         case AC_SV_GetStat:
-            SV_GetStat(VARG(0, int), VARG(1, int), VARG(2, int*));
-            break;
+            {
+                int* result = VARG(2, int*);
+                *result = SV_GetClientStat(VARG(0, int), VARG(1, int));
+                break;
+            }
         case AC_SV_SetStat:
             SV_SetClientStat(VARG(0, int), VARG(1, int), VARG(2, int));
             break;
 			default: 
             Com_Error(0, "Unknown system call index: %d", Code_);
     }
-}
-
-void SV_GetStat(int clientNum, signed int index, int *ret)
-{
-    *ret = SV_GetClientStat(clientNum, index);
 }
