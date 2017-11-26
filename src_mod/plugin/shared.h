@@ -7,7 +7,11 @@ enum EAPICode
     AC_Com_PrintError = 2,
     AC_Com_DPrintf = 3,
     AC_Com_PrintWarning = 4,
-    AC_Cbuf_AddText = 5
+    AC_Cbuf_AddText = 5,
+    AC_SV_SetConfigString = 6,
+    AC_SV_GetConfigString = 7,
+    AC_SV_GetStat = 8,
+    AC_SV_SetStat = 9
 };
 
 typedef void (*TSysCall)(const EAPICode Code_, ...);

@@ -72,3 +72,23 @@ inline void trap_Cbuf_AddText(const char* text)
 {
     syscall(AC_Cbuf_AddText, text);
 }
+
+inline void trap_SV_SetConfigString(int index, const char *val)
+{
+    syscall(AC_SV_SetConfigString, index, val);
+}
+
+inline void trap_SV_GetConfigString(int index, char *buffer, int bufferSize)
+{
+    syscall(AC_SV_GetConfigString, index, buffer, bufferSize);
+}
+
+inline void trap_SV_GetStat(int clientNum, signed int index, int *ret)
+{
+    syscall(AC_SV_GetStat, clientNum, index, ret);
+}
+
+inline void trap_SV_SetStat(int clientNum, signed int index, int value)
+{
+    syscall(AC_SV_SetStat, clientNum, index, value);
+}
