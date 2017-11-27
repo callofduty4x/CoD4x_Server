@@ -4,6 +4,7 @@
 //      You can change inner code. Do not delete functions - old plugins may rely on these.
 #pragma once
 
+#include "../core/server.h"
 #include "base.h"
 #include <cstdio>
 #include <cstdarg>
@@ -93,4 +94,14 @@ inline int trap_SV_GetStat(int clientNum, signed int index)
 inline void trap_SV_SetStat(int clientNum, signed int index, int value)
 {
     syscall(AC_SV_SetStat, clientNum, index, value);
+}
+
+inline void trap_RemoveBanByIP(netadr_t *remote)
+{
+    syscall(AC_RemoveBanByIP, remote);
+}
+
+inline void trap_AddBanByIP(netadr_t *remote, char *message, int expire)
+{
+    syscall(AC_AddBanByIP, remote, message, expire);
 }

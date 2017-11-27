@@ -11,7 +11,9 @@ enum EAPICode
     AC_SV_SetConfigString = 6,
     AC_SV_GetConfigString = 7,
     AC_SV_GetStat = 8,
-    AC_SV_SetStat = 9
+    AC_SV_SetStat = 9,
+    AC_RemoveBanByIP = 10,
+    AC_AddBanByIP = 11
 };
 
 typedef void (*TSysCall)(const EAPICode Code_, ...);

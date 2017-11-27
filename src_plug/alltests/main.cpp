@@ -19,6 +19,8 @@ void OnPluginLoad(EPluginLoadingResult* pResult_)
     trap_SV_SetStat(0, 0, 800);
     int ret = trap_SV_GetStat(0, 0);
     trap_Com_Printf("[alltests]: SV_GetStat(): %d \n", ret);
+    //trap_RemoveBanByIP(&remote);
+    //trap_AddBanByIP(&request->remote, "Invalid login attempt. You have to wait 20 seconds", 20);
     //trap_Com_Error("[alltests]: Com_Error(): Test Com_Error %d\n", 2);
     *pResult_ = PLR_OK;
 }

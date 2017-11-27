@@ -27,7 +27,7 @@
 
 #include "q_shared.h"
 #include "cvar.h"
-#include <zlib/unzip.h>
+#include "../zlib/unzip.h"
 /* #define fs_searchpaths (searchpath_t*)*((int*)(0x13f9da28)) */
 
 #define	DEMOGAME			"demota"

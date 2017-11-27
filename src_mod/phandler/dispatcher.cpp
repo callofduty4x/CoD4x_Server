@@ -51,6 +51,12 @@ void SysCallDispatcher(const EAPICode Code_, ...)
         case AC_SV_SetStat:
             SV_SetClientStat(VARG(0, int), VARG(1, int), VARG(2, int));
             break;
+        case AC_RemoveBanByIP:
+            SV_RemoveBanByip(VARG(0, netadr_t*));
+            break;
+        case AC_AddBanByIP:
+            SV_PlayerAddBanByip(VARG(0, netadr_t*), VARG(1, char*), VARG(2, int));
+            break;
 			default: 
             Com_Error(0, "Unknown system call index: %d", Code_);
     }

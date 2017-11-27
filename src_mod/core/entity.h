@@ -26,7 +26,7 @@
 
 #include "q_math.h"
 #include "q_shared.h"
-#include <game/surfaceflags.h>
+#include "../game/surfaceflags.h"
 
 #define g_entities ((gentity_t*)(0x841ffe0))
 
