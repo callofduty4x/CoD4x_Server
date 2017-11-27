@@ -766,10 +766,15 @@ void Sys_DoStartProcess( char *cmdline ) {
 
 void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect)
 {
+  int pagesize = 0x1000;
+
   if ( !address )
-    return calloc(1, dwSize);
-  else
-	Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
+  {
+    address = calloc(1, dwSize + pagesize);
+    address = (void*)( (unsigned int)(address + pagesize) & ~(pagesize -1));
+  }else{
+      Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
+  }
   return address;
 }
 

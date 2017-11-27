@@ -30,17 +30,19 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-#ifndef __WIN32
-void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect);
-bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType);
-#include "unix/sys_unix.h"
-#endif
 
 
 
 #ifdef __cplusplus
 extern "C"{
 #endif
+
+#ifndef __WIN32
+void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect);
+bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType);
+#include "unix/sys_unix.h"
+#endif
+
 
 unsigned int Sys_Milliseconds( void );
 unsigned long long Sys_MillisecondsLong( void );

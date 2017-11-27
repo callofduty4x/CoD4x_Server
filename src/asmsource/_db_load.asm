@@ -446,6 +446,7 @@ Load_XModel:
 	mov [esp], ebx
 	call DB_ConvertOffsetToPointer
 Load_XModel_10:
+Load_XModel_BoneNames:
 	mov ebx, [varXModel]
 	mov eax, [ebx+0x8]
 	test eax, eax
@@ -457,6 +458,7 @@ Load_XModel_10:
 	call DB_ConvertOffsetToPointer
 	mov ebx, [varXModel]
 Load_XModel_30:
+Load_XModel_parentList:
 	mov eax, [ebx+0xc]
 	test eax, eax
 	jz Load_XModel_50
@@ -467,6 +469,7 @@ Load_XModel_30:
 	call DB_ConvertOffsetToPointer
 	mov ebx, [varXModel]
 Load_XModel_50:
+Load_XModel_quats:
 	mov eax, [ebx+0x10]
 	test eax, eax
 	jz Load_XModel_70
@@ -477,6 +480,7 @@ Load_XModel_50:
 	call DB_ConvertOffsetToPointer
 	mov ebx, [varXModel]
 Load_XModel_70:
+Load_XModel_trans:
 	mov eax, [ebx+0x14]
 	test eax, eax
 	jz Load_XModel_90
@@ -487,6 +491,7 @@ Load_XModel_70:
 	call DB_ConvertOffsetToPointer
 	mov ebx, [varXModel]
 Load_XModel_90:
+Load_XModel_partClassification:
 	mov eax, [ebx+0x18]
 	test eax, eax
 	jz Load_XModel_110
@@ -497,6 +502,7 @@ Load_XModel_90:
 	call DB_ConvertOffsetToPointer
 	mov ebx, [varXModel]
 Load_XModel_110:
+Load_XModel_baseMat:
 	mov eax, [ebx+0x1c]
 	test eax, eax
 	jz Load_XModel_130
@@ -507,6 +513,7 @@ Load_XModel_110:
 	call DB_ConvertOffsetToPointer
 	mov ebx, [varXModel]
 Load_XModel_130:
+Load_XModel_surfs:
 	mov ecx, [ebx+0x20]
 	test ecx, ecx
 	jz Load_XModel_150
@@ -531,6 +538,7 @@ Load_XModel_130:
 Load_XModel_280:
 	mov ebx, [varXModel]
 Load_XModel_150:
+Load_XModel_materialHandles:
 	mov edx, [ebx+0x24]
 	test edx, edx
 	jz Load_XModel_170
@@ -552,6 +560,7 @@ Load_XModel_150:
 Load_XModel_300:
 	mov ebx, [varXModel]
 Load_XModel_170:
+Load_XModel_collSurfs:
 	mov eax, [ebx+0x98]
 	test eax, eax
 	jz Load_XModel_190
@@ -575,6 +584,7 @@ Load_XModel_170:
 Load_XModel_260:
 	mov ebx, [varXModel]
 Load_XModel_190:
+Load_XModel_boneInfo:
 	mov eax, [ebx+0xa4]
 	test eax, eax
 	jz Load_XModel_210
@@ -593,6 +603,7 @@ Load_XModel_190:
 	call Load_Stream
 	mov ebx, [varXModel]
 Load_XModel_210:
+Load_XModel_physPreset:
 	lea eax, [ebx+0xd4]
 	mov [varPhysPresetPtr], eax
 	mov dword [esp], 0x0
@@ -607,6 +618,7 @@ Load_XModel_210:
 	mov [esp], eax
 	call DB_ConvertOffsetToPointer
 Load_XModel_220:
+Load_XModel_exit:
 	add esp, 0x2c
 	pop ebx
 	pop esi

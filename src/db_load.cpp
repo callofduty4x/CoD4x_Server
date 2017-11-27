@@ -33,6 +33,7 @@
 #include "xassets/xmodel.h"
 #include "sys_thread.h"
 #include "zlib/unzip.h"
+#include "physicalmemory.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -76,6 +77,13 @@ byte* g_streamPosArray[XBLOCK_COUNT];
 unsigned int g_streamPosStackIndex;
 bool g_minimumFastFileLoaded;
 volatile unsigned int g_loadingAssets;
+/*
+float* varfloat;
+int16_t* varshort;
+byte* varbyte;
+XModel* varXModel;
+char** varXString;
+*/
 
 extern "C"
 {
@@ -220,10 +228,7 @@ byte* DB_MemAlloc(unsigned int size, unsigned int type, unsigned int allocType, 
   }else{
     size += 15;
   }
-/*  return (byte *)_PMem_AllocNamed(size, 0x1000u, mtype, allocType, filename, TRACK_FASTFILE,
-                    "C:\\projects_pc\\cod\\codsrc\\src\\database\\db_memory.cpp", 77);
-*/
-  return (byte *)PMem_Alloc(size, 0x1000u, mtype, allocType);
+  return (byte *)_PMem_AllocNamed(size, 0x1000u, mtype, allocType, filename, TRACK_FASTFILE);
 }
 
 
@@ -249,7 +254,6 @@ void __cdecl DB_AllocXBlocks(unsigned int *blockSize, const char *filename, XBlo
       }
       blocks[blockIndex].size = size;
       blocks[blockIndex].data = buf;
-//      Com_DPrintf(CON_CHANNEL_SYSTEM, "Block %d: %d bytes\n", blockIndex, size);
     }
   }
   Com_Printf(CON_CHANNEL_SYSTEM, "used %0.2f MB memory in DB alloc\n", (float)(total_size / 1048576.0));
@@ -557,7 +561,7 @@ void __cdecl DB_LoadXFileData(byte *pos, int size)
             g_load.stream.next_in = (byte*)g_load.compressBufferStart;
           }
         }
-        assertx(err == Z_OK, "Invalid fast file '%s' (%d != Z_OK)", g_load.filename, err);
+//        assertx(err == Z_OK, "Invalid fast file '%s' (%d != Z_OK)", g_load.filename, err);
         if ( g_load.stream.avail_out )
         {
           DB_WaitXFileStage();
@@ -694,6 +698,13 @@ void __cdecl DB_ResetMinimumFastFileLoaded()
   g_minimumFastFileLoaded = 0;
 }
 
+int StreamPos()
+{
+
+    int pos = g_streamPos - g_streamBlocks[g_streamPosIndex].data;
+    return pos;
+}
+
 void __cdecl Load_XAssetArrayCustom(int count)
 {
   XAsset *var;
@@ -705,7 +716,10 @@ void __cdecl Load_XAssetArrayCustom(int count)
   {
     varXAsset = var;
     Load_XAsset(0);
-    Com_Printf(CON_CHANNEL_SYSTEM, "Loaded %s\n", DB_GetXAssetName(varXAsset));
+/*
+    int spos = g_streamPos - g_streamBlocks[g_streamPosIndex].data;
+    Com_Printf(CON_CHANNEL_SYSTEM, "%d, %d   -   Loaded %s\n", spos, g_streamPosIndex ,DB_GetXAssetName(varXAsset));
+*/
     ++var;
     if ( g_load.abort )
     {
@@ -866,4 +880,263 @@ bool __cdecl DB_LoadXFile(const char *path, HANDLE f, const char *filename, XBlo
 }
 
 
+
+#if 0
+
+void __cdecl Load_XModel(bool a1)
+{
+  const char **v1; // ebx@1
+  XModel *v2; // ebx@4
+  xScriptString_t *v3; // eax@4
+  char *v4; // eax@7
+  int16_t *v5; // eax@10
+  float *v6; // eax@13
+  char *v7; // eax@16
+  DObjAnimMat *v8; // eax@19
+  int v9; // edi@23
+  int v10; // ebx@23
+  int v11; // edi@26
+  Material **v12; // ebx@26
+  int v13; // edi@29
+  int v14; // esi@29
+  XModel *v15; // ebx@33
+  PhysGeomList_t *v16; // eax@33
+  DWORD *v17; // ebx@38
+  int v18; // esi@42
+  int v19; // esi@45
+  int v20; // edi@54
+  uint16_t *v21; // ebx@54
+  int v22; // esi@57
+  int v23; // [sp+1Ch] [bp-1Ch]@37
+
+  Load_Stream(a1, varXModel, 220);
+  DB_PushStreamPos(4);
+  varXString = (const char **)varXModel;
+  Load_Stream(0, varXModel, 4);
+  v1 = varXString;
+  if ( *varXString )
+  {
+    if ( *varXString == (const char *)-1 )
+    {
+      *v1 = (const char *)DB_AllocStreamPos(0);
+      varConstChar = *varXString;
+      Load_XStringCustom(varXString);
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(varXString);
+    }
+  }
+  v2 = varXModel;
+  v3 = varXModel->boneNames;
+  if ( v3 )
+  {
+    if ( v3 == (xScriptString_t *)-1 )
+    {
+      v2->boneNames = (xScriptString_t *)DB_AllocStreamPos(1);
+      varScriptString = (uint16_t *)varXModel->boneNames;
+      v20 = varXModel->numBones;
+      Load_Stream(1, varScriptString, 2 * v20);
+      v21 = varScriptString;
+      if ( v20 > 0 )
+      {
+        v22 = 0;
+        do
+        {
+          varScriptString = v21;
+          Load_Stream(0, v21, 2);
+          Load_ScriptStringCustom(varScriptString);
+          ++v21;
+          ++v22;
+        }
+        while ( v20 != v22 );
+      }
+      v2 = varXModel;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&varXModel->boneNames);
+      v2 = varXModel;
+    }
+  }
+  v4 = v2->parentList;
+  if ( v4 )
+  {
+    if ( v4 == (char *)-1 )
+    {
+      v2->parentList = (char *)DB_AllocStreamPos(0);
+      varbyte = (int)varXModel->parentList;
+      Load_Stream(1, varbyte, varXModel->numBones - varXModel->numRootBones);
+      v2 = varXModel;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&v2->parentList);
+      v2 = varXModel;
+    }
+  }
+  v5 = v2->quats;
+  if ( v5 )
+  {
+    if ( v5 == (__int16 *)-1 )
+    {
+      v2->quats = (__int16 *)DB_AllocStreamPos(1);
+      varshort = (int)varXModel->quats;
+      Load_Stream(1, varshort, 8 * (varXModel->numBones - varXModel->numRootBones));
+      v2 = varXModel;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&v2->quats);
+      v2 = varXModel;
+    }
+  }
+  v6 = v2->trans;
+  if ( v6 )
+  {
+    if ( v6 == (float *)-1 )
+    {
+      v2->trans = (float *)DB_AllocStreamPos(3);
+      varfloat = (int)varXModel->trans;
+      Load_Stream(1, varfloat, 16 * (varXModel->numBones - varXModel->numRootBones));
+      v2 = varXModel;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&v2->trans);
+      v2 = varXModel;
+    }
+  }
+  v7 = v2->partClassification;
+  if ( v7 )
+  {
+    if ( v7 == (char *)-1 )
+    {
+      v2->partClassification = (char *)DB_AllocStreamPos(0);
+      varbyte = (int)varXModel->partClassification;
+      Load_Stream(1, varbyte, varXModel->numBones);
+      v2 = varXModel;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&v2->partClassification);
+      v2 = varXModel;
+    }
+  }
+  v8 = v2->baseMat;
+  if ( v8 )
+  {
+    if ( v8 == (DObjAnimMat_t *)-1 )
+    {
+      v2->baseMat = (DObjAnimMat_t *)DB_AllocStreamPos(3);
+      varDObjAnimMat = (int)varXModel->baseMat;
+      Load_Stream(1, varDObjAnimMat, 32 * varXModel->numBones);
+      v2 = varXModel;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&v2->baseMat);
+      v2 = varXModel;
+    }
+  }
+  if ( v2->surfs )
+  {
+    v2->surfs = (XSurface_t *)DB_AllocStreamPos(3);
+    varXSurface = (int)&varXModel->surfs->tileMode;
+    v9 = varXModel->numsurfs;
+    Load_Stream(1, varXSurface, 56 * v9);
+    v10 = varXSurface;
+    if ( v9 > 0 )
+    {
+      v18 = 0;
+      do
+      {
+        varXSurface = v10;
+        Load_XSurface(0);
+        v10 += 56;
+        ++v18;
+      }
+      while ( v9 != v18 );
+    }
+    v2 = varXModel;
+  }
+  if ( v2->materialHandles )
+  {
+    v2->materialHandles = (xMaterial_t **)DB_AllocStreamPos(3);
+    varMaterialHandle = (Material **)varXModel->materialHandles;
+    v11 = varXModel->numsurfs;
+    Load_Stream(1, varMaterialHandle, 4 * v11);
+    v12 = varMaterialHandle;
+    if ( v11 > 0 )
+    {
+      v19 = 0;
+      do
+      {
+        varMaterialHandle = v12;
+        Load_MaterialHandle(0);
+        ++v12;
+        ++v19;
+      }
+      while ( v11 != v19 );
+    }
+    v2 = varXModel;
+  }
+  if ( v2->collSurfs )
+  {
+    v2->collSurfs = (XModelCollSurf_t *)DB_AllocStreamPos(3);
+    varXModelCollSurf = (int)varXModel->collSurfs;
+    v13 = varXModel->numCollSurfs;
+    Load_Stream(1, varXModelCollSurf, 44 * v13);
+    v14 = varXModelCollSurf;
+    if ( v13 > 0 )
+    {
+      v23 = 0;
+      do
+      {
+        varXModelCollSurf = v14;
+        Load_Stream(0, v14, 44);
+        v17 = (_DWORD *)varXModelCollSurf;
+        if ( *(_DWORD *)varXModelCollSurf )
+        {
+          *v17 = DB_AllocStreamPos(3);
+          varXModelCollTri = *(_DWORD *)varXModelCollSurf;
+          Load_Stream(1, varXModelCollTri, 48 * *(_DWORD *)(varXModelCollSurf + 4));
+        }
+        v14 += 44;
+        ++v23;
+      }
+      while ( v13 != v23 );
+    }
+    v2 = varXModel;
+  }
+  if ( v2->boneInfo )
+  {
+    v2->boneInfo = (XBoneInfo_t *)DB_AllocStreamPos(3);
+    varXBoneInfo = (int)varXModel->boneInfo;
+    Load_Stream(1, varXBoneInfo, 40 * varXModel->numBones);
+    v2 = varXModel;
+  }
+  varPhysPresetPtr = (int)&v2->physPreset;
+  Load_PhysPresetPtr(0);
+  v15 = varXModel;
+  v16 = varXModel->physGeoms;
+  if ( !v16 )
+    goto Load_XModel_220;
+  if ( v16 != (PhysGeomList_t *)-1 )
+  {
+    DB_ConvertOffsetToPointer(&varXModel->physGeoms);
+Load_XModel_220:
+    DB_PopStreamPos(a1);
+    return;
+  }
+  v15->physGeoms = (PhysGeomList_t *)DB_AllocStreamPos(3);
+  varPhysGeomList = (int)varXModel->physGeoms;
+  Load_PhysGeomList(1);
+  DB_PopStreamPos(a1);
 }
+#endif
+
+
+
+}
+

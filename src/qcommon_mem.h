@@ -54,14 +54,9 @@ void __cdecl Hunk_ClearTempMemory(void);
 void __cdecl Hunk_ClearTempMemoryHigh(void);
 void* __cdecl Hunk_AllocateTempMemory(int size);
 void __cdecl Hunk_FreeTempMemory(void *buffer);
-void __cdecl PMem_Init(void);
-void __cdecl PMem_BeginAlloc(const char*, qboolean);
-void __cdecl PMem_EndAlloc(const char*, int);
 void* __cdecl TempMalloc( int );
 char *CopyString( const char *in );
 void FreeString( char *free );
-void __cdecl PMem_Free(const char*, unsigned int);
-void PMem_Init();
 void __cdecl Sys_OutOfMemError(const char* filename, int line);
 void Z_Free( void *ptr );
 void Z_FreeTags( int tag );
@@ -87,9 +82,6 @@ void *Z_TagMalloc( int size, int tag );	// NOT 0 filled memory
 void *Z_Malloc( int size );			// returns 0 filled memory
 void *S_Malloc( int size );			// NOT 0 filled memory only for small allocations
 #endif
-
-int __cdecl PMem_GetOverAllocatedSize();
-byte *__cdecl PMem_Alloc(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType);
 
 #ifdef __cplusplus
 }

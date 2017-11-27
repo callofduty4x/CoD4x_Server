@@ -270,7 +270,6 @@
 	global DB_RemoveClipMap
 	global Load_XModelAsset
 	global Mark_XModelAsset
-	global DB_ReleaseXAssets
 	global DB_RemoveGfxWorld
 	global Load_ClipMapAsset
 	global Load_MapEntsAsset
@@ -4656,35 +4655,6 @@ Mark_XModelAsset_50:
 	pop esi
 	pop edi
 	pop ebp
-	ret
-	nop
-
-
-;DB_ReleaseXAssets()
-DB_ReleaseXAssets:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x8
-	call Sys_SyncDatabase
-	mov ecx, db_hashTable
-DB_ReleaseXAssets_30:
-	movzx eax, word [ecx]
-	movzx edx, ax
-	test ax, ax
-	jz DB_ReleaseXAssets_10
-DB_ReleaseXAssets_20:
-	shl edx, 0x4
-	lea eax, [edx+g_assetEntryPool]
-	mov byte [eax+0x9], 0x0
-	movzx eax, word [eax+0xa]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_ReleaseXAssets_20
-DB_ReleaseXAssets_10:
-	add ecx, 0x2
-	cmp ecx, g_freeAssetEntryHead
-	jnz DB_ReleaseXAssets_30
-	leave
 	ret
 	nop
 
