@@ -10,5 +10,3 @@ echo Linking
 gcc -m32 -g -shared -static-libgcc -static-libstdc++ -o nehoscreenshotuploader.dll *.o -L..\ -lcom_plugin
 echo Cleaning up
 del *.o
-
-pause
