@@ -11,4 +11,8 @@ gcc -m32 -g -shared -static-libgcc -static-libstdc++ -o nehoscreenshotuploader.d
 echo Cleaning up
 del *.o
 
-pause
+if [ $? -ne 0 ]
+then
+    echo "Compile failed!"
+    exit 1
+fi
