@@ -50,15 +50,6 @@ build_script:
     Write-Host "Done."
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
-- ps: ./plugins/screenshotsender/nehoscreenshotuploader.dll
-- ps: ./plugins/censor/censor.dll
-- ps: ./plugins/cod4x_b3hide/b3hide.dll
-- ps: ./plugins/simplebanlist/simplebanlist.dll
-- ps: ./plugins/example_cpp_plugin/cpptest.dll
-- ps: ./plugins/pchat/pchat.dll
-- ps: ./plugins/sourcebansplugin/sourcebansplugin.dll
-- ps: ./plugins/warn/warn.dll
-- ps: ./plugins/antispam/antispam.dll
 branches:
   only:
     - master    # Ignore all other branches.
