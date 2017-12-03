@@ -3,17 +3,17 @@
 enum EAPICode
 {
     AC_Com_Printf = 0,
-    AC_Com_Error = 1,
-    AC_Com_PrintError = 2,
-    AC_Com_DPrintf = 3,
-    AC_Com_PrintWarning = 4,
-    AC_Cbuf_AddText = 5,
-    AC_SV_SetConfigString = 6,
-    AC_SV_GetConfigString = 7,
-    AC_SV_GetStat = 8,
-    AC_SV_SetStat = 9,
-    AC_RemoveBanByIP = 10,
-    AC_AddBanByIP = 11
+    AC_Com_Error,
+    AC_Com_PrintError,
+    AC_Com_DPrintf,
+    AC_Com_PrintWarning,
+    AC_Cbuf_AddText,
+    AC_SV_SetConfigString,
+    AC_SV_GetConfigString,
+    AC_SV_GetStat,
+    AC_SV_SetStat,
+    AC_RemoveBanByIP,
+    AC_AddBanByIP
 };
 
 typedef void (*TSysCall)(const EAPICode Code_, ...);
