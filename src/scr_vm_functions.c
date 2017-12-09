@@ -571,6 +571,47 @@ void PlayerCmd_GetPing(scr_entref_t arg)
 
 /*
 ============
+PlayerCmd_GetIP
+
+Returns the current IP address of this player.
+Usage: string = self getIP();
+============
+*/
+
+void PlayerCmd_GetIP(scr_entref_t arg)
+{
+
+    gentity_t *gentity;
+    int entityNum = 0;
+    client_t *cl;
+    mvabuf;
+
+    if (HIWORD(arg))
+    {
+
+        Scr_ObjectError("Not an entity");
+    }
+    else
+    {
+
+        entityNum = LOWORD(arg);
+        gentity = &g_entities[entityNum];
+
+        if (!gentity->client)
+        {
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        }
+    }
+    if (Scr_GetNumParam())
+    {
+        Scr_Error("Usage: self getIP()\n");
+    }
+
+    Scr_AddString(NET_AdrToString(&svs.clients[entityNum].netchan.remoteAddress));
+}
+
+/*
+============
 PlayerCmd_SetGravity
 
 Changes the value of gravity for this player.
