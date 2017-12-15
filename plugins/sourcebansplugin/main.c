@@ -264,7 +264,7 @@ PCL void OnMessageSent(char* message, int slot, qboolean* show, int mode)
  *      http://groups.google.com/group/comp.lang.c/msg/7c7b39328fefab9c
  */
 #ifndef strtok_r
-static char* strtok_r(char *str, const char *delim, char **nextp)
+char* strtok_r(char *str, const char *delim, char **nextp)
 {
     char *ret;
 
