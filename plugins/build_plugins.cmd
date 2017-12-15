@@ -1,4 +1,4 @@
-echo "Building Plugins"
+echo "Building Plugins -"
 
 cd screenshotsender
 makedll_win32.cmd
