@@ -19,15 +19,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
-#include "../pinc.h"
-#include "q_shared.h"
-
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
 #include <wchar.h>
+
+#include "../pinc.h"
+#include "q_shared.h"
+
 
 short   ShortSwap (short l)
 {
@@ -370,8 +370,7 @@ Same like strcat but with an additional copylimit parameter
 */
 void Q_strlcat( char *dest, size_t size, const char *src, int cpylimit)
 {
-
-	int l1;
+	int	l1;
 	l1 = strlen(dest);
 	if ( l1 >= size )
 	{
@@ -384,7 +383,7 @@ void Q_strlcat( char *dest, size_t size, const char *src, int cpylimit)
 		cpylimit = size - l1 -1;
 	}
 
-	memcpy( dest + l1, src, cpylimit);
+	memcpy(dest + l1, src, cpylimit);
 	dest[l1 + cpylimit] = 0;
 }
 
@@ -498,7 +497,11 @@ int QDECL Com_sprintfUni(wchar_t *dest, size_t size, const wchar_t *fmt, ...)
 	numchar = size / sizeof(wchar_t);
 
 	va_start (argptr,fmt);
+#ifdef _WIN32
 	len = vsnwprintf (dest, numchar, fmt, argptr );
+#else
+	len = vswprintf (dest, numchar, fmt, argptr );
+#endif
 	va_end (argptr);
 
 	if(len < 0 || len >= numchar)
@@ -807,3 +810,185 @@ void Info_SetValueForKey( char *s, const char *key, const char *value ) {
 	strcat (newi, s);
 	strcpy (s, newi);
 }
+
+
+
+
+static	int			cmd_argc;
+static	char		*cmd_argv[MAX_STRING_TOKENS];		// points into cmd_tokenized
+static	char		cmd_tokenized[MAX_STRING_CHARS+MAX_STRING_TOKENS];	// will have 0 bytes inserted
+
+/*
+============
+Cmd_Argc
+============
+*/
+int		Cmd_Argc( void ) {
+	return cmd_argc;
+}
+
+/*
+============
+Cmd_Argv
+============
+*/
+char	*Cmd_Argv( int arg ) {
+	if ( (unsigned)arg >= cmd_argc ) {
+		return "";
+	}
+	return cmd_argv[arg];
+}
+
+/*
+============
+Cmd_ArgvBuffer
+
+The interpreted versions use this because
+they can't have pointers returned to them
+============
+*/
+void	Cmd_ArgvBuffer( int arg, char *buffer, int bufferLength ) {
+	Q_strncpyz( buffer, Cmd_Argv( arg ), bufferLength );
+}
+
+
+/*
+============
+Cmd_Args
+
+Returns a single string containing argv(1) to argv(argc()-1)
+============
+*/
+char	*Cmd_Args( void ) {
+	static	char		cmd_args[MAX_STRING_CHARS];
+	int		i;
+
+	cmd_args[0] = 0;
+	for ( i = 1 ; i < cmd_argc ; i++ ) {
+		strcat( cmd_args, cmd_argv[i] );
+		if ( i != cmd_argc ) {
+			strcat( cmd_args, " " );
+		}
+	}
+
+	return cmd_args;
+}
+
+
+/*
+============
+Cmd_ArgsBuffer
+
+The interpreted versions use this because
+they can't have pointers returned to them
+============
+*/
+void	Cmd_ArgsBuffer( char *buffer, int bufferLength ) {
+	Q_strncpyz( buffer, Cmd_Args(), bufferLength );
+}
+
+
+/*
+============
+Cmd_TokenizeString
+
+Parses the given string into command line tokens.
+The text is copied to a seperate buffer and 0 characters
+are inserted in the apropriate place, The argv array
+will point into this temporary buffer.
+============
+*/
+void Cmd_TokenizeString( const char *text_in ) {
+	const char	*text;
+	char	*textOut;
+
+	// clear previous args
+	cmd_argc = 0;
+
+	if ( !text_in ) {
+		return;
+	}
+
+	text = text_in;
+	textOut = cmd_tokenized;
+
+	while ( 1 ) {
+		if ( cmd_argc == MAX_STRING_TOKENS ) {
+			return;			// this is usually something malicious
+		}
+
+		while ( 1 ) {
+			// skip whitespace
+			while ( *text && *text <= ' ' ) {
+				text++;
+			}
+			if ( !*text ) {
+				return;			// all tokens parsed
+			}
+
+			// skip // comments
+			if ( text[0] == '/' && text[1] == '/' ) {
+				return;			// all tokens parsed
+			}
+
+			// skip /* */ comments
+			if ( text[0] == '/' && text[1] =='*' ) {
+				while ( *text && ( text[0] != '*' || text[1] != '/' ) ) {
+					text++;
+				}
+				if ( !*text ) {
+					return;		// all tokens parsed
+				}
+				text += 2;
+			} else {
+				break;			// we are ready to parse a token
+			}
+		}
+
+		// handle quoted strings
+		if ( *text == '"' ) {
+			cmd_argv[cmd_argc] = textOut;
+			cmd_argc++;
+			text++;
+			while ( *text && *text != '"' ) {
+				*textOut++ = *text++;
+			}
+			*textOut++ = 0;
+			if ( !*text ) {
+				return;		// all tokens parsed
+			}
+			text++;
+			continue;
+		}
+
+		// regular token
+		cmd_argv[cmd_argc] = textOut;
+		cmd_argc++;
+
+		// skip until whitespace, quote, or command
+		while ( *text > ' ' ) {
+			if ( text[0] == '"' ) {
+				break;
+			}
+
+			if ( text[0] == '/' && text[1] == '/' ) {
+				break;
+			}
+
+			// skip /* */ comments
+			if ( text[0] == '/' && text[1] =='*' ) {
+				break;
+			}
+
+			*textOut++ = *text++;
+		}
+
+		*textOut++ = 0;
+
+		if ( !*text ) {
+			return;		// all tokens parsed
+		}
+	}
+	
+}
+
