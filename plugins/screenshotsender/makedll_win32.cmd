@@ -12,7 +12,7 @@ echo Cleaning up
 del *.o
 echo "Test42"
 
-:: goto :EOF
-:: :error
-:: echo Failed with error #%errorlevel%.
-:: exit /b 1
+goto :EOF
+:error
+echo Failed with error #%errorlevel%.
+exit /b 1
