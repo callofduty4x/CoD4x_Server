@@ -1,5 +1,7 @@
 @echo off
 
+exit /b 1
+
 REM Compiling: debugging
 REM echo `gcc -g -m32 -Wall -O1 -s -mtune=core2 -c *.c`
 
@@ -14,4 +16,4 @@ del *.o
 goto :EOF
 :error
 echo Failed with error #%errorlevel%.
-exit /b -1
+exit /b 1
