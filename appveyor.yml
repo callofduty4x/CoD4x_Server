@@ -59,11 +59,14 @@ branches:
 artifacts: 
   - path: bin\cod4x18_dedrun.exe
     name: cod4exe
+    
+  - path: plugins\**\*.dll
+    name: plugins
 deploy:
 - provider: GitHub
   auth_token:
     secure: Je7YohhSVawAyVkWQG3zyoppIB73CjJB99IlzzJzosFJ5NeBkYLUuA2SV52LTWXj
-  artifact: cod4exe
+  artifact: cod4exe, plugins
   draft: false
   prerelease: false
   on:
