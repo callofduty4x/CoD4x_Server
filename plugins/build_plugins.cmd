@@ -6,11 +6,11 @@ makedll_win32.cmd
 echo "Test23"
 cd ..
 echo "Test2"
-cd sourcebansplugin && makedll_win32.cmd && cd ..
+cd sourcebansplugin && call makedll_win32.cmd && cd ..
 echo "Test3"
 
 cd censor
-makedll_win32.cmd
+call makedll_win32.cmd
 cd ..
 
 cd cod4x_b3hide
