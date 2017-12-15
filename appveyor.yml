@@ -38,14 +38,14 @@ build_script:
     Write-Host "Building server code:"
 
     mingw32-make.exe;
-    cd plugins/screenshotsender; ./makedll_win32.cmd; cd ../..;
-    cd plugins/censor; ./makedll_win32.cmd; cd ../..;
-    cd plugins/cod4x_b3hide; ./makedll_win32.cmd; cd ../..;
-    cd plugins/simplebanlist; ./makedll_win32.cmd; cd ../..;
-    cd plugins/example_cpp_plugin; ./makedll_win32.cmd; cd ../..;
-    cd plugins/pchat; ./makedll_win32.cmd; cd ../..;
+    # cd plugins/screenshotsender; ./makedll_win32.cmd; cd ../..;
+    # cd plugins/censor; ./makedll_win32.cmd; cd ../..;
+    # cd plugins/cod4x_b3hide; ./makedll_win32.cmd; cd ../..;
+    # cd plugins/simplebanlist; ./makedll_win32.cmd; cd ../..;
+    # cd plugins/example_cpp_plugin; ./makedll_win32.cmd; cd ../..;
+    # cd plugins/pchat; ./makedll_win32.cmd; cd ../..;
     cd plugins/sourcebansplugin; ./makedll_win32.cmd; cd ../..;
-    cd plugins/warn; ./makedll_win32.cmd; cd ../..;
+    # cd plugins/warn; ./makedll_win32.cmd; cd ../..;
     # cd plugins/antispam; ./makedll_win32.cmd; cd ../..;
     Write-Host "Done."
 test_script:
