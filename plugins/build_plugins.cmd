@@ -1,10 +1,10 @@
 echo "Building Plugins"
 
-cd sourcebansplugin
+cd plugins/screenshotsender
 ./makedll_win32.cmd
 cd ..
 
-cd plugins/screenshotsender
+cd sourcebansplugin
 ./makedll_win32.cmd
 cd ..
 
