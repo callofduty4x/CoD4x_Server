@@ -1,38 +1,38 @@
 echo "Building Plugins"
 
-cd plugins/screenshotsender
-./makedll_win32.cmd
+cd screenshotsender
+makedll_win32.cmd
 cd ..
 
 cd sourcebansplugin
-./makedll_win32.cmd
+makedll_win32.cmd
 cd ..
 
-cd plugins/censor
-./makedll_win32.cmd
+cd censor
+makedll_win32.cmd
 cd ..
 
-cd plugins/cod4x_b3hide
-./makedll_win32.cmd
+cd cod4x_b3hide
+makedll_win32.cmd
 cd ..
 
-cd plugins/simplebanlist
-./makedll_win32.cmd
+cd simplebanlist
+makedll_win32.cmd
 cd ..
 
-cd plugins/example_cpp_plugin
-./makedll_win32.cmd
+cd example_cpp_plugin
+makedll_win32.cmd
 cd ..
 
-cd plugins/pchat
-./makedll_win32.cmd
+cd pchat
+makedll_win32.cmd
 cd ..
 
-cd plugins/warn
-./makedll_win32.cmd
+cd warn
+makedll_win32.cmd
 cd ..
 
-cd plugins/antispam
-./makedll_win32.cmd
+cd antispam
+makedll_win32.cmd
 cd ..
 
