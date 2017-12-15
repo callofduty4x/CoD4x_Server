@@ -10,3 +10,5 @@ echo Linking
 gcc -m32 -g -shared -static-libgcc -static-libstdc++ -o sourcebansplugin.dll *.o -L..\ -lcom_plugin
 echo Cleaning up
 del *.o
+
+if %errorlevel% neq 0 exit /b %errorlevel%
