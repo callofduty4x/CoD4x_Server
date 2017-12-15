@@ -1445,6 +1445,31 @@ void GScr_StrRepl()
 
 /*
 ============
+GScr_Pow
+
+Calculate a number with exponent.
+Usage: float = pow(base <float>, exponent <float>);
+============
+*/
+
+void GScr_Pow()
+{
+    float base, exponent;
+    
+    if (Scr_GetNumParam() != 2)
+    {
+        Scr_Error("Usage: pow(<float> ,<float>)");
+        return;
+    }
+
+    base = Scr_GetFloat(0);
+    exponent = Scr_GetFloat(1);
+    
+    Scr_AddFloat(powf(base, exponent));
+}
+
+/*
+============
 GScr_GetRealTime
 
 Returns the current time in seconds since 01/01/2012 UTC
