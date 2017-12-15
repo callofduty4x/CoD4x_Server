@@ -34,7 +34,7 @@ before_build:
     [Environment]::SetEnvironmentVariable("PATH",  "C:\tools\mingw32\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
 
 build_script:
-- ps: >-
+- cmd:
     Write-Host "Building server code:"
 
     mingw32-make.exe
