@@ -11,7 +11,7 @@ gcc -m32 -g -shared -static-libgcc -static-libstdc++ -o nehoscreenshotuploader.d
 echo Cleaning up
 del *.o
 
-goto :EOF
-:error
-echo Failed with error #%errorlevel%.
-exit /b 1
+:: goto :EOF
+:: :error
+:: echo Failed with error #%errorlevel%.
+:: exit /b 1
