@@ -35,7 +35,7 @@ before_build:
 
 build_script:
 - cmd:
-    Write-Host "Building server code:"
+    echo "Building server code:"
 
     mingw32-make.exe
     
@@ -47,14 +47,12 @@ build_script:
     # cd plugins/pchat; ./makedll_win32.cmd; cd ../..;
     
     cd plugins/sourcebansplugin
-    
     ./makedll_win32.cmd
-    
     cd ../..
     
     # cd plugins/warn; ./makedll_win32.cmd; cd ../..;
     # cd plugins/antispam; ./makedll_win32.cmd; cd ../..;
-    Write-Host "Done."
+    echo "Done."
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 branches:
