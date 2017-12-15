@@ -13,4 +13,5 @@ del *.o
 
 goto :EOF
 :error
-exit /b %errorlevel%
+echo Failed with error #%errorlevel%.
+exit /b -1
