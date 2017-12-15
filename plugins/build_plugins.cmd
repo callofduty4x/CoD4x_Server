@@ -1,7 +1,10 @@
 echo "Building Plugins -"
 
 echo "Test1"
-cd screenshotsender && makedll_win32.cmd && cd ..
+cd screenshotsender
+makedll_win32.cmd
+echo "Test23"
+cd ..
 echo "Test2"
 cd sourcebansplugin && makedll_win32.cmd && cd ..
 echo "Test3"
