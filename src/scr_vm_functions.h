@@ -42,7 +42,6 @@ void PlayerCmd_SetStat(scr_entref_t arg);
 void PlayerCmd_GetStat(scr_entref_t arg);
 void PlayerCmd_GetUserinfo(scr_entref_t arg);
 void PlayerCmd_GetPing(scr_entref_t arg);
-void PlayerCmd_GetIP(scr_entref_t arg);
 void PlayerCmd_SetGravity(scr_entref_t arg);
 void PlayerCmd_SetGroundReferenceEnt(scr_entref_t arg);
 void PlayerCmd_SetJumpHeight(scr_entref_t arg);
