@@ -465,6 +465,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("setrank", (void *)0x80a8ac4, 0);
     Scr_AddMethod("getuserinfo", PlayerCmd_GetUserinfo, 0);
     Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
+    Scr_AddMethod("getip", PlayerCmd_GetIP, 0);
     //HUD Functions
     Scr_AddMethod("settext", HECmd_SetText, 0);
     Scr_AddMethod("clearalltextafterhudelem", (void *)0x808f768, qtrue);
