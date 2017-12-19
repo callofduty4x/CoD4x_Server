@@ -56,12 +56,10 @@ Arch Linux 32-bit:
 yaourt -S nasm paxctl gcc-multilib make
 ```
 
-First enter `/src/tomcrypt`, and run `./compile_linux.sh`. Then go to `/src/mbedtls`, and run `make`.
-
 Now compile the server:
 
 ```
-make
+Enter the server sources root folder and run `make`.
 ```
 
 If compilation was successful the binary will be placed in the `/bin/` folder.
