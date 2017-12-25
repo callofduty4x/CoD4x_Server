@@ -79,6 +79,16 @@ hence inheriting any legal licenses that it's parent has.
 	3- Fixed players with slot number > 0 getting 0's data when connecting once (not sending any message) and then reconnecting.
 	
 ------------------------------------------------------------------------------------------------------------------------------
+												--2.6--
+
+	1- Fixed segfault when bots are added to a server
+	2- Check for proper playerID authentication before processing anything.
+	3- Fixed potentially undefined behaviour with messagecontent binary tree.
+	4- Fixed segfault case when a chatbanned player reconnects within the banlimit and then disconnects again.
+	5- Fixed memory leaks.
+	
+	Thanks to volkv for testing extensively.
+------------------------------------------------------------------------------------------------------------------------------
 
 */
  
@@ -89,9 +99,7 @@ hence inheriting any legal licenses that it's parent has.
 #include <utility>
 #include <map> 
 #include <functional>
-using namespace std;
 
-#define MESSAGETIME 180
 
 int ANTISPAM_MAXMESSAGES = 0;
 int bindlimit = 5;
@@ -114,15 +122,15 @@ private:
 	friend void OnPlayerGotAuthInfo(netadr_t* from, uint64_t* playerid, uint64_t *steamid, char *rejectmsg, qboolean *returnNow, client_t* cl);
 	friend void OnPlayerDC(client_t* client,const char* reason);
 
-	multimap<int,string,less<int>>* messagecontent; //Deletes messages older than userdefined seconds
+	std::multimap<int,std::string,std::less<int>> messagecontent; //Deletes messages older than userdefined seconds
 
 	void msgtimecheck(const int& timer)
 	{
-		for(auto i = (*messagecontent).begin();i !=(*messagecontent).end();)
+		for(auto i = (messagecontent).begin();i !=(messagecontent).end();)
 		{
 			if( ((timer) - (i->first)) > 120)
 			{
-				i = (*messagecontent).erase(i);
+				i = (messagecontent).erase(i);
 
 			}
 				
@@ -140,20 +148,19 @@ public:
 	int messagecounter;
 	int counter_time;
 	uint64_t playerID;
-    vector<int> messages;
+    std::vector<int> messages;
 
 userData_t()
 :isBanned(false),bantime(0),slotint(-1),lastMessage(0),messagecounter(0),counter_time(0),playerID(0)
 {
 	messages.resize(ANTISPAM_MAXMESSAGES);
-	messagecontent = new multimap<int,string,less<int>> ();
 }
-	bool MessageEnter(char* message,int timer,int slot)
+	bool MessageEnter(const char* message,int timer,int slot)
 	{		
 		slotint = slot;
-	string stringmessage = message;
+	std::string stringmessage = message;
 	msgtimecheck(timer);
-	int matches = count_if((*messagecontent).begin(),(*messagecontent).end(), [stringmessage,timer,this](auto i) -> bool
+	int matches = count_if(messagecontent.begin(),messagecontent.end(), [stringmessage,timer,this](auto i) -> bool
 	{
 		if(i.second == stringmessage)
 		{
@@ -171,10 +178,10 @@ userData_t()
 		{
 			isBanned = true;
 			bantime = timer;
-			Plugin_ChatPrintf(slotint,"[^3Antispam^7] You are chat banned for ^1%d ^2seconds^7 for bind spamming",((MESSAGETIME) - (timer - bantime)) );
+			Plugin_ChatPrintf(slotint,"[^3Antispam^7] You are chat banned for ^1%d ^2seconds^7 for bind spamming",((chatbanDuration) - (timer - bantime)) );
 			return isBanned;
 		}
-	(*messagecontent).insert(make_pair(timer,stringmessage));
+	messagecontent.insert(make_pair(timer,stringmessage));
 		return isBanned;
 	}
 	
@@ -184,7 +191,7 @@ userData_t()
 	//	Plugin_ChatPrintf(-1,"Time : %d",timer);
 	
 
-		if(timer - bantime >= MESSAGETIME)
+		if(timer - bantime >= chatbanDuration)
 		{
 			isBanned = false;
 
@@ -192,7 +199,7 @@ userData_t()
 		}
 		else if(isBanned)
 		{
-			Plugin_ChatPrintf(slotint,"[^3Antispam^7] You are chat banned for ^1%d ^2seconds^7 for bind spamming",((MESSAGETIME) - (timer - bantime)) );
+			Plugin_ChatPrintf(slotint,"[^3Antispam^7] You are chat banned for ^1%d ^2seconds^7 for bind spamming",(chatbanDuration - (timer - bantime)) );
 		}
 
 	return isBanned;
@@ -208,7 +215,7 @@ userData_t()
 		return bantime;
 	}
 
-	multimap<int,string,less<int>>* GetMessageContent() const
+	std::multimap<int,std::string,std::less<int>> GetMessageContent() const
 	{
 		return messagecontent;
 	}
@@ -220,8 +227,7 @@ userData_t()
 	{
 		this->isBanned = source.IsPlayerBanned();
 		this->bantime = source.GetBanTime();
-		this->messagecontent = new multimap<int,string,less<int>> ();
-		*(this->messagecontent) = *(source.GetMessageContent());
+		this->messagecontent = source.GetMessageContent();
 		this->lastMessage = source.lastMessage;
 		this->messagecounter = source.messagecounter;
 		this->counter_time = source.counter_time;
@@ -232,22 +238,32 @@ userData_t()
 	{
 		this->isBanned = source.IsPlayerBanned();
 		this->bantime = source.GetBanTime();
-		this->messagecontent = new multimap<int,string,less<int>> ();
-		*(this->messagecontent) = *(source.GetMessageContent());
+		this->messagecontent = source.GetMessageContent();
 		this->lastMessage = source.lastMessage;
 		this->messagecounter = source.messagecounter;
 		this->counter_time = source.counter_time;
 		this->messages = source.messages;
 		return *this;
 	}
-
+	void clear()
+	{
+		this->isBanned = false; 
+		this->bantime =0;
+		this->slotint = -1;
+		this->lastMessage = 0;
+		this->messagecounter = 0;
+		this->counter_time = 0;
+		this->playerID = 0;
+		fill(this->messages.begin(),this->messages.end() ,0);
+		this->messagecontent.clear();
+	}
 	
 };
-map<uint64_t,userData_t,less<uint64_t>> banmemory;
+std::map<uint64_t,userData_t,std::less<uint64_t>> banmemory;
 
 struct antispam_t
 {
-    vector<userData_t*> players;
+    std::vector<userData_t> players;
     int maxPlayers;
     cvar_t *maxMPM;
     cvar_t *minAP;
@@ -263,25 +279,23 @@ antispam_t data;
 PCL int OnInit()
 {	
 	
-	::data.maxPlayers = Plugin_GetSlotCount();
-	::data.maxMPM = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_maxMessagesPerMinute",6,0,30,0,"Count of maximum messages a player can send in a minute. 0 disables the chat completely."));
-	::data.minAP = static_cast<cvar_t*> (Plugin_Cvar_RegisterInt("antispam_minAdminPower",50,0,100,0,"Minimum power points to be exempted from spam control. 0 means enabled for everyone."));
-	::data.minMD = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_minMessageDelay",4,0,60,0,"Amount of time after sending a message the player can send one again. 0 disables the limit."));
-	::data.renMD = static_cast<cvar_t*>(Plugin_Cvar_RegisterBool("antispam_renewedMessageDelay",qfalse,0,"Do messages sent before minMessageDelay which are in buffer make the delay prolonged?"));
-	::data.bindLIM = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_bindspamLimit",4,3,30,0,"Number of detected bind spams sent in the last 2 minutes after which player is chatbanned for messages ."));
-	::data.chatbanDuration = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_chatBanDuration",180,0,3600,0,"The duration of a chat ban in seconds"));
-	::ANTISPAM_MAXMESSAGES = Plugin_Cvar_GetInteger(::data.maxMPM); // :: for anonymous namespace
+	data.maxPlayers = Plugin_GetSlotCount();
+	data.maxMPM = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_maxMessagesPerMinute",6,0,30,0,"Count of maximum messages a player can send in a minute. 0 disables the chat completely."));
+	data.minAP = static_cast<cvar_t*> (Plugin_Cvar_RegisterInt("antispam_minAdminPower",50,0,100,0,"Minimum power points to be exempted from spam control. 0 means enabled for everyone."));
+	data.minMD = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_minMessageDelay",4,0,60,0,"Amount of time after sending a message the player can send one again. 0 disables the limit."));
+	data.renMD = static_cast<cvar_t*>(Plugin_Cvar_RegisterBool("antispam_renewedMessageDelay",qfalse,0,"Do messages sent before minMessageDelay which are in buffer make the delay prolonged?"));
+	data.bindLIM = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_bindspamLimit",4,3,30,0,"Number of detected bind spams sent in the last 2 minutes after which player is chatbanned for messages ."));
+	data.chatbanDuration = static_cast<cvar_t*>(Plugin_Cvar_RegisterInt("antispam_chatBanDuration",180,0,3600,0,"The duration of a chat ban in seconds"));
+	ANTISPAM_MAXMESSAGES = Plugin_Cvar_GetInteger(data.maxMPM); //  anonymous namespace removed
 
-	::data.maxPlayers = Plugin_GetSlotCount();
-	::data.players.resize(::data.maxPlayers);
-    ::bindlimit = ::data.bindLIM->integer;
-	::chatbanDuration = ::data.chatbanDuration->integer;
-	
-	for(int i = 0; i <=::data.maxPlayers;++i)
-	{
-		::data.players[i] = new userData_t();
-	}
-	Plugin_ChatPrintf(-1,"[^3Antispam^7] Usmania says Plugin is ^2working^7 !");
+	data.maxPlayers = Plugin_GetSlotCount();
+    bindlimit = data.bindLIM->integer;
+	chatbanDuration = data.chatbanDuration->integer;
+
+	//data.players.reserve(data.maxPlayers);
+	//data.players.assign(Plugin_GetSlotCount(),userData_t());
+	data.players.resize(Plugin_GetSlotCount());
+	Plugin_Printf("[^3Antispam^7] Usmania says Plugin is ^2working^7 !\n");
 	return 0;
 }
 
@@ -296,8 +310,12 @@ PCL void OnMessageSent(char *message,int slot, qboolean *show, int type)
 	}
 	
 	client_t* client = Plugin_GetClientForClientNum(slot);
+	if(client->netchan.remoteAddress.type == NA_BOT || client->playerid == 0)
+	{
+		return;
+	}
 	int power = client->power;
-	if (::data.minAP->integer != 0 && (power >= ::data.minAP->integer)) 
+	if (data.minAP->integer != 0 && (power >= data.minAP->integer)) 
 	{
 		*show = qtrue;
 	    return;
@@ -306,7 +324,7 @@ PCL void OnMessageSent(char *message,int slot, qboolean *show, int type)
 int timer = Plugin_GetServerTime() / 1000; // Real Time acting weirdly,leading to crashed server , replaced with serverTime.
 
 
-if(::data.players[slot]->Banned(timer))
+if(data.players[slot].Banned(timer))
 {
 	*show = qfalse;
 	return;
@@ -321,56 +339,56 @@ if(::data.players[slot]->Banned(timer))
 
 	for(int i = 0; i <ANTISPAM_MAXMESSAGES;++i)
 	{
-		if( (::data.players[slot]->messages[i] != 0) && (timer - ::data.players[slot]->messages[i] > ::data.players[slot]->counter_time))
+		if( (data.players[slot].messages[i] != 0) && (timer - data.players[slot].messages[i] > data.players[slot].counter_time))
 		{
-			 ::data.players[slot]->counter_time = timer - ::data.players[slot]->messages[i];
+			 data.players[slot].counter_time = timer - data.players[slot].messages[i];
 			
 			
 		}
 	}
-//Plugin_ChatPrintf(-1," %d",::data.players[slot]->counter_time);
-if( (::data.players[slot]->messagecounter >= ANTISPAM_MAXMESSAGES) && (::data.players[slot]->counter_time < 60))
+//Plugin_ChatPrintf(-1," %d",data.players[slot].counter_time);
+if( (data.players[slot].messagecounter >= ANTISPAM_MAXMESSAGES) && (data.players[slot].counter_time < 60))
 {
 		
-	    Plugin_ChatPrintf(slot,"[^3AntiSpam^7] You will be allowed to send a message in ^1%d ^2seconds.^7",60 - ::data.players[slot]->counter_time);
+	    Plugin_ChatPrintf(slot,"[^3AntiSpam^7] You will be allowed to send a message in ^1%d ^2seconds.^7",60 - data.players[slot].counter_time);
 		*show = qfalse;
 	return;
 }	
 
-else if (::data.players[slot]->counter_time >= 60)
+else if (data.players[slot].counter_time >= 60)
 {
-	::data.players[slot]->messagecounter = 0;
-	::data.players[slot]->counter_time = 0;
-	fill(::data.players[slot]->messages.begin(),::data.players[slot]->messages.begin() + ANTISPAM_MAXMESSAGES ,0);
+	data.players[slot].messagecounter = 0;
+	data.players[slot].counter_time = 0;
+	std::fill(data.players[slot].messages.begin(),data.players[slot].messages.begin() + ANTISPAM_MAXMESSAGES ,0);
 }
 
-	if(::data.minMD->integer != 0 && (timer - ::data.players[slot]->lastMessage < ::data.minMD->integer))
+	if(data.minMD->integer != 0 && (timer - data.players[slot].lastMessage < data.minMD->integer))
 	{
 	    *show = qfalse;
-	    if(::data.renMD->boolean)
+	    if(data.renMD->boolean)
 		{
-		::data.players[slot]->lastMessage = timer;
-		::data.players[slot]->MessageEnter(message,timer,slot);
+		data.players[slot].lastMessage = timer;
+		data.players[slot].MessageEnter(message,timer,slot);
 
-			if(::data.players[slot]->messagecounter < ANTISPAM_MAXMESSAGES)
+			if(data.players[slot].messagecounter < ANTISPAM_MAXMESSAGES)
 			{
-				::data.players[slot]->messages[::data.players[slot]->messagecounter] = timer;
-				++(::data.players[slot]->messagecounter);
+				data.players[slot].messages[data.players[slot].messagecounter] = timer;
+				++(data.players[slot].messagecounter);
 
 			}
 			else
 			{
-				 Plugin_ChatPrintf(slot,"[^3AntiSpam^7] You will be allowed to send a message in ^1%d ^2seconds.^7",60 - ::data.players[slot]->counter_time);
+				 Plugin_ChatPrintf(slot,"[^3AntiSpam^7] You will be allowed to send a message in ^1%d ^2seconds.^7",60 - data.players[slot].counter_time);
 			}
 
 		}
 	    return;
 	}
 
-	    ::data.players[slot]->messages[::data.players[slot]->messagecounter] = timer;
-	    ::data.players[slot]->lastMessage = timer;
+	    data.players[slot].messages[data.players[slot].messagecounter] = timer;
+	    data.players[slot].lastMessage = timer;
 
-		if(::data.players[slot]->MessageEnter(message,timer,slot))
+		if(data.players[slot].MessageEnter(message,timer,slot))
 		{
 		*show = qfalse;
 		}
@@ -381,7 +399,7 @@ else if (::data.players[slot]->counter_time >= 60)
 
 		if(*show == qtrue)
 		{
-			++(::data.players[slot]->messagecounter);
+			++(data.players[slot].messagecounter);
 		}
 		
 		return;
@@ -391,57 +409,107 @@ else if (::data.players[slot]->counter_time >= 60)
 
 PCL void OnPlayerDC(client_t* client,const char* reason)
 {
-	
-	auto IDiterator = find_if(::data.players.begin(),::data.players.end(),[client](auto pointer){return( (*pointer).playerID == client->playerid);});
-	uint64_t playerID = (*IDiterator)->playerID;
-	int slotnum = (*IDiterator)->GetSlot();
-	
-	if (::data.players[slotnum]->IsPlayerBanned())
+	if(client->netchan.remoteAddress.type == NA_BOT || client->playerid == 0)
 	{
-		//Plugin_ChatPrintf(-1,"Disconnect : adding ban record" );
+		return;
+	}
+	//Plugin_Printf("Executing OnPlayerDC\n" );
+	//Plugin_Printf("Disconnect slotnum in client[0] : %d\n", data.players[0].slotint );
+
+	//auto IDiterator = find_if(data.players.begin(),data.players.end(),[client](auto pointer){return( pointer.playerID == client->playerid);}); -- could this be possilbe bug reported in segfault on DC in 2.5
+	//for(auto it = data.players.begin)
+
+	userData_t* IDiterator;
+
+	if(data.players[Plugin_ClientToSlot(client)].playerID == client->playerid) // just to be sure you know, incase of some weird swapping of clients without info to antispam
+	{
+	 IDiterator = &(data.players[Plugin_ClientToSlot(client)]);
+	}
+
+	else
+	{
+		data.players[Plugin_ClientToSlot(client)].clear();
+		return;
+	}
+	
+	uint64_t playerID;
+	int slotnum;
+
+	if(IDiterator != NULL)
+	{
+		playerID = IDiterator->playerID;
+		slotnum = IDiterator->GetSlot();
+	}
+
+	else
+	{
+		//Plugin_Printf("Size of vector : %d", data.players.size());
+		data.players[Plugin_ClientToSlot(client)].clear();
+		return;
+	}
+		//playerID = IDiterator->playerID;
+		//slotnum = IDiterator->GetSlot();
+
+
+
+	auto iterator = banmemory.find(client->playerid);
+	if (data.players[slotnum].IsPlayerBanned())
+	{
+		//Plugin_Printf("Disconnect : adding ban record\n" );
 		//Plugin_ChatPrintf(-1,"disconnect playerID : %d", playerID );
 
-	::banmemory.insert(make_pair(playerID,*(::data.players[slotnum])));
+	// What if the player was already banned, and then he reconnects but still there is ban memory --fixed
+	if(iterator != banmemory.end()) // Properly overwrite existing banrecord
+	{
+		banmemory[iterator->first] = data.players[slotnum];
 	}
 	else
 	{
-		::data.players[slotnum]->isBanned = false; 
-		::data.players[slotnum]->bantime =0;
-		::data.players[slotnum]->slotint = -1;
-		::data.players[slotnum]->lastMessage = 0;
-		::data.players[slotnum]->messagecounter = 0;
-		::data.players[slotnum]->counter_time = 0;
-		::data.players[slotnum]->playerID = 0;
-		fill(::data.players[slotnum]->messages.begin(),::data.players[slotnum]->messages.end() ,0);
-	::data.players[slotnum]->messagecontent->clear();
+		banmemory.insert(std::make_pair(playerID,data.players[slotnum]));
 	}
+	
+	}
+
+	data.players[slotnum].clear();
 	return;
 }
 
+
+
+
 PCL void OnPlayerGotAuthInfo(netadr_t* from, uint64_t* playerid, uint64_t *steamid, char *rejectmsg, qboolean *returnNow, client_t* cl)
 {
-	
-	int slotnum = Plugin_GetClientNumForClient(cl);
-	//Plugin_ChatPrintf(-1,"Connect clientnum : %d",slotnum );
-	::data.players[slotnum]->playerID = cl->playerid;
-	::data.players[slotnum]->slotint = slotnum;
-	//Plugin_ChatPrintf(-1,"Connect playerID : %d", ::data.players[slotnum]->playerID );
-
-	auto iterator = ::banmemory.find(cl->playerid);
-	if(iterator != ::banmemory.end())
+	if(cl->netchan.remoteAddress.type == NA_BOT || *playerid == 0)
+	{
+		return;
+	}
+	//Plugin_Printf("Executing OnPlayerConnect\n" );
+	int slotnum = Plugin_ClientToSlot(cl);
+	//Plugin_Printf("Connect clientnum : %d\n",slotnum );
+	//Plugin_Printf("Connect playerID : %d\n", data.players[slotnum].playerID );
+	data.players[slotnum].playerID = *playerid;
+	//	Plugin_Printf("Connect playerID : %d\n", data.players[slotnum].playerID );
+	data.players[slotnum].slotint = slotnum;
+	//Plugin_Printf("Connect playerID : %d\n", *playerid );
+	auto iterator = banmemory.find(*playerid);
+	if(iterator != banmemory.end())
 	{
 		//Plugin_ChatPrintf(-1,"Connect found previous ban record " );
-		if(( Plugin_GetServerTime()/1000 - (iterator->second).GetBanTime()) > (chatbanDuration))
+		if(( Plugin_GetServerTime()/1000 - (iterator->second).GetBanTime()) >= (chatbanDuration))
 			{
-				(iterator->second).isBanned = false;
 				banmemory.erase(iterator);
 				return;
 			}
-		*(::data.players[slotnum]) = iterator->second; 
-		
+			else if(( Plugin_GetServerTime()/1000 - (iterator->second).GetBanTime()) < (chatbanDuration))
+			{
+				data.players[slotnum] = iterator->second;
+				data.players[slotnum].slotint = slotnum;
+				//Plugin_Printf("Reinstating ban for %d,from banmemory: %d\n", *playerid ,(iterator->second).playerID);
+			}
+		//Plugin_Printf("Slot number of renewed ban %d\n",data.players[slotnum].slotint );
+		return;
 	}
 }
-
 
 PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain information about the plugin
     // Memory pointed by info is allocated by the server binary, just fill in the fields
@@ -452,7 +520,7 @@ PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain informati
 
     // =====  OPTIONAL  FIELDS  =====
     info->pluginVersion.major = 2;
-    info->pluginVersion.minor = 5;	// Plugin version
+    info->pluginVersion.minor = 6;	// Plugin version
     strncpy(info->fullName,"Cod4X Antispam 2017",sizeof(info->fullName)); //Full plugin name
     strncpy(info->shortDescription,"This plugin is used to prevent spam in the ingame chat. Made by Usmania ",sizeof(info->shortDescription)); // Short plugin description
     strncpy(info->longDescription,"This plugin is used to prevent spam in the ingame chat. To personalize the settings, set corresponding cvars.",sizeof(info->longDescription));
