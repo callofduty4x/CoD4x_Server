@@ -785,6 +785,10 @@ void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int 
   {
     realsize = dwSize + pagesize + sizeof(VirtualAllocInfo_t);
     unaligned = calloc(1, realsize);
+    if(unaligned == NULL)
+    {
+        return NULL;
+    }
     address = (void*)( (unsigned int)unaligned & ~(pagesize -1));
 
     address += pagesize;
