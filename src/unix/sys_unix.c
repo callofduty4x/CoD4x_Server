@@ -764,14 +764,42 @@ void Sys_DoStartProcess( char *cmdline ) {
 
 }
 
+typedef struct
+{
+    char magic[8];
+    void* realstart;
+    void* virtualstart;
+    int realsize;
+    int virtualsize;
+    int allocType;
+    int protect;
+}VirtualAllocInfo_t;
+
 void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect)
 {
   int pagesize = 0x1000;
+  void *unaligned;
+  int realsize;
 
   if ( !address )
   {
-    address = calloc(1, dwSize + pagesize);
-    address = (void*)( (unsigned int)(address + pagesize) & ~(pagesize -1));
+    realsize = dwSize + pagesize + sizeof(VirtualAllocInfo_t);
+    unaligned = calloc(1, realsize);
+    address = (void*)( (unsigned int)unaligned & ~(pagesize -1));
+
+    address += pagesize;
+    if(unaligned + sizeof(VirtualAllocInfo_t) > address)
+    {
+        address += pagesize;
+    }
+    VirtualAllocInfo_t *meminfo = (VirtualAllocInfo_t *)((byte*)address - sizeof(VirtualAllocInfo_t));
+    meminfo->realstart = unaligned;
+    meminfo->virtualstart = address;
+    meminfo->realsize = realsize;
+    meminfo->virtualsize = dwSize;
+    meminfo->allocType = flAllocationType;
+    meminfo->protect = flProtect;
+    memcpy(meminfo->magic, "VIRALLOC", sizeof(meminfo->magic));
   }else{
       Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
   }
@@ -782,7 +810,13 @@ bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
 {
   if ( lpAddress && dwFreeType == 0x8000 )
   {
-    free(lpAddress);
+    VirtualAllocInfo_t *meminfo = (VirtualAllocInfo_t *)((byte*)lpAddress - sizeof(VirtualAllocInfo_t));
+    if(meminfo->realstart == NULL || memcmp(meminfo->magic, "VIRALLOC", sizeof(meminfo->magic)))
+    {
+        Com_Error(ERR_FATAL, "VirtualFree with invalid handle\n");
+        return false;
+    }
+    free(meminfo->realstart);
     return true;
   }
   else

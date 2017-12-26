@@ -91,6 +91,7 @@ union XAssetHeader
   struct GfxImage *image;
   struct snd_alias_list_t *sound;
   struct SndCurve *sndCurve;
+  struct LoadedSound_s* loadedsound;
   struct clipMap_t *clipMap;
   struct ComWorld *comWorld;
   struct GameWorldSp *gameWorldSp;

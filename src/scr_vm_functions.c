@@ -2489,7 +2489,7 @@ void GScr_SpawnHelicopter()
 
     newent = G_Spawn();
 
-    Scr_SetString(&newent->classname, (unsigned short)stringIndex.script_vehicle);
+    Scr_SetString(&newent->classname, (unsigned short)scr_const.script_vehicle);
 
     newent->r.currentOrigin[0] = position[0];
     newent->r.currentOrigin[1] = position[1];
@@ -2609,15 +2609,15 @@ void ScrCmd_SetStance(scr_entref_t arg){
 
     strindex = Scr_GetConstString(0);
 
-    if(strindex == stringIndex.prone){
+    if(strindex == scr_const.prone){
 
 	gentity->client->ps.stance = 1;
 
-    }else if(strindex == stringIndex.crouch){
+    }else if(strindex == scr_const.crouch){
 
 	gentity->client->ps.stance = 2;
 
-    }else if(strindex == stringIndex.stand){
+    }else if(strindex == scr_const.stand){
 
 	gentity->client->ps.stance = 3;
 

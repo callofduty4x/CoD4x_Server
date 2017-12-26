@@ -62,7 +62,7 @@ typedef struct MssSound_s
   AILSOUNDINFO ailInfo;
   void *data;
 }MssSound_t;
- 
+
 typedef struct LoadedSound_s
 {
   const char *name;

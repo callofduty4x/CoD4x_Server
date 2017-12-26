@@ -125,9 +125,9 @@ void Com_InitDObj();
 #ifdef __cplusplus
 }
 #endif
-
-#define SV_ENTITY_DOBJS ((WORD*)  0x088E8500)    // Max = 0x400
-#define SV_DOBJ         ((DObj_t*)0x088E8D20)    // Max = 0x800
+//What is this???
+#define SV_ENTITY_DOBJS ((WORD*)  0x0)    // Max = 0x400
+#define SV_DOBJ         ((DObj_t*)0x0)    // Max = 0x800
 
 #endif //__DOBJ_H__
 

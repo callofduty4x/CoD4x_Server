@@ -1274,7 +1274,10 @@ Mantle_CreateAnims_90:
 	movss xmm1, dword [ebp-0x24]
 	movaps xmm0, xmm1
 	subss xmm0, [_float_16_00000000]
+	int 3
+	mov eax, [_data16_7fffffff]
 	andps xmm0, [_data16_7fffffff]
+	int 3
 	ucomiss xmm0, [_float_1_00000000]
 	jbe Mantle_CreateAnims_30
 	mov dword [esp+0x14], 0x0

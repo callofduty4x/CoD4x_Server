@@ -350,56 +350,6 @@ G_SpawnHelicopter_10:
 	ret
 
 
-;Helicopter_GetMethod(char const**)
-Helicopter_GetMethod:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, [ebp+0x8]
-	mov eax, [eax]
-	mov [ebp-0x1c], eax
-	xor esi, esi
-	mov ebx, s_methods
-	xor edi, edi
-	mov edx, eax
-	jmp Helicopter_GetMethod_10
-Helicopter_GetMethod_30:
-	add esi, 0x1
-	add edi, 0xc
-	add ebx, 0xc
-	cmp esi, 0x19
-	jz Helicopter_GetMethod_20
-	mov edx, [ebp-0x1c]
-Helicopter_GetMethod_10:
-	mov eax, [ebx]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call strcmp
-	test eax, eax
-	jnz Helicopter_GetMethod_30
-	mov eax, [edi+s_methods]
-	mov edx, [ebp+0x8]
-	mov [edx], eax
-	mov eax, [edi+s_methods+0x4]
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Helicopter_GetMethod_20:
-	xor eax, eax
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-
-
 ;Helicopter_Controller(gentity_s const*, int*)
 Helicopter_Controller:
 	push ebp
@@ -722,7 +672,6 @@ SECTION .data
 
 ;Initialized constant data of g_scr_helicopter:
 SECTION .rdata
-s_methods: dd _cstring_freehelicopter, CMD_Heli_FreeHelicopter, 0x0, _cstring_setspeed, CMD_VEH_SetSpeed, 0x0, _cstring_getspeed, CMD_VEH_GetSpeed, 0x0, _cstring_getspeedmph, CMD_VEH_GetSpeedMPH, 0x0, _cstring_resumespeed, CMD_VEH_ResumeSpeed, 0x0, _cstring_setyawspeed, CMD_VEH_SetYawSpeed, 0x0, _cstring_setmaxpitchroll, CMD_VEH_SetMaxPitchRoll, 0x0, _cstring_setturningabilit, CMD_VEH_SetTurningAbility, 0x0, _cstring_setairresistance, CMD_VEH_SetAirResitance, 0x0, _cstring_sethoverparams, CMD_VEH_SetHoverParams, 0x0, _cstring_setneargoalnotif, CMD_VEH_NearGoalNotifyDist, 0x0, _cstring_setvehgoalpos, CMD_VEH_SetGoalPos, 0x0, _cstring_setgoalyaw, CMD_VEH_SetGoalYaw, 0x0, _cstring_cleargoalyaw, CMD_VEH_ClearGoalYaw, 0x0, _cstring_settargetyaw, CMD_VEH_SetTargetYaw, 0x0, _cstring_cleartargetyaw, CMD_VEH_ClearTargetYaw, 0x0, _cstring_setlookatent, CMD_VEH_SetLookAtEnt, 0x0, _cstring_clearlookatent, CMD_VEH_ClearLookAtEnt, 0x0, _cstring_setvehweapon, CMD_VEH_SetWeapon, 0x0, _cstring_fireweapon, CMD_VEH_FireWeapon, 0x0, _cstring_setturrettargetv, CMD_VEH_SetTurretTargetVec, 0x0, _cstring_setturrettargete, CMD_VEH_SetTurretTargetEnt, 0x0, _cstring_clearturrettarge, CMD_VEH_ClearTurretTargetEnt, 0x0, _cstring_setvehicleteam, CMD_VEH_SetVehicleTeam, 0x0, _cstring_setdamagestage, CMD_Heli_SetDamageStage, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 
 ;Zero initialized global or static variables of g_scr_helicopter:
@@ -815,31 +764,6 @@ _cstring_if_set_the_turre:		db "If set, the turret will not fire through the cro
 _cstring_vehhelicopterhea:		db "vehHelicopterHeadSwayDontSwayTheTurret",0
 _cstring_the_amount_of_ro1:		db "The amount of rotational momentum the helicopter has with regards to tilting.",0
 _cstring_vehhelicoptertil7:		db "vehHelicopterTiltMomentum",0
-_cstring_freehelicopter:		db "freehelicopter",0
-_cstring_setspeed:		db "setspeed",0
-_cstring_getspeed:		db "getspeed",0
-_cstring_getspeedmph:		db "getspeedmph",0
-_cstring_resumespeed:		db "resumespeed",0
-_cstring_setyawspeed:		db "setyawspeed",0
-_cstring_setmaxpitchroll:		db "setmaxpitchroll",0
-_cstring_setturningabilit:		db "setturningability",0
-_cstring_setairresistance:		db "setairresistance",0
-_cstring_sethoverparams:		db "sethoverparams",0
-_cstring_setneargoalnotif:		db "setneargoalnotifydist",0
-_cstring_setvehgoalpos:		db "setvehgoalpos",0
-_cstring_setgoalyaw:		db "setgoalyaw",0
-_cstring_cleargoalyaw:		db "cleargoalyaw",0
-_cstring_settargetyaw:		db "settargetyaw",0
-_cstring_cleartargetyaw:		db "cleartargetyaw",0
-_cstring_setlookatent:		db "setlookatent",0
-_cstring_clearlookatent:		db "clearlookatent",0
-_cstring_setvehweapon:		db "setvehweapon",0
-_cstring_fireweapon:		db "fireweapon",0
-_cstring_setturrettargetv:		db "setturrettargetvec",0
-_cstring_setturrettargete:		db "setturrettargetent",0
-_cstring_clearturrettarge:		db "clearturrettarget",0
-_cstring_setvehicleteam:		db "setvehicleteam",0
-_cstring_setdamagestage:		db "setdamagestage",0
 
 
 

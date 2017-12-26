@@ -57,13 +57,13 @@ void __cdecl ClientScr_SetSessionTeam(gclient_t *gcl, client_fields_t *gfl)
 
     index = Scr_GetConstString(0);
 
-    if (index == stringIndex.axis)
+    if (index == scr_const.axis)
         gcl->sess.cs.team = TEAM_RED;
-    else if (index == stringIndex.allies)
+    else if (index == scr_const.allies)
         gcl->sess.cs.team = TEAM_BLUE;
-    else if (index == stringIndex.spectator)
+    else if (index == scr_const.spectator)
         gcl->sess.cs.team = TEAM_SPECTATOR;
-    else if (index == stringIndex.none)
+    else if (index == scr_const.none)
         gcl->sess.cs.team = TEAM_FREE;
     else
     {
