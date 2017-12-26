@@ -147,7 +147,6 @@
 	global Load_FxElemDefVisuals
 	global Load_FxImpactTablePtr
 	global Load_LocalizeEntryPtr
-	global Load_ScriptStringList
 	global Load_snd_alias_list_t
 	global Mark_FxElemDefVisuals
 	global Load_FxEffectDefHandle
@@ -12382,82 +12381,6 @@ Load_LocalizeEntryPtr_30:
 	jmp Load_LocalizeEntryPtr_80
 
 
-;Load_ScriptStringList(unsigned char)
-Load_ScriptStringList:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov dword [esp+0x8], 0x8
-	mov eax, [varScriptStringList]
-	mov [esp+0x4], eax
-	movzx eax, byte [ebp+0x8]
-	mov [esp], eax
-	call Load_Stream
-	mov dword [esp], 0x4
-	call DB_PushStreamPos
-	mov ebx, [varScriptStringList]
-	mov edx, [ebx+0x4]
-	test edx, edx
-	jz Load_ScriptStringList_10
-	mov dword [esp], 0x3
-	call DB_AllocStreamPos
-	mov [ebx+0x4], eax
-	mov eax, [varScriptStringList]
-	mov edx, [eax+0x4]
-	mov [varTempString], edx
-	mov edi, [eax]
-	lea eax, [edi*4]
-	mov [esp+0x8], eax
-	mov [esp+0x4], edx
-	mov dword [esp], 0x1
-	call Load_Stream
-	mov esi, [varTempString]
-	test edi, edi
-	jg Load_ScriptStringList_20
-Load_ScriptStringList_10:
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	jmp DB_PopStreamPos
-Load_ScriptStringList_20:
-	mov dword [ebp-0x1c], 0x0
-	jmp Load_ScriptStringList_30
-Load_ScriptStringList_50:
-	mov [esp], ebx
-	call DB_ConvertOffsetToPointer
-Load_ScriptStringList_40:
-	add esi, 0x4
-	add dword [ebp-0x1c], 0x1
-	cmp edi, [ebp-0x1c]
-	jz Load_ScriptStringList_10
-Load_ScriptStringList_30:
-	mov [varTempString], esi
-	mov dword [esp+0x8], 0x4
-	mov [esp+0x4], esi
-	mov dword [esp], 0x0
-	call Load_Stream
-	mov ebx, [varTempString]
-	mov eax, [ebx]
-	test eax, eax
-	jz Load_ScriptStringList_40
-	add eax, 0x1
-	jnz Load_ScriptStringList_50
-	mov dword [esp], 0x0
-	call DB_AllocStreamPos
-	mov [ebx], eax
-	mov edx, [varTempString]
-	mov eax, [edx]
-	mov [varConstChar], eax
-	mov [esp], edx
-	call Load_TempStringCustom
-	jmp Load_ScriptStringList_40
-
-
 ;Load_snd_alias_list_t(unsigned char)
 Load_snd_alias_list_t:
 	push ebp
@@ -14724,7 +14647,6 @@ Load_Font_20:
 
 ;Zero initialized global or static variables of db_load:
 SECTION .bss
-varScriptStringList: resb 0x4
 varXAsset: resb 0x8
 varXAssetList: resb 0x4
 varBrushWrapper: resb 0x10
@@ -14860,7 +14782,6 @@ varStreamFileNameRaw: resb 0xc
 varStreamedSound: resb 0x4
 varStringTable: resb 0x4
 varStringTablePtr: resb 0x4
-varTempString: resb 0x4
 varUShortVec: resb 0x4
 varUnsignedShort: resb 0x4
 varWeaponDef: resb 0x54

@@ -1092,57 +1092,6 @@ void __cdecl Load_WeaponDefSounds()
 */
 
 
-extern void* varScriptStringList;
-
-void Load_XAssetListCustom()
-{
-  static struct XAssetList* g_varXAssetList;
-
-  varXAssetList = (void*)&g_varXAssetList;
-  DB_LoadXFileData((byte *)&g_varXAssetList, 16);
-  DB_PushStreamPos(4u);
-  varScriptStringList = varXAssetList;
-  Load_ScriptStringList(0);
-  DB_PopStreamPos();
-}
-
-void __cdecl Load_XAsset(bool atStreamStart)
-{
-  Load_Stream(atStreamStart, varXAsset, 8);
-  varXAssetHeader = &varXAsset->header;
-  Load_XAssetHeader(0);
-}
-
-struct ComBurnableSample
-{
-  char state;
-};
-
-
-struct ComBurnableSample *__cdecl AllocLoad_raw_byte()
-{
-  return (struct ComBurnableSample *)DB_AllocStreamPos(0);
-}
-
-void __cdecl Load_XString(bool atStreamStart)
-{
-  Load_Stream(atStreamStart, varXString, 4);
-  if ( *varXString )
-  {
-    if ( (signed int)*varXString == -1 )
-    {
-      *varXString = (char *)AllocLoad_raw_byte();
-      varConstChar = *varXString;
-      Load_XStringCustom((const char **)varXString);
-    }
-    else
-    {
-      DB_ConvertOffsetToPointer(varXString);
-    }
-  }
-}
-
-
 void __cdecl Load_WeaponDef(bool atStreamStart)
 {
   XModel **v1; // ebx@1
