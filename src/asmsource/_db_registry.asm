@@ -20,12 +20,12 @@
 	extern Sys_WaitStartDatabase
 	extern _ZN10MacDisplay16GetSharedContextEv
 	extern _ZN10MacDisplay17SetCurrentContextEP16OpaqueContextRef
-	extern CreateFileA
+	extern _CreateFileA
 	extern Com_PrintWarning
 	extern g_loadingAssets
 	extern Q_stricmp
 	extern memset
-	extern GetFileSize
+	extern _GetFileSize
 	extern PMem_BeginAlloc
 	extern DB_ResetZoneSize
 	extern DB_LoadXFile
@@ -33,7 +33,7 @@
 	extern PMem_EndAlloc
 	extern Sys_Sleep
 	extern Sys_Milliseconds
-	extern CloseHandle
+	extern _CloseHandle
 	extern Com_Error
 	extern R_SyncRenderThread
 	extern RB_UnbindAllImages
@@ -2072,7 +2072,7 @@ DB_Thread_240:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x80000000
 	mov [esp], ebx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jnz DB_Thread_60
@@ -2116,7 +2116,7 @@ DB_Thread_40:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x80000000
 	mov dword [esp], _cstring_updatemp_patchff
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jz DB_Thread_90
@@ -2158,7 +2158,7 @@ DB_Thread_260:
 	mov [ebx+0x40], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call GetFileSize
+	call _GetFileSize
 	mov [ebx+0xa0], eax
 	mov eax, [ebp-0x324]
 	mov [ebx+0xa4], eax
@@ -2276,7 +2276,7 @@ DB_Thread_50:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x218]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jz DB_Thread_240
@@ -2300,11 +2300,11 @@ DB_Thread_230:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x318]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	cmp eax, 0xffffffff
 	jz DB_Thread_270
 	mov [esp], eax
-	call CloseHandle
+	call _CloseHandle
 	mov eax, 0x1
 DB_Thread_290:
 	test al, al
@@ -2323,7 +2323,7 @@ DB_Thread_290:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x218]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jz DB_Thread_240
@@ -2363,7 +2363,7 @@ DB_Thread_90:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x118]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jnz DB_Thread_60
@@ -4496,11 +4496,11 @@ DB_AddUserMapDir_10:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x80000000
 	mov [esp], ebx
-	call CreateFileA
+	call _CreateFileA
 	cmp eax, 0xffffffff
 	jz DB_AddUserMapDir_20
 	mov [esp], eax
-	call CloseHandle
+	call _CloseHandle
 	mov eax, [ebp+0x8]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_usermaps
@@ -4545,11 +4545,11 @@ DB_ModFileExists_10:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x80000000
 	mov [esp], ebx
-	call CreateFileA
+	call _CreateFileA
 	cmp eax, 0xffffffff
 	jz DB_ModFileExists_20
 	mov [esp], eax
-	call CloseHandle
+	call _CloseHandle
 	mov eax, 0x1
 	add esp, 0x124
 	pop ebx

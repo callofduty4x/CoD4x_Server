@@ -775,7 +775,7 @@ typedef struct
     int protect;
 }VirtualAllocInfo_t;
 
-void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect)
+void *__cdecl _VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect)
 {
   int pagesize = 0x1000;
   void *unaligned;
@@ -810,7 +810,7 @@ void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int 
   return address;
 }
 
-bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
+bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
 {
   if ( lpAddress && dwFreeType == 0x8000 )
   {
@@ -846,7 +846,9 @@ DWORD __cdecl InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
 {
 	return atomic_fetch_add(Addend, value);
 }
-int __cdecl SleepEx(int dwMilliseconds, BOOL alert)
+
+
+int __cdecl _SleepEx(int dwMilliseconds, BOOL alert)
 {
   return 0;
 }
@@ -868,7 +870,7 @@ typedef struct
   char name[32];
 }hObject_t;
 
-BOOL __cdecl CloseHandle(HANDLE handle)
+BOOL __cdecl _CloseHandle(HANDLE handle)
 {
 
   hObject_t *hObject = (hObject_t *)handle;
@@ -891,7 +893,7 @@ BOOL __cdecl CloseHandle(HANDLE handle)
 
 DWORD sLastError;
 
-DWORD __cdecl GetLastError()
+DWORD __cdecl _GetLastError()
 {
   DWORD result;
 
@@ -900,12 +902,12 @@ DWORD __cdecl GetLastError()
   return result;
 }
 
-void __cdecl SetLastError(DWORD error_val)
+void __cdecl _SetLastError(DWORD error_val)
 {
   sLastError = error_val;
 }
 
-BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(unsigned int, unsigned int, struct _OVERLAPPED*))
+BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(unsigned int, unsigned int, struct _OVERLAPPED*))
 {
   sLastError = 0;
   hObject_t *hObject = (hObject_t*)handle;
@@ -915,12 +917,12 @@ BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead,
   }
   if ( fseek(hObject->fh, lpOverlapped->Offset, 0) )
   {
-    SetLastError(38);
+    _SetLastError(38);
     return FALSE;
   }
   if ( (signed int)fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh) <= 0 )
   {
-    SetLastError(38);
+    _SetLastError(38);
     return FALSE;
   }
   return TRUE;
@@ -946,7 +948,7 @@ FILE* NixFOpen(const char* filen, const char* mode)
     return fopen(filename, mode);
 }
 
-HANDLE __cdecl CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, void *lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+HANDLE __cdecl _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, void *lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
 {
   FILE *fh;
   hObject_t *ho;
@@ -968,7 +970,7 @@ HANDLE __cdecl CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShar
 }
 
 
-DWORD __cdecl GetFileSize(HANDLE handle, DWORD *lpFileSizeHigh)
+DWORD __cdecl _GetFileSize(HANDLE handle, DWORD *lpFileSizeHigh)
 {
   uint32_t current;
   DWORD size;
@@ -1011,7 +1013,7 @@ int NixStat(const char* filen, struct stat *b)
 }
 
 
-int __cdecl GetFileAttributesA(const char *name)
+int __cdecl _GetFileAttributesA(const char *name)
 {
   struct stat st;
 
@@ -1021,7 +1023,7 @@ int __cdecl GetFileAttributesA(const char *name)
   return (st.st_uid & 0x4000u) >= 1 ? 0x10 : 0;
 }
 
-BOOL __cdecl SetFileAttributesA(const char *name, unsigned int fa)
+BOOL __cdecl _SetFileAttributesA(const char *name, unsigned int fa)
 {
   return FALSE;
 }

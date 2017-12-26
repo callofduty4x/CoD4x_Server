@@ -416,7 +416,7 @@ qboolean __cdecl DB_ReadData()
 
   Sys_WaitDatabaseThread();
 
-  if ( ReadFileEx(g_load.f, fileBuffer, 0x40000u, &g_load.overlapped, DB_FileReadCompletionDummyCallback) )
+  if ( _ReadFileEx(g_load.f, fileBuffer, 0x40000u, &g_load.overlapped, DB_FileReadCompletionDummyCallback) )
   {
     ++g_load.outstandingReads;
     g_load.overlapped.Offset += 0x40000;
@@ -432,7 +432,7 @@ void DB_ReadXFileStage()
         return;
     }
     assert ( !g_load.outstandingReads );
-    if ( !DB_ReadData() && GetLastError() != 38 )
+    if ( !DB_ReadData() && _GetLastError() != 38 )
     {
       Com_Error(ERR_DROP, "Read error of file '%s'", g_load.filename);
     }
@@ -456,7 +456,7 @@ void DB_WaitXFileStage()
 
     --g_load.outstandingReads;
     waitStart = Sys_Milliseconds();
-    SleepEx(-1, TRUE);
+    _SleepEx(-1, TRUE);
     g_totalWait += Sys_Milliseconds() - waitStart;
     InterlockedIncrement((DWORD*)&g_loadedSize);
     g_load.stream.avail_in += 0x40000;
@@ -479,7 +479,7 @@ void __cdecl DB_CancelLoadXFile()
     assert ( g_load.f );
     assert ( (signed int)g_load.f != INVALID_DBFILE );
 
-    CloseHandle(g_load.f);
+    _CloseHandle(g_load.f);
   }
 }
 
@@ -632,7 +632,7 @@ void __cdecl DB_LoadXFileData(byte *pos, int count)
               g_load.stream.avail_in += 0x40000;
             }
             DB_AuthLoad_InflateEnd(&g_load.stream);
-            CloseHandle(g_load.f);
+            _CloseHandle(g_load.f);
           }
           Com_Error(2, "Fastfile for zone '%s' appears corrupt or unreadable (code %i.)", g_load.filename, err + 110);
         }
@@ -810,7 +810,7 @@ void __cdecl DB_LoadXFileInternal()
 
   if ( g_trackLoadProgress )
   {
-    fileSize = GetFileSize(g_load.f, 0);
+    fileSize = _GetFileSize(g_load.f, 0);
     if ( file.externalSize + fileSize >= 0x100000 )
     {
       g_totalSize = (fileSize + 0x3FFFF) / 0x40000 - g_loadedSize;
