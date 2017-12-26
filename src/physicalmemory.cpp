@@ -236,6 +236,10 @@ void __cdecl PMem_Init()
   {
     g_physicalMemoryInit = true;
     memory = VirtualAlloc(0, 0x14800000u, 0x1000u, 4u);
+    if(memory == NULL)
+    {
+        Com_Error(ERR_FATAL, "PMem_Init(): not enough virtual memory within a single block available");
+    }
     PMem_InitPhysicalMemory(&g_mem, "main", memory, 0x14800000u);
   }
 }
