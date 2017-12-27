@@ -1055,56 +1055,6 @@ ScriptEntCmd_MoveTo_10:
 	nop
 
 
-;ScriptEnt_GetMethod(char const**)
-ScriptEnt_GetMethod:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, [ebp+0x8]
-	mov eax, [eax]
-	mov [ebp-0x1c], eax
-	xor esi, esi
-	mov ebx, methods
-	xor edi, edi
-	mov edx, eax
-	jmp ScriptEnt_GetMethod_10
-ScriptEnt_GetMethod_30:
-	mov edx, [ebp-0x1c]
-ScriptEnt_GetMethod_10:
-	mov eax, [ebx]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call strcmp
-	test eax, eax
-	jz ScriptEnt_GetMethod_20
-	add esi, 0x1
-	add edi, 0xc
-	add ebx, 0xc
-	cmp esi, 0x12
-	jnz ScriptEnt_GetMethod_30
-	xor eax, eax
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-ScriptEnt_GetMethod_20:
-	mov eax, [edi+methods]
-	mov edx, [ebp+0x8]
-	mov [edx], eax
-	mov eax, [edi+methods+0x4]
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-
-
 ;SP_script_brushmodel(gentity_s*)
 SP_script_brushmodel:
 	push ebp
@@ -2427,8 +2377,6 @@ SECTION .data
 
 ;Initialized constant data of g_scr_mover:
 SECTION .rdata
-methods: dd _cstring_moveto, ScriptEntCmd_MoveTo, 0x0, _cstring_movex, ScriptEntCmd_MoveX, 0x0, _cstring_movey, ScriptEntCmd_MoveY, 0x0, _cstring_movez, ScriptEntCmd_MoveZ, 0x0, _cstring_movegravity, ScriptEntCmd_GravityMove, 0x0, _cstring_rotateto, ScriptEntCmd_RotateTo, 0x0, _cstring_rotatepitch, ScriptEntCmd_RotatePitch, 0x0, _cstring_rotateyaw, ScriptEntCmd_RotateYaw, 0x0, _cstring_rotateroll, ScriptEntCmd_RotateRoll, 0x0, _cstring_devaddpitch, ScriptEntCmd_DevAddPitch, 0x1, _cstring_devaddyaw, ScriptEntCmd_DevAddYaw, 0x1, _cstring_devaddroll, ScriptEntCmd_DevAddRoll, 0x1, _cstring_vibrate, ScriptEntCmd_Vibrate, 0x0, _cstring_rotatevelocity, ScriptEntCmd_RotateVelocity, 0x0, _cstring_solid, ScriptEntCmd_Solid, 0x0, _cstring_notsolid, ScriptEntCmd_NotSolid, 0x0, _cstring_setcandamage, ScriptEntCmd_SetCanDamage, 0x0, _cstring_physicslaunch, ScriptEntCmd_PhysicsLaunch, 0x0, 0x0, 0x0
-
 
 ;Zero initialized global or static variables of g_scr_mover:
 SECTION .bss
@@ -2448,25 +2396,6 @@ _cstring_accel_time_plus_:		db "accel time plus decel time is greater than total
 _cstring_total_time_must_:		db "total time must be positive",0
 _cstring_decel_time_must_:		db "decel time must be nonnegative",0
 _cstring_accel_time_must_:		db "accel time must be nonnegative",0
-_cstring_moveto:		db "moveto",0
-_cstring_movex:		db "movex",0
-_cstring_movey:		db "movey",0
-_cstring_movez:		db "movez",0
-_cstring_movegravity:		db "movegravity",0
-_cstring_rotateto:		db "rotateto",0
-_cstring_rotatepitch:		db "rotatepitch",0
-_cstring_rotateyaw:		db "rotateyaw",0
-_cstring_rotateroll:		db "rotateroll",0
-_cstring_devaddpitch:		db "devaddpitch",0
-_cstring_devaddyaw:		db "devaddyaw",0
-_cstring_devaddroll:		db "devaddroll",0
-_cstring_vibrate:		db "vibrate",0
-_cstring_rotatevelocity:		db "rotatevelocity",0
-_cstring_solid:		db "solid",0
-_cstring_notsolid:		db "notsolid",0
-_cstring_setcandamage:		db "setcandamage",0
-_cstring_physicslaunch:		db "physicslaunch",0
-
 
 
 ;All constant floats and doubles:

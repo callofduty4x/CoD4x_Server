@@ -3978,7 +3978,7 @@ void SV_BotUserMove(client_t *client)
             /* Notify only once */
             if (!g_botai[num].doMove)
             {
-                Scr_Notify(ent, stringIndex.movedone, 0);
+                Scr_Notify(ent, scr_const.movedone, 0);
                 Com_Printf(CON_CHANNEL_SERVER,"Bot movement done at (%3.3f, %3.3f)\n",
                             ent->r.currentOrigin[0], ent->r.currentOrigin[1]);
             }
@@ -4000,7 +4000,7 @@ void SV_BotUserMove(client_t *client)
             }
             /* Notify only once */
             if (!g_botai[num].rotIterCount)
-                Scr_Notify(ent, stringIndex.rotatedone, 0);
+                Scr_Notify(ent, scr_const.rotatedone, 0);
         }
     }
 

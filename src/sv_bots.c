@@ -269,7 +269,7 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     if(!target->client)
         Scr_ParamError(0, "Not a client.");
 
-    tag_name = stringIndex.pelvis;
+    tag_name = scr_const.pelvis;
     if(argc == 2)
         tag_name = Scr_GetConstString(1);
 

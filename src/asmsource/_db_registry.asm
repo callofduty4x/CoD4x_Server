@@ -20,12 +20,12 @@
 	extern Sys_WaitStartDatabase
 	extern _ZN10MacDisplay16GetSharedContextEv
 	extern _ZN10MacDisplay17SetCurrentContextEP16OpaqueContextRef
-	extern CreateFileA
+	extern _CreateFileA
 	extern Com_PrintWarning
 	extern g_loadingAssets
 	extern Q_stricmp
 	extern memset
-	extern GetFileSize
+	extern _GetFileSize
 	extern PMem_BeginAlloc
 	extern DB_ResetZoneSize
 	extern DB_LoadXFile
@@ -33,7 +33,7 @@
 	extern PMem_EndAlloc
 	extern Sys_Sleep
 	extern Sys_Milliseconds
-	extern CloseHandle
+	extern _CloseHandle
 	extern Com_Error
 	extern R_SyncRenderThread
 	extern RB_UnbindAllImages
@@ -123,7 +123,7 @@
 	extern g_zoneHandles
 	extern g_zoneNameList
 	extern db_hashTable
-
+	extern DB_RemoveLoadedSound
 ;Exports of db_registry:
 	global g_zoneIndex
 	global DB_DynamicCloneXAssetHandler
@@ -136,7 +136,6 @@
 	global DB_RemoveXAssetHandler
 	global DB_RemoveTechniqueSet
 	global DB_RemoveImage
-	global DB_RemoveLoadedSound
 	global DB_RemoveComWorld
 	global g_freeAssetEntryHead
 	global DB_XAssetPool
@@ -294,7 +293,6 @@
 	global Mark_LightDefAsset
 	global Mark_MaterialAsset
 	global Mark_MenuListAsset
-	global Mark_SndCurveAsset
 	global DB_FindXAssetHeaderReal
 	global Load_WeaponDefAsset
 	global Mark_WeaponDefAsset
@@ -324,7 +322,6 @@
 	global DB_BeginRecoverLostDevice
 	global Load_GetCurrentZoneHandle
 	global Load_snd_alias_list_Asset
-	global Mark_snd_alias_list_Asset
 	global DB_GetVertexBufferAndOffset
 	global DB_GetAllXAssetOfType_FastFile
 	global Load_MaterialTechniqueSetAsset
@@ -441,17 +438,6 @@ DB_RemoveImage:
 	pop ebp
 	jmp Image_Release
 	nop
-
-
-;DB_RemoveLoadedSound(XAssetHeader)
-DB_RemoveLoadedSound:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov eax, [eax+0x28]
-	mov [ebp+0x8], eax
-	pop ebp
-	jmp Z_FreeInternal
 
 
 ;DB_RemoveComWorld(XAssetHeader)
@@ -2086,7 +2072,7 @@ DB_Thread_240:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x80000000
 	mov [esp], ebx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jnz DB_Thread_60
@@ -2130,7 +2116,7 @@ DB_Thread_40:
 	mov dword [esp+0x8], 0x0
 	mov dword [esp+0x4], 0x80000000
 	mov dword [esp], _cstring_updatemp_patchff
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jz DB_Thread_90
@@ -2172,7 +2158,7 @@ DB_Thread_260:
 	mov [ebx+0x40], edx
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call GetFileSize
+	call _GetFileSize
 	mov [ebx+0xa0], eax
 	mov eax, [ebp-0x324]
 	mov [ebx+0xa4], eax
@@ -2290,7 +2276,7 @@ DB_Thread_50:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x218]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jz DB_Thread_240
@@ -2314,11 +2300,11 @@ DB_Thread_230:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x318]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	cmp eax, 0xffffffff
 	jz DB_Thread_270
 	mov [esp], eax
-	call CloseHandle
+	call _CloseHandle
 	mov eax, 0x1
 DB_Thread_290:
 	test al, al
@@ -2337,7 +2323,7 @@ DB_Thread_290:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x218]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jz DB_Thread_240
@@ -2377,7 +2363,7 @@ DB_Thread_90:
 	mov dword [esp+0x4], 0x80000000
 	lea edx, [ebp-0x118]
 	mov [esp], edx
-	call CreateFileA
+	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
 	jnz DB_Thread_60
@@ -2471,10 +2457,11 @@ DB_FreeUnusedResources:
 	mov dword [esp+0x4], 0x8
 	mov dword [esp], 0x4
 	call SL_TransferSystem
-	mov esi, db_hashTable
+	xor esi, esi
 	mov edi, varXAsset
 DB_FreeUnusedResources_40:
-	movzx eax, word [esi]
+	lea eax, [db_hashTable+esi]
+	movzx eax, word [eax]
 	movzx edx, ax
 	test ax, ax
 	jz DB_FreeUnusedResources_10
@@ -2497,7 +2484,7 @@ DB_FreeUnusedResources_20:
 	jnz DB_FreeUnusedResources_20
 DB_FreeUnusedResources_10:
 	add esi, 0x2
-	mov eax, g_freeAssetEntryHead
+	mov eax, 65536
 	cmp eax, esi
 	jnz DB_FreeUnusedResources_40
 	mov dword [ebp-0x1c], 0x0
@@ -3270,10 +3257,9 @@ DB_UnloadXZone_100:
 	mov ebx, [eax*4+DB_RemoveXAssetHandler]
 	test ebx, ebx
 	jz DB_UnloadXZone_120
-	mov edx, [eax*4+DB_RemoveXAssetHandler]
 	mov eax, [ecx+0x4]
 	mov [esp], eax
-	call edx
+	call ebx
 	mov edx, [ebp-0x24]
 DB_UnloadXZone_210:
 	movzx eax, word [edx+0xc]
@@ -3690,10 +3676,9 @@ DB_LoadXAssets_140:
 	mov eax, [ebp-0x20]
 	mov eax, [eax+0x8]
 	mov [ebp-0x44], eax
-	mov eax, [g_zoneCount]
-	sub eax, 0x1
+	mov esi, [g_zoneCount]
+	sub esi, 0x1
 	js DB_LoadXAssets_60
-	lea esi, [eax+g_zoneHandles]
 	jmp DB_LoadXAssets_70
 DB_LoadXAssets_90:
 	mov edx, 0x1
@@ -3701,10 +3686,10 @@ DB_LoadXAssets_90:
 	call DB_UnloadXZone
 DB_LoadXAssets_80:
 	sub esi, 0x1
-	cmp esi, g_zoneIndex+0x1f
-	jz DB_LoadXAssets_60
+	js DB_LoadXAssets_60
 DB_LoadXAssets_70:
-	movzx ebx, byte [esi]
+	lea ebx, [esi+g_zoneHandles]
+	movzx ebx, byte [ebx]
 	lea eax, [ebx+ebx*4]
 	lea eax, [ebx+eax*4]
 	mov edx, [ebp-0x44]
@@ -4511,11 +4496,11 @@ DB_AddUserMapDir_10:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x80000000
 	mov [esp], ebx
-	call CreateFileA
+	call _CreateFileA
 	cmp eax, 0xffffffff
 	jz DB_AddUserMapDir_20
 	mov [esp], eax
-	call CloseHandle
+	call _CloseHandle
 	mov eax, [ebp+0x8]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_usermaps
@@ -4560,11 +4545,11 @@ DB_ModFileExists_10:
 	mov dword [esp+0x8], 0x1
 	mov dword [esp+0x4], 0x80000000
 	mov [esp], ebx
-	call CreateFileA
+	call _CreateFileA
 	cmp eax, 0xffffffff
 	jz DB_ModFileExists_20
 	mov [esp], eax
-	call CloseHandle
+	call _CloseHandle
 	mov eax, 0x1
 	add esp, 0x124
 	pop ebx
@@ -5035,32 +5020,32 @@ DB_ShutdownXAssets_10:
 	mov eax, [db_hashCritSect]
 	test eax, eax
 	jnz DB_ShutdownXAssets_30
-	mov eax, [g_zoneCount]
-	sub eax, 0x1
+	mov ebx, [g_zoneCount]
+	sub ebx, 0x1
 	js DB_ShutdownXAssets_40
-	lea ebx, [eax+g_zoneHandles]
-	mov esi, g_zoneIndex+0x1f
 DB_ShutdownXAssets_50:
-	movzx eax, byte [ebx]
+	lea eax, [ebx+g_zoneHandles]
+	movzx eax, byte [eax]
 	xor edx, edx
 	call DB_UnloadXZone
 	sub ebx, 0x1
-	cmp ebx, esi
-	jnz DB_ShutdownXAssets_50
+	jns DB_ShutdownXAssets_50
 DB_ShutdownXAssets_40:
-	mov dword [ebp-0x1c], db_hashTable
+	mov dword [ebp-0x1c], 0
 	mov edx, [ebp-0x1c]
 	jmp DB_ShutdownXAssets_60
 DB_ShutdownXAssets_80:
 	mov edx, [ebp-0x1c]
-	mov word [edx], 0x0
+	lea eax, [db_hashTable+edx]
+	mov word [eax], 0x0
 	add edx, 0x2
 	mov [ebp-0x1c], edx
-	mov eax, g_freeAssetEntryHead
+	mov eax, 65536
 	cmp eax, edx
 	jz DB_ShutdownXAssets_70
 DB_ShutdownXAssets_60:
-	movzx eax, word [edx]
+	lea eax, [db_hashTable+edx]
+	movzx eax, word [eax]
 	movzx edx, ax
 	mov [ebp-0x20], edx
 	test ax, ax
@@ -5089,20 +5074,21 @@ DB_ShutdownXAssets_90:
 	test di, di
 	jnz DB_ShutdownXAssets_100
 	mov edx, [ebp-0x1c]
-	mov word [edx], 0x0
+	lea eax, [db_hashTable+edx]
+	mov word [eax], 0x0
 	add edx, 0x2
 	mov [ebp-0x1c], edx
-	mov eax, g_freeAssetEntryHead
+	mov eax, 65536
 	cmp eax, edx
 	jnz DB_ShutdownXAssets_60
 DB_ShutdownXAssets_70:
 	call DB_FreeUnusedResources
-	mov eax, [g_zoneCount]
-	sub eax, 0x1
+	mov edi, [g_zoneCount]
+	sub edi, 0x1
 	js DB_ShutdownXAssets_110
-	lea edi, [eax+g_zoneHandles]
 DB_ShutdownXAssets_120:
-	movzx eax, byte [edi]
+	lea eax, [edi+g_zoneHandles]
+	movzx eax, byte [eax]
 	lea esi, [eax+eax*4]
 	lea esi, [eax+esi*4]
 	shl esi, 0x3
@@ -5120,9 +5106,7 @@ DB_ShutdownXAssets_120:
 	call PMem_Free
 	mov byte [esi+g_zones], 0x0
 	sub edi, 0x1
-	mov edx, g_zoneIndex+0x1f
-	cmp edx, edi
-	jnz DB_ShutdownXAssets_120
+	jns DB_ShutdownXAssets_120
 DB_ShutdownXAssets_110:
 	mov dword [g_zoneCount], 0x0
 	call DB_ResetMinimumFastFileLoaded
@@ -5646,67 +5630,6 @@ Mark_MenuListAsset_60:
 Mark_MenuListAsset_50:
 	cmp [edx+0x4], edi
 	jnz Mark_MenuListAsset_60
-	mov byte [edx+0x9], 0x1
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
-
-;Mark_SndCurveAsset(SndCurve*)
-Mark_SndCurveAsset:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov edi, [ebp+0x8]
-	mov dword [ebp-0x20], 0x8
-	mov [ebp-0x1c], edi
-	lea eax, [ebp-0x20]
-	mov [esp], eax
-	call DB_GetXAssetName
-	mov ebx, eax
-	mov esi, 0x8
-	jmp Mark_SndCurveAsset_10
-Mark_SndCurveAsset_30:
-	test eax, eax
-	jz Mark_SndCurveAsset_20
-	mov edx, eax
-Mark_SndCurveAsset_40:
-	mov eax, esi
-	shl eax, 0x5
-	sub eax, esi
-	lea esi, [eax+edx]
-	add ebx, 0x1
-Mark_SndCurveAsset_10:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz Mark_SndCurveAsset_30
-	mov edx, 0x2f
-	jmp Mark_SndCurveAsset_40
-Mark_SndCurveAsset_20:
-	and esi, 0x7fff
-	movzx eax, word [esi+esi+db_hashTable]
-	shl eax, 0x4
-	lea edx, [eax+g_assetEntryPool]
-	cmp dword [eax+g_assetEntryPool], 0x8
-	jz Mark_SndCurveAsset_50
-Mark_SndCurveAsset_60:
-	movzx eax, word [edx+0xa]
-	shl eax, 0x4
-	lea edx, [eax+g_assetEntryPool]
-	cmp dword [eax+g_assetEntryPool], 0x8
-	jnz Mark_SndCurveAsset_60
-Mark_SndCurveAsset_50:
-	cmp [edx+0x4], edi
-	jnz Mark_SndCurveAsset_60
 	mov byte [edx+0x9], 0x1
 	add esp, 0x2c
 	pop ebx
@@ -6946,7 +6869,7 @@ DB_EnumXAssets_FastFile_10:
 	jmp DB_EnumXAssets_FastFile_60
 DB_EnumXAssets_FastFile_20:
 	add edi, 0x2
-	mov eax, 131072
+	mov eax, 65536
 	cmp eax, edi
 	jnz DB_EnumXAssets_FastFile_70
 	mov dword [esp], db_hashCritSect
@@ -7257,67 +7180,6 @@ Load_snd_alias_list_Asset:
 	ret
 
 
-;Mark_snd_alias_list_Asset(snd_alias_list_t*)
-Mark_snd_alias_list_Asset:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov edi, [ebp+0x8]
-	mov dword [ebp-0x20], 0x7
-	mov [ebp-0x1c], edi
-	lea eax, [ebp-0x20]
-	mov [esp], eax
-	call DB_GetXAssetName
-	mov ebx, eax
-	mov esi, 0x7
-	jmp Mark_snd_alias_list_Asset_10
-Mark_snd_alias_list_Asset_30:
-	test eax, eax
-	jz Mark_snd_alias_list_Asset_20
-	mov edx, eax
-Mark_snd_alias_list_Asset_40:
-	mov eax, esi
-	shl eax, 0x5
-	sub eax, esi
-	lea esi, [eax+edx]
-	add ebx, 0x1
-Mark_snd_alias_list_Asset_10:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz Mark_snd_alias_list_Asset_30
-	mov edx, 0x2f
-	jmp Mark_snd_alias_list_Asset_40
-Mark_snd_alias_list_Asset_20:
-	and esi, 0x7fff
-	movzx eax, word [esi+esi+db_hashTable]
-	shl eax, 0x4
-	lea edx, [eax+g_assetEntryPool]
-	cmp dword [eax+g_assetEntryPool], 0x7
-	jz Mark_snd_alias_list_Asset_50
-Mark_snd_alias_list_Asset_60:
-	movzx eax, word [edx+0xa]
-	shl eax, 0x4
-	lea edx, [eax+g_assetEntryPool]
-	cmp dword [eax+g_assetEntryPool], 0x7
-	jnz Mark_snd_alias_list_Asset_60
-Mark_snd_alias_list_Asset_50:
-	cmp [edx+0x4], edi
-	jnz Mark_snd_alias_list_Asset_60
-	mov byte [edx+0x9], 0x1
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
-
 ;DB_GetVertexBufferAndOffset(unsigned char, void*, void*, int*)
 DB_GetVertexBufferAndOffset:
 	push ebp
@@ -7355,9 +7217,10 @@ DB_GetAllXAssetOfType_FastFile:
 	jnz DB_GetAllXAssetOfType_FastFile_10
 DB_GetAllXAssetOfType_FastFile_70:
 	xor ebx, ebx
-	mov ecx, db_hashTable
+	xor ecx, ecx
 DB_GetAllXAssetOfType_FastFile_60:
-	movzx eax, word [ecx]
+	lea eax, [db_hashTable+ecx]
+	movzx eax, word [eax]
 	movzx edx, ax
 	test ax, ax
 	jz DB_GetAllXAssetOfType_FastFile_20
@@ -7382,7 +7245,7 @@ DB_GetAllXAssetOfType_FastFile_30:
 	jnz DB_GetAllXAssetOfType_FastFile_30
 DB_GetAllXAssetOfType_FastFile_20:
 	add ecx, 0x2
-	cmp ecx, g_freeAssetEntryHead
+	cmp ecx, 65536
 	jnz DB_GetAllXAssetOfType_FastFile_60
 DB_GetAllXAssetOfType_FastFile_100:
 	mov dword [esp], db_hashCritSect
@@ -7424,7 +7287,7 @@ DB_GetAllXAssetOfType_FastFile_80:
 	test ax, ax
 	jnz DB_GetAllXAssetOfType_FastFile_90
 	add ecx, 0x2
-	cmp ecx, g_freeAssetEntryHead
+	cmp ecx, 65536
 	jnz DB_GetAllXAssetOfType_FastFile_60
 	jmp DB_GetAllXAssetOfType_FastFile_100
 	nop

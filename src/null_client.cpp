@@ -160,8 +160,9 @@ void __cdecl Load_SndAliasCustom(snd_alias_list_t **name)
   }
 }
 
-void __cdecl Load_SetSoundData(byte **arg0, MssSound *a1)
+void __cdecl Load_SetSoundData(byte **data, MssSound *sound)
 {
+    sound->data = NULL;
 }
 
 void __cdecl Material_UploadShaders(struct MaterialTechniqueSet *techset)

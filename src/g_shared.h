@@ -29,8 +29,6 @@
 
 #include "sys_cod4defs.h"
 
-#define level_ADDR 0x8370440
-#define level (*((level_locals_t *)(level_ADDR)))
 
 /* Unfortunately, this can't be used to check\get gametypes... At least for now... */
 /*#define g_gametypes ((gametypes_t*)(0x8583bc0))*/
@@ -172,6 +170,9 @@ typedef struct
     float compassNorth[2];
     struct scr_vehicle_s *vehicles;
 } level_locals_t;
+
+extern level_locals_t level;
+
 
 /* Max count = 32, started at 0x08583C10 */
 /*typedef struct gametype_t
@@ -519,12 +520,7 @@ void __cdecl G_SetOrigin(gentity_t *ent, const float *origin);
 void __cdecl SetClientViewAngle(gentity_t *ent, const float *angle);
 qboolean GetFollowPlayerState(int clientNum, playerState_t *ps);
 //This defines Cvars directly related to executable file
-#ifndef getcvaradr
-#define getcvaradr(adr) ((cvar_t *)(*(int *)(adr)))
-#endif
 
-#ifndef g_maxclients
-#define g_maxclients getcvaradr(0x84bcfe8)
-#endif
+extern cvar_t* g_maxclients;
 
 #endif /*G_SHARED_H*/

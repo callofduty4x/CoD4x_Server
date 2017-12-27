@@ -618,6 +618,21 @@ typedef enum {
 } fsOrigin_t;
 
 
+struct lerpFrame_t
+{
+  float yawAngle;
+  int yawing;
+  float pitchAngle;
+  int pitching;
+  int animationNumber;
+  struct animation_s *animation;
+  int animationTime;
+  vec3_t oldFramePos;
+  float animSpeedScale;
+  int oldFrameSnapshotTime;
+};
+
+
 
 //=============================================
 

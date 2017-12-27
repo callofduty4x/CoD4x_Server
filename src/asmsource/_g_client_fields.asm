@@ -25,7 +25,7 @@
 	extern ClientScr_ReadOnly
 	extern ClientScr_GetName
 	extern ClientScr_SetSessionTeam
-	extern fields
+	extern client_fields
 ;Exports of g_client_fields:
 
 	global ClientScr_GetSessionTeam
@@ -605,7 +605,7 @@ Scr_GetClientField:
 	mov ebx, [ebp+0x8]
 	mov eax, [ebp+0xc]
 	lea eax, [eax+eax*4]
-	lea edx, [eax*4+fields]
+	lea edx, [eax*4+client_fields]
 	mov ecx, [edx+0x10]
 	test ecx, ecx
 	jz Scr_GetClientField_10
@@ -637,7 +637,7 @@ Scr_SetClientField:
 	mov ebx, [ebp+0x8]
 	mov eax, [ebp+0xc]
 	lea eax, [eax+eax*4]
-	lea edx, [eax*4+fields]
+	lea edx, [eax*4+client_fields]
 	mov ecx, [edx+0xc]
 	test ecx, ecx
 	jz Scr_SetClientField_10

@@ -502,5 +502,60 @@ struct gclient_s {
 	pmoveExt_t pmext;*/
 };//Size: 0x3184
 
+
+struct clientControllers_s
+{
+  vec3_t angles[6];
+  vec3_t tag_origin_angles;
+  vec3_t tag_origin_offset;
+};
+
+
+
+#pragma pack(push, 4)
+struct clientInfo_t
+{
+  int infoValid;
+  int nextValid;
+  int clientNum;
+  char name[16];
+  team_t team;
+  team_t oldteam;
+  int rank;
+  int unk1;
+  int unk2;
+  int score;
+  int location;
+  int health;
+  char model[64];
+  char attachModelNames[6][64];
+  char attachTagNames[6][64];
+  struct lerpFrame_t legs;
+  struct lerpFrame_t torso;
+  float lerpMoveDir;
+  float lerpLean;
+  float playerAngles[3];
+  int leftHandGun;
+  int dobjDirty;
+  struct clientControllers_s control;
+  unsigned int clientConditions[10][2];
+  struct XAnimTree_s *pXAnimTree;
+  int iDObjWeapon;
+  char weaponModel;
+  char pad[3];
+  int stanceTransitionTime;
+  int turnAnimEndTime;
+  char turnAnimType;
+  char pad2[3];
+  int attachedVehEntNum;
+  int attachedVehSlotIndex;
+  byte hideWeapon;
+  byte usingKnife;
+  char pad3[2];
+};
+
+#pragma pack(pop)
+
+
 #endif
 

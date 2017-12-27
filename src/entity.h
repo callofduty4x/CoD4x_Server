@@ -28,7 +28,6 @@
 #include "q_shared.h"
 #include "game/surfaceflags.h"
 
-#define g_entities ((gentity_t*)(0x841ffe0))
 
 #ifndef CLIPHANDLE_DEFINED
 #define CLIPHANDLE_DEFINED
@@ -245,6 +244,9 @@ struct gentity_s {
 	struct tagInfo_s* tagInfo;
 	char unknown2[88];
 }; /* Size: 0x274 */
+
+extern gentity_t g_entities[];
+
 
 /***************** Verified *******************************/
 

@@ -4547,11 +4547,11 @@ int __cdecl FS_OpenFileOverwrite(const char *qpath)
   {
     Com_Printf(CON_CHANNEL_FILES, "FS_FOpenFileOverWrite: %s\n", ospath);
   }
-  v1 = GetFileAttributesA(ospath);
+  v1 = _GetFileAttributesA(ospath);
   attributes = v1 & 0xFFFFFFFE;
   if (attributes != v1 )
   {
-    SetFileAttributesA(ospath, attributes);
+    _SetFileAttributesA(ospath, attributes);
   }
   return FS_GetHandleAndOpenFile(qpath, ospath, 0);
 }

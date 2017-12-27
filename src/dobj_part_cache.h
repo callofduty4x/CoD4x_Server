@@ -20,6 +20,7 @@ typedef struct DObjPartCache_s
 	DObjPartCacheVectorSet_t vectorSet;
 } DObjPartCache_t;
 
-#define DOBJ_PART_CACHE (*(DObjPartCache_t*)0x08373250)
+//What is this?
+#define DOBJ_PART_CACHE (*(DObjPartCache_t*)0x0)
 
 #endif // __DOBJ_PART_CACHE__

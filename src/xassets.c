@@ -31,6 +31,7 @@
 #include "qcommon.h"
 #include "cmd.h"
 #include "xassets/xmodel.h"
+#include "xassets/sounds.h"
 #include "sys_thread.h"
 #include "zlib/unzip.h"
 //#include "physicalmemory.h"
@@ -38,6 +39,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 void XAssetUsage_f();
 void XAssetUsage2_f();
@@ -1090,57 +1092,6 @@ void __cdecl Load_WeaponDefSounds()
 */
 
 
-extern void* varScriptStringList;
-
-void Load_XAssetListCustom()
-{
-  static struct XAssetList* g_varXAssetList;
-
-  varXAssetList = (void*)&g_varXAssetList;
-  DB_LoadXFileData((byte *)&g_varXAssetList, 16);
-  DB_PushStreamPos(4u);
-  varScriptStringList = varXAssetList;
-  Load_ScriptStringList(0);
-  DB_PopStreamPos();
-}
-
-void __cdecl Load_XAsset(bool atStreamStart)
-{
-  Load_Stream(atStreamStart, varXAsset, 8);
-  varXAssetHeader = &varXAsset->header;
-  Load_XAssetHeader(0);
-}
-
-struct ComBurnableSample
-{
-  char state;
-};
-
-
-struct ComBurnableSample *__cdecl AllocLoad_raw_byte()
-{
-  return (struct ComBurnableSample *)DB_AllocStreamPos(0);
-}
-
-void __cdecl Load_XString(bool atStreamStart)
-{
-  Load_Stream(atStreamStart, varXString, 4);
-  if ( *varXString )
-  {
-    if ( (signed int)*varXString == -1 )
-    {
-      *varXString = (char *)AllocLoad_raw_byte();
-      varConstChar = *varXString;
-      Load_XStringCustom((const char **)varXString);
-    }
-    else
-    {
-      DB_ConvertOffsetToPointer(varXString);
-    }
-  }
-}
-
-
 void __cdecl Load_WeaponDef(bool atStreamStart)
 {
   XModel **v1; // ebx@1
@@ -1577,3 +1528,85 @@ void __cdecl DB_ReleaseXAssets()
   }
 }
 
+unsigned int DB_HashForName(const char *name, enum XAssetType type)
+{
+  const char *pos;
+  unsigned int hash;
+  int c;
+
+  hash = type;
+  for ( pos = name; *pos; ++pos )
+  {
+    c = tolower(*pos);
+    if ( c == '\\' )
+    {
+      c = '/';
+    }
+    hash = 31 * hash + c;
+  }
+  return hash;
+}
+
+
+void __cdecl Mark_SndCurveAsset(struct SndCurve *sndCurve)
+{
+  const char *name;
+  int hash, index;
+  union XAssetEntryPoolEntry *entry;
+  struct XAsset asset;
+
+  asset.type = ASSET_TYPE_SOUND_CURVE;
+  asset.header.sndCurve = sndCurve;
+  name = DB_GetXAssetName(&asset);
+  hash = DB_HashForName(name, asset.type);
+
+  for( index = db_hashTable[hash & 0x7FFF]; ; index = entry->entry.nextHash)
+  {
+    entry = &g_assetEntryPool[index];
+    if(entry->entry.asset.type != ASSET_TYPE_SOUND_CURVE)
+    {
+        continue;
+    }
+    if(entry->entry.asset.header.sndCurve == sndCurve)
+    {
+        break;
+    }
+  }
+  entry->entry.inuse = 1;
+}
+
+void __cdecl Mark_snd_alias_list_Asset(struct snd_alias_list_t *sound)
+{
+  const char *name;
+  int hash, index;
+  union XAssetEntryPoolEntry *entry;
+  struct XAsset asset;
+
+  asset.type = ASSET_TYPE_SOUND;
+  asset.header.sound = sound;
+  name = DB_GetXAssetName(&asset);
+  hash = DB_HashForName(name, asset.type);
+
+  for( index = db_hashTable[hash & 0x7FFF]; ; index = entry->entry.nextHash)
+  {
+    entry = &g_assetEntryPool[index];
+    if(entry->entry.asset.type != ASSET_TYPE_SOUND)
+    {
+        continue;
+    }
+    if(entry->entry.asset.header.sound == sound)
+    {
+        break;
+    }
+  }
+  entry->entry.inuse = 1;
+}
+
+void __cdecl DB_RemoveLoadedSound(union XAssetHeader sound)
+{
+    if(sound.loadedsound->sounds.data == NULL)
+    {
+        return;
+    }
+    Z_Free(sound.loadedsound->sounds.data);
+}

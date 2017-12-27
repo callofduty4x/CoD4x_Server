@@ -25,15 +25,6 @@
 #define __SCR_VM_H__
 
 
-#define SCRSTRUCT_ADDR 0x895bf08
-#define STRINGINDEX_ADDR 0x836fe20
-#define stringIndex (*((stringIndex_t*)(STRINGINDEX_ADDR)))
-#define scrVarGlob (((VariableValueInternal*)( 0x8a64e80 )))
-#define scrVarGlob_high (((VariableValueInternal*)( 0x8a64e80 + 16 * 32770 )))
-#define scrVarPub (*((scrVarPub_t*)( 0x8be4e80 )))
-#define scrVmPub (*((scrVmPub_t*)( 0x8c06320 )))
-#define g_script_error_level *(int*)(0x8c0631c)
-#define g_threadStartingTime *(int*)(0x8c0a678)
 
 #include "q_shared.h"
 #include "q_math.h"
@@ -489,7 +480,65 @@ struct scrVmGlob_t
   unsigned int localVarsStack[2048];
 };
 
+struct scrCompilePub_t
+{
+  int value_count;
+  int far_function_count;
+  unsigned int loadedscripts;
+  unsigned int scriptsPos;
+  unsigned int builtinFunc;
+  unsigned int builtinMeth;
+  uint16_t canonicalStrings[65536];
+  const char *in_ptr;
+  const char *parseBuf;
+  byte script_loading;
+  byte allowedBreakpoint;
+  int16_t pad;
+  int developer_statement;
+  char *opcodePos;
+  unsigned int programLen;
+  int func_table_size;
+  int func_table[1024];
+};
 #pragma pack(pop)
+
+struct scr_animtree_t
+{
+  struct XAnim_s *anims;
+};
+
+struct scrAnimPub_t
+{
+  unsigned int animtrees;
+  unsigned int animtree_node;
+  unsigned int animTreeNames;
+  struct scr_animtree_t xanim_lookup[2][128];
+  unsigned int xanim_num[2];
+  unsigned int animTreeIndex;
+  bool animtree_loading;
+};
+
+struct SourceBufferInfo
+{
+  const char *codePos;
+  char *buf;
+  const char *sourceBuf;
+  int len;
+  int sortedIndex;
+  bool archive;
+  byte pad[3];
+};
+
+
+
+struct scrParserPub_t
+{
+  struct SourceBufferInfo *sourceBufferLookup;
+  unsigned int sourceBufferLookupLen;
+  const char *scriptfilename;
+  const char *sourceBuf;
+};
+
 
 
 void __cdecl Scr_InitVariables(void);			//VM
@@ -661,4 +710,14 @@ ent_field_t* __internalGet_fields_1();
 
 extern struct scrVmGlob_t scrVmGlob;
 
+
+extern VariableValueInternal scrVarGlob[];
+#define scrVarGlob_high (((VariableValueInternal*)( scrVarGlob + 32770 )))
+extern scrVarPub_t scrVarPub;
+extern scrVmPub_t scrVmPub;
+extern struct scrCompilePub_t scrCompilePub;
+extern stringIndex_t stringIndex;
+extern int g_script_error_level;
+extern struct scrAnimPub_t scrAnimPub;
+extern struct scrParserPub_t scrParserPub;
 #endif

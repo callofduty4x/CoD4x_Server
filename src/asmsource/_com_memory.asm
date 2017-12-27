@@ -8,8 +8,8 @@
 	extern FS_LoadStack
 	extern R_ReflectionProbeRegisterDvars
 	extern r_reflectionProbeGenerate
-	extern VirtualAlloc
-	extern VirtualFree
+	extern _VirtualAlloc
+	extern _VirtualFree
 	extern Cmd_AddCommand
 	extern Com_Error
 	extern Sys_OutOfMemErrorInternal
@@ -309,7 +309,7 @@ Com_InitHunkMemory_30:
 	mov dword [esp+0x8], 0x2000
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call VirtualAlloc
+	call _VirtualAlloc
 	mov [s_hunkData], eax
 	test eax, eax
 	jz Com_InitHunkMemory_20
@@ -325,7 +325,7 @@ Com_InitHunkMemory_40:
 	mov [esp+0x4], eax
 	mov eax, [s_hunkData]
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	mov dword [esp+0x8], _ZZ18Com_InitHunkMemoryE17Com_Meminfo_f_VAR
 	mov dword [esp+0x4], Com_Meminfo_f
 	mov dword [esp], _cstring_meminfo
@@ -472,7 +472,7 @@ Hunk_AllocateTempMemoryHigh_20:
 	mov dword [esp+0x8], 0x1000
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jnz Hunk_AllocateTempMemoryHigh_30
 	mov dword [esp+0x4], 0x1aa
@@ -609,7 +609,7 @@ Hunk_AllocateTempMemory_30:
 	mov dword [esp+0x8], 0x1000
 	mov [esp+0x4], eax
 	mov [esp], edi
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jnz Hunk_AllocateTempMemory_50
 	mov dword [esp+0x4], 0x1aa
@@ -660,7 +660,7 @@ Hunk_Clear:
 	mov [esp+0x4], eax
 	mov eax, [s_hunkData]
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	leave
 	ret
 	nop
@@ -688,7 +688,7 @@ Hunk_ClearTempMemory_10:
 	mov dword [esp+0x8], 0x4000
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	leave
 	ret
 	nop
@@ -716,7 +716,7 @@ Hunk_ClearTempMemoryHigh_10:
 	mov dword [esp+0x8], 0x4000
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call VirtualFree
+	call _VirtualFree
 	leave
 	ret
 
@@ -745,7 +745,7 @@ Hunk_ClearToMarkLow:
 	mov dword [esp+0x8], 0x4000
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 Hunk_ClearToMarkLow_10:
 	add esp, 0x14
 	pop ebx
@@ -862,7 +862,7 @@ Hunk_FreeTempMemory_30:
 	mov dword [esp+0x8], 0x4000
 	mov [esp+0x4], eax
 	mov [esp], edx
-	call VirtualFree
+	call _VirtualFree
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -1136,13 +1136,13 @@ Z_TryVirtualAllocInternal:
 	mov dword [esp+0x8], 0x2000
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x0
-	call VirtualAlloc
+	call _VirtualAlloc
 	mov esi, eax
 	mov dword [esp+0xc], 0x4
 	mov dword [esp+0x8], 0x1000
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jz Z_TryVirtualAllocInternal_10
 Z_TryVirtualAllocInternal_20:
@@ -1156,7 +1156,7 @@ Z_TryVirtualAllocInternal_10:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call VirtualFree
+	call _VirtualFree
 	xor esi, esi
 	jmp Z_TryVirtualAllocInternal_20
 
@@ -1173,13 +1173,13 @@ Z_VirtualAllocInternal:
 	mov dword [esp+0x8], 0x2000
 	mov [esp+0x4], ebx
 	mov dword [esp], 0x0
-	call VirtualAlloc
+	call _VirtualAlloc
 	mov esi, eax
 	mov dword [esp+0xc], 0x4
 	mov dword [esp+0x8], 0x1000
 	mov [esp+0x4], ebx
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jz Z_VirtualAllocInternal_10
 	test esi, esi
@@ -1194,7 +1194,7 @@ Z_VirtualAllocInternal_10:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call VirtualFree
+	call _VirtualFree
 	xor esi, esi
 Z_VirtualAllocInternal_20:
 	mov dword [esp+0x4], 0x3a5
@@ -1220,7 +1220,7 @@ Z_VirtualCommitInternal:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jz Z_VirtualCommitInternal_10
 	leave
@@ -1242,7 +1242,7 @@ Z_VirtualDecommitInternal:
 	mov [esp+0x4], eax
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	leave
 	ret
 
@@ -1256,7 +1256,7 @@ Z_VirtualFreeInternal:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	leave
 	ret
 	nop
@@ -1272,7 +1272,7 @@ Z_VirtualReserve:
 	mov eax, [ebp+0x8]
 	mov [esp+0x4], eax
 	mov dword [esp], 0x0
-	call VirtualAlloc
+	call _VirtualAlloc
 	leave
 	ret
 	nop
@@ -1317,7 +1317,7 @@ Hunk_UserAlloc_90:
 	sub edx, ecx
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jz Hunk_UserAlloc_30
 Hunk_UserAlloc_20:
@@ -1344,13 +1344,13 @@ Hunk_UserAlloc_60:
 	mov dword [esp+0x8], 0x2000
 	mov [esp+0x4], esi
 	mov dword [esp], 0x0
-	call VirtualAlloc
+	call _VirtualAlloc
 	mov ebx, eax
 	mov dword [esp+0xc], 0x4
 	mov dword [esp+0x8], 0x1000
 	mov dword [esp+0x4], 0x20
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jz Hunk_UserAlloc_40
 Hunk_UserAlloc_80:
@@ -1427,14 +1427,14 @@ Hunk_UserReset_20:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	test ebx, ebx
 	jnz Hunk_UserReset_40
 Hunk_UserReset_30:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call VirtualFree
+	call _VirtualFree
 	mov [edi], edi
 	mov dword [edi+0x4], 0x0
 Hunk_UserReset_10:
@@ -1450,7 +1450,7 @@ Hunk_UserReset_10:
 	sub edx, ecx
 	mov [esp+0x4], edx
 	mov [esp], ecx
-	call VirtualFree
+	call _VirtualFree
 Hunk_UserReset_50:
 	mov [edi+0x10], ebx
 	mov dword [esp+0x8], 0xfe0
@@ -1515,13 +1515,13 @@ Hunk_UserCreate:
 	mov dword [esp+0x8], 0x2000
 	mov [esp+0x4], esi
 	mov dword [esp], 0x0
-	call VirtualAlloc
+	call _VirtualAlloc
 	mov ebx, eax
 	mov dword [esp+0xc], 0x4
 	mov dword [esp+0x8], 0x1000
 	mov dword [esp+0x4], 0x20
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jnz Hunk_UserCreate_10
 	mov dword [esp+0x4], 0x1aa
@@ -1591,14 +1591,14 @@ Hunk_UserDestroy_10:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	test ebx, ebx
 	jnz Hunk_UserDestroy_30
 Hunk_UserDestroy_20:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call VirtualFree
+	call _VirtualFree
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -1682,13 +1682,13 @@ Hunk_InitDebugMemory:
 	mov dword [esp+0x8], 0x2000
 	mov dword [esp+0x4], 0x1000000
 	mov dword [esp], 0x0
-	call VirtualAlloc
+	call _VirtualAlloc
 	mov ebx, eax
 	mov dword [esp+0xc], 0x4
 	mov dword [esp+0x8], 0x1000
 	mov dword [esp+0x4], 0x20
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jnz Hunk_InitDebugMemory_10
 	mov dword [esp+0x4], 0x1aa
@@ -1779,7 +1779,7 @@ Hunk_AllocAlignInternal_20:
 	mov dword [esp+0x8], 0x1000
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jnz Hunk_AllocAlignInternal_30
 	mov dword [esp+0x4], 0x1aa
@@ -1853,14 +1853,14 @@ Hunk_ShutdownDebugMemory_10:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], eax
-	call VirtualFree
+	call _VirtualFree
 	test ebx, ebx
 	jnz Hunk_ShutdownDebugMemory_30
 Hunk_ShutdownDebugMemory_20:
 	mov dword [esp+0x8], 0x8000
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call VirtualFree
+	call _VirtualFree
 	mov dword [g_debugUser], 0x0
 	add esp, 0x10
 	pop ebx
@@ -1937,7 +1937,7 @@ Hunk_AllocLowAlignInternal_20:
 	mov dword [esp+0x8], 0x1000
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call VirtualAlloc
+	call _VirtualAlloc
 	test eax, eax
 	jnz Hunk_AllocLowAlignInternal_30
 	mov dword [esp+0x4], 0x1aa
