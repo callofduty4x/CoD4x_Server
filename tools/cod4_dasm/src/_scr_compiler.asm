@@ -33,7 +33,7 @@
 	extern TempMemorySetPos
 	extern SL_TransferToCanonicalString
 	extern Scr_CreateCanonicalFilename
-	extern GetObjectA
+	extern SGetObjectA
 	extern GetNewVariable
 	extern SetVariableValue
 	extern Scr_GetFunction
@@ -4350,7 +4350,7 @@ EmitFunction_180:
 	mov [esp], eax
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov edx, eax
 	test edi, edi
 	jnz EmitFunction_50
@@ -4372,7 +4372,7 @@ EmitFunction_230:
 	call SL_TransferRefToUser
 EmitFunction_250:
 	mov [esp], esi
-	call GetObjectA
+	call SGetObjectA
 	mov ebx, eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
@@ -4486,7 +4486,7 @@ EmitFunction_270:
 	call SL_TransferRefToUser
 EmitFunction_240:
 	mov [esp], esi
-	call GetObjectA
+	call SGetObjectA
 	mov ebx, eax
 	xor esi, esi
 	jmp EmitFunction_170
@@ -10739,7 +10739,7 @@ ScriptCompile_80:
 	mov [esp], eax
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov edi, [edi+0x4]
 	test edi, edi
 	jz ScriptCompile_60
@@ -10868,7 +10868,7 @@ ScriptCompile_570:
 	mov [esp], eax
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov edx, [ebp-0x54]
 	mov [esp], edx
 	mov ecx, esi
@@ -11047,7 +11047,7 @@ ScriptCompile_430:
 	mov [esp], edx
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov esi, eax
 	mov eax, [ebp-0x64]
 	mov ecx, [eax+0x4]

@@ -26,7 +26,6 @@
 #include "../sys_main.h"
 #include "../sys_cod4defs.h"
 #include "sys_win32.h"
-#include "../sys_thread.h"
 
 #include <windows.h>
 #include <wincrypt.h>
@@ -931,8 +930,8 @@ void Sys_SleepUSec(int usec)
 
 unsigned int Sys_GetProcessAffinityMask()
 {
-  unsigned int systemAffinityMask;
-  unsigned int processAffinityMask = 0;
+  long unsigned int systemAffinityMask;
+  long unsigned int processAffinityMask = 0;
 
   HANDLE h = GetCurrentProcess();
 

@@ -26,11 +26,15 @@
 #define __SYS_MAIN_H__
 
 #include "q_shared.h"
+
+
 #include <setjmp.h>
 #include <inttypes.h>
 #include <stdbool.h>
 
-
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 
 #ifdef __cplusplus

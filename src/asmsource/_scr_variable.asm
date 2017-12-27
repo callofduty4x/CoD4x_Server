@@ -68,7 +68,7 @@
 	global AllocValue
 	global ClearArray
 	global FindObject
-	global GetObjectA
+	global SGetObjectA
 	global Scr_EvalOr
 	global AllocObject
 	global AllocThread
@@ -2888,8 +2888,8 @@ FindObject:
 	nop
 
 
-;GetObjectA(unsigned int)
-GetObjectA:
+;SGetObjectA(unsigned int)
+SGetObjectA:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2901,14 +2901,14 @@ GetObjectA:
 	lea edi, [eax+scrVarGlob+0x80020]
 	mov eax, [edi+0x8]
 	test al, 0x1f
-	jnz GetObjectA_10
+	jnz SGetObjectA_10
 	or eax, 0x1
 	mov [edi+0x8], eax
 	movzx eax, word [scrVarGlob+0x14]
 	mov [ebp-0x1c], ax
 	test ax, ax
-	jz GetObjectA_20
-GetObjectA_50:
+	jz SGetObjectA_20
+SGetObjectA_50:
 	movzx eax, word [ebp-0x1c]
 	shl eax, 0x4
 	lea esi, [eax+0x10]
@@ -2921,11 +2921,11 @@ GetObjectA_50:
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
-	jz GetObjectA_30
+	jz SGetObjectA_30
 	test byte [ebx+0x8], 0x60
-	jz GetObjectA_40
+	jz SGetObjectA_40
 	movzx eax, word [ebp-0x1a]
-GetObjectA_30:
+SGetObjectA_30:
 	mov [scrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
@@ -2948,7 +2948,7 @@ GetObjectA_30:
 	pop edi
 	pop ebp
 	ret
-GetObjectA_40:
+SGetObjectA_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1e]
@@ -2961,12 +2961,12 @@ GetObjectA_40:
 	mov [ecx+0x4], ax
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
-	jmp GetObjectA_30
-GetObjectA_20:
+	jmp SGetObjectA_30
+SGetObjectA_20:
 	mov dword [esp], _cstring_exceeded_maximum
 	call Scr_TerminalError
-	jmp GetObjectA_50
-GetObjectA_10:
+	jmp SGetObjectA_50
+SGetObjectA_10:
 	mov eax, [edi+0x4]
 	add esp, 0x2c
 	pop ebx

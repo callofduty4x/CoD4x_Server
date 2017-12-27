@@ -969,7 +969,7 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
         scrStruct.var_10 = "+";
         scrStruct.scr_buffer_handle = scr_buffer_handle;
         ScriptParse(&result, 0);
-        object = GetObjectA(GetVariable(scrStruct.var_04, handle));
+        object = SGetObjectA(GetVariable(scrStruct.var_04, handle));
 
         ScriptCompile(result, object, variable, precache, iarg_02);
 

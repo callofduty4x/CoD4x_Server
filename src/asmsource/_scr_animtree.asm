@@ -16,7 +16,7 @@
 	extern XAnimPrecache
 	extern Scr_CreateCanonicalFilename
 	extern GetNewVariable
-	extern GetObjectA
+	extern SGetObjectA
 	extern GetVariable
 	extern GetArray
 	extern SL_RemoveRefToString
@@ -469,7 +469,7 @@ Scr_UsingTreeInternal:
 	call GetNewVariable
 	mov ebx, eax
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov [ebp-0x1c], eax
 	mov edx, [esi*4+scrAnimPub+0x40c]
 	add edx, 0x1

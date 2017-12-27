@@ -35,7 +35,7 @@
 	extern Scr_InitAllocNode
 	extern ScriptParse
 	extern GetVariable
-	extern GetObjectA
+	extern SGetObjectA
 	extern ScriptCompile
 
 ;Exports of scr_main:
@@ -670,7 +670,7 @@ Scr_LoadScriptInternal_10:
 	mov [esp], eax
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov edi, eax
 	mov eax, [ebp+0x10]
 	mov [esp+0x10], eax
