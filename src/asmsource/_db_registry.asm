@@ -14,7 +14,7 @@
 	extern strstr
 	extern Q_strncpyz
 	extern Sys_GetValue
-	extern setjmp
+	extern _setjmp
 	extern Com_ErrorAbort
 	extern Sys_DatabaseCompleted
 	extern Sys_WaitStartDatabase
@@ -41,7 +41,7 @@
 	extern RB_ClearPixelShader
 	extern RB_ClearVertexShader
 	extern RB_ClearVertexDecl
-	extern InterlockedDecrement
+	extern Sys_InterlockedDecrement
 	extern g_assetNames
 	extern Com_PrintError
 	extern DB_EnumXAssets
@@ -57,7 +57,7 @@
 	extern DB_GetXAssetTypeSize
 	extern memcpy
 	extern Sys_Error
-	extern InterlockedIncrement
+	extern Sys_InterlockedIncrement
 	extern Sys_IsDatabaseReady2
 	extern Material_DirtyTechniqueSetOverrides
 	extern Material_OverrideTechniqueSets
@@ -2024,7 +2024,7 @@ DB_Thread_20:
 	mov dword [esp], 0x2
 	call Sys_GetValue
 	mov [esp], eax
-	call setjmp
+	call _setjmp
 	test eax, eax
 	jz DB_Thread_10
 	call Com_ErrorAbort
@@ -2413,7 +2413,7 @@ DB_AllocXAssetHeader:
 	ret
 DB_AllocXAssetHeader_10:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov edx, [ebp-0xc]
 	mov ebx, g_assetNames
 	mov eax, [ebx+edx*4]
@@ -2707,7 +2707,7 @@ DB_CreateDefaultEntry_80:
 	jmp DB_CreateDefaultEntry_180
 DB_CreateDefaultEntry_90:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov eax, [ebp-0x1c]
 	sub eax, 0xa
 	cmp eax, 0x1
@@ -2726,7 +2726,7 @@ DB_CreateDefaultEntry_90:
 	jmp DB_CreateDefaultEntry_200
 DB_CreateDefaultEntry_100:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov dword [esp+0x4], _cstring_could_not_alloca
 	mov dword [esp], 0x2
 	call Com_Error
@@ -2952,7 +2952,7 @@ DB_LinkXAssetEntry_140:
 	cmp edx, 0xf
 	jz DB_LinkXAssetEntry_200
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov ecx, [ebp-0x8b4]
 	movzx eax, byte [ecx+0x8]
 	lea edx, [eax+eax*4]
@@ -3146,7 +3146,7 @@ DB_LinkXAssetEntry_160:
 	jmp DB_LinkXAssetEntry_310
 DB_LinkXAssetEntry_120:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov dword [esp+0x4], _cstring_could_not_alloca
 	mov dword [esp], 0x2
 	call Com_Error
@@ -3399,7 +3399,7 @@ DB_UnloadXZone_290:
 	cmp byte [eax], 0x0
 	jz DB_UnloadXZone_270
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov eax, g_assetNames
 	mov edx, [ebp-0x20]
 	mov eax, [eax+edx*4]
@@ -3473,7 +3473,7 @@ DB_AddXAsset:
 	jmp DB_AddXAsset_10
 DB_AddXAsset_30:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 DB_AddXAsset_20:
 	mov dword [esp], 0x0
 	call Sys_Sleep
@@ -3482,7 +3482,7 @@ DB_AddXAsset_10:
 	test eax, eax
 	jnz DB_AddXAsset_20
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	sub eax, 0x1
 	jnz DB_AddXAsset_30
 	mov eax, [db_hashCritSect]
@@ -3493,7 +3493,7 @@ DB_AddXAsset_10:
 	call DB_LinkXAssetEntry
 	mov ebx, eax
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	cmp byte [g_isRecoveringLostDevice], 0x0
 	jz DB_AddXAsset_40
 	mov byte [g_mayRecoverLostAssets], 0x1
@@ -3528,7 +3528,7 @@ DB_PostLoadXZone:
 	jmp DB_PostLoadXZone_40
 DB_PostLoadXZone_60:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 DB_PostLoadXZone_50:
 	mov dword [esp], 0x0
 	call Sys_Sleep
@@ -3537,7 +3537,7 @@ DB_PostLoadXZone_30:
 	test eax, eax
 	jnz DB_PostLoadXZone_50
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	sub eax, 0x1
 	jnz DB_PostLoadXZone_60
 	mov eax, [db_hashCritSect]
@@ -3549,7 +3549,7 @@ DB_PostLoadXZone_30:
 DB_PostLoadXZone_90:
 	mov dword [g_copyInfoCount], 0x0
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	call Material_DirtyTechniqueSetOverrides
 	call Material_OverrideTechniqueSets
 	mov byte [g_archiveBuf], 0x0
@@ -3704,7 +3704,7 @@ DB_LoadXAssets_70:
 	jmp DB_LoadXAssets_110
 DB_LoadXAssets_130:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 DB_LoadXAssets_120:
 	mov dword [esp], 0x0
 	call Sys_Sleep
@@ -3713,7 +3713,7 @@ DB_LoadXAssets_100:
 	test eax, eax
 	jnz DB_LoadXAssets_120
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	sub eax, 0x1
 	jnz DB_LoadXAssets_130
 	mov eax, [db_hashCritSect]
@@ -4141,7 +4141,7 @@ DB_LoadXAssets_450:
 	cmp [ebp-0x50], eax
 	jnz DB_LoadXAssets_500
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov byte [g_archiveBuf], 0x0
 	call DB_LoadSounds
 	call DB_LoadDObjs
@@ -4921,7 +4921,7 @@ DB_IsXAssetDefault_20:
 	mov ebx, esi
 	and ebx, 0x7fff
 	mov dword [esp], db_hashCritSect
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	mov eax, [db_hashCritSect+0x4]
 	test eax, eax
 	jnz DB_IsXAssetDefault_50
@@ -4951,7 +4951,7 @@ DB_IsXAssetDefault_70:
 	test eax, eax
 	jnz DB_IsXAssetDefault_80
 	mov dword [esp], db_hashCritSect
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	xor eax, eax
 	cmp byte [ebx+0x8], 0x0
 	setz al
@@ -5005,7 +5005,7 @@ DB_ShutdownXAssets:
 	jmp DB_ShutdownXAssets_10
 DB_ShutdownXAssets_30:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 DB_ShutdownXAssets_20:
 	mov dword [esp], 0x0
 	call Sys_Sleep
@@ -5014,7 +5014,7 @@ DB_ShutdownXAssets_10:
 	test eax, eax
 	jnz DB_ShutdownXAssets_20
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	sub eax, 0x1
 	jnz DB_ShutdownXAssets_30
 	mov eax, [db_hashCritSect]
@@ -5111,7 +5111,7 @@ DB_ShutdownXAssets_110:
 	mov dword [g_zoneCount], 0x0
 	call DB_ResetMinimumFastFileLoaded
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -5652,7 +5652,7 @@ DB_FindXAssetHeaderReal:
 	mov dword [ebp-0x41c], 0x0
 DB_FindXAssetHeader_140:
 	mov dword [esp], db_hashCritSect
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	mov eax, [db_hashCritSect+0x4]
 	test eax, eax
 	jnz DB_FindXAssetHeader_10
@@ -5718,7 +5718,7 @@ DB_FindXAssetHeader_70:
 	jnz DB_FindXAssetHeader_90
 DB_FindXAssetHeader_210:
 	mov dword [esp], db_hashCritSect
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	test edi, edi
 	jz DB_FindXAssetHeader_100
 	cmp byte [edi+0x8], 0x0
@@ -5821,7 +5821,7 @@ DB_FindXAssetHeader_350:
 	test eax, eax
 	jnz DB_FindXAssetHeader_250
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 DB_FindXAssetHeader_110:
 	mov byte [edi+0x9], 0x1
 	mov ecx, [ebp-0x41c]
@@ -5846,7 +5846,7 @@ DB_FindXAssetHeader_120:
 	jmp DB_FindXAssetHeader_260
 DB_FindXAssetHeader_300:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 DB_FindXAssetHeader_290:
 	mov dword [esp], 0x0
 	call Sys_Sleep
@@ -5855,7 +5855,7 @@ DB_FindXAssetHeader_270:
 	test eax, eax
 	jnz DB_FindXAssetHeader_290
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	sub eax, 0x1
 	jnz DB_FindXAssetHeader_300
 	mov eax, [db_hashCritSect]
@@ -5928,7 +5928,7 @@ DB_FindXAssetHeader_530:
 	call DB_CreateDefaultEntry
 	mov ebx, eax
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov eax, [ebx+0x4]
 	jmp DB_FindXAssetHeader_410
 DB_FindXAssetHeader_450:
@@ -5950,7 +5950,7 @@ DB_FindXAssetHeader_450:
 	call Com_PrintError
 DB_FindXAssetHeader_400:
 	mov dword [esp], db_hashCritSect+0x4
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	xor eax, eax
 	jmp DB_FindXAssetHeader_410
 DB_FindXAssetHeader_390:
@@ -6753,7 +6753,7 @@ DB_EndRecoverLostDevice:
 	push ebx
 	sub esp, 0x14
 	mov dword [esp], db_hashCritSect
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	mov eax, [db_hashCritSect+0x4]
 	test eax, eax
 	jnz DB_EndRecoverLostDevice_10
@@ -6763,7 +6763,7 @@ DB_EndRecoverLostDevice_30:
 	jg DB_EndRecoverLostDevice_20
 DB_EndRecoverLostDevice_50:
 	mov dword [esp], db_hashCritSect
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	movzx eax, byte [g_loadingZone]
 	test al, al
 	setz byte [g_mayRecoverLostAssets]
@@ -6810,7 +6810,7 @@ DB_EnumXAssets_FastFile:
 	movzx eax, byte [ebp+0x14]
 	mov [ebp-0x19], al
 	mov dword [esp], db_hashCritSect
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	mov eax, [db_hashCritSect+0x4]
 	test eax, eax
 	jnz DB_EnumXAssets_FastFile_10
@@ -6873,7 +6873,7 @@ DB_EnumXAssets_FastFile_20:
 	cmp eax, edi
 	jnz DB_EnumXAssets_FastFile_70
 	mov dword [esp], db_hashCritSect
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -7095,7 +7095,7 @@ DB_BeginRecoverLostDevice:
 	jz DB_BeginRecoverLostDevice_10
 DB_BeginRecoverLostDevice_40:
 	mov dword [esp], db_hashCritSect
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	mov eax, [db_hashCritSect+0x4]
 	test eax, eax
 	jnz DB_BeginRecoverLostDevice_20
@@ -7104,7 +7104,7 @@ DB_BeginRecoverLostDevice_50:
 	test eax, eax
 	jg DB_BeginRecoverLostDevice_30
 	mov dword [esp], db_hashCritSect
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -7144,7 +7144,7 @@ DB_BeginRecoverLostDevice_60:
 	cmp ebx, [g_zoneCount]
 	jl DB_BeginRecoverLostDevice_60
 	mov dword [esp], db_hashCritSect
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -7211,7 +7211,7 @@ DB_GetAllXAssetOfType_FastFile:
 	mov esi, [ebp+0x8]
 	mov edi, [ebp+0xc]
 	mov dword [esp], db_hashCritSect
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	mov eax, [db_hashCritSect+0x4]
 	test eax, eax
 	jnz DB_GetAllXAssetOfType_FastFile_10
@@ -7249,7 +7249,7 @@ DB_GetAllXAssetOfType_FastFile_20:
 	jnz DB_GetAllXAssetOfType_FastFile_60
 DB_GetAllXAssetOfType_FastFile_100:
 	mov dword [esp], db_hashCritSect
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	mov eax, ebx
 	add esp, 0x4c
 	pop ebx

@@ -19,6 +19,8 @@
 ===========================================================================
 */
 
+#ifndef __SYS_WIN32_H__
+#define __SYS_WIN32_H__
 
 #include "../q_shared.h"
 #include "../objfile_parser.h"
@@ -78,3 +80,4 @@ BOOL __cdecl _SetFileAttributesA(const char *lpFileName, DWORD dwFileAttributes)
 }
 #endif
 
+#endif

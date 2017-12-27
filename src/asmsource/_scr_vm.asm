@@ -41,7 +41,7 @@
 	extern Scr_GetThreadWaitTime
 	extern Scr_ClearWaitTime
 	extern GetSafeParentLocalId
-	extern setjmp
+	extern _setjmp
 	extern Scr_GetVariableFieldIndex
 	extern scrCompilePub
 	extern Sys_Error
@@ -1249,7 +1249,7 @@ VM_ExecuteInternal_1760:
 	lea eax, [eax+eax*8]
 	lea eax, [eax*8+g_script_error]
 	mov [esp], eax
-	call setjmp
+	call _setjmp
 	test eax, eax
 	jnz VM_ExecuteInternal_10
 VM_ExecuteInternal_810:

@@ -3,9 +3,9 @@
 	extern MT_FreeIndex
 	extern Sys_LeaveCriticalSection
 	extern scrMemTreePub
-	extern InterlockedCompareExchange
-	extern InterlockedIncrement
-	extern InterlockedDecrement
+	extern Sys_InterlockedCompareExchange
+	extern Sys_InterlockedIncrement
+	extern Sys_InterlockedDecrement
 	extern tolower
 	extern MT_AllocIndex
 	extern memcpy
@@ -409,11 +409,11 @@ SL_AddUser_20:
 	or eax, ebx
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call InterlockedCompareExchange
+	call Sys_InterlockedCompareExchange
 	cmp ebx, eax
 	jnz SL_AddUser_20
 	mov [esp], esi
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 SL_AddUser_10:
 	add esp, 0x1c
 	pop ebx
@@ -473,7 +473,7 @@ SL_ConvertToLowercase_90:
 SL_ConvertToLowercase_80:
 	lea esi, [eax+0x1]
 	mov [esp], ebx
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	shl eax, 0x10
 	test eax, eax
 	jnz SL_ConvertToLowercase_60
@@ -791,12 +791,12 @@ SL_GetStringOfSize_180:
 	or eax, ebx
 	mov [esp+0x4], eax
 	mov [esp], ecx
-	call InterlockedCompareExchange
+	call Sys_InterlockedCompareExchange
 	cmp ebx, eax
 	jnz SL_GetStringOfSize_190
 	mov esi, [ebp-0x20]
 	mov [esp], esi
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	jmp SL_GetStringOfSize_170
 SL_GetStringOfSize_130:
 	mov ebx, [scrStringGlob]
@@ -872,12 +872,12 @@ SL_GetStringOfSize_270:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x24]
 	mov [esp], edx
-	call InterlockedCompareExchange
+	call Sys_InterlockedCompareExchange
 	cmp ebx, eax
 	jnz SL_GetStringOfSize_270
 	mov ecx, [ebp-0x24]
 	mov [esp], ecx
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	mov esi, [ebp-0x3c]
 	mov esi, [esi+0x4]
 	mov [ebp-0x48], esi
@@ -940,7 +940,7 @@ SL_TransferRefToUser_20:
 	or eax, ebx
 	mov [esp+0x4], eax
 	mov [esp], esi
-	call InterlockedCompareExchange
+	call Sys_InterlockedCompareExchange
 	cmp ebx, eax
 	jnz SL_TransferRefToUser_20
 	add esp, 0x1c
@@ -951,7 +951,7 @@ SL_TransferRefToUser_20:
 	ret
 SL_TransferRefToUser_10:
 	mov [esp], esi
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -1002,7 +1002,7 @@ Scr_SetString_40:
 Scr_SetString_30:
 	lea edi, [eax+0x1]
 	mov [esp], ebx
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	shl eax, 0x10
 	test eax, eax
 	jz Scr_SetString_50
@@ -1046,7 +1046,7 @@ Scr_SetString_10:
 	mov edx, [edx]
 	lea eax, [edx+eax*4]
 	mov [esp], eax
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	jmp Scr_SetString_60
 	nop
 
@@ -1114,7 +1114,7 @@ SL_AddRefToString:
 	mov edx, [edx]
 	lea eax, [edx+eax*4]
 	mov [esp], eax
-	call InterlockedIncrement
+	call Sys_InterlockedIncrement
 	leave
 	ret
 	nop
@@ -1137,7 +1137,7 @@ SL_ShutdownSystem:
 SL_ShutdownSystem_40:
 	lea edi, [eax+0x1]
 	mov [esp], ebx
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	shl eax, 0x10
 	test eax, eax
 	jz SL_ShutdownSystem_20
@@ -1355,7 +1355,7 @@ SL_RemoveRefToString:
 SL_RemoveRefToString_30:
 	lea edi, [eax+0x1]
 	mov [esp], ebx
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	shl eax, 0x10
 	test eax, eax
 	jz SL_RemoveRefToString_20
@@ -1509,7 +1509,7 @@ SL_RemoveRefToStringOfSize:
 	mov eax, [eax]
 	lea esi, [eax+edx*4]
 	mov [esp], esi
-	call InterlockedDecrement
+	call Sys_InterlockedDecrement
 	shl eax, 0x10
 	test eax, eax
 	jz SL_RemoveRefToStringOfSize_10

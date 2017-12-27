@@ -61,7 +61,7 @@ ifeq ($(OS),Windows_NT)
 ####################
 # Windows variables.
 BIN_EXT=.exe
-NASMFLAGS=-f coff -dWin32 --prefix _
+NASMFLAGS=-f win -dWin32 --prefix _
 OS_SOURCES=$(wildcard $(WIN_DIR)/*.c)
 OS_OBJ=$(patsubst $(WIN_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
 C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(WIN_DEFINES))
