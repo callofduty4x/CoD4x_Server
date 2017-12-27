@@ -695,9 +695,9 @@ void    Swap_Init( void );
 
 #define POF_PLAYER 4
 
-/*
+
 #define random()    ( ( rand() & 0x7fff ) / ( (float)0x7fff ) )
-#define crandom()   ( 2.0 * ( random() - 0.5 ) )
+/*#define crandom()   ( 2.0 * ( random() - 0.5 ) )
 */
 qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const char *function, const char *fmt, ...);
 
