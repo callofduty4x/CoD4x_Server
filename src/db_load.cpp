@@ -26,6 +26,7 @@
 #include "cvar.h"
 #include "xassets.h"
 #include "sys_patch.h"
+#include "sys_main.h"
 #include "qcommon_mem.h"
 #include "filesystem.h"
 #include "qcommon.h"
@@ -380,7 +381,7 @@ void __cdecl Load_Stream(bool atStreamStart, const void *ptr, int size)
     DB_IncStreamPos(size);
 }
 
-void __stdcall DB_FileReadCompletionDummyCallback(unsigned int dwErrorCode, unsigned int dwNumberOfBytesTransfered, struct _OVERLAPPED *lpOverlapped)
+void __stdcall DB_FileReadCompletionDummyCallback(long unsigned int dwErrorCode, long unsigned int dwNumberOfBytesTransfered, struct _OVERLAPPED *lpOverlapped)
 {
 
 }

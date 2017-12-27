@@ -33,21 +33,15 @@
 #include <stdbool.h>
 
 #ifdef _WIN32
-#include <windows.h>
+#include "win32/sys_win32.h"
+#else
+#include "unix/sys_unix.h"
 #endif
 
 
 #ifdef __cplusplus
 extern "C"{
 #endif
-
-#ifndef __WIN32
-#include "unix/sys_unix.h"
-#endif
-
-void *__cdecl _VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect);
-bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType);
-
 
 unsigned int Sys_Milliseconds( void );
 unsigned long long Sys_MillisecondsLong( void );

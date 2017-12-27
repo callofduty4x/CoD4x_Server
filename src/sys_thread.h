@@ -29,9 +29,7 @@
 #include <stdarg.h>
 
 
-#ifdef _WIN32
-	typedef DWORD threadid_t;
-#else
+#ifndef _WIN32
 	#include <pthread.h>
 #endif
 

@@ -2,10 +2,16 @@
 #include "sys_thread.h"
 #include "cvar.h"
 
+
+#ifndef _WIN32
 //#define COMPILER_GCC
 #define DX_TO_GL_ABSTRACTION
 #define POSIX
 #include "togl/rendermechanism.h"
+#else
+#include <d3d9.h>
+#endif
+
 #include "qcommon_io.h"
 #include "xassets.h"
 #include "qcommon_mem.h"

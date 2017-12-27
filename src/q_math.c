@@ -924,6 +924,7 @@ long double __cdecl randomf()
   return ((float)(signed int)ms_rand() * 0.000030517578f);
 }
 
+
 long double crandom()
 {
   unsigned int is;

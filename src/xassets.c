@@ -455,12 +455,6 @@ void DB_UnloadXAssetsMemoryForZone(byte freeflags)
 	}
 }
 
-/* No multithreading here :P */
-void _InterlockedExchangeAdd(int* lockedvar, int num)
-{
-    *lockedvar += num;
-}
-
 int DB_FileSize(const char *filename, int FF_DIR)
 {
 	char ospath[MAX_OSPATH];
