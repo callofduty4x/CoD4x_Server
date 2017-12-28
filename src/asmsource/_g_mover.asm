@@ -1401,9 +1401,10 @@ _cstring_hint_friendly:		db "HINT_FRIENDLY",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_0_50000000:		dq 0x3fe0000000000000	; 0.5
 _double_4_00000000:		dq 0x4010000000000000	; 4
 _double_0_00000000:		dq 0x0	; 0
 _float_4_00000000:		dd 0x40800000	; 4
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

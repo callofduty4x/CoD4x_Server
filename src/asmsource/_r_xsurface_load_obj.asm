@@ -1404,9 +1404,11 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_65535_00000000:		dd 0x477fff00	; 65535
 _float_0_50000000:		dd 0x3f000000	; 0.5
-_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; OWORD
-_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; OWORD
 
+
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; DQWORD

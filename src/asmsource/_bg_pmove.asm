@@ -8644,7 +8644,6 @@ _cstring_clamping_acceler:		db "clamping acceleration from %f to %f",0ah,0
 
 ;All constant floats and doubles:
 SECTION .rdata
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_240_00000000:		dd 0x43700000	; 240
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_45_00000000:		dd 0x42340000	; 45
@@ -8658,7 +8657,6 @@ _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00000000:		dd 0x0	; 0
 _float_10_00000000:		dd 0x41200000	; 10
 _float_0_01562500:		dd 0x3c800000	; 0.015625
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float__4_00000000:		dd 0xc0800000	; -4
 _float_100_00000000:		dd 0x42c80000	; 100
@@ -8716,3 +8714,6 @@ _float__50_00000000:		dd 0xc2480000	; -50
 _float_16_00000000:		dd 0x41800000	; 16
 _float_19_00000000:		dd 0x41980000	; 19
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD

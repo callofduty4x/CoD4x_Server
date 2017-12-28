@@ -2846,7 +2846,6 @@ _cstring_game_droppedfori:		db "GAME_DROPPEDFORINACTIVITY",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_00010000:		dd 0x38d1b717	; 0.0001
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_20_00000000:		dd 0x41a00000	; 20
 _float_0_00100000:		dd 0x3a83126f	; 0.001
@@ -2858,3 +2857,5 @@ _float_0_01000000:		dd 0x3c23d70a	; 0.01
 _float_0_00000000:		dd 0x0	; 0
 _float_1_10000002:		dd 0x3f8ccccd	; 1.1
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

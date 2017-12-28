@@ -2020,10 +2020,11 @@ _float_0_12500000:		dd 0x3e000000	; 0.125
 _float__0_00100000:		dd 0xba83126f	; -0.001
 _float_1_00100005:		dd 0x3f8020c5	; 1.001
 _float_1_00000000:		dd 0x3f800000	; 1
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float__1000000_00000000_float_:		dd 0xc9742400	; -1e+06
 _float_1000000_00000000:		dd 0x49742400	; 1e+06
-_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; OWORD
-_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; OWORD
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_4f000000:		dd 0x4f000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_4f800000:		dd 0x4f800000, 0x0, 0x0, 0x0	; DQWORD

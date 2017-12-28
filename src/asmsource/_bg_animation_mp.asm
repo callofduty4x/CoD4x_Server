@@ -6192,9 +6192,7 @@ SECTION .rdata
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_360_00000000:		dd 0x43b40000	; 360
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_05000000:		dd 0x3d4ccccd	; 0.05
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00000000:		dd 0x0	; 0
 _float_1000_00000000:		dd 0x447a0000	; 1000
@@ -6231,3 +6229,6 @@ _float_0_69999999:		dd 0x3f333333	; 0.7
 _float__0_30000001:		dd 0xbe99999a	; -0.3
 _float_0_25000000:		dd 0x3e800000	; 0.25
 
+align   16,db 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

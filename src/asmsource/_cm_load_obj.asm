@@ -2512,5 +2512,6 @@ _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_0_00000000:		dd 0x0	; 0
 _float_0_12500000:		dd 0x3e000000	; 0.125
 _float_1_00000000:		dd 0x3f800000	; 1
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 
+align   16,db 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD

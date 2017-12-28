@@ -2401,7 +2401,6 @@ _cstring_accel_time_must_:		db "accel time must be nonnegative",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1000_00000000:		dd 0x447a0000	; 1000
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_0_50000000:		dd 0x3f000000	; 0.5
@@ -2411,3 +2410,5 @@ _double_1000_00000000:		dq 0x408f400000000000	; 1000
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_1_00000048:		dd 0x3f800004	; 1
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
