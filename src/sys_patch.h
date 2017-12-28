@@ -33,3 +33,4 @@ DWORD SetDword(DWORD addr, DWORD replacement);
 qboolean Sys_MemoryProtectWrite(void* startoffset, int len);
 qboolean Sys_MemoryProtectExec(void* startoffset, int len);
 qboolean Sys_MemoryProtectReadonly(void* startoffset, int len);
+
