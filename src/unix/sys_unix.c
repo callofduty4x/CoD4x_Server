@@ -830,19 +830,19 @@ bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
   return false;
 }
 
-DWORD __cdecl InterlockedDecrement(DWORD volatile *Addend)
+DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend)
 {
 	return atomic_fetch_sub(Addend, 1) -1;
 }
-DWORD __cdecl InterlockedIncrement(DWORD volatile *Addend)
+DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend)
 {
 	return atomic_fetch_add(Addend, 1) +1;
 }
-DWORD __cdecl InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
+DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
 {
 	return __sync_val_compare_and_swap(Destination, Comparand, Exchange);
 }
-DWORD __cdecl InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
+DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
 {
 	return atomic_fetch_add(Addend, value);
 }
@@ -907,7 +907,7 @@ void __cdecl _SetLastError(DWORD error_val)
   sLastError = error_val;
 }
 
-BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(unsigned int, unsigned int, struct _OVERLAPPED*))
+BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(long unsigned int, long unsigned int, struct _OVERLAPPED*))
 {
   sLastError = 0;
   hObject_t *hObject = (hObject_t*)handle;

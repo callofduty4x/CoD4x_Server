@@ -32,15 +32,24 @@ struct _OVERLAPPED
   HANDLE hEvent;
 };
 
-BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(unsigned int,  unsigned int,  struct _OVERLAPPED *));
+BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(long unsigned int, long unsigned int,  struct _OVERLAPPED *));
 int __cdecl _SleepEx(int dwMilliseconds, BOOL alert);
 DWORD __cdecl _GetLastError();
 DWORD __cdecl _GetFileSize(HANDLE handle, DWORD *lpFileSizeHigh);
 
-DWORD __cdecl InterlockedDecrement(DWORD volatile *Addend);
-DWORD __cdecl InterlockedIncrement(DWORD volatile *Addend);
-DWORD __cdecl InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand);
-DWORD __cdecl InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value);
+DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend);
+DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend);
+DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand);
+DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value);
+
+void *__cdecl _VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect);
+bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType);
+
+
+#define InterlockedDecrement Sys_InterlockedDecrement
+#define InterlockedIncrement Sys_InterlockedIncrement
+#define InterlockedCompareExchange Sys_InterlockedCompareExchange
+#define InterlockedExchangeAdd Sys_InterlockedExchangeAdd
 
 #ifdef __cplusplus
 }
