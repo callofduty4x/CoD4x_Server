@@ -257,7 +257,6 @@
 	global iprintlnbold
 	global GScr_print3d
 	global GScr_line
-	global Scr_LogString
 	global GScr_SpawnPlane
 	global GScr_SpawnTurret
 	global GScr_PrecacheTurret
@@ -500,7 +499,6 @@
 	global GScr_SetStat
 	global GScr_SendLeaderboards
 	global ScrCmd_SetMoveSpeedScale
-	global ScrCmd_LogString
 	global ScrCmd_ItemWeaponSetAmmo
 	global SetObjectiveIcon
 	global GScr_RadiusDamageInternal
@@ -1031,16 +1029,6 @@ GScr_line_jumptab_0:
 	dd GScr_line_90
 	dd GScr_line_100
 	dd GScr_line_110
-
-
-;Scr_LogString()
-Scr_LogString:
-	push ebp
-	mov ebp, esp
-	pop ebp
-	ret
-	nop
-
 
 
 ;GScr_SpawnPlane()
@@ -12795,16 +12783,6 @@ ScrCmd_SetMoveSpeedScale:
 	pop ebp
 	ret
 	nop
-
-
-;ScrCmd_LogString(scr_entref_t)
-ScrCmd_LogString:
-	push ebp
-	mov ebp, esp
-	pop ebp
-	ret
-	nop
-	add [eax], al
 
 
 ;ScrCmd_ItemWeaponSetAmmo(scr_entref_t)

@@ -42,8 +42,6 @@
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 
-char *(*Scr_GetLocalizedString)(unsigned int arg) =
-    (char *(*)(unsigned int))0x0816541C;
 
 /*
 ============
@@ -2911,13 +2909,13 @@ void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg)
 
 void Scr_PrecacheString_f()
 {
-    char *locStrName = NULL;
+    const char *locStrName = NULL;
 
-    if (*(qboolean *)0x0837045C == qfalse)
+    if (level.initializing == qfalse)
         Scr_Error("precacheString must be called before any wait statements "
                   "in the gametype or level script\n");
 
-    locStrName = Scr_GetLocalizedString(0);
+    locStrName = Scr_GetIString(0);
     if (locStrName[0])
         g_isLocStringPrecached[G_LocalizedStringIndex(locStrName)] = qtrue;
 }
@@ -3033,4 +3031,47 @@ void GScr_ArrayTest()
     // Does nothing for now.
     // To be implemented with other script function name.
     //Scr_GetArrayId(0);
+}
+
+
+void ScrCmd_LogString(scr_entref_t arg)
+{
+
+}
+
+void Scr_LogString()
+{
+
+}
+
+
+void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
+{
+  gentity_t *pSelf;
+  char svcmd[128];
+
+  if (Scr_GetNumParam())
+  {
+    Scr_Error("Usage: <client> getXuid()\n");
+  }
+    if (HIWORD(arg))
+    {
+
+        Scr_ObjectError("Not an entity");
+        return;
+    }
+    else
+    {
+        pSelf = &g_entities[LOWORD(arg)];
+    }
+
+  if ( pSelf->client )
+  {
+    Com_sprintf(svcmd, sizeof(svcmd), "%llx", SV_GetPlayerXuid(pSelf->client->sess.cs.clientIndex));
+    Scr_AddString(svcmd);
+  }
+  else
+  {
+    Scr_AddString("0");
+  }
 }

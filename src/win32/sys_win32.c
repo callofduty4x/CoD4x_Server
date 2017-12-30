@@ -915,7 +915,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 }
 
 
-void  __attribute__ ((noreturn)) Sys_ExitForOS( int exitCode )
+void  __noreturn Sys_ExitForOS( int exitCode )
 {
 	ExitProcess( exitCode );
 }

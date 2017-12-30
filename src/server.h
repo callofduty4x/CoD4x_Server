@@ -930,7 +930,7 @@ void __cdecl SV_SetUserinfo(int clientIndex, const char *val);
 
 bool MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, enum DeltaFlags flags);
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number);
-
+uint64_t __cdecl SV_GetPlayerXuid(unsigned int clientNum);
 
 void __cdecl CM_UnlinkEntity(svEntity_t *ent);
 void __cdecl CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);

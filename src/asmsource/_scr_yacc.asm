@@ -1,6 +1,6 @@
 ;Imports of scr_yacc:
 	extern malloc
-	extern fprintf
+	extern Scr_YYACError
 	extern exit
 	extern memcpy
 	extern CompileError
@@ -28,6 +28,8 @@
 	extern Scr_ScanFile
 	extern realloc
 	extern yy_create_buffer
+	extern yy_stdin
+	extern yy_stdout
 ;Exports of scr_yacc:
 	global yaccResult
 	global yy_start
@@ -474,13 +476,10 @@ yyparse_70:
 	xor ecx, ecx
 	jmp yyparse_250
 yyparse_380:
-	mov dword [esp+0x8], _cstring_fatal_flex_scann
+	mov dword [esp+0x4], _cstring_fatal_flex_scann
 yyparse_810:
-	mov dword [esp+0x4], _cstring_s
-	mov eax, [0xd5cc920]
-	add eax, 0xb0
-	mov [esp], eax
-	call fprintf
+	mov dword [esp], _cstring_s
+	call Scr_YYACError
 	mov dword [esp], 0x2
 	call exit
 yyparse_100:
@@ -525,7 +524,7 @@ yyparse_230:
 	mov [ebp-0x2854], edx
 	jmp yyparse_180
 yyparse_300:
-	mov eax, [0xd5cc920]
+	call yy_stdin
 	mov [yyin], eax
 	jmp yyparse_410
 yyparse_400:
@@ -3693,8 +3692,7 @@ yyparse_1840:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_310:
-	mov eax, [0xd5cc920]
-	add eax, 0x58
+	call yy_stdout
 	mov [yyout], eax
 	jmp yyparse_550
 yyparse_390:
@@ -3876,7 +3874,7 @@ yyparse_770:
 	mov [ebp-0x2811], al
 	jmp yyparse_800
 yyparse_470:
-	mov dword [esp+0x8], _cstring_fatal_flex_scann1
+	mov dword [esp+0x4], _cstring_fatal_flex_scann1
 	jmp yyparse_810
 yyparse_460:
 	mov ecx, [yytext]
@@ -4182,7 +4180,7 @@ yyparse_1130:
 	mov [ebp-0x2800], eax
 	jmp yyparse_360
 yyparse_1060:
-	mov dword [esp+0x8], _cstring_fatal_error__sca
+	mov dword [esp+0x4], _cstring_fatal_error__sca
 	jmp yyparse_810
 yyparse_1050:
 	mov eax, edx

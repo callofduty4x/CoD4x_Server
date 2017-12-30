@@ -518,6 +518,14 @@ struct scrAnimPub_t
   bool animtree_loading;
 };
 
+struct scrAnimGlob_t
+{
+  const char *start;
+  const char *pos;
+  uint16_t using_xanim_lookup[2][128];
+  int bAnimCheck;
+};
+
 struct SourceBufferInfo
 {
   const char *codePos;
@@ -539,6 +547,27 @@ struct scrParserPub_t
   const char *sourceBuf;
 };
 
+#define MAX_SCRIPT_FILEHANDLES 10
+
+typedef enum{
+    SCR_FH_FILE,
+    SCR_FH_PARALIST,
+    SCR_FH_INDEXPARALIST
+}scr_fileHandleType_t;
+
+
+typedef struct{
+    FILE* fh;
+    scr_fileHandleType_t type;
+    char filename[MAX_QPATH];
+    int baseOffset;
+    int fileSize;
+}scr_fileHandle_t;
+
+
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 
 void __cdecl Scr_InitVariables(void);			//VM
@@ -619,7 +648,7 @@ void* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, byte )
 void __cdecl Scr_InitAllocNode( void );
 void __cdecl Scr_BeginLoadScripts( void );
 void __cdecl Scr_SetClassMap( unsigned int );
-#define Scr_AddClassField ((void (__cdecl *)(unsigned int classnum, const char* name, unsigned short int offset))0x081535BA)
+void __cdecl Scr_AddClassField(unsigned int classnum, const char* name, unsigned short int offset);
 void __cdecl Scr_SetGenericField( void*, fieldtype_t, int );
 void __cdecl Scr_GetGenericField( void*, fieldtype_t, int );
 void __cdecl Scr_SetString(unsigned short *strindexptr, unsigned const stringindex);
@@ -655,22 +684,6 @@ __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer 
 void __regparm3 VM_Notify(int, int, VariableValue* val);
 int __cdecl FindEntityId(int, int);
 
-#define MAX_SCRIPT_FILEHANDLES 10
-
-typedef enum{
-    SCR_FH_FILE,
-    SCR_FH_PARALIST,
-    SCR_FH_INDEXPARALIST
-}scr_fileHandleType_t;
-
-
-typedef struct{
-    FILE* fh;
-    scr_fileHandleType_t type;
-    char filename[MAX_QPATH];
-    int baseOffset;
-    int fileSize;
-}scr_fileHandle_t;
 
 qboolean Scr_FS_CloseFile( scr_fileHandle_t* f );
 int Scr_FS_ReadLine( void *buffer, int len, fileHandle_t f );
@@ -694,7 +707,6 @@ void ClientScr_GetName(gclient_t* gcl);
 const char* Scr_GetPlayername(gentity_t* gent);
 void Scr_FreeValue(unsigned int id);
 qboolean __cdecl Scr_IsValidGameType(const char *pszGameType);
-
 void __cdecl MT_DumpTree( );
 void __cdecl Scr_DumpScriptThreads( );
 
@@ -704,12 +716,22 @@ gclient_t* VM_GetGClientForEntity(gentity_t* ent);
 gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
 client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
 
+void __noreturn CompileError(unsigned int sourcePos, const char *msg, ...);
+void __cdecl RemoveVariable(unsigned int parentId, unsigned int unsignedValue);
+unsigned int __cdecl GetArray(unsigned int id);
+unsigned int __cdecl Scr_GetSelf(unsigned int threadId);
+unsigned int __cdecl GetArrayVariable(unsigned int parentId, unsigned int unsignedValue);
+void __cdecl SetVariableValue(unsigned int id, VariableValue *value);
 void __cdecl CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
 ent_field_t* __internalGet_fields_1();
 
-extern struct scrVmGlob_t scrVmGlob;
+#ifdef __cplusplus
+}
+#endif
 
+extern struct scrVmGlob_t scrVmGlob;
+extern struct scrAnimGlob_t scrAnimGlob;
 
 extern VariableValueInternal scrVarGlob[];
 #define scrVarGlob_high (((VariableValueInternal*)( scrVarGlob + 32770 )))
@@ -720,4 +742,5 @@ extern stringIndex_t stringIndex;
 extern int g_script_error_level;
 extern struct scrAnimPub_t scrAnimPub;
 extern struct scrParserPub_t scrParserPub;
+
 #endif

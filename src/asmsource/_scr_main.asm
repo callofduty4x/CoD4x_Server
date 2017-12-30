@@ -41,7 +41,6 @@
 ;Exports of scr_main:
 	global Scr_ScanFile
 	global Scr_FreeScripts
-	global Scr_IsIdentifier
 	global Scr_EndLoadScripts
 	global Scr_BeginLoadScripts
 	global Scr_EndLoadAnimTrees
@@ -187,41 +186,6 @@ Scr_FreeScripts_20:
 	mov byte [eax+0x418], 0x0
 	call Scr_EndLoadAnimTrees
 	jmp Scr_FreeScripts_40
-
-
-;Scr_IsIdentifier(char const*)
-Scr_IsIdentifier:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov edx, [ebp+0x8]
-	movzx eax, byte [edx]
-	test al, al
-	jnz Scr_IsIdentifier_10
-Scr_IsIdentifier_40:
-	mov eax, 0x1
-Scr_IsIdentifier_50:
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_IsIdentifier_10:
-	mov ebx, edx
-Scr_IsIdentifier_30:
-	movsx eax, al
-	mov [esp], eax
-	call I_iscsym
-	test eax, eax
-	jz Scr_IsIdentifier_20
-	movzx eax, byte [ebx+0x1]
-	add ebx, 0x1
-	test al, al
-	jnz Scr_IsIdentifier_30
-	jmp Scr_IsIdentifier_40
-Scr_IsIdentifier_20:
-	xor eax, eax
-	jmp Scr_IsIdentifier_50
 
 
 ;Scr_EndLoadScripts()

@@ -4697,11 +4697,12 @@ G_VehiclesInit:
 	mov word [s_numVehicleInfos], 0x0
 G_VehiclesInit_30:
 	mov eax, s_vehicles
-	mov edx, vehTestMaxMPH
+	xor edx, edx
 G_VehiclesInit_20:
 	mov dword [eax+0x1b8], 0x3ff
 	add eax, 0x354
-	cmp edx, eax
+	inc edx
+	cmp edx, 8
 	jnz G_VehiclesInit_20
 	mov eax, level
 	mov dword [eax+0x2e68], s_vehicles

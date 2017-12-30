@@ -725,7 +725,7 @@ void Sys_ExitThread(int code)
 
 }
 
-void  __attribute__ ((noreturn)) Sys_ExitForOS( int exitCode )
+void  __noreturn Sys_ExitForOS( int exitCode )
 {
 	exit(exitCode);
 }

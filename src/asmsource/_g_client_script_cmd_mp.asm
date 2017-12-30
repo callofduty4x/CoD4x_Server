@@ -145,7 +145,6 @@
 	global ScrCmd_StopLocalSound
 	global PlayerCmd_IsTalking
 	global PlayerCmd_AllowSpectateTeam
-	global PlayerCmd_GetXuid
 	global PlayerCmd_SetActionSlot
 	global PlayerCmd_SetPerk
 	global PlayerCmd_HasPerk
@@ -155,7 +154,6 @@
 	global PlayerCmd_UpdateDMScores
 	global PlayerCmd_SetRank
 	global G_InitializeAmmo
-	global Player_GetMethod
 	global PlayerCmd_AllowADS
 	global PlayerCmd_AllowJump
 	global PlayerCmd_hasWeapon
@@ -3887,50 +3885,6 @@ PlayerCmd_AllowSpectateTeam_20:
 	jmp PlayerCmd_AllowSpectateTeam_110
 
 
-;PlayerCmd_GetXuid(scr_entref_t)
-PlayerCmd_GetXuid:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov eax, [ebp+0x8]
-	mov edx, eax
-	shr eax, 0x10
-	test ax, ax
-	jnz PlayerCmd_GetXuid_10
-	movzx ecx, dx
-	lea eax, [ecx+ecx*8]
-	lea eax, [ecx+eax*2]
-	mov edx, eax
-	shl edx, 0x5
-	add eax, edx
-	add eax, ecx
-	mov edx, g_entities
-	mov eax, [edx+eax+0x15c]
-	test eax, eax
-	jz PlayerCmd_GetXuid_20
-PlayerCmd_GetXuid_40:
-	call Scr_GetNumParam
-	test eax, eax
-	jz PlayerCmd_GetXuid_30
-	mov dword [esp], _cstring_usage_self_getxu
-	call Scr_Error
-PlayerCmd_GetXuid_30:
-	mov dword [ebp+0x8], _cstring_0
-	leave
-	jmp Scr_AddString
-PlayerCmd_GetXuid_10:
-	mov dword [esp], _cstring_not_an_entity
-	call Scr_ObjectError
-	jmp PlayerCmd_GetXuid_40
-PlayerCmd_GetXuid_20:
-	mov [esp+0x4], ecx
-	mov dword [esp], _cstring_entity_i_is_not_
-	call va
-	mov [esp], eax
-	call Scr_ObjectError
-	jmp PlayerCmd_GetXuid_40
-
-
 ;PlayerCmd_SetActionSlot(scr_entref_t)
 PlayerCmd_SetActionSlot:
 	push ebp
@@ -4784,56 +4738,6 @@ G_InitializeAmmo_50:
 	pop ebp
 	ret
 	nop
-
-
-;Player_GetMethod(char const**)
-Player_GetMethod:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, [ebp+0x8]
-	mov eax, [eax]
-	mov [ebp-0x1c], eax
-	xor esi, esi
-	mov ebx, methods
-	xor edi, edi
-	mov edx, eax
-	jmp Player_GetMethod_10
-Player_GetMethod_30:
-	add esi, 0x1
-	add edi, 0xc
-	add ebx, 0xc
-	cmp esi, 0x53
-	jz Player_GetMethod_20
-	mov edx, [ebp-0x1c]
-Player_GetMethod_10:
-	mov eax, [ebx]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call strcmp
-	test eax, eax
-	jnz Player_GetMethod_30
-	mov eax, [edi+methods]
-	mov edx, [ebp+0x8]
-	mov [edx], eax
-	mov eax, [edi+methods+0x4]
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Player_GetMethod_20:
-	xor eax, eax
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
 
 
 ;PlayerCmd_AllowADS(scr_entref_t)
@@ -6861,8 +6765,6 @@ SECTION .data
 
 ;Initialized constant data of g_client_script_cmd_mp:
 SECTION .rdata
-methods: dd _cstring_giveweapon, PlayerCmd_giveWeapon, 0x0, _cstring_takeweapon, PlayerCmd_takeWeapon, 0x0, _cstring_takeallweapons, PlayerCmd_takeAllWeapons, 0x0, _cstring_getcurrentweapon, PlayerCmd_getCurrentWeapon, 0x0, _cstring_getcurrentoffhan, PlayerCmd_getCurrentOffhand, 0x0, _cstring_hasweapon, PlayerCmd_hasWeapon, 0x0, _cstring_switchtoweapon, PlayerCmd_switchToWeapon, 0x0, _cstring_switchtooffhand, PlayerCmd_switchToOffhand, 0x0, _cstring_givestartammo, PlayerCmd_giveStartAmmo, 0x0, _cstring_givemaxammo, PlayerCmd_giveMaxAmmo, 0x0, _cstring_getfractionstart, PlayerCmd_getFractionStartAmmo, 0x0, _cstring_getfractionmaxam, PlayerCmd_getFractionMaxAmmo, 0x0, _cstring_setorigin, PlayerCmd_setOrigin, 0x0, _cstring_getvelocity, PlayerCmd_GetVelocity, 0x0, _cstring_setplayerangles, PlayerCmd_setAngles, 0x0, _cstring_getplayerangles, PlayerCmd_getAngles, 0x0, _cstring_usebuttonpressed, PlayerCmd_useButtonPressed, 0x0, _cstring_attackbuttonpres, PlayerCmd_attackButtonPressed, 0x0, _cstring_adsbuttonpressed, PlayerCmd_adsButtonPressed, 0x0, _cstring_meleebuttonpress, PlayerCmd_meleeButtonPressed, 0x0, _cstring_fragbuttonpresse, PlayerCmd_fragButtonPressed, 0x0, _cstring_secondaryoffhand, PlayerCmd_secondaryOffhandButtonPressed, 0x0, _cstring_playerads, PlayerCmd_playerADS, 0x0, _cstring_isonground, PlayerCmd_isOnGround, 0x0, _cstring_pingplayer, PlayerCmd_pingPlayer, 0x0, _cstring_setviewmodel, PlayerCmd_SetViewmodel, 0x0, _cstring_getviewmodel, PlayerCmd_GetViewmodel, 0x0, _cstring_setoffhandsecond, PlayerCmd_setOffhandSecondaryClass, 0x0, _cstring_getoffhandsecond, PlayerCmd_getOffhandSecondaryClass, 0x0, _cstring_beginlocationsel, PlayerCmd_BeginLocationSelection, 0x0, _cstring_endlocationselec, PlayerCmd_EndLocationSelection, 0x0, _cstring_buttonpressed, PlayerCmd_buttonPressedDEVONLY, 0x0, _cstring_sayall, PlayerCmd_SayAll, 0x0, _cstring_sayteam, PlayerCmd_SayTeam, 0x0, _cstring_showscoreboard, PlayerCmd_showScoreboard, 0x0, _cstring_setspawnweapon, PlayerCmd_setSpawnWeapon, 0x0, _cstring_dropitem, PlayerCmd_dropItem, 0x0, _cstring_finishplayerdama, PlayerCmd_finishPlayerDamage, 0x0, _cstring_suicide, PlayerCmd_Suicide, 0x0, _cstring_openmenu, PlayerCmd_OpenMenu, 0x0, _cstring_openmenunomouse, PlayerCmd_OpenMenuNoMouse, 0x0, _cstring_closemenu, PlayerCmd_CloseMenu, 0x0, _cstring_closeingamemenu, PlayerCmd_CloseInGameMenu, 0x0, _cstring_freezecontrols, PlayerCmd_FreezeControls, 0x0, _cstring_disableweapons, PlayerCmd_DisableWeapons, 0x0, _cstring_enableweapons, PlayerCmd_EnableWeapons, 0x0, _cstring_setreverb, PlayerCmd_SetReverb, 0x0, _cstring_deactivatereverb, PlayerCmd_DeactivateReverb, 0x0, _cstring_setchannelvolume, PlayerCmd_SetChannelVolumes, 0x0, _cstring_deactivatechanne, PlayerCmd_DeactivateChannelVolumes, 0x0, _cstring_setweaponammocli, PlayerCmd_SetWeaponAmmoClip, 0x0, _cstring_setweaponammosto, PlayerCmd_SetWeaponAmmoStock, 0x0, _cstring_getweaponammocli, PlayerCmd_GetWeaponAmmoClip, 0x0, _cstring_getweaponammosto, PlayerCmd_GetWeaponAmmoStock, 0x0, _cstring_anyammoforweapon, PlayerCmd_AnyAmmoForWeaponModes, 0x0, _cstring_iprintln, iclientprintln, 0x0, _cstring_iprintlnbold, iclientprintlnbold, 0x0, _cstring_spawn, PlayerCmd_spawn, 0x0, _cstring_setentertime, PlayerCmd_setEnterTime, 0x0, _cstring_cloneplayer, PlayerCmd_ClonePlayer, 0x0, _cstring_setclientdvar, PlayerCmd_SetClientDvar, 0x0, _cstring_setclientdvars, PlayerCmd_SetClientDvars, 0x0, _cstring_playlocalsound, ScrCmd_PlayLocalSound, 0x0, _cstring_stoplocalsound, ScrCmd_StopLocalSound, 0x0, _cstring_istalking, PlayerCmd_IsTalking, 0x0, _cstring_allowspectatetea, PlayerCmd_AllowSpectateTeam, 0x0, _cstring_getguid, PlayerCmd_GetGuid, 0x0, _cstring_getxuid, PlayerCmd_GetXuid, 0x0, _cstring_allowads, PlayerCmd_AllowADS, 0x0, _cstring_allowjump, PlayerCmd_AllowJump, 0x0, _cstring_allowsprint, PlayerCmd_AllowSprint, 0x0, _cstring_setspreadoverrid2, PlayerCmd_SetSpreadOverride, 0x0, _cstring_resetspreadoverr, PlayerCmd_ResetSpreadOverride, 0x0, _cstring_setactionslot, PlayerCmd_SetActionSlot, 0x0, _cstring_getweaponslist, PlayerCmd_GetWeaponsList, 0x0, _cstring_getweaponslistpr, PlayerCmd_GetWeaponsListPrimaries, 0x0, _cstring_setperk, PlayerCmd_SetPerk, 0x0, _cstring_hasperk, PlayerCmd_HasPerk, 0x0, _cstring_clearperks, PlayerCmd_ClearPerks, 0x0, _cstring_unsetperk, PlayerCmd_UnsetPerk, 0x0, _cstring_updatescores, PlayerCmd_UpdateScores, 0x0, _cstring_updatedmscores, PlayerCmd_UpdateDMScores, 0x0, _cstring_setrank, PlayerCmd_SetRank, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
 
 ;Zero initialized global or static variables of g_client_script_cmd_mp:
 SECTION .bss
@@ -6920,89 +6822,6 @@ _cstring_setspreadoverrid1:		db "setspreadoverride: spread must be > 0",0
 _cstring_usage_player_res:		db "USAGE: <player> resetspreadoverride()",0ah,0
 _cstring_incorrect_number:		db "Incorrect number of parameters.",0ah,0
 _cstring_must_specify_eit:		db "Must specify either ",27h,"smoke",27h," or ",27h,"flash",27h," class to set secondary offhand to.",0ah,0
-_cstring_giveweapon:		db "giveweapon",0
-_cstring_takeweapon:		db "takeweapon",0
-_cstring_takeallweapons:		db "takeallweapons",0
-_cstring_getcurrentweapon:		db "getcurrentweapon",0
-_cstring_getcurrentoffhan:		db "getcurrentoffhand",0
-_cstring_hasweapon:		db "hasweapon",0
-_cstring_switchtoweapon:		db "switchtoweapon",0
-_cstring_switchtooffhand:		db "switchtooffhand",0
-_cstring_givestartammo:		db "givestartammo",0
-_cstring_givemaxammo:		db "givemaxammo",0
-_cstring_getfractionstart:		db "getfractionstartammo",0
-_cstring_getfractionmaxam:		db "getfractionmaxammo",0
-_cstring_setorigin:		db "setorigin",0
-_cstring_getvelocity:		db "getvelocity",0
-_cstring_setplayerangles:		db "setplayerangles",0
-_cstring_getplayerangles:		db "getplayerangles",0
-_cstring_usebuttonpressed:		db "usebuttonpressed",0
-_cstring_attackbuttonpres:		db "attackbuttonpressed",0
-_cstring_adsbuttonpressed:		db "adsbuttonpressed",0
-_cstring_meleebuttonpress:		db "meleebuttonpressed",0
-_cstring_fragbuttonpresse:		db "fragbuttonpressed",0
-_cstring_secondaryoffhand:		db "secondaryoffhandbuttonpressed",0
-_cstring_playerads:		db "playerads",0
-_cstring_isonground:		db "isonground",0
-_cstring_pingplayer:		db "pingplayer",0
-_cstring_setviewmodel:		db "setviewmodel",0
-_cstring_getviewmodel:		db "getviewmodel",0
-_cstring_setoffhandsecond:		db "setoffhandsecondaryclass",0
-_cstring_getoffhandsecond:		db "getoffhandsecondaryclass",0
-_cstring_beginlocationsel:		db "beginlocationselection",0
-_cstring_endlocationselec:		db "endlocationselection",0
-_cstring_buttonpressed:		db "buttonpressed",0
-_cstring_sayall:		db "sayall",0
-_cstring_sayteam:		db "sayteam",0
-_cstring_showscoreboard:		db "showscoreboard",0
-_cstring_setspawnweapon:		db "setspawnweapon",0
-_cstring_dropitem:		db "dropitem",0
-_cstring_finishplayerdama:		db "finishplayerdamage",0
-_cstring_suicide:		db "suicide",0
-_cstring_openmenu:		db "openmenu",0
-_cstring_openmenunomouse:		db "openmenunomouse",0
-_cstring_closemenu:		db "closemenu",0
-_cstring_closeingamemenu:		db "closeingamemenu",0
-_cstring_freezecontrols:		db "freezecontrols",0
-_cstring_disableweapons:		db "disableweapons",0
-_cstring_enableweapons:		db "enableweapons",0
-_cstring_setreverb:		db "setreverb",0
-_cstring_deactivatereverb:		db "deactivatereverb",0
-_cstring_setchannelvolume:		db "setchannelvolumes",0
-_cstring_deactivatechanne:		db "deactivatechannelvolumes",0
-_cstring_setweaponammocli:		db "setweaponammoclip",0
-_cstring_setweaponammosto:		db "setweaponammostock",0
-_cstring_getweaponammocli:		db "getweaponammoclip",0
-_cstring_getweaponammosto:		db "getweaponammostock",0
-_cstring_anyammoforweapon:		db "anyammoforweaponmodes",0
-_cstring_iprintln:		db "iprintln",0
-_cstring_iprintlnbold:		db "iprintlnbold",0
-_cstring_spawn:		db "spawn",0
-_cstring_setentertime:		db "setentertime",0
-_cstring_cloneplayer:		db "cloneplayer",0
-_cstring_setclientdvar:		db "setclientdvar",0
-_cstring_setclientdvars:		db "setclientdvars",0
-_cstring_playlocalsound:		db "playlocalsound",0
-_cstring_stoplocalsound:		db "stoplocalsound",0
-_cstring_istalking:		db "istalking",0
-_cstring_allowspectatetea:		db "allowspectateteam",0
-_cstring_getguid:		db "getguid",0
-_cstring_getxuid:		db "getxuid",0
-_cstring_allowads:		db "allowads",0
-_cstring_allowjump:		db "allowjump",0
-_cstring_allowsprint:		db "allowsprint",0
-_cstring_setspreadoverrid2:		db "setspreadoverride",0
-_cstring_resetspreadoverr:		db "resetspreadoverride",0
-_cstring_setactionslot:		db "setactionslot",0
-_cstring_getweaponslist:		db "getweaponslist",0
-_cstring_getweaponslistpr:		db "getweaponslistprimaries",0
-_cstring_setperk:		db "setperk",0
-_cstring_hasperk:		db "hasperk",0
-_cstring_clearperks:		db "clearperks",0
-_cstring_unsetperk:		db "unsetperk",0
-_cstring_updatescores:		db "updatescores",0
-_cstring_updatedmscores:		db "updatedmscores",0
-_cstring_setrank:		db "setrank",0
 
 
 

@@ -133,6 +133,7 @@ void Com_UnloadBsp();
 int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
 
 void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname);
+void __cdecl Com_SafeServerDObjFree(int handle);
 
 #ifdef __cplusplus
 }

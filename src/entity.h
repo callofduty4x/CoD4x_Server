@@ -196,11 +196,6 @@ typedef struct {
 	int		eventTime;
 } entityShared_t;
 
-/* Real types are different of course */
-typedef void turretInfo_s;
-
-
-
 typedef struct gentity_s gentity_t;
 
 struct gentity_s {
@@ -213,7 +208,7 @@ struct gentity_s {
 
 	struct gclient_s    *client;            // NULL if not a client		0x15c
 
-	turretInfo_s *pTurretInfo;
+	struct turretInfo_s *pTurretInfo;
 	struct scr_vehicle_s *scr_vehicle;
 
 	uint16_t model;

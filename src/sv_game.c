@@ -558,6 +558,16 @@ const char* SV_GetGuid( unsigned int clnum, char* buffer, int len)
 	Com_sprintf(buffer, len, "%llu", svs.clients[clnum].playerid);
 	return buffer;
 }
+
+uint64_t SV_GetPlayerXuid( unsigned int clnum)
+{
+	if(clnum > sv_maxclients->integer)
+		return 0;
+
+	return svs.clients[clnum].playerid;
+}
+
+
 const char* SV_GetGuidBin(int clnum)
 {
 	static char buf[33];

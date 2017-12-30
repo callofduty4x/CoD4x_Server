@@ -54,6 +54,11 @@
 #define __stdcall __attribute__((stdcall))
 #endif
 
+#ifndef __noreturn
+#define __noreturn __attribute__((noreturn))
+#endif
+
+
 #ifndef __cdecl
 #define __cdecl __attribute__((cdecl))
 #endif
@@ -247,6 +252,8 @@ void BigInfo_SetValueForKey( char *s, const char *key, const char *value );
 void BigInfo_SetEncodedValueForKey( char *s, const char *key, const char *value, int len );
 void Info_Print( const char *s );
 
+qboolean __cdecl I_iscsym(int c);
+
 int SV_Cmd_Argc( void );
 int	Cmd_Argc( void );
 char	*SV_Cmd_Argv( int arg );
@@ -374,7 +381,7 @@ int Com_GetCurrentParseLine( void );
 struct parseInfo_t *Com_Parse( const char *( *data_p ) );
 struct parseInfo_t *Com_ParseOnLine( const char *( *data_p ) );
 const char *Com_ParseRestOfLine( const char *( *data_p ) );
-
+const char *__cdecl Com_GetLastTokenPos();
 void Com_UngetToken( void );
 /*
 #ifdef __cplusplus

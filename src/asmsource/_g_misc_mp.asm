@@ -70,7 +70,6 @@
 	global turret_use
 	global G_FreeTurret
 	global turret_think
-	global G_InitTurrets
 	global G_SpawnTurret
 	global TeleportPlayer
 	global SP_info_notnull
@@ -498,19 +497,6 @@ turret_think_60:
 	jmp turret_think_50
 	nop
 
-
-;G_InitTurrets()
-G_InitTurrets:
-	push ebp
-	mov ebp, esp
-	mov eax, turretInfo
-G_InitTurrets_10:
-	mov dword [eax], 0x0
-	add eax, 0x48
-	cmp eax, g_clients
-	jnz G_InitTurrets_10
-	pop ebp
-	ret
 
 
 ;G_SpawnTurret(gentity_s*, char const*)

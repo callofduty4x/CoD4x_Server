@@ -319,6 +319,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("tablelookup", Scr_TableLookup, 0 );
 	Scr_AddFunction("tablelookupistring", Scr_TableLookupIString, 0 );
 	Scr_AddFunction("endlobby", GScr_EndLobby, 0 );
+	Scr_AddFunction("logstring", Scr_LogString, 0);
 
     //User edited functions
     Scr_AddFunction("spawn", GScr_Spawn, 0);
@@ -448,7 +449,8 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("hasperk", PlayerCmd_HasPerk, 0 );
 	Scr_AddMethod("clearperks", PlayerCmd_ClearPerks, 0 );
 	Scr_AddMethod("unsetperk", PlayerCmd_UnsetPerk, 0 );
-
+	Scr_AddMethod("setrank", PlayerCmd_SetRank, 0 );
+	Scr_AddMethod("updatedmscores", PlayerCmd_UpdateDMScores, 0 );
 
 
     Scr_AddMethod("getpower", PlayerCmd_GetPower, 0);
@@ -456,6 +458,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("setuid", PlayerCmd_SetUid, 0);
     Scr_AddMethod("spawn", PlayerCmd_spawn, 0);
     Scr_AddMethod("getguid", PlayerCmd_GetGuid, 0);
+    Scr_AddMethod("getxuid", PlayerCmd_GetXuid, 0);
     Scr_AddMethod("getuid", PlayerCmd_GetUid, 0);
     Scr_AddMethod("getsteamid", PlayerCmd_GetSteamID, 0);
     Scr_AddMethod("getplayerid", PlayerCmd_GetPlayerID, 0);
@@ -487,7 +490,8 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("setplayernamestring", HECmd_SetPlayerNameString, 0 );
 	Scr_AddMethod("setmapnamestring", HECmd_SetMapNameString, 0 );
 	Scr_AddMethod("setgametypestring", HECmd_SetGameTypeString, 0 );
-
+	Scr_AddMethod("cleartargetent", HECmd_ClearTargetEnt, 0);
+	Scr_AddMethod("settargetent", HECmd_SetTargetEnt, 0 );
     Scr_AddMethod("destroy", Scr_Destroy_f, 0);
 
 
@@ -569,6 +573,9 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("isragdoll", GScr_IsRagdoll, 0 );
 	Scr_AddMethod("getcorpseanim", GScr_GetCorpseAnim, 0 );
 	Scr_AddMethod("itemweaponsetammo", ScrCmd_ItemWeaponSetAmmo, 0 );
+	Scr_AddMethod("logstring", ScrCmd_LogString, 0 );
+	Scr_AddMethod("isonladder", GScr_IsOnLadder, 0 );
+	Scr_AddMethod("ismantling", GScr_IsMantling, 0 );
 
 
 
@@ -1613,7 +1620,28 @@ void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
 }
 
 
+
+//Fix for weird GNU-GCC ABI
+#if defined( __GNUC__ ) && !defined( __MINGW32__ )
+static inline __attribute__((always_inline)) VariableValue __cdecl GetEntityFieldValueReal(unsigned int classnum, int entnum, int offset);
+
+//For GCC
+void __cdecl GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
+{
+    VariableValue r;
+    r = GetEntityFieldValueReal(classnum, entnum, offset);
+    asm volatile (
+        "mov 0x4(%%eax), %%edx\n"
+        "mov 0x0(%%eax), %%eax\n"
+        ::"eax" (&r)
+    );
+}
+
+static inline __attribute__((always_inline)) VariableValue __cdecl GetEntityFieldValueReal(unsigned int classnum, int entnum, int offset)
+#else
+//For MSVC & MinGW
 VariableValue __cdecl GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
+#endif
 {
   VariableValue result;
 
@@ -1629,8 +1657,10 @@ VariableValue __cdecl GetEntityFieldValue(unsigned int classnum, int entnum, int
   assert(scrVmPub.top - scrVmPub.inparamcount == scrVmGlob.eval_stack - 1);
 
   scrVmPub.inparamcount = 0;
+
   result.u.intValue = scrVmGlob.eval_stack[0].u.intValue;
   result.type = scrVmGlob.eval_stack[0].type;
+
   return result;
 }
 
@@ -1759,16 +1789,15 @@ void __cdecl Scr_ConstructMessageString(int firstParmIndex, int lastParmIndex, c
 }
 
 
+void Scr_YYACError(const char* fmt, ...)
+{
+    va_list argptr;
+    char com_errorMessage[4096];
 
+    va_start(argptr, fmt);
+    Q_vsnprintf(com_errorMessage, sizeof(com_errorMessage), fmt, argptr);
+    va_end(argptr);
 
-
-
-
-
-
-
-
-
-
-
+    Com_Error(ERR_SCRIPT, "%s", com_errorMessage);
+}
 

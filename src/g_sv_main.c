@@ -885,3 +885,8 @@ float G_GetFogOpaqueDistSqrd()
 {
 	return level.fFogOpaqueDistSqrd;
 }
+
+void __cdecl G_SafeServerDObjFree(int handle)
+{
+  Com_SafeServerDObjFree(handle);
+}

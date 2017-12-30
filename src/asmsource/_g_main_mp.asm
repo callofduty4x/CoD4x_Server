@@ -151,6 +151,7 @@
 	extern Helicopter_Die
 	extern Helicopter_Controller
 	extern G_LogPrintf
+	extern G_SafeServerDObjFree
 
 ;Exports of g_main_mp:
 	global g_clients
@@ -1302,11 +1303,11 @@ G_InitGame_110:
 G_InitGame_20:
 	mov eax, SV_XModelGet
 	mov [level_bgs+0x999ec], eax
-	mov dword [level_bgs+0x999f0], 0x126fb6
+	mov dword [level_bgs+0x999f0], G_CreateDObj
 	mov dword [level_bgs+0x999f4], 0x0
-	mov dword [level_bgs+0x999f8], 0x126fe0
-	mov dword [level_bgs+0x999fc], 0x126fea
-	mov dword [level_bgs+0x99a00], 0x126ff4
+	mov dword [level_bgs+0x999f8], G_GetDObj
+	mov dword [level_bgs+0x999fc], G_SafeServerDObjFree
+	mov dword [level_bgs+0x99a00], Hunk_AllocXAnimServer
 	mov dword [level_bgs+0x999e8], 0x1
 	mov eax, [g_log]
 	mov edx, [eax+0xc]

@@ -92,7 +92,7 @@ const char *Sys_Basename( char *path );
 qboolean Sys_Mkdir( const char *path );
 qboolean Sys_SetPermissionsExec(const char* ospath);
 void Sys_WaitForErrorConfirmation(const char* error);
-void  __attribute__ ((noreturn)) Sys_ExitForOS( int exitCode );
+void  __noreturn Sys_ExitForOS( int exitCode );
 
 
 void Sys_SleepSec(int seconds);

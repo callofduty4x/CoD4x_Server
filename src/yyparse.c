@@ -51,3 +51,12 @@ yy_buffer_state* __cdecl yy_create_buffer(FILE *file, int bufferSize)
   return yybufState;
 }
 
+FILE* __cdecl yy_stdin()
+{
+    return stdin;
+}
+
+FILE* __cdecl yy_stdout()
+{
+    return stdout;
+}

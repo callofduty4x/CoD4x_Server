@@ -60,6 +60,13 @@ int Q_isalpha( int c )
 	return ( 0 );
 }
 
+int Q_isalphanum( int c )
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+		return ( 1 );
+	return ( 0 );
+}
+
 qboolean Q_isanumber( const char *s )
 {
 	char *p;
@@ -2076,7 +2083,7 @@ char __cdecl Q_CleanChar(char character)
 
 
 qboolean __cdecl I_iscsym(int c){
-    if(c == '_' || Q_isalpha( c ))
+    if(c == '_' || Q_isalphanum( c ))
     {
         return qtrue;
     }
