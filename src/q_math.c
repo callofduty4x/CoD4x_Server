@@ -486,6 +486,7 @@ float RadiusFromBounds( const vec3_t mins, const vec3_t maxs ) {
 AnglesToAxis
 =================
 */
+
 void __cdecl AnglesToAxis(const vec3_t angles, vec3_t axis[3])
 {
   float cy;
@@ -509,11 +510,11 @@ void __cdecl AnglesToAxis(const vec3_t angles, vec3_t axis[3])
   axis[0][0] = cp * cy;
   axis[0][1] = cp * sy;
   axis[0][2] = -sp;
-  axis[1][0] = sr * sp * cy + (-sy) * cr;
+  axis[1][0] = sr * sp * cy - sy * cr;
   axis[1][1] = sr * sp * sy + cr * cy;
   axis[1][2] = sr * cp;
   axis[2][0] = cr * sp * cy + (-sr) * (-sy);
-  axis[2][1] = cr * sp * sy + (-sr) * cy;
+  axis[2][1] = cr * sp * sy - sr * cy;
   axis[2][2] = cr * cp;
 }
 
@@ -553,15 +554,16 @@ void ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_t vP
 
 vec_t Vec3NormalizeTo( const vec3_t v, vec3_t out )
 {
-  float length;
+  float length, result;
 
   length = VectorLength(v);
-  if ( length == 0.0 )
+  result = length;
+  if ( length <= 0.0 )
   {
     length = 1.0;
   }
-  VectorScale(v, length, out);
-  return length;
+  VectorScale(v, 1.0 / length, out);
+  return result;
 }
 
 double __cdecl Vec2NormalizeTo(const float *v, float *out)

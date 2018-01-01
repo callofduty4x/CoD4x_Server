@@ -1848,7 +1848,7 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
     SV_Cmd_TokenizeString( s );
 
     c = SV_Cmd_Argv(0);
-    Com_Printf(CON_CHANNEL_SERVER,"SV packet %s: %s\n", NET_AdrToString(from), s);
+    Com_DPrintf(CON_CHANNEL_SERVER,"SV packet %s: %s\n", NET_AdrToString(from), s);
     //Most sensitive OOB commands first
         if (!Q_stricmp(c, "getstatus")) {
         SVC_Status( from );
@@ -3402,17 +3402,23 @@ void SV_SetServerStaticHeader()
 }
 
 
-
-
-void SV_InitArchivedSnapshot(){
-
-    svs.nextArchivedSnapshotFrames = 0;
-    svs.nextArchivedSnapshotBuffer = 0;
-    svs.nextCachedSnapshotEntities = 0;
-    svs.nextCachedSnapshotEntities = 0;
-    svs.nextCachedSnapshotFrames = 0;
+void SV_InitSnapshot()
+{
+  svs.nextSnapshotEntities = 0;
+  svs.nextSnapshotClients = 0;
+  //sv.inFrame = 0;
 }
 
+void SV_InitArchivedSnapshot()
+{
+  svs.nextArchivedSnapshotFrames = 0;
+  svs.nextArchivedSnapshotBuffer = 0;
+  svs.nextCachedSnapshotEntities = 0;
+  svs.nextCachedSnapshotClients = 0;
+  svs.nextCachedSnapshotFrames = 0;
+  svs.numCachedSnapshotEntities = sizeof(svs.cachedSnapshotEntities)/sizeof(svs.cachedSnapshotEntities[0]);
+  svs.numCachedSnapshotClients = sizeof(svs.cachedSnapshotClients)/sizeof(svs.cachedSnapshotClients[0]);
+}
 
 void SV_RunFrame(){
     SV_ResetSkeletonCache();
@@ -3645,7 +3651,6 @@ void SV_MapRestart( qboolean fastRestart ){
 
 /*    SV_InitCvars();*/
     SV_InitArchivedSnapshot();
-
     svs.snapFlagServerBit ^= 4;
 
     SV_GenerateServerId(qfalse); //Short restart
@@ -4660,13 +4665,6 @@ void SV_CreateBaseline( void ) {
 
 
 
-void SV_InitSnapshot()
-{
-  //sv.inFrame = 0;
-}
-
-
-
 
 void SV_SaveSystemInfo()
 {
@@ -4727,7 +4725,7 @@ void SV_SpawnServer(const char *mapname)
     DB_LoadXAssets(&zoneinfo, 1u, 0);
   }
 #endif
-//  Scr_ParseGameTypeList();
+  Scr_ParseGameTypeList();
   SV_SetGametype();
 
 #ifndef DEDICATEDONLY
@@ -4837,14 +4835,8 @@ void SV_SpawnServer(const char *mapname)
 
   Cvar_ClearFlagsForEach(1024); //CVAR_NORESTART? Probably not Cvar_ResetScriptInfo();
 
-  svs.nextSnapshotEntities = 0;
-  svs.nextSnapshotClients = 0;
-  svs.nextArchivedSnapshotFrames = 0;
-  svs.nextArchivedSnapshotBuffer = 0;
-  svs.nextCachedSnapshotEntities = 0;
-  svs.nextCachedSnapshotClients = 0;
-  svs.nextCachedSnapshotFrames = 0;
-  svs.numCachedSnapshotEntities = sizeof(svs.cachedSnapshotEntities)/sizeof(svs.cachedSnapshotEntities[0]);
+
+  SV_InitArchivedSnapshot();
   SV_InitSnapshot();
   svs.snapFlagServerBit ^= 4u;
 

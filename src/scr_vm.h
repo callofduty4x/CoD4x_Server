@@ -480,6 +480,11 @@ struct scrVmGlob_t
   unsigned int localVarsStack[2048];
 };
 
+struct __attribute__((aligned (64))) scrVarGlob_t
+{
+  VariableValueInternal variableList[98304];
+};
+
 struct scrCompilePub_t
 {
   int value_count;
@@ -725,6 +730,7 @@ void __cdecl SetVariableValue(unsigned int id, VariableValue *value);
 void __cdecl CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
 ent_field_t* __internalGet_fields_1();
+void __cdecl Scr_ParseGameTypeList();
 
 #ifdef __cplusplus
 }
@@ -733,8 +739,8 @@ ent_field_t* __internalGet_fields_1();
 extern struct scrVmGlob_t scrVmGlob;
 extern struct scrAnimGlob_t scrAnimGlob;
 
-extern VariableValueInternal scrVarGlob[];
-#define scrVarGlob_high (((VariableValueInternal*)( scrVarGlob + 32770 )))
+extern struct scrVarGlob_t scrVarGlob;
+#define SCR_VARHIGH 32770
 extern scrVarPub_t scrVarPub;
 extern scrVmPub_t scrVmPub;
 extern struct scrCompilePub_t scrCompilePub;

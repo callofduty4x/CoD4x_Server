@@ -777,6 +777,7 @@ void __cdecl G_RegisterCvars()
 	 Cvar_RegisterString("gamedate", "Feb 12 2009", 0x40u, "The date compiled");
 	 Cvar_RegisterString("sv_mapname", "", 0x44u, "The current map name");
 	 g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24u, "The current campaign");
+	 g_maxclients = Cvar_RegisterInt("g_maxclients", SV_GameGetMaxClients(), 1, 64, CVAR_ROM, "Max clients allowed on server - use sv_maxclients to change");
 	 g_synchronousClients = Cvar_RegisterBool("g_synchronousClients", 0, 8u, "Call 'client think' exactly once for each server frame to make smooth demos");
 	 g_log = Cvar_RegisterString("g_log", "games_mp.log", 1u, "Log file name");
 	 g_logSync = Cvar_RegisterBool("g_logSync", 0, 1u, "Enable synchronous logging");

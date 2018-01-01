@@ -762,11 +762,13 @@ void __cdecl SV_SetGametype()
     Q_strncpyz(gametype, sv_g_gametype->string, sizeof(gametype));
   }
   Q_strlwr(gametype);
+/*
   if ( !Scr_IsValidGameType(gametype) )
   {
     Com_Printf(CON_CHANNEL_SERVER, "g_gametype %s is not a valid gametype, defaulting to dm\n", gametype);
     strcpy(gametype, "dm");
   }
+*/
   Cvar_SetString(sv_g_gametype, gametype);
 }
 
@@ -860,4 +862,10 @@ qboolean __cdecl SV_GameCommand()
     return ConsoleCommand();
   }
   return 0;
+}
+
+
+int SV_GameGetMaxClients()
+{
+	return sv_maxclients->integer;
 }

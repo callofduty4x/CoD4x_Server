@@ -55,7 +55,7 @@ qboolean CM_TraceBoxInternal(TraceExtents *extents, const float *testvec, float 
 qboolean CM_TraceBox(TraceExtents *extents, const float *mins, const float *maxs, float fraction)
 {
   float lfraction = fraction;
-  
+
   if(CM_TraceBoxInternal(extents, mins, -1.0, &lfraction) == qtrue)
   {
       return qtrue;

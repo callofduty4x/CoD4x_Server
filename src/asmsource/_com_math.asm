@@ -3,9 +3,7 @@
 ;Exports of com_math:
 	global ClosestApproachOfTwoLines
 
-
 SECTION .text
-
 
 ;ClosestApproachOfTwoLines(float const*, float const*, float const*, float const*, float*, float*)
 ClosestApproachOfTwoLines:
@@ -129,7 +127,6 @@ ClosestApproachOfTwoLines_10:
 	pop ebp
 	ret
 	nop
-
 
 
 

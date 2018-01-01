@@ -805,7 +805,7 @@ void *__cdecl _VirtualAlloc(void *address, int dwSize, int flAllocationType, int
     meminfo->protect = flProtect;
     memcpy(meminfo->magic, "VIRALLOC", sizeof(meminfo->magic));
   }else{
-      Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
+//      Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
   }
   return address;
 }

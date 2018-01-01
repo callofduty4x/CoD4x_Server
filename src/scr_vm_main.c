@@ -41,8 +41,6 @@ typedef struct
     qboolean developer;
 } v_function_t;
 
-#define G_SCR_DATA_ADDR (void *)0x8583ba0
-
 char *var_typename[] =
     {
         "undefined",
@@ -96,7 +94,7 @@ client_fields_t client_fields[] = {
     {"assists", 0x2F84, F_INT, 0, 0},
     {"hasradar", 0x3178, F_INT, 0, 0},
     {"spectatorclient", 0x2F68, F_INT, ClientScr_SetSpectatorClient, ClientScr_GetSpectatorClient},
-    {"killcamentity", 0x2F6C, F_INT, ClientScr_SetKillcamEntity, 0},
+    {"killcamentity", 0x2F6C, F_INT, ClientScr_SetKillCamEntity, 0},
     {"archivetime", 0x2F74, F_FLOAT, ClientScr_SetArchiveTime, ClientScr_GetArchiveTime},
     {"psoffsettime", 0x3070, F_INT, ClientScr_SetPSOffsetTime, ClientScr_GetPSOffsetTime},
     {"pers", 0x2F88, F_MODEL, ClientScr_ReadOnly, 0},
@@ -1582,15 +1580,15 @@ unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvar
     {
         if(hash_id == 0)
         {
-            hash_id = scrVarGlob[ptr + 1].hash.u.prevSibling;
+            hash_id = scrVarGlob.variableList[ptr + 1].hash.u.prevSibling;
             if(hash_id == 0)
             {
                 return 0;
             }
         }else{
-            hash_id = scrVarGlob_high[var->hash.u.prevSibling].hash.id;
+            hash_id = scrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id;
         }
-        var = &scrVarGlob_high[hash_id];
+        var = &scrVarGlob.variableList[SCR_VARHIGH + hash_id];
 
         int type = var->w.type & 0x1f;
 
@@ -1599,7 +1597,7 @@ unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvar
 
         ++i;
     }
-    while ( var->hash.u.prevSibling && scrVarGlob_high[var->hash.u.prevSibling].hash.id && i < maxvariables);
+    while ( var->hash.u.prevSibling && scrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id && i < maxvariables);
 
     return 0;//GetArraySize(ptr);
 }
@@ -1800,4 +1798,5 @@ void Scr_YYACError(const char* fmt, ...)
 
     Com_Error(ERR_SCRIPT, "%s", com_errorMessage);
 }
+
 

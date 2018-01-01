@@ -3075,3 +3075,4 @@ void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
     Scr_AddString("0");
   }
 }
+

@@ -80,3 +80,4 @@ void __cdecl ClientScr_GetSpectatorClient(gclient_t *pSelf)
 {
     Scr_AddInt(pSelf->spectatorClient);
 }
+

@@ -278,7 +278,7 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 	MSG_WriteByte( &msg, svc_EOF );
 
 	*(int32_t*)0x13f39080 = *(int32_t*)msg.data;
-	compLen = 4 + MSG_WriteBitsCompress( 0, msg.data + 4 ,(byte*)0x13f39084 ,msg.cursize - 4);
+	compLen = 4 + MSG_WriteBitsCompress( msg.data + 4 ,(byte*)0x13f39084 ,msg.cursize - 4);
 
 	len = 0;
 	FS_DemoWrite( &len, 1, &cl->demofile );

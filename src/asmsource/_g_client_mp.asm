@@ -410,29 +410,6 @@ ClientConnect:
 	mov edx, [ebp+0x8]
 	mov [esp], edx
 	call ClientUserinfoChanged
-	mov dword [esp+0x8], 0x400
-	lea esi, [ebp-0x418]
-	mov [esp+0x4], esi
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call SV_GetUserinfo
-	mov eax, [ebx+0x2fd0]
-	test eax, eax
-	jnz ClientConnect_10
-	mov dword [esp+0x4], _cstring_password
-	mov [esp], esi
-	call Info_ValueForKey
-	mov esi, eax
-	mov ebx, g_password
-	mov eax, [ebx]
-	mov eax, [eax+0xc]
-	cmp byte [eax], 0x0
-	jnz ClientConnect_20
-ClientConnect_40:
-	mov eax, com_developer
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jnz ClientConnect_30
 ClientConnect_10:
 	mov edx, [ebp-0x420]
 	mov [esp], edx
@@ -446,36 +423,6 @@ ClientConnect_50:
 	pop edi
 	pop ebp
 	ret
-ClientConnect_20:
-	mov dword [esp+0x4], _cstring_none
-	mov [esp], eax
-	call Q_stricmp
-	test eax, eax
-	jz ClientConnect_40
-	mov eax, [ebx]
-	mov [esp+0x4], esi
-	mov eax, [eax+0xc]
-	mov [esp], eax
-	call strcmp
-	test eax, eax
-	jz ClientConnect_40
-	mov eax, [ebp-0x420]
-	mov [esp], eax
-	call G_FreeEntity
-	mov eax, _cstring_game_invalidpass
-	jmp ClientConnect_50
-ClientConnect_30:
-	mov dword [esp+0x4], _cstring_clients_cant_con
-	mov dword [esp], 0x10
-	call Com_PrintError
-	mov eax, _cstring_game_invalidserv
-	add esp, 0x42c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	add [eax], al
 
 
 ;ClientDisconnect(int)

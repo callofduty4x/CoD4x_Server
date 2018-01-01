@@ -490,7 +490,6 @@
 	global GScr_DamageConeTrace
 	global GScr_SightConeTrace
 	global GScr_GetEntityNumber
-	global GScr_PlaceSpawnPoint
 	global GScr_SetTeamForTrigger
 	global GScr_ClientClaimTrigger
 	global GScr_ClientReleaseTrigger
@@ -536,7 +535,6 @@
 	global GScr_GetCorpseAnim
 	global GScr_GetLocSelIndex
 	global ScrCmd_ShowToPlayer
-	global Scr_IsValidGameType
 	global Scr_MakeGameMessage
 	global Scr_PlayerLastStand
 	global Scr_StartupGameType
@@ -551,7 +549,6 @@
 	global Scr_VerifyWeaponIndex
 	global GScr_GetScriptMenuIndex
 	global GScr_GetStatusIconIndex
-	global Scr_GetGameTypeNameForScript
 	global GScr_EnableGrenadeTouchDamage
 	global GScr_DisableGrenadeTouchDamage
 	global g_scr_data
@@ -12078,164 +12075,6 @@ GScr_GetEntityNumber_10:
 	jmp Scr_AddInt
 
 
-;GScr_PlaceSpawnPoint(scr_entref_t)
-GScr_PlaceSpawnPoint:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x7c
-	mov eax, [ebp+0x8]
-	mov edx, eax
-	shr eax, 0x10
-	test ax, ax
-	jnz GScr_PlaceSpawnPoint_10
-	movzx eax, dx
-	lea edx, [eax+eax*8]
-	lea edx, [eax+edx*2]
-	mov ecx, edx
-	shl ecx, 0x5
-	add edx, ecx
-	lea edi, [edx+eax]
-	add edi, g_entities
-GScr_PlaceSpawnPoint_30:
-	mov eax, [edi+0x13c]
-	mov [ebp-0x24], eax
-	mov eax, [edi+0x140]
-	mov [ebp-0x20], eax
-	mov eax, [edi+0x144]
-	mov [ebp-0x1c], eax
-	mov eax, [edi+0x13c]
-	mov [ebp-0x30], eax
-	mov eax, [edi+0x140]
-	mov [ebp-0x2c], eax
-	movss xmm0, dword [_float_128_00000000]
-	addss xmm0, [edi+0x144]
-	movss [ebp-0x28], xmm0
-	mov dword [esp+0x18], 0x2810011
-	mov eax, [edi]
-	mov [esp+0x14], eax
-	lea ebx, [ebp-0x30]
-	mov [esp+0x10], ebx
-	mov eax, playerMaxs
-	mov [esp+0xc], eax
-	mov eax, playerMins
-	mov [esp+0x8], eax
-	lea esi, [ebp-0x24]
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call G_TraceCapsule
-	movss xmm4, dword [ebp-0x5c]
-	movss xmm0, dword [ebp-0x24]
-	movss xmm2, dword [ebp-0x30]
-	subss xmm2, xmm0
-	mulss xmm2, xmm4
-	addss xmm2, xmm0
-	movss [ebp-0x24], xmm2
-	movss xmm0, dword [ebp-0x20]
-	movss xmm1, dword [ebp-0x2c]
-	subss xmm1, xmm0
-	mulss xmm1, xmm4
-	addss xmm1, xmm0
-	movss [ebp-0x20], xmm1
-	movss xmm3, dword [ebp-0x1c]
-	movss xmm0, dword [ebp-0x28]
-	subss xmm0, xmm3
-	mulss xmm0, xmm4
-	addss xmm0, xmm3
-	movss [ebp-0x1c], xmm0
-	movss [ebp-0x30], xmm2
-	movss [ebp-0x2c], xmm1
-	subss xmm0, [_float_262144_00000000]
-	movss [ebp-0x28], xmm0
-	mov dword [esp+0x18], 0x2810011
-	mov eax, [edi]
-	mov [esp+0x14], eax
-	mov [esp+0x10], ebx
-	mov eax, playerMaxs
-	mov [esp+0xc], eax
-	mov eax, playerMins
-	mov [esp+0x8], eax
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call G_TraceCapsule
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call Trace_GetEntityHitId
-	movzx eax, ax
-	mov [edi+0x7c], eax
-	lea edx, [eax+eax*8]
-	lea edx, [eax+edx*2]
-	mov ecx, edx
-	shl ecx, 0x5
-	add edx, ecx
-	add edx, eax
-	add edx, g_entities
-	or dword [edx+0x180], 0x100000
-	movss xmm2, dword [ebp-0x5c]
-	movss xmm1, dword [ebp-0x24]
-	movss xmm0, dword [ebp-0x30]
-	subss xmm0, xmm1
-	mulss xmm0, xmm2
-	addss xmm1, xmm0
-	movss [ebp-0x24], xmm1
-	movss xmm1, dword [ebp-0x20]
-	movss xmm0, dword [ebp-0x2c]
-	subss xmm0, xmm1
-	mulss xmm0, xmm2
-	addss xmm1, xmm0
-	movss [ebp-0x20], xmm1
-	movss xmm1, dword [ebp-0x1c]
-	movss xmm0, dword [ebp-0x28]
-	subss xmm0, xmm1
-	mulss xmm2, xmm0
-	addss xmm1, xmm2
-	movss [ebp-0x1c], xmm1
-	mov dword [esp+0x18], 0x2810011
-	mov eax, [edi]
-	mov [esp+0x14], eax
-	mov [esp+0x10], esi
-	mov eax, playerMaxs
-	mov [esp+0xc], eax
-	mov eax, playerMins
-	mov [esp+0x8], eax
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call G_TraceCapsule
-	cmp byte [ebp-0x34], 0x0
-	jz GScr_PlaceSpawnPoint_20
-	cvttss2si eax, [edi+0x144]
-	mov [esp+0x14], eax
-	cvttss2si eax, [edi+0x140]
-	mov [esp+0x10], eax
-	cvttss2si eax, [edi+0x13c]
-	mov [esp+0xc], eax
-	mov eax, [edi]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_warning_spawn_po
-	mov dword [esp], 0x17
-	call Com_PrintWarning
-GScr_PlaceSpawnPoint_20:
-	mov [esp+0x4], esi
-	mov [esp], edi
-	call G_SetOrigin
-	add esp, 0x7c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_PlaceSpawnPoint_10:
-	mov dword [esp], _cstring_not_an_entity
-	call Scr_ObjectError
-	xor edi, edi
-	jmp GScr_PlaceSpawnPoint_30
-
-
 ;GScr_SetTeamForTrigger(scr_entref_t)
 GScr_SetTeamForTrigger:
 	push ebp
@@ -14863,51 +14702,6 @@ ScrCmd_ShowToPlayer_20:
 	jmp Scr_Error
 
 
-;Scr_IsValidGameType(char const*)
-Scr_IsValidGameType:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov eax, [g_scr_data+0x2c]
-	test eax, eax
-	jg Scr_IsValidGameType_10
-Scr_IsValidGameType_40:
-	xor eax, eax
-Scr_IsValidGameType_50:
-	test eax, eax
-	setnz al
-	movzx eax, al
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_IsValidGameType_10:
-	xor esi, esi
-	mov edi, g_scr_data+0x70
-	mov ebx, g_scr_data+0x30
-Scr_IsValidGameType_30:
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call Q_stricmp
-	test eax, eax
-	jz Scr_IsValidGameType_20
-	add esi, 0x1
-	add ebx, 0x84
-	add edi, 0x84
-	cmp [g_scr_data+0x2c], esi
-	jg Scr_IsValidGameType_30
-	jmp Scr_IsValidGameType_40
-Scr_IsValidGameType_20:
-	mov eax, edi
-	jmp Scr_IsValidGameType_50
-
-
 ;Scr_MakeGameMessage(int, char const*)
 Scr_MakeGameMessage:
 	push ebp
@@ -15567,49 +15361,6 @@ GScr_GetStatusIconIndex_20:
 	pop edi
 	pop ebp
 	ret
-	nop
-
-
-;Scr_GetGameTypeNameForScript(char const*)
-Scr_GetGameTypeNameForScript:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov ecx, [g_scr_data+0x2c]
-	test ecx, ecx
-	jg Scr_GetGameTypeNameForScript_10
-Scr_GetGameTypeNameForScript_40:
-	xor eax, eax
-Scr_GetGameTypeNameForScript_50:
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_GetGameTypeNameForScript_10:
-	xor esi, esi
-	mov edi, g_scr_data+0x70
-	mov ebx, g_scr_data+0x30
-Scr_GetGameTypeNameForScript_30:
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call Q_stricmp
-	test eax, eax
-	jz Scr_GetGameTypeNameForScript_20
-	add esi, 0x1
-	add ebx, 0x84
-	add edi, 0x84
-	cmp [g_scr_data+0x2c], esi
-	jg Scr_GetGameTypeNameForScript_30
-	jmp Scr_GetGameTypeNameForScript_40
-Scr_GetGameTypeNameForScript_20:
-	mov eax, edi
-	jmp Scr_GetGameTypeNameForScript_50
 	nop
 
 

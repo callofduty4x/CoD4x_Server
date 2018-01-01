@@ -935,6 +935,8 @@ uint64_t __cdecl SV_GetPlayerXuid(unsigned int clientNum);
 void __cdecl CM_UnlinkEntity(svEntity_t *ent);
 void __cdecl CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
 
+int SV_GameGetMaxClients();
+
 #ifdef COD4X18UPDATE
 void SV_ConnectWithUpdateProxy(client_t *cl);
 #endif

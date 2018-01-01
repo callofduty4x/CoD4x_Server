@@ -14094,12 +14094,14 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of scr_variable:
 SECTION .bss
+align   64,db 0
 scrVarPub: resb 0x20060
 scrVarGlob: resb 0x180020
 
 
 ;All cstrings:
 SECTION .rdata
+align   4,db 0
 _cstring_cannot_find_s:		db 15h,"cannot find ",27h,"%s",27h,0
 _cstring_keys:		db "keys",0
 _cstring_sss:		db "%s/%s.%s",0

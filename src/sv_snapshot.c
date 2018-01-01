@@ -446,10 +446,12 @@ Called by SV_SendClientSnapshot and SV_SendClientGameState
 __cdecl void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 	int rateMsec;
 
+	byte svCompressBuf[4*65536];
+
 #ifdef SV_SEND_HUFFMAN
 	int len;
-	*(int32_t*)0x13f39080 = *(int32_t*)msg->data;
-	len = MSG_WriteBitsCompress( 0, msg->data + 4 ,(byte*)0x13f39084 , msg->cursize - 4);
+	*(int32_t*)svCompressBuf = *(int32_t*)msg->data;
+	len = MSG_WriteBitsCompress( msg->data + 4 ,(byte*)svCompressBuf + 4, msg->cursize - 4);
 //	SV_TrackHuffmanCompression(len, msg->cursize - 4);
 	len += 4;
 #endif
@@ -460,7 +462,7 @@ __cdecl void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 	if(client->demorecording && !client->demowaiting && client->demofile.handleFiles.file.o)
 	{
 #ifdef SV_SEND_HUFFMAN
-		SV_WriteDemoMessageForClient((byte*)0x13f39080, len, client);
+		SV_WriteDemoMessageForClient(svCompressBuf, len, client);
 #else
 		SV_WriteDemoMessageForClient(msg->data, msg->cursize, client);
 #endif
@@ -477,7 +479,7 @@ __cdecl void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 
 	// send the datagram
 #ifdef SV_SEND_HUFFMAN
-	SV_Netchan_Transmit( client, (byte*)0x13f39080, len );
+	SV_Netchan_Transmit( client, svCompressBuf, len );
 #else
 	SV_Netchan_Transmit( client, msg->data, msg->cursize );
 #endif
@@ -1668,7 +1670,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
     Com_Error(ERR_FATAL, "svsHeader.nextCachedSnapshotMatchStates wrapped");
   }
   MSG_ClearLastReferencedEntity(msg);
-*/  
+*/
   for ( i = 0, client = svsHeader.clients; i < svsHeader.maxclients; ++i, ++client)
   {
     if ( client->state >= CS_PRIMED )

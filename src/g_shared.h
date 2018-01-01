@@ -492,8 +492,12 @@ extern cvar_t *g_oldVoting;
 
 extern qboolean onExitLevelExecuted;
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+
 int BG_GetPerkIndexForName(const char *name);
-int G_GetSavePersist(void);
 void G_SetSavePersist(int val);
 
 int G_GetClientSize();
@@ -519,8 +523,13 @@ void __cdecl BG_GetPlayerViewDirection(playerState_t *ps, float *forward, float 
 void __cdecl G_SetOrigin(gentity_t *ent, const float *origin);
 void __cdecl SetClientViewAngle(gentity_t *ent, const float *angle);
 qboolean GetFollowPlayerState(int clientNum, playerState_t *ps);
+#ifdef __cplusplus
+}
+#endif
+
 //This defines Cvars directly related to executable file
 
 extern cvar_t* g_maxclients;
+extern vec3_t playerMins, playerMaxs;
 
 #endif /*G_SHARED_H*/
