@@ -701,7 +701,7 @@ DObj_t *__cdecl SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gent
   return NULL;
 }
 
-
+#if 0
 void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
 {
   gentity_t *touch;
@@ -918,6 +918,174 @@ void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check,
 */
   }
 }
+
+#endif
+
+#if 0
+void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+{
+  gentity_t *touch;
+  vec3_t entAxis[4];
+  unsigned int clipHandle;
+  struct DObj_s *obj;
+  vec3_t absmin;
+  vec3_t localStart;
+  const float *angles;
+  struct DObjTrace_s objTrace;
+  vec3_t localEnd;
+  vec3_t absmax;
+  int entnum;
+  int partBits[5];
+  float oldFraction;
+  float radius;
+
+  entnum = check - sv.svEntities;
+  touch = SV_GentityNum(entnum);
+
+  if ( !(touch->r.contents & clip->contentmask) )
+  {
+    return;
+  }
+  if( clip->ignoreEntParams && clip->ignoreEntParams->baseEntity != 1023 )
+  {
+    if(clip->ignoreEntParams->ignoreSelf && entnum == clip->ignoreEntParams->baseEntity)
+    {
+        return;
+    }
+    if(clip->ignoreEntParams->ignoreParent && entnum == clip->ignoreEntParams->parentEntity)
+    {
+        return;
+    }
+    if(touch->r.ownerNum != 0)
+    {
+      if(clip->ignoreEntParams->ignoreSiblings && touch->r.ownerNum -1 == clip->ignoreEntParams->parentEntity
+        && entnum != clip->ignoreEntParams->baseEntity)
+      {
+        return;
+      }
+      if(clip->ignoreEntParams->ignoreChildren && touch->r.ownerNum -1 == clip->ignoreEntParams->baseEntity)
+      {
+        return;
+      }
+    }
+  }
+
+  obj = SV_LocationalTraceDObj(clip, touch);
+  if ( obj )
+  {
+    PIXBeginNamedEvent(-1, "SV_TracePointToEntity 1");
+    if ( touch->r.svFlags & 4 )
+    {
+      if ( !DObjHasContents(obj, clip->contentmask) )
+      {
+        return;
+      }
+      radius = DObjGetRadius(obj);
+      absmin[0] = touch->r.currentOrigin[0] - radius;
+      absmin[1] = touch->r.currentOrigin[1] - radius;
+      absmin[2] = touch->r.currentOrigin[2] - radius;
+      absmax[0] = touch->r.currentOrigin[0] + radius;
+      absmax[1] = touch->r.currentOrigin[1] + radius;
+      absmax[2] = touch->r.currentOrigin[2] + radius;
+
+    }
+    else
+    {
+      assert(clip->priorityMap);
+
+      VectorAdd(touch->r.currentOrigin, actorLocationalMins, absmin);
+      VectorAdd(touch->r.currentOrigin, actorLocationalMaxs, absmax);
+    }
+    if ( !CM_TraceBox(&clip->extents, absmin, absmax, trace->fraction) )
+    {
+      AnglesToAxis(touch->r.currentAngles, entAxis);
+      MatrixTransposeTransformVector43(clip->extents.start, entAxis, localStart);
+      MatrixTransposeTransformVector43(clip->extents.end, entAxis, localEnd);
+      objTrace.fraction = trace->fraction;
+      if ( touch->r.svFlags & 4 )
+      {
+        DObjGeomTracelinePartBits(obj, clip->contentmask, partBits);
+        G_DObjCalcPose(touch, partBits);
+        DObjGeomTraceline(obj, localStart, localEnd, clip->contentmask, &objTrace);
+      }
+      else
+      {
+        DObjTracelinePartBits(obj, partBits);
+        G_DObjCalcPose(touch, partBits);
+        DObjTraceline(obj, localStart, localEnd, clip->priorityMap, &objTrace);
+      }
+      if ( objTrace.fraction < trace->fraction )
+      {
+        assert(objTrace.fraction < 1.0 && objTrace.fraction >= 0.0);
+        assert(trace != NULL);
+
+        trace->fraction = objTrace.fraction;
+        trace->sflags = objTrace.sflags;
+        trace->modelIndex = objTrace.modelIndex;
+        trace->partName = objTrace.partName;
+        trace->partGroup = objTrace.partGroup;
+        MatrixTransformVector(objTrace.normal, entAxis, trace->normal);
+
+        assert(fabs( Vec3Length( trace->normal ) - 1.0f ) < 0.01 || Vec3Length( trace->normal ) < 0.01);
+
+        trace->walkable = trace->normal[2] >= 0.7;
+
+        assert(touch->s.number == (unsigned short)( touch->s.number ));
+
+        trace->hitType = 1;
+        trace->hitId = touch->s.number;
+        trace->cflags = touch->r.contents;
+        trace->material = NULL;
+      }
+    }
+  }
+  else
+  {
+    PIXBeginNamedEvent(-1, "SV_TracePointToEntity 2");
+    {
+      if ( !(check->linkcontents & clip->contentmask) )
+      {
+        return;
+      }
+      if ( CM_TraceBox(&clip->extents, touch->r.absmin, touch->r.absmax, trace->fraction) )
+      {
+        return;
+      }
+      clipHandle = SV_ClipHandleForEntity(touch);
+      angles = touch->r.currentAngles;
+      if ( !touch->r.bmodel )
+      {
+        angles = vec3_origin;
+      }
+      oldFraction = trace->fraction;
+ 
+      CM_TransformedBoxTrace(trace, clip->extents.start, clip->extents.end, vec3_origin, vec3_origin,
+        clipHandle, clip->contentmask, touch->r.currentOrigin, angles);
+ 
+      if ( trace->fraction >= oldFraction )
+      {
+        return;
+      }
+
+      assert(trace != NULL);
+
+      trace->modelIndex = 0;
+      trace->partName = 0;
+      trace->partGroup = 0;
+
+      assert(touch->s.number == (unsigned short)( touch->s.number ));
+
+      trace->hitType = 1;
+      trace->hitId = touch->s.number;
+      trace->cflags = touch->r.contents;
+      trace->material = NULL;
+    }
+  }
+}
+
+#endif
+
+
 
 int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t *check)
 {

@@ -1,3 +1,4 @@
+#include "xassets.h"
 #include "xassets/xmodel.h"
 #include "dobj.h"
 
@@ -8,8 +9,6 @@ int __cdecl XModelGetBoneIndex(XModel *model, unsigned int name, unsigned int of
   unsigned int numBones;
   unsigned int localBoneIndex;
   uint16_t *boneNames;
-
-  int i;
 
   assert(index != NULL);
 
@@ -22,18 +21,15 @@ int __cdecl XModelGetBoneIndex(XModel *model, unsigned int name, unsigned int of
   {
     if ( localBoneIndex >= numBones )
     {
-        Com_Printf(CON_CHANNEL_SYSTEM,"^5Miss bone part %s %d of %s\n", SL_ConvertToString(name), name, model->name);
-	for(i = 0; i < numBones; ++i)
-	{
-		Com_Printf(CON_CHANNEL_SYSTEM,"^6%s\n", SL_ConvertToString(boneNames[i]));
-	}
       return 0;
     }
   }
   *index = localBoneIndex + offset;
-  Com_Printf(CON_CHANNEL_SYSTEM,"^5Found bone part %s of %s\n", SL_ConvertToString(name), model->name);
-
   return 1;
 }
 
+
 }
+
+
+

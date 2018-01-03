@@ -72,7 +72,7 @@
 	extern Load_CreateMaterialVertexShader
 	extern Load_WeaponDefSounds
 	extern Load_WeaponDef
-
+	extern Load_XModelBoneNames
 
 ;Exports of db_load:
 	global Load_XModel
@@ -446,15 +446,7 @@ Load_XModel:
 	call DB_ConvertOffsetToPointer
 Load_XModel_10:
 Load_XModel_BoneNames:
-	mov ebx, [varXModel]
-	mov eax, [ebx+0x8]
-	test eax, eax
-	jz Load_XModel_30
-	add eax, 0x1
-	jz Load_XModel_40
-	lea eax, [ebx+0x8]
-	mov [esp], eax
-	call DB_ConvertOffsetToPointer
+	call Load_XModelBoneNames
 	mov ebx, [varXModel]
 Load_XModel_30:
 Load_XModel_parentList:
@@ -765,25 +757,6 @@ Load_XModel_140:
 	call Load_Stream
 	mov ebx, [varXModel]
 	jmp Load_XModel_130
-Load_XModel_40:
-	mov dword [esp], 0x1
-	call DB_AllocStreamPos
-	mov [ebx+0x8], eax
-	mov eax, [varXModel]
-	mov edx, [eax+0x8]
-	mov [varScriptString], edx
-	movzx edi, byte [eax+0x4]
-	lea eax, [edi+edi]
-	mov [esp+0x8], eax
-	mov [esp+0x4], edx
-	mov dword [esp], 0x1
-	call Load_Stream
-	mov ebx, [varScriptString]
-	test edi, edi
-	jg Load_XModel_310
-Load_XModel_330:
-	mov ebx, [varXModel]
-	jmp Load_XModel_30
 Load_XModel_60:
 	mov dword [esp], 0x0
 	call DB_AllocStreamPos
@@ -800,22 +773,6 @@ Load_XModel_60:
 	call Load_Stream
 	mov ebx, [varXModel]
 	jmp Load_XModel_50
-Load_XModel_310:
-	xor esi, esi
-Load_XModel_320:
-	mov [varScriptString], ebx
-	mov dword [esp+0x8], 0x2
-	mov [esp+0x4], ebx
-	mov dword [esp], 0x0
-	call Load_Stream
-	mov eax, [varScriptString]
-	mov [esp], eax
-	call Load_ScriptStringCustom
-	add ebx, 0x2
-	add esi, 0x1
-	cmp edi, esi
-	jnz Load_XModel_320
-	jmp Load_XModel_330
 
 
 ;Mark_XAsset()

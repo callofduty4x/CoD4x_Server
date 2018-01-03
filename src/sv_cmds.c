@@ -2346,7 +2346,6 @@ void SV_GetModules_f()
 	BuildModuleRequests(cl.cl);
 }
 
-
 void SV_AddOperatorCommands()
 {
 	static qboolean	initialized;

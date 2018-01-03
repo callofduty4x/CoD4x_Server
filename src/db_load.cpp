@@ -49,6 +49,8 @@
 #define FASTFILE_VERSION 5
 
 
+extern "C" void PrintScriptStrings();
+
 struct XBlock
 {
   byte *data;
@@ -828,6 +830,8 @@ void __cdecl DB_LoadXFileInternal()
 
   Load_XAssetListCustom();
 
+//  PrintScriptStrings();
+
   DB_PushStreamPos(4u);
 
   if ( varXAssetList->assets )
@@ -893,9 +897,9 @@ ScriptStringList* varScriptStringList;
 
 void Load_XAssetListCustom()
 {
-  static struct XAssetList* g_varXAssetList;
+  static struct XAssetList g_varXAssetList;
 
-  varXAssetList = (XAssetList*)&g_varXAssetList;
+  varXAssetList = &g_varXAssetList;
   DB_LoadXFileData((byte *)&g_varXAssetList, 16);
   DB_PushStreamPos(4u);
   varScriptStringList = (ScriptStringList *)varXAssetList;
@@ -928,7 +932,16 @@ void __cdecl Load_XString(bool atStreamStart)
   }
 }
 
+void __cdecl Load_ScriptStringCustom(uint16_t *var)
+{
+  *var = (uint16_t)(uint32_t)varXAssetList->stringList.strings[*var];
+}
 
+void __cdecl Load_ScriptString(bool atStreamStart)
+{
+  Load_Stream(atStreamStart, varScriptString, 2);
+  Load_ScriptStringCustom(varScriptString);
+}
 
 void __cdecl Load_TempString(bool atStreamStart)
 {
@@ -978,7 +991,45 @@ void __cdecl Load_ScriptStringList(bool atStreamStart)
 }
 
 
+void __cdecl Load_ScriptStringArray(bool atStreamStart, int count)
+{
+  uint16_t *var;
+  int i;
+
+  Load_Stream(atStreamStart, varScriptString, 2 * count);
+  var = varScriptString;
+  for ( i = 0; i < count; ++i )
+  {
+    varScriptString = var;
+    Load_ScriptString(0);
+    ++var;
+  }
+}
+
+extern XModel* varXModel;
+
+void Load_XModelBoneNames()
+{
+  if ( varXModel->boneNames )
+  {
+    if ( (signed int)(varXModel->boneNames) == -1 )
+    {
+      varXModel->boneNames = (uint16_t *)DB_AllocStreamPos(1);
+      varScriptString = varXModel->boneNames;
+      Load_ScriptStringArray(1, varXModel->numBones);
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&varXModel->boneNames);
+    }
+  }
+}
 
 
 }
+
+
+
+
+
 
