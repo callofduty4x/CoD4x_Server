@@ -1488,6 +1488,8 @@ void SV_ArchiveSnapshot(msg_t *msg)
 
 //  assert(Sys_IsServerThread() || !sv.smp);
 
+  snapInfo.archived = true;
+
   n = svsHeader.nextCachedSnapshotFrames - 512;
   if ( svsHeader.nextCachedSnapshotFrames - 512 < 0 )
   {

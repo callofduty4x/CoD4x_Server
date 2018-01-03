@@ -22,10 +22,10 @@
 	extern Scr_GetGenericField
 	extern Scr_SetGenericField
 	extern Scr_AddClassField
-	extern ClientScr_ReadOnly
-	extern ClientScr_GetName
-	extern ClientScr_SetSessionTeam
-	extern client_fields
+;	extern ClientScr_ReadOnly
+;	extern ClientScr_GetName
+;	extern ClientScr_SetSessionTeam
+;	extern client_fields
 ;Exports of g_client_fields:
 
 	global ClientScr_GetSessionTeam
@@ -47,9 +47,101 @@
 	global ClientScr_GetPSOffsetTime
 	global Scr_GetClientField
 	global Scr_SetClientField
+	global GScr_AddFieldsForClient
 
 
 SECTION .text
+
+
+;ClientScr_ReadOnly(gclient_s*, client_fields_s const*)
+ClientScr_ReadOnly:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x18
+	mov eax, [ebp+0xc]
+	mov eax, [eax]
+	mov [esp+0x4], eax
+	mov dword [esp], _cstring_player_field_s_i
+	call va
+	mov [ebp+0x8], eax
+	leave
+	jmp Scr_Error
+
+
+;ClientScr_GetName(gclient_s*, client_fields_s const*)
+ClientScr_GetName:
+	push ebp
+	mov ebp, esp
+	sub esp, 0x8
+	add dword [ebp+0x8], 0x3048
+	leave
+	jmp Scr_AddString
+	nop
+
+
+;ClientScr_SetSessionTeam(gclient_s*, client_fields_s const*)
+ClientScr_SetSessionTeam:
+	push ebp
+	mov ebp, esp
+	push esi
+	push ebx
+	sub esp, 0x10
+	mov ebx, [ebp+0x8]
+	mov dword [esp], 0x0
+	call Scr_GetConstString
+	mov edx, scr_const
+	cmp ax, [edx+0xe]
+	jz ClientScr_SetSessionTeam_10
+	cmp ax, [edx+0xc]
+	jz ClientScr_SetSessionTeam_20
+	cmp ax, [edx+0x140]
+	jz ClientScr_SetSessionTeam_30
+	cmp ax, [edx+0x58]
+	jz ClientScr_SetSessionTeam_40
+	movzx eax, ax
+	mov [esp], eax
+	call SL_ConvertToString
+	mov [esp+0x4], eax
+	mov dword [esp], _cstring_s_is_an_illegal_
+	call va
+	mov [esp], eax
+	call Scr_Error
+	jmp ClientScr_SetSessionTeam_50
+ClientScr_SetSessionTeam_10:
+	mov dword [ebx+0x3010], 0x1
+ClientScr_SetSessionTeam_50:
+	mov esi, level
+	mov eax, ebx
+	sub eax, [esi]
+	cmp eax, 0xc60ff
+	jle ClientScr_SetSessionTeam_60
+	mov dword [esp], _cstring_client_is_not_po
+	call Scr_Error
+ClientScr_SetSessionTeam_60:
+	mov eax, [ebx+0x3010]
+	mov [esp+0x4], eax
+	mov eax, [ebx+0x300c]
+	mov [esp], eax
+	call SV_SetAssignedTeam
+	sub ebx, [esi]
+	sar ebx, 0x2
+	imul eax, ebx, 0x408b97a1
+	mov [esp], eax
+	call ClientUserinfoChanged
+	add esp, 0x10
+	pop ebx
+	pop esi
+	pop ebp
+	jmp CalculateRanks
+ClientScr_SetSessionTeam_20:
+	mov dword [ebx+0x3010], 0x2
+	jmp ClientScr_SetSessionTeam_50
+ClientScr_SetSessionTeam_40:
+	mov dword [ebx+0x3010], 0x0
+	jmp ClientScr_SetSessionTeam_50
+ClientScr_SetSessionTeam_30:
+	mov dword [ebx+0x3010], 0x3
+	jmp ClientScr_SetSessionTeam_50
 
 
 
@@ -659,12 +751,63 @@ Scr_SetClientField_10:
 	ret
 
 
+
+;GScr_AddFieldsForClient()
+GScr_AddFieldsForClient:
+	push ebp
+	mov ebp, esp
+	push edi
+	push esi
+	push ebx
+	sub esp, 0x1c
+	mov ebx, [client_fields]
+	test ebx, ebx
+	jz GScr_AddFieldsForClient_10
+	xor edi, edi
+	mov esi, client_fields+0x14
+GScr_AddFieldsForClient_20:
+	mov ecx, edi
+	sar ecx, 0x2
+	lea eax, [ecx+ecx*2]
+	mov edx, eax
+	shl edx, 0x4
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x8
+	add eax, edx
+	mov edx, eax
+	shl edx, 0x10
+	add eax, edx
+	lea eax, [ecx+eax*4]
+	or ax, 0xc000
+	movzx eax, ax
+	mov [esp+0x8], eax
+	mov [esp+0x4], ebx
+	mov dword [esp], 0x0
+	call Scr_AddClassField
+	mov ebx, [esi]
+	add edi, 0x14
+	add esi, 0x14
+	test ebx, ebx
+	jnz GScr_AddFieldsForClient_20
+GScr_AddFieldsForClient_10:
+	add esp, 0x1c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+	nop
+
+
+
 ;Initialized global or static variables of g_client_fields:
 SECTION .data
 
 
 ;Initialized constant data of g_client_fields:
 SECTION .rdata
+client_fields: dd _cstring_name, 0x0, 0x2, ClientScr_ReadOnly, ClientScr_GetName, _cstring_sessionteam, 0x0, 0x3, ClientScr_SetSessionTeam, ClientScr_GetSessionTeam, _cstring_sessionstate, 0x0, 0x3, ClientScr_SetSessionState, ClientScr_GetSessionState, _cstring_maxhealth, 0x2fe8, 0x0, ClientScr_SetMaxHealth, 0x0, _cstring_score, 0x2f78, 0x0, ClientScr_SetScore, 0x0, _cstring_deaths, 0x2f7c, 0x0, 0x0, 0x0, _cstring_statusicon, 0x0, 0x3, ClientScr_SetStatusIcon, ClientScr_GetStatusIcon, _cstring_headicon, 0x0, 0x3, ClientScr_SetHeadIcon, ClientScr_GetHeadIcon, _cstring_headiconteam, 0x0, 0x3, ClientScr_SetHeadIconTeam, ClientScr_GetHeadIconTeam, _cstring_kills, 0x2f80, 0x0, 0x0, 0x0, _cstring_assists, 0x2f84, 0x0, 0x0, 0x0, _cstring_hasradar, 0x3178, 0x0, 0x0, 0x0, _cstring_spectatorclient, 0x2f68, 0x0, ClientScr_SetSpectatorClient, 0x0, _cstring_killcamentity, 0x2f6c, 0x0, ClientScr_SetKillCamEntity, 0x0, _cstring_archivetime, 0x2f74, 0x1, ClientScr_SetArchiveTime, ClientScr_GetArchiveTime, _cstring_psoffsettime, 0x3070, 0x0, ClientScr_SetPSOffsetTime, ClientScr_GetPSOffsetTime, _cstring_pers, 0x2f88, 0x8, ClientScr_ReadOnly, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 
 ;Zero initialized global or static variables of g_client_fields:
 SECTION .bss

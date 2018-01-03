@@ -130,7 +130,7 @@ void __cdecl SV_ResetSkeletonCache()
   {
     ++sv.skelTimeStamp;
   }
-  g_sv_skel_memory_start = (char*)(((int)g_sv_skel_memory) & (SKEL_MEM_ALIGNMENT - 1));
+  g_sv_skel_memory_start = (char*)(((int)g_sv_skel_memory + (SKEL_MEM_ALIGNMENT -1)) & ~(SKEL_MEM_ALIGNMENT - 1));
   sv.skelMemPos = 0;
 }
 

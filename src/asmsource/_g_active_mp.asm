@@ -2644,7 +2644,7 @@ SpectatorClientEndFrame:
 	push edi
 	push esi
 	push ebx
-	sub esp, 0x2fec
+	sub esp, 0x2ffc
 	mov eax, [ebp+0x8]
 	mov esi, [eax+0x15c]
 	mov edx, eax
@@ -2671,6 +2671,12 @@ SpectatorClientEndFrame_60:
 	mov eax, [esi+0x2f74]
 	sub eax, [esi+0x3070]
 	mov [ebp-0x1c], eax
+	lea eax, [ebp-0x2fec] ;otherFlags
+	mov [esp+0x18], eax
+	lea eax, [ebp-0x2fe8] ;health
+	mov [esp+0x14], eax
+	xor eax, eax
+	mov [esp+0x10], eax ;origin
 	mov [esp+0xc], edi
 	lea eax, [ebp-0x2fe4]
 	mov [esp+0x8], eax
@@ -2717,6 +2723,12 @@ SpectatorClientEndFrame_140:
 	mov eax, [esi+0x2f74]
 	add eax, [esi+0x3070]
 	mov [ebp-0x1c], eax
+	lea eax, [ebp-0x2fec] ;otherFlags
+	mov [esp+0x18], eax
+	lea eax, [ebp-0x2fe8] ;health
+	mov [esp+0x14], eax
+	xor eax, eax
+	mov [esp+0x10], eax ;origin
 	lea eax, [ebp-0x80]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x2fe4]
@@ -2742,7 +2754,7 @@ SpectatorClientEndFrame_110:
 	or edx, 0x8
 	mov [esi+0x14], edx
 SpectatorClientEndFrame_120:
-	add esp, 0x2fec
+	add esp, 0x2ffc
 	pop ebx
 	pop esi
 	pop edi
@@ -2790,7 +2802,7 @@ SpectatorClientEndFrame_40:
 	js SpectatorClientEndFrame_130
 	and eax, 0xffffffe7
 	mov [esi+0x14], eax
-	add esp, 0x2fec
+	add esp, 0x2ffc
 	pop ebx
 	pop esi
 	pop edi

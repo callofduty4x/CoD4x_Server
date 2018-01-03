@@ -26,7 +26,6 @@
 	global XModelGetRadius
 	global XModelPartsFree
 	global XModelTraceLine
-	global XModelGetBoneIndex
 	global XModelPartsSetData
 	global XModelSurfsSetData
 	global XModelPartsFindData
@@ -471,50 +470,6 @@ XModelTraceLine_10:
 	ret
 	nop
 
-
-;XModelGetBoneIndex(XModel const*, unsigned int, unsigned int, unsigned char*)
-XModelGetBoneIndex:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	mov eax, [ebp+0x8]
-	mov esi, [ebp+0xc]
-	mov ebx, [eax+0x8]
-	movzx eax, byte [eax+0x4]
-	movzx ecx, al
-	test al, al
-	jz XModelGetBoneIndex_10
-	movzx eax, word [ebx]
-	cmp esi, eax
-	jz XModelGetBoneIndex_20
-	xor edx, edx
-XModelGetBoneIndex_30:
-	add edx, 0x1
-	cmp ecx, edx
-	jbe XModelGetBoneIndex_10
-	movzx eax, word [ebx+edx*2]
-	cmp esi, eax
-	jnz XModelGetBoneIndex_30
-	mov eax, edx
-XModelGetBoneIndex_40:
-	add al, [ebp+0x10]
-	mov edx, [ebp+0x14]
-	mov [edx], al
-	mov eax, 0x1
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-XModelGetBoneIndex_10:
-	xor eax, eax
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-XModelGetBoneIndex_20:
-	xor eax, eax
-	jmp XModelGetBoneIndex_40
 
 
 ;XModelPartsSetData(char const*, XModelPartsLoad*, void* (*)(int))

@@ -39,6 +39,8 @@
 #endif
 
 
+cvar_t* msg_printEntityNums;
+
 /*
 This part makes msg.c undepended in case no proper qcommon_io.h is included
 */
@@ -47,6 +49,12 @@ This part makes msg.c undepended in case no proper qcommon_io.h is included
 
 //int pcount[256];
 //static char bigstring[MAX_MSGLEN];
+
+void MSG_RegisterCvars()
+{
+	msg_printEntityNums = Cvar_RegisterBool("msg_printEntityNums", 0, 0, "Print entity numbers");
+}
+
 
 /*
 ==============================================================================
@@ -1717,11 +1725,9 @@ void MSG_EndWriteMessageLength(msg_t* msg)
 
 int MSG_ReadEntityIndex(msg_t *msg, int numBits)
 {
-  cvar_t **msg_printEntityNums = (cvar_t**)(0x8930c18);
-
   if ( MSG_ReadBit(msg) )
   {
-    if ( (*msg_printEntityNums)->boolean )
+    if ( msg_printEntityNums->boolean )
       Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: 1 bit (inc)\n");
     ++msg->lastRefEntity;
   }
@@ -1729,18 +1735,18 @@ int MSG_ReadEntityIndex(msg_t *msg, int numBits)
   {
     if ( numBits != 10 || MSG_ReadBit(msg) )
     {
-      if ( (*msg_printEntityNums)->boolean )
+      if ( msg_printEntityNums->boolean )
         Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: %i bits (full)\n", numBits + 2);
       msg->lastRefEntity = MSG_ReadBits(msg, numBits);
     }
     else
     {
-      if ( (*msg_printEntityNums)->boolean )
+      if ( msg_printEntityNums->boolean )
         Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: %i bits (delta)\n", 6);
       msg->lastRefEntity += MSG_ReadBits(msg, 4);
     }
   }
-  if ( (*msg_printEntityNums)->boolean )
+  if ( msg_printEntityNums->boolean )
     Com_Printf(CON_CHANNEL_SYSTEM,"Read entity num %i\n", msg->lastRefEntity);
   return msg->lastRefEntity;
 }
@@ -2673,22 +2679,22 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
   	}
   	else
   	{
-//	    assert(svsHeaderValid);
+//		assert(svsHeaderValid);
 
-		predictedTime = SV_GetPredirectedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
-	    float dist = Vec3DistanceSq(predictedOrigin, to->origin);
+		predictedTime = SV_GetPredictedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
+		float dist = Vec3DistanceSq(predictedOrigin, to->origin);
 
-	    if ( from && svsHeader.clientArchive && MSG_WithinAllowedPredictionError(dist, to) && predictedTime == to->commandTime )
-    	{
-      		sendOriginAndVel = 0;
-      		MSG_WriteBit0(msg);
-    	}
-    	else
-    	{
-    	  sendOriginAndVel = 1;
-    	  MSG_WriteBit1(msg);
-    	}
-  	}
+		if ( from && svsHeader.clientArchive && MSG_WithinAllowedPredictionError(dist, to) && predictedTime == to->commandTime )
+		{
+			sendOriginAndVel = 0;
+			MSG_WriteBit0(msg);
+		}
+		else
+		{
+			sendOriginAndVel = 1;
+			MSG_WriteBit1(msg);
+		}
+	}
 
 	numFields = sizeof( playerStateFields ) / sizeof( playerStateFields[0] );
 	
@@ -2900,9 +2906,10 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
     from = &nullstate;
     memset(&nullstate, 0, sizeof(nullstate));
   }
+  int numFields = sizeof(clientStateFields) / sizeof(clientStateFields[0]);
   if ( to )
   {
-    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, 24, 6, clientStateFields, 1);
+    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, numFields, 6, clientStateFields, 1);
   }
   else
   {
@@ -3565,7 +3572,9 @@ bool __cdecl MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, 
 	return  qtrue;
   }
 */
-  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE, 69, 10, archivedEntityFields, 0) > 0)
+  int numFields = sizeof(archivedEntityFields) / sizeof(archivedEntityFields[0]);
+
+  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE, numFields, 10, archivedEntityFields, 0) > 0)
   {
 	return  qtrue;	
   }
@@ -3681,17 +3690,21 @@ int MSG_ReadDeltaClient(msg_t *msg, const int time, clientState_t *from, clientS
 {
   clientState_t dummy;
 
+  int numFields = sizeof( clientStateFields ) / sizeof( clientStateFields[0] );
+
   if ( !from )
   {
     memset(&dummy, 0, sizeof(dummy));
     from = &dummy;
   }
-  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, 24, 6, clientStateFields);
+  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, numFields, 6, clientStateFields);
 }
 
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number)
 {
-  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte*)to, number, 69, 10, archivedEntityFields);
+  int numFields = sizeof( archivedEntityFields ) / sizeof( archivedEntityFields[0] );
+
+  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte*)to, number, numFields, 10, archivedEntityFields);
 }
 
 
@@ -3805,7 +3818,6 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 	}
 
 	numFields = sizeof( playerStateFields ) / sizeof( playerStateFields[0] );
-	
 
 	readOriginAndVel = MSG_ReadBit(msg) > 0;
 	lc = MSG_ReadLastChangedField(msg, numFields);

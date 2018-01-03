@@ -94,16 +94,44 @@ const char *Sys_TempPath( void )
 }
 
 
+void Sys_PrintBacktraceGDB()
+{
+	int numFrames;
+	int i;
+	void** traces;
+	char** symbols;
 
+	printf("---------- Crash Backtrace ----------\n");
+	traces = malloc(65536*sizeof(void*));
+	numFrames = backtrace(traces, 65536);
+	symbols = backtrace_symbols(traces, numFrames);
+	for(i = 0; i < numFrames; i++)
+	{
+		printf("%5d: %s\n", numFrames - i -1, symbols[i]);
+	}
+	free(traces);
+}
 
+void Sys_PrintBacktrace()
+{
+	int numFrames;
+	int i;
+	void** traces;
+	char** symbols;
 
+	Com_Printf(CON_CHANNEL_SYSTEM,"---------- Crash Backtrace ----------\n");
+	traces = malloc(65536*sizeof(void*));
+	numFrames = backtrace(traces, 65536);
+	symbols = backtrace_symbols(traces, numFrames);
+	for(i = 0; i < numFrames; i++)
+	{
+		Com_Printf(CON_CHANNEL_SYSTEM,"%5d: %s\n", numFrames - i -1, symbols[i]);
+	}
+	free(traces);
+}
 
 void Sys_DumpCrash(int signal,struct sigcontext *ctx)
 {
-	void** traces;
-	char** symbols;
-	int numFrames;
-	int i;
 	char hash[65];
 	long unsigned size = sizeof(hash);
 	
@@ -113,16 +141,10 @@ void Sys_DumpCrash(int signal,struct sigcontext *ctx)
 	//Q_strncpyz(hash, "File Hashing has not been implemented yet", sizeof(hash));
 	hash[64] = '\0';
 	Com_Printf(CON_CHANNEL_SYSTEM,"File is %s Hash is: %s\n", Sys_ExeFile(), hash);
-	Com_Printf(CON_CHANNEL_SYSTEM,"---------- Crash Backtrace ----------\n");
-	traces = malloc(65536*sizeof(void*));
-	numFrames = backtrace(traces, 65536);
-	symbols = backtrace_symbols(traces, numFrames);
-	for(i = 0; i < numFrames; i++)
-		Com_Printf(CON_CHANNEL_SYSTEM,"%5d: %s\n", numFrames - i -1, symbols[i]);
+	Sys_PrintBacktrace();
 	Com_Printf(CON_CHANNEL_SYSTEM,"\n-- Registers ---\n");
 	Com_Printf(CON_CHANNEL_SYSTEM,"edi 0x%lx\nesi 0x%lx\nebp 0x%lx\nesp 0x%lx\neax 0x%lx\nebx 0x%lx\necx 0x%lx\nedx 0x%lx\neip 0x%lx\n",ctx->edi,ctx->esi,ctx->ebp,ctx->esp,ctx->eax,ctx->ebx,ctx->ecx,ctx->edx,ctx->eip);
 	Com_Printf(CON_CHANNEL_SYSTEM,"-------- Backtrace Completed --------\n");
-	free(traces);
 }
 
 /*

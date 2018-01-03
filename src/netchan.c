@@ -70,8 +70,6 @@ to the new value before sending out any replies.
 cvar_t      *showpackets;
 cvar_t      *showdrop;
 cvar_t      *qport;
-cvar_t      *msg_dumpEnts;
-cvar_t      *msg_printEntityNums;
 
 static char *netsrcString[2] = {
 	"client",
@@ -91,6 +89,7 @@ void Netchan_Init( int port ) {
 	showdrop = Cvar_RegisterBool( "showdrop", qfalse, CVAR_TEMP, "Show dropped packets");
 	qport = Cvar_RegisterInt( "net_qport", port, 1, 65535, CVAR_INIT, "The net_chan qport" );
 	NET_CookieInit();
+	MSG_RegisterCvars();
 }
 
 /*

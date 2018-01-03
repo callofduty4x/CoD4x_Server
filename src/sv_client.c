@@ -2761,12 +2761,12 @@ int SV_GetClientStat(int clientNum, signed int index)
 
 
 
-int SV_GetPredirectedOriginAndTimeForClientNum(int clientNum, float *origin)
+int SV_GetPredictedOriginAndTimeForClientNum(int clientNum, float *origin)
 {
 	client_t* client = &svs.clients[clientNum];
 	origin[0] = client->predictedOrigin[0];
 	origin[1] = client->predictedOrigin[1];
-	origin[2] = client->predictedOrigin[2];	
+	origin[2] = client->predictedOrigin[2];
 	return client->predictedOriginServerTime;
 }
 

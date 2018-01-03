@@ -53,6 +53,7 @@
 	extern colorRed
 	extern colorWhite
 	extern DObjPhysicsGetBounds
+	extern modNames
 
 ;Exports of g_combat_mp:
 	global g_HitLocConstNames
@@ -71,7 +72,6 @@
 	global CanDamage
 	global bulletPriorityMap
 	global riflePriorityMap
-	global modNames
 	global g_fHitLocDamageMult
 
 
@@ -2338,8 +2338,6 @@ bulletPriorityMap: dd 0x3030301, 0x3030303, 0x3030303, 0x3030303, 0x303, 0x0, 0x
 		db 0x0
 riflePriorityMap: dd 0x9090901, 0x6060708, 0x5050606, 0x4040404
 		db 0x3, 0x3, 0x0
-modNames: dd 0x1708cd8, 0x1708cda, 0x1708cdc, 0x1708cde, 0x1708ce0, 0x1708ce2, 0x1708ce4, 0x1708ce6, 0x1708ce8, 0x1708cea, 0x1708cec, 0x1708cee, 0x1708cf0, 0x1708cf2, 0x1708cf4, 0x1708cf6
-
 
 ;Initialized constant data of g_combat_mp:
 SECTION .rdata

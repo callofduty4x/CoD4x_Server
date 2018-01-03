@@ -28,7 +28,7 @@
 #include "misc.h"
 #include "sys_main.h"
 #include "sv_bots.h"
-#include "scr_vm_classfunc.h"
+//#include "scr_vm_classfunc.h"
 #include "stringed_interface.h"
 
 #include <stdarg.h>
@@ -80,6 +80,7 @@ char *var_typename[] =
 //   - if offset is 0 then setter/getter should be set. Offset 0 still can be used (rarely).
 //     getter/setter will be called with passed client_field_t value.
 //   - if getter/setter is 0 then field will be get from/set to specified offset and type from client_t structure.
+/*
 client_fields_t client_fields[] = {
     {"name", 0, F_LSTRING, ClientScr_ReadOnly, ClientScr_GetName},
     {"sessionteam", 0, F_STRING, ClientScr_SetSessionTeam, ClientScr_GetSessionTeam},
@@ -100,12 +101,15 @@ client_fields_t client_fields[] = {
     {"pers", 0x2F88, F_MODEL, ClientScr_ReadOnly, 0},
     {0, 0, 0, 0, 0}
 };
+*/
 
 // Original: 0x082202A0
 // This array used in patch inside cod4loader routines.
 // If you have decompiled one of mentioned there functions, make sure
 //   to remove patch.
 // Appears to have max 16384 elements.
+
+/*
 ent_field_t ent_fields[] = {
     {"classname", 0x170, F_STRING, Scr_ReadOnlyField},
     {"origin", 0x13C, F_VECTOR, Scr_SetOrigin},
@@ -119,14 +123,15 @@ ent_field_t ent_fields[] = {
     {"angles", 0x148, F_VECTOR, Scr_SetAngles},
     {0, 0, 0, 0}
 };
+*/
 
 stringIndex_t scr_const;
-
+/*
 ent_field_t* __internalGet_ent_fields()
 {
     return ent_fields;
 }
-
+*/
 void Scr_AddStockFunctions()
 {
 	Scr_AddFunction("createprintchannel", GScr_CreatePrintChannel, 1 );
@@ -809,7 +814,7 @@ void GScr_LoadGameTypeScript(void)
     /**************** Additional *************************/
     script_CallBacks_new[SCR_CB_SCRIPTCOMMAND] = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_ScriptCommand", 0);
 }
-
+/*
 void GScr_AddFieldsForEntity()
 {
     int i = 0;
@@ -833,6 +838,10 @@ void GScr_AddFieldsForClient()
         ++iterator;
     }
 }
+
+*/
+
+
 /*
 
 Bug in array - don't use!

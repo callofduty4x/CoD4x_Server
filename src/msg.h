@@ -127,7 +127,7 @@ void MSG_EndWriteMessageLength(msg_t* msg);
 int MSG_ReadBit(msg_t *msg);
 int MSG_ReadEntityIndex(msg_t *msg, int numBits);
 void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force);
-
+void MSG_RegisterCvars();
 
 #ifdef __cplusplus
 }

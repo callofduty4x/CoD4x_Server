@@ -118,7 +118,6 @@
 	global BG_AnimUpdatePlayerStateConditions
 	global BG_IsAds
 	global bgs
-	global controller_names
 
 
 SECTION .text
@@ -5994,7 +5993,6 @@ animParseModesStr: dd _cstring_defines, 0xffffffff, _cstring_animations, 0xfffff
 globalFilename: dd _cstring_mpplayeranimscri, 0x0, 0x0, 0x0
 animBodyPartsStr: dd _cstring__unused_, 0xffffffff, _cstring_legs1, 0xffffffff, _cstring_torso1, 0xffffffff, _cstring_both, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 bgs: dd 0x0, 0x0
-controller_names: dd 0x1708d20, 0x1708d22, 0x1708d24, 0x1708d36, 0x1708d2c, 0x1708d38
 
 
 ;Initialized constant data of bg_animation_mp:
