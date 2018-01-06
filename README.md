@@ -1,5 +1,5 @@
-# CoD4X Server [![Build Status](https://travis-ci.org/callofduty4x/CoD4x_Server.svg?branch=master)](https://travis-ci.org/callofduty4x/CoD4x_Server) [![Build status](https://ci.appveyor.com/api/projects/status/oalrrpp4j49iqdgy?svg=true)](https://ci.appveyor.com/project/D4edalus/cod4x-server)
-Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke  installation of the proprietary Cod4X client to players joining the server using the Cod4X servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
+# CoD4x Server [![Build Status](https://travis-ci.org/callofduty4x/CoD4x_Server.svg?branch=master)](https://travis-ci.org/callofduty4x/CoD4x_Server) [![Build status](https://ci.appveyor.com/api/projects/status/oalrrpp4j49iqdgy?svg=true)](https://ci.appveyor.com/project/D4edalus/cod4x-server)
+CoD4x is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke  installation of the proprietary CoD4x client to players joining the server using the CoD4x servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
 
 ## The most prominent features are:
 * Administration commands
@@ -10,8 +10,8 @@ Cod4X is a modification of the Call of Duty 4 - Modern Warfare server. It fixes 
 * Backwards compatibility to 1.7 and 1.7a servers
 * A new [masterserver](http://cod4master.cod4x.me/), for when the official masterserver is down
 
-The Cod4X server can run on Windows and Linux. 
-The Cod4X client update is only available for windows.
+The CoD4x server can run on Windows and Linux. 
+The CoD4x client update is only available for windows.
 
 ## Setting up a Call of Duty 4 server with Cod4x 1.8
 Download binaries: [Linux](https://cod4x.me/downloads/cod4x_server-linux.zip) [Windows](https://cod4x.me/downloads/cod4x_server-windows.zip)
@@ -26,8 +26,8 @@ Hint: you probably want to run the server on a separate user. Please don't run t
 A more detailed server tutorial is available on [our wiki](https://github.com/callofduty4x/CoD4x_Server/wiki/Server-setup).
 [Also read about new banlists here](https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes)
 
-## Compiling (Linux)
-To compile Cod4X from source you require the following tools:
+## Compiling on Linux
+To compile CoD4x from source you require the following tools:
 
 - NASM
 - paxctl
@@ -56,34 +56,22 @@ Arch Linux 32-bit:
 yaourt -S nasm paxctl gcc-multilib make
 ```
 
-First enter `/src/tomcrypt`, and run `./compile_linux.sh`. Then go to `/src/mbedtls`, and run `make`.
-
-Now compile the server:
-
-```
-make
-```
+Now compile the server by running `make`.
 
 If compilation was successful the binary will be placed in the `/bin/` folder.
 
-## Compiling (Windows)
-To compile Cod4X from source you require the following tools:
+## Compiling on Windows
+To compile CoD4x from source you require the following tools:
 
 - [NASM](http://www.nasm.us/pub/nasm/releasebuilds/?C=M;O=D)
 - [MinGW](http://www.mingw.org/): 'gcc' and 'mingw32-make'
 
-First enter `/src/tomcrypt`, and run `compile_win32.cmd`. Then go to `/src/mbedtls`, and run `build.cmd`.
-
-Now compile the server:
-
-```
-mingw32-make
-```
+Now compile the server by running `mingw32-make`.
 
 If compilation was successful the binary will be placed in the `/bin/` folder.
 
 ## Contributing
-Cod4X is licensed under the AGPL3 license. We welcome anybody to fork this project and submit a pull request.
+CoD4x is licensed under the AGPL3 license. We welcome anybody to fork this project and submit a pull request.
 
 Plugins can be written in C/C++ and we also provide language bindings for D. The `/plugins` directory contains some example plugins. You can contribute to the project by developing plugins and create a pull request for them and/or uploading and promoting them on the [forums](https://cod4x.me/forum/forum-17.html).
 
@@ -93,20 +81,20 @@ If you would like to work on a completely new feature, we would appreciate if yo
 If you're not a programmer but still want to help, you can help by testing and reporting bugs, but also by writing documentation. Please submit your bug reports to the Github issue tracker.
 
 ## Usage conditions for server hosters
-Aside from agreeing to the license, by making any use of CoD4X18 server you agree to the following:
+Aside from agreeing to the license, by making any use of CoD4x18 server you agree to the following:
 
-1. You make content which is connected to your CoD4X18 Server available to the developers on request. For example if you run a mod, you have to make everything available that is required to run another server just like your own. Think of a complete mod.ff, .iwds, plugins, database handlers, etc.
+1. You make content which is connected to your CoD4x18 Server available to the developers on request. For example if you run a mod, you have to make everything available that is required to run another server just like your own. Think of a complete mod.ff, .iwds, plugins, database handlers, etc.
 
 2. The developers reserve the right to reuse your content as long as it is not used commercially. You have a right for your name/clan/website getting mentioned if this is going to happen.
 They can also use it on their own servers.
 
-3. Maps you have installed on a server have to be either available on the internet already, or be made available to the community at the [Cod4X forums](https://cod4x.me/index.php?/forums/), with all required assets, like scripts, within 20 weeks of installation. You have to annouce your map on the [forums](https://cod4x.me/index.php?/forums/) on the same day you have installed it to gain the 20 weeks grace period. Not announced maps will have to be made available within 1 week.
+3. Maps you have installed on a server have to be either available on the internet already, or be made available to the community at the [CoD4x forums](https://cod4x.me/index.php?/forums/), with all required assets, like scripts, within 20 weeks of installation. You have to annouce your map on the [forums](https://cod4x.me/index.php?/forums/) on the same day you have installed it to gain the 20 weeks grace period. Not announced maps will have to be made available within 1 week.
 
 4. Plugins have to be made available as sourcecode so the user can interact with it
 
 Server's IPs violating these conditions can get permanently disabled.
 
-These conditions have been established to keep user created content open to everyone, and also to value the work on CoD4X.
+These conditions have been established to keep user created content open to everyone, and also to value the work on CoD4x.
 
 ## Everything else
 Please check out the [forums](https://cod4x.me) and [our wiki](https://github.com/D4edalus/CoD4x_Server/wiki).

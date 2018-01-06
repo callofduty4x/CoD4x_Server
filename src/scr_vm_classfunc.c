@@ -78,15 +78,5 @@ void __cdecl ClientScr_SetSessionTeam(gclient_t *gcl, client_fields_t *gfl)
 
 void __cdecl ClientScr_GetSpectatorClient(gclient_t *pSelf)
 {
-//    Scr_AddInt(pSelf->spectatorClient);
-
-    // Player isn't spectating anyone.		
-    if (pSelf->spectatorClient == -1)		
-    {		
-        Scr_AddUndefined();		
-    }		
-    else		
-    {		
-        Scr_AddEntity(&g_entities[pSelf->spectatorClient]);		
-    }
+    Scr_AddInt(pSelf->spectatorClient);
 }

@@ -7,14 +7,14 @@ branches:
 
 before_install:
   # hack for broken package, https://github.com/travis-ci/travis-ci/issues/6588
-  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ main restricted'"
-  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ universe'"
-  - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ multiverse'"
-  - "sudo add-apt-repository http://archive.ubuntu.com/ubuntu/"
-  - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ universe'"
-  - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ multiverse'"
-  - "sudo apt-get -qq update"
-
+  # - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ main restricted'"
+  # - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ universe'"
+  # - "sudo add-apt-repository --remove 'http://us-central1.gce.archive.ubuntu.com/ubuntu/ multiverse'"
+  # - "sudo add-apt-repository http://archive.ubuntu.com/ubuntu/"
+  # - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ universe'"
+  # - "sudo add-apt-repository 'http://archive.ubuntu.com/ubuntu/ multiverse'"
+  # - "sudo apt-get -qq update"
+  
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
@@ -27,12 +27,32 @@ script:
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
   - echo $TRAVIS_TAG
   - make
+  - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/censor && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/cod4x_b3hide && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/simplebanlist && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/example_cpp_plugin && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/pchat && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/sourcebansplugin && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/warn && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  # - cd plugins/antispam && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  # missing: webapibanlist, 
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
     secure: FsHPkowl4oZSLUhfEr7Q2sMGiNSJqJ4SAjRYxzh7o6/luf06gsq4WAXbZS6tEgCJJrpo//vjJIXQkyjY5wvovl8g25DESyyFNrY86adx5PRFz2zEgocZ4koQp883VBQC0cRBKHLsh8hL/GZ5j8aQhvGCN5lMWHQjNJlGPU06HXAZAZLTmYoU9JaMEIbksFiZtXWMBIGUFhDVmCCwTQwig/+jGKfPi0YAkUTVrQ/tvq8glymK/CYZtipeDYPXAKFdJfVfgLRxCTDpThM56mH9vj28DrQHUFL9ivIAc4B+2H3E0N8qjv6Xb0kIQuMqqn3Q0n7zM1t0uKJXXo/zA/7DyR8E4JEuR1PAFjSb3Tyt3FObwZM2FzL+IsXuf9x0ozEUKujY9YWn+o4+usBWB9z/i87f7e+9yYdTxbXAGEQLP7w7gDlpJlWMHHJ8j5WDvbS3j7T5xokjzJLrxbmZc1TdrKqMXrIV5ryAecHZJkiA1ccK9+ukPtCYXN8V/u0yHTS5UGaQn96R935yk2VLjwzEE7muTLExFZRxXR2cVuM0XpBMJDtija3zxpBhk+4wuzyvbq+4fhA3iDm2tKVOfa9s3uR/s4HJgIitIidZyYRKrsrNYujNDBAvoVWDlgXe0OQTqJHvgTJqMUHbTHNwvhzQaTDCwV6OtaGPGvJsabYTefQ=
-  file: ./bin/cod4x18_dedrun
+  file: 
+    - ./bin/cod4x18_dedrun
+    - ./plugins/screenshotsender/nehoscreenshotuploader.so
+    - ./plugins/censor/censor.so
+    - ./plugins/cod4x_b3hide/b3hide.so
+    - ./plugins/simplebanlist/simplebanlist.so
+    - ./plugins/example_cpp_plugin/cpptest.so
+    - ./plugins/pchat/pchat.so
+    - ./plugins/sourcebansplugin/sourcebansplugin.so
+    - ./plugins/warn/warn.so
+    # - ./plugins/antispam/antispam.so
   on:
     tags: true
     #condition: "$DODEPLOY = YES"
