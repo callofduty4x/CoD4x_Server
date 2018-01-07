@@ -1495,6 +1495,9 @@ void SV_ArchiveSnapshot(msg_t *msg)
   {
     n = 0;
   }
+
+  MSG_WriteLong(msg, 0xdeadbeef);
+
   svsHeader.archivedEntityCount = 0;
   for ( i = svsHeader.nextCachedSnapshotFrames - 1; i >= n; --i )
   {
@@ -1646,6 +1649,8 @@ void SV_ArchiveSnapshot(msg_t *msg)
       break;
     }
   }
+
+
   //PIXBeginNamedEvent(3158271, "write delta");
   MSG_WriteBit1(msg);
   MSG_WriteLong(msg, svsHeader.time);
@@ -1673,6 +1678,8 @@ void SV_ArchiveSnapshot(msg_t *msg)
   }
   MSG_ClearLastReferencedEntity(msg);
 */
+
+
   for ( i = 0, client = svsHeader.clients; i < svsHeader.maxclients; ++i, ++client)
   {
     if ( client->state >= CS_PRIMED )
@@ -1699,6 +1706,8 @@ void SV_ArchiveSnapshot(msg_t *msg)
       ++cachedSnap->num_clients;
     }
   }
+
+
   MSG_WriteBit0(msg);
   MSG_ClearLastReferencedEntity(msg);
   for ( e = 0; e < svsHeader.num_entities; ++e )
@@ -1743,6 +1752,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
       }
     }
   }
+
   if ( ++svsHeader.nextCachedSnapshotFrames >= 0x7FFFFFFE )
   {
     Com_Error(ERR_FATAL, "svsHeader.nextCachedSnapshotFrames wrapped");
@@ -1837,6 +1847,9 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
     MSG_InitReadOnly(&msg, &svs.archivedSnapshotBuffer[startIndex], frame->size);
   }
   MSG_BeginReading(&msg);
+
+  assert(MSG_ReadLong(&msg) == 0xdeadbeef);
+
   if ( MSG_ReadBit(&msg) )
   {
     assert ( !msg.overflowed );
