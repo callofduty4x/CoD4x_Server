@@ -1136,13 +1136,11 @@ void SV_ClientCalcFramerate()
 		elapsed = 1;
 	}
 
-	int calcfactor = ((1000 << 8) / (elapsed << 8));
-
 	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
 	{
 		if(cl->state == CS_ACTIVE)
 		{
-			cl->clFPS = cl->clFrames * calcfactor;
+			cl->clFPS = (float)cl->clFrames * 1000.0f / elapsed;
 		}else{
 			cl->clFPS = 0;
 		}
