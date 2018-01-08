@@ -3007,6 +3007,8 @@ void PlayerCmd_GetCountedFPSSweetspot(scr_entref_t arg)
         Scr_AddInt(250);
     else if(abs(333 - cl->clFPS) < 20)
         Scr_AddInt(333);
+    else
+        Scr_AddInt(cl->clFPS);
 }
 
 static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)
