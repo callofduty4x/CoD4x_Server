@@ -1140,7 +1140,17 @@ void SV_ClientCalcFramerate()
 	{
 		if(cl->state == CS_ACTIVE)
 		{
-			cl->clFPS = (float)cl->clFrames * 1000.0f / elapsed;
+			float newfps = (float)cl->clFrames * 1000.0f / elapsed;
+
+			if(cl->clFPS > 0 && abs(newfps - cl->clFPS) < 20)
+			{
+				newfps += (float)cl->clFPS;
+				cl->clFPS = newfps / 2.0f + 0.5f;
+			}
+			else
+			{
+				cl->clFPS = (float)cl->clFrames * 1000.0f / elapsed;
+			}
 		}else{
 			cl->clFPS = 0;
 		}

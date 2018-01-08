@@ -48,6 +48,7 @@ void PlayerCmd_SetJumpHeight(scr_entref_t arg);
 void PlayerCmd_SetMoveSpeed(scr_entref_t arg);
 void PlayerCmd_GetGeoLocation(scr_entref_t arg);
 void PlayerCmd_GetCountedFPS(scr_entref_t arg);
+void PlayerCmd_GetCountedFPSSweetspot(scr_entref_t arg);
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg);
 void PlayerCmd_SetVelocity(scr_entref_t arg);
 

@@ -2991,6 +2991,24 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
     Scr_AddInt(cl->clFPS);
 }
 
+void PlayerCmd_GetCountedFPSSweetspot(scr_entref_t arg)
+{
+    if (Scr_GetNumParam())
+        Scr_Error("Usage: <player entity> GetCountedFPSSweetspot()\n");
+
+    client_t *cl = VM_GetClientForEntityNumber(arg);
+
+    if (!cl)
+        Scr_ObjectError("not a client\n");
+
+    if(abs(125 - cl->clFPS) < 20)
+        Scr_AddInt(125);
+    else if(abs(250 - cl->clFPS) < 20)
+        Scr_AddInt(250);
+    else if(abs(333 - cl->clFPS) < 20)
+        Scr_AddInt(333);
+}
+
 static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)
 {
     char sidstring[128], gidstring[128];

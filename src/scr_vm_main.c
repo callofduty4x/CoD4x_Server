@@ -622,6 +622,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("setdamagestage", (void *)0x80ba890, 0);
     Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
     Scr_AddMethod("getcountedfps", PlayerCmd_GetCountedFPS, 0);
+    Scr_AddMethod("getcountedfpssweetspot", PlayerCmd_GetCountedFPSSweetspot, 0);
     Scr_AddMethod("getspectatorclient", PlayerCmd_GetSpectatorClient, 0);
 
     // Player movement detection.
