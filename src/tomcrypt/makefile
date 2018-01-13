@@ -1,5 +1,5 @@
 TARGET=libtomcrypt.a
-CFLAGS=-m32 -Wall -Os -s -I. -DLTC_NO_ROLC -DLTC_SOURCE
+CFLAGS=-m32 -Wall -Os -s -I. -Imath -DLTC_NO_ROLC -DLTC_SOURCE
 
 CC=gcc
 TARGETDIR=../../lib
