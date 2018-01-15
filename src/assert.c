@@ -25,7 +25,7 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
 
     Sys_PrintBacktrace();
 #endif
-    __builtin_trap();
+    asm("int $3");
     return 0;
 }
 

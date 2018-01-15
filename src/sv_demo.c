@@ -268,7 +268,7 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 
 	SV_WriteGameState(&msg, cl);
 
-	MSG_WriteLong( &msg, svse.configDataSequence );
+	MSG_WriteLong( &msg, svs.configDataSequence );
 	// write the client num
 	MSG_WriteLong( &msg, cl - svs.clients );
 	// write the checksum feed

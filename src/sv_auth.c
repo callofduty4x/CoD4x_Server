@@ -893,8 +893,8 @@ qboolean Auth_CanPlayerUseCommand(unsigned int clnum, const char* cmd)
 
 void Auth_AddCommandForClientToWhitelist(int clnum, const char* cmd)
 {
-	char *parsecmd = &svse.commandWhitelistBuf[0];
-	char *endptr = parsecmd + sizeof(svse.commandWhitelistBuf);
+	char *parsecmd = &svs.commandWhitelistBuf[0];
+	char *endptr = parsecmd + sizeof(svs.commandWhitelistBuf);
 	int i;
 	client_t* client;
 

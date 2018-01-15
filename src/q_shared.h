@@ -443,7 +443,7 @@ void QDECL Com_Error( int a, const char *error, ...);
 
 
 #define SOLID_BMODEL 0xffffff
-
+#define MASK_EFLAGS 0xFFFFFF
 /*
 =================
 PlaneTypeForNormal

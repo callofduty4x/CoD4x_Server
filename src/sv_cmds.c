@@ -1361,7 +1361,7 @@ Also called by SV_DropClient, SV_DirectConnect, and SV_SpawnServer
 ==================
 */
 void SV_Heartbeat_f( void ) {
-	svse.nextHeartbeatTime = 0;
+	svs.nextHeartbeatTime = 0;
 }
 
 
@@ -2406,7 +2406,6 @@ void SV_AddOperatorCommands()
 		Cmd_AddCommand ("devmap", SV_Map_f);
 
 	}
-
 }
 
 

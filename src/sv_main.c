@@ -134,7 +134,6 @@ cvar_t* sv_steamgroup;
 serverStatic_t		svs;
 server_t		sv;
 svsHeader_t		svsHeader;
-serverStaticExt_t	svse;	// persistant server info across maps
 permServerStatic_t	psvs;	// persistant even if server does shutdown
 
 qboolean svsHeaderValid;
@@ -1452,7 +1451,7 @@ SVC_FlushRedirect
 ================
 */
 static void SV_FlushRedirect( char *outputbuf, qboolean lastcommand ) {
-    NET_OutOfBandPrint( NS_SERVER, &svse.redirectAddress, "print\n%s", outputbuf );
+    NET_OutOfBandPrint( NS_SERVER, &svs.redirectAddress, "print\n%s", outputbuf );
 }
 
 /*
@@ -1471,7 +1470,7 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
     char *cmd_aux;
     char stringlinebuf[MAX_STRING_CHARS];
 
-    svse.redirectAddress = *from;
+    svs.redirectAddress = *from;
 
     if ( strcmp (SV_Cmd_Argv(1), sv_rconPassword->string )) {
         //Send only one deny answer out in 100 ms
@@ -2090,7 +2089,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                     MSG_ReadString(&singlemsg, stringline, sizeof(stringline));
                     if(authoritative)
                     {
-                        Q_strncpyz(svse.sysrestartmessage, stringline, sizeof(svse.sysrestartmessage));
+                        Q_strncpyz(svs.sysrestartmessage, stringline, sizeof(svs.sysrestartmessage));
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER,"Received restart message from masterserver which is not authoritative. Ignoring\n");
                     }
@@ -2436,10 +2435,10 @@ void SV_MasterHeartbeat(const char *message)
         return;		// only dedicated servers send heartbeats
 
     // if not time yet, don't send anything
-    if ( com_uFrameTime < svse.nextHeartbeatTime )
+    if ( com_uFrameTime < svs.nextHeartbeatTime )
         return;
 
-    svse.nextHeartbeatTime = com_uFrameTime + HEARTBEAT_USEC;
+    svs.nextHeartbeatTime = com_uFrameTime + HEARTBEAT_USEC;
 
     // this command should be changed if the server info / status format
     // ever incompatably changes
@@ -2558,11 +2557,11 @@ Informs all masters that this server is going down
 */
 void SV_MasterShutdown( void ) {
     // send a hearbeat right now
-    svse.nextHeartbeatTime = 0;
+    svs.nextHeartbeatTime = 0;
     SV_MasterHeartbeat(HEARTBEAT_DEAD);
 
     // send it again to minimize chance of drops
-    svse.nextHeartbeatTime = 0;
+    svs.nextHeartbeatTime = 0;
     SV_MasterHeartbeat(HEARTBEAT_DEAD);
 
     // when the master tries to poll the server, it won't respond, so
@@ -2704,7 +2703,6 @@ __cdecl void SV_Shutdown( const char *finalmsg ) {
     Cvar_SetBool( com_sv_running, qfalse );
 
     memset( &svs, 0, sizeof( svs ) );
-    memset( &svse, 0, sizeof( svse ) );
 
     Com_Printf(CON_CHANNEL_SERVER, "---------------------------\n" );
 
@@ -3176,8 +3174,8 @@ int SV_GetModelConfigstringIndex(int num)
 
 void SV_UpdateClientConfigInfo(client_t* cl)
 {
-    ++svse.configDataSequence;
-    svse.changedConfigData[svse.configDataSequence % MAX_CONFIGDATACACHE] = cl - svs.clients;
+    ++svs.configDataSequence;
+    svs.changedConfigData[svs.configDataSequence % MAX_CONFIGDATACACHE] = cl - svs.clients;
 
 }
 
@@ -4117,8 +4115,8 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     // allow pause if only the local client is connected
 /*	if ( SV_CheckPaused() ) {
         SV_MasterHeartbeat( HEARTBEAT_GAME );//Still send heartbeats
-        CL_WritePacket( &svse.authserver );
-        CL_WritePacket( &svse.scrMaster );
+        CL_WritePacket( &svs.authserver );
+        CL_WritePacket( &svs.scrMaster );
         return;
     }
 */
@@ -4306,8 +4304,8 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     }
     SetAnimCheck(com_animCheck->boolean);
 
-        if( svs.time > svse.frameNextSecond){	//This runs each second
-        svse.frameNextSecond = svs.time+1000;
+        if( svs.time > svs.frameNextSecond){	//This runs each second
+        svs.frameNextSecond = svs.time+1000;
 
         // the menu kills the server with this cvar
         if ( sv_killserver->boolean ) {
@@ -4316,8 +4314,8 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
         return qtrue;
         }
 
-        if(svs.time > svse.frameNextTenSeconds){	//This runs each 10 seconds
-        svse.frameNextTenSeconds = svs.time+10000;
+        if(svs.time > svs.frameNextTenSeconds){	//This runs each 10 seconds
+        svs.frameNextTenSeconds = svs.time+10000;
 
         int d, h, m;
         int uptime;
@@ -4339,9 +4337,9 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
         serverStatus_Write();
 
             PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
-/*		if(svs.time > svse.nextsecret){
-            svse.nextsecret = svs.time+80000;
-            Com_RandomBytes((byte*)&svse.secret,sizeof(int));
+/*		if(svs.time > svs.nextsecret){
+            svs.nextsecret = svs.time+80000;
+            Com_RandomBytes((byte*)&svs.secret,sizeof(int));
         }*/
 
         if(level.time > level.startTime + 20000){
@@ -4699,9 +4697,9 @@ void SV_SpawnServer(const char *mapname)
   int i, checksum;
   client_t* cl;
 
-    if(svse.sysrestartmessage[0])
+    if(svs.sysrestartmessage[0])
     {
-        Sys_Restart(svse.sysrestartmessage);
+        Sys_Restart(svs.sysrestartmessage);
         return;
     }
 

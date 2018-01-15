@@ -55,6 +55,7 @@ extern struct cm_world_t cm_world;
 // while not allowing a single ip to grab all challenge resources
 #define MAX_CHALLENGES_MULTI (MAX_CHALLENGES / 2)
 
+#define ARCHIVEDSSBUF_SIZE 0x1000000
 
 typedef struct{
 	netreliablemsg_t *netstate;
@@ -133,7 +134,7 @@ typedef enum {
 
 struct client_s
 {//90b4f8c
-	clientConnectState_t		state;
+	clientConnectState_t	state;
 	int			unksnapshotvar;		// must timeout a few frames in a row so debugging doesn't break
 	int			deltaMessage;		// (0x8) frame last client usercmd message
 	qboolean		rateDelayed;		// true if nextSnapshotTime was set based on rate instead of snapshotMsec
@@ -155,8 +156,6 @@ struct client_s
 	int			msgType;
 	unsigned int		currentAd;
 	int			enteredWorldTime;
-	byte			entityNotSolid[MAX_GENTITIES / 8];//One bit for entity  - No use
-	byte			entityInvisible[MAX_GENTITIES / 8];//One bit for entity  - No use
 	unsigned int		clFrames;
 	unsigned int		clFrameCalcTime;
 	unsigned int		clFPS;
@@ -183,7 +182,6 @@ struct client_s
 	int			isMember; //Steam group membership. 
 	//If sv_steamgroup is set up this variable will be 0 if membership status is still unknown.
 	//It will be -1 if he is not a member or 1 if he is a member or 2 if he is an officer
-	int			free1[1];
 	int			mutelevel; //1 = voice blocked; 2 = chat and voice blocked
 	int			lastFollowedClient;
 	byte		ssdata[24];
@@ -192,9 +190,6 @@ struct client_s
 	char		clantag[16];
 
 	char*		commandWhitelist[32];
-
-	//Free Space
-	byte		free[412];
 
 	int 		configDataAcknowledge; //New: to determine which config data updates the client has not yet received
 	vec3_t		predictedOrigin;	//0x63c
@@ -269,19 +264,6 @@ struct client_s
 
 typedef struct client_s client_t;
 
-/*
-typedef struct {
-	netadr_t		adr;
-	int			challenge;
-	int			clientChallenge;
-	int			time;				// time the last packet was sent to the autherize server
-	int			pingTime;			// time the challenge response was sent to client
-	int			firstTime;			// time the adr was first used, for authorize timeout checks
-	char			pbguid[33];
-	qboolean		connected;
-	int			ipAuthorize;
-} challenge_t;
-*/
 
 #define	MAX_STREAM_SERVERS	6
 #define	MAX_MASTER_SERVERS	2	// max recipients for heartbeat packets
@@ -300,16 +282,6 @@ typedef struct{
 	char cmdname[32];
 	char cmdargument[1024];
 }translatedCmds_t;
-
-/*
-
-Some Info:
-svs.nextSnapshotEntities 0x13f18f94
-svs.numSnapshotEntites 0x13f18f8c
-svc_snapshot = 6;
-svs.snapflagServerbit 0x13f18f88  //copied from real svs. to something else
-
-*/
 
 typedef struct archivedSnapshot_s
 {
@@ -356,6 +328,7 @@ typedef struct{
 }banlist_t;
 
 #define MAX_SNAPSHOT_ENTITIES	1024
+#define MAX_CONFIGDATACACHE 4096
 
 typedef struct {//0x8c51780
 
@@ -383,7 +356,7 @@ typedef struct {//0x8c51780
 	int nextArchivedSnapshotFrames; //0xee95e9c
 
 	archivedSnapshot_t archivedSnapshotFrames[1200];
-	byte archivedSnapshotBuffer[0x2000000];
+	byte archivedSnapshotBuffer[ARCHIVEDSSBUF_SIZE];
 	int nextArchivedSnapshotBuffer;
 	int nextCachedSnapshotEntities; //0x10e98420
 	int nextCachedSnapshotClients;
@@ -398,28 +371,12 @@ typedef struct {//0x8c51780
 
 	challenge2_t challenges[MAX_CHALLENGES];
 
-	int redirectAddress[5];
-	int authorizeAddress[5];
-
-	char netProfilingBuf[1504];
-
-	banlist_t banlist[16];
-
-	int field_14850;
-
 	vec3_t mapCenter;
 
-	char field_14860[112];
-
-}serverStatic_t; //Size: 0xb227580
-
-#define MAX_CONFIGDATACACHE 4096
-
-typedef struct {
 	unsigned long long	nextHeartbeatTime;
-	netadr_t		redirectAddress;			// for rcon return messages
 	netadr_t		authorizeAddress;			// ??? for rcon return messages
 	client_t		*redirectClient;		//used for SV_ExecuteRemoteControlCmd()
+	netadr_t		redirectAddress;
 	int				secret;
 	unsigned int	frameNextSecond;
 	unsigned int	frameNextTenSeconds;
@@ -429,7 +386,8 @@ typedef struct {
 	int				configDataSequence;
 	char			commandWhitelistBuf[1024];
 	char			sysrestartmessage[1024];
-}serverStaticExt_t;
+}serverStatic_t; //Size: 0xb227580
+
 
 typedef struct {
 	qboolean		cmdSystemInitialized;
@@ -641,7 +599,6 @@ svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
 gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
 
 
-extern	serverStaticExt_t	svse;	// persistant server info across maps
 extern	permServerStatic_t	psvs;	// persistant even if server does shutdown
 extern	qboolean		svsHeaderValid;
 struct moveclip_s;
