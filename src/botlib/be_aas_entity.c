@@ -56,14 +56,6 @@ extern aas_t aasworlds[2];
 
 aas_t *defaultaasworld = aasworlds;
 
-//FIXME: these might change
-enum {
-	ET_GENERAL,
-	ET_PLAYER,
-	ET_ITEM,
-	ET_MISSILE,
-	ET_MOVER
-};
 
 //===========================================================================
 //

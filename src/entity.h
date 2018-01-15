@@ -189,6 +189,7 @@ enum entityType_t
   ET_VEHICLE_COLLMAP = 0xF,
   ET_VEHICLE_CORPSE = 0x10,
   ET_EVENTS = 0x11,
+  ET_MOVER = 0x99 //Dummy for botlib
 };
 
 // entityState_t is the information conveyed from the server

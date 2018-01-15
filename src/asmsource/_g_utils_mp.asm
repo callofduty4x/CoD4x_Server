@@ -3325,7 +3325,6 @@ G_crandom:
 ;Initialized global or static variables of g_utils_mp:
 SECTION .data
 _ZZ22G_LocalizedStringIndexPKcE12origErrorMsg: dd _cstring_localized_string, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-entityTypeNames: dd _cstring_et_general, _cstring_et_player, _cstring_et_player_corpse, _cstring_et_item, _cstring_et_missile, _cstring_et_invisible, _cstring_et_scriptmover, _cstring_et_sound_blend, _cstring_et_fx, _cstring_et_loop_fx, _cstring_et_primary_light, _cstring_et_mg42, _cstring_et_helicopter, _cstring_et_plane, _cstring_et_vehicle, _cstring_et_vehicle_collm, _cstring_et_vehicle_corps
 
 
 ;Initialized constant data of g_utils_mp:
@@ -3354,24 +3353,6 @@ _cstring_g_findconfigstri1:		db 15h,"G_FindConfigstringIndex: overflow (%d): ",2
 _cstring_i_s:		db "%i: %s",0ah,0
 _cstring_g_spawn_no_free_:		db 15h,"G_Spawn: no free entities",0
 _cstring_localized_string:		db "localized string",0
-_cstring_et_general:		db "ET_GENERAL",0
-_cstring_et_player:		db "ET_PLAYER",0
-_cstring_et_player_corpse:		db "ET_PLAYER_CORPSE",0
-_cstring_et_item:		db "ET_ITEM",0
-_cstring_et_missile:		db "ET_MISSILE",0
-_cstring_et_invisible:		db "ET_INVISIBLE",0
-_cstring_et_scriptmover:		db "ET_SCRIPTMOVER",0
-_cstring_et_sound_blend:		db "ET_SOUND_BLEND",0
-_cstring_et_fx:		db "ET_FX",0
-_cstring_et_loop_fx:		db "ET_LOOP_FX",0
-_cstring_et_primary_light:		db "ET_PRIMARY_LIGHT",0
-_cstring_et_mg42:		db "ET_MG42",0
-_cstring_et_helicopter:		db "ET_HELICOPTER",0
-_cstring_et_plane:		db "ET_PLANE",0
-_cstring_et_vehicle:		db "ET_VEHICLE",0
-_cstring_et_vehicle_collm:		db "ET_VEHICLE_COLLMAP",0
-_cstring_et_vehicle_corps:		db "ET_VEHICLE_CORPSE",0
-
 
 
 ;All constant floats and doubles:
