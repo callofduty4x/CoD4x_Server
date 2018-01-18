@@ -2830,6 +2830,7 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
     {
       G_SetLastServerTime(cl - svs.clients, cmd->serverTime);
       ClientThink(cl - svs.clients);
+
 /*
       if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
       {

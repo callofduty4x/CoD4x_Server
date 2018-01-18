@@ -1959,7 +1959,7 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
           return 1;
         }
         return 0;
-      case 0xA:
+      case 10:
         Q_strncpyz(dest, pszKeyValue, sizeof(dest));
         *(uint32_t *)&pStruct[pField->iOffset] = Material_RegisterHandle(dest);
         if ( *(uint32_t *)&pStruct[pField->iOffset] )
@@ -1967,9 +1967,11 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
           return 1;
         }
         return 0;
-      case 0xB:
+      case 11:
         Q_strncpyz(dest, pszKeyValue, sizeof(dest));
         *(uint32_t *)&pStruct[pField->iOffset] = (uint32_t)Com_FindSoundAlias(dest);
+        return 1;
+      case 12:
         return 1;
       default:
         if ( pField->iFieldType >= 0 )
@@ -2217,3 +2219,4 @@ double __cdecl UnGetLeanFraction(const float fFrac)
   assert(fFrac <= 1.f);
   return 1.0 - sqrt(1.0 - fFrac);
 }
+

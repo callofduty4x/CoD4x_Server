@@ -4,7 +4,6 @@
 	extern AxisToQuat
 
 ;Exports of com_math_anglevectors:
-	global _GLOBAL__I__Z12AngleVectorsPKfPfS1_S1_
 	global AngleVectors
 	global AnglesToAxis
 	global AnglesToQuat
@@ -335,7 +334,7 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
-
+align 16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD

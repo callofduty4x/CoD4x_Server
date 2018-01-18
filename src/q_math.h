@@ -199,7 +199,7 @@ void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out
 #endif
 
 
-#define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f + 0.5f) & 65535)
+#define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))
 
 #ifndef ID_INLINE

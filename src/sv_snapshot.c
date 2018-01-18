@@ -1425,9 +1425,9 @@ int GetFollowPlayerStateLocal(int clientNum, playerState_t *ps)
 
   assert(svsHeaderValid);
 
-  if ( *(int *)((char *)&svsHeader.firstPlayerState->otherFlags + clientNum * svsHeader.clientSize) & 4 )
+  if ( *(int *)((byte *)&svsHeader.firstPlayerState->otherFlags + clientNum * svsHeader.clientSize) & 4 )
   {
-    memcpy(ps, svsHeader.firstPlayerState + clientNum * svsHeader.clientSize, sizeof(*ps));
+    memcpy(ps, (byte*)svsHeader.firstPlayerState + clientNum * svsHeader.clientSize, sizeof(*ps));
     for ( index = 0; index < 0x1F && ps->hud.current[index].type; ++index )
     {
       memset(&ps->hud.current[index], 0, sizeof(ps->hud.current[0]));
@@ -1452,7 +1452,9 @@ gentity_t *__cdecl SV_GentityNumLocal(int num)
     return (gentity_t *)((char *)svsHeader.gentities + num * svsHeader.gentitySize);
 }
 
-void MSG_TestDelta(snapshotInfo_t* snapInfo, int time, archivedEntity_t* baseline, archivedEntity_t *to, int refent);
+void MSG_TestDeltaAE(snapshotInfo_t* snapInfo, int time, archivedEntity_t* baseline, archivedEntity_t *to, int refent);
+void MSG_TestDeltaPS(snapshotInfo_t* snapInfo, int time, playerState_t* baseline, playerState_t *to);
+void MSG_TestDeltaCS(snapshotInfo_t* snapInfo, int time, clientState_t* baseline, clientState_t *to);
 
 
 void SV_ArchiveSnapshot(msg_t *msg)
@@ -1548,23 +1550,25 @@ void SV_ArchiveSnapshot(msg_t *msg)
             {
 	      assert(cachedClient2);
 
-#ifndef NDEBUG
-        MSG_WriteLong(msg, 0xdeadbee2);
-#endif
-
-
               cs2 = G_GetClientStateLocal(clientNum);
+              MSG_TestDeltaCS(&snapInfo, svsHeader.time, &cachedClient2->cs, cs2);
+
               MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, &cachedClient2->cs, cs2, 1);
               if ( GetFollowPlayerStateLocal(clientNum, &ps) )
               {
                 MSG_WriteBit1(msg);
                 if ( cachedClient2->playerStateExists )
                 {
+
+		    MSG_TestDeltaPS(&snapInfo, svsHeader.time, &cachedClient2->ps, &ps);
+
                   MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, &cachedClient2->ps, &ps);
                 }
                 else
                 {
-                  MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, 0, &ps);
+		    MSG_TestDeltaPS(&snapInfo, svsHeader.time, NULL, &ps);
+
+                  MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, NULL, &ps);
                 }
               }
               else
@@ -1585,16 +1589,16 @@ void SV_ArchiveSnapshot(msg_t *msg)
             {
               cs3 = G_GetClientStateLocal(clientNum);
 
-#ifndef NDEBUG
-              MSG_WriteLong(msg, 0xdeadbee2);
-#endif
+              MSG_TestDeltaCS(&snapInfo, svsHeader.time, NULL, cs3);
 
-
-              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, 0, cs3, 1);
+              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, NULL, cs3, 1);
               if ( GetFollowPlayerStateLocal(clientNum, &ps) )
               {
                 MSG_WriteBit1(msg);
-                MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, 0, &ps);
+
+		MSG_TestDeltaPS(&snapInfo, svsHeader.time, NULL, &ps);
+
+                MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, NULL, &ps);
               }
               else
               {
@@ -1657,7 +1661,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
 	      MSG_WriteLong(msg, 0xdeadbee7);
 #endif
 
-//	      MSG_TestDelta(&snapInfo, svsHeader.time, baseline, &to, msg->lastRefEntity);
+	      MSG_TestDeltaAE(&snapInfo, svsHeader.time, baseline, &to, msg->lastRefEntity);
 
               if ( MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, &to, 0) )
               {
@@ -1721,17 +1725,19 @@ void SV_ArchiveSnapshot(msg_t *msg)
                                                 % svsHeader.numCachedSnapshotClients];
       lcs = G_GetClientStateLocal(i);
 
-#ifndef NDEBUG
-      MSG_WriteLong(msg, 0xdeadbee2);
-#endif
-
       memcpy(&cachedCl->cs, lcs, sizeof(cachedCl->cs));
+
+      MSG_TestDeltaCS(&snapInfo, svsHeader.time, NULL, &cachedCl->cs);
+
       MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, 0, &cachedCl->cs, 1);
       cachedCl->playerStateExists = GetFollowPlayerStateLocal(i, &cachedCl->ps);
       if ( cachedCl->playerStateExists )
       {
         MSG_WriteBit1(msg);
-        MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, 0, &cachedCl->ps);
+
+	MSG_TestDeltaPS(&snapInfo, svsHeader.time, NULL, &cachedCl->ps);
+
+        MSG_WriteDeltaPlayerstate(&snapInfo, msg, svsHeader.time, NULL, &cachedCl->ps);
       }
       else
       {
@@ -1787,7 +1793,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
 #ifndef NDEBUG
         MSG_WriteLong(msg, 0xdeadbee7);
 #endif
-//	MSG_TestDelta(&snapInfo, svsHeader.time, baseline, archEnt, msg->lastRefEntity);
+	MSG_TestDeltaAE(&snapInfo, svsHeader.time, baseline, archEnt, msg->lastRefEntity);
 
         MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, archEnt, 0);
         ++svsHeader.archivedEntityCount;
@@ -1928,9 +1934,7 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
 */
     while ( MSG_ReadBit(&msg) )
     {
-      assert(MSG_ReadLong(&msg) == 0xdeadbee2);
-
-      newnum = MSG_ReadEntityIndex(&msg, 5);
+      newnum = MSG_ReadEntityIndex(&msg, 6);
       if ( msg.overflowed )
       {
         Com_Error(ERR_DROP, "SV_GetCachedSnapshot: end of message");
@@ -2055,12 +2059,10 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
     }
     while ( MSG_ReadBit(&msg) )
     {
-      assert(MSG_ReadLong(&msg) == 0xdeadbee2);
+      newnum = MSG_ReadEntityIndex(&msg, 6);
 
-      newnum = MSG_ReadEntityIndex(&msg, 5);
-      
       assert(newnum >= 0);
-     
+
       if ( msg.overflowed )
       {
         Com_Error(ERR_DROP, "SV_GetCachedSnapshot: end of message");

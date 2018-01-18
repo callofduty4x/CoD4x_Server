@@ -83,9 +83,9 @@ void vectoangles( const vec3_t value1, vec3_t angles ) {
 	if ( value1[1] == 0 && value1[0] == 0 ) {
 		yaw = 0;
 		if ( value1[2] > 0 ) {
-			pitch = 270;
-		} else {
 			pitch = 90;
+		} else {
+			pitch = 270;
 		}
 	} else {
 		yaw = ( atan2( value1[1], value1[0] ) * 180 / M_PI );
@@ -94,7 +94,7 @@ void vectoangles( const vec3_t value1, vec3_t angles ) {
 			yaw += 360.0;
 		}
 		forward = sqrt( value1[0] * value1[0] + value1[1] * value1[1] );
-		pitch = ( -atan2( value1[2], forward ) * 180 / M_PI );
+		pitch = ( atan2( value1[2], forward ) * 180 / M_PI );
 		if(pitch < 0.0)
 		{
 			pitch += 360.0;

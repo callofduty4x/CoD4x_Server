@@ -492,7 +492,7 @@ vectopitch_10:
 	fstp qword [ebp-0x20]
 	movsd xmm0, qword [ebp-0x20]
 	mulsd xmm0, [_double__180_00000000]
-	divsd xmm0, qword [_double_3_14159265]
+	divsd xmm0, [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss xmm2, dword [ebp-0x18]
 	ucomiss xmm0, xmm2
@@ -618,7 +618,7 @@ vectoangles_10:
 	fstp qword [ebp-0x50]
 	movsd xmm0, qword [ebp-0x50]
 	mulsd xmm0, [_double_180_00000000]
-	divsd xmm0, qword [_double_3_14159265]
+	divsd xmm0, [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss xmm3, dword [ebp-0x48]
 	ucomiss xmm0, xmm3
@@ -642,7 +642,7 @@ vectoangles_70:
 	fstp qword [ebp-0x50]
 	movsd xmm0, qword [ebp-0x50]
 	mulsd xmm0, [_double__180_00000000]
-	divsd xmm0, qword [_double_3_14159265]
+	divsd xmm0, [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss xmm3, dword [ebp-0x48]
 	ucomiss xmm0, xmm3
@@ -803,7 +803,7 @@ AxisToAngles_10:
 	fstp qword [ebp-0x58]
 	movsd xmm0, qword [ebp-0x58]
 	mulsd xmm0, [_double__180_00000000]
-	divsd xmm0, qword [_double_3_14159265]
+	divsd xmm0, [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss xmm3, dword [ebp-0x48]
 AxisToAngles_70:
@@ -1650,7 +1650,7 @@ GaussianRandom_10:
 	fstp qword [ebp-0x40]
 	movsd xmm0, qword [ebp-0x40]
 	mulsd xmm0, [_double__2_00000000]
-	divsd xmm0, qword [ebp-0x10]
+	divsd xmm0, [ebp-0x10]
 	cvtsd2ss xmm1, xmm0
 	sqrtss xmm1, xmm1
 	movss xmm3, dword [ebp-0x38]
@@ -1894,7 +1894,7 @@ vectosignedyaw_10:
 	fstp qword [ebp-0x18]
 	movsd xmm0, qword [ebp-0x18]
 	mulsd xmm0, [_double_180_00000000]
-	divsd xmm0, qword [_double_3_14159265]
+	divsd xmm0, [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss [ebp-0xc], xmm0
 	mov eax, [ebp-0xc]
@@ -4381,7 +4381,7 @@ PitchForYawOnNormal_10:
 	fstp qword [ebp-0x28]
 	movsd xmm0, qword [ebp-0x28]
 	mulsd xmm0, [_double_180_00000000]
-	divsd xmm0, qword [_double_3_14159265]
+	divsd xmm0, [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss [ebp-0x1c], xmm0
 	fld dword [ebp-0x1c]
@@ -6285,7 +6285,7 @@ vectoyaw_10:
 	fstp qword [ebp-0x28]
 	movsd xmm0, qword [ebp-0x28]
 	mulsd xmm0, [_double_180_00000000]
-	divsd xmm0, qword [_double_3_14159265]
+	divsd xmm0, [_double_3_14159265]
 	cvtsd2ss xmm0, xmm0
 	movss xmm2, dword [ebp-0x18]
 	ucomiss xmm0, xmm2
@@ -6711,7 +6711,6 @@ _float_2_00000000:		dd 0x40000000	; 2
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _double__180_00000000:		dq 0xc066800000000000	; -180
 _double_3_14159265:		dq 0x400921fb54442d18	; 3.14159
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_180_00000000:		dq 0x4066800000000000	; 180
 _float_90_00000000:		dd 0x42b40000	; 90
 _float_270_00000000:		dd 0x43870000	; 270
@@ -6720,12 +6719,10 @@ _float__90_00000000:		dd 0xc2b40000	; -90
 _float_180_00000000:		dd 0x43340000	; 180
 _double_57_29577951:		dq 0x404ca5dc1a63c1f8	; 57.2958
 _float_0_00000000:		dd 0x0	; 0
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00003052:		dd 0x38000000	; 3.05176e-05
 _double__2_00000000:		dq 0xc000000000000000	; -2
 _float__1_00000000:		dd 0xbf800000	; -1
-_data16_ffffffff:		dd 0xffffffff, 0x7fffffff, 0x0, 0x0	; OWORD
 _double_0_00100000:		dq 0x3f50624de0000000	; 0.001
 _double_1_00000000:		dq 0x3ff0000000000000	; 1
 _float_0_00000100:		dd 0x358637be	; 1e-06
@@ -6737,3 +6734,7 @@ _double__3_14159265:		dq 0xc00921fb54442d18	; -3.14159
 _float_3_14159274:		dd 0x40490fdb	; 3.14159
 _float_0_94999999:		dd 0x3f733333	; 0.95
 
+align 16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
+_data16_ffffffff:		dd 0xffffffff, 0x7fffffff, 0x0, 0x0	; OWORD

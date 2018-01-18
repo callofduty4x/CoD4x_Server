@@ -140,18 +140,18 @@ void MSG_Copy(msg_t *buf, byte *data, int length, msg_t *src)
 
 void MSG_WriteByte( msg_t *msg, int c ) {
 #ifdef PARANOID
-	if (c < 0 || c > 255)
+	if (c < -128 || c > 127)
 		Com_Error (ERR_FATAL, "MSG_WriteByte: range error");
 #endif
-	byte* dst;
+	int8_t* dst;
 
 	if ( msg->maxsize - msg->cursize < 1 ) {
 		msg->overflowed = qtrue;
 		return;
 	}
-	dst = (byte*)&msg->data[msg->cursize];
+	dst = (int8_t*)&msg->data[msg->cursize];
 	*dst = c;
-	msg->cursize += sizeof(byte);
+	msg->cursize += sizeof(int8_t);
 }
 
 
@@ -166,7 +166,7 @@ void MSG_WriteShort( msg_t *msg, int c ) {
 		msg->overflowed = qtrue;
 		return;
 	}
-	dst = (short*)&msg->data[msg->cursize];
+	dst = (int16_t*)&msg->data[msg->cursize];
 	*dst = c;
 	msg->cursize += sizeof(short);
 }
@@ -861,10 +861,6 @@ void MSG_NUinitHuffman() {
 */
 //===========================================================================
 
-static int GetMinBitCount(int x)
-{
-	return 32 - __builtin_clz (x);
-}
 
 typedef struct{
     const char* name;
@@ -887,6 +883,10 @@ typedef struct netField_s{
 	byte pad[3];
 } netField_t;
 
+static int GetMinBitCount(int x)
+{
+    return 32 - __builtin_clz (x);
+}
 
 // using the stringizing operator to save typing...
 #define NETF( x ) # x,(int)&( (entityState_t*)0 )->x
@@ -2368,7 +2368,7 @@ void MSG_WriteDeltaEntity(struct snapshotInfo_s *snapInfo, msg_t* msg, const int
 #define PSF( x ) # x,(int)&( (playerState_t*)0 )->x
 
 
-static netField_t playerStateFields[] =
+netField_t playerStateFields[] =
 {
 	{ PSF( commandTime ), -97, 0},
 	{ PSF( viewangles[1] ), -87, 0},
@@ -2810,6 +2810,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 				}else{
 					forceSend = qfalse;
 				}
+
 				MSG_WriteDeltaField(snapInfo, msg, time, (byte *)from, (byte *)to, field, i, forceSend);
 
 			}else{
@@ -2957,7 +2958,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 
 #define CSF( x ) # x,(int)&( (clientState_t*)0 )->x
 
-static netField_t clientStateFields[] =
+netField_t clientStateFields[] =
 {
 	{ CSF( modelindex ), 9, 0},
 	{ CSF( netname[0] ), 32, 0},
@@ -2998,11 +2999,11 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
   int numFields = sizeof(clientStateFields) / sizeof(clientStateFields[0]);
   if ( to )
   {
-    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, numFields, 6, clientStateFields, 1);
+    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields, 1);
   }
   else
   {
-	MSG_WriteEntityRemoval(snapInfo, msg, (byte*)from, 6, qtrue);
+	MSG_WriteEntityRemoval(snapInfo, msg, (byte*)from, GetMinBitCount(MAX_CLIENTS -1), qtrue);
   }
 }
 
@@ -3229,7 +3230,7 @@ float MSG_ReadOriginZFloat(msg_t *msg, float oldValue)
 
 double MSG_ReadAngle16(msg_t *msg)
 {
-  return (double)MSG_ReadShort(msg) * 0.0054931641;
+  return SHORT2ANGLE((double)MSG_ReadShort(msg));
 }
 
 int MSG_ReadEFlags(msg_t *msg, const int oldFlags)
@@ -3483,15 +3484,11 @@ void MSG_ReadDeltaField(msg_t *msg, int time, const void *from, const void *to, 
 			*(uint32_t*)toF = 0;
 			return;
 		}
-		bits = field->bits;
-		if ( field->bits < 0 )
-		{
-			bits = -bits;
-		}
+		bits = abs(field->bits);
 		bit_vect = bits & 7;
-		if ( bits & 7 )
+		if ( bit_vect )
 		{
-			t = MSG_ReadBits(msg, bits & 7);
+			t = MSG_ReadBits(msg, bit_vect);
 		}
 		else
 		{
@@ -3510,7 +3507,7 @@ void MSG_ReadDeltaField(msg_t *msg, int time, const void *from, const void *to, 
 			bit_vect = (1 << bits) - 1;
 		}
 		t = t ^ (*(uint32_t*)fromF & bit_vect);
-		if ( field->bits < 0 && (t >> (bits - 1)) & 1 )
+		if ( field->bits < 0 && (t >> (bits - 1)) & 1)
 		{
 			t |= ~bit_vect;
 		}
@@ -3795,7 +3792,7 @@ int MSG_ReadDeltaClient(msg_t *msg, const int time, clientState_t *from, clientS
     memset(&dummy, 0, sizeof(dummy));
     from = &dummy;
   }
-  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, numFields, 6, clientStateFields);
+  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields);
 }
 
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number)

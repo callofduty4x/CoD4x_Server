@@ -864,7 +864,7 @@ void Com_Init(char* commandLine){
     if(setjmp(*abortframe)){
         Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
     }
-
+    Tests_Init();
 }
 
 

@@ -59,6 +59,8 @@
 	extern player_breath_fire_delay
 	extern perk_weapRateMultiplier
 	extern player_burstFireCooldown
+;	extern Profile_Begin
+;	extern Profile_End
 
 ;Exports of bg_weapons:
 	global bg_numAmmoTypes
@@ -6081,7 +6083,9 @@ BG_CalculateWeaponPosition_Sway_60:
 	mov eax, [edx]
 	mov [esp+0x4], eax
 	movss [esp], xmm0
+;	call Profile_Begin
 	call DiffTrackAngle
+;	call Profile_End
 	mov eax, [ebp+0x14]
 	fstp dword [eax]
 	movss xmm0, dword [ebp-0x3c]

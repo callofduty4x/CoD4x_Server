@@ -823,7 +823,7 @@ void __cdecl G_RegisterCvars()
 	 g_TeamColor_Spectator = Cvar_RegisterColor( "g_TeamColor_Spectator", 0.25, 0.25, 0.25, 1.0, 0x100u, "Spectator team color");
 	 g_TeamColor_Free = Cvar_RegisterColor("g_TeamColor_Free", 0.75, 0.25, 0.25, 1.0, 0x100u, "Free Team color");
 	 g_smoothClients = Cvar_RegisterBool("g_smoothClients", qtrue, 0, "Enable extrapolation between client states");
-	 g_antilag = Cvar_RegisterBool("g_antilag", qtrue, 0x40u, "Turn on antilag checks for weapon hits");
+	 g_antilag = Cvar_RegisterBool("g_antilag", qtrue, 0x0u, "Turn on antilag checks for weapon hits");
 	 g_oldVoting = Cvar_RegisterBool("g_oldVoting", qtrue, 1u, "Use old voting method");
 	 g_voteAbstainWeight = Cvar_RegisterFloat( "g_voteAbstainWeight", 0.5, 0.0, 1.0, 1u, "How much an abstained vote counts as a 'no' vote");
 	 g_NoScriptSpam = Cvar_RegisterBool("g_no_script_spam", 0, 0, "Turn off script debugging info");
