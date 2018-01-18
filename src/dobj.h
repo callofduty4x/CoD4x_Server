@@ -126,8 +126,8 @@ void Com_InitDObj();
 }
 #endif
 //What is this???
-#define SV_ENTITY_DOBJS ((WORD*)  0x0)    // Max = 0x400
-#define SV_DOBJ         ((DObj_t*)0x0)    // Max = 0x800
+extern uint16_t serverObjMap[1024];
+extern DObj_t objBuf[];
 
 #endif //__DOBJ_H__
 

@@ -56,8 +56,8 @@ void PrintDObjInfo(DObj_t* dobj)
  */
 DObj_t* GetDObjForEntity(int entNum)
 {
-	if(SV_ENTITY_DOBJS[entNum])
-		return &SV_DOBJ[SV_ENTITY_DOBJS[entNum]];
+	if(serverObjMap[entNum])
+		return &objBuf[serverObjMap[entNum]];
 	return NULL;
 }
 
