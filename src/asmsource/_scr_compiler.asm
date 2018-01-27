@@ -42,7 +42,7 @@
 	extern Scr_GetClassnumForCharId
 	extern atoi
 	extern IsObjectFree
-	extern GetObjectType
+	extern Scr_GetObjectType
 	extern Scr_GetMethod
 	extern qsort
 	extern IsValidArrayIndex
@@ -6134,7 +6134,7 @@ EmitVariableExpression_120:
 	test al, al
 	jnz EmitVariableExpression_140
 	mov [esp], esi
-	call GetObjectType
+	call Scr_GetObjectType
 	mov ecx, eax
 	cmp eax, 0x16
 	ja EmitVariableExpression_140

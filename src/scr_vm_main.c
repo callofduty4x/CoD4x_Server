@@ -1809,3 +1809,198 @@ void Scr_YYACError(const char* fmt, ...)
 }
 
 
+void __cdecl Scr_ClearOutParams()
+{
+  while ( scrVmPub.outparamcount )
+  {
+    RemoveRefToValue(scrVmPub.top->type, scrVmPub.top->u);
+    --scrVmPub.top;
+    --scrVmPub.outparamcount;
+  }
+}
+
+void __cdecl IncInParam()
+{
+
+  assert(((scrVmPub.top >= scrVmGlob.eval_stack - 1) && (scrVmPub.top <= scrVmGlob.eval_stack)) || ((scrVmPub.top >= scrVmPub.stack) && (scrVmPub.top <= scrVmPub.maxstack)));
+
+  Scr_ClearOutParams( );
+
+  if ( scrVmPub.top == scrVmPub.maxstack )
+  {
+    Sys_Error("Internal script stack overflow");
+  }
+  ++scrVmPub.top;
+  ++scrVmPub.inparamcount;
+  assert(((scrVmPub.top >= scrVmGlob.eval_stack) && (scrVmPub.top <= scrVmGlob.eval_stack + 1)) || ((scrVmPub.top >= scrVmPub.stack) && (scrVmPub.top <= scrVmPub.maxstack)));
+
+}
+
+
+void __cdecl Scr_AddString(const char *value)
+{
+  assert(value != NULL);
+
+  IncInParam( );
+  scrVmPub.top->type = VAR_STRING;
+  scrVmPub.top->u.stringValue = SL_GetString(value, 0);
+}
+
+void __cdecl Scr_AddInt(int value)
+{
+  IncInParam( );
+  scrVmPub.top->type = VAR_INTEGER;
+  scrVmPub.top->u.intValue = value;
+}
+
+void __cdecl Scr_AddBool(bool value)
+{
+  assert(value == false || value == true);
+
+  IncInParam( );
+  scrVmPub.top->type = VAR_INTEGER;
+  scrVmPub.top->u.intValue = value;
+}
+
+void __cdecl Scr_AddFloat(float value)
+{
+  IncInParam();
+  scrVmPub.top->type = VAR_FLOAT;
+  scrVmPub.top->u.floatValue = value;
+}
+
+void __cdecl Scr_AddAnim(struct scr_anim_s value)
+{
+  IncInParam();
+  scrVmPub.top->type = VAR_ANIMATION;
+  scrVmPub.top->u.codePosValue = value.linkPointer;
+}
+
+void __cdecl Scr_AddUndefined( )
+{
+  IncInParam();
+  scrVmPub.top->type = VAR_UNDEFINED;
+}
+
+void __cdecl Scr_AddObject(unsigned int id)
+{
+  assert(id != 0);
+  assert(Scr_GetObjectType( id ) != VAR_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_NOTIFY_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_TIME_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_CHILD_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_DEAD_THREAD);
+
+  IncInParam();
+  scrVmPub.top->type = VAR_POINTER;
+  scrVmPub.top->u.intValue = id;
+  AddRefToObject(id);
+}
+
+void __cdecl Scr_AddEntityNum(int entnum, unsigned int classnum)
+{
+  unsigned int entId;
+  const char *varUsagePos;
+
+  varUsagePos = scrVarPub.varUsagePos;
+  if ( !scrVarPub.varUsagePos )
+  {
+    scrVarPub.varUsagePos = "<script entity variable>";
+  }
+  entId = Scr_GetEntityId(entnum, classnum);
+  Scr_AddObject(entId);
+  scrVarPub.varUsagePos = varUsagePos;
+}
+
+void __cdecl Scr_AddStruct( )
+{
+  unsigned int id;
+
+  id = AllocObject();
+  Scr_AddObject(id );
+  RemoveRefToObject(id);
+}
+
+void __cdecl Scr_AddIString(const char *value)
+{
+  assert(value != NULL);
+
+  IncInParam( );
+  scrVmPub.top->type = VAR_ISTRING;
+  scrVmPub.top->u.stringValue = SL_GetString(value, 0);
+}
+
+void __cdecl Scr_AddConstString(unsigned int value)
+{
+  assert(value != 0);
+
+  IncInParam( );
+  scrVmPub.top->type = VAR_STRING;
+  scrVmPub.top->u.stringValue = value;
+  SL_AddRefToString(value);
+}
+
+
+/*
+float *__cdecl Scr_AllocVector(const float *v)
+{
+  float *avec;
+
+  avec = Scr_AllocVectorInternal( );
+  VectorCopy(v, avec);
+  return avec;
+}
+*/
+
+void __cdecl Scr_AddVector(const float *value)
+{
+  IncInParam();
+  scrVmPub.top->type = VAR_VECTOR;
+  scrVmPub.top->u.vectorValue = Scr_AllocVector(value);
+}
+
+void __cdecl Scr_MakeArray( )
+{
+  IncInParam( );
+  scrVmPub.top->type = VAR_POINTER;
+  scrVmPub.top->u.intValue = Scr_AllocArray( );
+}
+
+void __cdecl Scr_AddArray( )
+{
+  unsigned int arraySize;
+  unsigned int id;
+  const char *varUsagePos;
+
+  varUsagePos = scrVarPub.varUsagePos;
+  if ( !scrVarPub.varUsagePos )
+  {
+    scrVarPub.varUsagePos = "<script array variable>";
+  }
+
+  assert(scrVmPub.inparamcount);
+
+  --scrVmPub.top;
+  --scrVmPub.inparamcount;
+
+  assert(scrVmPub.top->type == VAR_POINTER);
+
+  arraySize = GetArraySize( scrVmPub.top->u.stringValue);
+  id = GetNewArrayVariable( scrVmPub.top->u.stringValue, arraySize);
+  SetNewVariableValue( id, scrVmPub.top + 1);
+  scrVarPub.varUsagePos = varUsagePos;
+}
+
+void __cdecl Scr_AddArrayStringIndexed(unsigned int stringValue)
+{
+  unsigned int id;
+
+  assert(scrVmPub.inparamcount != 0);
+
+  --scrVmPub.top;
+  --scrVmPub.inparamcount;
+  assert(scrVmPub.top->type == VAR_POINTER);
+
+  id = GetNewVariable( scrVmPub.top->u.stringValue, stringValue);
+  SetNewVariableValue( id, scrVmPub.top + 1);
+}

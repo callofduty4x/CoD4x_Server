@@ -88,7 +88,7 @@
 	global Scr_EvalPlus
 	global Scr_GetVarId
 	global AddRefToValue
-	global GetObjectType
+	global Scr_GetObjectType
 	global IsFieldObject
 	global Scr_AddFields
 	global Scr_EvalArray
@@ -4141,8 +4141,8 @@ AddRefToValue_30:
 	jmp SL_AddRefToString
 
 
-;GetObjectType(unsigned int)
-GetObjectType:
+;Scr_GetObjectType(unsigned int)
+Scr_GetObjectType:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
@@ -14095,7 +14095,7 @@ SECTION .rdata
 ;Zero initialized global or static variables of scr_variable:
 SECTION .bss
 align   64,db 0
-scrVarPub: resb 0x20060
+scrVarPub: resb 0x20064
 scrVarGlob: resb 0x180020
 
 

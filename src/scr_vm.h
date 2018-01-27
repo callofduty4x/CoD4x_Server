@@ -300,6 +300,40 @@ typedef enum
     SCR_INT
 }scriptVarType_t;
 
+enum $0E0E04F36A22A28F2C0A7A22DC12DAE9
+{
+  VAR_UNDEFINED = 0x0,
+  VAR_BEGIN_REF = 0x1,
+  VAR_POINTER = 0x1,
+  VAR_STRING = 0x2,
+  VAR_ISTRING = 0x3,
+  VAR_VECTOR = 0x4,
+  VAR_END_REF = 0x5,
+  VAR_FLOAT = 0x5,
+  VAR_INTEGER = 0x6,
+  VAR_CODEPOS = 0x7,
+  VAR_PRECODEPOS = 0x8,
+  VAR_FUNCTION = 0x9,
+  VAR_STACK = 0xA,
+  VAR_ANIMATION = 0xB,
+  VAR_DEVELOPER_CODEPOS = 0xC,
+  VAR_INCLUDE_CODEPOS = 0xD,
+  VAR_THREAD = 0xE,
+  VAR_NOTIFY_THREAD = 0xF,
+  VAR_TIME_THREAD = 0x10,
+  VAR_CHILD_THREAD = 0x11,
+  VAR_OBJECT = 0x12,
+  VAR_DEAD_ENTITY = 0x13,
+  VAR_ENTITY = 0x14,
+  VAR_ARRAY = 0x15,
+  VAR_DEAD_THREAD = 0x16,
+  VAR_COUNT = 0x17,
+  VAR_THREAD_LIST = 0x18,
+  VAR_ENDON_LIST = 0x19
+};
+
+
+
 typedef struct
 {
     unsigned short type;
@@ -433,8 +467,9 @@ typedef struct
   struct HunkUser *programHunkUser;
   const char *programBuffer;
   const char *endScriptBuffer;
-  uint16_t saveIdMap[24574];
-  uint16_t saveIdMapRev[24574];
+/*  uint16_t saveIdMap[24574];
+  uint16_t saveIdMapRev[24574];*/
+  const char *varUsagePos;
 }scrVarPub_t;
 
 
@@ -531,6 +566,18 @@ struct scrAnimGlob_t
   int bAnimCheck;
 };
 
+struct scr_anim_s
+{
+	union{
+		struct{
+			uint16_t index;
+ 			uint16_t tree;
+		};
+		const char *linkPointer;
+	};
+};
+
+
 struct SourceBufferInfo
 {
   const char *codePos;
@@ -552,6 +599,9 @@ struct scrParserPub_t
   const char *sourceBuf;
 };
 
+
+
+
 #define MAX_SCRIPT_FILEHANDLES 10
 
 typedef enum{
@@ -568,6 +618,8 @@ typedef struct{
     int baseOffset;
     int fileSize;
 }scr_fileHandle_t;
+
+
 
 
 #ifdef __cplusplus
@@ -623,11 +675,11 @@ void __cdecl Scr_ObjectError( const char *string);
 
 void __cdecl Scr_AddInt(int value);
 void __cdecl Scr_AddFloat(float);
-void __cdecl Scr_AddBool(qboolean);
+void __cdecl Scr_AddBool(bool);
 void __cdecl Scr_AddString(const char *string);
-void __cdecl Scr_AddConstString(int strindex);
+void __cdecl Scr_AddConstString(unsigned int strindex);
 void __cdecl Scr_AddUndefined(void);
-void __cdecl Scr_AddVector( vec3_t vec );
+void __cdecl Scr_AddVector( const float* vec );
 void __cdecl Scr_AddArray( void );
 void __cdecl Scr_MakeArray( void );
 void __cdecl Scr_AddArrayKey( int strIdx );
@@ -731,7 +783,13 @@ void __cdecl CScr_GetObjectField(unsigned int classnum, int entnum, int clientNu
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
 ent_field_t* __internalGet_fields_1();
 void __cdecl Scr_ParseGameTypeList();
-
+unsigned int __cdecl Scr_GetObjectType(unsigned int id);
+void __cdecl SetNewVariableValue(unsigned int id, VariableValue *value);
+unsigned int __cdecl GetNewArrayVariable(unsigned int parentId, unsigned int unsignedValue);
+void __cdecl AddRefToObject(unsigned int id);
+unsigned int __cdecl Scr_GetEntityId(int entnum, unsigned int classnum);
+void __cdecl RemoveRefToObject(unsigned int id);
+float *__cdecl Scr_AllocVector(const float *v);
 #ifdef __cplusplus
 }
 #endif

@@ -721,9 +721,8 @@ void __cdecl SV_SetGameEndTime(int gameEndTime)
 
 void __cdecl SV_SetMapCenter(float *mapCenter)
 {
-  svs.mapCenter[0] = mapCenter[0];
-  svs.mapCenter[1] = mapCenter[1];
-  svs.mapCenter[2] = mapCenter[2];
+  assert(mapCenter);
+  VectorCopy(mapCenter, svs.mapCenter);
   SV_SetConfigstring(12, va("%g %g %g", svs.mapCenter[0], svs.mapCenter[1], svs.mapCenter[2]));
 }
 

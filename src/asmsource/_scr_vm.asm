@@ -36,7 +36,7 @@
 	extern memcpy
 	extern Scr_KillEndonThread
 	extern GetStartLocalId
-	extern GetObjectType
+	extern Scr_GetObjectType
 	extern Scr_GetThreadNotifyName
 	extern Scr_GetThreadWaitTime
 	extern Scr_ClearWaitTime
@@ -150,26 +150,15 @@
 	global VM_ExecuteInternal
 	global VM_Resume
 	global VM_Execute
-	global Scr_AddInt
-	global Scr_AddAnim
-	global Scr_AddBool
 	global Scr_Cleanup
 	global Scr_GetAnim
 	global Scr_GetType
 	global Scr_IncTime
-	global Scr_AddArray
-	global Scr_AddFloat
 	global Scr_GetFloat
 	global Scr_Settings
 	global Scr_Shutdown
-	global Scr_AddObject
-	global Scr_AddString
-	global Scr_AddStruct
-	global Scr_AddVector
 	global Scr_GetString
 	global Scr_GetVector
-	global Scr_MakeArray
-	global Scr_AddIString
 	global Scr_ExecThread
 	global Scr_FreeThread
 	global Scr_GetIString
@@ -179,12 +168,9 @@
 	global Scr_GetTypeName
 	global Scr_ObjectError
 	global VM_CancelNotify
-	global Scr_AddEntityNum
-	global Scr_AddUndefined
 	global Scr_GetEntityRef
 	global Scr_ResetTimeout
 	global Scr_AddExecThread
-	global Scr_AddConstString
 	global Scr_GetConstString
 	global Scr_GetDebugString
 	global Scr_GetNextCodepos
@@ -199,7 +185,6 @@
 	global Scr_ClearErrorMessage
 	global Scr_RunCurrentThreads
 	global Scr_GetNumScriptThreads
-	global Scr_AddArrayStringIndexed
 	global Scr_SetDynamicEntityField
 	global Scr_GetConstLowercaseString
 	global Scr_GetConstStringIncludeNull
@@ -1022,7 +1007,7 @@ VM_Notify_310:
 	call GetStartLocalId
 	mov [ebp-0x60], eax
 	mov [esp], eax
-	call GetObjectType
+	call Scr_GetObjectType
 	cmp eax, 0xf
 	jz VM_Notify_240
 	cmp eax, 0x10
@@ -2720,7 +2705,7 @@ VM_ExecuteInternal_3450:
 VM_ExecuteInternal_2950:
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call GetObjectType
+	call Scr_GetObjectType
 	mov edx, eax
 	jmp VM_ExecuteInternal_1230
 VM_ExecuteInternal_3460:
@@ -3703,12 +3688,12 @@ VM_ExecuteInternal_220:
 	mov ecx, [ecx]
 	mov [ebp-0x34], ecx
 	mov [esp], ecx
-	call GetObjectType
+	call Scr_GetObjectType
 	cmp eax, 0x14
 	jz VM_ExecuteInternal_1780
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call GetObjectType
+	call Scr_GetObjectType
 	mov ebx, eax
 	mov eax, [ebp-0x34]
 	mov [esp], eax
@@ -4648,7 +4633,7 @@ VM_ExecuteInternal_1330:
 	mov eax, [gFs+0xc]
 	mov eax, [eax]
 	mov [esp], eax
-	call GetObjectType
+	call Scr_GetObjectType
 	mov edx, eax
 VM_ExecuteInternal_2930:
 	mov eax, scrVarPub
@@ -4705,7 +4690,7 @@ VM_ExecuteInternal_1290:
 	mov eax, [gFs+0xc]
 	mov eax, [eax]
 	mov [esp], eax
-	call GetObjectType
+	call Scr_GetObjectType
 	mov edx, eax
 	jmp VM_ExecuteInternal_2830
 VM_ExecuteInternal_2820:
@@ -5701,167 +5686,6 @@ VM_Execute_90:
 	add [eax], al
 
 
-;Scr_AddInt(int)
-Scr_AddInt:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddInt_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddInt_20
-Scr_AddInt_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x6
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-Scr_AddInt_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddInt_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddInt_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddInt_40
-Scr_AddInt_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x6
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-
-
-;Scr_AddAnim(scr_anim_s)
-Scr_AddAnim:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddAnim_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddAnim_20
-Scr_AddAnim_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0xb
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-Scr_AddAnim_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddAnim_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddAnim_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddAnim_40
-Scr_AddAnim_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0xb
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-
-
-;Scr_AddBool(int)
-Scr_AddBool:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddBool_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddBool_20
-Scr_AddBool_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x6
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-Scr_AddBool_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddBool_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddBool_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddBool_40
-Scr_AddBool_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x6
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-
 
 ;Scr_Cleanup()
 Scr_Cleanup:
@@ -6183,85 +6007,6 @@ Scr_IncTime_10:
 	ret
 
 
-;Scr_AddArray()
-Scr_AddArray:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov edx, [scrVmPub+0x10]
-	lea eax, [edx-0x8]
-	mov [scrVmPub+0x10], eax
-	sub dword [scrVmPub+0x18], 0x1
-	mov eax, [edx-0x8]
-	mov [esp], eax
-	call GetArraySize
-	mov [esp+0x4], eax
-	mov eax, [scrVmPub+0x10]
-	mov eax, [eax]
-	mov [esp], eax
-	call GetNewArrayVariable
-	mov edx, [scrVmPub+0x10]
-	add edx, 0x8
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call SetNewVariableValue
-	leave
-	ret
-
-
-;Scr_AddFloat(float)
-Scr_AddFloat:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddFloat_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddFloat_20
-Scr_AddFloat_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x5
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-Scr_AddFloat_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddFloat_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddFloat_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddFloat_40
-Scr_AddFloat_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x5
-	mov edx, [ebp+0x8]
-	mov eax, [scrVmPub+0x10]
-	mov [eax], edx
-	leave
-	ret
-
 
 ;Scr_GetFloat(unsigned int)
 Scr_GetFloat:
@@ -6464,215 +6209,6 @@ Scr_Shutdown_10:
 	nop
 
 
-;Scr_AddObject(unsigned int)
-Scr_AddObject:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, [ebp+0x8]
-	mov ecx, [scrVmPub+0x1c]
-	test ecx, ecx
-	jnz Scr_AddObject_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddObject_20
-Scr_AddObject_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x1
-	mov eax, [scrVmPub+0x10]
-	mov [eax], ebx
-	mov [ebp+0x8], ebx
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	jmp AddRefToObject
-Scr_AddObject_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddObject_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddObject_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddObject_40
-Scr_AddObject_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_AddObject_40
-	nop
-
-
-;Scr_AddString(char const*)
-Scr_AddString:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, [scrVmPub+0x1c]
-	test ebx, ebx
-	jnz Scr_AddString_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddString_20
-Scr_AddString_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x2
-	mov ebx, [scrVmPub+0x10]
-	mov dword [esp+0x4], 0x0
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call SL_GetString
-	mov [ebx], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_AddString_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddString_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddString_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddString_40
-Scr_AddString_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_AddString_40
-
-
-;Scr_AddStruct()
-Scr_AddStruct:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	call AllocObject
-	mov ebx, eax
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddStruct_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddStruct_20
-Scr_AddStruct_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x1
-	mov eax, [scrVmPub+0x10]
-	mov [eax], ebx
-	mov [esp], ebx
-	call AddRefToObject
-	mov [esp], ebx
-	call RemoveRefToObject
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_AddStruct_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddStruct_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddStruct_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddStruct_40
-Scr_AddStruct_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_AddStruct_40
-
-
-;Scr_AddVector(float const*)
-Scr_AddVector:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddVector_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddVector_20
-Scr_AddVector_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x4
-	mov ebx, [scrVmPub+0x10]
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Scr_AllocVector
-	mov [ebx], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_AddVector_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddVector_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddVector_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddVector_40
-Scr_AddVector_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_AddVector_40
-	nop
-
-
 ;Scr_GetString(unsigned int)
 Scr_GetString:
 	push ebp
@@ -6831,108 +6367,6 @@ Scr_GetVector_30:
 	jmp Scr_GetVector_150
 	nop
 
-
-;Scr_MakeArray()
-Scr_MakeArray:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_MakeArray_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_MakeArray_20
-Scr_MakeArray_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x1
-	mov ebx, [scrVmPub+0x10]
-	call Scr_AllocArray
-	mov [ebx], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_MakeArray_10:
-	mov edx, [scrVmPub+0x10]
-Scr_MakeArray_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_MakeArray_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_MakeArray_40
-Scr_MakeArray_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_MakeArray_40
-	add [eax], al
-
-
-;Scr_AddIString(char const*)
-Scr_AddIString:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddIString_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddIString_20
-Scr_AddIString_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x3
-	mov ebx, [scrVmPub+0x10]
-	mov dword [esp+0x4], 0x0
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call SL_GetString
-	mov [ebx], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_AddIString_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddIString_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddIString_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddIString_40
-Scr_AddIString_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_AddIString_40
-	nop
 
 
 ;Scr_ExecThread(int, unsigned int)
@@ -7408,111 +6842,6 @@ VM_CancelNotify:
 	jmp VM_CancelNotifyInternal
 
 
-;Scr_AddEntityNum(int, unsigned int)
-Scr_AddEntityNum:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Scr_GetEntityId
-	mov ebx, eax
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddEntityNum_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddEntityNum_20
-Scr_AddEntityNum_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x1
-	mov eax, [scrVmPub+0x10]
-	mov [eax], ebx
-	mov [ebp+0x8], ebx
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	jmp AddRefToObject
-Scr_AddEntityNum_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddEntityNum_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddEntityNum_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddEntityNum_40
-Scr_AddEntityNum_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_AddEntityNum_40
-	nop
-
-
-;Scr_AddUndefined()
-Scr_AddUndefined:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov edx, [scrVmPub+0x1c]
-	test edx, edx
-	jnz Scr_AddUndefined_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddUndefined_20
-Scr_AddUndefined_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x0
-	leave
-	ret
-Scr_AddUndefined_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddUndefined_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddUndefined_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddUndefined_40
-Scr_AddUndefined_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x0
-	leave
-	ret
-	nop
-
-
 ;Scr_GetEntityRef(unsigned int)
 Scr_GetEntityRef:
 	push ebp
@@ -7574,7 +6903,7 @@ Scr_GetEntityRef_60:
 Scr_GetEntityRef_20:
 	mov edi, [esi]
 	mov [esp], edi
-	call GetObjectType
+	call Scr_GetObjectType
 	cmp eax, 0x14
 	jz Scr_GetEntityRef_80
 	add ebx, 0x1
@@ -7583,7 +6912,7 @@ Scr_GetEntityRef_20:
 	mov eax, [ebp-0x1c]
 	mov [ebx+0x10], eax
 	mov [esp], edi
-	call GetObjectType
+	call Scr_GetObjectType
 	mov edx, var_typename
 	mov eax, [edx+eax*4]
 	mov [esp+0x4], eax
@@ -7849,55 +7178,6 @@ Scr_TerminalError_10:
 	nop
 	add [eax], al
 
-
-;Scr_AddConstString(unsigned int)
-Scr_AddConstString:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, [ebp+0x8]
-	mov eax, [scrVmPub+0x1c]
-	test eax, eax
-	jnz Scr_AddConstString_10
-	mov edx, [scrVmPub+0x10]
-	cmp edx, [scrVmPub+0x4]
-	jz Scr_AddConstString_20
-Scr_AddConstString_40:
-	lea eax, [edx+0x8]
-	mov [scrVmPub+0x10], eax
-	add dword [scrVmPub+0x18], 0x1
-	mov dword [eax+0x4], 0x2
-	mov eax, [scrVmPub+0x10]
-	mov [eax], ebx
-	mov [ebp+0x8], ebx
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	jmp SL_AddRefToString
-Scr_AddConstString_10:
-	mov edx, [scrVmPub+0x10]
-Scr_AddConstString_30:
-	mov eax, [edx]
-	mov [esp+0x4], eax
-	mov eax, [edx+0x4]
-	mov [esp], eax
-	call RemoveRefToValue
-	mov edx, [scrVmPub+0x10]
-	sub edx, 0x8
-	mov [scrVmPub+0x10], edx
-	mov eax, [scrVmPub+0x1c]
-	sub eax, 0x1
-	mov [scrVmPub+0x1c], eax
-	test eax, eax
-	jnz Scr_AddConstString_30
-	cmp edx, [scrVmPub+0x4]
-	jnz Scr_AddConstString_40
-Scr_AddConstString_20:
-	mov dword [esp], _cstring_internal_script_
-	call Sys_Error
-	mov edx, [scrVmPub+0x10]
-	jmp Scr_AddConstString_40
 
 
 ;Scr_GetConstString(unsigned int)
@@ -8594,7 +7874,7 @@ Scr_GetPointerType_20:
 	pop ebx
 	pop esi
 	pop ebp
-	jmp GetObjectType
+	jmp Scr_GetObjectType
 Scr_GetPointerType_40:
 	cmp byte [scrVmPub+0x16], 0x0
 	jz Scr_GetPointerType_10
@@ -9253,29 +8533,6 @@ Scr_GetNumScriptThreads:
 	ret
 	nop
 
-
-;Scr_AddArrayStringIndexed(unsigned int)
-Scr_AddArrayStringIndexed:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov edx, [scrVmPub+0x10]
-	lea eax, [edx-0x8]
-	mov [scrVmPub+0x10], eax
-	sub dword [scrVmPub+0x18], 0x1
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov eax, [edx-0x8]
-	mov [esp], eax
-	call GetNewVariable
-	mov edx, [scrVmPub+0x10]
-	add edx, 0x8
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call SetNewVariableValue
-	leave
-	ret
-	add [eax], al
 
 
 ;Scr_SetDynamicEntityField(int, unsigned int, unsigned int)

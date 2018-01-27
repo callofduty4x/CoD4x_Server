@@ -1,6 +1,6 @@
 #include "q_shared.h"
 
-#define MAX_TURRETS 576
+#define MAX_TURRETS 32
 
 struct turretInfo_s
 {
