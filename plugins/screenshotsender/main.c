@@ -424,6 +424,8 @@ static void* SendScreenshotThreadForFile(void* q)
 
   Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, qsbuflen, "command", "submitshot");
 
+  Plugin_HTTP_CreateString_x_www_form_urlencoded(querystring, qsbuflen, "filename", sinfo->filepath);
+
   int stringlen = strlen(querystring);
 
   strcpy(&querystring[stringlen], "&data=");
