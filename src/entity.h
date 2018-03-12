@@ -350,6 +350,13 @@ extern gentity_t g_entities[];
 #define	MAX_ENT_CLUSTERS	16
 
 
+struct _EntHandle
+{
+  uint16_t number;
+  uint16_t infoIndex;
+};
+
+
 gentity_t* G_Spawn();
 void G_SpawnHelicopter( gentity_t* vehent, gentity_t* ownerent, const char* type, const char* model );
 qboolean G_CallSpawnEntity( gentity_t* ent );

@@ -196,7 +196,7 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
       Com_EndParseSession();
       CompileError(token_pos - scrAnimGlob.start, "%s", "unexpected end of file");
     }
-    if ( (unsigned int)Scr_GetSelf(animarray) )
+    if ( GetArraySize(animarray) )
     {
       value.u.intValue = flags;
       animarrayvar = GetArrayVariable(animarray, 0);
@@ -235,7 +235,7 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
   {
     SL_RemoveRefToString(animName);
   }
-  if ( bIncludeParent && !(unsigned int)Scr_GetSelf(parentId) )
+  if ( bIncludeParent && !GetArraySize(parentId) )
   {
     s = "void";
     if ( bLoop )

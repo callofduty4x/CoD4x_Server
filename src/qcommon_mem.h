@@ -40,7 +40,9 @@ typedef enum {
 	TAG_STATIC,
 	TAG_XZONE,
 	TAG_UNZIP,
-	TAG_STRINGED
+	TAG_STRINGED,
+	TAG_SCRIPTSTRING,
+    TAG_SCRIPTDEBUGGER
 } memtag_t;
 
 
@@ -53,6 +55,8 @@ void __cdecl Hunk_InitDebugMemory(void);
 void __cdecl Hunk_ClearTempMemory(void);
 void __cdecl Hunk_ClearTempMemoryHigh(void);
 void* __cdecl Hunk_AllocateTempMemory(int size);
+void* __cdecl Hunk_AllocateTempMemoryHigh(int size);
+void __cdecl TempMemorySetPos(char *pos);
 void __cdecl Hunk_FreeTempMemory(void *buffer);
 void* __cdecl TempMalloc( int );
 char *CopyString( const char *in );

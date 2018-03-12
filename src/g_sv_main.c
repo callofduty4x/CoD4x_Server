@@ -367,7 +367,7 @@ __cdecl void ExitLevel( void ) {
 		if ( gcl->sess.connected != CON_CONNECTED ) {
 			continue;
 		}
-		gcl->sess.scoreboard.score = 0;
+		gcl->sess.score = 0;
 		// change all client states to connecting, so the early players into the
 		// next level will know the others aren't done reconnecting
 		if(cl->netchan.remoteAddress.type != NA_BOT)

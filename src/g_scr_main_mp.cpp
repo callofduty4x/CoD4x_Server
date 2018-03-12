@@ -65,14 +65,14 @@ void __cdecl GScr_PlaceSpawnPoint(scr_entref_t entref)
   vec3_t vEnd;
   vec3_t vStart;
 
-  if ( HIWORD(entref) )
+  if ( entref.classnum )
   {
     Scr_ObjectError("not an entity");
     pEnt = 0;
   }
   else
   {
-    pEnt = &g_entities[LOWORD(entref)];
+    pEnt = &g_entities[entref.entnum];
   }
 
   VectorCopy(pEnt->r.currentOrigin, vStart);
@@ -131,6 +131,49 @@ char *__cdecl Scr_GetGameTypeNameForScript(const char *pszGameTypeScript)
 qboolean __cdecl Scr_IsValidGameType(const char *pszGameType)
 {
   return (qboolean)(Scr_GetGameTypeNameForScript(pszGameType) != NULL);
+}
+
+int __cdecl GScr_GetStatusIconIndex(const char *pszIcon)
+{
+  int iConfigNum;
+  char szConfigString[1024];
+
+  if ( !pszIcon[0] )
+  {
+    return 0;
+  }
+  for ( iConfigNum = 0; iConfigNum < MAX_STATUS_ICONS; ++iConfigNum )
+  {
+    SV_GetConfigstring(iConfigNum + STATUS_ICON_CS, szConfigString, sizeof(szConfigString));
+    if ( !Q_stricmp(szConfigString, pszIcon) )
+    {
+      return iConfigNum + 1;
+    }
+  }
+  Scr_Error(va("Status icon '%s' was not precached\n", pszIcon));
+  return 0;
+}
+
+
+int __cdecl GScr_GetHeadIconIndex(const char *pszIcon)
+{
+  int iConfigNum;
+  char szConfigString[1024];
+
+  if ( !pszIcon[0] )
+  {
+    return 0;
+  }
+  for ( iConfigNum = 0; iConfigNum < MAX_HEAD_ICONS; ++iConfigNum )
+  {
+    SV_GetConfigstring(iConfigNum + HEAD_ICON_CS, szConfigString, sizeof(szConfigString));
+    if ( !Q_stricmp(szConfigString, pszIcon) )
+    {
+      return iConfigNum + 1;
+    }
+  }
+  Scr_Error(va("Head icon '%s' was not precached\n", pszIcon));
+  return 0;
 }
 
 }

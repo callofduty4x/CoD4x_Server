@@ -6,6 +6,8 @@ void SV_WriteClientVoiceData(msg_t *msg, client_s *client)
 {
 	int i;
 
+  assert(client->voicePacketCount >= 0 && client->voicePacketCount <= MAX_VOICEPACKETS);
+
 	MSG_WriteByte(msg, client->voicePacketCount);
 
 	for(i = 0; i < client->voicePacketCount; i++)

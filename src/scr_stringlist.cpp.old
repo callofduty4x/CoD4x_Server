@@ -86,11 +86,11 @@ const char* SL_ConvertToString(unsigned int stringValue)
 unsigned int SL_GetString(const char *string, int type)
 {
 	int memlen = strlen(string) + 1;
-	return SL_GetStringOfSize(string, type, memlen);
+	return SL_GetStringOfSize(string, type, memlen, 0);
 }
 
 
-unsigned int SL_GetLowercaseString(const char *upperstring, int type)
+unsigned int SL_GetLowercaseString(const char *upperstring, unsigned int type)
 {
 	unsigned int size;
 	char lwrstr[8192];
@@ -108,7 +108,7 @@ unsigned int SL_GetLowercaseString(const char *upperstring, int type)
 	{
 		lwrstr[i] = tolower(upperstring[i]);
 	}
-    return SL_GetStringOfSize(lwrstr, type, size);
+    return SL_GetStringOfSize(lwrstr, type, size, 0);
 }
 
 

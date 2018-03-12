@@ -55,6 +55,8 @@ extern struct cm_world_t cm_world;
 // while not allowing a single ip to grab all challenge resources
 #define MAX_CHALLENGES_MULTI (MAX_CHALLENGES / 2)
 
+#define MAX_VOICEPACKETS 40
+
 #define ARCHIVEDSSBUF_SIZE 0x1000000
 
 typedef struct{
@@ -252,7 +254,7 @@ struct client_s
 	short			scriptId; //0xa0d22
 	int			canNotReliable;
 	int			serverId; //0xa0d28
-	struct VoicePacket_t	voicePackets[40];
+	struct VoicePacket_t	voicePackets[MAX_VOICEPACKETS];
 	int			voicePacketCount;//(0xa35f4)
 	byte			muteList[MAX_CLIENTS];
 	byte			sendVoice;//(0xa3638)

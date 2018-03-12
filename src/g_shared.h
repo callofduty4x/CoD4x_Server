@@ -51,6 +51,11 @@ SESS_STATE_INTERMISSION = 3
 #define SAY_TEAM 1
 #define SAY_TELL 2
 
+#define MAX_STATUS_ICONS 8
+#define STATUS_ICON_CS 2259
+#define HEAD_ICON_CS 2267
+#define MAX_HEAD_ICONS 15
+
 
 typedef struct
 {
@@ -116,7 +121,7 @@ typedef struct
     objective_t objectives[16];
 
     // store latched cvars here that we want to get at often
-    int maxclients; //0x1e4
+    unsigned int maxclients; //0x1e4
     int framenum;
     int time;         // in msec		0x1ec
     int previousTime; // 0x1f0 so movers can back up when blocked
@@ -523,6 +528,10 @@ void __cdecl BG_GetPlayerViewDirection(playerState_t *ps, float *forward, float 
 void __cdecl G_SetOrigin(gentity_t *ent, const float *origin);
 void __cdecl SetClientViewAngle(gentity_t *ent, const float *angle);
 qboolean GetFollowPlayerState(int clientNum, playerState_t *ps);
+void CalculateRanks();
+int __cdecl GScr_GetStatusIconIndex(const char *pszIcon);
+int __cdecl GScr_GetHeadIconIndex(const char *pszIcon);
+unsigned int __cdecl G_ModelName(int index);
 #ifdef __cplusplus
 }
 #endif

@@ -1,9 +1,9 @@
 ;Imports of scr_main:
-	extern scrCompilePub
+	extern gScrCompilePub
 	extern scrAnimPub
 	extern SL_ShutdownSystem
 	extern Scr_ShutdownOpcodeLookup
-	extern scrVarPub
+	extern gScrVarPub
 	extern Hunk_UserDestroy
 	extern I_iscsym
 	extern ClearObject
@@ -30,7 +30,7 @@
 	extern GetNewVariable
 	extern SL_ConvertToString
 	extern Com_sprintf
-	extern scrParserPub
+	extern gScrParserPub
 	extern Scr_AddSourceBuffer
 	extern Scr_InitAllocNode
 	extern ScriptParse
@@ -77,7 +77,7 @@ Scr_ScanFile_90:
 	pop ebp
 	ret
 Scr_ScanFile_10:
-	mov ebx, scrCompilePub
+	mov ebx, gScrCompilePub
 	mov eax, [ebx+0x20018]
 	movzx edx, byte [eax]
 	add eax, 0x1
@@ -149,7 +149,7 @@ Scr_FreeScripts:
 	push esi
 	push ebx
 	sub esp, 0x10
-	mov esi, scrCompilePub
+	mov esi, gScrCompilePub
 	cmp byte [esi+0x20020], 0x0
 	jnz Scr_FreeScripts_10
 	mov eax, scrAnimPub
@@ -159,7 +159,7 @@ Scr_FreeScripts_40:
 	mov dword [esp], 0x1
 	call SL_ShutdownSystem
 	call Scr_ShutdownOpcodeLookup
-	mov ebx, scrVarPub
+	mov ebx, gScrVarPub
 	mov eax, [ebx+0x44]
 	test eax, eax
 	jz Scr_FreeScripts_30
@@ -196,7 +196,7 @@ Scr_EndLoadScripts:
 	sub esp, 0x14
 	mov dword [esp], 0x2
 	call SL_ShutdownSystem
-	mov ebx, scrCompilePub
+	mov ebx, gScrCompilePub
 	mov byte [ebx+0x20020], 0x0
 	mov eax, [ebx+0x8]
 	mov [esp], eax
@@ -239,7 +239,7 @@ Scr_BeginLoadScripts:
 	push esi
 	push ebx
 	sub esp, 0x20
-	mov esi, scrCompilePub
+	mov esi, gScrCompilePub
 	mov byte [esi+0x20020], 0x1
 	call Scr_InitOpcodeLookup
 	call Scr_AllocArray
@@ -256,7 +256,7 @@ Scr_BeginLoadScripts:
 	mov dword [esp+0x4], _cstring_scr_beginloadscr
 	mov dword [esp], 0x100000
 	call Hunk_UserCreate
-	mov ebx, scrVarPub
+	mov ebx, gScrVarPub
 	mov [ebx+0x44], eax
 	mov [esp], eax
 	call TempMemoryReset
@@ -313,7 +313,7 @@ Scr_EndLoadAnimTrees:
 Scr_EndLoadAnimTrees_40:
 	mov dword [esp], 0x2
 	call SL_ShutdownSystem
-	mov ebx, scrVarPub
+	mov ebx, gScrVarPub
 	mov eax, [ebx+0x48]
 	test eax, eax
 	jz Scr_EndLoadAnimTrees_20
@@ -349,9 +349,9 @@ Scr_IsInOpcodeMemory:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
-	mov edx, scrVarPub
+	mov edx, gScrVarPub
 	sub eax, [edx+0x48]
-	mov edx, scrCompilePub
+	mov edx, gScrCompilePub
 	cmp eax, [edx+0x2002c]
 	setb al
 	movzx eax, al
@@ -370,7 +370,7 @@ SL_GetCanonicalString:
 	mov ebx, [ebp+0x8]
 	mov [esp], ebx
 	call SL_FindString
-	mov esi, scrCompilePub
+	mov esi, gScrCompilePub
 	movzx eax, word [esi+eax*2+0x18]
 	movzx edx, ax
 	test ax, ax
@@ -395,7 +395,7 @@ SL_GetCanonicalString_10:
 	movzx edx, ax
 	test ax, ax
 	jnz SL_GetCanonicalString_20
-	mov edx, scrVarPub
+	mov edx, gScrVarPub
 	movzx eax, word [edx+0x4]
 	add eax, 0x1
 	mov [edx+0x4], ax
@@ -423,7 +423,7 @@ Scr_GetFunctionHandle:
 	call Scr_CreateCanonicalFilename
 	mov ebx, eax
 	mov [esp+0x4], eax
-	mov edi, scrCompilePub
+	mov edi, gScrCompilePub
 	mov eax, [edi+0xc]
 	mov [esp], eax
 	call FindVariable
@@ -467,7 +467,7 @@ Scr_GetFunctionHandle_10:
 	call FindVariable
 	mov [esp], eax
 	call Scr_EvalVariable
-	mov ecx, scrVarPub
+	mov ecx, gScrVarPub
 	sub eax, [ecx+0x48]
 	cmp eax, [edi+0x2002c]
 	jae Scr_GetFunctionHandle_20
@@ -528,7 +528,7 @@ Scr_BeginLoadAnimTrees:
 	call Scr_AllocArray
 	mov [ebx], eax
 	mov dword [ebx+0x4], 0x0
-	mov eax, scrCompilePub
+	mov eax, gScrCompilePub
 	mov dword [eax+0x20024], 0x0
 	add esp, 0x4
 	pop ebx
@@ -549,7 +549,7 @@ Scr_LoadScriptInternal:
 	call Scr_CreateCanonicalFilename
 	mov esi, eax
 	mov [esp+0x4], eax
-	mov edx, scrCompilePub
+	mov edx, gScrCompilePub
 	mov eax, [edx+0x8]
 	mov [esp], eax
 	call FindVariable
@@ -558,7 +558,7 @@ Scr_LoadScriptInternal:
 	mov [esp], esi
 	call SL_RemoveRefToString
 	mov [esp+0x4], esi
-	mov edx, scrCompilePub
+	mov edx, gScrCompilePub
 	mov eax, [edx+0xc]
 	mov [esp], eax
 	call FindVariable
@@ -575,7 +575,7 @@ Scr_LoadScriptInternal_30:
 	ret
 Scr_LoadScriptInternal_10:
 	mov [esp+0x4], esi
-	mov edx, scrCompilePub
+	mov edx, gScrCompilePub
 	mov eax, [edx+0x8]
 	mov [esp], eax
 	call GetNewVariable
@@ -590,7 +590,7 @@ Scr_LoadScriptInternal_10:
 	lea eax, [ebp-0x5c]
 	mov [esp], eax
 	call Com_sprintf
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov edx, [edx+0xc]
 	mov [ebp-0x74], edx
 	mov dword [esp], 0x0
@@ -611,16 +611,16 @@ Scr_LoadScriptInternal_10:
 	mov eax, [ebx+0x8]
 	mov [ebp-0x6c], eax
 	mov dword [ebx+0x8], 0x0
-	mov edx, scrCompilePub
+	mov edx, gScrCompilePub
 	mov dword [edx+0x4], 0x0
 	call Scr_InitAllocNode
-	mov eax, scrParserPub
+	mov eax, gScrParserPub
 	mov eax, [eax+0x8]
 	mov [ebp-0x78], eax
 	lea eax, [ebp-0x5c]
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov [edx+0x8], eax
-	mov edx, scrCompilePub
+	mov edx, gScrCompilePub
 	mov dword [edx+0x20018], _cstring_
 	mov eax, [ebp-0x7c]
 	mov [edx+0x2001c], eax
@@ -629,7 +629,7 @@ Scr_LoadScriptInternal_10:
 	mov [esp], eax
 	call ScriptParse
 	mov [esp+0x4], esi
-	mov edx, scrCompilePub
+	mov edx, gScrCompilePub
 	mov eax, [edx+0xc]
 	mov [esp], eax
 	call GetVariable
@@ -647,7 +647,7 @@ Scr_LoadScriptInternal_10:
 	mov [esp], eax
 	call ScriptCompile
 	mov eax, [ebp-0x78]
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov [edx+0x8], eax
 	mov eax, [ebp-0x74]
 	mov [edx+0xc], eax
@@ -692,12 +692,12 @@ SL_TransferToCanonicalString:
 	mov dword [esp+0x4], 0x2
 	mov [esp], ebx
 	call SL_TransferRefToUser
-	mov ecx, scrCompilePub
+	mov ecx, gScrCompilePub
 	movzx eax, word [ecx+ebx*2+0x18]
 	movzx edx, ax
 	test ax, ax
 	jnz SL_TransferToCanonicalString_10
-	mov edx, scrVarPub
+	mov edx, gScrVarPub
 	movzx eax, word [edx+0x4]
 	add eax, 0x1
 	mov [edx+0x4], ax

@@ -94,7 +94,7 @@ scr_botmoveto
 static void scr_botmoveto(scr_entref_t ent_num)
 {
     vec3_t moveTo;
-    gentity_t* ent = VM_GetGEntityForNum(ent_num);
+    gentity_t* ent = VM_GetGEntityForEntRef(ent_num);
 
     if (Scr_GetNumParam() == 1)
     {
@@ -103,8 +103,8 @@ static void scr_botmoveto(scr_entref_t ent_num)
             if (ent->client)
             {
                 Scr_GetVector(0, moveTo);
-                vec2_copy(g_botai[ent_num].moveTo, moveTo);
-                g_botai[ent_num].doMove = 1;
+                vec2_copy(g_botai[ent_num.entnum].moveTo, moveTo);
+                g_botai[ent_num.entnum].doMove = 1;
             }
             else
                 Scr_ObjectError("Not a client.");
@@ -124,7 +124,7 @@ scr_botlookat
 static void scr_botlookat(scr_entref_t ent_num)
 {
     vec3_t look_at;
-    gentity_t *bot = VM_GetGEntityForNum(ent_num);
+    gentity_t *bot = VM_GetGEntityForEntRef(ent_num);
     float minDuration;
     float duration;
     int argc;
@@ -161,7 +161,7 @@ scr_botstop
 /* bot botStop(); */
 static void scr_botstop(scr_entref_t ent_num)
 {
-    gentity_t *bot = VM_GetGEntityForNum(ent_num);
+    gentity_t *bot = VM_GetGEntityForEntRef(ent_num);
 
     if (!bot)
         Scr_ObjectError("Not an entity.");
@@ -172,11 +172,11 @@ static void scr_botstop(scr_entref_t ent_num)
     if(Scr_GetNumParam() != 0)
         Scr_Error("Usage: <bot> botStop();");
 
-    g_botai[ent_num].buttons = 0;
-    g_botai[ent_num].doMove = 0;
-    g_botai[ent_num].rotIterCount = 0;
-    /*g_botai[ent_num].rotFrac[0] = 0;
-    g_botai[ent_num].rotFrac[1] = 0;*/
+    g_botai[ent_num.entnum].buttons = 0;
+    g_botai[ent_num.entnum].doMove = 0;
+    g_botai[ent_num.entnum].rotIterCount = 0;
+    /*g_botai[ent_num.entnum].rotFrac[0] = 0;
+    g_botai[ent_num.entnum].rotFrac[1] = 0;*/
 }
 /*
 ==================
@@ -194,7 +194,7 @@ static void scr_botaction(scr_entref_t ent_num)
     char buffer[1024];
     mvabuf;
 
-    bot = VM_GetGEntityForNum(ent_num);
+    bot = VM_GetGEntityForEntRef(ent_num);
     if (!bot)
         Scr_Error("Not an entity.");
 
@@ -217,9 +217,9 @@ static void scr_botaction(scr_entref_t ent_num)
         {
             key_found = qtrue;
             if (action[0] == '+')
-                g_botai[ent_num].buttons |= BotActions[i].key;
+                g_botai[ent_num.entnum].buttons |= BotActions[i].key;
             else
-                g_botai[ent_num].buttons &= ~(BotActions[i].key);
+                g_botai[ent_num.entnum].buttons &= ~(BotActions[i].key);
 
             return;
         }
@@ -251,7 +251,7 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     short tag_name;
     mvabuf;
 
-    bot = VM_GetGEntityForNum(ent_num);
+    bot = VM_GetGEntityForEntRef(ent_num);
     if(!bot)
         Scr_ObjectError("Not an entity.");
 
@@ -328,3 +328,4 @@ qboolean shouldSpamUseButton(gentity_t *bot)
     ai->lastAliveState = is_alive;
     return is_alive == qfalse && ai->useSpamDelay == 0 ? qtrue : qfalse;
 }
+

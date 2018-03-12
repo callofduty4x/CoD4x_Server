@@ -15,6 +15,7 @@
 	extern sprintf
 	extern MT_Init
 
+
 ;Exports of scr_stringlist:
 	global scrStringGlob
 	global SL_FreeString

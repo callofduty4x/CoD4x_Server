@@ -9,7 +9,7 @@
 	extern GetVariableValueAddress
 	extern SL_ConvertToString
 	extern Com_Error
-	extern scrVarPub
+	extern gScrVarPub
 	extern XAnimBlend
 	extern XAnimCreate
 	extern FindArrayVariable
@@ -36,7 +36,7 @@
 	extern Scr_EvalVariable
 	extern Scr_AllocArray
 	extern sprintf
-	extern scrParserPub
+	extern gScrParserPub
 	extern Scr_AddSourceBuffer
 	extern Com_BeginParseSession
 	extern Hunk_ClearTempMemoryHigh
@@ -235,7 +235,7 @@ Scr_CreateAnimationTree_110:
 	xor edi, edi
 Scr_CreateAnimationTree_90:
 	movzx esi, si
-	mov ebx, scrVarPub
+	mov ebx, gScrVarPub
 	mov edx, [ebx+0x38]
 	mov eax, edx
 	shl eax, 0x5
@@ -849,7 +849,7 @@ Scr_LoadAnimTreeAtIndex_20:
 	lea esi, [ebp-0x60]
 	mov [esp], esi
 	call sprintf
-	mov eax, scrParserPub
+	mov eax, gScrParserPub
 	mov eax, [eax+0xc]
 	mov [ebp-0x78], eax
 	mov dword [esp+0xc], 0x1
@@ -860,10 +860,10 @@ Scr_LoadAnimTreeAtIndex_20:
 	mov ebx, eax
 	test eax, eax
 	jz Scr_LoadAnimTreeAtIndex_30
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov edx, [edx+0x8]
 	mov [ebp-0x7c], edx
-	mov eax, scrParserPub
+	mov eax, gScrParserPub
 	mov [eax+0x8], esi
 	mov dword [esp], _cstring_scr_animtreepars
 	call Com_BeginParseSession
@@ -880,7 +880,7 @@ Scr_LoadAnimTreeAtIndex_20:
 Scr_LoadAnimTreeAtIndex_120:
 	call Com_EndParseSession
 	mov eax, [ebp-0x7c]
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov [edx+0x8], eax
 	mov eax, [ebp-0x78]
 	mov [edx+0xc], eax

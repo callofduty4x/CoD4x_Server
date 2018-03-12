@@ -71,11 +71,18 @@
 #define __optimize2 __attribute__ ((optimize("-O2")))
 #define __optimize3 __attribute__ ((optimize("-O3"))) __attribute__ ((noinline))
 
+
 #else
 
 #define __optimize2
 #define __optimize3
 
+#endif
+
+#ifdef _MSC_VER
+#define __align(X) __declspec(align(X))
+#else
+#define __align(X) __attribute__((aligned (X)))
 #endif
 
 #define REGPARM(X)   __attribute__ ((regparm(X)))
@@ -735,7 +742,7 @@ typedef enum
   SASYS_COUNT = 0x3,
 }snd_alias_system_t;
 
-
+#define UNREACHABLE_CODE 0
 
 #include "q_platform.h"
 #include "q_math.h"

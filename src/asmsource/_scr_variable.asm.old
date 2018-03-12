@@ -110,7 +110,6 @@
 	global FindPrevSibling
 	global GetStartLocalId
 	global GetVariableName
-	global Scr_AllocVector
 	global Scr_EvalBoolNot
 	global Scr_EvalGreater
 	global Scr_FreeObjects
@@ -132,7 +131,6 @@
 	global GetObjectVariable
 	global IsValidArrayIndex
 	global RemoveRefToObject
-	global RemoveRefToVector
 	global Scr_AddClassField
 	global Scr_ClearWaitTime
 	global Scr_EvalLessEqual
@@ -190,10 +188,9 @@
 	global Scr_DumpScriptVariablesDefault
 	global GetArray
 	global FreeValue
-	global scrVarPub
+	global gScrVarPub
 	global g_classMap
-	global scrVarGlob
-
+	global gScrVarGlob
 
 SECTION .text
 
@@ -350,7 +347,7 @@ Scr_AddFields_FastFile:
 	sub esp, 0x64
 	mov dword [esp], 0x0
 	call TempMalloc
-	mov [scrVarPub], eax
+	mov [gScrVarPub], eax
 	mov byte [eax], 0x0
 	mov eax, [ebp+0xc]
 	mov [esp+0x10], eax
@@ -392,7 +389,7 @@ Scr_AddFields_LoadObj:
 	mov esi, eax
 	mov dword [esp], 0x0
 	call TempMalloc
-	mov [scrVarPub], eax
+	mov [gScrVarPub], eax
 	mov byte [eax], 0x0
 	mov ebx, [ebp-0x1c]
 	test ebx, ebx
@@ -442,7 +439,7 @@ Scr_GetObjectUsage_540:
 	push ebx
 	sub esp, 0xac
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
+	movzx eax, word [eax+gScrVarGlob+0x1e]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_GetObjectUsage_10
@@ -450,7 +447,7 @@ Scr_GetObjectUsage_540:
 	movaps xmm3, xmm2
 Scr_GetObjectUsage_40:
 	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
+	lea ebx, [edx+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -465,7 +462,7 @@ Scr_GetObjectUsage_100:
 	test ax, ax
 	jz Scr_GetObjectUsage_30
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_40
 Scr_GetObjectUsage_30:
@@ -478,7 +475,7 @@ Scr_GetObjectUsage_30:
 	ret
 Scr_GetObjectUsage_20:
 	shl edx, 0x4
-	lea esi, [edx+scrVarGlob+0x10]
+	lea esi, [edx+gScrVarGlob+0x10]
 	mov eax, [esi+0x8]
 	and eax, 0x1f
 	cmp eax, 0x15
@@ -490,7 +487,7 @@ Scr_GetObjectUsage_20:
 	movaps xmm4, xmm3
 Scr_GetObjectUsage_90:
 	shl edx, 0x4
-	lea edi, [edx+scrVarGlob+0x80020]
+	lea edi, [edx+gScrVarGlob+0x80020]
 	mov edx, [edi+0x4]
 	mov eax, [edi+0x8]
 	and eax, 0x1f
@@ -505,7 +502,7 @@ Scr_GetObjectUsage_160:
 	test ax, ax
 	jz Scr_GetObjectUsage_80
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_90
 Scr_GetObjectUsage_80:
@@ -530,7 +527,7 @@ Scr_GetObjectUsage_60:
 	jmp Scr_GetObjectUsage_80
 Scr_GetObjectUsage_70:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov [ebp-0x64], edx
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -543,7 +540,7 @@ Scr_GetObjectUsage_70:
 	movaps xmm6, xmm3
 Scr_GetObjectUsage_150:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov [ebp-0x60], edx
 	mov ecx, edx
 	mov edx, [edx+0x4]
@@ -561,7 +558,7 @@ Scr_GetObjectUsage_220:
 	test ax, ax
 	jz Scr_GetObjectUsage_140
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_150
 Scr_GetObjectUsage_140:
@@ -575,7 +572,7 @@ Scr_GetObjectUsage_140:
 	jmp Scr_GetObjectUsage_160
 Scr_GetObjectUsage_130:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov [ebp-0x5c], edx
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -589,7 +586,7 @@ Scr_GetObjectUsage_130:
 	movss [ebp-0x58], xmm3
 Scr_GetObjectUsage_210:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov [ebp-0x54], edx
 	mov ecx, edx
 	mov edx, [edx+0x4]
@@ -608,7 +605,7 @@ Scr_GetObjectUsage_280:
 	test ax, ax
 	jz Scr_GetObjectUsage_200
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_210
 Scr_GetObjectUsage_200:
@@ -623,7 +620,7 @@ Scr_GetObjectUsage_200:
 	jmp Scr_GetObjectUsage_220
 Scr_GetObjectUsage_190:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov [ebp-0x50], edx
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -637,7 +634,7 @@ Scr_GetObjectUsage_190:
 	movss [ebp-0x4c], xmm3
 Scr_GetObjectUsage_270:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov [ebp-0x48], edx
 	mov ecx, edx
 	mov edx, [edx+0x4]
@@ -656,7 +653,7 @@ Scr_GetObjectUsage_340:
 	test ax, ax
 	jz Scr_GetObjectUsage_260
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_270
 Scr_GetObjectUsage_260:
@@ -677,7 +674,7 @@ Scr_GetObjectUsage_180:
 	jmp Scr_GetObjectUsage_200
 Scr_GetObjectUsage_250:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov [ebp-0x44], edx
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -691,7 +688,7 @@ Scr_GetObjectUsage_250:
 	movss [ebp-0x40], xmm3
 Scr_GetObjectUsage_330:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov [ebp-0x3c], edx
 	mov ecx, edx
 	mov edx, [edx+0x4]
@@ -710,7 +707,7 @@ Scr_GetObjectUsage_400:
 	test ax, ax
 	jz Scr_GetObjectUsage_320
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_330
 Scr_GetObjectUsage_320:
@@ -728,7 +725,7 @@ Scr_GetObjectUsage_240:
 	jmp Scr_GetObjectUsage_260
 Scr_GetObjectUsage_310:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov [ebp-0x38], edx
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -742,7 +739,7 @@ Scr_GetObjectUsage_310:
 	movss [ebp-0x34], xmm3
 Scr_GetObjectUsage_390:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov [ebp-0x30], edx
 	mov ecx, edx
 	mov edx, [edx+0x4]
@@ -761,7 +758,7 @@ Scr_GetObjectUsage_460:
 	test ax, ax
 	jz Scr_GetObjectUsage_380
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_390
 Scr_GetObjectUsage_380:
@@ -779,7 +776,7 @@ Scr_GetObjectUsage_300:
 	jmp Scr_GetObjectUsage_320
 Scr_GetObjectUsage_370:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov [ebp-0x2c], edx
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -793,7 +790,7 @@ Scr_GetObjectUsage_370:
 	movaps xmm7, xmm3
 Scr_GetObjectUsage_450:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov [ebp-0x28], edx
 	mov ecx, edx
 	mov edx, [edx+0x4]
@@ -811,7 +808,7 @@ Scr_GetObjectUsage_520:
 	test ax, ax
 	jz Scr_GetObjectUsage_440
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_450
 Scr_GetObjectUsage_440:
@@ -828,7 +825,7 @@ Scr_GetObjectUsage_360:
 	jmp Scr_GetObjectUsage_380
 Scr_GetObjectUsage_430:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov [ebp-0x24], edx
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -842,7 +839,7 @@ Scr_GetObjectUsage_430:
 	movaps xmm5, xmm3
 Scr_GetObjectUsage_510:
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov [ebp-0x20], edx
 	mov ecx, edx
 	mov edx, [edx+0x4]
@@ -860,7 +857,7 @@ Scr_GetObjectUsage_550:
 	test ax, ax
 	jz Scr_GetObjectUsage_500
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_GetObjectUsage_510
 Scr_GetObjectUsage_500:
@@ -878,7 +875,7 @@ Scr_GetObjectUsage_420:
 Scr_GetObjectUsage_490:
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x1c], eax
 	mov eax, [eax+0x8]
 	and eax, 0x1f
@@ -1005,7 +1002,7 @@ Scr_AddFieldsForFile_70:
 	mov [esp], ecx
 	call SL_GetCanonicalString
 	mov [ebp-0x2c], eax
-	mov ebx, [scrVarPub]
+	mov ebx, [gScrVarPub]
 	cmp byte [ebx], 0x0
 	jnz Scr_AddFieldsForFile_90
 Scr_AddFieldsForFile_110:
@@ -1156,14 +1153,14 @@ GetNewVariableIndexInternal3:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edi, [eax+0x80020]
-	lea eax, [edi+scrVarGlob]
+	lea eax, [edi+gScrVarGlob]
 	mov [ebp-0x2c], eax
-	movzx edx, word [edi+scrVarGlob]
+	movzx edx, word [edi+gScrVarGlob]
 	mov [ebp-0x32], dx
 	movzx edx, dx
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x30], eax
 	mov ecx, [eax+0x8]
 	and ecx, 0x60
@@ -1184,10 +1181,10 @@ GetNewVariableIndexInternal3:
 GetNewVariableIndexInternal3_110:
 	mov eax, [ebp-0x2c]
 	movzx ecx, word [eax+0x2]
-	mov edx, scrVarGlob+0x80020
+	mov edx, gScrVarGlob+0x80020
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
 	mov [eax+edx+0x4], si
 	shl esi, 0x4
@@ -1203,7 +1200,7 @@ GetNewVariableIndexInternal3_100:
 	mov [ebx+0x8], eax
 	shl dword [ebp-0x44], 0x4
 	mov edx, [ebp-0x44]
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov eax, [edx+0x8]
 	and eax, 0x1f
 	cmp eax, 0x15
@@ -1226,16 +1223,16 @@ GetNewVariableIndexInternal3_10:
 	movzx esi, word [edx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob+0x80020]
+	lea edi, [eax+gScrVarGlob+0x80020]
 	movzx ecx, word [edi+0x2]
 	movzx edx, word [edx+0x4]
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80024], dx
+	mov [eax+gScrVarGlob+0x80024], dx
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], cx
+	mov [edx+gScrVarGlob+0x80022], cx
 	mov edx, ebx
 GetNewVariableIndexInternal3_130:
 	movzx ecx, word [edx+0x2]
@@ -1243,9 +1240,9 @@ GetNewVariableIndexInternal3_130:
 	test cx, cx
 	jz GetNewVariableIndexInternal3_70
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], si
+	mov [eax+gScrVarGlob+0x8002e], si
 GetNewVariableIndexInternal3_70:
 	mov edx, [ebp-0x30]
 	movzx eax, word [edx+0xe]
@@ -1253,7 +1250,7 @@ GetNewVariableIndexInternal3_70:
 	test ax, ax
 	jz GetNewVariableIndexInternal3_80
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], si
+	mov [edx+gScrVarGlob+0x80022], si
 	mov eax, [ebp-0x2c]
 	movzx ecx, word [eax+0x2]
 GetNewVariableIndexInternal3_80:
@@ -1276,10 +1273,10 @@ GetNewVariableIndexInternal3_30:
 	mov eax, ecx
 	shl eax, 0x4
 	movzx edx, word [ebp-0x32]
-	mov [eax+scrVarGlob+0x80020], dx
+	mov [eax+gScrVarGlob+0x80020], dx
 	movzx eax, word [ebp-0x4c]
 	mov [ebp-0x22], ax
-	mov [edi+scrVarGlob], ax
+	mov [edi+gScrVarGlob], ax
 	mov eax, [ebp-0x30]
 	mov [eax+0xc], cx
 	mov edx, [ebp-0x2c]
@@ -1289,7 +1286,7 @@ GetNewVariableIndexInternal3_30:
 	mov ebx, edx
 	jmp GetNewVariableIndexInternal3_110
 GetNewVariableIndexInternal3_60:
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	movzx esi, ax
 	test ax, ax
 	jz GetNewVariableIndexInternal3_120
@@ -1297,14 +1294,14 @@ GetNewVariableIndexInternal3_250:
 	mov eax, esi
 	shl eax, 0x4
 	add eax, 0x80020
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	movzx eax, word [ebx+0x4]
-	mov [scrVarGlob+0x80024], ax
+	mov [gScrVarGlob+0x80024], ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x80022], 0x0
+	mov word [eax+gScrVarGlob+0x80022], 0x0
 	mov edx, [ebp-0x2c]
 	jmp GetNewVariableIndexInternal3_130
 GetNewVariableIndexInternal3_50:
@@ -1316,29 +1313,29 @@ GetNewVariableIndexInternal3_50:
 	mov ecx, eax
 	shl ecx, 0x4
 	add ecx, 0x80020
-	lea edx, [ecx+scrVarGlob]
+	lea edx, [ecx+gScrVarGlob]
 	mov [ebp-0x1c], edx
 	movzx esi, word [edx+0x2]
 	mov eax, [ebp-0x2c]
 	movzx edx, word [eax+0x4]
-	mov ebx, scrVarGlob+0x80020
+	mov ebx, gScrVarGlob+0x80020
 	mov eax, esi
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
 	mov [eax+ebx+0x4], dx
 	shl edx, 0x4
 	mov [edx+ebx+0x2], si
 	movzx edx, word [ebp-0x32]
-	mov [ecx+scrVarGlob], dx
+	mov [ecx+gScrVarGlob], dx
 	movzx ecx, word [ebp-0x4c]
-	mov [edi+scrVarGlob], cx
+	mov [edi+gScrVarGlob], cx
 	mov edx, [ebp-0x2c]
 	movzx eax, word [edx+0x2]
 	mov ecx, [ebp-0x1c]
 	mov [ecx+0x2], ax
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
 	movzx edx, word [ebp-0x20]
 	mov [eax+ebx+0xe], dx
@@ -1377,7 +1374,7 @@ GetNewVariableIndexInternal3_190:
 	jnz GetNewVariableIndexInternal3_170
 	add eax, 0x1
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	mov eax, [ebp-0x4c]
 	add esp, 0x5c
 	pop ebx
@@ -1411,28 +1408,28 @@ GetNewVariableIndexInternal3_90:
 	mov edx, [ebp-0x30]
 	movzx eax, word [edx+0xc]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	lea edx, [eax+0x8002]
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0xc]
+	movzx eax, word [eax+gScrVarGlob+0xc]
 	cmp [ebp-0x4c], eax
 	jz GetNewVariableIndexInternal3_210
 GetNewVariableIndexInternal3_220:
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	lea edx, [eax+0x8002]
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0xc]
+	movzx eax, word [eax+gScrVarGlob+0xc]
 	cmp eax, [ebp-0x4c]
 	jnz GetNewVariableIndexInternal3_220
 GetNewVariableIndexInternal3_210:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0xc], si
+	mov [edx+gScrVarGlob+0xc], si
 	jmp GetNewVariableIndexInternal3_230
 GetNewVariableIndexInternal3_140:
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	movzx edx, ax
 	mov [ebp-0x4c], edx
 	test ax, ax
@@ -1440,13 +1437,13 @@ GetNewVariableIndexInternal3_140:
 	mov eax, edx
 GetNewVariableIndexInternal3_260:
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	movzx eax, word [ebx+0x4]
-	mov [scrVarGlob+0x80024], ax
+	mov [gScrVarGlob+0x80024], ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x80022], 0x0
+	mov word [eax+gScrVarGlob+0x80022], 0x0
 	mov dword [ebx+0x8], 0x20
 	mov ecx, [ebp-0x30]
 	movzx eax, word [ecx+0xc]
@@ -1481,7 +1478,7 @@ CopyArray_110:
 	sub esp, 0x3c
 	mov [ebp-0x28], edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
+	movzx eax, word [eax+gScrVarGlob+0x1e]
 	movzx edx, ax
 	test ax, ax
 	jnz CopyArray_10
@@ -1503,22 +1500,22 @@ CopyArray_50:
 	jnz CopyArray_30
 	lea eax, [edx+0x1]
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 CopyArray_20:
 	shl dword [ebp-0x24], 0x4
 	mov edx, [ebp-0x24]
-	movzx eax, word [edx+scrVarGlob+0xe]
+	movzx eax, word [edx+gScrVarGlob+0xe]
 	movzx edx, ax
 	test ax, ax
 	jz CopyArray_40
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 CopyArray_10:
 	add edx, 0x8002
 	mov [ebp-0x24], edx
 	mov eax, edx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
 	mov eax, [edi+0x8]
 	mov ebx, eax
 	and ebx, 0x1f
@@ -1528,16 +1525,16 @@ CopyArray_10:
 	mov [esp], eax
 	call GetVariableIndexInternal
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	or [esi+0x8], ebx
 	cmp ebx, 0x1
 	jnz CopyArray_50
 	mov edx, [edi+0x4]
 	mov eax, edx
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	and eax, 0x1f
 	cmp eax, 0x15
 	jz CopyArray_60
@@ -1545,7 +1542,7 @@ CopyArray_10:
 	mov eax, [edi+0x4]
 	add eax, 0x1
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	jmp CopyArray_20
 CopyArray_30:
 	cmp eax, 0x2
@@ -1555,7 +1552,7 @@ CopyArray_30:
 	add word [edx-0x4], 0x1
 	jmp CopyArray_20
 CopyArray_60:
-	movzx edx, word [scrVarGlob+0x14]
+	movzx edx, word [gScrVarGlob+0x14]
 	mov [ebp-0x1c], dx
 	test dx, dx
 	jz CopyArray_80
@@ -1565,12 +1562,12 @@ CopyArray_130:
 	add eax, 0x10
 	mov [ebp-0x2c], eax
 	mov ebx, eax
-	add ebx, scrVarGlob
-	movzx eax, word [eax+scrVarGlob]
+	add ebx, gScrVarGlob
+	movzx eax, word [eax+gScrVarGlob]
 	mov [ebp-0x1e], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx edx, word [ecx+0x4]
 	mov [ebp-0x1a], dx
 	cmp ebx, ecx
@@ -1580,10 +1577,10 @@ CopyArray_130:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1e]
-	mov [edx+scrVarGlob+0x10], ax
+	mov [edx+gScrVarGlob+0x10], ax
 	movzx eax, word [ebp-0x1c]
 	mov edx, [ebp-0x2c]
-	mov [edx+scrVarGlob], ax
+	mov [edx+gScrVarGlob], ax
 	movzx edx, word [ebx+0xc]
 	mov [ecx+0xc], dx
 	movzx eax, word [ebx+0x4]
@@ -1591,10 +1588,10 @@ CopyArray_130:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 CopyArray_120:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	movzx edx, word [ebp-0x1c]
 	mov [ecx+0xc], dx
 	mov word [ecx+0xe], 0x0
@@ -1602,7 +1599,7 @@ CopyArray_120:
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
@@ -1637,11 +1634,11 @@ MakeVariableExternal:
 	mov [ebp-0x30], eax
 	shl eax, 0x4
 	add eax, 0x80020
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x28], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x24], eax
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -1661,17 +1658,17 @@ MakeVariableExternal_30:
 	movzx eax, word [eax+0xc]
 	shl eax, 0x4
 	add eax, 0x80020
-	lea edx, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	cmp [ebp-0x28], edx
 	jnz MakeVariableExternal_30
 	movzx eax, word [ecx]
 	shl eax, 0x4
 	mov ecx, [ebp-0x24]
 	movzx edx, word [ecx+0xc]
-	mov [eax+scrVarGlob+0x8002c], dx
+	mov [eax+gScrVarGlob+0x8002c], dx
 MakeVariableExternal_90:
 	movzx ecx, word [ebp-0x30]
 	mov eax, [ebp-0x24]
@@ -1720,10 +1717,10 @@ MakeVariableExternal_20:
 	mov [ebp-0x1c], eax
 	shl eax, 0x4
 	add eax, 0x80020
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	cmp [ebp-0x28], edi
 	jz MakeVariableExternal_90
 	mov eax, [edx+0x8]
@@ -1757,9 +1754,9 @@ MakeVariableExternal_180:
 	jz MakeVariableExternal_130
 	shl dword [ebp-0x20], 0x4
 	mov edx, [ebp-0x20]
-	movzx eax, word [edx+scrVarGlob+0x80020]
+	movzx eax, word [edx+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], cx
+	mov [eax+gScrVarGlob+0x8002e], cx
 MakeVariableExternal_130:
 	mov ebx, [ebp-0x28]
 	mov edx, [ebx]
@@ -1786,24 +1783,24 @@ MakeVariableExternal_40:
 	jmp MakeVariableExternal_150
 MakeVariableExternal_110:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob+0x80020]
+	movzx eax, word [ecx+gScrVarGlob+0x80020]
 	shl eax, 0x4
 	movzx edx, word [ebp-0x30]
-	mov [eax+scrVarGlob+0x8002e], dx
+	mov [eax+gScrVarGlob+0x8002e], dx
 	cmp word [ebp-0x2a], 0x0
 	jnz MakeVariableExternal_120
 	jmp MakeVariableExternal_160
 MakeVariableExternal_100:
 	shl edx, 0x4
 	movzx eax, word [ebp-0x30]
-	mov [edx+scrVarGlob+0x80022], ax
+	mov [edx+gScrVarGlob+0x80022], ax
 	test bx, bx
 	jz MakeVariableExternal_170
 	jmp MakeVariableExternal_110
 MakeVariableExternal_120:
 	movzx ecx, word [ebp-0x1c]
 	shl esi, 0x4
-	mov [esi+scrVarGlob+0x80022], cx
+	mov [esi+gScrVarGlob+0x80022], cx
 	jmp MakeVariableExternal_180
 MakeVariableExternal_140:
 	lea esi, [eax-0x800000]
@@ -1839,7 +1836,7 @@ Scr_EvalVariableEntityField:
 	push ebx
 	sub esp, 0x3c
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x28], eax
 	mov edi, [eax+0x8]
 	shr edi, 0x8
@@ -1863,11 +1860,11 @@ Scr_EvalVariableEntityField:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x24], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	mov edx, [esi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -1877,7 +1874,7 @@ Scr_EvalVariableEntityField_40:
 	mov ecx, 0x8002
 Scr_EvalVariableEntityField_30:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jnz Scr_EvalVariableEntityField_20
@@ -1900,12 +1897,12 @@ Scr_EvalVariableEntityField_10:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz Scr_EvalVariableEntityField_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -1915,12 +1912,12 @@ Scr_EvalVariableEntityField_60:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz Scr_EvalVariableEntityField_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -1928,13 +1925,13 @@ Scr_EvalVariableEntityField_60:
 Scr_EvalVariableEntityField_50:
 	add ecx, 0x8002
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_EvalVariableEntityField_70
 Scr_EvalVariableEntityField_20:
 	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
+	mov eax, [edx+gScrVarGlob+0x80024]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x28]
 	movzx eax, word [edx+0x6]
@@ -1947,7 +1944,7 @@ Scr_EvalVariableEntityField_20:
 	jnz Scr_EvalVariableEntityField_80
 	mov [ebp-0x2c], eax
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x10]
+	lea edx, [eax+gScrVarGlob+0x10]
 	mov eax, [edx+0x8]
 	and eax, 0x1f
 	cmp eax, 0x15
@@ -1959,7 +1956,7 @@ Scr_EvalVariableEntityField_20:
 Scr_EvalVariableEntityField_90:
 	mov [esp], ebx
 	call RemoveRefToObject
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov [ebp-0x1c], ax
 	test ax, ax
 	jz Scr_EvalVariableEntityField_100
@@ -1969,12 +1966,12 @@ Scr_EvalVariableEntityField_130:
 	add eax, 0x10
 	mov [ebp-0x30], eax
 	mov edi, eax
-	add edi, scrVarGlob
-	movzx edx, word [eax+scrVarGlob]
+	add edi, gScrVarGlob
+	movzx edx, word [eax+gScrVarGlob]
 	mov [ebp-0x1e], dx
 	movzx eax, dx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp edi, ecx
@@ -1984,10 +1981,10 @@ Scr_EvalVariableEntityField_130:
 	movzx edx, word [edi+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1e]
-	mov [edx+scrVarGlob+0x10], ax
+	mov [edx+gScrVarGlob+0x10], ax
 	movzx eax, word [ebp-0x1c]
 	mov edx, [ebp-0x30]
-	mov [edx+scrVarGlob], ax
+	mov [edx+gScrVarGlob], ax
 	movzx edx, word [edi+0xc]
 	mov [ecx+0xc], dx
 	movzx eax, word [edi+0x4]
@@ -1995,10 +1992,10 @@ Scr_EvalVariableEntityField_130:
 	mov ecx, edi
 	movzx eax, word [ebp-0x1a]
 Scr_EvalVariableEntityField_110:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	movzx edx, word [ebp-0x1c]
 	mov [ecx+0xc], dx
 	mov word [ecx+0xe], 0x0
@@ -2006,7 +2003,7 @@ Scr_EvalVariableEntityField_110:
 	movzx edx, word [edi]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
@@ -2035,7 +2032,7 @@ Scr_MakeValuePrimitive_80:
 	sub esp, 0x2c
 	mov esi, eax
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x1c], eax
 	mov eax, [eax+0x8]
 	and eax, 0x1f
@@ -2063,7 +2060,7 @@ Scr_MakeValuePrimitive_10:
 	test ax, ax
 	jz Scr_MakeValuePrimitive_30
 	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
+	lea ebx, [edx+gScrVarGlob+0x80020]
 	mov eax, [ebx+0x8]
 	mov edi, eax
 	shr edi, 0x8
@@ -2087,11 +2084,11 @@ Scr_MakeValuePrimitive_30:
 	ret
 Scr_MakeValuePrimitive_60:
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jz Scr_MakeValuePrimitive_30
 	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
+	lea ebx, [edx+gScrVarGlob+0x80020]
 	mov eax, [ebx+0x8]
 	mov edi, eax
 	shr edi, 0x8
@@ -2236,19 +2233,19 @@ AllocValue:
 	push esi
 	push ebx
 	sub esp, 0x2c
-	movzx edi, word [scrVarGlob+0x80024]
+	movzx edi, word [gScrVarGlob+0x80024]
 	test di, di
 	jz AllocValue_10
 AllocValue_40:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x80020]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x80020]
+	lea ecx, [eax+gScrVarGlob+0x80020]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -2258,8 +2255,8 @@ AllocValue_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x80020], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x80020], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -2267,10 +2264,10 @@ AllocValue_40:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 AllocValue_20:
-	mov [scrVarGlob+0x80024], ax
+	mov [gScrVarGlob+0x80024], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x80022], 0x0
+	mov word [eax+gScrVarGlob+0x80022], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
@@ -2305,13 +2302,13 @@ ClearArray:
 	mov [ebp-0x54], edx
 	test eax, eax
 	jnz ClearArray_10
-	mov eax, [scrVarPub+0x3c]
+	mov eax, [gScrVarPub+0x3c]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x48], eax
 	mov edi, [eax+0x8]
 	shr edi, 0x8
-	mov ebx, [scrVarPub+0x40]
+	mov ebx, [gScrVarPub+0x40]
 	add ebx, 0x800000
 	and ebx, 0xffffff
 	lea eax, [edi+edi*2]
@@ -2332,11 +2329,11 @@ ClearArray:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x44], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	mov edx, [esi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -2346,14 +2343,14 @@ ClearArray_150:
 	mov ecx, 0x8002
 ClearArray_140:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jnz ClearArray_30
 ClearArray_70:
 	xor ebx, ebx
 ClearArray_40:
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	mov eax, [ebx*4+var_typename]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s_is_not_an_arra
@@ -2368,7 +2365,7 @@ ClearArray_60:
 	jmp Scr_Error
 ClearArray_10:
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x4c], eax
 	mov ebx, [eax+0x8]
 	and ebx, 0x1f
@@ -2379,12 +2376,12 @@ ClearArray_130:
 	mov [ebp-0x50], esi
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov edx, [eax+0x8]
 	and edx, 0x1f
 	cmp edx, 0x15
 	jz ClearArray_50
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	mov eax, [edx*4+var_typename]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s_is_not_an_arra
@@ -2393,7 +2390,7 @@ ClearArray_130:
 	jmp ClearArray_60
 ClearArray_30:
 	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
+	mov eax, [edx+gScrVarGlob+0x80024]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x48]
 	movzx eax, word [edx+0x6]
@@ -2432,13 +2429,13 @@ ClearArray_20:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x44], eax
 	jz ClearArray_150
 ClearArray_160:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -2447,7 +2444,7 @@ ClearArray_160:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x44], eax
 	jnz ClearArray_160
 	jmp ClearArray_150
@@ -2495,10 +2492,10 @@ ClearArray_190:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -2514,7 +2511,7 @@ ClearArray_260:
 ClearArray_170:
 	mov [esp], esi
 	call RemoveRefToObject
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov [ebp-0x3c], ax
 	test ax, ax
 	jz ClearArray_210
@@ -2524,12 +2521,12 @@ ClearArray_360:
 	add eax, 0x10
 	mov [ebp-0x58], eax
 	mov ebx, eax
-	add ebx, scrVarGlob
-	movzx edx, word [eax+scrVarGlob]
+	add ebx, gScrVarGlob
+	movzx edx, word [eax+gScrVarGlob]
 	mov [ebp-0x3e], dx
 	movzx eax, dx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x3a], ax
 	cmp ebx, ecx
@@ -2539,10 +2536,10 @@ ClearArray_360:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x3e]
-	mov [edx+scrVarGlob+0x10], ax
+	mov [edx+gScrVarGlob+0x10], ax
 	movzx eax, word [ebp-0x3c]
 	mov edx, [ebp-0x58]
-	mov [edx+scrVarGlob], ax
+	mov [edx+gScrVarGlob], ax
 	movzx edx, word [ebx+0xc]
 	mov [ecx+0xc], dx
 	movzx eax, word [ebx+0x4]
@@ -2550,10 +2547,10 @@ ClearArray_360:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x3a]
 ClearArray_220:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	movzx edx, word [ebp-0x3c]
 	mov [ecx+0xc], dx
 	mov word [ecx+0xe], 0x0
@@ -2561,7 +2558,7 @@ ClearArray_220:
 	movzx ebx, word [ebx]
 	mov eax, ebx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
@@ -2597,10 +2594,10 @@ ClearArray_180:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -2614,12 +2611,12 @@ ClearArray_280:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz ClearArray_260
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -2629,17 +2626,17 @@ ClearArray_270:
 	jz ClearArray_260
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov eax, [ebp-0x34]
 	add eax, 0x1
 	mov [ebp-0x38], eax
 	mov edx, eax
 	shl edx, 0x4
-	add edx, scrVarGlob
+	add edx, gScrVarGlob
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	add ebx, scrVarGlob+0x80020
+	add ebx, gScrVarGlob+0x80020
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -2662,7 +2659,7 @@ ClearArray_290:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x2c], eax
 	movzx edx, word [ebx+0xe]
 	mov [ebp-0x2e], dx
@@ -2673,33 +2670,33 @@ ClearArray_290:
 	jz ClearArray_330
 	mov eax, edi
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], cx
+	mov [eax+gScrVarGlob+0x8002e], cx
 ClearArray_490:
 	cmp word [ebp-0x2e], 0x0
 	jz ClearArray_340
 	shl ecx, 0x4
-	mov [ecx+scrVarGlob+0x80022], di
+	mov [ecx+gScrVarGlob+0x80022], di
 ClearArray_480:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov eax, [ebp-0x2c]
 ClearArray_450:
 	mov word [eax+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], si
-	mov [scrVarGlob+0x80024], si
+	mov [eax+gScrVarGlob+0x80022], si
+	mov [gScrVarGlob+0x80024], si
 	jmp ClearArray_260
 ClearArray_80:
 	shl eax, 0x4
-	cmp word [eax+scrVarGlob+0x14], 0x0
+	cmp word [eax+gScrVarGlob+0x14], 0x0
 	jnz ClearArray_350
 	mov [esp], esi
 	call RemoveRefToObject
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	mov dword [ebp+0x8], _cstring_readonly_array_c
 	jmp ClearArray_60
 ClearArray_100:
@@ -2734,12 +2731,12 @@ ClearArray_380:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz ClearArray_260
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -2749,17 +2746,17 @@ ClearArray_370:
 	jz ClearArray_260
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov eax, [ebp-0x24]
 	add eax, 0x1
 	mov [ebp-0x28], eax
 	mov edx, eax
 	shl edx, 0x4
-	add edx, scrVarGlob
+	add edx, gScrVarGlob
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	add ebx, scrVarGlob+0x80020
+	add ebx, gScrVarGlob+0x80020
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -2782,7 +2779,7 @@ ClearArray_390:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx edx, word [ebx+0xe]
 	mov [ebp-0x1e], dx
@@ -2793,17 +2790,17 @@ ClearArray_390:
 	jz ClearArray_430
 	mov eax, edi
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], cx
+	mov [eax+gScrVarGlob+0x8002e], cx
 ClearArray_470:
 	cmp word [ebp-0x1e], 0x0
 	jz ClearArray_440
 	shl ecx, 0x4
-	mov [ecx+scrVarGlob+0x80022], di
+	mov [ecx+gScrVarGlob+0x80022], di
 ClearArray_460:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov eax, [ebp-0x1c]
 	jmp ClearArray_450
@@ -2816,36 +2813,36 @@ ClearArray_120:
 ClearArray_440:
 	shl dword [ebp-0x28], 0x4
 	mov edx, [ebp-0x28]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl edi, 0x4
-	movzx edx, word [edi+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [edi+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp ClearArray_460
 ClearArray_430:
 	mov eax, [ebp-0x28]
 	shl eax, 0x4
 	mov edx, ecx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0xe], dx
+	movzx edx, word [edx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0xe], dx
 	jmp ClearArray_470
 ClearArray_340:
 	shl dword [ebp-0x38], 0x4
 	mov edx, [ebp-0x38]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl edi, 0x4
-	movzx edx, word [edi+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [edi+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp ClearArray_480
 ClearArray_330:
 	mov eax, [ebp-0x38]
 	shl eax, 0x4
 	mov edx, ecx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0xe], dx
+	movzx edx, word [edx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0xe], dx
 	jmp ClearArray_490
 ClearArray_400:
 	mov [esp], edx
@@ -2882,7 +2879,7 @@ FindObject:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80024]
+	mov eax, [eax+gScrVarGlob+0x80024]
 	pop ebp
 	ret
 	nop
@@ -2898,13 +2895,13 @@ SGetObjectA:
 	sub esp, 0x2c
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob+0x80020]
+	lea edi, [eax+gScrVarGlob+0x80020]
 	mov eax, [edi+0x8]
 	test al, 0x1f
 	jnz SGetObjectA_10
 	or eax, 0x1
 	mov [edi+0x8], eax
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov [ebp-0x1c], ax
 	test ax, ax
 	jz SGetObjectA_20
@@ -2912,12 +2909,12 @@ SGetObjectA_50:
 	movzx eax, word [ebp-0x1c]
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1e], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -2926,10 +2923,10 @@ SGetObjectA_50:
 	jz SGetObjectA_40
 	movzx eax, word [ebp-0x1a]
 SGetObjectA_30:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	movzx eax, word [ebp-0x1c]
 	mov [ecx+0xc], ax
 	mov word [ecx+0xe], 0x0
@@ -2937,7 +2934,7 @@ SGetObjectA_30:
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x72
 	mov word [eax+0x4], 0x0
 	mov [edi+0x4], edx
@@ -2952,9 +2949,9 @@ SGetObjectA_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1e]
-	mov [edx+scrVarGlob+0x10], ax
+	mov [edx+gScrVarGlob+0x10], ax
 	movzx eax, word [ebp-0x1c]
-	mov [esi+scrVarGlob], ax
+	mov [esi+gScrVarGlob], ax
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -3009,19 +3006,19 @@ AllocObject:
 	push esi
 	push ebx
 	sub esp, 0x2c
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz AllocObject_10
 AllocObject_40:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -3031,8 +3028,8 @@ AllocObject_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -3040,17 +3037,17 @@ AllocObject_40:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 AllocObject_20:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx eax, word [ebx]
 	mov edx, eax
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov dword [edx+0x8], 0x72
 	mov word [edx+0x4], 0x0
 	add esp, 0x2c
@@ -3077,19 +3074,19 @@ AllocThread:
 	push esi
 	push ebx
 	sub esp, 0x2c
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz AllocThread_10
 AllocThread_40:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -3099,8 +3096,8 @@ AllocThread_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -3108,17 +3105,17 @@ AllocThread_40:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 AllocThread_20:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx eax, word [ebx]
 	mov edx, eax
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov dword [edx+0x8], 0x6e
 	mov word [edx+0x4], 0x0
 	mov ecx, [ebp+0x8]
@@ -3150,15 +3147,15 @@ ClearObject:
 	lea edi, [ecx+0x1]
 	mov eax, edi
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
-	add eax, scrVarGlob
+	add word [eax+gScrVarGlob+0x4], 0x1
+	add eax, gScrVarGlob
 	mov [ebp-0x28], eax
 	movzx eax, word [eax+0xe]
 	test ax, ax
 	jz ClearObject_10
 	movzx eax, ax
 	shl eax, 0x4
-	mov ebx, [eax+scrVarGlob+0x80028]
+	mov ebx, [eax+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -3177,11 +3174,11 @@ ClearObject:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x24], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -3192,12 +3189,12 @@ ClearObject_140:
 ClearObject_30:
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov edx, [ebp-0x28]
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	movzx eax, word [ebx+scrVarGlob+0x8002e]
+	movzx eax, word [ebx+gScrVarGlob+0x8002e]
 	movzx esi, ax
 	test ax, ax
 	jnz ClearObject_30
@@ -3210,37 +3207,37 @@ ClearObject_30:
 ClearObject_100:
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], dx
+	mov [eax+gScrVarGlob+0x8002e], dx
 	cmp word [ebp-0x4a], 0x0
 	jz ClearObject_50
 ClearObject_110:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], cx
+	mov [edx+gScrVarGlob+0x80022], cx
 ClearObject_120:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov ecx, [ebp-0x1c]
 	mov word [ecx+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], si
-	mov [scrVarGlob+0x80024], si
+	mov [eax+gScrVarGlob+0x80022], si
+	mov [gScrVarGlob+0x80024], si
 	cmp word [ebp-0x2a], 0x0
 	jz ClearObject_10
 	mov eax, [ebp-0x20]
 ClearObject_40:
 	add eax, 0x8002
 	shl eax, 0x4
-	movzx edx, word [eax+scrVarGlob+0xe]
+	movzx edx, word [eax+gScrVarGlob+0xe]
 	mov [ebp-0x2a], dx
 	movzx edx, dx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	mov [ebp-0x20], edx
-	lea ebx, [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -3263,7 +3260,7 @@ ClearObject_60:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx ecx, word [ebx+0xe]
 	mov [ebp-0x4a], cx
@@ -3274,18 +3271,18 @@ ClearObject_60:
 	jnz ClearObject_100
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	mov edi, [ebp-0x30]
-	mov [edi+scrVarGlob+0xe], ax
+	mov [edi+gScrVarGlob+0xe], ax
 	cmp word [ebp-0x4a], 0x0
 	jnz ClearObject_110
 ClearObject_50:
 	mov edx, [ebp-0x30]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ecx, 0x4
-	movzx edx, word [ecx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ecx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp ClearObject_120
 ClearObject_10:
 	mov edi, [ebp-0x28]
@@ -3303,16 +3300,16 @@ ClearObject_10:
 ClearObject_130:
 	movzx edx, word [edi+0xc]
 	mov dword [edi+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov ecx, [ebp-0x28]
 	mov [ecx+0x4], ax
 	mov eax, edx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	mov word [eax+gScrVarGlob+0x12], 0x0
+	movzx eax, word [gScrVarGlob+0x14]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
-	mov [scrVarGlob+0x14], dx
+	mov [eax+gScrVarGlob+0x12], dx
+	mov [gScrVarGlob+0x14], dx
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -3336,12 +3333,12 @@ ClearObject_150:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz ClearObject_140
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -3366,7 +3363,7 @@ GetVariable:
 	mov [esp], eax
 	call GetVariableIndexInternal
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	leave
 	ret
 
@@ -3439,7 +3436,7 @@ Scr_GetSelf:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x16]
+	movzx eax, word [eax+gScrVarGlob+0x16]
 	pop ebp
 	ret
 	add [eax], al
@@ -3474,10 +3471,10 @@ FindEntityId:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	mov edx, [esi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -3487,13 +3484,13 @@ FindEntityId_40:
 	mov ecx, 0x8002
 FindEntityId_30:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz FindEntityId_20
 FindEntityId_70:
 	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
+	mov eax, [edx+gScrVarGlob+0x80024]
 	pop ebx
 	pop esi
 	pop edi
@@ -3507,12 +3504,12 @@ FindEntityId_10:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz FindEntityId_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -3522,12 +3519,12 @@ FindEntityId_60:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz FindEntityId_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -3535,7 +3532,7 @@ FindEntityId_60:
 FindEntityId_50:
 	add ecx, 0x8002
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jnz FindEntityId_70
@@ -3573,10 +3570,10 @@ FindVariable:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -3586,7 +3583,7 @@ FindVariable_40:
 	mov ecx, 0x8002
 FindVariable_20:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	pop ebx
 	pop esi
 	pop edi
@@ -3604,19 +3601,19 @@ FindVariable_30:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz FindVariable_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
 	jnz FindVariable_50
 	add ecx, 0x8002
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	pop ebx
 	pop esi
 	pop edi
@@ -3630,7 +3627,7 @@ GetArraySize:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x16]
+	movzx eax, word [eax+gScrVarGlob+0x16]
 	pop ebp
 	ret
 
@@ -3641,7 +3638,7 @@ GetValueType:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80028]
+	mov eax, [eax+gScrVarGlob+0x80028]
 	and eax, 0x1f
 	pop ebp
 	ret
@@ -3653,7 +3650,7 @@ IsObjectFree:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	test byte [eax+scrVarGlob+0x18], 0x60
+	test byte [eax+gScrVarGlob+0x18], 0x60
 	setz al
 	movzx eax, al
 	pop ebp
@@ -4105,7 +4102,7 @@ Scr_GetVarId:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	pop ebp
 	ret
 
@@ -4132,7 +4129,7 @@ AddRefToValue_10:
 AddRefToValue_20:
 	add eax, 0x1
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	pop ebp
 	ret
 AddRefToValue_30:
@@ -4147,7 +4144,7 @@ Scr_GetObjectType:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	and eax, 0x1f
 	pop ebp
 	ret
@@ -4160,7 +4157,7 @@ IsFieldObject:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	and eax, 0x1f
 	cmp eax, 0x14
 	setbe al
@@ -4204,7 +4201,7 @@ Scr_EvalArray:
 	jz Scr_EvalArray_20
 	sub eax, 0x1
 	jz Scr_EvalArray_30
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	mov eax, [edx+0x4]
 	mov eax, [eax*4+var_typename]
 	mov [esp+0x4], eax
@@ -4256,11 +4253,11 @@ Scr_EvalArray_30:
 	mov edx, [eax]
 	lea ebx, [edx+0x1]
 	shl ebx, 0x4
-	mov eax, [ebx+scrVarGlob+0x8]
+	mov eax, [ebx+gScrVarGlob+0x8]
 	and eax, 0x1f
 	cmp eax, 0x15
 	jz Scr_EvalArray_60
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	mov eax, [eax*4+var_typename]
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_s_is_not_an_arra
@@ -4331,11 +4328,11 @@ Scr_EvalArray_290:
 	call va
 	mov [esp], eax
 	call Scr_Error
-	add word [ebx+scrVarGlob+0x4], 0x1
+	add word [ebx+gScrVarGlob+0x4], 0x1
 	mov eax, 0x8002
 Scr_EvalArray_170:
 	shl eax, 0x4
-	add eax, scrVarGlob
+	add eax, gScrVarGlob
 	mov edi, [eax+0x8]
 	and edi, 0x1f
 	mov ebx, [eax+0x4]
@@ -4346,7 +4343,7 @@ Scr_EvalArray_170:
 	jnz Scr_EvalArray_150
 	lea eax, [ebx+0x1]
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 Scr_EvalArray_140:
 	mov [ebp-0x38], ebx
 	mov [ebp-0x34], edi
@@ -4377,11 +4374,11 @@ Scr_EvalArray_130:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x2c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -4391,7 +4388,7 @@ Scr_EvalArray_190:
 	mov ecx, 0x8002
 Scr_EvalArray_180:
 	shl ecx, 0x4
-	movzx ebx, word [ecx+scrVarGlob]
+	movzx ebx, word [ecx+gScrVarGlob]
 	mov [esp], edi
 	call SL_RemoveRefToString
 	lea eax, [ebx+0x8002]
@@ -4404,12 +4401,12 @@ Scr_EvalArray_160:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x2c], eax
 	jz Scr_EvalArray_190
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp edi, eax
@@ -4419,12 +4416,12 @@ Scr_EvalArray_210:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x2c], eax
 	jz Scr_EvalArray_190
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, edi
@@ -4480,11 +4477,11 @@ Scr_EvalArray_120:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x30], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob+0x80020]
+	lea edi, [eax+gScrVarGlob+0x80020]
 	mov edx, [edi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -4494,7 +4491,7 @@ Scr_EvalArray_250:
 	mov ecx, 0x8002
 Scr_EvalArray_240:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	add eax, 0x8002
 	jmp Scr_EvalArray_170
 Scr_EvalArray_230:
@@ -4505,13 +4502,13 @@ Scr_EvalArray_230:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x30], eax
 	jz Scr_EvalArray_250
 Scr_EvalArray_270:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -4520,7 +4517,7 @@ Scr_EvalArray_270:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x30], eax
 	jnz Scr_EvalArray_270
 	jmp Scr_EvalArray_250
@@ -4668,7 +4665,7 @@ Scr_FindField:
 	push esi
 	push ebx
 	sub esp, 0x1c
-	mov esi, [scrVarPub]
+	mov esi, [gScrVarPub]
 	cmp byte [esi], 0x0
 	jnz Scr_FindField_10
 Scr_FindField_30:
@@ -4749,10 +4746,10 @@ Scr_GetOffset:
 	lea ecx, [ebx+0x8003]
 	mov eax, ecx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -4762,13 +4759,13 @@ Scr_GetOffset_40:
 	mov ecx, 0x8002
 Scr_GetOffset_30:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_GetOffset_20
 Scr_GetOffset_70:
 	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
+	mov eax, [edx+gScrVarGlob+0x80024]
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -4783,12 +4780,12 @@ Scr_GetOffset_10:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz Scr_GetOffset_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -4798,12 +4795,12 @@ Scr_GetOffset_60:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz Scr_GetOffset_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -4811,7 +4808,7 @@ Scr_GetOffset_60:
 Scr_GetOffset_50:
 	add ecx, 0x8002
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jnz Scr_GetOffset_70
@@ -4833,7 +4830,7 @@ AddRefToObject:
 	mov eax, [ebp+0x8]
 	add eax, 0x1
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	pop ebp
 	ret
 
@@ -4868,16 +4865,16 @@ GetNewVariable:
 	mov [ebp-0x1c], eax
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x28], eax
 	mov ecx, [ebp-0x1c]
 	add ecx, 0x8002
 	mov [ebp-0x30], ecx
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x2c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	mov [ebp-0x24], eax
 	mov ecx, [ebp-0x28]
 	movzx eax, word [ecx+0xe]
@@ -4885,7 +4882,7 @@ GetNewVariable:
 	test ax, ax
 	jz GetNewVariable_10
 	shl edx, 0x4
-	mov esi, [edx+scrVarGlob+0x80028]
+	mov esi, [edx+gScrVarGlob+0x80028]
 	shr esi, 0x8
 	lea edx, [esi+esi*4]
 	lea edx, [edx+edx*4]
@@ -4905,11 +4902,11 @@ GetNewVariable:
 	lea edx, [ebx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x20], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -4921,7 +4918,7 @@ GetNewVariable_50:
 GetNewVariable_40:
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x2], ax
+	mov [edx+gScrVarGlob+0x2], ax
 	movzx edx, word [ebp-0x24]
 	mov eax, edi
 	jmp GetNewVariable_30
@@ -4929,7 +4926,7 @@ GetNewVariable_10:
 	movzx edx, word [ebp-0x24]
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
+	mov [eax+gScrVarGlob+0x12], dx
 	xor eax, eax
 GetNewVariable_30:
 	mov ecx, [ebp-0x28]
@@ -4938,10 +4935,10 @@ GetNewVariable_30:
 	mov word [edx+0x2], 0x0
 	shl dword [ebp-0x24], 0x4
 	mov ecx, [ebp-0x24]
-	mov [ecx+scrVarGlob+0x8002e], ax
+	mov [ecx+gScrVarGlob+0x8002e], ax
 	shl dword [ebp-0x30], 0x4
 	mov edx, [ebp-0x30]
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -4956,13 +4953,13 @@ GetNewVariable_20:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jz GetNewVariable_50
 GetNewVariable_70:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -4971,7 +4968,7 @@ GetNewVariable_70:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jnz GetNewVariable_70
 	jmp GetNewVariable_50
@@ -5008,11 +5005,11 @@ RemoveVariable:
 	lea edx, [ecx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x24], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -5023,17 +5020,17 @@ RemoveVariable_110:
 	mov edx, 0x8002
 RemoveVariable_100:
 	shl edx, 0x4
-	movzx ebx, word [edx+scrVarGlob]
+	movzx ebx, word [edx+gScrVarGlob]
 	mov eax, [ebp+0x8]
 	add eax, 0x1
 	mov [ebp-0x28], eax
 	mov edx, eax
 	shl edx, 0x4
-	add edx, scrVarGlob
+	add edx, gScrVarGlob
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	lea esi, [ebx+scrVarGlob+0x80020]
+	lea esi, [ebx+gScrVarGlob+0x80020]
 	mov edx, [esi+0x4]
 	mov eax, [esi+0x8]
 	and eax, 0x1f
@@ -5050,7 +5047,7 @@ RemoveVariable_20:
 	movzx edi, word [esi+0xc]
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx edx, word [esi+0xe]
 	mov [ebp-0x1e], dx
@@ -5061,24 +5058,24 @@ RemoveVariable_20:
 	jz RemoveVariable_60
 	mov eax, ebx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], cx
+	mov [eax+gScrVarGlob+0x8002e], cx
 	cmp word [ebp-0x1e], 0x0
 	jz RemoveVariable_70
 RemoveVariable_80:
 	shl ecx, 0x4
-	mov [ecx+scrVarGlob+0x80022], bx
+	mov [ecx+gScrVarGlob+0x80022], bx
 RemoveVariable_90:
 	mov dword [esi+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [esi+0x4], ax
 	mov eax, [ebp-0x1c]
 	mov word [eax+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], di
-	mov [scrVarGlob+0x80024], di
+	mov [eax+gScrVarGlob+0x80022], di
+	mov [gScrVarGlob+0x80024], di
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -5090,18 +5087,18 @@ RemoveVariable_60:
 	shl eax, 0x4
 	mov edx, ecx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0xe], dx
+	movzx edx, word [edx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0xe], dx
 	cmp word [ebp-0x1e], 0x0
 	jnz RemoveVariable_80
 RemoveVariable_70:
 	shl dword [ebp-0x28], 0x4
 	mov ecx, [ebp-0x28]
-	movzx eax, word [ecx+scrVarGlob+0xc]
+	movzx eax, word [ecx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ebx, 0x4
-	movzx edx, word [ebx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ebx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp RemoveVariable_90
 RemoveVariable_10:
 	shr ecx, 0x8
@@ -5111,12 +5108,12 @@ RemoveVariable_10:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz RemoveVariable_110
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp edi, eax
@@ -5126,12 +5123,12 @@ RemoveVariable_130:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz RemoveVariable_110
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp edi, eax
@@ -5171,19 +5168,19 @@ Scr_AllocArray:
 	push esi
 	push ebx
 	sub esp, 0x2c
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz Scr_AllocArray_10
 Scr_AllocArray_40:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -5193,8 +5190,8 @@ Scr_AllocArray_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -5202,17 +5199,17 @@ Scr_AllocArray_40:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 Scr_AllocArray_20:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx eax, word [ebx]
 	mov edx, eax
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov dword [edx+0x8], 0x75
 	mov word [edx+0x4], 0x0
 	mov word [edx+0x6], 0x0
@@ -5253,7 +5250,7 @@ Scr_CastString:
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_cannot_cast_s_to1
 	call va
-	mov [scrVarPub+0xc], eax
+	mov [gScrVarPub+0xc], eax
 	mov edx, [esi]
 	mov eax, [esi+0x4]
 	sub eax, 0x1
@@ -5403,7 +5400,7 @@ Scr_CastVector_10:
 	jmp Scr_CastVector_40
 Scr_CastVector_20:
 	add eax, 0x1
-	mov [scrVarPub+0x10], eax
+	mov [gScrVarPub+0x10], eax
 	mov ebx, [ebp-0x2c]
 	mov dword [ebp-0x30], 0x3
 Scr_CastVector_90:
@@ -5652,14 +5649,14 @@ Scr_KillThread:
 	add edi, 0x1
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob
+	add eax, gScrVarGlob
 	mov [ebp-0x3c], eax
 	movzx eax, word [eax+0xe]
 	test ax, ax
 	jz Scr_KillThread_10
 	movzx eax, ax
 	shl eax, 0x4
-	mov ebx, [eax+scrVarGlob+0x80028]
+	mov ebx, [eax+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -5679,11 +5676,11 @@ Scr_KillThread:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x30], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -5694,12 +5691,12 @@ Scr_KillThread_250:
 Scr_KillThread_30:
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov edx, [ebp-0x3c]
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	movzx eax, word [ebx+scrVarGlob+0x8002e]
+	movzx eax, word [ebx+gScrVarGlob+0x8002e]
 	movzx esi, ax
 	test ax, ax
 	jnz Scr_KillThread_30
@@ -5712,37 +5709,37 @@ Scr_KillThread_30:
 Scr_KillThread_100:
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], dx
+	mov [eax+gScrVarGlob+0x8002e], dx
 	cmp word [ebp-0x5a], 0x0
 	jz Scr_KillThread_50
 Scr_KillThread_110:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], cx
+	mov [edx+gScrVarGlob+0x80022], cx
 Scr_KillThread_120:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov ecx, [ebp-0x28]
 	mov word [ecx+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], si
-	mov [scrVarGlob+0x80024], si
+	mov [eax+gScrVarGlob+0x80022], si
+	mov [gScrVarGlob+0x80024], si
 	cmp word [ebp-0x32], 0x0
 	jz Scr_KillThread_10
 	mov eax, [ebp-0x2c]
 Scr_KillThread_40:
 	add eax, 0x8002
 	shl eax, 0x4
-	movzx edx, word [eax+scrVarGlob+0xe]
+	movzx edx, word [eax+gScrVarGlob+0xe]
 	mov [ebp-0x32], dx
 	movzx edx, dx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	mov [ebp-0x2c], edx
-	lea ebx, [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -5765,7 +5762,7 @@ Scr_KillThread_60:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x28], eax
 	movzx ecx, word [ebx+0xe]
 	mov [ebp-0x5a], cx
@@ -5776,18 +5773,18 @@ Scr_KillThread_60:
 	jnz Scr_KillThread_100
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	mov edi, [ebp-0x40]
-	mov [edi+scrVarGlob+0xe], ax
+	mov [edi+gScrVarGlob+0xe], ax
 	cmp word [ebp-0x5a], 0x0
 	jnz Scr_KillThread_110
 Scr_KillThread_50:
 	mov edx, [ebp-0x40]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ecx, 0x4
-	movzx edx, word [ecx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ecx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp Scr_KillThread_120
 Scr_KillThread_10:
 	mov edi, [ebp-0x3c]
@@ -5801,7 +5798,7 @@ Scr_KillThread_10:
 	lea eax, [eax+eax*4]
 	lea eax, [eax+eax*4]
 	lea eax, [edx+eax*4]
-	mov esi, [scrVarPub+0x1c]
+	mov esi, [gScrVarPub+0x1c]
 	lea ebx, [eax+esi]
 	mov edx, 0x80018005
 	mov eax, ebx
@@ -5816,10 +5813,10 @@ Scr_KillThread_10:
 	lea ecx, [eax+0x8003]
 	mov eax, ecx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -5829,16 +5826,16 @@ Scr_KillThread_230:
 	mov ecx, 0x8002
 Scr_KillThread_220:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_KillThread_140
 	shl edx, 0x4
-	mov edx, [edx+scrVarGlob+0x80024]
+	mov edx, [edx+gScrVarGlob+0x80024]
 	mov [ebp-0x38], edx
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x20], eax
 	movzx eax, word [eax+0xe]
 	movzx edx, ax
@@ -5862,9 +5859,9 @@ Scr_KillThread_140:
 	pop ebp
 	ret
 Scr_KillThread_170:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, esi
@@ -5874,7 +5871,7 @@ Scr_KillThread_200:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jnz Scr_KillThread_170
 Scr_KillThread_190:
@@ -5882,13 +5879,13 @@ Scr_KillThread_190:
 Scr_KillThread_160:
 	mov [esp+0x4], ebx
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80024]
+	mov eax, [eax+gScrVarGlob+0x80024]
 	mov [esp], eax
 	call VM_CancelNotify
 	shl ebx, 0x4
-	add ebx, scrVarGlob+0x10
+	add ebx, gScrVarGlob+0x10
 	movzx eax, word [ebx+0x6]
 	mov [esp], eax
 	call RemoveRefToObject
@@ -5907,7 +5904,7 @@ Scr_KillThread_160:
 	jz Scr_KillThread_180
 Scr_KillThread_150:
 	shl edx, 0x4
-	movzx ebx, word [edx+scrVarGlob+0x80029]
+	movzx ebx, word [edx+gScrVarGlob+0x80029]
 	lea esi, [ebx+0x10000]
 	lea ecx, [esi+esi*4]
 	lea ecx, [ecx+ecx*4]
@@ -5925,11 +5922,11 @@ Scr_KillThread_150:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x1c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob+0x80020]
+	lea edi, [eax+gScrVarGlob+0x80020]
 	mov edx, [edi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -5942,19 +5939,19 @@ Scr_KillThread_150:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jz Scr_KillThread_190
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
 	jnz Scr_KillThread_200
 	jmp Scr_KillThread_160
 Scr_KillThread_180:
-	mov esi, [scrVarPub+0x1c]
+	mov esi, [gScrVarPub+0x1c]
 	jmp Scr_KillThread_210
 Scr_KillThread_130:
 	shr edx, 0x8
@@ -5964,13 +5961,13 @@ Scr_KillThread_130:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz Scr_KillThread_230
 Scr_KillThread_240:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp [ebp-0x24], eax
@@ -5979,7 +5976,7 @@ Scr_KillThread_240:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jnz Scr_KillThread_240
 	jmp Scr_KillThread_230
@@ -6000,12 +5997,12 @@ Scr_KillThread_260:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x30], eax
 	jz Scr_KillThread_250
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -6031,14 +6028,14 @@ Scr_StopThread:
 	lea eax, [ecx+0x1]
 	mov [ebp-0x2c], eax
 	shl eax, 0x4
-	add eax, scrVarGlob
+	add eax, gScrVarGlob
 	mov [ebp-0x28], eax
 	movzx eax, word [eax+0xe]
 	test ax, ax
 	jz Scr_StopThread_10
 	movzx eax, ax
 	shl eax, 0x4
-	mov ebx, [eax+scrVarGlob+0x80028]
+	mov ebx, [eax+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -6057,10 +6054,10 @@ Scr_StopThread:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -6071,12 +6068,12 @@ Scr_StopThread_130:
 Scr_StopThread_30:
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov edx, [ebp-0x28]
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	movzx eax, word [ebx+scrVarGlob+0x8002e]
+	movzx eax, word [ebx+gScrVarGlob+0x8002e]
 	movzx esi, ax
 	test ax, ax
 	jnz Scr_StopThread_30
@@ -6091,37 +6088,37 @@ Scr_StopThread_30:
 Scr_StopThread_100:
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], dx
+	mov [eax+gScrVarGlob+0x8002e], dx
 	cmp word [ebp-0x4a], 0x0
 	jz Scr_StopThread_50
 Scr_StopThread_110:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], cx
+	mov [edx+gScrVarGlob+0x80022], cx
 Scr_StopThread_120:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov ecx, [ebp-0x1c]
 	mov word [ecx+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], si
-	mov [scrVarGlob+0x80024], si
+	mov [eax+gScrVarGlob+0x80022], si
+	mov [gScrVarGlob+0x80024], si
 	cmp word [ebp-0x22], 0x0
 	jz Scr_StopThread_10
 	mov eax, [ebp-0x20]
 Scr_StopThread_40:
 	add eax, 0x8002
 	shl eax, 0x4
-	movzx edx, word [eax+scrVarGlob+0xe]
+	movzx edx, word [eax+gScrVarGlob+0xe]
 	mov [ebp-0x22], dx
 	movzx edx, dx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	mov [ebp-0x20], edx
-	lea ebx, [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -6144,7 +6141,7 @@ Scr_StopThread_60:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx ecx, word [ebx+0xe]
 	mov [ebp-0x4a], cx
@@ -6155,31 +6152,31 @@ Scr_StopThread_60:
 	jnz Scr_StopThread_100
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	mov edi, [ebp-0x30]
-	mov [edi+scrVarGlob+0xe], ax
+	mov [edi+gScrVarGlob+0xe], ax
 	cmp word [ebp-0x4a], 0x0
 	jnz Scr_StopThread_110
 Scr_StopThread_50:
 	mov edx, [ebp-0x30]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ecx, 0x4
-	movzx edx, word [ecx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ecx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp Scr_StopThread_120
 Scr_StopThread_10:
 	mov edi, [ebp-0x28]
 	movzx eax, word [edi+0x6]
 	mov [esp], eax
 	call RemoveRefToObject
-	mov eax, [scrVarPub+0x20]
+	mov eax, [gScrVarPub+0x20]
 	shl dword [ebp-0x2c], 0x4
 	mov edx, [ebp-0x2c]
-	mov [edx+scrVarGlob+0x6], ax
+	mov [edx+gScrVarGlob+0x6], ax
 	add eax, 0x1
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -6208,12 +6205,12 @@ Scr_StopThread_140:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz Scr_StopThread_130
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -6232,14 +6229,14 @@ FindLastSibling:
 	mov ecx, [ebp+0x8]
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1c]
+	movzx eax, word [eax+gScrVarGlob+0x1c]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x12]
+	movzx eax, word [eax+gScrVarGlob+0x12]
 	movzx edx, ax
 	test ax, ax
 	jz FindLastSibling_10
 	shl edx, 0x4
-	mov ebx, [edx+scrVarGlob+0x80028]
+	mov ebx, [edx+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -6258,10 +6255,10 @@ FindLastSibling:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -6282,9 +6279,9 @@ FindLastSibling_20:
 	jnz FindLastSibling_30
 	jmp FindLastSibling_40
 FindLastSibling_50:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -6294,7 +6291,7 @@ FindLastSibling_30:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jnz FindLastSibling_50
 	jmp FindLastSibling_10
@@ -6307,12 +6304,12 @@ FindNextSibling:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x8002e]
+	movzx eax, word [eax+gScrVarGlob+0x8002e]
 	movzx edx, ax
 	test ax, ax
 	jz FindNextSibling_10
 	shl edx, 0x4
-	movzx eax, word [edx+scrVarGlob+0x80020]
+	movzx eax, word [edx+gScrVarGlob+0x80020]
 	pop ebp
 	ret
 FindNextSibling_10:
@@ -6328,7 +6325,7 @@ FindPrevSibling:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80022]
+	movzx eax, word [eax+gScrVarGlob+0x80022]
 	pop ebp
 	ret
 
@@ -6341,7 +6338,7 @@ GetStartLocalId:
 	lea edx, [ecx+0x1]
 	mov eax, edx
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x8]
+	mov eax, [eax+gScrVarGlob+0x8]
 	and eax, 0x1f
 	cmp eax, 0x11
 	jz GetStartLocalId_10
@@ -6351,22 +6348,22 @@ GetStartLocalId_20:
 	ret
 GetStartLocalId_10:
 	shl edx, 0x4
-	mov ecx, [edx+scrVarGlob+0x8]
+	mov ecx, [edx+gScrVarGlob+0x8]
 	shr ecx, 0x8
 	lea edx, [ecx+0x1]
 	mov eax, edx
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x8]
+	mov eax, [eax+gScrVarGlob+0x8]
 	and eax, 0x1f
 	cmp eax, 0x11
 	jnz GetStartLocalId_20
 	shl edx, 0x4
-	mov ecx, [edx+scrVarGlob+0x8]
+	mov ecx, [edx+gScrVarGlob+0x8]
 	shr ecx, 0x8
 	lea edx, [ecx+0x1]
 	mov eax, edx
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x8]
+	mov eax, [eax+gScrVarGlob+0x8]
 	and eax, 0x1f
 	cmp eax, 0x11
 	jz GetStartLocalId_10
@@ -6379,36 +6376,10 @@ GetVariableName:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80028]
+	mov eax, [eax+gScrVarGlob+0x80028]
 	shr eax, 0x8
 	pop ebp
 	ret
-
-
-;Scr_AllocVector(float const*)
-Scr_AllocVector:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, [ebp+0x8]
-	mov dword [esp+0x4], 0x2
-	mov dword [esp], 0x10
-	call MT_Alloc
-	mov ecx, eax
-	lea eax, [eax+0x4]
-	mov dword [eax-0x4], 0x0
-	mov edx, [ebx]
-	mov [ecx+0x4], edx
-	mov edx, [ebx+0x4]
-	mov [eax+0x4], edx
-	mov edx, [ebx+0x8]
-	mov [eax+0x8], edx
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-	nop
 
 
 ;Scr_EvalBoolNot(VariableValue*)
@@ -6549,7 +6520,7 @@ Scr_FreeObjects:
 	push ebx
 	sub esp, 0x5c
 	mov ebx, 0x1
-	mov dword [ebp-0x1c], scrVarGlob
+	mov dword [ebp-0x1c], gScrVarGlob
 	jmp Scr_FreeObjects_10
 Scr_FreeObjects_30:
 	add dword [ebp-0x1c], 0x10
@@ -6561,7 +6532,7 @@ Scr_FreeObjects_10:
 	lea eax, [ebx+0x1]
 	mov [ebp-0x30], eax
 	shl eax, 0x4
-	add eax, scrVarGlob
+	add eax, gScrVarGlob
 	mov [ebp-0x2c], eax
 	mov eax, [eax+0x8]
 	test al, 0x60
@@ -6580,7 +6551,7 @@ Scr_FreeObjects_10:
 	jz Scr_FreeObjects_40
 	movzx eax, ax
 	shl eax, 0x4
-	mov edi, [eax+scrVarGlob+0x80028]
+	mov edi, [eax+gScrVarGlob+0x80028]
 	shr edi, 0x8
 	lea edx, [edi+edi*4]
 	lea edx, [edx+edx*4]
@@ -6599,10 +6570,10 @@ Scr_FreeObjects_10:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea ebx, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -6613,12 +6584,12 @@ Scr_FreeObjects_170:
 Scr_FreeObjects_60:
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov edx, [ebp-0x2c]
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	movzx eax, word [ebx+scrVarGlob+0x8002e]
+	movzx eax, word [ebx+gScrVarGlob+0x8002e]
 	movzx esi, ax
 	test ax, ax
 	jnz Scr_FreeObjects_60
@@ -6630,37 +6601,37 @@ Scr_FreeObjects_60:
 Scr_FreeObjects_140:
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], dx
+	mov [eax+gScrVarGlob+0x8002e], dx
 	cmp word [ebp-0x4a], 0x0
 	jz Scr_FreeObjects_80
 Scr_FreeObjects_150:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], cx
+	mov [edx+gScrVarGlob+0x80022], cx
 Scr_FreeObjects_160:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov ecx, [ebp-0x20]
 	mov word [ecx+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], si
-	mov [scrVarGlob+0x80024], si
+	mov [eax+gScrVarGlob+0x80022], si
+	mov [gScrVarGlob+0x80024], si
 	cmp word [ebp-0x26], 0x0
 	jz Scr_FreeObjects_90
 	mov eax, [ebp-0x24]
 Scr_FreeObjects_70:
 	add eax, 0x8002
 	shl eax, 0x4
-	movzx edi, word [eax+scrVarGlob+0xe]
+	movzx edi, word [eax+gScrVarGlob+0xe]
 	mov [ebp-0x26], di
 	movzx edx, di
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	mov [ebp-0x24], edx
-	lea ebx, [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -6683,7 +6654,7 @@ Scr_FreeObjects_100:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x20], eax
 	movzx eax, word [ebx+0xe]
 	mov [ebp-0x4a], ax
@@ -6695,7 +6666,7 @@ Scr_FreeObjects_100:
 	jnz Scr_FreeObjects_140
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	mov edi, [ebp-0x1c]
 	mov [edi+0x2e], ax
 	cmp word [ebp-0x4a], 0x0
@@ -6705,8 +6676,8 @@ Scr_FreeObjects_80:
 	movzx eax, word [edx+0x2c]
 	shl eax, 0x4
 	shl ecx, 0x4
-	movzx edx, word [ecx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ecx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp Scr_FreeObjects_160
 Scr_FreeObjects_50:
 	shr ecx, 0x8
@@ -6716,21 +6687,21 @@ Scr_FreeObjects_50:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp ebx, eax
 	jz Scr_FreeObjects_170
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp edi, eax
 	jnz Scr_FreeObjects_180
 	jmp Scr_FreeObjects_60
 Scr_FreeObjects_190:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, edi
@@ -6740,7 +6711,7 @@ Scr_FreeObjects_180:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp ebx, eax
 	jnz Scr_FreeObjects_190
 	jmp Scr_FreeObjects_170
@@ -6769,16 +6740,16 @@ Scr_FreeObjects_110:
 Scr_FreeObjects_200:
 	movzx edx, word [edi+0xc]
 	mov dword [edi+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov ecx, [ebp-0x2c]
 	mov [ecx+0x4], ax
 	mov eax, edx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	mov word [eax+gScrVarGlob+0x12], 0x0
+	movzx eax, word [gScrVarGlob+0x14]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
-	mov [scrVarGlob+0x14], dx
+	mov [eax+gScrVarGlob+0x12], dx
+	mov [gScrVarGlob+0x14], dx
 	jmp Scr_FreeObjects_30
 Scr_FreeObjects_120:
 	mov [esp], edx
@@ -6810,9 +6781,9 @@ Scr_GetEntityId:
 	mov [esp], eax
 	call GetVariableIndexInternal
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x24], eax
 	test byte [eax+0x8], 0x1f
 	jz Scr_GetEntityId_10
@@ -6826,7 +6797,7 @@ Scr_GetEntityId:
 	ret
 Scr_GetEntityId_10:
 	mov [ebp-0x20], bx
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov [ebp-0x1c], ax
 	test ax, ax
 	jz Scr_GetEntityId_20
@@ -6834,12 +6805,12 @@ Scr_GetEntityId_50:
 	movzx eax, word [ebp-0x1c]
 	shl eax, 0x4
 	lea edi, [eax+0x10]
-	lea ebx, [edi+scrVarGlob]
-	movzx ecx, word [edi+scrVarGlob]
+	lea ebx, [edi+gScrVarGlob]
+	movzx ecx, word [edi+gScrVarGlob]
 	mov [ebp-0x1e], cx
 	movzx eax, cx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -6849,9 +6820,9 @@ Scr_GetEntityId_50:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1e]
-	mov [edx+scrVarGlob+0x10], ax
+	mov [edx+gScrVarGlob+0x10], ax
 	movzx eax, word [ebp-0x1c]
-	mov [edi+scrVarGlob], ax
+	mov [edi+gScrVarGlob], ax
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -6859,10 +6830,10 @@ Scr_GetEntityId_50:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 Scr_GetEntityId_30:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	movzx eax, word [ebp-0x1c]
 	mov [ecx+0xc], ax
 	mov word [ecx+0xe], 0x0
@@ -6870,7 +6841,7 @@ Scr_GetEntityId_30:
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	shl esi, 0x8
 	or esi, 0x74
 	mov [eax+0x8], esi
@@ -6905,19 +6876,19 @@ Scr_SetClassMap:
 	push esi
 	push ebx
 	sub esp, 0x2c
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz Scr_SetClassMap_10
 Scr_SetClassMap_70:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x20], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1e], ax
 	cmp ebx, ecx
@@ -6926,36 +6897,36 @@ Scr_SetClassMap_70:
 	jz Scr_SetClassMap_30
 	movzx eax, word [ebp-0x1e]
 Scr_SetClassMap_20:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
 	mov ecx, [ebp+0x8]
 	lea eax, [ecx+ecx*2]
 	mov [eax*4+g_classMap+0x2], dx
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz Scr_SetClassMap_40
 Scr_SetClassMap_80:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -6965,8 +6936,8 @@ Scr_SetClassMap_80:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -6974,17 +6945,17 @@ Scr_SetClassMap_80:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 Scr_SetClassMap_50:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
@@ -7001,8 +6972,8 @@ Scr_SetClassMap_30:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x20]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -7032,19 +7003,19 @@ AllocChildThread:
 	push esi
 	push ebx
 	sub esp, 0x2c
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz AllocChildThread_10
 AllocChildThread_40:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx edx, word [ecx+0x4]
 	mov [ebp-0x1a], dx
 	cmp ebx, ecx
@@ -7054,8 +7025,8 @@ AllocChildThread_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx edx, word [ebx+0xc]
 	mov [ecx+0xc], dx
 	movzx eax, word [ebx+0x4]
@@ -7063,17 +7034,17 @@ AllocChildThread_40:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1a]
 AllocChildThread_50:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx eax, word [ebx]
 	mov ecx, eax
 	shl ecx, 0x4
-	add ecx, scrVarGlob+0x10
+	add ecx, gScrVarGlob+0x10
 	shl dword [ebp+0xc], 0x8
 	or dword [ebp+0xc], 0x71
 	mov edx, [ebp+0xc]
@@ -7106,7 +7077,7 @@ FindFirstSibling:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x1e]
+	movzx eax, word [eax+gScrVarGlob+0x1e]
 	pop ebp
 	ret
 
@@ -7124,7 +7095,7 @@ GetArrayVariable:
 	mov [esp], eax
 	call GetVariableIndexInternal
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	leave
 	ret
 
@@ -7135,7 +7106,7 @@ GetParentLocalId:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	shr eax, 0x8
 	pop ebp
 	ret
@@ -7192,13 +7163,13 @@ Scr_AddArrayKeys:
 	mov ebx, [ebp+0x8]
 	call Scr_MakeArray
 	shl ebx, 0x4
-	movzx eax, word [ebx+scrVarGlob+0x1e]
+	movzx eax, word [ebx+gScrVarGlob+0x1e]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_AddArrayKeys_10
 Scr_AddArrayKeys_50:
 	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob+0x80020]
+	lea ebx, [edx+gScrVarGlob+0x80020]
 	mov eax, [ebx+0x8]
 	shr eax, 0x8
 	cmp eax, 0xffff
@@ -7218,7 +7189,7 @@ Scr_AddArrayKeys_80:
 	test ax, ax
 	jz Scr_AddArrayKeys_10
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	test edx, edx
 	jnz Scr_AddArrayKeys_50
 Scr_AddArrayKeys_10:
@@ -7260,14 +7231,14 @@ Scr_EvalArrayRef:
 	mov eax, [ebp+0x8]
 	test eax, eax
 	jnz Scr_EvalArrayRef_10
-	mov eax, [scrVarPub+0x3c]
+	mov eax, [gScrVarPub+0x3c]
 	mov [ebp-0x54], eax
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x44], eax
 	mov edi, [eax+0x8]
 	shr edi, 0x8
-	mov edx, [scrVarPub+0x40]
+	mov edx, [gScrVarPub+0x40]
 	mov [ebp-0x58], edx
 	mov ebx, edx
 	add ebx, 0x800000
@@ -7290,11 +7261,11 @@ Scr_EvalArrayRef:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x40], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	mov edx, [esi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -7304,12 +7275,12 @@ Scr_EvalArrayRef_230:
 	mov ecx, 0x8002
 Scr_EvalArrayRef_220:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_EvalArrayRef_30
 	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
+	mov eax, [edx+gScrVarGlob+0x80024]
 	mov [esp+0x8], eax
 	mov ecx, [ebp-0x44]
 	movzx eax, word [ecx+0x6]
@@ -7342,7 +7313,7 @@ Scr_EvalArrayRef_370:
 	jmp Scr_EvalArrayRef_100
 Scr_EvalArrayRef_10:
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x48], eax
 	mov eax, [eax+0x8]
 	mov ebx, eax
@@ -7353,7 +7324,7 @@ Scr_EvalArrayRef_10:
 Scr_EvalArrayRef_100:
 	cmp ebx, 0x1
 	jz Scr_EvalArrayRef_120
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	cmp ebx, 0x2
 	jz Scr_EvalArrayRef_130
 	cmp ebx, 0x4
@@ -7396,23 +7367,23 @@ Scr_EvalArrayRef_260:
 	mov [ebp-0x1c], eax
 	mov eax, [ebp-0x54]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x34], eax
 	mov edx, [ebp-0x1c]
 	add edx, 0x8002
 	mov [ebp-0x3c], edx
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x38], ecx
-	movzx edi, word [eax+scrVarGlob]
+	movzx edi, word [eax+gScrVarGlob]
 	mov edx, [ebp-0x34]
 	movzx eax, word [edx+0xe]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_EvalArrayRef_150
 	shl edx, 0x4
-	mov esi, [edx+scrVarGlob+0x80028]
+	mov esi, [edx+gScrVarGlob+0x80028]
 	shr esi, 0x8
 	lea edx, [esi+esi*4]
 	lea edx, [edx+edx*4]
@@ -7434,11 +7405,11 @@ Scr_EvalArrayRef_260:
 	lea edx, [ebx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x2c], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -7450,7 +7421,7 @@ Scr_EvalArrayRef_310:
 Scr_EvalArrayRef_300:
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x2], ax
+	mov [edx+gScrVarGlob+0x2], ax
 	mov edx, edi
 	movzx eax, word [ebp-0x30]
 	mov ecx, [ebp-0x34]
@@ -7459,31 +7430,31 @@ Scr_EvalArrayRef_200:
 	mov edx, [ebp-0x38]
 	mov word [edx+0x2], 0x0
 	shl edi, 0x4
-	mov [edi+scrVarGlob+0x8002e], ax
+	mov [edi+gScrVarGlob+0x8002e], ax
 	shl dword [ebp-0x3c], 0x4
 	mov ecx, [ebp-0x3c]
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x48], eax
 	mov eax, [eax+0x8]
 Scr_EvalArrayRef_110:
 	or eax, 0x1
 	mov edx, [ebp-0x48]
 	mov [edx+0x8], eax
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz Scr_EvalArrayRef_170
 Scr_EvalArrayRef_210:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx ecx, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx ecx, word [esi+gScrVarGlob]
 	mov [ebp-0x26], cx
 	movzx eax, cx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x24], ax
 	cmp ebx, ecx
@@ -7492,17 +7463,17 @@ Scr_EvalArrayRef_210:
 	jz Scr_EvalArrayRef_190
 	movzx eax, word [ebp-0x24]
 Scr_EvalArrayRef_180:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
@@ -7520,8 +7491,8 @@ Scr_EvalArrayRef_190:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x26]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx edx, word [ebx+0xc]
 	mov [ecx+0xc], dx
 	movzx eax, word [ebx+0x4]
@@ -7534,7 +7505,7 @@ Scr_EvalArrayRef_150:
 	mov ecx, [ebp-0x34]
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], di
+	mov [eax+gScrVarGlob+0x12], di
 	xor eax, eax
 	jmp Scr_EvalArrayRef_200
 Scr_EvalArrayRef_170:
@@ -7549,21 +7520,21 @@ Scr_EvalArrayRef_20:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x40], eax
 	jz Scr_EvalArrayRef_230
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
 	jnz Scr_EvalArrayRef_240
 	jmp Scr_EvalArrayRef_220
 Scr_EvalArrayRef_250:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -7573,14 +7544,14 @@ Scr_EvalArrayRef_240:
 	lea ecx, [eax+0x8002]
 	mov edx, ecx
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x40], eax
 	jnz Scr_EvalArrayRef_250
 	jmp Scr_EvalArrayRef_230
 Scr_EvalArrayRef_40:
-	mov eax, [scrVarPub+0x3c]
+	mov eax, [gScrVarPub+0x3c]
 	mov [ebp-0x54], eax
-	mov edx, [scrVarPub+0x40]
+	mov edx, [gScrVarPub+0x40]
 	mov [ebp-0x58], edx
 	mov eax, edx
 	jmp Scr_EvalArrayRef_260
@@ -7593,12 +7564,12 @@ Scr_EvalArrayRef_120:
 	mov [ebp-0x4c], esi
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov edx, [eax+0x8]
 	and edx, 0x1f
 	cmp edx, 0x15
 	jz Scr_EvalArrayRef_280
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	mov eax, [edx*4+var_typename]
 	jmp Scr_EvalArrayRef_290
 Scr_EvalArrayRef_60:
@@ -7614,13 +7585,13 @@ Scr_EvalArrayRef_160:
 	add edx, 0x8002
 	mov ecx, edx
 	shl ecx, 0x4
-	lea eax, [ecx+scrVarGlob]
+	lea eax, [ecx+gScrVarGlob]
 	cmp [ebp-0x2c], eax
 	jz Scr_EvalArrayRef_310
 Scr_EvalArrayRef_320:
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x80020]
+	lea ecx, [eax+gScrVarGlob+0x80020]
 	mov eax, [ecx+0x8]
 	shr eax, 0x8
 	cmp eax, esi
@@ -7631,7 +7602,7 @@ Scr_EvalArrayRef_320:
 	add edx, 0x8002
 	mov ecx, edx
 	shl ecx, 0x4
-	lea eax, [ecx+scrVarGlob]
+	lea eax, [ecx+gScrVarGlob]
 	cmp [ebp-0x2c], eax
 	jnz Scr_EvalArrayRef_320
 	jmp Scr_EvalArrayRef_310
@@ -7653,7 +7624,7 @@ Scr_EvalArrayRef_70:
 Scr_EvalArrayRef_330:
 	mov [esp], esi
 	call RemoveRefToObject
-	movzx edx, word [scrVarGlob+0x14]
+	movzx edx, word [gScrVarGlob+0x14]
 	mov [ebp-0x20], dx
 	test dx, dx
 	jz Scr_EvalArrayRef_340
@@ -7663,12 +7634,12 @@ Scr_EvalArrayRef_380:
 	add eax, 0x10
 	mov [ebp-0x50], eax
 	mov ebx, eax
-	add ebx, scrVarGlob
-	movzx ecx, word [eax+scrVarGlob]
+	add ebx, gScrVarGlob
+	movzx ecx, word [eax+gScrVarGlob]
 	mov [ebp-0x22], cx
 	movzx eax, cx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1e], ax
 	cmp ebx, ecx
@@ -7678,10 +7649,10 @@ Scr_EvalArrayRef_380:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x22]
-	mov [edx+scrVarGlob+0x10], ax
+	mov [edx+gScrVarGlob+0x10], ax
 	movzx eax, word [ebp-0x20]
 	mov edx, [ebp-0x50]
-	mov [edx+scrVarGlob], ax
+	mov [edx+gScrVarGlob], ax
 	movzx edx, word [ebx+0xc]
 	mov [ecx+0xc], dx
 	movzx eax, word [ebx+0x4]
@@ -7689,10 +7660,10 @@ Scr_EvalArrayRef_380:
 	mov ecx, ebx
 	movzx eax, word [ebp-0x1e]
 Scr_EvalArrayRef_350:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	movzx edx, word [ebp-0x20]
 	mov [ecx+0xc], dx
 	mov word [ecx+0xe], 0x0
@@ -7700,7 +7671,7 @@ Scr_EvalArrayRef_350:
 	movzx ebx, word [ebx]
 	mov eax, ebx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
@@ -7714,11 +7685,11 @@ Scr_EvalArrayRef_350:
 	jmp Scr_EvalArrayRef_270
 Scr_EvalArrayRef_50:
 	shl eax, 0x4
-	cmp word [eax+scrVarGlob+0x14], 0x0
+	cmp word [eax+gScrVarGlob+0x14], 0x0
 	jnz Scr_EvalArrayRef_370
 	mov [esp], esi
 	call RemoveRefToObject
-	mov dword [scrVarPub+0x10], 0x1
+	mov dword [gScrVarPub+0x10], 0x1
 	mov dword [esp], _cstring_readonly_array_c
 	call Scr_Error
 	xor edx, edx
@@ -7764,12 +7735,12 @@ Scr_EvalEquality_140:
 	mov edx, [esi]
 	mov eax, edx
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80028]
+	mov eax, [eax+gScrVarGlob+0x80028]
 	and eax, 0x1f
 	cmp eax, 0x15
 	jnz Scr_EvalEquality_20
 Scr_EvalEquality_100:
-	cmp byte [scrVarPub+0x8], 0x0
+	cmp byte [gScrVarPub+0x8], 0x0
 	jnz Scr_EvalEquality_30
 Scr_EvalEquality_10:
 	mov [ebp+0xc], edi
@@ -7865,7 +7836,7 @@ Scr_EvalEquality_190:
 Scr_EvalEquality_20:
 	mov eax, [edi]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80028]
+	mov eax, [eax+gScrVarGlob+0x80028]
 	and eax, 0x1f
 	cmp eax, 0x15
 	jz Scr_EvalEquality_100
@@ -8042,7 +8013,7 @@ Scr_EvalVariable:
 	sub esp, 0x2c
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov edx, [eax+0x8]
 	and edx, 0x1f
 	mov [ebp-0x1c], edx
@@ -8070,7 +8041,7 @@ Scr_EvalVariable:
 Scr_EvalVariable_20:
 	lea eax, [edi+0x1]
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	mov esi, [ebp-0x1c]
 Scr_EvalVariable_50:
 	mov eax, edi
@@ -8135,7 +8106,7 @@ SetVariableValue:
 	mov eax, [ebp+0x8]
 	mov esi, [ebp+0xc]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x4]
 	mov edx, [ebx+0x8]
 	mov eax, edx
@@ -8232,10 +8203,10 @@ FindArrayVariable:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	mov edx, [esi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -8245,7 +8216,7 @@ FindArrayVariable_40:
 	mov ecx, 0x8002
 FindArrayVariable_20:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	pop ebx
 	pop esi
 	pop edi
@@ -8263,19 +8234,19 @@ FindArrayVariable_30:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz FindArrayVariable_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
 	jnz FindArrayVariable_50
 	add ecx, 0x8002
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	pop ebx
 	pop esi
 	pop edi
@@ -8295,7 +8266,7 @@ GetObjectVariable:
 	mov [esp], eax
 	call GetVariableIndexInternal
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	leave
 	ret
 	nop
@@ -8327,7 +8298,7 @@ RemoveRefToObject_200:
 	lea edi, [ecx+0x1]
 	mov edx, edi
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	mov [ebp-0x2c], eax
 	mov ebx, eax
 	movzx eax, word [eax+0x4]
@@ -8357,16 +8328,16 @@ RemoveRefToObject_70:
 	mov eax, [ebp-0x2c]
 	movzx edx, word [eax+0xc]
 	mov dword [eax+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov ecx, [ebp-0x2c]
 	mov [ecx+0x4], ax
 	mov eax, edx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	mov word [eax+gScrVarGlob+0x12], 0x0
+	movzx eax, word [gScrVarGlob+0x14]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
-	mov [scrVarGlob+0x14], dx
+	mov [eax+gScrVarGlob+0x12], dx
+	mov [gScrVarGlob+0x14], dx
 	add esp, 0x5c
 	pop ebx
 	pop esi
@@ -8374,7 +8345,7 @@ RemoveRefToObject_70:
 	pop ebp
 	ret
 RemoveRefToObject_40:
-	add word [edx+scrVarGlob+0x4], 0x1
+	add word [edx+gScrVarGlob+0x4], 0x1
 	movzx eax, word [eax+0xe]
 	test ax, ax
 	jnz RemoveRefToObject_50
@@ -8385,15 +8356,15 @@ RemoveRefToObject_120:
 	jnz RemoveRefToObject_60
 	movzx edx, word [ebx+0xc]
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov [ebx+0x4], ax
 	mov eax, edx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	mov word [eax+gScrVarGlob+0x12], 0x0
+	movzx eax, word [gScrVarGlob+0x14]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
-	mov [scrVarGlob+0x14], dx
+	mov [eax+gScrVarGlob+0x12], dx
+	mov [gScrVarGlob+0x14], dx
 	jmp RemoveRefToObject_70
 RemoveRefToObject_30:
 	cmp word [ebx+0xe], 0x0
@@ -8419,7 +8390,7 @@ RemoveRefToObject_60:
 RemoveRefToObject_50:
 	movzx eax, ax
 	shl eax, 0x4
-	mov ebx, [eax+scrVarGlob+0x80028]
+	mov ebx, [eax+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -8438,11 +8409,11 @@ RemoveRefToObject_50:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x24], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -8453,12 +8424,12 @@ RemoveRefToObject_210:
 RemoveRefToObject_90:
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov edx, [ebp-0x2c]
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	movzx eax, word [ebx+scrVarGlob+0x8002e]
+	movzx eax, word [ebx+gScrVarGlob+0x8002e]
 	movzx esi, ax
 	test ax, ax
 	jnz RemoveRefToObject_90
@@ -8472,37 +8443,37 @@ RemoveRefToObject_90:
 RemoveRefToObject_170:
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], dx
+	mov [eax+gScrVarGlob+0x8002e], dx
 	cmp word [ebp-0x4a], 0x0
 	jz RemoveRefToObject_110
 RemoveRefToObject_180:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], cx
+	mov [edx+gScrVarGlob+0x80022], cx
 RemoveRefToObject_190:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov ecx, [ebp-0x1c]
 	mov word [ecx+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], si
-	mov [scrVarGlob+0x80024], si
+	mov [eax+gScrVarGlob+0x80022], si
+	mov [gScrVarGlob+0x80024], si
 	cmp word [ebp-0x26], 0x0
 	jz RemoveRefToObject_120
 	mov eax, [ebp-0x20]
 RemoveRefToObject_100:
 	add eax, 0x8002
 	shl eax, 0x4
-	movzx edi, word [eax+scrVarGlob+0xe]
+	movzx edi, word [eax+gScrVarGlob+0xe]
 	mov [ebp-0x26], di
 	movzx edx, di
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	mov [ebp-0x20], edx
-	lea ebx, [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -8525,7 +8496,7 @@ RemoveRefToObject_130:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx eax, word [ebx+0xe]
 	mov [ebp-0x4a], ax
@@ -8537,18 +8508,18 @@ RemoveRefToObject_130:
 	jnz RemoveRefToObject_170
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	mov edi, [ebp-0x30]
-	mov [edi+scrVarGlob+0xe], ax
+	mov [edi+gScrVarGlob+0xe], ax
 	cmp word [ebp-0x4a], 0x0
 	jnz RemoveRefToObject_180
 RemoveRefToObject_110:
 	mov edx, [ebp-0x30]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ecx, 0x4
-	movzx edx, word [ecx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ecx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp RemoveRefToObject_190
 RemoveRefToObject_140:
 	mov [esp], edx
@@ -8566,21 +8537,21 @@ RemoveRefToObject_80:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz RemoveRefToObject_210
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
 	jnz RemoveRefToObject_220
 	jmp RemoveRefToObject_90
 RemoveRefToObject_230:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -8590,7 +8561,7 @@ RemoveRefToObject_220:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jnz RemoveRefToObject_230
 	jmp RemoveRefToObject_210
@@ -8602,30 +8573,6 @@ RemoveRefToObject_160:
 	nop
 	add [eax], al
 
-
-;RemoveRefToVector(float const*)
-RemoveRefToVector:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov edx, [ebp+0x8]
-	cmp byte [edx-0x1], 0x0
-	jnz RemoveRefToVector_10
-	lea ecx, [edx-0x4]
-	movzx eax, word [edx-0x4]
-	test ax, ax
-	jz RemoveRefToVector_20
-	sub eax, 0x1
-	mov [edx-0x4], ax
-RemoveRefToVector_10:
-	leave
-	ret
-RemoveRefToVector_20:
-	mov dword [esp+0x4], 0x10
-	mov [esp], ecx
-	call MT_Free
-	leave
-	ret
 
 
 ;Scr_AddClassField(unsigned int, char const*, unsigned int)
@@ -8666,23 +8613,23 @@ Scr_AddClassField:
 	mov [ebp-0x1c], eax
 	mov eax, [ebp-0x4c]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x40], eax
 	mov ecx, [ebp-0x1c]
 	add ecx, 0x8002
 	mov [ebp-0x48], ecx
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x44], edx
-	movzx edi, word [eax+scrVarGlob]
+	movzx edi, word [eax+gScrVarGlob]
 	mov ecx, [ebp-0x40]
 	movzx eax, word [ecx+0xe]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_AddClassField_10
 	shl edx, 0x4
-	mov ebx, [edx+scrVarGlob+0x80028]
+	mov ebx, [edx+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -8703,11 +8650,11 @@ Scr_AddClassField:
 	lea edx, [ecx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x38], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x3c], eax
 	mov ecx, [eax+0x8]
 	mov eax, ecx
@@ -8720,7 +8667,7 @@ Scr_AddClassField_80:
 Scr_AddClassField_70:
 	shl edx, 0x4
 	movzx ecx, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x2], cx
+	mov [edx+gScrVarGlob+0x2], cx
 	mov edx, edi
 	mov eax, esi
 	mov ecx, [ebp-0x40]
@@ -8729,19 +8676,19 @@ Scr_AddClassField_10:
 	mov edx, edi
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], di
+	mov [eax+gScrVarGlob+0x12], di
 	xor eax, eax
 Scr_AddClassField_30:
 	mov [ecx+0xe], dx
 	mov edx, [ebp-0x44]
 	mov word [edx+0x2], 0x0
 	shl edi, 0x4
-	mov [edi+scrVarGlob+0x8002e], ax
+	mov [edi+gScrVarGlob+0x8002e], ax
 	shl dword [ebp-0x48], 0x4
 	mov ecx, [ebp-0x48]
-	movzx edx, word [ecx+scrVarGlob]
+	movzx edx, word [ecx+gScrVarGlob]
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov eax, [edx+0x8]
 	and eax, 0xffffffe0
 	or eax, 0x6
@@ -8776,9 +8723,9 @@ Scr_AddClassField_30:
 	add eax, 0x8002
 	mov [ebp-0x34], eax
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x30], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	mov [ebp-0x2c], eax
 	mov ecx, [ebp-0x40]
 	movzx eax, word [ecx+0xe]
@@ -8786,7 +8733,7 @@ Scr_AddClassField_30:
 	test ax, ax
 	jz Scr_AddClassField_40
 	shl edx, 0x4
-	mov esi, [edx+scrVarGlob+0x80028]
+	mov esi, [edx+gScrVarGlob+0x80028]
 	shr esi, 0x8
 	lea edx, [esi+esi*4]
 	lea edx, [edx+edx*4]
@@ -8807,11 +8754,11 @@ Scr_AddClassField_30:
 	lea edx, [ebx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x28], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -8823,7 +8770,7 @@ Scr_AddClassField_120:
 Scr_AddClassField_110:
 	shl edx, 0x4
 	movzx eax, word [ebp-0x24]
-	mov [edx+scrVarGlob+0x2], ax
+	mov [edx+gScrVarGlob+0x2], ax
 	movzx edx, word [ebp-0x2c]
 	mov eax, edi
 	jmp Scr_AddClassField_60
@@ -8831,7 +8778,7 @@ Scr_AddClassField_40:
 	movzx edx, word [ebp-0x2c]
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
+	mov [eax+gScrVarGlob+0x12], dx
 	xor eax, eax
 Scr_AddClassField_60:
 	mov ecx, [ebp-0x40]
@@ -8840,15 +8787,15 @@ Scr_AddClassField_60:
 	mov word [edx+0x2], 0x0
 	shl dword [ebp-0x2c], 0x4
 	mov ecx, [ebp-0x2c]
-	mov [ecx+scrVarGlob+0x8002e], ax
+	mov [ecx+gScrVarGlob+0x8002e], ax
 	shl dword [ebp-0x34], 0x4
 	mov eax, [ebp-0x34]
-	movzx ebx, word [eax+scrVarGlob]
+	movzx ebx, word [eax+gScrVarGlob]
 	mov edx, [ebp-0x20]
 	mov [esp], edx
 	call SL_RemoveRefToString
 	shl ebx, 0x4
-	add ebx, scrVarGlob+0x80020
+	add ebx, gScrVarGlob+0x80020
 	mov eax, [ebx+0x8]
 	and eax, 0xffffffe0
 	or eax, 0x6
@@ -8870,13 +8817,13 @@ Scr_AddClassField_20:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x38], eax
 	jz Scr_AddClassField_80
 Scr_AddClassField_100:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -8885,7 +8832,7 @@ Scr_AddClassField_100:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x38], eax
 	jnz Scr_AddClassField_100
 	jmp Scr_AddClassField_80
@@ -8897,12 +8844,12 @@ Scr_AddClassField_50:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x28], eax
 	jz Scr_AddClassField_120
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, esi
@@ -8912,12 +8859,12 @@ Scr_AddClassField_140:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x28], eax
 	jz Scr_AddClassField_120
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -8937,7 +8884,7 @@ Scr_ClearWaitTime:
 	mov ebp, esp
 	mov edx, [ebp+0x8]
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	mov eax, [edx+0x8]
 	and eax, 0xffffffe0
 	or eax, 0xe
@@ -9083,7 +9030,7 @@ Scr_EvalSizeValue_10:
 	mov ecx, [esi]
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x10]
+	lea edx, [eax+gScrVarGlob+0x10]
 	mov dword [esi+0x4], 0x6
 	mov eax, [edx+0x8]
 	and eax, 0x1f
@@ -9147,7 +9094,7 @@ Scr_FreeEntityNum:
 	sub esp, 0x4
 	mov edx, [ebp+0x8]
 	mov eax, [ebp+0xc]
-	cmp byte [scrVarPub+0x34], 0x0
+	cmp byte [gScrVarPub+0x34], 0x0
 	jz Scr_FreeEntityNum_10
 	lea eax, [eax+eax*2]
 	movzx eax, word [eax*4+g_classMap+0x2]
@@ -9170,10 +9117,10 @@ Scr_FreeEntityNum:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -9183,7 +9130,7 @@ Scr_FreeEntityNum_50:
 	mov ecx, 0x8002
 Scr_FreeEntityNum_40:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jnz Scr_FreeEntityNum_30
@@ -9196,18 +9143,18 @@ Scr_FreeEntityNum_10:
 	ret
 Scr_FreeEntityNum_30:
 	shl edx, 0x4
-	mov ebx, [edx+scrVarGlob+0x80024]
+	mov ebx, [edx+gScrVarGlob+0x80024]
 	lea edx, [ebx+0x1]
 	shl edx, 0x4
-	lea ecx, [edx+scrVarGlob]
+	lea ecx, [edx+gScrVarGlob]
 	mov eax, [ecx+0x8]
 	and eax, 0xffffffe0
 	or eax, 0x13
 	mov [ecx+0x8], eax
-	add word [edx+scrVarGlob+0x4], 0x1
-	mov eax, [scrVarPub+0x2c]
+	add word [edx+gScrVarGlob+0x4], 0x1
+	mov eax, [gScrVarPub+0x2c]
 	mov [ecx+0x6], ax
-	mov [scrVarPub+0x2c], ebx
+	mov [gScrVarPub+0x2c], ebx
 	mov [ebp+0xc], esi
 	mov eax, [ebp-0x10]
 	mov [ebp+0x8], eax
@@ -9225,13 +9172,13 @@ Scr_FreeEntityNum_20:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz Scr_FreeEntityNum_50
 Scr_FreeEntityNum_70:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -9240,7 +9187,7 @@ Scr_FreeEntityNum_70:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jnz Scr_FreeEntityNum_70
 	jmp Scr_FreeEntityNum_50
@@ -9259,11 +9206,11 @@ Scr_InitVariables:
 Scr_InitVariables_10:
 	mov ebx, esi
 	shl ebx, 0x4
-	lea ecx, [ebx+scrVarGlob]
+	lea ecx, [ebx+gScrVarGlob]
 	mov dword [ecx+0x8], 0x0
 	mov eax, esi
 	lea edx, [esi-0x1]
-	mov [ebx+scrVarGlob], dx
+	mov [ebx+gScrVarGlob], dx
 	mov [ecx+0xc], dx
 	mov [ecx+0x4], si
 	sub eax, 0x2
@@ -9271,22 +9218,22 @@ Scr_InitVariables_10:
 	add esi, 0x1
 	cmp esi, 0x8001
 	jnz Scr_InitVariables_10
-	mov dword [scrVarGlob+0x18], 0x0
-	mov word [scrVarGlob+0x10], 0x0
-	mov word [scrVarGlob+0x1c], 0x0
-	mov word [scrVarGlob+0x14], 0x1
-	mov word [scrVarGlob+0x22], 0x0
-	mov word [scrVarGlob+0x12], 0x7fff
-	mov word [scrVarGlob+0x80004], 0x0
+	mov dword [gScrVarGlob+0x18], 0x0
+	mov word [gScrVarGlob+0x10], 0x0
+	mov word [gScrVarGlob+0x1c], 0x0
+	mov word [gScrVarGlob+0x14], 0x1
+	mov word [gScrVarGlob+0x22], 0x0
+	mov word [gScrVarGlob+0x12], 0x7fff
+	mov word [gScrVarGlob+0x80004], 0x0
 	mov si, 0x8003
 Scr_InitVariables_20:
 	mov ebx, esi
 	shl ebx, 0x4
-	lea ecx, [ebx+scrVarGlob]
+	lea ecx, [ebx+gScrVarGlob]
 	mov dword [ecx+0x8], 0x0
 	mov edx, esi
 	lea eax, [esi+0x7ffe]
-	mov [ebx+scrVarGlob], ax
+	mov [ebx+gScrVarGlob], ax
 	mov [ecx+0xc], ax
 	lea eax, [esi+0x7fff]
 	mov [ecx+0x4], ax
@@ -9295,13 +9242,13 @@ Scr_InitVariables_20:
 	add esi, 0x1
 	cmp esi, 0x18000
 	jnz Scr_InitVariables_20
-	mov dword [scrVarGlob+0x80028], 0x0
-	mov word [scrVarGlob+0x80020], 0x0
-	mov word [scrVarGlob+0x8002c], 0x0
-	mov word [scrVarGlob+0x80024], 0x1
-	mov word [scrVarGlob+0x80032], 0x0
-	mov word [scrVarGlob+0x80022], 0xfffd
-	mov word [scrVarGlob+0x17fff4], 0x0
+	mov dword [gScrVarGlob+0x80028], 0x0
+	mov word [gScrVarGlob+0x80020], 0x0
+	mov word [gScrVarGlob+0x8002c], 0x0
+	mov word [gScrVarGlob+0x80024], 0x1
+	mov word [gScrVarGlob+0x80032], 0x0
+	mov word [gScrVarGlob+0x80022], 0xfffd
+	mov word [gScrVarGlob+0x17fff4], 0x0
 	pop ebx
 	pop esi
 	pop ebp
@@ -9338,11 +9285,11 @@ ClearVariableField:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x20], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -9350,7 +9297,7 @@ ClearVariableField:
 	jz ClearVariableField_10
 ClearVariableField_60:
 	shl edi, 0x4
-	add edi, scrVarGlob+0x10
+	add edi, gScrVarGlob+0x10
 	mov [ebp-0x24], edi
 	mov edx, [edi+0x8]
 	mov eax, edx
@@ -9387,11 +9334,11 @@ ClearVariableField_20:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x1c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	mov edx, [esi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -9401,7 +9348,7 @@ ClearVariableField_90:
 	mov ecx, 0x8002
 ClearVariableField_80:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz ClearVariableField_40
@@ -9410,7 +9357,7 @@ ClearVariableField_80:
 	mov dword [eax+0x4], 0x0
 	mov [esp+0xc], eax
 	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
+	mov eax, [edx+gScrVarGlob+0x80024]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x24]
 	movzx eax, word [edx+0x6]
@@ -9432,12 +9379,12 @@ ClearVariableField_70:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jz ClearVariableField_60
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -9461,13 +9408,13 @@ ClearVariableField_30:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jz ClearVariableField_90
 ClearVariableField_110:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -9476,7 +9423,7 @@ ClearVariableField_110:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jnz ClearVariableField_110
 	jmp ClearVariableField_90
@@ -9493,7 +9440,7 @@ ClearVariableValue:
 	sub esp, 0x14
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x4]
 	mov edx, [ebx+0x8]
 	mov eax, edx
@@ -9574,10 +9521,10 @@ FindObjectVariable:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -9587,7 +9534,7 @@ FindObjectVariable_40:
 	mov ecx, 0x8002
 FindObjectVariable_20:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	pop ebx
 	pop esi
 	pop edi
@@ -9605,19 +9552,19 @@ FindObjectVariable_30:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz FindObjectVariable_40
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
 	jnz FindObjectVariable_50
 	add ecx, 0x8002
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	pop ebx
 	pop esi
 	pop edi
@@ -9637,11 +9584,11 @@ RemoveNextVariable:
 	lea eax, [edx+0x1]
 	mov [ebp-0x28], eax
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0xe]
+	movzx eax, word [eax+gScrVarGlob+0xe]
 	lea edi, [eax+0x8002]
 	mov eax, edi
 	shl eax, 0x4
-	mov ebx, [eax+scrVarGlob+0x8]
+	mov ebx, [eax+gScrVarGlob+0x8]
 	shr ebx, 0x8
 	lea eax, [ebx+ebx*4]
 	lea eax, [eax+eax*4]
@@ -9660,11 +9607,11 @@ RemoveNextVariable:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x24], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -9675,11 +9622,11 @@ RemoveNextVariable_110:
 RemoveNextVariable_100:
 	mov edx, [ebp-0x28]
 	shl edx, 0x4
-	add edx, scrVarGlob
+	add edx, gScrVarGlob
 	mov eax, esi
 	call MakeVariableExternal
 	shl edi, 0x4
-	lea esi, [edi+scrVarGlob]
+	lea esi, [edi+gScrVarGlob]
 	mov edx, [esi+0x4]
 	mov eax, [esi+0x8]
 	and eax, 0x1f
@@ -9696,7 +9643,7 @@ RemoveNextVariable_20:
 	movzx edi, word [esi+0xc]
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx eax, word [esi+0xe]
 	mov [ebp-0x1e], ax
@@ -9708,24 +9655,24 @@ RemoveNextVariable_20:
 	jz RemoveNextVariable_60
 	mov eax, ebx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], cx
+	mov [eax+gScrVarGlob+0x8002e], cx
 	cmp word [ebp-0x1e], 0x0
 	jz RemoveNextVariable_70
 RemoveNextVariable_80:
 	shl ecx, 0x4
-	mov [ecx+scrVarGlob+0x80022], bx
+	mov [ecx+gScrVarGlob+0x80022], bx
 RemoveNextVariable_90:
 	mov dword [esi+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [esi+0x4], ax
 	mov eax, [ebp-0x1c]
 	mov word [eax+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], di
-	mov [scrVarGlob+0x80024], di
+	mov [eax+gScrVarGlob+0x80022], di
+	mov [gScrVarGlob+0x80024], di
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -9737,18 +9684,18 @@ RemoveNextVariable_60:
 	shl eax, 0x4
 	mov edx, ecx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0xe], dx
+	movzx edx, word [edx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0xe], dx
 	cmp word [ebp-0x1e], 0x0
 	jnz RemoveNextVariable_80
 RemoveNextVariable_70:
 	shl dword [ebp-0x28], 0x4
 	mov edx, [ebp-0x28]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ebx, 0x4
-	movzx edx, word [ebx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ebx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp RemoveNextVariable_90
 RemoveNextVariable_10:
 	shr ecx, 0x8
@@ -9759,12 +9706,12 @@ RemoveNextVariable_120:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz RemoveNextVariable_110
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -9820,10 +9767,10 @@ SafeRemoveVariable:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -9845,12 +9792,12 @@ SafeRemoveVariable_40:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz SafeRemoveVariable_30
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -9860,17 +9807,17 @@ SafeRemoveVariable_20:
 	jz SafeRemoveVariable_30
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov eax, [ebp+0x8]
 	add eax, 0x1
 	mov [ebp-0x24], eax
 	mov edx, eax
 	shl edx, 0x4
-	add edx, scrVarGlob
+	add edx, gScrVarGlob
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	add ebx, scrVarGlob+0x80020
+	add ebx, gScrVarGlob+0x80020
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -9893,7 +9840,7 @@ SafeRemoveVariable_50:
 	movzx edi, word [ebx+0xc]
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx edx, word [ebx+0xe]
 	mov [ebp-0x1e], dx
@@ -9904,24 +9851,24 @@ SafeRemoveVariable_50:
 	jz SafeRemoveVariable_90
 	mov eax, esi
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], cx
+	mov [eax+gScrVarGlob+0x8002e], cx
 	cmp word [ebp-0x1e], 0x0
 	jz SafeRemoveVariable_100
 SafeRemoveVariable_110:
 	shl ecx, 0x4
-	mov [ecx+scrVarGlob+0x80022], si
+	mov [ecx+gScrVarGlob+0x80022], si
 SafeRemoveVariable_120:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov eax, [ebp-0x1c]
 	mov word [eax+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], di
-	mov [scrVarGlob+0x80024], di
+	mov [eax+gScrVarGlob+0x80022], di
+	mov [gScrVarGlob+0x80024], di
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -9933,18 +9880,18 @@ SafeRemoveVariable_90:
 	shl eax, 0x4
 	mov edx, ecx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0xe], dx
+	movzx edx, word [edx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0xe], dx
 	cmp word [ebp-0x1e], 0x0
 	jnz SafeRemoveVariable_110
 SafeRemoveVariable_100:
 	shl dword [ebp-0x24], 0x4
 	mov edx, [ebp-0x24]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl esi, 0x4
-	movzx edx, word [esi+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [esi+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp SafeRemoveVariable_120
 SafeRemoveVariable_60:
 	mov [esp], edx
@@ -10014,7 +9961,7 @@ Scr_FreeEntityList:
 	push esi
 	push ebx
 	sub esp, 0x5c
-	mov eax, [scrVarPub+0x2c]
+	mov eax, [gScrVarPub+0x2c]
 	mov [ebp-0x30], eax
 	test eax, eax
 	jnz Scr_FreeEntityList_10
@@ -10029,7 +9976,7 @@ Scr_FreeEntityList_30:
 	mov edi, [ebp-0x30]
 	mov [esp], edi
 	call RemoveRefToObject
-	mov eax, [scrVarPub+0x2c]
+	mov eax, [gScrVarPub+0x2c]
 	mov [ebp-0x30], eax
 	test eax, eax
 	jz Scr_FreeEntityList_20
@@ -10039,9 +9986,9 @@ Scr_FreeEntityList_10:
 	mov [ebp-0x2c], edx
 	mov eax, edx
 	shl eax, 0x4
-	lea edi, [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
 	movzx eax, word [edi+0x6]
-	mov [scrVarPub+0x2c], eax
+	mov [gScrVarPub+0x2c], eax
 	mov word [edi+0x6], 0x0
 	mov ecx, [ebp-0x30]
 	mov [esp], ecx
@@ -10051,7 +9998,7 @@ Scr_FreeEntityList_10:
 	jz Scr_FreeEntityList_30
 	movzx eax, ax
 	shl eax, 0x4
-	mov ebx, [eax+scrVarGlob+0x80028]
+	mov ebx, [eax+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -10071,11 +10018,11 @@ Scr_FreeEntityList_10:
 	lea esi, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x24], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -10086,12 +10033,12 @@ Scr_FreeEntityList_150:
 Scr_FreeEntityList_50:
 	mov eax, esi
 	shl eax, 0x4
-	movzx ebx, word [eax+scrVarGlob+0x80020]
+	movzx ebx, word [eax+gScrVarGlob+0x80020]
 	mov edx, edi
 	mov eax, esi
 	call MakeVariableExternal
 	shl ebx, 0x4
-	movzx eax, word [ebx+scrVarGlob+0x8002e]
+	movzx eax, word [ebx+gScrVarGlob+0x8002e]
 	movzx esi, ax
 	test ax, ax
 	jnz Scr_FreeEntityList_50
@@ -10104,37 +10051,37 @@ Scr_FreeEntityList_50:
 Scr_FreeEntityList_120:
 	mov eax, ecx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], dx
+	mov [eax+gScrVarGlob+0x8002e], dx
 	cmp word [ebp-0x4a], 0x0
 	jz Scr_FreeEntityList_70
 Scr_FreeEntityList_130:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x80022], cx
+	mov [edx+gScrVarGlob+0x80022], cx
 Scr_FreeEntityList_140:
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	mov ecx, [ebp-0x1c]
 	mov word [ecx+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], si
-	mov [scrVarGlob+0x80024], si
+	mov [eax+gScrVarGlob+0x80022], si
+	mov [gScrVarGlob+0x80024], si
 	cmp word [ebp-0x26], 0x0
 	jz Scr_FreeEntityList_30
 Scr_FreeEntityList_60:
 	mov eax, [ebp-0x20]
 	add eax, 0x8002
 	shl eax, 0x4
-	movzx edx, word [eax+scrVarGlob+0xe]
+	movzx edx, word [eax+gScrVarGlob+0xe]
 	mov [ebp-0x26], dx
 	movzx edx, dx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
+	movzx edx, word [edx+gScrVarGlob+0x80020]
 	mov [ebp-0x20], edx
-	lea ebx, [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -10157,7 +10104,7 @@ Scr_FreeEntityList_80:
 	movzx esi, word [ebx+0xc]
 	mov eax, esi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx ecx, word [ebx+0xe]
 	mov [ebp-0x4a], cx
@@ -10168,18 +10115,18 @@ Scr_FreeEntityList_80:
 	jnz Scr_FreeEntityList_120
 	mov eax, edx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	mov edi, [ebp-0x34]
-	mov [edi+scrVarGlob+0xe], ax
+	mov [edi+gScrVarGlob+0xe], ax
 	cmp word [ebp-0x4a], 0x0
 	jnz Scr_FreeEntityList_130
 Scr_FreeEntityList_70:
 	mov edx, [ebp-0x34]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ecx, 0x4
-	movzx edx, word [ecx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ecx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp Scr_FreeEntityList_140
 Scr_FreeEntityList_40:
 	shr ecx, 0x8
@@ -10189,21 +10136,21 @@ Scr_FreeEntityList_40:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jz Scr_FreeEntityList_150
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
 	jnz Scr_FreeEntityList_160
 	jmp Scr_FreeEntityList_50
 Scr_FreeEntityList_170:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -10213,7 +10160,7 @@ Scr_FreeEntityList_160:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x24], eax
 	jnz Scr_FreeEntityList_170
 	jmp Scr_FreeEntityList_150
@@ -10239,7 +10186,7 @@ Scr_GetEntityIdRef:
 	mov ebp, esp
 	mov edx, [ebp+0x8]
 	shl edx, 0x4
-	add edx, scrVarGlob+0x10
+	add edx, gScrVarGlob+0x10
 	movzx eax, word [edx+0x9]
 	shl eax, 0x10
 	and ecx, 0xffff
@@ -10257,7 +10204,7 @@ Scr_RemoveClassMap:
 	push ebx
 	sub esp, 0x14
 	mov eax, [ebp+0x8]
-	cmp byte [scrVarPub+0x34], 0x0
+	cmp byte [gScrVarPub+0x34], 0x0
 	jz Scr_RemoveClassMap_10
 	lea eax, [eax+eax*2]
 	lea ebx, [eax*4]
@@ -10325,16 +10272,16 @@ GetNewArrayVariable:
 	mov [ebp-0x1c], eax
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x28], eax
 	mov ecx, [ebp-0x1c]
 	add ecx, 0x8002
 	mov [ebp-0x30], ecx
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x2c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	mov [ebp-0x24], eax
 	mov ecx, [ebp-0x28]
 	movzx eax, word [ecx+0xe]
@@ -10342,7 +10289,7 @@ GetNewArrayVariable:
 	test ax, ax
 	jz GetNewArrayVariable_10
 	shl edx, 0x4
-	mov esi, [edx+scrVarGlob+0x80028]
+	mov esi, [edx+gScrVarGlob+0x80028]
 	shr esi, 0x8
 	lea edx, [esi+esi*4]
 	lea edx, [edx+edx*4]
@@ -10362,11 +10309,11 @@ GetNewArrayVariable:
 	lea edx, [ebx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x20], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -10378,7 +10325,7 @@ GetNewArrayVariable_50:
 GetNewArrayVariable_40:
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x2], ax
+	mov [edx+gScrVarGlob+0x2], ax
 	movzx edx, word [ebp-0x24]
 	mov eax, edi
 	jmp GetNewArrayVariable_30
@@ -10386,7 +10333,7 @@ GetNewArrayVariable_10:
 	movzx edx, word [ebp-0x24]
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
+	mov [eax+gScrVarGlob+0x12], dx
 	xor eax, eax
 GetNewArrayVariable_30:
 	mov ecx, [ebp-0x28]
@@ -10395,10 +10342,10 @@ GetNewArrayVariable_30:
 	mov word [edx+0x2], 0x0
 	shl dword [ebp-0x24], 0x4
 	mov ecx, [ebp-0x24]
-	mov [ecx+scrVarGlob+0x8002e], ax
+	mov [ecx+gScrVarGlob+0x8002e], ax
 	shl dword [ebp-0x30], 0x4
 	mov edx, [ebp-0x30]
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -10413,13 +10360,13 @@ GetNewArrayVariable_20:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jz GetNewArrayVariable_50
 GetNewArrayVariable_70:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -10428,7 +10375,7 @@ GetNewArrayVariable_70:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jnz GetNewArrayVariable_70
 	jmp GetNewArrayVariable_50
@@ -10448,15 +10395,15 @@ RemoveVariableValue:
 	mov eax, [ebp+0xc]
 	mov edx, eax
 	shl edx, 0x4
-	movzx ebx, word [edx+scrVarGlob+0x80020]
+	movzx ebx, word [edx+gScrVarGlob+0x80020]
 	mov edx, [ebp+0x8]
 	add edx, 0x1
 	mov [ebp-0x24], edx
 	shl edx, 0x4
-	add edx, scrVarGlob
+	add edx, gScrVarGlob
 	call MakeVariableExternal
 	shl ebx, 0x4
-	lea esi, [ebx+scrVarGlob+0x80020]
+	lea esi, [ebx+gScrVarGlob+0x80020]
 	mov edx, [esi+0x4]
 	mov eax, [esi+0x8]
 	and eax, 0x1f
@@ -10473,7 +10420,7 @@ RemoveVariableValue_10:
 	movzx edi, word [esi+0xc]
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x1c], eax
 	movzx eax, word [esi+0xe]
 	mov [ebp-0x1e], ax
@@ -10485,24 +10432,24 @@ RemoveVariableValue_10:
 	jz RemoveVariableValue_50
 	mov eax, ebx
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x80020]
+	movzx eax, word [eax+gScrVarGlob+0x80020]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x8002e], cx
+	mov [eax+gScrVarGlob+0x8002e], cx
 	cmp word [ebp-0x1e], 0x0
 	jz RemoveVariableValue_60
 RemoveVariableValue_70:
 	shl ecx, 0x4
-	mov [ecx+scrVarGlob+0x80022], bx
+	mov [ecx+gScrVarGlob+0x80022], bx
 RemoveVariableValue_80:
 	mov dword [esi+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [esi+0x4], ax
 	mov eax, [ebp-0x1c]
 	mov word [eax+0x2], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], di
-	mov [scrVarGlob+0x80024], di
+	mov [eax+gScrVarGlob+0x80022], di
+	mov [gScrVarGlob+0x80024], di
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -10514,18 +10461,18 @@ RemoveVariableValue_50:
 	shl eax, 0x4
 	mov edx, ecx
 	shl edx, 0x4
-	movzx edx, word [edx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0xe], dx
+	movzx edx, word [edx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0xe], dx
 	cmp word [ebp-0x1e], 0x0
 	jnz RemoveVariableValue_70
 RemoveVariableValue_60:
 	shl dword [ebp-0x24], 0x4
 	mov edx, [ebp-0x24]
-	movzx eax, word [edx+scrVarGlob+0xc]
+	movzx eax, word [edx+gScrVarGlob+0xc]
 	shl eax, 0x4
 	shl ebx, 0x4
-	movzx edx, word [ebx+scrVarGlob+0x80020]
-	mov [eax+scrVarGlob+0x12], dx
+	movzx edx, word [ebx+gScrVarGlob+0x80020]
+	mov [eax+gScrVarGlob+0x12], dx
 	jmp RemoveVariableValue_80
 RemoveVariableValue_20:
 	mov [esp], edx
@@ -10625,7 +10572,7 @@ Scr_CastDebugString_100:
 Scr_CastDebugString_80:
 	mov eax, [esi]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	and eax, 0x1f
 	mov eax, [eax*4+var_typename]
 	jmp Scr_CastDebugString_70
@@ -10703,14 +10650,14 @@ Scr_EvalFieldObject_10:
 	mov ecx, esi
 	mov eax, esi
 	shl eax, 0x4
-	mov ebx, [eax+scrVarGlob+0x18]
+	mov ebx, [eax+gScrVarGlob+0x18]
 	and ebx, 0x1f
 	cmp ebx, 0x14
 	jg Scr_EvalFieldObject_60
 	mov [ebp-0x10], esi
 	shl dword [ebp+0x8], 0x4
 	mov ebx, [ebp+0x8]
-	add ebx, scrVarGlob+0x80020
+	add ebx, gScrVarGlob+0x80020
 	mov ecx, [ebx+0x4]
 	mov edx, [ebx+0x8]
 	mov eax, edx
@@ -10790,7 +10737,7 @@ Scr_KillEndonThread:
 	sub esp, 0x14
 	mov ebx, [ebp+0x8]
 	shl ebx, 0x4
-	add ebx, scrVarGlob+0x10
+	add ebx, gScrVarGlob+0x10
 	movzx eax, word [ebx+0x6]
 	mov [esp], eax
 	call RemoveRefToObject
@@ -10812,7 +10759,7 @@ SetNewVariableValue:
 	mov edx, [ebp+0x8]
 	mov ecx, [ebp+0xc]
 	shl edx, 0x4
-	add edx, scrVarGlob+0x80020
+	add edx, gScrVarGlob+0x80020
 	mov eax, [edx+0x8]
 	or eax, [ecx+0x4]
 	mov [edx+0x8], eax
@@ -10853,16 +10800,16 @@ GetNewObjectVariable:
 	mov [ebp-0x1c], eax
 	mov eax, edi
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x28], eax
 	mov ecx, [ebp-0x1c]
 	add ecx, 0x8002
 	mov [ebp-0x30], ecx
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x2c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	mov [ebp-0x24], eax
 	mov ecx, [ebp-0x28]
 	movzx eax, word [ecx+0xe]
@@ -10870,7 +10817,7 @@ GetNewObjectVariable:
 	test ax, ax
 	jz GetNewObjectVariable_10
 	shl edx, 0x4
-	mov esi, [edx+scrVarGlob+0x80028]
+	mov esi, [edx+gScrVarGlob+0x80028]
 	shr esi, 0x8
 	lea edx, [esi+esi*4]
 	lea edx, [edx+edx*4]
@@ -10890,11 +10837,11 @@ GetNewObjectVariable:
 	lea edx, [ebx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x20], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -10906,7 +10853,7 @@ GetNewObjectVariable_50:
 GetNewObjectVariable_40:
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x2], ax
+	mov [edx+gScrVarGlob+0x2], ax
 	movzx edx, word [ebp-0x24]
 	mov eax, edi
 	jmp GetNewObjectVariable_30
@@ -10914,7 +10861,7 @@ GetNewObjectVariable_10:
 	movzx edx, word [ebp-0x24]
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
+	mov [eax+gScrVarGlob+0x12], dx
 	xor eax, eax
 GetNewObjectVariable_30:
 	mov ecx, [ebp-0x28]
@@ -10923,10 +10870,10 @@ GetNewObjectVariable_30:
 	mov word [edx+0x2], 0x0
 	shl dword [ebp-0x24], 0x4
 	mov ecx, [ebp-0x24]
-	mov [ecx+scrVarGlob+0x8002e], ax
+	mov [ecx+gScrVarGlob+0x8002e], ax
 	shl dword [ebp-0x30], 0x4
 	mov edx, [ebp-0x30]
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	add esp, 0x2c
 	pop ebx
 	pop esi
@@ -10941,13 +10888,13 @@ GetNewObjectVariable_20:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jz GetNewObjectVariable_50
 GetNewObjectVariable_70:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -10956,7 +10903,7 @@ GetNewObjectVariable_70:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jnz GetNewObjectVariable_70
 	jmp GetNewObjectVariable_50
@@ -10972,7 +10919,7 @@ GetSafeParentLocalId:
 	mov eax, [ebp+0x8]
 	add eax, 0x1
 	shl eax, 0x4
-	mov edx, [eax+scrVarGlob+0x8]
+	mov edx, [eax+gScrVarGlob+0x8]
 	mov eax, edx
 	and eax, 0x1f
 	cmp eax, 0x11
@@ -10994,7 +10941,7 @@ GetVariableKeyObject:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80028]
+	mov eax, [eax+gScrVarGlob+0x80028]
 	shr eax, 0x8
 	sub eax, 0x10000
 	pop ebp
@@ -11082,9 +11029,9 @@ Scr_FreeGameVariable:
 	mov eax, [ebp+0x8]
 	test eax, eax
 	jz Scr_FreeGameVariable_10
-	mov eax, [scrVarPub+0x24]
+	mov eax, [gScrVarPub+0x24]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -11094,16 +11041,16 @@ Scr_FreeGameVariable:
 Scr_FreeGameVariable_50:
 	movzx edx, word [ebx+0xc]
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	movzx eax, dx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x80022], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	mov word [eax+gScrVarGlob+0x80022], 0x0
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], dx
-	mov [scrVarGlob+0x80024], dx
-	mov dword [scrVarPub+0x24], 0x0
+	mov [eax+gScrVarGlob+0x80022], dx
+	mov [gScrVarGlob+0x80024], dx
+	mov dword [gScrVarPub+0x24], 0x0
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -11123,9 +11070,9 @@ Scr_FreeGameVariable_20:
 	mov [edx-0x4], ax
 	jmp Scr_FreeGameVariable_50
 Scr_FreeGameVariable_10:
-	mov eax, [scrVarPub+0x24]
+	mov eax, [gScrVarPub+0x24]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x80024]
+	mov eax, [eax+gScrVarGlob+0x80024]
 	call Scr_MakeValuePrimitive
 	add esp, 0x14
 	pop ebx
@@ -11179,22 +11126,22 @@ Scr_AllocGameVariable:
 	sub esp, 0x3c
 	mov dword [ebp-0x30], 0x0
 	mov dword [ebp-0x2c], 0x0
-	mov eax, [scrVarPub+0x24]
+	mov eax, [gScrVarPub+0x24]
 	test eax, eax
 	jnz Scr_AllocGameVariable_10
-	movzx edi, word [scrVarGlob+0x80024]
+	movzx edi, word [gScrVarGlob+0x80024]
 	test di, di
 	jz Scr_AllocGameVariable_20
 Scr_AllocGameVariable_120:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x80020]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x20], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x80020]
+	lea ecx, [eax+gScrVarGlob+0x80020]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1e], ax
 	cmp ebx, ecx
@@ -11203,30 +11150,30 @@ Scr_AllocGameVariable_120:
 	jz Scr_AllocGameVariable_40
 	movzx eax, word [ebp-0x1e]
 Scr_AllocGameVariable_30:
-	mov [scrVarGlob+0x80024], ax
+	mov [gScrVarGlob+0x80024], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x80022], 0x0
+	mov word [eax+gScrVarGlob+0x80022], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	mov dword [ecx+0x8], 0x60
 	movzx ebx, word [ebx]
 	mov [ebp-0x24], ebx
-	mov [scrVarPub+0x24], ebx
-	movzx edi, word [scrVarGlob+0x14]
+	mov [gScrVarPub+0x24], ebx
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz Scr_AllocGameVariable_50
 Scr_AllocGameVariable_130:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	mov [ebp-0x1a], ax
 	cmp ebx, ecx
@@ -11235,24 +11182,24 @@ Scr_AllocGameVariable_130:
 	jz Scr_AllocGameVariable_70
 	movzx eax, word [ebp-0x1a]
 Scr_AllocGameVariable_60:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
 	mov [ebp-0x30], edx
 	shl dword [ebp-0x24], 0x4
 	mov ebx, [ebp-0x24]
-	add ebx, scrVarGlob+0x80020
+	add ebx, gScrVarGlob+0x80020
 	mov ecx, [ebx+0x4]
 	mov edx, [ebx+0x8]
 	mov eax, edx
@@ -11290,8 +11237,8 @@ Scr_AllocGameVariable_70:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -11303,8 +11250,8 @@ Scr_AllocGameVariable_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x20]
-	mov [edx+scrVarGlob+0x80020], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x80020], ax
+	mov [esi+gScrVarGlob], di
 	movzx eax, word [ebx+0xc]
 	mov [ecx+0xc], ax
 	movzx eax, word [ebx+0x4]
@@ -11353,7 +11300,7 @@ Scr_DumpScriptThreads:
     sub esp, 0x14c
     xor esi, esi
     mov ebx, 0x8003
-    mov ecx, scrVarGlob+0x80030
+    mov ecx, gScrVarGlob+0x80030
 Scr_DumpScriptThreads_20:
     mov edx, [ecx+0x8]
     test dl, 0x60
@@ -11388,7 +11335,7 @@ Scr_DumpScriptThreads_30:
     jz Scr_DumpScriptThreads_40
     mov dword [ebp-0x114], 0x0
     mov dword [ebp-0xbc], 0x8003
-    mov dword [ebp-0x120], scrVarGlob+0x80030
+    mov dword [ebp-0x120], gScrVarGlob+0x80030
     mov eax, [ebp-0x118]
     mov [ebp-0x124], eax
     jmp Scr_DumpScriptThreads_50
@@ -11436,7 +11383,7 @@ Scr_DumpScriptThreads_600:
     movzx ecx, word [edi+0x8]
     mov eax, ecx
     shl eax, 0x4
-    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx eax, word [eax+gScrVarGlob+0x1e]
     movzx edx, ax
     test ax, ax
     jz Scr_DumpScriptThreads_90
@@ -11444,7 +11391,7 @@ Scr_DumpScriptThreads_600:
     movss [ebp-0xec], xmm3
 Scr_DumpScriptThreads_120:
     shl edx, 0x4
-    lea ebx, [edx+scrVarGlob+0x80020]
+    lea ebx, [edx+gScrVarGlob+0x80020]
     mov edx, [ebx+0x4]
     mov eax, [ebx+0x8]
     and eax, 0x1f
@@ -11460,7 +11407,7 @@ Scr_DumpScriptThreads_310:
     test ax, ax
     jz Scr_DumpScriptThreads_110
     shl edx, 0x4
-    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx eax, word [edx+gScrVarGlob+0x80020]
     movzx edx, ax
     test ax, ax
     jnz Scr_DumpScriptThreads_120
@@ -11471,7 +11418,7 @@ Scr_DumpScriptThreads_560:
     lea ecx, [esi+esi*4]
     lea ecx, [ecx+ecx*4]
     lea ecx, [esi+ecx*4]
-    add ecx, [scrVarPub+0x1c]
+    add ecx, [gScrVarPub+0x1c]
     mov edx, 0x80018005
     mov eax, ecx
     mul edx
@@ -11484,11 +11431,11 @@ Scr_DumpScriptThreads_560:
     add ecx, 0x8003
     mov eax, ecx
     shl eax, 0x4
-    lea edx, [eax+scrVarGlob]
+    lea edx, [eax+gScrVarGlob]
     mov [ebp-0xe8], edx
-    movzx eax, word [eax+scrVarGlob]
+    movzx eax, word [eax+gScrVarGlob]
     shl eax, 0x4
-    lea ebx, [eax+scrVarGlob+0x80020]
+    lea ebx, [eax+gScrVarGlob+0x80020]
     mov edx, [ebx+0x8]
     mov eax, edx
     and eax, 0x60
@@ -11498,15 +11445,15 @@ Scr_DumpScriptThreads_390:
     mov ecx, 0x8002
 Scr_DumpScriptThreads_380:
     shl ecx, 0x4
-    movzx eax, word [ecx+scrVarGlob]
+    movzx eax, word [ecx+gScrVarGlob]
     movzx edx, ax
     pxor xmm2, xmm2
     test ax, ax
     jz Scr_DumpScriptThreads_140
     shl edx, 0x4
-    mov eax, [edx+scrVarGlob+0x80024]
+    mov eax, [edx+gScrVarGlob+0x80024]
     shl eax, 0x4
-    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx eax, word [eax+gScrVarGlob+0x1e]
     movzx edx, ax
     test ax, ax
     jnz Scr_DumpScriptThreads_150
@@ -11622,7 +11569,7 @@ Scr_DumpScriptThreads_220:
     jz Scr_DumpScriptThreads_240
     movzx eax, ax
     shl eax, 0x4
-    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx eax, word [eax+gScrVarGlob+0x1e]
     movzx edx, ax
     test ax, ax
     jz Scr_DumpScriptThreads_250
@@ -11634,18 +11581,18 @@ Scr_DumpScriptThreads_280:
     lea edi, [edx+0x8002]
     mov edx, edi
     shl edx, 0x4
-    mov eax, [edx+scrVarGlob+0x8]
+    mov eax, [edx+gScrVarGlob+0x8]
     and eax, 0x1f
     sub eax, 0x1
     jz Scr_DumpScriptThreads_260
 Scr_DumpScriptThreads_860:
     shl edi, 0x4
-    movzx eax, word [edi+scrVarGlob+0xe]
+    movzx eax, word [edi+gScrVarGlob+0xe]
     movzx edx, ax
     test ax, ax
     jz Scr_DumpScriptThreads_270
     shl edx, 0x4
-    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx eax, word [edx+gScrVarGlob+0x80020]
     movzx edx, ax
     test ax, ax
     jnz Scr_DumpScriptThreads_280
@@ -11655,7 +11602,7 @@ Scr_DumpScriptThreads_270:
 Scr_DumpScriptThreads_100:
     mov eax, edx
     shl eax, 0x4
-    lea esi, [eax+scrVarGlob+0x10]
+    lea esi, [eax+gScrVarGlob+0x10]
     mov eax, [esi+0x8]
     and eax, 0x1f
     cmp eax, 0x15
@@ -11671,7 +11618,7 @@ Scr_DumpScriptThreads_100:
     jmp Scr_DumpScriptThreads_310
 Scr_DumpScriptThreads_180:
     shl edx, 0x4
-    lea ebx, [edx+scrVarGlob+0x10]
+    lea ebx, [edx+gScrVarGlob+0x10]
     mov eax, [ebx+0x8]
     and eax, 0x1f
     cmp eax, 0x15
@@ -11683,7 +11630,7 @@ Scr_DumpScriptThreads_180:
     movaps xmm2, xmm3
 Scr_DumpScriptThreads_360:
     shl edx, 0x4
-    lea esi, [edx+scrVarGlob+0x80020]
+    lea esi, [edx+gScrVarGlob+0x80020]
     mov edx, [esi+0x4]
     mov eax, [esi+0x8]
     and eax, 0x1f
@@ -11698,7 +11645,7 @@ Scr_DumpScriptThreads_420:
     test ax, ax
     jz Scr_DumpScriptThreads_350
     shl edx, 0x4
-    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx eax, word [edx+gScrVarGlob+0x80020]
     movzx edx, ax
     test ax, ax
     jnz Scr_DumpScriptThreads_360
@@ -11717,13 +11664,13 @@ Scr_DumpScriptThreads_130:
     lea ecx, [eax+0x8002]
     mov edx, ecx
     shl edx, 0x4
-    lea eax, [edx+scrVarGlob]
+    lea eax, [edx+gScrVarGlob]
     cmp [ebp-0xe8], eax
     jz Scr_DumpScriptThreads_390
 Scr_DumpScriptThreads_400:
-    movzx eax, word [edx+scrVarGlob]
+    movzx eax, word [edx+gScrVarGlob]
     shl eax, 0x4
-    lea edx, [eax+scrVarGlob+0x80020]
+    lea edx, [eax+gScrVarGlob+0x80020]
     mov eax, [edx+0x8]
     shr eax, 0x8
     cmp eax, esi
@@ -11732,14 +11679,14 @@ Scr_DumpScriptThreads_400:
     lea ecx, [eax+0x8002]
     mov edx, ecx
     shl edx, 0x4
-    lea eax, [edx+scrVarGlob]
+    lea eax, [edx+gScrVarGlob]
     cmp [ebp-0xe8], eax
     jnz Scr_DumpScriptThreads_400
     jmp Scr_DumpScriptThreads_390
 Scr_DumpScriptThreads_340:
     mov eax, edx
     shl eax, 0x4
-    add eax, scrVarGlob+0x10
+    add eax, gScrVarGlob+0x10
     mov [ebp-0xe4], eax
     mov eax, [eax+0x8]
     and eax, 0x1f
@@ -11759,18 +11706,18 @@ Scr_DumpScriptThreads_340:
     jmp Scr_DumpScriptThreads_420
 Scr_DumpScriptThreads_170:
     shl edi, 0x4
-    mov edi, [edi+scrVarGlob+0x18]
+    mov edi, [edi+gScrVarGlob+0x18]
     shr edi, 0x8
     mov eax, edi
     shl eax, 0x4
-    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx eax, word [eax+gScrVarGlob+0x1e]
     movzx edx, ax
     test ax, ax
     jz Scr_DumpScriptThreads_430
     movaps xmm2, xmm3
 Scr_DumpScriptThreads_460:
     shl edx, 0x4
-    lea ebx, [edx+scrVarGlob+0x80020]
+    lea ebx, [edx+gScrVarGlob+0x80020]
     mov edx, [ebx+0x4]
     mov eax, [ebx+0x8]
     and eax, 0x1f
@@ -11785,7 +11732,7 @@ Scr_DumpScriptThreads_520:
     test ax, ax
     jz Scr_DumpScriptThreads_450
     shl edx, 0x4
-    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx eax, word [edx+gScrVarGlob+0x80020]
     movzx edx, ax
     test ax, ax
     jnz Scr_DumpScriptThreads_460
@@ -11799,7 +11746,7 @@ Scr_DumpScriptThreads_450:
     lea ecx, [esi+esi*4]
     lea ecx, [ecx+ecx*4]
     lea ecx, [esi+ecx*4]
-    add ecx, [scrVarPub+0x1c]
+    add ecx, [gScrVarPub+0x1c]
     mov edx, 0x80018005
     mov eax, ecx
     mul edx
@@ -11812,11 +11759,11 @@ Scr_DumpScriptThreads_450:
     add ecx, 0x8003
     mov eax, ecx
     shl eax, 0x4
-    lea edx, [eax+scrVarGlob]
+    lea edx, [eax+gScrVarGlob]
     mov [ebp-0xe0], edx
-    movzx eax, word [eax+scrVarGlob]
+    movzx eax, word [eax+gScrVarGlob]
     shl eax, 0x4
-    lea ebx, [eax+scrVarGlob+0x80020]
+    lea ebx, [eax+gScrVarGlob+0x80020]
     mov edx, [ebx+0x8]
     mov eax, edx
     and eax, 0x60
@@ -11826,15 +11773,15 @@ Scr_DumpScriptThreads_540:
     mov ecx, 0x8002
 Scr_DumpScriptThreads_530:
     shl ecx, 0x4
-    movzx eax, word [ecx+scrVarGlob]
+    movzx eax, word [ecx+gScrVarGlob]
     movzx edx, ax
     pxor xmm2, xmm2
     test ax, ax
     jz Scr_DumpScriptThreads_480
     shl edx, 0x4
-    mov eax, [edx+scrVarGlob+0x80024]
+    mov eax, [edx+gScrVarGlob+0x80024]
     shl eax, 0x4
-    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx eax, word [eax+gScrVarGlob+0x1e]
     movzx edx, ax
     test ax, ax
     jnz Scr_DumpScriptThreads_490
@@ -11847,7 +11794,7 @@ Scr_DumpScriptThreads_480:
 Scr_DumpScriptThreads_440:
     mov eax, edx
     shl eax, 0x4
-    lea esi, [eax+scrVarGlob+0x10]
+    lea esi, [eax+gScrVarGlob+0x10]
     mov eax, [esi+0x8]
     and eax, 0x1f
     cmp eax, 0x15
@@ -11871,13 +11818,13 @@ Scr_DumpScriptThreads_470:
     lea ecx, [eax+0x8002]
     mov edx, ecx
     shl edx, 0x4
-    lea eax, [edx+scrVarGlob]
+    lea eax, [edx+gScrVarGlob]
     cmp [ebp-0xe0], eax
     jz Scr_DumpScriptThreads_540
 Scr_DumpScriptThreads_550:
-    movzx eax, word [edx+scrVarGlob]
+    movzx eax, word [edx+gScrVarGlob]
     shl eax, 0x4
-    lea edx, [eax+scrVarGlob+0x80020]
+    lea edx, [eax+gScrVarGlob+0x80020]
     mov eax, [edx+0x8]
     shr eax, 0x8
     cmp eax, esi
@@ -11886,7 +11833,7 @@ Scr_DumpScriptThreads_550:
     lea ecx, [eax+0x8002]
     mov edx, ecx
     shl edx, 0x4
-    lea eax, [edx+scrVarGlob]
+    lea eax, [edx+gScrVarGlob]
     cmp [ebp-0xe0], eax
     jnz Scr_DumpScriptThreads_550
     jmp Scr_DumpScriptThreads_540
@@ -11924,7 +11871,7 @@ Scr_DumpScriptThreads_580:
 Scr_DumpScriptThreads_490:
     movaps xmm2, xmm3
     shl edx, 0x4
-    lea ebx, [edx+scrVarGlob+0x80020]
+    lea ebx, [edx+gScrVarGlob+0x80020]
     mov edx, [ebx+0x4]
     mov eax, [ebx+0x8]
     and eax, 0x1f
@@ -11939,12 +11886,12 @@ Scr_DumpScriptThreads_630:
     test ax, ax
     jz Scr_DumpScriptThreads_480
     shl edx, 0x4
-    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx eax, word [edx+gScrVarGlob+0x80020]
     movzx edx, ax
     test ax, ax
     jz Scr_DumpScriptThreads_480
     shl edx, 0x4
-    lea ebx, [edx+scrVarGlob+0x80020]
+    lea ebx, [edx+gScrVarGlob+0x80020]
     mov edx, [ebx+0x4]
     mov eax, [ebx+0x8]
     and eax, 0x1f
@@ -11953,7 +11900,7 @@ Scr_DumpScriptThreads_630:
 Scr_DumpScriptThreads_610:
     mov eax, edx
     shl eax, 0x4
-    lea esi, [eax+scrVarGlob+0x10]
+    lea esi, [eax+gScrVarGlob+0x10]
     mov eax, [esi+0x8]
     and eax, 0x1f
     cmp eax, 0x15
@@ -11972,7 +11919,7 @@ Scr_DumpScriptThreads_610:
 Scr_DumpScriptThreads_150:
     movaps xmm2, xmm3
     shl edx, 0x4
-    lea ebx, [edx+scrVarGlob+0x80020]
+    lea ebx, [edx+gScrVarGlob+0x80020]
     mov edx, [ebx+0x4]
     mov eax, [ebx+0x8]
     and eax, 0x1f
@@ -11987,12 +11934,12 @@ Scr_DumpScriptThreads_660:
     test ax, ax
     jz Scr_DumpScriptThreads_140
     shl edx, 0x4
-    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx eax, word [edx+gScrVarGlob+0x80020]
     movzx edx, ax
     test ax, ax
     jz Scr_DumpScriptThreads_140
     shl edx, 0x4
-    lea ebx, [edx+scrVarGlob+0x80020]
+    lea ebx, [edx+gScrVarGlob+0x80020]
     mov edx, [ebx+0x4]
     mov eax, [ebx+0x8]
     and eax, 0x1f
@@ -12001,7 +11948,7 @@ Scr_DumpScriptThreads_660:
 Scr_DumpScriptThreads_640:
     mov eax, edx
     shl eax, 0x4
-    lea esi, [eax+scrVarGlob+0x10]
+    lea esi, [eax+gScrVarGlob+0x10]
     mov eax, [esi+0x8]
     and eax, 0x1f
     cmp eax, 0x15
@@ -12165,9 +12112,9 @@ Scr_DumpScriptThreads_770:
     cvttss2si ebx, [ebp-0x100]
     jmp Scr_DumpScriptThreads_810
 Scr_DumpScriptThreads_260:
-    mov eax, [edx+scrVarGlob+0x4]
+    mov eax, [edx+gScrVarGlob+0x4]
     shl eax, 0x4
-    movzx eax, word [eax+scrVarGlob+0x1e]
+    movzx eax, word [eax+gScrVarGlob+0x1e]
     movzx edx, ax
     test ax, ax
     jz Scr_DumpScriptThreads_820
@@ -12175,7 +12122,7 @@ Scr_DumpScriptThreads_260:
     movaps xmm3, xmm2
 Scr_DumpScriptThreads_850:
     shl edx, 0x4
-    lea esi, [edx+scrVarGlob+0x80020]
+    lea esi, [edx+gScrVarGlob+0x80020]
     mov edx, [esi+0x4]
     mov eax, [esi+0x8]
     and eax, 0x1f
@@ -12190,7 +12137,7 @@ Scr_DumpScriptThreads_880:
     test ax, ax
     jz Scr_DumpScriptThreads_840
     shl edx, 0x4
-    movzx eax, word [edx+scrVarGlob+0x80020]
+    movzx eax, word [edx+gScrVarGlob+0x80020]
     movzx edx, ax
     test ax, ax
     jnz Scr_DumpScriptThreads_850
@@ -12204,7 +12151,7 @@ Scr_DumpScriptThreads_840:
 Scr_DumpScriptThreads_830:
     mov eax, edx
     shl eax, 0x4
-    lea ebx, [eax+scrVarGlob+0x10]
+    lea ebx, [eax+gScrVarGlob+0x10]
     mov eax, [ebx+0x8]
     and eax, 0x1f
     cmp eax, 0x15
@@ -12234,7 +12181,7 @@ Scr_EvalVariableField:
 	test eax, eax
 	jz Scr_EvalVariableField_10
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov edx, [eax+0x8]
 	and edx, 0x1f
 	mov [ebp-0x1c], edx
@@ -12264,8 +12211,8 @@ Scr_EvalVariableField_20:
 	mov esi, [ebp-0x1c]
 	jmp Scr_EvalVariableField_60
 Scr_EvalVariableField_10:
-	mov edx, [scrVarPub+0x40]
-	mov eax, [scrVarPub+0x3c]
+	mov edx, [gScrVarPub+0x40]
+	mov eax, [gScrVarPub+0x3c]
 	call Scr_EvalVariableEntityField
 	add esp, 0x2c
 	pop ebx
@@ -12276,7 +12223,7 @@ Scr_EvalVariableField_10:
 Scr_EvalVariableField_30:
 	lea eax, [edi+0x1]
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	mov esi, [ebp-0x1c]
 	jmp Scr_EvalVariableField_60
 Scr_EvalVariableField_50:
@@ -12319,11 +12266,11 @@ Scr_FindVariableField:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x1c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -12333,12 +12280,12 @@ Scr_FindVariableField_60:
 	mov ecx, 0x8002
 Scr_FindVariableField_50:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz Scr_FindVariableField_20
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob+0x80020]
+	lea eax, [edx+gScrVarGlob+0x80020]
 	mov esi, [eax+0x8]
 	and esi, 0x1f
 	mov ebx, [eax+0x4]
@@ -12360,7 +12307,7 @@ Scr_FindVariableField_120:
 Scr_FindVariableField_20:
 	mov eax, edi
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	and eax, 0x1f
 	cmp eax, 0x14
 	jz Scr_FindVariableField_40
@@ -12381,12 +12328,12 @@ Scr_FindVariableField_10:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jz Scr_FindVariableField_60
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -12396,12 +12343,12 @@ Scr_FindVariableField_80:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jz Scr_FindVariableField_60
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -12421,7 +12368,7 @@ Scr_FindVariableField_30:
 Scr_FindVariableField_90:
 	lea eax, [ebx+0x1]
 	shl eax, 0x4
-	add word [eax+scrVarGlob+0x4], 0x1
+	add word [eax+gScrVarGlob+0x4], 0x1
 	jmp Scr_FindVariableField_110
 Scr_FindVariableField_40:
 	mov edx, esi
@@ -12440,7 +12387,7 @@ Scr_GetThreadWaitTime:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	shr eax, 0x8
 	pop ebp
 	ret
@@ -12455,13 +12402,13 @@ Scr_SetThreadWaitTime:
 	mov edx, [ebp+0x8]
 	add edx, 0x1
 	shl edx, 0x4
-	lea ebx, [edx+scrVarGlob]
+	lea ebx, [edx+gScrVarGlob]
 	mov eax, [ebx+0x8]
 	and eax, 0xe0
 	or eax, 0x10
 	mov [ebx+0x8], eax
 	shl ecx, 0x8
-	or [edx+scrVarGlob+0x8], ecx
+	or [edx+gScrVarGlob+0x8], ecx
 	pop ebx
 	pop ebp
 	ret
@@ -12473,11 +12420,11 @@ Scr_ShutdownVariables:
 	mov ebp, esp
 	push ebx
 	sub esp, 0x14
-	mov eax, [scrVarPub+0x24]
+	mov eax, [gScrVarPub+0x24]
 	test eax, eax
 	jz Scr_ShutdownVariables_10
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -12487,16 +12434,16 @@ Scr_ShutdownVariables:
 Scr_ShutdownVariables_50:
 	movzx edx, word [ebx+0xc]
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	movzx eax, dx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x80022], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	mov word [eax+gScrVarGlob+0x80022], 0x0
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], dx
-	mov [scrVarGlob+0x80024], dx
-	mov dword [scrVarPub+0x24], 0x0
+	mov [eax+gScrVarGlob+0x80022], dx
+	mov [gScrVarGlob+0x80024], dx
+	mov dword [gScrVarPub+0x24], 0x0
 Scr_ShutdownVariables_10:
 	add esp, 0x14
 	pop ebx
@@ -12544,7 +12491,7 @@ SetVariableFieldValue:
 	test eax, eax
 	jz SetVariableFieldValue_10
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [ebx+0x4]
 	mov edx, [ebx+0x8]
 	mov eax, edx
@@ -12581,9 +12528,9 @@ SetVariableFieldValue_20:
 	jmp SetVariableFieldValue_50
 SetVariableFieldValue_10:
 	mov [esp+0x8], esi
-	mov eax, [scrVarPub+0x40]
+	mov eax, [gScrVarPub+0x40]
 	mov [esp+0x4], eax
-	mov eax, [scrVarPub+0x3c]
+	mov eax, [gScrVarPub+0x3c]
 	mov [esp], eax
 	call SetVariableEntityFieldValue
 	add esp, 0x10
@@ -12615,7 +12562,7 @@ RemoveRefToEmptyObject:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ecx+0x4]
 	test ax, ax
 	jz RemoveRefToEmptyObject_10
@@ -12626,15 +12573,15 @@ RemoveRefToEmptyObject:
 RemoveRefToEmptyObject_10:
 	movzx edx, word [ecx+0xc]
 	mov dword [ecx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	movzx eax, word [gScrVarGlob+0x14]
 	mov [ecx+0x4], ax
 	mov eax, edx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
-	movzx eax, word [scrVarGlob+0x14]
+	mov word [eax+gScrVarGlob+0x12], 0x0
+	movzx eax, word [gScrVarGlob+0x14]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
-	mov [scrVarGlob+0x14], dx
+	mov [eax+gScrVarGlob+0x12], dx
+	mov [gScrVarGlob+0x14], dx
 	pop ebp
 	ret
 	nop
@@ -12975,7 +12922,7 @@ Scr_EvalVariableObject:
 	sub esp, 0x18
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov edx, [eax+0x8]
 	and edx, 0x1f
 	cmp edx, 0x1
@@ -12995,7 +12942,7 @@ Scr_EvalVariableObject_10:
 	mov ecx, [eax+0x4]
 	mov eax, ecx
 	shl eax, 0x4
-	mov edx, [eax+scrVarGlob+0x18]
+	mov edx, [eax+gScrVarGlob+0x18]
 	and edx, 0x1f
 	cmp edx, 0x14
 	jg Scr_EvalVariableObject_20
@@ -13011,7 +12958,7 @@ GetVariableValueAddress:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80024
+	add eax, gScrVarGlob+0x80024
 	pop ebp
 	ret
 
@@ -13022,7 +12969,7 @@ Scr_GetThreadNotifyName:
 	mov ebp, esp
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	movzx eax, word [eax+scrVarGlob+0x19]
+	movzx eax, word [eax+gScrVarGlob+0x19]
 	pop ebp
 	ret
 	add [eax], al
@@ -13035,7 +12982,7 @@ Scr_SetThreadNotifyName:
 	mov eax, [ebp+0x8]
 	mov ecx, [ebp+0xc]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov edx, [eax+0x8]
 	and edx, 0xe0
 	or edx, 0xf
@@ -13086,10 +13033,10 @@ GetVariableIndexInternal:
 	mov [ebp-0x30], eax
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edi, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea edi, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x80020]
+	lea ecx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ecx+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -13103,14 +13050,14 @@ GetVariableIndexInternal_60:
 	mov esi, eax
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x28], eax
 	mov eax, esi
 	shl eax, 0x4
 	add eax, 0x80020
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x2c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	mov [ebp-0x24], eax
 	mov ecx, [ebp-0x28]
 	movzx eax, word [ecx+0xe]
@@ -13118,7 +13065,7 @@ GetVariableIndexInternal_60:
 	test ax, ax
 	jz GetVariableIndexInternal_20
 	shl edx, 0x4
-	mov ebx, [edx+scrVarGlob+0x80028]
+	mov ebx, [edx+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -13139,11 +13086,11 @@ GetVariableIndexInternal_60:
 	lea edx, [ecx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x1c], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x20], eax
 	mov ecx, [eax+0x8]
 	mov eax, ecx
@@ -13155,7 +13102,7 @@ GetVariableIndexInternal_110:
 	mov edx, 0x8002
 GetVariableIndexInternal_100:
 	shl edx, 0x4
-	mov [edx+scrVarGlob+0x2], si
+	mov [edx+gScrVarGlob+0x2], si
 	movzx edx, word [ebp-0x24]
 	mov eax, edi
 GetVariableIndexInternal_40:
@@ -13165,7 +13112,7 @@ GetVariableIndexInternal_40:
 	mov word [edx+0x2], 0x0
 	shl dword [ebp-0x24], 0x4
 	mov ecx, [ebp-0x24]
-	mov [ecx+scrVarGlob+0x8002e], ax
+	mov [ecx+gScrVarGlob+0x8002e], ax
 	mov eax, esi
 	add esp, 0x2c
 	pop ebx
@@ -13177,7 +13124,7 @@ GetVariableIndexInternal_20:
 	movzx edx, word [ebp-0x24]
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], dx
+	mov [eax+gScrVarGlob+0x12], dx
 	xor eax, eax
 	jmp GetVariableIndexInternal_40
 GetVariableIndexInternal_10:
@@ -13188,12 +13135,12 @@ GetVariableIndexInternal_10:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz GetVariableIndexInternal_60
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -13203,12 +13150,12 @@ GetVariableIndexInternal_80:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp edi, eax
 	jz GetVariableIndexInternal_60
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -13238,12 +13185,12 @@ GetVariableIndexInternal_30:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jz GetVariableIndexInternal_110
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -13253,12 +13200,12 @@ GetVariableIndexInternal_130:
 	mov eax, edi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jz GetVariableIndexInternal_110
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -13300,7 +13247,7 @@ Scr_UnmatchingTypesError:
 	sub esp, 0x3c
 	mov edi, [ebp+0x8]
 	mov esi, [ebp+0xc]
-	mov edx, [scrVarPub+0xc]
+	mov edx, [gScrVarPub+0xc]
 	test edx, edx
 	jz Scr_UnmatchingTypesError_10
 	xor ebx, ebx
@@ -13436,7 +13383,7 @@ Scr_GetVariableFieldIndex:
 	mov esi, [ebp+0xc]
 	mov eax, edi
 	shl eax, 0x4
-	mov eax, [eax+scrVarGlob+0x18]
+	mov eax, [eax+gScrVarGlob+0x18]
 	and eax, 0x1f
 	cmp eax, 0x12
 	jle Scr_GetVariableFieldIndex_10
@@ -13475,19 +13422,19 @@ Scr_GetVariableFieldIndex_20:
 	lea ebx, [ecx+0x1]
 	shl ecx, 0x4
 	lea eax, [ecx+0x80030]
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x1c], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
 	cmp eax, 0x40
 	jz Scr_GetVariableFieldIndex_30
 Scr_GetVariableFieldIndex_50:
-	mov [scrVarPub+0x3c], edi
-	mov [scrVarPub+0x40], esi
+	mov [gScrVarPub+0x3c], edi
+	mov [gScrVarPub+0x40], esi
 	xor ebx, ebx
 	mov eax, ebx
 	add esp, 0x2c
@@ -13512,12 +13459,12 @@ Scr_GetVariableFieldIndex_60:
 	mov eax, ebx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x1c], eax
 	jz Scr_GetVariableFieldIndex_50
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -13538,8 +13485,8 @@ Scr_RemoveThreadNotifyName:
 	mov eax, [ebp+0x8]
 	add eax, 0x1
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob+0x9]
+	lea ebx, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob+0x9]
 	mov [esp], eax
 	call SL_RemoveRefToString
 	mov eax, [ebx+0x8]
@@ -13583,24 +13530,24 @@ GetNewObjectVariableReverse:
 	mov ecx, eax
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x10]
+	lea ebx, [eax+gScrVarGlob+0x10]
 	movzx eax, word [ebx+0xc]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x20], eax
 	lea eax, [ecx+0x8002]
 	mov [ebp-0x28], eax
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x24], edx
-	movzx edi, word [eax+scrVarGlob]
+	movzx edi, word [eax+gScrVarGlob]
 	mov edx, [ebp-0x20]
 	movzx eax, word [edx+0x2]
 	movzx edx, ax
 	test ax, ax
 	jz GetNewObjectVariableReverse_10
 	shl edx, 0x4
-	lea eax, [edx+scrVarGlob+0x80020]
+	lea eax, [edx+gScrVarGlob+0x80020]
 	mov [eax+0xe], cx
 	mov esi, [eax+0x8]
 	shr esi, 0x8
@@ -13623,10 +13570,10 @@ GetNewObjectVariableReverse:
 	mov [ebp-0x1c], eax
 	shl ebx, 0x4
 	lea eax, [ebx+0x80030]
-	lea ebx, [eax+scrVarGlob]
-	movzx eax, word [eax+scrVarGlob]
+	lea ebx, [eax+gScrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov ecx, [edx+0x8]
 	mov eax, ecx
 	and eax, 0x60
@@ -13646,10 +13593,10 @@ GetNewObjectVariableReverse_30:
 	mov edx, [ebp-0x24]
 	mov [edx+0x2], ax
 	shl edi, 0x4
-	mov word [edi+scrVarGlob+0x8002e], 0x0
+	mov word [edi+gScrVarGlob+0x8002e], 0x0
 	shl dword [ebp-0x28], 0x4
 	mov edx, [ebp-0x28]
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	add esp, 0x1c
 	pop ebx
 	pop esi
@@ -13668,12 +13615,12 @@ GetNewObjectVariableReverse_50:
 	mov eax, edx
 	shl eax, 0x4
 	lea ecx, [eax+0x80020]
-	lea eax, [ecx+scrVarGlob]
+	lea eax, [ecx+gScrVarGlob]
 	cmp ebx, eax
 	jz GetNewObjectVariableReverse_60
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x80020]
+	lea ecx, [eax+gScrVarGlob+0x80020]
 	mov eax, [ecx+0x8]
 	shr eax, 0x8
 	cmp esi, eax
@@ -13698,7 +13645,7 @@ SetVariableEntityFieldValue:
 	sub esp, 0x4c
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov [ebp-0x34], eax
 	mov edi, [eax+0x8]
 	shr edi, 0x8
@@ -13723,11 +13670,11 @@ SetVariableEntityFieldValue:
 	add ecx, 0x8003
 	mov eax, ecx
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x30], edx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	lea esi, [eax+scrVarGlob+0x80020]
+	lea esi, [eax+gScrVarGlob+0x80020]
 	mov edx, [esi+0x8]
 	mov eax, edx
 	and eax, 0x60
@@ -13737,14 +13684,14 @@ SetVariableEntityFieldValue_80:
 	mov ecx, 0x8002
 SetVariableEntityFieldValue_70:
 	shl ecx, 0x4
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	movzx edx, ax
 	test ax, ax
 	jz SetVariableEntityFieldValue_20
 	mov ecx, [ebp+0x10]
 	mov [esp+0xc], ecx
 	shl edx, 0x4
-	mov eax, [edx+scrVarGlob+0x80024]
+	mov eax, [edx+gScrVarGlob+0x80024]
 	mov [esp+0x8], eax
 	mov edx, [ebp-0x34]
 	movzx eax, word [edx+0x6]
@@ -13776,16 +13723,16 @@ SetVariableEntityFieldValue_20:
 	add eax, 0x8002
 	mov [ebp-0x2c], eax
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob]
+	lea edx, [eax+gScrVarGlob]
 	mov [ebp-0x28], edx
-	movzx edi, word [eax+scrVarGlob]
+	movzx edi, word [eax+gScrVarGlob]
 	mov ecx, [ebp-0x34]
 	movzx eax, word [ecx+0xe]
 	movzx edx, ax
 	test ax, ax
 	jz SetVariableEntityFieldValue_40
 	shl edx, 0x4
-	mov ebx, [edx+scrVarGlob+0x80028]
+	mov ebx, [edx+gScrVarGlob+0x80028]
 	shr ebx, 0x8
 	lea edx, [ebx+ebx*4]
 	lea edx, [edx+edx*4]
@@ -13806,11 +13753,11 @@ SetVariableEntityFieldValue_20:
 	lea edx, [ecx+0x8003]
 	mov eax, edx
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob]
+	lea ecx, [eax+gScrVarGlob]
 	mov [ebp-0x20], ecx
-	movzx eax, word [eax+scrVarGlob]
+	movzx eax, word [eax+gScrVarGlob]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x24], eax
 	mov ecx, [eax+0x8]
 	mov eax, ecx
@@ -13823,7 +13770,7 @@ SetVariableEntityFieldValue_120:
 SetVariableEntityFieldValue_110:
 	shl edx, 0x4
 	movzx ecx, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x2], cx
+	mov [edx+gScrVarGlob+0x2], cx
 	mov edx, edi
 	mov eax, esi
 	mov ecx, [ebp-0x34]
@@ -13832,12 +13779,12 @@ SetVariableEntityFieldValue_60:
 	mov edx, [ebp-0x28]
 	mov word [edx+0x2], 0x0
 	shl edi, 0x4
-	mov [edi+scrVarGlob+0x8002e], ax
+	mov [edi+gScrVarGlob+0x8002e], ax
 	shl dword [ebp-0x2c], 0x4
 	mov ecx, [ebp-0x2c]
-	movzx eax, word [ecx+scrVarGlob]
+	movzx eax, word [ecx+gScrVarGlob]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov edx, [eax+0x8]
 	mov ecx, [ebp+0x10]
 	or edx, [ecx+0x4]
@@ -13855,7 +13802,7 @@ SetVariableEntityFieldValue_40:
 	mov edx, edi
 	movzx eax, word [ecx+0xc]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x12], di
+	mov [eax+gScrVarGlob+0x12], di
 	xor eax, eax
 	jmp SetVariableEntityFieldValue_60
 SetVariableEntityFieldValue_10:
@@ -13866,12 +13813,12 @@ SetVariableEntityFieldValue_10:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x30], eax
 	jz SetVariableEntityFieldValue_80
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -13881,12 +13828,12 @@ SetVariableEntityFieldValue_100:
 	mov eax, ecx
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x30], eax
 	jz SetVariableEntityFieldValue_80
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp ebx, eax
@@ -13903,13 +13850,13 @@ SetVariableEntityFieldValue_50:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jz SetVariableEntityFieldValue_120
 SetVariableEntityFieldValue_140:
-	movzx eax, word [edx+scrVarGlob]
+	movzx eax, word [edx+gScrVarGlob]
 	shl eax, 0x4
-	lea edx, [eax+scrVarGlob+0x80020]
+	lea edx, [eax+gScrVarGlob+0x80020]
 	mov eax, [edx+0x8]
 	shr eax, 0x8
 	cmp eax, ebx
@@ -13918,7 +13865,7 @@ SetVariableEntityFieldValue_140:
 	mov eax, esi
 	shl eax, 0x4
 	lea edx, [eax+0x80020]
-	lea eax, [edx+scrVarGlob]
+	lea eax, [edx+gScrVarGlob]
 	cmp [ebp-0x20], eax
 	jnz SetVariableEntityFieldValue_140
 	jmp SetVariableEntityFieldValue_120
@@ -13947,7 +13894,7 @@ GetArray:
 	sub esp, 0x2c
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	add eax, scrVarGlob+0x80020
+	add eax, gScrVarGlob+0x80020
 	mov [ebp-0x20], eax
 	mov edx, eax
 	mov eax, [eax+0x8]
@@ -13955,19 +13902,19 @@ GetArray:
 	jnz GetArray_10
 	or eax, 0x1
 	mov [edx+0x8], eax
-	movzx edi, word [scrVarGlob+0x14]
+	movzx edi, word [gScrVarGlob+0x14]
 	test di, di
 	jz GetArray_20
 GetArray_60:
 	movzx eax, di
 	shl eax, 0x4
 	lea esi, [eax+0x10]
-	lea ebx, [esi+scrVarGlob]
-	movzx eax, word [esi+scrVarGlob]
+	lea ebx, [esi+gScrVarGlob]
+	movzx eax, word [esi+gScrVarGlob]
 	mov [ebp-0x1c], ax
 	movzx eax, ax
 	shl eax, 0x4
-	lea ecx, [eax+scrVarGlob+0x10]
+	lea ecx, [eax+gScrVarGlob+0x10]
 	movzx edx, word [ecx+0x4]
 	mov [ebp-0x1a], dx
 	cmp ebx, ecx
@@ -13976,17 +13923,17 @@ GetArray_60:
 	jz GetArray_40
 	movzx eax, word [ebp-0x1a]
 GetArray_50:
-	mov [scrVarGlob+0x14], ax
+	mov [gScrVarGlob+0x14], ax
 	movzx eax, ax
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x12], 0x0
+	mov word [eax+gScrVarGlob+0x12], 0x0
 	mov [ecx+0xc], di
 	mov word [ecx+0xe], 0x0
 	mov word [ebx+0x2], 0x0
 	movzx edx, word [ebx]
 	mov eax, edx
 	shl eax, 0x4
-	add eax, scrVarGlob+0x10
+	add eax, gScrVarGlob+0x10
 	mov dword [eax+0x8], 0x75
 	mov word [eax+0x4], 0x0
 	mov word [eax+0x6], 0x0
@@ -14005,8 +13952,8 @@ GetArray_40:
 	movzx edx, word [ebx+0xc]
 	shl edx, 0x4
 	movzx eax, word [ebp-0x1c]
-	mov [edx+scrVarGlob+0x10], ax
-	mov [esi+scrVarGlob], di
+	mov [edx+gScrVarGlob+0x10], ax
+	mov [esi+gScrVarGlob], di
 	movzx edx, word [ebx+0xc]
 	mov [ecx+0xc], dx
 	movzx eax, word [ebx+0x4]
@@ -14032,7 +13979,7 @@ FreeValue:
 	sub esp, 0x14
 	mov eax, [ebp+0x8]
 	shl eax, 0x4
-	lea ebx, [eax+scrVarGlob+0x80020]
+	lea ebx, [eax+gScrVarGlob+0x80020]
 	mov edx, [ebx+0x4]
 	mov eax, [ebx+0x8]
 	and eax, 0x1f
@@ -14054,15 +14001,15 @@ FreeValue:
 FreeValue_10:
 	movzx edx, word [ebx+0xc]
 	mov dword [ebx+0x8], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	movzx eax, word [gScrVarGlob+0x80024]
 	mov [ebx+0x4], ax
 	movzx eax, dx
 	shl eax, 0x4
-	mov word [eax+scrVarGlob+0x80022], 0x0
-	movzx eax, word [scrVarGlob+0x80024]
+	mov word [eax+gScrVarGlob+0x80022], 0x0
+	movzx eax, word [gScrVarGlob+0x80024]
 	shl eax, 0x4
-	mov [eax+scrVarGlob+0x80022], dx
-	mov [scrVarGlob+0x80024], dx
+	mov [eax+gScrVarGlob+0x80022], dx
+	mov [gScrVarGlob+0x80024], dx
 	add esp, 0x14
 	pop ebx
 	pop ebp
@@ -14083,6 +14030,7 @@ FreeValue_30:
 	nop
 
 
+
 ;Initialized global or static variables of scr_variable:
 SECTION .data
 g_classMap: dd 0x0, 0x65, _cstring_entity, 0x0, 0x68, _cstring_hudelem, 0x0, 0x70, _cstring_pathnode, 0x0, 0x76, _cstring_vehiclenode, 0x0, 0x0, 0x0, 0x0
@@ -14095,8 +14043,8 @@ SECTION .rdata
 ;Zero initialized global or static variables of scr_variable:
 SECTION .bss
 align   64,db 0
-scrVarPub: resb 0x20064
-scrVarGlob: resb 0x180020
+gScrVarPub: resb 0x20064
+gScrVarGlob: resb 0x180020
 
 
 ;All cstrings:

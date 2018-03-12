@@ -86,7 +86,13 @@ P_P_F int Plugin_ClientToSlot(client_t *client)
 
 P_P_F clientScoreboard_t Plugin_GetClientScoreboard(int clientNum)
 {
-    return level.clients[clientNum].sess.scoreboard;
+    clientScoreboard_t score;
+    score.kills = level.clients[clientNum].sess.kills;
+    score.deaths = level.clients[clientNum].sess.deaths;
+    score.assists = level.clients[clientNum].sess.assists;
+    score.score = level.clients[clientNum].sess.score;
+
+    return score;
 }
 P_P_F uint64_t Plugin_Cmd_GetSteamID()
 {

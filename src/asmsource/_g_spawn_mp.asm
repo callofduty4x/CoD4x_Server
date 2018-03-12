@@ -95,6 +95,8 @@
 	extern Scr_SetOrigin
 	extern Scr_SetHealth
 	extern Scr_SetAngles
+	extern Scr_GetGenericField
+	extern Scr_SetGenericField
 
 ;Exports of g_spawn_mp:
 	global s_bspOnlySpawns
@@ -117,13 +119,10 @@
 	global Scr_ExecEntThread
 	global Scr_GetObjectField
 	global Scr_SetObjectField
-	global Scr_GetGenericField
-	global Scr_SetGenericField
 	global G_DuplicateEntityFields
 	global GScr_AddFieldsForRadiant
 	global G_SpawnEntitiesFromString
 	global GScr_AddFieldsForEntity
-
 
 SECTION .text
 
@@ -1261,263 +1260,6 @@ Scr_SetObjectField_40:
 	jmp Scr_SetObjectField_60
 
 
-;Scr_GetGenericField(unsigned char*, fieldtype_t, int)
-Scr_GetGenericField:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x24
-	mov eax, [ebp+0xc]
-	cmp eax, 0x9
-	ja Scr_GetGenericField_10
-	jmp dword [eax*4+Scr_GetGenericField_jumptab_0]
-Scr_GetGenericField_110:
-	mov ecx, [ebp+0x10]
-	mov ebx, [ebp+0x8]
-	movzx eax, word [ecx+ebx]
-	mov [esp], eax
-	call G_ModelName
-	mov [esp], eax
-	call Scr_AddConstString
-Scr_GetGenericField_10:
-	add esp, 0x24
-	pop ebx
-	pop ebp
-	ret
-Scr_GetGenericField_20:
-	mov ebx, [ebp+0x8]
-	mov edx, [ebp+0x10]
-	mov eax, [ebx+edx]
-	mov [esp], eax
-	call Scr_AddInt
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_100:
-	mov ebx, [ebp+0x8]
-	mov edx, [ebp+0x10]
-	movzx eax, word [ebx+edx]
-	test ax, ax
-	jz Scr_GetGenericField_10
-	movzx eax, ax
-	mov [esp], eax
-	call Scr_AddObject
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_90:
-	xor eax, eax
-	mov [ebp-0x14], eax
-	mov ecx, [ebp+0x8]
-	mov ebx, [ebp+0x10]
-	mov edx, [ecx+ebx]
-	mov [ebp-0x10], edx
-	mov [ebp-0xc], eax
-	lea eax, [ebp-0x14]
-	mov [esp], eax
-	call Scr_AddVector
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_80:
-	mov eax, [ebp+0x8]
-	add eax, [ebp+0x10]
-	cmp word [eax], 0x0
-	jz Scr_GetGenericField_10
-	mov dword [esp+0x4], 0x0
-	movzx edx, word [eax]
-	lea eax, [edx+edx*8]
-	lea eax, [edx+eax*2]
-	mov ecx, eax
-	shl ecx, 0x5
-	add eax, ecx
-	lea eax, [eax+edx-0x274]
-	mov edx, g_entities
-	mov eax, [edx+eax]
-	mov [esp], eax
-	call Scr_AddEntityNum
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_70:
-	mov edx, [ebp+0x8]
-	mov ecx, [ebp+0x10]
-	mov eax, [edx+ecx]
-	test eax, eax
-	jz Scr_GetGenericField_10
-	mov dword [esp+0x4], 0x0
-	mov eax, [eax]
-	mov [esp], eax
-	call Scr_AddEntityNum
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_60:
-	mov eax, [ebp+0x8]
-	add eax, [ebp+0x10]
-	mov [esp], eax
-	call Scr_AddVector
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_50:
-	mov edx, [ebp+0x8]
-	mov ecx, [ebp+0x10]
-	movzx eax, word [edx+ecx]
-	test ax, ax
-	jz Scr_GetGenericField_10
-	movzx eax, ax
-	mov [esp], eax
-	call Scr_AddConstString
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_40:
-	mov eax, [ebp+0x8]
-	add eax, [ebp+0x10]
-	mov [esp], eax
-	call Scr_AddString
-	jmp Scr_GetGenericField_10
-Scr_GetGenericField_30:
-	mov ecx, [ebp+0x8]
-	mov ebx, [ebp+0x10]
-	mov eax, [ecx+ebx]
-	mov [esp], eax
-	call Scr_AddFloat
-	jmp Scr_GetGenericField_10
-	
-	
-Scr_GetGenericField_jumptab_0:
-	dd Scr_GetGenericField_20
-	dd Scr_GetGenericField_30
-	dd Scr_GetGenericField_40
-	dd Scr_GetGenericField_50
-	dd Scr_GetGenericField_60
-	dd Scr_GetGenericField_70
-	dd Scr_GetGenericField_80
-	dd Scr_GetGenericField_90
-	dd Scr_GetGenericField_100
-	dd Scr_GetGenericField_110
-
-
-;Scr_SetGenericField(unsigned char*, fieldtype_t, int)
-Scr_SetGenericField:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x24
-	mov eax, [ebp+0xc]
-	cmp eax, 0x7
-	ja Scr_SetGenericField_10
-	jmp dword [eax*4+Scr_SetGenericField_jumptab_0]
-Scr_SetGenericField_120:
-	mov dword [esp], 0x0
-	call Scr_GetType
-	test eax, eax
-	jnz Scr_SetGenericField_20
-Scr_SetGenericField_50:
-	xor eax, eax
-Scr_SetGenericField_60:
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x10]
-	add eax, [ebp+0x8]
-	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
-Scr_SetGenericField_10:
-	add esp, 0x24
-	pop ebx
-	pop ebp
-	ret
-Scr_SetGenericField_70:
-	mov dword [esp], 0x0
-	call Scr_GetInt
-	mov edx, [ebp+0x8]
-	mov ecx, [ebp+0x10]
-	mov [edx+ecx], eax
-	jmp Scr_SetGenericField_10
-Scr_SetGenericField_130:
-	lea eax, [ebp-0x14]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
-	call Scr_GetVector
-	mov eax, [ebp-0x10]
-	mov ecx, [ebp+0x8]
-	mov edx, [ebp+0x10]
-	mov [ecx+edx], eax
-	jmp Scr_SetGenericField_10
-Scr_SetGenericField_110:
-	mov ebx, [ebp+0x8]
-	add ebx, [ebp+0x10]
-	mov dword [esp], 0x0
-	call Scr_GetType
-	test eax, eax
-	jnz Scr_SetGenericField_30
-Scr_SetGenericField_40:
-	xor eax, eax
-	mov [ebx], eax
-	jmp Scr_SetGenericField_10
-Scr_SetGenericField_90:
-	mov dword [esp], 0x0
-	call Scr_GetConstStringIncludeNull
-	mov [esp+0x4], eax
-	mov eax, [ebp+0x8]
-	add eax, [ebp+0x10]
-	mov [esp], eax
-	call Scr_SetString
-	jmp Scr_SetGenericField_10
-Scr_SetGenericField_100:
-	lea eax, [ebp-0x14]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
-	call Scr_GetVector
-	mov edx, [ebp+0x8]
-	add edx, [ebp+0x10]
-	mov eax, [ebp-0x14]
-	mov [edx], eax
-	mov eax, [ebp-0x10]
-	mov [edx+0x4], eax
-	mov eax, [ebp-0xc]
-	mov [edx+0x8], eax
-	jmp Scr_SetGenericField_10
-Scr_SetGenericField_80:
-	mov dword [esp], 0x0
-	call Scr_GetFloat
-	mov eax, [ebp+0x8]
-	mov edx, [ebp+0x10]
-	fstp dword [eax+edx]
-	jmp Scr_SetGenericField_10
-Scr_SetGenericField_30:
-	mov dword [esp], 0x0
-	call Scr_GetEntityRef
-	mov edx, eax
-	shr eax, 0x10
-	test ax, ax
-	jnz Scr_SetGenericField_40
-	movzx eax, dx
-	lea edx, [eax+eax*8]
-	lea edx, [eax+edx*2]
-	mov ecx, edx
-	shl ecx, 0x5
-	add edx, ecx
-	lea eax, [edx+eax]
-	add eax, g_entities
-	mov [ebx], eax
-	jmp Scr_SetGenericField_10
-Scr_SetGenericField_20:
-	mov dword [esp], 0x0
-	call Scr_GetEntityRef
-	mov edx, eax
-	shr eax, 0x10
-	test ax, ax
-	jnz Scr_SetGenericField_50
-	movzx eax, dx
-	lea edx, [eax+eax*8]
-	lea edx, [eax+edx*2]
-	mov ecx, edx
-	shl ecx, 0x5
-	add edx, ecx
-	lea eax, [edx+eax]
-	add eax, g_entities
-	jmp Scr_SetGenericField_60
-	nop
-	
-	
-Scr_SetGenericField_jumptab_0:
-	dd Scr_SetGenericField_70
-	dd Scr_SetGenericField_80
-	dd Scr_SetGenericField_10
-	dd Scr_SetGenericField_90
-	dd Scr_SetGenericField_100
-	dd Scr_SetGenericField_110
-	dd Scr_SetGenericField_120
-	dd Scr_SetGenericField_130
-
 
 ;G_DuplicateEntityFields(gentity_s*, gentity_s const*)
 G_DuplicateEntityFields:
@@ -1895,8 +1637,6 @@ GScr_AddFieldsForEntity_10:
 	pop esi
 	pop ebp
 	jmp GScr_AddFieldsForClient
-
-
 
 ;Initialized global or static variables of g_spawn_mp:
 SECTION .data

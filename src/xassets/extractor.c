@@ -186,7 +186,7 @@ static void add_zone_source_line(const char *asset_type, const char *asset_name)
 static void extract_rawfile(const void *header)
 {
     char output_path[MAX_OSPATH];
-    Rawfile_t *asset = (Rawfile_t *)header;
+    struct RawFile *asset = (struct RawFile *)header;
     fileHandle_t f;
 
     /* Do not extract with same name as .ff. */
@@ -205,7 +205,7 @@ static void extract_rawfile(const void *header)
         return;
     }
     WRITE_EXTRACTOR_HEADER(f);
-    FS_Write(asset->data, asset->data_size, f);
+    FS_Write(asset->buffer, asset->len, f);
     FS_FCloseFile(f);
     add_zone_source_line("rawfile", asset->name);
 }

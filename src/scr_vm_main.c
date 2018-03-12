@@ -910,7 +910,7 @@ void __cdecl GScr_LoadScripts(void)
         Scr_SetClassMap(i);
 
     GScr_AddFieldsForEntity();
-    GScr_AddFieldsForClient();
+//    GScr_AddFieldsForClient(); Already called by GScr_AddFieldsForEntity() and dup call makes assert fail
     GScr_AddFieldsForHudElems();
     GScr_AddFieldsForRadiant();
     Scr_EndLoadScripts();
@@ -954,12 +954,12 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
 
     handle = Scr_CreateCanonicalFilename(scriptname);
 
-    if (FindVariable(scrCompilePub.loadedscripts, handle))
+    if (FindVariable(gScrCompilePub.loadedscripts, handle))
     {
         --callScriptStackPtr;
 
         SL_RemoveRefToString(handle);
-        variable = FindVariable(scrCompilePub.scriptsPos, handle);
+        variable = FindVariable(gScrCompilePub.scriptsPos, handle);
 
         if (variable)
         {
@@ -970,11 +970,11 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
     else
     {
 
-        variable = GetNewVariable(scrCompilePub.loadedscripts, handle);
+        variable = GetNewVariable(gScrCompilePub.loadedscripts, handle);
 
         SL_RemoveRefToString(handle);
 
-        oldSourceBuf = scrParserPub.sourceBuf;
+        oldSourceBuf = gScrParserPub.sourceBuf;
 
         /*
         Try to load our extended scriptfile (gsx) first.
@@ -1001,20 +1001,20 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
 
         oldAnimTreeNames = scrAnimPub.animTreeNames;
         scrAnimPub.animTreeNames = 0;
-        scrCompilePub.far_function_count = 0;
+        gScrCompilePub.far_function_count = 0;
         Scr_InitAllocNode();
-        oldFilename = scrParserPub.scriptfilename;
-        scrParserPub.scriptfilename = filepath;
-        scrCompilePub.in_ptr = "+";
-        scrCompilePub.parseBuf = scr_buffer_handle;
+        oldFilename = gScrParserPub.scriptfilename;
+        gScrParserPub.scriptfilename = filepath;
+        gScrCompilePub.in_ptr = "+";
+        gScrCompilePub.parseBuf = scr_buffer_handle;
         ScriptParse(&result, 0);
 
-        object = SGetObjectA(GetVariable(scrCompilePub.scriptsPos, handle));
+        object = SGetObjectA(GetVariable(gScrCompilePub.scriptsPos, handle));
 
         ScriptCompile(result, object, variable, precache, iarg_02);
 
-        scrParserPub.scriptfilename = oldFilename;
-        scrParserPub.sourceBuf = oldSourceBuf;
+        gScrParserPub.scriptfilename = oldFilename;
+        gScrParserPub.sourceBuf = oldSourceBuf;
         scrAnimPub.animTreeNames = oldAnimTreeNames;
 
         --callScriptStackPtr;
@@ -1298,7 +1298,7 @@ void GetHuffmanArray(){
 /*
 int GetArraySize(int aHandle)
 {
-    int size = scrVarGlob.variables[aHandle].value.typeSize.size;
+    int size = gScrVarGlob.variables[aHandle].value.typeSize.size;
     return size;
 }*/
 
@@ -1312,21 +1312,21 @@ __regparm3 void VM_Notify_Hook(int entid, int constString, VariableValue *argume
 
 void Scr_InitSystem()
 {
-    scrVarPub.timeArrayId = AllocObject();
-    scrVarPub.pauseArrayId = Scr_AllocArray();
-    scrVarPub.levelId = AllocObject();
-    scrVarPub.animId = AllocObject();
-    scrVarPub.time = 0;
+    gScrVarPub.timeArrayId = AllocObject();
+    gScrVarPub.pauseArrayId = Scr_AllocArray();
+    gScrVarPub.levelId = AllocObject();
+    gScrVarPub.animId = AllocObject();
+    gScrVarPub.time = 0;
     g_script_error_level = -1;
 }
 
 void Scr_ClearArguments()
 {
-    while (scrVmPub.outparamcount)
+    while (gScrVmPub.outparamcount)
     {
-        RemoveRefToValue(scrVmPub.top->type, scrVmPub.top->u);
-        --scrVmPub.top;
-        --scrVmPub.outparamcount;
+        RemoveRefToValue(gScrVmPub.top->type, gScrVmPub.top->u);
+        --gScrVmPub.top;
+        --gScrVmPub.outparamcount;
     }
 }
 
@@ -1337,27 +1337,27 @@ void Scr_NotifyInternal(int varNum, int constString, int numArgs)
     int ctype;
 
     Scr_ClearArguments();
-    curArg = scrVmPub.top - numArgs;
-    z = scrVmPub.inparamcount - numArgs;
+    curArg = gScrVmPub.top - numArgs;
+    z = gScrVmPub.inparamcount - numArgs;
     if (varNum)
     {
         ctype = curArg->type;
         curArg->type = 8;
-        scrVmPub.inparamcount = 0;
-        VM_Notify(varNum, constString, scrVmPub.top);
+        gScrVmPub.inparamcount = 0;
+        VM_Notify(varNum, constString, gScrVmPub.top);
         curArg->type = ctype;
     }
-    while (scrVmPub.top != curArg)
+    while (gScrVmPub.top != curArg)
     {
-        RemoveRefToValue(scrVmPub.top->type, scrVmPub.top->u);
-        --scrVmPub.top;
+        RemoveRefToValue(gScrVmPub.top->type, gScrVmPub.top->u);
+        --gScrVmPub.top;
     }
-    scrVmPub.inparamcount = z;
+    gScrVmPub.inparamcount = z;
 }
 
 void Scr_NotifyLevel(int constString, unsigned int numArgs)
 {
-    Scr_NotifyInternal(scrVarPub.levelId, constString, numArgs);
+    Scr_NotifyInternal(gScrVarPub.levelId, constString, numArgs);
 }
 
 void Scr_NotifyNum(int entityNum, unsigned int entType, unsigned int constString, unsigned int numArgs)
@@ -1380,15 +1380,15 @@ void RuntimeError_Debug(char *msg, char *pos, int a4)
 
     Com_Printf(CON_CHANNEL_SCRIPT,"\n^1******* script runtime error *******\n%s: ", msg);
     Scr_PrintPrevCodePos(0, pos, a4);
-    if (scrVmPub.function_count)
+    if (gScrVmPub.function_count)
     {
-        for (i = scrVmPub.function_count - 1; i > 0; --i)
+        for (i = gScrVmPub.function_count - 1; i > 0; --i)
         {
             Com_Printf(CON_CHANNEL_SCRIPT,"^1called from:\n");
-            Scr_PrintPrevCodePos(0, scrVmPub.function_frame_start[i].fs.pos, scrVmPub.function_frame_start[i].fs.localId == 0);
+            Scr_PrintPrevCodePos(0, gScrVmPub.function_frame_start[i].fs.pos, gScrVmPub.function_frame_start[i].fs.localId == 0);
         }
         Com_Printf(CON_CHANNEL_SCRIPT,"^1started from:\n");
-        Scr_PrintPrevCodePos(0, scrVmPub.function_frame_start[0].fs.pos, 1);
+        Scr_PrintPrevCodePos(0, gScrVmPub.function_frame_start[0].fs.pos, 1);
     }
     Com_Printf(CON_CHANNEL_SCRIPT,"^1************************************\n");
 }
@@ -1397,15 +1397,15 @@ void RuntimeError(char *pos, int arg4, char *message, char *a4)
 {
     int errtype;
 
-    if (!scrVarPub.developer && !scrVmPub.terminal_error)
+    if (!gScrVarPub.developer && !gScrVmPub.terminal_error)
     {
         return;
     }
 
-    if (scrVmPub.debugCode)
+    if (gScrVmPub.debugCode)
     {
         Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", message);
-        if (!scrVmPub.terminal_error)
+        if (!gScrVmPub.terminal_error)
         {
             return;
         }
@@ -1413,13 +1413,13 @@ void RuntimeError(char *pos, int arg4, char *message, char *a4)
     else
     {
         RuntimeError_Debug(message, pos, arg4);
-        if (!scrVmPub.abort_on_error && !scrVmPub.terminal_error)
+        if (!gScrVmPub.abort_on_error && !gScrVmPub.terminal_error)
         {
             return;
         }
     }
 
-    if (scrVmPub.terminal_error)
+    if (gScrVmPub.terminal_error)
     {
         errtype = 5;
     }
@@ -1442,7 +1442,7 @@ qboolean Scr_ScriptRuntimecheckInfiniteLoop()
 {
     int now = Sys_Milliseconds();
 
-    if (now - scrVmGlob.starttime > 6000)
+    if (now - gScrVmGlob.starttime > 6000)
     {
         Cbuf_AddText("wait 50;map_rotate\n");
         return qtrue;
@@ -1453,13 +1453,13 @@ qboolean Scr_ScriptRuntimecheckInfiniteLoop()
 
 gentity_t *VM_GetGEntityForNum(scr_entref_t num)
 {
-    if (HIWORD(num))
+    if (num.classnum)
     {
         Scr_Error("Not an entity");
         return NULL;
     }
 
-    return &g_entities[LOWORD(num)];
+    return &g_entities[num.entnum];
 }
 
 gclient_t *VM_GetGClientForEntity(gentity_t *ent)
@@ -1472,39 +1472,55 @@ gclient_t *VM_GetGClientForEntityNumber(scr_entref_t num)
     return VM_GetGClientForEntity(VM_GetGEntityForNum(num));
 }
 
-client_t *VM_GetClientForEntityNumber(scr_entref_t num)
+client_t *VM_GetClientForEntRef(scr_entref_t ref) //Very bad, this must go
 {
-    return &svs.clients[num];
+    return &svs.clients[ref.entnum];
+}
+
+gentity_t *VM_GetGEntityForEntRef(scr_entref_t num)
+{
+    if (num.classnum)
+    {
+        Scr_Error("Not an entity");
+        return NULL;
+    }
+
+    return &g_entities[num.entnum];
+}
+
+gclient_t *VM_GetGClientForEntRef(scr_entref_t ref)
+{
+    return VM_GetGClientForEntity(VM_GetGEntityForEntRef(ref));
 }
 
 /*
 void __cdecl sub_51D1F0()
 {
-  if ( !scrVarPub.evaluate && !unk_1509088 )
+  if ( !gScrVarPub.evaluate && !unk_1509088 )
   {
-    if ( scrVarPub.developer && scrVmGlob.loading )
+    if ( gScrVarPub.developer && gScrVmGlob.loading )
     {
-      scrVmPub.terminal_error = 1;
+      gScrVmPub.terminal_error = 1;
     }
-    if ( scrVmPub.function_count || scrVmPub.debugCode )
+    if ( gScrVmPub.function_count || gScrVmPub.debugCode )
     {
       longjmp(g_script_error[g_script_error_level], -1);
     }
-    Sys_Error("%s", scrVarPub.error_message);
+    Sys_Error("%s", gScrVarPub.error_message);
   }
-  if ( scrVmPub.terminal_error )
+  if ( gScrVmPub.terminal_error )
   {
-    Sys_Error("%s", scrVarPub.error_message);
+    Sys_Error("%s", gScrVarPub.error_message);
   }
 }
 
 void Scr_Error(const char *error)
 {
   static char errormsg[1024];
-  if ( !scrVarPub.error_message )
+  if ( !gScrVarPub.error_message )
   {
     Q_strncpyz(errormsg, error, sizeof(errormsg));
-    scrVarPub.error_message = errormsg;
+    gScrVarPub.error_message = errormsg;
   }
   sub_51D1F0();
 }
@@ -1514,18 +1530,18 @@ int Scr_GetInt(unsigned int paramnum)
     mvabuf;
     VariableValue *var;
 
-    if (paramnum >= scrVmPub.outparamcount)
+    if (paramnum >= gScrVmPub.outparamcount)
     {
         Scr_Error(va("parameter %d does not exist", paramnum + 1));
         return 0;
     }
 
-    var = &scrVmPub.top[-paramnum];
+    var = &gScrVmPub.top[-paramnum];
     if (var->type == 6)
     {
         return var->u.intValue;
     }
-    scrVarPub.error_index = paramnum + 1;
+    gScrVarPub.error_index = paramnum + 1;
     Scr_Error(va("type %s is not an int", var_typename[var->type]));
     return 0;
 }
@@ -1535,18 +1551,18 @@ unsigned int Scr_GetObject(unsigned int paramnum)
     mvabuf;
     VariableValue *var;
 
-    if (paramnum >= scrVmPub.outparamcount)
+    if (paramnum >= gScrVmPub.outparamcount)
     {
         Scr_Error(va("parameter %d does not exist", paramnum + 1));
         return 0;
     }
 
-    var = &scrVmPub.top[-paramnum];
+    var = &gScrVmPub.top[-paramnum];
     if (var->type == 1)
     {
         return var->u.pointerValue;
     }
-    scrVarPub.error_index = paramnum + 1;
+    gScrVarPub.error_index = paramnum + 1;
     Scr_Error(va("type %s is not an object", var_typename[var->type]));
     return 0;
 }
@@ -1558,19 +1574,19 @@ int Scr_GetFunc(unsigned int paramnum)
     mvabuf;
     VariableValue *var;
 
-    if (paramnum >= scrVmPub.outparamcount)
+    if (paramnum >= gScrVmPub.outparamcount)
     {
         Scr_Error(va("parameter %d does not exist", paramnum + 1));
         return -1;
     }
 
-    var = &scrVmPub.top[-paramnum];
+    var = &gScrVmPub.top[-paramnum];
     if (var->type == 9)
     {
-        int vmRomAddress = var->u.codePosValue - scrVarPub.programBuffer;
+        int vmRomAddress = var->u.codePosValue - gScrVarPub.programBuffer;
         return vmRomAddress;
     }
-    scrVarPub.error_index = paramnum + 1;
+    gScrVarPub.error_index = paramnum + 1;
     Scr_Error(va("type %s is not an function", var_typename[var->type]));
     return -1;
 }
@@ -1589,15 +1605,15 @@ unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvar
     {
         if(hash_id == 0)
         {
-            hash_id = scrVarGlob.variableList[ptr + 1].hash.u.prevSibling;
+            hash_id = gScrVarGlob.variableList[ptr + 1].hash.u.prevSibling;
             if(hash_id == 0)
             {
                 return 0;
             }
         }else{
-            hash_id = scrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id;
+            hash_id = gScrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id;
         }
-        var = &scrVarGlob.variableList[SCR_VARHIGH + hash_id];
+        var = &gScrVarGlob.variableList[SCR_VARHIGH + hash_id];
 
         int type = var->w.type & 0x1f;
 
@@ -1606,9 +1622,18 @@ unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvar
 
         ++i;
     }
-    while ( var->hash.u.prevSibling && scrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id && i < maxvariables);
+    while ( var->hash.u.prevSibling && gScrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id && i < maxvariables);
 
     return 0;//GetArraySize(ptr);
+}
+
+unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index)
+{
+  if ( index >= gScrVmPub.outparamcount || gScrVmPub.top[-index].type )
+  {
+    return Scr_GetConstString(index);
+  }
+  return 0;
 }
 
 void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
@@ -1616,12 +1641,12 @@ void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
 /*
   Scr_DumpScriptThreads(inst);
   Scr_DumpScriptVariablesDefault(inst);
-  scrVmPub.terminal_error = 1;
+  gScrVmPub.terminal_error = 1;
   Scr_Error(inst, error, 0);
 */
   Scr_DumpScriptThreads( );
   Scr_DumpScriptVariablesDefault( );
-  scrVmPub.terminal_error = 1;
+  gScrVmPub.terminal_error = 1;
   Scr_Error(error);
 
 }
@@ -1652,21 +1677,21 @@ VariableValue __cdecl GetEntityFieldValue(unsigned int classnum, int entnum, int
 {
   VariableValue result;
 
-  assert ( !scrVmPub.inparamcount );
-  assert(!scrVmPub.outparamcount);
+  assert ( !gScrVmPub.inparamcount );
+  assert(!gScrVmPub.outparamcount);
 
-  scrVmPub.top = scrVmGlob.eval_stack - 1;
-  scrVmGlob.eval_stack[0].type = 0;
+  gScrVmPub.top = gScrVmGlob.eval_stack - 1;
+  gScrVmGlob.eval_stack[0].type = 0;
   Scr_GetObjectField(classnum, entnum, offset);
 
-  assert(!scrVmPub.inparamcount || scrVmPub.inparamcount == 1);
-  assert(!scrVmPub.outparamcount);
-  assert(scrVmPub.top - scrVmPub.inparamcount == scrVmGlob.eval_stack - 1);
+  assert(!gScrVmPub.inparamcount || gScrVmPub.inparamcount == 1);
+  assert(!gScrVmPub.outparamcount);
+  assert(gScrVmPub.top - gScrVmPub.inparamcount == gScrVmGlob.eval_stack - 1);
 
-  scrVmPub.inparamcount = 0;
+  gScrVmPub.inparamcount = 0;
 
-  result.u.intValue = scrVmGlob.eval_stack[0].u.intValue;
-  result.type = scrVmGlob.eval_stack[0].type;
+  result.u.intValue = gScrVmGlob.eval_stack[0].u.intValue;
+  result.type = gScrVmGlob.eval_stack[0].type;
 
   return result;
 }
@@ -1811,28 +1836,28 @@ void Scr_YYACError(const char* fmt, ...)
 
 void __cdecl Scr_ClearOutParams()
 {
-  while ( scrVmPub.outparamcount )
+  while ( gScrVmPub.outparamcount )
   {
-    RemoveRefToValue(scrVmPub.top->type, scrVmPub.top->u);
-    --scrVmPub.top;
-    --scrVmPub.outparamcount;
+    RemoveRefToValue(gScrVmPub.top->type, gScrVmPub.top->u);
+    --gScrVmPub.top;
+    --gScrVmPub.outparamcount;
   }
 }
 
 void __cdecl IncInParam()
 {
 
-  assert(((scrVmPub.top >= scrVmGlob.eval_stack - 1) && (scrVmPub.top <= scrVmGlob.eval_stack)) || ((scrVmPub.top >= scrVmPub.stack) && (scrVmPub.top <= scrVmPub.maxstack)));
+  assert(((gScrVmPub.top >= gScrVmGlob.eval_stack - 1) && (gScrVmPub.top <= gScrVmGlob.eval_stack)) || ((gScrVmPub.top >= gScrVmPub.stack) && (gScrVmPub.top <= gScrVmPub.maxstack)));
 
   Scr_ClearOutParams( );
 
-  if ( scrVmPub.top == scrVmPub.maxstack )
+  if ( gScrVmPub.top == gScrVmPub.maxstack )
   {
     Sys_Error("Internal script stack overflow");
   }
-  ++scrVmPub.top;
-  ++scrVmPub.inparamcount;
-  assert(((scrVmPub.top >= scrVmGlob.eval_stack) && (scrVmPub.top <= scrVmGlob.eval_stack + 1)) || ((scrVmPub.top >= scrVmPub.stack) && (scrVmPub.top <= scrVmPub.maxstack)));
+  ++gScrVmPub.top;
+  ++gScrVmPub.inparamcount;
+  assert(((gScrVmPub.top >= gScrVmGlob.eval_stack) && (gScrVmPub.top <= gScrVmGlob.eval_stack + 1)) || ((gScrVmPub.top >= gScrVmPub.stack) && (gScrVmPub.top <= gScrVmPub.maxstack)));
 
 }
 
@@ -1842,15 +1867,15 @@ void __cdecl Scr_AddString(const char *value)
   assert(value != NULL);
 
   IncInParam( );
-  scrVmPub.top->type = VAR_STRING;
-  scrVmPub.top->u.stringValue = SL_GetString(value, 0);
+  gScrVmPub.top->type = VAR_STRING;
+  gScrVmPub.top->u.stringValue = SL_GetString(value, 0);
 }
 
 void __cdecl Scr_AddInt(int value)
 {
   IncInParam( );
-  scrVmPub.top->type = VAR_INTEGER;
-  scrVmPub.top->u.intValue = value;
+  gScrVmPub.top->type = VAR_INTEGER;
+  gScrVmPub.top->u.intValue = value;
 }
 
 void __cdecl Scr_AddBool(bool value)
@@ -1858,28 +1883,28 @@ void __cdecl Scr_AddBool(bool value)
   assert(value == false || value == true);
 
   IncInParam( );
-  scrVmPub.top->type = VAR_INTEGER;
-  scrVmPub.top->u.intValue = value;
+  gScrVmPub.top->type = VAR_INTEGER;
+  gScrVmPub.top->u.intValue = value;
 }
 
 void __cdecl Scr_AddFloat(float value)
 {
   IncInParam();
-  scrVmPub.top->type = VAR_FLOAT;
-  scrVmPub.top->u.floatValue = value;
+  gScrVmPub.top->type = VAR_FLOAT;
+  gScrVmPub.top->u.floatValue = value;
 }
 
 void __cdecl Scr_AddAnim(struct scr_anim_s value)
 {
   IncInParam();
-  scrVmPub.top->type = VAR_ANIMATION;
-  scrVmPub.top->u.codePosValue = value.linkPointer;
+  gScrVmPub.top->type = VAR_ANIMATION;
+  gScrVmPub.top->u.codePosValue = value.linkPointer;
 }
 
 void __cdecl Scr_AddUndefined( )
 {
   IncInParam();
-  scrVmPub.top->type = VAR_UNDEFINED;
+  gScrVmPub.top->type = VAR_UNDEFINED;
 }
 
 void __cdecl Scr_AddObject(unsigned int id)
@@ -1892,8 +1917,8 @@ void __cdecl Scr_AddObject(unsigned int id)
   assert(Scr_GetObjectType( id ) != VAR_DEAD_THREAD);
 
   IncInParam();
-  scrVmPub.top->type = VAR_POINTER;
-  scrVmPub.top->u.intValue = id;
+  gScrVmPub.top->type = VAR_POINTER;
+  gScrVmPub.top->u.intValue = id;
   AddRefToObject(id);
 }
 
@@ -1902,14 +1927,14 @@ void __cdecl Scr_AddEntityNum(int entnum, unsigned int classnum)
   unsigned int entId;
   const char *varUsagePos;
 
-  varUsagePos = scrVarPub.varUsagePos;
-  if ( !scrVarPub.varUsagePos )
+  varUsagePos = gScrVarPub.varUsagePos;
+  if ( !gScrVarPub.varUsagePos )
   {
-    scrVarPub.varUsagePos = "<script entity variable>";
+    gScrVarPub.varUsagePos = "<script entity variable>";
   }
   entId = Scr_GetEntityId(entnum, classnum);
   Scr_AddObject(entId);
-  scrVarPub.varUsagePos = varUsagePos;
+  gScrVarPub.varUsagePos = varUsagePos;
 }
 
 void __cdecl Scr_AddStruct( )
@@ -1926,8 +1951,8 @@ void __cdecl Scr_AddIString(const char *value)
   assert(value != NULL);
 
   IncInParam( );
-  scrVmPub.top->type = VAR_ISTRING;
-  scrVmPub.top->u.stringValue = SL_GetString(value, 0);
+  gScrVmPub.top->type = VAR_ISTRING;
+  gScrVmPub.top->u.stringValue = SL_GetString(value, 0);
 }
 
 void __cdecl Scr_AddConstString(unsigned int value)
@@ -1935,8 +1960,8 @@ void __cdecl Scr_AddConstString(unsigned int value)
   assert(value != 0);
 
   IncInParam( );
-  scrVmPub.top->type = VAR_STRING;
-  scrVmPub.top->u.stringValue = value;
+  gScrVmPub.top->type = VAR_STRING;
+  gScrVmPub.top->u.stringValue = value;
   SL_AddRefToString(value);
 }
 
@@ -1955,15 +1980,15 @@ float *__cdecl Scr_AllocVector(const float *v)
 void __cdecl Scr_AddVector(const float *value)
 {
   IncInParam();
-  scrVmPub.top->type = VAR_VECTOR;
-  scrVmPub.top->u.vectorValue = Scr_AllocVector(value);
+  gScrVmPub.top->type = VAR_VECTOR;
+  gScrVmPub.top->u.vectorValue = Scr_AllocVector(value);
 }
 
 void __cdecl Scr_MakeArray( )
 {
   IncInParam( );
-  scrVmPub.top->type = VAR_POINTER;
-  scrVmPub.top->u.intValue = Scr_AllocArray( );
+  gScrVmPub.top->type = VAR_POINTER;
+  gScrVmPub.top->u.intValue = Scr_AllocArray( );
 }
 
 void __cdecl Scr_AddArray( )
@@ -1972,35 +1997,40 @@ void __cdecl Scr_AddArray( )
   unsigned int id;
   const char *varUsagePos;
 
-  varUsagePos = scrVarPub.varUsagePos;
-  if ( !scrVarPub.varUsagePos )
+  varUsagePos = gScrVarPub.varUsagePos;
+  if ( !gScrVarPub.varUsagePos )
   {
-    scrVarPub.varUsagePos = "<script array variable>";
+    gScrVarPub.varUsagePos = "<script array variable>";
   }
 
-  assert(scrVmPub.inparamcount);
+  assert(gScrVmPub.inparamcount);
 
-  --scrVmPub.top;
-  --scrVmPub.inparamcount;
+  --gScrVmPub.top;
+  --gScrVmPub.inparamcount;
 
-  assert(scrVmPub.top->type == VAR_POINTER);
+  assert(gScrVmPub.top->type == VAR_POINTER);
 
-  arraySize = GetArraySize( scrVmPub.top->u.stringValue);
-  id = GetNewArrayVariable( scrVmPub.top->u.stringValue, arraySize);
-  SetNewVariableValue( id, scrVmPub.top + 1);
-  scrVarPub.varUsagePos = varUsagePos;
+  arraySize = GetArraySize( gScrVmPub.top->u.stringValue);
+  id = GetNewArrayVariable( gScrVmPub.top->u.stringValue, arraySize);
+  SetNewVariableValue( id, gScrVmPub.top + 1);
+  gScrVarPub.varUsagePos = varUsagePos;
 }
 
 void __cdecl Scr_AddArrayStringIndexed(unsigned int stringValue)
 {
   unsigned int id;
 
-  assert(scrVmPub.inparamcount != 0);
+  assert(gScrVmPub.inparamcount != 0);
 
-  --scrVmPub.top;
-  --scrVmPub.inparamcount;
-  assert(scrVmPub.top->type == VAR_POINTER);
+  --gScrVmPub.top;
+  --gScrVmPub.inparamcount;
+  assert(gScrVmPub.top->type == VAR_POINTER);
 
-  id = GetNewVariable( scrVmPub.top->u.stringValue, stringValue);
-  SetNewVariableValue( id, scrVmPub.top + 1);
+  id = GetNewVariable( gScrVmPub.top->u.stringValue, stringValue);
+  SetNewVariableValue( id, gScrVmPub.top + 1);
+}
+
+void Scr_UpdateDebugger()
+{
+    
 }

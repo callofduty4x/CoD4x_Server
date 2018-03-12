@@ -553,7 +553,7 @@ static void SV_MiniStatus_f( void ) {
 			Com_Printf(CON_CHANNEL_DONT_FILTER,"^7");
 
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"%3i ", i);
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"%5i ", gclient->sess.scoreboard.score);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"%5i ", gclient->sess.score);
 		if (cl->state == CS_CONNECTED)
 			Com_Printf(CON_CHANNEL_DONT_FILTER,"CNCT ");
 		else if (cl->state == CS_ZOMBIE)
@@ -694,7 +694,7 @@ static void SV_Status_f( void ) {
 		if (!cl->state)
 			continue;
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"%3i ", i);
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"%5i ", gclient->sess.scoreboard.score);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"%5i ", gclient->sess.score);
 		if (cl->state == CS_CONNECTED)
 			Com_Printf(CON_CHANNEL_DONT_FILTER,"CNCT ");
 		else if (cl->state == CS_ZOMBIE)

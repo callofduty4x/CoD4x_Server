@@ -780,7 +780,7 @@ __optimize3 __regparm1 void SVC_Status( netadr_t *from ) {
         cl = &svs.clients[i];
         if ( cl->state >= CS_CONNECTED && !cl->undercover) {
             Com_sprintf( player, sizeof( player ), "%i %i \"%s\"\n",
-                         gclient->sess.scoreboard.score, cl->ping, cl->name );
+                         gclient->sess.score, cl->ping, cl->name );
             playerLength = strlen( player );
             if ( statusLength + playerLength >= sizeof( status ) ) {
                 break;      // can't hold any more
@@ -1366,7 +1366,7 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
             Q_CleanStr(cleanplayername);
 
             MSG_WriteString(&playermsg, cleanplayername);
-            MSG_WriteLong(&playermsg, gclient->sess.scoreboard.score);
+            MSG_WriteLong(&playermsg, gclient->sess.score);
             int connectedTime = svs.time - cl->connectedTime;
             if(cl->connectedTime == 0)
             {
@@ -2789,10 +2789,10 @@ void	serverStatus_Write(){
 
 
                             Com_sprintf(team,sizeof(team),"%i", gclient->sess.cs.team);
-                            Com_sprintf(score,sizeof(score),"%i", gclient->sess.scoreboard.score);
-                            Com_sprintf(kills,sizeof(kills),"%i", gclient->sess.scoreboard.kills);
-                            Com_sprintf(deaths,sizeof(deaths),"%i", gclient->sess.scoreboard.deaths);
-                            Com_sprintf(assists,sizeof(assists),"%i", gclient->sess.scoreboard.assists);
+                            Com_sprintf(score,sizeof(score),"%i", gclient->sess.score);
+                            Com_sprintf(kills,sizeof(kills),"%i", gclient->sess.kills);
+                            Com_sprintf(deaths,sizeof(deaths),"%i", gclient->sess.deaths);
+                            Com_sprintf(assists,sizeof(assists),"%i", gclient->sess.assists);
                             Com_sprintf(ping,sizeof(ping),"%i", cl->ping);
                             Com_sprintf(power,sizeof(power),"%i", cl->power);
                             Com_sprintf(rank,sizeof(rank),"%i", gclient->sess.cs.rank +1);
@@ -3140,7 +3140,7 @@ SV_GetConfigstring
 void SV_GetConfigstring( int index, char *buffer, int bufferSize ) {
 
     short strIndex;
-    char* cs;
+    const char* cs;
 
     if ( bufferSize < 1 ) {
         Com_Error( ERR_DROP, "SV_GetConfigstring: bufferSize == %i", bufferSize );
@@ -3326,10 +3326,10 @@ void SV_WriteRconStatus( msg_t* msg ) {
             SV_SApiSteamIDTo64String(cl->steamid, psti, sizeof(psti));
             Info_SetValueForKey( infostring, "playerid", psti);
             Info_SetValueForKey( infostring, "team", va("%i", gclient->sess.cs.team));
-            Info_SetValueForKey( infostring, "score", va("%i", gclient->sess.scoreboard.score));
-            Info_SetValueForKey( infostring, "kills", va("%i", gclient->sess.scoreboard.kills));
-            Info_SetValueForKey( infostring, "deaths", va("%i", gclient->sess.scoreboard.deaths));
-            Info_SetValueForKey( infostring, "assists", va("%i", gclient->sess.scoreboard.assists));
+            Info_SetValueForKey( infostring, "score", va("%i", gclient->sess.score));
+            Info_SetValueForKey( infostring, "kills", va("%i", gclient->sess.kills));
+            Info_SetValueForKey( infostring, "deaths", va("%i", gclient->sess.deaths));
+            Info_SetValueForKey( infostring, "assists", va("%i", gclient->sess.assists));
             Info_SetValueForKey( infostring, "ping", va("%i", cl->ping));
 
             if(cl->netchan.remoteAddress.type == NA_BOT)
@@ -3941,7 +3941,7 @@ void SV_BotUserMove(client_t *client)
     ucmd.serverTime = svs.time;
 
     playerState_t* ps = SV_GameClientNum(num);
-    ent = VM_GetGEntityForNum(num);
+    ent = SV_GentityNum(num);
 
     ucmd.weapon = (byte)(ps->weapon & 0xFF);
 

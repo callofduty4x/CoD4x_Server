@@ -19,7 +19,7 @@
 	extern node3
 	extern node1
 	extern node6
-	extern scrCompilePub
+	extern gScrCompilePub
 	extern node1_
 	extern node4
 	extern SL_GetString_
@@ -1620,7 +1620,7 @@ yyparse_2410:
 	mov dword [esp], 0x56
 	call node2
 	mov [ebp-0x280c], eax
-	mov eax, scrCompilePub
+	mov eax, gScrCompilePub
 	add dword [eax+0x4], 0x1
 	mov ebx, [ebp-0x280c]
 	mov edi, [ebp-0x2810]
@@ -2041,7 +2041,7 @@ yyparse_1480:
 	mov [ebp-0x280c], eax
 	mov ecx, [edi-0x4]
 	mov [ebp-0x2810], ecx
-	mov eax, scrCompilePub
+	mov eax, gScrCompilePub
 	add dword [eax+0x4], 0x1
 	mov ebx, [ebp-0x280c]
 	mov edi, ecx
@@ -2088,7 +2088,7 @@ yyparse_1460:
 	mov dword [esp], 0x15
 	call node3
 	mov [ebp-0x280c], eax
-	mov eax, scrCompilePub
+	mov eax, gScrCompilePub
 	add dword [eax+0x4], 0x1
 	mov ebx, [ebp-0x280c]
 	mov edi, [ebp-0x2810]

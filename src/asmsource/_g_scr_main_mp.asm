@@ -543,12 +543,10 @@
 	global Scr_PlayerDisconnect
 	global Scr_SightTracePassed
 	global GScr_DisableAimAssist
-	global GScr_GetHeadIconIndex
 	global GScr_MissileSetTarget
 	global Scr_ParseGameTypeList
 	global Scr_VerifyWeaponIndex
 	global GScr_GetScriptMenuIndex
-	global GScr_GetStatusIconIndex
 	global GScr_EnableGrenadeTouchDamage
 	global GScr_DisableGrenadeTouchDamage
 	global g_scr_data
@@ -15073,59 +15071,6 @@ GScr_DisableAimAssist_10:
 	nop
 
 
-;GScr_GetHeadIconIndex(char const*)
-GScr_GetHeadIconIndex:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x41c
-	mov esi, [ebp+0x8]
-	cmp byte [esi], 0x0
-	jnz GScr_GetHeadIconIndex_10
-GScr_GetHeadIconIndex_40:
-	xor eax, eax
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_GetHeadIconIndex_10:
-	xor ebx, ebx
-	lea edi, [ebp-0x418]
-GScr_GetHeadIconIndex_30:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], edi
-	lea eax, [ebx+0x8db]
-	mov [esp], eax
-	call SV_GetConfigstring
-	mov [esp+0x4], esi
-	mov [esp], edi
-	call Q_stricmp
-	test eax, eax
-	jz GScr_GetHeadIconIndex_20
-	add ebx, 0x1
-	cmp ebx, 0xf
-	jnz GScr_GetHeadIconIndex_30
-	mov [esp+0x4], esi
-	mov dword [esp], _cstring_head_icon_s_was_
-	call va
-	mov [esp], eax
-	call Scr_Error
-	jmp GScr_GetHeadIconIndex_40
-GScr_GetHeadIconIndex_20:
-	lea eax, [ebx+0x1]
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
-
 ;GScr_MissileSetTarget(scr_entref_t)
 GScr_MissileSetTarget:
 	push ebp
@@ -15310,58 +15255,6 @@ GScr_GetScriptMenuIndex_20:
 	ret
 	nop
 
-
-;GScr_GetStatusIconIndex(char const*)
-GScr_GetStatusIconIndex:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x41c
-	mov esi, [ebp+0x8]
-	cmp byte [esi], 0x0
-	jnz GScr_GetStatusIconIndex_10
-GScr_GetStatusIconIndex_40:
-	xor eax, eax
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_GetStatusIconIndex_10:
-	xor ebx, ebx
-	lea edi, [ebp-0x418]
-GScr_GetStatusIconIndex_30:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], edi
-	lea eax, [ebx+0x8d3]
-	mov [esp], eax
-	call SV_GetConfigstring
-	mov [esp+0x4], esi
-	mov [esp], edi
-	call Q_stricmp
-	test eax, eax
-	jz GScr_GetStatusIconIndex_20
-	add ebx, 0x1
-	cmp ebx, 0x8
-	jnz GScr_GetStatusIconIndex_30
-	mov [esp+0x4], esi
-	mov dword [esp], _cstring_status_icon_s_wa
-	call va
-	mov [esp], eax
-	call Scr_Error
-	jmp GScr_GetStatusIconIndex_40
-GScr_GetStatusIconIndex_20:
-	lea eax, [ebx+0x1]
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
 
 
 ;GScr_EnableGrenadeTouchDamage(scr_entref_t)
