@@ -1652,50 +1652,6 @@ void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
 }
 
 
-
-//Fix for weird GNU-GCC ABI
-#if defined( __GNUC__ ) && !defined( __MINGW32__ )
-static inline __attribute__((always_inline)) VariableValue __cdecl GetEntityFieldValueReal(unsigned int classnum, int entnum, int offset);
-
-//For GCC
-void __cdecl GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
-{
-    VariableValue r;
-    r = GetEntityFieldValueReal(classnum, entnum, offset);
-    asm volatile (
-        "mov 0x4(%%eax), %%edx\n"
-        "mov 0x0(%%eax), %%eax\n"
-        ::"eax" (&r)
-    );
-}
-
-static inline __attribute__((always_inline)) VariableValue __cdecl GetEntityFieldValueReal(unsigned int classnum, int entnum, int offset)
-#else
-//For MSVC & MinGW
-VariableValue __cdecl GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
-#endif
-{
-  VariableValue result;
-
-  assert ( !gScrVmPub.inparamcount );
-  assert(!gScrVmPub.outparamcount);
-
-  gScrVmPub.top = gScrVmGlob.eval_stack - 1;
-  gScrVmGlob.eval_stack[0].type = 0;
-  Scr_GetObjectField(classnum, entnum, offset);
-
-  assert(!gScrVmPub.inparamcount || gScrVmPub.inparamcount == 1);
-  assert(!gScrVmPub.outparamcount);
-  assert(gScrVmPub.top - gScrVmPub.inparamcount == gScrVmGlob.eval_stack - 1);
-
-  gScrVmPub.inparamcount = 0;
-
-  result.u.intValue = gScrVmGlob.eval_stack[0].u.intValue;
-  result.type = gScrVmGlob.eval_stack[0].type;
-
-  return result;
-}
-
 void __cdecl Scr_LocalizationError(int iParm, const char *pszErrorMessage)
 {
   Scr_ParamError(iParm, pszErrorMessage);

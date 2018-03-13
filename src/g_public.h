@@ -65,7 +65,6 @@ void __cdecl ClientDisconnect(int clientNum);
 void __cdecl G_SetLastServerTime(int clientNum, int lastServerTime);
 void __cdecl ClientThink(int clientNum);
 int __cdecl G_GetSavePersist();
-void __cdecl G_BroadcastVoice(struct gentity_s *talker, struct VoicePacket_t *voicePacket);
 void __cdecl G_ResetEntityParsePoint();
 void __cdecl G_InitGame(int levelTime, int randomSeed, int restart, int savepersist);
 void __cdecl G_ShutdownGame(int freeScripts);
@@ -75,5 +74,7 @@ const char *__cdecl CS_DisplayName(clientState_t *cs, int type);
 #ifdef __cplusplus
 }
 #endif
+
+void __cdecl G_BroadcastVoice(struct gentity_s *talker, struct VoicePacket_t *voicePacket);
 
 #endif

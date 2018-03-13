@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "q_shared.h"
 #include "misc.h"
 #include "scr_vm.h"
@@ -1230,10 +1231,10 @@ void __cdecl Scr_EvalVariableExtern(unsigned int id)
 }
 #else
 VariableValue __cdecl Scr_EvalVariableExtern(unsigned int id)
-#endif
 {
   return Scr_EvalVariable(id);
 }
+#endif
 
 
 VariableValue Scr_EvalVariableField(unsigned int id)
@@ -1263,10 +1264,10 @@ void __cdecl Scr_EvalVariableFieldExtern(unsigned int id)
 }
 #else
 VariableValue __cdecl Scr_EvalVariableFieldExtern(unsigned int id)
-#endif
 {
   return Scr_EvalVariableField(id);
 }
+#endif
 
 VariableValue Scr_FindVariableField(unsigned int parentId, unsigned int name)
 {
@@ -1312,11 +1313,10 @@ void __cdecl Scr_FindVariableFieldExtern(unsigned int parentId, unsigned int nam
 }
 #else
 VariableValue __cdecl Scr_FindVariableFieldExtern(unsigned int parentId, unsigned int name)
-#endif
 {
   return Scr_FindVariableField(parentId, name);
 }
-
+#endif
 unsigned int __cdecl AllocValue( )
 {
   VariableValueInternal *entry;

@@ -116,6 +116,7 @@ void __cdecl SV_UserVoice(client_t *cl, msg_t *msg)
   }
 }
 
+
 void __cdecl SV_PreGameUserVoice(client_t *cl, msg_t *msg)
 {
   int packet;
