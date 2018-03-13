@@ -25,7 +25,7 @@
 	extern FindObject
 	extern SL_FindLowercaseString
 	extern GetValueType
-	extern Scr_EvalVariable
+	extern Scr_EvalVariableExtern
 	extern Scr_LoadAnimTreeAtIndex
 	extern GetNewVariable
 	extern SL_ConvertToString
@@ -466,7 +466,7 @@ Scr_GetFunctionHandle_10:
 	mov [esp], eax
 	call FindVariable
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov ecx, gScrVarPub
 	sub eax, [ecx+0x48]
 	cmp eax, [edi+0x2002c]

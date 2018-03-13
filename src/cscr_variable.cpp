@@ -268,6 +268,7 @@ void __regparm2 MakeVariableExternal(unsigned int index, VariableValueInternal *
 
   entryValue->w.status &= ~VAR_STAT_MASK;
   entryValue->w.status |= VAR_STAT_HEAD;
+  entryValue->w.status |= VAR_STAT_EXTERNAL;
   entryValue->v.next = index;
 }
 
@@ -344,11 +345,8 @@ void __cdecl FreeChildValue(unsigned int parentId, unsigned int id)
   unsigned int index;
 
   entryValue = &gScrVarGlob.variableList[id + VARIABLELIST_CHILD_BEGIN];
-  if((entryValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL)
-  {
-    Com_Printf(CON_CHANNEL_SYSTEM, "Assert okay\n");
-  }
-//  assert((entryValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
+
+  assert((entryValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
   assert((entryValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(!IsObject( entryValue ));
   assert(gScrVarGlob.variableList[VARIABLELIST_CHILD_BEGIN + entryValue->v.index].hash.id == id);
@@ -372,7 +370,7 @@ void __cdecl FreeChildValue(unsigned int parentId, unsigned int id)
     assert(gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN + id]);
     gScrVarDebugPub->varUsage[id + VARIABLELIST_CHILD_BEGIN] = 0;
   }
-//  assert((entryValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
+  assert((entryValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
 
   index = entryValue->v.next;
   entry = &gScrVarGlob.variableList[index + VARIABLELIST_CHILD_BEGIN].hash;
@@ -2874,6 +2872,15 @@ scr_entref_t __cdecl Scr_GetEntityIdRef(unsigned int entId)
   ref.classnum = entValue->w.classnum >> VAR_NAME_BITS;
   return ref;
 }
+
+uint32_t __cdecl Scr_GetEntityIdRefExtern(unsigned int entId)
+{
+  scr_entref_t ref;
+  ref = Scr_GetEntityIdRef(entId);
+
+  return *(uint32_t*)&ref;
+}
+
 
 void __cdecl Scr_InitClassMap( )
 {

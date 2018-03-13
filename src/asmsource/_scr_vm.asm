@@ -101,7 +101,7 @@
 	extern Com_PrintError
 	extern Scr_PrintPrevCodePos
 	extern GetInternalVariableIndex
-	extern Scr_GetEntityIdRef
+	extern Scr_GetEntityIdRefExtern
 	extern Com_PrintWarning
 	extern SGetObjectA
 	extern longjmp
@@ -4222,7 +4222,7 @@ VM_ExecuteInternal_230:
 VM_ExecuteInternal_1780:
 	mov eax, [ebp-0x34]
 	mov [esp], eax
-	call Scr_GetEntityIdRef
+	call Scr_GetEntityIdRefExtern
 	mov ebx, eax
 	mov eax, [ebp-0x34]
 	mov [esp], eax
@@ -7027,7 +7027,7 @@ Scr_GetEntityRef_190:
 	jmp Scr_GetEntityRef_210
 Scr_GetEntityRef_80:
 	mov [esp], edi
-	call Scr_GetEntityIdRef
+	call Scr_GetEntityIdRefExtern
 	mov edx, eax
 	shr edx, 0x10
 	mov ecx, eax

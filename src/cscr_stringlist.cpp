@@ -367,7 +367,7 @@ void __cdecl SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int l
 
   refStr = GetRefString(stringValue);
 
-  if(stringValue == 2744/*2338*/)
+  if(stringValue == 2338)
   {
     Com_Printf(CON_CHANNEL_SCRIPT, "Remove ref for %s old count: %d\n", refStr->str, refStr->refCount);
 //    Sys_PrintBacktrace();
@@ -375,7 +375,7 @@ void __cdecl SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int l
 
   assertx(refStr->refCount > 0, "refStr->refCount = %d", refStr->refCount);
 
- // if(refStr->refCount <= 0)
+  if(refStr->refCount <= 0)
   {
     return;
   }
@@ -450,7 +450,7 @@ void __cdecl SL_AddRefToString(unsigned int stringValue)
   }
   refStr = GetRefString(stringValue);
 
-  if(stringValue == 2744/*2338*/)
+  if(stringValue == 2338)
   {
     Com_Printf(CON_CHANNEL_SCRIPT, "Add ref for %s old count: %d\n", refStr->str, refStr->refCount);
 //    Sys_PrintBacktrace();
@@ -656,7 +656,7 @@ void __cdecl SL_AddUserInternal(RefString *refStr, unsigned int user)
         exchange.user |= user;
     }while(InterlockedCompareExchange((DWORD*)&refStr->data, exchange.data, compare.data) != (DWORD)compare.data);
 
-  if(str == 2744/*2338*/)
+  if(str == 2338)
   {
     Com_Printf(CON_CHANNEL_SCRIPT, "Add USer ref for %s old count: %d\n", refStr->str, refStr->refCount);
 //    Sys_PrintBacktrace();
@@ -802,7 +802,7 @@ unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsi
   refStr->user = user;
   assert(refStr->user == user);
 
-  if(stringValue == 2744/*2338*/)
+  if(stringValue == 2338)
   {
     Com_Printf(CON_CHANNEL_SCRIPT, "Add ref for %s to new sting\n", refStr->str);
 //    Sys_PrintBacktrace();
@@ -872,7 +872,7 @@ void __cdecl SL_TransferRefToUser(unsigned int stringValue, unsigned int user)
       InterlockedDecrement((volatile DWORD*)&gScrStringDebugGlob->refCount[stringValue]);
     }
 
-  if(stringValue == 2744/*2338*/)
+  if(stringValue == 2338)
   {
     Com_Printf(CON_CHANNEL_SCRIPT, "Remove trnasferrefuser for %s old count: %d\n", refStr->str, refStr->refCount);
 //    Sys_PrintBacktrace();
@@ -1062,7 +1062,7 @@ float *__cdecl Scr_AllocVectorInternal()
 
   refVec = (RefVector*)MT_Alloc(16, 2);
   refVec->head = 0;
-//  InterlockedIncrement(&gScrVarPub.totalVectorRefCount);
+  InterlockedIncrement((DWORD*)&gScrVarPub.totalVectorRefCount);
   if ( gScrStringDebugGlob )
   {
     unsigned int value = MT_GetIndexByRef((byte*)refVec);
@@ -1087,7 +1087,7 @@ void __cdecl RemoveRefToVector(const float *vectorValue)
 
   if ( !refVec->byteLen )
   {
-//    InterlockedDecrement(&gScrVarPub.totalVectorRefCount);
+    InterlockedDecrement((DWORD*)&gScrVarPub.totalVectorRefCount);
     if ( gScrStringDebugGlob )
     {
       unsigned int value = MT_GetIndexByRef((byte*)refVec);
@@ -1113,7 +1113,7 @@ void __cdecl AddRefToVector(const float *vectorValue)
 
   if ( !refVec->byteLen )
   {
-    //InterlockedIncrement((DWORD*)&gScrVarPub.totalVectorRefCount);
+    InterlockedIncrement((DWORD*)&gScrVarPub.totalVectorRefCount);
     if ( gScrStringDebugGlob )
     {
       unsigned int value = MT_GetIndexByRef((byte*)refVec);

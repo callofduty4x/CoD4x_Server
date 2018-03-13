@@ -1,6 +1,6 @@
 ;Imports of scr_compiler:
 	extern FindVariable
-	extern Scr_EvalVariable
+	extern Scr_EvalVariableExtern
 	extern RemoveVariable
 	extern GetVariableValueAddress
 	extern GetValueType
@@ -122,7 +122,7 @@ LinkThread_90:
 	ret
 LinkThread_10:
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x20], eax
 	test eax, eax
 	jg LinkThread_20
@@ -249,7 +249,7 @@ SpecifyThreadPosition:
 	call GetVariable
 	mov ebx, eax
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x20], eax
 	mov [ebp-0x1c], edx
 	mov eax, [ebp-0x1c]
@@ -4328,7 +4328,7 @@ EmitFunction_190:
 	mov [esp], eax
 	call FindVariable
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	mov edi, [ebp-0x24]
@@ -4391,7 +4391,7 @@ EmitFunction_170:
 	call GetVariable
 	mov esi, eax
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x20], eax
 	mov [ebp-0x1c], edx
 	mov eax, [ebp-0x1c]
@@ -4511,7 +4511,7 @@ EmitFunction_100:
 	ret
 EmitFunction_80:
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov esi, eax
 	cmp edx, 0xd
 	jz EmitFunction_100
@@ -4699,7 +4699,7 @@ EmitCall_110:
 	test eax, eax
 	jz EmitCall_140
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	xor eax, eax
@@ -6303,7 +6303,7 @@ EmitMethod_130:
 	test eax, eax
 	jz EmitMethod_160
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	xor eax, eax
@@ -10945,7 +10945,7 @@ ScriptCompile_660:
 	ret
 ScriptCompile_340:
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x30], eax
 	mov [ebp-0x2c], edx
 	cmp dword [ebp-0x2c], 0xd
@@ -11034,7 +11034,7 @@ ScriptCompile_430:
 	test eax, eax
 	jz ScriptCompile_410
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	cmp dword [ebp-0x24], 0xd

@@ -33,7 +33,7 @@
 	extern SetVariableValue
 	extern RemoveVariable
 	extern SL_GetString_
-	extern Scr_EvalVariable
+	extern Scr_EvalVariableExtern
 	extern Scr_AllocArray
 	extern sprintf
 	extern gScrParserPub
@@ -683,7 +683,7 @@ Scr_FindAnimTree_10:
 	test eax, eax
 	jz Scr_FindAnimTree_20
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	jmp Scr_FindAnimTree_30
 	nop
 
