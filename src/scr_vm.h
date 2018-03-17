@@ -180,6 +180,7 @@ enum scr_opcode
 
 
 
+
 typedef struct{
 	uint16_t emptystring;
 	uint16_t active;
@@ -207,8 +208,8 @@ typedef struct{
 	uint16_t entity;
 	uint16_t explode;
 	uint16_t failed;
-	uint16_t fraction;
 	uint16_t free;
+	uint16_t fraction;
 	uint16_t goal;
 	uint16_t goal_changed;
 	uint16_t goal_yaw;
@@ -354,9 +355,6 @@ typedef struct{
 	uint16_t tag_wheel_back_right;
 	uint16_t tag_wheel_middle_left;
 	uint16_t tag_wheel_middle_right;
-	uint16_t script_vehicle_collision_dup;
-	uint16_t script_vehicle_collmap_dup;
-	uint16_t script_vehicle_corpse_dup;
 	uint16_t tag_detach;
 	uint16_t tag_popout;
 	uint16_t tag_body;
@@ -370,9 +368,9 @@ typedef struct{
 	uint16_t back_left;
 	uint16_t back_right;
 	uint16_t tag_gunner_pov;
-}stringIndex_t;
+}scr_const_t;
 
-extern stringIndex_t scr_const;
+extern scr_const_t scr_const;
 
 
 typedef void (*xfunction_t)();
@@ -936,7 +934,6 @@ extern struct scrVarGlob_t gScrVarGlob;
 extern scrVarPub_t gScrVarPub;
 extern scrVmPub_t gScrVmPub;
 extern struct scrCompilePub_t gScrCompilePub;
-extern stringIndex_t stringIndex;
 extern int g_script_error_level;
 extern struct scrAnimPub_t scrAnimPub;
 extern struct scrParserPub_t gScrParserPub;

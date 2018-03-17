@@ -57,6 +57,7 @@
 	extern FindNextSibling
 	extern FindObject
 	extern GetVariableName
+	extern SL_MakeStatic
 
 ;Exports of scr_compiler:
 	global scrCompileGlob
@@ -3411,7 +3412,9 @@ EmitValue_50:
 EmitValue_60:
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call SL_TransferRefToUser
+	call SL_MakeStatic	
+;	mov [esp], ebx
+;	call SL_TransferRefToUser
 EmitValue_10:
 	add esp, 0x1c
 	pop ebx
@@ -4483,7 +4486,9 @@ EmitFunction_20:
 EmitFunction_270:
 	mov dword [esp+0x4], 0x2
 	mov [esp], ebx
-	call SL_TransferRefToUser
+	call SL_MakeStatic
+;	mov [esp], ebx
+;	call SL_TransferRefToUser
 EmitFunction_240:
 	mov [esp], esi
 	call SGetObjectA

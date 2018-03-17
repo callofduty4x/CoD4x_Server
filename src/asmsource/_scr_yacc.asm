@@ -1083,7 +1083,7 @@ yyparse_3330:
 	mov edx, [yyleng]
 	add eax, edx
 	mov [g_out_pos], eax
-	mov dword [esp+0xc], 0xe
+	mov dword [esp+0xc], 14
 	add edx, 0x1
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
@@ -1100,7 +1100,7 @@ yyparse_3320:
 	mov edx, [yyleng]
 	add eax, edx
 	mov [g_out_pos], eax
-	mov dword [esp+0xc], 0xe
+	mov dword [esp+0xc], 14
 	add edx, 0x1
 	mov [esp+0x8], edx
 	mov dword [esp+0x4], 0x0
@@ -1254,7 +1254,7 @@ yyparse_2300:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_2290:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edi, [ebp-0x2848]
@@ -1291,7 +1291,7 @@ yyparse_1160:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_2270:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x2848]
@@ -1321,7 +1321,7 @@ yyparse_2270:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_2260:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x2848]
@@ -1519,7 +1519,7 @@ yyparse_2360:
 yyparse_2350:
 	mov esi, [ebp-0x2848]
 	sub esi, 0x30
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x2848]
@@ -1999,7 +1999,7 @@ yyparse_1500:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1490:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov ebx, [ebp-0x2848]
@@ -2020,7 +2020,7 @@ yyparse_1490:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1480:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edi, [ebp-0x2848]
@@ -2047,7 +2047,7 @@ yyparse_1480:
 	mov edi, ecx
 	jmp yyparse_420
 yyparse_1470:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x2848]
@@ -2069,7 +2069,7 @@ yyparse_1470:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1460:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edi, [ebp-0x2848]
@@ -2094,7 +2094,7 @@ yyparse_1460:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1450:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov ebx, [ebp-0x2848]
@@ -2107,7 +2107,7 @@ yyparse_1450:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1440:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x2848]
@@ -2301,7 +2301,7 @@ yyparse_1820:
 	mov edi, ecx
 	jmp yyparse_420
 yyparse_1810:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x2848]
@@ -2324,7 +2324,7 @@ yyparse_1810:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1800:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov edi, [ebp-0x2848]
@@ -2372,7 +2372,7 @@ yyparse_1790:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1780:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x2848]
@@ -2450,7 +2450,7 @@ yyparse_1740:
 	mov edi, [ebp-0x2810]
 	jmp yyparse_420
 yyparse_1730:
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov ecx, [ebp-0x2848]
@@ -3008,7 +3008,7 @@ yyparse_2490:
 	mov eax, esi
 yyparse_690:
 	mov byte [eax], 0x0
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov [esp], esi
@@ -3034,7 +3034,7 @@ yyparse_2480:
 	mov eax, esi
 yyparse_610:
 	mov byte [eax], 0x0
-	mov dword [esp+0x8], 0xe
+	mov dword [esp+0x8], 14
 	movzx eax, byte [g_parse_user]
 	mov [esp+0x4], eax
 	mov [esp], esi

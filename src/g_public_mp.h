@@ -15,3 +15,5 @@ class EntHandle
         uint16_t infoIndex;
 
 };
+
+unsigned int __cdecl GScr_AllocString(const char *s);

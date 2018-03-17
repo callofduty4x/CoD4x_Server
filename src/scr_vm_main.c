@@ -125,7 +125,7 @@ ent_field_t ent_fields[] = {
 };
 */
 
-stringIndex_t scr_const;
+scr_const_t scr_const;
 /*
 ent_field_t* __internalGet_ent_fields()
 {
@@ -693,6 +693,7 @@ void Scr_InitFunctions()
     }
 }
 
+
 int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qboolean mandatory)
 {
 
@@ -891,6 +892,7 @@ void __cdecl GScr_LoadScripts(void)
     cvar_t *mapname;
     int i;
 
+//    SL_SetScriptCompile(true);
     Scr_BeginLoadScripts();
     Scr_InitFunctions();
 
@@ -914,6 +916,7 @@ void __cdecl GScr_LoadScripts(void)
     GScr_AddFieldsForHudElems();
     GScr_AddFieldsForRadiant();
     Scr_EndLoadScripts();
+//    SL_SetScriptCompile(false);
 }
 
 #define MAX_CALLSCRIPTSTACKDEPTH 200

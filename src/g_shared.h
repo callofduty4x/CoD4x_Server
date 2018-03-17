@@ -532,6 +532,10 @@ void CalculateRanks();
 int __cdecl GScr_GetStatusIconIndex(const char *pszIcon);
 int __cdecl GScr_GetHeadIconIndex(const char *pszIcon);
 unsigned int __cdecl G_ModelName(int index);
+void __cdecl Com_SetWeaponInfoMemory(int source);
+void __cdecl ClearRegisteredItems();
+void __cdecl BG_ClearWeaponDef();
+int __cdecl G_GetWeaponIndexForName(const char *name);
 #ifdef __cplusplus
 }
 #endif

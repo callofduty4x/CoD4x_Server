@@ -31,8 +31,9 @@ const char *mt_type_names[ ] =
   "config string",
   "debugger string",
   "vehicle",
-  "generic"
-};
+  "generic",
+  "static string"
+  };
 
 class MemoryTree
 {
@@ -96,11 +97,13 @@ private:
 const char* MemoryTree::MT_NodeInfoString(unsigned int nodeNum)
 {
   int type;
+  char string[920];
 
   type = gScrMemTreeDebugGlob.mt_usage[nodeNum];
   if ( gScrMemTreeDebugGlob.mt_usage[nodeNum] )
   {
-    return va("%s: '%s' (%d)", mt_type_names[type], SL_ConvertToString(nodeNum), gScrMemTreeDebugGlob.mt_usage_size[nodeNum]);
+    Q_strncpyz(string, SL_ConvertToString(nodeNum), sizeof(string));
+    return va("%s: '%s' (%d)", mt_type_names[type], string, gScrMemTreeDebugGlob.mt_usage_size[nodeNum]);
   }
   return "<FREE>";
 }
@@ -126,7 +129,7 @@ void MemoryTree::MT_DumpTree( )
   int size;
   int totalAllocBuckets;
   int totalAlloc;
-  int mt_type_usage[23];
+  int mt_type_usage[24];
   int type;
   int totalBuckets;
 
@@ -158,7 +161,7 @@ void MemoryTree::MT_DumpTree( )
     Com_Printf(CON_CHANNEL_PARSERSCRIPT, "%d subtree has %d * %d = %d free buckets\n", size, subTreeSize, 1 << size, subTreeSize * (1 << size));
   }
   Com_Printf(CON_CHANNEL_PARSERSCRIPT, "********************************\n");
-  for ( type = 1; type < 23; ++type )
+  for ( type = 1; type < 24; ++type )
   {
     Com_Printf(CON_CHANNEL_PARSERSCRIPT, "'%s' allocated: %d\n", mt_type_names[type], mt_type_usage[type]);
   }
@@ -244,7 +247,7 @@ void MemoryTree::MT_RemoveHeadMemoryNode(int size)
   assert(size >= 0 && size <= MEMORY_NODE_BITS);
 
   parentNode = &gScrMemTreeGlob.head[size];
-  oldNodeValue = gScrMemTreeGlob.nodes[gScrMemTreeGlob.head[size]];
+  oldNodeValue = gScrMemTreeGlob.nodes[*parentNode];
 
   while ( 1 )
   {
@@ -252,11 +255,11 @@ void MemoryTree::MT_RemoveHeadMemoryNode(int size)
     {
         oldNode = oldNodeValue.next;
         *parentNode = oldNodeValue.next;
-        if ( !oldNodeValue.next )
+        if ( !oldNode )
         {
             break;
         }
-        parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.next].next;
+        parentNode = &gScrMemTreeGlob.nodes[oldNode].next;
     }else{
         if ( oldNodeValue.next )
         {
@@ -268,21 +271,21 @@ void MemoryTree::MT_RemoveHeadMemoryNode(int size)
             if ( prevScore >= nextScore )
             {
                 oldNode = oldNodeValue.prev;
-                *parentNode = oldNodeValue.prev;
-                parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.prev].prev;
+                *parentNode = oldNode;
+                parentNode = &gScrMemTreeGlob.nodes[oldNode].prev;
             }
             else
             {
                 oldNode = oldNodeValue.next;
-                *parentNode = oldNodeValue.next;
-                parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.next].next;
+                *parentNode = oldNode;
+                parentNode = &gScrMemTreeGlob.nodes[oldNode].next;
             }
         }
         else
         {
             oldNode = oldNodeValue.prev;
-            *parentNode = oldNodeValue.prev;
-            parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.prev].prev;
+            *parentNode = oldNode;
+            parentNode = &gScrMemTreeGlob.nodes[oldNode].prev;
         }
     }
     assert(oldNode != 0);
@@ -572,6 +575,8 @@ unsigned int MemoryTree::MT_AllocIndex(int numBytes, int type)
   gScrMemTreeDebugGlob.mt_usage[nodeNum] = type;
   gScrMemTreeDebugGlob.mt_usage_size[nodeNum] = size;
   Sys_LeaveCriticalSection(CRITSECT_MEMORY_TREE);
+  if(nodeNum == 1613)
+  Com_Printf(CON_CHANNEL_DONT_FILTER, "Alloc Index %d\n", 1613);
   return nodeNum;
 }
 
@@ -648,6 +653,9 @@ void MemoryTree::MT_FreeIndex(unsigned int nodeNum, int numBytes)
 
   assert(size >= 0 && size <= MEMORY_NODE_BITS);
   assert(nodeNum > 0 && nodeNum < MEMORY_NODE_COUNT);
+
+  if(nodeNum == 1613)
+  Com_Printf(CON_CHANNEL_DONT_FILTER, "Free Index %d\n", 1613);
 
   Sys_EnterCriticalSection(CRITSECT_MEMORY_TREE);
   --gScrMemTreeGlob.totalAlloc;

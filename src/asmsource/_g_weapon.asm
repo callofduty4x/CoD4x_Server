@@ -63,7 +63,6 @@
 	global G_UseOffHand
 	global LogAccuracyHit
 	global FireWeaponMelee
-	global G_SetupWeaponDef
 	global G_GivePlayerWeapon
 	global G_SelectWeaponIndex
 	global G_SetEquippedOffHand
@@ -911,53 +910,6 @@ FireWeaponMelee_20:
 	add [eax], al
 
 
-;G_SetupWeaponDef()
-G_SetupWeaponDef:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	mov dword [esp+0x4], _cstring_game_g_setupweap
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	mov eax, bg_lastParsedWeaponIndex
-	mov eax, [eax]
-	test eax, eax
-	jz G_SetupWeaponDef_10
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	leave
-	ret
-G_SetupWeaponDef_10:
-	mov dword [esp], 0x1
-	call Com_SetWeaponInfoMemory
-	call ClearRegisteredItems
-	call BG_ClearWeaponDef
-	mov eax, level
-	mov eax, [eax+0x1c]
-	test eax, eax
-	jz G_SetupWeaponDef_20
-	mov eax, G_RegisterWeapon
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_defaultweapon_mp
-	call BG_GetWeaponIndexForName
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	leave
-	ret
-G_SetupWeaponDef_20:
-	mov dword [esp], _cstring_defaultweapon_mp
-	call BG_FindWeaponIndexForName
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	leave
-	ret
-
 
 ;G_GivePlayerWeapon(playerState_s*, int, unsigned char)
 G_GivePlayerWeapon:
@@ -1589,11 +1541,7 @@ SECTION .bss
 ;All cstrings:
 SECTION .rdata
 _cstring_unknown_weapon_t:		db 15h,"Unknown weapon type %i for %s",0ah,0
-_cstring_:		db "----------------------",0ah,0
-_cstring_game_g_setupweap:		db "Game: G_SetupWeaponDef",0ah,0
-_cstring_defaultweapon_mp:		db "defaultweapon_mp",0
 _cstring_c_i:		db "%c %i",0
-
 
 
 ;All constant floats and doubles:

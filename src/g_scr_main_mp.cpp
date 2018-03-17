@@ -1,8 +1,7 @@
 #include "q_shared.h"
 #include "scr_vm.h"
 #include "g_shared.h"
-
-
+#include "cscr_stringlist.h"
 
 
 struct gameTypeScript_t
@@ -176,5 +175,16 @@ int __cdecl GScr_GetHeadIconIndex(const char *pszIcon)
   return 0;
 }
 
-}
+};
 
+unsigned int __cdecl GScr_AllocString(const char *s)
+{
+  unsigned int stringVal;
+
+//  SL_SetScriptCompile(true);
+  stringVal = Scr_AllocString(s);
+//  SL_SetScriptCompile(false);
+  
+  return stringVal;
+
+}

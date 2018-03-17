@@ -208,7 +208,6 @@
 	extern Scr_ExecThread
 	extern Scr_FreeThread
 	extern G_SetAngle
-	extern Scr_AllocString
 	extern Scr_RemoveClassMap
 	extern SV_XModelGet
 	extern XModelNumBones
@@ -520,7 +519,6 @@
 	global Scr_VoteCalled
 	global GScr_IsMantling
 	global GScr_IsOnLadder
-	global GScr_AllocString
 	global GScr_FreeScripts
 	global GScr_GetNumParts
 	global GScr_GetPartName
@@ -13976,20 +13974,6 @@ GScr_IsOnLadder_20:
 	pop ebx
 	pop ebp
 	jmp Scr_AddBool
-	nop
-
-
-;GScr_AllocString(char const*)
-GScr_AllocString:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov dword [esp+0x4], 0x1
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Scr_AllocString
-	leave
-	ret
 	nop
 
 

@@ -24,6 +24,7 @@ void __cdecl AddRefToVector(const float *vectorValue);
 void __cdecl RemoveRefToVector(const float *vectorValue);
 unsigned int __cdecl SL_ConvertFromString(const char *str);
 unsigned int __cdecl SL_GetString_(const char *str, unsigned int user, int type);
+void SL_SetScriptCompile(bool active);
 
 
 
