@@ -49,7 +49,7 @@ struct __align(4) scrVarDebugPub_t
   bool dummy;
 };
 
-extern scrVarDebugPub_t *gScrVarDebugPub;
+extern struct scrVarDebugPub_t *gScrVarDebugPub;
 
 
 #ifdef __cplusplus

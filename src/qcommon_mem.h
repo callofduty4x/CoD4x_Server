@@ -45,6 +45,20 @@ typedef enum {
     TAG_SCRIPTDEBUGGER
 } memtag_t;
 
+/* This struct really really needs to be verified before using! */
+struct HunkUser
+{
+  struct HunkUser *current;
+  struct HunkUser *next;
+  int maxSize;
+  int end;
+  int pos;
+  const char *name;
+  int fixed;
+  int type;
+  char buf[1];
+};
+
 
 #ifdef __cplusplus
 extern "C"{
@@ -68,7 +82,7 @@ void Com_InitSmallZoneMemory( void );
 void Com_InitZoneMemory( void );
 char* Z_MallocGarbage(int, const char*, int);
 void* Hunk_Alloc(int size, const char* name, int type);
-void __cdecl Hunk_UserDestroy(HunkUser *user);
+void __cdecl Hunk_UserDestroy(struct HunkUser *user);
 void *__cdecl Hunk_AllocInternal(int size);
 #define L_Malloc malloc
 #define L_Free free
