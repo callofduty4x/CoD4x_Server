@@ -33,6 +33,8 @@
 #include "misc.h"
 #include "sec_crypto.h"
 #include "sv_auth.h"
+#include "cscr_stringlist.h"
+
 #include "sapi.h"
 
 #include <string.h>

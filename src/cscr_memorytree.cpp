@@ -2,6 +2,7 @@
 #include "qcommon_io.h"
 #include "sys_thread.h"
 #include "misc.h"
+#include "cscr_stringlist.h"
 
 #define MEMORY_NODE_BITS 16
 #define MEMORY_NODE_COUNT (1 << MEMORY_NODE_BITS)
@@ -31,8 +32,7 @@ const char *mt_type_names[ ] =
   "config string",
   "debugger string",
   "vehicle",
-  "generic",
-  "static string"
+  "generic"
   };
 
 class MemoryTree
@@ -129,8 +129,8 @@ void MemoryTree::MT_DumpTree( )
   int size;
   int totalAllocBuckets;
   int totalAlloc;
-  int mt_type_usage[24];
-  int type;
+  int mt_type_usage[ARRAY_COUNT(mt_type_names)];
+  unsigned int type;
   int totalBuckets;
 
   memset(&mt_type_usage, 0, sizeof(mt_type_usage));
@@ -161,7 +161,7 @@ void MemoryTree::MT_DumpTree( )
     Com_Printf(CON_CHANNEL_PARSERSCRIPT, "%d subtree has %d * %d = %d free buckets\n", size, subTreeSize, 1 << size, subTreeSize * (1 << size));
   }
   Com_Printf(CON_CHANNEL_PARSERSCRIPT, "********************************\n");
-  for ( type = 1; type < 24; ++type )
+  for ( type = 1; type < ARRAY_COUNT(mt_type_names); ++type )
   {
     Com_Printf(CON_CHANNEL_PARSERSCRIPT, "'%s' allocated: %d\n", mt_type_names[type], mt_type_usage[type]);
   }
@@ -297,66 +297,6 @@ void MemoryTree::MT_RemoveHeadMemoryNode(int size)
 
 }
 
-
-/*
-void MemoryTree::MT_RemoveHeadMemoryNode(int size)
-{
-  MemoryNode tempNodeValue; // ST18_16@20
-  int oldNode; // [sp+0h] [bp-30h]@7
-  MemoryNode oldNodeValue; // [sp+14h] [bp-1Ch]@5
-  uint16_t *parentNode; // [sp+24h] [bp-Ch]@5
-  int prevScore; // [sp+28h] [bp-8h]@11
-  int nextScore; // [sp+2Ch] [bp-4h]@11
-
-  assert(size >= 0 && size <= MEMORY_NODE_BITS);
-
-  parentNode = &gScrMemTreeGlob.head[size];
-  oldNodeValue = gScrMemTreeGlob.nodes[gScrMemTreeGlob.head[size]];
-
-  while ( oldNodeValue.prev )
-  {
-    if ( oldNodeValue.next )
-    {
-      prevScore = MT_GetScore(oldNodeValue.prev);
-      nextScore = MT_GetScore(oldNodeValue.next);
-
-      assert ( prevScore != nextScore);
-
-      if ( prevScore >= nextScore )
-      {
-        oldNode = oldNodeValue.prev;
-        *parentNode = oldNodeValue.prev;
-        parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.prev].prev;
-      }
-      else
-      {
-        oldNode = oldNodeValue.next;
-        *parentNode = oldNodeValue.next;
-        parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.next].next;
-      }
-    }
-    else
-    {
-      oldNode = oldNodeValue.prev;
-      *parentNode = oldNodeValue.prev;
-      parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.prev].prev;
-    }
-LABEL_17:
-    assert(oldNode);
-
-    tempNodeValue = oldNodeValue;
-    oldNodeValue = gScrMemTreeGlob.nodes[oldNode];
-    gScrMemTreeGlob.nodes[oldNode] = tempNodeValue;
-  }
-  oldNode = oldNodeValue.next;
-  *parentNode = oldNodeValue.next;
-  if ( oldNodeValue.next )
-  {
-    parentNode = &gScrMemTreeGlob.nodes[oldNodeValue.next].next;
-    goto LABEL_17;
-  }
-}
-*/
 
 void MemoryTree::MT_AddMemoryNode(int newNode, int size)
 {
@@ -575,8 +515,7 @@ unsigned int MemoryTree::MT_AllocIndex(int numBytes, int type)
   gScrMemTreeDebugGlob.mt_usage[nodeNum] = type;
   gScrMemTreeDebugGlob.mt_usage_size[nodeNum] = size;
   Sys_LeaveCriticalSection(CRITSECT_MEMORY_TREE);
-  if(nodeNum == 1613)
-  Com_Printf(CON_CHANNEL_DONT_FILTER, "Alloc Index %d\n", 1613);
+
   return nodeNum;
 }
 
@@ -654,9 +593,6 @@ void MemoryTree::MT_FreeIndex(unsigned int nodeNum, int numBytes)
   assert(size >= 0 && size <= MEMORY_NODE_BITS);
   assert(nodeNum > 0 && nodeNum < MEMORY_NODE_COUNT);
 
-  if(nodeNum == 1613)
-  Com_Printf(CON_CHANNEL_DONT_FILTER, "Free Index %d\n", 1613);
-
   Sys_EnterCriticalSection(CRITSECT_MEMORY_TREE);
   --gScrMemTreeGlob.totalAlloc;
   gScrMemTreeGlob.totalAllocBuckets -= 1 << size;
@@ -726,30 +662,9 @@ int MemoryTree::MT_GetIndexByRef(byte* p)
 }
 
 
-
-extern "C"{
-
 static class MemoryTree mt;
 
-byte *__cdecl MT_Alloc(int numBytes, int type)
-{
-  return mt.MT_Alloc(numBytes, type);
-}
-
-void __cdecl MT_Free(void *p, int numBytes)
-{
-  mt.MT_Free(p, numBytes);
-}
-
-void __cdecl MT_FreeIndex(unsigned int nodeNum, int numBytes)
-{
-  mt.MT_FreeIndex(nodeNum, numBytes);
-}
-
-unsigned int __cdecl MT_AllocIndex(int numBytes, int type)
-{
-	return mt.MT_AllocIndex(numBytes, type);
-}
+extern "C"{
 
 void __cdecl MT_DumpTree( )
 {
@@ -766,6 +681,20 @@ bool MT_Realloc(int oldNumBytes, int newNumbytes)
     return mt.MT_Realloc(oldNumBytes, newNumbytes);
 }
 
+byte *__cdecl MT_Alloc(int numBytes, int type)
+{
+  return mt.MT_Alloc(numBytes, type);
+}
+
+void __cdecl MT_Free(void *p, int numBytes)
+{
+  mt.MT_Free(p, numBytes);
+}
+
+};
+
+
+
 byte* MT_GetRefByIndex(int index)
 {
     return mt.MT_GetRefByIndex(index);
@@ -776,4 +705,12 @@ int MT_GetIndexByRef(byte* p)
     return mt.MT_GetIndexByRef(p);
 }
 
-};
+void __cdecl MT_FreeIndex(unsigned int nodeNum, int numBytes)
+{
+  mt.MT_FreeIndex(nodeNum, numBytes);
+}
+
+unsigned int __cdecl MT_AllocIndex(int numBytes, int type)
+{
+	return mt.MT_AllocIndex(numBytes, type);
+}

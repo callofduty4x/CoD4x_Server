@@ -35,6 +35,7 @@
 #include "sys_thread.h"
 #include "zlib/unzip.h"
 #include "physicalmemory.h"
+#include "cscr_stringlist.h"
 
 #include <string.h>
 #include <stdlib.h>

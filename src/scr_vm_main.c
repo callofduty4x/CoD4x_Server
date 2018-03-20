@@ -30,6 +30,9 @@
 #include "sv_bots.h"
 //#include "scr_vm_classfunc.h"
 #include "stringed_interface.h"
+#include "cscr_stringlist.h"
+#include "cscr_variable.h"
+#include "cscr_animtree.h"
 
 #include <stdarg.h>
 #include <ctype.h>
@@ -892,7 +895,6 @@ void __cdecl GScr_LoadScripts(void)
     cvar_t *mapname;
     int i;
 
-//    SL_SetScriptCompile(true);
     Scr_BeginLoadScripts();
     Scr_InitFunctions();
 
@@ -916,7 +918,6 @@ void __cdecl GScr_LoadScripts(void)
     GScr_AddFieldsForHudElems();
     GScr_AddFieldsForRadiant();
     Scr_EndLoadScripts();
-//    SL_SetScriptCompile(false);
 }
 
 #define MAX_CALLSCRIPTSTACKDEPTH 200
@@ -1002,8 +1003,8 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
             return 0;
         }
 
-        oldAnimTreeNames = scrAnimPub.animTreeNames;
-        scrAnimPub.animTreeNames = 0;
+        oldAnimTreeNames = gScrAnimPub.animTreeNames;
+        gScrAnimPub.animTreeNames = 0;
         gScrCompilePub.far_function_count = 0;
         Scr_InitAllocNode();
         oldFilename = gScrParserPub.scriptfilename;
@@ -1018,7 +1019,7 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
 
         gScrParserPub.scriptfilename = oldFilename;
         gScrParserPub.sourceBuf = oldSourceBuf;
-        scrAnimPub.animTreeNames = oldAnimTreeNames;
+        gScrAnimPub.animTreeNames = oldAnimTreeNames;
 
         --callScriptStackPtr;
 
@@ -1038,266 +1039,6 @@ void Scr_Sys_Error_Wrapper(const char *fmt, ...)
     Com_Error(ERR_SCRIPT, "%s", com_errorMessage);
 }
 
-//Was only needed to extract the arrays
-/*
-void GetVirtualFunctionArray(){
-
-    char buffer[1024*1024];
-    char line[128];
-    int i;
-    char *funname;
-    xfunction_t funaddr;
-    int funtype;
-    v_function_t *ptr;
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-    for(i = 0, ptr = (v_function_t*)0x821c620; ptr->offset != NULL && i < 25; ptr++, i++){
-
-    funname = ptr->name;
-    funaddr = ptr->offset;
-    funtype = ptr->developer;
-
-    Com_sprintf(line, sizeof(line), "\t{\"%s\", (void*)%p, %x},\n", funname, funaddr, funtype);
-    Q_strncat(buffer, sizeof(buffer), line);
-
-    }
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
-}
-*/
-
-/*
-void GetVirtualFunctionArray(){
-
-    char buffer[1024*1024];
-    char line[128];
-    int i;
-    char *funname;
-    xfunction_t funaddr;
-    int funtype;
-    v_function_t *ptr;
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-    for(i = 0, ptr = (v_function_t*)0x826e060; ptr->offset != NULL; ptr++, i++){
-
-    funname = ptr->name;
-    funaddr = ptr->offset;
-    funtype = ptr->developer;
-
-    Com_sprintf(line, sizeof(line), "\tScr_AddFunction(\"%s\", (void*)%p, %i);\n", funname, funaddr, funtype);
-    Q_strncat(buffer, sizeof(buffer), line);
-
-    }
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
-}
-
-typedef struct{
-    char *name;
-    int offset;
-    int bits;
-    int zero;
-}subnetlist_t;
-
-
-typedef struct{
-    subnetlist_t *sub;
-    int size;
-}netlist_t;
-
-
-
-
-void GetDeltaEntArray(){
-
-    char buffer[1024*1024];
-    char line[128];
-    netlist_t *ptr;
-    subnetlist_t *subptr;
-    int i, j;
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-    for(j=0, ptr = (netlist_t*)0x82293c0; ptr->sub != NULL ; ptr++, j++){
-
-    subptr = ptr->sub;
-    Com_sprintf(line, sizeof(line), "netField_t entityStateFields_%i[] =\n{\n", j);
-    Q_strncat(buffer, sizeof(buffer), line);
-
-    for(i = 0; i < ptr->size; i++, subptr++)
-    {
-        Com_sprintf(line, sizeof(line), "\t{ NETF( %s ), %i, %i, %i},\n", subptr->name, subptr->offset, subptr->bits, subptr->zero);
-        Q_strncat(buffer, sizeof(buffer), line);
-    }
-
-    Com_sprintf(line, sizeof(line), "};\n\n\n");
-    Q_strncat(buffer, sizeof(buffer), line);
-
-    }
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
-}
-
-
-
-typedef struct{
-    char *name;
-    int offset;
-    int bits;
-    int unknown;
-}netlistPlayer_t;
-
-
-void GetDeltaPlayerArray(){
-
-    char buffer[1024*1024];
-    char line[128];
-    netlistPlayer_t *ptr;
-    int j;
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-    for(j=0, ptr = (netlistPlayer_t*)0x82283c0; ptr->name != NULL; ptr++, j++){
-
-    Com_sprintf(line, sizeof(line), "\tint\t\t%s; %i\n", ptr->name, ptr->offset);
-    Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
-
-    }
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
-}
-
-
-
-typedef struct __attribute__((packed)){
-    byte mov1;
-    byte mov2;
-    byte mov3;
-    char* string;
-    byte call1;
-    byte call2;
-    byte call3;
-    byte call4;
-    byte call5;
-    byte mov11;
-    byte mov12;
-    short* index;
-}stringindexcmd_t;
-
-
-void StringIndexArray(){
-
-    char buffer[1024*1024];
-    char line[128];
-    int j;
-    stringindexcmd_t* ptr;
-
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-    for(j=0, ptr = (stringindexcmd_t*)0x80a396e; ptr->mov3 != 0x90 ; ptr++, j++){
-
-    Com_Printf(CON_CHANNEL_SCRIPT,"String: %s\n", ptr->string);
-    Com_sprintf(line, sizeof(line), "\tshort   %s;\n", ptr->string);
-    Q_strncat(buffer, sizeof(buffer), line);
-    }
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
-}
-
-
-void GetPlayerFieldArray(){
-
-    char buffer[1024*1024];
-    char line[128];
-    scrClientFields_t *ptr;
-    int j;
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-    for(j=0, ptr = (scrClientFields_t*)0x8215780; ptr->name != NULL; ptr++, j++){
-
-    Com_sprintf(line, sizeof(line), "\tScr_AddPlayerField(%s, %d, %d, %p, %p)\n", ptr->name, ptr->val1, ptr->val1, ptr->setfun, ptr->getfun);
-    Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
-
-    }
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
-}
-*/
-/*#include <string.h>
-void GetEntityFieldArray()
-{
-
-    char buffer[1024 * 1024];
-    char line[128];
-    ent_field_t *ptr;
-    int j;
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-    Com_sprintf(line, sizeof(line), "entity_fields_t entityField[]");
-    Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
-
-    for (j = 0, ptr = (ent_field_t *)0x82202a0; ptr->name != NULL; ptr++, j++)
-    {
-
-        Com_sprintf(line, sizeof(line), "\t{ \"%s\", %d, %d, (void*)%p) },\n", ptr->name, ptr->val1, ptr->val2, ptr->setfun);
-        Q_strncat(buffer, sizeof(buffer), line);
-        Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
-    }
-
-    Com_sprintf(line, sizeof(line), "};\n");
-    Q_strncat(buffer, sizeof(buffer), line);
-    Com_Printf(CON_CHANNEL_SCRIPT,"%s\n", line);
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    Com_Quit_f();
-}
-*/
-/*
-void GetHuffmanArray(){
-
-    char buffer[1024*1024];
-    char line[128];
-    int j;
-    byte* data;
-    int *number;
-
-    Com_Memset(buffer, 0, sizeof(buffer));
-
-
-
-    if(0 < FS_ReadFile("cod_mac-bin.iwd", (void**)&data)){
-
-
-        data += 0x387080;
-
-        number = (int*)data;
-
-        for(j=0; j < 256 ; j++){
-
-        Com_sprintf(line, sizeof(line), "\t%d,\t\t\t//%d\n", number[j],j);
-        Q_strncat(buffer, sizeof(buffer), line);
-
-    }
-
-    FS_WriteFile("array.txt", buffer, strlen(buffer));
-    }
-    Com_Quit_f();
-}
-*/
 /*
 int GetArraySize(int aHandle)
 {
@@ -1496,38 +1237,7 @@ gclient_t *VM_GetGClientForEntRef(scr_entref_t ref)
     return VM_GetGClientForEntity(VM_GetGEntityForEntRef(ref));
 }
 
-/*
-void __cdecl sub_51D1F0()
-{
-  if ( !gScrVarPub.evaluate && !unk_1509088 )
-  {
-    if ( gScrVarPub.developer && gScrVmGlob.loading )
-    {
-      gScrVmPub.terminal_error = 1;
-    }
-    if ( gScrVmPub.function_count || gScrVmPub.debugCode )
-    {
-      longjmp(g_script_error[g_script_error_level], -1);
-    }
-    Sys_Error("%s", gScrVarPub.error_message);
-  }
-  if ( gScrVmPub.terminal_error )
-  {
-    Sys_Error("%s", gScrVarPub.error_message);
-  }
-}
 
-void Scr_Error(const char *error)
-{
-  static char errormsg[1024];
-  if ( !gScrVarPub.error_message )
-  {
-    Q_strncpyz(errormsg, error, sizeof(errormsg));
-    gScrVarPub.error_message = errormsg;
-  }
-  sub_51D1F0();
-}
-*/
 int Scr_GetInt(unsigned int paramnum)
 {
     mvabuf;
@@ -1595,41 +1305,6 @@ int Scr_GetFunc(unsigned int paramnum)
 }
 
 
-
-unsigned int Scr_GetArrayId(unsigned int paramnum, VariableValue** v, int maxvariables)
-{
-    unsigned int ptr = Scr_GetObject(paramnum);
-    VariableValueInternal *var;
-
-    unsigned int hash_id = 0;
-    int i = 0;
-
-    do
-    {
-        if(hash_id == 0)
-        {
-            hash_id = gScrVarGlob.variableList[ptr + 1].hash.u.prevSibling;
-            if(hash_id == 0)
-            {
-                return 0;
-            }
-        }else{
-            hash_id = gScrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id;
-        }
-        var = &gScrVarGlob.variableList[SCR_VARHIGH + hash_id];
-
-        int type = var->w.type & 0x1f;
-
-        v[i]->type = type;
-        v[i]->u = var->u.u;
-
-        ++i;
-    }
-    while ( var->hash.u.prevSibling && gScrVarGlob.variableList[SCR_VARHIGH + var->hash.u.prevSibling].hash.id && i < maxvariables);
-
-    return 0;//GetArraySize(ptr);
-}
-
 unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index)
 {
   if ( index >= gScrVmPub.outparamcount || gScrVmPub.top[-index].type )
@@ -1641,12 +1316,7 @@ unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index)
 
 void __cdecl Scr_TerminalError(const char *error/*, scriptInstance_t inst*/)
 {
-/*
-  Scr_DumpScriptThreads(inst);
-  Scr_DumpScriptVariablesDefault(inst);
-  gScrVmPub.terminal_error = 1;
-  Scr_Error(inst, error, 0);
-*/
+
   Scr_DumpScriptThreads( );
   Scr_DumpScriptVariablesDefault( );
   gScrVmPub.terminal_error = 1;
@@ -1993,3 +1663,5 @@ void Scr_UpdateDebugger()
 {
     
 }
+
+

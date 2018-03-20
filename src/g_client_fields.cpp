@@ -5,6 +5,8 @@
 #include "g_shared.h"
 #include "cscr_stringlist.h"
 #include "g_fields.h"
+#include "cscr_variable.h"
+
 #include <algorithm>
 
 #define ENTFIELD_MASK 0xc000

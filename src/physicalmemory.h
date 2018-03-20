@@ -15,7 +15,7 @@ extern "C"{
 #endif
 
 void __cdecl PMem_Init();
-void __cdecl PMem_BeginAlloc(const char *name, unsigned int allocType, EMemTrack memTrack);
+void __cdecl PMem_BeginAlloc(const char *name, unsigned int allocType, enum EMemTrack memTrack);
 void __cdecl PMem_EndAlloc(const char *name, unsigned int allocType);
 void __cdecl PMem_Free(const char *name);
 

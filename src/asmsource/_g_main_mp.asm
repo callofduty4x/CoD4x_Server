@@ -152,7 +152,7 @@
 	extern G_LogPrintf
 	extern G_SafeServerDObjFree
 	extern G_RegisterCvars
-	extern SL_FreeStaticStrings
+
 ;Exports of g_main_mp:
 	global g_clients
 	global g_entinfoNames
@@ -1746,7 +1746,6 @@ G_ShutdownGame_160:
 	jnz G_ShutdownGame_170
 	mov dword [esp], 0x1
 	call Com_FreeWeaponInfoMemory
-	call SL_FreeStaticStrings
 	mov dword [esp], 0x0
 	call Hunk_ClearToMarkLow
 	jmp G_ShutdownGame_180

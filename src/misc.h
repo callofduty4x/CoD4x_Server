@@ -38,15 +38,6 @@ void __cdecl SetAnimCheck(int);
 qboolean __cdecl BG_IsWeaponValid( playerState_t *ps, unsigned int index);
 qboolean __cdecl SEH_StringEd_GetString( const char* input );
 
-void __cdecl SL_Init(void);
-void __cdecl SL_RemoveRefToString( unsigned int );
-const char* SL_ConvertToString(unsigned int index);
-int SL_FindString(const char *string);
-unsigned int SL_FindLowercaseString(const char *upperstring);
-unsigned int __cdecl SL_GetStringOfSize(const char *string, unsigned int user, unsigned int len, int type);
-unsigned int __cdecl SL_GetLowercaseString(const char *str, unsigned int type);
-unsigned int __cdecl SL_GetString(const char *str, int type);
-int REGPARM(2) FindStringOfSize(const char *string, unsigned int size);
 void AddRedirectLocations(void);
 qboolean __cdecl Com_LoadDvarsFromBuffer(const char **inputbuf, unsigned int length, const char *data_p, const char *filename);
 

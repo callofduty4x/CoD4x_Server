@@ -50,7 +50,7 @@
 	extern AnimTreeParseInternal
 
 ;Exports of scr_animtree:
-	global scrAnimGlob
+	global gScrAnimGlob
 	global Hunk_AllocXAnimTreePrecache
 	global Scr_GetAnimTreeSize
 	global ConnectScriptToAnim
@@ -65,7 +65,7 @@
 	global Scr_EmitAnimation
 	global Scr_GetAnimsIndex
 	global Scr_LoadAnimTreeAtIndex
-	global scrAnimPub
+	global gScrAnimPub
 
 
 SECTION .text
@@ -455,7 +455,7 @@ Scr_UsingTreeInternal:
 	call Scr_CreateCanonicalFilename
 	mov [ebp-0x20], eax
 	mov [esp+0x4], eax
-	mov eax, [scrAnimPub]
+	mov eax, [gScrAnimPub]
 	mov [esp], eax
 	call FindVariable
 	mov ebx, eax
@@ -463,19 +463,19 @@ Scr_UsingTreeInternal:
 	jnz Scr_UsingTreeInternal_10
 	mov eax, [ebp-0x20]
 	mov [esp+0x4], eax
-	mov eax, [scrAnimPub]
+	mov eax, [gScrAnimPub]
 	mov [esp], eax
 	call GetNewVariable
 	mov ebx, eax
 	mov [esp], eax
 	call SGetObjectA
 	mov [ebp-0x1c], eax
-	mov edx, [esi*4+scrAnimPub+0x40c]
+	mov edx, [esi*4+gScrAnimPub+0x40c]
 	add edx, 0x1
-	mov [esi*4+scrAnimPub+0x40c], edx
+	mov [esi*4+gScrAnimPub+0x40c], edx
 	shl esi, 0x7
 	lea eax, [esi+edx]
-	mov [eax+eax+scrAnimGlob+0x8], bx
+	mov [eax+eax+gScrAnimGlob+0x8], bx
 	mov eax, [ebp-0x24]
 	mov [eax], edx
 Scr_UsingTreeInternal_20:
@@ -504,8 +504,8 @@ Scr_UsingTreeInternal_10:
 	mov dword [eax], 0x0
 	mov eax, esi
 	shl eax, 0x8
-	lea edi, [eax+scrAnimGlob+0x8]
-	mov ecx, [esi*4+scrAnimPub+0x40c]
+	lea edi, [eax+gScrAnimGlob+0x8]
+	mov ecx, [esi*4+gScrAnimPub+0x40c]
 	test ecx, ecx
 	jz Scr_UsingTreeInternal_20
 	movzx eax, word [edi+0x2]
@@ -594,7 +594,7 @@ Scr_GetAnims:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
-	mov eax, [eax*4+scrAnimPub+0x20c]
+	mov eax, [eax*4+gScrAnimPub+0x20c]
 	pop ebp
 	ret
 	nop
@@ -605,7 +605,7 @@ SetAnimCheck:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
-	mov [scrAnimGlob+0x208], eax
+	mov [gScrAnimGlob+0x208], eax
 	pop ebp
 	ret
 	nop
@@ -633,10 +633,10 @@ Scr_UsingTree:
 	jmp CompileError
 Scr_UsingTree_10:
 	mov ecx, 0x1
-	mov edx, scrAnimPub+0x414
+	mov edx, gScrAnimPub+0x414
 	mov eax, ebx
 	call Scr_UsingTreeInternal
-	mov [scrAnimPub+0x8], eax
+	mov [gScrAnimPub+0x8], eax
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -656,7 +656,7 @@ Scr_FindAnimTree:
 	call Scr_CreateCanonicalFilename
 	mov ebx, eax
 	mov [esp+0x4], eax
-	mov eax, [scrAnimPub]
+	mov eax, [gScrAnimPub]
 	mov [esp], eax
 	call FindVariable
 	mov esi, eax
@@ -696,7 +696,7 @@ Scr_EmitAnimation:
 	push ebx
 	sub esp, 0x20
 	mov esi, [ebp+0x8]
-	mov ebx, [scrAnimPub+0x8]
+	mov ebx, [gScrAnimPub+0x8]
 	test ebx, ebx
 	jnz Scr_EmitAnimation_10
 	mov dword [esp+0x4], _cstring_using_animtree_w
@@ -752,12 +752,12 @@ Scr_GetAnimsIndex:
 	push esi
 	push ebx
 	mov edi, [ebp+0x8]
-	mov ebx, [scrAnimPub+0x410]
+	mov ebx, [gScrAnimPub+0x410]
 	test ebx, ebx
 	jz Scr_GetAnimsIndex_10
-	cmp edi, [ebx*4+scrAnimPub+0x20c]
+	cmp edi, [ebx*4+gScrAnimPub+0x20c]
 	jz Scr_GetAnimsIndex_10
-	lea ecx, [ebx*4+scrAnimPub+0x208]
+	lea ecx, [ebx*4+gScrAnimPub+0x208]
 	mov edx, ebx
 	lea esi, [ebx-0x1]
 Scr_GetAnimsIndex_30:
@@ -801,7 +801,7 @@ Scr_LoadAnimTreeAtIndex:
 	shl eax, 0x7
 	mov edx, [ebp+0x8]
 	lea esi, [eax+edx]
-	movzx ebx, word [esi+esi+scrAnimGlob+0x8]
+	movzx ebx, word [esi+esi+gScrAnimGlob+0x8]
 	mov [esp], ebx
 	call GetVariableName
 	movzx eax, ax
@@ -827,7 +827,7 @@ Scr_LoadAnimTreeAtIndex_10:
 	call FindVariable
 	test eax, eax
 	jnz Scr_LoadAnimTreeAtIndex_20
-	mov dword [esi*4+scrAnimPub+0xc], 0x0
+	mov dword [esi*4+gScrAnimPub+0xc], 0x0
 	add esp, 0x9c
 	pop ebx
 	pop esi
@@ -840,7 +840,7 @@ Scr_LoadAnimTreeAtIndex_20:
 	mov [ebp-0x6c], eax
 	call Scr_AllocArray
 	mov edi, eax
-	mov [scrAnimPub+0x4], eax
+	mov [gScrAnimPub+0x4], eax
 	mov edx, [ebp-0x84]
 	mov [esp], edx
 	call SL_ConvertToString
@@ -867,8 +867,8 @@ Scr_LoadAnimTreeAtIndex_20:
 	mov [eax+0x8], esi
 	mov dword [esp], _cstring_scr_animtreepars
 	call Com_BeginParseSession
-	mov [scrAnimGlob+0x4], ebx
-	mov [scrAnimGlob], ebx
+	mov [gScrAnimGlob+0x4], ebx
+	mov [gScrAnimGlob], ebx
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], 0x0
 	mov ecx, 0x1
@@ -890,7 +890,7 @@ Scr_LoadAnimTreeAtIndex_120:
 	test eax, eax
 	jz Scr_LoadAnimTreeAtIndex_30
 Scr_LoadAnimTreeAtIndex_100:
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	call Scr_GetAnimTreeSize
 	mov ebx, eax
 	mov eax, [ebp-0x84]
@@ -931,7 +931,7 @@ Scr_LoadAnimTreeAtIndex_110:
 	mov dword [esp], 0x1
 	mov ecx, [ebp-0x70]
 	mov edx, [ebp-0x6c]
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	call Scr_CreateAnimationTree
 	mov edx, [ebp-0x6c]
 	mov [esp], edx
@@ -944,10 +944,10 @@ Scr_LoadAnimTreeAtIndex_70:
 	mov eax, [ebp-0x80]
 	mov [esp], eax
 	call RemoveVariable
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	mov [esp], eax
 	call RemoveRefToObject
-	mov dword [scrAnimPub+0x4], 0x0
+	mov dword [gScrAnimPub+0x4], 0x0
 	mov dword [ebp-0x1c], 0x7
 	mov edx, [ebp-0x70]
 	mov [ebp-0x20], edx
@@ -966,7 +966,7 @@ Scr_LoadAnimTreeAtIndex_70:
 	mov eax, [ebp+0x10]
 	add eax, [ebp+0x8]
 	mov edx, [ebp-0x70]
-	mov [eax*4+scrAnimPub+0xc], edx
+	mov [eax*4+gScrAnimPub+0xc], edx
 	add esp, 0x9c
 	pop ebx
 	pop esi
@@ -1029,7 +1029,7 @@ Scr_LoadAnimTreeAtIndex_30:
 	call Com_Error
 	jmp Scr_LoadAnimTreeAtIndex_100
 Scr_LoadAnimTreeAtIndex_50:
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	call Scr_PrecacheAnimationTree
 	jmp Scr_LoadAnimTreeAtIndex_110
 Scr_LoadAnimTreeAtIndex_40:
@@ -1038,7 +1038,7 @@ Scr_LoadAnimTreeAtIndex_40:
 	call Com_EndParseSession
 	mov dword [esp+0x8], _cstring_bad_token
 	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
+	sub ebx, [gScrAnimGlob]
 	mov [esp], ebx
 	call CompileError
 	jmp Scr_LoadAnimTreeAtIndex_120
@@ -1055,8 +1055,8 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of scr_animtree:
 SECTION .bss
-scrAnimGlob: resb 0x280
-scrAnimPub: resb 0x480
+gScrAnimGlob: resb 0x280
+gScrAnimPub: resb 0x480
 
 
 ;All cstrings:

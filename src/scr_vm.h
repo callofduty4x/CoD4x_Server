@@ -556,44 +556,6 @@ typedef struct
 }VariableValueInternal;
 
 
-typedef struct
-{
-  const char *fieldBuffer;
-  uint16_t canonicalStrCount;
-  byte developer;
-  byte developer_script;
-  byte evaluate;
-  byte pad[3];
-  const char *error_message;
-  int error_index;
-  unsigned int time;
-  unsigned int timeArrayId;
-  unsigned int pauseArrayId;
-  unsigned int levelId;
-  unsigned int gameId;
-  unsigned int animId;
-  unsigned int freeEntList;
-  unsigned int tempVariable;
-  byte bInited;
-  byte pad2;
-  uint16_t savecount;
-  unsigned int checksum;
-  unsigned int entId;
-  unsigned int entFieldName;
-  struct HunkUser *programHunkUser;
-  const char *programBuffer;
-  const char *endScriptBuffer;
-/*  uint16_t saveIdMap[24574];
-  uint16_t saveIdMapRev[24574];*/
-  const char *varUsagePos;
-  int totalObjectRefCount;
-  int numScriptValues;
-  int numScriptObjects;
-  int numScriptThreads;
-  int totalVectorRefCount;
-}scrVarPub_t;
-
-
 struct function_stack_t
 {
   const char *pos;
@@ -636,10 +598,7 @@ struct scrVmGlob_t
   unsigned int localVarsStack[2048];
 };
 
-struct __attribute__((aligned (64))) scrVarGlob_t
-{
-  VariableValueInternal variableList[98304];
-};
+
 
 struct scrCompilePub_t
 {
@@ -662,30 +621,6 @@ struct scrCompilePub_t
   int func_table[1024];
 };
 #pragma pack(pop)
-
-struct scr_animtree_t
-{
-  struct XAnim_s *anims;
-};
-
-struct scrAnimPub_t
-{
-  unsigned int animtrees;
-  unsigned int animtree_node;
-  unsigned int animTreeNames;
-  struct scr_animtree_t xanim_lookup[2][128];
-  unsigned int xanim_num[2];
-  unsigned int animTreeIndex;
-  bool animtree_loading;
-};
-
-struct scrAnimGlob_t
-{
-  const char *start;
-  const char *pos;
-  uint16_t using_xanim_lookup[2][128];
-  int bAnimCheck;
-};
 
 struct scr_anim_s
 {
@@ -812,26 +747,17 @@ short __cdecl Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int 
 short __cdecl Scr_ExecThread( int callbackHook, unsigned int numArgs);
 void __cdecl Scr_FreeThread( short threadId);
 unsigned int __cdecl Scr_CreateCanonicalFilename( const char* name );
-//Unknown real returntype
-unsigned int __cdecl FindVariable( unsigned int, unsigned int );
-unsigned int __cdecl FindObject( unsigned int );
-unsigned int __cdecl GetNewVariable( unsigned int, unsigned int );
 void * __cdecl TempMalloc( int );
 void __cdecl ScriptParse( sval_u* , byte);
-unsigned int __cdecl SGetObjectA( unsigned int );
-unsigned int __cdecl GetVariable( unsigned int, unsigned int );
 void __cdecl ScriptCompile( sval_u, unsigned int, unsigned int, PrecacheEntry*, int);
 void* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, byte );
 void __cdecl Scr_InitAllocNode( void );
 void __cdecl Scr_BeginLoadScripts( void );
-void __cdecl Scr_SetClassMap( unsigned int );
-void __cdecl Scr_AddClassField(unsigned int classnum, const char* name, unsigned int offset);
 void __cdecl Scr_SetString(unsigned short *strindexptr, unsigned const stringindex);
 unsigned int __cdecl Scr_AllocString(const char* string);
 void Scr_InitSystem();
-unsigned int GetArraySize(unsigned int);
-void RemoveRefToValue(int type, union VariableUnion val);
 unsigned int __cdecl SL_GetCanonicalString(const char *str);
+
 
 void __cdecl GScr_AddFieldsForHudElems( void );
 void __cdecl GScr_AddFieldsForRadiant( void );
@@ -858,7 +784,6 @@ qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
 __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
 void __regparm3 VM_Notify(int, int, VariableValue* val);
-unsigned int FindEntityId(int entnum, unsigned int classnum);
 
 
 qboolean Scr_FS_CloseFile( scr_fileHandle_t* f );
@@ -880,10 +805,7 @@ void GScr_GetCvar();
 void GScr_AddScriptCommand();
 void RuntimeError(char *a3, int arg4, char *message, char *a4);
 const char* Scr_GetPlayername(gentity_t* gent);
-void Scr_FreeValue(unsigned int id);
 qboolean __cdecl Scr_IsValidGameType(const char *pszGameType);
-void __cdecl MT_DumpTree( );
-void __cdecl Scr_DumpScriptThreads( );
 
 // Safe function to get gentity for num passed by script call "ent function()"
 gentity_t* VM_GetGEntityForNum(scr_entref_t num);
@@ -896,21 +818,9 @@ gentity_t *VM_GetGEntityForEntRef(scr_entref_t num);
 
 
 void __noreturn CompileError(unsigned int sourcePos, const char *msg, ...);
-void __cdecl RemoveVariable(unsigned int parentId, unsigned int unsignedValue);
-unsigned int __cdecl GetArray(unsigned int id);
-unsigned int __cdecl Scr_GetSelf(unsigned int threadId);
-unsigned int __cdecl GetArrayVariable(unsigned int parentId, unsigned int unsignedValue);
-void __cdecl SetVariableValue(unsigned int id, VariableValue *value);
 void __cdecl CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
 void __cdecl Scr_ParseGameTypeList();
-unsigned int __cdecl Scr_GetObjectType(unsigned int id);
-void __cdecl SetNewVariableValue(unsigned int id, VariableValue *value);
-unsigned int __cdecl GetNewArrayVariable(unsigned int parentId, unsigned int unsignedValue);
-void __cdecl AddRefToObject(unsigned int id);
-unsigned int __cdecl Scr_GetEntityId(int entnum, unsigned int classnum);
-void __cdecl RemoveRefToObject(unsigned int id);
-float *__cdecl Scr_AllocVector(const float *v);
 void __cdecl Scr_TerminalError(const char *error);
 void Scr_UpdateDebugger();
 bool __cdecl SetEntityFieldValue(unsigned int classnum, int entnum, int offset, VariableValue *value);
@@ -919,6 +829,7 @@ void __cdecl VM_CancelNotify(unsigned int notifyListOwnerId, unsigned int startL
 void __cdecl Scr_AddObject(unsigned int id);
 unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index);
 scr_entref_t __cdecl Scr_GetEntityRef(unsigned int index);
+void Scr_ShutdownOpcodeLookup( );
 #ifdef __cplusplus
 }
 #endif
@@ -927,11 +838,7 @@ VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
 
 
 extern struct scrVmGlob_t gScrVmGlob;
-extern struct scrAnimGlob_t scrAnimGlob;
 
-extern struct scrVarGlob_t gScrVarGlob;
-#define SCR_VARHIGH 32770
-extern scrVarPub_t gScrVarPub;
 extern scrVmPub_t gScrVmPub;
 extern struct scrCompilePub_t gScrCompilePub;
 extern int g_script_error_level;

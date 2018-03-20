@@ -2,7 +2,7 @@
 #include "scr_vm.h"
 #include "cscr_parser.h"
 #include "cscr_main.h"
-
+#include "cscr_variable.h"
 
 struct SourceLookup
 {

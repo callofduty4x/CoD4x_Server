@@ -6,6 +6,7 @@
 #include "misc.h"
 #include "dobj_part_cache.h"
 #include "server.h"
+#include "cscr_stringlist.h"
 
 BotMovementInfo_t g_botai[MAX_CLIENTS];
 

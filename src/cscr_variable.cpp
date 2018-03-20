@@ -10,6 +10,7 @@
 #include "cscr_animtree.h"
 #include "xassets.h"
 #include "xassets/rawfile.h"
+#include "cscr_variable.h"
 
 #define VAR_STAT_MASK 0x60
 #define VAR_MASK 0x1F
@@ -43,12 +44,9 @@
 #define FIRST_DEAD_OBJECT VAR_DEAD_THREAD
 
 
-struct __align(4) scrVarDebugPub_t
+struct __attribute__((aligned (64))) scrVarGlob_t
 {
-  const char **varUsage;
-  uint16_t *extRefCount;
-  int *leakCount;
-  bool dummy;
+  VariableValueInternal *variableList;
 };
 
 extern const char* var_typename[];
@@ -939,7 +937,7 @@ unsigned int __cdecl GetArrayVariable(unsigned int parentId, unsigned int unsign
   return gScrVarGlob.variableList[GetArrayVariableIndex(parentId, unsignedValue) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-unsigned int Scr_GetEntityId(int entnum, unsigned int classnum)
+unsigned int __cdecl Scr_GetEntityId(int entnum, unsigned int classnum)
 {
   unsigned int entArrayId;
   uint16_t actualEntNum;
@@ -3408,9 +3406,8 @@ static void __cdecl Scr_InitVariableRange(unsigned int begin, unsigned int end)
 void __cdecl Scr_InitVariables( )
 {
   int variableCount = (VARIABLELIST_CHILD_SIZE + VARIABLELIST_PARENT_SIZE +3);
-  //gScrVarGlob.variableList = (VariableValueInternal *)_PMem_AllocNamed(sizeof(VariableValueInternal) * variableCount, 0x80u, 4u, 1u, "ScriptVars", TRACK_SCRIPT);
-//  gScrVarPub.saveIdMap = (uint16_t *)_PMem_AllocNamed(0xFFFCu, 4u, 4u, 1u, "ScriptVars", TRACK_SCRIPT);
-//  gScrVarPub.saveIdMapRev = (uint16_t *)_PMem_AllocNamed(0xFFFCu, 4u, 4u, 1u, "ScriptVars", TRACK_SCRIPT);
+  gScrVarGlob.variableList = (VariableValueInternal*)_PMem_AllocNamed(sizeof(VariableValueInternal) * variableCount, 0x80u, 4u, 1u, "ScriptVars", TRACK_SCRIPT);
+
   if ( !gScrVarDebugPub )
   {
     Scr_ResetScrVarDebugPub();

@@ -37,7 +37,7 @@
 	extern GetNewVariable
 	extern SetVariableValue
 	extern Scr_GetFunction
-	extern scrAnimPub
+	extern gScrAnimPub
 	extern Scr_EmitAnimation
 	extern Scr_GetClassnumForCharId
 	extern atoi
@@ -57,7 +57,6 @@
 	extern FindNextSibling
 	extern FindObject
 	extern GetVariableName
-	extern SL_MakeStatic
 
 ;Exports of scr_compiler:
 	global scrCompileGlob
@@ -3412,9 +3411,7 @@ EmitValue_50:
 EmitValue_60:
 	mov dword [esp+0x4], 0x1
 	mov [esp], ebx
-	call SL_MakeStatic	
-;	mov [esp], ebx
-;	call SL_TransferRefToUser
+	call SL_TransferRefToUser
 EmitValue_10:
 	add esp, 0x1c
 	pop ebx
@@ -4486,9 +4483,7 @@ EmitFunction_20:
 EmitFunction_270:
 	mov dword [esp+0x4], 0x2
 	mov [esp], ebx
-	call SL_MakeStatic
-;	mov [esp], ebx
-;	call SL_TransferRefToUser
+	call SL_TransferRefToUser
 EmitFunction_240:
 	mov [esp], esi
 	call SGetObjectA
@@ -5653,7 +5648,7 @@ EmitOrEvalPrimitiveExpression_390:
 	jmp EmitOrEvalPrimitiveExpression_20
 EmitOrEvalPrimitiveExpression_410:
 	mov edi, [eax+0x4]
-	mov eax, scrAnimPub
+	mov eax, gScrAnimPub
 	mov eax, [eax+0x414]
 	test eax, eax
 	jnz EmitOrEvalPrimitiveExpression_170
@@ -10704,7 +10699,7 @@ ScriptCompile:
 	mov eax, [ebp+0xc]
 	mov [scrCompileGlob+0x8], eax
 	mov byte [scrCompileGlob+0x1c], 0x0
-	mov eax, scrAnimPub
+	mov eax, gScrAnimPub
 	mov dword [eax+0x414], 0x0
 	mov dword [gScrCompilePub+0x20024], 0x0
 	mov eax, [gScrCompilePub+0x4]

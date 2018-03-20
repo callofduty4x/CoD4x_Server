@@ -47,6 +47,8 @@
 #include "q_math.h"
 #include "math.h"
 #include "httpftp.h"
+#include "cscr_stringlist.h"
+#include "cscr_variable.h"
 
 #include "sapi.h"
 

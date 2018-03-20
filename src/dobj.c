@@ -1,10 +1,11 @@
 #include "dobj.h"
 #include "xassets/xmodel.h"
+#include "cscr_stringlist.h"
 
 void PrintDObjInfo(DObj_t* dobj)
 {
 	int idx, i, j;
-	char* duplicatePartsString;
+	const char* duplicatePartsString;
 
 	if(dobj)
 	{

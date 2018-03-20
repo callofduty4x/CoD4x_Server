@@ -47,7 +47,8 @@ These commands can only be entered from stdin or by a remote operator datagram
 #include "sys_main.h"
 #include "sapi.h"
 #include "scr_vm.h"
-
+#include "cscr_memorytree.h"
+#include "cscr_variable.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -1937,9 +1938,10 @@ static void SV_SetPerk_f( void ){
 }
 
 
+
 void __cdecl SV_StringUsage_f()
 {
-  MT_DumpTree( );
+	MT_DumpTree( );
 }
 
 void __cdecl SV_ScriptUsage_f()

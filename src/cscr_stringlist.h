@@ -17,16 +17,15 @@ unsigned int __cdecl SL_GetStringOfSize(const char *string, unsigned int user, u
 unsigned int __cdecl SL_GetLowercaseString(const char *str, unsigned int type);
 unsigned int __cdecl SL_GetString(const char *str, int type);
 int REGPARM(2) FindStringOfSize(const char *string, unsigned int size);
-byte* MT_GetRefByIndex(int index);
 float* __cdecl Scr_AllocVectorInternal();
+float *__cdecl Scr_AllocVector(const float *v);
 void __cdecl SL_AddRefToString(unsigned int stringValue);
 void __cdecl AddRefToVector(const float *vectorValue);
 void __cdecl RemoveRefToVector(const float *vectorValue);
 unsigned int __cdecl SL_ConvertFromString(const char *str);
 unsigned int __cdecl SL_GetString_(const char *str, unsigned int user, int type);
 void SL_SetScriptCompile(bool active);
-
-
+void __cdecl SL_ShutdownSystem(unsigned int user);
 
 #ifdef __cplusplus
 };

@@ -54,6 +54,8 @@
 #include "xassets/extractor.h"
 #include "sec_update.h"
 #include "bg_public.h"
+#include "cscr_stringlist.h"
+#include "physicalmemory.h"
 
 #include <string.h>
 #include <setjmp.h>
@@ -811,7 +813,7 @@ void Com_Init(char* commandLine){
 
         msec = Sys_Milliseconds();
 
-        PMem_BeginAlloc("$init", qtrue);
+        PMem_BeginAlloc("$init", qtrue, TRACK_MISC);
         DB_InitThread();
     }
 //    Con_InitChannels();

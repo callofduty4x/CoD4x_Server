@@ -41,7 +41,6 @@
 	extern Scr_GetThreadWaitTime
 	extern Scr_ClearWaitTime
 	extern GetSafeParentLocalId
-	extern _setjmp
 	extern Scr_GetVariableFieldIndex
 	extern gScrCompilePub
 	extern Sys_Error
@@ -104,7 +103,6 @@
 	extern Scr_GetEntityIdRefExtern
 	extern Com_PrintWarning
 	extern SGetObjectA
-	extern longjmp
 	extern FindFirstSibling
 	extern Scr_GetAnims
 	extern XAnimGetAnims
@@ -129,10 +127,14 @@
 	extern Scr_FreeObjects
 	extern Scr_InitClassMap
 	extern AllocValue
-	extern scrAnimPub
+	extern gScrAnimPub
 	extern FindNextSibling
 	extern Scr_SetObjectField
 	extern tolower
+	extern error_message
+	extern g_script_error_level
+	extern Scr_ErrorJumpOut
+	extern Scr_ErrorJumpOutTarget
 	extern Scr_DecNumScriptThreads
 	extern Scr_IncNumScriptThreads
 
@@ -184,16 +186,11 @@
 	global SetEntityFieldValue
 	global Scr_CancelNotifyList
 	global Scr_ExecEntThreadNum
-	global Scr_ClearErrorMessage
 	global Scr_RunCurrentThreads
 	global Scr_SetDynamicEntityField
 	global Scr_GetConstLowercaseString
-	global Scr_Init
-	global Scr_Error
 	global g_EndPos
 	global gScrVmPub
-	global g_script_error
-	global g_script_error_level
 
 
 SECTION .text
@@ -1234,11 +1231,7 @@ VM_ExecuteInternal:
 	mov dword [ebp-0x2c], 0x0
 	mov dword [ebp-0x30], 0x0
 VM_ExecuteInternal_1760:
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call _setjmp
+	call Scr_ErrorJumpOutTarget
 	test eax, eax
 	jnz VM_ExecuteInternal_10
 VM_ExecuteInternal_810:
@@ -4716,12 +4709,7 @@ VM_ExecuteInternal_2850:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz VM_ExecuteInternal_2860
 VM_ExecuteInternal_350:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 VM_ExecuteInternal_4280:
 	mov ebx, [gScrVmPub+0x1c]
 	test ebx, ebx
@@ -5789,12 +5777,7 @@ Scr_GetAnim_80:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetAnim_90
 Scr_GetAnim_50:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetAnim_20:
 	mov esi, [edi]
 	mov ecx, [ebp+0xc]
@@ -5949,12 +5932,7 @@ Scr_GetType_40:
 	mov [gScrVmPub+0x16], al
 	jmp Scr_GetType_70
 Scr_GetType_50:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetType_20:
 	mov dword [esp+0x8], 0x400
 	mov [esp+0x4], eax
@@ -6077,12 +6055,7 @@ Scr_GetFloat_60:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetFloat_80
 Scr_GetFloat_70:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetFloat_50:
 	cmp byte [gScrVmPub+0x16], 0x0
 	jz Scr_GetFloat_90
@@ -6303,12 +6276,7 @@ Scr_GetVector_90:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetVector_100
 Scr_GetVector_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetVector_20:
 	mov edx, [edx]
 	mov eax, [edx]
@@ -6507,12 +6475,7 @@ Scr_GetIString_90:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetIString_100
 Scr_GetIString_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetIString_20:
 	mov eax, [ecx]
 	mov [ebp+0x8], eax
@@ -6616,12 +6579,7 @@ Scr_ParamError_80:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_ParamError_70
 Scr_ParamError_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_ParamError_40:
 	add esp, 0x14
 	pop ebx
@@ -6713,12 +6671,7 @@ Scr_GetTypeName_40:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetTypeName_60
 Scr_GetTypeName_50:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetTypeName_30:
 	cmp byte [gScrVmPub+0x16], 0x0
 	jz Scr_GetTypeName_70
@@ -6784,12 +6737,7 @@ Scr_ObjectError_80:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_ObjectError_70
 Scr_ObjectError_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_ObjectError_50:
 	mov eax, 0x1
 	mov edx, [gScrVmGlob+0x14]
@@ -6899,12 +6847,7 @@ Scr_GetEntityRef_50:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetEntityRef_70
 Scr_GetEntityRef_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetEntityRef_20:
 	mov edi, [esi]
 	mov [esp], edi
@@ -7011,12 +6954,7 @@ Scr_GetEntityRef_210:
 	jnz Scr_GetEntityRef_60
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetEntityRef_200
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetEntityRef_190:
 	mov eax, 0x1
 	mov esi, [gScrVmGlob+0x14]
@@ -7114,77 +7052,6 @@ Scr_AddExecThread_10:
 	pop ebp
 	ret
 
-
-;Scr_TerminalError(char const*)
-Scr_TerminalError:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	call Scr_DumpScriptThreads
-	call Scr_DumpScriptVariablesDefault
-	mov byte [gScrVmPub+0x16], 0x1
-	mov ebx, gScrVarPub
-	mov eax, [ebx+0xc]
-	test eax, eax
-	jz Scr_TerminalError_10
-Scr_TerminalError_90:
-	cmp byte [ebx+0x8], 0x0
-	jnz Scr_TerminalError_20
-	mov eax, gScrCompilePub
-	cmp byte [eax+0x20020], 0x0
-	jz Scr_TerminalError_30
-Scr_TerminalError_20:
-	cmp byte [gScrVmPub+0x16], 0x0
-	jz Scr_TerminalError_40
-Scr_TerminalError_70:
-	mov eax, gScrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-Scr_TerminalError_40:
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_TerminalError_30:
-	cmp byte [ebx+0x6], 0x0
-	jnz Scr_TerminalError_50
-Scr_TerminalError_80:
-	mov ecx, [gScrVmPub+0x8]
-	test ecx, ecx
-	jnz Scr_TerminalError_60
-	cmp byte [gScrVmPub+0x14], 0x0
-	jz Scr_TerminalError_70
-Scr_TerminalError_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
-Scr_TerminalError_50:
-	mov eax, 0x1
-	mov ebx, [gScrVmGlob+0x14]
-	test ebx, ebx
-	movzx edx, byte [gScrVmPub+0x16]
-	cmovz eax, edx
-	mov [gScrVmPub+0x16], al
-	jmp Scr_TerminalError_80
-Scr_TerminalError_10:
-	mov dword [esp+0x8], 0x400
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov dword [esp], error_message
-	call Q_strncpyz
-	mov dword [ebx+0xc], error_message
-	jmp Scr_TerminalError_90
-	nop
-	add [eax], al
-
-
-
 ;Scr_GetConstString(unsigned int)
 Scr_GetConstString:
 	push ebp
@@ -7264,12 +7131,7 @@ Scr_GetConstString_90:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetConstString_110
 Scr_GetConstString_100:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetConstString_50:
 	mov eax, [ebx]
 	add esp, 0x10
@@ -7369,12 +7231,7 @@ Scr_GetDebugString_90:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetDebugString_80
 Scr_GetDebugString_70:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetDebugString_60:
 	mov eax, 0x1
 	mov edx, [gScrVmGlob+0x14]
@@ -7866,12 +7723,7 @@ Scr_GetPointerType_110:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetPointerType_120
 Scr_GetPointerType_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetPointerType_20:
 	mov eax, [edx]
 	mov [ebp+0x8], eax
@@ -8063,7 +7915,7 @@ Scr_ShutdownSystem_30:
 	mov dword [gScrVmGlob+0x14], 0x0
 	mov eax, gScrCompilePub
 	mov byte [eax+0x20020], 0x0
-	mov edx, scrAnimPub
+	mov edx, gScrAnimPub
 	mov byte [edx+0x418], 0x0
 	mov dword [eax+0xc], 0x0
 	mov dword [eax+0x8], 0x0
@@ -8481,18 +8333,6 @@ Scr_ExecEntThreadNum_10:
 	nop
 
 
-;Scr_ClearErrorMessage()
-Scr_ClearErrorMessage:
-	push ebp
-	mov ebp, esp
-	mov eax, gScrVarPub
-	mov dword [eax+0xc], 0x0
-	mov dword [gScrVmGlob+0x10], 0x0
-	mov dword [eax+0x10], 0x0
-	pop ebp
-	ret
-
-
 ;Scr_RunCurrentThreads()
 Scr_RunCurrentThreads:
 	push ebp
@@ -8590,12 +8430,7 @@ Scr_GetConstLowercaseString_140:
 	cmp byte [gScrVmPub+0x14], 0x0
 	jz Scr_GetConstLowercaseString_60
 Scr_GetConstLowercaseString_50:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
+	call Scr_ErrorJumpOut
 Scr_GetConstLowercaseString_30:
 	cmp byte [gScrVmPub+0x16], 0x0
 	jz Scr_GetConstLowercaseString_70
@@ -8713,117 +8548,6 @@ Scr_GetConstLowercaseString_100:
 	jmp Scr_GetConstLowercaseString_160
 
 
-;Scr_Init()
-Scr_Init:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x4
-	call Scr_InitClassMap
-	mov dword [gScrVmPub+0x4], gScrVmPub+0x4318
-	mov dword [gScrVmPub+0x10], gScrVmPub+0x320
-	mov dword [gScrVmPub+0x8], 0x0
-	mov dword [gScrVmPub+0xc], gScrVmPub+0x20
-	mov dword [gScrVmPub], gScrVmGlob+0x18
-	mov ebx, gScrVarPub
-	mov byte [ebx+0x8], 0x0
-	mov byte [gScrVmPub+0x14], 0x0
-	mov dword [ebx+0xc], 0x0
-	mov dword [gScrVmGlob+0x10], 0x0
-	mov dword [ebx+0x10], 0x0
-	mov byte [gScrVmPub+0x16], 0x0
-	mov dword [gScrVmPub+0x1c], 0x0
-	mov dword [gScrVmPub+0x18], 0x0
-	call AllocValue
-	mov [ebx+0x30], eax
-	mov dword [ebx+0x18], 0x0
-	mov dword [ebx+0x1c], 0x0
-	mov dword [ebx+0x20], 0x0
-	mov dword [ebx+0x24], 0x0
-	mov dword [ebx+0x28], 0x0
-	mov dword [ebx+0x2c], 0x0
-	mov dword [gScrVmPub+0x324], 0x7
-	mov dword [gScrVmGlob+0x14], 0x0
-	mov eax, gScrCompilePub
-	mov byte [eax+0x20020], 0x0
-	mov edx, scrAnimPub
-	mov byte [edx+0x418], 0x0
-	mov dword [eax+0xc], 0x0
-	mov dword [eax+0x8], 0x0
-	mov dword [edx], 0x0
-	mov dword [eax+0x14], 0x0
-	mov dword [eax+0x10], 0x0
-	mov byte [ebx+0x34], 0x1
-	add esp, 0x4
-	pop ebx
-	pop ebp
-	ret
-	nop
-
-
-;Scr_Error(char const*)
-Scr_Error:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, gScrVarPub
-	mov ecx, [ebx+0xc]
-	test ecx, ecx
-	jz Scr_Error_10
-Scr_Error_90:
-	cmp byte [ebx+0x8], 0x0
-	jnz Scr_Error_20
-	mov eax, gScrCompilePub
-	cmp byte [eax+0x20020], 0x0
-	jz Scr_Error_30
-Scr_Error_20:
-	cmp byte [gScrVmPub+0x16], 0x0
-	jz Scr_Error_40
-Scr_Error_70:
-	mov eax, gScrVarPub
-	mov eax, [eax+0xc]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_s
-	call Sys_Error
-Scr_Error_40:
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_Error_30:
-	cmp byte [ebx+0x6], 0x0
-	jnz Scr_Error_50
-Scr_Error_80:
-	mov ebx, [gScrVmPub+0x8]
-	test ebx, ebx
-	jnz Scr_Error_60
-	cmp byte [gScrVmPub+0x14], 0x0
-	jz Scr_Error_70
-Scr_Error_60:
-	mov dword [esp+0x4], 0xffffffff
-	mov eax, [g_script_error_level]
-	lea eax, [eax+eax*8]
-	lea eax, [eax*8+g_script_error]
-	mov [esp], eax
-	call longjmp
-Scr_Error_50:
-	mov eax, 0x1
-	mov edx, [gScrVmGlob+0x14]
-	test edx, edx
-	movzx edx, byte [gScrVmPub+0x16]
-	cmovz eax, edx
-	mov [gScrVmPub+0x16], al
-	jmp Scr_Error_80
-Scr_Error_10:
-	mov dword [esp+0x8], 0x400
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov dword [esp], error_message
-	call Q_strncpyz
-	mov dword [ebx+0xc], error_message
-	jmp Scr_Error_90
-
 
 ;Initialized global or static variables of scr_vm:
 SECTION .data
@@ -8841,10 +8565,7 @@ thread_count: resb 0x4
 gFs: resb 0x14
 caseCount: resb 0x4
 opcode: resb 0x8
-error_message: resb 0x440
 gScrVmPub: resb 0x4320
-g_script_error: resb 0x9a0
-g_script_error_level: resb 0x20
 
 
 ;All cstrings:

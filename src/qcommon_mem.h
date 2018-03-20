@@ -68,6 +68,7 @@ void Com_InitSmallZoneMemory( void );
 void Com_InitZoneMemory( void );
 char* Z_MallocGarbage(int, const char*, int);
 void* Hunk_Alloc(int size, const char* name, int type);
+void __cdecl Hunk_UserDestroy(HunkUser *user);
 void *__cdecl Hunk_AllocInternal(int size);
 #define L_Malloc malloc
 #define L_Free free

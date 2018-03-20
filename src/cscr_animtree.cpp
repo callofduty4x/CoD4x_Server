@@ -1,6 +1,8 @@
 #include "q_shared.h"
-#include "misc.h"
 #include "scr_vm.h"
+#include "cscr_stringlist.h"
+#include "cscr_variable.h"
+#include "cscr_animtree.h"
 
 const char *propertyNames[] =
 {
@@ -12,6 +14,16 @@ const char *propertyNames[] =
   "separate",
   "forceload"
 };
+
+struct scrAnimGlob_t
+{
+  const char *start;
+  const char *pos;
+  uint16_t using_xanim_lookup[2][128];
+  int bAnimCheck;
+};
+
+extern struct scrAnimGlob_t gScrAnimGlob;
 
 extern "C"{
 
@@ -39,7 +51,7 @@ unsigned int GetAnimTreeParseProperties()
   flags = 0;
   while ( 1 )
   {
-    token = Com_ParseOnLine(&scrAnimGlob.pos);
+    token = Com_ParseOnLine(&gScrAnimGlob.pos);
     if ( !token->token[0] )
     {
       break;
@@ -79,7 +91,7 @@ unsigned int GetAnimTreeParseProperties()
         token_pos = Com_GetLastTokenPos();
         errormsg = va("Unknown XAnimTree anim property: \"%s\"", property);
         Com_EndParseSession();
-        CompileError(token_pos - scrAnimGlob.start, "%s", errormsg);
+        CompileError(token_pos - gScrAnimGlob.start, "%s", errormsg);
         break;
     }
   }
@@ -112,8 +124,8 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
 
   while ( 1 )
   {
-    tok = Com_Parse(&scrAnimGlob.pos);
-    if ( !scrAnimGlob.pos )
+    tok = Com_Parse(&gScrAnimGlob.pos);
+    if ( !gScrAnimGlob.pos )
     {
         r = true;
         break;
@@ -135,12 +147,12 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
       {
         token_pos = Com_GetLastTokenPos();
         Com_EndParseSession();
-        CompileError(token_pos - scrAnimGlob.start, "%s", "duplicate animation");
+        CompileError(token_pos - gScrAnimGlob.start, "%s", "duplicate animation");
       }
       currentAnim = GetVariable(parentNode, animName);
-      bIgnore = !bComplete && !FindVariable(names, animName) && !scrAnimGlob.bAnimCheck;
+      bIgnore = !bComplete && !FindVariable(names, animName) && !gScrAnimGlob.bAnimCheck;
       flags = 0;
-      tok = Com_ParseOnLine(&scrAnimGlob.pos);
+      tok = Com_ParseOnLine(&gScrAnimGlob.pos);
       if(!tok->token[0])
       {
           continue;
@@ -149,21 +161,21 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
       {
           token_pos = Com_GetLastTokenPos();
           Com_EndParseSession();
-          CompileError(token_pos - scrAnimGlob.start, "%s", "FIXME: aliases not yet implemented");
+          CompileError(token_pos - gScrAnimGlob.start, "%s", "FIXME: aliases not yet implemented");
       }
       if ( tok->token[0] != ':' || tok->token[1] )
       {
           token_pos = Com_GetLastTokenPos();
           Com_EndParseSession();
-          CompileError(token_pos - scrAnimGlob.start, "%s", "bad token");
+          CompileError(token_pos - gScrAnimGlob.start, "%s", "bad token");
       }
       flags = GetAnimTreeParseProperties();
-      tok = Com_Parse(&scrAnimGlob.pos);
+      tok = Com_Parse(&gScrAnimGlob.pos);
       if ( tok->token[0] != '{' || tok->token[1] )
       {
           token_pos = Com_GetLastTokenPos();
           Com_EndParseSession();
-          CompileError(token_pos - scrAnimGlob.start, "%s", "properties cannot be applied to primitive animations");
+          CompileError(token_pos - gScrAnimGlob.start, "%s", "properties cannot be applied to primitive animations");
       }
 
     }
@@ -175,26 +187,26 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
     {
       token_pos = Com_GetLastTokenPos();
       Com_EndParseSession();
-      CompileError(token_pos - scrAnimGlob.start, "%s", "bad token");
+      CompileError(token_pos - gScrAnimGlob.start, "%s", "bad token");
     }
-    if ( Com_ParseOnLine(&scrAnimGlob.pos)->token[0] )
+    if ( Com_ParseOnLine(&gScrAnimGlob.pos)->token[0] )
     {
       token_pos = Com_GetLastTokenPos();
       Com_EndParseSession();
-      CompileError(token_pos - scrAnimGlob.start, "%s", "token not allowed after '{'");
+      CompileError(token_pos - gScrAnimGlob.start, "%s", "token not allowed after '{'");
     }
     if ( !currentAnim )
     {
       token_pos = Com_GetLastTokenPos();
       Com_EndParseSession();
-      CompileError(token_pos - scrAnimGlob.start, "%s", "no animation specified for this block");
+      CompileError(token_pos - gScrAnimGlob.start, "%s", "no animation specified for this block");
     }
     animarray = GetArray(currentAnim);
     if ( AnimTreeParseInternal(animarray, names, bIgnore == 0, flags & 1, bComplete || (flags & 8 && !bIgnore)) )
     {
       token_pos = Com_GetLastTokenPos();
       Com_EndParseSession();
-      CompileError(token_pos - scrAnimGlob.start, "%s", "unexpected end of file");
+      CompileError(token_pos - gScrAnimGlob.start, "%s", "unexpected end of file");
     }
     if ( GetArraySize(animarray) )
     {
@@ -217,13 +229,13 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
     {
       token_pos = Com_GetLastTokenPos();
       Com_EndParseSession();
-      CompileError(token_pos - scrAnimGlob.start, "%s", "bad token");
+      CompileError(token_pos - gScrAnimGlob.start, "%s", "bad token");
     }
-    if ( Com_ParseOnLine(&scrAnimGlob.pos)->token[0] )
+    if ( Com_ParseOnLine(&gScrAnimGlob.pos)->token[0] )
     {
       token_pos = Com_GetLastTokenPos();
       Com_EndParseSession();
-      CompileError(token_pos - scrAnimGlob.start, "%s", "token not allowed after '}'");
+      CompileError(token_pos - gScrAnimGlob.start, "%s", "token not allowed after '}'");
     }
   }
 

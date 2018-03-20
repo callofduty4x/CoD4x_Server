@@ -1,3 +1,647 @@
+#if 0
+
+// ==========================================================
+// IW4M project
+// 
+// Component: clientdll
+// Sub-component: steam_api
+// Purpose: A safer reimplementation of scr_stringlist.cpp.
+//
+// Initial author: NTAuthority
+// Started: 2013-02-06
+// ==========================================================
+#include "q_shared.h"
+#include "cscr_memorytree.h"
+#include "qcommon_mem.h"
+#include <windows.h>
+#include "sparsehash/dense_hash_map"
+#include "scr_vm.h"
+
+#define MAX_SCRIPT_STRINGS 65535
+
+
+static HANDLE stringHeap;
+
+//#define SL_Debug(x, ...) OutputDebugString(va_x(x, __VA_ARGS__))
+#define SL_Debug(x, ...) 
+
+struct ScriptStringData;
+
+struct ScriptStringManagementData
+{
+	int32_t users; // bitmask
+	uint32_t references; // reference count
+	ScriptStringData* data; // backreference to the data we know about
+};
+
+struct ScriptStringData
+{
+	ScriptStringManagementData* data;
+	char* string;
+	int length;
+};
+
+static uint32_t slFirstFree; // might need to be optimized to be a linked list of free blocks?
+static CRITICAL_SECTION slCritSec;
+static ScriptStringData slStrings[MAX_SCRIPT_STRINGS];
+static google::dense_hash_map<std::string, uint16_t> slHashMap;
+
+extern "C"{
+void SL_AddUser(uint16_t string, int user);
+
+void SL_Init()
+{
+  slHashMap.set_empty_key("*DUMMYDUMMY*");
+	slHashMap.set_deleted_key("*DUMMYDUMM*");
+	stringHeap = HeapCreate(0, 1024 * 1024, 0);
+
+	MT_Init();
+
+	slFirstFree = 1;
+
+	InitializeCriticalSection(&slCritSec);
+	EnterCriticalSection(&slCritSec);
+
+	LeaveCriticalSection(&slCritSec);
+}
+
+void SL_StringUsage(bool detailed)
+{
+  ScriptStringData *sl;
+  char printstring[129];
+  unsigned int u = 0;
+  unsigned int f = 0;
+  unsigned int i;
+
+  for(i = 0, sl = slStrings; i < ARRAY_COUNT(slStrings); ++i, ++sl)
+  {
+    if(sl->string)
+    {
+      if(detailed)
+      {
+        Q_strncpyz(printstring, sl->string, sizeof(printstring));
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "%5d: %s > refCount: %3d user: %d\n", i, printstring, sl->data->references, sl->data->users);
+      }
+      ++u;
+    }else{
+      ++f;
+    }
+  }
+  Com_Printf(CON_CHANNEL_DONT_FILTER, "%d used strings   %d free strings\n", u, f);
+}
+
+void SL_AddRefToString(uint16_t string);
+
+int SL_GetStringOfSize(const char* string, int user, int size, int type)
+{
+	EnterCriticalSection(&slCritSec);
+
+	// try to find the string first
+	std::string str(string, size);
+	google::dense_hash_map<std::string, uint16_t>::const_iterator iter = slHashMap.find(str);
+
+	if (iter != slHashMap.end())
+	{
+		SL_Debug("GetStringOfSize '%s' found %i\n", string, iter->second);
+
+  	ScriptStringData* data = &slStrings[iter->second];
+    assert(data->data->references > 0);
+
+    SL_AddUser(iter->second, user); //Also adds ref
+
+		LeaveCriticalSection(&slCritSec);
+		return iter->second;
+	}
+
+	// add the string to the list
+	ScriptStringData* data = &slStrings[slFirstFree];
+	uint16_t stringID = slFirstFree;
+
+	data->data = (ScriptStringManagementData*)HeapAlloc(stringHeap, 0, sizeof(ScriptStringManagementData));
+
+	data->string = (char*)HeapAlloc(stringHeap, 0, size);
+	memcpy(data->string, string, size);
+
+	data->length = size;
+
+	data->data->data = data;
+	data->data->references = 1;
+	data->data->users = user;
+
+	// find the next free string
+	for (int i = slFirstFree; i < MAX_SCRIPT_STRINGS; i++)
+	{
+		if (!slStrings[i].string)
+		{
+			slFirstFree = i;
+			break;
+		}
+	}
+
+	slHashMap[str] = stringID;
+
+	LeaveCriticalSection(&slCritSec);
+
+	SL_Debug("GetStringOfSize '%s' allocated %i (user %i)\n", string, stringID, user);
+
+	return stringID;
+}
+
+int SL_FindStringOfSize(const char* string, int size)
+{
+	EnterCriticalSection(&slCritSec);
+
+	std::string str(string, size);
+
+	google::dense_hash_map<std::string, uint16_t>::const_iterator iter = slHashMap.find(str);
+
+	if (iter != slHashMap.end())
+	{
+		LeaveCriticalSection(&slCritSec);
+
+		SL_Debug("FindStringOfSize '%s' found %i\n", string, iter->second);
+
+		return iter->second;
+	}
+
+	SL_Debug("FindStringOfSize '%s' - no results!\n", string, iter->second);
+
+	LeaveCriticalSection(&slCritSec);
+
+	return 0;
+}
+
+// this function is way more optimized in IW SL
+int SL_ConvertFromString(const char* string)
+{
+	SL_Debug("ConvertFromString '%s'\n", string);
+
+	return SL_FindStringOfSize(string, strlen(string) + 1);
+}
+
+void SL_FreeString(uint16_t string)
+{
+	EnterCriticalSection(&slCritSec);
+
+	ScriptStringData* data = &slStrings[string];
+
+  assert(data->data->references == 0);
+
+  //delete data->data;
+	HeapFree(stringHeap, 0, data->data);
+
+	std::string str(data->string, data->length);
+	slHashMap.erase(str);
+
+	SL_Debug("FreeString %i '%s'\n", string, data->string);
+
+	//free((void*)data->string);
+	HeapFree(stringHeap, 0, data->string);
+
+	if (string < slFirstFree)
+	{
+		slFirstFree = string;
+	}
+
+	data->data = NULL;
+	data->string = NULL;
+
+	LeaveCriticalSection(&slCritSec);
+}
+
+void SL_AddRefToString(uint16_t string)
+{
+	EnterCriticalSection(&slCritSec);
+
+  assert(slStrings[string].data->references > 0);
+
+	InterlockedIncrement(&slStrings[string].data->references);
+
+	SL_Debug("AddRefToString %i (new refcount: %i)\n", string, slStrings[string].data->references);
+
+	LeaveCriticalSection(&slCritSec);
+}
+
+void SL_RemoveRefToString(uint16_t string)
+{
+	EnterCriticalSection(&slCritSec);
+
+	SL_Debug("RemoveRefToString %i (new refcount: %i)\n", string, slStrings[string].data->references - 1);
+
+  assert(slStrings[string].data->references > 0);
+
+	if (!InterlockedDecrement(&slStrings[string].data->references))
+	{
+		SL_FreeString(string);
+	}
+	
+	LeaveCriticalSection(&slCritSec);
+}
+
+void SL_RemoveRefToStringOfSize(uint16_t string, int size)
+{
+	SL_RemoveRefToString(string);
+}
+
+void Scr_SetString(uint16_t* to, unsigned int from)
+{
+  uint16_t string = from; 
+	if (string)
+	{
+		SL_AddRefToString(string);
+	}
+
+	if (*to)
+	{
+		SL_RemoveRefToString(*to);
+	}
+
+	*to = string;
+}
+
+int SL_GetStringLen(uint16_t string)
+{
+	if (slStrings[string].string)
+	{
+		//return strlen(slStrings[string].string);
+		return slStrings[string].length - 1;
+	}
+
+	return 0;
+}
+
+void SL_TransferRefToUser(uint16_t string, char user)
+{
+	EnterCriticalSection(&slCritSec);
+	ScriptStringManagementData* data = slStrings[string].data;
+
+  assert(data->references > 0);
+  
+  if(data->users & user)
+  {
+    InterlockedDecrement((long*)&data->references);
+  }else{
+ 		_InterlockedOr((long*)&data->users, user);
+  }
+
+	SL_Debug("SL_TransferRefToUser: %i '%s' %i\n", string, slStrings[string].string, user);
+
+	LeaveCriticalSection(&slCritSec);
+	//SL_RemoveRefToString(string);
+}
+
+void SL_AddUser(uint16_t string, int user)
+{
+	ScriptStringManagementData* data = slStrings[string].data;
+
+  assert(data->references > 0);
+
+	if (data)
+	{
+		SL_Debug("SL_AddUser: %i '%s' %i\n", string, slStrings[string].string, user);
+
+		if (!(data->users & user))
+		{
+			SL_AddRefToString(string);
+		}
+
+		_InterlockedOr((long*)&data->users, user);
+	}
+}
+
+
+int SL_ConvertToLowercase(uint16_t string, int user)
+{
+	char tempString[8192];
+  uint16_t lowerstring;
+
+	EnterCriticalSection(&slCritSec);
+
+	ScriptStringData* data = &slStrings[string];
+
+	int length = data->length;//strlen(data->string);
+
+	if (length < sizeof(tempString))	
+	{
+		strcpy(tempString, data->string);
+
+		for (int i = 0; i < length; i++)
+		{
+			tempString[i] = tolower(tempString[i]);
+		}
+
+		LeaveCriticalSection(&slCritSec);
+
+		lowerstring = SL_GetStringOfSize(tempString, user, strlen(tempString) + 1, 0);
+		SL_RemoveRefToString(string);
+
+    return lowerstring;
+  }
+
+	LeaveCriticalSection(&slCritSec);
+
+	return string;
+}
+
+void SL_ShutdownSystem(int system)
+{
+	EnterCriticalSection(&slCritSec);
+
+	SL_Debug("SL_ShutdownSystem: %i\n", system);
+
+	for (int i = 0; i < MAX_SCRIPT_STRINGS; i++)
+	{
+		if (slStrings[i].data)
+		{
+			ScriptStringManagementData* data = slStrings[i].data;
+
+			if (data->users & system)
+			{
+        data->users &= ~system;
+				SL_RemoveRefToString(i);
+			}
+		}
+	}
+
+	LeaveCriticalSection(&slCritSec);
+}
+
+void SL_TransferSystem(int oldSystem, int newSystem)
+{
+	EnterCriticalSection(&slCritSec);
+
+	for (int i = 0; i < MAX_SCRIPT_STRINGS; i++)
+	{
+		if (slStrings[i].data)
+		{
+			ScriptStringManagementData* data = slStrings[i].data;
+
+			if (data->users & oldSystem)
+			{
+				InterlockedExchange((unsigned long*)&data->users, (data->users & ~oldSystem) | newSystem);
+			}
+		}
+	}
+
+	LeaveCriticalSection(&slCritSec);
+}
+
+const char* SL_ConvertToString(uint16_t string)
+{
+	SL_Debug("SL_ConvertToString: %i '%s'\n", string, slStrings[string].string);
+
+	return slStrings[string].string;
+}
+
+int SL_FindString(const char *string)
+{
+  return SL_FindStringOfSize(string, strlen(string) + 1);
+}
+
+unsigned int SL_FindLowercaseString(const char *upperstring)
+{
+	unsigned int size;
+	char lwrstr[8192];
+	unsigned int i;
+
+	size = strlen(upperstring) + 1;
+	
+	if ( size >= sizeof(lwrstr) )
+	{
+		return 0;
+	}
+  
+	for(i = 0; i < size; ++i)
+	{
+		lwrstr[i] = tolower(upperstring[i]);
+	}
+    return SL_FindStringOfSize(lwrstr, size);
+}
+
+unsigned int __cdecl SL_GetString_(const char *str, unsigned int user, int type)
+{
+  return SL_GetStringOfSize(str, user, strlen(str) + 1, type);
+}
+
+unsigned int SL_GetString(const char *string, int user)
+{
+	return SL_GetString_(string, user, 6);
+}
+
+unsigned int SL_GetLowercaseStringOfSize(const char *upperstring, int user, unsigned int len, int type)
+{
+	char lwrstr[8192];
+	unsigned int i;
+
+	if ( len >= sizeof(lwrstr) )
+	{
+		Com_Error(ERR_FATAL, "SL_GetLowercaseStringOfSize(): max string length exceeded: \"%s\"", upperstring);
+		return 0;
+	}
+  
+	for(i = 0; i < len; ++i)
+	{
+		lwrstr[i] = tolower(upperstring[i]);
+	}
+    return SL_GetStringOfSize(lwrstr, user, len, type);
+}
+
+
+unsigned int __cdecl SL_GetLowercaseString_(const char *str, unsigned int user, int type)
+{
+  return SL_GetLowercaseStringOfSize(str, user, strlen(str) + 1, type);
+}
+
+unsigned int __cdecl SL_GetLowercaseString(const char *str, unsigned int user)
+{
+  return SL_GetLowercaseString_(str, user, 6);
+}
+
+void CreateCanonicalFilename(char *newFilename, const char *filename, int count)
+{
+  unsigned int c;
+
+  assert(count > 0);
+
+  while ( 1 )
+  {
+    do
+    {
+      c = *filename++;
+    }
+    while ( c == '\\' );
+    if ( c != '/' )
+    {
+      while ( c >= ' ' )
+      {
+        *newFilename++ = tolower(c);
+        if ( !--count )
+        {
+          Com_Error(ERR_DROP, "Filename '%s' exceeds maximum length", filename);
+        }
+        if ( c == '/' )
+        {
+          break;
+        }
+        c = *filename++;
+        if ( c == '\\' )
+        {
+          c = '/';
+        }
+      }
+      if ( !c )
+      {
+        break;
+      }
+    }
+  }
+  *newFilename = 0;
+}
+
+unsigned int __cdecl Scr_CreateCanonicalFilename(const char *filename)
+{
+  char newFilename[1024];
+
+  CreateCanonicalFilename(newFilename, filename, sizeof(newFilename));
+  return SL_GetString_(newFilename, 0, 7);
+}
+
+struct RefVector
+{
+    union
+    {
+      struct
+      {
+        unsigned int refCount : 16;
+        unsigned int user : 8;
+        unsigned int byteLen : 8;
+      };
+      volatile int head;
+    };
+    vec3_t vec;
+};
+
+float *__cdecl Scr_AllocVectorInternal()
+{
+  RefVector *refVec;
+
+  refVec = (RefVector*)MT_Alloc(16, 2);
+  refVec->head = 0;
+  InterlockedIncrement((DWORD*)&gScrVarPub.totalVectorRefCount);
+/*  if ( gScrStringDebugGlob )
+  {
+    unsigned int value = MT_GetIndexByRef((byte*)refVec);
+    InterlockedIncrement((DWORD*)&gScrStringDebugGlob->refCount[value]);
+  }*/
+  return refVec->vec;
+}
+
+float *__cdecl Scr_AllocVector(const float* vec)
+{
+  float* avec = Scr_AllocVectorInternal();
+  VectorCopy(vec, avec);
+  return avec;
+}
+
+
+void __cdecl RemoveRefToVector(const float *vectorValue)
+{
+  RefVector *refVec;
+
+  refVec = (RefVector*)((byte*)vectorValue -4);
+
+  if ( !refVec->byteLen )
+  {
+    InterlockedDecrement((DWORD*)&gScrVarPub.totalVectorRefCount);
+/*    if ( gScrStringDebugGlob )
+    {
+      unsigned int value = MT_GetIndexByRef((byte*)refVec);
+      assert(gScrStringDebugGlob->refCount[value] > 0);
+      InterlockedDecrement((DWORD*)&gScrStringDebugGlob->refCount[value]);
+    }
+  */
+    if ( refVec->refCount )
+    {
+      --refVec->refCount;
+    }
+    else
+    {
+      MT_Free(refVec, 16);
+    }
+  }
+}
+
+void __cdecl AddRefToVector(const float *vectorValue)
+{
+  RefVector *refVec;
+
+  refVec = (RefVector*)((byte*)vectorValue -4);
+
+  if ( !refVec->byteLen )
+  {
+    InterlockedIncrement((DWORD*)&gScrVarPub.totalVectorRefCount);
+/*    if ( gScrStringDebugGlob )
+    {
+      unsigned int value = MT_GetIndexByRef((byte*)refVec);
+      assert( gScrStringDebugGlob->refCount[value] >= 0);
+      InterlockedIncrement((DWORD*)&gScrStringDebugGlob->refCount[value]);
+    }
+  */
+    ++refVec->refCount;
+    assert(refVec->refCount);
+  }
+}
+
+unsigned int __cdecl SL_GetStringForFloat(float f)
+{
+  char tempString[128];
+
+  sprintf(tempString, "%g", f);
+  return SL_GetString_(tempString, 0, 15);
+}
+
+unsigned int __cdecl SL_GetStringForInt(int i)
+{
+  char tempString[128];
+
+  sprintf(tempString, "%i", i);
+  return SL_GetString_(tempString, 0, 15);
+}
+
+unsigned int __cdecl SL_GetStringForVector(const float *v)
+{
+  char tempString[256];
+
+  sprintf(tempString, "(%g, %g, %g)", v[0], v[1], v[2]);
+  return SL_GetString_(tempString, 0, 15);
+}
+
+unsigned int __cdecl Scr_AllocString(const char *s)
+{
+  return SL_GetString(s, 1u);
+}
+
+void SL_FreeStaticStrings()
+{
+
+}
+
+void __cdecl SL_MakeStatic(unsigned int stringValue)
+{
+
+}
+
+};
+
+bool SL_IsDebugging() //Not sure about a good name
+{
+  return false;
+}
+
+
+
+#else 
+
 /*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
@@ -28,7 +672,7 @@
 #include "scr_vm.h"
 #include "cscr_memorytree.h"
 #include "qcommon_mem.h"
-#include "cscr_variable.h"
+#include "sparsehash/dense_hash_map"
 
 #include <string.h>
 #include <stdarg.h>
@@ -60,7 +704,9 @@ struct __align(4) RefString
 };
 #pragma pack(pop)
 
+const RefString* slSlowMap[32768];
 
+/*
 struct HashEntry
 {
   unsigned int status_next;
@@ -70,7 +716,7 @@ struct HashEntry
     unsigned int str;
   };
 };
-
+*/
 struct scrStringDebugGlob_t
 {
   volatile int refCount[DEBUG_REFCOUNT_SIZE];
@@ -80,13 +726,20 @@ struct scrStringDebugGlob_t
 
 struct __align(128) scrStringGlob_t
 {
-  HashEntry *hashTable;
+//  HashEntry *hashTable;
   bool inited;
-  HashEntry *nextFreeEntry;
+  bool bAtCompileTime;
+//  HashEntry *nextFreeEntry;
   int indentLevel;
   int stringsUsed[32];
 };
 
+extern "C" unsigned int __cdecl SL_GetString_(const char *str, unsigned int user, int type);
+
+extern "C" void SL_StringUsage()
+{
+
+}
 
 scrStringDebugGlob_t *gScrStringDebugGlob;
 scrStringGlob_t gScrStringGlob;
@@ -110,8 +763,6 @@ unsigned int GetHashCode(const char *str, unsigned int len)
     }
     return hash % 32767 + 1;
 }
-
-
 
 RefString *GetRefString(unsigned int stringValue)
 {
@@ -164,11 +815,8 @@ const char * SL_DebugConvertToString(unsigned int stringValue)
   return "<NULL>";
 }
 
-
-
-
-
-void SL_FreeString(unsigned int stringValue, RefString *refStr, unsigned int len)
+/*
+void SL_FreeString(RefString *refStr, unsigned int len)
 {
   HashEntry *entry;
   int newIndex;
@@ -176,10 +824,13 @@ void SL_FreeString(unsigned int stringValue, RefString *refStr, unsigned int len
   unsigned int index;
   unsigned int prev;
   HashEntry *newEntry;
+  unsigned int stringValue;
+
+  stringValue = MT_GetIndexByRef((byte*)refStr);
 
   index = GetHashCode(refStr->str, len);
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
-  if ( refStr->refCount )
+//  if ( refStr->refCount )
   {
     Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
     return;
@@ -239,6 +890,40 @@ void SL_FreeString(unsigned int stringValue, RefString *refStr, unsigned int len
     gScrStringGlob.hashTable[newNext].prev = newIndex;
     gScrStringGlob.hashTable->status_next = newIndex;
     Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+}*/
+
+
+void SL_FreeString(RefString *refStr, unsigned int len)
+{
+//  HashEntry *entry;
+  int newIndex;
+  unsigned int newNext;
+  unsigned int index;
+  unsigned int prev;
+//  HashEntry *newEntry;
+  unsigned int stringValue;
+
+  stringValue = MT_GetIndexByRef((byte*)refStr);
+
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
+  if ( refStr->refCount )
+  {
+    Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+    return;
+  }
+  assertx(!refStr->user, "SL_DebugConvertToString( stringValue ) = %s", SL_DebugConvertToString(stringValue));
+
+  MT_FreeIndex(stringValue, len + 4);
+
+  for(i = 0; i < ARRAY_COUNT(slSlowMap); ++i)
+  {
+    if(slSlowMap[i] == refStr)
+    {
+      slSlowMap[i] = NULL;
+      break;
+    }
+  }
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
 }
 
 void Scr_ResetScrStringDebugGlob( )
@@ -320,6 +1005,7 @@ void CreateCanonicalFilename(char *newFilename, const char *filename, int count)
   *newFilename = 0;
 }
 
+extern "C"{
 
 unsigned int __cdecl SL_GetStringForFloat(float f)
 {
@@ -345,6 +1031,9 @@ unsigned int __cdecl SL_GetStringForVector(const float *v)
   return SL_GetString_(tempString, 0, 15);
 }
 
+
+};
+
 bool SL_IsDebugging() //Not sure about a good name
 {
   if ( !gScrStringDebugGlob || !gScrStringDebugGlob->ignoreLeaks )
@@ -364,10 +1053,11 @@ void __cdecl SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int l
 
   assertx(refStr->refCount > 0, "refStr->refCount = %d", refStr->refCount);
 
-  if(refStr->refCount == 0)
+  if(refStr->refCount <= 0)
   {
     return;
   }
+
 
   if ( InterlockedDecrement((volatile DWORD*)&refStr->data) << 16 )
   {
@@ -402,7 +1092,7 @@ void __cdecl SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int l
         exchange.user = 0;
     }while(InterlockedCompareExchange((DWORD*)&refStr->data, exchange.data, compare.data) != (DWORD)compare.data);
 
-    SL_FreeString(stringValue, refStr, len);
+    SL_FreeString(refStr, len);
     if ( gScrStringDebugGlob )
     {
       assertx(gScrStringDebugGlob->totalRefCount && gScrStringDebugGlob->refCount[stringValue], 
@@ -436,7 +1126,10 @@ void __cdecl SL_AddRefToString(unsigned int stringValue)
     InterlockedIncrement((volatile DWORD*)&gScrStringDebugGlob->totalRefCount);
     InterlockedIncrement((volatile DWORD*)&gScrStringDebugGlob->refCount[stringValue]);
   }
+
   refStr = GetRefString(stringValue);
+
+  assert(refStr->refCount > 0);
 
   InterlockedIncrement((volatile DWORD*)&refStr->data);
 
@@ -511,7 +1204,53 @@ unsigned int SL_GetLowercaseStringOfSize(const char *upperstring, int user, unsi
 }
 
 
+unsigned int SL_FindStringOfSize(const char* string, int size)
+{
+  unsigned int index;
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
 
+  for(i = 0; i < ARRAY_COUNT(slSlowMap); ++i)
+  {
+    if(slSlowMap[i] /*&& slSlowMap[i]->byteLen == size % 256*/ && strcmp(string, slSlowMap[i]->str) == 0)
+    {
+      break;
+    }
+  }
+
+  if(i == ARRAY_COUNT(slSlowMap))
+  {
+    index = 0;
+  }else{
+    index = MT_GetIndexByRef((byte*)slSlowMap[i]);
+  }
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+	return index;
+}
+
+unsigned int SL_CreateStringOfSize(const char* string, int len, int type)
+{
+  for(i = 0; i < ARRAY_COUNT(slSlowMap); ++i)
+  {
+    if(slSlowMap[i] == NULL)
+    {
+      break;
+    }
+  }
+  if(i == ARRAY_COUNT(slSlowMap))
+  {
+    Com_Error(ERR_DROP, "exceeded maximum number of script strings");
+    return 0;
+  }
+
+  stringValue = MT_AllocIndex(len + 4, type);
+
+  assert(stringValue != 0);
+
+  slSlowMap[i] = GetRefString(stringValue);
+  return stringValue;
+}
+
+/*
 unsigned int __cdecl SL_FindStringOfSize(const char *str, unsigned int len)
 {
   unsigned int stringValue;
@@ -571,7 +1310,7 @@ unsigned int __cdecl SL_FindStringOfSize(const char *str, unsigned int len)
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
   return stringValue;
 }
-
+*/
 
 unsigned int __cdecl SL_GetLowercaseString_(const char *str, unsigned int user, int type)
 {
@@ -637,13 +1376,68 @@ void __cdecl SL_AddUserInternal(RefString *refStr, unsigned int user)
         exchange.data = compare.data;
         exchange.user |= user;
     }while(InterlockedCompareExchange((DWORD*)&refStr->data, exchange.data, compare.data) != (DWORD)compare.data);
-
     InterlockedIncrement((DWORD*)&refStr->data);
   }
 
 }
 
 
+unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsigned int len, int type)
+{
+  int newNext;
+  unsigned int stringValue;
+//  HashEntry *entry;
+  unsigned int hash;
+  int newIndex;
+  RefString *refStr;
+  int next;
+  unsigned int prev;
+//  HashEntry *newEntry;
+
+  assert(str != NULL);
+
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
+
+  stringValue = SL_FindStringOfSize(str, len);
+  if(stringValue != 0)
+  {
+    refStr = GetRefString(stringValue);
+
+    SL_AddUserInternal(refStr, user);
+
+    assert(refStr->str == SL_ConvertToString( stringValue ));
+
+    Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+    return stringValue;
+  }
+  stringValue = SL_CreateStringOfSize(str, len, type);
+
+  ++gScrStringGlob.stringsUsed[gScrStringGlob.indentLevel];
+
+  assert(stringValue != 0);
+
+  refStr = GetRefString(stringValue);
+  memcpy(refStr->str, str, len);
+
+  refStr->user = user;
+  assert(refStr->user == user);
+
+  refStr->refCount = 1;
+  refStr->byteLen = len;
+
+  if ( gScrStringDebugGlob )
+  {
+    InterlockedIncrement((volatile DWORD*)&gScrStringDebugGlob->totalRefCount);
+    InterlockedIncrement((volatile DWORD*)&gScrStringDebugGlob->refCount[stringValue]);
+  }
+  assert(refStr->str == SL_ConvertToString( stringValue ));
+
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+  return stringValue;
+}
+
+
+/*
 unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsigned int len, int type)
 {
   int newNext;
@@ -657,6 +1451,26 @@ unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsi
   HashEntry *newEntry;
 
   assert(str != NULL);
+
+#ifdef NEWHASH
+
+	// try to find the string first
+
+	std::string str(str, len);
+	google::dense_hash_map<std::string, uint16_t>::const_iterator iter = slHashMap.find(str);
+
+  if (iter != slHashMap.end())
+	{
+  	ScriptStringData* data = &slStrings[iter->second];
+    assert(data->data->references > 0);
+
+    SL_AddUser(iter->second, user); //Also adds ref
+
+		LeaveCriticalSection(&slCritSec);
+		return iter->second;
+	}
+
+#else
   hash = GetHashCode(str, len);
 
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
@@ -678,7 +1492,7 @@ unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsi
     newIndex = entry->status_next & HASH_NEXT_MASK;
     for ( newEntry = &gScrStringGlob.hashTable[newIndex]; newEntry != entry; newEntry = &gScrStringGlob.hashTable[newIndex] )
     {
-
+      
       assert((newEntry->status_next & HASH_STAT_MASK) == HASH_STAT_MOVABLE);
       refStr = GetRefString(newEntry->prev);
       if ( refStr->byteLen == len && !memcmp(refStr->str, str, len) )
@@ -706,7 +1520,7 @@ unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsi
     if ( !newIndex )
     {
       Scr_DumpScriptThreads();
-      Scr_DumpScriptVariablesDefault();
+//      Scr_DumpScriptVariablesDefault();
       Com_Error(ERR_DROP, "exceeded maximum number of script strings");
     }
     stringValue = MT_AllocIndex(len + 4, type);
@@ -733,7 +1547,7 @@ unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsi
       if ( !newIndex )
       {
         Scr_DumpScriptThreads();
-        Scr_DumpScriptVariablesDefault();
+//        Scr_DumpScriptVariablesDefault();
         Com_Error(ERR_DROP, "exceeded maximum number of script strings");
       }
       stringValue = MT_AllocIndex(len + 4, type);
@@ -757,6 +1571,7 @@ unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsi
     assert(!(hash & HASH_STAT_MASK));
     entry->status_next = hash | HASH_STAT_HEAD;
   }
+  
   ++gScrStringGlob.stringsUsed[gScrStringGlob.indentLevel];
 
   assert(stringValue != 0);
@@ -782,7 +1597,7 @@ unsigned int __cdecl SL_GetStringOfSize(const char *str, unsigned int user, unsi
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
   return stringValue;
 }
-
+*/
 int __cdecl SL_GetStringLen(unsigned int stringValue)
 {
   RefString *refString;
@@ -821,6 +1636,7 @@ void __cdecl SL_TransferRefToUser(unsigned int stringValue, unsigned int user)
   RefString *refStr;
 
   refStr = GetRefString(stringValue);
+
   if ( user & refStr->user )
   {
     assertx(refStr->refCount > 1, "SL_DebugConvertToString( stringValue ) = %s", SL_DebugConvertToString(stringValue));
@@ -830,7 +1646,6 @@ void __cdecl SL_TransferRefToUser(unsigned int stringValue, unsigned int user)
       InterlockedDecrement((volatile DWORD*)&gScrStringDebugGlob->totalRefCount);
       InterlockedDecrement((volatile DWORD*)&gScrStringDebugGlob->refCount[stringValue]);
     }
-
     InterlockedDecrement((volatile DWORD*)refStr);
   }
   else
@@ -849,7 +1664,7 @@ void __cdecl SL_TransferRefToUser(unsigned int stringValue, unsigned int user)
 
 }
 
-
+/*
 void __cdecl SL_Init()
 {
   HashEntry *entry;
@@ -859,6 +1674,9 @@ void __cdecl SL_Init()
   assert ( !gScrStringGlob.inited );
   MT_Init( );
   Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
+
+  slHashMap.set_empty_key("*DUMMYDUMMY*");
+	slHashMap.set_deleted_key("*DUMMYDUMM*");
 
   gScrStringGlob.hashTable = (HashEntry*)Z_TagMalloc(32768 * sizeof(HashEntry), TAG_SCRIPTSTRING);
   gScrStringGlob.hashTable->status_next = 0;
@@ -876,13 +1694,58 @@ void __cdecl SL_Init()
   assert(!(gScrStringGlob.hashTable[prev].status_next & HASH_NEXT_MASK));
 
   gScrStringGlob.hashTable->prev = prev;
-  SL_InitCheckLeaks();
+//  SL_InitCheckLeaks();
+  gScrStringGlob.indentLevel = 0;
+  memset(gScrStringGlob.stringsUsed, 0, sizeof(gScrStringGlob.stringsUsed));
+  gScrStringGlob.inited = 1;
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+}
+*/
+
+void __cdecl SL_Init()
+{
+  unsigned int hash;
+  unsigned int prev;
+
+  assert ( !gScrStringGlob.inited );
+  MT_Init( );
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
+
+//  SL_InitCheckLeaks();
   gScrStringGlob.indentLevel = 0;
   memset(gScrStringGlob.stringsUsed, 0, sizeof(gScrStringGlob.stringsUsed));
   gScrStringGlob.inited = 1;
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
 }
 
+void __cdecl SL_ShutdownSystem(unsigned int user)
+{
+  unsigned int hash;
+  HashEntry *entry;
+  RefString *refStr;
+
+  assert(user != 0);
+
+  Sys_EnterCriticalSection(CRITSECT_SCRIPT_STRING);
+
+
+  for(i = 0; i < ARRAY_COUNT(slSlowMap); ++i)
+  {
+    if(slSlowMap[i] == NULL)
+    {
+      continue;
+    }
+    if (user & slSlowMap[i]->user)
+    {
+      slSlowMap[i]->users &= ~user;
+      unsigned int value = MT_GetIndexByRef((byte*)slSlowMap[i]);
+      SL_RemoveRefToString(value);
+    }
+  }
+  Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+}
+
+/*
 void __cdecl SL_ShutdownSystem(unsigned int user)
 {
   unsigned int hash;
@@ -906,13 +1769,19 @@ void __cdecl SL_ShutdownSystem(unsigned int user)
       {
         break;
       }
-      refStr->user &= ~user;
+      refStr->user = user;
       gScrStringGlob.nextFreeEntry = 0;
       SL_RemoveRefToString(entry->prev);
     }
     while ( gScrStringGlob.nextFreeEntry );
   }
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
+}
+*/
+
+void __cdecl SL_MakeStatic(unsigned int stringValue)
+{
+
 }
 
 void __cdecl Scr_SetString(uint16_t *to, unsigned int from)
@@ -976,6 +1845,11 @@ void __cdecl SL_TransferSystem(unsigned int from, unsigned int to)
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
 }
 
+void SL_FreeStaticStrings()
+{
+
+}
+
 unsigned int __cdecl Scr_CreateCanonicalFilename(const char *filename)
 {
   char newFilename[1024];
@@ -1025,6 +1899,14 @@ float *__cdecl Scr_AllocVectorInternal()
   return refVec->vec;
 }
 
+float *__cdecl Scr_AllocVector(const float* vec)
+{
+  float* avec = Scr_AllocVectorInternal();
+  VectorCopy(vec, avec);
+  return avec;
+}
+
+
 void __cdecl RemoveRefToVector(const float *vectorValue)
 {
   RefVector *refVec;
@@ -1037,7 +1919,7 @@ void __cdecl RemoveRefToVector(const float *vectorValue)
     if ( gScrStringDebugGlob )
     {
       unsigned int value = MT_GetIndexByRef((byte*)refVec);
-      assert(gScrStringDebugGlob->refCount[value] >= 0);
+      assert(gScrStringDebugGlob->refCount[value] > 0);
       InterlockedDecrement((DWORD*)&gScrStringDebugGlob->refCount[value]);
     }
     if ( refVec->refCount )
@@ -1071,13 +1953,6 @@ void __cdecl AddRefToVector(const float *vectorValue)
   }
 }
 
-float *__cdecl Scr_AllocVector(const float* vec)
-{
-  float* avec = Scr_AllocVectorInternal();
-  VectorCopy(vec, avec);
-  return avec;
-}
+};
 
-
-
-}
+#endif

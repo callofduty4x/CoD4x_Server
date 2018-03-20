@@ -1,5 +1,12 @@
 #include "scr_vm.h"
-//#include "cscr_variable.h"
+#include "cscr_variable.h"
+#include "cscr_animtree.h"
+#include "sys_main.h"
+#include <setjmp.h>
+
+int g_script_error_level;
+jmp_buf g_script_error[33];
+char error_message[1024];
 
 VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
 {
@@ -51,7 +58,7 @@ VariableValue __cdecl GetEntityFieldValueEx(unsigned int classnum, int entnum, i
 }
 #endif
 
-#if 0
+
 
 void __cdecl Scr_ClearErrorMessage( )
 {
@@ -124,7 +131,52 @@ void __cdecl Scr_Init( )
   gScrVarPub.bInited = 1;
 }
 
-#endif
+
+void Scr_ErrorJumpOut()
+{
+    assert ( (unsigned int)g_script_error_level < ARRAY_COUNT( g_script_error ));
+    longjmp(g_script_error[g_script_error_level], -1);
+}
+
+int Scr_ErrorJumpOutTarget()
+{
+    return setjmp(g_script_error[g_script_error_level]);
+}
+
+void __cdecl Scr_ErrorInternal( )
+{
+  assert(gScrVarPub.error_message != NULL);
+
+  if ( !gScrVarPub.evaluate && !gScrCompilePub.script_loading )
+  {
+    if ( gScrVmPub.function_count || gScrVmPub.debugCode )
+    {
+        Com_Printf(CON_CHANNEL_LOGFILEONLY, "throwing script exception: %s\n", gScrVarPub.error_message);
+        Scr_ErrorJumpOut();
+    }
+    Sys_Error("%s", gScrVarPub.error_message);
+  }
+  if ( gScrVmPub.terminal_error )
+  {
+    Sys_Error("%s", gScrVarPub.error_message);
+  }
+}
+
+void __cdecl Scr_SetErrorMessage(const char *error)
+{
+  if ( !gScrVarPub.error_message )
+  {
+    Q_strncpyz(error_message, error, sizeof(error_message));
+    gScrVarPub.error_message = error_message;
+  }
+}
+
+void __cdecl Scr_Error(const char *error)
+{
+  Scr_SetErrorMessage(error);
+  gScrVmPub.terminal_error = false;
+  Scr_ErrorInternal( );
+}
 
 
 };

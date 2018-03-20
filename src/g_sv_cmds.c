@@ -32,6 +32,8 @@
 #include "server.h"
 #include "scr_vm.h"
 #include "misc.h"
+#include "cscr_stringlist.h"
+
 
 #include <string.h>
 

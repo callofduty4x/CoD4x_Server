@@ -34,7 +34,7 @@
 #include "xassets/sounds.h"
 #include "sys_thread.h"
 #include "zlib/unzip.h"
-//#include "physicalmemory.h"
+#include "physicalmemory.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -420,7 +420,7 @@ void DB_UnloadXAssetsMemoryInternal(XZone* zone)
 {
         DB_FreeXZoneMemory(&zone->zonememory);
         Com_Printf(CON_CHANNEL_FILES,"Unloaded fastfile %s\n", zone->zoneinfo.name);
-        PMem_Free(zone->zoneinfo.name, zone->index);
+        PMem_Free(zone->zoneinfo.name/*, zone->index*/);
         zone->zoneinfo.name[0] = '\0';
 }
 
