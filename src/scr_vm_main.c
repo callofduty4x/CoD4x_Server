@@ -70,71 +70,9 @@ char *var_typename[] =
         "array",
         "removed thread"};
 
-// Original: 0x08215780
-// Last element must be zeroed.
-// Warning: max 64 elements in array. Hardcoded into VM structures.
-// How to understand?
-//   name is the name of script field.
-//   offset is the address in gclient_t structure.
-//   type is the type of variable.
-//   setter is the function pointer to be called when trying to set variable (self.statusicon = "something")
-//   getter is the function pointer to be called when trying to get variable (iprintln(self.statusicon))
-// Some notes: (based on Scr_GetClientField, 0x080C89D8)
-//   - if offset is 0 then setter/getter should be set. Offset 0 still can be used (rarely).
-//     getter/setter will be called with passed client_field_t value.
-//   - if getter/setter is 0 then field will be get from/set to specified offset and type from client_t structure.
-/*
-client_fields_t client_fields[] = {
-    {"name", 0, F_LSTRING, ClientScr_ReadOnly, ClientScr_GetName},
-    {"sessionteam", 0, F_STRING, ClientScr_SetSessionTeam, ClientScr_GetSessionTeam},
-    {"sessionstate", 0, F_STRING, ClientScr_SetSessionState, ClientScr_GetSessionState},
-    {"maxhealth", 0x2FE8, F_INT, ClientScr_SetMaxHealth, 0},
-    {"score", 0x2F78, F_INT, ClientScr_SetScore, 0},
-    {"deaths", 0x2F7C, F_INT, 0, 0},
-    {"statusicon", 0, F_STRING, ClientScr_SetStatusIcon, ClientScr_GetStatusIcon},
-    {"headicon", 0, F_STRING, ClientScr_SetHeadIcon, ClientScr_GetHeadIcon},
-    {"headiconteam", 0, F_STRING, ClientScr_SetHeadIconTeam, ClientScr_GetHeadIconTeam},
-    {"kills", 0x2F80, F_INT, 0, 0},
-    {"assists", 0x2F84, F_INT, 0, 0},
-    {"hasradar", 0x3178, F_INT, 0, 0},
-    {"spectatorclient", 0x2F68, F_INT, ClientScr_SetSpectatorClient, ClientScr_GetSpectatorClient},
-    {"killcamentity", 0x2F6C, F_INT, ClientScr_SetKillCamEntity, 0},
-    {"archivetime", 0x2F74, F_FLOAT, ClientScr_SetArchiveTime, ClientScr_GetArchiveTime},
-    {"psoffsettime", 0x3070, F_INT, ClientScr_SetPSOffsetTime, ClientScr_GetPSOffsetTime},
-    {"pers", 0x2F88, F_MODEL, ClientScr_ReadOnly, 0},
-    {0, 0, 0, 0, 0}
-};
-*/
-
-// Original: 0x082202A0
-// This array used in patch inside cod4loader routines.
-// If you have decompiled one of mentioned there functions, make sure
-//   to remove patch.
-// Appears to have max 16384 elements.
-
-/*
-ent_field_t ent_fields[] = {
-    {"classname", 0x170, F_STRING, Scr_ReadOnlyField},
-    {"origin", 0x13C, F_VECTOR, Scr_SetOrigin},
-    {"model", 0x168, F_MODEL, Scr_ReadOnlyField},
-    {"spawnflags", 0x17C, F_INT, Scr_ReadOnlyField},
-    {"target", 0x172, F_STRING, 0},
-    {"targetname", 0x174, F_STRING, 0},
-    {"count", 0x1AC, F_INT, 0},
-    {"health", 0x1A0, F_INT, Scr_SetHealth},
-    {"dmg", 0x1A8, F_INT, 0},
-    {"angles", 0x148, F_VECTOR, Scr_SetAngles},
-    {0, 0, 0, 0}
-};
-*/
 
 scr_const_t scr_const;
-/*
-ent_field_t* __internalGet_ent_fields()
-{
-    return ent_fields;
-}
-*/
+
 void Scr_AddStockFunctions()
 {
 	Scr_AddFunction("createprintchannel", GScr_CreatePrintChannel, 1 );
@@ -818,76 +756,7 @@ void GScr_LoadGameTypeScript(void)
     /**************** Additional *************************/
     script_CallBacks_new[SCR_CB_SCRIPTCOMMAND] = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_ScriptCommand", 0);
 }
-/*
-void GScr_AddFieldsForEntity()
-{
-    int i = 0;
-    ent_field_t *iterator = ent_fields;
-    while(iterator->name)
-    {
-        Scr_AddClassField(0, iterator->name, i);
-        ++i;
-        ++iterator;
-    }
-}
 
-void GScr_AddFieldsForClient()
-{
-    int i = 0;
-    client_fields_t *iterator = client_fields;
-    while(iterator->name)
-    {
-        Scr_AddClassField(0, iterator->name, 0xc000 + i);
-        ++i;
-        ++iterator;
-    }
-}
-
-*/
-
-
-/*
-
-Bug in array - don't use!
-
-void Scr_GetClientField(gclient_t* gcl, int num)
-{
-
-    client_fields_t *field = (client_fields_t *)0x8215780;
-
-    field = &field[num];
-//    client_fields_t *field = &clientField[num];
-
-
-    if(field->getfun)
-
-        field->getfun(gcl, field);
-
-    else
-
-        Scr_GetGenericField(gcl, field->type, field->val1);
-
-}
-
-
-void Scr_SetClientField(gclient_t* gcl, int num)
-{
-    client_fields_t *field = (client_fields_t *)0x8215780;
-
-    field = &field[num];
-
-//    client_fields_t *field = &clientField[num];
-
-    if(field->setfun)
-
-        field->setfun(gcl, field);
-
-    else
-
-        Scr_SetGenericField(gcl, field->type, field->val1);
-
-}
-*/
 
 void __cdecl GScr_LoadScripts(void)
 {
@@ -1593,18 +1462,6 @@ void __cdecl Scr_AddConstString(unsigned int value)
   gScrVmPub.top->u.stringValue = value;
   SL_AddRefToString(value);
 }
-
-
-/*
-float *__cdecl Scr_AllocVector(const float *v)
-{
-  float *avec;
-
-  avec = Scr_AllocVectorInternal( );
-  VectorCopy(v, avec);
-  return avec;
-}
-*/
 
 void __cdecl Scr_AddVector(const float *value)
 {

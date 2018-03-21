@@ -133,8 +133,10 @@
 	extern tolower
 	extern error_message
 	extern g_script_error_level
+	extern g_script_error
+	extern _setjmp
 	extern Scr_ErrorJumpOut
-	extern Scr_ErrorJumpOutTarget
+	extern VM_GetJmpBuf
 	extern Scr_DecNumScriptThreads
 	extern Scr_IncNumScriptThreads
 
@@ -191,7 +193,6 @@
 	global Scr_GetConstLowercaseString
 	global g_EndPos
 	global gScrVmPub
-
 
 SECTION .text
 
@@ -1231,7 +1232,10 @@ VM_ExecuteInternal:
 	mov dword [ebp-0x2c], 0x0
 	mov dword [ebp-0x30], 0x0
 VM_ExecuteInternal_1760:
-	call Scr_ErrorJumpOutTarget
+	call VM_GetJmpBuf
+	mov dword [esp+4], 0
+	mov [esp], eax
+	call _setjmp
 	test eax, eax
 	jnz VM_ExecuteInternal_10
 VM_ExecuteInternal_810:
@@ -8546,7 +8550,6 @@ Scr_GetConstLowercaseString_100:
 	cmovz eax, edx
 	mov [gScrVmPub+0x16], al
 	jmp Scr_GetConstLowercaseString_160
-
 
 
 ;Initialized global or static variables of scr_vm:

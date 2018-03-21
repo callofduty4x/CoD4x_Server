@@ -8,6 +8,7 @@ int g_script_error_level;
 jmp_buf g_script_error[33];
 char error_message[1024];
 
+
 VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
 {
   VariableValue result;
@@ -59,13 +60,13 @@ VariableValue __cdecl GetEntityFieldValueEx(unsigned int classnum, int entnum, i
 #endif
 
 
-
 void __cdecl Scr_ClearErrorMessage( )
 {
   gScrVarPub.error_message = 0;
   gScrVmGlob.dialog_error_message = 0;
   gScrVarPub.error_index = 0;
 }
+
 
 void __cdecl Scr_VM_Init( )
 {
@@ -137,14 +138,20 @@ void Scr_ErrorJumpOut()
     assert ( (unsigned int)g_script_error_level < ARRAY_COUNT( g_script_error ));
     longjmp(g_script_error[g_script_error_level], -1);
 }
-
+/*
 int Scr_ErrorJumpOutTarget()
 {
     return setjmp(g_script_error[g_script_error_level]);
+}*/
+
+jmp_buf* VM_GetJmpBuf()
+{
+    return &g_script_error[g_script_error_level];
 }
 
+
 void __cdecl Scr_ErrorInternal( )
-{
+{   
   assert(gScrVarPub.error_message != NULL);
 
   if ( !gScrVarPub.evaluate && !gScrCompilePub.script_loading )
@@ -180,3 +187,4 @@ void __cdecl Scr_Error(const char *error)
 
 
 };
+

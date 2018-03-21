@@ -181,9 +181,7 @@ unsigned int __cdecl GScr_AllocString(const char *s)
 {
   unsigned int stringVal;
 
-//  SL_SetScriptCompile(true);
   stringVal = Scr_AllocString(s);
-//  SL_SetScriptCompile(false);
   
   return stringVal;
 
