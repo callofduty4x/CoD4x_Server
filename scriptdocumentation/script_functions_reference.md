@@ -344,8 +344,8 @@ Returns the given time as readable string. `Realtime` is the time in seconds you
 - `0` — time will be displayed in UTC timezone
 - `1` — time will be displayed in Local timezone
  
-`Format` is a string to describe how the time will be displayed. It accepts formats from c++ function `strftime()`.
-For it's reference please head to: http://cplusplus.com/reference/ctime/strftime.
+`Format` is a string to describe how the time will be displayed. It accepts formats from c function `strftime()`.
+For it's reference please head to: https://www.tutorialspoint.com/c_standard_library/c_function_strftime.htm.
 
 Usage exmaple: `date = TimeToString(1468578161, 1, "%c");`
 
