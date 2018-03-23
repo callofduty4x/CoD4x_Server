@@ -2,6 +2,9 @@
 #include "scr_vm.h"
 #include "g_shared.h"
 #include "cscr_stringlist.h"
+#include "stringed_interface.h"
+
+#include <ctype.h>
 
 
 struct gameTypeScript_t
@@ -51,6 +54,31 @@ struct scr_data_t
 
 extern struct scr_data_t g_scr_data;
 
+
+
+void __cdecl Scr_LocalizationError(int iParm, const char *pszErrorMessage)
+{
+  Scr_ParamError(iParm, pszErrorMessage);
+}
+
+void __cdecl Scr_ValidateLocalizedStringRef(int parmIndex, const char *token, int tokenLen)
+{
+  int charIter;
+
+  assert( token != 0 );
+  assert( tokenLen >= 0 );
+
+  if ( tokenLen > 1 )
+  {
+    for ( charIter = 0; charIter < tokenLen; ++charIter )
+    {
+      if ( !isalnum(token[charIter]) && token[charIter] != '_' )
+      {
+        Scr_ParamError(parmIndex, va("Illegal localized string reference: %s must contain only alpha-numeric characters and underscores", token));
+      }
+    }
+  }
+}
 
 
 extern "C"{
@@ -175,6 +203,107 @@ int __cdecl GScr_GetHeadIconIndex(const char *pszIcon)
   return 0;
 }
 
+
+void __cdecl Scr_ConstructMessageString(int firstParmIndex, int lastParmIndex, const char *errorContext, char *string, unsigned int stringLimit)
+{
+  unsigned int charIndex;
+  unsigned int tokenLen;
+  int type;
+  gentity_t *ent;
+  int parmIndex;
+  const char *token;
+  unsigned int stringLen;
+
+  stringLen = 0;
+  for ( parmIndex = firstParmIndex; parmIndex <= lastParmIndex; ++parmIndex )
+  {
+    type = Scr_GetType(parmIndex);
+    if ( type == VAR_ISTRING )
+    {
+      token = Scr_GetIString(parmIndex);
+      tokenLen = strlen(token);
+      Scr_ValidateLocalizedStringRef(parmIndex, token, tokenLen);
+      if ( stringLen + tokenLen + 1 >= stringLimit )
+      {
+        Scr_ParamError(parmIndex, va("%s is too long. Max length is %i\n", errorContext, stringLimit));
+      }
+      if ( stringLen )
+      {
+        string[stringLen++] = 20;
+      }
+    }
+    else if ( type != VAR_POINTER || Scr_GetPointerType(parmIndex) != VAR_ENTITY )
+    {
+      token = Scr_GetString(parmIndex);
+      tokenLen = strlen(token);
+      for ( charIndex = 0; charIndex < tokenLen; ++charIndex )
+      {
+        if ( token[charIndex] == 20 || token[charIndex] == 21 || token[charIndex] == 22 )
+        {
+          Scr_ParamError(parmIndex, va("bad escape character (%i) present in string", token[charIndex]));
+        }
+        if ( isalpha(token[charIndex]) )
+        {
+          if ( loc_warnings->boolean )
+          {
+            if ( loc_warningsAsErrors->boolean )
+            {
+              Scr_LocalizationError(parmIndex, va("non-localized %s strings are not allowed to have letters in them: \"%s\"", errorContext, token));
+            }
+            else
+            {
+              Com_PrintWarning(CON_CHANNEL_PLAYERWEAP,
+                "WARNING: Non-localized %s string is not allowed to have letters in it. Must be changed over to a localized string: \"%s\"\n",
+                errorContext, token);
+            }
+          }
+          break;
+        }
+      }
+      if ( stringLen + tokenLen + 1 >= stringLimit )
+      {
+        Scr_ParamError(parmIndex, va("%s is too long. Max length is %i\n", errorContext, stringLimit));
+      }
+      if ( tokenLen )
+      {
+        string[stringLen++] = 21;
+      }
+    }
+    else
+    {
+      ent = Scr_GetEntity(parmIndex);
+      if ( !ent->client )
+      {
+        Scr_ParamError(parmIndex, "Entity is not a player");
+      }
+      token = va("%s^7", CS_DisplayName(&ent->client->sess.cs, 3));
+      tokenLen = strlen(token);
+      if ( stringLen + tokenLen + 1 >= stringLimit )
+      {
+        Scr_ParamError(parmIndex, va("%s is too long. Max length is %i\n", errorContext, stringLimit));
+      }
+      if ( tokenLen )
+      {
+        string[stringLen++] = 21;
+      }
+    }
+    for ( charIndex = 0; charIndex < tokenLen; ++charIndex )
+    {
+      if ( token[charIndex] != 20 && token[charIndex] != 21 && token[charIndex] != 22 )
+      {
+        string[stringLen] = token[charIndex];
+      }
+      else
+      {
+        string[stringLen] = '.';
+      }
+      ++stringLen;
+    }
+  }
+  string[stringLen] = 0;
+}
+
+
 };
 
 unsigned int __cdecl GScr_AllocString(const char *s)
@@ -186,3 +315,4 @@ unsigned int __cdecl GScr_AllocString(const char *s)
   return stringVal;
 
 }
+

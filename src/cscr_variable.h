@@ -50,6 +50,7 @@ struct __align(4) scrVarDebugPub_t
 };
 
 extern struct scrVarDebugPub_t *gScrVarDebugPub;
+extern const char *var_typename[];
 
 
 #ifdef __cplusplus

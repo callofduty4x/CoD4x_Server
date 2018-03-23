@@ -1,7 +1,9 @@
 #include "scr_vm.h"
 #include "cscr_variable.h"
 #include "cscr_animtree.h"
+#include "cscr_stringlist.h"
 #include "sys_main.h"
+#include "cmd.h"
 #include <setjmp.h>
 
 int g_script_error_level;
@@ -184,6 +186,350 @@ void __cdecl Scr_Error(const char *error)
   gScrVmPub.terminal_error = false;
   Scr_ErrorInternal( );
 }
+
+void __cdecl Scr_TerminalError(const char *error)
+{
+
+  Scr_DumpScriptThreads( );
+  Scr_DumpScriptVariablesDefault( );
+  gScrVmPub.terminal_error = true;
+  Scr_SetErrorMessage(error);
+
+  Scr_ErrorInternal( );
+}
+
+
+void __cdecl Scr_ClearOutParams()
+{
+  while ( gScrVmPub.outparamcount )
+  {
+    RemoveRefToValue(gScrVmPub.top->type, gScrVmPub.top->u);
+    --gScrVmPub.top;
+    --gScrVmPub.outparamcount;
+  }
+}
+
+void __cdecl IncInParam()
+{
+
+  assert(((gScrVmPub.top >= gScrVmGlob.eval_stack - 1) && (gScrVmPub.top <= gScrVmGlob.eval_stack)) || ((gScrVmPub.top >= gScrVmPub.stack) && (gScrVmPub.top <= gScrVmPub.maxstack)));
+
+  Scr_ClearOutParams( );
+
+  if ( gScrVmPub.top == gScrVmPub.maxstack )
+  {
+    Sys_Error("Internal script stack overflow");
+  }
+  ++gScrVmPub.top;
+  ++gScrVmPub.inparamcount;
+  assert(((gScrVmPub.top >= gScrVmGlob.eval_stack) && (gScrVmPub.top <= gScrVmGlob.eval_stack + 1)) || ((gScrVmPub.top >= gScrVmPub.stack) && (gScrVmPub.top <= gScrVmPub.maxstack)));
+
+}
+
+
+void __cdecl Scr_AddString(const char *value)
+{
+  assert(value != NULL);
+
+  IncInParam( );
+  gScrVmPub.top->type = VAR_STRING;
+  gScrVmPub.top->u.stringValue = SL_GetString(value, 0);
+}
+
+void __cdecl Scr_AddInt(int value)
+{
+  IncInParam( );
+  gScrVmPub.top->type = VAR_INTEGER;
+  gScrVmPub.top->u.intValue = value;
+}
+
+void __cdecl Scr_AddBool(bool value)
+{
+  IncInParam( );
+  gScrVmPub.top->type = VAR_INTEGER;
+  gScrVmPub.top->u.intValue = value;
+}
+
+void __cdecl Scr_AddFloat(float value)
+{
+  IncInParam();
+  gScrVmPub.top->type = VAR_FLOAT;
+  gScrVmPub.top->u.floatValue = value;
+}
+
+void __cdecl Scr_AddAnim(struct scr_anim_s value)
+{
+  IncInParam();
+  gScrVmPub.top->type = VAR_ANIMATION;
+  gScrVmPub.top->u.codePosValue = value.linkPointer;
+}
+
+void __cdecl Scr_AddUndefined( )
+{
+  IncInParam();
+  gScrVmPub.top->type = VAR_UNDEFINED;
+}
+
+void __cdecl Scr_AddObject(unsigned int id)
+{
+  assert(id != 0);
+  assert(Scr_GetObjectType( id ) != VAR_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_NOTIFY_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_TIME_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_CHILD_THREAD);
+  assert(Scr_GetObjectType( id ) != VAR_DEAD_THREAD);
+
+  IncInParam();
+  gScrVmPub.top->type = VAR_POINTER;
+  gScrVmPub.top->u.intValue = id;
+  AddRefToObject(id);
+}
+
+void __cdecl Scr_AddEntityNum(int entnum, unsigned int classnum)
+{
+  unsigned int entId;
+  const char *varUsagePos;
+
+  varUsagePos = gScrVarPub.varUsagePos;
+  if ( !gScrVarPub.varUsagePos )
+  {
+    gScrVarPub.varUsagePos = "<script entity variable>";
+  }
+  entId = Scr_GetEntityId(entnum, classnum);
+  Scr_AddObject(entId);
+  gScrVarPub.varUsagePos = varUsagePos;
+}
+
+void __cdecl Scr_AddStruct( )
+{
+  unsigned int id;
+
+  id = AllocObject();
+  Scr_AddObject(id );
+  RemoveRefToObject(id);
+}
+
+void __cdecl Scr_AddIString(const char *value)
+{
+  assert(value != NULL);
+
+  IncInParam( );
+  gScrVmPub.top->type = VAR_ISTRING;
+  gScrVmPub.top->u.stringValue = SL_GetString(value, 0);
+}
+
+void __cdecl Scr_AddConstString(unsigned int value)
+{
+  assert(value != 0);
+
+  IncInParam( );
+  gScrVmPub.top->type = VAR_STRING;
+  gScrVmPub.top->u.stringValue = value;
+  SL_AddRefToString(value);
+}
+
+void __cdecl Scr_AddVector(const float *value)
+{
+  IncInParam();
+  gScrVmPub.top->type = VAR_VECTOR;
+  gScrVmPub.top->u.vectorValue = Scr_AllocVector(value);
+}
+
+void __cdecl Scr_MakeArray( )
+{
+  IncInParam( );
+  gScrVmPub.top->type = VAR_POINTER;
+  gScrVmPub.top->u.intValue = Scr_AllocArray( );
+}
+
+void __cdecl Scr_AddArray( )
+{
+  unsigned int arraySize;
+  unsigned int id;
+  const char *varUsagePos;
+
+  varUsagePos = gScrVarPub.varUsagePos;
+  if ( !gScrVarPub.varUsagePos )
+  {
+    gScrVarPub.varUsagePos = "<script array variable>";
+  }
+
+  assert(gScrVmPub.inparamcount);
+
+  --gScrVmPub.top;
+  --gScrVmPub.inparamcount;
+
+  assert(gScrVmPub.top->type == VAR_POINTER);
+
+  arraySize = GetArraySize( gScrVmPub.top->u.stringValue);
+  id = GetNewArrayVariable( gScrVmPub.top->u.stringValue, arraySize);
+  SetNewVariableValue( id, gScrVmPub.top + 1);
+  gScrVarPub.varUsagePos = varUsagePos;
+}
+
+void __cdecl Scr_AddArrayStringIndexed(unsigned int stringValue)
+{
+  unsigned int id;
+
+  assert(gScrVmPub.inparamcount != 0);
+
+  --gScrVmPub.top;
+  --gScrVmPub.inparamcount;
+  assert(gScrVmPub.top->type == VAR_POINTER);
+
+  id = GetNewVariable( gScrVmPub.top->u.stringValue, stringValue);
+  SetNewVariableValue( id, gScrVmPub.top + 1);
+}
+
+
+unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index)
+{
+  if ( index >= gScrVmPub.outparamcount || gScrVmPub.top[-index].type )
+  {
+    return Scr_GetConstString(index);
+  }
+  return 0;
+}
+
+//Use with Scr_Exce(Ent)Thread
+int Scr_GetFunc(unsigned int paramnum)
+{
+    VariableValue *var;
+
+    if (paramnum >= gScrVmPub.outparamcount)
+    {
+        Scr_Error(va("parameter %d does not exist", paramnum + 1));
+        return -1;
+    }
+
+    var = &gScrVmPub.top[-paramnum];
+    if (var->type == VAR_FUNCTION)
+    {
+        int vmRomAddress = var->u.codePosValue - gScrVarPub.programBuffer;
+        return vmRomAddress;
+    }
+    gScrVarPub.error_index = paramnum + 1;
+    Scr_Error(va("type %s is not an function", var_typename[var->type]));
+    return -1;
+}
+
+
+int Scr_GetInt(unsigned int paramnum)
+{
+    VariableValue *var;
+
+    if (paramnum >= gScrVmPub.outparamcount)
+    {
+        Scr_Error(va("parameter %d does not exist", paramnum + 1));
+        return 0;
+    }
+
+    var = &gScrVmPub.top[-paramnum];
+    if (var->type == 6)
+    {
+        return var->u.intValue;
+    }
+    gScrVarPub.error_index = paramnum + 1;
+    Scr_Error(va("type %s is not an int", var_typename[var->type]));
+    return 0;
+}
+
+unsigned int Scr_GetObject(unsigned int paramnum)
+{
+    VariableValue *var;
+
+    if (paramnum >= gScrVmPub.outparamcount)
+    {
+        Scr_Error(va("parameter %d does not exist", paramnum + 1));
+        return 0;
+    }
+
+    var = &gScrVmPub.top[-paramnum];
+    if (var->type == 1)
+    {
+        return var->u.pointerValue;
+    }
+    gScrVarPub.error_index = paramnum + 1;
+    Scr_Error(va("type %s is not an object", var_typename[var->type]));
+    return 0;
+}
+
+qboolean Scr_ScriptRuntimecheckInfiniteLoop()
+{
+    int now = Sys_Milliseconds();
+
+    if (now - gScrVmGlob.starttime > 6000)
+    {
+        Cbuf_AddText("wait 50;map_rotate\n");
+        return qtrue;
+        //CPU is just busy
+    }
+    return qfalse;
+}
+
+
+
+void Scr_NotifyInternal(int varNum, int constString, int numArgs)
+{
+    VariableValue *curArg;
+    int z;
+    int ctype;
+
+    Scr_ClearOutParams();
+    curArg = gScrVmPub.top - numArgs;
+    z = gScrVmPub.inparamcount - numArgs;
+    if (varNum)
+    {
+        ctype = curArg->type;
+        curArg->type = 8;
+        gScrVmPub.inparamcount = 0;
+        VM_Notify(varNum, constString, gScrVmPub.top);
+        curArg->type = ctype;
+    }
+    while (gScrVmPub.top != curArg)
+    {
+        RemoveRefToValue(gScrVmPub.top->type, gScrVmPub.top->u);
+        --gScrVmPub.top;
+    }
+    gScrVmPub.inparamcount = z;
+}
+
+void Scr_NotifyLevel(int constString, unsigned int numArgs)
+{
+    Scr_NotifyInternal(gScrVarPub.levelId, constString, numArgs);
+}
+
+void Scr_NotifyNum(int entityNum, unsigned int entType, unsigned int constString, unsigned int numArgs)
+{
+    int entVarNum;
+
+    entVarNum = FindEntityId(entityNum, entType);
+
+    Scr_NotifyInternal(entVarNum, constString, numArgs);
+}
+
+void Scr_Notify(gentity_t *ent, unsigned short constString, unsigned int numArgs)
+{
+    Scr_NotifyNum(ent->s.number, 0, constString, numArgs);
+}
+
+void Scr_InitSystem()
+{
+    gScrVarPub.timeArrayId = AllocObject();
+    gScrVarPub.pauseArrayId = Scr_AllocArray();
+    gScrVarPub.levelId = AllocObject();
+    gScrVarPub.animId = AllocObject();
+    gScrVarPub.time = 0;
+    g_script_error_level = -1;
+}
+
+
+void Scr_UpdateDebugger()
+{
+    
+}
+
+
 
 
 };

@@ -1,6 +1,9 @@
 #include "scr_vm.h"
 #include "g_public_mp.h"
 
+scr_const_t scr_const;
+
+
 extern "C" void __cdecl GScr_LoadConsts()
 {
   scr_const.emptystring = GScr_AllocString("");
@@ -193,3 +196,5 @@ extern "C" void __cdecl GScr_LoadConsts()
   scr_const.back_right = GScr_AllocString("back_right");
   scr_const.tag_gunner_pov = GScr_AllocString("tag_gunner_pov");
 }
+
+

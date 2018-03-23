@@ -44,6 +44,34 @@
 #define FIRST_DEAD_OBJECT VAR_DEAD_THREAD
 
 
+const char *var_typename[] =
+{
+        "undefined",
+        "object",
+        "string",
+        "localized string",
+        "vector",
+        "float",
+        "int",
+        "codepos",
+        "precodepos",
+        "function",
+        "stack",
+        "animation",
+        "developer codepos",
+        "include codepos",
+        "thread",
+        "thread",
+        "thread",
+        "thread",
+        "struct",
+        "removed entity",
+        "entity",
+        "array",
+        "removed thread"
+};
+
+
 struct __attribute__((aligned (64))) scrVarGlob_t
 {
   VariableValueInternal variableList[98304];
