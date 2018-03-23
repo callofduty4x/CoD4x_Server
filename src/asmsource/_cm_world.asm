@@ -35,8 +35,8 @@
 	global CM_PointSightTraceToEntities
 	global CM_PointTraceStaticModelsComplete
 
-
 SECTION .text
+
 
 
 ;CM_PointSightTraceToEntities_r(sightpointtrace_t*, unsigned short, float const*, float const*)

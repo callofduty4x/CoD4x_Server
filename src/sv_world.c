@@ -228,12 +228,14 @@ void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
   struct worldSector_s *node;
   gentity_t *gcheck;
   int en;
+  unsigned int nextNodeIndex;
+  int gnum;
 
   for (node = &cm_world.sectors[nodeIndex] ;node->contents.contentsEntities & ap->contentmask; node = &cm_world.sectors[nodeIndex])
   {
-		for(en = node->contents.entities; en > 0; en = sv.svEntities[en].nextEntityInWorldSector)
+		for(en = node->contents.entities; en > 0; en = sv.svEntities[gnum].nextEntityInWorldSector)
 		{
-      		int gnum = en -1;
+    	gnum = en -1;
 			gcheck = SV_GentityNum(gnum);
 			if ( gcheck->r.contents & ap->contentmask )
 			{
@@ -252,15 +254,15 @@ void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
 				}
 				ap->list[ap->count] = gnum;
 				++ap->count;
-	      	}
-        }
+	    }
+    }
       
-	    if ( node->tree.dist >= ap->maxs[node->tree.axis] )
+	  if ( node->tree.dist >= ap->maxs[node->tree.axis] )
 		{
 			nodeIndex = node->tree.child[1];
 			if ( node->tree.dist <= ap->mins[node->tree.axis] )
 			{
-			return;
+  			return;
 			}
 		}
 		else if ( node->tree.dist <= ap->mins[node->tree.axis] )
@@ -269,17 +271,20 @@ void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
 		}
 		else
 		{
-			nodeIndex = node->tree.child[1];
+			nextNodeIndex = node->tree.child[1];
 			CM_AreaEntities_r(node->tree.child[0], ap);
-		}
+      nodeIndex = nextNodeIndex;
     }
+  }
 }
 
 
 int CM_AreaEntities(const float *mins, const float *maxs, int *entityList, int maxcount, int contentmask)
 {
-  areaParms_t ae; // [sp+8h] [bp-20h]@1
+  areaParms_t ae;
 
+  PIXBeginNamedEvent(-1, "CM_AreaEntities");
+  
   ae.mins = mins;
   ae.maxs = maxs;
   ae.list = entityList;

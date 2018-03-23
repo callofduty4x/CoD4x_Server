@@ -21,6 +21,7 @@
 	extern Scr_PlayerDamage
 	extern BG_GetViewmodelWeaponIndex
 	extern CM_AreaEntities
+	extern CM_AreaEntities_ASM
 	extern LogAccuracyHit
 	extern AngleVectors
 	extern Com_PrintWarning
@@ -54,7 +55,6 @@
 	extern colorWhite
 	extern DObjPhysicsGetBounds
 	extern modNames
-	extern RadiusDamagePrint
 
 ;Exports of g_combat_mp:
 	global g_HitLocConstNames
@@ -634,11 +634,6 @@ G_RadiusDamage_30:
 	mov [esp], esi
 	call CM_AreaEntities
 	mov [ebp-0x1054], eax
-	mov [esp], eax
-	lea eax, [ebp-0x1048]
-	mov [esp+4], eax
-	call RadiusDamagePrint
-	mov eax, [ebp-0x1054]
 	test eax, eax
 	jle G_RadiusDamage_10
 	mov dword [ebp-0x1050], 0x0
