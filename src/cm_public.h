@@ -24,7 +24,12 @@
 #ifndef __CM_PUBLIC_H__
 #define __CM_PUBLIC_H__
 
-/* 760 */
+#ifndef CLIPHANDLE_DEFINED
+#define CLIPHANDLE_DEFINED
+typedef unsigned int clipHandle_t;
+#endif
+
+
 typedef enum
 {
   TRACE_HITTYPE_NONE = 0x0,

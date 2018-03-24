@@ -2,7 +2,7 @@
 #include "sys_thread.h"
 #include "cvar.h"
 
-
+/*
 #ifndef _WIN32
 //#define COMPILER_GCC
 #define DX_TO_GL_ABSTRACTION
@@ -11,6 +11,12 @@
 #else
 #include <d3d9.h>
 #endif
+*/
+
+
+typedef int IDirect3DVertexBuffer9;
+typedef int IDirect3DIndexBuffer9;
+
 
 #include "qcommon_io.h"
 #include "xassets.h"
@@ -37,6 +43,7 @@ void R_ReflectionProbeRegisterDvars()
 {
 	r_reflectionProbeGenerate = Cvar_RegisterBool("r_reflectionProbeGenerate", qfalse, CVAR_ROM, "Probe reflections");
 }
+
 
 /*
 void XAnimFreeList(){};

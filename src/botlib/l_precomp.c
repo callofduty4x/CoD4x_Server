@@ -58,7 +58,7 @@ typedef enum {qfalse, qtrue}    qboolean;
 #endif //SCREWUP
 
 #ifdef BOTLIB
-#include "../q_shared.h"
+#include "game_inc.h"
 #include "../game/botlib.h"
 #include "be_interface.h"
 #include "l_memory.h"

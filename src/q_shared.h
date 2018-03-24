@@ -752,10 +752,14 @@ typedef enum team_s{
 	TEAM_NUM_TEAMS
 }team_t;
 
+#ifndef CLIPHANDLE_DEFINED
+#define CLIPHANDLE_DEFINED
+typedef unsigned int clipHandle_t;
+#endif
+
 #include "q_platform.h"
 #include "q_math.h"
 #include "sys_cod4defs.h"
-#include "entity.h"
 
 #endif
 

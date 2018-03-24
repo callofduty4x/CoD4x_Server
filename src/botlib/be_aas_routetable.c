@@ -34,7 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 // Tab Size:		3
 //===========================================================================
 
-#include "../q_shared.h"
+#include "game_inc.h"
 #include "l_memory.h"
 #include "l_script.h"
 #include "l_precomp.h"

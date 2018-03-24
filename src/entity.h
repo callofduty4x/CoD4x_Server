@@ -32,10 +32,6 @@
 
 
 
-#ifndef CLIPHANDLE_DEFINED
-#define CLIPHANDLE_DEFINED
-typedef unsigned int clipHandle_t;
-#endif
 
 typedef enum {
 	TR_STATIONARY,

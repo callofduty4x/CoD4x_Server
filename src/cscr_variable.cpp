@@ -393,7 +393,7 @@ void __cdecl FreeChildValue(unsigned int parentId, unsigned int id)
   --gScrVarPub.numScriptValues;
   if ( gScrVarDebugPub )
   {
-    assert(gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN + id]);
+    //assert(gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN + id]);
     gScrVarDebugPub->varUsage[id + VARIABLELIST_CHILD_BEGIN] = 0;
   }
   assert((entryValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
@@ -518,7 +518,7 @@ void __cdecl FreeVariable(unsigned int id)
   --gScrVarPub.numScriptObjects;
   if ( gScrVarDebugPub )
   {
-    assert(gScrVarDebugPub->varUsage[VARIABLELIST_PARENT_BEGIN + id]);
+    //assert(gScrVarDebugPub->varUsage[VARIABLELIST_PARENT_BEGIN + id]);
     gScrVarDebugPub->varUsage[id + VARIABLELIST_PARENT_BEGIN] = 0;
   }
   entryValue = &gScrVarGlob.variableList[id + VARIABLELIST_PARENT_BEGIN];
@@ -626,7 +626,7 @@ unsigned int __cdecl AllocVariable()
 
   if ( gScrVarDebugPub )
   {
-    assert(!gScrVarDebugPub->varUsage[VARIABLELIST_PARENT_BEGIN + entry->hash.id]);
+    //assert(!gScrVarDebugPub->varUsage[VARIABLELIST_PARENT_BEGIN + entry->hash.id]);
     gScrVarDebugPub->varUsage[entry->hash.id + VARIABLELIST_PARENT_BEGIN] = gScrVarPub.varUsagePos;
   }
   return entry->hash.id;
@@ -869,7 +869,7 @@ unsigned int __regparm3 GetNewVariableIndexInternal3(unsigned int parentId, unsi
   //assert(gScrVarPub.varUsagePos);
   if ( gScrVarDebugPub )
   {
-    assert(!gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN + entry->hash.id]);
+    //assert(!gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN + entry->hash.id]);
     gScrVarDebugPub->varUsage[entry->hash.id + VARIABLELIST_CHILD_BEGIN] = gScrVarPub.varUsagePos;
   }
   parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
@@ -1388,7 +1388,7 @@ unsigned int __cdecl AllocValue( )
 
   if ( gScrVarDebugPub )
   {
-    assert(!gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN+ entry->hash.id]);
+    //assert(!gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN+ entry->hash.id]);
     gScrVarDebugPub->varUsage[entry->hash.id + VARIABLELIST_CHILD_BEGIN] = gScrVarPub.varUsagePos;
   }
   entryValue->w.status = VAR_STAT_EXTERNAL;
@@ -1799,7 +1799,7 @@ void __cdecl FreeValue(unsigned int id)
   --gScrVarPub.numScriptValues;
   if ( gScrVarDebugPub )
   {
-    assert(gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN + id]);
+    //assert(gScrVarDebugPub->varUsage[VARIABLELIST_CHILD_BEGIN + id]);
     gScrVarDebugPub->varUsage[id + VARIABLELIST_CHILD_BEGIN] = 0;
   }
   assert((entryValue->w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);

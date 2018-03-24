@@ -36,7 +36,7 @@ If you have questions concerning this license or the applicable additional terms
  *
  *****************************************************************************/
 
-#include "../q_shared.h"
+#include "game_inc.h"
 #include "l_log.h"
 #include "l_memory.h"
 #include "l_script.h"
