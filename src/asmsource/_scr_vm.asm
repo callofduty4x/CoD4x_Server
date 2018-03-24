@@ -139,6 +139,7 @@
 	extern VM_GetJmpBuf
 	extern Scr_DecNumScriptThreads
 	extern Scr_IncNumScriptThreads
+	extern Scr_ScriptRuntimecheckInfiniteLoop
 
 ;Exports of scr_vm:
 	global gScrVmGlob
@@ -3174,10 +3175,9 @@ VM_ExecuteInternal_3850:
 	mov ecx, eax
 	jmp VM_ExecuteInternal_40
 VM_ExecuteInternal_3860:
-	call Sys_Milliseconds
-	sub eax, [gScrVmGlob+0x18]
-	cmp eax, 0x9c3
-	jg VM_ExecuteInternal_1370
+	call Scr_ScriptRuntimecheckInfiniteLoop
+	test al, al
+	jnz VM_ExecuteInternal_1370
 	mov eax, [gFs]
 	lea edx, [eax+0x2]
 	movzx eax, word [eax]

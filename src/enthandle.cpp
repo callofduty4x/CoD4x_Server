@@ -85,6 +85,9 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
   }
   return infoIndex;
 }
+
+
+
         bool __cdecl EntHandle::isDefined()
         {
             assertx((!number || g_entities[number - 1].r.inuse), "(number - 1) = %i", number - 1);

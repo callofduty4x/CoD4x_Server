@@ -25,9 +25,11 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
+#include "g_public_mp.h"
 #include "q_math.h"
 #include "q_shared.h"
 #include "game/surfaceflags.h"
+
 
 
 #ifndef CLIPHANDLE_DEFINED
@@ -285,6 +287,74 @@ typedef struct {
 	int		eventTime;
 } entityShared_t;
 
+
+struct trigger_ent_t
+{
+  int threshold;
+  int accumulate;
+  int timestamp;
+  int singleUserEntIndex;
+  byte requireLookAt;
+};
+
+struct item_ent_t
+{
+  int ammoCount;
+  int clipAmmoCount;
+  int index;
+};
+
+
+struct mover_ent_t
+{
+  float decelTime;
+  float aDecelTime;
+  float speed;
+  float aSpeed;
+  float midTime;
+  float aMidTime;
+  vec3_t pos1;
+  vec3_t pos2;
+  vec3_t pos3;
+  vec3_t apos1;
+  vec3_t apos2;
+  vec3_t apos3;
+};
+
+struct corpse_ent_t
+{
+  int deathAnimStartTime;
+};
+
+enum MissileStage
+{
+  MISSILESTAGE_SOFTLAUNCH = 0x0,
+  MISSILESTAGE_ASCENT = 0x1,
+  MISSILESTAGE_DESCENT = 0x2,
+};
+
+enum MissileFlightMode
+{
+  MISSILEFLIGHTMODE_TOP = 0x0,
+  MISSILEFLIGHTMODE_DIRECT = 0x1,
+};
+
+
+struct missile_ent_t
+{
+  float time;
+  int timeOfBirth;
+  float travelDist;
+  vec3_t surfaceNormal;
+  enum team_s team;
+  vec3_t curvature;
+  int targetEntNum;
+  vec3_t targetOffset;
+  enum MissileStage stage;
+  enum MissileFlightMode flightMode;
+};
+
+
 typedef struct gentity_s gentity_t;
 
 struct gentity_s {
@@ -319,14 +389,37 @@ struct gentity_s {
 	int flags;
 	int eventTime;
 
-	char pad_188[24]; /* 0x188 */
-	int health; /* 0x1A0 */
+	int freeAfterEvent;
+	int unlinkAfterEvent;
+	int clipmask;
+	int processedFrame;
+	struct gentity_s *parent;
+	int nextthink;
+
+  	int health; /* 0x1A0 */
 	int maxHealth;
 	int damage;
 	int count;
-	char unknown[104];
+
+	struct gentity_s *chain;
+
+	//	char unknown[104];
+	union{
+		struct item_ent_t item[2];
+		struct trigger_ent_t trigger;
+		struct mover_ent_t mover;
+		struct corpse_ent_t corpse;
+		struct missile_ent_t missile;
+	};
+
+	EntHandle missileTargetEnt;
+
 	struct tagInfo_s* tagInfo;
-	char unknown2[88];
+	struct gentity_s *tagChildren;
+	uint16_t attachModelNames[19];
+	uint16_t attachTagNames[19];
+	int useCount;
+	struct gentity_s *nextFree;
 }; /* Size: 0x274 */
 
 extern gentity_t g_entities[];
@@ -349,13 +442,6 @@ extern gentity_t g_entities[];
 #define ENTITYNUM_MAX_NORMAL    ( MAX_GENTITIES - 2 )
 
 #define	MAX_ENT_CLUSTERS	16
-
-
-struct _EntHandle
-{
-  uint16_t number;
-  uint16_t infoIndex;
-};
 
 
 gentity_t* G_Spawn();

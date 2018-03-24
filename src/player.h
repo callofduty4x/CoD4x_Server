@@ -25,6 +25,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include "g_public_mp.h"
 #include "q_shared.h"
 #include "q_math.h"
 #include "entity.h"
@@ -260,13 +261,7 @@ typedef struct {
 	int location;
 } playerTeamState_t;
 
-typedef enum {
-	TEAM_FREE,
-	TEAM_RED,
-	TEAM_BLUE,
-	TEAM_SPECTATOR,
-	TEAM_NUM_TEAMS
-}team_t;
+
 
 // the auto following clients don't follow a specific client
 // number, but instead follow the first two active players
@@ -461,7 +456,7 @@ struct gclient_s {
 	float sniperRifleMuzzleYaw;		//Free member
 	int PCSpecialPickedUpCount;		//Free member
 
-	struct _EntHandle useHoldEntity; //0x30f8
+	EntHandle useHoldEntity; //0x30f8
 
 	int useHoldTime;             //0x30fc time the player switched teams
 

@@ -494,6 +494,7 @@ extern cvar_t *jump_slowdownEnable;
 extern cvar_t *g_antilag;
 extern cvar_t *g_cheats;
 extern cvar_t *g_oldVoting;
+extern cvar_t *g_inactivity;
 
 extern qboolean onExitLevelExecuted;
 
@@ -536,6 +537,15 @@ void __cdecl Com_SetWeaponInfoMemory(int source);
 void __cdecl ClearRegisteredItems();
 void __cdecl BG_ClearWeaponDef();
 int __cdecl G_GetWeaponIndexForName(const char *name);
+void __cdecl G_EntUnlink(struct gentity_s *ent);
+void __cdecl G_SetClientContents(struct gentity_s *pEnt);
+void __cdecl ClientEndFrame(struct gentity_s *ent);
+void __cdecl ClientThink_real(struct gentity_s *ent, struct usercmd_s *ucmd);
+void __cdecl BG_PlayerStateToEntityState(struct playerState_s *ps, struct entityState_s *s, int snap, char handler);
+int G_GetClientArchiveTime(int clientindex);
+void G_SetClientArchiveTime(int clindex, int time);
+void G_ClientStopUsingTurret(gentity_t* ent);
+
 #ifdef __cplusplus
 }
 #endif

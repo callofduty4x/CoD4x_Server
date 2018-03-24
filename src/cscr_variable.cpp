@@ -3396,7 +3396,7 @@ void __cdecl Scr_DumpScriptVariablesDefault( )
 
 static void __cdecl Scr_ResetScrVarDebugPub( )
 {
-  //gScrVarDebugPub = &gScrVarDebugPubBuff;
+  gScrVarDebugPub = &gScrVarDebugPubBuff;
 }
 
 static void __cdecl Scr_InitVariableRange(unsigned int begin, unsigned int end)

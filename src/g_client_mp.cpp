@@ -1,0 +1,174 @@
+#include "g_public_mp.h"
+#include "q_shared.h"
+#include "qcommon.h"
+#include "g_shared.h"
+#include "scr_vm.h"
+#include "server_public.h"
+#include "server.h"
+#include "plugin_handler.h"
+
+void __cdecl ClientClearFields(gclient_s *client)
+{
+    client->useHoldEntity.setEnt(0);
+}
+
+void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, const float *spawn_angles)
+{
+  gclient_s *client;
+  vec3_t clean_spawn_angles;
+  int index;
+  int iFlags;
+  int savedSpawnCount;
+  int savedServerTime;
+  clientSession_t savedSess;
+
+  index = ent - g_entities;
+  client = ent->client;
+
+  assertx((unsigned int)index < level.maxclients ,"index doesn't index level.maxclients\n\t%i not in [0, %i)", index, level.maxclients);
+  assert(ent->client == &level.clients[index]);
+  assert(ent->r.inuse);
+
+  if ( client->ps.otherFlags & 4 )
+  {
+    if ( client->ps.eFlags & 0x300 )
+    {
+      assert(client->ps.clientNum == ent->s.number);
+      assert(client->ps.viewlocked_entNum != ENTITYNUM_NONE);
+
+      assert(level.gentities[client->ps.viewlocked_entNum].r.ownerNum == index);
+      if(level.gentities[client->ps.viewlocked_entNum].client)
+      {
+        G_ClientStopUsingTurret(&level.gentities[client->ps.viewlocked_entNum]);
+      }
+    }
+  }
+  G_EntUnlink(ent);
+  if ( ent->r.linked )
+  {
+    SV_UnlinkEntity(ent);
+  }
+  ent->s.groundEntityNum = 1023;
+  Scr_SetString(&ent->classname, scr_const.player);
+  ent->clipmask = 0x2810011;
+  ent->r.svFlags |= 1u;
+  ent->takedamage = 0;
+  G_SetClientContents(ent);
+  ent->handler = 11;
+  /*
+  Blackops
+  ent->handler = 14;
+  */
+  ent->flags = 4096;
+  
+  VectorCopy(playerMins, ent->r.mins);
+  VectorCopy(playerMaxs, ent->r.maxs);
+
+  iFlags = client->ps.eFlags & 0x100002;
+  
+  memcpy(&savedSess, &client->sess, sizeof(savedSess));
+  
+  savedSpawnCount = client->ps.stats[4];
+  savedServerTime = client->lastServerTime;
+  
+  ClientClearFields(client);
+
+  memset(client, 0, sizeof(gclient_s));
+  
+  memcpy(&client->sess, &savedSess, sizeof(client->sess));
+  
+  client->lastServerTime = savedServerTime;
+  client->spectatorClient = -1;
+  client->ps.stats[4] = savedSpawnCount + 1;
+  client->ps.stats[2] = client->sess.maxHealth;
+  client->ps.eFlags = iFlags;
+  client->sess.cs.clientIndex = index;
+  client->sess.cs.attachedVehEntNum = 1023;
+  client->ps.clientNum = index;
+  client->ps.viewlocked_entNum = 1023;
+
+  assertx((unsigned int)(client - level.clients) < level.maxclients ,"client - level.clients doesn't index level.maxclients\n\t%i not in [0, %i)", client - level.clients, level.maxclients);
+
+  SV_GetUsercmd(client - level.clients, &client->sess.cmd);
+  client->ps.eFlags ^= 2u;
+  client->ps.viewHeightTarget = 60;
+  client->ps.viewHeightCurrent = 60.0;
+  client->ps.viewHeightLerpTime = 0;
+  client->ps.dofNearBlur = 6.0;
+  client->ps.dofFarBlur = 1.8;
+  client->ps.spreadOverride = 0;
+  client->ps.spreadOverrideState = 0;
+  client->ps.throwBackGrenadeTimeLeft = 0;
+  client->ps.throwBackGrenadeOwner = 1023;
+/*
+    BLACKOPS
+  for ( i = 0; i < 15; ++i )
+  {
+    BG_PlayerSetWeaponQuickReload(&client->ps, client->ps.heldWeapons[i].weapon, 1);
+  }
+  if ( BG_GetWeaponDef(client->ps.weapon)->bDualWield )
+  {
+    PM_StartWeaponAnim(&client->ps, 1, 1);
+  }
+  PM_StartWeaponAnim(&client->ps, 1, 0);
+*/
+  G_SetOrigin(ent, spawn_origin);
+  
+  VectorCopy(spawn_origin, client->ps.origin);
+
+  client->ps.pm_flags |= 0x400u;
+
+  clean_spawn_angles[0] = spawn_angles[0];
+  clean_spawn_angles[1] = spawn_angles[1];
+  clean_spawn_angles[2] = 0.0;
+  
+  SetClientViewAngle(ent, clean_spawn_angles);
+  client->inactivityTime = level.time + 1000 * g_inactivity->integer;
+  
+  client->buttons = client->sess.cmd.buttons;
+  level.clientIsSpawning = 1;
+  client->lastSpawnTime = level.time;
+  client->sess.cmd.serverTime = level.time;
+  client->ps.commandTime = level.time - 100;
+  ClientEndFrame(ent);
+  ClientThink_real(ent, &client->sess.cmd);
+  level.clientIsSpawning = 0;
+  BG_PlayerStateToEntityState(&client->ps, &ent->s, 1, 1);
+
+
+
+  //CoD4X garbage
+
+	client_t *cl = &svs.clients[ent->s.number];
+	cl->lastFollowedClient = -1; //remove the last followed player number if we self have respawned
+
+	if(svs.time - cl->enteredWorldTime > 800){
+	//First spawn after map reloading
+		PHandler_Event(PLUGINS_ONCLIENTSPAWN, ent);
+
+		if(!cl->firstSpawn){
+			//First spawn after connecting to server
+			G_ShowMotd( ent->s.number );
+		}
+		cl->firstSpawn = qtrue;
+	}
+
+	int i;
+	gentity_t* followers;
+
+	for(i = 0, followers = g_entities; i < g_maxclients->integer; i++, followers++)//let refollow all spectors me who have prior followed me
+	{
+		if(svs.clients[i].lastFollowedClient == ent->s.number)
+		{
+			Cmd_FollowClient_f(followers, ent->s.number);
+		}
+	}
+
+	if(ent->client->sess.sessionState == SESS_STATE_PLAYING)
+	{
+		cl->undercover = qfalse;
+	}
+
+
+}
+

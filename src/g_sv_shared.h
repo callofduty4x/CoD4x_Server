@@ -35,7 +35,6 @@ void Init_CallVote(void);
 __cdecl void Cmd_CallVote_f( gentity_t *ent );
 void G_ChatRedirect(char* msg, int client, int mode);
 void G_AddChatRedirect(void (*rd_dest)( const char *, int, int));
-qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);
 __cdecl void StopFollowingOnDeath( gentity_t *ent );
 __cdecl void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText );
 __cdecl void ExitLevel( void );
@@ -48,7 +47,13 @@ void __cdecl GScr_LoadScripts(void);
 extern cvar_t* g_speed;
 
 void __cdecl SV_GameSendServerCommand(int clientnum, int svscmd_type, const char *text);
-void G_ShowMotd(unsigned int clnum);
+
+#ifdef __cplusplus
+extern "C" void G_ShowMotd(unsigned int clnum);
+extern "C" qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);
+
+#endif
+
 void QDECL G_LogPrintf( const char *fmt, ... );
 void G_PrintRedirect(char* msg, int len);
 void G_PrintAddRedirect(void (*rd_dest)( const char *, int));
@@ -83,8 +88,5 @@ void G_AddRule(const char* newtext);
 void G_AddAdvert(const char* newtext);
 void G_InitMotd();
 void G_ClearAllMessages();
-int G_GetClientArchiveTime(int clientindex);
-void G_SetClientArchiveTime(int clindex, int time);
-void G_ClientStopUsingTurret(gentity_t* ent);
 void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
 #endif

@@ -744,6 +744,14 @@ typedef enum
 
 #define UNREACHABLE_CODE 0
 
+typedef enum team_s{
+	TEAM_FREE,
+	TEAM_RED,
+	TEAM_BLUE,
+	TEAM_SPECTATOR,
+	TEAM_NUM_TEAMS
+}team_t;
+
 #include "q_platform.h"
 #include "q_math.h"
 #include "sys_cod4defs.h"

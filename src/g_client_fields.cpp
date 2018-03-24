@@ -292,12 +292,26 @@ void __cdecl ClientScr_SetSpectatorClient(gclient_s *pSelf, client_fields_s *pFi
   assert(pSelf != NULL);
 
   iNewSpectatorClient = Scr_GetInt(0);
-  if ( iNewSpectatorClient < -1 || iNewSpectatorClient >= 32 )
+  if ( iNewSpectatorClient < -1 || iNewSpectatorClient >= MAX_CLIENTS )
   {
     Scr_Error("spectatorclient can only be set to -1, or a valid client number");
   }
   pSelf->sess.forceSpectatorClient = iNewSpectatorClient;
 }
+
+void __cdecl ClientScr_GetSpectatorClient(gclient_s *pSelf, client_fields_s *pField)
+{
+  assert(pSelf != NULL);
+
+  int iSpectatorClient = pSelf->spectatorClient;
+
+  if ( iSpectatorClient < 0 || iSpectatorClient >= MAX_CLIENTS )
+  {
+    iSpectatorClient = -1;
+  }
+  Scr_AddInt(iSpectatorClient);
+}
+
 
 void __cdecl ClientScr_SetPSOffsetTime(gclient_s *pSelf, client_fields_s *pField)
 {
@@ -389,7 +403,7 @@ static client_fields_s fields[] =
   { "score", CSF(sess.score), F_INT, &ClientScr_SetScore, NULL },
   { "sessionstate", 0, F_STRING, &ClientScr_SetSessionState, &ClientScr_GetSessionState },
   { "statusicon", 0, F_STRING, &ClientScr_SetStatusIcon, &ClientScr_GetStatusIcon },
-  { "spectatorclient", CSF(spectatorClient), F_INT, &ClientScr_SetSpectatorClient, NULL },
+  { "spectatorclient", 0, F_INT, &ClientScr_SetSpectatorClient, ClientScr_GetSpectatorClient },
   { "archivetime", CSF(sess.archiveTime), F_FLOAT, &ClientScr_SetArchiveTime, &ClientScr_GetArchiveTime },
   { "psoffsettime", CSF(sess.psOffsetTime), F_INT, &ClientScr_SetPSOffsetTime, &ClientScr_GetPSOffsetTime },
   { "pers", CSF(sess.scriptPersId), F_OBJECT, &ClientScr_ReadOnly, NULL },

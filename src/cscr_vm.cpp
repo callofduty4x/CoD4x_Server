@@ -454,17 +454,16 @@ unsigned int Scr_GetObject(unsigned int paramnum)
     return 0;
 }
 
-qboolean Scr_ScriptRuntimecheckInfiniteLoop()
+bool Scr_ScriptRuntimecheckInfiniteLoop()
 {
     int now = Sys_Milliseconds();
 
     if (now - gScrVmGlob.starttime > 6000)
     {
         Cbuf_AddText("wait 50;map_rotate\n");
-        return qtrue;
-        //CPU is just busy
+        return true;
     }
-    return qfalse;
+    return false;
 }
 
 
