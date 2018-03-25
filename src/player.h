@@ -447,8 +447,8 @@ struct gclient_s {
     
 	int currentAimSpreadScale;		//0x30dc
 
-	struct gentity_s *persistantPowerup;	//Free member
-	int portalID;					//Free member
+	int jumpHeight; //Used for per player jump height -- bad place here. This should be part of playerState_t
+	int lastFollowedClient;
 
 	int dropWeaponTime;				//JPW NERVE last time a weapon was dropped
 

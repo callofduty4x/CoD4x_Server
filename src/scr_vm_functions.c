@@ -615,9 +615,7 @@ void PlayerCmd_SetGravity(scr_entref_t arg)
         return;
     }
 
-    Pmove_ExtendedTurnOn();
-
-    svs.clients[entityNum].gravity = gravity;
+    gentity->client->ps.gravity = gravity;
     SV_SendServerCommandNoLoss(&svs.clients[entityNum], va("v g_gravity \"%d\"", gravity));
 }
 
@@ -704,7 +702,6 @@ void PlayerCmd_SetJumpHeight(scr_entref_t arg)
     gentity_t *gentity;
     int entityNum = 0;
     int height;
-    mvabuf;
 
     if (arg.classnum)
     {
@@ -737,11 +734,8 @@ void PlayerCmd_SetJumpHeight(scr_entref_t arg)
         Scr_Error("setjumpheight range is between 1 and 50000\n");
         return;
     }
-
-    Pmove_ExtendedTurnOn();
-
-    svs.clients[entityNum].jumpHeight = height;
-    SV_SendServerCommandNoLoss(&svs.clients[entityNum], va("v jump_height \"%d\"", height));
+    gentity->client->jumpHeight = height;
+    SV_GameSendServerCommand(entityNum, 1, va("v jump_height \"%d\"", height));
 }
 
 /*
@@ -787,15 +781,13 @@ void PlayerCmd_SetMoveSpeed(scr_entref_t arg)
 
     speed = Scr_GetInt(0);
 
-    if (speed < 0 || speed > 50000)
+    if (speed <= 0 || speed > 50000)
     {
         Scr_Error("setmovespeed range is between 0 and 50000\n");
         return;
     }
-
-    Pmove_ExtendedTurnOn();
-
-    svs.clients[entityNum].playerMoveSpeed = speed;
+    gentity->client->sess.moveSpeedScaleMultiplier = speed / g_speed->integer;
+    Com_PrintWarning(CON_CHANNEL_SCRIPT, "PlayerCmd_SetMoveSpeed() is deprecated! Please use setmovespeedscale(speed / 190)\n");
 }
 
 /*

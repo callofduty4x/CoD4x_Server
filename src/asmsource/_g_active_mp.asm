@@ -50,6 +50,7 @@
 	extern SV_UnlinkEntity
 	extern Cmd_FollowCycle_f
 	extern StopFollowing
+	extern StopFollowingOnDeath
 	extern CM_AreaEntities
 	extern ExpandBoundsToWidth
 	extern SV_EntityContact
@@ -437,12 +438,7 @@ ClientEndFrame:
 	mov edx, [ebp+0x8]
 	mov byte [edx+0x16e], 0xb
 	mov dword [eax+0x89c], 0x0
-	mov eax, g_gravity
-	mov eax, [eax]
-	cvttss2si eax, [eax+0xc]
 	mov ecx, [ebp-0x70]
-	mov [ecx+0x58], eax
-	mov eax, [edx+0x15c]
 	mov eax, [eax+0x2ffc]
 	mov [ecx+0x5dc], eax
 	mov eax, [ecx+0x3080]
@@ -2742,7 +2738,7 @@ SpectatorClientEndFrame_140:
 SpectatorClientEndFrame_80:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call StopFollowing
+	call StopFollowingOnDeath
 	mov ecx, [esi+0x14]
 	mov edx, ecx
 	and edx, 0xffffffef

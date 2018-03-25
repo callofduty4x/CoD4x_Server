@@ -87,6 +87,7 @@ void *__cdecl Hunk_AllocInternal(int size);
 #define L_Malloc malloc
 #define L_Free free
 
+void __cdecl Hunk_FreeDebugMem(void *mem);
 
 
 #ifdef ZONE_DEBUG

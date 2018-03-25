@@ -3479,11 +3479,7 @@ void SV_PreLevelLoad(){
 
     NV_LoadConfig();
 
-    G_InitMotd();
-
     for ( client = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, client++ ) {
-
-        G_DestroyAdsForPlayer(client); //Remove hud message ads
 
         // send the new gamestate to all connected clients
         if ( client->state < CS_ACTIVE ) {
@@ -3499,7 +3495,6 @@ void SV_PreLevelLoad(){
             continue;
         }
     }
-    Pmove_ExtendedResetState();
 
     HL2Rcon_EventLevelStart();
 
@@ -3632,8 +3627,6 @@ void SV_MapRestart( qboolean fastRestart ){
 
     // connect and begin all the clients
     for ( client = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, client++ ) {
-
-        G_DestroyAdsForPlayer(client); //Remove hud message ads
 
         if ( client->state < CS_CONNECTED ) {
             continue;
@@ -4103,8 +4096,6 @@ happen before SV_Frame is called
 __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     unsigned int frameUsec;
     char mapname[MAX_QPATH];
-    client_t* client;
-    int i;
     static qboolean underattack = qfalse;
     mvabuf;
 
@@ -4306,58 +4297,45 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     }
     SetAnimCheck(com_animCheck->boolean);
 
-        if( svs.time > svs.frameNextSecond){	//This runs each second
-        svs.frameNextSecond = svs.time+1000;
+    if( svs.time > svs.frameNextSecond){	//This runs each second
+            svs.frameNextSecond = svs.time+1000;
 
-        // the menu kills the server with this cvar
-        if ( sv_killserver->boolean ) {
-        SV_Shutdown( "Server was killed.\n" );
-        Cvar_SetBool( sv_killserver, qfalse );
-        return qtrue;
-        }
+            // the menu kills the server with this cvar
+            if ( sv_killserver->boolean ) {
+                SV_Shutdown( "Server was killed.\n" );
+                Cvar_SetBool( sv_killserver, qfalse );
+                return qtrue;
+            }
 
-        if(svs.time > svs.frameNextTenSeconds){	//This runs each 10 seconds
-        svs.frameNextTenSeconds = svs.time+10000;
+            if(svs.time > svs.frameNextTenSeconds){	//This runs each 10 seconds
+            svs.frameNextTenSeconds = svs.time+10000;
 
-        int d, h, m;
-        int uptime;
+            int d, h, m;
+            int uptime;
 
-        uptime = Sys_Seconds();
-        d = uptime/(60*60*24);
-//		uptime = uptime%(60*60*24);
-        h = uptime/(60*60);
-//		uptime = uptime%(60*60);
-        m = uptime/60;
+            uptime = Sys_Seconds();
+            d = uptime/(60*60*24);
+    //		uptime = uptime%(60*60*24);
+            h = uptime/(60*60);
+    //		uptime = uptime%(60*60);
+            m = uptime/60;
 
-        if(h < 4)
-            Cvar_SetString(sv_uptime, va("%i minutes", m));
-        else if(d < 3)
-            Cvar_SetString(sv_uptime, va("%i hours", h));
-        else
-            Cvar_SetString(sv_uptime, va("%i days", d));
+            if(h < 4)
+                Cvar_SetString(sv_uptime, va("%i minutes", m));
+            else if(d < 3)
+                Cvar_SetString(sv_uptime, va("%i hours", h));
+            else
+                Cvar_SetString(sv_uptime, va("%i days", d));
 
-        serverStatus_Write();
+            serverStatus_Write();
 
             PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
-/*		if(svs.time > svs.nextsecret){
-            svs.nextsecret = svs.time+80000;
-            Com_RandomBytes((byte*)&svs.secret,sizeof(int));
-        }*/
+    /*		if(svs.time > svs.nextsecret){
+                svs.nextsecret = svs.time+80000;
+                Com_RandomBytes((byte*)&svs.secret,sizeof(int));
+            }*/
 
-        if(level.time > level.startTime + 20000){
-            for(client = svs.clients, i = 0; i < sv_maxclients->integer; i++, client++){
-                if(client->state != CS_ACTIVE)
-                    continue;
-
-                if(client->netchan.remoteAddress.type == NA_BOT)
-                    continue;
-
-                G_PrintRuleForPlayer(client);
-                G_PrintAdvertForPlayer(client);
-            }
-        }
-
-        }
+    }
     }
 
     return qtrue;

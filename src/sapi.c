@@ -592,7 +592,126 @@ void QDECL SApi_DPrintf( const char *fmt, ...) {
 }
 
 
+void SAPI_DropClientNoNotify(unsigned int drop, const char *reason)
+{
+	if(drop >= sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_DropClientNoNotify(&svs.clients[drop], reason);
+}
 
+void SAPI_DropClient(unsigned int drop, const char *reason)
+{
+	if(drop >= sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_DropClient(&svs.clients[drop], reason);
+}
+
+void SAPI_SendReliableServerCommand(unsigned int client, msg_t *msg)
+{
+	if(client >= sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_SendReliableServerCommand(&svs.clients[client], msg);
+}
+
+void SAPI_AddBanForClient(unsigned int cl, int bantime, const char* banreason)
+{
+	if(cl >= sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_AddBanForClient(&svs.clients[cl], bantime, banreason);
+}
+
+void SAPI_ScreenshotArrived(unsigned int cl, const char* filename)
+{
+	if(cl >= sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_ScreenshotArrived(&svs.clients[cl], filename);
+}
+void SAPI_ModuleArrived(unsigned int cl, const char* filename, long checksum)
+{
+	if(cl >= sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_ModuleArrived(&svs.clients[cl], filename, checksum);
+}
+
+void SAPI_GetEmuClientData(unsigned int clnum, struct clientEmu_t *emu)
+{
+	if(clnum >= sv_maxclients->integer)
+	{
+		memset(emu, 0, sizeof(struct clientEmu_t));
+		return;
+	}
+	client_t* cl = &svs.clients[clnum];
+	
+	emu->challenge = cl->challenge;
+	emu->playerid = cl->playerid;
+	emu->steamid = cl->steamid;
+	emu->clanid = cl->clanid;
+	emu->steamidPending = cl->steamidPending;
+	emu->clanidPending = cl->clanidPending;
+	emu->steamstatus = cl->steamstatus;
+	emu->name = cl->name;
+	emu->maxnamelen = sizeof(cl->name);
+	emu->isBot = cl->netchan.remoteAddress.type == NA_BOT;
+	emu->inLevel = cl->state == CS_ACTIVE;
+	emu->isConnected = cl->state >= CS_CONNECTED;
+	emu->isMember = cl->isMember;
+	emu->hasValidPassword = cl->hasValidPassword;
+	emu->clantag = cl->clantag;
+	emu->maxclantaglen = sizeof(cl->clantag);
+	emu->legacy_pbguid = cl->legacy_pbguid;
+	emu->maxguidlen = sizeof(cl->legacy_pbguid);
+
+}
+
+void SAPI_SetEmuClientData(unsigned int clnum, struct clientEmu_t *emu)
+{
+	if(clnum >= sv_maxclients->integer)
+	{
+		return;
+	}
+	client_t* cl = &svs.clients[clnum];
+
+	cl->challenge = emu->challenge;
+	cl->playerid = emu->playerid;
+	cl->steamid = emu->steamid;
+	cl->clanid = emu->clanid;
+	cl->steamidPending = emu->steamidPending;
+	cl->clanidPending = emu->clanidPending;
+	cl->steamstatus = emu->steamstatus;
+	cl->isMember = emu->isMember;
+	cl->hasValidPassword = emu->hasValidPassword;
+
+}
+
+void SAPI_GetGameClientData(unsigned int clnum, struct gclientEmu_t *emu)
+{
+	if(clnum >= sv_maxclients->integer)
+	{
+		memset(emu, 0, sizeof(struct gclientEmu_t));
+		return;
+	}
+	struct gentity_s* ent = SV_GentityNum(clnum);
+	if(ent->client == NULL)
+	{
+		memset(emu, 0, sizeof(struct gclientEmu_t));
+		return;	
+	}
+	emu->buttons = ent->client->buttons;
+	VectorCopy(ent->client->ps.origin, emu->origin);
+	VectorCopy(ent->client->ps.viewangles, emu->viewangles);
+}
 
 
 exports_t sapi_imp;
@@ -613,12 +732,12 @@ void SV_InitSApi()
 	exports.Com_Error = Com_Error;
 	exports.Cvar_VariableIntegerValue = Cvar_VariableIntegerValue;
 	exports.Cvar_VariableStringBuffer = Cvar_VariableStringBuffer;
-	exports.SV_DropClientNoNotify = SV_DropClientNoNotify;
-	exports.SV_DropClient = SV_DropClient;
-	exports.SV_SendReliableServerCommand = SV_SendReliableServerCommand;
-	exports.SV_AddBanForClient = SV_AddBanForClient;
-	exports.SV_ScreenshotArrived = SV_ScreenshotArrived;
-	exports.SV_ModuleArrived = SV_ModuleArrived;
+	exports.SAPI_DropClientNoNotify = SAPI_DropClientNoNotify;
+	exports.SAPI_DropClient = SAPI_DropClient;
+	exports.SAPI_SendReliableServerCommand = SAPI_SendReliableServerCommand;
+	exports.SAPI_AddBanForClient = SAPI_AddBanForClient;
+	exports.SAPI_ScreenshotArrived = SAPI_ScreenshotArrived;
+	exports.SAPI_ModuleArrived = SAPI_ModuleArrived;
 	exports.FS_SV_HomeWriteFile = FS_SV_HomeWriteFile;
 	exports.Sys_Milliseconds = Sys_Milliseconds;
 	exports.pkcs_5_alg2 = pkcs_5_alg2_200sleep;
@@ -627,6 +746,9 @@ void SV_InitSApi()
 	exports.Cvar_RegisterString = Cvar_RegisterString;
 	exports.Cvar_RegisterBool = Cvar_RegisterBool;
 	exports.Cvar_SetString = Cvar_SetString;
+	exports.SetClientData = SAPI_SetEmuClientData;
+	exports.GetClientData = SAPI_GetEmuClientData;
+	exports.GetGameClientData = SAPI_GetGameClientData;
 
 	sv_usesteam64id = Cvar_RegisterBool("sv_usesteam64id", qtrue, CVAR_ARCHIVE, "Display and log Steam64 id in most commands");
 
@@ -660,17 +782,17 @@ void SV_RunSApiFrame()
 void SV_NotifySApiDisconnect(client_t* drop)
 {
 	if(sapi_imp.NotifyDisconnect)
-		sapi_imp.NotifyDisconnect(drop);
+		sapi_imp.NotifyDisconnect(drop - svs.clients);
 }
+
 
 
 int SV_ConnectSApi(client_t* client)
 {
 	if(sapi_imp.Connect)
 	{
-		return sapi_imp.Connect(client);
+		return sapi_imp.Connect(client - svs.clients);
 	}
-	//Q_strncpyz(client->shortname, client->name, sizeof(client->shortname));
 	return 1;
 }
 
@@ -679,7 +801,7 @@ void SV_SApiData(client_t* cl, msg_t* msg)
 {
 	if(sapi_imp.Data)
 	{
-		sapi_imp.Data(cl, msg);
+		sapi_imp.Data(cl - svs.clients, msg);
 		if(cl->state > CS_CONNECTED)
 		{
 			ClientUserinfoChanged( cl - svs.clients );
@@ -698,27 +820,27 @@ void SV_SApiShutdown()
 void SV_SApiReadSS( client_t* cl, msg_t* msg )
 {
 	if(sapi_imp.ReadSS)
-		sapi_imp.ReadSS( cl, msg );
+		sapi_imp.ReadSS( cl - svs.clients, msg );
 }
 
 void SV_SApiTakeSS(client_t* cl, const char* savename)
 {
 	if(sapi_imp.TakeSS)
-		sapi_imp.TakeSS( cl, savename );
+		sapi_imp.TakeSS( cl - svs.clients, savename );
 }
 
 void SV_SApiSendModuleRequest(client_t* cl)
 {
     if(sapi_imp.SendModuleRequest)
 	{
-        sapi_imp.SendModuleRequest(cl);
+        sapi_imp.SendModuleRequest(cl - svs.clients);
 	}
 }
 
 void SV_SApiProcessModules( client_t* cl, msg_t* msg )
 {
     if(sapi_imp.ProcessModules)
-        sapi_imp.ProcessModules(cl, msg);
+        sapi_imp.ProcessModules(cl - svs.clients, msg);
 }
 
 qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer))
@@ -728,4 +850,6 @@ qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uin
 
 	return qfalse;
 }
+
+
 

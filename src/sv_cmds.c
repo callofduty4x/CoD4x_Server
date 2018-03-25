@@ -724,14 +724,16 @@ static void SV_Status_f( void ) {
     			j++;
     		} while(j < l);
 
-        Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", cl->shortname);
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"%.15s", cl->name);
 
     		// TTimo adding a ^7 to reset the color
     		// NOTE: colored names in status breaks the padding (WONTFIX)
     		Com_Printf(CON_CHANNEL_DONT_FILTER,"^7");
-    		l = 16 - Q_PrintStrlen(cl->shortname);
-    		j = 0;
-
+    		l = 16 - Q_PrintStrlen(cl->name);
+    		if(l < 1){
+				l = 1;
+			}
+			j = 0;
     		do
     		{
     			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
@@ -1596,58 +1598,6 @@ static void SV_Record_f( void ) {
 
 
 
-static void SV_ShowRules_f(){
-
-    unsigned int clnum;
-    client_t* cl;
-    int i;
-
-    if(Cmd_GetInvokerPower() > 20){
-
-	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
-	{
-		if(cl->state == CS_ACTIVE){
-	            cl->msgType = 1;
-	            cl->currentAd = 0;
-		}
-	}
-
-    }else{
-        clnum = Cmd_GetInvokerClnum();
-        if(clnum < 64){
-            cl = &svs.clients[clnum];
-            cl->msgType = 1;
-            cl->currentAd = 0;
-        }
-    }
-}
-
-static void SV_AddRule_f(){
-
-    if ( Cmd_Argc() != 2) {
-        Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: addRuleMsg <\"text here in quotes\">\n" );
-        return;
-    }
-
-    G_AddRule( Cmd_Argv(1));
-}
-
-static void SV_AddAdvert_f(){
-
-    if ( Cmd_Argc() != 2) {
-        Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: addAdvertMsg <\"text here in quotes\">\n" );
-        return;
-    }
-    G_AddAdvert( Cmd_Argv(1));
-}
-
-static void SV_ClearAllMessages_f(){
-
-    G_ClearAllMessages();
-
-}
-
-
 /*
 ===========
 SV_Serverinfo_f
@@ -2359,9 +2309,6 @@ void SV_AddOperatorCommands()
 	Cmd_AddPCommand ("serverinfo", SV_Serverinfo_f, 1);
 	Cmd_AddPCommand ("map", SV_Map_f, 60);
 	Cmd_AddCommand ("map_rotate", SV_MapRotate_f);
-	Cmd_AddCommand ("addAdvertMsg", SV_AddAdvert_f);
-	Cmd_AddCommand ("addRuleMsg", SV_AddRule_f);
-	Cmd_AddCommand ("clearAllMsg", SV_ClearAllMessages_f);
 	Cmd_AddCommand ("writenvcfg", NV_WriteConfig);
 	Cmd_AddCommand ("status", SV_Status_f);
 	Cmd_AddCommand ("addCommand", Cmd_AddTranslatedCommand_f);
@@ -2375,7 +2322,6 @@ void SV_AddOperatorCommands()
 	Cmd_AddCommand ("setPerk", SV_SetPerk_f);
 	Cmd_AddPCommand ("map_restart", SV_MapRestart_f, 50);
 	Cmd_AddCommand ("fast_restart", SV_FastRestart_f);
-	Cmd_AddPCommand ("rules", SV_ShowRules_f, 1);
 	Cmd_AddCommand ("heartbeat", SV_Heartbeat_f);
 	Cmd_AddPCommand ("kick", Cmd_KickPlayer_f, 35);
 	Cmd_AddCommand ("clientkick", Cmd_KickPlayer_f);
