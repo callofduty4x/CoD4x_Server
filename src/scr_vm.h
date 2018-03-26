@@ -770,7 +770,8 @@ qboolean Scr_PlayerSay(gentity_t*, int mode, const char* text);
 qboolean Scr_ScriptCommand(int clientnum, const char* cmd, const char* args);
 
 void GScr_LoadGameTypeScript(void);
-unsigned int Scr_LoadScript(const char* scriptname, PrecacheEntry *precache, int iarg_02);
+unsigned int Scr_LoadScriptInternal(const char* scriptname, PrecacheEntry *precache, int precachecount);
+unsigned int Scr_LoadScript(const char* scriptname);
 qboolean Scr_ExecuteMasterResponse(char* s);
 void Scr_AddStockFunctions();
 void Scr_AddStockMethods();

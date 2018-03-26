@@ -657,12 +657,25 @@ P_P_F void Plugin_BanClient( unsigned int clientnum, int duration, int invokerid
 
 P_P_F gentity_t* Plugin_GetGentityForEntityNum(int entnum)
 {
+    if((unsigned int)entnum > MAX_GENTITIES)
+    {
+        return NULL;
+    }
     return &g_entities[entnum];
 }
 
 P_P_F client_t* Plugin_GetClientForClientNum(int clientnum)
 {
+    if((unsigned int)clientnum > sv_maxclients->integer)
+    {
+        return NULL;
+    }
     return &svs.clients[clientnum];
+}
+
+P_P_F int Plugin_GetClientNumForClientNum(client_t* client)
+{
+    return client - svs.clients;
 }
 
 P_P_F int Plugin_FS_SV_WriteFile( const char *qpath, const void *buffer, int size)

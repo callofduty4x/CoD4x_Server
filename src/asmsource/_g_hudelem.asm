@@ -2779,7 +2779,7 @@ _cstring_null:		db 0
 _cstring_usage_hudelem_se:		db "USAGE: <hudelem> setShader(",22h,"materialname",22h,"[, optional_width, optional_height]);",0
 _cstring_height_i__0:		db "height %i < 0",0
 _cstring_width_i__0:		db "width %i < 0",0
-_cstring_settargetent_cal:		db "SetTargetEnt() called on a non-broadcasting entity, may not show in client snapshots.",0
+_cstring_settargetent_cal:		db "SetTargetEnt() called on a non-broadcasting entity, may not show in client snapshots.",0ah,0
 _cstring_settimer:		db "setTimer",0
 _cstring_settimerup:		db "setTimerUp",0
 _cstring_settenthstimer:		db "setTenthsTimer",0
