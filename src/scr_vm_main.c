@@ -613,7 +613,7 @@ int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qbool
     int fh;
     PrecacheEntry load_buffer;
 
-    if (!Scr_LoadScript(scriptName, &load_buffer, 0))
+    if (!Scr_LoadScript(scriptName))
     {
         if (mandatory)
         {
@@ -763,7 +763,7 @@ void __cdecl GScr_LoadScripts(void)
 
 #define MAX_CALLSCRIPTSTACKDEPTH 200
 
-__cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *precache, int iarg_02)
+__cdecl unsigned int Scr_LoadScriptInternal(const char *scriptname, PrecacheEntry *precache, int entriesCount)
 {
 
     sval_u result;
@@ -856,7 +856,7 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
 
         object = SGetObjectA(GetVariable(gScrCompilePub.scriptsPos, handle));
 
-        ScriptCompile(result, object, variable, precache, iarg_02);
+        ScriptCompile(result, object, variable, precache, entriesCount);
 
         gScrParserPub.scriptfilename = oldFilename;
         gScrParserPub.sourceBuf = oldSourceBuf;
@@ -867,6 +867,16 @@ __cdecl unsigned int Scr_LoadScript(const char *scriptname, PrecacheEntry *preca
         return object;
     }
 }
+
+
+unsigned int Scr_LoadScript(const char* scriptname)
+{
+    PrecacheEntry precache;
+
+    return Scr_LoadScriptInternal(scriptname, &precache, 0);
+
+}
+
 
 void Scr_Sys_Error_Wrapper(const char *fmt, ...)
 {
