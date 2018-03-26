@@ -25,7 +25,7 @@ void ClearAllSpectators(struct gentity_s* ent)
 	}
 }
 
-void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, const float *spawn_angles)
+extern "C" void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, const float *spawn_angles)
 {
   gclient_s *client;
   vec3_t clean_spawn_angles;
