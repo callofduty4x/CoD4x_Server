@@ -750,7 +750,7 @@ unsigned int __cdecl Scr_CreateCanonicalFilename( const char* name );
 void * __cdecl TempMalloc( int );
 void __cdecl ScriptParse( sval_u* , byte);
 void __cdecl ScriptCompile( sval_u, unsigned int, unsigned int, PrecacheEntry*, int);
-void* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, byte );
+char* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, bool );
 void __cdecl Scr_InitAllocNode( void );
 void __cdecl Scr_BeginLoadScripts( void );
 void __cdecl Scr_SetString(unsigned short *strindexptr, unsigned const stringindex);

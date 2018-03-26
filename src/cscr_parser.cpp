@@ -3,6 +3,16 @@
 #include "cscr_parser.h"
 #include "cscr_main.h"
 #include "cscr_variable.h"
+#include "xassets/rawfile.h"
+#include "xassets.h"
+#include "qcommon_mem.h"
+
+struct SaveSourceBufferInfo
+{
+  char *sourceBuf;
+  int len;
+};
+
 
 struct SourceLookup
 {
@@ -40,6 +50,9 @@ struct scrParserGlob_t
 
 scrParserGlob_t gScrParserGlob;
 scrParserPub_t gScrParserPub;
+
+
+extern "C" void __regparm3 Scr_AddSourceBufferInternal(const char *extFilename, const char *codePos, char *sourceBuf, int len, bool doEolFixup, bool archive);
 
 
 unsigned int Scr_GetFunctionLineNumInternal(const char *buf, unsigned int sourcePos, const char **startLine)
@@ -345,6 +358,80 @@ void Scr_PrintPrevCodePosSpreadSheet(conChannel_t channel, const char *codePos, 
   }
 }
 
+char *__cdecl Scr_ReadFile_FastFile(const char *filename, const char *extFilename, const char *codePos, bool archive)
+{
+  RawFile *rawfile;
+  int len;
+  const char *sourceBuf;
+
+  if ( useFastFile->boolean )
+  {
+    rawfile = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE, extFilename).rawfile;
+    if ( rawfile )
+    {
+      sourceBuf = rawfile->buffer;
+      len = strlen(sourceBuf);
+      Scr_AddSourceBufferInternal(extFilename, codePos, (char *)sourceBuf, len, 1, archive);
+      return (char *)sourceBuf;
+    }
+  }
+  Scr_AddSourceBufferInternal(extFilename, codePos, 0, -1, 1, archive);
+  return NULL;
+}
+
+
+char *__cdecl Scr_ReadFile_LoadObj(const char *filename, const char *extFilename, const char *codePos, bool archive)
+{
+  int len;
+  int f;
+  char *sourceBuf;
+
+  len = FS_FOpenFileByMode(extFilename, &f, FS_READ);
+  if ( len >= 0 )
+  {
+/*
+    if ( !fs_gameDirVar && fs_gameDirVar->string[0] )
+    {
+      g_loadedImpureScript = 1;
+    }
+*/
+    sourceBuf = (char*)Hunk_AllocateTempMemoryHigh(len + 1);
+    FS_Read(sourceBuf, len, f);
+    sourceBuf[len] = 0;
+    FS_FCloseFile(f);
+    Scr_AddSourceBufferInternal(extFilename, codePos, sourceBuf, len, 1, archive);
+    return sourceBuf;
+  }
+  Scr_AddSourceBufferInternal(extFilename, codePos, 0, -1, 1, archive);
+  return NULL;
+}
+
+
+
+char *__cdecl Scr_ReadFile(const char *filename, const char *extFilename, const char *codePos, bool archive)
+{
+  int file;
+
+//  if ( fs_gameDirVar && fs_gameDirVar->string[0])
+  {
+    if ( FS_FOpenFileRead(extFilename, &file) < 0 )
+    {
+      return Scr_ReadFile_FastFile(filename, extFilename, codePos, archive);
+    }
+    FS_FCloseFile(file);
+    return Scr_ReadFile_LoadObj(filename, extFilename, codePos, archive);
+  }
+/* 
+Impure script locked mode here:
+  if ( useFastFile->boolean )
+  {
+    return Scr_ReadFile_FastFile(filename, extFilename, codePos, archive);
+  }
+  return Scr_ReadFile_LoadObj(filename, extFilename, codePos, archive);
+*/    
+}
+
+
 extern "C"{
 
 
@@ -421,6 +508,59 @@ void __cdecl Scr_PrintPrevCodePos(conChannel_t channel, const char *codePos, uns
     Com_Printf(channel, "%s\n\n", codePos);
   }
 }
+
+
+char *__cdecl Scr_AddSourceBuffer( const char *filename, const char *extFilename, const char *codePos, bool archive)
+{
+  const char *source;
+  char c;
+  SaveSourceBufferInfo *saveSourceBuffer;
+  signed int len;
+  char *dest;
+  int i;
+  char *sourceBuf;
+
+  if ( !archive || !gScrParserGlob.saveSourceBufferLookup )
+  {
+    return Scr_ReadFile(filename, extFilename, codePos, archive);
+  }
+  assert(gScrParserGlob.saveSourceBufferLookupLen > 0);
+  --gScrParserGlob.saveSourceBufferLookupLen;
+  saveSourceBuffer = &gScrParserGlob.saveSourceBufferLookup[gScrParserGlob.saveSourceBufferLookupLen];
+  len = saveSourceBuffer->len;
+
+  assert(len >= -1);
+  if ( len >= 0 )
+  {
+    sourceBuf = (char*)Hunk_AllocateTempMemoryHigh(len + 1);
+    source = saveSourceBuffer->sourceBuf;
+    dest = sourceBuf;
+    for ( i = 0; i < len; ++i )
+    {
+      c = *source++;
+      if ( c )
+      {
+        *dest++ = c;
+      }
+      else
+      {
+        *dest++ = '\n';
+      }
+    }
+    *dest = 0;
+    if ( saveSourceBuffer->sourceBuf )
+    {
+      Hunk_FreeDebugMem(gScrParserGlob.saveSourceBufferLookup[gScrParserGlob.saveSourceBufferLookupLen].sourceBuf);
+    }
+  }
+  else
+  {
+    sourceBuf = 0;
+  }
+  Scr_AddSourceBufferInternal(extFilename, codePos, sourceBuf, len, 1, archive);
+  return sourceBuf;
+}
+
 
 };
 

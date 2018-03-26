@@ -147,7 +147,6 @@ int SV_BotAllocateClient( void ) {
 
 
 	Q_strncpyz(cl->name, name, sizeof(cl->name));
-	Q_strncpyz(cl->shortname, name, sizeof(cl->shortname));
 
 	/* ClientSetUsername(i, name); */
 

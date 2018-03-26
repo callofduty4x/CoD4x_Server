@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-
+#if 0
 
 #include "q_shared.h"
 #include "qcommon.h"
@@ -435,3 +435,5 @@ void G_ClearAllMessages()
 {
     Com_Memset(&messages, 0, sizeof(msgDisplay_t));
 }
+
+#endif

@@ -721,7 +721,6 @@ void SV_UserinfoChanged( client_t *cl ) {
 
 	}else{
 */
-	Q_strncpyz(cl->shortname, cl->name, sizeof(cl->shortname));
 /*
 	}
 */
@@ -838,7 +837,6 @@ void SV_CloseAllClientHandles(client_t *drop)
 
 	SV_NotifySApiDisconnect(drop);
 	SV_CloseDownload(drop);
-	G_DestroyAdsForPlayer(drop);
 	SV_FreeClient(drop);
 	SV_DisconnectReliableMessageProtocol(drop);
 
@@ -1179,6 +1177,8 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 
 	client->deltaMessage = -1;
 	client->nextSnapshotTime = svs.time;    // generate a snapshot immediately
+	client->enteredWorldTime = svs.time;
+
 
 	if(cmd)
 		client->lastUsercmd = *cmd;
@@ -1191,13 +1191,6 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 		SV_DropClient( client, "EXE_UNPURECLIENTDETECTED" );
 		return;
 	}
-	client->enteredWorldTime = svs.time;
-	if(client->connectedTime == 0)
-	{
-		client->connectedTime = svs.time;
-	}
-	//Set gravity, speed... to system default
-	Pmove_ExtendedInitForClient(client);
 
 	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
 
@@ -1209,7 +1202,7 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 			SV_RecordClient(client, va("demo_%s_", psti));
 	}
 
-	if(!client->enteredWorldForFirstTime && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6)){
+	if(client->connectedTime == 0 && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6)){
 		if(client->steamid != 0)
 		{
 			SV_SApiSteamIDToString(client->steamid, ssti, sizeof(ssti));
@@ -1220,7 +1213,11 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 		}
 	}
 
-	client->enteredWorldForFirstTime = qtrue;
+	if(client->connectedTime == 0)
+	{
+		client->connectedTime = svs.time;
+	}
+
 	client->pureAuthentic = 1;
 
 	HL2Rcon_EventClientEnterWorld( clientNum );
@@ -1348,7 +1345,6 @@ gentity_t* SV_AddBotClient(){
 
 
 	Q_strncpyz(cl->name, name, sizeof(cl->name));
-	Q_strncpyz(cl->shortname, name, sizeof(cl->shortname));
 
 	/* ClientSetUsername(i, name); */
 

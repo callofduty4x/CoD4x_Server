@@ -868,3 +868,12 @@ int SV_GameGetMaxClients()
 {
 	return sv_maxclients->integer;
 }
+
+void SV_GameSetUndercoverState(unsigned int clientNum, bool state)
+{
+  if(clientNum > sv_maxclients->integer)
+  {
+    return;
+  }
+  svs.clients[clientNum].undercover = state;
+}

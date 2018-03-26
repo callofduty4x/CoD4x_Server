@@ -4,12 +4,25 @@
 #include "g_shared.h"
 #include "scr_vm.h"
 #include "server_public.h"
-#include "server.h"
 #include "plugin_handler.h"
 
 void __cdecl ClientClearFields(gclient_s *client)
 {
     client->useHoldEntity.setEnt(0);
+}
+
+void ClearAllSpectators(struct gentity_s* ent)
+{
+	unsigned int i;
+	struct gentity_s* followers;
+
+	for(i = 0, followers = level.gentities; i < level.maxclients; i++, followers++)//let refollow all spectors me who have prior followed me
+	{
+		if(followers->client && followers->client->lastFollowedClient == ent->s.number)
+		{
+			Cmd_FollowClient_f(followers, ent->s.number);
+		}
+	}
 }
 
 void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, const float *spawn_angles)
@@ -117,6 +130,7 @@ void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, const float 
   VectorCopy(spawn_origin, client->ps.origin);
 
   client->ps.pm_flags |= 0x400u;
+  client->ps.gravity = (int)g_gravity->value;
 
   clean_spawn_angles[0] = spawn_angles[0];
   clean_spawn_angles[1] = spawn_angles[1];
@@ -138,35 +152,18 @@ void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, const float 
 
 
   //CoD4X garbage
+  client->lastFollowedClient = -1; //remove the last followed player number if we self have respawned
 
-	client_t *cl = &svs.clients[ent->s.number];
-	cl->lastFollowedClient = -1; //remove the last followed player number if we self have respawned
+  ClearAllSpectators(ent);
 
-	if(svs.time - cl->enteredWorldTime > 800){
-	//First spawn after map reloading
-		PHandler_Event(PLUGINS_ONCLIENTSPAWN, ent);
+	PHandler_Event(PLUGINS_ONCLIENTSPAWN, ent);
 
-		if(!cl->firstSpawn){
-			//First spawn after connecting to server
-			G_ShowMotd( ent->s.number );
-		}
-		cl->firstSpawn = qtrue;
-	}
 
-	int i;
-	gentity_t* followers;
 
-	for(i = 0, followers = g_entities; i < g_maxclients->integer; i++, followers++)//let refollow all spectors me who have prior followed me
-	{
-		if(svs.clients[i].lastFollowedClient == ent->s.number)
-		{
-			Cmd_FollowClient_f(followers, ent->s.number);
-		}
-	}
 
 	if(ent->client->sess.sessionState == SESS_STATE_PLAYING)
 	{
-		cl->undercover = qfalse;
+    SV_GameSetUndercoverState(index, false);
 	}
 
 
