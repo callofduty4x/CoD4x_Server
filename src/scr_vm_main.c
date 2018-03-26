@@ -68,7 +68,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("isstring", GScr_IsString, 0 );
 	Scr_AddFunction("isalive", GScr_IsAlive, 0 );
 	Scr_AddFunction("gettime", GScr_GetTime, 0 );
-	Scr_AddFunction("getentbynum", Scr_GetEntByNum, 1 );
+	Scr_AddFunction("getentbynum", Scr_GetEntByNum, 0 );
 	Scr_AddFunction("getweaponmodel", Scr_GetWeaponModel, 0 );
 	Scr_AddFunction("getanimlength", GScr_GetAnimLength, 0 );
 	Scr_AddFunction("animhasnotetrack", GScr_AnimHasNotetrack, 0 );
@@ -105,6 +105,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("acos", GScr_acos, 0 );
 	Scr_AddFunction("atan", GScr_atan, 0 );
 	Scr_AddFunction("int", GScr_CastInt, 0 );
+//	Scr_AddFunction("float", GScr_CastFloat, 0 );
 	Scr_AddFunction("abs", GScr_abs, 0 );
 	Scr_AddFunction("min", GScr_min, 0 );
 	Scr_AddFunction("max", GScr_max, 0 );

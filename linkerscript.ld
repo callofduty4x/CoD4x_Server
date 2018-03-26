@@ -7,7 +7,7 @@ SEARCH_DIR("/usr/i386-linux-gnu/lib32"); SEARCH_DIR("/usr/x86_64-linux-gnu/lib32
 SECTIONS
 {
   /* Read-only sections, merged into text segment: */
-  PROVIDE (__executable_start = SEGMENT_START("text-segment", 0x20000000)); . = SEGMENT_START("text-segment", 0x20000000) + SIZEOF_HEADERS;
+  PROVIDE (__executable_start = SEGMENT_START("text-segment", 0x80000000)); . = SEGMENT_START("text-segment", 0x80000000) + SIZEOF_HEADERS;
   .interp         : { *(.interp) }
   .note.gnu.build-id : { *(.note.gnu.build-id) }
   .hash           : { *(.hash) }

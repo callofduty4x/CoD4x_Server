@@ -781,7 +781,7 @@ void __cdecl SV_InitGameVM(int restart, int registerDvars)
   G_ResetEntityParsePoint();
   SV_ResetSkeletonCache();
 
-  assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= 32);
+  assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
 
   for ( i = 0; i < sv_maxclients->integer; ++i )
   {
