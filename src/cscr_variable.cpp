@@ -74,7 +74,7 @@ const char *var_typename[] =
 
 struct __attribute__((aligned (64))) scrVarGlob_t
 {
-  VariableValueInternal variableList[98304];
+  VariableValueInternal* variableList;
 };
 
 extern const char* var_typename[];
@@ -3434,7 +3434,7 @@ static void __cdecl Scr_InitVariableRange(unsigned int begin, unsigned int end)
 void __cdecl Scr_InitVariables( )
 {
   int variableCount = (VARIABLELIST_CHILD_SIZE + VARIABLELIST_PARENT_SIZE +3);
-  //gScrVarGlob.variableList = (VariableValueInternal*)_PMem_AllocNamed(sizeof(VariableValueInternal) * variableCount, 0x80u, 4u, 1u, "ScriptVars", TRACK_SCRIPT);
+  gScrVarGlob.variableList = (VariableValueInternal*)_PMem_AllocNamed(sizeof(VariableValueInternal) * variableCount, 0x80u, 4u, 1u, "ScriptVars", TRACK_SCRIPT);
 
   if ( !gScrVarDebugPub )
   {
