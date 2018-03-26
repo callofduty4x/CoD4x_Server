@@ -274,6 +274,7 @@
 
     __cdecl gentity_t* Plugin_GetGentityForEntityNum(int entnum);
     __cdecl client_t* Plugin_GetClientForClientNum(int clientnum);
+    __cdecl unsigned int Plugin_GetClientNumForClient(client_t* cl);
 
     __cdecl const char* Plugin_SL_ConvertToString(int index);
 

@@ -42,7 +42,7 @@
 #define MAX_OSPATH   256
 #define PACKET_BACKUP  32
 #define MAX_CLIENTS   64
-#define NUMFORCLIENT(clientobj) clientobj - clientbase
+#define NUMFORCLIENT(clientobj) Plugin_GetClientNumForClient(clientobj)
 #define NETCHAN_UNSENTBUFFER_SIZE 0x20000
 #define NETCHAN_FRAGMENTBUFFER_SIZE 0x800
 
