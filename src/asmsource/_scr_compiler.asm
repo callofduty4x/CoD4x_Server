@@ -57,9 +57,12 @@
 	extern FindNextSibling
 	extern FindObject
 	extern GetVariableName
+	extern scrCompileGlob
+	extern gScrCompilePub
+
 
 ;Exports of scr_compiler:
-	global scrCompileGlob
+;	global scrCompileGlob
 	global LinkThread
 	global SpecifyThreadPosition
 	global Scr_CalcLocalVarsVariableExpressionRef
@@ -91,7 +94,7 @@
 	global EmitThreadInternal
 	global ScriptCompile
 	global CompareCaseInfo
-	global gScrCompilePub
+;	global gScrCompilePub
 
 
 SECTION .text
@@ -11432,8 +11435,8 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of scr_compiler:
 SECTION .bss
-scrCompileGlob: resb 0x200
-gScrCompilePub: resb 0x21064
+;scrCompileGlob: resb 0x200
+;gScrCompilePub: resb 0x21064
 
 
 ;All cstrings:

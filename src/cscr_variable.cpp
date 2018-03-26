@@ -2110,6 +2110,7 @@ qboolean __cdecl IsFieldObject(unsigned int id)
 
 unsigned int __cdecl GetNewVariableIndexInternal(unsigned int parentId, unsigned int name)
 {
+  Com_Printf(CON_CHANNEL_DONT_FILTER, "GetNewVariableIndexInternal %d %d\n", parentId, name);
   assert(!FindVariableIndexInternal( parentId, name ));
   unsigned int index = (parentId + 101 * name) % (VARIABLELIST_CHILD_SIZE -1) + 1;
   return GetNewVariableIndexInternal2(parentId, name, index);
