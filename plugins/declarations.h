@@ -28,6 +28,7 @@
 
 #include <string.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <time.h>
 
 #define MAX_QPATH 64
@@ -46,8 +47,8 @@
 #define NETCHAN_FRAGMENTBUFFER_SIZE 0x800
 
 
-#define CLIENT_BASE_ADDR 0x90b4f8C
-#define clientbase ((client_t*)CLIENT_BASE_ADDR)  //e.g. clientbase[i].username
+//#define CLIENT_BASE_ADDR 0x0
+//#define clientbase ((client_t*)CLIENT_BASE_ADDR)  //e.g. clientbase[i].username
 
 //Types and structs
 typedef int scr_entref_t;
@@ -976,7 +977,41 @@ typedef struct {
 } statData_t;
 
 
-struct client_s
+#define MAX_ZPATH 256
+
+typedef void* unzFile;
+
+typedef union qfile_gus {
+    FILE*		o;
+    unzFile	z;
+} qfile_gut;
+
+typedef struct qfile_us {
+    qfile_gut	file;
+    qboolean	unique;
+} qfile_ut;
+
+
+typedef struct {
+    qfile_ut		handleFiles;
+    union{
+	qboolean	handleSync;
+	void*		writebuffer;
+    };
+    union{
+	int		fileSize;
+	int		bufferSize;
+    };
+    union{
+	int		zipFilePos;
+	int		bufferPos; //For buffered writes
+    };
+    qboolean		zipFile;
+    qboolean		streamed;
+    char			name[MAX_ZPATH];
+} fileHandleData_t; //0x11C (284) Size
+
+typedef struct client_s
 {
 	clientConnectState_t	state;
 	int					unksnapshotvar;		// must timeout a few frames in a row so debugging doesn't break
@@ -1089,7 +1124,7 @@ struct client_s
 	byte			receivedstats;
 	byte			gamestateSent;
 	byte			hasValidPassword;
-};
+}client_t;
 
 
 
