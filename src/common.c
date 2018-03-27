@@ -1558,8 +1558,4 @@ const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, in
   return result;
 }
 
-const char *__cdecl CS_DisplayName(clientState_t *cs, int type)
-{
-  return Com_DisplayName(cs->netname, /*cs->clanAbbrev*/ "", type);
-}
 

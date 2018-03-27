@@ -166,6 +166,16 @@ extern "C" void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, c
     SV_GameSetUndercoverState(index, false);
 	}
 
-
 }
 
+const char *__cdecl CS_DisplayName(clientState_t *cs, int type)
+{
+  const char* clan = SV_GetPlayerClan(cs->clientIndex);
+  const char* name = SV_GetPlayerName(cs->clientIndex);
+  
+  if(name && clan)
+  {
+    return Com_DisplayName(name, clan, type);
+  }
+  return "";
+}

@@ -44,45 +44,16 @@
 #define FIRST_DEAD_OBJECT VAR_DEAD_THREAD
 
 
-const char *var_typename[] =
-{
-        "undefined",
-        "object",
-        "string",
-        "localized string",
-        "vector",
-        "float",
-        "int",
-        "codepos",
-        "precodepos",
-        "function",
-        "stack",
-        "animation",
-        "developer codepos",
-        "include codepos",
-        "thread",
-        "thread",
-        "thread",
-        "thread",
-        "struct",
-        "removed entity",
-        "entity",
-        "array",
-        "removed thread"
-};
-
-
 struct __attribute__((aligned (64))) scrVarGlob_t
 {
   VariableValueInternal* variableList;
 };
 
 extern const char* var_typename[];
-scrVarDebugPub_t *gScrVarDebugPub = NULL;
-scrVarDebugPub_t gScrVarDebugPubBuff;
+extern scrVarDebugPub_t *gScrVarDebugPub;
+extern scrVarDebugPub_t gScrVarDebugPubBuff;
 
-scrVarGlob_t gScrVarGlob;
-scrVarPub_t gScrVarPub;
+extern scrVarGlob_t gScrVarGlob;
 
 struct scr_classStruct_t
 {
@@ -92,14 +63,7 @@ struct scr_classStruct_t
   const char *name;
 };
 
-scr_classStruct_t gScrClassMap[] =
-{
-  { 0u, 0u, 'e', "entity" },
-  { 0u, 0u, 'h', "hudelem" },
-  { 0u, 0u, 'p', "pathnode" },
-  { 0u, 0u, 'v', "vehiclenode" },
-  { 0u, 0u, 'd', "dynentity" }
-};
+extern scr_classStruct_t gScrClassMap[5];
 
 static void SetEmptyArray(unsigned int parentId)
 {
@@ -3462,6 +3426,16 @@ void __cdecl Scr_InitVariables( )
   }
   Scr_InitVariableRange(VARIABLELIST_PARENT_BEGIN, VARIABLELIST_PARENT_BEGIN + VARIABLELIST_PARENT_SIZE);
   Scr_InitVariableRange(VARIABLELIST_CHILD_BEGIN, VARIABLELIST_CHILD_BEGIN + VARIABLELIST_CHILD_SIZE);
+
+
+  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarDebugPub: %d\n", sizeof(gScrVarDebugPub));
+  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarDebugPubBuff: %d\n", sizeof(gScrVarDebugPubBuff));
+  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarGlob: %d\n", sizeof(gScrVarGlob));
+  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarPub: %d\n", sizeof(gScrVarPub));
+  Com_Printf(CON_CHANNEL_SCRIPT, "gScrClassMap: %d\n", sizeof(gScrClassMap));
+  
+
+
 }
 
 #define _LEAKED_ 0

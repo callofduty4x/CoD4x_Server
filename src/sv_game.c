@@ -877,3 +877,21 @@ void SV_GameSetUndercoverState(unsigned int clientNum, bool state)
   }
   svs.clients[clientNum].undercover = state;
 }
+
+const char* SV_GetPlayerName(unsigned int clientNum)
+{
+  if(clientNum > sv_maxclients->integer)
+  {
+    return NULL;
+  }
+  return svs.clients[clientNum].name;
+}
+
+const char* SV_GetPlayerClan(unsigned int clientNum)
+{
+  if(clientNum > sv_maxclients->integer)
+  {
+    return NULL;
+  }
+  return svs.clients[clientNum].clantag;
+}

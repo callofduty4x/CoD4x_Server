@@ -134,6 +134,7 @@ int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
 
 void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname);
 void __cdecl Com_SafeServerDObjFree(int handle);
+const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, int type);
 
 #ifdef __cplusplus
 }
