@@ -831,11 +831,12 @@ void __cdecl Scr_AddObject(unsigned int id);
 unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index);
 scr_entref_t __cdecl Scr_GetEntityRef(unsigned int index);
 void Scr_ShutdownOpcodeLookup( );
+VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset);
+
 #ifdef __cplusplus
 }
 #endif
 
-VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset); //cplusplus
 
 
 extern struct scrVmGlob_t gScrVmGlob;

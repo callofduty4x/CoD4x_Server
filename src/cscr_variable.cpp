@@ -44,16 +44,45 @@
 #define FIRST_DEAD_OBJECT VAR_DEAD_THREAD
 
 
+const char *var_typename[] =
+{
+        "undefined",
+        "object",
+        "string",
+        "localized string",
+        "vector",
+        "float",
+        "int",
+        "codepos",
+        "precodepos",
+        "function",
+        "stack",
+        "animation",
+        "developer codepos",
+        "include codepos",
+        "thread",
+        "thread",
+        "thread",
+        "thread",
+        "struct",
+        "removed entity",
+        "entity",
+        "array",
+        "removed thread"
+};
+
+
 struct __attribute__((aligned (64))) scrVarGlob_t
 {
   VariableValueInternal* variableList;
 };
 
-extern const char* var_typename[];
-extern scrVarDebugPub_t *gScrVarDebugPub;
-extern scrVarDebugPub_t gScrVarDebugPubBuff;
+struct scrVarDebugPub_t *gScrVarDebugPub = NULL;
+struct scrVarDebugPub_t gScrVarDebugPubBuff;
 
-extern scrVarGlob_t gScrVarGlob;
+struct scrVarGlob_t gScrVarGlob;
+scrVarPub_t gScrVarPub;
+
 
 struct scr_classStruct_t
 {
@@ -63,7 +92,15 @@ struct scr_classStruct_t
   const char *name;
 };
 
-extern scr_classStruct_t gScrClassMap[5];
+struct scr_classStruct_t gScrClassMap[] =
+{
+  { 0u, 0u, 'e', "entity" },
+  { 0u, 0u, 'h', "hudelem" },
+  { 0u, 0u, 'p', "pathnode" },
+  { 0u, 0u, 'v', "vehiclenode" },
+  { 0u, 0u, 'd', "dynentity" }
+};
+
 
 static void SetEmptyArray(unsigned int parentId)
 {
@@ -1207,16 +1244,28 @@ VariableValue Scr_EvalVariable(unsigned int id)
 //Fix for weird GNU-GCC ABI
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For Linux
-void __cdecl Scr_EvalVariableExtern(unsigned int id)
-{
-    VariableValue r;
-    r = Scr_EvalVariable(id);
-    asm volatile (
-        "mov 0x4(%%eax), %%edx\n"
-        "mov 0x0(%%eax), %%eax\n"
-        ::"eax" (&r)
-    );
-}
+__asm__(/* Scr_EvalVariable ABI Wrapper */
+"Scr_EvalVariableExtern:\n"
+".globl Scr_EvalVariableExtern\n"
+"push %ebp\n"
+"mov %esp, %ebp\n"
+"sub $0x18, %esp\n" //reserve Stack space
+
+"push 0x8(%ebp)\n" //id
+"lea -0x14(%ebp), %eax\n"
+"push %eax\n" //hidden pointer for struct
+
+"call Scr_EvalVariable\n"
+
+"add $0x4, %esp\n" //1st argument stdcall (No add) 2nd argument cdecl (add 4), makes sense, right?
+
+"mov -0x14(%ebp), %eax\n"
+"mov -0x10(%ebp), %edx\n"
+
+"add $0x18, %esp\n"
+"pop %ebp\n"
+"ret\n");
+
 #else
 VariableValue __cdecl Scr_EvalVariableExtern(unsigned int id)
 {
@@ -1240,16 +1289,28 @@ VariableValue Scr_EvalVariableField(unsigned int id)
 //Fix for weird GNU-GCC ABI
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For Linux
-void __cdecl Scr_EvalVariableFieldExtern(unsigned int id)
-{
-    VariableValue r;
-    r = Scr_EvalVariableField(id);
-    asm volatile (
-        "mov 0x4(%%eax), %%edx\n"
-        "mov 0x0(%%eax), %%eax\n"
-        ::"eax" (&r)
-    );
-}
+__asm__(/* Scr_EvalVariableField ABI Wrapper */
+"Scr_EvalVariableFieldExtern:\n"
+".globl Scr_EvalVariableFieldExtern\n"
+"push %ebp\n"
+"mov %esp, %ebp\n"
+"sub $0x18, %esp\n" //reserve Stack space
+
+"push 0x8(%ebp)\n" //id
+"lea -0x14(%ebp), %eax\n"
+"push %eax\n" //hidden pointer for struct
+
+"call Scr_EvalVariableField\n"
+
+"add $0x4, %esp\n" //1st argument stdcall (No add) 2nd argument cdecl (add 4), makes sense, right?
+
+"mov -0x14(%ebp), %eax\n"
+"mov -0x10(%ebp), %edx\n"
+
+"add $0x18, %esp\n"
+"pop %ebp\n"
+"ret\n");
+
 #else
 VariableValue __cdecl Scr_EvalVariableFieldExtern(unsigned int id)
 {
@@ -1289,16 +1350,29 @@ VariableValue Scr_FindVariableField(unsigned int parentId, unsigned int name)
 //Fix for weird GNU-GCC ABI
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For Linux
-void __cdecl Scr_FindVariableFieldExtern(unsigned int parentId, unsigned int name)
-{
-    VariableValue r;
-    r = Scr_FindVariableField(parentId, name);
-    asm volatile (
-        "mov 0x4(%%eax), %%edx\n"
-        "mov 0x0(%%eax), %%eax\n"
-        ::"eax" (&r)
-    );
-}
+__asm__(/* Scr_FindVariableField ABI Wrapper */
+"Scr_FindVariableFieldExtern:\n"
+".globl Scr_FindVariableFieldExtern\n"
+"push %ebp\n"
+"mov %esp, %ebp\n"
+"sub $0x18, %esp\n" //reserve Stack space
+
+"push 0xc(%ebp)\n" //name
+"push 0x8(%ebp)\n" //parentId
+"lea -0x14(%ebp), %eax\n"
+"push %eax\n" //hidden pointer for struct
+
+"call Scr_FindVariableField\n"
+
+"add $0x8, %esp\n" //1st argument stdcall (No add) 2nd and 3rd argument cdecl (add 8), makes sense, right?
+
+"mov -0x14(%ebp), %eax\n"
+"mov -0x10(%ebp), %edx\n"
+
+"add $0x18, %esp\n"
+"pop %ebp\n"
+"ret\n");
+
 #else
 VariableValue __cdecl Scr_FindVariableFieldExtern(unsigned int parentId, unsigned int name)
 {
@@ -2074,7 +2148,6 @@ qboolean __cdecl IsFieldObject(unsigned int id)
 
 unsigned int __cdecl GetNewVariableIndexInternal(unsigned int parentId, unsigned int name)
 {
-  Com_Printf(CON_CHANNEL_DONT_FILTER, "GetNewVariableIndexInternal %d %d\n", parentId, name);
   assert(!FindVariableIndexInternal( parentId, name ));
   unsigned int index = (parentId + 101 * name) % (VARIABLELIST_CHILD_SIZE -1) + 1;
   return GetNewVariableIndexInternal2(parentId, name, index);
@@ -3427,15 +3500,6 @@ void __cdecl Scr_InitVariables( )
   Scr_InitVariableRange(VARIABLELIST_PARENT_BEGIN, VARIABLELIST_PARENT_BEGIN + VARIABLELIST_PARENT_SIZE);
   Scr_InitVariableRange(VARIABLELIST_CHILD_BEGIN, VARIABLELIST_CHILD_BEGIN + VARIABLELIST_CHILD_SIZE);
 
-
-  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarDebugPub: %d\n", sizeof(gScrVarDebugPub));
-  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarDebugPubBuff: %d\n", sizeof(gScrVarDebugPubBuff));
-  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarGlob: %d\n", sizeof(gScrVarGlob));
-  Com_Printf(CON_CHANNEL_SCRIPT, "gScrVarPub: %d\n", sizeof(gScrVarPub));
-  Com_Printf(CON_CHANNEL_SCRIPT, "gScrClassMap: %d\n", sizeof(gScrClassMap));
-  
-
-
 }
 
 #define _LEAKED_ 0
@@ -4696,4 +4760,5 @@ void __cdecl Scr_EvalBinaryOperator(int op, VariableValue *value1, VariableValue
 
 
 };
+
 

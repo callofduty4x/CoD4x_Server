@@ -11,7 +11,7 @@ jmp_buf g_script_error[33];
 char error_message[1024];
 
 
-VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
+extern "C" VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
 {
   VariableValue result;
 
@@ -35,19 +35,32 @@ VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
 }
 
 extern "C"{
-    //Fix for weird GNU-GCC ABI
+//Fix for weird GNU-GCC ABI
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
-//For GCC
-void __cdecl GetEntityFieldValueEx(unsigned int classnum, int entnum, int offset)
-{
-    VariableValue r;
-    r = GetEntityFieldValue(classnum, entnum, offset);
-    asm volatile (
-        "mov 0x4(%%eax), %%edx\n"
-        "mov 0x0(%%eax), %%eax\n"
-        ::"eax" (&r)
-    );
-}
+//For Linux
+__asm__(/* GetEntityFieldValueEx ABI Wrapper */
+"GetEntityFieldValueEx:\n"
+".globl GetEntityFieldValueEx\n"
+"push %ebp\n"
+"mov %esp, %ebp\n"
+"sub $0x18, %esp\n" //reserve Stack space
+
+"push 0x10(%ebp)\n" //offset
+"push 0xc(%ebp)\n" //entnum
+"push 0x8(%ebp)\n" //classnum
+"lea -0x14(%ebp), %eax\n"
+"push %eax\n" //hidden pointer for struct
+
+"call GetEntityFieldValue\n"
+
+"add $0xc, %esp\n" //1st argument stdcall (No add) 2nd, 3rd, 4th argument cdecl (add 12), makes sense, right?
+
+"mov -0x14(%ebp), %eax\n"
+"mov -0x10(%ebp), %edx\n"
+
+"add $0x18, %esp\n"
+"pop %ebp\n"
+"ret\n");
 
 #else
 //For MSVC & MinGW
@@ -532,4 +545,7 @@ void Scr_UpdateDebugger()
 
 
 };
+
+
+
 
