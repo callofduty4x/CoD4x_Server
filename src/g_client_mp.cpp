@@ -179,3 +179,23 @@ const char *__cdecl CS_DisplayName(clientState_t *cs, int type)
   }
   return "";
 }
+
+extern "C" __cdecl const char* G_GetPlayerId(struct gentity_s* ent)
+{
+    char id[33];
+
+    if(ent->client == NULL)
+    {
+	return "";
+    }
+/*
+    uint64_t xuid = SV_GetPlayerXuid(ent->client.ps.clientNum);
+
+    return va("%llu", xuid);
+*/
+
+    SV_GetGuid(ent->client->ps.clientNum, id, sizeof(id));
+
+    return va("%s", id);
+
+}

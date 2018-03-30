@@ -7,7 +7,7 @@
 #include "dobj.h"
 #include "xassets/xmodel.h"
 #include "g_scr_vehicle.h"
-
+#include "g_shared.h"
 
 extern byte* archivedEntityFields[];
 extern byte* playerStateFields[];
@@ -290,6 +290,8 @@ __asm__("int $3");
 
 
 */
+
+
 void Tests_Init()
 {
 /*	Cmd_AddCommand("testpscode", MSG_TestPSCode);

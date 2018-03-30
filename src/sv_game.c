@@ -568,12 +568,6 @@ uint64_t SV_GetPlayerXuid( unsigned int clnum)
 }
 
 
-const char* SV_GetGuidBin(int clnum)
-{
-	static char buf[33];
-	return SV_GetGuid( clnum, buf, sizeof(buf));
-}
-
 qboolean __cdecl SV_MapExists(const char *name)
 {
   char fullpath[MAX_OSPATH];
