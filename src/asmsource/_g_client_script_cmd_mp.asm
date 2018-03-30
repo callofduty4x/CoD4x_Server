@@ -1096,6 +1096,11 @@ PlayerCmd_finishPlayerDamage_240:
 PlayerCmd_finishPlayerDamage_30:
 	mov dword [esp], 0x2
 	call Scr_GetInt
+	and eax, 0x7fffffff
+	cmp eax, 0xffff
+	js PlayerCmd_finishPlayerDamage_skipclamp
+	mov eax, 0xffff
+PlayerCmd_finishPlayerDamage_skipclamp:
 	mov [ebp-0x68], eax
 	test eax, eax
 	jle PlayerCmd_finishPlayerDamage_40
@@ -1207,6 +1212,12 @@ PlayerCmd_finishPlayerDamage_320:
 	mulss xmm0, [eax+0xc]
 	cvttss2si eax, xmm0
 	add [edx+0xa0], eax
+	mov eax, [edx+0xa0]
+	test eax, 0x80000000
+	jz PlayerCmd_finishPlayerDamage_skipclamp2
+	mov eax, 0x7fffffff
+	mov [edx+0xa0], eax
+PlayerCmd_finishPlayerDamage_skipclamp2:
 	mov eax, [ebp-0x70]
 	test eax, eax
 	jz PlayerCmd_finishPlayerDamage_160

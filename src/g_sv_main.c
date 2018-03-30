@@ -717,8 +717,8 @@ void BG_RegisterCvars()
 	 player_sprintStrafeSpeedScale = Cvar_RegisterFloat( "player_sprintStrafeSpeedScale", 0.667, 0.0, 5000.0, 0x180u, "The speed at which you can strafe while sprinting");
 	 player_sprintCameraBob = Cvar_RegisterFloat( "player_sprintCameraBob", 0.5, 0.0, 2.0, 0x180u, "The speed the camera bobs while you sprint");
 	 player_turnAnims = Cvar_RegisterBool( "player_turnAnims", 0, 0x180u, "Use animations to turn a player's model in multiplayer");
-	 player_dmgtimer_timePerPoint = Cvar_RegisterFloat( "player_dmgtimer_timePerPoint", 100.0, 0.0, 3.4028235e38, 0x180u, "The time in milliseconds that the player is slowed down per point of damage");
-	 player_dmgtimer_maxTime = Cvar_RegisterFloat( "player_dmgtimer_maxTime", 750.0, 0.0, 3.4028235e38, 0x180u, "The maximum time that the player is slowed due to damage");
+	 player_dmgtimer_timePerPoint = Cvar_RegisterFloat( "player_dmgtimer_timePerPoint", 100.0, 0.0, 30000.0, 0x180u, "The time in milliseconds that the player is slowed down per point of damage");
+	 player_dmgtimer_maxTime = Cvar_RegisterFloat( "player_dmgtimer_maxTime", 750.0, 0.0, 64000.0, 0x180u, "The maximum time that the player is slowed due to damage");
 	 player_dmgtimer_minScale = Cvar_RegisterFloat( "player_dmgtimer_minScale", 0.0, 0.0, 1.0, 0x180u, "The minimum scale value to slow the player by when damaged");
 	 player_dmgtimer_stumbleTime = Cvar_RegisterInt( "player_dmgtimer_stumbleTime", 500, 0, 2000, 0x180u, "Maximum time to play stumble animations");
 	 player_dmgtimer_flinchTime = Cvar_RegisterInt( "player_dmgtimer_flinchTime", 500, 0, 2000, 0x180u, "Maximum time to play flinch animations");

@@ -192,11 +192,7 @@ void MSG_TestPSCode()
 		return;
 	}
 
-	from->damagePitch = 1;
-	to->damagePitch = 150;
-
-
-	MSG_TestDeltaPS(&snapInfo, 261250, from, to);
+	MSG_TestDeltaPS(&snapInfo, 286450, from, to);
 
 	FS_FreeFile(from);
 	FS_FreeFile(to);
@@ -294,8 +290,8 @@ __asm__("int $3");
 
 void Tests_Init()
 {
-/*	Cmd_AddCommand("testpscode", MSG_TestPSCode);
-	Cmd_AddCommand("testmsgreadlong", Test_MSG_WriteReadLong);
+	Cmd_AddCommand("testpscode", MSG_TestPSCode);
+/*	Cmd_AddCommand("testmsgreadlong", Test_MSG_WriteReadLong);
 	Cmd_AddCommand("printdobj", FindAndPrintDObj_f);
 	Cmd_AddCommand("dumpvehicles", DumpVehicleInfo_f);
 */
