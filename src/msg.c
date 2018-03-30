@@ -464,7 +464,7 @@ void MSG_WriteEntityIndex(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
 
 int MSG_GetByte(msg_t *msg, int where)
 {
-  if ( where < msg->cursize )
+  if ( where + sizeof(int8_t) <= msg->cursize )
   {
     return msg->data[where];
   }
@@ -474,7 +474,7 @@ int MSG_GetByte(msg_t *msg, int where)
 
 int MSG_GetShort(msg_t *msg, int where)
 {
-  if ( where +1 < msg->cursize )
+  if ( where + sizeof(int16_t) <= msg->cursize )
   {
     return *(int16_t*)&msg->data[where];
   }
@@ -499,7 +499,7 @@ int MSG_GetShort(msg_t *msg, int where)
 
 int MSG_GetLong(msg_t *msg, int where)
 {
-  if ( where +3 < msg->cursize )
+  if ( where +sizeof(int32_t) <= msg->cursize )
   {
     return *(int32_t*)&msg->data[where];
   }
@@ -524,7 +524,7 @@ int MSG_GetLong(msg_t *msg, int where)
 
 int64_t MSG_GetInt64(msg_t *msg, int where)
 {
-  if ( where +7 < msg->cursize )
+  if ( where + sizeof(int64_t) <= msg->cursize )
   {
     return *(int64_t*)&msg->data[where];
   }
@@ -576,7 +576,7 @@ int MSG_ReadShort( msg_t *msg ) {
 int32_t MSG_ReadLong( msg_t *msg ) {
 	int32_t	c;
 
-	if ( msg->readcount+sizeof(int32_t) > msg->cursize ) {
+	if ( msg->readcount+sizeof(int32_t) > msg->cursize + msg->splitSize) {
 		msg->overflowed = 1;
 		return -1;
 	}	
@@ -590,7 +590,7 @@ int32_t MSG_ReadLong( msg_t *msg ) {
 int64_t MSG_ReadInt64( msg_t *msg ) {
 	int64_t		c;
 
-	if ( msg->readcount+sizeof(int64_t) > msg->cursize ) {
+	if ( msg->readcount+sizeof(int64_t) > msg->cursize + msg->splitSize ) {
 		msg->overflowed = 1;
 		return -1;
 	}	
