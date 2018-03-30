@@ -66,6 +66,7 @@
 	extern Scr_GetInt
 	extern _ZN9EntHandle6setEntEP9gentity_s
 	extern Q_stricmp
+	extern s_flashTags
 
 ;Exports of g_scr_vehicle:
 	global s_phys
@@ -107,7 +108,6 @@
 	global CMD_VEH_SetTurretTargetEnt
 	global CMD_VEH_SetTurretTargetVec
 	global CMD_VEH_ClearTurretTargetEnt
-	global s_flashTags
 
 
 SECTION .text
@@ -5328,8 +5328,6 @@ CMD_VEH_ClearTurretTargetEnt_10:
 
 ;Initialized global or static variables of g_scr_vehicle:
 SECTION .data
-s_flashTags: dd 0x1708c90, 0x1708c92, 0x1708c94, 0x1708c96, 0x1708c98, 0x0, 0x0, 0x0
-
 
 ;Initialized constant data of g_scr_vehicle:
 SECTION .rdata

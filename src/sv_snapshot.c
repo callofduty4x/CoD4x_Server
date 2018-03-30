@@ -2143,8 +2143,7 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
 
     while ( 1 )
     {
-      int xy = MSG_ReadLong(&msg);
-      assertx(xy == 0xdeadbee7, "val = %x\n", xy);
+      assert(MSG_ReadLong(&msg) == 0xdeadbee7);
 
       newnum = MSG_ReadEntityIndex(&msg, 10);
       if ( newnum == 1023 )
