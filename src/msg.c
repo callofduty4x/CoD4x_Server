@@ -492,7 +492,7 @@ int MSG_GetShort(msg_t *msg, int where)
   //2 bytes splitted up
   for(i = 0; i < 2; ++i)
   {
-    ((byte*)&c)[i] = MSG_GetByte(msg, where);
+    ((byte*)&c)[i] = MSG_GetByte(msg, where +i);
   }
   return c;
 }
@@ -517,7 +517,7 @@ int MSG_GetLong(msg_t *msg, int where)
   //4 bytes splitted up
   for(i = 0; i < 4; ++i)
   {
-    ((byte*)&c)[i] = MSG_GetByte(msg, where);
+    ((byte*)&c)[i] = MSG_GetByte(msg, where +i);
   }
   return c;
 }
@@ -541,7 +541,7 @@ int64_t MSG_GetInt64(msg_t *msg, int where)
   //8 bytes splitted up
   for(i = 0; i < 8; ++i)
   {
-    ((byte*)&c)[i] = MSG_GetByte(msg, where);
+    ((byte*)&c)[i] = MSG_GetByte(msg, where +i);
   }
   return c;
 }

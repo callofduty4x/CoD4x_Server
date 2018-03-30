@@ -199,9 +199,30 @@ void MSG_TestPSCode()
 }
 
 
+void Test_MSG_WriteReadLong()
+{
+    byte buffer[128];
+    byte s1[2];
+    byte s2[2];
+
+    msg_t msg;
+    MSG_Init(&msg, buffer, sizeof(buffer));
+    MSG_WriteLong(&msg, 0xdeadbee7);
+    s1[0] = buffer[0];
+    s1[1] = buffer[1];
+    s2[0] = buffer[2];
+    s2[1] = buffer[3];
+    MSG_InitReadOnlySplit(&msg, s1, sizeof(s1), s2, sizeof(s2));
+    int t = MSG_ReadLong(&msg);
+    assert(t == 0xdeadbee7);
+
+
+
+}
+
 void Tests_Init()
 {
 	Cmd_AddCommand("testpscode", MSG_TestPSCode);
-
+	Cmd_AddCommand("testmsgreadlong", Test_MSG_WriteReadLong);
 
 }
