@@ -289,17 +289,17 @@ __asm__("int $3");
 }
 
 
-
+*/
 void Tests_Init()
 {
-	Cmd_AddCommand("testpscode", MSG_TestPSCode);
+/*	Cmd_AddCommand("testpscode", MSG_TestPSCode);
 	Cmd_AddCommand("testmsgreadlong", Test_MSG_WriteReadLong);
 	Cmd_AddCommand("printdobj", FindAndPrintDObj_f);
 	Cmd_AddCommand("dumpvehicles", DumpVehicleInfo_f);
+*/
 }
 
 
 
 
 
-*/
