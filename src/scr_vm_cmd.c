@@ -236,3 +236,24 @@ __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer 
 	}
 	return NULL;
 }
+
+qboolean Scr_IsSyscallDefined( const char *name )
+{
+	scr_function_t  *cmd;
+	
+	for( cmd = scr_methods; cmd != NULL; cmd = cmd->next )
+	{
+		if( !Q_stricmp( name, cmd->name ) )
+		{
+			return qtrue;
+		}
+	}
+	for( cmd = scr_functions; cmd != NULL; cmd = cmd->next )
+	{
+		if( !Q_stricmp( name, cmd->name ) )
+		{
+			return qtrue;
+		}
+	}
+	return qfalse;
+}

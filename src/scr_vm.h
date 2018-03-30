@@ -683,6 +683,8 @@ extern "C"{
 #endif
 
 
+qboolean Scr_IsSyscallDefined( const char *name );
+void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath );
 void __cdecl Scr_InitVariables(void);			//VM
 void __cdecl Scr_Init(void);			//VM_Init
 void __cdecl Scr_Settings(int, int, int);

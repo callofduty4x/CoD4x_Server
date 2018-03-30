@@ -43,6 +43,7 @@
 #include "scr_vm_functions.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
+extern char* var_typename[];
 
 
 /*
@@ -3071,3 +3072,29 @@ void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
   }
 }
 
+void GScr_Float()
+{
+    mvabuf;
+
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: floatVal = float(<float, int, bool or string>);");
+        return;
+    }
+
+    int varType = Scr_GetType(0);
+    if (varType == 5)
+        Scr_AddFloat(Scr_GetFloat(0));
+    else if (varType == 6)
+        Scr_AddFloat(1.0 * Scr_GetInt(0));
+    else if (varType == 2)
+    {
+        char* strFloat = Scr_GetString(0);
+        double result = 0.0;
+        if (isdigit(strFloat[0]))
+            result = atof(strFloat);
+        Scr_AddFloat((float)result);
+    }
+    else
+        Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
+}

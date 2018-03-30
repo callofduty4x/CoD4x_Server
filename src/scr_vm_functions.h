@@ -546,3 +546,4 @@ void PlayerCmd_ClearPerks(scr_entref_t entref);
 void PlayerCmd_UnsetPerk(scr_entref_t entref);
 void PlayerCmd_SetRank(scr_entref_t entref);
 void PlayerCmd_UpdateDMScores(scr_entref_t entref);
+void GScr_Float();
