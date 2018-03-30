@@ -125,9 +125,9 @@ void Com_InitDObj();
 #ifdef __cplusplus
 }
 #endif
-//What is this???
+
 extern uint16_t serverObjMap[1024];
-extern DObj_t objBuf[];
+extern DObj_t objBuf[2048];
 
 #endif //__DOBJ_H__
 

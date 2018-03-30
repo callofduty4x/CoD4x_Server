@@ -4,6 +4,10 @@
 #include "msg.h"
 #include "server.h"
 #include "cmd.h"
+#include "dobj.h"
+#include "xassets/xmodel.h"
+#include "g_scr_vehicle.h"
+
 
 extern byte* archivedEntityFields[];
 extern byte* playerStateFields[];
@@ -198,7 +202,7 @@ void MSG_TestPSCode()
 	FS_FreeFile(to);
 }
 
-
+/*
 void Test_MSG_WriteReadLong()
 {
     byte buffer[128];
@@ -220,9 +224,82 @@ void Test_MSG_WriteReadLong()
 
 }
 
+
+int __cdecl SV_DObjGetBoneIndex_Debug(struct gentity_s *ent, unsigned int boneName)
+{
+  DObj *obj;
+  char index;
+
+  obj = Com_GetServerDObj(ent->s.number);
+
+  PrintDObjInfo(obj);
+
+  if ( obj )
+  {
+    index = -2;
+    if ( DObjGetBoneIndex(obj, boneName, &index, -1) )
+    {
+      return (uint8_t)index;
+    }
+  }
+  return -1;
+}
+
+
+void FindAndPrintDObj_f()
+{
+    DObj* obj;
+    XModel* model;
+    int i, k;
+
+    const char* n = Cmd_Argv(1);
+    if(*n == 0)
+    {
+	return;
+    }
+
+    for(i = 0; i < ARRAY_COUNT(objBuf); ++i)
+    {
+	obj = &objBuf[i];
+
+	if(obj->models == NULL)
+	{
+	    continue;
+	}
+	for(k = 0; k < obj->numModels; ++k)
+	{
+		model = obj->models[k];
+	}
+	
+    }
+
+}
+
+
+void DumpVehicleInfo_f()
+{
+    int i;
+    Com_Printf(CON_CHANNEL_SCRIPT, "vehicle: type\n");
+__asm__("int $3");
+    for(i = 0; i < 32; ++i)
+    {
+	Com_Printf(CON_CHANNEL_SCRIPT, "%s: %d\n", s_vehicleInfos[i].name, s_vehicleInfos[i].type);
+    }
+
+}
+
+
+
 void Tests_Init()
 {
 	Cmd_AddCommand("testpscode", MSG_TestPSCode);
 	Cmd_AddCommand("testmsgreadlong", Test_MSG_WriteReadLong);
-
+	Cmd_AddCommand("printdobj", FindAndPrintDObj_f);
+	Cmd_AddCommand("dumpvehicles", DumpVehicleInfo_f);
 }
+
+
+
+
+
+*/

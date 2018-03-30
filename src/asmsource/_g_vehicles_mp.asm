@@ -6549,7 +6549,6 @@ _cstring_artillery:		db "artillery",0
 _cstring_helicopter:		db "helicopter",0
 
 
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_17_60000038:		dd 0x418ccccd	; 17.6

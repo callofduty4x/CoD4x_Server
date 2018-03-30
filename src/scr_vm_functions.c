@@ -2463,7 +2463,7 @@ void GScr_Spawn()
 
 void GScr_SpawnHelicopter()
 {
-    const char *type;
+    const char *vehicleInfoName;
     const char *model;
     gentity_t *newent;
     gentity_t *ownerent;
@@ -2478,7 +2478,7 @@ void GScr_SpawnHelicopter()
     }
     Scr_GetVector(1, position);
     Scr_GetVector(2, rotation);
-    type = Scr_GetString(3);
+    vehicleInfoName = Scr_GetString(3);
     model = Scr_GetString(4);
 
     newent = G_Spawn();
@@ -2492,7 +2492,7 @@ void GScr_SpawnHelicopter()
     newent->r.currentAngles[1] = rotation[1];
     newent->r.currentAngles[2] = rotation[2];
 
-    G_SpawnHelicopter(newent, ownerent, type, model);
+    G_SpawnHelicopter(newent, ownerent, vehicleInfoName, model);
 
     Scr_AddEntity(newent);
 }

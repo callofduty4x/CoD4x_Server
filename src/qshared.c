@@ -1919,7 +1919,7 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
 {
   char dest[0x2000];
 
-  if ( pField->iFieldType < 15 )
+  if ( pField->iFieldType <= 11 )
   {
     switch ( pField->iFieldType )
     {
