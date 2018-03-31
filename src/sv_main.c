@@ -3602,21 +3602,20 @@ void __cdecl SV_ReconnectClients(int savepersist)
             continue;
         }
 
-        if ( client->netchan.remoteAddress.type == NA_BOT ) {
-            continue;
-        }
 
-        Com_sprintf(cmd, sizeof(cmd), "%c", savepersist != 0 ? 'n' : 'B');
-        SV_AddServerCommand(client, 1, cmd);
+        if ( client->netchan.remoteAddress.type != NA_BOT ) {
+            Com_sprintf(cmd, sizeof(cmd), "%c", savepersist != 0 ? 'n' : 'B');
+            SV_AddServerCommand(client, 1, cmd);
+        }
 
         // connect the client again, without the firstTime flag
         denied = ClientConnect(i, client->scriptId);
-
         if(denied){
             SV_DropClient(client, denied);
             Com_Printf(CON_CHANNEL_SERVER,"SV_MapRestart: dropped client %i - denied!\n", i);
             continue;
         }
+
 
         if(client->state == CS_ACTIVE){
             SV_ClientEnterWorld( client, &client->lastUsercmd );
@@ -3693,7 +3692,6 @@ void SV_MapRestart( qboolean fastRestart ){
     sv.state = SS_LOADING;
 //    sv.inFrame = 0;
     sv.restarting = qtrue;
-    sv.start_frameTime = com_frameTime;
 
     SV_RestartGameProgs(pers);
     SV_BuildXAssetCSString();
