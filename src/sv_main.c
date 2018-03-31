@@ -3583,6 +3583,48 @@ void SV_PostFastRestart(){
     PHandler_Event(PLUGINS_ONPOSTFASTRESTART, NULL);
 }
 
+
+void __cdecl SV_ReconnectClients(int savepersist)
+{
+    int i;
+    client_t* client;
+    const char  *denied;
+    char cmd[128];
+
+    // connect and begin all the clients
+    for ( i = 0, client = svs.clients; i < sv_maxclients->integer ; i++, client++ ) {
+        if(client->state < CS_PRIMED)
+        {
+            client->gamestateSent = 0;
+        }
+        // send the new gamestate to all connected clients
+        if ( client->state < CS_CONNECTED ) {
+            continue;
+        }
+
+        if ( client->netchan.remoteAddress.type == NA_BOT ) {
+            continue;
+        }
+
+        Com_sprintf(cmd, sizeof(cmd), "%c", savepersist != 0 ? 'n' : 'B');
+        SV_AddServerCommand(client, 1, cmd);
+
+        // connect the client again, without the firstTime flag
+        denied = ClientConnect(i, client->scriptId);
+
+        if(denied){
+            SV_DropClient(client, denied);
+            Com_Printf(CON_CHANNEL_SERVER,"SV_MapRestart: dropped client %i - denied!\n", i);
+            continue;
+        }
+
+        if(client->state == CS_ACTIVE){
+            SV_ClientEnterWorld( client, &client->lastUsercmd );
+        }
+    }
+}
+
+
 /*
 ================
 SV_MapRestart
@@ -3595,8 +3637,6 @@ void SV_MapRestart( qboolean fastRestart ){
 
     int i;
     client_t    *client;
-    const char  *denied;
-    char cmd[128];
 
     // make sure server is running
     if ( !com_sv_running->boolean ) {
@@ -3651,47 +3691,22 @@ void SV_MapRestart( qboolean fastRestart ){
     //sv.inFrame = 0;
 
     sv.state = SS_LOADING;
+//    sv.inFrame = 0;
     sv.restarting = qtrue;
+    sv.start_frameTime = com_frameTime;
 
     SV_RestartGameProgs(pers);
     SV_BuildXAssetCSString();
+
+/*    
     // run a few frames to allow everything to settle
     for ( i = 0 ; i < 3 ; i++ ) {
         svs.time += 100;
         SV_RunFrame();
     }
+*/
 
-    // connect and begin all the clients
-    for ( i = 0, client = svs.clients; i < sv_maxclients->integer ; i++, client++ ) {
-        if(client->state < CS_PRIMED)
-        {
-            client->gamestateSent = 0;
-        }
-        // send the new gamestate to all connected clients
-        if ( client->state < CS_CONNECTED ) {
-            continue;
-        }
-
-        if ( client->netchan.remoteAddress.type == NA_BOT ) {
-            continue;
-        }
-
-        Com_sprintf(cmd, sizeof(cmd), "%c", pers != 0 ? 'n' : 'B');
-        SV_AddServerCommand(client, 1, cmd);
-
-        // connect the client again, without the firstTime flag
-        denied = ClientConnect(i, client->scriptId);
-
-        if(denied){
-            SV_DropClient(client, denied);
-            Com_Printf(CON_CHANNEL_SERVER,"SV_MapRestart: dropped client %i - denied!\n", i);
-            continue;
-        }
-
-        if(client->state == CS_ACTIVE){
-            SV_ClientEnterWorld( client, &client->lastUsercmd );
-        }
-    }
+    SV_ReconnectClients(pers);
 
     // reset all the vm data in place without changing memory allocation
     // note that we do NOT set sv.state = SS_LOADING, so configstrings that
