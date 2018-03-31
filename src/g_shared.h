@@ -121,7 +121,7 @@ typedef struct
     objective_t objectives[16];
 
     // store latched cvars here that we want to get at often
-    unsigned int maxclients; //0x1e4
+    int maxclients; //0x1e4
     int framenum;
     int time;         // in msec		0x1ec
     int previousTime; // 0x1f0 so movers can back up when blocked
