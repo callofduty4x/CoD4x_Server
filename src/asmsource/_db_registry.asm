@@ -124,6 +124,9 @@
 	extern g_zoneNameList
 	extern db_hashTable
 	extern DB_RemoveLoadedSound
+	extern DB_BuildOSPath
+	extern DB_BuildZoneFilePath
+
 ;Exports of db_registry:
 	global g_zoneIndex
 	global DB_DynamicCloneXAssetHandler
@@ -246,8 +249,7 @@
 	global g_debugZoneName
 	global g_missingAssetFile
 	global DB_PrintAssetName
-	global DB_BuildOSPath_FromSource
-	global DB_Thread
+	global DB_TryLoadXFile
 	global DB_SyncExternalAssets
 	global DB_AllocXAssetHeader
 	global DB_FreeUnusedResources
@@ -257,7 +259,6 @@
 	global DB_AddXAsset
 	global DB_PostLoadXZone
 	global DB_Cleanup
-	global DB_InitThread
 	global DB_LoadXAssets
 	global Load_FontAsset
 	global Load_MenuAsset
@@ -1912,159 +1913,40 @@ DB_PrintAssetName:
 	ret
 
 
-;DB_BuildOSPath_FromSource(char const*, FF_DIR, int, char*)
-DB_BuildOSPath_FromSource:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x6c
-	mov esi, eax
-	mov edi, ecx
-	cmp edx, 0x1
-	jz DB_BuildOSPath_FromSource_10
-	cmp edx, 0x2
-	jz DB_BuildOSPath_FromSource_20
-	test edx, edx
-	jz DB_BuildOSPath_FromSource_30
-	add esp, 0x6c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_BuildOSPath_FromSource_30:
-	call Win_GetLanguage
-	mov ebx, eax
-	call Sys_DefaultInstallPath
-	mov [esp+0x14], esi
-	mov [esp+0x10], ebx
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_szonessff
-	mov [esp+0x4], edi
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Com_sprintf
-	add esp, 0x6c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_BuildOSPath_FromSource_10:
-	mov eax, fs_gameDirVar
-	mov eax, [eax]
-	mov ebx, [eax+0xc]
-	call Sys_DefaultInstallPath
-	mov [esp+0x14], esi
-	mov [esp+0x10], ebx
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_sssff
-	mov [esp+0x4], edi
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Com_sprintf
-	add esp, 0x6c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_BuildOSPath_FromSource_20:
-	mov dword [esp+0x4], _cstring__load
-	mov [esp], eax
-	call strstr
-	test eax, eax
-	jz DB_BuildOSPath_FromSource_40
-	sub eax, esi
-	add eax, 0x1
-	mov [esp+0x8], eax
-	mov [esp+0x4], esi
-	lea ebx, [ebp-0x58]
-	mov [esp], ebx
-	call Q_strncpyz
-DB_BuildOSPath_FromSource_50:
-	call Sys_DefaultInstallPath
-	mov [esp+0x18], esi
-	mov [esp+0x14], ebx
-	mov dword [esp+0x10], _cstring_usermaps
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_ssssff
-	mov [esp+0x4], edi
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Com_sprintf
-	add esp, 0x6c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_BuildOSPath_FromSource_40:
-	mov dword [esp+0x8], 0x40
-	mov [esp+0x4], esi
-	lea ebx, [ebp-0x58]
-	mov [esp], ebx
-	call Q_strncpyz
-	jmp DB_BuildOSPath_FromSource_50
-	nop
-	add [eax], al
-
-
-;DB_Thread(unsigned int)
-DB_Thread:
+;DB_TryLoadXFile()
+DB_TryLoadXFile:
 	push ebp
 	mov ebp, esp
 	push edi
 	push esi
 	push ebx
 	sub esp, 0x34c
-DB_Thread_20:
-	mov dword [esp], 0x2
-	call Sys_GetValue
-	mov [esp], eax
-	call _setjmp
-	test eax, eax
-	jz DB_Thread_10
-	call Com_ErrorAbort
-	jmp DB_Thread_20
-DB_Thread_30:
-	call Sys_DatabaseCompleted
-DB_Thread_10:
-	call Sys_WaitStartDatabase
-	call _ZN10MacDisplay16GetSharedContextEv
-	mov [esp], eax
-	call _ZN10MacDisplay17SetCurrentContextEP16OpaqueContextRef
 	mov eax, [g_zoneInfoCount]
 	test eax, eax
-	jz DB_Thread_10
-	mov eax, [g_zoneInfoCount]
-	mov [ebp-0x32c], eax
-	mov dword [g_zoneInfoCount], 0x0
-	test eax, eax
-	jz DB_Thread_30
+	jnz DB_TryLoadXFile_10
+DB_TryLoadXFile_Fini:
+	add esp, 0x34c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+DB_TryLoadXFile_10:
 	mov dword [ebp-0x330], 0x0
 	mov dword [ebp-0x31c], g_zoneInfo
-	jmp DB_Thread_40
-DB_Thread_80:
-	mov eax, fs_gameDirVar
-	mov eax, [eax]
-	mov eax, [eax+0xc]
-	cmp byte [eax], 0x0
-	jnz DB_Thread_50
-DB_Thread_240:
-	call Win_GetLanguage
-	mov ebx, eax
-	call Sys_DefaultInstallPath
-	mov [esp+0x14], edi
-	mov [esp+0x10], ebx
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_szonessff
-	mov dword [esp+0x4], 0x100
+DB_TryLoadXFile_NextZone:
+	mov edx, [ebp-0x31c]
+	mov edx, [edx+0x40]
+	mov [ebp-0x320], edx
+	mov eax, [ebp-0x330]
+	shl eax, 0x6
+	mov edx, [ebp-0x330]
+	lea edi, [eax+edx*4+g_zoneInfo]
 	lea ebx, [ebp-0x118]
-	mov [esp], ebx
-	call Com_sprintf
+	mov dword [esp+8], 256
+	mov [esp+4], ebx
+	mov [esp], edi
+	call DB_BuildZoneFilePath
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x60000000
 	mov dword [esp+0x10], 0x3
@@ -2075,69 +1957,47 @@ DB_Thread_240:
 	call _CreateFileA
 	mov esi, eax
 	cmp eax, 0xffffffff
-	jnz DB_Thread_60
+	jnz DB_TryLoadXFile_60
 	mov dword [esp+0x4], _cstring__load
 	mov [esp], ebx
 	call strstr
 	test eax, eax
-	jz DB_Thread_70
+	jz DB_TryLoadXFile_70
 	mov [esp+0x8], ebx
 	mov dword [esp+0x4], _cstring_warning_could_no
 	mov dword [esp], 0xa
 	call Com_PrintWarning
-DB_Thread_280:
+DB_TryLoadXFile_280:
 	mov edx, g_loadingAssets
 	mov eax, [edx]
 	sub eax, 0x1
 	mov [edx], eax
-DB_Thread_170:
+DB_TryLoadXFile_170:
 	add dword [ebp-0x330], 0x1
 	add dword [ebp-0x31c], 0x44
 	mov edx, [ebp-0x330]
-	cmp [ebp-0x32c], edx
-	jz DB_Thread_30
-DB_Thread_40:
-	mov edx, [ebp-0x31c]
-	mov edx, [edx+0x40]
-	mov [ebp-0x320], edx
-	mov eax, [ebp-0x330]
-	shl eax, 0x6
-	mov edx, [ebp-0x330]
-	lea edi, [eax+edx*4+g_zoneInfo]
-	mov dword [esp+0x4], _cstring_mp_patch
-	mov [esp], edi
-	call Q_stricmp
-	test eax, eax
-	jnz DB_Thread_80
-	mov dword [esp+0x18], 0x0
-	mov dword [esp+0x14], 0x60000000
-	mov dword [esp+0x10], 0x3
-	mov dword [esp+0xc], 0x0
-	mov dword [esp+0x8], 0x0
-	mov dword [esp+0x4], 0x80000000
-	mov dword [esp], _cstring_updatemp_patchff
-	call _CreateFileA
-	mov esi, eax
-	cmp eax, 0xffffffff
-	jz DB_Thread_90
-DB_Thread_60:
+	cmp [g_zoneInfoCount], edx
+	jnz DB_TryLoadXFile_NextZone
+	call Sys_DatabaseCompleted
+	jmp DB_TryLoadXFile_Fini
+DB_TryLoadXFile_60:
 	mov dword [ebp-0x324], 0x0
-DB_Thread_250:
+DB_TryLoadXFile_250:
 	mov dword [g_zoneIndex], 0x0
 	mov edx, 0x1
 	mov eax, g_zones
-	jmp DB_Thread_100
-DB_Thread_120:
+	jmp DB_TryLoadXFile_100
+DB_TryLoadXFile_120:
 	add edx, 0x1
 	add eax, 0xa8
 	cmp edx, 0x21
-	jz DB_Thread_110
-DB_Thread_100:
+	jz DB_TryLoadXFile_110
+DB_TryLoadXFile_100:
 	cmp byte [eax+0xa8], 0x0
-	jnz DB_Thread_120
+	jnz DB_TryLoadXFile_120
 	mov [g_zoneIndex], edx
 	mov eax, edx
-DB_Thread_260:
+DB_TryLoadXFile_260:
 	lea edx, [eax+eax*4]
 	lea edx, [eax+edx*4]
 	lea edx, [edx*8+g_zones]
@@ -2165,21 +2025,21 @@ DB_Thread_260:
 	add dword [g_zoneCount], 0x1
 	mov byte [g_loadingZone], 0x1
 	cmp byte [g_isRecoveringLostDevice], 0x0
-	jnz DB_Thread_130
-DB_Thread_180:
+	jnz DB_TryLoadXFile_130
+DB_TryLoadXFile_180:
 	mov byte [g_mayRecoverLostAssets], 0x0
 	cmp dword [ebp-0x320], 0x4
-	jz DB_Thread_140
-	jg DB_Thread_150
+	jz DB_TryLoadXFile_140
+	jg DB_TryLoadXFile_150
 	cmp dword [ebp-0x320], 0x1
-	jz DB_Thread_140
-DB_Thread_190:
+	jz DB_TryLoadXFile_140
+DB_TryLoadXFile_190:
 	xor eax, eax
 	mov [g_zoneAllocType], eax
 	mov eax, [g_zoneAllocType]
 	sub eax, 0x1
-	jz DB_Thread_160
-DB_Thread_200:
+	jz DB_TryLoadXFile_160
+DB_TryLoadXFile_200:
 	mov eax, [g_zoneAllocType]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -2211,168 +2071,62 @@ DB_Thread_200:
 	call PMem_EndAlloc
 	mov byte [g_loadingZone], 0x0
 	mov byte [g_mayRecoverLostAssets], 0x1
-	jmp DB_Thread_170
-DB_Thread_130:
+	jmp DB_TryLoadXFile_170
+DB_TryLoadXFile_130:
 	mov dword [esp], 0x19
 	call Sys_Sleep
 	cmp byte [g_isRecoveringLostDevice], 0x0
-	jz DB_Thread_180
+	jz DB_TryLoadXFile_180
 	mov dword [esp], 0x19
 	call Sys_Sleep
 	cmp byte [g_isRecoveringLostDevice], 0x0
-	jnz DB_Thread_130
-	jmp DB_Thread_180
-DB_Thread_150:
+	jnz DB_TryLoadXFile_130
+	jmp DB_TryLoadXFile_180
+DB_TryLoadXFile_150:
 	cmp dword [ebp-0x320], 0x20
-	jz DB_Thread_140
+	jz DB_TryLoadXFile_140
 	cmp dword [ebp-0x320], 0x40
-	jnz DB_Thread_190
-DB_Thread_140:
+	jnz DB_TryLoadXFile_190
+DB_TryLoadXFile_140:
 	mov eax, 0x1
 	mov [g_zoneAllocType], eax
 	mov eax, [g_zoneAllocType]
 	sub eax, 0x1
-	jnz DB_Thread_200
-DB_Thread_160:
+	jnz DB_TryLoadXFile_200
+DB_TryLoadXFile_160:
 	cmp byte [g_initializing], 0x0
-	jz DB_Thread_200
+	jz DB_TryLoadXFile_200
 	call Sys_Milliseconds
 	mov edi, eax
 	mov dword [esp+0x4], _cstring_waiting_for_init
 	mov dword [esp], 0x0
 	call Com_Printf
 	cmp byte [g_initializing], 0x0
-	jz DB_Thread_210
-DB_Thread_220:
+	jz DB_TryLoadXFile_210
+DB_TryLoadXFile_220:
 	mov dword [esp], 0x1
 	call Sys_Sleep
 	cmp byte [g_initializing], 0x0
-	jnz DB_Thread_220
-DB_Thread_210:
+	jnz DB_TryLoadXFile_220
+DB_TryLoadXFile_210:
 	call Sys_Milliseconds
 	sub eax, edi
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_waited_d_ms_for_
 	mov dword [esp], 0x10
 	call Com_Printf
-	jmp DB_Thread_200
-DB_Thread_50:
-	mov dword [esp+0x4], _cstring_mod
-	mov [esp], edi
-	call Q_stricmp
-	test eax, eax
-	jnz DB_Thread_230
-	lea eax, [ebp-0x218]
-	mov [esp], eax
-	mov ecx, 0x100
-	mov edx, 0x1
-	mov eax, edi
-	call DB_BuildOSPath_FromSource
-	mov dword [esp+0x18], 0x0
-	mov dword [esp+0x14], 0x60000000
-	mov dword [esp+0x10], 0x3
-	mov dword [esp+0xc], 0x0
-	mov dword [esp+0x8], 0x1
-	mov dword [esp+0x4], 0x80000000
-	lea edx, [ebp-0x218]
-	mov [esp], edx
-	call _CreateFileA
-	mov esi, eax
-	cmp eax, 0xffffffff
-	jz DB_Thread_240
-	mov dword [ebp-0x324], 0x1
-	jmp DB_Thread_250
-DB_Thread_110:
+	jmp DB_TryLoadXFile_200
+DB_TryLoadXFile_110:
 	mov eax, [g_zoneIndex]
-	jmp DB_Thread_260
-DB_Thread_230:
-	lea eax, [ebp-0x318]
-	mov [esp], eax
-	mov ecx, 0x100
-	xor edx, edx
-	mov eax, edi
-	call DB_BuildOSPath_FromSource
-	mov dword [esp+0x18], 0x0
-	mov dword [esp+0x14], 0x60000000
-	mov dword [esp+0x10], 0x3
-	mov dword [esp+0xc], 0x0
-	mov dword [esp+0x8], 0x1
-	mov dword [esp+0x4], 0x80000000
-	lea edx, [ebp-0x318]
-	mov [esp], edx
-	call _CreateFileA
-	cmp eax, 0xffffffff
-	jz DB_Thread_270
-	mov [esp], eax
-	call _CloseHandle
-	mov eax, 0x1
-DB_Thread_290:
-	test al, al
-	jnz DB_Thread_240
-	lea eax, [ebp-0x218]
-	mov [esp], eax
-	mov ecx, 0x100
-	mov edx, 0x2
-	mov eax, edi
-	call DB_BuildOSPath_FromSource
-	mov dword [esp+0x18], 0x0
-	mov dword [esp+0x14], 0x60000000
-	mov dword [esp+0x10], 0x3
-	mov dword [esp+0xc], 0x0
-	mov dword [esp+0x8], 0x1
-	mov dword [esp+0x4], 0x80000000
-	lea edx, [ebp-0x218]
-	mov [esp], edx
-	call _CreateFileA
-	mov esi, eax
-	cmp eax, 0xffffffff
-	jz DB_Thread_240
-	mov dword [ebp-0x324], 0x2
-	jmp DB_Thread_250
-DB_Thread_70:
+	jmp DB_TryLoadXFile_260
+DB_TryLoadXFile_70:
 	call Sys_DatabaseCompleted
 	lea eax, [ebp-0x118]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_error_could_not_
 	mov dword [esp], 0x2
 	call Com_Error
-	jmp DB_Thread_280
-DB_Thread_270:
-	xor eax, eax
-	jmp DB_Thread_290
-DB_Thread_90:
-	mov dword [esp+0x4], _cstring_loading_mp_patch
-	mov dword [esp], 0x10
-	call Com_Printf
-	call Win_GetLanguage
-	mov ebx, eax
-	call Sys_DefaultInstallPath
-	mov [esp+0x14], edi
-	mov [esp+0x10], ebx
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_szonessff
-	mov dword [esp+0x4], 0x100
-	lea eax, [ebp-0x118]
-	mov [esp], eax
-	call Com_sprintf
-	mov dword [esp+0x18], 0x0
-	mov dword [esp+0x14], 0x60000000
-	mov dword [esp+0x10], 0x3
-	mov dword [esp+0xc], 0x0
-	mov dword [esp+0x8], 0x0
-	mov dword [esp+0x4], 0x80000000
-	lea edx, [ebp-0x118]
-	mov [esp], edx
-	call _CreateFileA
-	mov esi, eax
-	cmp eax, 0xffffffff
-	jnz DB_Thread_60
-	lea eax, [ebp-0x118]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_warning_could_no
-	mov dword [esp], 0xa
-	call Com_PrintWarning
-	jmp DB_Thread_280
+	jmp DB_TryLoadXFile_280
 
 
 ;DB_SyncExternalAssets()
@@ -3599,23 +3353,6 @@ DB_Cleanup:
 	jmp Sys_SyncDatabase
 	nop
 
-;DB_InitThread()
-DB_InitThread:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov dword [esp], DB_Thread
-	call Sys_SpawnDatabaseThread
-	test al, al
-	jz DB_InitThread_10
-	leave
-	ret
-DB_InitThread_10:
-	mov dword [esp], _cstring_failed_to_create
-	call Sys_Error
-	leave
-	ret
-
 
 ;DB_LoadXAssets(XZoneInfo*, unsigned int, int)
 DB_LoadXAssets:
@@ -4488,7 +4225,7 @@ DB_AddUserMapDir_10:
 	mov ecx, 0x100
 	mov edx, 0x2
 	mov eax, [ebp+0x8]
-	call DB_BuildOSPath_FromSource
+	call DB_BuildOSPath
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x60000000
 	mov dword [esp+0x10], 0x3
@@ -4537,7 +4274,7 @@ DB_ModFileExists_10:
 	mov ecx, 0x100
 	mov edx, 0x1
 	mov eax, _cstring_mod
-	call DB_BuildOSPath_FromSource
+	call DB_BuildOSPath
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x60000000
 	mov dword [esp+0x10], 0x3

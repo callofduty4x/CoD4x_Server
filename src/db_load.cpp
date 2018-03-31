@@ -1026,6 +1026,62 @@ void Load_XModelBoneNames()
   }
 }
 
+void DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
+{
+    if(fs_gameDirVar->string && fs_gameDirVar->string[0] && Q_stricmp(zoneName, "mod") == 0)
+    {
+        //We look for mod files
+        DB_BuildOSPath(zoneName, 1, maxlen, oFilename);
+        return;
+    }
+
+    //We look for files in zone/language/*
+    DB_BuildOSPath(zoneName, 0, maxlen, oFilename);
+
+    if(FS_FileExists(oFilename))
+    {
+        return;
+    }
+
+    //Nothing found in zone dir? Look in Usermaps if running mods
+    if(fs_gameDirVar->string && fs_gameDirVar->string[0])
+    {
+        //We look for usermap files
+        DB_BuildOSPath(zoneName, 2, maxlen, oFilename);
+        return;
+    }
+}
+
+
+void __cdecl __noreturn DB_Thread(unsigned int threadContext)
+{
+  jmp_buf* savestate;
+
+  assertx( threadContext == THREAD_CONTEXT_DATABASE, "%i, %i", threadContext, THREAD_CONTEXT_DATABASE);
+
+  savestate = (jmp_buf*)Sys_GetValue(2);
+  if ( setjmp( *savestate ) )
+  {
+    Com_ErrorAbort();
+  }
+
+  R_ReleaseDXDeviceOwnership();
+
+  while ( 1 )
+  {
+    Sys_WaitStartDatabase();
+    DB_TryLoadXFile();
+  }
+}
+
+
+void __cdecl DB_InitThread()
+{
+  if ( !Sys_SpawnDatabaseThread(DB_Thread) )
+  {
+    Sys_Error("Failed to create database thread");
+  }
+}
 
 }
 

@@ -329,6 +329,13 @@ void SND_AddPhysicsSound(snd_alias_list_t *a1, float *a2)
 
 }
 
+
+void __cdecl R_ReleaseDXDeviceOwnership()
+{
+
+}
+
+
 }
 
 class OpaqueContextRef

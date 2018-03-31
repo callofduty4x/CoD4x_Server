@@ -84,8 +84,9 @@ extern unsigned int com_expectedHunkUsage;
 extern qboolean com_fixedConsolePosition;
 int Com_IsDeveloper();
 qboolean Com_LoadBinaryImage();
-
+void __cdecl __noreturn Com_ErrorAbort();
 void Com_SyncThreads();
+void R_ReleaseDXDeviceOwnership();
 
 #define MAXPRINTMSG 4096
 #define	MAX_RELIABLE_COMMANDS	128	// max string commands buffered for restransmit
