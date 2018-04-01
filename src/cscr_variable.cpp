@@ -4341,13 +4341,13 @@ void __cdecl Scr_EvalPlus(VariableValue *value1, VariableValue *value2)
   switch ( value1->type )
   {
     case VAR_STRING:
-      s1 = SL_ConvertToString(value1->u.intValue);
-      s2 = SL_ConvertToString(value2->u.intValue);
-      s1len = SL_GetStringLen(value1->u.intValue);
-      len = s1len + SL_GetStringLen(value2->u.intValue) + 1;
+      s1 = SL_ConvertToString(value1->u.stringValue);
+      s2 = SL_ConvertToString(value2->u.stringValue);
+      s1len = SL_GetStringLen(value1->u.stringValue);
+      len = s1len + SL_GetStringLen(value2->u.stringValue) + 1;
       if(len >= sizeof(str)){
-        SL_RemoveRefToString(value1->u.intValue);
-        SL_RemoveRefToString(value2->u.intValue);
+        SL_RemoveRefToString(value1->u.stringValue);
+        SL_RemoveRefToString(value2->u.stringValue);
         value1->type = VAR_UNDEFINED;
         value2->type = VAR_UNDEFINED;
         Scr_Error(va("cannot concat \"%s\" and \"%s\" - max string length exceeded", s1, s2));
@@ -4356,9 +4356,9 @@ void __cdecl Scr_EvalPlus(VariableValue *value1, VariableValue *value2)
       strcpy(str, s1);
       strcpy(str + s1len, s2);
       s = SL_GetStringOfSize(str, 0, len, 15);
-      SL_RemoveRefToString(value1->u.intValue);
-      SL_RemoveRefToString(value2->u.intValue);
-      value1->u.intValue = s;
+      SL_RemoveRefToString(value1->u.stringValue);
+      SL_RemoveRefToString(value2->u.stringValue);
+      value1->u.stringValue = s;
       break;
     case VAR_VECTOR:
       vec = Scr_AllocVectorInternal();
