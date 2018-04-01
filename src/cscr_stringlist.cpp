@@ -133,7 +133,18 @@ int SL_GetRefStringLen(RefString *refString)
 {
   int len;
 
-  for ( len = refString->byteLen - 1; refString->str[len]; len += 256 );
+  if(!refString->byteLen)
+  {
+    len = 256 - 1; //Bugfix for 256 % 256 = 0 or 512 % 256 = 0 or... Just promote it to 256
+  }else{
+    len = refString->byteLen - 1;
+  }
+
+  while(refString->str[len])
+  {
+    len += 256;
+  }
+
   return len;
 }
 

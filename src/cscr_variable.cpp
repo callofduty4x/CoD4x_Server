@@ -4355,7 +4355,9 @@ void __cdecl Scr_EvalPlus(VariableValue *value1, VariableValue *value2)
       }
       strcpy(str, s1);
       strcpy(str + s1len, s2);
+
       s = SL_GetStringOfSize(str, 0, len, 15);
+
       SL_RemoveRefToString(value1->u.stringValue);
       SL_RemoveRefToString(value2->u.stringValue);
       value1->u.stringValue = s;
