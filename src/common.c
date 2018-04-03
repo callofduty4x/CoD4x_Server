@@ -1309,6 +1309,10 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		va_end (argptr);
 		lastErrorCode = code;
 		/* Terminate this thread and wait for the main-thread entering this function */
+		if(Sys_IsDatabaseThread())
+		{
+			Sys_DatabaseCompleted();
+		}
 		Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
 		Sys_ExitThread(-1);
 		return;

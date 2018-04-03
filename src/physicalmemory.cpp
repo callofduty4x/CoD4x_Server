@@ -199,6 +199,8 @@ void PMem_FreeInPrim(PhysicalMemoryPrim *prim, const char *name, int location)
   {
     if ( prim->allocList[allocIndex].name == name )
     {
+      Com_Printf(CON_CHANNEL_SYSTEM, "^1PMem_FreeIndex( %s %d )\n", name, allocIndex);
+
       PMem_FreeIndex(prim, allocIndex, location);
       return;
     }
@@ -210,7 +212,6 @@ extern "C"{
 void __cdecl PMem_Free(const char *name)
 {
   int i;
-
   for ( i = 0; i < 2; ++i )
   {
     if ( i )
@@ -232,6 +233,8 @@ void __cdecl PMem_EndAlloc(const char *name, unsigned int allocType)
 {
   assert ( allocType < PHYS_ALLOC_COUNT);
 
+  Com_Printf(CON_CHANNEL_SYSTEM, "^1PMem_EndAlloc(%s, %d)\n", name, allocType);
+
   Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
   PMem_EndAllocInPrim(&g_mem.prim[allocType], name);
   Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
@@ -241,6 +244,8 @@ void __cdecl PMem_EndAlloc(const char *name, unsigned int allocType)
 void __cdecl PMem_BeginAlloc(const char *name, unsigned int allocType, EMemTrack memTrack)
 {
   assert ( allocType < PHYS_ALLOC_COUNT);
+
+  Com_Printf(CON_CHANNEL_SYSTEM, "^1PMem_BeginAlloc(%s, %d, %d)\n", name, allocType, (int)memTrack);
 
   Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
   PMem_BeginAllocInPrim(&g_mem.prim[allocType], name, memTrack);
@@ -307,4 +312,4 @@ void PMem_DumpMemStats()
 
 }
 
-}
+};

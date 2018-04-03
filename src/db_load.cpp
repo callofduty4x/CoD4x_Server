@@ -73,7 +73,7 @@ volatile int g_loadedSize;
 volatile int g_totalExternalBytes;
 volatile int g_loadedExternalBytes;
 volatile int g_totalStreamBytes;
-qboolean g_trackLoadProgress;
+bool g_trackLoadProgress;
 int g_totalWait;
 struct XBlock* g_streamBlocks;
 unsigned int g_streamDelayIndex;
@@ -81,6 +81,45 @@ byte* g_streamPosArray[XBLOCK_COUNT];
 unsigned int g_streamPosStackIndex;
 bool g_minimumFastFileLoaded;
 volatile unsigned int g_loadingAssets;
+volatile bool g_loadingZone;
+volatile unsigned int g_zoneInfoCount;
+unsigned int g_zoneIndex;
+bool g_initializing;
+int g_zoneCount;
+bool g_isRecoveringLostDevice;
+bool g_mayRecoverLostAssets;
+
+struct XZoneInfoInternal
+{
+  char name[64];
+  int flags;
+};
+
+XZoneInfoInternal g_zoneInfo[32];
+
+
+typedef struct
+{
+  XBlock blocks[XBLOCK_COUNT];
+  int allocVertexBuffer;
+  int allocIndexBuffer;
+  IDirect3DVertexBuffer9 *vertexBufferHandle;
+  IDirect3DIndexBuffer9 *indexBufferHandle;
+}XZoneMemory;
+
+
+typedef struct
+{
+  XZoneInfoInternal zoneinfo;
+  int index;
+  XZoneMemory zonememory;
+  int zoneSize;
+  int ff_dir;
+}XZone;
+
+XZone g_zones[33];
+uint8_t g_zoneHandles[ARRAY_COUNT(g_zones)];
+
 /*
 float* varfloat;
 int16_t* varshort;
@@ -442,7 +481,7 @@ void DB_ReadXFileStage()
     }
 }
 
-void __cdecl DB_ResetZoneSize(qboolean trackLoadProgress)
+void __cdecl DB_ResetZoneSize(bool trackLoadProgress)
 {
   g_totalSize = 0;
   g_loadedSize = 0;
@@ -867,7 +906,7 @@ bool __cdecl DB_LoadXFile(const char *path, HANDLE f, const char *filename, XBlo
   memset(&g_load, 0, sizeof(g_load));
   g_load.f = f;
   g_load.filename = filename;
-  g_load.flags = 0;//flags;
+  g_load.flags = flags;
   g_load.blocks = blocks;
   g_load.interrupt = interrupt;
   g_load.allocType = allocType;
@@ -882,7 +921,7 @@ bool __cdecl DB_LoadXFile(const char *path, HANDLE f, const char *filename, XBlo
   g_load.stream.next_in = (byte*)buf;
   g_load.stream.avail_in = 0;
   g_load.deflateBufferPos = DEFLATE_BUFFER_SIZE;
-  //DB_LoadXFileInternal();
+  DB_LoadXFileInternal();
   return 1;
 }
 
@@ -1053,6 +1092,145 @@ void DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
 }
 
 
+void __cdecl DB_Sleep(int usec)
+{
+    Sys_SleepUSec(usec);
+}
+
+int DB_GetZoneAllocType(int zoneFlags)
+{
+  switch ( zoneFlags )
+  {
+    case 1:
+    case 4:
+    case 0x20:
+    case 0x40:
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+
+bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags, char* g_fileBuf)
+{
+    HANDLE zoneFile;
+    char filename[256];
+    unsigned int i;
+    XZone* z;
+    unsigned int startWaitingTime;
+    unsigned int g_zoneAllocType;
+//    char g_fileBuf[DBFILE_BUFFER_SIZE];
+
+    DB_BuildZoneFilePath(zoneName, filename, sizeof(filename));
+    zoneFile = _CreateFileA(filename, 0x80000000, 1, 0, 3, 0x60000000, 0);
+    if ( zoneFile == (HANDLE)-1 )
+    {
+      if ( strstr(filename, "_load") )
+      {
+        Com_PrintWarning(CON_CHANNEL_FILES, "WARNING: Could not find zone '%s'\n", filename);
+      }
+      else
+      {
+        Sys_DatabaseCompleted();
+        Com_Error(ERR_DROP, "ERROR: Could not find zone '%s'\n", filename);
+      }
+      return 0;
+    }
+    g_zoneIndex = 0;
+    for ( i = 1; i < ARRAY_COUNT(g_zones); ++i )
+    {
+      if ( !g_zones[i].zoneinfo.name[0] )
+      {
+        g_zoneIndex = i;
+        break;
+      }
+    }
+
+    z = &g_zones[g_zoneIndex];
+    memset(z, 0, sizeof(XZone));
+    g_zoneHandles[g_zoneCount] = g_zoneIndex;
+
+    Q_strncpyz(z->zoneinfo.name, zoneName, sizeof(z->zoneinfo.name));
+    z->zoneinfo.flags = zoneFlags;
+    z->zoneSize = _GetFileSize(zoneFile, 0);
+    z->ff_dir = 0;
+
+    ++g_zoneCount;
+    g_loadingZone = 1;
+
+    while ( g_isRecoveringLostDevice )
+    {
+      Sys_SleepUSec(25000);
+    }
+    g_mayRecoverLostAssets = 0;
+
+    g_zoneAllocType = DB_GetZoneAllocType(zoneFlags);
+
+    if(g_zoneAllocType == 1 && g_initializing)
+    {
+      startWaitingTime = Sys_Milliseconds();
+      Com_Printf(CON_CHANNEL_DONT_FILTER, "Waiting for $init to finish.  There may be assets missing from code_post_gfx.\n");
+
+      while ( g_initializing )
+      {
+        DB_Sleep(1000);
+      }
+
+      Com_Printf(CON_CHANNEL_SYSTEM, "Waited %d ms for $init to finish.\n", Sys_Milliseconds() - startWaitingTime);
+    }
+
+    PMem_BeginAlloc(z->zoneinfo.name, g_zoneAllocType, TRACK_FASTFILE);
+
+    z->index = g_zoneAllocType;
+
+    DB_ResetZoneSize((zoneFlags & 8) != 0);
+    DB_LoadXFile(filename, zoneFile, z->zoneinfo.name, z->zonememory.blocks, NULL, g_fileBuf, g_zoneAllocType, 0);
+
+    PMem_EndAlloc(z->zoneinfo.name, g_zoneAllocType);
+    g_loadingZone = 0;
+    g_mayRecoverLostAssets = 1;
+    return 1;
+}
+
+
+void DB_TryLoadXFile()
+{
+  bool isCodeZone;
+  unsigned int j;
+  unsigned int zoneInfoCount;
+
+  if ( g_zoneInfoCount )
+  {
+    zoneInfoCount = g_zoneInfoCount;
+    g_zoneInfoCount = 0;
+    assert(!g_loadingZone);
+    char *g_fileBuf = (char*)Z_Malloc(DBFILE_BUFFER_SIZE);
+
+    for ( j = 0; j < zoneInfoCount; ++j )
+    {
+      isCodeZone = (g_zoneInfo[j].flags & 1) != 0;
+      if ( !DB_TryLoadXFileInternal(g_zoneInfo[j].name, g_zoneInfo[j].flags, g_fileBuf) )
+      {
+          --g_loadingAssets;
+      }
+    }
+    assert(!g_loadingZone);
+    assert(!g_loadingAssets);
+/*
+    Sys_LockWrite(&s_dbReorder.critSect);
+    DB_EndReorderZone();
+    Sys_UnlockWrite(&s_dbReorder.critSect);
+*/
+    Sys_DatabaseCompleted();
+    Z_Free(g_fileBuf);
+    return;
+  }
+  assert(!g_loadingAssets);
+}
+
+
+
 void __cdecl __noreturn DB_Thread(unsigned int threadContext)
 {
   jmp_buf* savestate;
@@ -1081,6 +1259,12 @@ void __cdecl DB_InitThread()
   {
     Sys_Error("Failed to create database thread");
   }
+}
+
+
+void __cdecl DB_SetInitializing(bool inUse)
+{
+  g_initializing = inUse;
 }
 
 }

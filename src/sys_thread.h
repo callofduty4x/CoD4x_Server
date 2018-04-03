@@ -91,6 +91,7 @@ void Sys_RunDelegatedEvents();
 void Sys_SleepUSec(int usec);
 void __cdecl Sys_WaitStartDatabase();
 qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p));
+void __cdecl Sys_DatabaseCompleted();
 
 signed int __cdecl Sys_WaitForObject(HANDLE handle);
 signed int __cdecl Sys_IsObjectSignaled(HANDLE handle);

@@ -126,13 +126,20 @@
 	extern DB_RemoveLoadedSound
 	extern DB_BuildOSPath
 	extern DB_BuildZoneFilePath
+	extern Sys_SleepSec
+	extern g_loadingZone
+	extern g_zoneInfoCount
+	extern g_zoneInfo
+	extern g_zoneIndex
+	extern g_zoneCount
+	extern g_initializing
+	extern g_mayRecoverLostAssets
+	extern g_isRecoveringLostDevice
 
 ;Exports of db_registry:
-	global g_zoneIndex
 	global DB_DynamicCloneXAssetHandler
 	global DB_DynamicCloneMenu
 	global DB_DynamicCloneWeaponDef
-	global g_zoneCount
 	global db_hashCritSect
 	global g_defaultAssetCount
 	global g_defaultAssetName
@@ -186,14 +193,8 @@
 	global DB_FreeXAssetHeader_FxImpactTable
 	global DB_FreeXAssetHeader_RawFile
 	global DB_FreeXAssetHeader_StringTable
-	global g_zoneInfo
-	global g_zoneInfoCount
 	global g_fileBuf
-	global g_initializing
 	global g_zoneAllocType
-	global g_mayRecoverLostAssets
-	global g_isRecoveringLostDevice
-	global g_loadingZone
 	global g_sync
 	global g_zoneInited
 	global g_poolSize
@@ -249,7 +250,6 @@
 	global g_debugZoneName
 	global g_missingAssetFile
 	global DB_PrintAssetName
-	global DB_TryLoadXFile
 	global DB_SyncExternalAssets
 	global DB_AllocXAssetHeader
 	global DB_FreeUnusedResources
@@ -278,7 +278,6 @@
 	global Mark_MapEntsAsset
 	global Mark_RawFileAsset
 	global DB_IsXAssetDefault
-	global DB_SetInitializing
 	global DB_ShutdownXAssets
 	global DB_UpdateDebugZone
 	global Load_ComWorldAsset
@@ -1913,221 +1912,6 @@ DB_PrintAssetName:
 	ret
 
 
-;DB_TryLoadXFile()
-DB_TryLoadXFile:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x34c
-	mov eax, [g_zoneInfoCount]
-	test eax, eax
-	jnz DB_TryLoadXFile_10
-DB_TryLoadXFile_Fini:
-	add esp, 0x34c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_TryLoadXFile_10:
-	mov dword [ebp-0x330], 0x0
-	mov dword [ebp-0x31c], g_zoneInfo
-DB_TryLoadXFile_NextZone:
-	mov edx, [ebp-0x31c]
-	mov edx, [edx+0x40]
-	mov [ebp-0x320], edx
-	mov eax, [ebp-0x330]
-	shl eax, 0x6
-	mov edx, [ebp-0x330]
-	lea edi, [eax+edx*4+g_zoneInfo]
-	lea ebx, [ebp-0x118]
-	mov dword [esp+8], 256
-	mov [esp+4], ebx
-	mov [esp], edi
-	call DB_BuildZoneFilePath
-	mov dword [esp+0x18], 0x0
-	mov dword [esp+0x14], 0x60000000
-	mov dword [esp+0x10], 0x3
-	mov dword [esp+0xc], 0x0
-	mov dword [esp+0x8], 0x1
-	mov dword [esp+0x4], 0x80000000
-	mov [esp], ebx
-	call _CreateFileA
-	mov esi, eax
-	cmp eax, 0xffffffff
-	jnz DB_TryLoadXFile_60
-	mov dword [esp+0x4], _cstring__load
-	mov [esp], ebx
-	call strstr
-	test eax, eax
-	jz DB_TryLoadXFile_70
-	mov [esp+0x8], ebx
-	mov dword [esp+0x4], _cstring_warning_could_no
-	mov dword [esp], 0xa
-	call Com_PrintWarning
-DB_TryLoadXFile_280:
-	mov edx, g_loadingAssets
-	mov eax, [edx]
-	sub eax, 0x1
-	mov [edx], eax
-DB_TryLoadXFile_170:
-	add dword [ebp-0x330], 0x1
-	add dword [ebp-0x31c], 0x44
-	mov edx, [ebp-0x330]
-	cmp [g_zoneInfoCount], edx
-	jnz DB_TryLoadXFile_NextZone
-	call Sys_DatabaseCompleted
-	jmp DB_TryLoadXFile_Fini
-DB_TryLoadXFile_60:
-	mov dword [ebp-0x324], 0x0
-DB_TryLoadXFile_250:
-	mov dword [g_zoneIndex], 0x0
-	mov edx, 0x1
-	mov eax, g_zones
-	jmp DB_TryLoadXFile_100
-DB_TryLoadXFile_120:
-	add edx, 0x1
-	add eax, 0xa8
-	cmp edx, 0x21
-	jz DB_TryLoadXFile_110
-DB_TryLoadXFile_100:
-	cmp byte [eax+0xa8], 0x0
-	jnz DB_TryLoadXFile_120
-	mov [g_zoneIndex], edx
-	mov eax, edx
-DB_TryLoadXFile_260:
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	lea edx, [edx*8+g_zones]
-	mov [ebp-0x328], edx
-	mov dword [esp+0x8], 0xa8
-	mov dword [esp+0x4], 0x0
-	mov [esp], edx
-	call memset
-	movzx edx, byte [g_zoneIndex]
-	mov eax, [g_zoneCount]
-	mov [eax+g_zoneHandles], dl
-	mov ebx, [ebp-0x328]
-	mov dword [esp+0x8], 0x40
-	mov [esp+0x4], edi
-	mov [esp], ebx
-	call Q_strncpyz
-	mov edx, [ebp-0x320]
-	mov [ebx+0x40], edx
-	mov dword [esp+0x4], 0x0
-	mov [esp], esi
-	call _GetFileSize
-	mov [ebx+0xa0], eax
-	mov eax, [ebp-0x324]
-	mov [ebx+0xa4], eax
-	add dword [g_zoneCount], 0x1
-	mov byte [g_loadingZone], 0x1
-	cmp byte [g_isRecoveringLostDevice], 0x0
-	jnz DB_TryLoadXFile_130
-DB_TryLoadXFile_180:
-	mov byte [g_mayRecoverLostAssets], 0x0
-	cmp dword [ebp-0x320], 0x4
-	jz DB_TryLoadXFile_140
-	jg DB_TryLoadXFile_150
-	cmp dword [ebp-0x320], 0x1
-	jz DB_TryLoadXFile_140
-DB_TryLoadXFile_190:
-	xor eax, eax
-	mov [g_zoneAllocType], eax
-	mov eax, [g_zoneAllocType]
-	sub eax, 0x1
-	jz DB_TryLoadXFile_160
-DB_TryLoadXFile_200:
-	mov eax, [g_zoneAllocType]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call PMem_BeginAlloc
-	mov eax, [g_zoneAllocType]
-	mov edx, [ebp-0x328]
-	mov [edx+0x44], eax
-	shr dword [ebp-0x320], 0x3
-	and dword [ebp-0x320], 0x1
-	mov eax, [ebp-0x320]
-	mov [esp], eax
-	call DB_ResetZoneSize
-	mov eax, [g_zoneAllocType]
-	mov [esp+0x18], eax
-	mov dword [esp+0x14], g_fileBuf
-	mov dword [esp+0x10], 0x0
-	mov eax, [ebp-0x328]
-	add eax, 0x48
-	mov [esp+0xc], eax
-	mov [esp+0x8], ebx
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x118]
-	mov [esp], eax
-	call DB_LoadXFile
-	call DB_LoadXFileInternal
-	mov eax, [g_zoneAllocType]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call PMem_EndAlloc
-	mov byte [g_loadingZone], 0x0
-	mov byte [g_mayRecoverLostAssets], 0x1
-	jmp DB_TryLoadXFile_170
-DB_TryLoadXFile_130:
-	mov dword [esp], 0x19
-	call Sys_Sleep
-	cmp byte [g_isRecoveringLostDevice], 0x0
-	jz DB_TryLoadXFile_180
-	mov dword [esp], 0x19
-	call Sys_Sleep
-	cmp byte [g_isRecoveringLostDevice], 0x0
-	jnz DB_TryLoadXFile_130
-	jmp DB_TryLoadXFile_180
-DB_TryLoadXFile_150:
-	cmp dword [ebp-0x320], 0x20
-	jz DB_TryLoadXFile_140
-	cmp dword [ebp-0x320], 0x40
-	jnz DB_TryLoadXFile_190
-DB_TryLoadXFile_140:
-	mov eax, 0x1
-	mov [g_zoneAllocType], eax
-	mov eax, [g_zoneAllocType]
-	sub eax, 0x1
-	jnz DB_TryLoadXFile_200
-DB_TryLoadXFile_160:
-	cmp byte [g_initializing], 0x0
-	jz DB_TryLoadXFile_200
-	call Sys_Milliseconds
-	mov edi, eax
-	mov dword [esp+0x4], _cstring_waiting_for_init
-	mov dword [esp], 0x0
-	call Com_Printf
-	cmp byte [g_initializing], 0x0
-	jz DB_TryLoadXFile_210
-DB_TryLoadXFile_220:
-	mov dword [esp], 0x1
-	call Sys_Sleep
-	cmp byte [g_initializing], 0x0
-	jnz DB_TryLoadXFile_220
-DB_TryLoadXFile_210:
-	call Sys_Milliseconds
-	sub eax, edi
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_waited_d_ms_for_
-	mov dword [esp], 0x10
-	call Com_Printf
-	jmp DB_TryLoadXFile_200
-DB_TryLoadXFile_110:
-	mov eax, [g_zoneIndex]
-	jmp DB_TryLoadXFile_260
-DB_TryLoadXFile_70:
-	call Sys_DatabaseCompleted
-	lea eax, [ebp-0x118]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_error_could_not_
-	mov dword [esp], 0x2
-	call Com_Error
-	jmp DB_TryLoadXFile_280
-
 
 ;DB_SyncExternalAssets()
 DB_SyncExternalAssets:
@@ -3510,6 +3294,10 @@ DB_LoadXAssets_160:
 	mov dword [esp+0x4], _cstring_unloaded_fastfil
 	mov dword [esp], 0x10
 	call Com_Printf
+
+	mov dword [esp], 2
+	call Sys_SleepSec
+
 	mov eax, [ebx+0x44]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -3576,6 +3364,10 @@ DB_LoadXAssets_220:
 	mov dword [esp+0x4], _cstring_unloaded_fastfil
 	mov dword [esp], 0x10
 	call Com_Printf
+
+	mov dword [esp], 2
+	call Sys_SleepSec
+
 	mov eax, [ebx+0x44]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -3642,6 +3434,10 @@ DB_LoadXAssets_280:
 	mov dword [esp+0x4], _cstring_unloaded_fastfil
 	mov dword [esp], 0x10
 	call Com_Printf
+
+	mov dword [esp], 2
+	call Sys_SleepSec
+
 	mov eax, [ebx+0x44]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -3709,6 +3505,10 @@ DB_LoadXAssets_340:
 	mov dword [esp+0x4], _cstring_unloaded_fastfil
 	mov dword [esp], 0x10
 	call Com_Printf
+
+	mov dword [esp], 2
+	call Sys_SleepSec
+
 	mov eax, [ebx+0x44]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -3777,6 +3577,10 @@ DB_LoadXAssets_400:
 	mov dword [esp+0x4], _cstring_unloaded_fastfil
 	mov dword [esp], 0x10
 	call Com_Printf
+
+	mov dword [esp], 2
+	call Sys_SleepSec
+
 	mov eax, [ebx+0x44]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -3844,6 +3648,10 @@ DB_LoadXAssets_460:
 	mov dword [esp+0x4], _cstring_unloaded_fastfil
 	mov dword [esp], 0x10
 	call Com_Printf
+
+	mov dword [esp], 2
+	call Sys_SleepSec
+
 	mov eax, [ebx+0x44]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -4717,17 +4525,6 @@ DB_IsXAssetDefault_90:
 	nop
 
 
-;DB_SetInitializing(unsigned char)
-DB_SetInitializing:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov [g_initializing], al
-	pop ebp
-	ret
-	nop
-
-
 ;DB_ShutdownXAssets()
 DB_ShutdownXAssets:
 	push ebp
@@ -4837,6 +4634,10 @@ DB_ShutdownXAssets_120:
 	mov dword [esp+0x4], _cstring_unloaded_fastfil
 	mov dword [esp], 0x10
 	call Com_Printf
+
+	mov dword [esp], 2
+	call Sys_SleepSec
+
 	mov eax, [ebx+0x44]
 	mov [esp+0x4], eax
 	mov [esp], ebx
@@ -5795,6 +5596,12 @@ DB_FindXAssetHeader_440:
 	jmp DB_FindXAssetHeader_530
 DB_FindXAssetHeader_460:
 	mov dword [esp+0x4], _cstring_cfg
+	mov edx, [ebp+0xc]
+	mov [esp], edx
+	call strstr
+	test eax, eax
+	jnz DB_FindXAssetHeader_400
+	mov dword [esp+0x4], _cstring_gsx
 	mov edx, [ebp+0xc]
 	mov [esp], edx
 	call strstr
@@ -7134,15 +6941,8 @@ DB_Update_10:
 
 ;Zero initialized global or static variables of db_registry:
 SECTION .bss
-;g_zones: resb 0x15c0
-;g_zoneNameList: resb 0x820
-g_zoneIndex: resb 0x20
-;g_zoneHandles: resb 0x20
-g_zoneCount: resb 0x4
 db_hashCritSect: resb 0x8
 g_defaultAssetCount: resb 0x14
-;g_assetEntryPool: resb 0x80000
-;db_hashTable: resb 0x10000
 g_freeAssetEntryHead: resb 0x20
 g_XModelPiecesPool: resb 0x320
 g_PhysPresetPool: resb 0xb20
@@ -7165,14 +6965,7 @@ g_FxEffectDefPool: resb 0x3220
 g_FxImpactTablePool: resb 0x40
 g_RawFilePool: resb 0x3020
 g_StringTablePool: resb 0x340
-g_zoneInfo: resb 0x220
-g_zoneInfoCount: resb 0x20
-g_fileBuf: resb 0x80000
-g_initializing: resb 0x4
 g_zoneAllocType: resb 0x4
-g_mayRecoverLostAssets: resb 0x1
-g_isRecoveringLostDevice: resb 0x1
-g_loadingZone: resb 0x2
 g_sync: resb 0x4
 g_zoneInited: resb 0x1
 g_archiveBuf: resb 0xf
@@ -7234,6 +7027,7 @@ _cstring_ss1:		db "%s,%s",0ah,0
 _cstring_missingassetcsv:		db "missingasset.csv",0
 _cstring_smps:		db "%s,mp/%s",0ah,0
 _cstring_cfg:		db ".cfg",0
+_cstring_gsx:		db ".gsx",0
 _cstring_localized_:		db "localized_",0
 _cstring_s_load:		db "%s_load",0
 _cstring_space:		db " ",0

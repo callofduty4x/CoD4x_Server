@@ -130,7 +130,7 @@ extern "C"
 #endif
 
 void R_Init();
-void __cdecl DB_SetInitializing(qboolean);
+void __cdecl DB_SetInitializing(bool);
 qboolean __cdecl DB_FileExists(const char* filename, int mode);
 qboolean __cdecl DB_ModFileExists(void);
 void __cdecl DB_LoadXAssets(XZoneInfo*, unsigned int assetscount, int);
@@ -168,7 +168,6 @@ void __cdecl Load_XString(bool atStreamStart);
 void __cdecl Load_XAssetHeader(bool atStreamStart);
 const char* DB_GetXAssetName(struct XAsset*);
 void __cdecl Load_ScriptStringArray(bool atStreamStart, int count);
-void __cdecl DB_TryLoadXFile();
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For GCC
 void* __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);
