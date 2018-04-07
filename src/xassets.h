@@ -92,7 +92,7 @@ union XAssetHeader
   struct snd_alias_list_t *sound;
   struct SndCurve *sndCurve;
   struct LoadedSound_s* loadedsound;
-  struct clipMap_t *clipMap;
+  struct clipMap_s *clipMap;
   struct ComWorld *comWorld;
   struct GameWorldSp *gameWorldSp;
   struct GameWorldMp *gameWorldMp;

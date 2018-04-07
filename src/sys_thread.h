@@ -92,6 +92,12 @@ void Sys_SleepUSec(int usec);
 void __cdecl Sys_WaitStartDatabase();
 qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p));
 void __cdecl Sys_DatabaseCompleted();
+void Sys_WakeDatabase();
+void Sys_WakeDatabase2();
+void Sys_NotifyDatabase();
+
+
+
 
 signed int __cdecl Sys_WaitForObject(HANDLE handle);
 signed int __cdecl Sys_IsObjectSignaled(HANDLE handle);
@@ -122,6 +128,13 @@ typedef struct
 unsigned int Sys_GetProcessAffinityMask();
 void** Sys_GetThreadLocalStorage();
 void Sys_SetThreadLocalStorage(void**);
+
+
+struct CriticalSection_t
+{
+  volatile DWORD readcount;
+  volatile DWORD writecount;
+};
 
 
 #ifdef __cplusplus

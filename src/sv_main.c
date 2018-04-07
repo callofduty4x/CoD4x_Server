@@ -4753,7 +4753,7 @@ void SV_SpawnServer(const char *mapname)
             }
 
             if ( cl->state < CS_PRIMED )
-        {
+            {
                 continue;
             }
             SV_SendServerCommandNoLoss( cl, "%c \"%s\" \"%s\"", 'l', mapname, sv_g_gametype->string );

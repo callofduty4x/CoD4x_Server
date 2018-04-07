@@ -10,7 +10,7 @@
 
 
 #pragma pack(push, 2)
-typedef struct 
+typedef struct cbrushside_s
 {
   cplane_t *plane;
   unsigned int materialNum;
@@ -173,8 +173,6 @@ typedef void DynEntityDef;
 typedef void DynEntityPose;
 typedef void DynEntityClient;
 typedef void DynEntityColl;
-
-/* 6988 */
 
 typedef struct clipMap_s
 {

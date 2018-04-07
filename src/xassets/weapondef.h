@@ -7,7 +7,6 @@
 #include "material.h"
 #include "../dobj.h"
 
-/* 743 */
 typedef enum 
 {
   MISSILE_GUIDANCE_NONE = 0x0,
@@ -18,7 +17,6 @@ typedef enum
 }guidedMissileType_t;
 
 
-/* 758 */
 typedef enum 
 {
   WEAPSTICKINESS_NONE = 0x0,
@@ -28,7 +26,6 @@ typedef enum
   WEAPSTICKINESS_COUNT = 0x4,
 }WeapStickinessType;
 
-/* 748 */
 typedef enum 
 {
   AMMO_COUNTER_CLIP_NONE = 0x0,
@@ -41,7 +38,6 @@ typedef enum
   AMMO_COUNTER_CLIP_COUNT = 0x7,
 }ammoCounterClipType_t;
 
-/* 745 */
 typedef enum 
 {
   WEAPPROJEXP_GRENADE = 0x0,
@@ -54,7 +50,6 @@ typedef enum
   WEAPPROJEXP_NUM = 0x7,
 }weapProjExposion_t;
 
-/* 746 */
 typedef enum 
 {
   VEH_ACTIVE_RETICLE_NONE = 0x0,
@@ -63,7 +58,6 @@ typedef enum
   VEH_ACTIVE_RETICLE_COUNT = 0x3,
 }activeReticleType_t;
 
-/* 761 */
 typedef enum 
 {
   WEAPOVERLAYRETICLE_NONE = 0x0,
@@ -71,7 +65,6 @@ typedef enum
   WEAPOVERLAYRETICLE_NUM = 0x2,
 }weapOverlayReticle_t;
 
-/* 762 */
 typedef enum 
 {
   WEAPSTANCE_STAND = 0x0,
@@ -80,7 +73,6 @@ typedef enum
   WEAPSTANCE_NUM = 0x3,
 }weapStance_t;
 
-/* 763 */
 typedef enum 
 {
   WEAPON_ICON_RATIO_1TO1 = 0x0,
@@ -89,7 +81,6 @@ typedef enum
   WEAPON_ICON_RATIO_COUNT = 0x3,
 }weaponIconRatioType_t;
 
-/* 744 */
 typedef enum 
 {
   OFFHAND_CLASS_NONE = 0x0,
@@ -99,7 +90,6 @@ typedef enum
   OFFHAND_CLASS_COUNT = 0x4,
 }OffhandClass;
 
-/* 749 */
 typedef enum 
 {
   PENETRATE_TYPE_NONE = 0x0,
@@ -109,7 +99,6 @@ typedef enum
   PENETRATE_TYPE_COUNT = 0x4,
 }PenetrateType;
 
-/* 750 */
 typedef enum 
 {
   IMPACT_TYPE_NONE = 0x0,
@@ -124,7 +113,6 @@ typedef enum
   IMPACT_TYPE_COUNT = 0x9,
 }ImpactType;
 
-/* 759 */
 typedef enum 
 {
   WEAPCLASS_RIFLE = 0x0,
@@ -140,7 +128,6 @@ typedef enum
   WEAPCLASS_NUM = 0xA,
 }weapClass_t;
 
-/* 753 */
 typedef enum 
 {
   WEAPINVENTORY_PRIMARY = 0x0,
@@ -150,7 +137,7 @@ typedef enum
   WEAPINVENTORYCOUNT = 0x4,
 }weapInventoryType_t;
 
-/* 754 */
+
 typedef enum 
 {
   WEAPTYPE_BULLET = 0x0,
@@ -160,7 +147,6 @@ typedef enum
   WEAPTYPE_NUM = 0x4,
 }weapType_t;
 
-/* 755 */
 typedef enum 
 {
   WEAPOVERLAYINTERFACE_NONE = 0x0,
@@ -169,7 +155,6 @@ typedef enum
   WEAPOVERLAYINTERFACECOUNT = 0x3,
 }WeapOverlayInteface_t;
 
-/* 756 */
 typedef enum 
 {
   WEAPON_FIRETYPE_FULLAUTO = 0x0,
@@ -181,21 +166,18 @@ typedef enum
 }weapFireType_t;
 
 
-/* 778 */
 typedef enum 
 {
   IT_BAD = 0x0,
   IT_WEAPON = 0x1,
 }itemType_t;
 
-/* 7141 */
 typedef struct 
 {
   itemType_t giType;
 }gitem_s;
 
 
-/* 7062 */
 struct WeaponDef
 {
   const char *szInternalName;
@@ -564,7 +546,7 @@ struct WeaponDef
 };
 
 
-/* 1918 */
+
 #pragma pack(push, 4)
 typedef struct weaponInfo_s
 {

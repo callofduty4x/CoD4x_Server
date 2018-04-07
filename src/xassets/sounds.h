@@ -13,12 +13,12 @@ typedef enum
 }snd_alias_type_t;
 
 
-typedef struct SndCurve_s
+struct SndCurve
 {
   const char *filename;
   int knotCount;
   float knots[8][2];
-}SndCurve_t;
+};
 
 
 typedef struct SpeakerLevels_s
@@ -70,11 +70,11 @@ typedef struct LoadedSound_s
 }LoadedSound_t;
 
 
-typedef struct SoundFileInfo_s
+struct SoundFileInfo
 {
   const char *sndfilename;
   MssSound_t ailsoundinfo;
-}SoundFileInfo_t;
+};
 
 
 typedef struct StreamFileNamePacked_s
@@ -148,7 +148,7 @@ struct snd_alias_t
   float lfePercentage;
   float centerPercentage;
   int startDelay;
-  SndCurve_t *volumeFalloffCurve;
+  struct SndCurve *volumeFalloffCurve;
   float envelopMin;
   float envelopMax;
   float envelopPercentage;

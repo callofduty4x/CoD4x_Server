@@ -19,7 +19,9 @@
 ===========================================================================
 */
 
-
+#ifdef __WIN32
+#include <d3d9.h>
+#endif
 
 #include "q_shared.h"
 #include "qcommon_io.h"
@@ -32,14 +34,32 @@
 #include "qcommon.h"
 #include "cmd.h"
 #include "xassets/xmodel.h"
+#include "xassets/phys.h"
+#include "xassets/xanims.h"
+#include "xassets/gfximage.h"
+#include "xassets/sounds.h"
+#include "xassets/mapents.h"
+#include "xassets/gfxworld.h"
+#include "xassets/menu.h"
+#include "xassets/menulist.h"
+#include "xassets/font.h"
+#include "xassets/localized.h"
+#include "xassets/weapondef.h"
+#include "xassets/rawfile.h"
+#include "xassets/stringtable.h"
+#include "xassets/fx.h"
+#include "world.h"
+#include "cm_local.h"
 #include "sys_thread.h"
 #include "zlib/unzip.h"
 #include "physicalmemory.h"
 #include "cscr_stringlist.h"
+#include "r_public.h"
 
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 
 #define XBLOCK_COUNT_IW3 9
 #define XBLOCK_COUNT_T5 7
@@ -48,7 +68,7 @@
 #define DEFLATE_BUFFER_SIZE 0x8000
 #define DBFILE_BUFFER_SIZE 0x80000
 #define FASTFILE_VERSION 5
-
+#define XASSET_ENTRY_POOL_SIZE 32768
 
 extern "C" void PrintScriptStrings();
 
@@ -88,6 +108,33 @@ bool g_initializing;
 int g_zoneCount;
 bool g_isRecoveringLostDevice;
 bool g_mayRecoverLostAssets;
+extern bool g_archiveBuf;
+extern int g_sync;
+extern unsigned int g_copyInfoCount;
+extern struct CriticalSection_t db_hashCritSect;
+int g_poolSize[ASSET_TYPE_COUNT];
+
+
+struct XAssetEntry
+{
+  struct XAsset asset;
+  byte zoneIndex;
+  bool inuse;
+  uint16_t nextHash;
+  uint16_t nextOverride;
+  uint16_t usageFrame;
+};
+
+union XAssetEntryPoolEntry
+{
+  struct XAssetEntry entry;
+  union XAssetEntryPoolEntry *next;
+};
+
+extern union XAssetEntryPoolEntry *g_freeAssetEntryHead;
+extern union XAssetEntryPoolEntry g_assetEntryPool[32768];
+
+
 
 struct XZoneInfoInternal
 {
@@ -120,6 +167,11 @@ typedef struct
 XZone g_zones[33];
 uint8_t g_zoneHandles[ARRAY_COUNT(g_zones)];
 
+
+
+extern void (__cdecl *DB_InitPoolHeaderHandler[ASSET_TYPE_COUNT])(void *, int);
+XAnimParts g_XAnimPartsPool[4096];
+
 /*
 float* varfloat;
 int16_t* varshort;
@@ -127,6 +179,112 @@ byte* varbyte;
 XModel* varXModel;
 */
 extern char** varXString;
+
+
+void *DB_XAssetPool[ASSET_TYPE_COUNT];
+
+
+extern "C"{
+  void DB_SaveSounds();
+  void DB_SaveDObjs();
+  void DB_SyncExternalAssets();
+  void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
+  void DB_LoadSounds();
+};
+
+
+void* XAssetAllocPool(int type, int sizeoftype)
+{
+  assert(type >= 0 && type < ASSET_TYPE_COUNT);
+
+  if(g_poolSize[type] == 0)
+  {
+    return NULL;
+  }
+  assert(sizeoftype > 0);
+
+  return (void *)_PMem_AllocNamed(g_poolSize[type] * sizeoftype, 0x4u, 0, 0, "xasset_pool", TRACK_FASTFILE);
+
+}
+
+
+void DB_InitPoolSize( )
+{
+  g_poolSize[ASSET_TYPE_XMODELPIECES] = 64;
+  g_poolSize[ASSET_TYPE_PHYSPRESET] = 64;
+  g_poolSize[ASSET_TYPE_XANIMPARTS] = 4096;
+  g_poolSize[ASSET_TYPE_XMODEL] = 1000;
+  g_poolSize[ASSET_TYPE_MATERIAL] = 2048;
+  g_poolSize[ASSET_TYPE_TECHNIQUE_SET] = 1024;
+  g_poolSize[ASSET_TYPE_IMAGE] = 2400;
+  g_poolSize[ASSET_TYPE_SOUND] = 16000;
+  g_poolSize[ASSET_TYPE_SOUND_CURVE] = 64;
+  g_poolSize[ASSET_TYPE_LOADED_SOUND] = 1200;
+  g_poolSize[ASSET_TYPE_CLIPMAP] = 1;
+  g_poolSize[ASSET_TYPE_CLIPMAP_PVS] = 1;
+  g_poolSize[ASSET_TYPE_COMWORLD] = 1;
+  g_poolSize[ASSET_TYPE_GAMEWORLD_SP] = 1;
+  g_poolSize[ASSET_TYPE_GAMEWORLD_MP] = 1;
+  g_poolSize[ASSET_TYPE_MAP_ENTS] = 2;
+  g_poolSize[ASSET_TYPE_GFXWORLD] = 1;
+  g_poolSize[ASSET_TYPE_LIGHT_DEF] = 32;
+  g_poolSize[ASSET_TYPE_UI_MAP] = 0;
+  g_poolSize[ASSET_TYPE_FONT] = 16;
+  g_poolSize[ASSET_TYPE_MENULIST] = 128;
+  g_poolSize[ASSET_TYPE_MENU] = 640;
+  g_poolSize[ASSET_TYPE_LOCALIZE_ENTRY] = 6144;
+  g_poolSize[ASSET_TYPE_WEAPON] = 128;
+  g_poolSize[ASSET_TYPE_SNDDRIVER_GLOBALS] = 1;
+  g_poolSize[ASSET_TYPE_FX] = 400;
+  g_poolSize[ASSET_TYPE_IMPACT_FX] = 4;
+  g_poolSize[ASSET_TYPE_AITYPE] = 0;
+  g_poolSize[ASSET_TYPE_MPTYPE] = 0;
+  g_poolSize[ASSET_TYPE_CHARACTER] = 0;
+  g_poolSize[ASSET_TYPE_XMODELALIAS] = 0;
+  g_poolSize[ASSET_TYPE_RAWFILE] = 1024;
+  g_poolSize[ASSET_TYPE_STRINGTABLE] = 100;
+}
+
+void DB_InitXAssetPools( )
+{
+        DB_InitPoolSize();
+
+        DB_XAssetPool[ASSET_TYPE_XMODELPIECES] = XAssetAllocPool(ASSET_TYPE_XMODELPIECES, sizeof(XModelPieces));
+        DB_XAssetPool[ASSET_TYPE_PHYSPRESET] = XAssetAllocPool(ASSET_TYPE_PHYSPRESET, sizeof(PhysPreset));
+        DB_XAssetPool[ASSET_TYPE_XANIMPARTS] = &g_XAnimPartsPool;
+        DB_XAssetPool[ASSET_TYPE_XMODEL] = XAssetAllocPool(ASSET_TYPE_XMODEL, sizeof(XModel));
+        DB_XAssetPool[ASSET_TYPE_MATERIAL] = XAssetAllocPool(ASSET_TYPE_MATERIAL, sizeof(Material));
+        DB_XAssetPool[ASSET_TYPE_TECHNIQUE_SET] = XAssetAllocPool(ASSET_TYPE_TECHNIQUE_SET, sizeof(MaterialTechniqueSet));
+        DB_XAssetPool[ASSET_TYPE_IMAGE] = XAssetAllocPool(ASSET_TYPE_IMAGE, sizeof(GfxImage));
+        DB_XAssetPool[ASSET_TYPE_SOUND] = XAssetAllocPool(ASSET_TYPE_SOUND, sizeof(snd_alias_list_t));
+        DB_XAssetPool[ASSET_TYPE_SOUND_CURVE] = XAssetAllocPool(ASSET_TYPE_SOUND_CURVE, sizeof(SndCurve));
+        DB_XAssetPool[ASSET_TYPE_LOADED_SOUND] = XAssetAllocPool(ASSET_TYPE_LOADED_SOUND, sizeof(SoundFileInfo));
+        DB_XAssetPool[ASSET_TYPE_CLIPMAP] = &cm;
+        DB_XAssetPool[ASSET_TYPE_CLIPMAP_PVS] = &cm;
+        DB_XAssetPool[ASSET_TYPE_COMWORLD] = &comWorld;
+        DB_XAssetPool[ASSET_TYPE_GAMEWORLD_SP] = NULL;
+        DB_XAssetPool[ASSET_TYPE_GAMEWORLD_MP] = &gameWorldMp;
+        DB_XAssetPool[ASSET_TYPE_MAP_ENTS] = XAssetAllocPool(ASSET_TYPE_MAP_ENTS, sizeof(MapEnts));
+        DB_XAssetPool[ASSET_TYPE_GFXWORLD] = &s_world;
+        DB_XAssetPool[ASSET_TYPE_LIGHT_DEF] = XAssetAllocPool(ASSET_TYPE_LIGHT_DEF, sizeof(GfxLightDef));
+        DB_XAssetPool[ASSET_TYPE_UI_MAP] = NULL;
+        DB_XAssetPool[ASSET_TYPE_FONT] = XAssetAllocPool(ASSET_TYPE_FONT, sizeof(Font_s));
+        DB_XAssetPool[ASSET_TYPE_MENULIST] = XAssetAllocPool(ASSET_TYPE_MENULIST, sizeof(MenuList));
+        DB_XAssetPool[ASSET_TYPE_MENU] = XAssetAllocPool(ASSET_TYPE_MENU, sizeof(MenuDef_t));
+        DB_XAssetPool[ASSET_TYPE_LOCALIZE_ENTRY] = XAssetAllocPool(ASSET_TYPE_LOCALIZE_ENTRY, sizeof(LocalizeEntry));
+        DB_XAssetPool[ASSET_TYPE_WEAPON] = XAssetAllocPool(ASSET_TYPE_WEAPON, sizeof(WeaponDef));
+        DB_XAssetPool[ASSET_TYPE_SNDDRIVER_GLOBALS] = NULL;
+        DB_XAssetPool[ASSET_TYPE_FX] = XAssetAllocPool(ASSET_TYPE_FX, sizeof(FxEffectDef));
+        DB_XAssetPool[ASSET_TYPE_IMPACT_FX] = XAssetAllocPool(ASSET_TYPE_IMPACT_FX, sizeof(FxImpactTable));
+        DB_XAssetPool[ASSET_TYPE_AITYPE] = NULL;
+        DB_XAssetPool[ASSET_TYPE_MPTYPE] = NULL;
+        DB_XAssetPool[ASSET_TYPE_CHARACTER] = NULL;
+        DB_XAssetPool[ASSET_TYPE_XMODELALIAS] = NULL;
+        DB_XAssetPool[ASSET_TYPE_RAWFILE] = XAssetAllocPool(ASSET_TYPE_RAWFILE, sizeof(RawFile));
+        DB_XAssetPool[ASSET_TYPE_STRINGTABLE] = XAssetAllocPool(ASSET_TYPE_STRINGTABLE, sizeof(StringTable));
+
+}
+
 
 
 extern "C"
@@ -1267,7 +1425,277 @@ void __cdecl DB_SetInitializing(bool inUse)
   g_initializing = inUse;
 }
 
+void DB_ArchiveAssets()
+{
+  if ( !g_archiveBuf )
+  {
+    g_archiveBuf = 1;
+    R_SyncRenderThread();
+    R_ClearAllStaticModelCacheRefs();
+    DB_SaveSounds();
+    DB_SaveDObjs();
+  }
 }
+
+void __cdecl DB_InitPoolHeader(XAssetType type)
+{
+  if ( DB_XAssetPool[type] )
+  {
+    DB_InitPoolHeaderHandler[type](DB_XAssetPool[type], g_poolSize[type]);
+  }
+}
+
+
+
+void __cdecl DB_Init()
+{
+  int type;
+  unsigned int i;
+/*
+  db_xassetdebug = _Dvar_RegisterBool("db_xassetdebug", 0, 0, "debug assets loading");
+  db_xassetdebugtype = _Dvar_RegisterInt("db_xassetdebugtype", -1, -2, 43, 0, "debug assets loading type: -1 all; indexes start at 0");
+*/
+  DB_InitXAssetPools( );
+
+  for ( type = 0; type < ASSET_TYPE_COUNT; ++type )
+  {
+    DB_InitPoolHeader((XAssetType)type);
+  }
+  g_freeAssetEntryHead = &g_assetEntryPool[1];
+  for ( i = 1; i < XASSET_ENTRY_POOL_SIZE -1; ++i )
+  {
+    g_assetEntryPool[i].next = &g_assetEntryPool[i + 1];
+  }
+  g_assetEntryPool[XASSET_ENTRY_POOL_SIZE -1].next = NULL;
+}
+
+
+void DB_LockWrite()
+{
+  while ( 1 )
+  {
+    if ( !db_hashCritSect.readcount )
+    {
+      if ( InterlockedIncrement(&db_hashCritSect.writecount) == 1 && !db_hashCritSect.readcount )
+      {
+        break;
+      }
+      InterlockedDecrement(&db_hashCritSect.writecount);
+    }
+    Sys_SleepSec(0);
+  }
+}
+
+void DB_FreeXBlocks(XBlock *blocks)
+{
+	Com_Memset(blocks, 0, sizeof(XBLOCK_COUNT * sizeof(XBlock)));
+}
+
+void DB_FreeXZoneMemory(XZoneMemory* zonemem)
+{
+	if(zonemem->vertexBufferHandle)
+	{
+		R_UnlockVertexBuffer(zonemem->vertexBufferHandle);
+		R_FreeStaticVertexBuffer(zonemem->vertexBufferHandle);
+	}
+
+	if(zonemem->indexBufferHandle)
+	{
+		R_UnlockIndexBuffer(zonemem->indexBufferHandle);
+		R_FreeStaticIndexBuffer(zonemem->indexBufferHandle);
+	}
+	DB_FreeXBlocks(zonemem->blocks);
+}
+
+void __cdecl DB_UnloadXZoneMemory(XZone *zone)
+{
+  DB_FreeXZoneMemory(&zone->zonememory);
+
+  Com_Printf(CON_CHANNEL_SYSTEM, "Unloaded fastfile '%s'\n", zone->zoneinfo.name);
+  PMem_Free(zone->zoneinfo.name);
+
+  zone->zoneinfo.name[0] = 0;
+}
+
+
+void __cdecl DB_UnloadXAssetsMemory(XZone *zone)
+{
+  int zoneIter;
+
+  for ( zoneIter = 0; zone != &g_zones[zoneIter]; ++zoneIter )
+  {
+    assert(zoneIter < g_zoneCount);
+  }
+
+  DB_UnloadXZoneMemory(zone);
+  --g_zoneCount;
+  while ( zoneIter < g_zoneCount )
+  {
+    memcpy(&g_zones[zoneIter], &g_zones[zoneIter + 1], sizeof(XZone));
+    ++zoneIter;
+  }
+}
+
+void __cdecl DB_UnloadXAssetsMemoryForZone(int zoneFreeFlags, int zoneFreeBit)
+{
+  int i;
+
+  if ( zoneFreeBit & zoneFreeFlags )
+  {
+    for ( i = g_zoneCount - 1; i >= 0; --i )
+    {
+      if ( zoneFreeBit & g_zones[i].zoneinfo.flags )
+      {
+        DB_UnloadXAssetsMemory(&g_zones[i]);
+      }
+    }
+  }
+}
+
+
+void DB_UnlockWrite()
+{
+  InterlockedDecrement(&db_hashCritSect.writecount);
+}
+
+
+void DB_UnarchiveAssets()
+{
+  assert(g_archiveBuf);
+  assert(Sys_IsMainThread() || Sys_IsRenderThread());
+
+  g_archiveBuf = 0;
+  DB_LoadSounds();
+  DB_LoadDObjs();
+  Material_DirtyTechniqueSetOverrides();
+  BG_FillInAllWeaponItems();
+}
+
+
+void __cdecl DB_LoadXZone(XZoneInfo *zoneInfo, unsigned int zoneCount)
+{
+  unsigned int j;
+  const char *zoneName;
+  unsigned int zoneInfoCount;
+
+  if ( g_zoneCount == ARRAY_COUNT( g_zoneInfo ) )
+  {
+    Com_Error(ERR_DROP, "Max zone count exceeded");
+  }
+  assert(!g_zoneInfoCount);
+  assert(!g_loadingAssets);
+
+  zoneInfoCount = 0;
+  for ( j = 0; j < zoneCount; ++j )
+  {
+    zoneName = zoneInfo[j].name;
+    if ( zoneName )
+    {
+      assert(zoneInfoCount < ARRAY_COUNT( g_zoneInfo ));
+
+      Q_strncpyz(g_zoneInfo[zoneInfoCount].name, zoneName, sizeof(g_zoneInfo[zoneInfoCount].name));
+      Com_Printf(CON_CHANNEL_SYSTEM, "Adding fastfile '%s' to queue\n", g_zoneInfo[zoneInfoCount].name);
+      g_zoneInfo[zoneInfoCount].flags = zoneInfo[j].allocFlags;
+      zoneInfoCount++;
+    }
+  }
+  if ( zoneInfoCount )
+  {
+    g_loadingAssets = zoneInfoCount;
+    Sys_WakeDatabase2();
+    Sys_WakeDatabase();
+    g_zoneInfoCount = zoneInfoCount;
+    Sys_NotifyDatabase();
+  }
+}
+
+void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int sync)
+{
+  static bool g_zoneInited = false;
+  bool unloadedZone;
+  int zh;
+  unsigned int j;
+  int i;
+  int zoneFreeFlags;
+
+  assert(Sys_IsMainThread() || Sys_IsRenderThread());
+  assert(zoneCount);
+
+
+  if ( !g_zoneInited )
+  {
+    g_zoneInited = true;
+    DB_Init();
+    /*
+    Cmd_AddCommandInternal("loadzone", DB_LoadZone_f, &DB_LoadZone_f_VAR);
+    Cmd_AddCommandInternal("listdefaultassets", DB_ListDefaultEntries_f, &DB_ListDefaultEntries_f_VAR);
+    Cmd_AddCommandInternal("listassetpool", DB_ListAssetPool_f, &DB_ListAssetPool_f_VAR);
+    Cmd_AddCommandInternal("dumpmateriallist", DB_DumpMaterialList_f, &DB_DumpMaterialList_f_VAR);
+  */
+  }
+  unloadedZone = 0;
+  Material_ClearShaderUploadList();
+  Sys_SyncDatabase();
+  DB_PostLoadXZone();
+
+  assert(!g_archiveBuf);
+
+  for ( j = 0; j < zoneCount; ++j )
+  {
+    zoneFreeFlags = zoneInfo[j].freeFlags;
+    for ( i = g_zoneCount - 1; i >= 0; --i )
+    {
+      zh = g_zoneHandles[i];
+      if ( zoneFreeFlags & g_zones[zh].zoneinfo.flags )
+      {
+        if ( !unloadedZone )
+        {
+            unloadedZone = 1;
+            DB_SyncExternalAssets();
+            DB_ArchiveAssets( );
+            DB_LockWrite();
+        }
+        DB_UnloadXZone(zh, 1);
+      }
+    }
+  }
+  
+  if ( unloadedZone )
+  {
+    DB_FreeUnusedResources();
+    for ( j = 0; j < zoneCount; ++j )
+    {
+      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 64);
+      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 32);
+      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 16);
+      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 8);
+      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 4);
+      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 1);
+    }
+    DB_UnlockWrite();
+    DB_UnarchiveAssets();
+  }
+  
+  if ( sync )
+  {
+    DB_ArchiveAssets();
+  }
+
+  g_sync = sync;
+  DB_LoadXZone(zoneInfo, zoneCount);
+
+  if ( sync )
+  {
+    assert(!g_copyInfoCount);
+    Sys_SyncDatabase();
+    DB_UnarchiveAssets();
+  }
+}
+
+
+
+
+};
 
 
 

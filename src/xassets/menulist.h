@@ -1,5 +1,4 @@
 #pragma once
-#include "menu.h"
 
 typedef unsigned int uint;
 
@@ -10,11 +9,10 @@ typedef unsigned int uint;
 /* First will add all contents of other menus inside. */
 /* Second one just one file. */
 /* Doesn't seem like a good idea to extract menus from here. */
-typedef struct Menufile_t
-{
-    char *name;
-    uint count; /* Count of menus inside. */
-    MenuDef_t **menus; /* Pointer to array of 'menu' pointers. Its size == count. */
-} Menufile_t;
 
-#define XASSET_TYPE_MENUFILE (20)
+struct MenuList
+{
+  const char *name;
+  int menuCount;
+  struct menuDef_t **menus;
+};

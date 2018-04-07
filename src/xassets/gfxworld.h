@@ -239,4 +239,7 @@ typedef struct GfxWorld
 }GfxWorld_t;
 #pragma pack(pop)
 
+
+extern struct GfxWorld s_world;
+
 #endif
