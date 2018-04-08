@@ -1,3 +1,9 @@
+
+
+#if 0
+
+T-Max has to fix it. Or better make it a standalone program
+
 /* Stdlib includes: */
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,11 +19,12 @@
 #include "../sys_main.h"
 #include "../filesystem.h"
 #include "../qcommon.h"
+#include "../xassets.h"
 /* Assets includes: */
 #include "rawfile.h"
-#include "localized_string.h"
+#include "localized.h"
 #include "stringtable.h"
-#include "menufile.h"
+#include "menulist.h"
 #include "menu.h"
 
 #define MAX_STORE_FASTFILES (32)
@@ -54,6 +61,7 @@ typedef struct ZoneDataBlock_t
     uint size;
 } ZoneDataBlock_t;
 
+/* This struct is the T-Max version of DB_LoadData */
 typedef struct FastFileZlibHandler_t
 {
     FILE *fd;
@@ -74,9 +82,11 @@ typedef struct ExtractorAssetHandler_t
     extract_routine_t handler;
 } ExtractorAssetHandler_t;
 
+/*
 #define g_pFFContents (*(FastFileContents_t **)0x1411F540)
-#define g_ff (*(FastFileZlibHandler_t *)0x1411EF60)
-const char *(*DB_XAssetGetName)(AssetHandler_t* handler) = ((const char*(*)(AssetHandler_t*))0x081DA7F2);
+*/
+extern FastFileZlibHandler_t g_load;
+
 
 static void extract_rawfile(const void *header);
 static void extract_menufile(const void *header);
@@ -115,9 +125,9 @@ static const ExtractorAssetHandler_t g_ExtractorRoutines[33] = {
     {17, 0, 0},
     {18, 0, 0},
     {19, 0, 0},
-    {XASSET_TYPE_MENUFILE, "menufile", (extract_routine_t)extract_menufile},
+    {ASSET_TYPE_MENULIST, "menufile", (extract_routine_t)extract_menufile},
     {21, 0},
-    {XASSET_TYPE_LOCALIZEDSTRING, "localizedstring", (extract_routine_t)extract_localized_string},
+    {ASSET_TYPE_LOCALIZE_ENTRY, "localizedstring", (extract_routine_t)extract_localized_string},
     {23, 0},
     {24, 0},
     {25, 0},
@@ -126,8 +136,8 @@ static const ExtractorAssetHandler_t g_ExtractorRoutines[33] = {
     {28, 0},
     {29, 0},
     {30, 0},
-    {XASSET_TYPE_RAWFILE, "rawfile", (extract_routine_t)extract_rawfile},
-    {XASSET_TYPE_STRINGTABLE, "stringtable", (extract_routine_t)extract_stringtable}
+    {ASSET_TYPE_RAWFILE, "rawfile", (extract_routine_t)extract_rawfile},
+    {ASSET_TYPE_STRINGTABLE, "stringtable", (extract_routine_t)extract_stringtable}
 };
 
 /* Setups output path. */
@@ -149,18 +159,18 @@ void store_fastfile_contents_information()
 
     /* Do not add maps to this list as they can be unloaded 
        and unloading not covered by this code. */
-    if (!strncmp(g_ff.name, "mp_", 3))
+    if (!strncmp(g_load.name, "mp_", 3))
         return;
 
     for (i = 0; i < MAX_STORE_FASTFILES; ++i)
     {
         info = &g_FastFileAssetsTableInfo[i];
-        if (!strcmp(info->name, g_ff.name) || !info->name[0])
+        if (!strcmp(info->name, g_load.name) || !info->name[0])
             break;
     }
     /* 'info' points to old fastfile or to place for new one. */
     Com_Memset(info, 0, sizeof(FastFileAssetsTableInfo_t));
-    strcpy(info->name, g_ff.name);
+    strcpy(info->name, g_load.name);
     Com_Memcpy(&info->content, g_pFFContents, sizeof(FastFileContents_t));
 }
 
@@ -1229,3 +1239,11 @@ void add_extractor_console_commands()
 #undef WRITE_ITEMDEF_FIELD_FLOAT
 #undef WRITE_ITEMDEF_FIELD_INT
 #undef WRITE_EXTRACTOR_HEADER
+
+#else
+
+void extractor_init(){}
+void add_extractor_console_commands(){}
+
+
+#endif

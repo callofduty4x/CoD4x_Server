@@ -1515,6 +1515,7 @@ void Com_Close()
   if ( useFastFile->boolean )
   {
     DB_ShutdownXAssets();
+    DB_ShutdownXAssetPools();
   }
   Scr_Shutdown( );
   Hunk_ShutdownDebugMemory();

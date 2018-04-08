@@ -55,6 +55,7 @@
 #include "physicalmemory.h"
 #include "cscr_stringlist.h"
 #include "r_public.h"
+#include <ctype.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -113,7 +114,8 @@ extern int g_sync;
 extern unsigned int g_copyInfoCount;
 extern struct CriticalSection_t db_hashCritSect;
 int g_poolSize[ASSET_TYPE_COUNT];
-
+bool g_poolSizeModified[ASSET_TYPE_COUNT];
+extern int g_defaultAssetCount;
 
 struct XAssetEntry
 {
@@ -166,7 +168,8 @@ typedef struct
 
 XZone g_zones[33];
 uint8_t g_zoneHandles[ARRAY_COUNT(g_zones)];
-
+union XAssetEntryPoolEntry g_assetEntryPool[32768];
+uint16_t db_hashTable[32768];
 
 
 extern void (__cdecl *DB_InitPoolHeaderHandler[ASSET_TYPE_COUNT])(void *, int);
@@ -179,7 +182,7 @@ byte* varbyte;
 XModel* varXModel;
 */
 extern char** varXString;
-
+extern void (__cdecl *DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void *, XAssetHeader);
 
 void *DB_XAssetPool[ASSET_TYPE_COUNT];
 
@@ -190,7 +193,10 @@ extern "C"{
   void DB_SyncExternalAssets();
   void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
   void DB_LoadSounds();
+  void __cdecl Load_SndAliasCustom(snd_alias_list_t **var);
 };
+
+void XAssetUsage_f();
 
 
 void* XAssetAllocPool(int type, int sizeoftype)
@@ -203,8 +209,8 @@ void* XAssetAllocPool(int type, int sizeoftype)
   }
   assert(sizeoftype > 0);
 
-  return (void *)_PMem_AllocNamed(g_poolSize[type] * sizeoftype, 0x4u, 0, 0, "xasset_pool", TRACK_FASTFILE);
-
+//  return (void *)_PMem_AllocNamed(g_poolSize[type] * sizeoftype, 0x4u, 0, 0, "xasset_pool", TRACK_FASTFILE);
+  return malloc(g_poolSize[type] * sizeoftype);
 }
 
 
@@ -243,6 +249,7 @@ void DB_InitPoolSize( )
   g_poolSize[ASSET_TYPE_XMODELALIAS] = 0;
   g_poolSize[ASSET_TYPE_RAWFILE] = 1024;
   g_poolSize[ASSET_TYPE_STRINGTABLE] = 100;
+  memset(g_poolSizeModified, 0, sizeof(g_poolSizeModified));
 }
 
 void DB_InitXAssetPools( )
@@ -286,9 +293,50 @@ void DB_InitXAssetPools( )
 }
 
 
+bool DB_CanFreeXAssetPool(int type )
+{
+    switch(type)
+    {
+        case ASSET_TYPE_XANIMPARTS:
+        case ASSET_TYPE_CLIPMAP:
+        case ASSET_TYPE_CLIPMAP_PVS:
+        case ASSET_TYPE_COMWORLD:
+        case ASSET_TYPE_GAMEWORLD_MP:
+        case ASSET_TYPE_GFXWORLD:
+            return false;
+        default:
+            break;
+    }
+    if(DB_XAssetPool[type] != NULL)
+    {
+        return true;
+    }
+    return false;
+}
+
+
+
+
 
 extern "C"
 {
+
+void DB_ShutdownXAssetPools( )
+{
+    int i;
+
+    for(i = 0; i < ASSET_TYPE_COUNT; ++i)
+    {
+        if(DB_CanFreeXAssetPool(i ))
+        {
+            free(DB_XAssetPool[i]);
+            DB_XAssetPool[i] = NULL;
+        }
+    }
+
+}
+
+
 
 void __cdecl DB_LoadedExternalData(int size)
 {
@@ -1447,6 +1495,8 @@ void __cdecl DB_InitPoolHeader(XAssetType type)
 
 
 
+
+
 void __cdecl DB_Init()
 {
   int type;
@@ -1467,6 +1517,9 @@ void __cdecl DB_Init()
     g_assetEntryPool[i].next = &g_assetEntryPool[i + 1];
   }
   g_assetEntryPool[XASSET_ENTRY_POOL_SIZE -1].next = NULL;
+
+  Cmd_AddCommand("XAssetUsage", XAssetUsage_f);
+
 }
 
 
@@ -1509,6 +1562,8 @@ void DB_FreeXZoneMemory(XZoneMemory* zonemem)
 
 void __cdecl DB_UnloadXZoneMemory(XZone *zone)
 {
+  Sys_WaitDatabaseThread(); //Required here so it can not clash with PMem_Free()
+
   DB_FreeXZoneMemory(&zone->zonememory);
 
   Com_Printf(CON_CHANNEL_SYSTEM, "Unloaded fastfile '%s'\n", zone->zoneinfo.name);
@@ -1522,7 +1577,7 @@ void __cdecl DB_UnloadXAssetsMemory(XZone *zone)
 {
   int zoneIter;
 
-  for ( zoneIter = 0; zone != &g_zones[zoneIter]; ++zoneIter )
+  for ( zoneIter = 0; zone != &g_zones[g_zoneHandles[zoneIter]]; ++zoneIter )
   {
     assert(zoneIter < g_zoneCount);
   }
@@ -1531,22 +1586,24 @@ void __cdecl DB_UnloadXAssetsMemory(XZone *zone)
   --g_zoneCount;
   while ( zoneIter < g_zoneCount )
   {
-    memcpy(&g_zones[zoneIter], &g_zones[zoneIter + 1], sizeof(XZone));
+    g_zoneHandles[zoneIter] = g_zoneHandles[zoneIter + 1];
     ++zoneIter;
   }
 }
 
 void __cdecl DB_UnloadXAssetsMemoryForZone(int zoneFreeFlags, int zoneFreeBit)
 {
-  int i;
+  int i, zh;
 
   if ( zoneFreeBit & zoneFreeFlags )
   {
     for ( i = g_zoneCount - 1; i >= 0; --i )
     {
-      if ( zoneFreeBit & g_zones[i].zoneinfo.flags )
+      zh = g_zoneHandles[i];
+
+      if ( zoneFreeBit & g_zones[zh].zoneinfo.flags )
       {
-        DB_UnloadXAssetsMemory(&g_zones[i]);
+        DB_UnloadXAssetsMemory(&g_zones[zh]);
       }
     }
   }
@@ -1609,6 +1666,8 @@ void __cdecl DB_LoadXZone(XZoneInfo *zoneInfo, unsigned int zoneCount)
   }
 }
 
+
+
 void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int sync)
 {
   static bool g_zoneInited = false;
@@ -1659,7 +1718,7 @@ void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int syn
       }
     }
   }
-  
+
   if ( unloadedZone )
   {
     DB_FreeUnusedResources();
@@ -1675,7 +1734,7 @@ void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int syn
     DB_UnlockWrite();
     DB_UnarchiveAssets();
   }
-  
+
   if ( sync )
   {
     DB_ArchiveAssets();
@@ -1694,11 +1753,905 @@ void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int syn
 
 
 
+void __cdecl DB_FreeXAssetHeader(XAssetType type, XAssetHeader header)
+{
+  DB_FreeXAssetHeaderHandler[type](DB_XAssetPool[type], header);
+}
+
+
+void __cdecl DB_FreeXAssetEntry(XAssetEntry *assetEntry)
+{
+  XAssetEntryPoolEntry *oldFreeHead;
+
+  DB_FreeXAssetHeader(assetEntry->asset.type, assetEntry->asset.header);
+  oldFreeHead = g_freeAssetEntryHead;
+  g_freeAssetEntryHead = (XAssetEntryPoolEntry *)assetEntry;
+  *(XAssetEntryPoolEntry **)assetEntry = oldFreeHead;
+}
+
+
+void DB_FreeDefaultEntries()
+{
+  unsigned int nextAssetEntryIndex;
+  unsigned int hash;
+  unsigned int assetEntryIndex;
+  XAssetEntryPoolEntry *assetEntry;
+
+  for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
+  {
+    for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = nextAssetEntryIndex )
+    {
+      assetEntry = &g_assetEntryPool[assetEntryIndex];
+      nextAssetEntryIndex = assetEntry->entry.nextHash;
+
+      assert(!assetEntry->entry.zoneIndex);
+      assert(!assetEntry->entry.nextOverride);
+      assert(g_defaultAssetCount);
+
+      --g_defaultAssetCount;
+      DB_FreeXAssetEntry(&assetEntry->entry);
+    }
+    db_hashTable[hash] = 0;
+  }
+  assert(!g_defaultAssetCount);
+}
+
+
+
+void __cdecl DB_ShutdownXAssets()
+{
+  int i, zh;
+
+  DB_SyncXAssets();
+  DB_SyncExternalAssets();
+  DB_LockWrite();
+  for ( i = g_zoneCount - 1; i >= 0; --i )
+  {
+    DB_UnloadXZone(g_zoneHandles[i], 0);
+  }
+  DB_FreeDefaultEntries();
+  DB_FreeUnusedResources();
+  for ( i = g_zoneCount - 1; i >= 0; --i )
+  {
+    zh = g_zoneHandles[i];
+    DB_UnloadXZoneMemory(&g_zones[zh]);
+  }
+  g_zoneCount = 0;
+  DB_ResetMinimumFastFileLoaded();
+
+  DB_UnlockWrite( );
+}
+
+
+
+
+
+
+
+int DB_FileSize(const char *filename, int FF_DIR)
+{
+    char ospath[MAX_OSPATH];
+    DB_BuildOSPath(filename, FF_DIR, sizeof(ospath), ospath);
+    return FS_filelengthForOSPath(ospath);
+}
+
+
+
+void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsize)
+{
+	int i;
+	XZone *zone;
+	char fileName[MAX_OSPATH];
+	int filesize;
+	char checkSum[64];
+
+	g_zoneSumList[0] = '\0';
+	g_zoneNameList[0] = '\0';
+
+	for(i = 0, zone = g_zones; i < 32; i++, ++zone)
+	{
+		if ( zone->zoneinfo.name[0] == '\0' || !Q_strncmp(zone->zoneinfo.name, "localized_", 10) )
+		{
+			continue;
+		}
+
+		if ( zone->ff_dir == 1 )
+		{
+			if ( g_zoneNameList[0] )
+			{
+				Q_strncat(g_zoneNameList, maxsize, " ");
+			}
+          Q_strncat(g_zoneNameList, maxsize, fs_gameDirVar->string);
+          Q_strncat(g_zoneNameList, maxsize, "/");
+          Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+		if ( g_zoneSumList[0] )
+		{
+			Q_strncat(g_zoneSumList, maxsize, " ");
+		}
+		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
+		Q_strncat(g_zoneSumList, maxsize, checkSum);
+
+		  continue;
+		}
+		if ( zone->ff_dir != 2 )
+		{
+			if ( g_zoneNameList[0] )
+			{
+				Q_strncat(g_zoneNameList, maxsize, " ");
+			}
+			Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+		if ( g_zoneSumList[0] )
+		{
+			Q_strncat(g_zoneSumList, maxsize, " ");
+		}
+		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
+		Q_strncat(g_zoneSumList, maxsize, checkSum);
+
+			continue;
+		}
+
+/* Can't be right...? Hmm. Won't have effect anyway
+		if ( !(com_dedicated->integer) )
+		{
+			continue;
+		}
+*/
+		Com_sprintf(fileName, sizeof(fileName), "%s_load", zone->zoneinfo.name);
+        filesize = DB_FileSize(fileName, 2);
+        if ( !filesize )
+        {
+			continue;
+		}
+
+		if ( g_zoneSumList[0] )
+		{
+			Q_strncat(g_zoneSumList, maxsize, " ");
+		}
+		Com_sprintf(checkSum, sizeof(checkSum), "%u %u", zone->zoneSize, filesize);
+		Q_strncat(g_zoneSumList, maxsize, checkSum);
+
+
+		Q_strncat(g_zoneNameList, maxsize, " usermaps/");
+		Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+		Q_strncat(g_zoneNameList, maxsize, " usermaps/");
+		Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
+		Q_strncat(g_zoneNameList, maxsize, "_load");
+
+	}
+}
+
+
+void DB_SyncXAssets()
+{
+    Sys_SyncDatabase();
+    DB_PostLoadXZone();
+}
+
+extern const char *(__cdecl *DB_XAssetGetNameHandler[ASSET_TYPE_COUNT])(union XAssetHeader *);
+
+//char g_zoneNameList[2080];
+
+const char *__cdecl DB_GetXAssetHeaderName(int type, union XAssetHeader *header)
+{
+    const char *name;
+
+    assert(header);
+//    assert(DB_XAssetGetNameHandler[type]);
+    assert(header->data);
+    if(DB_XAssetGetNameHandler[type] == NULL)
+    {
+        return "Name not found for asset";
+    }
+
+    name = DB_XAssetGetNameHandler[type](header);
+
+    assertx(name, "Name not found for asset type %s\n", g_assetNames[type]);
+
+    return name;
+}
+
+const char *__cdecl DB_GetXAssetName(struct XAsset *asset)
+{
+    assert(asset);
+    return DB_GetXAssetHeaderName(asset->type, &asset->header);
+}
+
+
+void __cdecl DB_MaterialSetName(union XAssetHeader *xasset, const char *name)
+{
+  xasset->material->info.name = name;
+//    *(const char**)xasset->data = name;
+}
+
+
+
+extern const char* varConstChar;
+
+void __cdecl Load_XStringCustom(const char **str)
+{
+  int numBytesLoaded;
+  const char* string = *str;
+  for ( numBytesLoaded = 1; ; ++numBytesLoaded )
+  {
+    DB_LoadXFileData((byte *)string, 1);
+    if ( !*string )
+    {
+      break;
+    }
+    ++string;
+  }
+  DB_IncStreamPos((int)numBytesLoaded);
+}
+
+void __cdecl Load_XStringPtr(bool atStreamstart)
+{
+    Load_Stream(atStreamstart, varXStringPtr, 4);
+    if ( !*varXStringPtr )
+    {
+        return;
+    }
+    if ( (signed int)*varXStringPtr != -1 )
+    {
+      DB_ConvertOffsetToPointer(varXStringPtr);
+      return;
+    }
+    *varXStringPtr = (char**)DB_AllocStreamPos(3);
+    varXString = *varXStringPtr;
+    Load_Stream(1u, varXString, 4);
+    if ( !*varXString )
+    {
+        return;
+    }
+    if ( (int)*varXString != -1 )
+    {
+        DB_ConvertOffsetToPointer(varXString);
+        return;
+
+    }
+    *varXString = (char*)DB_AllocStreamPos(0);
+    varConstChar = *varXString;
+    Load_XStringCustom((const char**)varXString);
+
+}
+
+/*
+void __cdecl Load_ScriptStringCustom(uint16_t *var)
+{
+  *var = (uint16_t)varXAssetList->stringList.strings[*var];
+}
+*/
+
+extern struct WeaponDef* varWeaponDef;
+extern snd_alias_list_name* varsnd_alias_list_name;
+
+
+void __cdecl Load_WeaponDef(bool atStreamStart)
+{
+  XModel **v1; // ebx@1
+  signed int v2; // esi@1
+  uint16_t *v5; // ebx@5
+  signed int v6; // esi@5
+  uint16_t *v7; // ebx@7
+  signed int v8; // esi@7
+  uint16_t *v9; // ebx@9
+  signed int v10; // esi@9
+  struct WeaponDef *v11; // ebx@11
+  struct snd_alias_list_t **v12; // eax@11
+  struct XModel **v13; // ebx@15
+  signed int v14; // esi@15
+  struct WeaponDef *v15; // ebx@17
+  float (*v16)[2]; // eax@17
+  float (*v17)[2]; // eax@20
+  struct WeaponDef *v18; // ebx@23
+  float (*v19)[2]; // eax@23
+  float (*v20)[2]; // eax@26
+  struct snd_alias_list_t **v21; // ebx@31
+  signed int v22; // esi@31
+  vec2_t *varvec2_t;
+  unsigned int i;
+
+  Load_Stream(atStreamStart, varWeaponDef, sizeof(struct WeaponDef));
+  DB_PushStreamPos(4);
+  varXString = (char**)&varWeaponDef->szInternalName;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->szDisplayName;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->szOverlayName;
+  Load_XString(0);
+  varXModelPtr = varWeaponDef->gunXModel;
+  Load_Stream(0, varWeaponDef->gunXModel, 64);
+  v1 = varXModelPtr;
+  v2 = 16;
+  do
+  {
+    varXModelPtr = v1;
+    Load_XModelPtr(0);
+    ++v1;
+    --v2;
+  }
+  while ( v2 );
+  varXModelPtr = &varWeaponDef->handXModel;
+  Load_XModelPtr(0);
+
+  varXString = (char**)varWeaponDef->szXAnims;
+  Load_Stream(0, varWeaponDef->szXAnims, 132);
+  for(i = 0; i < ARRAY_COUNT(varWeaponDef->szXAnims); ++i, ++varXString)
+  {
+    Load_XString(0);
+  }
+  varXString = (char**)&varWeaponDef->szModeName;
+  Load_XString(0);
+  varScriptString = varWeaponDef->hideTags;
+  Load_Stream(0, varWeaponDef->hideTags, 16);
+  v5 = varScriptString;
+  v6 = 8;
+  do
+  {
+    varScriptString = v5;
+    Load_Stream(0, v5, 2);
+    Load_ScriptStringCustom(varScriptString);
+    ++v5;
+    --v6;
+  }
+  while ( v6 );
+  varScriptString = varWeaponDef->notetrackSoundMapKeys;
+  Load_Stream(0, varWeaponDef->notetrackSoundMapKeys, 32);
+  v7 = varScriptString;
+  v8 = 16;
+  do
+  {
+    varScriptString = v7;
+    Load_Stream(0, v7, 2);
+    Load_ScriptStringCustom(varScriptString);
+    ++v7;
+    --v8;
+  }
+  while ( v8 );
+  varScriptString = varWeaponDef->notetrackSoundMapValues;
+  Load_Stream(0, varWeaponDef->notetrackSoundMapValues, 32);
+  v9 = varScriptString;
+  v10 = 16;
+  do
+  {
+    varScriptString = v9;
+    Load_Stream(0, v9, 2);
+    Load_ScriptStringCustom(varScriptString);
+    ++v9;
+    --v10;
+  }
+  while ( v10 );
+  varFxEffectDefHandle = &varWeaponDef->viewFlashEffect;
+  Load_FxEffectDefHandle(0);
+  varFxEffectDefHandle = &varWeaponDef->worldFlashEffect;
+  Load_FxEffectDefHandle(0);
+  varsnd_alias_list_name = &varWeaponDef->pickupSound;
+  Load_Stream(0, &varWeaponDef->pickupSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->pickupSoundPlayer;
+  Load_Stream(0, &varWeaponDef->pickupSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->ammoPickupSound;
+  Load_Stream(0, &varWeaponDef->ammoPickupSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->ammoPickupSoundPlayer;
+  Load_Stream(0, &varWeaponDef->ammoPickupSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->projectileSound;
+  Load_Stream(0, &varWeaponDef->projectileSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->pullbackSound;
+  Load_Stream(0, &varWeaponDef->pullbackSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->pullbackSoundPlayer;
+  Load_Stream(0, &varWeaponDef->pullbackSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireSound;
+  Load_Stream(0, &varWeaponDef->fireSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireLoopSound;
+  Load_Stream(0, &varWeaponDef->fireLoopSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireLoopSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireLoopSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireStopSound;
+  Load_Stream(0, &varWeaponDef->fireStopSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireStopSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireStopSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireLastSound;
+  Load_Stream(0, &varWeaponDef->fireLastSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->fireLastSoundPlayer;
+  Load_Stream(0, &varWeaponDef->fireLastSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->emptyFireSound;
+  Load_Stream(0, &varWeaponDef->emptyFireSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->emptyFireSoundPlayer;
+  Load_Stream(0, &varWeaponDef->emptyFireSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->meleeSwipeSound;
+  Load_Stream(0, &varWeaponDef->meleeSwipeSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->meleeSwipeSoundPlayer;
+  Load_Stream(0, &varWeaponDef->meleeSwipeSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->meleeHitSound;
+  Load_Stream(0, &varWeaponDef->meleeHitSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->meleeMissSound;
+  Load_Stream(0, &varWeaponDef->meleeMissSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->rechamberSound;
+  Load_Stream(0, &varWeaponDef->rechamberSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->rechamberSoundPlayer;
+  Load_Stream(0, &varWeaponDef->rechamberSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadSound;
+  Load_Stream(0, &varWeaponDef->reloadSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadSoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadEmptySound;
+  Load_Stream(0, &varWeaponDef->reloadEmptySound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadEmptySoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadEmptySoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadStartSound;
+  Load_Stream(0, &varWeaponDef->reloadStartSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadStartSoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadStartSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadEndSound;
+  Load_Stream(0, &varWeaponDef->reloadEndSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->reloadEndSoundPlayer;
+  Load_Stream(0, &varWeaponDef->reloadEndSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->detonateSound;
+  Load_Stream(0, &varWeaponDef->detonateSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->detonateSoundPlayer;
+  Load_Stream(0, &varWeaponDef->detonateSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->nightVisionWearSound;
+  Load_Stream(0, &varWeaponDef->nightVisionWearSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->nightVisionWearSoundPlayer;
+  Load_Stream(0, &varWeaponDef->nightVisionWearSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->nightVisionRemoveSound;
+  Load_Stream(0, &varWeaponDef->nightVisionRemoveSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->nightVisionRemoveSoundPlayer;
+  Load_Stream(0, &varWeaponDef->nightVisionRemoveSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->altSwitchSound;
+  Load_Stream(0, &varWeaponDef->altSwitchSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->altSwitchSoundPlayer;
+  Load_Stream(0, &varWeaponDef->altSwitchSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->raiseSound;
+  Load_Stream(0, &varWeaponDef->raiseSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->raiseSoundPlayer;
+  Load_Stream(0, &varWeaponDef->raiseSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->firstRaiseSound;
+  Load_Stream(0, &varWeaponDef->firstRaiseSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->firstRaiseSoundPlayer;
+  Load_Stream(0, &varWeaponDef->firstRaiseSoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->putawaySound;
+  Load_Stream(0, &varWeaponDef->putawaySound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->putawaySoundPlayer;
+  Load_Stream(0, &varWeaponDef->putawaySoundPlayer, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  v11 = varWeaponDef;
+  v12 = varWeaponDef->bounceSound;
+  if ( v12 )
+  {
+    if ( (int)v12 == -1 )
+    {
+      v11->bounceSound = (struct snd_alias_list_t **)DB_AllocStreamPos(3);
+      varsnd_alias_list_name = varWeaponDef->bounceSound;
+      Load_Stream(1, varsnd_alias_list_name, 116);
+      v21 = varsnd_alias_list_name;
+      v22 = 29;
+      do
+      {
+        varsnd_alias_list_name = v21;
+        Load_Stream(0, v21, 4);
+        Load_SndAliasCustom(varsnd_alias_list_name);
+        ++v21;
+        --v22;
+      }
+      while ( v22 );
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&varWeaponDef->bounceSound);
+    }
+    v11 = varWeaponDef;
+  }
+  varFxEffectDefHandle = &v11->viewShellEjectEffect;
+  Load_FxEffectDefHandle(0);
+  varFxEffectDefHandle = &varWeaponDef->worldShellEjectEffect;
+  Load_FxEffectDefHandle(0);
+  varFxEffectDefHandle = &varWeaponDef->viewLastShotEjectEffect;
+  Load_FxEffectDefHandle(0);
+  varFxEffectDefHandle = &varWeaponDef->worldLastShotEjectEffect;
+  Load_FxEffectDefHandle(0);
+  varMaterialHandle = &varWeaponDef->reticleCenter;
+  Load_MaterialHandle(0);
+  varMaterialHandle = &varWeaponDef->reticleSide;
+  Load_MaterialHandle(0);
+  varXModelPtr = varWeaponDef->worldModel;
+  Load_Stream(0, varWeaponDef->worldModel, 64);
+  v13 = varXModelPtr;
+  v14 = 16;
+  do
+  {
+    varXModelPtr = v13;
+    Load_XModelPtr(0);
+    ++v13;
+    --v14;
+  }
+  while ( v14 );
+  varXModelPtr = &varWeaponDef->worldClipModel;
+  Load_XModelPtr(0);
+  varXModelPtr = &varWeaponDef->rocketModel;
+  Load_XModelPtr(0);
+  varXModelPtr = &varWeaponDef->knifeModel;
+  Load_XModelPtr(0);
+  varXModelPtr = &varWeaponDef->worldKnifeModel;
+  Load_XModelPtr(0);
+  varMaterialHandle = &varWeaponDef->hudIcon;
+  Load_MaterialHandle(0);
+  varMaterialHandle = &varWeaponDef->ammoCounterIcon;
+  Load_MaterialHandle(0);
+  varXString = (char**)&varWeaponDef->szAmmoName;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->szClipName;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->szSharedAmmoCapName;
+  Load_XString(0);
+  varMaterialHandle = &varWeaponDef->overlayMaterial;
+  Load_MaterialHandle(0);
+  varMaterialHandle = &varWeaponDef->overlayMaterialLowRes;
+  Load_MaterialHandle(0);
+  varMaterialHandle = &varWeaponDef->killIcon;
+  Load_MaterialHandle(0);
+  varMaterialHandle = &varWeaponDef->dpadIcon;
+  Load_MaterialHandle(0);
+  varXString = (char**)&varWeaponDef->szAltWeaponName;
+  Load_XString(0);
+  varXModelPtr = &varWeaponDef->projectileModel;
+  Load_XModelPtr(0);
+  varFxEffectDefHandle = &varWeaponDef->projExplosionEffect;
+  Load_FxEffectDefHandle(0);
+  varFxEffectDefHandle = &varWeaponDef->projDudEffect;
+  Load_FxEffectDefHandle(0);
+  varsnd_alias_list_name = &varWeaponDef->projExplosionSound;
+  Load_Stream(0, &varWeaponDef->projExplosionSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varsnd_alias_list_name = &varWeaponDef->projDudSound;
+  Load_Stream(0, &varWeaponDef->projDudSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varFxEffectDefHandle = &varWeaponDef->projTrailEffect;
+  Load_FxEffectDefHandle(0);
+  varFxEffectDefHandle = &varWeaponDef->projIgnitionEffect;
+  Load_FxEffectDefHandle(0);
+  varsnd_alias_list_name = &varWeaponDef->projIgnitionSound;
+  Load_Stream(0, &varWeaponDef->projIgnitionSound, 4);
+  Load_SndAliasCustom(varsnd_alias_list_name);
+  varXString = (char**)varWeaponDef->accuracyGraphName;
+  Load_XString(0);
+  v15 = varWeaponDef;
+  v16 = varWeaponDef->accuracyGraphKnots[0];
+  if ( v16 )
+  {
+    if ( v16 == (float (*)[2])-1 )
+    {
+      v15->accuracyGraphKnots[0] = (float (*)[2])DB_AllocStreamPos(3);
+      varvec2_t = varWeaponDef->accuracyGraphKnots[0];
+      Load_Stream(1, varvec2_t, 8 * varWeaponDef->accuracyGraphKnotCount[0]);
+      v15 = varWeaponDef;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(varWeaponDef->accuracyGraphKnots);
+      v15 = varWeaponDef;
+    }
+  }
+  v17 = v15->originalAccuracyGraphKnots[0];
+  if ( v17 )
+  {
+    if ( v17 == (float (*)[2])-1 )
+    {
+      v15->originalAccuracyGraphKnots[0] = (float (*)[2])DB_AllocStreamPos(3);
+      varvec2_t = varWeaponDef->originalAccuracyGraphKnots[0];
+      Load_Stream(1, varvec2_t, 8 * varWeaponDef->accuracyGraphKnotCount[0]);
+      v15 = varWeaponDef;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(v15->originalAccuracyGraphKnots);
+      v15 = varWeaponDef;
+    }
+  }
+  varXString = (char**)&v15->accuracyGraphName[1];
+  Load_XString(0);
+  v18 = varWeaponDef;
+  v19 = varWeaponDef->accuracyGraphKnots[1];
+  if ( v19 )
+  {
+    if ( v19 == (float (*)[2])-1 )
+    {
+      v18->accuracyGraphKnots[1] = (float (*)[2])DB_AllocStreamPos(3);
+      varvec2_t = varWeaponDef->accuracyGraphKnots[1];
+      Load_Stream(1, varvec2_t, 8 * varWeaponDef->accuracyGraphKnotCount[1]);
+      v18 = varWeaponDef;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&varWeaponDef->accuracyGraphKnots[1]);
+      v18 = varWeaponDef;
+    }
+  }
+  v20 = v18->originalAccuracyGraphKnots[1];
+  if ( v20 )
+  {
+    if ( v20 == (float (*)[2])-1 )
+    {
+      v18->originalAccuracyGraphKnots[1] = (float (*)[2])DB_AllocStreamPos(3);
+      varvec2_t = varWeaponDef->originalAccuracyGraphKnots[1];
+      Load_Stream(1, varvec2_t, 8 * varWeaponDef->accuracyGraphKnotCount[1]);
+      v18 = varWeaponDef;
+    }
+    else
+    {
+      DB_ConvertOffsetToPointer(&v18->originalAccuracyGraphKnots[1]);
+      v18 = varWeaponDef;
+    }
+  }
+  varXString = (char**)&v18->szUseHintString;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->dropHintString;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->szScript;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->fireRumble;
+  Load_XString(0);
+  varXString = (char**)&varWeaponDef->meleeImpactRumble;
+  Load_XString(0);
+  DB_PopStreamPos( );
+}
+
+
+void __cdecl DB_ReleaseXAssets()
+{
+  unsigned int hash;
+  unsigned int assetEntryIndex;
+
+  assert( Sys_IsMainThread());
+
+  Sys_SyncDatabase();
+
+  for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
+  {
+    for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = g_assetEntryPool[assetEntryIndex].entry.nextHash )
+    {
+      g_assetEntryPool[assetEntryIndex].entry.inuse = 0;
+    }
+  }
+}
+
+unsigned int DB_HashForName(const char *name, enum XAssetType type)
+{
+  const char *pos;
+  unsigned int hash;
+  int c;
+
+  hash = type;
+  for ( pos = name; *pos; ++pos )
+  {
+    c = tolower(*pos);
+    if ( c == '\\' )
+    {
+      c = '/';
+    }
+    hash = 31 * hash + c;
+  }
+  return hash;
+}
+
+
+void __cdecl Mark_SndCurveAsset(struct SndCurve *sndCurve)
+{
+  const char *name;
+  int hash, index;
+  union XAssetEntryPoolEntry *entry;
+  struct XAsset asset;
+
+  asset.type = ASSET_TYPE_SOUND_CURVE;
+  asset.header.sndCurve = sndCurve;
+  name = DB_GetXAssetName(&asset);
+  hash = DB_HashForName(name, asset.type);
+
+  for( index = db_hashTable[hash & (ARRAY_COUNT(db_hashTable) -1)]; ; index = entry->entry.nextHash)
+  {
+    entry = &g_assetEntryPool[index];
+    if(entry->entry.asset.type != ASSET_TYPE_SOUND_CURVE)
+    {
+        continue;
+    }
+    if(entry->entry.asset.header.sndCurve == sndCurve)
+    {
+        break;
+    }
+  }
+  entry->entry.inuse = 1;
+}
+
+void __cdecl Mark_snd_alias_list_Asset(struct snd_alias_list_t *sound)
+{
+  const char *name;
+  int hash, index;
+  union XAssetEntryPoolEntry *entry;
+  struct XAsset asset;
+
+  asset.type = ASSET_TYPE_SOUND;
+  asset.header.sound = sound;
+  name = DB_GetXAssetName(&asset);
+  hash = DB_HashForName(name, asset.type);
+
+  for( index = db_hashTable[hash & (ARRAY_COUNT(db_hashTable) -1)]; ; index = entry->entry.nextHash)
+  {
+    entry = &g_assetEntryPool[index];
+    if(entry->entry.asset.type != ASSET_TYPE_SOUND)
+    {
+        continue;
+    }
+    if(entry->entry.asset.header.sound == sound)
+    {
+        break;
+    }
+  }
+  entry->entry.inuse = 1;
+}
+
+void __cdecl DB_RemoveLoadedSound(union XAssetHeader sound)
+{
+    if(sound.loadedsound->sounds.data == NULL)
+    {
+        return;
+    }
+    Z_Free(sound.loadedsound->sounds.data);
+}
+
+
+
+void DB_BuildOverallocatedXAssetList(char* configstring, int len)
+{
+    int i;
+    char cstring[64];
+
+    configstring[0] = '\0';
+
+    for(i = 0; i < ASSET_TYPE_COUNT; ++i)
+    {
+        if(!g_poolSizeModified[i])
+        {
+            continue;
+        }
+
+        Com_sprintf(cstring, sizeof(cstring), "%s=%d ", g_assetNames[i], g_poolSize[i]);
+        Q_strncat(configstring, len, cstring);
+    }
+
+}
+
 
 };
 
 
 
+void DB_CountXAssets(int *count, int len ,qboolean a4)
+{
+  int index, sindex;
+  unsigned int i;
+  union XAssetEntryPoolEntry *listselector, *slistselect;
+  enum XAssetType type;
+
+  Sys_EnterCriticalSection(CRITSECT_DBHASH);
+
+/*
+  InterlockedIncrement(&db_hashCritSect);
+  while ( xasset_interlock )
+  {
+    Sys_SleepUSec(0);
+  }
+*/
+  if((len / sizeof(int)) < ASSET_TYPE_COUNT)
+  {
+    return;
+  }
+
+  Com_Memset(count, 0, len);
+
+  for(i = 0; i < ARRAY_COUNT(db_hashTable); ++i)
+  {
+    for(index = db_hashTable[i]; index; index = listselector->entry.nextHash)
+    {
+	listselector = &g_assetEntryPool[index];
+
+	type = listselector->entry.asset.type;
+
+	if(type < 0 || type >= ASSET_TYPE_COUNT)
+	{
+		continue;
+	}
+
+	++count[type];
+
+	if ( !a4 )
+		continue;
+
+	for(sindex = listselector->entry.nextOverride; sindex; sindex = slistselect->entry.nextOverride)
+	{
+            slistselect = &g_assetEntryPool[sindex];
+	    ++count[type];
+	}
+    }
+  }
+  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
+}
 
 
 
+
+
+void XAssetUsage_f()
+{
+    int assettype, j, l;
+    int countlist[ASSET_TYPE_COUNT];
+
+
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"XAsset usage:\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Name                 Used  Free \n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"-------------------- ----- -----\n");
+
+    DB_CountXAssets(countlist, sizeof(countlist), qtrue);
+
+    for(assettype = 0; assettype < ASSET_TYPE_COUNT; assettype++)
+    {
+	Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", g_assetNames[assettype]);
+
+	l = 20 - strlen(g_assetNames[assettype]);
+	j = 0;
+
+	do
+	{
+		Com_Printf(CON_CHANNEL_DONT_FILTER," ");
+		j++;
+	} while(j < l);
+
+	Com_Printf(CON_CHANNEL_DONT_FILTER," %5d %5d\n", countlist[assettype], g_poolSize[assettype] - countlist[assettype]);
+
+    }
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
+
+}

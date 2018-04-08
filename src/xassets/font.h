@@ -1,7 +1,6 @@
 #ifndef __FONT_H__
 #define __FONT_H__
 #include "material.h"
-#include <d3dx9.h>
 
 /* 7043 */
 #pragma pack(push, 2)
@@ -21,7 +20,7 @@ typedef struct
 }Glyph;
 #pragma pack(pop)
 
-
+/*
 typedef struct
 {
   IDirect3DTexture9* glyph;
@@ -33,7 +32,7 @@ typedef struct
 }GlyphInfo_t;
 
 //Basic settings for ttf fonts
-/*
+
 typedef struct
 {
   ID3DXFont* h;
@@ -77,7 +76,8 @@ Font_t* Font_GetDefaultFont();
 void Font_InitTTF();
 const GlyphInfo_t* R_TTFFontGetGlyph(Font_t* font, wchar_t c);
 */
-const GlyphInfo_t *Glyph_Find( Font_t* font, wchar_t index );
+//const GlyphInfo_t *Glyph_Find( Font_t* font, wchar_t index );
+
 void R_LoadGlyphs(Font_t* font, const char* text, int textlen);
 
 #endif

@@ -13,11 +13,6 @@
 #endif
 */
 
-
-typedef int IDirect3DVertexBuffer9;
-typedef int IDirect3DIndexBuffer9;
-
-
 #include "qcommon_io.h"
 #include "xassets.h"
 #include "qcommon_mem.h"

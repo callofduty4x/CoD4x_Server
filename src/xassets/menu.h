@@ -521,7 +521,7 @@ typedef struct WindowDef_t
     vec4_t backColor;
     vec4_t borderColor;
     vec4_t outlineColor;
-    Material_t *background;
+    struct Material *background;
 } WindowDef_t;
 
 typedef struct ItemDef_t
