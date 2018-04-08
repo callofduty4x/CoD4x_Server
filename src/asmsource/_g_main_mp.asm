@@ -2023,8 +2023,7 @@ CheckVote_20:
 	mov dword [esp+0x4], level+0x320
 	mov dword [esp], _cstring_s
 	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
+	mov [esp], eax
 	call Cbuf_AddText
 	jmp CheckVote_10
 

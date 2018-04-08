@@ -7518,8 +7518,7 @@ GScr_MapRestart_10:
 	call Scr_GetInt
 	mov [ebx+0x1540], eax
 GScr_MapRestart_20:
-	mov dword [esp+0x4], _cstring_fast_restart
-	mov dword [esp], 0x0
+	mov dword [esp], _cstring_fast_restart
 	call Cbuf_AddText
 	add esp, 0x14
 	pop ebx
@@ -8158,8 +8157,7 @@ GScr_KickPlayer_10:
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_tempbanclient_i
 	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
+	mov [esp], eax
 	call Cbuf_AddText
 	leave
 	ret
@@ -8182,8 +8180,7 @@ GScr_BanPlayer_10:
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_banclient_i
 	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
+	mov [esp], eax
 	call Cbuf_AddText
 	leave
 	ret
@@ -8231,8 +8228,7 @@ GScr_LoadMap_40:
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_map_s
 	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
+	mov [esp], eax
 	call Cbuf_AddText
 	add esp, 0x10
 	pop ebx

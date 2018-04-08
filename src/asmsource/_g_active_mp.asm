@@ -2099,11 +2099,13 @@ P_DamageFeedback_60:
 	movss xmm1, dword [_float_256_00000000]
 	mulss xmm0, xmm1
 	cvttss2si eax, xmm0
+	and eax, 0xff
 	mov [ebx+0x140], eax
 	movss xmm0, dword [ebp-0x20]
 	divss xmm0, xmm2
 	mulss xmm0, xmm1
 	cvttss2si eax, xmm0
+	and eax, 0xff
 	mov [ebx+0x13c], eax
 	mov ecx, level
 	jmp P_DamageFeedback_90
