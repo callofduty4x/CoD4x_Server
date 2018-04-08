@@ -210,8 +210,99 @@ void* XAssetAllocPool(int type, int sizeoftype)
   assert(sizeoftype > 0);
 
 //  return (void *)_PMem_AllocNamed(g_poolSize[type] * sizeoftype, 0x4u, 0, 0, "xasset_pool", TRACK_FASTFILE);
-  return malloc(g_poolSize[type] * sizeoftype);
+  return Z_TagMalloc(g_poolSize[type] * sizeoftype, TAG_XZONE);
 }
+
+
+
+qboolean DB_XAssetNoAlloc(enum XAssetType i)
+{
+	if(i == ASSET_TYPE_CLIPMAP)
+		return qtrue;
+	if(i == ASSET_TYPE_CLIPMAP_PVS)
+		return qtrue;
+	if(i == ASSET_TYPE_COMWORLD)
+		return qtrue;
+	if(i ==	ASSET_TYPE_GAMEWORLD_SP)
+		return qtrue;
+	if(i == ASSET_TYPE_GAMEWORLD_MP)
+		return qtrue;
+	if(i == ASSET_TYPE_MAP_ENTS)
+		return qtrue;
+	if(i == ASSET_TYPE_GFXWORLD)
+		return qtrue;
+	if(i == ASSET_TYPE_UI_MAP)
+		return qtrue;
+	if(i == ASSET_TYPE_SNDDRIVER_GLOBALS)
+		return qtrue;
+	if(i == ASSET_TYPE_AITYPE)
+		return qtrue;
+	if(i == ASSET_TYPE_MPTYPE)
+		return qtrue;
+	if(i == ASSET_TYPE_CHARACTER)
+		return qtrue;
+	if(i == ASSET_TYPE_LOCALIZE_ENTRY)
+		return qtrue;
+	if(i == ASSET_TYPE_XMODELALIAS)
+		return qtrue;
+	if(i == ASSET_TYPE_RAWFILE)
+		return qtrue;
+	if(i == ASSET_TYPE_MENU)
+		return qtrue;
+	if(i == ASSET_TYPE_WEAPON)
+		return qtrue;
+	if(i == ASSET_TYPE_STRINGTABLE)
+		return qtrue;
+
+	return qfalse;
+}
+
+void DB_ParseRequestedXAssetNum()
+{
+	char toparse[1024];
+	const char* type_name;
+	char* scanpos;
+	char scanstring[64];
+	int i, count;
+
+	cvar_t *r_xassetnum = Cvar_RegisterString("r_xassetnum", "", CVAR_INIT, "The list of xassets with their count in the key=value key=value... format");
+
+	Com_sprintf(toparse, sizeof(toparse), " %s", r_xassetnum->string);
+
+	for(i = 0;  i < ASSET_TYPE_COUNT; ++i)
+	{
+		if(DB_XAssetNoAlloc((XAssetType)i) || i == ASSET_TYPE_MENU || i == ASSET_TYPE_WEAPON || i == ASSET_TYPE_STRINGTABLE)
+		{
+			continue;
+		}
+
+		type_name = g_assetNames[ i ];
+
+		Com_sprintf(scanstring, sizeof(scanstring), " %s=", type_name);
+
+		scanpos = strstr(toparse, scanstring);
+		if(scanpos == NULL)
+		{
+			continue;
+		}
+
+		scanpos += strlen(scanstring);
+
+		count = atoi(scanpos);
+		if(count < 1 || count > 65535)
+		{
+			continue;
+		}
+		
+		if(count <= g_poolSize[i])
+		{
+			continue;
+		}
+		g_poolSize[i] = count;
+		g_poolSizeModified[i] = true;
+	}
+}
+
 
 
 void DB_InitPoolSize( )
@@ -255,6 +346,7 @@ void DB_InitPoolSize( )
 void DB_InitXAssetPools( )
 {
         DB_InitPoolSize();
+        DB_ParseRequestedXAssetNum();
 
         DB_XAssetPool[ASSET_TYPE_XMODELPIECES] = XAssetAllocPool(ASSET_TYPE_XMODELPIECES, sizeof(XModelPieces));
         DB_XAssetPool[ASSET_TYPE_PHYSPRESET] = XAssetAllocPool(ASSET_TYPE_PHYSPRESET, sizeof(PhysPreset));
@@ -316,8 +408,6 @@ bool DB_CanFreeXAssetPool(int type )
 
 
 
-
-
 extern "C"
 {
 
@@ -329,7 +419,7 @@ void DB_ShutdownXAssetPools( )
     {
         if(DB_CanFreeXAssetPool(i ))
         {
-            free(DB_XAssetPool[i]);
+            Z_Free(DB_XAssetPool[i]);
             DB_XAssetPool[i] = NULL;
         }
     }
@@ -2655,3 +2745,5 @@ void XAssetUsage_f()
     Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 
 }
+
+

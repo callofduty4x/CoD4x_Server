@@ -43,7 +43,11 @@ void MSG_TestDeltaAE(snapshotInfo_t* snapInfo, int time, archivedEntity_t* basel
 	assert(!msg.overflowed);
 
 	bool equal = lc == -1;
-	assert(equal);
+	if(!equal)
+	{
+		FS_WriteFile("ae_from.bin", baseline, sizeof(archivedEntity_t));
+		FS_WriteFile("ae_to.bin", to, sizeof(archivedEntity_t));
+	}
 }
 
 void MSG_TestDeltaPS(snapshotInfo_t* snapInfo, int time, playerState_t *baseline, playerState_t *to)
@@ -68,7 +72,12 @@ void MSG_TestDeltaPS(snapshotInfo_t* snapInfo, int time, playerState_t *baseline
 	assert(!msg.overflowed);
 
 	bool equal = lc == -1;
-	assert(equal);
+	if(!equal)
+	{
+		FS_WriteFile("ps_from.bin", baseline, sizeof(playerState_t));
+		FS_WriteFile("ps_to.bin", to, sizeof(playerState_t));
+	}
+
 }
 
 void MSG_TestDeltaCS(snapshotInfo_t* snapInfo, int time, clientState_t* baseline, clientState_t *to)
@@ -103,7 +112,11 @@ void MSG_TestDeltaCS(snapshotInfo_t* snapInfo, int time, clientState_t* baseline
 	assert(!msg.overflowed);
 
 	bool equal = lc == -1;
-	assert(equal);
+	if(!equal)
+	{
+		FS_WriteFile("cs_from.bin", baseline, sizeof(clientState_t));
+		FS_WriteFile("cs_to.bin", to, sizeof(clientState_t));
+	}
 }
 
 
