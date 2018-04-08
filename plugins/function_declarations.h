@@ -273,7 +273,7 @@
     __cdecl playerState_t *Plugin_SV_GameClientNum( int num ); //Retrives the playerState_t* object from a client number
 
     __cdecl gentity_t* Plugin_GetGentityForEntityNum(int entnum);
-    __cdecl client_t* Plugin_GetClientForClientNum(int clientnum);
+    __cdecl client_t* Plugin_GetClientForClientNum(int clientnum); //Can return NULL have to check
     __cdecl unsigned int Plugin_GetClientNumForClient(client_t* cl);
 
     __cdecl const char* Plugin_SL_ConvertToString(int index);

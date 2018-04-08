@@ -195,7 +195,7 @@ static void Cmd_B3Status_f()
 	for (i=0; i < MAX_CLIENTS ; i++)
 	{
 		cl = Plugin_GetClientForClientNum(i);
-		if (!cl->state)
+		if (!cl || !cl->state)
 			continue;
         
         clientScoreboard_t score = Plugin_GetClientScoreboard(i); //How does this work? Not returning a pointer?

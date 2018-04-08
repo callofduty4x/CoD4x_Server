@@ -673,7 +673,7 @@ P_P_F client_t* Plugin_GetClientForClientNum(int clientnum)
     return &svs.clients[clientnum];
 }
 
-P_P_F int Plugin_GetClientNumForClientNum(client_t* client)
+P_P_F int Plugin_GetClientNumForClient(client_t* client)
 {
     return client - svs.clients;
 }

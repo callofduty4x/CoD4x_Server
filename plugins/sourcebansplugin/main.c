@@ -202,7 +202,7 @@ static void SM_PSay_f()
   for(i = 0; i < Plugin_GetSlotCount(); ++i)
   {
     client_t* cl = Plugin_GetClientForClientNum(i);
-    if(cl->state < CS_ACTIVE)
+    if(!cl || cl->state < CS_ACTIVE)
     {
       continue;
     }
@@ -263,8 +263,8 @@ PCL void OnMessageSent(char* message, int slot, qboolean* show, int mode)
  *     (Declaration that it's public domain):
  *      http://groups.google.com/group/comp.lang.c/msg/7c7b39328fefab9c
  */
-#ifndef strtok_r
-static char* strtok_r(char *str, const char *delim, char **nextp)
+#ifndef strtok_rc
+static char* strtok_rc(char *str, const char *delim, char **nextp)
 {
     char *ret;
 
@@ -580,6 +580,10 @@ static void* QueryThreadForPlayer(void* q)
         for(i = 0; i < MAX_CLIENTS; ++i)
         {
             client_t* cl = Plugin_GetClientForClientNum(i);
+            if(!cl)
+            {
+                continue;
+            }
             if(cl->state >= CS_CONNECTED && cl->playerid == baninfo->playerid)
             {
                 cl->mutelevel = 1; //Only voice - !!!Race condition!!!
@@ -594,6 +598,10 @@ static void* QueryThreadForPlayer(void* q)
         for(i = 0; i < MAX_CLIENTS; ++i)
         {
             client_t* cl = Plugin_GetClientForClientNum(i);
+            if(!cl)
+            {
+                continue;
+            }
             if(cl->state >= CS_CONNECTED && cl->playerid == baninfo->playerid)
             {
                 cl->mutelevel = 2; //Voice and chat - !!!Race condition!!!
@@ -893,7 +901,7 @@ static void* GetPlayerPermissionsThread(void* q)
         for(i = 0; i < MAX_CLIENTS; ++i)
         {
           client_t* cl = Plugin_GetClientForClientNum(i);
-          if(cl->state >= CS_PRIMED && cl->steamid == steamid)
+          if(cl && cl->state >= CS_PRIMED && cl->steamid == steamid)
           {
             break;
           }
@@ -980,7 +988,7 @@ PCL void OnFrame()
   for(i = 0; i < MAX_CLIENTS; ++i)
   {
     client_t* cl = Plugin_GetClientForClientNum(i);
-    if(cl->state < CS_CONNECTED)
+    if(!cl || cl->state < CS_CONNECTED)
     {
       continue;
     }
@@ -992,7 +1000,7 @@ PCL void OnFrame()
             char buf[1024];
             strncpy(buf, cachedPermissionlist[i].cmdlist, sizeof(buf));
             state = buf;
-            while((token = strtok_r(state, ";", &state)))
+            while((token = strtok_rc(state, ";", &state)))
             {
               Plugin_AddCommandForClientToWhitelist(i, token);
               Plugin_Printf("adding %s\n", token);
@@ -1008,9 +1016,10 @@ PCL void OnFrame()
     {
       continue;
     }
-    Plugin_DropClient(i, baninfo.message);
 
   }
+  Plugin_Printf("Done Checking all players\n");
+
   cacheupdated = qfalse;
   Plugin_LeaveCriticalSection();
 }
