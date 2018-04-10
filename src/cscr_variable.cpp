@@ -4611,7 +4611,7 @@ void __cdecl Scr_EvalEquality(VariableValue *value1, VariableValue *value2)
       break;
     case VAR_FLOAT:
       value1->type = VAR_INTEGER;
-      value1->u.intValue = (value1->u.floatValue - value2->u.floatValue) < 0.000001;
+      value1->u.intValue = fabs(value1->u.floatValue - value2->u.floatValue) < 0.000001;
       break;
     case VAR_INTEGER:
       value1->u.intValue = value1->u.intValue == value2->u.intValue;
