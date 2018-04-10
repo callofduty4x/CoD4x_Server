@@ -82,7 +82,7 @@ void __cdecl ClientScr_SetSessionTeam(gclient_s *pSelf, client_fields_s *pField)
   {
     Scr_Error(va("'%s' is an illegal sessionteam string. Must be allies, axis, none, or spectator.", SL_ConvertToString(newTeam)));
   }
-  if ( (unsigned int)(pSelf - level.clients) >= level.maxclients )
+  if ( (unsigned int)(pSelf - level.clients) >= (unsigned int)level.maxclients )
   {
     Scr_Error("client is not pointing to the level.clients array");
   }
@@ -107,7 +107,7 @@ void __cdecl ClientScr_GetArchiveTime(gclient_s *pSelf, client_fields_s *pField)
 void __cdecl ClientScr_SetMaxHealth(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf);
-  assert( (unsigned int)(pSelf - level.clients) < level.maxclients);
+  assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
 
   pSelf->sess.maxHealth = Scr_GetInt(0);
   if ( pSelf->sess.maxHealth < 1 )
@@ -128,7 +128,7 @@ void __cdecl ClientScr_SetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField
   uint16_t sTeam;
 
   assert(pSelf != NULL);
-  assert( (unsigned int)(pSelf - level.clients) < level.maxclients);
+  assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
 
   pEnt = &g_entities[pSelf - level.clients];
   sTeam = Scr_GetConstString(0);
@@ -157,7 +157,7 @@ void __cdecl ClientScr_SetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField
 void __cdecl ClientScr_GetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf != NULL);
-  assert( (unsigned int)(pSelf - level.clients) < level.maxclients);
+  assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
 
   switch ( g_entities[pSelf - level.clients].s.iHeadIconTeam )
   {
@@ -182,7 +182,7 @@ void __cdecl ClientScr_SetScore(gclient_s *pSelf, client_fields_s *pField)
   int score;
 
   assert(pSelf != NULL);
-  assert( (unsigned int)(pSelf - level.clients) < level.maxclients);
+  assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
   score = Scr_GetInt(0);
 
   score = std::max(score, -30000);
@@ -331,7 +331,7 @@ void __cdecl ClientScr_SetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
   const char *pszIcon; 
 
   assert(pSelf != NULL);
-  assert( (unsigned int)(pSelf - level.clients) < level.maxclients);
+  assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
 
   pEnt = &g_entities[pSelf - level.clients];
   pszIcon = Scr_GetString(0);
@@ -344,7 +344,7 @@ void __cdecl ClientScr_GetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
   gentity_s *pEnt;
 
   assert(pSelf != NULL);
-  assert( (unsigned int)(pSelf - level.clients) < level.maxclients);
+  assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
 
   pEnt = &g_entities[pSelf - level.clients];
   if ( g_entities[pSelf - level.clients].s.iHeadIcon )
