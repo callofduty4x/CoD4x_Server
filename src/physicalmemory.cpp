@@ -199,6 +199,7 @@ void PMem_FreeInPrim(PhysicalMemoryPrim *prim, const char *name, int location)
   {
     if ( prim->allocList[allocIndex].name == name )
     {
+      assert(allocIndex == prim->allocListCount - 1);
       PMem_FreeIndex(prim, allocIndex, location);
       return;
     }

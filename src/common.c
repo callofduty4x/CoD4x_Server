@@ -1312,8 +1312,12 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		if(Sys_IsDatabaseThread())
 		{
 			Sys_DatabaseCompleted();
+			Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
+			Com_Printf(CON_CHANNEL_ERROR, "%s\n", com_errorMessage);
+			abortframe = (jmp_buf*)Sys_GetValue(2);
+			longjmp (*abortframe, -1);
 		}
-		Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
+		Com_Printf(CON_CHANNEL_ERROR, "%s\n", com_errorMessage);
 		Sys_ExitThread(-1);
 		return;
 	}

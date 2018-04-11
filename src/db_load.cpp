@@ -1370,10 +1370,24 @@ void DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
         return;
     }
 
+    if(fs_gameDirVar->string && fs_gameDirVar->string[0]) //Load from fs_gamedirvar or from zone/language
+    {
+      if ( Q_stricmp(zoneName, "common_mp") == 0 || Q_stricmp(zoneName, "localized_common_mp") == 0 ||
+         Q_stricmp(zoneName, "code_post_gfx_mp") == 0 || Q_stricmp(zoneName, "localized_code_post_gfx_mp") == 0
+      ){
+        DB_BuildOSPath(zoneName, 1, maxlen, oFilename);
+
+        if(FS_FileExistsOSPath(oFilename))
+        {
+            return;
+        }
+      }
+    }
+
     //We look for files in zone/language/*
     DB_BuildOSPath(zoneName, 0, maxlen, oFilename);
 
-    if(FS_FileExists(oFilename))
+    if(FS_FileExistsOSPath(oFilename))
     {
         return;
     }
@@ -1399,6 +1413,7 @@ int DB_GetZoneAllocType(int zoneFlags)
   {
     case 1:
     case 4:
+    case 0x10:
     case 0x20:
     case 0x40:
       return 1;
