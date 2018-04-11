@@ -28,7 +28,6 @@
 #include <time.h>
 #include "cvar.h"
 #include "qcommon_io.h"
-#define DEDICATEDONLY
 
 typedef enum {
 	// bk001129 - make sure SE_NONE is zero

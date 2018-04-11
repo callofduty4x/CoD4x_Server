@@ -1460,6 +1460,12 @@ BG_LoadWeaponDefInternal_100:
 	call ParseConfigStringToStruct
 	test eax, eax
 	jnz BG_LoadWeaponDefInternal_90
+	lea eax, [ebp-0x5c]
+	mov [esp+0x8], eax
+	mov eax, _junkparse_
+	mov [esp+4], eax
+	mov dword [esp], 2
+	call Com_Error
 BG_LoadWeaponDefInternal_240:
 	mov dword [ebp-0x287c], 0x0
 BG_LoadWeaponDefInternal_250:
@@ -2386,6 +2392,7 @@ _cstring_nonplayer:		db "non-player",0
 _cstring_bullet:		db "bullet",0
 _cstring_projectile:		db "projectile",0
 _cstring_binoculars:		db "binoculars",0
+_junkparse_:			db "weapon ",22h,"%s",22h," file parse error. Junk in file?"
 
 
 

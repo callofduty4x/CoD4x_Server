@@ -869,9 +869,9 @@ void HStorage_WriteDataToFile(varStorage_t* vobj, const char* filename){
             }
 
             *infostring = 0;
-            BigInfo_SetValueForKey(infostring, "name", name);
-            BigInfo_SetValueForKey(infostring, "type", HStorage_EnumToVarType(type));
-            BigInfo_SetValueForKey(infostring, "count", va("%d", count));
+            Info_SetValueForKey(infostring, "name", name);
+            Info_SetValueForKey(infostring, "type", HStorage_EnumToVarType(type));
+            Info_SetValueForKey(infostring, "count", va("%d", count));
 
             for(i = 0; i < count; i++)
             {
@@ -883,9 +883,9 @@ void HStorage_WriteDataToFile(varStorage_t* vobj, const char* filename){
                 if(type == VSVAR_STRING)
                 {
                     string = HStorage_ValueToString(type, &value, buf, sizeof(buf));
-                    BigInfo_SetEncodedValueForKey(infostring, va("v%d", i), string, strlen(string));
+                    Info_SetEncodedValueForKey(infostring, va("v%d", i), string, strlen(string));
                 }else{
-                    BigInfo_SetValueForKey(infostring, va("v%d", i), HStorage_ValueToString(type, &value, buf, sizeof(buf)));
+                    Info_SetValueForKey(infostring, va("v%d", i), HStorage_ValueToString(type, &value, buf, sizeof(buf)));
                 }
             }
 
@@ -895,6 +895,7 @@ void HStorage_WriteDataToFile(varStorage_t* vobj, const char* filename){
     FS_FCloseFile(file);
     FS_SV_HomeCopyFile(va("%s.tmp", filename) , (char*)filename);
 }
+
 
 qboolean HStorage_ParseLine(varStorage_t* vobj ,char* line, int linenumber){
 
@@ -941,7 +942,7 @@ qboolean HStorage_ParseLine(varStorage_t* vobj ,char* line, int linenumber){
         Com_sprintf(queryString, sizeof(queryString), "v%d", i);
         if(varType == VSVAR_STRING)
         {
-            outlen = BigInfo_DecodedValueForKey(line, queryString, outbuf, sizeof(outbuf));
+            outlen = Info_DecodedValueForKey(line, queryString, outbuf, sizeof(outbuf));
             if(outlen < sizeof(outbuf))
             {
                 outbuf[outlen] = '\0';

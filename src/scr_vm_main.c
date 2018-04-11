@@ -50,7 +50,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("createprintchannel", GScr_CreatePrintChannel, 1 );
 	Scr_AddFunction("setprintchannel", GScr_printChannelSet, 1 );
 	Scr_AddFunction("print", print, 0 );
-	Scr_AddFunction("println", println, 0 );
+	Scr_AddFunction("println", println, 1 );
 	Scr_AddFunction("iprintln", iprintln, 0 );
 	Scr_AddFunction("iprintlnbold", iprintlnbold, 0 );
 	Scr_AddFunction("print3d", GScr_print3d, 1 );
