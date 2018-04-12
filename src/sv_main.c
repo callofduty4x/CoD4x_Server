@@ -4437,19 +4437,14 @@ void SV_CalculateChecksums()
     for(i = 0; i < Cmd_Argc(); ++i)
     {
 
-        DB_BuildQPath(Cmd_Argv(i), 0, sizeof(filename), filename);
+        DB_GetQPathForZone(Cmd_Argv(i), sizeof(filename), filename);
 
         if((len = FS_CalculateChecksumForFile(filename, &crc32)) <= 0)
         {
-            DB_BuildQPath(Cmd_Argv(i), 3, sizeof(filename), filename);
-            if((len = FS_CalculateChecksumForFile(filename, &crc32)) <= 0)
-            {
-                str = Cmd_Argv(i);
-                DB_BuildQPath(str +9, 2, sizeof(filename), filename);
-                len = FS_CalculateChecksumForFile(filename, &crc32);
-            }
+            Com_PrintError(CON_CHANNEL_SERVER,"file for loaded zone '%s' not found\n", Cmd_Argv(i));
+        }else{
+            Com_Printf(CON_CHANNEL_SERVER,"^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
         }
-        Com_Printf(CON_CHANNEL_SERVER,"^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
     }
 
     Cmd_EndTokenizedString();

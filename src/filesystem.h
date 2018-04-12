@@ -232,6 +232,7 @@ void FS_RenameOSPath( const char *from_ospath, const char *to_ospath );
 qboolean FS_SetPermissionsExec(const char* ospath);
 __regparm3 void DB_BuildOSPath(const char *filename, int ffdir, int len, char *buff);
 void DB_BuildQPath(const char *filename, int ffdir, int len, char *buff);
+bool DB_GetQPathForZone(const char* zoneName, int maxlen, char* opath);
 int     FS_FOpenFileByMode( const char *qpath, fileHandle_t *f, fsMode_t mode );
 void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen);
 void FS_AddIwdPureCheckReference(searchpath_t *search);

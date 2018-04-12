@@ -1403,6 +1403,38 @@ int DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
 }
 
 
+bool DB_GetQPathForZone(const char* zoneName, int maxlen, char* opath)
+{
+	int i;
+	XZone *zone;
+
+  assert(opath);
+  assert(zoneName);
+
+	opath[0] = '\0';
+
+  if(zoneName[0] == 0)
+  {
+    return false;
+  }
+
+	for(i = 0, zone = g_zones; i < 32; i++, ++zone)
+	{
+		if ( Q_stricmp(zone->zoneinfo.name, zoneName) != 0 )
+		{
+			continue;
+		}
+    DB_BuildQPath(zone->zoneinfo.name, zone->ff_dir, maxlen, opath);
+    if(*opath)
+    {
+      return true;
+    }
+    return false;
+  }
+  return false;
+}
+
+
 void __cdecl DB_Sleep(int usec)
 {
     Sys_SleepUSec(usec);
