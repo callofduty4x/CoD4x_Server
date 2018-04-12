@@ -1361,13 +1361,13 @@ void Load_XModelBoneNames()
   }
 }
 
-void DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
+int DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
 {
     if(fs_gameDirVar->string && fs_gameDirVar->string[0] && Q_stricmp(zoneName, "mod") == 0)
     {
         //We look for mod files
         DB_BuildOSPath(zoneName, 1, maxlen, oFilename);
-        return;
+        return 1;
     }
 
     if(fs_gameDirVar->string && fs_gameDirVar->string[0]) //Load from fs_gamedirvar or from zone/language
@@ -1379,7 +1379,7 @@ void DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
 
         if(FS_FileExistsOSPath(oFilename))
         {
-            return;
+          return 1;
         }
       }
     }
@@ -1389,7 +1389,7 @@ void DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
 
     if(FS_FileExistsOSPath(oFilename))
     {
-        return;
+      return 0;
     }
 
     //Nothing found in zone dir? Look in Usermaps if running mods
@@ -1397,8 +1397,9 @@ void DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
     {
         //We look for usermap files
         DB_BuildOSPath(zoneName, 2, maxlen, oFilename);
-        return;
+        return 2;
     }
+    return -1;
 }
 
 
@@ -1427,14 +1428,18 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
     HANDLE zoneFile;
     char filename[256];
     unsigned int i;
+    int ff_dir;
     XZone* z;
     unsigned int startWaitingTime;
     unsigned int g_zoneAllocType;
 //    char g_fileBuf[DBFILE_BUFFER_SIZE];
 
-    DB_BuildZoneFilePath(zoneName, filename, sizeof(filename));
-    zoneFile = _CreateFileA(filename, 0x80000000, 1, 0, 3, 0x60000000, 0);
-    if ( zoneFile == (HANDLE)-1 )
+    ff_dir = DB_BuildZoneFilePath(zoneName, filename, sizeof(filename));
+    if(ff_dir >= 0)
+    {
+      zoneFile = _CreateFileA(filename, 0x80000000, 1, 0, 3, 0x60000000, 0);
+    }
+    if (ff_dir >= 0 && zoneFile == (HANDLE)-1 )
     {
       if ( strstr(filename, "_load") )
       {
@@ -1464,7 +1469,7 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
     Q_strncpyz(z->zoneinfo.name, zoneName, sizeof(z->zoneinfo.name));
     z->zoneinfo.flags = zoneFlags;
     z->zoneSize = _GetFileSize(zoneFile, 0);
-    z->ff_dir = 0;
+    z->ff_dir = ff_dir;
 
     ++g_zoneCount;
     g_loadingZone = 1;
