@@ -1403,20 +1403,37 @@ int DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
 }
 
 
-bool DB_GetQPathForZone(const char* zoneName, int maxlen, char* opath)
+bool DB_GetQPathForZone(const char* zonePath, int maxlen, char* opath)
 {
 	int i;
 	XZone *zone;
-
+	const char* fi;
+	char zoneName[256];
+	int zoneNameLen;
+	bool loadimage;
   assert(opath);
-  assert(zoneName);
+  assert(zonePath);
 
 	opath[0] = '\0';
 
-  if(zoneName[0] == 0)
+  if(zonePath[0] == 0)
   {
     return false;
   }
+    if((fi = strrchr(zonePath, '/')) != NULL)
+    {
+        Q_strncpyz(zoneName, fi +1, sizeof(zoneName));
+    }else{
+        Q_strncpyz(zoneName, zonePath, sizeof(zoneName));
+    }
+    zoneNameLen = strlen(zoneName);
+    if(zoneNameLen > 5 && Q_stricmp(zoneName + zoneNameLen -5, "_load") == 0)
+    {
+        loadimage = true;
+        zoneName[zoneNameLen -5] = 0;
+    }else{
+        loadimage = false;
+    }
 
 	for(i = 0, zone = g_zones; i < 32; i++, ++zone)
 	{
@@ -1424,7 +1441,11 @@ bool DB_GetQPathForZone(const char* zoneName, int maxlen, char* opath)
 		{
 			continue;
 		}
-    DB_BuildQPath(zone->zoneinfo.name, zone->ff_dir, maxlen, opath);
+    if(loadimage)
+    {
+        Q_strncat(zoneName,  sizeof(zoneName), "_load");
+    }
+    DB_BuildQPath(zoneName, zone->ff_dir, maxlen, opath);
     if(*opath)
     {
       return true;

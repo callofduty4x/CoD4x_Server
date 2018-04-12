@@ -1690,6 +1690,10 @@ long FS_SV_FOpenFileRead( const char *filename, fileHandle_t *fp ) {
 		Com_Error( ERR_FATAL, "Filesystem call made without initialization" );
 	}
 
+	if(filename == NULL || filename[0] == 0)
+	{
+		return 0;
+	}
 
 	f = FS_HandleForFile();
 	if(f == 0){
