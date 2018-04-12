@@ -44,34 +44,46 @@
 
 void R_Init(){
 
-        int XAssetscount;
+        int i = 0;
         XZoneInfo XZoneInfoStack[6];
 
-        XZoneInfoStack[4].name = "localized_common_mp";
-        XZoneInfoStack[4].allocFlags = 1;
-        XZoneInfoStack[4].freeFlags = 0;
-        XZoneInfoStack[3].name = "common_mp";
-        XZoneInfoStack[3].allocFlags = 4;
-        XZoneInfoStack[3].freeFlags = 0;
-        XZoneInfoStack[2].name = "ui_mp";
-        XZoneInfoStack[2].allocFlags = 8;
-        XZoneInfoStack[2].freeFlags = 0;
-        XZoneInfoStack[1].name = "localized_code_post_gfx_mp";
-        XZoneInfoStack[1].allocFlags = 0;
-        XZoneInfoStack[1].freeFlags = 0;
-        XZoneInfoStack[0].name = "code_post_gfx_mp";
-        XZoneInfoStack[0].allocFlags = 2;
-        XZoneInfoStack[0].freeFlags = 0;
+        XZoneInfoStack[i].name = "code_post_gfx_mp";
+        XZoneInfoStack[i].allocFlags = 2;
+        XZoneInfoStack[i].freeFlags = 0;
+        ++i;
+
+        XZoneInfoStack[i].name = "localized_code_post_gfx_mp";
+        XZoneInfoStack[i].allocFlags = 0;
+        XZoneInfoStack[i].freeFlags = 0;
+        ++i;
+
+#ifndef DEDICATEDONLY
+        XZoneInfoStack[i].name = "ui_mp";
+        XZoneInfoStack[i].allocFlags = 8;
+        XZoneInfoStack[i].freeFlags = 0;
+        ++i;
+#endif
+
+        XZoneInfoStack[i].name = "common_mp";
+        XZoneInfoStack[i].allocFlags = 4;
+        XZoneInfoStack[i].freeFlags = 0;
+        ++i;
+
+#ifndef DEDICATEDONLY
+        XZoneInfoStack[i].name = "localized_common_mp";
+        XZoneInfoStack[i].allocFlags = 1;
+        XZoneInfoStack[i].freeFlags = 0;
+        ++i;
+#endif
 
         if(DB_ModFileExists()){
-            XAssetscount = 6;
-            XZoneInfoStack[5].name = "mod";
-            XZoneInfoStack[5].allocFlags = 16;
-            XZoneInfoStack[5].freeFlags = 0;
-        }else{
-            XAssetscount = 5;
+
+            XZoneInfoStack[i].name = "mod";
+            XZoneInfoStack[i].allocFlags = 16;
+            XZoneInfoStack[i].freeFlags = 0;
+            ++i;
         }
-        DB_LoadXAssets(&XZoneInfoStack[0],XAssetscount,0);
+        DB_LoadXAssets(&XZoneInfoStack[0], i, 0);
 
 }
 

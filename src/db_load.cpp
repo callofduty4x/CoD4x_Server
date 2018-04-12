@@ -1413,7 +1413,6 @@ int DB_GetZoneAllocType(int zoneFlags)
   {
     case 1:
     case 4:
-    case 0x10:
     case 0x20:
     case 0x40:
       return 1;
