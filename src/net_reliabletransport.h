@@ -50,6 +50,7 @@ typedef struct
 	int time;
 	int nextacktime;
 	int qport;
+	int ping;
 }netreliablemsg_t;
 
 void ReliableMessagesFrame(netreliablemsg_t *chan, int msec);
