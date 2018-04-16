@@ -46,7 +46,70 @@ struct pml_t
   vec3_t previous_velocity;
 };
 
+/*
+#pragma pack(push, 8)
+struct animation_s
+{
+  char name[64];
+  int initialLerp;
+  float moveSpeed;
+  int duration;
+  int nameHash;
+  int flags;
+  int pad1;
+  int64_t movetype;
+  int noteType;
+  int pad2;
+};
+#pragma pack(pop)
 
+#pragma pack(push, 8)
+struct animScriptData_t
+{
+  animation_s animations[512];
+  unsigned int numAnimations;
+  animScript_t scriptAnims[1][43];
+  animScript_t scriptCannedAnims[1][43];
+  animScript_t scriptStateChange[1][1];
+  animScript_t scriptEvents[21];
+  animScriptItem_t scriptItems[2048];
+  int numScriptItems;
+  scr_animtree_t animTree;
+  unsigned __int16 torsoAnim;
+  unsigned __int16 legsAnim;
+  unsigned __int16 turningAnim;
+  snd_alias_list_t *(__cdecl *soundAlias)(const char *);
+  int (__cdecl *playSoundAlias)(int, snd_alias_list_t *);
+};
+#pragma pack(pop)
+
+
+
+#pragma pack(push, 1)
+struct __align(8) bgs_s
+{
+  animScriptData_t animScriptData;
+  bodyAnim_t generic_human;
+  int time;
+  int latestSnapshotTime;
+  int frametime;
+  int anim_user;
+  XModel *(__cdecl *GetXModel)(const char *);
+  void (__cdecl *CreateDObj)(DObjModel_s *, unsigned int int16_t, XAnimTree_s *, int, int, clientInfo_t *);
+  uint16_t (__cdecl *AttachWeapon)(DObjModel_s *, uint16_t, clientInfo_t *);
+  DObj_s *(__cdecl *GetDObj)(int, int);
+  void (__cdecl *SafeDObjFree)(int, int);
+  void *(__cdecl *AllocXAnim)(int);
+  clientInfo_t clientinfo[64];
+};
+#pragma pack(pop)
+*/
+struct bgs_s{
+    byte data[0xacd20];
+};
+
+extern struct bgs_s level_bgs;
+extern struct bgs_s *bgs;
 #endif
 
 

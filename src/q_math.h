@@ -182,6 +182,7 @@ vec_t Distance( const vec3_t p1, const vec3_t p2 ) ;
 void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
 void  SnapAngles(float *vAngles);
 
+double __cdecl Vec3DistanceSq(const float *p1, const float *p2);
 float vec2_maxabs    (vec2_t v);
 
 
@@ -211,3 +212,4 @@ void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out
 #endif
 
 #endif
+

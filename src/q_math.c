@@ -44,116 +44,6 @@ vec4_t colorGreenFaded = {0, 1, 0, 0.75};
 vec4_t colorRedFaded = {0.75, 0.25, 0, 0.75};
 vec4_t colorBlackBlank = {0, 0, 0, 0};
 
-vec_t Vec3Normalize( vec3_t v ) {
-	float length, ilength;
-
-	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-	length = sqrt( length );
-
-	if ( length ) {
-		ilength = 1 / length;
-		v[0] *= ilength;
-		v[1] *= ilength;
-		v[2] *= ilength;
-	}
-
-	return length;
-}
-
-vec_t VectorLength( const vec3_t v ) {
-	return sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
-}
-
-float VectorDistance( vec3_t v1, vec3_t v2 ) {
-	vec3_t dir;
-
-	VectorSubtract( v2, v1, dir );
-	return VectorLength( dir );
-}
-
-int VectorCompare( const vec3_t v1, const vec3_t v2 ) {
-	if ( v1[0] != v2[0] || v1[1] != v2[1] || v1[2] != v2[2] ) {
-		return 0;
-	}
-
-	return 1;
-}
-
-void VectorInverse( vec3_t v ) {
-	v[0] = -v[0];
-	v[1] = -v[1];
-	v[2] = -v[2];
-}
-
-
-
-static int sRandSeed;
-
-unsigned int __cdecl ms_rand()
-{
-  sRandSeed = 214013 * sRandSeed + 2531011;
-  return ((unsigned int)sRandSeed >> 16) & 0x7FFF;
-}
-
-void __cdecl ms_srand(int seed)
-{
-  sRandSeed = seed;
-}
-
-
-
-void __cdecl Vec3Lerp(const float *from, const float *to, float frac, float *result)
-{
-  result[0] = (to[0] - from[0]) * frac + from[0];
-  result[1] = (to[1] - from[1]) * frac + from[1];
-  result[2] = (to[2] - from[2]) * frac + from[2];
-}
-
-
-vec_t Distance( const vec3_t p1, const vec3_t p2 ) {
-	vec3_t v;
-
-	VectorSubtract( p2, p1, v );
-	return VectorLength( v );
-}
-
-
-/*
-================
-ProjectPointOntoVector
-================
-*/
-void ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_t vProj ) {
-	vec3_t pVec, vec;
-
-	VectorSubtract( point, vStart, pVec );
-	VectorSubtract( vEnd, vStart, vec );
-	VectorNormalize( vec );
-	// project onto the directional vector for this segment
-	VectorMA( vStart, DotProduct( pVec, vec ), vec, vProj );
-}
-
-
-vec_t VectorNormalize2( const vec3_t v, vec3_t out ) {
-	float length, ilength;
-
-	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-	length = sqrt( length );
-
-	if ( length ) {
-		ilength = 1 / length;
-		out[0] = v[0] * ilength;
-		out[1] = v[1] * ilength;
-		out[2] = v[2] * ilength;
-	} else {
-		VectorClear( out );
-	}
-
-	return length;
-
-}
-
-
 void Math_VectorToAngles(vec3_t vector, vec3_t angles)
 {
     angles[0] = 0.0;
@@ -184,44 +74,56 @@ void Math_VectorToAngles(vec3_t vector, vec3_t angles)
     }
 }
 
-/* Returns maximum absolute value of vector's components. */
-float vec2_maxabs(vec2_t v)
-{
-    vec2_t v_abs;
-    v_abs[0] = fabs(v[0]);
-    v_abs[1] = fabs(v[1]);
 
-    if (v_abs[0] > v_abs[1])
-        return v_abs[0];
 
-    return v_abs[1];
+void vectoangles( const vec3_t value1, vec3_t angles ) {
+	float forward;
+	float yaw, pitch;
+
+	if ( value1[1] == 0 && value1[0] == 0 ) {
+		yaw = 0;
+		if ( value1[2] > 0 ) {
+			pitch = 270;
+		} else {
+			pitch = 90;
+		}
+	} else {
+		yaw = ( atan2( value1[1], value1[0] ) * 180 / M_PI );
+		if(yaw < 0.0)
+		{
+			yaw += 360.0;
+		}
+		forward = sqrt( value1[0] * value1[0] + value1[1] * value1[1] );
+		pitch = ( -atan2( value1[2], forward ) * 180 / M_PI );
+		if(pitch < 0.0)
+		{
+			pitch += 360.0;
+		}
+
+	}
+
+	angles[PITCH] = pitch;
+	angles[YAW] = yaw;
+	angles[ROLL] = 0;
 }
 
-void __cdecl MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out)
+
+vec_t __cdecl vectosignedpitch(const vec3_t vec)
 {
-  assert( in1 != out);
+  float t;
 
-  out[0] = in1[0] * in2[0][0] + in1[1] * in2[1][0] + in1[2] * in2[2][0];
-  out[1] = in1[0] * in2[0][1] + in1[1] * in2[1][1] + in1[2] * in2[2][1];
-  out[2] = in1[0] * in2[0][2] + in1[1] * in2[1][2] + in1[2] * in2[2][2];
-}
-
-void __cdecl SnapAngles(float *vAngles)
-{
-  float delta;
-  int rounded;
-  int i;
-
-  for ( i = 0; i < 3; ++i )
+  if ( 0.0 != vec[1] || 0.0 != vec[0] )
   {
-    rounded = (signed int)(vAngles[i] + 9.313225746154785e-10);
-    delta = (float)rounded - vAngles[i];
-    if ( Square(delta) < 0.0000010000001 )
-    {
-      vAngles[i] = (float)rounded;
-    }
+    t = atan2(vec[2], sqrt(vec[1] * vec[1] + vec[0] * vec[0]));
+    return t * -180.0 / M_PI;
   }
+  if ( -vec[2] < 0.0 )
+  {
+    return -90.0;
+  }
+  return 90.0;
 }
+
 
 
 
@@ -281,115 +183,6 @@ void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanF
         VectorMA(position, v * fLeanDist, right, position);
     }
 }
-
-vec_t VectorLengthSquared( const vec3_t v ) {
-	return ( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
-}
-
-//Lame?!
-void __cdecl Sys_SnapVector(vec3_t v)
-{
-    SnapVector(v);
-}
-
-
-#if 0
-
-static unsigned int holdrand;
-
-
-void __cdecl Rand_Init(int seed)
-{
-  holdrand = seed;
-}
-
-long double __cdecl randomf()
-{
-  return ((float)(signed int)ms_rand() * 0.000030517578f);
-}
-
-
-
-double __cdecl flrand(float min, float max)
-{
-  float result;
-
-  holdrand = 214013 * holdrand + 2531011;
-  result = (holdrand >> 17);
-  return ((max - min) * result) / 32768.0 + min;
-}
-
-
-int __cdecl irand(int min, int max)
-{
-  holdrand = 214013 * holdrand + 2531011;
-  return ((holdrand >> 17) * (max - min) >> 15) + min;
-}
-
-
-long double crandom()
-{
-  unsigned int is;
-
-  is = ms_rand();
-  return ((float)is * 0.000030517578 * 2.0 - 1.0);
-}
-
-
-
-
-
-void vectoangles( const vec3_t value1, vec3_t angles ) {
-	float forward;
-	float yaw, pitch;
-
-	if ( value1[1] == 0 && value1[0] == 0 ) {
-		yaw = 0;
-		if ( value1[2] > 0 ) {
-			pitch = 90;
-		} else {
-			pitch = 270;
-		}
-	} else {
-		yaw = ( atan2( value1[1], value1[0] ) * 180 / M_PI );
-		if(yaw < 0.0)
-		{
-			yaw += 360.0;
-		}
-		forward = sqrt( value1[0] * value1[0] + value1[1] * value1[1] );
-		pitch = ( atan2( value1[2], forward ) * 180 / M_PI );
-		if(pitch < 0.0)
-		{
-			pitch += 360.0;
-		}
-
-	}
-
-	angles[PITCH] = pitch;
-	angles[YAW] = yaw;
-	angles[ROLL] = 0;
-}
-
-
-vec_t __cdecl vectosignedpitch(const vec3_t vec)
-{
-  float t;
-
-  if ( 0.0 != vec[1] || 0.0 != vec[0] )
-  {
-    t = atan2(vec[2], sqrt(vec[1] * vec[1] + vec[0] * vec[0]));
-    return t * -180.0 / M_PI;
-  }
-  if ( -vec[2] < 0.0 )
-  {
-    return -90.0;
-  }
-  return 90.0;
-}
-
-
-
-
 
 
 int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd)
@@ -500,6 +293,18 @@ int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p ) {
     return sides;
 }
 
+/* Returns maximum absolute value of vector's components. */
+float vec2_maxabs(vec2_t v)
+{
+    vec2_t v_abs;
+    v_abs[0] = fabs(v[0]);
+    v_abs[1] = fabs(v[1]);
+
+    if (v_abs[0] > v_abs[1])
+        return v_abs[0];
+
+    return v_abs[1];
+}
 
 vec3_t vec3_origin = {0,0,0};
 
@@ -520,6 +325,21 @@ vec_t Vec2Normalize( vec3_t v ) {
 }
 
 
+vec_t Vec3Normalize( vec3_t v ) {
+	float length, ilength;
+
+	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	length = sqrt( length );
+
+	if ( length ) {
+		ilength = 1 / length;
+		v[0] *= ilength;
+		v[1] *= ilength;
+		v[2] *= ilength;
+	}
+
+	return length;
+}
 
 vec_t Vec4Normalize( vec4_t v ) {
 	float length, ilength;
@@ -538,17 +358,28 @@ vec_t Vec4Normalize( vec4_t v ) {
 }
 
 
+vec_t VectorLength( const vec3_t v ) {
+	return sqrt( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
+}
 
 vec_t Vec2Length( const vec2_t v ) {
 	return sqrt( v[0] * v[0] + v[1] * v[1] );
 }
 
+vec_t VectorLengthSquared( const vec3_t v ) {
+	return ( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
+}
 
 vec_t Vec4LengthSq( const vec4_t v)
 {
 	return ( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3] );
 }
 
+void VectorInverse( vec3_t v ) {
+	v[0] = -v[0];
+	v[1] = -v[1];
+	v[2] = -v[2];
+}
 
 
 void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up ) {
@@ -583,10 +414,48 @@ void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up 
 	}
 }
 
+int VectorCompare( const vec3_t v1, const vec3_t v2 ) {
+	if ( v1[0] != v2[0] || v1[1] != v2[1] || v1[2] != v2[2] ) {
+		return 0;
+	}
+
+	return 1;
+}
 
 
+float VectorDistance( vec3_t v1, vec3_t v2 ) {
+	vec3_t dir;
+
+	VectorSubtract( v2, v1, dir );
+	return VectorLength( dir );
+}
 
 
+vec_t VectorNormalize2( const vec3_t v, vec3_t out ) {
+	float length, ilength;
+
+	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	length = sqrt( length );
+
+	if ( length ) {
+		ilength = 1 / length;
+		out[0] = v[0] * ilength;
+		out[1] = v[1] * ilength;
+		out[2] = v[2] * ilength;
+	} else {
+		VectorClear( out );
+	}
+
+	return length;
+
+}
+
+vec_t Distance( const vec3_t p1, const vec3_t p2 ) {
+	vec3_t v;
+
+	VectorSubtract( p2, p1, v );
+	return VectorLength( v );
+}
 
 /*
 =================
@@ -663,6 +532,20 @@ void AxisCopy( vec3_t in[3], vec3_t out[3] ) {
 	VectorCopy( in[2], out[2] );
 }
 
+/*
+================
+ProjectPointOntoVector
+================
+*/
+void ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_t vProj ) {
+	vec3_t pVec, vec;
+
+	VectorSubtract( point, vStart, pVec );
+	VectorSubtract( vEnd, vStart, vec );
+	VectorNormalize( vec );
+	// project onto the directional vector for this segment
+	VectorMA( vStart, DotProduct( pVec, vec ), vec, vProj );
+}
 
 
 vec_t Vec3NormalizeTo( const vec3_t v, vec3_t out )
@@ -748,6 +631,13 @@ void __cdecl MatrixTranspose(const float (*in)[3], float (*out)[3])
   (*out)[8] = (*in)[8];
 }
 
+void __cdecl MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out)
+{
+  assert( in1 != out);
+  out[0] = in1[0] * in2[0][0] + in1[1] * in2[1][0] + in1[2] * in2[2][0] + in2[3][0];
+  out[1] = in1[0] * in2[0][1] + in1[1] * in2[1][1] + in1[2] * in2[2][1] + in2[3][1];
+  out[2] = in1[0] * in2[0][2] + in1[1] * in2[1][2] + in1[2] * in2[2][2] + in2[3][2];
+}
 
 void __cdecl MatrixTransposeTransformVector(const float *in1, const vec3_t in2[3], float *out)
 {
@@ -993,6 +883,12 @@ void __cdecl Vec4Lerp(const float *from, const float *to, float frac, float *res
   result[3] = (to[3] - from[3]) * frac + from[3];
 }
 
+void __cdecl Vec3Lerp(const float *from, const float *to, float frac, float *result)
+{
+  result[0] = (to[0] - from[0]) * frac + from[0];
+  result[1] = (to[1] - from[1]) * frac + from[1];
+  result[2] = (to[2] - from[2]) * frac + from[2];
+}
 
 void __cdecl QuatLerp(const float *qa, const float *qb, float frac, float *out)
 {
@@ -1008,6 +904,54 @@ void __cdecl QuatLerp(const float *qa, const float *qb, float frac, float *out)
 }
 
 
+static int sRandSeed;
+
+unsigned int __cdecl ms_rand()
+{
+  sRandSeed = 214013 * sRandSeed + 2531011;
+  return ((unsigned int)sRandSeed >> 16) & 0x7FFF;
+}
+
+void __cdecl ms_srand(int seed)
+{
+  sRandSeed = seed;
+}
+
+long double __cdecl randomf()
+{
+  return ((float)(signed int)ms_rand() * 0.000030517578f);
+}
+
+
+long double crandom()
+{
+  unsigned int is;
+
+  is = ms_rand();
+  return ((float)is * 0.000030517578 * 2.0 - 1.0);
+}
+
+static unsigned int holdrand;
+
+double __cdecl flrand(float min, float max)
+{
+  float result;
+
+  holdrand = 214013 * holdrand + 2531011;
+  result = (holdrand >> 17);
+  return ((max - min) * result) / 32768.0 + min;
+}
+
+void __cdecl Rand_Init(int seed)
+{
+  holdrand = seed;
+}
+
+int __cdecl irand(int min, int max)
+{
+  holdrand = 214013 * holdrand + 2531011;
+  return ((holdrand >> 17) * (max - min) >> 15) + min;
+}
 
 
 qboolean __cdecl IntersectPlanes(const float **plane, float *xyz)
@@ -1458,7 +1402,20 @@ void __cdecl ProjectPointOnPlane(const float *p, const float *normal, float *dst
   dst[2] = (d * normal[2]) + p[2];
 }
 
+//Lame?!
+void __cdecl Sys_SnapVector(vec3_t v)
+{
+    SnapVector(v);
+}
 
+void __cdecl MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out)
+{
+  assert( in1 != out);
+
+  out[0] = in1[0] * in2[0][0] + in1[1] * in2[1][0] + in1[2] * in2[2][0];
+  out[1] = in1[0] * in2[0][1] + in1[1] * in2[1][1] + in1[2] * in2[2][1];
+  out[2] = in1[0] * in2[0][2] + in1[1] * in2[1][2] + in1[2] * in2[2][2];
+}
 
 void __cdecl MatrixInverseOrthogonal43(const float in[4][3], float out[4][3])
 {
@@ -1955,6 +1912,22 @@ void __cdecl UnitQuatToForward(const float *quat, float *forward)
   forward[2] = (quat[0] * quat[2] - quat[1] * quat[3]) * 2.0;
 }
 
+void __cdecl SnapAngles(float *vAngles)
+{
+  float delta;
+  int rounded;
+  int i;
+
+  for ( i = 0; i < 3; ++i )
+  {
+    rounded = (signed int)(vAngles[i] + 9.313225746154785e-10);
+    delta = (float)rounded - vAngles[i];
+    if ( Square(delta) < 0.0000010000001 )
+    {
+      vAngles[i] = (float)rounded;
+    }
+  }
+}
 
 
 void __cdecl NearestPitchAndYawOnPlane(const float *angles, const float *normal, float *result)
@@ -1969,4 +1942,11 @@ void __cdecl NearestPitchAndYawOnPlane(const float *angles, const float *normal,
   vectoangles(projected, result);
 }
 
-#endif
+double __cdecl Vec3DistanceSq(const float *p1, const float *p2)
+{
+  vec3_t d;
+
+  VectorSubtract(p2, p1, d);
+  return VectorLengthSquared( d );
+}
+

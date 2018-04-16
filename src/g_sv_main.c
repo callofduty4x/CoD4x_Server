@@ -891,3 +891,20 @@ void __cdecl G_SafeServerDObjFree(int handle)
 {
   Com_SafeServerDObjFree(handle);
 }
+
+
+void G_FixupPlayerPositions()
+{
+    vec3_t porg;
+
+    int i;
+    for(i = 0; i < level.maxclients; ++i)
+    {
+	SV_GetPredictedOriginAndTimeForClientNum(i, porg);
+	float distsq = Vec3DistanceSq(level.clients[i].ps.origin, porg);
+	if(distsq <= 1.0)
+	{
+		VectorCopy(porg, level.clients[i].ps.origin);
+	}
+    }
+}

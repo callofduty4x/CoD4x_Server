@@ -1029,14 +1029,12 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 
 
 	clientNum = cl - svs.clients;
-//	extcl = &svs.extclients[clientNum];
 
 	// use the checksum feed in the key
 	key = sv.checksumFeed;
 	// also use the message acknowledge
 	key ^= cl->messageAcknowledge;
 	// also use the last acknowledged server command in the key
-//	key ^= Com_HashKey( extcl->reliableCommands[ cl->reliableAcknowledge & ( MAX_RELIABLE_COMMANDS - 1 ) ].command, 32 );
 	key ^= Com_HashKey( cl->reliableCommands[ cl->reliableAcknowledge & ( MAX_RELIABLE_COMMANDS - 1 ) ].command, 32 );
 
 	ps = SV_GameClientNum( clientNum );

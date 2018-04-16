@@ -95,7 +95,6 @@
 
 ;Exports of g_active_mp:
 	global _ZZ15G_TouchTriggersP9gentity_sE5range
-	global ClientThink
 	global G_RunClient
 	global ClientImpacts
 	global G_PlayerEvent
@@ -114,69 +113,6 @@
 
 
 SECTION .text
-
-
-;ClientThink(int)
-ClientThink:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov ecx, [ebp+0x8]
-	lea eax, [ecx+ecx*8]
-	lea eax, [ecx+eax*2]
-	mov edx, eax
-	shl edx, 0x5
-	add eax, edx
-	lea ebx, [eax+ecx]
-	add ebx, g_entities
-	mov esi, bgs
-	mov eax, level_bgs
-	mov [esi], eax
-	mov eax, [ebx+0x15c]
-	mov edx, [eax+0x2f90]
-	mov [eax+0x2fb0], edx
-	mov edx, [eax+0x2f94]
-	mov [eax+0x2fb4], edx
-	mov edx, [eax+0x2f98]
-	mov [eax+0x2fb8], edx
-	mov edx, [eax+0x2f9c]
-	mov [eax+0x2fbc], edx
-	mov edx, [eax+0x2fa0]
-	mov [eax+0x2fc0], edx
-	mov edx, [eax+0x2fa4]
-	mov [eax+0x2fc4], edx
-	mov edx, [eax+0x2fa8]
-	mov [eax+0x2fc8], edx
-	mov edx, [eax+0x2fac]
-	mov [eax+0x2fcc], edx
-	mov eax, [ebx+0x15c]
-	add eax, 0x2f90
-	mov [esp+0x4], eax
-	mov [esp], ecx
-	call SV_GetUsercmd
-	mov edx, [ebx+0x15c]
-	mov eax, level
-	mov eax, [eax+0x1ec]
-	mov [edx+0x3084], eax
-	mov eax, g_synchronousClients
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jnz ClientThink_10
-	mov eax, [ebx+0x15c]
-	add eax, 0x2f90
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call ClientThink_real
-ClientThink_10:
-	mov dword [esi], 0x0
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-	nop
 
 
 ;G_RunClient(gentity_s*)

@@ -495,6 +495,8 @@ extern cvar_t *g_antilag;
 extern cvar_t *g_cheats;
 extern cvar_t *g_oldVoting;
 extern cvar_t *g_inactivity;
+extern cvar_t *g_synchronousClients;
+
 
 extern qboolean onExitLevelExecuted;
 

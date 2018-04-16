@@ -4156,7 +4156,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
         // let everything in the world think and move
         G_RunFrame( svs.time );
     }
-
+    G_FixupPlayerPositions();
     SV_RunSApiFrame();
 
     // send messages back to the clients

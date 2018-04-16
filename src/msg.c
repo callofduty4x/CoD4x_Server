@@ -2722,19 +2722,12 @@ qboolean MSG_ShouldSendPSField(struct snapshotInfo_s *snapInfo, byte sendOriginA
 
 qboolean MSG_WithinAllowedPredictionError(float dist, playerState_t *to)
 {
-    if(dist <= 0.01)
+    if(dist <= 5.0)
     {
     	return qtrue;
     }
-	return qfalse;
-}
-
-double __cdecl Vec3DistanceSq(const float *p1, const float *p2)
-{
-  vec3_t d;
-
-  VectorSubtract(p2, p1, d);
-  return VectorLengthSquared( d );
+//    Com_Printf(CON_CHANNEL_SERVER, "Update prediction!\n");
+    return qfalse;
 }
 
 
@@ -2769,7 +2762,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
   	else
   	{
 //		assert(svsHeaderValid);
-
+//Send him 
 		predictedTime = SV_GetPredictedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
 		float dist = Vec3DistanceSq(predictedOrigin, to->origin);
 
