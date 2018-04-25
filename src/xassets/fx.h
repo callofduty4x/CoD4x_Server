@@ -1,7 +1,7 @@
 
 
 
-struct FxEffectDef
+typedef struct FxEffectDef
 {
   const char *name;
   int flags;
@@ -11,7 +11,7 @@ struct FxEffectDef
   int elemDefCountOneShot;
   int elemDefCountEmission;
   struct FxElemDef *elemDefs;
-};
+} FxEffectDef;
 
 
 struct FxImpactTable

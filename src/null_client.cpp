@@ -1,3 +1,4 @@
+#include "null_client.h"
 #include "q_shared.h"
 #include "sys_thread.h"
 #include "cvar.h"
@@ -123,7 +124,7 @@ void __cdecl DB_SaveSounds()
 {
 }
 
-struct Material *__cdecl Material_RegisterHandle(const char *name, int imageTrack)
+Material* __cdecl Material_RegisterHandle(const char *name, int imageTrack)
 {
 	return NULL;
 }
@@ -228,12 +229,12 @@ double __cdecl R_GetAdjustedLodDist(float dist, enum XModelLodRampType lodRampTy
     return 0;
 }
 
-struct FxEffectDef *__cdecl FX_Register(const char *name)
+FxEffectDef *__cdecl FX_Register(const char *name)
 {
     return NULL;
 }
 
-struct snd_alias_list_t* __cdecl Com_FindSoundAlias(const char *name)
+snd_alias_list_t* __cdecl Com_FindSoundAlias(const char *name)
 {
     return NULL;
 }

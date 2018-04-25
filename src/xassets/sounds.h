@@ -157,12 +157,12 @@ struct snd_alias_t
 
 
 
-struct snd_alias_list_t
+typedef struct snd_alias_list_t
 {
   const char *aliasName;
   struct snd_alias_t *head; //Can be multiple
   int count;
-};
+} snd_alias_list_t;
 
 typedef union 
 {
@@ -193,7 +193,6 @@ extern "C"{
 #endif
 
 
-struct snd_alias_list_t*__cdecl Com_FindSoundAlias(const char *name);
 struct snd_alias_t *__cdecl _Com_PickSoundAliasFromList(struct snd_alias_list_t *sndaliaslist);
 void SND_PlayAmbientAlias(struct snd_alias_t *alias, int localClientNum, int fadetime);
 

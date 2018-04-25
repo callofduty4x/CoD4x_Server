@@ -30,6 +30,7 @@
 #include "qcommon_io.h"
 #include "sys_thread.h"
 #include "misc.h"
+#include "null_client.h"
 
 
 int Q_isprint( int c )
@@ -1867,7 +1868,7 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
         return 0;
       case 10:
         Q_strncpyz(dest, pszKeyValue, sizeof(dest));
-        *(uint32_t *)&pStruct[pField->iOffset] = Material_RegisterHandle(dest);
+        *(uint32_t *)&pStruct[pField->iOffset] = (uint32_t)Material_RegisterHandle(dest, 0);
 #ifdef DEDICATEDONLY
 		return 1;
 #else
