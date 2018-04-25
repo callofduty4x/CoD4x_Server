@@ -20,7 +20,7 @@
 ===========================================================================
 */
 
-
+#include "g_sv_main.h"
 #include "q_shared.h"
 #include "qcommon_io.h"
 #include "cvar.h"

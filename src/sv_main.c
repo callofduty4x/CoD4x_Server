@@ -49,6 +49,7 @@
 #include "httpftp.h"
 #include "cscr_stringlist.h"
 #include "cscr_variable.h"
+#include "g_sv_main.h"
 
 #include "sapi.h"
 
@@ -4418,7 +4419,7 @@ void SV_CalculateChecksums()
 {
     int i;
     char filename[MAX_OSPATH];
-    char* str;
+    //char* str;
     int len, crc32;
 
     Com_Printf(CON_CHANNEL_SERVER,"^4Calculate referenced files checksums...\n");
