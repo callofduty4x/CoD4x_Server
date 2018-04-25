@@ -45,8 +45,8 @@ clipHandle_t CM_TempBoxModel( const vec3_t mins, const vec3_t maxs, int capsule 
 
 	TraceThreadInfo* tti = Sys_GetValue(3);
 
-	cmodel_t* box_model = tti->box_model;
-	cbrush_t* box_brush = tti->box_brush;
+	struct cmodel_t* box_model = tti->box_model;
+	struct cbrush_t* box_brush = tti->box_brush;
 
 	VectorCopy( mins, box_model->mins );
 	VectorCopy( maxs, box_model->maxs );

@@ -77,6 +77,7 @@ typedef struct cLeaf_s
 }cLeaf_t;
 #pragma pack(pop)
 
+/*
 typedef struct 
 {
   vec3_t mins;
@@ -84,7 +85,7 @@ typedef struct
   float radius;
   cLeaf_t leaf;
 }cmodel_t;
-
+*/
 
 /* 6972 */
 typedef struct 
@@ -290,6 +291,7 @@ struct TraceCheckCount
 
 /* 7216 */
 /* memerror fix please */
+/*
 typedef struct 
 {
   struct TraceCheckCount checkcount;
@@ -297,7 +299,7 @@ typedef struct
   cmodel_t *box_model;
   PhysGeomList **geoms;
 }TraceThreadInfo;
-
+*/
 
 typedef struct
 {

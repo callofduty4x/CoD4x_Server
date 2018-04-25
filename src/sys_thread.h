@@ -25,6 +25,7 @@
 #define __SYS_THREAD_H__
 
 //#define THREAD_DEBUG
+#include "cm_local.h"
 #include "sys_main.h"
 #include <stdarg.h>
 
@@ -117,11 +118,11 @@ struct TraceCheckCount
 };
 
 
-typedef struct 
+typedef struct TraceThreadInfo
 {
   struct TraceCheckCount checkcount;
-  struct cbrush_s *box_brush;
-  struct cmodel_s *box_model;
+  struct cbrush_t *box_brush;
+  struct cmodel_t *box_model;
 }TraceThreadInfo;
 
 

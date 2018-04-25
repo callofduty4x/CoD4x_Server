@@ -68,7 +68,7 @@ typedef struct cLeaf_s
 }cLeaf_t;
 #pragma pack(pop)
 
-typedef struct 
+typedef struct cmodel_t
 {
   vec3_t mins;
   vec3_t maxs;
@@ -148,7 +148,7 @@ typedef struct CollisionAabbTree_s
 }CollisionAabbTree_t;
 
 /* 6981 */
-typedef struct __attribute__((aligned(16))) 
+typedef struct __attribute__((aligned(16))) cbrush_t
 {
   float mins[3];
   int contents;
@@ -159,7 +159,7 @@ typedef struct __attribute__((aligned(16)))
   char *baseAdjacentSide;
   int16_t firstAdjacentSideOffsets[2][3];
   char edgeCount[2][3];
-}cbrush_t;
+} cbrush_t;
 
 typedef struct MapEnts_s
 {
