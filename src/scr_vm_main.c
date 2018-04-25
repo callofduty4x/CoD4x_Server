@@ -33,6 +33,7 @@
 #include "cscr_stringlist.h"
 #include "cscr_variable.h"
 #include "cscr_animtree.h"
+#include "cscr_parser.h"
 
 #include <stdarg.h>
 #include <ctype.h>
@@ -43,6 +44,9 @@ typedef struct
     xfunction_t offset;
     qboolean developer;
 } v_function_t;
+
+
+void __cdecl GScr_AddFieldsForEntity();
 
 
 void Scr_AddStockFunctions()
@@ -613,7 +617,7 @@ int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qbool
 {
 
     int fh;
-    PrecacheEntry load_buffer;
+    //PrecacheEntry load_buffer;
 
     if (!Scr_LoadScript(scriptName))
     {
