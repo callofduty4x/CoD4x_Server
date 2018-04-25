@@ -116,6 +116,10 @@ void Sys_BeginLoadThreadPriorities();
 void Sys_EndLoadThreadPriorities();
 void Sys_BeginShutdownWatchdog();
 
+signed int __cdecl Sys_ResetEvent(HANDLE handle);
+signed int __cdecl Sys_SetEvent(HANDLE handle);
+HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name);
+
 #ifdef __cplusplus
 }
 #endif

@@ -23,9 +23,7 @@
 #include "sys_thread.h"
 #include "qcommon.h"
 #include "qcommon_io.h"
-#ifdef THREAD_DEBUG
 #include "sys_main.h"
-#endif
 #include "sys_thread.h"
 
 #include <string.h>

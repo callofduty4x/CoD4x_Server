@@ -12,10 +12,6 @@ extern "C"{
 
 
 BOOL __cdecl _CloseHandle(HANDLE handle);
-signed int __cdecl Sys_ResetEvent(HANDLE handle);
-signed int __cdecl Sys_SetEvent(HANDLE handle);
-HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name);
-void Sys_SetThreadName(threadid_t tid, const char* name);
 
 //Just for Win32 code compatibility
 threadid_t Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg);

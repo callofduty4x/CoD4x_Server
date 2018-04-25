@@ -144,6 +144,7 @@ struct CriticalSection_t
 #define THREAD_CONTEXT_MAIN 0
 #define THREAD_CONTEXT_DATABASE 1
 
+void Sys_SetThreadName(threadid_t tid, const char* name);
 
 #endif
 
