@@ -215,12 +215,19 @@ $(DEF_FILE): $(TARGET)
 	@pexports $^ > $@
 
 ############################
-# Delete built object files.
+# Delete built object files. (Server only)
 clean:
+	@echo   clean Server
+	@$(CLEAN)
+
+############################
+# Delete built object files. (Server only)
+clean_all:
 	@echo   clean Server
 	@$(CLEAN)
 	@echo   clean Mbedtls
 	@$(MAKE) -C $(SRC_DIR)/mbedtls clean
 	@echo   clean Tomcrypt
 	@$(MAKE) -C $(SRC_DIR)/tomcrypt clean
+
 
