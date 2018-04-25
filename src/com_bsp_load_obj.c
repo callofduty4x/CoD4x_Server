@@ -96,19 +96,19 @@ struct BspChunk
 
 
 
-struct BspHeader
+typedef struct BspHeader
 {
   unsigned int ident;
   unsigned int version;
   unsigned int chunkCount;
   struct BspChunk chunks[100];
-};
+} BspHeader;
 
 
-typedef struct
+typedef struct comBspGlob_t
 {
   char name[64];
-  struct BspHeader *header;
+  BspHeader *header;
   unsigned int fileSize;
   unsigned int checksum;
   enum LumpType loadedLumpType;
@@ -178,7 +178,7 @@ void __cdecl Com_LoadBsp(const char *filename)
   {
     Com_Error(ERR_DROP, "EXE_ERR_COULDNT_LOAD\x15%s", filename);
   }
-  comBspGlob.header = Z_MallocGarbage(comBspGlob.fileSize, "Com_LoadBsp", 11);
+  comBspGlob.header = (BspHeader*)Z_MallocGarbage(comBspGlob.fileSize, "Com_LoadBsp", 11);
   bytesRead = FS_Read(comBspGlob.header, comBspGlob.fileSize, h);
   FS_FCloseFile(h);
   if ( bytesRead != comBspGlob.fileSize )
