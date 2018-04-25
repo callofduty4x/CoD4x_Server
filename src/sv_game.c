@@ -30,6 +30,7 @@
 #include "g_public.h"
 #include "dobj.h"
 #include "xassets/xmodel.h"
+#include "xassets/sounds.h"
 #include "game/botlib.h"
 #include "scr_vm.h"
 #include "sys_main.h"
