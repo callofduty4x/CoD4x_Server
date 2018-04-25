@@ -32,6 +32,8 @@ If you have questions concerning this license or the applicable additional terms
 #include "qcommon_io.h"
 #include "g_sv_shared.h"
 #include "scr_vm.h"
+#include "sv_snapshot.h"
+
 /*
 ==================
 CheatsOk
