@@ -27,6 +27,7 @@
 #include "server.h"
 #include "cm_public.h"
 #include "dobj.h"
+#include "sv_world.h"
 
 vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
@@ -1096,17 +1097,17 @@ void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check,
   struct gentity_s *touch;
   IgnoreEntParams *inp;
   DObj *obj;
-  vec3_t entAxis[4];
-  struct DObjTrace_s objTrace;
-  int partBits[5];
-  vec3_t localEnd;
-  vec3_t absmin;
-  vec3_t absmax;
-  vec3_t localStart;
+  //vec3_t entAxis[4];
+  //struct DObjTrace_s objTrace;
+  //int partBits[5];
+  //vec3_t localEnd;
+  //vec3_t absmin;
+  //vec3_t absmax;
+  //vec3_t localStart;
   float* angle;
   double oldfrac;
   clipHandle_t cliphandle;
-  float radius;
+  //float radius;
 
   entnum = check - sv.svEntities;
   touch = SV_GentityNum(entnum);
@@ -1114,17 +1115,19 @@ void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check,
   {
     return;
   }
-  if(!( (inp = clip->ignoreEntParams) == 0 || inp->baseEntity == 1023
-      || (!inp->ignoreSelf || entnum != inp->baseEntity) && (!inp->ignoreParent || entnum != inp->parentEntity)
-      && (touch->r.ownerNum == 0 || (!inp->ignoreSiblings || touch->r.ownerNum - 1 != inp->parentEntity || entnum == inp->baseEntity) && (!inp->ignoreChildren || touch->r.ownerNum - 1 != inp->baseEntity)))
-  ){
-    return;
-  }
 
+  inp = clip->ignoreEntParams;
+  int A = inp == 0;
+  int B = inp->baseEntity == 1023;
+  int C = (!inp->ignoreSelf || entnum != inp->baseEntity);
+  int D = (!inp->ignoreParent || entnum != inp->parentEntity);
+  int E = touch->r.ownerNum == 0;
+  int F = (!inp->ignoreSiblings || touch->r.ownerNum - 1 != inp->parentEntity || entnum == inp->baseEntity);
+  int G = (!inp->ignoreChildren || touch->r.ownerNum - 1 != inp->baseEntity);
+  if(!(A || B || (C && D && (E || (F && G)))))
+    return;
 
   obj = SV_LocationalTraceDObj(clip, touch);
-
-
 
   if ( !obj )
   {

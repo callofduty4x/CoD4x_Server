@@ -97,14 +97,14 @@ struct sightpointtrace_t
   char *priorityMap;
 };
 
-struct pointtrace_t
+typedef struct pointtrace_t
 {
   TraceExtents extents;
   IgnoreEntParams *ignoreEntParams;
   int contentmask;
   int bLocational;
   char *priorityMap;
-};
+} pointtrace_t;
 
 
 typedef struct moveclip_s{

@@ -21,8 +21,6 @@ SECTION .text
 
 
 
-;SV_PointTraceToEntityIntern(pointtrace_t const* clip, gentity_s* touch, trace_t*, DObj* obj)
-
 SV_PointTraceToEntityIntern:
 	push ebp
 	mov ebp, esp
