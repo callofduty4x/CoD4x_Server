@@ -411,7 +411,7 @@ bool DB_CanFreeXAssetPool(int type )
 extern "C"
 {
 
-void DB_ShutdownXAssetPools( )
+void __cdecl DB_ShutdownXAssetPools()
 {
     int i;
 
@@ -598,7 +598,7 @@ void __cdecl DB_AllocXBlocks(unsigned int *blockSize, const char *filename, XBlo
   }
   Com_Printf(CON_CHANNEL_SYSTEM, "used %0.2f MB memory in DB alloc\n", (float)(total_size / 1048576.0));
 
-#pragma warning "StaticIndexBuffer? StaticVertexBuffer?"
+#pragma message "StaticIndexBuffer? StaticVertexBuffer?"
 }
 
 
@@ -1564,7 +1564,7 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
 
 void DB_TryLoadXFile()
 {
-  bool isCodeZone;
+  //bool isCodeZone;
   unsigned int j;
   unsigned int zoneInfoCount;
 
@@ -1577,7 +1577,7 @@ void DB_TryLoadXFile()
 
     for ( j = 0; j < zoneInfoCount; ++j )
     {
-      isCodeZone = (g_zoneInfo[j].flags & 1) != 0;
+      //isCodeZone = (g_zoneInfo[j].flags & 1) != 0;
       if ( !DB_TryLoadXFileInternal(g_zoneInfo[j].name, g_zoneInfo[j].flags, g_fileBuf) )
       {
           --g_loadingAssets;

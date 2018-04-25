@@ -1,3 +1,4 @@
+#include "tests.h"
 #include "q_shared.h"
 #include "qcommon.h"
 #include "qcommon_io.h"

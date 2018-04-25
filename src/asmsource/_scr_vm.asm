@@ -6158,7 +6158,6 @@ Scr_Settings:
 	ret
 
 
-;Scr_Shutdown()
 Scr_Shutdown:
 	push ebp
 	mov ebp, esp

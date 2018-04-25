@@ -1,3 +1,4 @@
+#include "win_localize.h"
 #include "q_shared.h"
 #include "filesystem.h"
 

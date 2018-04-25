@@ -1644,7 +1644,6 @@ Hunk_AllocInternal:
 	nop
 
 
-;Hunk_ResetDebugMem()
 Hunk_ResetDebugMem:
 	push ebp
 	mov ebp, esp
@@ -1834,7 +1833,6 @@ Hunk_AllocAlignInternal_50:
 	nop
 
 
-;Hunk_ShutdownDebugMemory()
 Hunk_ShutdownDebugMemory:
 	push ebp
 	mov ebp, esp

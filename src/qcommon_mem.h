@@ -68,8 +68,10 @@ void __cdecl Com_InitHunkMemory(void);
 void __cdecl Hunk_InitDebugMemory(void);
 void __cdecl Hunk_ClearTempMemory(void);
 void __cdecl Hunk_ClearTempMemoryHigh(void);
+void __cdecl Hunk_Clear();
 void* __cdecl Hunk_AllocateTempMemory(int size);
 void* __cdecl Hunk_AllocateTempMemoryHigh(int size);
+void __cdecl Hunk_ResetDebugMem();
 void __cdecl TempMemorySetPos(char *pos);
 void __cdecl Hunk_FreeTempMemory(void *buffer);
 void* __cdecl TempMalloc( int );
@@ -88,6 +90,7 @@ void *__cdecl Hunk_AllocInternal(int size);
 #define L_Free free
 
 void __cdecl Hunk_FreeDebugMem(void *mem);
+void __cdecl Hunk_ShutdownDebugMemory();
 
 
 #ifdef ZONE_DEBUG

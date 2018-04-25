@@ -56,6 +56,10 @@
 #include "bg_public.h"
 #include "cscr_stringlist.h"
 #include "physicalmemory.h"
+#include "win_localize.h"
+#include "tests.h"
+#include "null_client.h"
+#include "db_load.h"
 
 #include <string.h>
 #include <setjmp.h>
@@ -153,6 +157,13 @@ void EventTimerTest(int time, int triggerTime, int value, char* s){
 	Com_Printf(CON_CHANNEL_SYSTEM,"^5Event exectuted: %i %i %i %i %s\n", time, triggerTime, Sys_Milliseconds(), value, s);
 
 }
+
+void CCS_InitConstantConfigStrings();
+void Com_ShutdownDObj();
+void DObjShutdown();
+void XAnimShutdown();
+void Com_ShutdownWorld();
+void CM_Shutdown();
 
 
 /*
@@ -1483,7 +1494,7 @@ void __cdecl Com_SetScriptSettings()
 
 void __cdecl Com_Restart()
 {
-  XZoneInfo zoneInfo[1];
+//  XZoneInfo zoneInfo[1];
 
 //  com_codeTimeScale = 1.0;
   CL_ShutdownHunkUsers();

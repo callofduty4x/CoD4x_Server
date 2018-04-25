@@ -834,6 +834,7 @@ unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index);
 scr_entref_t __cdecl Scr_GetEntityRef(unsigned int index);
 void Scr_ShutdownOpcodeLookup( );
 VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset);
+void Scr_Shutdown();
 
 #ifdef __cplusplus
 }
