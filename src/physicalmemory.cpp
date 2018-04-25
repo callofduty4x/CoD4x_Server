@@ -56,7 +56,7 @@ void PMem_InitPhysicalMemory(PhysicalMemory *pmem, const char *name, void *memor
 
 byte* __cdecl _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType, const char *name, EMemTrack memTrack)
 {
-  int alignedSize;
+  //int alignedSize;
   unsigned int highPos;
   signed int location;
   unsigned int lowPos;
@@ -93,7 +93,7 @@ byte* __cdecl _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsign
   {
     lowPos = ~alignment & (alignment + g_mem.prim[allocType].pos);
     highPos = size + lowPos;
-    alignedSize = size + lowPos - g_mem.prim[allocType].pos;
+    //alignedSize = size + lowPos - g_mem.prim[allocType].pos;
     g_overAllocatedSize = size + lowPos - g_mem.prim[1].pos;
     if ( g_overAllocatedSize > 0 )
     {
