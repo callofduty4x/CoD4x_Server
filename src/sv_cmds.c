@@ -868,19 +868,16 @@ static void Cmd_Undercover_f() {
 			return;
 		}
 		client_t* cl = &svs.clients[invokerclnum];
-		gc = G_GetPlayerState(invokerclnum);
+		gc = G_GetGClient(invokerclnum);
 		if(gc && gc->sess.sessionState == SESS_STATE_PLAYING)
 		{
 			Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You can not use the command \"undercover\" when you are alive\n");
 			return;
 		}
+
 		cl->undercover ^= 1;
-		if(cl->undercover)
-		{
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"Undercover mode is now turned on\n");
-		}else{
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"Undercover mode is now turned off\n");
-		}
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Undercover mode is now turned %s\n", cl->undercover ? "off" : "on");
+
 		Auth_StoreUndercoverStatus(cl);
 		return;
         }
@@ -894,7 +891,7 @@ static void Cmd_Undercover_f() {
 	if(cl == NULL)
 		return;
 
-	gc = G_GetPlayerState(cl - svs.clients);
+	gc = G_GetGClient(cl - svs.clients);
 	if(gc && gc->sess.sessionState == SESS_STATE_PLAYING)
 	{
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: You can not use the command \"undercover\" when you are alive\n");
@@ -2300,9 +2297,8 @@ void SV_GetModules_f()
 
 void SV_AddOperatorCommands()
 {
-	static qboolean	initialized;
-
-	initialized = qtrue;
+	//static qboolean	initialized; // Not used?
+	//initialized = qtrue;
 
 	//Former safe commands
 	Cmd_AddPCommand ("systeminfo", SV_Systeminfo_f, 1);

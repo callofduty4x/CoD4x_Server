@@ -511,6 +511,7 @@ void G_SetSavePersist(int val);
 int G_GetClientSize();
 playerState_t *G_GetPlayerState(int num);
 clientState_t *G_GetClientState(int num);
+gclient_t *G_GetGClient(int num);
 void SpawnVehicle(gentity_t *ent, const char *vehtype);
 void __cdecl G_VehSpawner(gentity_t *ent);
 void __cdecl G_VehCollmapSpawner(gentity_t *ent);

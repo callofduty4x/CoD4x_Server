@@ -872,6 +872,11 @@ clientState_t* G_GetClientState(int num)
     return &level.clients[num].sess.cs;
 }
 
+gclient_t *G_GetGClient(int num)
+{
+    return &level.clients[num];
+}
+
 int G_GetClientArchiveTime(int clnum)
 {
 	return level.clients[clnum].sess.archiveTime;
