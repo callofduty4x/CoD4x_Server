@@ -78,14 +78,14 @@ char *__cdecl Win_LocalizeRef(const char *ref)
 {
   const char *strings;
   int useRef;
-  const char *token;
+  parseInfo_t *token;
 
   Com_BeginParseSession("localization");
   strings = localization.strings;
   while ( 1 )
   {
     token = Com_Parse(&strings);
-    if ( !*token )
+    if ( !token->token[0] )
     {
       Com_EndParseSession();
 /*
@@ -97,16 +97,16 @@ char *__cdecl Win_LocalizeRef(const char *ref)
 */
       return Win_CopyLocalizationString(ref);
     }
-    useRef = strcmp(token, ref) == 0;
+    useRef = strcmp(token->token, ref) == 0;
     token = Com_Parse(&strings);
-    if ( !*token )
+    if ( !token->token[0] )
     {
       break;
     }
     if ( useRef )
     {
       Com_EndParseSession();
-      return Win_CopyLocalizationString(token);
+      return Win_CopyLocalizationString(token->token);
     }
   }
   Com_EndParseSession();

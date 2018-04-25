@@ -359,7 +359,8 @@ enum ParseTokenType
   PARSE_TOKEN_PUNCTUATION = 0x5
 };
 
-struct parseInfo_t{
+typedef struct parseInfo_t
+{
 	char token[MAX_TOKEN_CHARS];
 	enum ParseTokenType tokenType;
 	int lines;
@@ -373,7 +374,7 @@ struct parseInfo_t{
 	int backup_lines;
 	const char *backup_text;
 	const char *parseFile;
-};
+} parseInfo_t;
 
 
 
