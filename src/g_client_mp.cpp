@@ -13,15 +13,13 @@ void __cdecl ClientClearFields(gclient_s *client)
 
 void ClearAllSpectators(struct gentity_s* ent)
 {
-	unsigned int i;
+	int i;
 	struct gentity_s* followers;
 
 	for(i = 0, followers = level.gentities; i < level.maxclients; i++, followers++)//let refollow all spectors me who have prior followed me
 	{
 		if(followers->client && followers->client->lastFollowedClient == ent->s.number)
-		{
 			Cmd_FollowClient_f(followers, ent->s.number);
-		}
 	}
 }
 
@@ -38,7 +36,7 @@ extern "C" void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, c
   index = ent - g_entities;
   client = ent->client;
 
-  assertx((unsigned int)index < level.maxclients ,"index doesn't index level.maxclients\n\t%i not in [0, %i)", index, level.maxclients);
+  assertx(index < level.maxclients ,"index doesn't index level.maxclients\n\t%i not in [0, %i)", index, level.maxclients);
   assert(ent->client == &level.clients[index]);
   assert(ent->r.inuse);
 
@@ -100,7 +98,7 @@ extern "C" void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, c
   client->ps.clientNum = index;
   client->ps.viewlocked_entNum = 1023;
 
-  assertx((unsigned int)(client - level.clients) < level.maxclients ,"client - level.clients doesn't index level.maxclients\n\t%i not in [0, %i)", client - level.clients, level.maxclients);
+  assertx((int)(client - level.clients) < level.maxclients ,"client - level.clients doesn't index level.maxclients\n\t%i not in [0, %i)", client - level.clients, level.maxclients);
 
   SV_GetUsercmd(client - level.clients, &client->sess.cmd);
   client->ps.eFlags ^= 2u;
