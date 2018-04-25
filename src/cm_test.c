@@ -259,11 +259,9 @@ int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_
 	return CM_PointContents( p_l, model );
 }
 
-
-bool __cdecl CM_ClipHandleIsValid(unsigned int handle)
+/*
+qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle)
 {
-  bool result; // al@2
-
   if ( handle >= cm.numSubModels )
   {
     if ( handle == BOX_MODEL_HANDLE )
@@ -274,3 +272,4 @@ bool __cdecl CM_ClipHandleIsValid(unsigned int handle)
   }
   return true;
 }
+*/
