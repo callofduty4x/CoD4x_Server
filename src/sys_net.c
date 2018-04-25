@@ -20,23 +20,6 @@
 ===========================================================================
 */
 
-#include "qcommon_io.h"
-#include "sys_net.h"
-#include "cvar.h"
-#include "q_platform.h"
-#include "net_game_conf.h"
-#include "cmd.h"
-#include "net_game.h"
-#include "sys_thread.h"
-
-#include <string.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
-#include <ctype.h>
-#include <stddef.h>		/* for offsetof*/
-
-
 #ifdef _WIN32
 #	include <winsock2.h>
 #	include <ws2tcpip.h>
@@ -53,6 +36,22 @@
 #	else
 #		include <ws2spi.h>
 #	endif
+
+#include "qcommon_io.h"
+#include "sys_net.h"
+#include "cvar.h"
+#include "q_platform.h"
+#include "net_game_conf.h"
+#include "cmd.h"
+#include "net_game.h"
+#include "sys_thread.h"
+
+#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <time.h>
+#include <ctype.h>
+#include <stddef.h>		/* for offsetof*/
 
 typedef int socklen_t;
 #	ifdef ADDRESS_FAMILY
