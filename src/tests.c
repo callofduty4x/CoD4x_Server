@@ -41,7 +41,7 @@ void MSG_TestDeltaAE(snapshotInfo_t* snapInfo, int time, archivedEntity_t* basel
 
 	to->s.lerp.eFlags &= MASK_EFLAGS;
 
-	int lc = MSG_WriteDelta_LastChangedField(&rto, to, &archivedEntityFields, 69);
+	int lc = MSG_WriteDelta_LastChangedField((byte*)&rto, (byte*)to, (netField_t*)&archivedEntityFields, 69);
 
 	assert(msg.cursize == msg.readcount);
 	assert(!msg.overflowed);
@@ -74,7 +74,7 @@ void MSG_TestDeltaPS(snapshotInfo_t* snapInfo, int time, playerState_t *baseline
         MSG_ReadDeltaPlayerstate(0, &msg, time, baseline, &rto, 0);
 
 
-	int lc = MSG_WriteDelta_LastChangedField(&rto, to, &playerStateFields, 141);
+	int lc = MSG_WriteDelta_LastChangedField((byte*)&rto, (byte*)to, (netField_t*)&playerStateFields, 141);
 
 	assert(msg.cursize == msg.readcount);
 	assert(!msg.overflowed);
@@ -122,7 +122,7 @@ void MSG_TestDeltaCS(snapshotInfo_t* snapInfo, int time, clientState_t* baseline
 
         MSG_ReadDeltaClient( &msg, time, baseline, &rto, newnum);
 
-	int lc = MSG_WriteDelta_LastChangedField(&rto, to, &clientStateFields, 24);
+	int lc = MSG_WriteDelta_LastChangedField((byte*)&rto, (byte*)to, (netField_t*)&clientStateFields, 24);
 
 	assert(msg.cursize == msg.readcount);
 	assert(!msg.overflowed);

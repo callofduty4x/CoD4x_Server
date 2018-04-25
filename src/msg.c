@@ -874,15 +874,6 @@ typedef struct{
     int z;
 }netEntlist_t;
 
-
-typedef struct netField_s{
-	char    *name;
-	int offset;
-	int bits;           // 0 = float
-	byte changeHints;
-	byte pad[3];
-} netField_t;
-
 static int GetMinBitCount(int x)
 {
     return 32 - __builtin_clz (x);
