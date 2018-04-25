@@ -20,9 +20,9 @@
 //////////////////////////////////////////////////
 
 
-#pragma warning ( disable : 4511 )			// copy constructor could not be generated
-#pragma warning ( disable : 4512 )			// assignment operator could not be generated
-#pragma warning ( disable : 4663 )			// C++ language change: blah blah template crap blah blah
+//#pragma warning ( disable : 4511 )			// copy constructor could not be generated
+//#pragma warning ( disable : 4512 )			// assignment operator could not be generated
+//#pragma warning ( disable : 4663 )			// C++ language change: blah blah template crap blah blah
 #include "stringed_interface.h"
 #include "stringed_ingame.h"
 
