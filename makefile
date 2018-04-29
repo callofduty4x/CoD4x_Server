@@ -31,9 +31,9 @@ CPP=g++
 WIN_DEFINES=WINVER=0x501
 LINUX_DEFINES=_GNU_SOURCE
 CFLAGS=-m32 -msse2 -mfpmath=sse -Wall -O0 -g -fno-omit-frame-pointer
-WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows -static-libgcc -static -lm
+WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static -lm
 WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
-LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Tlinkerscript.ld -Wl,-rpath=./
+LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Wl,-rpath=./
 LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
 COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE)
 
@@ -144,7 +144,7 @@ endif
 ###############################
 # A rule to link server binary.
 $(TARGET): $(OS_OBJ) $(C_OBJ) $(CPP_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o
-	@echo   $(CPP)
+	@echo   $(CPP) $(TARGET)
 # CFLAGS for compiler, LFLAGS for linker.
 	@$(CPP) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
 
@@ -175,7 +175,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 ################################
 # A rule to build assemler code.
 $(OBJ_DIR)/%.o: $(SRC_DIR)/asmsource/%.asm
-	@echo   $(CC)  $@
+	@echo   $(NASM)  $@
 	@$(NASM) $(NASMFLAGS) $< -o $@
 
 ###################################
