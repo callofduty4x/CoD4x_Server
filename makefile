@@ -6,15 +6,29 @@
 # If you want to get a debug version, use          #
 # `make DEBUG=true`                                #
 ####################################################
-########################################################################
-# TODO: linux.                                                         #
-# Check if something wrong. I got 2.3 mb file like in good old days ;D #
-########################################################################
-
 
 ##############################
 # A name of server executable.
 TARGETNAME=cod4x18_dedrun
+
+###################################################################
+# Build system specific information.
+# In git not exist there will be some errors, but nothing critical.
+BUILD_NUMBER=$(shell git rev-list --count HEAD)
+BUILD_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+BUILD_REVISION=$(shell git rev-parse HEAD)
+
+ifeq ($(BUILD_NUMBER), )
+BUILD_NUMBER:=0
+endif
+
+ifeq ($(BUILD_BRANCH), )
+BUILD_BRANCH:=no-branch
+endif
+
+ifeq ($(BUILD_REVISION), )
+BUILD_REVISION:=no-revision
+endif
 
 ############################################
 # Configure type of build.
@@ -35,7 +49,7 @@ WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -sta
 WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
 LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Wl,-rpath=./
 LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
-COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE)
+COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE) BUILD_NUMBER=$(BUILD_NUMBER) BUILD_BRANCH=$(BUILD_BRANCH) BUILD_REVISION=$(BUILD_REVISION)
 
 ########################
 # Setup directory names.
@@ -54,7 +68,6 @@ EXTERNAL=mbedtls tomcrypt
 # Setup external applications.
 NASM=nasm
 
-
 ###########################################################
 # Setup OS-specific variables (All the garbage goes there).
 ifeq ($(OS),Windows_NT)
@@ -64,7 +77,7 @@ BIN_EXT=.exe
 NASMFLAGS=-f win -dWin32 --prefix _
 OS_SOURCES=$(wildcard $(WIN_DIR)/*.c)
 OS_OBJ=$(patsubst $(WIN_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
-C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(WIN_DEFINES))
+C_DEFINES=$(addprefix -D,$(COD4X_DEFINES) $(WIN_DEFINES))
 LFLAGS=$(WIN_LFLAGS)
 LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
 RESOURCE_FILE=src/win32/win_cod4.res
@@ -79,14 +92,13 @@ BIN_EXT=
 NASMFLAGS=-f elf
 OS_SOURCES=$(wildcard $(LINUX_DIR)/*.c)
 OS_OBJ=$(patsubst $(LINUX_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
-C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(LINUX_DEFINES))
+C_DEFINES=$(addprefix -D,$(COD4X_DEFINES) $(LINUX_DEFINES))
 LFLAGS=$(LINUX_LFLAGS)
 LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
 CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
 endif
-
 
 #####################
 # Source files lists.
@@ -151,8 +163,8 @@ $(TARGET): $(OS_OBJ) $(C_OBJ) $(CPP_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) ob
 ################################
 # A rule to make version module.
 obj/version.o: src/version/version.c FORCE
-	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) -o $@ $<
+	@echo   $(CC)  $@ $(C_DEFINES)
+	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
 
 ############################################
 # An empty rule to force rebuild other rule.

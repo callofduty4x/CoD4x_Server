@@ -1,5 +1,4 @@
 #include "version.h"
-#include "version_build.h"
 
 #define SYS_COMMONVERSION 17.6
 #define _STRINGIFY(s) #s
@@ -18,4 +17,14 @@ const char* Sys_GetCommonVersionString()
 int Sys_GetBuild()
 {
     return BUILD_NUMBER;
+}
+
+const char* Sys_GetBranch()
+{
+    return STRINGIFY(BUILD_BRANCH);
+}
+
+const char* Sys_GetRevision()
+{
+    return STRINGIFY(BUILD_REVISION);
 }

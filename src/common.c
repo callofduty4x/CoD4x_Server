@@ -634,7 +634,9 @@ static void Com_InitCvars( void ){
     com_version = Cvar_RegisterString ("version", s, CVAR_ROM | CVAR_SERVERINFO , "Game version");
     com_shortversion = Cvar_RegisterString ("shortversion", Q3_VERSION, CVAR_ROM | CVAR_SERVERINFO , "Short game version");
 
-    Cvar_RegisterString ("build", va("%i", Sys_GetBuild()), CVAR_ROM | CVAR_SERVERINFO , "");
+    Cvar_RegisterInt ("build", Sys_GetBuild(), Sys_GetBuild(), Sys_GetBuild(), CVAR_ROM | CVAR_SERVERINFO, "Count of SCM commits since project has been started");
+    Cvar_RegisterString("branch", Sys_GetBranch(), CVAR_ROM | CVAR_SERVERINFO, "Name of SCM branch");
+    Cvar_RegisterString("revision", Sys_GetRevision(), CVAR_ROM | CVAR_SERVERINFO, "Hash of SCM revision");
     useFastFile = Cvar_RegisterBool ("useFastFiles", qtrue, 16, "Enables loading data from fast files");
     //MasterServer
     //AuthServer
