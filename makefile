@@ -242,4 +242,5 @@ clean_all:
 	@echo   clean Tomcrypt
 	@$(MAKE) -C $(SRC_DIR)/tomcrypt clean
 
-
+docker: $(TARGET)
+	@docker build . -t cod4x/bleeding
