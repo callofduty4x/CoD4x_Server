@@ -1,5 +1,5 @@
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include <stdint.h>
 
 typedef enum

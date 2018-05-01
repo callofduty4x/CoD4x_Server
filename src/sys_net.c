@@ -20,23 +20,6 @@
 ===========================================================================
 */
 
-#ifdef _WIN32
-#	include <winsock2.h>
-#	include <ws2tcpip.h>
-#	include <iphlpapi.h>
-#	if WINVER < 0x501
-#		ifdef __MINGW32__
-			// wspiapi.h isn't available on MinGW, so if it's
-			// present it's because the end user has added it
-			// and we should look for it in our tree
-#			include "wspiapi.h"
-#		else
-#			include <wspiapi.h>
-#		endif
-#	else
-#		include <ws2spi.h>
-#	endif
-
 #include "qcommon_io.h"
 #include "sys_net.h"
 #include "cvar.h"
@@ -53,100 +36,120 @@
 #include <ctype.h>
 #include <stddef.h>		/* for offsetof*/
 
-typedef int socklen_t;
-#	ifdef ADDRESS_FAMILY
-#		define sa_family_t	ADDRESS_FAMILY
-#	else
-typedef unsigned short sa_family_t;
-#	endif
+#ifdef _WIN32
+	#include <winsock2.h>
+	#include <ws2tcpip.h>
+	#include <iphlpapi.h>
+	#if WINVER < 0x501
+		#ifdef __MINGW32__
+					// wspiapi.h isn't available on MinGW, so if it's
+					// present it's because the end user has added it
+					// and we should look for it in our tree
+			#include "wspiapi.h"
+		#else
+			#include <wspiapi.h>
+		#endif
+	#else
+		#include <ws2spi.h>
+	#endif
 
-/* no epipe yet */
-#ifndef WSAEPIPE
-    #define WSAEPIPE       -12345
-#endif
-#	define EAGAIN			WSAEWOULDBLOCK
-#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
-#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
-#	define ECONNRESET		WSAECONNRESET
-#	define EINPROGRESS		WSAEINPROGRESS
-#	define EINTR			WSAEINTR
-# define EPIPE      WSAEPIPE
-typedef u_long	ioctlarg_t;
-#	define socketError		WSAGetLastError( )
+	
 
-#define NET_NOSIGNAL 0x0
+	typedef int socklen_t;
+	#	ifdef ADDRESS_FAMILY
+	#		define sa_family_t	ADDRESS_FAMILY
+	#	else
+	typedef unsigned short sa_family_t;
+	#	endif
 
-static WSADATA	winsockdata;
-static qboolean	winsockInitialized = qfalse;
+	/* no epipe yet */
+	#ifndef WSAEPIPE
+		#define WSAEPIPE       -12345
+	#endif
+	#	define EAGAIN			WSAEWOULDBLOCK
+	#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
+	#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
+	#	define ECONNRESET		WSAECONNRESET
+	#	define EINPROGRESS		WSAEINPROGRESS
+	#	define EINTR			WSAEINTR
+	# define EPIPE      WSAEPIPE
+	typedef u_long	ioctlarg_t;
+	#	define socketError		WSAGetLastError( )
 
-#ifndef IPV6_V6ONLY
-#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
-#endif 
+	#define NET_NOSIGNAL 0x0
 
-int inet_pton(int af, const char *src, void *dst)
-{
-	struct sockaddr_storage sin;
-	int addrSize = sizeof(sin);
-	char address[256];
-	strncpy(address, src, sizeof(address));
+	static WSADATA	winsockdata;
+	static qboolean	winsockInitialized = qfalse;
 
-	int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
-	if(rc != 0)
+	#ifndef IPV6_V6ONLY
+		#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
+	#endif 
+
+	int inet_pton(int af, const char *src, void *dst)
 	{
-		return -1;
+		struct sockaddr_storage sin;
+		int addrSize = sizeof(sin);
+		char address[256];
+		strncpy(address, src, sizeof(address));
+
+		int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
+		if(rc != 0)
+		{
+			return -1;
+		}
+		if(af == AF_INET)
+		{
+			*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
+			return 1;
+		}
+		if(af == AF_INET6)
+		{
+			*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
+			return 1;
+		}
+		return 0;
 	}
-	if(af == AF_INET)
-	{
-		*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
-		return 1;
-	}
-	if(af == AF_INET6)
-	{
-		*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
-		return 1;
-	}
-	return 0;
-}
 
 #else
 
-#	if MAC_OS_X_VERSION_MIN_REQUIRED == 1020
-		// needed for socklen_t on OSX 10.2
-#		define _BSD_SOCKLEN_T_
-#	endif
+	#	if MAC_OS_X_VERSION_MIN_REQUIRED == 1020
+			// needed for socklen_t on OSX 10.2
+	#		define _BSD_SOCKLEN_T_
+	#	endif
 
-#ifdef MACOS_X
-    #define NET_NOSIGNAL SO_NOSIGPIPE
-#else
-    #define NET_NOSIGNAL MSG_NOSIGNAL
-#endif
+	#ifdef MACOS_X
+		#define NET_NOSIGNAL SO_NOSIGPIPE
+	#else
+		#define NET_NOSIGNAL MSG_NOSIGNAL
+	#endif
 
-#	include <sys/socket.h>
-#	include <errno.h>
-#	include <netdb.h>
-#	include <netinet/in.h>
-#	include <arpa/inet.h>
-#	include <net/if.h>
-#	include <sys/ioctl.h>
-#	include <sys/types.h>
-#	include <sys/time.h>
-#	include <unistd.h>
-#	if !defined(__sun) && !defined(__sgi)
-#		include <ifaddrs.h>
-#	endif
+	#include <sys/socket.h>
+	#include <errno.h>
+	#include <netdb.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+	#include <net/if.h>
+	#include <sys/ioctl.h>
+	#include <sys/types.h>
+	#include "net_game.h"
+	#include <sys/time.h>
+	#include <unistd.h>
+	#	if !defined(__sun) && !defined(__sgi)
+	#		include <ifaddrs.h>
+	#	endif
 
-#	ifdef __sun
-#		include <sys/filio.h>
-#	endif
+	#	ifdef __sun
+	#		include <sys/filio.h>
+	#	endif
 
 
-#	define INVALID_SOCKET		-1
-#	define SOCKET_ERROR		-1
-#	define closesocket		close
-#	define ioctlsocket		ioctl
-typedef int	ioctlarg_t;
-#	define socketError		errno
-typedef int SOCKET;
+	#	define INVALID_SOCKET		-1
+	#	define SOCKET_ERROR		-1
+	#	define closesocket		close
+	#	define ioctlsocket		ioctl
+	typedef int	ioctlarg_t;
+	#	define socketError		errno
+	typedef int SOCKET;
 #endif
 
 

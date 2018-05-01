@@ -1,7 +1,7 @@
 #include "sv_bots.h"
 #include "scr_vm.h"
 #include "sys_main.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "scr_vm_functions.h"
 #include "misc.h"
 #include "dobj_part_cache.h"

@@ -1,5 +1,5 @@
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "g_shared.h"
 #include "server.h"
 #include "cscr_stringlist.h"

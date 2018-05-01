@@ -762,7 +762,7 @@ typedef unsigned int clipHandle_t;
 #endif
 
 #include "q_platform.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "sys_cod4defs.h"
 
 #endif

@@ -1,5 +1,4 @@
 #include "win_localize.h"
-#include "q_shared.h"
 #include "filesystem.h"
 
 #define LANGUAGE_BUF_SIZE 4096

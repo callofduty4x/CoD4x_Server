@@ -25,7 +25,7 @@
 #ifndef __G_SV_SHARED_H__
 #define __G_SV_SHARED_H__
 
-#include "q_math.h"
+#include "q_shared.h"
 #include "q_shared.h"
 #include "entity.h"
 #include "cvar.h"

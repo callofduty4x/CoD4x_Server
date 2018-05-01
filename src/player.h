@@ -27,7 +27,7 @@
 
 #include "g_public_mp.h"
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "entity.h"
 
 #define KEY_MASK_FORWARD        127

@@ -44,7 +44,7 @@
 #include "hl2rcon.h"
 #include "crc.h"
 #include "sv_bots.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "math.h"
 #include "httpftp.h"
 #include "cscr_stringlist.h"

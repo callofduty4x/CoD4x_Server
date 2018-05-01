@@ -27,7 +27,7 @@
 
 
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "entity.h"
 #include "player.h"
 #include "g_hud.h"

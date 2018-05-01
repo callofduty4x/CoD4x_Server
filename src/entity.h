@@ -26,7 +26,7 @@
 #define __ENTITY_H__
 
 #include "g_public_mp.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "q_shared.h"
 #include "game/surfaceflags.h"
 
