@@ -3073,7 +3073,7 @@ void GScr_Float()
     {
         char* strFloat = Scr_GetString(0);
         double result = 0.0;
-        if (isdigit(strFloat[0]))
+        if ( isdigit(strFloat[0]) || (strFloat[0] == '-' && isdigit(strFloat[1])))
             result = atof(strFloat);
         Scr_AddFloat((float)result);
     }
