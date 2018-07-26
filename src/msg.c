@@ -2723,11 +2723,10 @@ qboolean MSG_ShouldSendPSField(struct snapshotInfo_s *snapInfo, byte sendOriginA
 
 qboolean MSG_WithinAllowedPredictionError(float dist, playerState_t *to)
 {
-    if(dist <= 5.0)
+    if(dist <= 0.01)
     {
     	return qtrue;
     }
-//    Com_Printf(CON_CHANNEL_SERVER, "Update prediction!\n");
     return qfalse;
 }
 

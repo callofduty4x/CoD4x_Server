@@ -65,50 +65,11 @@ void __cdecl ClientThink(int clientNum)
   {
     ClientThink_real(ent, &ent->client->sess.cmd);
   }
-/*
-  vec3_t predorg;
-
-  SV_GetPredictedOriginAndTimeForClientNum(clientNum, predorg);
-  if(level.clients)
-  {
-        static vec3_t storedpred;
-	static vec3_t storedorg;
-        if(VectorCompare(level.clients[clientNum].ps.origin, storedorg) != 1 || VectorCompare(predorg, storedpred) != 1)
-        {
-            Com_Printf(CON_CHANNEL_SERVER, "(%.1f %.1f %.1f) Predicted: (%.1f %.1f %.1f)\n", level.clients[clientNum].ps.origin[0], level.clients[clientNum].ps.origin[1], level.clients[clientNum].ps.origin[2], predorg[0], predorg[1], predorg[2]);
-            VectorCopy(level.clients[clientNum].ps.origin, storedorg);
-            VectorCopy(predorg, storedpred);
-
-        }
-//	level.clients[0].ps.moveSpeedScaleMultiplier = 1.0;
-  }
-*/
 
   assert(bgs == &level_bgs);
 
   bgs = NULL;
 }
-
-
-
-extern "C" void DebugWriteBGS(fileHandle_t f)
-{
-        FS_Write(&level_bgs.time, sizeof(level_bgs.time), f);
-        FS_Write(&level_bgs.latestSnapshotTime, sizeof(level_bgs.latestSnapshotTime), f);
-        FS_Write(&level_bgs.frametime, sizeof(level_bgs.frametime), f);
-//        FS_Write(&level_bgs.clientinfo, sizeof(level_bgs.clientinfo), f);
-
-}
-
-extern "C" void DebugReadBGS(fileHandle_t f)
-{
-        FS_Read(&level_bgs.time, sizeof(level_bgs.time), f);
-        FS_Read(&level_bgs.latestSnapshotTime, sizeof(level_bgs.latestSnapshotTime), f);
-        FS_Read(&level_bgs.frametime, sizeof(level_bgs.frametime), f);
-//        FS_Read(&level_bgs.clientinfo, sizeof(level_bgs.clientinfo), f);
-
-}
-
 
 
 

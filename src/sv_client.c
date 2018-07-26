@@ -1090,23 +1090,6 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		return;
 	}
 
-
-
-	struct gclient_s oldgcl;
-	struct gentity_s oldent;
-	oldent = g_entities[clientNum];
-	oldgcl = *(oldent.client);
-	oldent.pTurretInfo = NULL;
-	oldent.scr_vehicle = NULL;
-	oldent.parent = NULL;
-	oldent.chain = NULL;
-	oldent.tagInfo = NULL;
-	oldent.tagChildren = NULL;
-	oldent.nextFree = NULL;
-	struct usercmd_s coldcmd;
-	coldcmd = cmds[0];
-
-
 	// usually, the first couple commands will be duplicates
 	// of ones we have previously received, but the servertimes
 	// in the commands will cause them to be immediately discarded
@@ -1135,189 +1118,21 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		if(cl->demorecording && !cl->demowaiting && cl->demofile.handleFiles.file.o)
 			SV_WriteDemoArchive(cl);
 	}
-	static qboolean recording = qfalse;
-	if(cmdCount == 1 || recording)
-	{
-	    static vec3_t oldorigin;
-            static fileHandle_t f;
-	    unsigned int marker = 0x7f7f7f7f;
-            if(VectorCompare(oldorigin, cl->predictedOrigin) != 1)
-            {
+
+/*
+Needed to debug prediction errors. Otherwise useless
+	static vec3_t oldorigin;
+        if(VectorCompare(oldorigin, cl->predictedOrigin) != 1)
+        {
                 VectorCopy(cl->predictedOrigin, oldorigin);
                 float dist = Vec3DistanceSq(level.clients[clientNum].ps.origin, cl->predictedOrigin);
                 dist = sqrt(dist);
                 Com_Printf(CON_CHANNEL_SERVER, "Error: (%.3f)\n", dist);
-
-//                Com_Printf(CON_CHANNEL_SERVER, "(%.1f %.1f %.1f) Predicted: (%.1f %.1f %.1f)\n", level.clients[clientNum].ps.origin[0], level.clients[clientNum].ps.origin[1], level.clients[clientNum].ps.origin[2], cl->predictedOrigin[0], cl->predictedOrigin[1], cl->predictedOrigin[2]);
-		if(!recording && svs.time > 1000*60)
-		{
-			f = FS_FOpenFileWrite("pmove_test.set");
-			if(f > 0)
-			{
-				FS_Write(&marker, sizeof(marker), f);
-
-				FS_Write(&oldent, sizeof(oldent), f);
-				FS_Write(&oldgcl, sizeof(oldgcl), f);
-				FS_Write(&coldcmd, sizeof(coldcmd), f);
-				FS_Write(cl->predictedOrigin, sizeof(cl->predictedOrigin), f);
-				FS_Write(&level.time, sizeof(level.time), f);
-				FS_Write(&svs.time, sizeof(svs.time), f);
-				DebugWriteBGS(f);
-				FS_Write(&marker, sizeof(marker), f);
-
-			}else{
-				Com_PrintError(CON_CHANNEL_SERVER, "couldn't open pmove_test.set\n");
-			}
-			recording = qtrue;
-
-		}else if(recording){
-			FS_Write(&coldcmd, sizeof(coldcmd), f);
-			FS_Write(cl->predictedOrigin, sizeof(cl->predictedOrigin), f);
-			FS_Write(&marker, sizeof(marker), f);
-
-			FS_FCloseFile(f);
-			Com_Quit_f();
-
-		}else{
-			Com_PrintError(CON_CHANNEL_SERVER, "left: %d\n", (1000*60 - svs.time) /1000);
-		}
-            }
-
-	    
-	    VectorCopy(cl->predictedOrigin, level.clients[clientNum].ps.origin);
-	}else{
-		Com_Printf(CON_CHANNEL_SERVER, "Cmd count: %d", cmdCount);
+                VectorCopy(cl->predictedOrigin, level.clients[clientNum].ps.origin);
 	}
-
+*/
 
 }
-
-void PrintVector(float* vec)
-{
-	Com_Printf(CON_CHANNEL_SERVER, "x: %.5f y: %.5f z: %.5f", vec[0], vec[1], vec[2]);
-}
-
-
-
-
-void LoadAndRunMovementTestSet()
-{
-    float n = -1.6;
-    n = (float)f2rint(n);
-    Com_Printf(CON_CHANNEL_SERVER, "n=%.1f\n", n);
-    return;
-
-    if(svs.clients[0].state < CS_ACTIVE)
-    {
-	return;
-    }
-
-    fileHandle_t f;
-    long l = FS_FOpenFileRead("pmove_test.set", &f);
-    if(l < 1)
-    {
-	return;
-    }
-
-    unsigned int marker;
-    struct usercmd_s cmd[2];
-    struct gentity_s dummy;
-    struct gclient_s gcl;
-
-    FS_Read(&marker, sizeof(marker), f);
-    Com_Printf(CON_CHANNEL_SERVER,"marker = %x\n", marker);
-
-
-    FS_Read(&dummy, sizeof(struct gentity_s), f);
-    FS_Read(&gcl, sizeof(struct gclient_s), f);
-
-
-    g_entities[0].client->ps.commandTime = gcl.ps.commandTime;
-    memcpy(g_entities[0].client->ps.delta_angles, gcl.ps.delta_angles, sizeof(vec3_t));
-    memcpy(g_entities[0].client->ps.origin, gcl.ps.origin, sizeof(vec3_t));
-    memcpy(g_entities[0].client->ps.velocity, gcl.ps.velocity, sizeof(vec3_t));
-
-    FS_Read(&cmd[0], sizeof(struct usercmd_s), f);
-
-    FS_Read(svs.clients[0].predictedOrigin, sizeof(vec3_t), f);
-
-    FS_Read(&level.time, sizeof(int), f);
-    FS_Read(&svs.time, sizeof(int), f);
-    DebugReadBGS(f);
-
-    FS_Read(&marker, sizeof(marker), f);
-    Com_Printf(CON_CHANNEL_SERVER,"marker = %x\n", marker);
-
-
-    Com_Printf(CON_CHANNEL_SERVER,"delta_angles: ");
-    PrintVector(g_entities[0].client->ps.delta_angles);
-    Com_Printf(CON_CHANNEL_SERVER,"\nvelocity: ");
-    PrintVector(g_entities[0].client->ps.velocity);
-    Com_Printf(CON_CHANNEL_SERVER,"\norigin: ");
-    PrintVector(g_entities[0].client->ps.origin);
-    Com_Printf(CON_CHANNEL_SERVER,"\n");
-
-
-
-
-
-    SV_ClientThink( &svs.clients[0], &cmd[0] );
-    float dist = Vec3DistanceSq(level.clients[0].ps.origin, svs.clients[0].predictedOrigin);
-    dist = sqrt(dist);
-
-    Com_Printf(CON_CHANNEL_SERVER,"Testset Error: (%.3f)\n", dist);
-
-    Com_Printf(CON_CHANNEL_SERVER,"delta_angles: ");
-    PrintVector(g_entities[0].client->ps.delta_angles);
-    Com_Printf(CON_CHANNEL_SERVER,"\nvelocity: ");
-    PrintVector(g_entities[0].client->ps.velocity);
-    Com_Printf(CON_CHANNEL_SERVER,"\norigin: ");
-    PrintVector(g_entities[0].client->ps.origin);
-    Com_Printf(CON_CHANNEL_SERVER,"\n");
-
-
-
-    FS_Read(&cmd[1], sizeof(struct usercmd_s), f);
-    FS_Read(svs.clients[0].predictedOrigin, sizeof(vec3_t), f);
-
-
-    FS_Read(&marker, sizeof(marker), f);
-    Com_Printf(CON_CHANNEL_SERVER,"marker = %x\n", marker);
-
-
-    SV_ClientThink( &svs.clients[0], &cmd[1] );
-    dist = Vec3DistanceSq(level.clients[0].ps.origin, svs.clients[0].predictedOrigin);
-    dist = sqrt(dist);
-    Com_Printf(CON_CHANNEL_SERVER,"Testset Error: (%.3f)\n", dist);
-
-    Com_Printf(CON_CHANNEL_SERVER,"delta_angles: ");
-    PrintVector(g_entities[0].client->ps.delta_angles);
-    Com_Printf(CON_CHANNEL_SERVER,"\nvelocity: ");
-    PrintVector(g_entities[0].client->ps.velocity);
-    Com_Printf(CON_CHANNEL_SERVER,"\norigin: ");
-    PrintVector(g_entities[0].client->ps.origin);
-    Com_Printf(CON_CHANNEL_SERVER,"\n");
-
-
-
-
-    FS_FCloseFile(f);
-
-
-
-
-    Com_Quit_f();
-}
-
-
-
-
-
-
-
-
-
-
 
 void SV_ClientCalcFramerate()
 {
