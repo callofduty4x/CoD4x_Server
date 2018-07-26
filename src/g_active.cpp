@@ -4,6 +4,7 @@
 #include "server_public.h"
 #include "qcommon_io.h"
 
+
 extern "C"{
 
 int __cdecl G_ClientCanSpectateTeamOrLocalPlayer(gclient_t *client, clientState_t *cs)
@@ -88,5 +89,29 @@ void __cdecl ClientThink(int clientNum)
   bgs = NULL;
 }
 
+
+
+extern "C" void DebugWriteBGS(fileHandle_t f)
+{
+        FS_Write(&level_bgs.time, sizeof(level_bgs.time), f);
+        FS_Write(&level_bgs.latestSnapshotTime, sizeof(level_bgs.latestSnapshotTime), f);
+        FS_Write(&level_bgs.frametime, sizeof(level_bgs.frametime), f);
+//        FS_Write(&level_bgs.clientinfo, sizeof(level_bgs.clientinfo), f);
+
+}
+
+extern "C" void DebugReadBGS(fileHandle_t f)
+{
+        FS_Read(&level_bgs.time, sizeof(level_bgs.time), f);
+        FS_Read(&level_bgs.latestSnapshotTime, sizeof(level_bgs.latestSnapshotTime), f);
+        FS_Read(&level_bgs.frametime, sizeof(level_bgs.frametime), f);
+//        FS_Read(&level_bgs.clientinfo, sizeof(level_bgs.clientinfo), f);
+
+}
+
+
+
+
 };
+
 

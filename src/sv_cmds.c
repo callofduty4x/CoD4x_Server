@@ -2295,6 +2295,11 @@ void SV_GetModules_f()
 	BuildModuleRequests(cl.cl);
 }
 
+
+void LoadAndRunMovementTestSet();
+
+
+
 void SV_AddOperatorCommands()
 {
 	//static qboolean	initialized; // Not used?
@@ -2344,6 +2349,8 @@ void SV_AddOperatorCommands()
 
 	Cmd_AddPCommand("stoprecord", SV_StopRecord_f, 70);
 	Cmd_AddPCommand("record", SV_Record_f, 50);
+
+	Cmd_AddCommand("movetest", LoadAndRunMovementTestSet);
 
 	if(Com_IsDeveloper()){
 		Cmd_AddCommand ("showconfigstring", SV_ShowConfigstring_f);

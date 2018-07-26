@@ -1403,10 +1403,14 @@ void __cdecl ProjectPointOnPlane(const float *p, const float *normal, float *dst
   dst[2] = (d * normal[2]) + p[2];
 }
 
+
 //Lame?!
 void __cdecl Sys_SnapVector(vec3_t v)
 {
-    SnapVector(v);
+    v[0] = f2rint(v[0]);
+    v[1] = f2rint(v[1]);
+    v[2] = f2rint(v[2]);
+
 }
 
 void __cdecl MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out)

@@ -44,10 +44,11 @@ CC=gcc
 CPP=g++
 WIN_DEFINES=WINVER=0x501
 LINUX_DEFINES=_GNU_SOURCE
-CFLAGS=-m32 -msse2 -mfpmath=sse -Wall -O0 -g -fno-omit-frame-pointer -fmax-errors=15
+CFLAGS=-m32 -msse2 -fno-pie -mfpmath=sse -Wall -O1 -g -fno-omit-frame-pointer -fmax-errors=15
+
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static -lm
 WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
-LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Wl,-rpath=./
+LINUX_LFLAGS=-m32 -g -no-pie -static-libgcc -rdynamic -Wl,-rpath=./
 LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
 COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE) BUILD_NUMBER=$(BUILD_NUMBER) BUILD_BRANCH=$(BUILD_BRANCH) BUILD_REVISION=$(BUILD_REVISION)
 

@@ -104,8 +104,22 @@ struct __align(8) bgs_s
 };
 #pragma pack(pop)
 */
-struct bgs_s{
-    byte data[0xacd20];
+
+struct __align(8) bgs_s
+{
+  byte animScriptData[0x9a9d0];
+  byte generic_human[0x10];
+  int time;
+  int latestSnapshotTime;
+  int frametime;
+  int anim_user;
+  struct XModel *(__cdecl *GetXModel)(const char *);
+  void (__cdecl *CreateDObj)(struct DObjModel_s *, unsigned int int16_t, struct XAnimTree_s *, int, int, struct clientInfo_t *);
+  uint16_t (__cdecl *AttachWeapon)(struct DObjModel_s *, uint16_t, struct clientInfo_t *);
+  struct DObj_s *(__cdecl *GetDObj)(int, int);
+  void (__cdecl *SafeDObjFree)(int, int);
+  void *(__cdecl *AllocXAnim)(int);
+  struct clientInfo_t clientinfo[64];
 };
 
 extern struct bgs_s level_bgs;

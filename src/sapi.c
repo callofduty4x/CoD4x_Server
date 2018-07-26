@@ -468,9 +468,9 @@ uint64_t SV_SApiGUID2PlayerID(const char* guid)
 
 	for(i = 0; i < sizeof(diggest2); ++i)
 	{
-		digit2[i] = guid[2*i];
-		digit2[i+1] = guid[2*i +1];
-		digit2[i+2] = 0;
+		digit2[0] = guid[2*i];
+		digit2[1] = guid[2*i +1];
+		digit2[2] = 0;
 		diggest2[i] = strtol(digit2, NULL, 16);;
 	}
 

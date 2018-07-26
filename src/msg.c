@@ -1833,48 +1833,6 @@ int MSG_ReadEntityIndex(msg_t *msg, int numBits)
   return msg->lastRefEntity;
 }
 
-#if 0
-/*
-float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
-{
-	signed int baseval;
-	int deltabits, olddelta;
-	vec3_t center;
-
-	if ( MSG_ReadBit(msg) )
-	{
-		CL_GetMapCenter(center);
-		baseval = center[bits != -92] + 0.5f;
-		deltabits = MSG_ReadBits(msg, 24);
-		olddelta = (signed int)oldValue - baseval;
-		return ((olddelta + 0x800000) ^ deltabits) + baseval - 0x800000;
-	}
-	deltabits = MSG_ReadBits(msg, 7);
-	deltabits -= 64;
-    return deltabits + oldValue;
-}
-*/
-
-float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
-{
-	signed int baseval;
-	int deltabits, olddelta;
-	vec3_t center;
-
-	if ( MSG_ReadBit(msg) )
-	{
-		CL_GetMapCenter(center);
-		baseval = center[bits != -92] + 0.5f;
-		deltabits = MSG_ReadBits(msg, 16);
-		olddelta = (signed int)oldValue - baseval;
-		return ((olddelta + 0x8000) ^ deltabits) + baseval - 0x8000;
-	}
-	deltabits = MSG_ReadBits(msg, 7);
-	deltabits -= 64;
-    return deltabits + oldValue;
-}
-#endif
-
 
 qboolean MSG_ValuesAreEqual(int bits, const int *fromF, const int *toF)
 {
@@ -1890,12 +1848,11 @@ qboolean MSG_ValuesAreEqual(int bits, const int *fromF, const int *toF)
 		case 0:
 		case 13:
 			result = (int16_t)ANGLE2SHORT( *(float *)toF ) == (int16_t)ANGLE2SHORT( *(float *)fromF );
-//			((signed int)(182.044449f * *(float *)toF + 0.5f) == (signed int)(*(float *)fromF * 182.044449f  + 0.5f));
 			break;
 		case 8:
 		case 9:
 		case 10:
-			result = (signed int)floorf(*(float *)fromF + 0.5f) == (signed int)floorf(*(float *)toF + 0.5f);
+			result = (signed int)f2rint(*(float *)fromF) == (signed int)f2rint(*(float *)toF);
 			break;
 		case 5:
 			result = *fromF / 100 == *toF / 100;
@@ -1941,8 +1898,8 @@ void MSG_WriteOriginFloat(const int clientNum, msg_t *msg, int bits, float value
   signed int mcenterbits, delta;
   vec3_t center;
   
-  ival = (signed int)floorf(value +0.5f);
-  ioldval = (signed int)floorf(oldValue +0.5f);
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
   delta = ival - ioldval;
   
   if ( (unsigned int)(delta + 64)  > 127 )
@@ -1966,8 +1923,8 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
   signed int mcenterbits;
   vec3_t center;
   
-  ival = (signed int)floorf(value +0.5f);
-  ioldval = (signed int)floorf(oldValue +0.5f);
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
   
   if ( (unsigned int)(ival - ioldval + 64)  > 127 )
   {
@@ -1982,6 +1939,59 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
     MSG_WriteBits(msg, ival - ioldval + 64, 7);
   }
 }
+
+/*
+Before using this f2rint has to be used on client side as well
+void MSG_WriteOriginFloat(const int clientNum, msg_t *msg, int bits, float value, float oldValue)
+{
+  signed int ival;
+  signed int ioldval;
+  signed int mcenterbits, delta;
+  vec3_t center;
+  
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
+  delta = ival - ioldval;
+  
+  if ( (unsigned int)(delta + 64)  > 127 )
+  {
+    MSG_WriteBit1(msg);
+	SV_GetMapCenterFromSVSHeader(center);
+	mcenterbits = (signed int)f2rint(center[bits != -92]);
+    MSG_WriteBits(msg, (ival - mcenterbits + (1 << (24 - 1))) ^ (ioldval - mcenterbits + (1 << (24 - 1))), 24);
+  }
+  else
+  {
+    MSG_WriteBit0(msg);
+    MSG_WriteBits(msg, delta + 64, 7);
+  }
+}
+
+void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float oldValue)
+{
+  signed int ival;
+  signed int ioldval;
+  signed int mcenterbits;
+  vec3_t center;
+  
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
+  
+  if ( (unsigned int)(ival - ioldval + 64)  > 127 )
+  {
+    MSG_WriteBit1(msg);
+	SV_GetMapCenterFromSVSHeader(center);
+	mcenterbits = (signed int)f2rint(center[2]);
+    MSG_WriteBits(msg, (ival - mcenterbits + (1 << (20 - 1)))) ^ (ioldval - mcenterbits + (1 << (20 - 1)))), 20);
+  }
+  else
+  {
+    MSG_WriteBit0(msg);
+    MSG_WriteBits(msg, ival - ioldval + 64, 7);
+  }
+}
+*/
+
 
 
 __regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
@@ -2111,7 +2121,7 @@ __regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg,
 			break;
 
 		case -86:
-			MSG_WriteBits(msg, floorf(((floattodata - 1.4) * 10.0) + 0.5), 5);
+			MSG_WriteBits(msg, f2rint((floattodata - 1.4) * 10.0), 5);
 			break;
 
 		case -85:
@@ -2518,7 +2528,7 @@ void MSG_SetDefaultUserCmd(playerState_t *ps, usercmd_t *ucmd)
 
 	for(i = 0; i < 2; i++)
 	{
-		ucmd->angles[i] = ANGLE2SHORT(ps->viewangles[i] - ps->delta_angles[i]);  //(int)(() * (65536 / 360) + 0.5) & 0xFFFF;
+		ucmd->angles[i] = ANGLE2SHORT(ps->viewangles[i] - ps->delta_angles[i]);
 	}
   
 	if ( !(ps->otherFlags & 4) )
@@ -3147,7 +3157,9 @@ void __cdecl MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, userc
 	  }
 	  if ( to->buttons & 4 )
       {
-        to->meleeChargeYaw = (float)MSG_ReadDeltaKeyShort(msg, key, (int16_t)(signed int)(from->meleeChargeYaw * 182.04445 + 0.5)) * 0.0054931641;
+//        to->meleeChargeYaw = (float)MSG_ReadDeltaKeyShort(msg, key, (int16_t)(signed int)(from->meleeChargeYaw * 182.04445 + 0.5)) * 0.0054931641;
+        to->meleeChargeYaw = (float)MSG_ReadDeltaKeyShort(msg, key, (int16_t)ANGLE2SHORT(from->meleeChargeYaw)) * 0.0054931641;
+
         to->meleeChargeDist = MSG_ReadDeltaKey(msg, key, from->meleeChargeDist, 8);
 	  }
       if ( to->buttons >= 0x200000 )
@@ -3211,6 +3223,39 @@ float MSG_ReadOriginZFloat(msg_t *msg, float oldValue)
   }
   return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
 }
+
+
+/*
+float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
+{
+  signed int coord;
+
+  if ( MSG_ReadBit(msg) )
+  {
+	vec3_t center;
+	MSG_GetMapCenter(center);
+    coord = (signed int)f2rint(center[bits != -92]);
+    return (double)((((signed int)oldValue - coord + (1 << (24 - 1))) ^ MSG_ReadBits(msg, 24)) + coord - (1 << (24 - 1)));
+  }
+  return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
+}
+
+float MSG_ReadOriginZFloat(msg_t *msg, float oldValue)
+{
+  signed int coord;
+
+  if ( MSG_ReadBit(msg) )
+  {
+	vec3_t center;
+	MSG_GetMapCenter(center);
+	coord = (signed int)f2rint(center[2]);
+    return (double)((((signed int)oldValue - coord + (1 << (20 - 1))) ^ MSG_ReadBits(msg, 20)) + coord - (1 << (20 - 1)));
+  }
+  return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
+}
+*/
+
+
 
 double MSG_ReadAngle16(msg_t *msg)
 {

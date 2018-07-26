@@ -44,16 +44,9 @@ struct VoicePacket_t
 };
 
 
-struct clientControllers_t
-{
-  vec3_t angles[6];
-  vec3_t tag_origin_angles;
-  vec3_t tag_origin_offset;
-};
-
 struct CEntPlayerInfo
 {
-  struct clientControllers_t *control;
+  struct clientControllers_s *control;
   byte tag[6];
 };
 
