@@ -77,7 +77,7 @@ void __cdecl Scr_GetGenericField(const void *data, fieldtype_t type, int ofs)
       }
       break;
     case F_MODEL:
-      Scr_AddConstString(G_ModelName((uint16_t)b[ofs]));
+      Scr_AddConstString(G_ModelName(*(uint16_t *)&b[ofs]));
       break;
     default:
       Scr_GetGenericField2(b, type, ofs);
