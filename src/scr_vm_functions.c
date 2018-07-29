@@ -2805,7 +2805,7 @@ void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object)
     Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_HOLDBREATH ? qtrue : qfalse);
 }
 
-void PlayerCmd_ADSButtonPressed(scr_entref_t object)
+void PlayerCmd_AimButtonPressed(scr_entref_t object)
 {
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> AimButtonPressed()\n");

@@ -119,6 +119,7 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("sqrt", GScr_sqrt, 0 );
 	Scr_AddFunction("vectorfromlinetopoint", GScr_VectorFromLineToPoint, 0 );
 	Scr_AddFunction("pointonsegmentnearesttopoint", GScr_PointOnSegmentNearestToPoint, 0 );
+	Scr_AddFunction("isweapondetonationtimed",GScr_IsWeaponDetonationTimed, 0);
 	Scr_AddFunction("distance", Scr_Distance, 0 );
 	Scr_AddFunction("distance2d", Scr_Distance2D, 0 );
 	Scr_AddFunction("distancesquared", Scr_DistanceSquared, 0 );
@@ -287,6 +288,7 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("isarray", Scr_IsArray_f, qfalse); // http://zeroy.com/script/variables/isarray.htm
     Scr_AddFunction("iscvardefined", GScr_IsCvarDefined, 0);
     Scr_AddFunction("arraytest", GScr_ArrayTest, 1);
+
 }
 
 void Scr_AddStockMethods()
@@ -372,6 +374,8 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("clearperks", PlayerCmd_ClearPerks, 0 );
 	Scr_AddMethod("unsetperk", PlayerCmd_UnsetPerk, 0 );
 	Scr_AddMethod("setrank", PlayerCmd_SetRank, 0 );
+	Scr_AddMethod("adsbuttonpressed", PlayerCmd_adsButtonPressed, 0);
+
 	Scr_AddMethod("updatedmscores", PlayerCmd_UpdateDMScores, 0 );
 
 
@@ -575,7 +579,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("jumpbuttonpressed", PlayerCmd_JumpButtonPressed, 0);
     Scr_AddMethod("isinads", PlayerCmd_IsInADS, 0);
     Scr_AddMethod("holdbreathbuttonpressed", PlayerCmd_HoldBreathButtonPressed, 0);
-    Scr_AddMethod("aimbuttonpressed", PlayerCmd_ADSButtonPressed, 0);
+    Scr_AddMethod("aimbuttonpressed", PlayerCmd_AimButtonPressed, 0);
 
     Scr_AddMethod("steamgroupmembershipquery", PlayerCmd_GetSteamGroupMembership, 0);
     Scr_AddMethod("setvelocity", PlayerCmd_SetVelocity, qfalse);
