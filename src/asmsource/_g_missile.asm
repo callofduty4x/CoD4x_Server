@@ -11,6 +11,7 @@
 	extern AxisToQuat
 	extern QuatSlerp
 	extern Vec4Normalize
+	extern Vec3Normalize
 	extern UnitQuatToForward
 	extern colorBlue
 	extern G_DebugLineWithDuration
@@ -3563,6 +3564,9 @@ G_RunMissile_20:
 	pop ebp
 	ret
 G_RunMissile_210:
+	lea edx, [ebp-0xb8]
+	mov [esp], edx
+	call Vec3Normalize
 	lea eax, [ebp-0x48]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x24]
