@@ -38,7 +38,7 @@
 	extern G_SetupWeaponDef
 	extern Cvar_VariableBooleanValue
 	extern SV_XModelGet
-	extern FS_FOpenFileByMode
+	extern G_OpenLogFile
 	extern Com_PrintWarning
 	extern Mantle_CreateAnims
 	extern bgs
@@ -152,7 +152,7 @@
 	extern G_LogPrintf
 	extern G_SafeServerDObjFree
 	extern G_RegisterCvars
-
+	extern G_CloseLogFile
 ;Exports of g_main_mp:
 	global g_clients
 	global g_entinfoNames
@@ -703,27 +703,7 @@ G_InitGame_20:
 	mov dword [level_bgs+0x999fc], G_SafeServerDObjFree
 	mov dword [level_bgs+0x99a00], Hunk_AllocXAnimServer
 	mov dword [level_bgs+0x999e8], 0x1
-	mov eax, [g_log]
-	mov edx, [eax+0xc]
-	cmp byte [edx], 0x0
-	jz G_InitGame_40
-	mov eax, [g_logSync]
-	cmp byte [eax+0xc], 0x0
-	jz G_InitGame_50
-	mov dword [esp+0x8], 0x3
-	mov dword [esp+0x4], level+0x18
-	mov [esp], edx
-	call FS_FOpenFileByMode
-	mov eax, [level+0x18]
-	test eax, eax
-	jnz G_InitGame_60
-G_InitGame_120:
-	mov eax, [g_log]
-	mov eax, [eax+0xc]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_warning_couldnt_
-	mov dword [esp], 0xf
-	call Com_PrintWarning
+	call G_OpenLogFile
 G_InitGame_130:
 	mov dword [level+0x2df4], 0x0
 	mov dword [level+0x2df8], 0x0
@@ -836,30 +816,6 @@ G_InitGame_100:
 G_InitGame_10:
 	call G_RegisterCvars
 	jmp G_InitGame_110
-G_InitGame_50:
-	mov dword [esp+0x8], 0x2
-	mov dword [esp+0x4], level+0x18
-	mov [esp], edx
-	call FS_FOpenFileByMode
-	mov eax, [level+0x18]
-	test eax, eax
-	jz G_InitGame_120
-G_InitGame_60:
-	mov dword [esp+0x4], 0x400
-	lea ebx, [ebp-0x818]
-	mov [esp], ebx
-	call SV_GetServerinfo
-	mov dword [esp], _cstring_1
-	call G_LogPrintf
-	mov [esp+0x4], ebx
-	mov dword [esp], _cstring_initgame_s
-	call G_LogPrintf
-	jmp G_InitGame_130
-G_InitGame_40:
-	mov dword [esp+0x4], _cstring_not_logging_to_d
-	mov dword [esp], 0xf
-	call Com_Printf
-	jmp G_InitGame_130
 G_InitGame_70:
 	mov dword [esp+0x8], 0x999cc
 	mov dword [esp+0x4], 0x0
@@ -1607,9 +1563,7 @@ G_ShutdownGame:
 	mov dword [esp+0x4], _cstring__shutdowngame_d_
 	mov dword [esp], 0xf
 	call Com_Printf
-	mov eax, [level+0x18]
-	test eax, eax
-	jnz G_ShutdownGame_10
+	call G_CloseLogFile
 G_ShutdownGame_130:
 	mov eax, bgs
 	mov dword [eax], 0x0
@@ -1689,15 +1643,6 @@ G_ShutdownGame_50:
 	mov dword [esp], g_entities+0x9cb18
 	call G_FreeEntity
 	jmp G_ShutdownGame_120
-G_ShutdownGame_10:
-	mov dword [esp], _cstring_shutdowngame
-	call G_LogPrintf
-	mov dword [esp], _cstring_1
-	call G_LogPrintf
-	mov eax, [level+0x18]
-	mov [esp], eax
-	call FS_FCloseFile
-	jmp G_ShutdownGame_130
 G_ShutdownGame_110:
 	mov [esp], eax
 	call FS_FCloseFile

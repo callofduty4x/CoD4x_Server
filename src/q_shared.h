@@ -141,9 +141,6 @@ typedef enum {qfalse, qtrue}	qboolean;
 #define	MAX_STRING_TOKENS	1024	// max tokens resulting from Cmd_TokenizeString
 #define	MAX_STRING_CHARS	1024
 
-#ifndef Q_vsnprintf
-int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
-#endif
 
 #define Q_COLOR_ESCAPE	'^'
 #define Q_IsColorString(p)	( p && *(p) == Q_COLOR_ESCAPE && *((p)+1) && *((p)+1) != Q_COLOR_ESCAPE )
@@ -189,6 +186,11 @@ int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
 #ifdef __cplusplus
 extern "C"{
 #endif
+
+#ifndef Q_vsnprintf
+int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
+#endif
+
 
 void Com_Memset(void*, byte, int);
 //#define Com_Memset memset

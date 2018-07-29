@@ -108,22 +108,18 @@ typedef struct qfile_us {
 //Added manual buffering as the stdio file buffering has corrupted the written files
 
 typedef struct {
-	qfile_ut		handleFiles;
-	union{
-		qboolean	handleSync;
-		void*		writebuffer;
-	};
-	union{
-		int		fileSize;
-		int		bufferSize;
-	};
-	union{
-		int		zipFilePos;
-		int		bufferPos; //For buffered writes
-	};
-	qboolean		zipFile;
-	qboolean		streamed;
-	char			name[MAX_ZPATH];
+	qfile_ut	handleFiles;
+	qboolean	handleSync;
+	int		fileSize;
+	int		zipFilePos;
+	qboolean	zipFile;
+	qboolean	streamed;
+	char		name[MAX_ZPATH];
+	//Not used by filesystem api
+	void*		writebuffer;
+	int		bufferSize;
+	int		bufferPos; //For buffered writes, next write position for logfile buffering
+	int		rbufferPos; //next read position
 } fileHandleData_t; //0x11C (284) Size
 
 
@@ -255,10 +251,22 @@ void __cdecl FS_FileClose(FILE *stream);
 qboolean SEH_GetLanguageIndexForName(const char* language, int *langindex);
 const char* SEH_GetLanguageName(unsigned int langindex);
 int SEH_GetCurrentLanguage( );
+void FS_CloseLogFile(fileHandle_t f);
+fileHandle_t FS_OpenLogfile(const char* name, char mode);
+void FS_WriteLogFlush(fileHandle_t f);
+int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h );
 #ifdef __cplusplus
 }
 #endif
 
 
 #endif
+
+
+
+
+
+
+
+
 

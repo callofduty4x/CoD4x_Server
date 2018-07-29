@@ -46,6 +46,7 @@ cvar_t*  g_gametype;
 cvar_t*  g_synchronousClients;
 cvar_t*  g_log;
 cvar_t*  g_logSync;
+cvar_t*  g_logTimeStampInSeconds;
 cvar_t*  g_banIPs;
 cvar_t*  g_gravity;
 cvar_t*  g_knockback;
@@ -412,103 +413,6 @@ void G_SetSavePersist(int val){
 }
 
 
-/*
-=================
-G_LogPrintf
-
-Print to the logfile with a time stamp if it is open
-=================
-*/
-__cdecl void QDECL G_LogPrintf( const char *fmt, ... ) {
-
-	va_list argptr;
-
-	char string[1024];
-	int stringlen;
-	int min, tens, sec;
-	int timelen;
-
-	sec = level.time / 1000;
-
-	min = sec / 60;
-	sec -= min * 60;
-	tens = sec / 10;
-	sec -= tens * 10;
-
-	Com_sprintf( string, sizeof( string ), "%3i:%i%i ", min, tens, sec );
-
-	timelen = strlen(string);
-
-	va_start( argptr, fmt );
-	Q_vsnprintf( string + timelen, sizeof( string ) - timelen, fmt, argptr );
-
-	va_end( argptr );
-
-	stringlen = strlen( string );
-
-	G_PrintRedirect(string, stringlen);
-
-	if ( !level.logFile ) {
-		return;
-	}
-
-#ifdef _WIN32
-	char outstring[2048];
-	stringlen = Q_strLF2CRLF(string, outstring, sizeof(outstring) );
-	FS_Write( outstring, stringlen, level.logFile );
-#else
-	FS_Write( string, stringlen, level.logFile );
-#endif
-}
-
-#define MAX_REDIRECTDESTINATIONS 4
-
-static void (*rd_destinations[MAX_REDIRECTDESTINATIONS])( const char *buffer, int len );
-
-void G_PrintRedirect(char* msg, int len)
-{
-
-    int i;
-
-    for(i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
-    {
-        if(rd_destinations[i] == NULL)
-            return;
-
-        rd_destinations[i](msg, len);
-
-    }
-
-}
-/*
-    To Add:
-    HL2Rcon_SourceRconSendGameLog(string, stringlen);
-*/
-
-
-void G_PrintAddRedirect(void (*rd_dest)( const char *, int))
-{
-    int i;
-
-    for(i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
-    {
-        if(rd_destinations[i] == rd_dest)
-        {
-            Com_Error(ERR_FATAL, "G_PrintAddRedirect: Attempt to add an already defined redirect function twice.");
-            return;
-        }
-
-        if(rd_destinations[i] == NULL)
-        {
-            rd_destinations[i] = rd_dest;
-            return;
-        }
-    }
-    Com_Error(ERR_FATAL, "G_PrintAddRedirect: Out of redirect handles. Increase MAX_REDIRECTDESTINATIONS to add more redirect destinations");
-}
-
-
-
 
 void Jump_RegisterCvars()
 {
@@ -780,6 +684,7 @@ void __cdecl G_RegisterCvars()
 	 g_maxclients = Cvar_RegisterInt("g_maxclients", SV_GameGetMaxClients(), 1, 64, CVAR_ROM, "Max clients allowed on server - use sv_maxclients to change");
 	 g_synchronousClients = Cvar_RegisterBool("g_synchronousClients", 0, 8u, "Call 'client think' exactly once for each server frame to make smooth demos");
 	 g_log = Cvar_RegisterString("g_log", "games_mp.log", 1u, "Log file name");
+	 g_logTimeStampInSeconds = Cvar_RegisterBool("g_logTimeStampInSeconds", 0, 1u, "Enable logging with time stamps in seconds since UTC 1/1/1970");
 	 g_logSync = Cvar_RegisterBool("g_logSync", 0, 1u, "Enable synchronous logging");
 	 g_banIPs = Cvar_RegisterString("g_banIPs", "", 1u, "IP addresses to ban from playing");
 	 g_gravity = Cvar_RegisterFloat("g_gravity", 800.0, 1.0, 3.4028235e38, 0, "Game gravity in inches per second per second");
