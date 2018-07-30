@@ -1243,8 +1243,10 @@ void Load_XAssetListCustom()
   DB_PopStreamPos();
 }
 
+
 void __cdecl Load_XAsset(bool atStreamStart)
 {
+
   Load_Stream(atStreamStart, varXAsset, 8);
   varXAssetHeader = &varXAsset->header;
   Load_XAssetHeader(0);
@@ -2819,3 +2821,25 @@ void XAssetUsage_f()
 }
 
 
+extern "C"
+{
+bool G_TurretsDisabled();
+
+void __cdecl Load_WeaponDefAsset(WeaponDef **weapon)
+{
+    if(G_TurretsDisabled()) //saving high valuable resources when we don't use turrets
+    {
+        const char* weapname = (*weapon)->szInternalName;
+        if(!strcmp(weapname, "saw_bipod_stand_mp") || !strcmp(weapname, "saw_bipod_crouch_mp"))
+        {
+          Com_Printf(CON_CHANNEL_SYSTEM, "Skip weapon '%s'\n", weapname);
+          *weapon = NULL;
+          return;
+        }
+    }
+    *weapon = (WeaponDef *)DB_AddXAsset(ASSET_TYPE_WEAPON, (*weapon));
+
+}
+
+
+};

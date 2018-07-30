@@ -138,6 +138,8 @@
 	extern DB_XAssetPool
 	extern g_poolSize
 	extern DB_LoadXAssets
+	extern Load_WeaponDefAsset
+
 ;Exports of db_registry:
 	global DB_DynamicCloneXAssetHandler
 	global DB_DynamicCloneMenu
@@ -271,7 +273,6 @@
 	global Mark_MaterialAsset
 	global Mark_MenuListAsset
 	global DB_FindXAssetHeaderReal
-	global Load_WeaponDefAsset
 	global Mark_WeaponDefAsset
 	global DB_LoadDelayedImages
 	global Load_PhysPresetAsset
@@ -4813,23 +4814,6 @@ DB_FindXAssetHeader_420:
 	call Com_PrintWarning
 	jmp DB_FindXAssetHeader_400
 	nop
-
-
-;Load_WeaponDefAsset(WeaponDef**)
-Load_WeaponDefAsset:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x4
-	mov ebx, [ebp+0x8]
-	mov edx, [ebx]
-	mov eax, 0x17
-	call DB_AddXAsset
-	mov [ebx], eax
-	add esp, 0x4
-	pop ebx
-	pop ebp
-	ret
 
 
 ;Mark_WeaponDefAsset(WeaponDef*)

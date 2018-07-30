@@ -64,6 +64,7 @@
 	extern ColorNormalize
 	extern vectoangles
 	extern G_LevelSpawnString
+	extern G_TurretsDisabled
 
 ;Exports of g_misc_mp:
 	global turretInfo
@@ -507,6 +508,16 @@ G_SpawnTurret:
 	push esi
 	push ebx
 	sub esp, 0x3c
+	call G_TurretsDisabled
+	test al, al
+	jz G_SpawnTurret_Cont
+	add esp, 0x3c
+	pop ebx
+	pop esi
+	pop edi
+	pop ebp
+	ret
+G_SpawnTurret_Cont:
 	mov edi, [ebp+0x8]
 	mov eax, [ebp+0xc]
 	mov [ebp-0x1c], eax
