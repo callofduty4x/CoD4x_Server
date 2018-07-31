@@ -278,7 +278,6 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("strtokbypixlen", GScr_StrTokByPixLen, 0);
     Scr_AddFunction("strpixlen", GScr_StrPixLen, 0);
     Scr_AddFunction("strcolorstrip", GScr_StrColorStrip, 0);
-    Scr_AddFunction("copystr", GScr_CopyString, 0);
     Scr_AddFunction("strrepl", GScr_StrRepl, 0);
     Scr_AddFunction("strtokbylen", GScr_StrTokByLen, 0);
     Scr_AddFunction("exec", GScr_CbufAddText, 0);

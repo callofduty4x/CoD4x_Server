@@ -1377,9 +1377,8 @@ void GScr_StrPixLen()
 ============
 GScr_StrColorStrip
 
-Directly cleans the given string from all colorscodes. The original string will be modified!
-If it is required that the original string remains you need to create a copy of string prior with copystr()
-Usage: void = StrColorStrip(string <string>);
+Cleans the given string from all colorscodes.
+Usage: string = StrColorStrip(string <string>);
 ============
 */
 
@@ -1390,20 +1389,21 @@ void GScr_StrColorStrip()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: StrColorStrip(<string>)\n");
+        Scr_Error("Usage:string = StrColorStrip(<string>)\n");
     }
 
     char *string = Scr_GetString(0);
 
-    int i;
+    int i, j;
 
-    Q_strncpyz(buffer, string, sizeof(buffer));
-
-    for (i = 0; buffer[i]; i++)
+    for (i = 0, j = 0; string[i]; ++i)
     {
-        if (buffer[i] == '^' && buffer[i + 1] >= '0' && buffer[i + 1] <= '9')
+        if (string[i] == '^' && string[i + 1] >= '0' && string[i + 1] <= '9')
         {
-            buffer[i + 1] = '7';
+            ++i;
+        }else{
+            buffer[j] = string[i];
+            ++j;
         }
     }
     Scr_AddString(buffer);
@@ -1439,24 +1439,6 @@ void GScr_StrRepl()
     Scr_AddString(buffer);
 }
 
-/*
-============
-GScr_CopyString
-
-Creates a real copy of the given string and returns the location of the newly created copy
-Usage: string = CopyStr(string <string>);
-============
-*/
-
-void GScr_CopyString()
-{
-
-    if (Scr_GetNumParam() != 1)
-    {
-        Scr_Error("Usage: CopyStr(<string>)\n");
-    }
-    Scr_AddString(Scr_GetString(0));
-}
 
 /*
 ============
