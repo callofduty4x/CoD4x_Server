@@ -64,7 +64,7 @@
 	extern ColorNormalize
 	extern vectoangles
 	extern G_LevelSpawnString
-	extern G_TurretsDisabled
+	extern DB_DiscardBspWeapons
 
 ;Exports of g_misc_mp:
 	global turretInfo
@@ -508,7 +508,7 @@ G_SpawnTurret:
 	push esi
 	push ebx
 	sub esp, 0x3c
-	call G_TurretsDisabled
+	call DB_DiscardBspWeapons
 	test al, al
 	jz G_SpawnTurret_Cont
 	add esp, 0x3c

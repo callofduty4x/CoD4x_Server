@@ -1,9 +1,6 @@
 #include "q_shared.h"
-#include "cvar.h"
 
 #define MAX_TURRETS 32
-
-cvar_t* g_noturrets;
 
 struct turretInfo_s
 {
@@ -37,23 +34,6 @@ void G_InitTurrets()
   for(i = 0; i < MAX_TURRETS; ++i){
     turretInfo[i].inuse = 0;
   }
-}
-
-bool G_TurretsDisabled()
-{
-    if(g_noturrets->boolean)
-    {
-	return true;
-    }
-    return false;
-}
-
-void G_EarlyInit()
-{
-
-    g_noturrets = Cvar_RegisterBool("g_noturrets", qfalse, 0, "Do not load turrets from fastfiles. Can free up up to 2 weapons");
-
-
 }
 
 }

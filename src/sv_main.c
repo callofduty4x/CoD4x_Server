@@ -51,6 +51,7 @@
 #include "cscr_variable.h"
 #include "g_sv_main.h"
 #include "sapi.h"
+#include "db_load.h"
 
 #include <string.h>
 #include <stdarg.h>
@@ -3514,9 +3515,9 @@ void SV_BuildXAssetCSString()
     DB_BuildOverallocatedXAssetList(list, sizeof(list));
 
     turrets[0] = 0;
-    if(G_TurretsDisabled())
+    if(DB_DiscardBspWeapons())
     {
-        strcpy(turrets, "noturrets=1 ");
+        strcpy(turrets, "nobspweapon=1 ");
     }
     Com_sprintf(cs, sizeof(cs), "cod%d %s%s", PROTOCOL_VERSION, list, turrets);
     SV_SetConfigstring(2, cs);
@@ -4704,8 +4705,6 @@ void SV_SpawnServer(const char *mapname)
 
   Com_SyncThreads();
   Sys_BeginLoadThreadPriorities();
-
-  G_EarlyInit();
 
 #ifndef DEDICATEDONLY
   char loadffname[128];

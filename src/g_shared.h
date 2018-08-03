@@ -552,7 +552,6 @@ int G_GetClientArchiveTime(int clientindex);
 void G_SetClientArchiveTime(int clindex, int time);
 void G_ClientStopUsingTurret(gentity_t* ent);
 void G_EarlyInit();
-bool G_TurretsDisabled();
 #ifdef __cplusplus
 }
 #endif

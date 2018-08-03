@@ -5,5 +5,5 @@ void __cdecl DB_InitThread();
 void __cdecl DB_ReleaseXAssets();
 void __cdecl DB_ShutdownXAssets();
 void __cdecl DB_ShutdownXAssetPools();
-
+bool __cdecl DB_DiscardBspWeapons();
 #endif

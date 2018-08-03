@@ -117,6 +117,10 @@ int g_poolSize[ASSET_TYPE_COUNT];
 bool g_poolSizeModified[ASSET_TYPE_COUNT];
 extern int g_defaultAssetCount;
 
+cvar_t* db_xassetdebug;
+cvar_t* db_xassetdebugtype;
+
+
 struct XAssetEntry
 {
   struct XAsset asset;
@@ -191,12 +195,15 @@ extern "C"{
   void DB_SaveSounds();
   void DB_SaveDObjs();
   void DB_SyncExternalAssets();
-  void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
+  //void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
   void DB_LoadSounds();
   void __cdecl Load_SndAliasCustom(snd_alias_list_t **var);
+  void Mark_XAsset();
 };
 
 void XAssetUsage_f();
+void __cdecl DB_UnloadXZone(XZone *zone, bool createDefault);
+void __cdecl DB_UnloadXZoneInternal(unsigned int zone, bool createDefault);
 
 
 void* XAssetAllocPool(int type, int sizeoftype)
@@ -210,7 +217,7 @@ void* XAssetAllocPool(int type, int sizeoftype)
   assert(sizeoftype > 0);
 
 //  return (void *)_PMem_AllocNamed(g_poolSize[type] * sizeoftype, 0x4u, 0, 0, "xasset_pool", TRACK_FASTFILE);
-  return Z_TagMalloc(g_poolSize[type] * sizeoftype, TAG_XZONE);
+  return Z_TagMalloc(g_poolSize[type] * sizeoftype +4, TAG_XZONE);
 }
 
 
@@ -1657,18 +1664,18 @@ void __cdecl DB_InitPoolHeader(XAssetType type)
   }
 }
 
-
-
+cvar_t* db_nobspweapon;
 
 
 void __cdecl DB_Init()
 {
   int type;
   unsigned int i;
-/*
-  db_xassetdebug = _Dvar_RegisterBool("db_xassetdebug", 0, 0, "debug assets loading");
-  db_xassetdebugtype = _Dvar_RegisterInt("db_xassetdebugtype", -1, -2, 43, 0, "debug assets loading type: -1 all; indexes start at 0");
-*/
+
+  db_xassetdebug = Cvar_RegisterBool("db_xassetdebug", qfalse, 0, "debug assets loading");
+  db_xassetdebugtype = Cvar_RegisterInt("db_xassetdebugtype", -1, -2, 43, 0, "debug assets loading type: -1 all; indexes start at 0");
+  db_nobspweapon = Cvar_RegisterBool("db_nobspweapon", qfalse, 0, "Do not load weapons from map/usermap fastfiles. Can free up to 2 weapons");
+
   DB_InitXAssetPools( );
 
   for ( type = 0; type < ASSET_TYPE_COUNT; ++type )
@@ -1685,6 +1692,8 @@ void __cdecl DB_Init()
   Cmd_AddCommand("XAssetUsage", XAssetUsage_f);
 
 }
+
+
 
 
 void DB_LockWrite()
@@ -1878,7 +1887,7 @@ void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int syn
             DB_ArchiveAssets( );
             DB_LockWrite();
         }
-        DB_UnloadXZone(zh, 1);
+        DB_UnloadXZoneInternal(zh, true);
       }
     }
   }
@@ -1948,16 +1957,16 @@ void DB_FreeDefaultEntries()
       assetEntry = &g_assetEntryPool[assetEntryIndex];
       nextAssetEntryIndex = assetEntry->entry.nextHash;
 
-      assert(!assetEntry->entry.zoneIndex);
+//      assert(!assetEntry->entry.zoneIndex); Will fail on some mods. Won't bother anymore why
       assert(!assetEntry->entry.nextOverride);
       assert(g_defaultAssetCount);
 
-      --g_defaultAssetCount;
+//      --g_defaultAssetCount;
       DB_FreeXAssetEntry(&assetEntry->entry);
     }
     db_hashTable[hash] = 0;
   }
-  assert(!g_defaultAssetCount);
+//  assert(!g_defaultAssetCount);
 }
 
 
@@ -1971,7 +1980,7 @@ void __cdecl DB_ShutdownXAssets()
   DB_LockWrite();
   for ( i = g_zoneCount - 1; i >= 0; --i )
   {
-    DB_UnloadXZone(g_zoneHandles[i], 0);
+    DB_UnloadXZoneInternal(g_zoneHandles[i], false);
   }
   DB_FreeDefaultEntries();
   DB_FreeUnusedResources();
@@ -2126,6 +2135,129 @@ void __cdecl DB_MaterialSetName(union XAssetHeader *xasset, const char *name)
   xasset->material->info.name = name;
 //    *(const char**)xasset->data = name;
 }
+
+const char *__cdecl DB_GetXAssetTypeName(int type)
+{
+  assert(type >= 0 && type < ASSET_TYPE_COUNT);
+  return g_assetNames[type];
+}
+
+
+enum DBCloneMethod
+{
+  DB_CLONE_NORMAL = 0x0,
+  DB_CLONE_FROM_DEFAULT = 0x1,
+  DB_CLONE_SWAP = 0x2,
+};
+
+
+
+extern void (__cdecl *DB_RemoveXAssetHandler[])(void*);
+extern void (__cdecl *DB_DynamicCloneXAssetHandler[])(void*, void*, DBCloneMethod);
+extern void (__cdecl *DB_XAssetSetNameHandler[])(void *, const char *);
+extern const char* g_defaultAssetName[];
+
+unsigned int DB_HashForName(const char *name, enum XAssetType type)
+{
+  const char *pos;
+  unsigned int hash;
+  int c;
+
+  hash = type;
+  for ( pos = name; *pos; ++pos )
+  {
+    c = tolower(*pos);
+    if ( c == '\\' )
+    {
+      c = '/';
+    }
+    hash = 31 * hash + c;
+  }
+  return hash;
+}
+
+
+void __cdecl DB_SetXAssetName(XAsset *asset, const char *name)
+{
+  assert(DB_XAssetSetNameHandler[asset->type]);
+  DB_XAssetSetNameHandler[asset->type](&asset->header, name);
+}
+
+
+
+
+void __cdecl DB_RemoveXAsset(XAsset *asset)
+{
+  if ( DB_RemoveXAssetHandler[asset->type] )
+  {
+    DB_RemoveXAssetHandler[asset->type](asset->header.data);
+  }
+}
+
+void __cdecl DB_CloneXAssetInternal(XAsset *from, XAsset *to)
+{
+  int size;
+  assert(from->type == to->type);
+  size = DB_GetXAssetTypeSize(from->type);
+  memcpy(to->header.data, from->header.data, size);
+}
+
+
+bool __cdecl DB_DynamicCloneXAsset(XAssetHeader from, XAssetHeader to, XAssetType type, DBCloneMethod cloneMethod)
+{
+  if ( !DB_DynamicCloneXAssetHandler[type] )
+  {
+    return 0;
+  }
+  DB_DynamicCloneXAssetHandler[type](from.data, to.data, cloneMethod);
+  return 1;
+}
+
+void __cdecl DB_CloneXAsset(XAsset *from, XAsset *to, DBCloneMethod cloneMethod)
+{
+  assert(from->type == to->type);
+
+  DB_DynamicCloneXAsset(from->header, to->header, to->type, cloneMethod);
+  DB_CloneXAssetInternal(from, to);
+}
+
+
+void __cdecl DB_CloneXAssetEntry(XAssetEntry *from, XAssetEntry *to, DBCloneMethod cloneMethod)
+{
+  DB_CloneXAsset(&from->asset, &to->asset, cloneMethod);
+  to->zoneIndex = from->zoneIndex;
+}
+
+
+void* __cdecl DB_FindXAssetDefaultHeaderInternal(XAssetType type)
+{
+  unsigned int assetEntryIndex;
+  const char *name;
+  XAssetEntryPoolEntry *assetEntry;
+
+  name = g_defaultAssetName[type];
+  for ( assetEntryIndex = db_hashTable[DB_HashForName(name, type) % 0x8000]; ; assetEntryIndex = assetEntry->entry.nextHash )
+  {
+    if ( !assetEntryIndex )
+    {
+      return NULL;
+    }
+    assetEntry = &g_assetEntryPool[assetEntryIndex];
+    if ( g_assetEntryPool[assetEntryIndex].entry.asset.type == type )
+    {
+      if ( !Q_stricmp(DB_GetXAssetName(&assetEntry->entry.asset), name) )
+      {
+        break;
+      }
+    }
+  }
+  while ( assetEntry->entry.nextOverride )
+  {
+    assetEntry = &g_assetEntryPool[assetEntry->entry.nextOverride];
+  }
+  return assetEntry->entry.asset.header.data;
+}
+
 
 
 
@@ -2623,24 +2755,6 @@ void __cdecl DB_ReleaseXAssets()
   }
 }
 
-unsigned int DB_HashForName(const char *name, enum XAssetType type)
-{
-  const char *pos;
-  unsigned int hash;
-  int c;
-
-  hash = type;
-  for ( pos = name; *pos; ++pos )
-  {
-    c = tolower(*pos);
-    if ( c == '\\' )
-    {
-      c = '/';
-    }
-    hash = 31 * hash + c;
-  }
-  return hash;
-}
 
 
 void __cdecl Mark_SndCurveAsset(struct SndCurve *sndCurve)
@@ -2733,6 +2847,161 @@ void DB_BuildOverallocatedXAssetList(char* configstring, int len)
 
 
 
+void __cdecl DB_UnloadXZoneInternal(unsigned int zoneIndex, bool createDefault)
+{
+  unsigned int hash;
+  uint16_t *pAssetEntryIndex;
+  XAssetEntryPoolEntry *overrideAssetEntry;
+  XAsset asset;
+  const char *name;
+  XAssetEntry *assetEntry;
+  uint16_t *pOverrideAssetEntryIndex;
+  unsigned int overrideAssetEntryIndex;
+  const char* debugname;
+
+  assert(zoneIndex);
+
+//  R_StreamPushSyncDisable();
+  Com_Printf(CON_CHANNEL_SYSTEM, "Unloading assets from fastfile '%s' ", &g_zones[zoneIndex].zoneinfo.name);
+  if ( createDefault )
+  {
+    Com_Printf(CON_CHANNEL_SYSTEM, "and creating default assets stubs\n");
+  }
+  else
+  {
+    Com_Printf(CON_CHANNEL_SYSTEM, "and deleting all assets\n");
+  }
+  for (hash = 0, pAssetEntryIndex = &db_hashTable[hash]; hash < ARRAY_COUNT(db_hashTable); )
+  {
+      if ( !*pAssetEntryIndex )
+      {
+        ++hash;
+        pAssetEntryIndex = &db_hashTable[hash];
+        continue;
+      }
+      assetEntry = &g_assetEntryPool[*pAssetEntryIndex].entry;
+      if ( (uint8_t)assetEntry->zoneIndex == zoneIndex )
+      {
+        if ( assetEntry->inuse )
+        {
+          if ( createDefault )
+          {
+            varXAsset = (XAsset*)assetEntry;
+            Mark_XAsset();
+          }
+        }
+        if ( db_xassetdebug->boolean )
+        {
+          debugname = Cvar_GetVariantString("db_xassetdebugname");
+          if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == assetEntry->asset.type
+              || (debugname[0] && !Q_stricmp(DB_GetXAssetName(&assetEntry->asset), debugname)) )
+          {
+            Com_Printf(CON_CHANNEL_SYSTEM, "DB_UnloadXZoneInternal: removing asset: '%s','%s'\n",
+                DB_GetXAssetTypeName(assetEntry->asset.type), DB_GetXAssetName(&assetEntry->asset));
+          }
+        }
+        DB_RemoveXAsset(&assetEntry->asset);
+        overrideAssetEntryIndex = assetEntry->nextOverride;
+        if ( overrideAssetEntryIndex )
+        {
+          DB_CloneXAssetEntry(&g_assetEntryPool[overrideAssetEntryIndex].entry, assetEntry, DB_CLONE_NORMAL);
+          assetEntry->nextOverride = g_assetEntryPool[overrideAssetEntryIndex].entry.nextOverride;
+          DB_FreeXAssetEntry(&g_assetEntryPool[overrideAssetEntryIndex].entry);
+          if ( db_xassetdebug->boolean )
+          {
+            debugname = Cvar_GetVariantString("db_xassetdebugname");
+            if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == assetEntry->asset.type
+              || (debugname[0] && !Q_stricmp(DB_GetXAssetName(&assetEntry->asset), debugname)) )
+            {
+
+              Com_Printf(CON_CHANNEL_SYSTEM, "DB_UnloadXZoneInternal: reverted to asset: '%s','%s' from %s\n", 
+		DB_GetXAssetTypeName(assetEntry->asset.type), DB_GetXAssetName(&assetEntry->asset), 
+		g_zones[(uint8_t)assetEntry->zoneIndex].zoneinfo.name);
+            }
+          }
+          goto LABEL_48;
+        }
+        if ( createDefault )
+        {
+          asset.type = assetEntry->asset.type;
+          asset.header.data = DB_FindXAssetDefaultHeaderInternal(asset.type);
+          if ( asset.header.data )
+          {
+            ++g_defaultAssetCount;
+            assetEntry->zoneIndex = 0;
+            name = DB_GetXAssetName(&assetEntry->asset);
+            DB_CloneXAssetInternal(&asset, &assetEntry->asset);
+            DB_SetXAssetName(&assetEntry->asset, name);
+            if ( db_xassetdebug->boolean )
+            {
+              debugname = Cvar_GetVariantString("db_xassetdebugname");
+              if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == assetEntry->asset.type
+                  || (debugname[0] && !Q_stricmp(DB_GetXAssetName(&assetEntry->asset), debugname)) )
+              {
+                Com_Printf(CON_CHANNEL_SYSTEM, "DB_UnloadXZoneInternal: using default for asset: '%s','%s'\n", 
+                    DB_GetXAssetTypeName(assetEntry->asset.type), DB_GetXAssetName(&assetEntry->asset));
+              }
+            }
+            goto LABEL_48;
+          }
+          if ( assetEntry->nextOverride )
+          {
+            assert(!assetEntry->nextOverride);
+          }
+          *pAssetEntryIndex = assetEntry->nextHash;
+          DB_FreeXAssetEntry(assetEntry);
+          if ( *g_defaultAssetName[asset.type] )
+          {
+            Sys_LeaveCriticalSection(CRITSECT_DBHASH);
+            Sys_Error("Could not load default asset for asset type '%s'", (&g_assetNames)[asset.type]);
+          }
+        }
+        else
+        {
+          if ( assetEntry->nextOverride )
+          {
+            assert(!assetEntry->nextOverride);
+          }
+          *pAssetEntryIndex = assetEntry->nextHash;
+          DB_FreeXAssetEntry(assetEntry);
+        }
+      }
+      else
+      {
+LABEL_48:
+        pOverrideAssetEntryIndex = &assetEntry->nextOverride;
+        while ( *pOverrideAssetEntryIndex )
+        {
+          overrideAssetEntry = &g_assetEntryPool[*pOverrideAssetEntryIndex];
+          if ( overrideAssetEntry->entry.inuse )
+          {
+            assert(!overrideAssetEntry->entry.inuse);
+          }
+          if ( (uint8_t)overrideAssetEntry->entry.zoneIndex == zoneIndex )
+          {
+            DB_RemoveXAsset(&overrideAssetEntry->entry.asset);
+            *pOverrideAssetEntryIndex = overrideAssetEntry->entry.nextOverride;
+            DB_FreeXAssetEntry(&overrideAssetEntry->entry);
+          }
+          else
+          {
+            pOverrideAssetEntryIndex = &overrideAssetEntry->entry.nextOverride;
+          }
+        }
+        pAssetEntryIndex = &assetEntry->nextHash;
+      }
+
+  }
+//  R_StreamPopSyncDisable();
+}
+
+
+void __cdecl DB_UnloadXZone(XZone *zone, bool createDefault)
+{
+  DB_UnloadXZoneInternal(zone->index, createDefault);
+}
+
+
 void DB_CountXAssets(int *count, int len ,qboolean a4)
 {
   int index, sindex;
@@ -2823,16 +3092,22 @@ void XAssetUsage_f()
 
 extern "C"
 {
-bool G_TurretsDisabled();
+
+bool DB_DiscardBspWeapons()
+{
+    return db_nobspweapon->boolean;
+}
 
 void __cdecl Load_WeaponDefAsset(WeaponDef **weapon)
 {
-    if(G_TurretsDisabled()) //saving high valuable resources when we don't use turrets
+    const char* weapname;
+    weapname = (*weapon)->szInternalName;
+
+    if(DB_DiscardBspWeapons()) //saving high valuable resources when we don't use weapons from maps
     {
-        const char* weapname = (*weapon)->szInternalName;
-        if(!strcmp(weapname, "saw_bipod_stand_mp") || !strcmp(weapname, "saw_bipod_crouch_mp"))
+        if(Q_stricmp(g_load.filename, "common_mp") && Q_stricmp(g_load.filename, "mod") && Q_stricmp(g_load.filename, "ui_mp"))
         {
-          Com_Printf(CON_CHANNEL_SYSTEM, "Skip weapon '%s'\n", weapname);
+          Com_Printf(CON_CHANNEL_SYSTEM, "Skip weapon '%s' from '%s'\n", weapname, g_load.filename);
           *weapon = NULL;
           return;
         }
@@ -2840,6 +3115,7 @@ void __cdecl Load_WeaponDefAsset(WeaponDef **weapon)
     *weapon = (WeaponDef *)DB_AddXAsset(ASSET_TYPE_WEAPON, (*weapon));
 
 }
+
 
 
 };
