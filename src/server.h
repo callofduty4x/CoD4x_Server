@@ -149,7 +149,7 @@ struct client_s
 	int					demoArchiveIndex;
 	int					demoMaxDeltaFrames;
 	int					demoDeltaFrameCount;
-	bool				undercover;
+	qboolean				undercover;
 	int					bantime;
 	int					clienttimeout;
 	int					power;
@@ -244,10 +244,10 @@ struct client_s
 	int			voicePacketCount;
 	byte			muteList[MAX_CLIENTS];
 	byte			sendVoice;
-	stats_t			stats;
 	byte			receivedstats;
 	byte			gamestateSent;
 	byte			hasValidPassword;
+	stats_t			stats;
 };//0x0a563c
 
 typedef struct client_s client_t;

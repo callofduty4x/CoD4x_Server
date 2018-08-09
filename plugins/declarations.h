@@ -995,21 +995,17 @@ typedef struct qfile_us {
 
 typedef struct {
     qfile_ut		handleFiles;
-    union{
-	qboolean	handleSync;
-	void*		writebuffer;
-    };
-    union{
-	int		fileSize;
-	int		bufferSize;
-    };
-    union{
-	int		zipFilePos;
-	int		bufferPos; //For buffered writes
-    };
+    qboolean	handleSync;
+    int		fileSize;
+    int		zipFilePos;
     qboolean		zipFile;
     qboolean		streamed;
     char			name[MAX_ZPATH];
+    //Not used by filesystem api
+    void*		writebuffer;
+    int			bufferSize;
+    int			bufferPos; //For buffered writes, next write position for logfile buffering
+    int	rbufferPos; //next read position
 } fileHandleData_t; //0x11C (284) Size
 
 typedef struct client_s
@@ -1027,7 +1023,7 @@ typedef struct client_s
 	int					demoArchiveIndex;
 	int					demoMaxDeltaFrames;
 	int					demoDeltaFrameCount;
-	bool				undercover;
+	qboolean				undercover;
 	int					bantime;
 	int					clienttimeout;
 	int					power;
@@ -1121,10 +1117,10 @@ typedef struct client_s
 	int			voicePacketCount;
 	byte			muteList[MAX_CLIENTS];
 	byte			sendVoice;
-	statData_t			stats;
 	byte			receivedstats;
 	byte			gamestateSent;
 	byte			hasValidPassword;
+	statData_t		stats;
 }client_t;
 
 

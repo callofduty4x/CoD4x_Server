@@ -396,6 +396,7 @@ PCL int OnInit(){	// Funciton called on server initiation
     Plugin_AddCommand("dumpbanlistcache", ListCachedBans_f, 100);
     Plugin_AddCommand("sm_psay", SM_PSay_f, 100);
     Plugin_AddCommand("sm_chat", SM_Chat_f, 30);
+
     return 0;
 }
 
@@ -1018,8 +1019,6 @@ PCL void OnFrame()
     }
 
   }
-  Plugin_Printf("Done Checking all players\n");
-
   cacheupdated = qfalse;
   Plugin_LeaveCriticalSection();
 }

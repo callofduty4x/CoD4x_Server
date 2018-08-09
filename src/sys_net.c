@@ -727,6 +727,8 @@ static struct addrinfo *SearchAddrInfo(struct addrinfo *hints, sa_family_t famil
 }
 
 
+
+
 static qboolean NET_Resolve(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family, char* errormsg1k)
 {
 	struct addrinfo hints;
@@ -743,7 +745,6 @@ static qboolean NET_Resolve(const char *s, struct sockaddr *sadr, int sadr_len, 
 	hintsp->ai_socktype = SOCK_DGRAM;
 
 	retval = getaddrinfo(s, NULL, hintsp, &res);
-
 	if(!retval)
 	{
 		if(family == AF_UNSPEC)
@@ -826,6 +827,21 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 			ptonaddr[3] = 1;
 			memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
 			sin->sin_family = AF_INET;
+
+		}else if(family == AF_UNSPEC){
+			if(net_enabled->integer & NET_ENABLEV6)
+			{
+				ptonaddr[15] = 1;
+				memcpy(&sin6->sin6_addr, ptonaddr, sizeof(sin6->sin6_addr));
+				sin6->sin6_family = AF_INET6;
+			}
+			else
+			{
+				ptonaddr[0] = 127;
+				ptonaddr[3] = 1;
+				memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
+				sin->sin_family = AF_INET;
+			}
 		}else{
 			return qfalse;
 		}
@@ -833,11 +849,26 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 		return qtrue;
 	}
 
-
-	if(NET_DnsCacheQuery(s, &sadrstore, family))
-	{
-		memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
-		return qtrue;
+	if(family == AF_UNSPEC){
+		if(net_enabled->integer & NET_ENABLEV6)
+		{
+			if(NET_DnsCacheQuery(s, &sadrstore, AF_INET6))
+			{
+				memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+				return qtrue;
+			}
+		}
+		if(NET_DnsCacheQuery(s, &sadrstore, AF_INET))
+		{
+			memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+			return qtrue;
+		}
+	}else{
+		if(NET_DnsCacheQuery(s, &sadrstore, family))
+		{
+			memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+			return qtrue;
+		}
 	}
 
 	retval = NET_Resolve(s, (struct sockaddr*)&sadrstore , sizeof(sadrstore), family, errormsg);
@@ -847,6 +878,7 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 		NET_DnsCacheUpdate(s, &sadrstore);
 	}
 	memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+
 	return retval;
 }
 
@@ -3558,8 +3590,6 @@ __optimize3 __regparm1 qboolean NET_Event(int socket)
 	}
 	return qtrue;
 }
-
-
 
 
 /*

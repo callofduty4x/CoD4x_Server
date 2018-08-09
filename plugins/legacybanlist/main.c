@@ -259,9 +259,10 @@ PCL void OnPlayerGetBanStatus(baninfo_t* baninfo, char* message, int len)
 
   this = banlist;
   if(!this)
+  {
         return;
+  }
 
-	{
     for(i = 0 ; i < current_banindex; this++, i++){
         if(Q_stricmpn(this->guid, pbguid +24, 8) == 0)
         {
@@ -294,7 +295,7 @@ PCL void OnPlayerGetBanStatus(baninfo_t* baninfo, char* message, int len)
             return;
         }
     }
-  }
+
   return;
 
 }

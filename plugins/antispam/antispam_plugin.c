@@ -65,7 +65,7 @@ PCL void OnMessageSent(char *message,int slot, qboolean *show, int type){
 	// now the i value holds the number of messages in the messages array which are older than 60 seconds + 1
 	// we need to remove those
 	if(i!=0){
-	    for(j=0;j<ANTISPAM_MAXMESSAGES && i<ANTISPAM_MAXMESSAGES && data.players[slot].messages[j] != 0;++i,++j);{
+	    for(j=0;j<ANTISPAM_MAXMESSAGES && i<ANTISPAM_MAXMESSAGES && data.players[slot].messages[j] != 0;++i,++j){
 		data.players[slot].messages[j] = data.players[slot].messages[i];
 		data.players[slot].messages[i] = 0;
 	    }
