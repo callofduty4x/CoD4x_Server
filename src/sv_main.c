@@ -4993,3 +4993,46 @@ void __cdecl SV_FreeClientScriptId(client_t *cl)
   Scr_FreeValue(cl->scriptId);
   cl->scriptId = 0;
 }
+
+
+
+qboolean SV_FileStillActive(const char* name)
+{
+    int i;
+    char filename[MAX_OSPATH];
+    //char* str;
+    int len, crc32;
+
+    Cmd_TokenizeString(sv_referencedIwdNames->string);
+
+
+    Com_Printf(CON_CHANNEL_SERVER,"Check for file %s\n", name);
+
+
+    for(i = 0; i < Cmd_Argc(); ++i)
+    {
+        Com_sprintf(filename, sizeof(filename), "%s.iwd", Cmd_Argv(i));
+        if(Q_stricmp(name, filename) == 0)
+        {
+            Cmd_EndTokenizedString();
+            return qtrue;
+        }
+    }
+    Cmd_EndTokenizedString();
+
+
+    Cmd_TokenizeString(sv_referencedFFNames->string);
+
+    for(i = 0; i < Cmd_Argc(); ++i)
+    {
+        DB_GetQPathForZone(Cmd_Argv(i), sizeof(filename), filename);
+        if(Q_stricmp(name, filename) == 0)
+        {
+            Cmd_EndTokenizedString();
+            return qtrue;
+        }
+    }
+
+    Cmd_EndTokenizedString();
+    return qfalse;
+}

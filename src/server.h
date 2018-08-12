@@ -881,7 +881,7 @@ void __cdecl CM_UnlinkEntity(svEntity_t *ent);
 void __cdecl CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
 
 int SV_GameGetMaxClients();
-
+qboolean SV_FileStillActive(const char* name);
 #ifdef COD4X18UPDATE
 void SV_ConnectWithUpdateProxy(client_t *cl);
 #endif
@@ -907,4 +907,6 @@ typedef struct{
 
 extern spawnerrortest_t e_spawns[64];
 */
+
+
 
