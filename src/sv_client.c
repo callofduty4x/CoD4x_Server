@@ -171,7 +171,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	char* xversion;
 
 	xversion = Info_ValueForKey( userinfo, "xver");
-	if(Q_stricmp(xversion, Sys_GetCommonVersionString()) && version > 6)
+	if(Q_stricmp(xversion, Sys_GetCommonVersionString()) && version > 7)
 	{
 		NET_OutOfBandPrint( NS_SERVER, from, "error\nBad subversion. Server expects subversion %s but client is %s\n", Sys_GetCommonVersionString(), xversion );
 		return;
@@ -229,12 +229,12 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	if ( version != sv_protocol->integer ) {
 
 #ifdef COD4X18UPDATE
-		if(version < 7)
+		if(version <= 7)
 		{
 			Com_Printf(CON_CHANNEL_SERVER,"Have to fix up old client which reports version %d\n", version);
 		}else{
 #endif
-			if(version < 8)
+			if(version < 9)
 			{
 				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
 							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
@@ -390,7 +390,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 
 
 #ifdef COD4X18UPDATE
-	if(version < 7 && newcl->challenge == challenge && newcl->state && newcl->updateconnOK)
+	if(version <= 7 && newcl->challenge == challenge && newcl->state && newcl->updateconnOK)
 	{
 		Com_Memset(newcl, 0x00, sizeof(client_t));
 		newcl->updateconnOK = qtrue;

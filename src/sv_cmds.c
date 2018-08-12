@@ -566,7 +566,6 @@ static void SV_MiniStatus_f( void ) {
 			ping = cl->ping < 9999 ? cl->ping : 9999;
 			Com_Printf(CON_CHANNEL_DONT_FILTER,"%4i ", ping);
 		}
-
     SV_SApiSteamIDToString(cl->steamid, ssti, sizeof(ssti));
     SV_SApiSteamIDToString(cl->playerid, psti, sizeof(psti));
 

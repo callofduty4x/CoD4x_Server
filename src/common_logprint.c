@@ -312,6 +312,7 @@ fileHandle_t Com_OpenLogfile(const char* name, char mode)
 	{
 		wakelogfilewriter = Sys_CreateEvent(1, 1, "wakelogfilewriter");
 		Sys_CreateNewThread(Com_WriteLogThread, &logthreadid, NULL);
+		Sys_SetThreadName(logthreadid, "LogfileWriter");
 	}
 	return FS_OpenLogfile(name, mode);
 }
@@ -366,6 +367,9 @@ void Com_CloseLogFiles()
 
 fileHandle_t Com_OpenGameLogfile(const char* name, char mode, qboolean sync)
 {
+	if ( !FS_Initialized()) {
+		return 0;
+	}
 
 	fileHandle_t f = Com_OpenLogfile(name, mode);
 	if(f > 0)

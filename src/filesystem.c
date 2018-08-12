@@ -265,7 +265,8 @@ FS_Initialized
 
 qboolean FS_Initialized() {
 
-	return (fs_searchpaths != NULL);
+	bool init = (fs_searchpaths != NULL);
+	return init;
 }
 
 /*
@@ -2844,9 +2845,9 @@ void FS_Startup(const char *gameName)
     cvar_t *levelname;
     mvabuf;
 
-    Sys_EnterCriticalSection(CRITSECT_FILESYSTEM);
-
     Com_Printf(CON_CHANNEL_FILES,"----- FS_Startup -----\n");
+
+    Sys_EnterCriticalSection(CRITSECT_FILESYSTEM);
 
     fs_packFiles = 0;
 
@@ -4953,7 +4954,20 @@ void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the log
 
 	Sys_LeaveCriticalSection(CRITSECT_LOGFILETHREAD);
 
-	FS_Write(cpybuffer, remaining, h);
+	int written = fwrite (cpybuffer, 1, remaining, fhd->handleFiles.file.o);
+	if (written == 0) {
+		Sys_Print("FS_WriteLogFlush: 0 bytes written\n" );
+		return;
+	}
+
+	if (written == -1) {
+		Sys_Print("FS_WriteLogFlush: -1 bytes written\n" );
+		return;
+	}
+	if ( fhd->handleSync ) {
+		fflush( fhd->handleFiles.file.o );
+	}
+
 }
 
 

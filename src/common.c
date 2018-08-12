@@ -95,8 +95,10 @@ qboolean com_errorEntered;
 qboolean com_fullyInitialized = qfalse;
 qboolean com_missingAssetOpenFailed;
 
+static int watchdog_timer;
 void Com_WriteConfig_f( void );
 void Com_WriteConfiguration( void );
+void* Debug_HitchWatchdog(void*);
 /*
 ========================================================================
 
@@ -164,6 +166,7 @@ void DObjShutdown();
 void XAnimShutdown();
 void Com_ShutdownWorld();
 void CM_Shutdown();
+void Init_Watchdog();
 
 
 /*
@@ -583,7 +586,7 @@ void Com_Quit_f( void ) {
 
   Com_Printf(CON_CHANNEL_SYSTEM,"All plugins have terminated\n");
 
-	Sys_EnterCriticalSection( 2 );
+//	Sys_EnterCriticalSection( CRITSECT_COM_ERROR );
 
 	Scr_Cleanup();
 	GScr_Shutdown();
@@ -612,7 +615,7 @@ void Com_Quit_f( void ) {
 		NET_Shutdown();
 	}
 
-	Sys_LeaveCriticalSection( 2 );
+//	Sys_LeaveCriticalSection( CRITSECT_COM_ERROR );
 
 	Sys_Quit ();
 }
@@ -880,6 +883,10 @@ void Com_Init(char* commandLine){
         Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
     }
     Tests_Init();
+
+
+
+//    Init_Watchdog();
 }
 
 
@@ -1121,6 +1128,11 @@ __optimize3 void Com_Frame( void ) {
 		Com_Error(0, "Error Cleanup");
 	}
 	Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
+
+	Sys_EnterCriticalSection(CRITSECT_WATCHDOG);
+	watchdog_timer = 0;
+	Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
+
 }
 
 
@@ -1306,10 +1318,15 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 	int		currentTime;
 	jmp_buf*	abortframe;
 	mvabuf;
+	char l_errorMessage[4096];
 
+#ifdef DEBUG
+	Com_Printf(CON_CHANNEL_ERROR,"Com_Error entered:\n");
+	Sys_PrintBacktrace();
+#endif
 
 	if(com_developer && com_developer->integer > 1)
-		__builtin_trap ( ); // SIGILL on windows - crash. Have to do something?
+		asm ("int $3"); // SIGILL on windows - crash. Have to do something?
 
 	Sys_EnterCriticalSection(CRITSECT_COM_ERROR);
 
@@ -1318,19 +1335,28 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		com_errorEntered = qtrue;
 
 		va_start (argptr,fmt);
-		Q_vsnprintf (com_errorMessage, sizeof(com_errorMessage),fmt,argptr);
+		Q_vsnprintf (l_errorMessage, sizeof(l_errorMessage),fmt,argptr);
+
 		va_end (argptr);
+
+		Q_strncpyz(com_errorMessage, l_errorMessage, sizeof(com_errorMessage));
+
 		lastErrorCode = code;
 		/* Terminate this thread and wait for the main-thread entering this function */
 		if(Sys_IsDatabaseThread())
 		{
 			Sys_DatabaseCompleted();
+
 			Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
-			Com_Printf(CON_CHANNEL_ERROR, "%s\n", com_errorMessage);
+
+			Com_Printf(CON_CHANNEL_ERROR, "%s\n", l_errorMessage);
 			abortframe = (jmp_buf*)Sys_GetValue(2);
 			longjmp (*abortframe, -1);
 		}
-		Com_Printf(CON_CHANNEL_ERROR, "%s\n", com_errorMessage);
+		Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
+
+		Com_Printf(CON_CHANNEL_ERROR, "%s\n", l_errorMessage);
+
 		Sys_ExitThread(-1);
 		return;
 	}
@@ -1581,3 +1607,27 @@ const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, in
 }
 
 
+void* Debug_HitchWatchdog(void* arg)
+{
+    while(true)
+    {
+        Sys_EnterCriticalSection(CRITSECT_WATCHDOG);
+
+	++watchdog_timer;
+	if(watchdog_timer >= 40)
+	{
+		asm("int $3");
+	}
+	Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
+
+        Sys_SleepMSec(100);
+    }
+    return NULL;
+}
+
+void Init_Watchdog()
+{
+    threadid_t tid;
+    Sys_CreateNewThread(Debug_HitchWatchdog, &tid, NULL);
+    Sys_SetThreadName(tid, "Watchdog");
+}
