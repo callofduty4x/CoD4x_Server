@@ -851,5 +851,20 @@ qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uin
 	return qfalse;
 }
 
+uint32_t SV_SApiGetAuthenticationTicket(unsigned char* data, int *buflen, uint64_t *steamid)
+{
+	if(sapi_imp.GetAuthenticationTicket)
+	{
+		return sapi_imp.GetAuthenticationTicket(data, buflen, steamid); //To authenticate this server towards other servers
+	}
+	return 0;
+}
 
+void SV_SApiCancelAuthenticationTicket(uint32_t ticket)
+{
+	if(sapi_imp.GetAuthenticationTicket)
+	{
+		sapi_imp.CancelAuthenticationTicket(ticket); //To authenticate this server towards other servers
+	}
+}
 

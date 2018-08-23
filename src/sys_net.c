@@ -378,6 +378,9 @@ char *NET_ErrorStringMT( char* buf, int size ) {
 
 
 static void NetadrToSockadr( netadr_t *a, struct sockaddr *s ) {
+
+	memset(s, 0, sizeof(struct sockaddr_storage));
+
 	if( a->type == NA_BROADCAST ) {
 		((struct sockaddr_in *)s)->sin_family = AF_INET;
 		((struct sockaddr_in *)s)->sin_port = a->port;
@@ -1874,7 +1877,7 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 	else
 		Com_Printf(CON_CHANNEL_NETWORK, "Opening IP socket: %s UDP\n", NET_AdrToStringMT(&netadr, nstring, sizeof(nstring)) );
 
-	newsocket = socket( AF_INET6, socktype, 0 );
+	newsocket = socket( PF_INET6, socktype, 0 );
 
 	if( newsocket == INVALID_SOCKET ) {
 		*err = socketError;
@@ -3459,10 +3462,26 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
   }
   NetadrToSockadr( &remoteadr, (struct sockaddr *)&address);
 
-	if( ( newsocket = socket( address.ss_family, SOCK_STREAM, IPPROTO_TCP ) ) == INVALID_SOCKET ) {
+	int sockfam = 0;
+	int sin_len = 0;
+	/* WTF BSD */
+	if(address.ss_family == AF_INET)
+	{
+		sockfam = PF_INET;
+		sin_len = sizeof(struct sockaddr_in);
+	}else if(address.ss_family == AF_INET6){
+		sockfam = PF_INET6;
+		sin_len = sizeof(struct sockaddr_in6);
+	}else{
+		sockfam = address.ss_family;
+		sin_len = sizeof(bindaddr);
+	}
+
+	if( ( newsocket = socket( sockfam, SOCK_STREAM, IPPROTO_TCP ) ) == INVALID_SOCKET ) {
 		if(!silent) Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TCPConnect: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		return INVALID_SOCKET;
 	}
+
 	// make it non-blocking
 	ioctlarg_t	_true = 1;
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
@@ -3475,16 +3494,26 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
   if(sourceadr)
   {
     NetadrToSockadr(sourceadr, (struct sockaddr *)&bindaddr);
-	if( bind( newsocket, (void *)&bindaddr, sizeof(bindaddr) ) == SOCKET_ERROR ) {
+
+	int bsin_len = 0;
+	/* WTF BSD */
+	if(bindaddr.ss_family == AF_INET)
+	{
+		bsin_len = sizeof(struct sockaddr_in);
+	}else if(address.ss_family == AF_INET6){
+		bsin_len = sizeof(struct sockaddr_in6);
+	}else{
+		bsin_len = sizeof(bindaddr);
+	}
+
+	if( bind( newsocket, (void *)&bindaddr, bsin_len ) == SOCKET_ERROR ) {
 		if(!silent) Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TcpClientConnect: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		closesocket( newsocket );
 		return INVALID_SOCKET;
 	}
   }
 
-
-
-	if( connect( newsocket, (void *)&address, sizeof(address) ) != SOCKET_ERROR )
+	if( connect( newsocket, (void *)&address, sin_len ) != SOCKET_ERROR )
 	{
 		return newsocket;
 	}
