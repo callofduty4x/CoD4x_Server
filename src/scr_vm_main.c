@@ -953,6 +953,7 @@ void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath )
 		}
 			
 		int pos1, pos2;
+		pos1 = pos2 = 0;
 		if( el != NULL )
 		{
 			pos1 = p - (char *)scr_buffer_handle;

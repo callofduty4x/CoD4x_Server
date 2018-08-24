@@ -561,16 +561,17 @@ const char *Sys_Dirname(const char *path)
     slash1 = strrchr(dir, '/');
     slash2 = strrchr(dir, '\\');
 
-    if (slash1 && slash2)
+    if (slash1 && slash2){
         max = slash1 < slash2 ? slash2 : slash1;
-    else if (slash1 && !slash2)
+    }else if (slash1 && !slash2){
         max = slash1;
-    else if (!slash1 && slash2)
+    }else if (!slash1 && slash2){
         max = slash2;
-        
-    if (max)
+    }
+    if (max){
         *max = '\0';
-	return va("%s", dir);
+    }
+    return va("%s", dir);
 }
 /*
 ==============

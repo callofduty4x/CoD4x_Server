@@ -2097,7 +2097,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                     MSG_ReadString(&singlemsg, challenge, 65);
                     svs.nextHeartbeatTime = com_uFrameTime + 3000000; //Now but with ticket
                 }else if(ic == 5){
-                    Com_Printf(CON_CHANNEL_SERVER,"Masterserver didn't load ticket database yet. Try again later\n");
+                    Com_Printf(CON_CHANNEL_SERVER,"Masterserver didn't load token database yet. Try again later\n");
                     *needticket = qtrue;
                     MSG_ReadString(&singlemsg, challenge, 65);
                     svs.nextHeartbeatTime = com_uFrameTime + 300000000; //try again in 5 minutes
@@ -2105,7 +2105,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                     MSG_ReadString(&singlemsg, newchallenge, 65);
                     if(strcmp(challenge, newchallenge) == 0)
                     {
-                        Com_Printf(CON_CHANNEL_SERVER, "Ticket is invalid! Abandoning master server registration\n");
+                        Com_Printf(CON_CHANNEL_SERVER, "sv_token is invalid! Abandoning master server registration\n");
                         svs.nextHeartbeatTime = com_uFrameTime + 3600000000; //Try again in 1 hour
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER, "Bad challenge! Retrying...\n");
@@ -2288,6 +2288,7 @@ void* SV_SendHeartbeatThread(void* arg)
                 Com_sprintf(challengehash, sizeof(challengehash), "%s.%s", opts->token, opts->challengei4);
                 unsigned long size = sizeof(finalsha);
                 Sec_HashMemory(SEC_HASH_SHA256,(void *)challengehash,strlen(challengehash),finalsha,&size,qfalse);
+                Q_strupr(finalsha);
                 memcpy(opts->msgtokenstart, finalsha, 64);
             }
             SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative, opts->needticket, opts->challengei4);
@@ -2301,6 +2302,7 @@ void* SV_SendHeartbeatThread(void* arg)
                 Com_sprintf(challengehash, sizeof(challengehash), "%s.%s", opts->token, opts->challengei6);
                 unsigned long size = sizeof(finalsha);
                 Sec_HashMemory(SEC_HASH_SHA256,(void *)challengehash,strlen(challengehash),finalsha,&size,qfalse);
+                Q_strupr(finalsha);
                 memcpy(opts->msgtokenstart, finalsha, 64);
             }
 
@@ -4117,11 +4119,15 @@ void SV_BotUserMove(client_t *client)
             --g_botai[num].rotIterCount;
             for(i = 0; i < 3; ++i)
             {
-                ucmd.angles[i] += g_botai[num].rotFrac[i];
-                if(ucmd.angles[i] < 0)
+                if(i < 2)
+                {
+                    ucmd.angles[i] += g_botai[num].rotFrac[i];
+                }
+                if(ucmd.angles[i] < 0){
                     ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
-                else if(ucmd.angles[i] > 0xFFFF)
+                }else if(ucmd.angles[i] > 0xFFFF){
                     ucmd.angles[i] -= 0xFFFF;
+                }
             }
             /* Notify only once */
             if (!g_botai[num].rotIterCount)

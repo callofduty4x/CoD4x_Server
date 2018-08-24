@@ -88,13 +88,7 @@ char *__cdecl Win_LocalizeRef(const char *ref)
     if ( !token->token[0] )
     {
       Com_EndParseSession();
-/*
-      v1 = va("unlocalized: %s", ref);
-      if ( !(unsigned __int8)Assert_MyHandler("C:\\projects_pc\\cod\\codsrc\\src\\win32\\win_localize.cpp", 112, 0, v1) )
-      {
-        __debugbreak();
-      }
-*/
+      assertx(1 == 0, "unlocalized: %s", ref);
       return Win_CopyLocalizationString(ref);
     }
     useRef = strcmp(token->token, ref) == 0;
@@ -110,13 +104,8 @@ char *__cdecl Win_LocalizeRef(const char *ref)
     }
   }
   Com_EndParseSession();
-/*
-  v3 = va("missing value: %s", ref);
-  if ( !(unsigned __int8)Assert_MyHandler("C:\\projects_pc\\cod\\codsrc\\src\\win32\\win_localize.cpp", 121, 0, v3) )
-  {
-    __debugbreak();
-  }
-*/
+
+  assertx(1 == 0, "missing value: %s", ref);
   return Win_CopyLocalizationString(ref);
 }
 

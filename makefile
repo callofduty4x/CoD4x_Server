@@ -44,7 +44,13 @@ CC=gcc
 CPP=g++
 WIN_DEFINES=WINVER=0x501
 LINUX_DEFINES=_GNU_SOURCE
-CFLAGS=-m32 -msse2 -fno-pie -mfpmath=sse -Wall -O0 -g -fno-omit-frame-pointer -fmax-errors=15
+CFLAGS=-m32 -msse2 -mfpmath=sse -Wall -fno-omit-frame-pointer -fmax-errors=15
+
+ifeq ($(DEBUG), true)
+DCFLAGS=-fno-pie -O0 -g
+else
+DCFLAGS=-fno-pie -O1 -DNDEBUG
+endif
 
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static -lm
 WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
@@ -165,7 +171,7 @@ $(TARGET): $(OS_OBJ) $(C_OBJ) $(CPP_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) ob
 # A rule to make version module.
 obj/version.o: src/version/version.c FORCE
 	@echo   $(CC)  $@ $(C_DEFINES)
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ############################################
 # An empty rule to force rebuild other rule.
@@ -176,14 +182,14 @@ FORCE:
 # -march=nocona
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 #####################################
 # A rule to build common c++ server code.
 # -march=nocona
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo   $(CPP)  $@
-	@$(CPP) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CPP) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ################################
 # A rule to build assemler code.
@@ -195,25 +201,25 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/asmsource/%.asm
 # A rule to build zlib source code.
 $(OBJ_DIR)/%.o: $(ZLIB_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ######################################
 # A rule to build xassets source code.
 $(OBJ_DIR)/%.o: $(ASSETS_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################
 # A rule to build Windows specific code.
 $(OBJ_DIR)/%.o: $(WIN_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################
 # A rule to build Linux specific code.
 $(OBJ_DIR)/%.o: $(LINUX_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################################
 # A rule for Windows to create server interface library.

@@ -482,7 +482,7 @@ static qboolean Sys_StringToSockaddrNoDNS(const char* s, struct sockaddr *sadr, 
 {
 	char ptonaddr[32];
 	char addressstring[128];
-	char *ifstring;
+	char *ifstring = NULL;
 	struct sockaddr_storage sadrstore;
 	struct sockaddr_in *sin = (struct sockaddr_in *)&sadrstore;
 	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sadrstore;
