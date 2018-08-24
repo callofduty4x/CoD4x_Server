@@ -305,7 +305,7 @@ qboolean Sys_CreateCallbackThread(void* threadMain,...)
 }
 
 
-bool Sys_IsDatabaseReady()
+qboolean Sys_IsDatabaseReady()
 {
   return Sys_IsObjectSignaled(databaseCompletedEvent) == 1;
 }
@@ -315,7 +315,7 @@ void Sys_WaitStartDatabase()
   Sys_WaitForObject(wakeDatabaseEvent);
 }
 
-bool Sys_IsDatabaseThread()
+qboolean Sys_IsDatabaseThread()
 {
   threadid_t curtid;
 
@@ -323,7 +323,7 @@ bool Sys_IsDatabaseThread()
   return curtid == threadId[1];
 }
 
-bool Sys_IsServerThread()
+qboolean Sys_IsServerThread()
 {
 /*
   threadid_t curtid;
@@ -335,7 +335,7 @@ bool Sys_IsServerThread()
 }
 
 
-bool Sys_IsRenderThread()
+qboolean Sys_IsRenderThread()
 {
 /*
   threadid_t curtid;
@@ -375,7 +375,7 @@ void Sys_WakeDatabase2()
   Sys_ResetEvent(databaseCompletedEvent2);
 }
 
-bool __cdecl Sys_IsDatabaseReady2()
+qboolean __cdecl Sys_IsDatabaseReady2()
 {
   return Sys_IsObjectSignaled(databaseCompletedEvent2) == 1;
 }
@@ -390,7 +390,7 @@ void __cdecl Sys_SyncDatabase()
   Sys_WaitForObject(databaseCompletedEvent);
 }
 
-bool __cdecl Sys_HaveSuspendedDatabaseThread(ThreadOwner to)
+qboolean __cdecl Sys_HaveSuspendedDatabaseThread(ThreadOwner to)
 {
   return g_databaseThreadOwner == to;
 }
