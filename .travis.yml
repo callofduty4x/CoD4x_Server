@@ -32,8 +32,8 @@ before_install:
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
-  - CC=gcc-4.9 
-  - CXX=g++-4.9
+  - export CC=gcc-4.9 
+  - export CXX=g++-4.9
   - $CC --version
   - $CXX --version
 script:
