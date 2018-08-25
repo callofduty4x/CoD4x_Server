@@ -26,16 +26,16 @@ addons:
 
 before_install:
   - arch
-  - CC=gcc-4.9 
-  - CXX=g++-4.9
-  - $CC --version
-  - $CXX --version
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
+  - CC=gcc-4.9 
+  - CXX=g++-4.9
+  - $CC --version
+  - $CXX --version
 script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
