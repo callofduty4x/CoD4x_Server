@@ -58,9 +58,7 @@ deploy:
 - provider: GitHub
   auth_token:
     secure: Je7YohhSVawAyVkWQG3zyoppIB73CjJB99IlzzJzosFJ5NeBkYLUuA2SV52LTWXj
-  artifact: 
-    - cod4exe
-    - cod4exe_dbg
+  artifact: cod4exe, cod4exe_dbg
   draft: false
   prerelease: false
   on:
