@@ -27,6 +27,7 @@ addons:
       #- g++-5
 
 before_install:
+  - echo "before install"
   #- arch
   #- sudo ls /etc/dpkg/dpkg.cfg.d/
   #- sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
@@ -40,17 +41,15 @@ before_install:
   #- $CXX --version
 
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-  - echo ${CXX}
-  - ${CXX} --version
-  - ${CXX} -v
+  - echo "install"
   
 script:
+  - echo "script"
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
   - echo $TRAVIS_TAG
-  - make
-  - make DEBUG=true
+  - make CC=gcc-4.9 CPP=g++-4.9
+  - make CC=gcc-4.9 CPP=g++-4.9 DEBUG=true
 deploy:
   skip_cleanup: true
   provider: releases
