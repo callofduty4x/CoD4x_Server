@@ -23,6 +23,8 @@ addons:
       #- g++-4.8
       - gcc-4.9
       - g++-4.9
+      - gcc-4.9-multilib 
+      - g++-4.9-multilib
       #- gcc-5
       #- g++-5
 
@@ -34,7 +36,7 @@ before_install:
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
+  - sudo apt-get install nasm:i386 paxctl:i386 libtommath-dev:i386
   
 install:
   - echo "install"
