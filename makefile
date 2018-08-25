@@ -9,7 +9,12 @@
 
 ##############################
 # A name of server executable.
+
+ifeq ($(DEBUG), true)
+TARGETNAME=cod4x18_dedrun_dbg
+else
 TARGETNAME=cod4x18_dedrun
+endif
 
 ###################################################################
 # Build system specific information.
