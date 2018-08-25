@@ -3,6 +3,7 @@ language: cpp
 branches:
   only:
    - master
+   - dev_newarch
 
 before_install:
   # hack for broken package, https://github.com/travis-ci/travis-ci/issues/6588
