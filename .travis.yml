@@ -8,7 +8,7 @@ branches:
 env:
   #- CC=gcc     CXX=g++
   #- CC=gcc-4.8 CXX=g++-4.8
-  - CC=gcc-4.9 CXX=g++-4.9
+  #- CC=gcc-4.9 CXX=g++-4.9
   #- CC=gcc-5   CXX=g++-5
   #- CC=clang   CXX=clang++
    
@@ -26,6 +26,8 @@ addons:
 
 before_install:
   - arch
+  - CC=gcc-4.9 
+  - CXX=g++-4.9
   - $CC --version
   - $CXX --version
   - sudo ls /etc/dpkg/dpkg.cfg.d/
