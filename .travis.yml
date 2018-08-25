@@ -37,7 +37,7 @@ before_install:
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
   - sudo apt-get install nasm:i386 paxctl:i386 libtommath-dev:i386
-  - ln -s /usr/include/asm-generic /usr/include/asm
+  - sudo ln -s /usr/include/asm-generic /usr/include/asm
   
 install:
   - echo "install"
