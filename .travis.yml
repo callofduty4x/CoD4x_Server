@@ -5,23 +5,35 @@ branches:
    - master
    - dev_newarch
    
+env:
+  #- CC=gcc     CXX=g++
+  #- CC=gcc-4.8 CXX=g++-4.8
+  - CC=gcc-4.9 CXX=g++-4.9
+  #- CC=gcc-5   CXX=g++-5
+  #- CC=clang   CXX=clang++
+   
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
+      #- gcc-4.8
+      #- g++-4.8
       - gcc-4.9
       - g++-4.9
+      #- gcc-5
+      #- g++-5
 
 before_install:
   - arch
+  - $CC --version
+  - $CXX --version
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
   - sudo ls /etc/dpkg/dpkg.cfg.d/
 #  - sudo dpkg --add-architecture i386
   - sudo apt-get update
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
