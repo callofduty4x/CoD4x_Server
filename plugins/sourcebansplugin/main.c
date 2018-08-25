@@ -327,20 +327,22 @@ static int HTTP_DoBlockingQuery(const char *url, char* data, int *len)
       return 0;
     }
 
-    if(r->code != 200)
+    if(r->code != 200 && r->contentLength <= 0)
     {
+      data[0] = 0;
       code = r->code;
       Plugin_HTTP_FreeObj(r);
       return code;
     }
 
     outlen = r->contentLength;
-    if(outlen >= *len)
+    if(outlen >= (*len -1))
     {
-      outlen = *len;
+      outlen = (*len -1);
     }
-
+    *len = outlen;
     memcpy(data, r->extrecvmsg->data + r->headerLength, outlen);
+    data[outlen] = 0;
     code = r->code;
     Plugin_HTTP_FreeObj(r);
     return code;
@@ -971,6 +973,7 @@ PCL void OnPlayerGetBanStatus(baninfo_t* baninfo, char* message, int len)
   }
   //deal with that player here
   Q_strncpyz(message, baninfo->message, len);
+
 }
 
 PCL void OnFrame()
@@ -1017,7 +1020,7 @@ PCL void OnFrame()
     {
       continue;
     }
-
+    Plugin_DropClient(i, baninfo.message);
   }
   cacheupdated = qfalse;
   Plugin_LeaveCriticalSection();
