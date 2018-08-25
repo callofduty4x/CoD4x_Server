@@ -78,7 +78,10 @@ struct __attribute__((aligned (64))) scrVarGlob_t
 };
 
 struct scrVarDebugPub_t *gScrVarDebugPub = NULL;
+
+#ifndef NDEBUG
 struct scrVarDebugPub_t gScrVarDebugPubBuff;
+#endif
 
 struct scrVarGlob_t gScrVarGlob;
 scrVarPub_t gScrVarPub;
@@ -3434,7 +3437,9 @@ void __cdecl Scr_DumpScriptVariablesDefault( )
 
 static void __cdecl Scr_ResetScrVarDebugPub( )
 {
+#ifndef NDEBUG
   gScrVarDebugPub = &gScrVarDebugPubBuff;
+#endif
 }
 
 static void __cdecl Scr_InitVariableRange(unsigned int begin, unsigned int end)

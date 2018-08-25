@@ -2214,9 +2214,18 @@ void SV_BeginDownloadX_f( client_t *cl, msg_t* msg ) {
 
 	// cl->downloadName is non-zero now, SV_WriteDownloadToClient will see this and open
 	// the file itself
-	cl->wwwDl_var01 = 1;
 
 	MSG_ReadString( msg, cl->downloadName, sizeof( cl->downloadName ) );
+
+	if(!SV_FileStillActive(cl->downloadName))
+	{
+		cl->downloadName[0] = 0;
+		SV_SendClientGameState(cl); //Send new gamestate when he begins to download an old file
+		return;
+	}
+	cl->wwwDl_var01 = 1;
+
+
 }
 
 /*

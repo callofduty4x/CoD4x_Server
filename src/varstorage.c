@@ -952,7 +952,7 @@ qboolean HStorage_ParseLine(varStorage_t* vobj ,char* line, int linenumber){
 
             vsValue_t value;
             value.string = outbuf;
-            suc = HStorage_AddDataInternal( obj, &value);
+            HStorage_AddDataInternal( obj, &value);
 
         }else{
             varValue = Info_ValueForKey(line, queryString);

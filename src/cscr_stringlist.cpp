@@ -90,7 +90,10 @@ struct __align(128) scrStringGlob_t
 
 scrStringDebugGlob_t *gScrStringDebugGlob;
 scrStringGlob_t gScrStringGlob;
+
+#ifndef NDEBUG
 scrStringDebugGlob_t gScrStringDebugGlobBuff;
+#endif
 
 unsigned int GetHashCode(const char *str, unsigned int len)
 {
@@ -254,14 +257,19 @@ void SL_FreeString(unsigned int stringValue, RefString *refStr, unsigned int len
 
 void Scr_ResetScrStringDebugGlob( )
 {
+#ifndef NDEBUG
   gScrStringDebugGlob = &gScrStringDebugGlobBuff;
+#endif
 }
 
 void SL_InitCheckLeaks( )
 {
   Scr_ResetScrStringDebugGlob( );
-  Com_Memset((void*)gScrStringDebugGlob->refCount, 0, sizeof(gScrStringDebugGlob->refCount));
-  gScrStringDebugGlob->totalRefCount = 0;
+  if(gScrStringDebugGlob)
+  {
+      Com_Memset((void*)gScrStringDebugGlob->refCount, 0, sizeof(gScrStringDebugGlob->refCount));
+      gScrStringDebugGlob->totalRefCount = 0;
+  }
 }
 
 void Scr_ClearScrStringDebugGlob( )

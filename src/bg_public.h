@@ -7,6 +7,8 @@
 void __cdecl BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
 void __cdecl BG_ShutdownWeaponDefFiles();
 
+struct DObjModel_s;
+
 struct pmove_t
 {
   struct playerState_s *ps;
@@ -114,7 +116,7 @@ struct __align(8) bgs_s
   int frametime;
   int anim_user;
   struct XModel *(__cdecl *GetXModel)(const char *);
-  void (__cdecl *CreateDObj)(struct DObjModel_s *, unsigned int int16_t, struct XAnimTree_s *, int, int, struct clientInfo_t *);
+  void (__cdecl *CreateDObj)(struct DObjModel_s *, uint16_t, struct XAnimTree_s *, int, int, struct clientInfo_t *);
   uint16_t (__cdecl *AttachWeapon)(struct DObjModel_s *, uint16_t, struct clientInfo_t *);
   struct DObj_s *(__cdecl *GetDObj)(int, int);
   void (__cdecl *SafeDObjFree)(int, int);

@@ -84,7 +84,7 @@ static void Bot_CalculateRotationForOrigin(gentity_t* bot, vec3_t origin, float 
                                       g_botai[bot->s.clientNum].rotIterCount));
     }
     /* Roll will be always 0. */
-    g_botai[bot_num].rotFrac[2] = 0.0;
+    //g_botai[bot_num].rotFrac[2] = 0.0; Roll does not exist! - IceNinjaman
 }
 /*
 ==================

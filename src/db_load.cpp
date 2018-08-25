@@ -1497,6 +1497,8 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
 //    char g_fileBuf[DBFILE_BUFFER_SIZE];
 
     ff_dir = DB_BuildZoneFilePath(zoneName, filename, sizeof(filename));
+    zoneFile = 0;
+
     if(ff_dir >= 0)
     {
       zoneFile = _CreateFileA(filename, 0x80000000, 1, 0, 3, 0x60000000, 0);

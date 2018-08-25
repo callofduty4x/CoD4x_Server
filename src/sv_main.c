@@ -52,6 +52,7 @@
 #include "g_sv_main.h"
 #include "sapi.h"
 #include "db_load.h"
+#include "sec_crypto.h"
 
 #include <string.h>
 #include <stdarg.h>
@@ -133,6 +134,7 @@ cvar_t* sv_shownet;
 cvar_t* sv_updatebackendname;
 cvar_t* sv_legacymode;
 cvar_t* sv_steamgroup;
+cvar_t* sv_authtoken;
 
 serverStatic_t		svs;
 server_t		sv;
@@ -2043,13 +2045,20 @@ typedef struct
     qboolean authoritative;
     netadr_t* iplist;
     int ipcount;
+    qboolean* needticket;
+    qboolean* threadlock;
+    char* challengei4;
+    char* challengei6;
+    byte* msgtokenstart;
+    char token[48];
 }masterHeartbeatThreadOptions_t;
 
 
-void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
+void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needticket, char* challenge)
 {
     byte databuf[8192];
     char stringline[1024];
+    char newchallenge[65];
     msg_t singlemsg;
     int ic;
 
@@ -2082,6 +2091,28 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                     Com_PrintError(CON_CHANNEL_SERVER,"Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
                 }else if(ic == 2){
                     Com_PrintError(CON_CHANNEL_SERVER,"Failure registering server on masterserver. Server address is banned: %s\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+                }else if(ic == 3){
+                    Com_Printf(CON_CHANNEL_SERVER,"Masterserver needs token to complete registration\n");
+                    *needticket = qtrue;
+                    MSG_ReadString(&singlemsg, challenge, 65);
+                    svs.nextHeartbeatTime = com_uFrameTime + 3000000; //Now but with ticket
+                }else if(ic == 5){
+                    Com_Printf(CON_CHANNEL_SERVER,"Masterserver didn't load token database yet. Try again later\n");
+                    *needticket = qtrue;
+                    MSG_ReadString(&singlemsg, challenge, 65);
+                    svs.nextHeartbeatTime = com_uFrameTime + 300000000; //try again in 5 minutes
+                }else if(ic == 4){
+                    MSG_ReadString(&singlemsg, newchallenge, 65);
+                    if(strcmp(challenge, newchallenge) == 0)
+                    {
+                        Com_Printf(CON_CHANNEL_SERVER, "sv_token is invalid! Abandoning master server registration\n");
+                        svs.nextHeartbeatTime = com_uFrameTime + 3600000000; //Try again in 1 hour
+                    }else{
+                        Com_Printf(CON_CHANNEL_SERVER, "Bad challenge! Retrying...\n");
+                        svs.nextHeartbeatTime = com_uFrameTime + 8000000; //Now but with ticket
+                        Q_strncpyz(challenge, newchallenge, 65);
+                    }
+                    *needticket = qtrue;
                 }
                 break;
             case 2:
@@ -2119,7 +2150,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
 }
 
 
-void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen, qboolean authoritative)
+void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen, qboolean authoritative, qboolean* needticket, char* challenge)
 {
     int l = 0;
     byte response[16384];
@@ -2212,7 +2243,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
                 if(Q_stricmp(line, "masterHeartbeatResponse") == 0)
                 {
                     MSG_ReadLong(&msg); //MessageID maybe future use but placeholder here
-                    SV_HeartBeatMessageLoop(&msg, authoritative);
+                    SV_HeartBeatMessageLoop(&msg, authoritative, needticket, challenge);
                 }else{
                     Com_Printf(CON_CHANNEL_SERVER,"Corrupted Masterserver response\n");
                 }
@@ -2238,6 +2269,9 @@ void* SV_SendHeartbeatThread(void* arg)
     masterHeartbeatThreadOptions_t* opts = arg;
     int count = opts->ipcount;
     int i;
+    char challengehash[512];
+    char finalsha[65];
+
     netadr_t* iplist = opts->iplist;
     for(i = 0; i < count; ++i)
     {
@@ -2249,17 +2283,50 @@ void* SV_SendHeartbeatThread(void* arg)
             //IPv4
             Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr4, adrstrdst, sizeof(adrstrdst)));
-            SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
-        }else	if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe){
+            if(opts->msgtokenstart)
+            {
+                Com_sprintf(challengehash, sizeof(challengehash), "%s.%s", opts->token, opts->challengei4);
+                unsigned long size = sizeof(finalsha);
+                Sec_HashMemory(SEC_HASH_SHA256,(void *)challengehash,strlen(challengehash),finalsha,&size,qfalse);
+                Q_strupr(finalsha);
+                memcpy(opts->msgtokenstart, finalsha, 64);
+            }
+            SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative, opts->needticket, opts->challengei4);
+        }else if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe){
             //IPv6
             Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr6, adrstrdst, sizeof(adrstrdst)));
-            SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
+
+            if(opts->msgtokenstart)
+            {
+                Com_sprintf(challengehash, sizeof(challengehash), "%s.%s", opts->token, opts->challengei6);
+                unsigned long size = sizeof(finalsha);
+                Sec_HashMemory(SEC_HASH_SHA256,(void *)challengehash,strlen(challengehash),finalsha,&size,qfalse);
+                Q_strupr(finalsha);
+                memcpy(opts->msgtokenstart, finalsha, 64);
+            }
+
+            SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen, opts->authoritative, opts->needticket, opts->challengei6);
         }
     }
+
     opts->locked = qfalse;
+    *(opts->threadlock) = qfalse;
     return NULL;
 }
+
+
+typedef struct
+{
+    netadr_t i4;
+    netadr_t i6;
+    qboolean authoritative; //Can send commands server executes. Like restart etc.
+    char name[64];
+    qboolean needticket;
+    char challengei4[73];
+    char challengei6[73];
+    qboolean threadlock;
+}masterserver_t;
 
 
 /*
@@ -2273,18 +2340,24 @@ changes from empty to non-empty, and full to non-full,
 but not on every player enter or exit.
 ================
 */
-void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4, netadr_t* adr6, qboolean authoritative)
+void SV_CreateAndSendMasterheartbeatMessage(const char* message, masterserver_t* masrv)
 {
     msg_t msg;
     char string[1024];
     masterHeartbeatThreadOptions_t *opts = NULL;
     static masterHeartbeatThreadOptions_t options[8];
     int i;
-    
+
+    netadr_t *adr4 = &masrv->i4;
+    netadr_t *adr6 = &masrv->i6;
+    qboolean authoritative = masrv->authoritative;
+
+
     if(adr4 == NULL || adr6 == NULL || message == NULL)
     {
         return;
     }
+
     for(i = 0; i < 8; ++i)
     {
         if(options[i].locked == qfalse)
@@ -2297,8 +2370,13 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4,
     {
         return;
     }
-    opts->locked = qtrue;
+    if(masrv->threadlock)
+    {
+        return;
+    }
 
+    opts->locked = qtrue;
+    masrv->threadlock = qtrue;
     opts->authoritative = authoritative;
     opts->adr4 = *adr4;
     opts->adr6 = *adr6;
@@ -2311,10 +2389,46 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4,
     MSG_WriteLong(&msg, psvs.masterserver_messageid);
     ++psvs.masterserver_messageid;
 
+    opts->msgtokenstart = NULL;
+
+    if(masrv->needticket){
+
+	Q_strncpyz(opts->token, sv_authtoken->string, sizeof(opts->token));
+
+
+	if(opts->token[0] == 0)
+	{
+		Com_Printf(CON_CHANNEL_SERVER, "Can not register server on the masterserver. Server needs to provide a valid token in cvar sv_authtoken.\n");
+		opts->locked = qfalse;
+		masrv->threadlock = qfalse;
+		return;
+	}
+
+        MSG_BeginWriteMessageLength(&msg); //Messagelength
+        MSG_WriteLong(&msg, 2); //Command encryptedappidticket
+
+	//First 8 bytes of token
+	for(i = 0; i < 8; ++i)
+	{
+		MSG_WriteByte(&msg, opts->token[i]);
+	}
+
+	opts->msgtokenstart = msg.data + msg.cursize;
+
+	//Sourceip depended. Write empty message first
+	for(i = 0; i < 64; ++i)
+	{
+		MSG_WriteByte(&msg, 0xff);
+	}
+	MSG_WriteByte(&msg, 0x0);
+        MSG_EndWriteMessageLength(&msg);
+    }
+
     MSG_BeginWriteMessageLength(&msg); //Messagelength
     MSG_WriteLong(&msg, 1); //Command sourceenginequery
     SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
     MSG_EndWriteMessageLength(&msg);
+
 
     MSG_BeginWriteMessageLength(&msg); //Messagelength
     MSG_WriteLong(&msg, 0); //EOF
@@ -2322,19 +2436,16 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4,
 
     opts->messagelen = msg.cursize;
     opts->iplist = NET_GetLocalAddressList(&opts->ipcount);
+    opts->needticket = &masrv->needticket;
+    opts->threadlock = &masrv->threadlock;
+    opts->challengei4 = masrv->challengei4;
+    opts->challengei6 = masrv->challengei6;
+
     threadid_t tinfo;
     Sys_CreateNewThread(SV_SendHeartbeatThread, &tinfo, opts);
 
 }
 
-
-typedef struct
-{
-    netadr_t i4;
-    netadr_t i6;
-    qboolean authoritative; //Can send commands server executes. Like restart etc.
-    char name[64];
-}masterserver_t;
 
 typedef struct
 {
@@ -2447,13 +2558,9 @@ void SV_MasterHeartbeat(const char *message)
     // ever incompatably changes
     
     /* Official CoD4X master servers used also by ingame serverbrowser */
-    char string[1024];
-    Com_sprintf(string, sizeof(string), "\xff\xff\xff\xffheartbeat %s", message);
     for(i = 0; i < masterservers.count; ++i)
     {
-        SV_CreateAndSendMasterheartbeatMessage(string, &masterservers.servers[i].i4, 
-                                &masterservers.servers[i].i6, 
-                                masterservers.servers[i].authoritative);
+        SV_CreateAndSendMasterheartbeatMessage(message, &masterservers.servers[i]);
     }
     /* Activision master servers */
     if(netenabled & NET_ENABLEV4)
@@ -3064,6 +3171,7 @@ void SV_InitCvarsOnce(void){
     sv_shownet = Cvar_RegisterInt("sv_shownet", -1, -1, 63, 0, "Enable network debugging for a client");
     sv_updatebackendname = Cvar_RegisterString("sv_updatebackendname", UPDATE_PROXYSERVER_NAME, CVAR_ARCHIVE, "Hostname for the used clientupdatebackend");
     sv_legacymode = Cvar_RegisterBool("sv_legacyguidmode", qfalse, CVAR_ARCHIVE, "outputs pbguid on status command and games_mp.log");
+    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.me");
 }
 
 
@@ -4011,11 +4119,15 @@ void SV_BotUserMove(client_t *client)
             --g_botai[num].rotIterCount;
             for(i = 0; i < 3; ++i)
             {
-                ucmd.angles[i] += g_botai[num].rotFrac[i];
-                if(ucmd.angles[i] < 0)
+                if(i < 2)
+                {
+                    ucmd.angles[i] += g_botai[num].rotFrac[i];
+                }
+                if(ucmd.angles[i] < 0){
                     ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
-                else if(ucmd.angles[i] > 0xFFFF)
+                }else if(ucmd.angles[i] > 0xFFFF){
                     ucmd.angles[i] -= 0xFFFF;
+                }
             }
             /* Notify only once */
             if (!g_botai[num].rotIterCount)
@@ -4992,4 +5104,47 @@ void __cdecl SV_FreeClientScriptId(client_t *cl)
 
   Scr_FreeValue(cl->scriptId);
   cl->scriptId = 0;
+}
+
+
+
+qboolean SV_FileStillActive(const char* name)
+{
+    int i;
+    char filename[MAX_OSPATH];
+    //char* str;
+    int len, crc32;
+
+    Cmd_TokenizeString(sv_referencedIwdNames->string);
+
+
+    Com_Printf(CON_CHANNEL_SERVER,"Check for file %s\n", name);
+
+
+    for(i = 0; i < Cmd_Argc(); ++i)
+    {
+        Com_sprintf(filename, sizeof(filename), "%s.iwd", Cmd_Argv(i));
+        if(Q_stricmp(name, filename) == 0)
+        {
+            Cmd_EndTokenizedString();
+            return qtrue;
+        }
+    }
+    Cmd_EndTokenizedString();
+
+
+    Cmd_TokenizeString(sv_referencedFFNames->string);
+
+    for(i = 0; i < Cmd_Argc(); ++i)
+    {
+        DB_GetQPathForZone(Cmd_Argv(i), sizeof(filename), filename);
+        if(Q_stricmp(name, filename) == 0)
+        {
+            Cmd_EndTokenizedString();
+            return qtrue;
+        }
+    }
+
+    Cmd_EndTokenizedString();
+    return qfalse;
 }

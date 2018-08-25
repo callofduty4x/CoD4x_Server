@@ -382,7 +382,6 @@ int __cdecl SV_EntityContact(const float *mins, const float *maxs, struct gentit
   trace.normal[0] = 0.0;
   trace.normal[1] = 0.0;
   trace.normal[2] = 0.0;
-  trace.normal[3] = 0.0;
 
   if ( gEnt->r.svFlags & (0x20 | SVF_DISK))
   {

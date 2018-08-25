@@ -228,9 +228,11 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 					/* Skip the 2 Bit Hint */
 					FuncName = &FuncName[2];
 					if(nstrings < MAX_IMPORT_STRINGS -1)
+					{
 						strings[nstrings] = FuncName;
 						nstrings ++;
-//					Com_Printf(CON_CHANNEL_SYSTEM,"%d: FuncName: %s\n", i, FuncName);
+//						Com_Printf(CON_CHANNEL_SYSTEM,"%d: FuncName: %s\n", i, FuncName);
+					}
 				}
 				Thunk++;
 				i++;

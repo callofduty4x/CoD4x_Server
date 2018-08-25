@@ -37,7 +37,9 @@ build_script:
 - ps: >-
     Write-Host "Building server code:"
 
-    mingw32-make.exe -fmakefile2
+    mingw32-make.exe
+    
+    mingw32-make.exe DEBUG=true
 
     Write-Host "Done."
 test_script:
@@ -45,16 +47,20 @@ test_script:
 branches:
   only:
     - master    # Ignore all other branches.
+    - dev_newarch
 artifacts: 
   - path: bin\cod4x18_dedrun.exe
     name: cod4exe
+    
+  - path: bin\cod4x18_dedrun_dbg.exe
+    name: cod4exe_dbg
 deploy:
 - provider: GitHub
   auth_token:
     secure: Je7YohhSVawAyVkWQG3zyoppIB73CjJB99IlzzJzosFJ5NeBkYLUuA2SV52LTWXj
-  artifact: cod4exe
+  artifact: cod4exe, cod4exe_dbg
   draft: false
   prerelease: false
   on:
-    branch: master                 # release from master branch only
+    #branch: master                 # release from master branch only
     appveyor_repo_tag: true        # deploy on tag push only

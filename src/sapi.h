@@ -27,6 +27,8 @@ qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uin
 
 uint64_t SV_SApiGUID2PlayerID(const char* guid);
 
+uint32_t SV_SApiGetAuthenticationTicket(unsigned char* data, int *buflen, uint64_t *steamid);
+void SV_SApiCancelAuthenticationTicket(uint32_t ticket);
 #endif
 
 #if defined(__IN_EXTSAPIMODULE__) || defined(__IN_SAPIMODULE__)
@@ -112,8 +114,10 @@ typedef struct{
 	void (*NotifyDisconnect)(unsigned int num);
 	void (*RunFrame)();
 	bool (*SteamGetGroupMemberStatusByClientNum)(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)); //reference is user configurable variable passed back to callback
+	uint32_t (*GetAuthenticationTicket)(unsigned char* data, int *buflen, uint64_t* steamid); //To authenticate this server towards other servers
+	void (*CancelAuthenticationTicket)(uint32_t ticket); //To authenticate this server towards other servers
 }exports_t;
 
 
-
 #endif
+
