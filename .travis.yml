@@ -1,4 +1,6 @@
 language: cpp
+compiler: 
+  - gcc
 
 branches:
   only:
@@ -36,6 +38,13 @@ before_install:
   #- export CXX=g++-4.9
   #- $CC --version
   #- $CXX --version
+
+install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
+  - echo ${CXX}
+  - ${CXX} --version
+  - ${CXX} -v
+  
 script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
