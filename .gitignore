@@ -32,6 +32,7 @@ bin/zone/*
 bin/serverstatus.xml
 bin/main_shared/*
 bin/cod4x18_dedrun
+bin/cod4x18_dedrun_dbg
 src/steam_api/
 lib/*.a
 

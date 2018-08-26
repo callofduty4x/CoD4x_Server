@@ -37,7 +37,7 @@ void Com_PrintLogfile( const char *msg );
 void Com_CloseLogFiles(void);
 fileHandle_t Com_OpenGameLogfile(const char* name, char mode, qboolean sync);
 void Com_CloseGameLogfile();
-
+int Com_WriteGameLogfile(const char* data, int len);
 
 #ifdef __cplusplus
 };

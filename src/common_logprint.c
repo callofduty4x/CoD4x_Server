@@ -388,3 +388,13 @@ void Com_CloseGameLogfile()
 	Com_CloseLogFile( gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
 	gamelogfile = 0;
 }
+
+int Com_WriteGameLogfile(const char* data, int ilen)
+{
+    if(!gamelogfile)
+    {
+        return 0;
+    }
+    return Com_WriteLog(data, ilen, gamelogfile);
+
+}
