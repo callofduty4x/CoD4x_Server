@@ -2105,7 +2105,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                     MSG_ReadString(&singlemsg, newchallenge, 65);
                     if(strcmp(challenge, newchallenge) == 0)
                     {
-                        Com_Printf(CON_CHANNEL_SERVER, "sv_token is invalid! Abandoning master server registration\n");
+                        Com_Printf(CON_CHANNEL_SERVER, "sv_authtoken is invalid! Abandoning master server registration\n");
                         svs.nextHeartbeatTime = com_uFrameTime + 3600000000; //Try again in 1 hour
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER, "Bad challenge! Retrying...\n");
