@@ -2,13 +2,13 @@
 NAME='cpptest'
 
 #Compiling: debugging
-echo `g++ -g -m32 -Wall -O1 -s -fvisibility=hidden -mtune=core2 -c *.cpp`
+echo `$(PLUGIN_COMP_CXX) -g -m32 -Wall -O1 -s -fvisibility=hidden -mtune=core2 -c *.cpp`
 
 #Compiling: release
-#echo `g++ -m32 -Wall -O1 -s -fvisibility=hidden -mtune=core2 -c *.cpp`
+#echo `$(PLUGIN_COMP_CXX) -m32 -Wall -O1 -s -fvisibility=hidden -mtune=core2 -c *.cpp`
 
 #Linking
-echo `g++ -m32 -shared -fvisibility=hidden -o $NAME''.so *.o`
+echo `$(PLUGIN_COMP_CXX) -m32 -shared -fvisibility=hidden -o $NAME''.so *.o`
 
 #Cleaning up
 echo `rm *.o`
