@@ -553,6 +553,12 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
         return;
     }
 
+    if (sv_disableChat->boolean == qtrue)
+    {
+        SV_GameSendServerCommand(ent->s.number, 0, "\x67 \"Chat messages disabled on this server\"");
+        return;
+    }
+
     switch (mode)
     {
     default:

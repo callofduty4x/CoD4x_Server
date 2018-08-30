@@ -6,6 +6,7 @@ Versions in this file correspond to git tags.
 ## Unreleased
 ### Changes
 #### Makefiles
+Now you can use "sv_disableChat" dvar to disable chat messages on server (commands "$..." still available).
 incremental builds are now possible. `make -f makefile2` runs the new build scripts. appveyor and travis continuous integration services have been updated to the new buildprocess.
 
 ## 17.3
