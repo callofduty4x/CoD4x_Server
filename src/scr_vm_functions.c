@@ -2988,13 +2988,13 @@ void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
     int entityNum = 0;		
     mvabuf;		
 		
-    if (HIWORD(arg))		
+    if (arg.classnum)		
     {		
         Scr_ObjectError("Not an entity");		
     }		
     else		
     {		
-        entityNum = LOWORD(arg);		
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];		
 		
         if (!gentity->client)		
