@@ -49,7 +49,7 @@
 
 PCL int OnInit(){ // Function executed after the plugin is loaded on the server.
 
-    Com_Printf("Hello, world! :D\n");
+    Plugin_Printf("Hello, world! :D\n");
 	return 0;	// 0 => Initialization successfull.
 }
 /*
@@ -58,7 +58,7 @@ PCL int OnInit(){ // Function executed after the plugin is loaded on the server.
  Those are not mandatory
 =========================
 */
-PCL void OnPlayerConnect(int slotNum);
+/*PCL void OnPlayerConnect(int slotNum);
 PCL void OnPlayerDC(int slotNum);
 PCL void OnExitLevel();
 PCL void OnMessageSent(char *message);
@@ -67,7 +67,7 @@ PCL void OnFrame();
 PCL void OnClientAuthorized();
 PCL void OnClientSpawn();
 PCL void OnClientEnterWorld();
-PCL void TCPServerPacket();
+PCL void TCPServerPacket();*/
 
 /*
 ============================
