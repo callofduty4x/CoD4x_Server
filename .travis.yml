@@ -51,7 +51,7 @@ script:
   - echo $TRAVIS_TAG
   - make CC=gcc-4.9 CPP=g++-4.9
   - make CC=gcc-4.9 CPP=g++-4.9 DEBUG=true
-  - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..  - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/censor && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/cod4x_b3hide && chmod +x makedll.sh && ./makedll.sh && cd ../..
   - cd plugins/simplebanlist && chmod +x makedll.sh && ./makedll.sh && cd ../..
