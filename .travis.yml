@@ -51,6 +51,16 @@ script:
   - echo $TRAVIS_TAG
   - make CC=gcc-4.9 CPP=g++-4.9
   - make CC=gcc-4.9 CPP=g++-4.9 DEBUG=true
+  - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..  - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/censor && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/cod4x_b3hide && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/simplebanlist && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/example_cpp_plugin && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/pchat && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/sourcebansplugin && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  - cd plugins/warn && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  # - cd plugins/antispam && chmod +x makedll.sh && ./makedll.sh && cd ../..
+  # missing: webapibanlist,   - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..
 deploy:
   skip_cleanup: true
   provider: releases
@@ -59,6 +69,15 @@ deploy:
   file: 
     - ./bin/cod4x18_dedrun
     - ./bin/cod4x18_dedrun_dbg
+    - ./plugins/screenshotsender/nehoscreenshotuploader.so
+    - ./plugins/censor/censor.so
+    - ./plugins/cod4x_b3hide/b3hide.so
+    - ./plugins/simplebanlist/simplebanlist.so
+    - ./plugins/example_cpp_plugin/cpptest.so
+    - ./plugins/pchat/pchat.so
+    - ./plugins/sourcebansplugin/sourcebansplugin.so
+    - ./plugins/warn/warn.so
+    # - ./plugins/antispam/antispam.so
   on:
     tags: true
     #condition: "$DODEPLOY = YES"
