@@ -34,6 +34,7 @@
 #include "sec_crypto.h"
 #include "sv_auth.h"
 #include "cscr_stringlist.h"
+#include "bg.h"
 
 #include "sapi.h"
 #include <string.h>
@@ -3198,4 +3199,23 @@ void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
     SV_SetBrushModel(scriptEnt);
     scriptEnt->r.contents |= contents;
     SV_LinkEntity(scriptEnt);
+}
+
+void PlayerCmd_SetStance(scr_entref_t playerEntNum)
+{
+    if (Scr_GetNumParam() != 1)
+    Scr_Error("usage: <client> setStance(<string stance>);");
+
+    // Object check.
+    gclient_t* cl = VM_GetGClientForEntityNumber(playerEntNum);
+    if (!cl)
+        Scr_ObjectError("entity is not a client");
+
+    // Param check.
+    short stanceIdx = Scr_GetConstString(0);
+    if (stanceIdx != (unsigned short)scr_const.stand && stanceIdx != (unsigned short)scr_const.crouch && stanceIdx != (unsigned short)scr_const.prone)
+        Scr_ParamError(0, "stance must be one of {stand, crouch, prone}");
+
+    BGEvent event = stanceIdx == (unsigned short)scr_const.stand ? EV_STANCE_FORCE_STAND : stanceIdx == (unsigned short)scr_const.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
+    BG_AddPredictableEventToPlayerstate(event, 0, cl);
 }

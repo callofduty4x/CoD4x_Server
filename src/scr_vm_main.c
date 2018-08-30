@@ -600,6 +600,8 @@ void Scr_AddStockMethods()
 
     // Clone script_brushmodel settings to script_model.
     Scr_AddMethod("clonebrushmodeltoscriptmodel", GScr_CloneBrushModelToScriptModel, qfalse);
+    // Force player stance.
+    Scr_AddMethod("setstance", PlayerCmd_SetStance, qfalse);
 }
 
 void Scr_InitFunctions()
