@@ -26,6 +26,9 @@ before_install:
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo apt-get update
   - sudo apt-get install nasm:i386 paxctl:i386 libtommath-dev:i386
+  
+  # stackoverflow magic, didn't actually check why .. but works
+  - sudo ln -s /usr/include/asm-generic /usr/include/asm
 
 script: 
-  - make CC=$CC CPP=$CXX
+  - make
