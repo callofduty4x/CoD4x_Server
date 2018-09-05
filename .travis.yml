@@ -37,8 +37,6 @@ script:
   #- make CC=$CC CPP=$CXX DEBUG=true
   - make CC=$CC CPP=$CXX plugins
 
-
-
 deploy:
   skip_cleanup: true
   provider: releases
