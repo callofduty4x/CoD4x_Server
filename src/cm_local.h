@@ -4,14 +4,13 @@
 #include "q_shared.h"
 #include "sys_thread.h"
 
-#define cm (*((clipMap_t*)(0x889EBC0)))
 
 #define BOX_MODEL_HANDLE 4095
 #define CAPSULE_MODEL_HANDLE BOX_MODEL_HANDLE
 
 
 #pragma pack(push, 2)
-typedef struct 
+typedef struct cbrushside_s
 {
   cplane_t *plane;
   unsigned int materialNum;
@@ -69,7 +68,7 @@ typedef struct cLeaf_s
 }cLeaf_t;
 #pragma pack(pop)
 
-typedef struct 
+typedef struct cmodel_t
 {
   vec3_t mins;
   vec3_t maxs;
@@ -149,7 +148,7 @@ typedef struct CollisionAabbTree_s
 }CollisionAabbTree_t;
 
 /* 6981 */
-typedef struct __attribute__((aligned(16))) 
+typedef struct __attribute__((aligned(16))) cbrush_t
 {
   float mins[3];
   int contents;
@@ -160,7 +159,7 @@ typedef struct __attribute__((aligned(16)))
   char *baseAdjacentSide;
   int16_t firstAdjacentSideOffsets[2][3];
   char edgeCount[2][3];
-}cbrush_t;
+} cbrush_t;
 
 typedef struct MapEnts_s
 {
@@ -174,8 +173,6 @@ typedef void DynEntityDef;
 typedef void DynEntityPose;
 typedef void DynEntityClient;
 typedef void DynEntityColl;
-
-/* 6988 */
 
 typedef struct clipMap_s
 {
@@ -258,6 +255,7 @@ typedef struct
 */
 
 cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle );
+extern clipMap_t cm;
 
 
 #endif

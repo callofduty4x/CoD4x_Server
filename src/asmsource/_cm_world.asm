@@ -35,8 +35,8 @@
 	global CM_PointSightTraceToEntities
 	global CM_PointTraceStaticModelsComplete
 
-
 SECTION .text
+
 
 
 ;CM_PointSightTraceToEntities_r(sightpointtrace_t*, unsigned short, float const*, float const*)
@@ -2528,9 +2528,10 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_512_00000000:		dd 0x44000000	; 512
 _float_0_50000000:		dd 0x3f000000	; 0.5
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD

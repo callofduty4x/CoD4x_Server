@@ -25,13 +25,12 @@
 #define __SYS_THREAD_H__
 
 //#define THREAD_DEBUG
+#include "cm_local.h"
 #include "sys_main.h"
 #include <stdarg.h>
 
 
-#ifdef _WIN32
-	typedef DWORD threadid_t;
-#else
+#ifndef _WIN32
 	#include <pthread.h>
 #endif
 
@@ -55,12 +54,15 @@ enum CriticalSection
   CRITSECT_CINEMATIC_TARGET_CHANGE = 15,
   CRITSECT_CBUF = 16,
   CRITSECT_LOGFILE = 17,
-  CRITSECT_PLUGIN = 18,
-  CRITSECT_HTTPS = 19,
-  CRITSECT_RESOLVE = 20,
-  CRITSECT_FILESYSTEM = 21,
-  CRITSECT_DL_MAP = 22,
-  CRITSECT_COUNT = 23
+  CRITSECT_LOGFILETHREAD = 18,
+  CRITSECT_PLUGIN = 19,
+  CRITSECT_HTTPS = 20,
+  CRITSECT_RESOLVE = 21,
+  CRITSECT_FILESYSTEM = 22,
+  CRITSECT_DL_MAP = 23,
+  CRITSECT_PHYSICAL_MEMORY = 24,
+  CRITSECT_WATCHDOG = 25,
+  CRITSECT_COUNT = 26
 };
 
 #ifdef __cplusplus
@@ -75,9 +77,9 @@ void __cdecl Sys_LeaveCriticalSectionInternal(int section);
 void __cdecl Sys_InitializeCriticalSections( void );
 void __cdecl Sys_InitMainThread( void );
 qboolean __cdecl Sys_IsMainThread( void );
-bool __cdecl Sys_IsDatabaseThread( void );
-bool __cdecl Sys_IsServerThread( void );
-bool __cdecl Sys_IsRenderThread( void );
+qboolean __cdecl Sys_IsDatabaseThread( void );
+qboolean __cdecl Sys_IsServerThread( void );
+qboolean __cdecl Sys_IsRenderThread( void );
 void Sys_SyncDatabase();
 void Com_InitThreadData(int threadcontext);
 void* __cdecl Sys_GetValue(int key);
@@ -90,6 +92,15 @@ void Sys_RunThreadCallbacks();
 void Sys_ExitThread(int code);
 void Sys_RunDelegatedEvents();
 void Sys_SleepUSec(int usec);
+void __cdecl Sys_WaitStartDatabase();
+qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p));
+void __cdecl Sys_DatabaseCompleted();
+void Sys_WakeDatabase();
+void Sys_WakeDatabase2();
+void Sys_NotifyDatabase();
+
+
+
 
 signed int __cdecl Sys_WaitForObject(HANDLE handle);
 signed int __cdecl Sys_IsObjectSignaled(HANDLE handle);
@@ -109,11 +120,11 @@ struct TraceCheckCount
 };
 
 
-typedef struct 
+typedef struct TraceThreadInfo
 {
   struct TraceCheckCount checkcount;
-  struct cbrush_s *box_brush;
-  struct cmodel_s *box_model;
+  struct cbrush_t *box_brush;
+  struct cmodel_t *box_model;
 }TraceThreadInfo;
 
 
@@ -122,10 +133,21 @@ void** Sys_GetThreadLocalStorage();
 void Sys_SetThreadLocalStorage(void**);
 
 
+struct CriticalSection_t
+{
+  volatile DWORD readcount;
+  volatile DWORD writecount;
+};
+
+
 #ifdef __cplusplus
 }
 #endif
 
+#define THREAD_CONTEXT_MAIN 0
+#define THREAD_CONTEXT_DATABASE 1
+
+void Sys_SetThreadName(threadid_t tid, const char* name);
 
 #endif
 

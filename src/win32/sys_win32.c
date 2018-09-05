@@ -26,7 +26,6 @@
 #include "../sys_main.h"
 #include "../sys_cod4defs.h"
 #include "sys_win32.h"
-#include "../sys_thread.h"
 
 #include <windows.h>
 #include <wincrypt.h>
@@ -39,6 +38,7 @@
 #include <Shlobj.h>
 
 void Sys_ShowErrorDialog(const char* functionName);
+void Sys_InitThreadContext();
 
 WinVars_t g_wv;
 
@@ -561,16 +561,17 @@ const char *Sys_Dirname(const char *path)
     slash1 = strrchr(dir, '/');
     slash2 = strrchr(dir, '\\');
 
-    if (slash1 && slash2)
+    if (slash1 && slash2){
         max = slash1 < slash2 ? slash2 : slash1;
-    else if (slash1 && !slash2)
+    }else if (slash1 && !slash2){
         max = slash1;
-    else if (!slash1 && slash2)
+    }else if (!slash1 && slash2){
         max = slash2;
-        
-    if (max)
+    }
+    if (max){
         *max = '\0';
-	return va("%s", dir);
+    }
+    return va("%s", dir);
 }
 /*
 ==============
@@ -673,6 +674,7 @@ void Sys_CloseLibrary(void* hModule)
 
 static CRITICAL_SECTION crit_sections[CRITSECT_COUNT];
 threadid_t mainthread;
+DWORD tlsKey;
 
 
 void Sys_InitializeCriticalSections( void )
@@ -909,12 +911,12 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			return 1;
 		}
 	}
-
+	Sys_InitThreadContext();
     return Sys_Main(sys_cmdline);
 }
 
 
-void  __attribute__ ((noreturn)) Sys_ExitForOS( int exitCode )
+void  __noreturn Sys_ExitForOS( int exitCode )
 {
 	ExitProcess( exitCode );
 }
@@ -931,11 +933,108 @@ void Sys_SleepUSec(int usec)
 
 unsigned int Sys_GetProcessAffinityMask()
 {
-  unsigned int systemAffinityMask;
-  unsigned int processAffinityMask = 0;
+  long unsigned int systemAffinityMask;
+  long unsigned int processAffinityMask = 0;
 
   HANDLE h = GetCurrentProcess();
 
   GetProcessAffinityMask(h, &processAffinityMask, &systemAffinityMask);
   return processAffinityMask;
+}
+
+DWORD __cdecl Sys_InterlockedExchangeAdd(LONG volatile *Addend, DWORD value)
+{
+	return InterlockedExchangeAdd(Addend, value);
+}
+
+DWORD __cdecl Sys_InterlockedDecrement(LONG volatile *Addend)
+{
+	return InterlockedDecrement(Addend);
+}
+DWORD __cdecl Sys_InterlockedIncrement(LONG volatile *Addend)
+{
+	return InterlockedIncrement(Addend);
+}
+DWORD __cdecl Sys_InterlockedCompareExchange(LONG volatile *Destination, DWORD Exchange, DWORD Comparand)
+{
+	return InterlockedCompareExchange(Destination, Exchange, Comparand);
+}
+
+int __cdecl __cxa_atexit(void (__cdecl *func) (void*), void *arg, void *dso_handle)
+{
+	return atexit((void(__cdecl*)(void))func);
+}
+
+void Sys_InitThreadContext()
+{
+	tlsKey = TlsAlloc();
+    mainthread = Sys_GetCurrentThreadId( );
+}
+
+void Sys_SetThreadLocalStorage(void** localvar)
+{
+    if(TlsSetValue(tlsKey, localvar) == FALSE)
+	{
+		Sys_ShowErrorDialog("Sys_SetThreadLocalStorage");
+		ExitProcess(-1);
+	}
+}
+
+void** Sys_GetThreadLocalStorage()
+{
+    return TlsGetValue(tlsKey);
+}
+
+#ifdef __GNUC__
+ 
+
+struct tagTHREADNAME_INFO
+{
+    DWORD dwType; // must be 0x1000
+    LPCSTR szName; // pointer to name (in user addr space)
+    DWORD dwThreadID; // thread ID (-1=caller thread)
+    DWORD dwFlags; // reserved for future use, must be zero
+};
+
+#endif
+
+void Sys_SetThreadName(threadid_t tid, const char* szThreadName)
+{
+	return;
+  struct tagTHREADNAME_INFO info;
+
+  info.dwType = 4096;
+  info.szName = szThreadName;
+  info.dwThreadID = tid;
+  info.dwFlags = 0;
+  RaiseException(0x406D1388u, 0, 4u, &info.dwType);
+}
+
+HANDLE __cdecl Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)
+{
+	return CreateEventA(NULL, bManualReset, bInitialState, name);
+}
+
+signed int __cdecl Sys_ResetEvent(HANDLE hEvent)
+{
+	return ResetEvent(hEvent);
+}
+
+signed int __cdecl Sys_SetEvent(HANDLE hEvent)
+{
+	return SetEvent(hEvent);
+}
+
+signed int __cdecl Sys_WaitForObject(HANDLE hHandle)
+{
+	return WaitForSingleObject(hHandle, -1);
+}
+
+signed int __cdecl Sys_IsObjectSignaled(HANDLE hHandle)
+{
+	if(WaitForSingleObject(hHandle, 0) == 0)
+	{
+		return 1;
+	}
+	return 0;
 }

@@ -208,7 +208,6 @@
 	extern Scr_ExecThread
 	extern Scr_FreeThread
 	extern G_SetAngle
-	extern Scr_AllocString
 	extern Scr_RemoveClassMap
 	extern SV_XModelGet
 	extern XModelNumBones
@@ -257,7 +256,6 @@
 	global iprintlnbold
 	global GScr_print3d
 	global GScr_line
-	global Scr_LogString
 	global GScr_SpawnPlane
 	global GScr_SpawnTurret
 	global GScr_PrecacheTurret
@@ -491,7 +489,6 @@
 	global GScr_DamageConeTrace
 	global GScr_SightConeTrace
 	global GScr_GetEntityNumber
-	global GScr_PlaceSpawnPoint
 	global GScr_SetTeamForTrigger
 	global GScr_ClientClaimTrigger
 	global GScr_ClientReleaseTrigger
@@ -500,7 +497,6 @@
 	global GScr_SetStat
 	global GScr_SendLeaderboards
 	global ScrCmd_SetMoveSpeedScale
-	global ScrCmd_LogString
 	global ScrCmd_ItemWeaponSetAmmo
 	global SetObjectiveIcon
 	global GScr_RadiusDamageInternal
@@ -523,8 +519,6 @@
 	global Scr_VoteCalled
 	global GScr_IsMantling
 	global GScr_IsOnLadder
-	global Scr_GetFunction
-	global GScr_AllocString
 	global GScr_FreeScripts
 	global GScr_GetNumParts
 	global GScr_GetPartName
@@ -539,7 +533,6 @@
 	global GScr_GetCorpseAnim
 	global GScr_GetLocSelIndex
 	global ScrCmd_ShowToPlayer
-	global Scr_IsValidGameType
 	global Scr_MakeGameMessage
 	global Scr_PlayerLastStand
 	global Scr_StartupGameType
@@ -548,13 +541,10 @@
 	global Scr_PlayerDisconnect
 	global Scr_SightTracePassed
 	global GScr_DisableAimAssist
-	global GScr_GetHeadIconIndex
 	global GScr_MissileSetTarget
 	global Scr_ParseGameTypeList
 	global Scr_VerifyWeaponIndex
 	global GScr_GetScriptMenuIndex
-	global GScr_GetStatusIconIndex
-	global Scr_GetGameTypeNameForScript
 	global GScr_EnableGrenadeTouchDamage
 	global GScr_DisableGrenadeTouchDamage
 	global g_scr_data
@@ -1032,16 +1022,6 @@ GScr_line_jumptab_0:
 	dd GScr_line_90
 	dd GScr_line_100
 	dd GScr_line_110
-
-
-;Scr_LogString()
-Scr_LogString:
-	push ebp
-	mov ebp, esp
-	pop ebp
-	ret
-	nop
-
 
 
 ;GScr_SpawnPlane()
@@ -7538,8 +7518,7 @@ GScr_MapRestart_10:
 	call Scr_GetInt
 	mov [ebx+0x1540], eax
 GScr_MapRestart_20:
-	mov dword [esp+0x4], _cstring_fast_restart
-	mov dword [esp], 0x0
+	mov dword [esp], _cstring_fast_restart
 	call Cbuf_AddText
 	add esp, 0x14
 	pop ebx
@@ -8178,8 +8157,7 @@ GScr_KickPlayer_10:
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_tempbanclient_i
 	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
+	mov [esp], eax
 	call Cbuf_AddText
 	leave
 	ret
@@ -8202,8 +8180,7 @@ GScr_BanPlayer_10:
 	mov [esp+0x4], eax
 	mov dword [esp], _cstring_banclient_i
 	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
+	mov [esp], eax
 	call Cbuf_AddText
 	leave
 	ret
@@ -8251,8 +8228,7 @@ GScr_LoadMap_40:
 	mov [esp+0x4], esi
 	mov dword [esp], _cstring_map_s
 	call va
-	mov [esp+0x4], eax
-	mov dword [esp], 0x0
+	mov [esp], eax
 	call Cbuf_AddText
 	add esp, 0x10
 	pop ebx
@@ -12091,164 +12067,6 @@ GScr_GetEntityNumber_10:
 	jmp Scr_AddInt
 
 
-;GScr_PlaceSpawnPoint(scr_entref_t)
-GScr_PlaceSpawnPoint:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x7c
-	mov eax, [ebp+0x8]
-	mov edx, eax
-	shr eax, 0x10
-	test ax, ax
-	jnz GScr_PlaceSpawnPoint_10
-	movzx eax, dx
-	lea edx, [eax+eax*8]
-	lea edx, [eax+edx*2]
-	mov ecx, edx
-	shl ecx, 0x5
-	add edx, ecx
-	lea edi, [edx+eax]
-	add edi, g_entities
-GScr_PlaceSpawnPoint_30:
-	mov eax, [edi+0x13c]
-	mov [ebp-0x24], eax
-	mov eax, [edi+0x140]
-	mov [ebp-0x20], eax
-	mov eax, [edi+0x144]
-	mov [ebp-0x1c], eax
-	mov eax, [edi+0x13c]
-	mov [ebp-0x30], eax
-	mov eax, [edi+0x140]
-	mov [ebp-0x2c], eax
-	movss xmm0, dword [_float_128_00000000]
-	addss xmm0, [edi+0x144]
-	movss [ebp-0x28], xmm0
-	mov dword [esp+0x18], 0x2810011
-	mov eax, [edi]
-	mov [esp+0x14], eax
-	lea ebx, [ebp-0x30]
-	mov [esp+0x10], ebx
-	mov eax, playerMaxs
-	mov [esp+0xc], eax
-	mov eax, playerMins
-	mov [esp+0x8], eax
-	lea esi, [ebp-0x24]
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call G_TraceCapsule
-	movss xmm4, dword [ebp-0x5c]
-	movss xmm0, dword [ebp-0x24]
-	movss xmm2, dword [ebp-0x30]
-	subss xmm2, xmm0
-	mulss xmm2, xmm4
-	addss xmm2, xmm0
-	movss [ebp-0x24], xmm2
-	movss xmm0, dword [ebp-0x20]
-	movss xmm1, dword [ebp-0x2c]
-	subss xmm1, xmm0
-	mulss xmm1, xmm4
-	addss xmm1, xmm0
-	movss [ebp-0x20], xmm1
-	movss xmm3, dword [ebp-0x1c]
-	movss xmm0, dword [ebp-0x28]
-	subss xmm0, xmm3
-	mulss xmm0, xmm4
-	addss xmm0, xmm3
-	movss [ebp-0x1c], xmm0
-	movss [ebp-0x30], xmm2
-	movss [ebp-0x2c], xmm1
-	subss xmm0, [_float_262144_00000000]
-	movss [ebp-0x28], xmm0
-	mov dword [esp+0x18], 0x2810011
-	mov eax, [edi]
-	mov [esp+0x14], eax
-	mov [esp+0x10], ebx
-	mov eax, playerMaxs
-	mov [esp+0xc], eax
-	mov eax, playerMins
-	mov [esp+0x8], eax
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call G_TraceCapsule
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call Trace_GetEntityHitId
-	movzx eax, ax
-	mov [edi+0x7c], eax
-	lea edx, [eax+eax*8]
-	lea edx, [eax+edx*2]
-	mov ecx, edx
-	shl ecx, 0x5
-	add edx, ecx
-	add edx, eax
-	add edx, g_entities
-	or dword [edx+0x180], 0x100000
-	movss xmm2, dword [ebp-0x5c]
-	movss xmm1, dword [ebp-0x24]
-	movss xmm0, dword [ebp-0x30]
-	subss xmm0, xmm1
-	mulss xmm0, xmm2
-	addss xmm1, xmm0
-	movss [ebp-0x24], xmm1
-	movss xmm1, dword [ebp-0x20]
-	movss xmm0, dword [ebp-0x2c]
-	subss xmm0, xmm1
-	mulss xmm0, xmm2
-	addss xmm1, xmm0
-	movss [ebp-0x20], xmm1
-	movss xmm1, dword [ebp-0x1c]
-	movss xmm0, dword [ebp-0x28]
-	subss xmm0, xmm1
-	mulss xmm2, xmm0
-	addss xmm1, xmm2
-	movss [ebp-0x1c], xmm1
-	mov dword [esp+0x18], 0x2810011
-	mov eax, [edi]
-	mov [esp+0x14], eax
-	mov [esp+0x10], esi
-	mov eax, playerMaxs
-	mov [esp+0xc], eax
-	mov eax, playerMins
-	mov [esp+0x8], eax
-	mov [esp+0x4], esi
-	lea eax, [ebp-0x5c]
-	mov [esp], eax
-	call G_TraceCapsule
-	cmp byte [ebp-0x34], 0x0
-	jz GScr_PlaceSpawnPoint_20
-	cvttss2si eax, [edi+0x144]
-	mov [esp+0x14], eax
-	cvttss2si eax, [edi+0x140]
-	mov [esp+0x10], eax
-	cvttss2si eax, [edi+0x13c]
-	mov [esp+0xc], eax
-	mov eax, [edi]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_warning_spawn_po
-	mov dword [esp], 0x17
-	call Com_PrintWarning
-GScr_PlaceSpawnPoint_20:
-	mov [esp+0x4], esi
-	mov [esp], edi
-	call G_SetOrigin
-	add esp, 0x7c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_PlaceSpawnPoint_10:
-	mov dword [esp], _cstring_not_an_entity
-	call Scr_ObjectError
-	xor edi, edi
-	jmp GScr_PlaceSpawnPoint_30
-
-
 ;GScr_SetTeamForTrigger(scr_entref_t)
 GScr_SetTeamForTrigger:
 	push ebp
@@ -12796,16 +12614,6 @@ ScrCmd_SetMoveSpeedScale:
 	pop ebp
 	ret
 	nop
-
-
-;ScrCmd_LogString(scr_entref_t)
-ScrCmd_LogString:
-	push ebp
-	mov ebp, esp
-	pop ebp
-	ret
-	nop
-	add [eax], al
 
 
 ;ScrCmd_ItemWeaponSetAmmo(scr_entref_t)
@@ -14165,20 +13973,6 @@ GScr_IsOnLadder_20:
 	nop
 
 
-;GScr_AllocString(char const*)
-GScr_AllocString:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov dword [esp+0x4], 0x1
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call Scr_AllocString
-	leave
-	ret
-	nop
-
-
 ;GScr_FreeScripts()
 GScr_FreeScripts:
 	push ebp
@@ -14886,51 +14680,6 @@ ScrCmd_ShowToPlayer_20:
 	jmp Scr_Error
 
 
-;Scr_IsValidGameType(char const*)
-Scr_IsValidGameType:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov eax, [g_scr_data+0x2c]
-	test eax, eax
-	jg Scr_IsValidGameType_10
-Scr_IsValidGameType_40:
-	xor eax, eax
-Scr_IsValidGameType_50:
-	test eax, eax
-	setnz al
-	movzx eax, al
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_IsValidGameType_10:
-	xor esi, esi
-	mov edi, g_scr_data+0x70
-	mov ebx, g_scr_data+0x30
-Scr_IsValidGameType_30:
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call Q_stricmp
-	test eax, eax
-	jz Scr_IsValidGameType_20
-	add esi, 0x1
-	add ebx, 0x84
-	add edi, 0x84
-	cmp [g_scr_data+0x2c], esi
-	jg Scr_IsValidGameType_30
-	jmp Scr_IsValidGameType_40
-Scr_IsValidGameType_20:
-	mov eax, edi
-	jmp Scr_IsValidGameType_50
-
-
 ;Scr_MakeGameMessage(int, char const*)
 Scr_MakeGameMessage:
 	push ebp
@@ -15302,59 +15051,6 @@ GScr_DisableAimAssist_10:
 	nop
 
 
-;GScr_GetHeadIconIndex(char const*)
-GScr_GetHeadIconIndex:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x41c
-	mov esi, [ebp+0x8]
-	cmp byte [esi], 0x0
-	jnz GScr_GetHeadIconIndex_10
-GScr_GetHeadIconIndex_40:
-	xor eax, eax
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_GetHeadIconIndex_10:
-	xor ebx, ebx
-	lea edi, [ebp-0x418]
-GScr_GetHeadIconIndex_30:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], edi
-	lea eax, [ebx+0x8db]
-	mov [esp], eax
-	call SV_GetConfigstring
-	mov [esp+0x4], esi
-	mov [esp], edi
-	call Q_stricmp
-	test eax, eax
-	jz GScr_GetHeadIconIndex_20
-	add ebx, 0x1
-	cmp ebx, 0xf
-	jnz GScr_GetHeadIconIndex_30
-	mov [esp+0x4], esi
-	mov dword [esp], _cstring_head_icon_s_was_
-	call va
-	mov [esp], eax
-	call Scr_Error
-	jmp GScr_GetHeadIconIndex_40
-GScr_GetHeadIconIndex_20:
-	lea eax, [ebx+0x1]
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
-
 ;GScr_MissileSetTarget(scr_entref_t)
 GScr_MissileSetTarget:
 	push ebp
@@ -15539,101 +15235,6 @@ GScr_GetScriptMenuIndex_20:
 	ret
 	nop
 
-
-;GScr_GetStatusIconIndex(char const*)
-GScr_GetStatusIconIndex:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x41c
-	mov esi, [ebp+0x8]
-	cmp byte [esi], 0x0
-	jnz GScr_GetStatusIconIndex_10
-GScr_GetStatusIconIndex_40:
-	xor eax, eax
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_GetStatusIconIndex_10:
-	xor ebx, ebx
-	lea edi, [ebp-0x418]
-GScr_GetStatusIconIndex_30:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], edi
-	lea eax, [ebx+0x8d3]
-	mov [esp], eax
-	call SV_GetConfigstring
-	mov [esp+0x4], esi
-	mov [esp], edi
-	call Q_stricmp
-	test eax, eax
-	jz GScr_GetStatusIconIndex_20
-	add ebx, 0x1
-	cmp ebx, 0x8
-	jnz GScr_GetStatusIconIndex_30
-	mov [esp+0x4], esi
-	mov dword [esp], _cstring_status_icon_s_wa
-	call va
-	mov [esp], eax
-	call Scr_Error
-	jmp GScr_GetStatusIconIndex_40
-GScr_GetStatusIconIndex_20:
-	lea eax, [ebx+0x1]
-	add esp, 0x41c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
-
-;Scr_GetGameTypeNameForScript(char const*)
-Scr_GetGameTypeNameForScript:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov ecx, [g_scr_data+0x2c]
-	test ecx, ecx
-	jg Scr_GetGameTypeNameForScript_10
-Scr_GetGameTypeNameForScript_40:
-	xor eax, eax
-Scr_GetGameTypeNameForScript_50:
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-Scr_GetGameTypeNameForScript_10:
-	xor esi, esi
-	mov edi, g_scr_data+0x70
-	mov ebx, g_scr_data+0x30
-Scr_GetGameTypeNameForScript_30:
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call Q_stricmp
-	test eax, eax
-	jz Scr_GetGameTypeNameForScript_20
-	add esi, 0x1
-	add ebx, 0x84
-	add edi, 0x84
-	cmp [g_scr_data+0x2c], esi
-	jg Scr_GetGameTypeNameForScript_30
-	jmp Scr_GetGameTypeNameForScript_40
-Scr_GetGameTypeNameForScript_20:
-	mov eax, edi
-	jmp Scr_GetGameTypeNameForScript_50
-	nop
 
 
 ;GScr_EnableGrenadeTouchDamage(scr_entref_t)
@@ -15992,289 +15593,6 @@ _cstring_s7:		db "%s^7",0
 _cstring_s_is_too_long_ma:		db "%s is too long. Max length is %i",0ah,0
 _cstring_warning_nonlocal:		db "WARNING: Non-localized %s string is not allowed to have letters in it. Must be changed over to a localized string: ",22h,"%s",22h,0ah,0
 _cstring_currently_on_sup:		db "Currently on supported on damage triggers",0
-_cstring_attach:		db "attach",0
-_cstring_detach:		db "detach",0
-_cstring_detachall:		db "detachall",0
-_cstring_getattachsize:		db "getattachsize",0
-_cstring_getattachmodelna:		db "getattachmodelname",0
-_cstring_getattachtagname:		db "getattachtagname",0
-_cstring_getattachignorec:		db "getattachignorecollision",0
-_cstring_getammocount:		db "getammocount",0
-_cstring_getclanid:		db "getclanid",0
-_cstring_getclanname:		db "getclanname",0
-_cstring_hidepart:		db "hidepart",0
-_cstring_showpart:		db "showpart",0
-_cstring_showallparts:		db "showallparts",0
-_cstring_linkto:		db "linkto",0
-_cstring_unlink:		db "unlink",0
-_cstring_enablelinkto:		db "enablelinkto",0
-_cstring_getorigin:		db "getorigin",0
-_cstring_geteye:		db "geteye",0
-_cstring_useby:		db "useby",0
-_cstring_setstablemissile:		db "setstablemissile",0
-_cstring_istouching:		db "istouching",0
-_cstring_playsound:		db "playsound",0
-_cstring_playsoundasmaste1:		db "playsoundasmaster",0
-_cstring_playsoundtoteam:		db "playsoundtoteam",0
-_cstring_playsoundtoplaye:		db "playsoundtoplayer",0
-_cstring_playloopsound:		db "playloopsound",0
-_cstring_stoploopsound:		db "stoploopsound",0
-_cstring_playrumbleonenti:		db "playrumbleonentity",0
-_cstring_playrumbleloopon:		db "playrumblelooponentity",0
-_cstring_stoprumble:		db "stoprumble",0
-_cstring_delete:		db "delete",0
-_cstring_setmodel:		db "setmodel",0
-_cstring_getnormalhealth:		db "getnormalhealth",0
-_cstring_setnormalhealth:		db "setnormalhealth",0
-_cstring_show:		db "show",0
-_cstring_hide:		db "hide",0
-_cstring_laseron:		db "laseron",0
-_cstring_laseroff:		db "laseroff",0
-_cstring_showtoplayer:		db "showtoplayer",0
-_cstring_setcontents:		db "setcontents",0
-_cstring_getstance:		db "getstance",0
-_cstring_setcursorhint:		db "setcursorhint",0
-_cstring_sethintstring:		db "sethintstring",0
-_cstring_usetriggerrequir:		db "usetriggerrequirelookat",0
-_cstring_shellshock:		db "shellshock",0
-_cstring_gettagorigin:		db "gettagorigin",0
-_cstring_gettagangles:		db "gettagangles",0
-_cstring_stopshellshock:		db "stopshellshock",0
-_cstring_setdepthoffield:		db "setdepthoffield",0
-_cstring_setviewmodeldept:		db "setviewmodeldepthoffield",0
-_cstring_viewkick:		db "viewkick",0
-_cstring_localtoworldcoor:		db "localtoworldcoords",0
-_cstring_setrightarc:		db "setrightarc",0
-_cstring_setleftarc:		db "setleftarc",0
-_cstring_settoparc:		db "settoparc",0
-_cstring_setbottomarc:		db "setbottomarc",0
-_cstring_radiusdamage:		db "radiusdamage",0
-_cstring_detonate:		db "detonate",0
-_cstring_damageconetrace:		db "damageconetrace",0
-_cstring_sightconetrace:		db "sightconetrace",0
-_cstring_getentitynumber:		db "getentitynumber",0
-_cstring_enablegrenadetou:		db "enablegrenadetouchdamage",0
-_cstring_disablegrenadeto:		db "disablegrenadetouchdamage",0
-_cstring_enableaimassist:		db "enableaimassist",0
-_cstring_disableaimassist:		db "disableaimassist",0
-_cstring_placespawnpoint:		db "placespawnpoint",0
-_cstring_setteamfortrigge2:		db "setteamfortrigger",0
-_cstring_clientclaimtrigg2:		db "clientclaimtrigger",0
-_cstring_clientreleasetri2:		db "clientreleasetrigger",0
-_cstring_releaseclaimedtr1:		db "releaseclaimedtrigger",0
-_cstring_getstat:		db "getstat",0
-_cstring_setstat:		db "setstat",0
-_cstring_sendleaderboards:		db "sendleaderboards",0
-_cstring_setmovespeedscal:		db "setmovespeedscale",0
-_cstring_logstring:		db "logstring",0
-_cstring_missile_settarge:		db "missile_settarget",0
-_cstring_isonladder:		db "isonladder",0
-_cstring_ismantling:		db "ismantling",0
-_cstring_startragdoll:		db "startragdoll",0
-_cstring_isragdoll:		db "isragdoll",0
-_cstring_getcorpseanim:		db "getcorpseanim",0
-_cstring_itemweaponsetamm:		db "itemweaponsetammo",0
-_cstring_createprintchann:		db "createprintchannel",0
-_cstring_setprintchannel:		db "setprintchannel",0
-_cstring_print:		db "print",0
-_cstring_println:		db "println",0
-_cstring_iprintln:		db "iprintln",0
-_cstring_iprintlnbold:		db "iprintlnbold",0
-_cstring_print3d:		db "print3d",0
-_cstring_line:		db "line",0
-_cstring_getent:		db "getent",0
-_cstring_getentarray:		db "getentarray",0
-_cstring_spawn:		db "spawn",0
-_cstring_spawnplane:		db "spawnplane",0
-_cstring_spawnturret:		db "spawnturret",0
-_cstring_precacheturret:		db "precacheturret",0
-_cstring_spawnstruct:		db "spawnstruct",0
-_cstring_spawnhelicopter:		db "spawnhelicopter",0
-_cstring_assert:		db "assert",0
-_cstring_assertex:		db "assertex",0
-_cstring_assertmsg:		db "assertmsg",0
-_cstring_isdefined:		db "isdefined",0
-_cstring_isstring:		db "isstring",0
-_cstring_isalive:		db "isalive",0
-_cstring_getdvar:		db "getdvar",0
-_cstring_getdvarint:		db "getdvarint",0
-_cstring_getdvarfloat:		db "getdvarfloat",0
-_cstring_setdvar:		db "setdvar",0
-_cstring_gettime:		db "gettime",0
-_cstring_getentbynum:		db "getentbynum",0
-_cstring_getweaponmodel:		db "getweaponmodel",0
-_cstring_getanimlength:		db "getanimlength",0
-_cstring_animhasnotetrack:		db "animhasnotetrack",0
-_cstring_getnotetracktime:		db "getnotetracktimes",0
-_cstring_getbrushmodelcen:		db "getbrushmodelcenter",0
-_cstring_objective_add:		db "objective_add",0
-_cstring_objective_delete:		db "objective_delete",0
-_cstring_objective_state:		db "objective_state",0
-_cstring_objective_icon:		db "objective_icon",0
-_cstring_objective_positi:		db "objective_position",0
-_cstring_objective_onenti:		db "objective_onentity",0
-_cstring_objective_curren:		db "objective_current",0
-_cstring_missile_createat:		db "missile_createattractorent",0
-_cstring_missile_createat1:		db "missile_createattractororigin",0
-_cstring_missile_createre:		db "missile_createrepulsorent",0
-_cstring_missile_createre1:		db "missile_createrepulsororigin",0
-_cstring_missile_deleteat:		db "missile_deleteattractor",0
-_cstring_bullettrace:		db "bullettrace",0
-_cstring_bullettracepasse:		db "bullettracepassed",0
-_cstring_sighttracepassed:		db "sighttracepassed",0
-_cstring_physicstrace:		db "physicstrace",0
-_cstring_playerphysicstra:		db "playerphysicstrace",0
-_cstring_getmovedelta:		db "getmovedelta",0
-_cstring_getangledelta:		db "getangledelta",0
-_cstring_getnorthyaw:		db "getnorthyaw",0
-_cstring_randomint:		db "randomint",0
-_cstring_randomfloat:		db "randomfloat",0
-_cstring_randomintrange:		db "randomintrange",0
-_cstring_randomfloatrange:		db "randomfloatrange",0
-_cstring_sin:		db "sin",0
-_cstring_cos:		db "cos",0
-_cstring_tan:		db "tan",0
-_cstring_asin:		db "asin",0
-_cstring_acos:		db "acos",0
-_cstring_atan:		db "atan",0
-_cstring_int:		db "int",0
-_cstring_abs:		db "abs",0
-_cstring_min:		db "min",0
-_cstring_max:		db "max",0
-_cstring_floor:		db "floor",0
-_cstring_ceil:		db "ceil",0
-_cstring_sqrt:		db "sqrt",0
-_cstring_vectorfromlineto:		db "vectorfromlinetopoint",0
-_cstring_pointonsegmentne:		db "pointonsegmentnearesttopoint",0
-_cstring_distance:		db "distance",0
-_cstring_distance2d:		db "distance2d",0
-_cstring_distancesquared:		db "distancesquared",0
-_cstring_length:		db "length",0
-_cstring_lengthsquared:		db "lengthsquared",0
-_cstring_closer:		db "closer",0
-_cstring_vectordot:		db "vectordot",0
-_cstring_vectornormalize:		db "vectornormalize",0
-_cstring_vectortoangles:		db "vectortoangles",0
-_cstring_vectorlerp:		db "vectorlerp",0
-_cstring_anglestoup:		db "anglestoup",0
-_cstring_anglestoright:		db "anglestoright",0
-_cstring_anglestoforward:		db "anglestoforward",0
-_cstring_combineangles:		db "combineangles",0
-_cstring_issubstr:		db "issubstr",0
-_cstring_getsubstr:		db "getsubstr",0
-_cstring_tolower:		db "tolower",0
-_cstring_strtok:		db "strtok",0
-_cstring_musicplay:		db "musicplay",0
-_cstring_musicstop:		db "musicstop",0
-_cstring_soundfade:		db "soundfade",0
-_cstring_ambientplay:		db "ambientplay",0
-_cstring_ambientstop:		db "ambientstop",0
-_cstring_precachemodel:		db "precachemodel",0
-_cstring_precacheshellsho1:		db "precacheshellshock",0
-_cstring_precacheitem:		db "precacheitem",0
-_cstring_precacheshader:		db "precacheshader",0
-_cstring_precachestring:		db "precachestring",0
-_cstring_precacherumble:		db "precacherumble",0
-_cstring_loadfx:		db "loadfx",0
-_cstring_playfx:		db "playfx",0
-_cstring_playfxontag:		db "playfxontag",0
-_cstring_playloopedfx:		db "playloopedfx",0
-_cstring_spawnfx:		db "spawnfx",0
-_cstring_triggerfx:		db "triggerfx",0
-_cstring_physicsexplosion:		db "physicsexplosionsphere",0
-_cstring_physicsexplosion1:		db "physicsexplosioncylinder",0
-_cstring_physicsjolt:		db "physicsjolt",0
-_cstring_physicsjitter:		db "physicsjitter",0
-_cstring_setexpfog1:		db "setexpfog",0
-_cstring_grenadeexplosion:		db "grenadeexplosioneffect",0
-_cstring_setplayerignorer:		db "setplayerignoreradiusdamage",0
-_cstring_getnumparts:		db "getnumparts",0
-_cstring_getpartname:		db "getpartname",0
-_cstring_earthquake:		db "earthquake",0
-_cstring_newhudelem:		db "newhudelem",0
-_cstring_newclienthudelem:		db "newclienthudelem",0
-_cstring_newteamhudelem:		db "newteamhudelem",0
-_cstring_resettimeout:		db "resettimeout",0
-_cstring_weaponfiretime:		db "weaponfiretime",0
-_cstring_isweaponcliponly:		db "isweaponcliponly",0
-_cstring_isweapondetonati:		db "isweapondetonationtimed",0
-_cstring_weaponclipsize:		db "weaponclipsize",0
-_cstring_weaponissemiauto:		db "weaponissemiauto",0
-_cstring_weaponisboltacti:		db "weaponisboltaction",0
-_cstring_weapontype:		db "weapontype",0
-_cstring_weaponclass:		db "weaponclass",0
-_cstring_weaponinventoryt:		db "weaponinventorytype",0
-_cstring_weaponstartammo:		db "weaponstartammo",0
-_cstring_weaponmaxammo:		db "weaponmaxammo",0
-_cstring_weaponaltweaponn:		db "weaponaltweaponname",0
-_cstring_isplayer:		db "isplayer",0
-_cstring_isplayernumber:		db "isplayernumber",0
-_cstring_setwinningplayer:		db "setwinningplayer",0
-_cstring_setwinningteam:		db "setwinningteam",0
-_cstring_announcement1:		db "announcement",0
-_cstring_clientannounceme:		db "clientannouncement",0
-_cstring_getteamscore:		db "getteamscore",0
-_cstring_setteamscore:		db "setteamscore",0
-_cstring_setclientnamemod:		db "setclientnamemode",0
-_cstring_updateclientname:		db "updateclientnames",0
-_cstring_getteamplayersal:		db "getteamplayersalive",0
-_cstring_objective_team:		db "objective_team",0
-_cstring_logprint:		db "logprint",0
-_cstring_worldentnumber:		db "worldentnumber",0
-_cstring_obituary:		db "obituary",0
-_cstring_positionwouldtel:		db "positionwouldtelefrag",0
-_cstring_getstarttime:		db "getstarttime",0
-_cstring_precachemenu:		db "precachemenu",0
-_cstring_precachestatusic:		db "precachestatusicon",0
-_cstring_precacheheadicon:		db "precacheheadicon",0
-_cstring_precachelocation:		db "precachelocationselector",0
-_cstring_map_restart:		db "map_restart",0
-_cstring_exitlevel:		db "exitlevel",0
-_cstring_makedvarserverin:		db "makedvarserverinfo",0
-_cstring_setarchive:		db "setarchive",0
-_cstring_allclientsprint:		db "allclientsprint",0
-_cstring_clientprint:		db "clientprint",0
-_cstring_mapexists:		db "mapexists",0
-_cstring_isvalidgametype:		db "isvalidgametype",0
-_cstring_matchend:		db "matchend",0
-_cstring_setplayerteamran:		db "setplayerteamrank",0
-_cstring_sendranks:		db "sendranks",0
-_cstring_endparty:		db "endparty",0
-_cstring_setteamradar:		db "setteamradar",0
-_cstring_getteamradar:		db "getteamradar",0
-_cstring_getassignedteam:		db "getassignedteam",0
-_cstring_setvotestring:		db "setvotestring",0
-_cstring_setvotetime:		db "setvotetime",0
-_cstring_setvoteyescount:		db "setvoteyescount",0
-_cstring_setvotenocount:		db "setvotenocount",0
-_cstring_openfile:		db "openfile",0
-_cstring_closefile:		db "closefile",0
-_cstring_fprintln:		db "fprintln",0
-_cstring_fprintfields:		db "fprintfields",0
-_cstring_freadln:		db "freadln",0
-_cstring_fgetarg:		db "fgetarg",0
-_cstring_kick:		db "kick",0
-_cstring_ban:		db "ban",0
-_cstring_map:		db "map",0
-_cstring_playrumbleonposi:		db "playrumbleonposition",0
-_cstring_playrumbleloopon1:		db "playrumblelooponposition",0
-_cstring_stopallrumbles:		db "stopallrumbles",0
-_cstring_soundexists:		db "soundexists",0
-_cstring_issplitscreen:		db "issplitscreen",0
-_cstring_setminimap:		db "setminimap",0
-_cstring_setmapcenter:		db "setmapcenter",0
-_cstring_setgameendtime:		db "setgameendtime",0
-_cstring_getarraykeys:		db "getarraykeys",0
-_cstring_searchforonlineg:		db "searchforonlinegames",0
-_cstring_quitlobby:		db "quitlobby",0
-_cstring_quitparty:		db "quitparty",0
-_cstring_startparty:		db "startparty",0
-_cstring_startprivatematc:		db "startprivatematch",0
-_cstring_visionsetnaked:		db "visionsetnaked",0
-_cstring_visionsetnight:		db "visionsetnight",0
-_cstring_tablelookup:		db "tablelookup",0
-_cstring_tablelookupistri:		db "tablelookupistring",0
-_cstring_endlobby:		db "endlobby",0
 
 
 
@@ -16282,7 +15600,6 @@ _cstring_endlobby:		db "endlobby",0
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00000000:		dd 0x0	; 0
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _float__1_00000000:		dd 0xbf800000	; -1
@@ -16297,3 +15614,5 @@ _float_10_00000000:		dd 0x41200000	; 10
 _float_128_00000000:		dd 0x43000000	; 128
 _float_262144_00000000:		dd 0x48800000	; 262144
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

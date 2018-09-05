@@ -105,7 +105,6 @@ void QDECL Com_PrintScriptRuntimeWarning( const char *fmt, ... );
 __cdecl void Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type);
 void QDECL Com_DPrintfLogfile( const char *fmt, ... );
 
-
 #ifdef __cplusplus
 }
 #endif

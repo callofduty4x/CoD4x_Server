@@ -23,6 +23,7 @@
 
 #include "plugin_handler.h"
 #include "sys_main.h"
+#include "sys_patch.h"
 /*==========================================*
  *                                          *
  *   Plugin Handler's internal functions    *

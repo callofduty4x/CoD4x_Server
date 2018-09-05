@@ -153,6 +153,7 @@ SECTION .rdata
 SECTION .rdata
 _float__1_00000000:		dd 0xbf800000	; -1
 _float_1_00000000:		dd 0x3f800000	; 1
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__0_00000000:		dd 0x80000000	; -0
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

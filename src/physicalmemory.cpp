@@ -4,6 +4,7 @@
 #include "mem_track.h"
 #include "sys_main.h"
 #include "physicalmemory.h"
+#include "sys_thread.h"
 
 #define PHYS_ALLOC_HIGH 1
 #define MAX_PHYSICAL_ALLOCATIONS 32
@@ -55,11 +56,14 @@ void PMem_InitPhysicalMemory(PhysicalMemory *pmem, const char *name, void *memor
 
 byte* __cdecl _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType, const char *name, EMemTrack memTrack)
 {
-  int alignedSize;
+  //int alignedSize;
   unsigned int highPos;
   signed int location;
   unsigned int lowPos;
   unsigned int allocedSize;
+  byte* allocptr;
+
+  Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
 
   location = 0;
   PMem_Init();
@@ -79,6 +83,7 @@ byte* __cdecl _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsign
     if ( g_overAllocatedSize > 0 )
     {
       Com_Printf(CON_CHANNEL_SYSTEM, "requested size:  %d  over allocation:  %d\n", size, g_overAllocatedSize);
+      Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
       Sys_OutOfMemError(__FILE__, __LINE__);
     }
     allocedSize = g_mem.prim[allocType].pos - lowPos;
@@ -88,18 +93,22 @@ byte* __cdecl _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsign
   {
     lowPos = ~alignment & (alignment + g_mem.prim[allocType].pos);
     highPos = size + lowPos;
-    alignedSize = size + lowPos - g_mem.prim[allocType].pos;
+    //alignedSize = size + lowPos - g_mem.prim[allocType].pos;
     g_overAllocatedSize = size + lowPos - g_mem.prim[1].pos;
     if ( g_overAllocatedSize > 0 )
     {
       Com_PrintError(CON_CHANNEL_SYSTEM, "Need %i more bytes of '%s' physical ram for alloc to succeed\n", g_overAllocatedSize, g_mem.name);
+      Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
       Sys_OutOfMemError(__FILE__, __LINE__);
     }
     allocedSize = highPos - g_mem.prim[allocType].pos;
     g_mem.prim[allocType].pos = highPos;
   }
   track_physical_alloc(allocedSize, name, memTrack, location);
-  return &g_mem.buf[lowPos];
+  allocptr = &g_mem.buf[lowPos];
+
+  Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+  return allocptr;
 }
 
 
@@ -190,6 +199,7 @@ void PMem_FreeInPrim(PhysicalMemoryPrim *prim, const char *name, int location)
   {
     if ( prim->allocList[allocIndex].name == name )
     {
+      assert(allocIndex == prim->allocListCount - 1);
       PMem_FreeIndex(prim, allocIndex, location);
       return;
     }
@@ -201,7 +211,6 @@ extern "C"{
 void __cdecl PMem_Free(const char *name)
 {
   int i;
-
   for ( i = 0; i < 2; ++i )
   {
     if ( i )
@@ -212,20 +221,31 @@ void __cdecl PMem_Free(const char *name)
     {
       Com_Printf(CON_CHANNEL_SYSTEM, "PMem_Free( %s, %s )\n", name, "Low");
     }
+    Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
     PMem_FreeInPrim(&g_mem.prim[i], name, 0);
+    Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+
   }
 }
 
 void __cdecl PMem_EndAlloc(const char *name, unsigned int allocType)
 {
   assert ( allocType < PHYS_ALLOC_COUNT);
+
+  Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
   PMem_EndAllocInPrim(&g_mem.prim[allocType], name);
+  Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+
 }
 
 void __cdecl PMem_BeginAlloc(const char *name, unsigned int allocType, EMemTrack memTrack)
 {
   assert ( allocType < PHYS_ALLOC_COUNT);
+
+  Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
   PMem_BeginAllocInPrim(&g_mem.prim[allocType], name, memTrack);
+  Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+
 }
 
 void __cdecl PMem_Init()
@@ -234,9 +254,19 @@ void __cdecl PMem_Init()
 
   if ( !g_physicalMemoryInit )
   {
+    Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+
     g_physicalMemoryInit = true;
-    memory = VirtualAlloc(0, 0x14800000u, 0x1000u, 4u);
+    memory = _VirtualAlloc(0, 0x14800000u, 0x1000u, 4u);
+    if(memory == NULL)
+    {
+        Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+        Com_Error(ERR_FATAL, "PMem_Init(): not enough virtual memory within a single block available");
+    }
     PMem_InitPhysicalMemory(&g_mem, "main", memory, 0x14800000u);
+
+    Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+
   }
 }
 
@@ -244,6 +274,8 @@ void PMem_DumpMemStats()
 {
   unsigned int h;
   signed int i;
+
+  Sys_EnterCriticalSection(CRITSECT_PHYSICAL_MEMORY);
 
   if ( g_mem.prim[1].allocListCount )
   {
@@ -269,7 +301,10 @@ void PMem_DumpMemStats()
       g_mem.prim[0].allocList[i].name, (double)(0.00000095367432 * (long double)(signed int)(h - g_mem.prim[0].allocList[i].pos)));
     h = g_mem.prim[0].allocList[i].pos;
   }
+  Sys_LeaveCriticalSection(CRITSECT_PHYSICAL_MEMORY);
+
   Com_Printf(CON_CHANNEL_SYSTEM, "------------------------\n");
-}
 
 }
+
+};

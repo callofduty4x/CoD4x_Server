@@ -44,11 +44,15 @@
 #include "hl2rcon.h"
 #include "crc.h"
 #include "sv_bots.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "math.h"
 #include "httpftp.h"
-
+#include "cscr_stringlist.h"
+#include "cscr_variable.h"
+#include "g_sv_main.h"
 #include "sapi.h"
+#include "db_load.h"
+#include "sec_crypto.h"
 
 #include <string.h>
 #include <stdarg.h>
@@ -130,11 +134,12 @@ cvar_t* sv_shownet;
 cvar_t* sv_updatebackendname;
 cvar_t* sv_legacymode;
 cvar_t* sv_steamgroup;
+cvar_t* sv_authtoken;
+cvar_t* sv_disableChat;
 
 serverStatic_t		svs;
 server_t		sv;
 svsHeader_t		svsHeader;
-serverStaticExt_t	svse;	// persistant server info across maps
 permServerStatic_t	psvs;	// persistant even if server does shutdown
 
 qboolean svsHeaderValid;
@@ -781,7 +786,7 @@ __optimize3 __regparm1 void SVC_Status( netadr_t *from ) {
         cl = &svs.clients[i];
         if ( cl->state >= CS_CONNECTED && !cl->undercover) {
             Com_sprintf( player, sizeof( player ), "%i %i \"%s\"\n",
-                         gclient->sess.scoreboard.score, cl->ping, cl->name );
+                         gclient->sess.score, cl->ping, cl->name );
             playerLength = strlen( player );
             if ( statusLength + playerLength >= sizeof( status ) ) {
                 break;      // can't hold any more
@@ -1367,7 +1372,7 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
             Q_CleanStr(cleanplayername);
 
             MSG_WriteString(&playermsg, cleanplayername);
-            MSG_WriteLong(&playermsg, gclient->sess.scoreboard.score);
+            MSG_WriteLong(&playermsg, gclient->sess.score);
             int connectedTime = svs.time - cl->connectedTime;
             if(cl->connectedTime == 0)
             {
@@ -1452,7 +1457,7 @@ SVC_FlushRedirect
 ================
 */
 static void SV_FlushRedirect( char *outputbuf, qboolean lastcommand ) {
-    NET_OutOfBandPrint( NS_SERVER, &svse.redirectAddress, "print\n%s", outputbuf );
+    NET_OutOfBandPrint( NS_SERVER, &svs.redirectAddress, "print\n%s", outputbuf );
 }
 
 /*
@@ -1471,7 +1476,7 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
     char *cmd_aux;
     char stringlinebuf[MAX_STRING_CHARS];
 
-    svse.redirectAddress = *from;
+    svs.redirectAddress = *from;
 
     if ( strcmp (SV_Cmd_Argv(1), sv_rconPassword->string )) {
         //Send only one deny answer out in 100 ms
@@ -1848,7 +1853,7 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
     SV_Cmd_TokenizeString( s );
 
     c = SV_Cmd_Argv(0);
-    Com_Printf(CON_CHANNEL_SERVER,"SV packet %s: %s\n", NET_AdrToString(from), s);
+    Com_DPrintf(CON_CHANNEL_SERVER,"SV packet %s: %s\n", NET_AdrToString(from), s);
     //Most sensitive OOB commands first
         if (!Q_stricmp(c, "getstatus")) {
         SVC_Status( from );
@@ -2041,13 +2046,20 @@ typedef struct
     qboolean authoritative;
     netadr_t* iplist;
     int ipcount;
+    qboolean* needticket;
+    qboolean* threadlock;
+    char* challengei4;
+    char* challengei6;
+    byte* msgtokenstart;
+    char token[48];
 }masterHeartbeatThreadOptions_t;
 
 
-void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
+void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needticket, char* challenge)
 {
     byte databuf[8192];
     char stringline[1024];
+    char newchallenge[65];
     msg_t singlemsg;
     int ic;
 
@@ -2080,6 +2092,28 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                     Com_PrintError(CON_CHANNEL_SERVER,"Failure registering server on masterserver. Errorcode: 0x%x\n", MSG_ReadLong(&singlemsg));
                 }else if(ic == 2){
                     Com_PrintError(CON_CHANNEL_SERVER,"Failure registering server on masterserver. Server address is banned: %s\n", MSG_ReadString(&singlemsg, stringline, sizeof(stringline)));
+                }else if(ic == 3){
+                    Com_Printf(CON_CHANNEL_SERVER,"Masterserver needs token to complete registration\n");
+                    *needticket = qtrue;
+                    MSG_ReadString(&singlemsg, challenge, 65);
+                    svs.nextHeartbeatTime = com_uFrameTime + 3000000; //Now but with ticket
+                }else if(ic == 5){
+                    Com_Printf(CON_CHANNEL_SERVER,"Masterserver didn't load token database yet. Try again later\n");
+                    *needticket = qtrue;
+                    MSG_ReadString(&singlemsg, challenge, 65);
+                    svs.nextHeartbeatTime = com_uFrameTime + 300000000; //try again in 5 minutes
+                }else if(ic == 4){
+                    MSG_ReadString(&singlemsg, newchallenge, 65);
+                    if(strcmp(challenge, newchallenge) == 0)
+                    {
+                        Com_Printf(CON_CHANNEL_SERVER, "sv_authtoken is invalid! Abandoning master server registration\n");
+                        svs.nextHeartbeatTime = com_uFrameTime + 3600000000; //Try again in 1 hour
+                    }else{
+                        Com_Printf(CON_CHANNEL_SERVER, "Bad challenge! Retrying...\n");
+                        svs.nextHeartbeatTime = com_uFrameTime + 8000000; //Now but with ticket
+                        Q_strncpyz(challenge, newchallenge, 65);
+                    }
+                    *needticket = qtrue;
                 }
                 break;
             case 2:
@@ -2090,7 +2124,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
                     MSG_ReadString(&singlemsg, stringline, sizeof(stringline));
                     if(authoritative)
                     {
-                        Q_strncpyz(svse.sysrestartmessage, stringline, sizeof(svse.sysrestartmessage));
+                        Q_strncpyz(svs.sysrestartmessage, stringline, sizeof(svs.sysrestartmessage));
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER,"Received restart message from masterserver which is not authoritative. Ignoring\n");
                     }
@@ -2117,7 +2151,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative)
 }
 
 
-void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen, qboolean authoritative)
+void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen, qboolean authoritative, qboolean* needticket, char* challenge)
 {
     int l = 0;
     byte response[16384];
@@ -2210,7 +2244,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
                 if(Q_stricmp(line, "masterHeartbeatResponse") == 0)
                 {
                     MSG_ReadLong(&msg); //MessageID maybe future use but placeholder here
-                    SV_HeartBeatMessageLoop(&msg, authoritative);
+                    SV_HeartBeatMessageLoop(&msg, authoritative, needticket, challenge);
                 }else{
                     Com_Printf(CON_CHANNEL_SERVER,"Corrupted Masterserver response\n");
                 }
@@ -2236,6 +2270,9 @@ void* SV_SendHeartbeatThread(void* arg)
     masterHeartbeatThreadOptions_t* opts = arg;
     int count = opts->ipcount;
     int i;
+    char challengehash[512];
+    char finalsha[65];
+
     netadr_t* iplist = opts->iplist;
     for(i = 0; i < count; ++i)
     {
@@ -2247,17 +2284,50 @@ void* SV_SendHeartbeatThread(void* arg)
             //IPv4
             Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr4, adrstrdst, sizeof(adrstrdst)));
-            SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
-        }else	if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe){
+            if(opts->msgtokenstart)
+            {
+                Com_sprintf(challengehash, sizeof(challengehash), "%s.%s", opts->token, opts->challengei4);
+                unsigned long size = sizeof(finalsha);
+                Sec_HashMemory(SEC_HASH_SHA256,(void *)challengehash,strlen(challengehash),finalsha,&size,qfalse);
+                Q_strupr(finalsha);
+                memcpy(opts->msgtokenstart, finalsha, 64);
+            }
+            SV_SendReceiveHeartbeatTCP(&opts->adr4, &iplist[i], opts->message, opts->messagelen, opts->authoritative, opts->needticket, opts->challengei4);
+        }else if(iplist[i].type == NA_IP6 && opts->adr6.type == NA_IP6 && iplist[i].ip6[0] < 0xfe){
             //IPv6
             Com_Printf(CON_CHANNEL_SERVER,"Sending master heartbeat from %s to %s\n", NET_AdrToStringMT(&iplist[i], adrstr, sizeof(adrstr)),
             NET_AdrToStringMT(&opts->adr6, adrstrdst, sizeof(adrstrdst)));
-            SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen, opts->authoritative);
+
+            if(opts->msgtokenstart)
+            {
+                Com_sprintf(challengehash, sizeof(challengehash), "%s.%s", opts->token, opts->challengei6);
+                unsigned long size = sizeof(finalsha);
+                Sec_HashMemory(SEC_HASH_SHA256,(void *)challengehash,strlen(challengehash),finalsha,&size,qfalse);
+                Q_strupr(finalsha);
+                memcpy(opts->msgtokenstart, finalsha, 64);
+            }
+
+            SV_SendReceiveHeartbeatTCP(&opts->adr6, &iplist[i], opts->message, opts->messagelen, opts->authoritative, opts->needticket, opts->challengei6);
         }
     }
+
     opts->locked = qfalse;
+    *(opts->threadlock) = qfalse;
     return NULL;
 }
+
+
+typedef struct
+{
+    netadr_t i4;
+    netadr_t i6;
+    qboolean authoritative; //Can send commands server executes. Like restart etc.
+    char name[64];
+    qboolean needticket;
+    char challengei4[73];
+    char challengei6[73];
+    qboolean threadlock;
+}masterserver_t;
 
 
 /*
@@ -2271,18 +2341,24 @@ changes from empty to non-empty, and full to non-full,
 but not on every player enter or exit.
 ================
 */
-void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4, netadr_t* adr6, qboolean authoritative)
+void SV_CreateAndSendMasterheartbeatMessage(const char* message, masterserver_t* masrv)
 {
     msg_t msg;
     char string[1024];
     masterHeartbeatThreadOptions_t *opts = NULL;
     static masterHeartbeatThreadOptions_t options[8];
     int i;
-    
+
+    netadr_t *adr4 = &masrv->i4;
+    netadr_t *adr6 = &masrv->i6;
+    qboolean authoritative = masrv->authoritative;
+
+
     if(adr4 == NULL || adr6 == NULL || message == NULL)
     {
         return;
     }
+
     for(i = 0; i < 8; ++i)
     {
         if(options[i].locked == qfalse)
@@ -2295,8 +2371,13 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4,
     {
         return;
     }
-    opts->locked = qtrue;
+    if(masrv->threadlock)
+    {
+        return;
+    }
 
+    opts->locked = qtrue;
+    masrv->threadlock = qtrue;
     opts->authoritative = authoritative;
     opts->adr4 = *adr4;
     opts->adr6 = *adr6;
@@ -2309,10 +2390,46 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4,
     MSG_WriteLong(&msg, psvs.masterserver_messageid);
     ++psvs.masterserver_messageid;
 
+    opts->msgtokenstart = NULL;
+
+    if(masrv->needticket){
+
+	Q_strncpyz(opts->token, sv_authtoken->string, sizeof(opts->token));
+
+
+	if(opts->token[0] == 0)
+	{
+		Com_Printf(CON_CHANNEL_SERVER, "Can not register server on the masterserver. Server needs to provide a valid token in cvar sv_authtoken.\n");
+		opts->locked = qfalse;
+		masrv->threadlock = qfalse;
+		return;
+	}
+
+        MSG_BeginWriteMessageLength(&msg); //Messagelength
+        MSG_WriteLong(&msg, 2); //Command encryptedappidticket
+
+	//First 8 bytes of token
+	for(i = 0; i < 8; ++i)
+	{
+		MSG_WriteByte(&msg, opts->token[i]);
+	}
+
+	opts->msgtokenstart = msg.data + msg.cursize;
+
+	//Sourceip depended. Write empty message first
+	for(i = 0; i < 64; ++i)
+	{
+		MSG_WriteByte(&msg, 0xff);
+	}
+	MSG_WriteByte(&msg, 0x0);
+        MSG_EndWriteMessageLength(&msg);
+    }
+
     MSG_BeginWriteMessageLength(&msg); //Messagelength
     MSG_WriteLong(&msg, 1); //Command sourceenginequery
     SVC_SourceEngineQuery_WriteInfo(&msg, "", qtrue);
     MSG_EndWriteMessageLength(&msg);
+
 
     MSG_BeginWriteMessageLength(&msg); //Messagelength
     MSG_WriteLong(&msg, 0); //EOF
@@ -2320,19 +2437,16 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, netadr_t* adr4,
 
     opts->messagelen = msg.cursize;
     opts->iplist = NET_GetLocalAddressList(&opts->ipcount);
+    opts->needticket = &masrv->needticket;
+    opts->threadlock = &masrv->threadlock;
+    opts->challengei4 = masrv->challengei4;
+    opts->challengei6 = masrv->challengei6;
+
     threadid_t tinfo;
     Sys_CreateNewThread(SV_SendHeartbeatThread, &tinfo, opts);
 
 }
 
-
-typedef struct
-{
-    netadr_t i4;
-    netadr_t i6;
-    qboolean authoritative; //Can send commands server executes. Like restart etc.
-    char name[64];
-}masterserver_t;
 
 typedef struct
 {
@@ -2436,22 +2550,18 @@ void SV_MasterHeartbeat(const char *message)
         return;		// only dedicated servers send heartbeats
 
     // if not time yet, don't send anything
-    if ( com_uFrameTime < svse.nextHeartbeatTime )
+    if ( com_uFrameTime < svs.nextHeartbeatTime )
         return;
 
-    svse.nextHeartbeatTime = com_uFrameTime + HEARTBEAT_USEC;
+    svs.nextHeartbeatTime = com_uFrameTime + HEARTBEAT_USEC;
 
     // this command should be changed if the server info / status format
     // ever incompatably changes
     
     /* Official CoD4X master servers used also by ingame serverbrowser */
-    char string[1024];
-    Com_sprintf(string, sizeof(string), "\xff\xff\xff\xffheartbeat %s", message);
     for(i = 0; i < masterservers.count; ++i)
     {
-        SV_CreateAndSendMasterheartbeatMessage(string, &masterservers.servers[i].i4, 
-                                &masterservers.servers[i].i6, 
-                                masterservers.servers[i].authoritative);
+        SV_CreateAndSendMasterheartbeatMessage(message, &masterservers.servers[i]);
     }
     /* Activision master servers */
     if(netenabled & NET_ENABLEV4)
@@ -2558,11 +2668,11 @@ Informs all masters that this server is going down
 */
 void SV_MasterShutdown( void ) {
     // send a hearbeat right now
-    svse.nextHeartbeatTime = 0;
+    svs.nextHeartbeatTime = 0;
     SV_MasterHeartbeat(HEARTBEAT_DEAD);
 
     // send it again to minimize chance of drops
-    svse.nextHeartbeatTime = 0;
+    svs.nextHeartbeatTime = 0;
     SV_MasterHeartbeat(HEARTBEAT_DEAD);
 
     // when the master tries to poll the server, it won't respond, so
@@ -2704,7 +2814,6 @@ __cdecl void SV_Shutdown( const char *finalmsg ) {
     Cvar_SetBool( com_sv_running, qfalse );
 
     memset( &svs, 0, sizeof( svs ) );
-    memset( &svse, 0, sizeof( svse ) );
 
     Com_Printf(CON_CHANNEL_SERVER, "---------------------------\n" );
 
@@ -2791,10 +2900,10 @@ void	serverStatus_Write(){
 
 
                             Com_sprintf(team,sizeof(team),"%i", gclient->sess.cs.team);
-                            Com_sprintf(score,sizeof(score),"%i", gclient->sess.scoreboard.score);
-                            Com_sprintf(kills,sizeof(kills),"%i", gclient->sess.scoreboard.kills);
-                            Com_sprintf(deaths,sizeof(deaths),"%i", gclient->sess.scoreboard.deaths);
-                            Com_sprintf(assists,sizeof(assists),"%i", gclient->sess.scoreboard.assists);
+                            Com_sprintf(score,sizeof(score),"%i", gclient->sess.score);
+                            Com_sprintf(kills,sizeof(kills),"%i", gclient->sess.kills);
+                            Com_sprintf(deaths,sizeof(deaths),"%i", gclient->sess.deaths);
+                            Com_sprintf(assists,sizeof(assists),"%i", gclient->sess.assists);
                             Com_sprintf(ping,sizeof(ping),"%i", cl->ping);
                             Com_sprintf(power,sizeof(power),"%i", cl->power);
                             Com_sprintf(rank,sizeof(rank),"%i", gclient->sess.cs.rank +1);
@@ -3063,6 +3172,8 @@ void SV_InitCvarsOnce(void){
     sv_shownet = Cvar_RegisterInt("sv_shownet", -1, -1, 63, 0, "Enable network debugging for a client");
     sv_updatebackendname = Cvar_RegisterString("sv_updatebackendname", UPDATE_PROXYSERVER_NAME, CVAR_ARCHIVE, "Hostname for the used clientupdatebackend");
     sv_legacymode = Cvar_RegisterBool("sv_legacyguidmode", qfalse, CVAR_ARCHIVE, "outputs pbguid on status command and games_mp.log");
+    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.me");
+    sv_disableChat = Cvar_RegisterBool("sv_disablechat", qfalse, CVAR_ARCHIVE, "Disable chat messages from clients");
 }
 
 
@@ -3142,7 +3253,7 @@ SV_GetConfigstring
 void SV_GetConfigstring( int index, char *buffer, int bufferSize ) {
 
     short strIndex;
-    char* cs;
+    const char* cs;
 
     if ( bufferSize < 1 ) {
         Com_Error( ERR_DROP, "SV_GetConfigstring: bufferSize == %i", bufferSize );
@@ -3176,8 +3287,8 @@ int SV_GetModelConfigstringIndex(int num)
 
 void SV_UpdateClientConfigInfo(client_t* cl)
 {
-    ++svse.configDataSequence;
-    svse.changedConfigData[svse.configDataSequence % MAX_CONFIGDATACACHE] = cl - svs.clients;
+    ++svs.configDataSequence;
+    svs.changedConfigData[svs.configDataSequence % MAX_CONFIGDATACACHE] = cl - svs.clients;
 
 }
 
@@ -3328,10 +3439,10 @@ void SV_WriteRconStatus( msg_t* msg ) {
             SV_SApiSteamIDTo64String(cl->steamid, psti, sizeof(psti));
             Info_SetValueForKey( infostring, "playerid", psti);
             Info_SetValueForKey( infostring, "team", va("%i", gclient->sess.cs.team));
-            Info_SetValueForKey( infostring, "score", va("%i", gclient->sess.scoreboard.score));
-            Info_SetValueForKey( infostring, "kills", va("%i", gclient->sess.scoreboard.kills));
-            Info_SetValueForKey( infostring, "deaths", va("%i", gclient->sess.scoreboard.deaths));
-            Info_SetValueForKey( infostring, "assists", va("%i", gclient->sess.scoreboard.assists));
+            Info_SetValueForKey( infostring, "score", va("%i", gclient->sess.score));
+            Info_SetValueForKey( infostring, "kills", va("%i", gclient->sess.kills));
+            Info_SetValueForKey( infostring, "deaths", va("%i", gclient->sess.deaths));
+            Info_SetValueForKey( infostring, "assists", va("%i", gclient->sess.assists));
             Info_SetValueForKey( infostring, "ping", va("%i", cl->ping));
 
             if(cl->netchan.remoteAddress.type == NA_BOT)
@@ -3402,17 +3513,23 @@ void SV_SetServerStaticHeader()
 }
 
 
-
-
-void SV_InitArchivedSnapshot(){
-
-    svs.nextArchivedSnapshotFrames = 0;
-    svs.nextArchivedSnapshotBuffer = 0;
-    svs.nextCachedSnapshotEntities = 0;
-    svs.nextCachedSnapshotEntities = 0;
-    svs.nextCachedSnapshotFrames = 0;
+void SV_InitSnapshot()
+{
+  svs.nextSnapshotEntities = 0;
+  svs.nextSnapshotClients = 0;
+  //sv.inFrame = 0;
 }
 
+void SV_InitArchivedSnapshot()
+{
+  svs.nextArchivedSnapshotFrames = 0;
+  svs.nextArchivedSnapshotBuffer = 0;
+  svs.nextCachedSnapshotEntities = 0;
+  svs.nextCachedSnapshotClients = 0;
+  svs.nextCachedSnapshotFrames = 0;
+  svs.numCachedSnapshotEntities = sizeof(svs.cachedSnapshotEntities)/sizeof(svs.cachedSnapshotEntities[0]);
+  svs.numCachedSnapshotClients = sizeof(svs.cachedSnapshotClients)/sizeof(svs.cachedSnapshotClients[0]);
+}
 
 void SV_RunFrame(){
     SV_ResetSkeletonCache();
@@ -3473,11 +3590,7 @@ void SV_PreLevelLoad(){
 
     NV_LoadConfig();
 
-    G_InitMotd();
-
     for ( client = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, client++ ) {
-
-        G_DestroyAdsForPlayer(client); //Remove hud message ads
 
         // send the new gamestate to all connected clients
         if ( client->state < CS_ACTIVE ) {
@@ -3493,7 +3606,6 @@ void SV_PreLevelLoad(){
             continue;
         }
     }
-    Pmove_ExtendedResetState();
 
     HL2Rcon_EventLevelStart();
 
@@ -3508,9 +3620,16 @@ void SV_BuildXAssetCSString()
 {
     char cs[MAX_STRING_CHARS];
     char list[MAX_STRING_CHARS];
+    char turrets[16];
 
     DB_BuildOverallocatedXAssetList(list, sizeof(list));
-    Com_sprintf(cs, sizeof(cs), "cod%d %s", PROTOCOL_VERSION, list);
+
+    turrets[0] = 0;
+    if(DB_DiscardBspWeapons())
+    {
+        strcpy(turrets, "nobspweapon=1 ");
+    }
+    Com_sprintf(cs, sizeof(cs), "cod%d %s%s", PROTOCOL_VERSION, list, turrets);
     SV_SetConfigstring(2, cs);
 }
 
@@ -3582,6 +3701,47 @@ void SV_PostFastRestart(){
     PHandler_Event(PLUGINS_ONPOSTFASTRESTART, NULL);
 }
 
+
+void __cdecl SV_ReconnectClients(int savepersist)
+{
+    int i;
+    client_t* client;
+    const char  *denied;
+    char cmd[128];
+
+    // connect and begin all the clients
+    for ( i = 0, client = svs.clients; i < sv_maxclients->integer ; i++, client++ ) {
+        if(client->state < CS_PRIMED)
+        {
+            client->gamestateSent = 0;
+        }
+        // send the new gamestate to all connected clients
+        if ( client->state < CS_CONNECTED ) {
+            continue;
+        }
+
+
+        if ( client->netchan.remoteAddress.type != NA_BOT ) {
+            Com_sprintf(cmd, sizeof(cmd), "%c", savepersist != 0 ? 'n' : 'B');
+            SV_AddServerCommand(client, 1, cmd);
+        }
+
+        // connect the client again, without the firstTime flag
+        denied = ClientConnect(i, client->scriptId);
+        if(denied){
+            SV_DropClient(client, denied);
+            Com_Printf(CON_CHANNEL_SERVER,"SV_MapRestart: dropped client %i - denied!\n", i);
+            continue;
+        }
+
+
+        if(client->state == CS_ACTIVE){
+            SV_ClientEnterWorld( client, &client->lastUsercmd );
+        }
+    }
+}
+
+
 /*
 ================
 SV_MapRestart
@@ -3594,8 +3754,6 @@ void SV_MapRestart( qboolean fastRestart ){
 
     int i;
     client_t    *client;
-    const char  *denied;
-    char cmd[128];
 
     // make sure server is running
     if ( !com_sv_running->boolean ) {
@@ -3627,8 +3785,6 @@ void SV_MapRestart( qboolean fastRestart ){
     // connect and begin all the clients
     for ( client = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, client++ ) {
 
-        G_DestroyAdsForPlayer(client); //Remove hud message ads
-
         if ( client->state < CS_CONNECTED ) {
             continue;
         }
@@ -3645,7 +3801,6 @@ void SV_MapRestart( qboolean fastRestart ){
 
 /*    SV_InitCvars();*/
     SV_InitArchivedSnapshot();
-
     svs.snapFlagServerBit ^= 4;
 
     SV_GenerateServerId(qfalse); //Short restart
@@ -3653,47 +3808,21 @@ void SV_MapRestart( qboolean fastRestart ){
     //sv.inFrame = 0;
 
     sv.state = SS_LOADING;
+//    sv.inFrame = 0;
     sv.restarting = qtrue;
 
     SV_RestartGameProgs(pers);
     SV_BuildXAssetCSString();
+
+/*    
     // run a few frames to allow everything to settle
     for ( i = 0 ; i < 3 ; i++ ) {
         svs.time += 100;
         SV_RunFrame();
     }
+*/
 
-    // connect and begin all the clients
-    for ( i = 0, client = svs.clients; i < sv_maxclients->integer ; i++, client++ ) {
-        if(client->state < CS_PRIMED)
-        {
-            client->gamestateSent = 0;
-        }
-        // send the new gamestate to all connected clients
-        if ( client->state < CS_CONNECTED ) {
-            continue;
-        }
-
-        if ( client->netchan.remoteAddress.type == NA_BOT ) {
-            continue;
-        }
-
-        Com_sprintf(cmd, sizeof(cmd), "%c", pers != 0 ? 'n' : 'B');
-        SV_AddServerCommand(client, 1, cmd);
-
-        // connect the client again, without the firstTime flag
-        denied = ClientConnect(i, client->scriptId);
-
-        if(denied){
-            SV_DropClient(client, denied);
-            Com_Printf(CON_CHANNEL_SERVER,"SV_MapRestart: dropped client %i - denied!\n", i);
-            continue;
-        }
-
-        if(client->state == CS_ACTIVE){
-            SV_ClientEnterWorld( client, &client->lastUsercmd );
-        }
-    }
+    SV_ReconnectClients(pers);
 
     // reset all the vm data in place without changing memory allocation
     // note that we do NOT set sv.state = SS_LOADING, so configstrings that
@@ -3938,7 +4067,7 @@ void SV_BotUserMove(client_t *client)
     ucmd.serverTime = svs.time;
 
     playerState_t* ps = SV_GameClientNum(num);
-    ent = VM_GetGEntityForNum(num);
+    ent = SV_GentityNum(num);
 
     ucmd.weapon = (byte)(ps->weapon & 0xFF);
 
@@ -3978,7 +4107,7 @@ void SV_BotUserMove(client_t *client)
             /* Notify only once */
             if (!g_botai[num].doMove)
             {
-                Scr_Notify(ent, stringIndex.movedone, 0);
+                Scr_Notify(ent, scr_const.movedone, 0);
                 Com_Printf(CON_CHANNEL_SERVER,"Bot movement done at (%3.3f, %3.3f)\n",
                             ent->r.currentOrigin[0], ent->r.currentOrigin[1]);
             }
@@ -3992,15 +4121,19 @@ void SV_BotUserMove(client_t *client)
             --g_botai[num].rotIterCount;
             for(i = 0; i < 3; ++i)
             {
-                ucmd.angles[i] += g_botai[num].rotFrac[i];
-                if(ucmd.angles[i] < 0)
+                if(i < 2)
+                {
+                    ucmd.angles[i] += g_botai[num].rotFrac[i];
+                }
+                if(ucmd.angles[i] < 0){
                     ucmd.angles[i] = 0xFFFF + ucmd.angles[i];
-                else if(ucmd.angles[i] > 0xFFFF)
+                }else if(ucmd.angles[i] > 0xFFFF){
                     ucmd.angles[i] -= 0xFFFF;
+                }
             }
             /* Notify only once */
             if (!g_botai[num].rotIterCount)
-                Scr_Notify(ent, stringIndex.rotatedone, 0);
+                Scr_Notify(ent, scr_const.rotatedone, 0);
         }
     }
 
@@ -4098,8 +4231,6 @@ happen before SV_Frame is called
 __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     unsigned int frameUsec;
     char mapname[MAX_QPATH];
-    client_t* client;
-    int i;
     static qboolean underattack = qfalse;
     mvabuf;
 
@@ -4112,8 +4243,8 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     // allow pause if only the local client is connected
 /*	if ( SV_CheckPaused() ) {
         SV_MasterHeartbeat( HEARTBEAT_GAME );//Still send heartbeats
-        CL_WritePacket( &svse.authserver );
-        CL_WritePacket( &svse.scrMaster );
+        CL_WritePacket( &svs.authserver );
+        CL_WritePacket( &svs.scrMaster );
         return;
     }
 */
@@ -4301,58 +4432,45 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     }
     SetAnimCheck(com_animCheck->boolean);
 
-        if( svs.time > svse.frameNextSecond){	//This runs each second
-        svse.frameNextSecond = svs.time+1000;
+    if( svs.time > svs.frameNextSecond){	//This runs each second
+            svs.frameNextSecond = svs.time+1000;
 
-        // the menu kills the server with this cvar
-        if ( sv_killserver->boolean ) {
-        SV_Shutdown( "Server was killed.\n" );
-        Cvar_SetBool( sv_killserver, qfalse );
-        return qtrue;
-        }
+            // the menu kills the server with this cvar
+            if ( sv_killserver->boolean ) {
+                SV_Shutdown( "Server was killed.\n" );
+                Cvar_SetBool( sv_killserver, qfalse );
+                return qtrue;
+            }
 
-        if(svs.time > svse.frameNextTenSeconds){	//This runs each 10 seconds
-        svse.frameNextTenSeconds = svs.time+10000;
+            if(svs.time > svs.frameNextTenSeconds){	//This runs each 10 seconds
+            svs.frameNextTenSeconds = svs.time+10000;
 
-        int d, h, m;
-        int uptime;
+            int d, h, m;
+            int uptime;
 
-        uptime = Sys_Seconds();
-        d = uptime/(60*60*24);
-//		uptime = uptime%(60*60*24);
-        h = uptime/(60*60);
-//		uptime = uptime%(60*60);
-        m = uptime/60;
+            uptime = Sys_Seconds();
+            d = uptime/(60*60*24);
+    //		uptime = uptime%(60*60*24);
+            h = uptime/(60*60);
+    //		uptime = uptime%(60*60);
+            m = uptime/60;
 
-        if(h < 4)
-            Cvar_SetString(sv_uptime, va("%i minutes", m));
-        else if(d < 3)
-            Cvar_SetString(sv_uptime, va("%i hours", h));
-        else
-            Cvar_SetString(sv_uptime, va("%i days", d));
+            if(h < 4)
+                Cvar_SetString(sv_uptime, va("%i minutes", m));
+            else if(d < 3)
+                Cvar_SetString(sv_uptime, va("%i hours", h));
+            else
+                Cvar_SetString(sv_uptime, va("%i days", d));
 
-        serverStatus_Write();
+            serverStatus_Write();
 
             PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
-/*		if(svs.time > svse.nextsecret){
-            svse.nextsecret = svs.time+80000;
-            Com_RandomBytes((byte*)&svse.secret,sizeof(int));
-        }*/
+    /*		if(svs.time > svs.nextsecret){
+                svs.nextsecret = svs.time+80000;
+                Com_RandomBytes((byte*)&svs.secret,sizeof(int));
+            }*/
 
-        if(level.time > level.startTime + 20000){
-            for(client = svs.clients, i = 0; i < sv_maxclients->integer; i++, client++){
-                if(client->state != CS_ACTIVE)
-                    continue;
-
-                if(client->netchan.remoteAddress.type == NA_BOT)
-                    continue;
-
-                G_PrintRuleForPlayer(client);
-                G_PrintAdvertForPlayer(client);
-            }
-        }
-
-        }
+    }
     }
 
     return qtrue;
@@ -4422,7 +4540,7 @@ void SV_CalculateChecksums()
 {
     int i;
     char filename[MAX_OSPATH];
-    char* str;
+    //char* str;
     int len, crc32;
 
     Com_Printf(CON_CHANNEL_SERVER,"^4Calculate referenced files checksums...\n");
@@ -4441,19 +4559,14 @@ void SV_CalculateChecksums()
     for(i = 0; i < Cmd_Argc(); ++i)
     {
 
-        DB_BuildQPath(Cmd_Argv(i), 0, sizeof(filename), filename);
+        DB_GetQPathForZone(Cmd_Argv(i), sizeof(filename), filename);
 
         if((len = FS_CalculateChecksumForFile(filename, &crc32)) <= 0)
         {
-            DB_BuildQPath(Cmd_Argv(i), 3, sizeof(filename), filename);
-            if((len = FS_CalculateChecksumForFile(filename, &crc32)) <= 0)
-            {
-                str = Cmd_Argv(i);
-                DB_BuildQPath(str +9, 2, sizeof(filename), filename);
-                len = FS_CalculateChecksumForFile(filename, &crc32);
-            }
+            Com_PrintError(CON_CHANNEL_SERVER,"file for loaded zone '%s' not found\n", Cmd_Argv(i));
+        }else{
+            Com_Printf(CON_CHANNEL_SERVER,"^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
         }
-        Com_Printf(CON_CHANNEL_SERVER,"^4CRC32 for %s is %x Len %d\n", filename, crc32, len);
     }
 
     Cmd_EndTokenizedString();
@@ -4660,13 +4773,6 @@ void SV_CreateBaseline( void ) {
 
 
 
-void SV_InitSnapshot()
-{
-  //sv.inFrame = 0;
-}
-
-
-
 
 void SV_SaveSystemInfo()
 {
@@ -4701,9 +4807,9 @@ void SV_SpawnServer(const char *mapname)
   int i, checksum;
   client_t* cl;
 
-    if(svse.sysrestartmessage[0])
+    if(svs.sysrestartmessage[0])
     {
-        Sys_Restart(svse.sysrestartmessage);
+        Sys_Restart(svs.sysrestartmessage);
         return;
     }
 
@@ -4713,6 +4819,7 @@ void SV_SpawnServer(const char *mapname)
 
   Com_SyncThreads();
   Sys_BeginLoadThreadPriorities();
+
 #ifndef DEDICATEDONLY
   char loadffname[128];
 
@@ -4727,7 +4834,7 @@ void SV_SpawnServer(const char *mapname)
     DB_LoadXAssets(&zoneinfo, 1u, 0);
   }
 #endif
-//  Scr_ParseGameTypeList();
+  Scr_ParseGameTypeList();
   SV_SetGametype();
 
 #ifndef DEDICATEDONLY
@@ -4764,7 +4871,7 @@ void SV_SpawnServer(const char *mapname)
             }
 
             if ( cl->state < CS_PRIMED )
-        {
+            {
                 continue;
             }
             SV_SendServerCommandNoLoss( cl, "%c \"%s\" \"%s\"", 'l', mapname, sv_g_gametype->string );
@@ -4837,14 +4944,8 @@ void SV_SpawnServer(const char *mapname)
 
   Cvar_ClearFlagsForEach(1024); //CVAR_NORESTART? Probably not Cvar_ResetScriptInfo();
 
-  svs.nextSnapshotEntities = 0;
-  svs.nextSnapshotClients = 0;
-  svs.nextArchivedSnapshotFrames = 0;
-  svs.nextArchivedSnapshotBuffer = 0;
-  svs.nextCachedSnapshotEntities = 0;
-  svs.nextCachedSnapshotClients = 0;
-  svs.nextCachedSnapshotFrames = 0;
-  svs.numCachedSnapshotEntities = sizeof(svs.cachedSnapshotEntities)/sizeof(svs.cachedSnapshotEntities[0]);
+
+  SV_InitArchivedSnapshot();
   SV_InitSnapshot();
   svs.snapFlagServerBit ^= 4u;
 
@@ -5005,4 +5106,47 @@ void __cdecl SV_FreeClientScriptId(client_t *cl)
 
   Scr_FreeValue(cl->scriptId);
   cl->scriptId = 0;
+}
+
+
+
+qboolean SV_FileStillActive(const char* name)
+{
+    int i;
+    char filename[MAX_OSPATH];
+    //char* str;
+    int len, crc32;
+
+    Cmd_TokenizeString(sv_referencedIwdNames->string);
+
+
+    Com_Printf(CON_CHANNEL_SERVER,"Check for file %s\n", name);
+
+
+    for(i = 0; i < Cmd_Argc(); ++i)
+    {
+        Com_sprintf(filename, sizeof(filename), "%s.iwd", Cmd_Argv(i));
+        if(Q_stricmp(name, filename) == 0)
+        {
+            Cmd_EndTokenizedString();
+            return qtrue;
+        }
+    }
+    Cmd_EndTokenizedString();
+
+
+    Cmd_TokenizeString(sv_referencedFFNames->string);
+
+    for(i = 0; i < Cmd_Argc(); ++i)
+    {
+        DB_GetQPathForZone(Cmd_Argv(i), sizeof(filename), filename);
+        if(Q_stricmp(name, filename) == 0)
+        {
+            Cmd_EndTokenizedString();
+            return qtrue;
+        }
+    }
+
+    Cmd_EndTokenizedString();
+    return qfalse;
 }

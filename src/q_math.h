@@ -25,6 +25,7 @@
 #ifndef __Q_MATH_H__
 #define __Q_MATH_H__
 
+
 /*
 ==============================================================
 
@@ -116,7 +117,7 @@ extern vec4_t colorBlackBlank;
 #define VectorSet(v, x, y, z)	((v)[0]=(x), (v)[1]=(y), (v)[2]=(z))
 #define Vector4Copy( a,b )        ( ( b )[0] = ( a )[0],( b )[1] = ( a )[1],( b )[2] = ( a )[2],( b )[3] = ( a )[3] )
 
-#define SnapVector( v ) {v[0] = (int)v[0]; v[1] = (int)v[1]; v[2] = (int)v[2];}
+#define SnapVector( v ) {v[0] = (float)(signed int)v[0]; v[1] = (float)(signed int)v[1]; v[2] = (float)(signed int)v[2];}
 
 #define VectorNormalize Vec3Normalize
 
@@ -151,7 +152,6 @@ extern vec4_t colorBlackBlank;
 #endif
 
 //#include "util_heap.h"
-
 struct cplane_s;
 
 #ifdef __cplusplus
@@ -182,6 +182,7 @@ vec_t Distance( const vec3_t p1, const vec3_t p2 ) ;
 void AnglesToAxis( const vec3_t angles, vec3_t axis[3] );
 void  SnapAngles(float *vAngles);
 
+double __cdecl Vec3DistanceSq(const float *p1, const float *p2);
 float vec2_maxabs    (vec2_t v);
 
 
@@ -193,13 +194,22 @@ void Vec3Lerp(const float *start, const float *end, const float fraction, float 
 double Vec2DistanceSq(const float *v0, const float *v1);
 void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out);
 
+#include <xmmintrin.h>
+
+
+static inline int f2rint(float f)
+{
+    return __builtin_ia32_cvtss2si(__extension__ (__m128)(__v4sf){ f });
+}
+
+
 
 #ifdef __cplusplus
 }
 #endif
 
 
-#define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f + 0.5f) & 65535)
+#define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))
 
 #ifndef ID_INLINE
@@ -211,3 +221,4 @@ void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out
 #endif
 
 #endif
+

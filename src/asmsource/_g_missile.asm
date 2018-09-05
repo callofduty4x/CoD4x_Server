@@ -11,6 +11,7 @@
 	extern AxisToQuat
 	extern QuatSlerp
 	extern Vec4Normalize
+	extern Vec3Normalize
 	extern UnitQuatToForward
 	extern colorBlue
 	extern G_DebugLineWithDuration
@@ -3563,6 +3564,9 @@ G_RunMissile_20:
 	pop ebp
 	ret
 G_RunMissile_210:
+	lea edx, [ebp-0xb8]
+	mov [esp], edx
+	call Vec3Normalize
 	lea eax, [ebp-0x48]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x24]
@@ -6237,11 +6241,9 @@ _float_0_10000000:		dd 0x3dcccccd	; 0.1
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_360_00000000:		dd 0x43b40000	; 360
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_80_00000000:		dd 0x42a00000	; 80
 _float_0_30000001:		dd 0x3e99999a	; 0.3
 _float_0_85000002:		dd 0x3f59999a	; 0.85
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_45_00000000:		dd 0x42340000	; 45
 _float_90_00000000:		dd 0x42b40000	; 90
 _float_180_00000000:		dd 0x43340000	; 180
@@ -6283,3 +6285,6 @@ _float_16_00000000:		dd 0x41800000	; 16
 _float__16_00000000:		dd 0xc1800000	; -16
 _float_120_00000000:		dd 0x42f00000	; 120
 
+align   16,db 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

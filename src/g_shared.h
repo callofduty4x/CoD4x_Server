@@ -29,8 +29,6 @@
 
 #include "sys_cod4defs.h"
 
-#define level_ADDR 0x8370440
-#define level (*((level_locals_t *)(level_ADDR)))
 
 /* Unfortunately, this can't be used to check\get gametypes... At least for now... */
 /*#define g_gametypes ((gametypes_t*)(0x8583bc0))*/
@@ -52,6 +50,11 @@ SESS_STATE_INTERMISSION = 3
 #define SAY_ALL 0
 #define SAY_TEAM 1
 #define SAY_TELL 2
+
+#define MAX_STATUS_ICONS 8
+#define STATUS_ICON_CS 2259
+#define HEAD_ICON_CS 2267
+#define MAX_HEAD_ICONS 15
 
 
 typedef struct
@@ -172,6 +175,9 @@ typedef struct
     float compassNorth[2];
     struct scr_vehicle_s *vehicles;
 } level_locals_t;
+
+extern level_locals_t level;
+
 
 /* Max count = 32, started at 0x08583C10 */
 /*typedef struct gametype_t
@@ -488,16 +494,27 @@ extern cvar_t *jump_slowdownEnable;
 extern cvar_t *g_antilag;
 extern cvar_t *g_cheats;
 extern cvar_t *g_oldVoting;
+extern cvar_t *g_inactivity;
+extern cvar_t *g_synchronousClients;
+extern cvar_t *g_log;
+extern cvar_t *g_logSync;
+extern cvar_t *g_logTimeStampInSeconds;
+
 
 extern qboolean onExitLevelExecuted;
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+
 int BG_GetPerkIndexForName(const char *name);
-int G_GetSavePersist(void);
 void G_SetSavePersist(int val);
 
 int G_GetClientSize();
 playerState_t *G_GetPlayerState(int num);
 clientState_t *G_GetClientState(int num);
+gclient_t *G_GetGClient(int num);
 void SpawnVehicle(gentity_t *ent, const char *vehtype);
 void __cdecl G_VehSpawner(gentity_t *ent);
 void __cdecl G_VehCollmapSpawner(gentity_t *ent);
@@ -518,13 +535,30 @@ void __cdecl BG_GetPlayerViewDirection(playerState_t *ps, float *forward, float 
 void __cdecl G_SetOrigin(gentity_t *ent, const float *origin);
 void __cdecl SetClientViewAngle(gentity_t *ent, const float *angle);
 qboolean GetFollowPlayerState(int clientNum, playerState_t *ps);
-//This defines Cvars directly related to executable file
-#ifndef getcvaradr
-#define getcvaradr(adr) ((cvar_t *)(*(int *)(adr)))
+void CalculateRanks();
+int __cdecl GScr_GetStatusIconIndex(const char *pszIcon);
+int __cdecl GScr_GetHeadIconIndex(const char *pszIcon);
+unsigned int __cdecl G_ModelName(int index);
+void __cdecl Com_SetWeaponInfoMemory(int source);
+void __cdecl ClearRegisteredItems();
+void __cdecl BG_ClearWeaponDef();
+int __cdecl G_GetWeaponIndexForName(const char *name);
+void __cdecl G_EntUnlink(struct gentity_s *ent);
+void __cdecl G_SetClientContents(struct gentity_s *pEnt);
+void __cdecl ClientEndFrame(struct gentity_s *ent);
+void __cdecl ClientThink_real(struct gentity_s *ent, struct usercmd_s *ucmd);
+void __cdecl BG_PlayerStateToEntityState(struct playerState_s *ps, struct entityState_s *s, int snap, char handler);
+int G_GetClientArchiveTime(int clientindex);
+void G_SetClientArchiveTime(int clindex, int time);
+void G_ClientStopUsingTurret(gentity_t* ent);
+void G_EarlyInit();
+#ifdef __cplusplus
+}
 #endif
 
-#ifndef g_maxclients
-#define g_maxclients getcvaradr(0x84bcfe8)
-#endif
+//This defines Cvars directly related to executable file
+
+extern cvar_t* g_maxclients;
+extern vec3_t playerMins, playerMaxs;
 
 #endif /*G_SHARED_H*/

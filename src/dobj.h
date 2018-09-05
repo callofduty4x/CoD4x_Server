@@ -43,7 +43,7 @@ typedef struct DSkelPartBits_s
 } DSkelPartBits_t;
 
 
-typedef struct DSkel_s
+typedef struct DSkel
 {
 	DSkelPartBits_t partBits;
 	int timeStamp;
@@ -53,19 +53,19 @@ typedef struct DSkel_s
 
 typedef struct DObj_s
 {
-	int *tree;
-	WORD duplicateParts;
-	WORD entNum;
-	byte duplicatePartsSize;
-	byte numModels;
-	byte numBones;
-	byte pad;
-	int ignoreCollision;
-	int locked;
-	DSkel_t skel;
-	int radius;
-	int hidePartBits[4];
-	struct XModel **models;
+  struct XAnimTree_s *tree;
+  uint16_t duplicateParts;
+  uint16_t entnum;
+  char duplicatePartsSize;
+  char numModels;
+  char numBones;
+  byte pad;
+  unsigned int ignoreCollision;
+  volatile int locked;
+  struct DSkel skel;
+  float radius;
+  int hidePartBits[4];
+  struct XModel **models;
 } DObj_t, DObj;
 
 struct DObjTrace_s
@@ -126,8 +126,8 @@ void Com_InitDObj();
 }
 #endif
 
-#define SV_ENTITY_DOBJS ((WORD*)  0x088E8500)    // Max = 0x400
-#define SV_DOBJ         ((DObj_t*)0x088E8D20)    // Max = 0x800
+extern uint16_t serverObjMap[1024];
+extern DObj_t objBuf[2048];
 
 #endif //__DOBJ_H__
 

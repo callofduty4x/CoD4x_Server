@@ -2318,8 +2318,9 @@ _float_999900_00000000:		dd 0x49741dc0	; 999900
 _float_1600_00000000:		dd 0x44c80000	; 1600
 _float_999999995904_0000_float_:		dd 0x5368d4a5	; 1e+12
 _float_0_50000000:		dd 0x3f000000	; 0.5
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double_0_00010000:		dq 0x3f1a36e2eb1c432d	; 0.0001
 _float__0_16666667:		dd 0xbe2aaaab	; -0.166667
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 
+align   16,db 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

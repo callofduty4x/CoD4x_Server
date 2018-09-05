@@ -42,6 +42,11 @@ static fileHandle_t logfile;
 static fileHandle_t adminlogfile;
 static fileHandle_t debuglogfile;
 static fileHandle_t enterleavelogfile;
+static fileHandle_t gamelogfile; //copy of level.logfile
+
+
+fileHandle_t Com_OpenLogfile(const char* name, char mode);
+int Com_WriteLog(const char* data, int len, fileHandle_t f);
 
 
 void QDECL SV_EnterLeaveLog( const char *fmt, ... ) {
@@ -72,7 +77,7 @@ void QDECL SV_EnterLeaveLog( const char *fmt, ... ) {
 
 	    if ( !enterleavelogfile && FS_Initialized()) {
 
-				enterleavelogfile = FS_FOpenFileAppend( "enterleave.log" );
+				enterleavelogfile = Com_OpenLogfile( "enterleave.log", 'a' );
 				// force it to not buffer so we get valid
 				if ( enterleavelogfile )
 				{
@@ -90,9 +95,9 @@ void QDECL SV_EnterLeaveLog( const char *fmt, ... ) {
 #ifdef _WIN32
 				char outstring[2* MAXPRINTMSG];
 				int stringlen = Q_strLF2CRLF(msg, outstring, sizeof(outstring) );
-				FS_Write( outstring, stringlen, enterleavelogfile );
+				Com_WriteLog( outstring, stringlen, enterleavelogfile );
 #else
-				FS_Write( msg, strlen(msg), enterleavelogfile);
+				Com_WriteLog( msg, strlen(msg), enterleavelogfile);
 #endif
 	    }
 
@@ -125,7 +130,7 @@ void QDECL Com_PrintAdministrativeLog( const char *msg ) {
 				ltime[strlen(ltime)-1] = 0;
 
 
-				adminlogfile = FS_FOpenFileAppend( "adminactions.log" );
+				adminlogfile = Com_OpenLogfile( "adminactions.log", 'a' );
 				// force it to not buffer so we get valid
 				if ( adminlogfile ){
 					FS_ForceFlush(adminlogfile);
@@ -134,7 +139,7 @@ void QDECL Com_PrintAdministrativeLog( const char *msg ) {
 #else
 					Com_sprintf(logwritestart, sizeof(logwritestart), "\nLogfile opened on %s\n\n", ltime);
 #endif
-					FS_Write(logwritestart, strlen(logwritestart), adminlogfile);
+					Com_WriteLog(logwritestart, strlen(logwritestart), adminlogfile);
 				}
 	    }
 
@@ -143,9 +148,9 @@ void QDECL Com_PrintAdministrativeLog( const char *msg ) {
 #ifdef _WIN32
 				char outstring[2* MAXPRINTMSG];
 				int stringlen = Q_strLF2CRLF(msg, outstring, sizeof(outstring) );
-				FS_Write( outstring, stringlen, adminlogfile );
+				Com_WriteLog( outstring, stringlen, adminlogfile );
 #else
-				FS_Write( msg, strlen(msg), adminlogfile);
+				Com_WriteLog( msg, strlen(msg), adminlogfile);
 #endif
 	    }
 
@@ -175,7 +180,7 @@ void Com_PrintLogfile( const char *msg )
 				/* Now try to rename it */
 				FS_Rename( "qconsole.log", "qconsole.log.old" );
 
-				logfile = FS_FOpenFileWrite( "qconsole.log" );
+				logfile = Com_OpenLogfile( "qconsole.log", 'w' );
 
 				if ( com_logfile->integer > 1 && logfile ) {
 					// force it to not buffer so we get valid
@@ -189,7 +194,7 @@ void Com_PrintLogfile( const char *msg )
 #else
 					Com_sprintf(logwritestart, sizeof(logwritestart), "\nLogfile opened on %s\n\n", asctime( newtime ));
 #endif
-					FS_Write(logwritestart, strlen(logwritestart), logfile);
+					Com_WriteLog(logwritestart, strlen(logwritestart), logfile);
 				}
 	    }
 	    if ( logfile && FS_Initialized())
@@ -197,9 +202,9 @@ void Com_PrintLogfile( const char *msg )
 #ifdef _WIN32
 				char outstring[2* MAXPRINTMSG];
 				int stringlen = Q_strLF2CRLF(msg, outstring, sizeof(outstring) );
-				FS_Write( outstring, stringlen, logfile );
+				Com_WriteLog( outstring, stringlen, logfile );
 #else
-				FS_Write( msg, strlen(msg), logfile);
+				Com_WriteLog( msg, strlen(msg), logfile);
 #endif
 			}
 	}
@@ -229,7 +234,7 @@ void Com_DPrintLogfile( const char *msg )
 				/* Now try to rename it */
 				FS_Rename( "qconsole.log", "qconsole.log.old" );
 
-				debuglogfile = FS_FOpenFileWrite( "debug_qconsole.log" );
+				debuglogfile = Com_OpenLogfile( "debug_qconsole.log", 'w' );
 
 				if ( com_logfile->integer > 1 && debuglogfile ) {
 					// force it to not buffer so we get valid
@@ -243,19 +248,19 @@ void Com_DPrintLogfile( const char *msg )
 #else
 					Com_sprintf(logwritestart, sizeof(logwritestart), "\nLogfile opened on %s\n\n", asctime( newtime ));
 #endif
-					FS_Write(logwritestart, strlen(logwritestart), debuglogfile);
+					Com_WriteLog(logwritestart, strlen(logwritestart), debuglogfile);
 				}
 	    }
 	    if ( debuglogfile && FS_Initialized())
 	    {
 				char outstring[2* MAXPRINTMSG];
 				Com_sprintf(outstring, sizeof(outstring), "Time=%ud ", Sys_Milliseconds());
-				FS_Write( outstring, strlen(outstring), debuglogfile );
+				Com_WriteLog( outstring, strlen(outstring), debuglogfile );
 #ifdef _WIN32
 				int stringlen = Q_strLF2CRLF(msg, outstring, sizeof(outstring) );
-				FS_Write( outstring, stringlen, debuglogfile );
+				Com_WriteLog( outstring, stringlen, debuglogfile );
 #else
-				FS_Write( msg, strlen(msg), debuglogfile);
+				Com_WriteLog( msg, strlen(msg), debuglogfile);
 #endif
 		}
 	}
@@ -275,35 +280,121 @@ void QDECL Com_DPrintfLogfile( const char *fmt, ... ) {
 }
 
 
+static HANDLE wakelogfilewriter;
 
 
-/*
-This function should close all opened non Zip files
-*/
+void* Com_WriteLogThread(void* null)
+{
+	while(1)
+	{
+		Sys_WaitForObject(wakelogfilewriter);
+		Sys_ResetEvent(wakelogfilewriter);
+
+		FS_WriteLogFlush(adminlogfile);
+		FS_WriteLogFlush(logfile);
+		FS_WriteLogFlush(debuglogfile);
+		FS_WriteLogFlush(enterleavelogfile);
+		FS_WriteLogFlush(gamelogfile);
+	}
+	return NULL;
+}
+
+
+void Com_CloseLogFile(fileHandle_t f)
+{
+	FS_CloseLogFile(f);
+}
+
+fileHandle_t Com_OpenLogfile(const char* name, char mode)
+{
+	static threadid_t logthreadid = -1;
+	if(logthreadid == -1)
+	{
+		wakelogfilewriter = Sys_CreateEvent(1, 1, "wakelogfilewriter");
+		Sys_CreateNewThread(Com_WriteLogThread, &logthreadid, NULL);
+		Sys_SetThreadName(logthreadid, "LogfileWriter");
+	}
+	return FS_OpenLogfile(name, mode);
+}
+
+
+int Com_WriteLog(const char* data, int ilen, fileHandle_t f)
+{
+	int len = ilen;
+
+	while(1){ //Spin here as long as we don't have enough space to put the message into the buffer
+
+		int l = FS_WriteLog(data, len, f);
+		data += l;
+		len -= l;
+
+		Sys_SetEvent(wakelogfilewriter);
+
+		if(len == 0)
+		{
+			break;
+		}else{
+			Sys_SleepUSec(0);
+		}
+	}
+	return ilen;
+}
+
 void Com_CloseLogFiles()
 {
 	Sys_EnterCriticalSection(CRITSECT_LOGFILE);
 
 	Cvar_SetInt(com_logfile, 0);
 
-	if(adminlogfile){
-		FS_FCloseFile( adminlogfile );
-		adminlogfile = 0;
-	}
-	if(logfile){
-		FS_FCloseFile( logfile );
-		logfile = 0;
-	}
-	if(debuglogfile){
-		FS_FCloseFile( debuglogfile );
-		debuglogfile = 0;
-	}
-	if(enterleavelogfile){
-		FS_FCloseFile( enterleavelogfile );
-		enterleavelogfile = 0;
-	}
+	Com_CloseLogFile( adminlogfile );
+	adminlogfile = 0;
+
+	Com_CloseLogFile( logfile );
+	logfile = 0;
+
+	Com_CloseLogFile( debuglogfile );
+	debuglogfile = 0;
+
+	Com_CloseLogFile( enterleavelogfile );
+	enterleavelogfile = 0;
+
+	Com_CloseLogFile( gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
+	gamelogfile = 0;
 
 	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 
 }
 
+fileHandle_t Com_OpenGameLogfile(const char* name, char mode, qboolean sync)
+{
+	if ( !FS_Initialized()) {
+		return 0;
+	}
+
+	fileHandle_t f = Com_OpenLogfile(name, mode);
+	if(f > 0)
+	{
+		if(sync)
+		{
+			FS_ForceFlush(f);
+		}
+		gamelogfile = f;
+	}
+	return f;
+}
+
+void Com_CloseGameLogfile()
+{
+	Com_CloseLogFile( gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
+	gamelogfile = 0;
+}
+
+int Com_WriteGameLogfile(const char* data, int ilen)
+{
+    if(!gamelogfile)
+    {
+        return 0;
+    }
+    return Com_WriteLog(data, ilen, gamelogfile);
+
+}

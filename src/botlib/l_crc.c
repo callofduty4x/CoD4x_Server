@@ -39,7 +39,7 @@ If you have questions concerning this license or the applicable additional terms
 #include <stdio.h>
 #include <string.h>
 
-#include "../q_shared.h"
+#include "game_inc.h"
 #include "../game/botlib.h"
 #include "be_interface.h"            //for botimport.Print
 

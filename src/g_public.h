@@ -1,6 +1,7 @@
 #ifndef __G_PUBLIC_H__
 #define __G_PUBLIC_H__
 
+#include "player.h"
 
 // entity->svFlags
 // the server does not know how to interpret most of the values
@@ -43,28 +44,30 @@ struct VoicePacket_t
 };
 
 
-struct clientControllers_t
-{
-  vec3_t angles[6];
-  vec3_t tag_origin_angles;
-  vec3_t tag_origin_offset;
-};
-
 struct CEntPlayerInfo
 {
-  struct clientControllers_t *control;
+  struct clientControllers_s *control;
   byte tag[6];
 };
 
-
+#ifdef __cplusplus
+extern "C"{
+#endif
 float __cdecl G_GetFogOpaqueDistSqrd();
 void __cdecl ClientDisconnect(int clientNum);
 void __cdecl G_SetLastServerTime(int clientNum, int lastServerTime);
 void __cdecl ClientThink(int clientNum);
 int __cdecl G_GetSavePersist();
-void __cdecl G_BroadcastVoice(struct gentity_s *talker, struct VoicePacket_t *voicePacket);
 void __cdecl G_ResetEntityParsePoint();
 void __cdecl G_InitGame(int levelTime, int randomSeed, int restart, int savepersist);
 void __cdecl G_ShutdownGame(int freeScripts);
 qboolean __cdecl ConsoleCommand();
+const char *__cdecl CS_DisplayName(clientState_t *cs, int type);
+
+#ifdef __cplusplus
+}
+#endif
+
+void __cdecl G_BroadcastVoice(struct gentity_s *talker, struct VoicePacket_t *voicePacket);
+
 #endif

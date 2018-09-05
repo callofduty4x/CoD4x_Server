@@ -33,17 +33,21 @@
 #include "misc.h"
 #include "sec_crypto.h"
 #include "sv_auth.h"
-#include "sapi.h"
+#include "cscr_stringlist.h"
+#include "bg.h"
 
+#include "sapi.h"
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
+#include "tomcrypt/tomcrypt_misc.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
+extern char* var_typename[];
 
-char *(*Scr_GetLocalizedString)(unsigned int arg) =
-    (char *(*)(unsigned int))0x0816541C;
+
+extern char* var_typename[];
 
 /*
 ============
@@ -81,7 +85,7 @@ void PlayerCmd_GetSteamID(scr_entref_t arg)
     mvabuf;
     char str[128];
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -89,7 +93,7 @@ void PlayerCmd_GetSteamID(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -118,7 +122,7 @@ void PlayerCmd_GetSteamID64(scr_entref_t arg)
     mvabuf;
     char str[128];
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -126,7 +130,7 @@ void PlayerCmd_GetSteamID64(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -164,7 +168,7 @@ void PlayerCmd_GetPlayerID(scr_entref_t arg)
     mvabuf;
     char str[128];
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -172,7 +176,7 @@ void PlayerCmd_GetPlayerID(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -210,7 +214,7 @@ void PlayerCmd_GetPlayerID64(scr_entref_t arg)
     mvabuf;
     char str[128];
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -218,7 +222,7 @@ void PlayerCmd_GetPlayerID64(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -256,7 +260,7 @@ void PlayerCmd_GetGuid(scr_entref_t arg)
     char buf[128];
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -264,7 +268,7 @@ void PlayerCmd_GetGuid(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -312,7 +316,7 @@ void PlayerCmd_GetPower(scr_entref_t arg)
     client_t *cl;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -320,7 +324,7 @@ void PlayerCmd_GetPower(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -348,7 +352,7 @@ void PlayerCmd_SetPower(scr_entref_t arg)
     client_t *cl;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -356,7 +360,7 @@ void PlayerCmd_SetPower(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -387,7 +391,7 @@ void PlayerCmd_SetStat(scr_entref_t arg)
     int numparms, index, value;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -396,7 +400,7 @@ void PlayerCmd_SetStat(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -438,7 +442,7 @@ void PlayerCmd_GetStat(scr_entref_t arg)
     mvabuf;
     int entityNum;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -447,7 +451,7 @@ void PlayerCmd_GetStat(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -493,7 +497,7 @@ void PlayerCmd_GetUserinfo(scr_entref_t arg)
     client_t *cl;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -501,7 +505,7 @@ void PlayerCmd_GetUserinfo(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -540,7 +544,7 @@ void PlayerCmd_GetPing(scr_entref_t arg)
     client_t *cl;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -548,7 +552,7 @@ void PlayerCmd_GetPing(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -583,7 +587,7 @@ void PlayerCmd_SetGravity(scr_entref_t arg)
     int gravity;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -592,7 +596,7 @@ void PlayerCmd_SetGravity(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -615,9 +619,7 @@ void PlayerCmd_SetGravity(scr_entref_t arg)
         return;
     }
 
-    Pmove_ExtendedTurnOn();
-
-    svs.clients[entityNum].gravity = gravity;
+    gentity->client->ps.gravity = gravity;
     SV_SendServerCommandNoLoss(&svs.clients[entityNum], va("v g_gravity \"%d\"", gravity));
 }
 
@@ -643,14 +645,14 @@ void PlayerCmd_SetGroundReferenceEnt(scr_entref_t arg)
     int otherEntityNum = 0;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
         Scr_ObjectError("Not an entity");
         return;
     }
     else
     {
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -704,9 +706,8 @@ void PlayerCmd_SetJumpHeight(scr_entref_t arg)
     gentity_t *gentity;
     int entityNum = 0;
     int height;
-    mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -715,7 +716,7 @@ void PlayerCmd_SetJumpHeight(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -737,11 +738,8 @@ void PlayerCmd_SetJumpHeight(scr_entref_t arg)
         Scr_Error("setjumpheight range is between 1 and 50000\n");
         return;
     }
-
-    Pmove_ExtendedTurnOn();
-
-    svs.clients[entityNum].jumpHeight = height;
-    SV_SendServerCommandNoLoss(&svs.clients[entityNum], va("v jump_height \"%d\"", height));
+    gentity->client->jumpHeight = height;
+    SV_GameSendServerCommand(entityNum, 1, va("v jump_height \"%d\"", height));
 }
 
 /*
@@ -761,7 +759,7 @@ void PlayerCmd_SetMoveSpeed(scr_entref_t arg)
     int speed;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -770,7 +768,7 @@ void PlayerCmd_SetMoveSpeed(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -787,15 +785,13 @@ void PlayerCmd_SetMoveSpeed(scr_entref_t arg)
 
     speed = Scr_GetInt(0);
 
-    if (speed < 0 || speed > 50000)
+    if (speed <= 0 || speed > 50000)
     {
         Scr_Error("setmovespeed range is between 0 and 50000\n");
         return;
     }
-
-    Pmove_ExtendedTurnOn();
-
-    svs.clients[entityNum].playerMoveSpeed = speed;
+    gentity->client->sess.moveSpeedScaleMultiplier = speed / g_speed->integer;
+    Com_PrintWarning(CON_CHANNEL_SCRIPT, "PlayerCmd_SetMoveSpeed() is deprecated! Please use setmovespeedscale(speed / 190)\n");
 }
 
 /*
@@ -823,7 +819,7 @@ void PlayerCmd_GetGeoLocation(scr_entref_t arg)
     const char *countryname;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -832,7 +828,7 @@ void PlayerCmd_GetGeoLocation(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -1384,9 +1380,8 @@ void GScr_StrPixLen()
 ============
 GScr_StrColorStrip
 
-Directly cleans the given string from all colorscodes. The original string will be modified!
-If it is required that the original string remains you need to create a copy of string prior with copystr()
-Usage: void = StrColorStrip(string <string>);
+Cleans the given string from all colorscodes.
+Usage: string = StrColorStrip(string <string>);
 ============
 */
 
@@ -1397,20 +1392,21 @@ void GScr_StrColorStrip()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: StrColorStrip(<string>)\n");
+        Scr_Error("Usage:string = StrColorStrip(<string>)\n");
     }
 
     char *string = Scr_GetString(0);
 
-    int i;
+    int i, j;
 
-    Q_strncpyz(buffer, string, sizeof(buffer));
-
-    for (i = 0; buffer[i]; i++)
+    for (i = 0, j = 0; string[i]; ++i)
     {
-        if (buffer[i] == '^' && buffer[i + 1] >= '0' && buffer[i + 1] <= '9')
+        if (string[i] == '^' && string[i + 1] >= '0' && string[i + 1] <= '9')
         {
-            buffer[i + 1] = '7';
+            ++i;
+        }else{
+            buffer[j] = string[i];
+            ++j;
         }
     }
     Scr_AddString(buffer);
@@ -1446,23 +1442,30 @@ void GScr_StrRepl()
     Scr_AddString(buffer);
 }
 
+
 /*
 ============
-GScr_CopyString
+GScr_Pow
 
-Creates a real copy of the given string and returns the location of the newly created copy
-Usage: string = CopyStr(string <string>);
+Calculate a number with exponent.
+Usage: float = pow(base <float>, exponent <float>);
 ============
 */
 
-void GScr_CopyString()
+void GScr_Pow()
 {
-
-    if (Scr_GetNumParam() != 1)
+    float base, exponent;
+    
+    if (Scr_GetNumParam() != 2)
     {
-        Scr_Error("Usage: CopyStr(<string>)\n");
+        Scr_Error("Usage: pow(<float> ,<float>)");
+        return;
     }
-    Scr_AddString(Scr_GetString(0));
+
+    base = Scr_GetFloat(0);
+    exponent = Scr_GetFloat(1);
+    
+    Scr_AddFloat(powf(base, exponent));
 }
 
 /*
@@ -1878,7 +1881,7 @@ void GScr_FS_InitParamList(){
 
 
     if(scr_fopencount == MAX_SCRIPT_FILEHANDLES -1){
-        Scr_Error(va("FS_FOpen(): Exceeded limit of %i opened files\n", MAX_SCRIPT_FILEHANDLES));
+        Scr_Error(va("FS_FOpen(): Exceeded limit of %i opened files\n", MAX_SCRIPT_FILEHANDLES), false);
     }
 
     if(Q_stricmp(mode, "read")){
@@ -2094,7 +2097,7 @@ void PlayerCmd_spawn(scr_entref_t arg)
 
     int entityNum = 0;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
 
         Scr_ObjectError("Not an entity");
@@ -2102,7 +2105,7 @@ void PlayerCmd_spawn(scr_entref_t arg)
     else
     {
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -2184,13 +2187,13 @@ void HECmd_SetText(scr_entref_t entnum)
 {
     char buffer[1024];
 
-    if (HIWORD(entnum) != 1)
+    if (entnum.classnum != 1)
     {
         Scr_ObjectError("G_HudSetText: Not a hud element");
         return;
     }
 
-    game_hudelem_t *element = &g_hudelems[LOWORD(entnum)];
+    game_hudelem_t *element = &g_hudelems[entnum.entnum];
 
     HudElem_ClearTypeSettings(element);
 
@@ -2467,9 +2470,10 @@ void GScr_Spawn()
     }
 }
 
+
 void GScr_SpawnHelicopter()
 {
-    const char *type;
+    const char *vehicleInfoName;
     const char *model;
     gentity_t *newent;
     gentity_t *ownerent;
@@ -2484,12 +2488,12 @@ void GScr_SpawnHelicopter()
     }
     Scr_GetVector(1, position);
     Scr_GetVector(2, rotation);
-    type = Scr_GetString(3);
+    vehicleInfoName = Scr_GetString(3);
     model = Scr_GetString(4);
 
     newent = G_Spawn();
 
-    Scr_SetString(&newent->classname, (unsigned short)stringIndex.script_vehicle);
+    Scr_SetString(&newent->classname, (unsigned short)scr_const.script_vehicle);
 
     newent->r.currentOrigin[0] = position[0];
     newent->r.currentOrigin[1] = position[1];
@@ -2498,7 +2502,7 @@ void GScr_SpawnHelicopter()
     newent->r.currentAngles[1] = rotation[1];
     newent->r.currentAngles[2] = rotation[2];
 
-    G_SpawnHelicopter(newent, ownerent, type, model);
+    G_SpawnHelicopter(newent, ownerent, vehicleInfoName, model);
 
     Scr_AddEntity(newent);
 }
@@ -2587,14 +2591,14 @@ void ScrCmd_SetStance(scr_entref_t arg){
     short strindex;
     mvabuf;
 
-    if(HIWORD(arg)){
+    if(arg.classnum){
 
         Scr_ObjectError("Not an entity");
         return;
 
     }else{
 
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if(!gentity->client){
@@ -2609,21 +2613,21 @@ void ScrCmd_SetStance(scr_entref_t arg){
 
     strindex = Scr_GetConstString(0);
 
-    if(strindex == stringIndex.prone){
+    if(strindex == scr_const.prone){
 
 	gentity->client->ps.stance = 1;
 
-    }else if(strindex == stringIndex.crouch){
+    }else if(strindex == scr_const.crouch){
 
 	gentity->client->ps.stance = 2;
 
-    }else if(strindex == stringIndex.stand){
+    }else if(strindex == scr_const.stand){
 
 	gentity->client->ps.stance = 3;
 
     }else{
 
-        Scr_Error(va("Illegal stance string: '%s'." ,SL_ConvertToString(strindex)));
+        Scr_Error(va("Illegal stance string: '%s'." ,SL_ConvertToString(strindex)), false);
     }
 
 }
@@ -2634,7 +2638,7 @@ void PlayerCmd_ForwardButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> ForwardButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2647,7 +2651,7 @@ void PlayerCmd_BackButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> BackButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2660,7 +2664,7 @@ void PlayerCmd_MoveLeftButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> MoveLeftButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2673,7 +2677,7 @@ void PlayerCmd_MoveRightButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> MoveRightButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2686,7 +2690,7 @@ void PlayerCmd_SprintButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> SprintButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2699,7 +2703,7 @@ void PlayerCmd_ReloadButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> ReloadButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2712,7 +2716,7 @@ void PlayerCmd_LeanLeftButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> LeanLeftButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2725,7 +2729,7 @@ void PlayerCmd_LeanRightButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> LeanRightButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2738,7 +2742,7 @@ void PlayerCmd_IsProning(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> IsProning()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2751,7 +2755,7 @@ void PlayerCmd_IsCrouching(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> IsCrouching()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2764,7 +2768,7 @@ void PlayerCmd_IsStanding(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> IsStanding()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2777,7 +2781,7 @@ void PlayerCmd_JumpButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> JumpButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2790,7 +2794,7 @@ void PlayerCmd_IsInADS(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> IsInADS()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2803,7 +2807,7 @@ void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> HoldBreathButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2811,12 +2815,12 @@ void PlayerCmd_HoldBreathButtonPressed(scr_entref_t object)
     Scr_AddBool(cl->lastUsercmd.buttons & KEY_MASK_HOLDBREATH ? qtrue : qfalse);
 }
 
-void PlayerCmd_ADSButtonPressed(scr_entref_t object)
+void PlayerCmd_AimButtonPressed(scr_entref_t object)
 {
     if (Scr_GetNumParam())
         Scr_Error("Usage: <client> AimButtonPressed()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(object);
+    client_t *cl = VM_GetClientForEntRef(object);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2829,7 +2833,7 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
     if (Scr_GetNumParam())
         Scr_Error("Usage: <player entity> GetCountedFPS()\n");
 
-    client_t *cl = VM_GetClientForEntityNumber(arg);
+    client_t *cl = VM_GetClientForEntRef(arg);
 
     if (!cl)
         Scr_ObjectError("not a client\n");
@@ -2870,13 +2874,13 @@ void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg)
     int entityNum = 0;
     mvabuf;
 
-    if (HIWORD(arg))
+    if (arg.classnum)
     {
         Scr_ObjectError("Not an entity");
     }
     else
     {
-        entityNum = LOWORD(arg);
+        entityNum = arg.entnum;
         gentity = &g_entities[entityNum];
 
         if (!gentity->client)
@@ -2911,26 +2915,26 @@ void PlayerCmd_GetSteamGroupMembership(scr_entref_t arg)
 
 void Scr_PrecacheString_f()
 {
-    char *locStrName = NULL;
+    const char *locStrName = NULL;
 
-    if (*(qboolean *)0x0837045C == qfalse)
+    if (level.initializing == qfalse)
         Scr_Error("precacheString must be called before any wait statements "
                   "in the gametype or level script\n");
 
-    locStrName = Scr_GetLocalizedString(0);
+    locStrName = Scr_GetIString(0);
     if (locStrName[0])
         g_isLocStringPrecached[G_LocalizedStringIndex(locStrName)] = qtrue;
 }
 
 void Scr_Destroy_f(scr_entref_t hud_elem_num)
 {
-    if (HIWORD(hud_elem_num) != 1)
+    if (hud_elem_num.classnum != 1)
     {
         Scr_ObjectError("not a hud element");
         return;
     }
 
-    game_hudelem_t *hud_elem = &g_hudelems[LOWORD(hud_elem_num)];
+    game_hudelem_t *hud_elem = &g_hudelems[hud_elem_num.entnum];
 
     int cs_index = hud_elem->elem.text;
 
@@ -3005,12 +3009,43 @@ qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *c
 
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
 {
-    Scr_Error("Functionality dropped. To get/set spectator client number, use 'ent.spectatorClient' member instead.");
+    gentity_t *gentity;
+    int entityNum = 0;		
+    mvabuf;		
+		
+    if (arg.classnum)		
+    {		
+        Scr_ObjectError("Not an entity");		
+    }		
+    else		
+    {		
+        entityNum = arg.entnum;
+        gentity = &g_entities[entityNum];		
+		
+        if (!gentity->client)		
+        {		
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));		
+        }		
+    }		
+    if (Scr_GetNumParam())		
+    {		
+        Scr_Error("Usage: self getSpectatorClient()\n");		
+    }		
+		
+    // Player isn't spectating anyone.		
+    if (gentity->client->spectatorClient == -1)		
+    {		
+        Scr_AddUndefined();		
+    }		
+    else		
+    {		
+        Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);		
+    }		
 }
 
 void PlayerCmd_SetVelocity(scr_entref_t arg)
 {
-    gclient_t *cl = VM_GetGClientForEntityNumber(arg);
+    gclient_t *cl = VM_GetGClientForEntRef(arg);
     float velocity[3];
     if (!cl)
     {
@@ -3033,4 +3068,210 @@ void GScr_ArrayTest()
     // Does nothing for now.
     // To be implemented with other script function name.
     //Scr_GetArrayId(0);
+}
+
+
+void ScrCmd_LogString(scr_entref_t arg)
+{
+
+}
+
+void Scr_LogString()
+{
+
+}
+
+
+void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
+{
+    gentity_t *pSelf;
+    char svcmd[128];
+
+    if (Scr_GetNumParam())
+    {
+        Scr_Error("Usage: <client> getXuid()\n");
+    }
+    if (arg.classnum)
+    {
+
+        Scr_ObjectError("Not an entity");
+        return;
+    }
+    else
+    {
+        pSelf = &g_entities[arg.entnum];
+    }
+
+    if ( pSelf->client )
+    {
+        Com_sprintf(svcmd, sizeof(svcmd), "%llx", SV_GetPlayerXuid(pSelf->client->sess.cs.clientIndex));
+        Scr_AddString(svcmd);
+    }
+    else
+    {
+        Scr_AddString("0");
+    }
+}
+void GScr_Base64Encode()
+{
+    char encoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: encoded = base64Encode(\"String to be encoded\");");
+        return;
+    }
+
+    char* toEncode = Scr_GetString(0);
+    unsigned long encodedLen = sizeof(encoded);
+    base64_encode((byte*)toEncode, strlen(toEncode), (byte*)encoded, &encodedLen);
+    encoded[sizeof(encoded) - 1] = '\0';
+    Scr_AddString(encoded);
+}
+
+void GScr_Base64Decode()
+{
+    char decoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: decoded = base64Decode(\"bla-bla-bla too lazy to write proper example==\");");
+        return;
+    }
+
+    char* toDecode = Scr_GetString(0);
+    unsigned long decodedLen = sizeof(decoded);
+    base64_decode((byte*)toDecode, strlen(toDecode), (byte*)decoded, &decodedLen);
+    decoded[sizeof(decoded) - 1] = '\0';
+    Scr_AddString(decoded);
+}
+
+void GScr_IsEntity()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isEntity(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 20);
+}
+
+void GScr_IsVector()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isVector(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 4);
+}
+
+/*void GScr_IsString()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isString(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 2);
+}*/
+
+void GScr_IsFloat()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isFloat(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 5);
+}
+
+void GScr_IsInt()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isInt(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 6);
+}
+
+void GScr_Float()
+{
+    mvabuf;
+
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: floatVal = float(<float, int, bool or string>);");
+        return;
+    }
+
+    int varType = Scr_GetType(0);
+    if (varType == 5)
+        Scr_AddFloat(Scr_GetFloat(0));
+    else if (varType == 6)
+        Scr_AddFloat(1.0 * Scr_GetInt(0));
+    else if (varType == 2)
+    {
+        char* strFloat = Scr_GetString(0);
+        double result = 0.0;
+        if ( isdigit(strFloat[0]) || (strFloat[0] == '-' && isdigit(strFloat[1])))
+            result = atof(strFloat);
+        Scr_AddFloat((float)result);
+    }
+    else
+        Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
+}
+
+void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
+{
+    // Common checks.
+    if (Scr_GetNumParam() != 1)
+        Scr_Error("usage: <scriptModelEnt> CloneBrushModelToScriptModel(<brushModelEnt>)");
+
+    // Object checks.
+    gentity_t* scriptEnt = VM_GetGEntityForNum(scriptModelEntNum);
+    if (scriptEnt->classname != (unsigned short)scr_const.script_model)
+        Scr_ObjectError("passed entity is not a script_model entity");
+
+    if (scriptEnt->s.eType != 6)
+        Scr_ObjectError("passed entity type is not 6 (TODO: what is it?)");
+
+    // Arguments checks.
+    gentity_t* brushEnt = Scr_GetEntity(0);
+    if (brushEnt->classname != (unsigned short)scr_const.script_brushmodel && brushEnt->classname != (unsigned short)scr_const.script_model && brushEnt->classname != (unsigned short)scr_const.script_origin && brushEnt->classname != (unsigned short)scr_const.light)
+        Scr_ParamError(0, "brush model entity classname must be one of {script_brushmodel, script_model, script_origin, light}");
+
+    if (!brushEnt->s.index)
+        Scr_ParamError(0, "brush model entity has no collision model");
+
+    // Let's do this...
+    SV_UnlinkEntity(scriptEnt);
+    scriptEnt->s.index = brushEnt->s.index;
+    int contents = scriptEnt->r.contents;
+    SV_SetBrushModel(scriptEnt);
+    scriptEnt->r.contents |= contents;
+    SV_LinkEntity(scriptEnt);
+}
+
+void PlayerCmd_SetStance(scr_entref_t playerEntNum)
+{
+    if (Scr_GetNumParam() != 1)
+    Scr_Error("usage: <client> setStance(<string stance>);");
+
+    // Object check.
+    gclient_t* cl = VM_GetGClientForEntityNumber(playerEntNum);
+    if (!cl)
+        Scr_ObjectError("entity is not a client");
+
+    // Param check.
+    short stanceIdx = Scr_GetConstString(0);
+    if (stanceIdx != (unsigned short)scr_const.stand && stanceIdx != (unsigned short)scr_const.crouch && stanceIdx != (unsigned short)scr_const.prone)
+        Scr_ParamError(0, "stance must be one of {stand, crouch, prone}");
+
+    BGEvent event = stanceIdx == (unsigned short)scr_const.stand ? EV_STANCE_FORCE_STAND : stanceIdx == (unsigned short)scr_const.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
+    BG_AddPredictableEventToPlayerstate(event, 0, cl);
 }

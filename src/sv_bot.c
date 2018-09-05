@@ -147,7 +147,6 @@ int SV_BotAllocateClient( void ) {
 
 
 	Q_strncpyz(cl->name, name, sizeof(cl->name));
-	Q_strncpyz(cl->shortname, name, sizeof(cl->shortname));
 
 	/* ClientSetUsername(i, name); */
 
@@ -677,6 +676,7 @@ SV_BotInitBotLib
 ==================
 */
 void SV_BotInitBotLib( void ) {
+#if 0
 	botlib_import_t botlib_import;
 
 	SV_BotInitCvars();
@@ -718,6 +718,7 @@ void SV_BotInitBotLib( void ) {
 	// done.
 
 	botlib_export = (botlib_export_t *)GetBotLibAPI( BOTLIB_API_VERSION, &botlib_import );
+#endif
 }
 
 #if 0

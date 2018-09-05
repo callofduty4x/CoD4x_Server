@@ -109,11 +109,7 @@ __cdecl void Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type) 
 			Com_PrintRedirect(msg, msglen);
 			lock = qfalse;
 
-			if ( rd_buffer ) {
-				if(!rd_flush){
-					Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
-					return;
-				}
+			if ( rd_buffer && rd_flush) {
 				if ((msglen + strlen(rd_buffer)) > (rd_buffersize - 1)) {
 
 					lock = qtrue;
@@ -126,8 +122,8 @@ __cdecl void Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type) 
 				// TTimo nooo .. that would defeat the purpose
 				//rd_flush(rd_buffer);
 				//*rd_buffer = 0;
-				Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
-				return;
+//				Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
+//				return;
 			}
 		}
 		

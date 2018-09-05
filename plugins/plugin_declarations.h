@@ -19,8 +19,8 @@
 ===========================================================================
 */
 
-#define PLUGIN_HANDLER_VERSION_MAJOR 3
-#define PLUGIN_HANDLER_VERSION_MINOR 100
+#define PLUGIN_HANDLER_VERSION_MAJOR 4
+#define PLUGIN_HANDLER_VERSION_MINOR 000
 //PHandler v. 2.2
 
 enum Plugin_Err{	// To be used as the code argument for Plugin_Error()

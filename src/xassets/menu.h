@@ -1,11 +1,8 @@
 #pragma once
-#include "../q_math.h"
+#include "../q_shared.h"
 #include "keyword.h"
 
 typedef unsigned int uint;
-/* TODO these are a placeholders. Better to use struct definitions. */
-typedef void snd_alias_list_t;
-typedef void Material_t;
 
 typedef enum OperationEnum_t {
     OP_NOOP = 0,
@@ -417,7 +414,7 @@ typedef struct ListBoxDef_t
     int usePaging;
     vec4_t selectBorder;
     vec4_t disableColor;
-    Material_t *selectIcon;
+    struct Material *selectIcon;
 } ListBoxDef_t;
 
 typedef struct EditFieldDef_t
@@ -524,7 +521,7 @@ typedef struct WindowDef_t
     vec4_t backColor;
     vec4_t borderColor;
     vec4_t outlineColor;
-    Material_t *background;
+    struct Material *background;
 } WindowDef_t;
 
 typedef struct ItemDef_t
@@ -558,7 +555,7 @@ typedef struct ItemDef_t
     ItemKeyHandler_t *onKey;
     const char *onDvar;
     DvarFlag_t dvarFlags;
-    snd_alias_list_t *focusSound;
+    struct snd_alias_list_t *focusSound;
     float feeder;
     int cursorPos;
     ItemDefData_t typeData;

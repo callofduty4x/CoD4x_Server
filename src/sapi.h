@@ -27,9 +27,47 @@ qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uin
 
 uint64_t SV_SApiGUID2PlayerID(const char* guid);
 
+uint32_t SV_SApiGetAuthenticationTicket(unsigned char* data, int *buflen, uint64_t *steamid);
+void SV_SApiCancelAuthenticationTicket(uint32_t ticket);
 #endif
 
 #if defined(__IN_EXTSAPIMODULE__) || defined(__IN_SAPIMODULE__)
+
+#ifdef __GNUC__
+#define __packed __attribute__((__packed__))
+#else
+#define __packed
+#endif 
+
+struct __packed clientEmu_t
+{
+	//Large members first. GCC is error prone in packaging...
+	uint64_t playerid;
+	uint64_t steamid;
+	uint64_t clanid;
+	uint64_t steamidPending;
+	uint64_t clanidPending;
+	int challenge;
+	int steamstatus;
+	char *name;
+	int maxnamelen;
+	int isMember;
+	char* clantag;
+	int maxclantaglen;
+	char* legacy_pbguid;
+	int maxguidlen;
+	bool isBot;
+	bool inLevel;
+	bool isConnected;
+	bool hasValidPassword;
+};
+
+struct gclientEmu_t
+{
+	int buttons;
+	vec3_t origin;
+	vec3_t viewangles;
+};
 
 typedef struct{
 	void (*Com_Printf)( const char *fmt, ... );
@@ -40,21 +78,14 @@ typedef struct{
   void (*Com_Error)( int code, const char *fmt, ... );
 	int (*Cvar_VariableIntegerValue)( const char *var_name );
 	const char *(*Cvar_VariableStringBuffer)( const char *var_name, char *buf, int sizebuf );
-#ifndef __cplusplus
-	void (*SV_DropClientNoNotify)( client_t *drop, const char *reason );
-	void (*SV_DropClient)( client_t *drop, const char *reason );
-	void (*SV_SendReliableServerCommand)(client_t* client, msg_t *msg);
-	void (*SV_AddBanForClient)(client_t* cl, int bantime, const char* banreason);
-	void (*SV_ScreenshotArrived)(client_t* cl, const char* filename);
-    void (*SV_ModuleArrived)(client_t* cl, const char* filename, long checksum);
-#else
-	void (*SV_DropClientNoNotify)( void *drop, const char *reason );
-	void (*SV_DropClient)( void *drop, const char *reason );
-	void (*SV_SendReliableServerCommand)(void* client, void *msg);
-	void (*SV_AddBanForClient)(void* cl, int bantime, const char* banreason);
-	void (*SV_ScreenshotArrived)(void* cl, const char* filename);
-    void (*SV_ModuleArrived)(void* cl, const char* filename, long checksum);
-#endif
+
+	void (*SAPI_DropClientNoNotify)( unsigned int drop, const char *reason );
+	void (*SAPI_DropClient)( unsigned int drop, const char *reason );
+	void (*SAPI_SendReliableServerCommand)(unsigned int client, msg_t *msg);
+	void (*SAPI_AddBanForClient)(unsigned int cl, int bantime, const char* banreason);
+	void (*SAPI_ScreenshotArrived)(unsigned int cl, const char* filename);
+    void (*SAPI_ModuleArrived)(unsigned int cl, const char* filename, long checksum);
+
 	int (*FS_SV_HomeWriteFile)( const char *qpath, const void *buffer, int size);
 	unsigned int (*Sys_Milliseconds)();
 	int (*pkcs_5_alg2)(const unsigned char *password, unsigned long password_len,
@@ -66,23 +97,27 @@ typedef struct{
 	cvar_t* (*Cvar_RegisterString)(const char *var_name, const char *var_value, unsigned short flags, const char *var_description);
 	cvar_t* (*Cvar_RegisterBool)(const char *var_name, qboolean var_value, unsigned short flags, const char *var_description);
 	void (*Cvar_SetString)(cvar_t*, const char*);
+	void (*SetClientData)(unsigned int clnum, struct clientEmu_t *emu);
+	void (*GetClientData)(unsigned int clnum, struct clientEmu_t *emu);
+	void (*GetGameClientData)(unsigned int clnum, struct gclientEmu_t *emu);
 }imports_t;
 
 
-#ifdef __SERVER_H__
 typedef struct{
-	void (*TakeSS)(client_t* cl, const char* savename);
-	void (*ReadSS)( client_t* cl, msg_t* msg );
-    void (*SendModuleRequest)(client_t* cl);
-    void (*ProcessModules)(client_t* cl, msg_t* msg);
+	void (*TakeSS)(unsigned int num, const char* savename);
+	void (*ReadSS)( unsigned int num, msg_t* msg );
+    void (*SendModuleRequest)(unsigned int num);
+    void (*ProcessModules)(unsigned int num, msg_t* msg);
 	void (*Shutdown)();
-	void (*Data)(client_t* cl, msg_t* msg);
-	int (*Connect)(client_t* client);
-	void (*NotifyDisconnect)(client_t* drop);
+	void (*Data)(unsigned int num, msg_t* msg);
+	int (*Connect)(unsigned int num);
+	void (*NotifyDisconnect)(unsigned int num);
 	void (*RunFrame)();
 	bool (*SteamGetGroupMemberStatusByClientNum)(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)); //reference is user configurable variable passed back to callback
+	uint32_t (*GetAuthenticationTicket)(unsigned char* data, int *buflen, uint64_t* steamid); //To authenticate this server towards other servers
+	void (*CancelAuthenticationTicket)(uint32_t ticket); //To authenticate this server towards other servers
 }exports_t;
-#endif
 
 
 #endif
+

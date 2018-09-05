@@ -1,4 +1,4 @@
-#include "q_shared.h"
+#include "win_localize.h"
 #include "filesystem.h"
 
 #define LANGUAGE_BUF_SIZE 4096
@@ -78,45 +78,34 @@ char *__cdecl Win_LocalizeRef(const char *ref)
 {
   const char *strings;
   int useRef;
-  const char *token;
+  parseInfo_t *token;
 
   Com_BeginParseSession("localization");
   strings = localization.strings;
   while ( 1 )
   {
     token = Com_Parse(&strings);
-    if ( !*token )
+    if ( !token->token[0] )
     {
       Com_EndParseSession();
-/*
-      v1 = va("unlocalized: %s", ref);
-      if ( !(unsigned __int8)Assert_MyHandler("C:\\projects_pc\\cod\\codsrc\\src\\win32\\win_localize.cpp", 112, 0, v1) )
-      {
-        __debugbreak();
-      }
-*/
+      assertx(1 == 0, "unlocalized: %s", ref);
       return Win_CopyLocalizationString(ref);
     }
-    useRef = strcmp(token, ref) == 0;
+    useRef = strcmp(token->token, ref) == 0;
     token = Com_Parse(&strings);
-    if ( !*token )
+    if ( !token->token[0] )
     {
       break;
     }
     if ( useRef )
     {
       Com_EndParseSession();
-      return Win_CopyLocalizationString(token);
+      return Win_CopyLocalizationString(token->token);
     }
   }
   Com_EndParseSession();
-/*
-  v3 = va("missing value: %s", ref);
-  if ( !(unsigned __int8)Assert_MyHandler("C:\\projects_pc\\cod\\codsrc\\src\\win32\\win_localize.cpp", 121, 0, v3) )
-  {
-    __debugbreak();
-  }
-*/
+
+  assertx(1 == 0, "missing value: %s", ref);
   return Win_CopyLocalizationString(ref);
 }
 

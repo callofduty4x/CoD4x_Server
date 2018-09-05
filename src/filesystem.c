@@ -265,7 +265,8 @@ FS_Initialized
 
 qboolean FS_Initialized() {
 
-	return (fs_searchpaths != NULL);
+	bool init = (fs_searchpaths != NULL);
+	return init;
 }
 
 /*
@@ -1690,6 +1691,10 @@ long FS_SV_FOpenFileRead( const char *filename, fileHandle_t *fp ) {
 		Com_Error( ERR_FATAL, "Filesystem call made without initialization" );
 	}
 
+	if(filename == NULL || filename[0] == 0)
+	{
+		return 0;
+	}
 
 	f = FS_HandleForFile();
 	if(f == 0){
@@ -2840,9 +2845,9 @@ void FS_Startup(const char *gameName)
     cvar_t *levelname;
     mvabuf;
 
-    Sys_EnterCriticalSection(CRITSECT_FILESYSTEM);
-
     Com_Printf(CON_CHANNEL_FILES,"----- FS_Startup -----\n");
+
+    Sys_EnterCriticalSection(CRITSECT_FILESYSTEM);
 
     fs_packFiles = 0;
 
@@ -4547,11 +4552,11 @@ int __cdecl FS_OpenFileOverwrite(const char *qpath)
   {
     Com_Printf(CON_CHANNEL_FILES, "FS_FOpenFileOverWrite: %s\n", ospath);
   }
-  v1 = GetFileAttributesA(ospath);
+  v1 = _GetFileAttributesA(ospath);
   attributes = v1 & 0xFFFFFFFE;
   if (attributes != v1 )
   {
-    SetFileAttributesA(ospath, attributes);
+    _SetFileAttributesA(ospath, attributes);
   }
   return FS_GetHandleAndOpenFile(qpath, ospath, 0);
 }
@@ -4811,4 +4816,158 @@ char *__cdecl FS_GetMapBaseName(const char *mapname)
   }
   return basename;
 }
+
+//8kbyte buffer
+#define DEFAULT_LOGFILEBUFFER (1024*8)
+
+void FS_CloseLogFile(fileHandle_t f)
+{
+    fileHandleData_t *fhd;
+
+    if(f < 1)
+    {
+        return;
+    }
+
+    fhd = &fsh[f];
+    Z_Free(fhd->writebuffer);
+    FS_FCloseFile( f );
+}
+
+
+fileHandle_t FS_OpenLogfile(const char* name, char mode)
+{
+	fileHandle_t logfile;
+	fileHandleData_t *fhd;
+
+	switch( mode)
+	{
+		case 'w':
+			logfile = FS_FOpenFileWrite( name );
+			break;
+		case 'a':
+			logfile = FS_FOpenFileAppend( name );
+			break;
+		default:
+			logfile = 0;
+	}
+	if(!logfile)
+	{
+		return 0;
+	}
+	fhd = &fsh[logfile];
+
+	fhd->writebuffer = Z_Malloc(DEFAULT_LOGFILEBUFFER);
+	if(fhd->writebuffer == NULL)
+	{
+		FS_FCloseFile( logfile );
+		return 0;
+	}
+	fhd->bufferSize = DEFAULT_LOGFILEBUFFER;
+	fhd->bufferPos = 0;
+	fhd->rbufferPos = 0;
+	return logfile;
+}
+
+int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h )
+{
+	fileHandleData_t *fhd;
+	int remaining;
+	int writelen;
+	int i, len;
+	len = ilen;
+
+	fhd = &fsh[h];
+	if(fhd->writebuffer == NULL)
+	{
+		Com_Error(ERR_FATAL, "attempted to use FS_WriteLog on a non logfile handle");
+	}
+
+	Sys_EnterCriticalSection(CRITSECT_LOGFILETHREAD);
+
+	if(fhd->bufferPos >= fhd->rbufferPos)
+	{
+	    remaining = DEFAULT_LOGFILEBUFFER - (fhd->bufferPos - fhd->rbufferPos) -1;
+	}else{
+	    remaining = (fhd->rbufferPos - fhd->bufferPos) -1;
+	}
+
+	writelen = len;
+	if(remaining < writelen)
+	{
+		writelen = remaining;
+	}
+	int index;
+	for(i = 0; i < writelen; ++i)
+	{
+		index = (fhd->bufferPos + i) % DEFAULT_LOGFILEBUFFER;
+		((char*)fhd->writebuffer)[index] = ((char*)buffer)[i];
+	}
+	fhd->bufferPos = (fhd->bufferPos + i) % DEFAULT_LOGFILEBUFFER;
+
+	Sys_LeaveCriticalSection(CRITSECT_LOGFILETHREAD);
+
+	return writelen;
+}
+
+
+void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the logwrite thread
+{
+	fileHandleData_t *fhd;
+	int remaining;
+	int i;
+	char cpybuffer[DEFAULT_LOGFILEBUFFER];
+
+	if(h < 1)
+	{
+		return;
+	}
+
+	fhd = &fsh[h];
+	if(fhd->writebuffer == NULL)
+	{
+		Com_Error(ERR_FATAL, "attempted to use FS_WriteLog on a non logfile handle");
+	}
+
+	Sys_EnterCriticalSection(CRITSECT_LOGFILETHREAD);
+
+	if(fhd->bufferPos == fhd->rbufferPos)
+	{
+		Sys_LeaveCriticalSection(CRITSECT_LOGFILETHREAD);
+		return;
+	}
+
+	if(fhd->bufferPos >= fhd->rbufferPos)
+	{
+	    remaining = (fhd->bufferPos - fhd->rbufferPos);
+	}else{
+	    remaining = DEFAULT_LOGFILEBUFFER - (fhd->rbufferPos - fhd->bufferPos);
+	}
+
+	assert(remaining <= DEFAULT_LOGFILEBUFFER);
+
+	for(i = 0; i < remaining; ++i)
+	{
+	    ((char*)cpybuffer)[i] = ((char*)fhd->writebuffer)[(fhd->rbufferPos + i) % DEFAULT_LOGFILEBUFFER];
+	}
+	fhd->rbufferPos = fhd->bufferPos;
+
+	Sys_LeaveCriticalSection(CRITSECT_LOGFILETHREAD);
+
+	int written = fwrite (cpybuffer, 1, remaining, fhd->handleFiles.file.o);
+	if (written == 0) {
+		Sys_Print("FS_WriteLogFlush: 0 bytes written\n" );
+		return;
+	}
+
+	if (written == -1) {
+		Sys_Print("FS_WriteLogFlush: -1 bytes written\n" );
+		return;
+	}
+	if ( fhd->handleSync ) {
+		fflush( fhd->handleFiles.file.o );
+	}
+
+}
+
 

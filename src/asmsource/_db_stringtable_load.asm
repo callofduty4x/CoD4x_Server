@@ -3,27 +3,10 @@
 	extern SL_AddUser
 
 ;Exports of db_stringtable_load:
-	global Load_ScriptStringCustom
 	global Mark_ScriptStringCustom
 
 
 SECTION .text
-
-
-;Load_ScriptStringCustom(unsigned short*)
-Load_ScriptStringCustom:
-	push ebp
-	mov ebp, esp
-	mov ecx, [ebp+0x8]
-	mov eax, varXAssetList
-	mov eax, [eax]
-	movzx edx, word [ecx]
-	mov eax, [eax+0x4]
-	mov eax, [eax+edx*4]
-	mov [ecx], ax
-	pop ebp
-	ret
-	nop
 
 
 ;Mark_ScriptStringCustom(unsigned short*)

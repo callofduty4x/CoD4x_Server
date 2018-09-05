@@ -20,7 +20,7 @@
 ===========================================================================
 */
 
-
+#include "g_sv_main.h"
 #include "q_shared.h"
 #include "qcommon_io.h"
 #include "cvar.h"
@@ -46,6 +46,7 @@ cvar_t*  g_gametype;
 cvar_t*  g_synchronousClients;
 cvar_t*  g_log;
 cvar_t*  g_logSync;
+cvar_t*  g_logTimeStampInSeconds;
 cvar_t*  g_banIPs;
 cvar_t*  g_gravity;
 cvar_t*  g_knockback;
@@ -367,7 +368,7 @@ __cdecl void ExitLevel( void ) {
 		if ( gcl->sess.connected != CON_CONNECTED ) {
 			continue;
 		}
-		gcl->sess.scoreboard.score = 0;
+		gcl->sess.score = 0;
 		// change all client states to connecting, so the early players into the
 		// next level will know the others aren't done reconnecting
 		if(cl->netchan.remoteAddress.type != NA_BOT)
@@ -410,103 +411,6 @@ void G_SetSavePersist(int val){
 
 	level.savePersist = val;
 }
-
-
-/*
-=================
-G_LogPrintf
-
-Print to the logfile with a time stamp if it is open
-=================
-*/
-__cdecl void QDECL G_LogPrintf( const char *fmt, ... ) {
-
-	va_list argptr;
-
-	char string[1024];
-	int stringlen;
-	int min, tens, sec;
-	int timelen;
-
-	sec = level.time / 1000;
-
-	min = sec / 60;
-	sec -= min * 60;
-	tens = sec / 10;
-	sec -= tens * 10;
-
-	Com_sprintf( string, sizeof( string ), "%3i:%i%i ", min, tens, sec );
-
-	timelen = strlen(string);
-
-	va_start( argptr, fmt );
-	Q_vsnprintf( string + timelen, sizeof( string ) - timelen, fmt, argptr );
-
-	va_end( argptr );
-
-	stringlen = strlen( string );
-
-	G_PrintRedirect(string, stringlen);
-
-	if ( !level.logFile ) {
-		return;
-	}
-
-#ifdef _WIN32
-	char outstring[2048];
-	stringlen = Q_strLF2CRLF(string, outstring, sizeof(outstring) );
-	FS_Write( outstring, stringlen, level.logFile );
-#else
-	FS_Write( string, stringlen, level.logFile );
-#endif
-}
-
-#define MAX_REDIRECTDESTINATIONS 4
-
-static void (*rd_destinations[MAX_REDIRECTDESTINATIONS])( const char *buffer, int len );
-
-void G_PrintRedirect(char* msg, int len)
-{
-
-    int i;
-
-    for(i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
-    {
-        if(rd_destinations[i] == NULL)
-            return;
-
-        rd_destinations[i](msg, len);
-
-    }
-
-}
-/*
-    To Add:
-    HL2Rcon_SourceRconSendGameLog(string, stringlen);
-*/
-
-
-void G_PrintAddRedirect(void (*rd_dest)( const char *, int))
-{
-    int i;
-
-    for(i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
-    {
-        if(rd_destinations[i] == rd_dest)
-        {
-            Com_Error(ERR_FATAL, "G_PrintAddRedirect: Attempt to add an already defined redirect function twice.");
-            return;
-        }
-
-        if(rd_destinations[i] == NULL)
-        {
-            rd_destinations[i] = rd_dest;
-            return;
-        }
-    }
-    Com_Error(ERR_FATAL, "G_PrintAddRedirect: Out of redirect handles. Increase MAX_REDIRECTDESTINATIONS to add more redirect destinations");
-}
-
 
 
 
@@ -717,8 +621,8 @@ void BG_RegisterCvars()
 	 player_sprintStrafeSpeedScale = Cvar_RegisterFloat( "player_sprintStrafeSpeedScale", 0.667, 0.0, 5000.0, 0x180u, "The speed at which you can strafe while sprinting");
 	 player_sprintCameraBob = Cvar_RegisterFloat( "player_sprintCameraBob", 0.5, 0.0, 2.0, 0x180u, "The speed the camera bobs while you sprint");
 	 player_turnAnims = Cvar_RegisterBool( "player_turnAnims", 0, 0x180u, "Use animations to turn a player's model in multiplayer");
-	 player_dmgtimer_timePerPoint = Cvar_RegisterFloat( "player_dmgtimer_timePerPoint", 100.0, 0.0, 3.4028235e38, 0x180u, "The time in milliseconds that the player is slowed down per point of damage");
-	 player_dmgtimer_maxTime = Cvar_RegisterFloat( "player_dmgtimer_maxTime", 750.0, 0.0, 3.4028235e38, 0x180u, "The maximum time that the player is slowed due to damage");
+	 player_dmgtimer_timePerPoint = Cvar_RegisterFloat( "player_dmgtimer_timePerPoint", 100.0, 0.0, 30000.0, 0x180u, "The time in milliseconds that the player is slowed down per point of damage");
+	 player_dmgtimer_maxTime = Cvar_RegisterFloat( "player_dmgtimer_maxTime", 750.0, 0.0, 64000.0, 0x180u, "The maximum time that the player is slowed due to damage");
 	 player_dmgtimer_minScale = Cvar_RegisterFloat( "player_dmgtimer_minScale", 0.0, 0.0, 1.0, 0x180u, "The minimum scale value to slow the player by when damaged");
 	 player_dmgtimer_stumbleTime = Cvar_RegisterInt( "player_dmgtimer_stumbleTime", 500, 0, 2000, 0x180u, "Maximum time to play stumble animations");
 	 player_dmgtimer_flinchTime = Cvar_RegisterInt( "player_dmgtimer_flinchTime", 500, 0, 2000, 0x180u, "Maximum time to play flinch animations");
@@ -777,8 +681,10 @@ void __cdecl G_RegisterCvars()
 	 Cvar_RegisterString("gamedate", "Feb 12 2009", 0x40u, "The date compiled");
 	 Cvar_RegisterString("sv_mapname", "", 0x44u, "The current map name");
 	 g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24u, "The current campaign");
+	 g_maxclients = Cvar_RegisterInt("g_maxclients", SV_GameGetMaxClients(), 1, 64, CVAR_ROM, "Max clients allowed on server - use sv_maxclients to change");
 	 g_synchronousClients = Cvar_RegisterBool("g_synchronousClients", 0, 8u, "Call 'client think' exactly once for each server frame to make smooth demos");
 	 g_log = Cvar_RegisterString("g_log", "games_mp.log", 1u, "Log file name");
+	 g_logTimeStampInSeconds = Cvar_RegisterBool("g_logTimeStampInSeconds", 0, 1u, "Enable logging with time stamps in seconds since UTC 1/1/1970");
 	 g_logSync = Cvar_RegisterBool("g_logSync", 0, 1u, "Enable synchronous logging");
 	 g_banIPs = Cvar_RegisterString("g_banIPs", "", 1u, "IP addresses to ban from playing");
 	 g_gravity = Cvar_RegisterFloat("g_gravity", 800.0, 1.0, 3.4028235e38, 0, "Game gravity in inches per second per second");
@@ -822,7 +728,7 @@ void __cdecl G_RegisterCvars()
 	 g_TeamColor_Spectator = Cvar_RegisterColor( "g_TeamColor_Spectator", 0.25, 0.25, 0.25, 1.0, 0x100u, "Spectator team color");
 	 g_TeamColor_Free = Cvar_RegisterColor("g_TeamColor_Free", 0.75, 0.25, 0.25, 1.0, 0x100u, "Free Team color");
 	 g_smoothClients = Cvar_RegisterBool("g_smoothClients", qtrue, 0, "Enable extrapolation between client states");
-	 g_antilag = Cvar_RegisterBool("g_antilag", qtrue, 0x40u, "Turn on antilag checks for weapon hits");
+	 g_antilag = Cvar_RegisterBool("g_antilag", qtrue, 0x0u, "Turn on antilag checks for weapon hits");
 	 g_oldVoting = Cvar_RegisterBool("g_oldVoting", qtrue, 1u, "Use old voting method");
 	 g_voteAbstainWeight = Cvar_RegisterFloat( "g_voteAbstainWeight", 0.5, 0.0, 1.0, 1u, "How much an abstained vote counts as a 'no' vote");
 	 g_NoScriptSpam = Cvar_RegisterBool("g_no_script_spam", 0, 0, "Turn off script debugging info");
@@ -852,273 +758,7 @@ void __cdecl G_RegisterCvars()
 	 g_fogHalfDistReadOnly = Cvar_RegisterFloat( "g_fogHalfDistReadOnly", 0.1, 0.0, 3.4028235e38, 0x10C0u, "Fog start distance that was set in the most recent call to \"setexpfog\"");
 
 
-	G_CopyCvars();
 	Cvar_SetCheatState();
-}
-
-
-
-
-
-
-
-
-
-
-
-void G_CopyCvars()
-{
-    /* g_maxclients */
-   *(cvar_t**)0x84bcfe8 = sv_maxclients;
-    /* g_com_dedicated */
-   *(cvar_t**)0x84bcfec = com_dedicated;
-
-   *(cvar_t**)0x84BCFF8 = sv_cheats;
-   *(cvar_t**)0x84BCFE0 = g_gametype;
-   *(cvar_t**)0x84BD024 = g_synchronousClients;
-   *(cvar_t**)0x84BD054 = g_log;
-   *(cvar_t**)0x84BD058 = g_logSync;
-   *(cvar_t**)0x84BD06C = g_banIPs;
-   *(cvar_t**)0x84BCFF4 = g_gravity;
-   *(cvar_t**)0x84BCFFC = g_knockback;
-   *(cvar_t**)0x84BD01C = g_maxDroppedWeapons;
-   *(cvar_t**)0x84BD008 = g_inactivity;
-   *(cvar_t**)0x84BD00C = g_debugDamage;
-   *(cvar_t**)0x84BD010 = g_debugBullets;
-   *(cvar_t**)0x84BD014 = bullet_penetrationEnabled;
-   *(cvar_t**)0x84BD018 = g_entinfo;
-   *(cvar_t**)0x84BD020 = g_motd;
-   *(cvar_t**)0x84BD028 = g_playerCollisionEjectSpeed;
-   *(cvar_t**)0x84BD02C = g_dropForwardSpeed;
-   *(cvar_t**)0x84BD030 = g_dropUpSpeedBase;
-   *(cvar_t**)0x84BD034 = g_dropUpSpeedRand;
-   *(cvar_t**)0x84BD038 = g_dropHorzSpeedRand;
-   *(cvar_t**)0x84BD03C = g_clonePlayerMaxVelocity;
-   *(cvar_t**)0x84BD048 = voice_global;
-   *(cvar_t**)0x84BD044 = voice_localEcho;
-   *(cvar_t**)0x84BD04C = voice_deadChat;
-   *(cvar_t**)0x84BD05C = g_allowVote;
-   *(cvar_t**)0x84BD068 = g_listEntity;
-   *(cvar_t**)0x84BD064 = g_deadChat;
-   *(cvar_t**)0x84BD050 = g_voiceChatTalkingDuration;
-   *(cvar_t**)0x84BD098 = g_TeamIcon_Allies;
-   *(cvar_t**)0x84BD09C = g_TeamIcon_Axis;
-   *(cvar_t**)0x84BD0A0 = g_TeamIcon_Free;
-   *(cvar_t**)0x84BD0A4 = g_TeamIcon_Spectator;
-   *(cvar_t**)0x84BD078 = g_ScoresColor_MyTeam;
-   *(cvar_t**)0x84BD07C = g_ScoresColor_EnemyTeam;
-   *(cvar_t**)0x84BD080 = g_ScoresColor_Spectator;
-   *(cvar_t**)0x84BD084 = g_ScoresColor_Free;
-   *(cvar_t**)0x84BD08C = g_ScoresColor_Allies;
-   *(cvar_t**)0x84BD088 = g_ScoresColor_Axis;
-   *(cvar_t**)0x84BD090 = g_TeamName_Allies;
-   *(cvar_t**)0x84BD094 = g_TeamName_Axis;
-   *(cvar_t**)0x84BD0B0 = g_TeamColor_Allies;
-   *(cvar_t**)0x84BD0B4 = g_TeamColor_Axis;
-   *(cvar_t**)0x84BD0A8 = g_TeamColor_MyTeam;
-   *(cvar_t**)0x84BD0AC = g_TeamColor_EnemyTeam;
-   *(cvar_t**)0x84BD0B8 = g_TeamColor_Spectator;
-   *(cvar_t**)0x84BD0BC = g_TeamColor_Free;
-   *(cvar_t**)0x84BD074 = g_smoothClients;
-   *(cvar_t**)0x84BD0E8 = g_antilag;
-   *(cvar_t**)0x84BD0EC = g_oldVoting;
-   *(cvar_t**)0x84BD0F0 = g_voteAbstainWeight;
-   *(cvar_t**)0x84BD0C0 = g_NoScriptSpam;
-   *(cvar_t**)0x84BD0C4 = g_debugLocDamage;
-   *(cvar_t**)0x84BD0C8 = g_friendlyfireDist;
-   *(cvar_t**)0x84BD0CC = g_friendlyNameDist;
-   *(cvar_t**)0x84BD0D0 = melee_debug;
-   *(cvar_t**)0x84BD0D4 = radius_damage_debug;
-   *(cvar_t**)0x84BD0D8 = player_throwbackInnerRadius;
-   *(cvar_t**)0x84BD0DC = player_throwbackOuterRadius;
-   *(cvar_t**)0x84BD0E0 = player_MGUseRadius;
-   *(cvar_t**)0x84BD0E4 = g_minGrenadeDamageSpeed;
-   *(cvar_t**)0x84BD0FC = g_compassShowEnemies;
-   *(cvar_t**)0x84BD100 = pickupPrints;
-   *(cvar_t**)0x84BD0F4 = g_dumpAnims;
-   *(cvar_t**)0x84BD000 = g_useholdtime;
-   *(cvar_t**)0x84BD004 = g_useholdspawndelay;
-   *(cvar_t**)0x84BD0F8 = g_redCrosshairs;
-   *(cvar_t**)0x84BD040 = g_mantleBlockTimeBuffer;
-   *(cvar_t**)0x84BD104 = g_fogColorReadOnly;
-   *(cvar_t**)0x84BD108 = g_fogStartDistReadOnly;
-   *(cvar_t**)0x84BD10C = g_fogHalfDistReadOnly;
-   *(cvar_t**)0x8583B20 = vehHelicopterMaxSpeed;
-   *(cvar_t**)0x8583B24 = vehHelicopterMaxSpeedVertical;
-   *(cvar_t**)0x8583B28 = vehHelicopterMaxAccel;
-   *(cvar_t**)0x8583B2C = vehHelicopterMaxAccelVertical;
-   *(cvar_t**)0x8583B30 = vehHelicopterMaxYawRate;
-   *(cvar_t**)0x8583B34 = vehHelicopterMaxYawAccel;
-   *(cvar_t**)0x8583B38 = vehHelicopterMaxPitch;
-   *(cvar_t**)0x8583B3C = vehHelicopterMaxRoll;
-   *(cvar_t**)0x8583B40 = vehHelicopterLookaheadTime;
-   *(cvar_t**)0x8583B44 = vehHelicopterHoverSpeedThreshold;
-   *(cvar_t**)0x8583B48 = vehHelicopterRightStickDeadzone;
-   *(cvar_t**)0x8583B4C = vehHelicopterStrafeDeadzone;
-   *(cvar_t**)0x8583B50 = vehHelicopterScaleMovement;
-   *(cvar_t**)0x8583B58 = vehHelicopterSoftCollisions;
-   *(cvar_t**)0x8583B5C = vehHelicopterDecelerationFwd;
-   *(cvar_t**)0x8583B60 = vehHelicopterDecelerationSide;
-   *(cvar_t**)0x8583B64 = vehHelicopterInvertUpDown;
-   *(cvar_t**)0x8583B68 = vehHelicopterYawOnLeftStick;
-   *(cvar_t**)0x8583B6C = vehHelicopterTiltSpeed;
-   *(cvar_t**)0x8583B70 = vehHelicopterTiltFromAcceleration;
-   *(cvar_t**)0x8583B74 = vehHelicopterTiltFromDeceleration;
-   *(cvar_t**)0x8583B78 = vehHelicopterTiltFromVelocity;
-   *(cvar_t**)0x8583B7C = vehHelicopterTiltFromControllerAxes;
-   *(cvar_t**)0x8583B80 = vehHelicopterTiltFromFwdAndYaw;
-   *(cvar_t**)0x8583B84 = vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt;
-   *(cvar_t**)0x8583B88 = vehHelicopterJitterJerkyness;
-   *(cvar_t**)0x8583B8C = vehHelicopterHeadSwayDontSwayTheTurret;
-   *(cvar_t**)0x8583B90 = vehHelicopterTiltMomentum;
-   *(cvar_t**)0x8587B40 = vehDebugServer;
-   *(cvar_t**)0x8587B44 = vehTextureScrollScale;
-   *(cvar_t**)0x8587B48 = vehTestHorsepower;
-   *(cvar_t**)0x8587B4C = vehTestWeight;
-   *(cvar_t**)0x8587B50 = vehTestMaxMPH;
-   *(cvar_t**)0x83627A0 = missileHellfireMaxSlope;
-   *(cvar_t**)0x83627A4 = missileHellfireUpAccel;
-   *(cvar_t**)0x83627A8 = missileJavClimbHeightDirect;
-   *(cvar_t**)0x83627AC = missileJavClimbHeightTop;
-   *(cvar_t**)0x83627B0 = missileJavClimbAngleDirect;
-   *(cvar_t**)0x83627B4 = missileJavClimbAngleTop;
-   *(cvar_t**)0x83627B8 = missileJavClimbCeilingDirect;
-   *(cvar_t**)0x83627BC = missileJavClimbCeilingTop;
-   *(cvar_t**)0x83627C0 = missileJavTurnRateDirect;
-   *(cvar_t**)0x83627C4 = missileJavTurnRateTop;
-   *(cvar_t**)0x83627C8 = missileJavAccelClimb;
-   *(cvar_t**)0x83627CC = missileJavAccelDescend;
-   *(cvar_t**)0x83627D0 = missileJavSpeedLimitClimb;
-   *(cvar_t**)0x83627D4 = missileJavSpeedLimitDescend;
-   *(cvar_t**)0x83627D8 = missileJavTurnDecel;
-   *(cvar_t**)0x83627DC = missileJavClimbToOwner;
-   *(cvar_t**)0x83627EC = missileWaterMaxDepth;
-   *(cvar_t**)0x83627E0 = missileDebugDraw;
-   *(cvar_t**)0x83627E4 = missileDebugText;
-   *(cvar_t**)0x83627E8 = missileDebugAttractors;
-   *(cvar_t**)0x8278218 = bg_viewKickScale;
-   *(cvar_t**)0x827821C = bg_viewKickMax;
-   *(cvar_t**)0x8278220 = bg_viewKickMin;
-   *(cvar_t**)0x8278224 = bg_viewKickRandom;
-   *(cvar_t**)0x827BCC0 = player_view_pitch_up;
-   *(cvar_t**)0x827BCC4 = player_view_pitch_down;
-   *(cvar_t**)0x827BCC8 = player_lean_shift_left;
-   *(cvar_t**)0x827BCCC = player_lean_shift_right;
-   *(cvar_t**)0x827BCD0 = player_lean_shift_crouch_left;
-   *(cvar_t**)0x827BCD4 = player_lean_shift_crouch_right;
-   *(cvar_t**)0x827BCD8 = player_lean_rotate_left;
-   *(cvar_t**)0x827BCDC = player_lean_rotate_right;
-   *(cvar_t**)0x827BCE0 = player_lean_rotate_crouch_left;
-   *(cvar_t**)0x827BCE4 = player_lean_rotate_crouch_right;
-   *(cvar_t**)0x827BCE8 = bg_ladder_yawcap;
-   *(cvar_t**)0x827BCEC = bg_prone_yawcap;
-   *(cvar_t**)0x827BCF0 = bg_foliagesnd_minspeed;
-   *(cvar_t**)0x827BCF4 = bg_foliagesnd_maxspeed;
-   *(cvar_t**)0x827BCF8 = bg_foliagesnd_slowinterval;
-   *(cvar_t**)0x827BCFC = bg_foliagesnd_fastinterval;
-   *(cvar_t**)0x827BD00 = bg_foliagesnd_resetinterval;
-   *(cvar_t**)0x827BD04 = bg_fallDamageMinHeight;
-   *(cvar_t**)0x827BD08 = bg_fallDamageMaxHeight;
-   *(cvar_t**)0x827BD0C = inertiaMax;
-   *(cvar_t**)0x827BD10 = inertiaDebug;
-   *(cvar_t**)0x827BD14 = inertiaAngle;
-   *(cvar_t**)0x827BD1C = friction;
-   *(cvar_t**)0x827BD18 = stopspeed;
-   *(cvar_t**)0x827BD20 = bg_swingSpeed;
-   *(cvar_t**)0x827BD24 = bg_legYawTolerance;
-   *(cvar_t**)0x827BD34 = bg_bobAmplitudeSprinting;
-   *(cvar_t**)0x827BD28 = bg_bobAmplitudeStanding;
-   *(cvar_t**)0x827BD2C = bg_bobAmplitudeDucked;
-   *(cvar_t**)0x827BD30 = bg_bobAmplitudeProne;
-   *(cvar_t**)0x827BD38 = bg_bobMax;
-   *(cvar_t**)0x827BD3C = bg_aimSpreadMoveSpeedThreshold;
-   *(cvar_t**)0x827BD40 = bg_maxGrenadeIndicatorSpeed;
-   *(cvar_t**)0x827BD44 = player_breath_hold_time;
-   *(cvar_t**)0x827BD48 = player_breath_gasp_time;
-   *(cvar_t**)0x827BD4C = player_breath_fire_delay;
-   *(cvar_t**)0x827BD50 = player_breath_gasp_scale;
-   *(cvar_t**)0x827BD54 = player_breath_hold_lerp;
-   *(cvar_t**)0x827BD58 = player_breath_gasp_lerp;
-   *(cvar_t**)0x827BD5C = player_breath_snd_lerp;
-   *(cvar_t**)0x827BD60 = player_breath_snd_delay;
-   *(cvar_t**)0x827BD64 = player_scopeExitOnDamage;
-   *(cvar_t**)0x827BD68 = player_adsExitDelay;
-   *(cvar_t**)0x827BD6C = player_move_factor_on_torso;
-   *(cvar_t**)0x827BD70 = player_debugHealth;
-   *(cvar_t**)0x827BD74 = player_sustainAmmo;
-   *(cvar_t**)0x827BD78 = player_moveThreshhold;
-   *(cvar_t**)0x827BD7C = player_footstepsThreshhold;
-   *(cvar_t**)0x827BD84 = player_strafeSpeedScale;
-   *(cvar_t**)0x827BD88 = player_backSpeedScale;
-   *(cvar_t**)0x827BD80 = player_strafeAnimCosAngle;
-   *(cvar_t**)0x827BD8C = player_spectateSpeedScale;
-   *(cvar_t**)0x827BDA0 = player_sprintForwardMinimum;
-   *(cvar_t**)0x827BD94 = player_sprintSpeedScale;
-   *(cvar_t**)0x827BD98 = player_sprintTime;
-   *(cvar_t**)0x827BD9C = player_sprintMinTime;
-   *(cvar_t**)0x827BDA4 = player_sprintRechargePause;
-   *(cvar_t**)0x827BDA8 = player_sprintStrafeSpeedScale;
-   *(cvar_t**)0x827BDAC = player_sprintCameraBob;
-   *(cvar_t**)0x827BD90 = player_turnAnims;
-   *(cvar_t**)0x827BDB0 = player_dmgtimer_timePerPoint;
-   *(cvar_t**)0x827BDB4 = player_dmgtimer_maxTime;
-   *(cvar_t**)0x827BDB8 = player_dmgtimer_minScale;
-   *(cvar_t**)0x827BDBC = player_dmgtimer_stumbleTime;
-   *(cvar_t**)0x827BDC0 = player_dmgtimer_flinchTime;
-   *(cvar_t**)0x82780C4 = bg_shock_soundLoop;
-   *(cvar_t**)0x82780C8 = bg_shock_soundLoopSilent;
-   *(cvar_t**)0x82780CC = bg_shock_soundEnd;
-   *(cvar_t**)0x82780D0 = bg_shock_soundEndAbort;
-   *(cvar_t**)0x82780A0 = bg_shock_screenType;
-   *(cvar_t**)0x82780A4 = bg_shock_screenBlurBlendTime;
-   *(cvar_t**)0x82780A8 = bg_shock_screenBlurBlendFadeTime;
-   *(cvar_t**)0x82780AC = bg_shock_screenFlashWhiteFadeTime;
-   *(cvar_t**)0x82780B0 = bg_shock_screenFlashShotFadeTime;
-   *(cvar_t**)0x82780B4 = bg_shock_viewKickPeriod;
-   *(cvar_t**)0x82780B8 = bg_shock_viewKickRadius;
-   *(cvar_t**)0x82780BC = bg_shock_viewKickFadeTime;
-   *(cvar_t**)0x82780C0 = bg_shock_sound;
-   *(cvar_t**)0x82780D4 = bg_shock_soundFadeInTime;
-   *(cvar_t**)0x82780D8 = bg_shock_soundFadeOutTime;
-   *(cvar_t**)0x82780DC = bg_shock_soundLoopFadeTime;
-   *(cvar_t**)0x82780E0 = bg_shock_soundLoopEndDelay;
-   *(cvar_t**)0x82780E4 = bg_shock_soundRoomType;
-   *(cvar_t**)0x82780E8 = bg_shock_soundDryLevel;
-   *(cvar_t**)0x82780EC = bg_shock_soundWetLevel;
-   *(cvar_t**)0x82780F0 = bg_shock_soundModEndDelay;
-   *(cvar_t**)0x8278200 = bg_shock_lookControl;
-   *(cvar_t**)0x8278204 = bg_shock_lookControl_maxpitchspeed;
-   *(cvar_t**)0x8278208 = bg_shock_lookControl_maxyawspeed;
-   *(cvar_t**)0x827820C = bg_shock_lookControl_mousesensitivityscale;
-   *(cvar_t**)0x8278210 = bg_shock_lookControl_fadeTime;
-   *(cvar_t**)0x8278214 = bg_shock_movement;
-   *(cvar_t**)0x827BDC4 = player_meleeRange;
-   *(cvar_t**)0x827BDC8 = player_meleeWidth;
-   *(cvar_t**)0x827BDCC = player_meleeHeight;
-   *(cvar_t**)0x827BDD0 = player_meleeChargeFriction;
-   *(cvar_t**)0x827BDD4 = player_burstFireCooldown;
-   *(cvar_t**)0x827BDD8 = bullet_penetrationMinFxDist;
-   *(cvar_t**)0x8278060 = jump_height;
-   *(cvar_t**)0x8278070 = jump_stepSize;
-   *(cvar_t**)0x8278068 = jump_slowdownEnable;
-   *(cvar_t**)0x827806C = jump_ladderPushVel;
-   *(cvar_t**)0x8278064 = jump_spreadAdd;
-   *(cvar_t**)0x8278078 = mantle_enable;
-   *(cvar_t**)0x8278084 = mantle_debug;
-   *(cvar_t**)0x827808C = mantle_check_range;
-   *(cvar_t**)0x8278088 = mantle_check_radius;
-   *(cvar_t**)0x8278090 = mantle_check_angle;
-   *(cvar_t**)0x827807C = mantle_view_yawcap;
-   *(cvar_t**)0x828DDE4 = perk_weapSpreadMultiplier;
-   *(cvar_t**)0x828DDE8 = perk_weapReloadMultiplier;
-   *(cvar_t**)0x828DDEC = perk_weapRateMultiplier;
-   *(cvar_t**)0x828DDF0 = perk_extraBreath;
-   *(cvar_t**)0x828DDF4 = perk_bulletPenetrationMultiplier;
-   *(cvar_t**)0x828DDF8 = perk_grenadeDeath;
-   *(cvar_t**)0x828DDFC = perk_parabolicRadius;
-   *(cvar_t**)0x828DE00 = perk_parabolicAngle;
-   *(cvar_t**)0x828DE04 = perk_parabolicIcon;
-   *(cvar_t**)0x828DE08 = perk_sprintMultiplier;
 }
 
 
@@ -1137,6 +777,11 @@ clientState_t* G_GetClientState(int num)
     return &level.clients[num].sess.cs;
 }
 
+gclient_t *G_GetGClient(int num)
+{
+    return &level.clients[num];
+}
+
 int G_GetClientArchiveTime(int clnum)
 {
 	return level.clients[clnum].sess.archiveTime;
@@ -1151,3 +796,9 @@ float G_GetFogOpaqueDistSqrd()
 {
 	return level.fFogOpaqueDistSqrd;
 }
+
+void __cdecl G_SafeServerDObjFree(int handle)
+{
+  Com_SafeServerDObjFree(handle);
+}
+

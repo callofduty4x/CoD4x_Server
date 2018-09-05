@@ -662,8 +662,9 @@ _cstring_zero_length_vect:		db "zero length vector in %s()",0
 
 ;All constant floats and doubles:
 SECTION .rdata
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

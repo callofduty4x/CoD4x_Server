@@ -1557,16 +1557,17 @@ _cstring_player_mantle_ov:		db "player_mantle_over_low",0
 
 ;All constant floats and doubles:
 SECTION .rdata
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_16_00000000:		dd 0x41800000	; 16
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_18_00000000:		dd 0x41900000	; 18
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_31_00000000:		dd 0x41f80000	; 31
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00010000:		dd 0x38d1b717	; 0.0001
-_double_57_29577951:		dq 0x404ca5dc1a63c1f8	; 57.2958
 _float_60_00000000:		dd 0x42700000	; 60
 _float_40_00000000:		dd 0x42200000	; 40
 _float_20_00000000:		dd 0x41a00000	; 20
+_double_57_29577951:		dq 0x404ca5dc1a63c1f8	; 57.2958
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD

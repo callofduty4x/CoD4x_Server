@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
  *
  *****************************************************************************/
 
-#include "../q_shared.h"
+#include "game_inc.h"
 #include "l_memory.h"
 #include "l_script.h"
 #include "l_precomp.h"
@@ -56,14 +56,6 @@ extern aas_t aasworlds[2];
 
 aas_t *defaultaasworld = aasworlds;
 
-//FIXME: these might change
-enum {
-	ET_GENERAL,
-	ET_PLAYER,
-	ET_ITEM,
-	ET_MISSILE,
-	ET_MOVER
-};
 
 //===========================================================================
 //

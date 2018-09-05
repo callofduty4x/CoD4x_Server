@@ -25,18 +25,9 @@
 #define __SCR_VM_H__
 
 
-#define SCRSTRUCT_ADDR 0x895bf08
-#define STRINGINDEX_ADDR 0x836fe20
-#define stringIndex (*((stringIndex_t*)(STRINGINDEX_ADDR)))
-#define scrVarGlob (((VariableValueInternal*)( 0x8a64e80 )))
-#define scrVarGlob_high (((VariableValueInternal*)( 0x8a64e80 + 16 * 32770 )))
-#define scrVarPub (*((scrVarPub_t*)( 0x8be4e80 )))
-#define scrVmPub (*((scrVmPub_t*)( 0x8c06320 )))
-#define g_script_error_level *(int*)(0x8c0631c)
-#define g_threadStartingTime *(int*)(0x8c0a678)
 
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "entity.h"
 #include "player.h"
 #include "g_hud.h"
@@ -44,199 +35,342 @@
 #include "g_sv_shared.h"
 
 
-typedef struct{
-	short   emptystring;
-	short   active;
-	short   j_spine4;
-	short   j_helmet;
-	short   j_head;
-	short   all;
-	short   allies;
-	short   axis;
-	short   bad_path;
-	short   begin_firing;
-	short   cancel_location;
-	short   confirm_location;
-	short   crouch;
-	short   current;
-	short   damage;
-	short   dead;
-	short   death;
-	short   detonate;
-	short   direct;
-	short   dlight;
-	short   done;
-	short   empty;
-	short   end_firing;
-	short   entity;
-	short   explode;
-	short   failed;
-	short   fraction;
-	short   free;
-	short   goal;
-	short   goal_changed;
-	short   goal_yaw;
-	short   grenade;
-	short   grenade_danger;
-	short   grenade_fire;
-	short   grenade_pullback;
-	short   info_notnull;
-	short   invisible;
-	short   key1;
-	short   key2;
-	short   killanimscript;
-	short   left;
-	short   light;
-	short   movedone;
-	short   noclass;
-	short   none;
-	short   normal;
-	short   player;
-	short   position;
-	short   projectile_impact;
-	short   prone;
-	short   right;
-	short   reload;
-	short   reload_start;
-	short   rocket;
-	short   rotatedone;
-	short   script_brushmodel;
-	short   script_model;
-	short   script_origin;
-	short   snd_enveffectsprio_level;
-	short   snd_enveffectsprio_shellshock;
-	short   snd_channelvolprio_holdbreath;
-	short   snd_channelvolprio_pain;
-	short   snd_channelvolprio_shellshock;
-	short   stand;
-	short   suppression;
-	short   suppression_end;
-	short   surfacetype;
-	short   tag_aim;
-	short   tag_aim_animated;
-	short   tag_brass;
-	short   tag_butt;
-	short   tag_clip;
-	short   tag_flash;
-	short   tag_flash_11;
-	short   tag_flash_2;
-	short   tag_flash_22;
-	short   tag_flash_3;
-	short   tag_fx;
-	short   tag_inhand;
-	short   tag_knife_attach;
-	short   tag_knife_fx;
-	short   tag_laser;
-	short   tag_origin;
-	short   tag_weapon;
-	short   tag_player;
-	short   tag_camera;
-	short   tag_weapon_right;
-	short   tag_gasmask;
-	short   tag_gasmask2;
-	short   tag_sync;
-	short   target_script_trigger;
-	short   tempEntity;
-	short   top;
-	short   touch;
-	short   trigger;
-	short   trigger_use;
-	short   trigger_use_touch;
-	short   trigger_damage;
-	short   trigger_lookat;
-	short   truck_cam;
-	short   weapon_change;
-	short   weapon_fired;
-	short   worldspawn;
-	short   flashbang;
-	short   flash;
-	short   smoke;
-	short   night_vision_on;
-	short   night_vision_off;
-	short   MOD_UNKNOWN;
-	short   MOD_PISTOL_BULLET;
-	short   MOD_RIFLE_BULLET;
-	short   MOD_GRENADE;
-	short   MOD_GRENADE_SPLASH;
-	short   MOD_PROJECTILE;
-	short   MOD_PROJECTILE_SPLASH;
-	short   MOD_MELEE;
-	short   MOD_HEAD_SHOT;
-	short   MOD_CRUSH;
-	short   MOD_TELEFRAG;
-	short   MOD_FALLING;
-	short   MOD_SUICIDE;
-	short   MOD_TRIGGER_HURT;
-	short   MOD_EXPLOSIVE;
-	short   MOD_IMPACT;
-	short   script_vehicle;
-	short   script_vehicle_collision;
-	short   script_vehicle_collmap;
-	short   script_vehicle_corpse;
-	short   turret_fire;
-	short   turret_on_target;
-	short   turret_not_on_target;
-	short   turret_on_vistarget;
-	short   turret_no_vis;
-	short   turret_rotate_stopped;
-	short   turret_deactivate;
-	short   turretstatechange;
-	short   turretownerchange;
-	short   reached_end_node;
-	short   reached_wait_node;
-	short   reached_wait_speed;
-	short   near_goal;
-	short   veh_collision;
-	short   veh_predictedcollision;
-	short   auto_change;
-	short   back_low;
-	short   back_mid;
-	short   back_up;
-	short   begin;
-	short   call_vote;
-	short   freelook;
-	short   head;
-	short   intermission;
-	short   j_head_dup;
-	short   manual_change;
-	short   menuresponse;
-	short   neck;
-	short   pelvis;
-	short   pistol;
-	short   plane_waypoint;
-	short   playing;
-	short   spectator;
-	short   vote;
-	short   sprint_begin;
-	short   sprint_end;
-	short   tag_driver;
-	short   tag_passenger;
-	short   tag_gunner;
-	short   tag_wheel_front_left;
-	short   tag_wheel_front_right;
-	short   tag_wheel_back_left;
-	short   tag_wheel_back_right;
-	short   tag_wheel_middle_left;
-	short   tag_wheel_middle_right;
-	short   script_vehicle_collision_dup;
-	short   script_vehicle_collmap_dup;
-	short   script_vehicle_corpse_dup;
-	short   tag_detach;
-	short   tag_popout;
-	short   tag_body;
-	short   tag_turret;
-	short   tag_turret_base;
-	short   tag_barrel;
-	short   tag_engine_left;
-	short   tag_engine_right;
-	short   front_left;
-	short   front_right;
-	short   back_left;
-	short   back_right;
-	short   tag_gunner_pov;
-}stringIndex_t;
+enum scr_opcode
+{
+  OP_End = 0x0,
+  OP_Return = 0x1,
+  OP_GetUndefined = 0x2,
+  OP_GetZero = 0x3,
+  OP_GetByte = 0x4,
+  OP_GetNegByte = 0x5,
+  OP_GetUnsignedShort = 0x6,
+  OP_GetNegUnsignedShort = 0x7,
+  OP_GetInteger = 0x8,
+  OP_GetFloat = 0x9,
+  OP_GetString = 0xA,
+  OP_GetIString = 0xB,
+  OP_GetVector = 0xC,
+  OP_GetLevelObject = 0xD,
+  OP_GetAnimObject = 0xE,
+  OP_GetSelf = 0xF,
+  OP_GetLevel = 0x10,
+  OP_GetGame = 0x11,
+  OP_GetAnim = 0x12,
+  OP_GetAnimation = 0x13,
+  OP_GetGameRef = 0x14,
+  OP_GetFunction = 0x15,
+  OP_CreateLocalVariable = 0x16,
+  OP_RemoveLocalVariables = 0x17,
+  OP_EvalLocalVariableCached0 = 0x18,
+  OP_EvalLocalVariableCached1 = 0x19,
+  OP_EvalLocalVariableCached2 = 0x1A,
+  OP_EvalLocalVariableCached3 = 0x1B,
+  OP_EvalLocalVariableCached4 = 0x1C,
+  OP_EvalLocalVariableCached5 = 0x1D,
+  OP_EvalLocalVariableCached = 0x1E,
+  OP_EvalLocalArrayCached = 0x1F,
+  OP_EvalArray = 0x20,
+  OP_EvalLocalArrayRefCached0 = 0x21,
+  OP_EvalLocalArrayRefCached = 0x22,
+  OP_EvalArrayRef = 0x23,
+  OP_ClearArray = 0x24,
+  OP_EmptyArray = 0x25,
+  OP_GetSelfObject = 0x26,
+  OP_EvalLevelFieldVariable = 0x27,
+  OP_EvalAnimFieldVariable = 0x28,
+  OP_EvalSelfFieldVariable = 0x29,
+  OP_EvalFieldVariable = 0x2A,
+  OP_EvalLevelFieldVariableRef = 0x2B,
+  OP_EvalAnimFieldVariableRef = 0x2C,
+  OP_EvalSelfFieldVariableRef = 0x2D,
+  OP_EvalFieldVariableRef = 0x2E,
+  OP_ClearFieldVariable = 0x2F,
+  OP_SafeCreateVariableFieldCached = 0x30,
+  OP_SafeSetVariableFieldCached0 = 0x31,
+  OP_SafeSetVariableFieldCached = 0x32,
+  OP_SafeSetWaittillVariableFieldCached = 0x33,
+  OP_clearparams = 0x34,
+  OP_checkclearparams = 0x35,
+  OP_EvalLocalVariableRefCached0 = 0x36,
+  OP_EvalLocalVariableRefCached = 0x37,
+  OP_SetLevelFieldVariableField = 0x38,
+  OP_SetVariableField = 0x39,
+  OP_SetAnimFieldVariableField = 0x3A,
+  OP_SetSelfFieldVariableField = 0x3B,
+  OP_SetLocalVariableFieldCached0 = 0x3C,
+  OP_SetLocalVariableFieldCached = 0x3D,
+  OP_CallBuiltin0 = 0x3E,
+  OP_CallBuiltin1 = 0x3F,
+  OP_CallBuiltin2 = 0x40,
+  OP_CallBuiltin3 = 0x41,
+  OP_CallBuiltin4 = 0x42,
+  OP_CallBuiltin5 = 0x43,
+  OP_CallBuiltin = 0x44,
+  OP_CallBuiltinMethod0 = 0x45,
+  OP_CallBuiltinMethod1 = 0x46,
+  OP_CallBuiltinMethod2 = 0x47,
+  OP_CallBuiltinMethod3 = 0x48,
+  OP_CallBuiltinMethod4 = 0x49,
+  OP_CallBuiltinMethod5 = 0x4A,
+  OP_CallBuiltinMethod = 0x4B,
+  OP_wait = 0x4C,
+  OP_waittillFrameEnd = 0x4D,
+  OP_PreScriptCall = 0x4E,
+  OP_ScriptFunctionCall2 = 0x4F,
+  OP_ScriptFunctionCall = 0x50,
+  OP_ScriptFunctionCallPointer = 0x51,
+  OP_ScriptMethodCall = 0x52,
+  OP_ScriptMethodCallPointer = 0x53,
+  OP_ScriptThreadCall = 0x54,
+  OP_ScriptThreadCallPointer = 0x55,
+  OP_ScriptMethodThreadCall = 0x56,
+  OP_ScriptMethodThreadCallPointer = 0x57,
+  OP_DecTop = 0x58,
+  OP_CastFieldObject = 0x59,
+  OP_EvalLocalVariableObjectCached = 0x5A,
+  OP_CastBool = 0x5B,
+  OP_BoolNot = 0x5C,
+  OP_BoolComplement = 0x5D,
+  OP_JumpOnFalse = 0x5E,
+  OP_JumpOnTrue = 0x5F,
+  OP_JumpOnFalseExpr = 0x60,
+  OP_JumpOnTrueExpr = 0x61,
+  OP_jump = 0x62,
+  OP_jumpback = 0x63,
+  OP_inc = 0x64,
+  OP_dec = 0x65,
+  OP_bit_or = 0x66,
+  OP_bit_ex_or = 0x67,
+  OP_bit_and = 0x68,
+  OP_equality = 0x69,
+  OP_inequality = 0x6A,
+  OP_less = 0x6B,
+  OP_greater = 0x6C,
+  OP_less_equal = 0x6D,
+  OP_greater_equal = 0x6E,
+  OP_shift_left = 0x6F,
+  OP_shift_right = 0x70,
+  OP_plus = 0x71,
+  OP_minus = 0x72,
+  OP_multiply = 0x73,
+  OP_divide = 0x74,
+  OP_mod = 0x75,
+  OP_size = 0x76,
+  OP_waittillmatch = 0x77,
+  OP_waittill = 0x78,
+  OP_notify = 0x79,
+  OP_endon = 0x7A,
+  OP_voidCodepos = 0x7B,
+  OP_switch = 0x7C,
+  OP_endswitch = 0x7D,
+  OP_vector = 0x7E,
+  OP_NOP = 0x7F,
+  OP_abort = 0x80,
+  OP_object = 0x81,
+  OP_thread_object = 0x82,
+  OP_EvalLocalVariable = 0x83,
+  OP_EvalLocalVariableRef = 0x84,
+  OP_prof_begin = 0x85,
+  OP_prof_end = 0x86,
+  OP_breakpoint = 0x87,
+  OP_assignmentBreakpoint = 0x88,
+  OP_manualAndAssignmentBreakpoint = 0x89,
+  OP_count = 0x8A,
+};
 
-extern stringIndex_t scr_const;
+
+
+
+typedef struct{
+	uint16_t emptystring;
+	uint16_t active;
+	uint16_t j_spine4;
+	uint16_t j_helmet;
+	uint16_t j_head;
+	uint16_t all;
+	uint16_t allies;
+	uint16_t axis;
+	uint16_t bad_path;
+	uint16_t begin_firing;
+	uint16_t cancel_location;
+	uint16_t confirm_location;
+	uint16_t crouch;
+	uint16_t current;
+	uint16_t damage;
+	uint16_t dead;
+	uint16_t death;
+	uint16_t detonate;
+	uint16_t direct;
+	uint16_t dlight;
+	uint16_t done;
+	uint16_t empty;
+	uint16_t end_firing;
+	uint16_t entity;
+	uint16_t explode;
+	uint16_t failed;
+	uint16_t free;
+	uint16_t fraction;
+	uint16_t goal;
+	uint16_t goal_changed;
+	uint16_t goal_yaw;
+	uint16_t grenade;
+	uint16_t grenade_danger;
+	uint16_t grenade_fire;
+	uint16_t grenade_pullback;
+	uint16_t info_notnull;
+	uint16_t invisible;
+	uint16_t key1;
+	uint16_t key2;
+	uint16_t killanimscript;
+	uint16_t left;
+	uint16_t light;
+	uint16_t movedone;
+	uint16_t noclass;
+	uint16_t none;
+	uint16_t normal;
+	uint16_t player;
+	uint16_t position;
+	uint16_t projectile_impact;
+	uint16_t prone;
+	uint16_t right;
+	uint16_t reload;
+	uint16_t reload_start;
+	uint16_t rocket;
+	uint16_t rotatedone;
+	uint16_t script_brushmodel;
+	uint16_t script_model;
+	uint16_t script_origin;
+	uint16_t snd_enveffectsprio_level;
+	uint16_t snd_enveffectsprio_shellshock;
+	uint16_t snd_channelvolprio_holdbreath;
+	uint16_t snd_channelvolprio_pain;
+	uint16_t snd_channelvolprio_shellshock;
+	uint16_t stand;
+	uint16_t suppression;
+	uint16_t suppression_end;
+	uint16_t surfacetype;
+	uint16_t tag_aim;
+	uint16_t tag_aim_animated;
+	uint16_t tag_brass;
+	uint16_t tag_butt;
+	uint16_t tag_clip;
+	uint16_t tag_flash;
+	uint16_t tag_flash_11;
+	uint16_t tag_flash_2;
+	uint16_t tag_flash_22;
+	uint16_t tag_flash_3;
+	uint16_t tag_fx;
+	uint16_t tag_inhand;
+	uint16_t tag_knife_attach;
+	uint16_t tag_knife_fx;
+	uint16_t tag_laser;
+	uint16_t tag_origin;
+	uint16_t tag_weapon;
+	uint16_t tag_player;
+	uint16_t tag_camera;
+	uint16_t tag_weapon_right;
+	uint16_t tag_gasmask;
+	uint16_t tag_gasmask2;
+	uint16_t tag_sync;
+	uint16_t target_script_trigger;
+	uint16_t tempEntity;
+	uint16_t top;
+	uint16_t touch;
+	uint16_t trigger;
+	uint16_t trigger_use;
+	uint16_t trigger_use_touch;
+	uint16_t trigger_damage;
+	uint16_t trigger_lookat;
+	uint16_t truck_cam;
+	uint16_t weapon_change;
+	uint16_t weapon_fired;
+	uint16_t worldspawn;
+	uint16_t flashbang;
+	uint16_t flash;
+	uint16_t smoke;
+	uint16_t night_vision_on;
+	uint16_t night_vision_off;
+	uint16_t MOD_UNKNOWN;
+	uint16_t MOD_PISTOL_BULLET;
+	uint16_t MOD_RIFLE_BULLET;
+	uint16_t MOD_GRENADE;
+	uint16_t MOD_GRENADE_SPLASH;
+	uint16_t MOD_PROJECTILE;
+	uint16_t MOD_PROJECTILE_SPLASH;
+	uint16_t MOD_MELEE;
+	uint16_t MOD_HEAD_SHOT;
+	uint16_t MOD_CRUSH;
+	uint16_t MOD_TELEFRAG;
+	uint16_t MOD_FALLING;
+	uint16_t MOD_SUICIDE;
+	uint16_t MOD_TRIGGER_HURT;
+	uint16_t MOD_EXPLOSIVE;
+	uint16_t MOD_IMPACT;
+	uint16_t script_vehicle;
+	uint16_t script_vehicle_collision;
+	uint16_t script_vehicle_collmap;
+	uint16_t script_vehicle_corpse;
+	uint16_t turret_fire;
+	uint16_t turret_on_target;
+	uint16_t turret_not_on_target;
+	uint16_t turret_on_vistarget;
+	uint16_t turret_no_vis;
+	uint16_t turret_rotate_stopped;
+	uint16_t turret_deactivate;
+	uint16_t turretstatechange;
+	uint16_t turretownerchange;
+	uint16_t reached_end_node;
+	uint16_t reached_wait_node;
+	uint16_t reached_wait_speed;
+	uint16_t near_goal;
+	uint16_t veh_collision;
+	uint16_t veh_predictedcollision;
+	uint16_t auto_change;
+	uint16_t back_low;
+	uint16_t back_mid;
+	uint16_t back_up;
+	uint16_t begin;
+	uint16_t call_vote;
+	uint16_t freelook;
+	uint16_t head;
+	uint16_t intermission;
+	uint16_t j_head_dup;
+	uint16_t manual_change;
+	uint16_t menuresponse;
+	uint16_t neck;
+	uint16_t pelvis;
+	uint16_t pistol;
+	uint16_t plane_waypoint;
+	uint16_t playing;
+	uint16_t spectator;
+	uint16_t vote;
+	uint16_t sprint_begin;
+	uint16_t sprint_end;
+	uint16_t tag_driver;
+	uint16_t tag_passenger;
+	uint16_t tag_gunner;
+	uint16_t tag_wheel_front_left;
+	uint16_t tag_wheel_front_right;
+	uint16_t tag_wheel_back_left;
+	uint16_t tag_wheel_back_right;
+	uint16_t tag_wheel_middle_left;
+	uint16_t tag_wheel_middle_right;
+	uint16_t tag_detach;
+	uint16_t tag_popout;
+	uint16_t tag_body;
+	uint16_t tag_turret;
+	uint16_t tag_turret_base;
+	uint16_t tag_barrel;
+	uint16_t tag_engine_left;
+	uint16_t tag_engine_right;
+	uint16_t front_left;
+	uint16_t front_right;
+	uint16_t back_left;
+	uint16_t back_right;
+	uint16_t tag_gunner_pov;
+}scr_const_t;
+
+extern scr_const_t scr_const;
 
 
 typedef void (*xfunction_t)();
@@ -256,7 +390,11 @@ typedef unsigned int sval_u;
 
 #ifndef SCR_ENTREF_DEFINED
 #define SCR_ENTREF_DEFINED
-typedef int scr_entref_t;
+typedef struct
+{
+  uint16_t entnum;
+  uint16_t classnum;
+}scr_entref_t;
 #endif
 /**************** Additional *************************/
 
@@ -266,37 +404,6 @@ typedef enum{
 }script_CallBacks_new_t;
 
 extern int script_CallBacks_new[8];
-
-typedef enum fieldtype_e
-{
-    F_INT = 0x0,
-    F_FLOAT = 0x1,
-    F_LSTRING = 0x2,
-    F_STRING = 0x3,
-    F_VECTOR = 0x4,
-    F_ENTITY = 0x5,
-    F_VECTORHACK = 0x6,
-    F_OBJECT = 0x7,
-    F_UNKNOWN = 0x8,
-	F_MODEL = 0x9
-} fieldtype_t;
-
-typedef struct client_fields_s
-{
-    const char *name;
-    int ofs;
-    fieldtype_t type;
-    void (__cdecl *setter)(gclient_t *, struct client_fields_s *);
-    void (__cdecl *getter)(gclient_t *);
-}client_fields_t;
-
-typedef struct ent_field_s
-{
-  const char *name;
-  int ofs;
-  fieldtype_t type;
-  void (__cdecl *callback)(gentity_t *, int);
-} ent_field_t;
 
 typedef enum
 {
@@ -308,6 +415,40 @@ typedef enum
     SCR_FLOAT,
     SCR_INT
 }scriptVarType_t;
+
+enum $0E0E04F36A22A28F2C0A7A22DC12DAE9
+{
+  VAR_UNDEFINED = 0x0,
+  VAR_BEGIN_REF = 0x1,
+  VAR_POINTER = 0x1,
+  VAR_STRING = 0x2,
+  VAR_ISTRING = 0x3,
+  VAR_VECTOR = 0x4,
+  VAR_END_REF = 0x5,
+  VAR_FLOAT = 0x5,
+  VAR_INTEGER = 0x6,
+  VAR_CODEPOS = 0x7,
+  VAR_PRECODEPOS = 0x8,
+  VAR_FUNCTION = 0x9,
+  VAR_STACK = 0xA,
+  VAR_ANIMATION = 0xB,
+  VAR_DEVELOPER_CODEPOS = 0xC,
+  VAR_INCLUDE_CODEPOS = 0xD,
+  VAR_THREAD = 0xE,
+  VAR_NOTIFY_THREAD = 0xF,
+  VAR_TIME_THREAD = 0x10,
+  VAR_CHILD_THREAD = 0x11,
+  VAR_OBJECT = 0x12,
+  VAR_DEAD_ENTITY = 0x13,
+  VAR_ENTITY = 0x14,
+  VAR_ARRAY = 0x15,
+  VAR_DEAD_THREAD = 0x16,
+  VAR_COUNT = 0x17,
+  VAR_THREAD_LIST = 0x18,
+  VAR_ENDON_LIST = 0x19
+};
+
+
 
 typedef struct
 {
@@ -415,38 +556,6 @@ typedef struct
 }VariableValueInternal;
 
 
-typedef struct
-{
-  const char *fieldBuffer;
-  uint16_t canonicalStrCount;
-  byte developer;
-  byte developer_script;
-  byte evaluate;
-  byte pad[3];
-  const char *error_message;
-  int error_index;
-  unsigned int time;
-  unsigned int timeArrayId;
-  unsigned int pauseArrayId;
-  unsigned int levelId;
-  unsigned int gameId;
-  unsigned int animId;
-  unsigned int freeEntList;
-  unsigned int tempVariable;
-  byte bInited;
-  byte pad2;
-  uint16_t savecount;
-  unsigned int checksum;
-  unsigned int entId;
-  unsigned int entFieldName;
-  struct HunkUser *programHunkUser;
-  const char *programBuffer;
-  const char *endScriptBuffer;
-  uint16_t saveIdMap[24574];
-  uint16_t saveIdMapRev[24574];
-}scrVarPub_t;
-
-
 struct function_stack_t
 {
   const char *pos;
@@ -489,17 +598,101 @@ struct scrVmGlob_t
   unsigned int localVarsStack[2048];
 };
 
+
+
+struct scrCompilePub_t
+{
+  int value_count;
+  int far_function_count;
+  unsigned int loadedscripts;
+  unsigned int scriptsPos;
+  unsigned int builtinFunc;
+  unsigned int builtinMeth;
+  uint16_t canonicalStrings[65536];
+  const char *in_ptr;
+  const char *parseBuf;
+  byte script_loading;
+  byte allowedBreakpoint;
+  int16_t pad;
+  int developer_statement;
+  char *opcodePos;
+  unsigned int programLen;
+  int func_table_size;
+  int func_table[1024];
+};
 #pragma pack(pop)
 
+struct scr_anim_s
+{
+	union{
+		struct{
+			uint16_t index;
+ 			uint16_t tree;
+		};
+		const char *linkPointer;
+	};
+};
 
+
+struct SourceBufferInfo
+{
+  const char *codePos;
+  char *buf;
+  const char *sourceBuf;
+  int len;
+  int sortedIndex;
+  bool archive;
+  byte pad[3];
+};
+
+
+
+struct scrParserPub_t
+{
+  struct SourceBufferInfo *sourceBufferLookup;
+  unsigned int sourceBufferLookupLen;
+  const char *scriptfilename;
+  const char *sourceBuf;
+};
+
+
+
+
+#define MAX_SCRIPT_FILEHANDLES 10
+
+typedef enum{
+    SCR_FH_FILE,
+    SCR_FH_PARALIST,
+    SCR_FH_INDEXPARALIST
+}scr_fileHandleType_t;
+
+
+typedef struct{
+    FILE* fh;
+    scr_fileHandleType_t type;
+    char filename[MAX_QPATH];
+    int baseOffset;
+    int fileSize;
+}scr_fileHandle_t;
+
+
+
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+
+qboolean Scr_IsSyscallDefined( const char *name );
+void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath );
 void __cdecl Scr_InitVariables(void);			//VM
 void __cdecl Scr_Init(void);			//VM_Init
 void __cdecl Scr_Settings(int, int, int);
 void __cdecl Scr_AddEntity(gentity_t* ent);
 void __cdecl Scr_Cleanup(void);
 void __cdecl GScr_Shutdown(void);
-int __cdecl Scr_AllocArray();
-int __cdecl AllocObject();
+unsigned int __cdecl Scr_AllocArray();
+unsigned int __cdecl AllocObject();
 int __cdecl Scr_GetNumParam( void );
 int __cdecl Scr_GetInt( unsigned int );
 float __cdecl Scr_GetFloat( unsigned int );
@@ -540,45 +733,33 @@ void __cdecl Scr_ObjectError( const char *string);
 
 void __cdecl Scr_AddInt(int value);
 void __cdecl Scr_AddFloat(float);
-void __cdecl Scr_AddBool(qboolean);
+void __cdecl Scr_AddBool(bool);
 void __cdecl Scr_AddString(const char *string);
-void __cdecl Scr_AddConstString(int strindex);
+void __cdecl Scr_AddConstString(unsigned int strindex);
 void __cdecl Scr_AddUndefined(void);
-void __cdecl Scr_AddVector( vec3_t vec );
+void __cdecl Scr_AddVector( const float* vec );
 void __cdecl Scr_AddArray( void );
 void __cdecl Scr_MakeArray( void );
 void __cdecl Scr_AddArrayKey( int strIdx );
 void __cdecl Scr_Notify( gentity_t*, unsigned short, unsigned int);
 void __cdecl Scr_NotifyNum( int, unsigned int, unsigned int, unsigned int);
-/*Not working :(  */
-void __cdecl Scr_PrintPrevCodePos( int printDest, const char* pos, qboolean unk2 );
+
 int __cdecl Scr_GetFunctionHandle( const char* scriptName, const char* labelName);
 short __cdecl Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int numArgs);
 short __cdecl Scr_ExecThread( int callbackHook, unsigned int numArgs);
 void __cdecl Scr_FreeThread( short threadId);
 unsigned int __cdecl Scr_CreateCanonicalFilename( const char* name );
-//Unknown real returntype
-unsigned int __cdecl FindVariable( unsigned int, unsigned int );
-unsigned int __cdecl FindObject( unsigned int );
-unsigned int __cdecl GetNewVariable( unsigned int, unsigned int );
 void * __cdecl TempMalloc( int );
 void __cdecl ScriptParse( sval_u* , byte);
-unsigned int __cdecl GetObjectA( unsigned int );
-unsigned int __cdecl GetObject( unsigned int );
-unsigned int __cdecl GetVariable( unsigned int, unsigned int );
 void __cdecl ScriptCompile( sval_u, unsigned int, unsigned int, PrecacheEntry*, int);
-void* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, byte );
+char* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, bool );
 void __cdecl Scr_InitAllocNode( void );
 void __cdecl Scr_BeginLoadScripts( void );
-void __cdecl Scr_SetClassMap( unsigned int );
-#define Scr_AddClassField ((void (__cdecl *)(unsigned int classnum, const char* name, unsigned short int offset))0x081535BA)
-void __cdecl Scr_SetGenericField( void*, fieldtype_t, int );
-void __cdecl Scr_GetGenericField( void*, fieldtype_t, int );
 void __cdecl Scr_SetString(unsigned short *strindexptr, unsigned const stringindex);
-int __cdecl Scr_AllocString(const char* string);
+unsigned int __cdecl Scr_AllocString(const char* string);
 void Scr_InitSystem();
-int GetArraySize(int);
-void RemoveRefToValue(scriptVarType_t type, union VariableUnion val);
+unsigned int __cdecl SL_GetCanonicalString(const char *str);
+
 
 void __cdecl GScr_AddFieldsForHudElems( void );
 void __cdecl GScr_AddFieldsForRadiant( void );
@@ -591,7 +772,8 @@ qboolean Scr_PlayerSay(gentity_t*, int mode, const char* text);
 qboolean Scr_ScriptCommand(int clientnum, const char* cmd, const char* args);
 
 void GScr_LoadGameTypeScript(void);
-unsigned int Scr_LoadScript(const char* scriptname, PrecacheEntry *precache, int iarg_02);
+unsigned int Scr_LoadScriptInternal(const char* scriptname, PrecacheEntry *precache, int precachecount);
+unsigned int Scr_LoadScript(const char* scriptname);
 qboolean Scr_ExecuteMasterResponse(char* s);
 void Scr_AddStockFunctions();
 void Scr_AddStockMethods();
@@ -605,24 +787,7 @@ qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
 __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
 void __regparm3 VM_Notify(int, int, VariableValue* val);
-int __cdecl FindEntityId(int, int);
 
-#define MAX_SCRIPT_FILEHANDLES 10
-
-typedef enum{
-    SCR_FH_FILE,
-    SCR_FH_PARALIST,
-    SCR_FH_INDEXPARALIST
-}scr_fileHandleType_t;
-
-
-typedef struct{
-    FILE* fh;
-    scr_fileHandleType_t type;
-    char filename[MAX_QPATH];
-    int baseOffset;
-    int fileSize;
-}scr_fileHandle_t;
 
 qboolean Scr_FS_CloseFile( scr_fileHandle_t* f );
 int Scr_FS_ReadLine( void *buffer, int len, fileHandle_t f );
@@ -642,24 +807,47 @@ void GScr_GetCvarInt();
 void GScr_GetCvar();
 void GScr_AddScriptCommand();
 void RuntimeError(char *a3, int arg4, char *message, char *a4);
-void ClientScr_GetName(gclient_t* gcl);
 const char* Scr_GetPlayername(gentity_t* gent);
-void Scr_FreeValue(unsigned int id);
 qboolean __cdecl Scr_IsValidGameType(const char *pszGameType);
-
-void __cdecl MT_DumpTree( );
-void __cdecl Scr_DumpScriptThreads( );
 
 // Safe function to get gentity for num passed by script call "ent function()"
 gentity_t* VM_GetGEntityForNum(scr_entref_t num);
 gclient_t* VM_GetGClientForEntity(gentity_t* ent);
 gclient_t* VM_GetGClientForEntityNumber(scr_entref_t num);
 client_t* VM_GetClientForEntityNumber(scr_entref_t num); // Mainly for pressed buttons detection.
+client_t *VM_GetClientForEntRef(scr_entref_t ref); //Bad!
+gclient_t *VM_GetGClientForEntRef(scr_entref_t ref);
+gentity_t *VM_GetGEntityForEntRef(scr_entref_t num);
 
+
+void __noreturn CompileError(unsigned int sourcePos, const char *msg, ...);
 void __cdecl CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
-ent_field_t* __internalGet_fields_1();
+void __cdecl Scr_ParseGameTypeList();
+void __cdecl Scr_TerminalError(const char *error);
+void Scr_UpdateDebugger();
+bool __cdecl SetEntityFieldValue(unsigned int classnum, int entnum, int offset, VariableValue *value);
+void __cdecl Scr_CancelNotifyList(unsigned int notifyListOwnerId);
+void __cdecl VM_CancelNotify(unsigned int notifyListOwnerId, unsigned int startLocalId);
+void __cdecl Scr_AddObject(unsigned int id);
+unsigned int __cdecl Scr_GetConstStringIncludeNull(unsigned int index);
+scr_entref_t __cdecl Scr_GetEntityRef(unsigned int index);
+void Scr_ShutdownOpcodeLookup( );
+VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset);
+void Scr_Shutdown();
 
-extern struct scrVmGlob_t scrVmGlob;
+#ifdef __cplusplus
+}
+#endif
+
+
+
+extern struct scrVmGlob_t gScrVmGlob;
+
+extern scrVmPub_t gScrVmPub;
+extern struct scrCompilePub_t gScrCompilePub;
+extern int g_script_error_level;
+extern struct scrAnimPub_t scrAnimPub;
+extern struct scrParserPub_t gScrParserPub;
 
 #endif

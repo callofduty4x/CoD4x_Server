@@ -9,14 +9,14 @@
 	extern GetVariableValueAddress
 	extern SL_ConvertToString
 	extern Com_Error
-	extern scrVarPub
+	extern gScrVarPub
 	extern XAnimBlend
 	extern XAnimCreate
 	extern FindArrayVariable
 	extern XAnimPrecache
 	extern Scr_CreateCanonicalFilename
 	extern GetNewVariable
-	extern GetObjectA
+	extern SGetObjectA
 	extern GetVariable
 	extern GetArray
 	extern SL_RemoveRefToString
@@ -33,10 +33,10 @@
 	extern SetVariableValue
 	extern RemoveVariable
 	extern SL_GetString_
-	extern Scr_EvalVariable
+	extern Scr_EvalVariableExtern
 	extern Scr_AllocArray
 	extern sprintf
-	extern scrParserPub
+	extern gScrParserPub
 	extern Scr_AddSourceBuffer
 	extern Com_BeginParseSession
 	extern Hunk_ClearTempMemoryHigh
@@ -47,17 +47,16 @@
 	extern CompileError2
 	extern va
 	extern Scr_IsInOpcodeMemory
+	extern AnimTreeParseInternal
 
 ;Exports of scr_animtree:
-	global scrAnimGlob
-	global propertyNames
+	global gScrAnimGlob
 	global Hunk_AllocXAnimTreePrecache
 	global Scr_GetAnimTreeSize
 	global ConnectScriptToAnim
 	global Scr_CreateAnimationTree
 	global Scr_PrecacheAnimationTree
 	global Scr_UsingTreeInternal
-	global AnimTreeParseInternal
 	global Scr_FindAnim
 	global Scr_GetAnims
 	global SetAnimCheck
@@ -66,7 +65,7 @@
 	global Scr_EmitAnimation
 	global Scr_GetAnimsIndex
 	global Scr_LoadAnimTreeAtIndex
-	global scrAnimPub
+	global gScrAnimPub
 
 
 SECTION .text
@@ -236,7 +235,7 @@ Scr_CreateAnimationTree_110:
 	xor edi, edi
 Scr_CreateAnimationTree_90:
 	movzx esi, si
-	mov ebx, scrVarPub
+	mov ebx, gScrVarPub
 	mov edx, [ebx+0x38]
 	mov eax, edx
 	shl eax, 0x5
@@ -456,7 +455,7 @@ Scr_UsingTreeInternal:
 	call Scr_CreateCanonicalFilename
 	mov [ebp-0x20], eax
 	mov [esp+0x4], eax
-	mov eax, [scrAnimPub]
+	mov eax, [gScrAnimPub]
 	mov [esp], eax
 	call FindVariable
 	mov ebx, eax
@@ -464,19 +463,19 @@ Scr_UsingTreeInternal:
 	jnz Scr_UsingTreeInternal_10
 	mov eax, [ebp-0x20]
 	mov [esp+0x4], eax
-	mov eax, [scrAnimPub]
+	mov eax, [gScrAnimPub]
 	mov [esp], eax
 	call GetNewVariable
 	mov ebx, eax
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov [ebp-0x1c], eax
-	mov edx, [esi*4+scrAnimPub+0x40c]
+	mov edx, [esi*4+gScrAnimPub+0x40c]
 	add edx, 0x1
-	mov [esi*4+scrAnimPub+0x40c], edx
+	mov [esi*4+gScrAnimPub+0x40c], edx
 	shl esi, 0x7
 	lea eax, [esi+edx]
-	mov [eax+eax+scrAnimGlob+0x8], bx
+	mov [eax+eax+gScrAnimGlob+0x8], bx
 	mov eax, [ebp-0x24]
 	mov [eax], edx
 Scr_UsingTreeInternal_20:
@@ -505,8 +504,8 @@ Scr_UsingTreeInternal_10:
 	mov dword [eax], 0x0
 	mov eax, esi
 	shl eax, 0x8
-	lea edi, [eax+scrAnimGlob+0x8]
-	mov ecx, [esi*4+scrAnimPub+0x40c]
+	lea edi, [eax+gScrAnimGlob+0x8]
+	mov ecx, [esi*4+gScrAnimPub+0x40c]
 	test ecx, ecx
 	jz Scr_UsingTreeInternal_20
 	movzx eax, word [edi+0x2]
@@ -528,441 +527,6 @@ Scr_UsingTreeInternal_30:
 	mov eax, [ebp-0x24]
 	mov [eax], edx
 	jmp Scr_UsingTreeInternal_20
-	nop
-
-
-;AnimTreeParseInternal(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)
-AnimTreeParseInternal:
-AnimTreeParseInternal_270:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x4c
-	mov [ebp-0x3c], eax
-	mov [ebp-0x40], edx
-	mov [ebp-0x41], cl
-	movzx eax, byte [ebp+0x8]
-	mov [ebp-0x42], al
-	movzx eax, byte [ebp+0xc]
-	mov [ebp-0x43], al
-	mov dword [ebp-0x1c], 0x6
-	mov dword [ebp-0x2c], 0x0
-	mov dword [ebp-0x38], 0x0
-	mov dword [ebp-0x34], 0x0
-	mov byte [ebp-0x2d], 0x0
-AnimTreeParseInternal_210:
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_Parse
-	mov esi, eax
-	mov ebx, [scrAnimGlob+0x4]
-	test ebx, ebx
-	jz AnimTreeParseInternal_10
-AnimTreeParseInternal_70:
-	mov [esp], eax
-	call Scr_IsIdentifier
-	test al, al
-	jz AnimTreeParseInternal_20
-	cmp byte [ebp-0x2d], 0x0
-	jnz AnimTreeParseInternal_30
-AnimTreeParseInternal_330:
-	mov dword [esp+0x8], 0x4
-	mov dword [esp+0x4], 0x2
-	mov [esp], esi
-	call SL_GetLowercaseString_
-	mov [ebp-0x2c], eax
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x3c]
-	mov [esp], eax
-	call FindVariable
-	test eax, eax
-	jnz AnimTreeParseInternal_40
-AnimTreeParseInternal_320:
-	mov eax, [ebp-0x2c]
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x3c]
-	mov [esp], eax
-	call GetVariable
-	mov [ebp-0x38], eax
-	cmp byte [ebp-0x43], 0x0
-	jz AnimTreeParseInternal_50
-AnimTreeParseInternal_100:
-	mov byte [ebp-0x2d], 0x0
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_ParseOnLine
-	mov esi, eax
-	cmp byte [eax], 0x0
-	jnz AnimTreeParseInternal_60
-AnimTreeParseInternal_110:
-	mov dword [ebp-0x34], 0x0
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_Parse
-	mov esi, eax
-	mov ebx, [scrAnimGlob+0x4]
-	test ebx, ebx
-	jnz AnimTreeParseInternal_70
-AnimTreeParseInternal_10:
-	mov esi, 0x1
-AnimTreeParseInternal_490:
-	cmp byte [ebp-0x2d], 0x0
-	jnz AnimTreeParseInternal_80
-AnimTreeParseInternal_470:
-	cmp byte [ebp-0x41], 0x0
-	jnz AnimTreeParseInternal_90
-AnimTreeParseInternal_430:
-	mov eax, esi
-	add esp, 0x4c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-AnimTreeParseInternal_50:
-	mov eax, [ebp-0x2c]
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x40]
-	mov [esp], eax
-	call FindVariable
-	test eax, eax
-	jnz AnimTreeParseInternal_100
-	mov ecx, [scrAnimGlob+0x208]
-	test ecx, ecx
-	jnz AnimTreeParseInternal_100
-	mov byte [ebp-0x2d], 0x1
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_ParseOnLine
-	mov esi, eax
-	cmp byte [eax], 0x0
-	jz AnimTreeParseInternal_110
-AnimTreeParseInternal_60:
-	mov [esp], eax
-	call Scr_IsIdentifier
-	test al, al
-	jnz AnimTreeParseInternal_120
-AnimTreeParseInternal_420:
-	cmp byte [esi], 0x3a
-	jnz AnimTreeParseInternal_130
-	cmp byte [esi+0x1], 0x0
-	jnz AnimTreeParseInternal_130
-AnimTreeParseInternal_340:
-	mov dword [ebp-0x34], 0x0
-AnimTreeParseInternal_390:
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_ParseOnLine
-	mov edi, eax
-	cmp byte [eax], 0x0
-	jz AnimTreeParseInternal_140
-AnimTreeParseInternal_170:
-	xor esi, esi
-	mov ebx, propertyNames
-AnimTreeParseInternal_160:
-	mov eax, [ebx]
-	mov [esp+0x4], eax
-	mov [esp], edi
-	call Q_stricmp
-	test eax, eax
-	jz AnimTreeParseInternal_150
-	add esi, 0x1
-	add ebx, 0x4
-	cmp esi, 0x4
-	jnz AnimTreeParseInternal_160
-AnimTreeParseInternal_380:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_unknown_anim_pro
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_ParseOnLine
-	mov edi, eax
-	cmp byte [eax], 0x0
-	jnz AnimTreeParseInternal_170
-AnimTreeParseInternal_140:
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_Parse
-	mov esi, eax
-	cmp byte [eax], 0x7b
-	jnz AnimTreeParseInternal_180
-	cmp byte [eax+0x1], 0x0
-	jnz AnimTreeParseInternal_180
-AnimTreeParseInternal_20:
-	movzx eax, byte [esi]
-	cmp al, 0x7b
-	jz AnimTreeParseInternal_190
-	cmp al, 0x7d
-	jz AnimTreeParseInternal_200
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_bad_token
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	jmp AnimTreeParseInternal_210
-AnimTreeParseInternal_190:
-	cmp byte [esi+0x1], 0x0
-	jnz AnimTreeParseInternal_220
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_ParseOnLine
-	cmp byte [eax], 0x0
-	jnz AnimTreeParseInternal_230
-AnimTreeParseInternal_400:
-	mov edx, [ebp-0x38]
-	test edx, edx
-	jz AnimTreeParseInternal_240
-AnimTreeParseInternal_410:
-	mov eax, [ebp-0x38]
-	mov [esp], eax
-	call GetArray
-	mov esi, eax
-	cmp byte [ebp-0x43], 0x0
-	jnz AnimTreeParseInternal_250
-	test byte [ebp-0x34], 0x8
-	jz AnimTreeParseInternal_260
-	cmp byte [ebp-0x2d], 0x0
-	jnz AnimTreeParseInternal_260
-AnimTreeParseInternal_250:
-	mov eax, 0x1
-	xor byte [ebp-0x2d], 0x1
-	movzx ecx, byte [ebp-0x2d]
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x34]
-	and eax, 0x1
-	mov [esp], eax
-	mov edx, [ebp-0x40]
-	mov eax, esi
-	call AnimTreeParseInternal_270
-	test al, al
-	jnz AnimTreeParseInternal_280
-AnimTreeParseInternal_300:
-	mov [esp], esi
-	call GetArraySize
-	test eax, eax
-	jz AnimTreeParseInternal_290
-AnimTreeParseInternal_310:
-	mov eax, [ebp-0x34]
-	mov [ebp-0x20], eax
-	mov dword [esp+0x4], 0x0
-	mov [esp], esi
-	call GetArrayVariable
-	lea edx, [ebp-0x20]
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call SetVariableValue
-	mov dword [ebp-0x38], 0x0
-	mov byte [ebp-0x2d], 0x0
-	jmp AnimTreeParseInternal_210
-AnimTreeParseInternal_260:
-	xor eax, eax
-	xor byte [ebp-0x2d], 0x1
-	movzx ecx, byte [ebp-0x2d]
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x34]
-	and eax, 0x1
-	mov [esp], eax
-	mov edx, [ebp-0x40]
-	mov eax, esi
-	call AnimTreeParseInternal_270
-	test al, al
-	jz AnimTreeParseInternal_300
-AnimTreeParseInternal_280:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_unexpected_end_o
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	mov [esp], esi
-	call GetArraySize
-	test eax, eax
-	jnz AnimTreeParseInternal_310
-AnimTreeParseInternal_290:
-	mov eax, [ebp-0x2c]
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x3c]
-	mov [esp], eax
-	call RemoveVariable
-	mov dword [ebp-0x38], 0x0
-	mov byte [ebp-0x2d], 0x0
-	jmp AnimTreeParseInternal_210
-AnimTreeParseInternal_40:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_duplicate_animat1
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	jmp AnimTreeParseInternal_320
-AnimTreeParseInternal_30:
-	mov eax, [ebp-0x2c]
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x3c]
-	mov [esp], eax
-	call RemoveVariable
-	jmp AnimTreeParseInternal_330
-AnimTreeParseInternal_130:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_bad_token
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	jmp AnimTreeParseInternal_340
-AnimTreeParseInternal_150:
-	cmp esi, 0x1
-	jz AnimTreeParseInternal_350
-	jb AnimTreeParseInternal_360
-	cmp esi, 0x2
-	jz AnimTreeParseInternal_370
-	cmp esi, 0x3
-	jnz AnimTreeParseInternal_380
-	or dword [ebp-0x34], 0x10
-	jmp AnimTreeParseInternal_390
-AnimTreeParseInternal_180:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_properties_canno
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	jmp AnimTreeParseInternal_20
-AnimTreeParseInternal_360:
-	or dword [ebp-0x34], 0x1
-	jmp AnimTreeParseInternal_390
-AnimTreeParseInternal_350:
-	or dword [ebp-0x34], 0x2
-	jmp AnimTreeParseInternal_390
-AnimTreeParseInternal_220:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_bad_token
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_ParseOnLine
-	cmp byte [eax], 0x0
-	jz AnimTreeParseInternal_400
-AnimTreeParseInternal_230:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_token_not_allowe
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	mov edx, [ebp-0x38]
-	test edx, edx
-	jnz AnimTreeParseInternal_410
-AnimTreeParseInternal_240:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_no_animation_spe
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	jmp AnimTreeParseInternal_410
-AnimTreeParseInternal_120:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_fixme_aliases_no
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	jmp AnimTreeParseInternal_420
-AnimTreeParseInternal_90:
-	mov eax, [ebp-0x3c]
-	mov [esp], eax
-	call GetArraySize
-	test eax, eax
-	jnz AnimTreeParseInternal_430
-	cmp byte [ebp-0x42], 0x0
-	jz AnimTreeParseInternal_440
-	mov eax, _cstring_void_loop
-AnimTreeParseInternal_480:
-	mov dword [esp+0x8], 0x4
-	mov dword [esp+0x4], 0x0
-	mov [esp], eax
-	call SL_GetString_
-	mov ebx, eax
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x3c]
-	mov [esp], eax
-	call GetVariable
-	mov [esp], ebx
-	call SL_RemoveRefToString
-	mov eax, esi
-	add esp, 0x4c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-AnimTreeParseInternal_370:
-	or dword [ebp-0x34], 0x8
-	jmp AnimTreeParseInternal_390
-AnimTreeParseInternal_200:
-	cmp byte [esi+0x1], 0x0
-	jnz AnimTreeParseInternal_450
-AnimTreeParseInternal_500:
-	mov dword [esp], scrAnimGlob+0x4
-	call Com_ParseOnLine
-	cmp byte [eax], 0x0
-	jnz AnimTreeParseInternal_460
-	xor esi, esi
-	cmp byte [ebp-0x2d], 0x0
-	jz AnimTreeParseInternal_470
-AnimTreeParseInternal_80:
-	mov eax, [ebp-0x2c]
-	mov [esp+0x4], eax
-	mov eax, [ebp-0x3c]
-	mov [esp], eax
-	call RemoveVariable
-	jmp AnimTreeParseInternal_470
-AnimTreeParseInternal_440:
-	mov eax, _cstring_void
-	jmp AnimTreeParseInternal_480
-AnimTreeParseInternal_460:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_token_not_allowe1
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	xor esi, esi
-	jmp AnimTreeParseInternal_490
-AnimTreeParseInternal_450:
-	call Com_GetLastTokenPos
-	mov ebx, eax
-	call Com_EndParseSession
-	mov dword [esp+0x8], _cstring_bad_token
-	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
-	mov [esp], ebx
-	call CompileError
-	jmp AnimTreeParseInternal_500
 	nop
 
 
@@ -1030,7 +594,7 @@ Scr_GetAnims:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
-	mov eax, [eax*4+scrAnimPub+0x20c]
+	mov eax, [eax*4+gScrAnimPub+0x20c]
 	pop ebp
 	ret
 	nop
@@ -1041,7 +605,7 @@ SetAnimCheck:
 	push ebp
 	mov ebp, esp
 	mov eax, [ebp+0x8]
-	mov [scrAnimGlob+0x208], eax
+	mov [gScrAnimGlob+0x208], eax
 	pop ebp
 	ret
 	nop
@@ -1069,10 +633,10 @@ Scr_UsingTree:
 	jmp CompileError
 Scr_UsingTree_10:
 	mov ecx, 0x1
-	mov edx, scrAnimPub+0x414
+	mov edx, gScrAnimPub+0x414
 	mov eax, ebx
 	call Scr_UsingTreeInternal
-	mov [scrAnimPub+0x8], eax
+	mov [gScrAnimPub+0x8], eax
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -1092,7 +656,7 @@ Scr_FindAnimTree:
 	call Scr_CreateCanonicalFilename
 	mov ebx, eax
 	mov [esp+0x4], eax
-	mov eax, [scrAnimPub]
+	mov eax, [gScrAnimPub]
 	mov [esp], eax
 	call FindVariable
 	mov esi, eax
@@ -1119,7 +683,7 @@ Scr_FindAnimTree_10:
 	test eax, eax
 	jz Scr_FindAnimTree_20
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	jmp Scr_FindAnimTree_30
 	nop
 
@@ -1132,7 +696,7 @@ Scr_EmitAnimation:
 	push ebx
 	sub esp, 0x20
 	mov esi, [ebp+0x8]
-	mov ebx, [scrAnimPub+0x8]
+	mov ebx, [gScrAnimPub+0x8]
 	test ebx, ebx
 	jnz Scr_EmitAnimation_10
 	mov dword [esp+0x4], _cstring_using_animtree_w
@@ -1188,12 +752,12 @@ Scr_GetAnimsIndex:
 	push esi
 	push ebx
 	mov edi, [ebp+0x8]
-	mov ebx, [scrAnimPub+0x410]
+	mov ebx, [gScrAnimPub+0x410]
 	test ebx, ebx
 	jz Scr_GetAnimsIndex_10
-	cmp edi, [ebx*4+scrAnimPub+0x20c]
+	cmp edi, [ebx*4+gScrAnimPub+0x20c]
 	jz Scr_GetAnimsIndex_10
-	lea ecx, [ebx*4+scrAnimPub+0x208]
+	lea ecx, [ebx*4+gScrAnimPub+0x208]
 	mov edx, ebx
 	lea esi, [ebx-0x1]
 Scr_GetAnimsIndex_30:
@@ -1237,7 +801,7 @@ Scr_LoadAnimTreeAtIndex:
 	shl eax, 0x7
 	mov edx, [ebp+0x8]
 	lea esi, [eax+edx]
-	movzx ebx, word [esi+esi+scrAnimGlob+0x8]
+	movzx ebx, word [esi+esi+gScrAnimGlob+0x8]
 	mov [esp], ebx
 	call GetVariableName
 	movzx eax, ax
@@ -1263,7 +827,7 @@ Scr_LoadAnimTreeAtIndex_10:
 	call FindVariable
 	test eax, eax
 	jnz Scr_LoadAnimTreeAtIndex_20
-	mov dword [esi*4+scrAnimPub+0xc], 0x0
+	mov dword [esi*4+gScrAnimPub+0xc], 0x0
 	add esp, 0x9c
 	pop ebx
 	pop esi
@@ -1276,7 +840,7 @@ Scr_LoadAnimTreeAtIndex_20:
 	mov [ebp-0x6c], eax
 	call Scr_AllocArray
 	mov edi, eax
-	mov [scrAnimPub+0x4], eax
+	mov [gScrAnimPub+0x4], eax
 	mov edx, [ebp-0x84]
 	mov [esp], edx
 	call SL_ConvertToString
@@ -1285,7 +849,7 @@ Scr_LoadAnimTreeAtIndex_20:
 	lea esi, [ebp-0x60]
 	mov [esp], esi
 	call sprintf
-	mov eax, scrParserPub
+	mov eax, gScrParserPub
 	mov eax, [eax+0xc]
 	mov [ebp-0x78], eax
 	mov dword [esp+0xc], 0x1
@@ -1296,15 +860,15 @@ Scr_LoadAnimTreeAtIndex_20:
 	mov ebx, eax
 	test eax, eax
 	jz Scr_LoadAnimTreeAtIndex_30
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov edx, [edx+0x8]
 	mov [ebp-0x7c], edx
-	mov eax, scrParserPub
+	mov eax, gScrParserPub
 	mov [eax+0x8], esi
 	mov dword [esp], _cstring_scr_animtreepars
 	call Com_BeginParseSession
-	mov [scrAnimGlob+0x4], ebx
-	mov [scrAnimGlob], ebx
+	mov [gScrAnimGlob+0x4], ebx
+	mov [gScrAnimGlob], ebx
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], 0x0
 	mov ecx, 0x1
@@ -1316,7 +880,7 @@ Scr_LoadAnimTreeAtIndex_20:
 Scr_LoadAnimTreeAtIndex_120:
 	call Com_EndParseSession
 	mov eax, [ebp-0x7c]
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov [edx+0x8], eax
 	mov eax, [ebp-0x78]
 	mov [edx+0xc], eax
@@ -1326,7 +890,7 @@ Scr_LoadAnimTreeAtIndex_120:
 	test eax, eax
 	jz Scr_LoadAnimTreeAtIndex_30
 Scr_LoadAnimTreeAtIndex_100:
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	call Scr_GetAnimTreeSize
 	mov ebx, eax
 	mov eax, [ebp-0x84]
@@ -1367,7 +931,7 @@ Scr_LoadAnimTreeAtIndex_110:
 	mov dword [esp], 0x1
 	mov ecx, [ebp-0x70]
 	mov edx, [ebp-0x6c]
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	call Scr_CreateAnimationTree
 	mov edx, [ebp-0x6c]
 	mov [esp], edx
@@ -1380,10 +944,10 @@ Scr_LoadAnimTreeAtIndex_70:
 	mov eax, [ebp-0x80]
 	mov [esp], eax
 	call RemoveVariable
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	mov [esp], eax
 	call RemoveRefToObject
-	mov dword [scrAnimPub+0x4], 0x0
+	mov dword [gScrAnimPub+0x4], 0x0
 	mov dword [ebp-0x1c], 0x7
 	mov edx, [ebp-0x70]
 	mov [ebp-0x20], edx
@@ -1402,7 +966,7 @@ Scr_LoadAnimTreeAtIndex_70:
 	mov eax, [ebp+0x10]
 	add eax, [ebp+0x8]
 	mov edx, [ebp-0x70]
-	mov [eax*4+scrAnimPub+0xc], edx
+	mov [eax*4+gScrAnimPub+0xc], edx
 	add esp, 0x9c
 	pop ebx
 	pop esi
@@ -1465,7 +1029,7 @@ Scr_LoadAnimTreeAtIndex_30:
 	call Com_Error
 	jmp Scr_LoadAnimTreeAtIndex_100
 Scr_LoadAnimTreeAtIndex_50:
-	mov eax, [scrAnimPub+0x4]
+	mov eax, [gScrAnimPub+0x4]
 	call Scr_PrecacheAnimationTree
 	jmp Scr_LoadAnimTreeAtIndex_110
 Scr_LoadAnimTreeAtIndex_40:
@@ -1474,7 +1038,7 @@ Scr_LoadAnimTreeAtIndex_40:
 	call Com_EndParseSession
 	mov dword [esp+0x8], _cstring_bad_token
 	mov dword [esp+0x4], _cstring_s
-	sub ebx, [scrAnimGlob]
+	sub ebx, [gScrAnimGlob]
 	mov [esp], ebx
 	call CompileError
 	jmp Scr_LoadAnimTreeAtIndex_120
@@ -1483,7 +1047,6 @@ Scr_LoadAnimTreeAtIndex_40:
 
 ;Initialized global or static variables of scr_animtree:
 SECTION .data
-propertyNames: dd _cstring_loopsync, _cstring_nonloopsync, _cstring_complete, _cstring_additive, 0x0, 0x0, 0x0, 0x0
 
 
 ;Initialized constant data of scr_animtree:
@@ -1492,8 +1055,8 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of scr_animtree:
 SECTION .bss
-scrAnimGlob: resb 0x280
-scrAnimPub: resb 0x480
+gScrAnimGlob: resb 0x280
+gScrAnimPub: resb 0x480
 
 
 ;All cstrings:

@@ -24,7 +24,7 @@
 #ifndef __CVAR_H__
 #define __CVAR_H__
 
-#include "q_math.h"
+#include "q_shared.h"
 #include "q_shared.h"
 
 // nothing outside the Cvar_*() functions should modify these fields!

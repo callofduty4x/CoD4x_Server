@@ -44,7 +44,7 @@ void ReliableMessageTrackRate(netreliablemsg_t *chan)
 		chan->txwindow.rateInfo.lastBytesSnapTotal = chan->txwindow.rateInfo.bytesTotal;
 		chan->txwindow.rateInfo.nextRateCntTime = chan->time + 1000;
 #ifdef RELIABLE_RATEDBG
-		Com_Printf(CON_CHANNEL_NETWORK,"TX-Rate %d, TX-RateTotal: %d RX-Rate %d, RX-RateTotal: %d\n", 
+		Com_Printf(CON_CHANNEL_NETWORK,"Ping: %d, TX-Rate %d, TX-RateTotal: %d RX-Rate %d, RX-RateTotal: %d\n", chan->ping,
 			chan->txwindow.rateInfo.bytesPerSec, chan->txwindow.rateInfo.bytesPerSecTotal,
 			chan->rxwindow.rateInfo.bytesPerSec, chan->rxwindow.rateInfo.bytesPerSecTotal);
 #endif
@@ -233,7 +233,6 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 			MSG_WriteShort(&buf, chan->txwindow.windowsize);
 			MSG_WriteShort(&buf, 0);
 			NET_SendPacket( chan->sock, buf.cursize, buf.data, &chan->remoteAddress );	
-			
 #ifdef _LAGDEBUG			
 			dbghitcounter_t *dbgc = &phitcounter[(unsigned short)chan->qport];
 			unsigned int time = Sys_Milliseconds();
@@ -281,7 +280,10 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 								chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len);
 								
 			NET_SendPacket( chan->sock, buf.cursize, buf.data, &chan->remoteAddress );
-
+			if(chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].senttime == 0)
+			{
+				chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].senttime = chan->time;
+			}
 #ifdef _LAGDEBUG			
 			dbghitcounter_t *dbgc = &phitcounter[(unsigned short)chan->qport];
 			unsigned int time = Sys_Milliseconds();
@@ -389,6 +391,7 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 	if(chan->txwindow.acknowledge < acknowledge){
 		//Acknowledge all received data
 		chan->txwindow.acknowledge = acknowledge;
+		chan->ping = chan->time - chan->txwindow.fragments[(acknowledge -1) % chan->txwindow.bufferlen].senttime;
 #ifdef RELIABLE_DEBUG
 		Com_Printf(CON_CHANNEL_NETWORK,"^5Acknowledge is now %d Top is now: %d Remaining fragments are %d\n", chan->txwindow.acknowledge, chan->txwindow.sequence, chan->txwindow.sequence - chan->txwindow.acknowledge);
 #endif

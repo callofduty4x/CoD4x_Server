@@ -2395,11 +2395,12 @@ _cstring_skipepair_value_2:		db "SkipEpair: value ",27h,"%s",27h," contains a ",
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _double_0_00000010:		dq 0x3e7ad7f29abcaf48	; 1e-07
 _double_0_00100000:		dq 0x3f50624dd2f1a9fc	; 0.001
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_0_00200000:		dd 0x3b03126f	; 0.002
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 
+align   16,db 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

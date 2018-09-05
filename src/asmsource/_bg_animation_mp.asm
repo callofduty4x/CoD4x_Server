@@ -118,7 +118,6 @@
 	global BG_AnimUpdatePlayerStateConditions
 	global BG_IsAds
 	global bgs
-	global controller_names
 
 
 SECTION .text
@@ -5994,7 +5993,6 @@ animParseModesStr: dd _cstring_defines, 0xffffffff, _cstring_animations, 0xfffff
 globalFilename: dd _cstring_mpplayeranimscri, 0x0, 0x0, 0x0
 animBodyPartsStr: dd _cstring__unused_, 0xffffffff, _cstring_legs1, 0xffffffff, _cstring_torso1, 0xffffffff, _cstring_both, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 bgs: dd 0x0, 0x0
-controller_names: dd 0x1708d20, 0x1708d22, 0x1708d24, 0x1708d36, 0x1708d2c, 0x1708d38
 
 
 ;Initialized constant data of bg_animation_mp:
@@ -6192,9 +6190,7 @@ SECTION .rdata
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_360_00000000:		dd 0x43b40000	; 360
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_05000000:		dd 0x3d4ccccd	; 0.05
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_00000000:		dd 0x0	; 0
 _float_1000_00000000:		dd 0x447a0000	; 1000
@@ -6231,3 +6227,6 @@ _float_0_69999999:		dd 0x3f333333	; 0.7
 _float__0_30000001:		dd 0xbe99999a	; -0.3
 _float_0_25000000:		dd 0x3e800000	; 0.25
 
+align   16,db 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

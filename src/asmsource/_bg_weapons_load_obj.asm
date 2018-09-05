@@ -78,7 +78,7 @@ BG_LoadDefaultWeaponDef_LoadObj:
 	sub esp, 0x18
 	mov dword [bg_defaultWeaponDefs], _cstring_null
 	mov edx, weaponDefFields+0x8
-	mov ecx, weapIconRatioNames+0x8
+	xor ecx, ecx
 BG_LoadDefaultWeaponDef_LoadObj_20:
 	mov eax, [edx]
 	test eax, eax
@@ -87,7 +87,7 @@ BG_LoadDefaultWeaponDef_LoadObj_20:
 	mov dword [eax+bg_defaultWeaponDefs], _cstring_null
 BG_LoadDefaultWeaponDef_LoadObj_10:
 	add edx, 0xc
-	cmp ecx, edx
+	cmp ecx, 502
 	jnz BG_LoadDefaultWeaponDef_LoadObj_20
 	mov dword [bg_defaultWeaponDefs], _cstring_none
 	mov dword [bg_defaultWeaponDefs+0x76c], _cstring_noweaponaccu
@@ -1367,7 +1367,7 @@ BG_LoadWeaponDefInternal:
 	mov [ebp-0x287c], eax
 	mov dword [eax], _cstring_null
 	mov edx, weaponDefFields+0x8
-	mov ecx, weapIconRatioNames+0x8
+	xor ecx, ecx
 BG_LoadWeaponDefInternal_20:
 	mov ebx, [edx]
 	test ebx, ebx
@@ -1377,7 +1377,8 @@ BG_LoadWeaponDefInternal_20:
 	mov dword [eax+ebx], _cstring_null
 BG_LoadWeaponDefInternal_10:
 	add edx, 0xc
-	cmp ecx, edx
+	inc ecx
+	cmp ecx, 502
 	jnz BG_LoadWeaponDefInternal_20
 	mov edi, [ebp+0xc]
 	mov [esp+0x10], edi
@@ -1459,6 +1460,12 @@ BG_LoadWeaponDefInternal_100:
 	call ParseConfigStringToStruct
 	test eax, eax
 	jnz BG_LoadWeaponDefInternal_90
+	lea eax, [ebp-0x5c]
+	mov [esp+0x8], eax
+	mov eax, _junkparse_
+	mov [esp+4], eax
+	mov dword [esp], 2
+	call Com_Error
 BG_LoadWeaponDefInternal_240:
 	mov dword [ebp-0x287c], 0x0
 BG_LoadWeaponDefInternal_250:
@@ -2385,6 +2392,7 @@ _cstring_nonplayer:		db "non-player",0
 _cstring_bullet:		db "bullet",0
 _cstring_projectile:		db "projectile",0
 _cstring_binoculars:		db "binoculars",0
+_junkparse_:			db "weapon ",22h,"%s",22h," file parse error. Junk in file?"
 
 
 

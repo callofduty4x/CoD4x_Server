@@ -127,6 +127,72 @@ else
    do_something_else();
 ```
 
+#### `isEntity(<variable>)`
+
+Returns true if passed variable has 'entity' type.
+
+Usage example:
+```
+if (isEntity(a))
+   do_something();
+else
+   do_something_else();
+```
+
+#### `isVector(<variable>)`
+
+Returns true if passed variable has 'vector' type.
+
+Usage example:
+```
+if (isVector(a))
+   do_something();
+else
+   do_something_else();
+```
+
+#### `isString(<variable>)`
+
+Returns true if passed variable has 'string' type. Returns false for localized strings.
+
+Usage example:
+```
+if (isString(a))
+   do_something();
+else
+   do_something_else();
+```
+
+#### `isFloat(<variable>)`
+
+Returns true if passed variable has 'float' type.
+
+Usage example:
+```
+if (isFloat(a))
+   do_something();
+else
+   do_something_else();
+```
+
+#### `isInt(<variable>)`
+
+Returns true if passed variable has 'int' type.
+
+Usage example:
+```
+if (isInt(a))
+   do_something();
+else
+   do_something_else();
+```
+
+#### `float(<int, float, bool or string>)`
+
+Casts float on passed variable.
+
+Usage example: `floatVal = float("150.9");`
+
 ### Players Related Functions
 
 #### `GetUserinfo(string <variable_name>)`
@@ -288,6 +354,18 @@ Usage exmaple: `date = TimeToString(1468578161, 1, "%c");`
 Calculates and returns SHA256 sum of the given string.
 
 Usage example: `hash = sha256("Foo");`
+
+#### `base64Encode(string <string>)`
+
+Returns Base64 encoded string of given string.
+
+Usage example: `encoded = base64Encode("String to be encoded");`
+
+#### `base64Decode(string <string>)`
+
+Returns Base64 decoded string of given string.
+
+Usage example: `decoded = base64Decode("Too lazy to get some encoded string=");`
 
 ### File Operations
 

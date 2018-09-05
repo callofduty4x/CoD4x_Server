@@ -24,7 +24,12 @@
 #ifndef __CM_PUBLIC_H__
 #define __CM_PUBLIC_H__
 
-/* 760 */
+#ifndef CLIPHANDLE_DEFINED
+#define CLIPHANDLE_DEFINED
+typedef unsigned int clipHandle_t;
+#endif
+
+
 typedef enum
 {
   TRACE_HITTYPE_NONE = 0x0,
@@ -92,14 +97,14 @@ struct sightpointtrace_t
   char *priorityMap;
 };
 
-struct pointtrace_t
+typedef struct pointtrace_t
 {
   TraceExtents extents;
   IgnoreEntParams *ignoreEntParams;
   int contentmask;
   int bLocational;
   char *priorityMap;
-};
+} pointtrace_t;
 
 
 typedef struct moveclip_s{
@@ -113,6 +118,17 @@ typedef struct moveclip_s{
 } moveclip_t;
 
 
+// trace->entityNum can also be 0 to (MAX_GENTITIES-1)
+// or ENTITYNUM_NONE, ENTITYNUM_WORLD
+#ifndef CLIPHANDLE_DEFINED
+#define CLIPHANDLE_DEFINED
+typedef unsigned int clipHandle_t;
+#endif
+
+
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 int CM_BoxLeafnums( const vec3_t mins, const vec3_t maxs, uint16_t *list, int listsize, int *lastLeaf );
 byte *CM_ClusterPVS( int cluster );
@@ -132,12 +148,6 @@ int __cdecl CM_PointSightTraceToEntities(struct sightpointtrace_t *spt);
 int __cdecl CM_ClipSightTraceToEntities(struct sightclip_t *clip);
 int __cdecl CM_PointTraceStaticModelsComplete(const float *start, const float *end, int contentmask);
 
-// trace->entityNum can also be 0 to (MAX_GENTITIES-1)
-// or ENTITYNUM_NONE, ENTITYNUM_WORLD
-#ifndef CLIPHANDLE_DEFINED
-#define CLIPHANDLE_DEFINED
-typedef unsigned int clipHandle_t;
-#endif
 
 qboolean CM_TraceBox(TraceExtents *extents, const float *mins, const float *maxs, float fraction);
 
@@ -155,6 +165,11 @@ void __cdecl CM_PointTraceToEntities(struct pointtrace_t *clip, trace_t *trace);
 qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle);
 int __cdecl CM_ContentsOfModel(unsigned int handle);
 void __cdecl CM_TransformedBoxTraceExternal(trace_t *results, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
+int16_t __cdecl Trace_GetEntityHitId(trace_t *trace);
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif

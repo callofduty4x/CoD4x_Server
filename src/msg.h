@@ -26,7 +26,7 @@
 
 #include "q_shared.h"
 #include "entity.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "player.h"
 
 #include <stdint.h>
@@ -61,6 +61,14 @@ typedef struct {
 		int		lengthoffset;
 	};
 } msg_t; //Size: 0x28
+
+typedef struct netField_s{
+	char    *name;
+	int offset;
+	int bits;           // 0 = float
+	byte changeHints;
+	byte pad[3];
+} netField_t;
 
 
 struct clientState_s;
@@ -127,7 +135,8 @@ void MSG_EndWriteMessageLength(msg_t* msg);
 int MSG_ReadBit(msg_t *msg);
 int MSG_ReadEntityIndex(msg_t *msg, int numBits);
 void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force);
-
+void MSG_RegisterCvars();
+int __cdecl MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fields, int numFields);
 
 #ifdef __cplusplus
 }

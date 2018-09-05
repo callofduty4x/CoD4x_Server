@@ -54,6 +54,12 @@
 #include "xassets/extractor.h"
 #include "sec_update.h"
 #include "bg_public.h"
+#include "cscr_stringlist.h"
+#include "physicalmemory.h"
+#include "win_localize.h"
+#include "tests.h"
+#include "null_client.h"
+#include "db_load.h"
 
 #include <string.h>
 #include <setjmp.h>
@@ -89,8 +95,10 @@ qboolean com_errorEntered;
 qboolean com_fullyInitialized = qfalse;
 qboolean com_missingAssetOpenFailed;
 
+static int watchdog_timer;
 void Com_WriteConfig_f( void );
 void Com_WriteConfiguration( void );
+void* Debug_HitchWatchdog(void*);
 /*
 ========================================================================
 
@@ -151,6 +159,14 @@ void EventTimerTest(int time, int triggerTime, int value, char* s){
 	Com_Printf(CON_CHANNEL_SYSTEM,"^5Event exectuted: %i %i %i %i %s\n", time, triggerTime, Sys_Milliseconds(), value, s);
 
 }
+
+void CCS_InitConstantConfigStrings();
+void Com_ShutdownDObj();
+void DObjShutdown();
+void XAnimShutdown();
+void Com_ShutdownWorld();
+void CM_Shutdown();
+void Init_Watchdog();
 
 
 /*
@@ -570,7 +586,7 @@ void Com_Quit_f( void ) {
 
   Com_Printf(CON_CHANNEL_SYSTEM,"All plugins have terminated\n");
 
-	Sys_EnterCriticalSection( 2 );
+//	Sys_EnterCriticalSection( CRITSECT_COM_ERROR );
 
 	Scr_Cleanup();
 	GScr_Shutdown();
@@ -599,7 +615,7 @@ void Com_Quit_f( void ) {
 		NET_Shutdown();
 	}
 
-	Sys_LeaveCriticalSection( 2 );
+//	Sys_LeaveCriticalSection( CRITSECT_COM_ERROR );
 
 	Sys_Quit ();
 }
@@ -621,7 +637,9 @@ static void Com_InitCvars( void ){
     com_version = Cvar_RegisterString ("version", s, CVAR_ROM | CVAR_SERVERINFO , "Game version");
     com_shortversion = Cvar_RegisterString ("shortversion", Q3_VERSION, CVAR_ROM | CVAR_SERVERINFO , "Short game version");
 
-    Cvar_RegisterString ("build", va("%i", Sys_GetBuild()), CVAR_ROM | CVAR_SERVERINFO , "");
+    Cvar_RegisterInt ("build", Sys_GetBuild(), Sys_GetBuild(), Sys_GetBuild(), CVAR_ROM | CVAR_SERVERINFO, "Count of SCM commits since project has been started");
+    Cvar_RegisterString("branch", Sys_GetBranch(), CVAR_ROM | CVAR_SERVERINFO, "Name of SCM branch");
+    Cvar_RegisterString("revision", Sys_GetRevision(), CVAR_ROM | CVAR_SERVERINFO, "Hash of SCM revision");
     useFastFile = Cvar_RegisterBool ("useFastFiles", qtrue, 16, "Enables loading data from fast files");
     //MasterServer
     //AuthServer
@@ -811,7 +829,7 @@ void Com_Init(char* commandLine){
 
         msec = Sys_Milliseconds();
 
-        PMem_BeginAlloc("$init", qtrue);
+        PMem_BeginAlloc("$init", qtrue, TRACK_MISC);
         DB_InitThread();
     }
 //    Con_InitChannels();
@@ -864,7 +882,11 @@ void Com_Init(char* commandLine){
     if(setjmp(*abortframe)){
         Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
     }
+    Tests_Init();
 
+
+
+//    Init_Watchdog();
 }
 
 
@@ -1106,6 +1128,11 @@ __optimize3 void Com_Frame( void ) {
 		Com_Error(0, "Error Cleanup");
 	}
 	Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
+
+	Sys_EnterCriticalSection(CRITSECT_WATCHDOG);
+	watchdog_timer = 0;
+	Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
+
 }
 
 
@@ -1291,10 +1318,15 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 	int		currentTime;
 	jmp_buf*	abortframe;
 	mvabuf;
+	char l_errorMessage[4096];
 
+#ifndef NDEBUG
+	Com_Printf(CON_CHANNEL_ERROR,"Com_Error entered:\n");
+	Sys_PrintBacktrace();
+#endif
 
 	if(com_developer && com_developer->integer > 1)
-		__builtin_trap ( ); // SIGILL on windows - crash. Have to do something?
+		asm ("int $3"); // SIGILL on windows - crash. Have to do something?
 
 	Sys_EnterCriticalSection(CRITSECT_COM_ERROR);
 
@@ -1303,11 +1335,28 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		com_errorEntered = qtrue;
 
 		va_start (argptr,fmt);
-		Q_vsnprintf (com_errorMessage, sizeof(com_errorMessage),fmt,argptr);
+		Q_vsnprintf (l_errorMessage, sizeof(l_errorMessage),fmt,argptr);
+
 		va_end (argptr);
+
+		Q_strncpyz(com_errorMessage, l_errorMessage, sizeof(com_errorMessage));
+
 		lastErrorCode = code;
 		/* Terminate this thread and wait for the main-thread entering this function */
+		if(Sys_IsDatabaseThread())
+		{
+			Sys_DatabaseCompleted();
+
+			Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
+
+			Com_Printf(CON_CHANNEL_ERROR, "%s\n", l_errorMessage);
+			abortframe = (jmp_buf*)Sys_GetValue(2);
+			longjmp (*abortframe, -1);
+		}
 		Sys_LeaveCriticalSection(CRITSECT_COM_ERROR);
+
+		Com_Printf(CON_CHANNEL_ERROR, "%s\n", l_errorMessage);
+
 		Sys_ExitThread(-1);
 		return;
 	}
@@ -1473,7 +1522,7 @@ void __cdecl Com_SetScriptSettings()
 
 void __cdecl Com_Restart()
 {
-  XZoneInfo zoneInfo[1];
+//  XZoneInfo zoneInfo[1];
 
 //  com_codeTimeScale = 1.0;
   CL_ShutdownHunkUsers();
@@ -1509,6 +1558,7 @@ void Com_Close()
   if ( useFastFile->boolean )
   {
     DB_ShutdownXAssets();
+    DB_ShutdownXAssetPools();
   }
   Scr_Shutdown( );
   Hunk_ShutdownDebugMemory();
@@ -1556,8 +1606,28 @@ const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, in
   return result;
 }
 
-const char *__cdecl CS_DisplayName(clientState_t *cs, int type)
+
+void* Debug_HitchWatchdog(void* arg)
 {
-  return Com_DisplayName(cs->netname, /*cs->clanAbbrev*/ "", type);
+    while(true)
+    {
+        Sys_EnterCriticalSection(CRITSECT_WATCHDOG);
+
+	++watchdog_timer;
+	if(watchdog_timer >= 40)
+	{
+		asm("int $3");
+	}
+	Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
+
+        Sys_SleepMSec(100);
+    }
+    return NULL;
 }
 
+void Init_Watchdog()
+{
+    threadid_t tid;
+    Sys_CreateNewThread(Debug_HitchWatchdog, &tid, NULL);
+    Sys_SetThreadName(tid, "Watchdog");
+}

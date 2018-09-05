@@ -35,6 +35,11 @@ typedef enum {
 	EXEC_APPEND			// add to end of the command buffer (normal case)
 } cbufExec_t;
 
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 typedef void (*xcommand_t)(void);
 typedef void (*completionFunc_t)( char *args, int argNum );
 void Cmd_Init(void);
@@ -94,5 +99,10 @@ uint64_t Cmd_GetInvokerSteamID();
 const char* Cmd_GetInvokerName(char *buf, int len);
 void Cmd_SetCurrentInvokerInfo(int power, int client, uint64_t steamid, const char* name);
 void Cmd_ResetInvokerInfo();
+
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif

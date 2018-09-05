@@ -1,4 +1,4 @@
-#include "q_math.h"
+#include "q_shared.h"
 #include "cm_local.h"
 #include "qcommon.h"
 #include "cmd.h"

@@ -5681,9 +5681,10 @@ SECTION .rdata
 SECTION .rdata
 _float_0_00000000:		dd 0x0	; 0
 _float__3402823466385288_float__:		dd 0xff7fffff	; -3.40282e+38
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _double_0_00000100:		dq 0x3eb0c6f7a0b5ed8d	; 1e-06
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 
+align   16,db 0
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

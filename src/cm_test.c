@@ -1,4 +1,4 @@
-#include "q_math.h"
+#include "q_shared.h"
 #include "cm_local.h"
 
 
@@ -259,18 +259,16 @@ int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_
 	return CM_PointContents( p_l, model );
 }
 
-
-bool __cdecl CM_ClipHandleIsValid(unsigned int handle)
+// This one used among others but it should not be in file called "test"
+qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle)
 {
-  bool result; // al@2
-
   if ( handle >= cm.numSubModels )
   {
     if ( handle == BOX_MODEL_HANDLE )
     {
-      return true;
+      return qtrue;
     }
-    return false;
+    return qfalse;
   }
-  return true;
+  return qtrue;
 }

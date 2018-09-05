@@ -250,9 +250,9 @@ typedef struct Material
 extern "C"{
 #endif
 typedef struct Material Material_t;
-struct Material* Material_RegisterHandle(const char* name, int track);
 qboolean Material_IsDefault(struct Material *);
 const char *__cdecl Material_GetName(struct Material *a1);
+void Material_ClearShaderUploadList();
 #ifdef __cplusplus
 }
 #endif

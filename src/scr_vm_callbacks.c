@@ -112,3 +112,4 @@ qboolean Scr_ScriptCommand(int clientnum, const char* cmd, const char* args){
 
     return qtrue;
 }
+

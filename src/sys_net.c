@@ -36,118 +36,120 @@
 #include <ctype.h>
 #include <stddef.h>		/* for offsetof*/
 
-
 #ifdef _WIN32
-#	include <winsock2.h>
-#	include <ws2tcpip.h>
-#	include <iphlpapi.h>
-#	if WINVER < 0x501
-#		ifdef __MINGW32__
-			// wspiapi.h isn't available on MinGW, so if it's
-			// present it's because the end user has added it
-			// and we should look for it in our tree
-#			include "wspiapi.h"
-#		else
-#			include <wspiapi.h>
-#		endif
-#	else
-#		include <ws2spi.h>
-#	endif
+	#include <winsock2.h>
+	#include <ws2tcpip.h>
+	#include <iphlpapi.h>
+	#if WINVER < 0x501
+		#ifdef __MINGW32__
+					// wspiapi.h isn't available on MinGW, so if it's
+					// present it's because the end user has added it
+					// and we should look for it in our tree
+			#include "wspiapi.h"
+		#else
+			#include <wspiapi.h>
+		#endif
+	#else
+		#include <ws2spi.h>
+	#endif
 
-typedef int socklen_t;
-#	ifdef ADDRESS_FAMILY
-#		define sa_family_t	ADDRESS_FAMILY
-#	else
-typedef unsigned short sa_family_t;
-#	endif
+	
 
-/* no epipe yet */
-#ifndef WSAEPIPE
-    #define WSAEPIPE       -12345
-#endif
-#	define EAGAIN			WSAEWOULDBLOCK
-#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
-#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
-#	define ECONNRESET		WSAECONNRESET
-#	define EINPROGRESS		WSAEINPROGRESS
-#	define EINTR			WSAEINTR
-# define EPIPE      WSAEPIPE
-typedef u_long	ioctlarg_t;
-#	define socketError		WSAGetLastError( )
+	typedef int socklen_t;
+	#	ifdef ADDRESS_FAMILY
+	#		define sa_family_t	ADDRESS_FAMILY
+	#	else
+	typedef unsigned short sa_family_t;
+	#	endif
 
-#define NET_NOSIGNAL 0x0
+	/* no epipe yet */
+	#ifndef WSAEPIPE
+		#define WSAEPIPE       -12345
+	#endif
+	#	define EAGAIN			WSAEWOULDBLOCK
+	#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
+	#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
+	#	define ECONNRESET		WSAECONNRESET
+	#	define EINPROGRESS		WSAEINPROGRESS
+	#	define EINTR			WSAEINTR
+	# define EPIPE      WSAEPIPE
+	typedef u_long	ioctlarg_t;
+	#	define socketError		WSAGetLastError( )
 
-static WSADATA	winsockdata;
-static qboolean	winsockInitialized = qfalse;
+	#define NET_NOSIGNAL 0x0
 
-#ifndef IPV6_V6ONLY
-#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
-#endif 
+	static WSADATA	winsockdata;
+	static qboolean	winsockInitialized = qfalse;
 
-int inet_pton(int af, const char *src, void *dst)
-{
-	struct sockaddr_storage sin;
-	int addrSize = sizeof(sin);
-	char address[256];
-	strncpy(address, src, sizeof(address));
+	#ifndef IPV6_V6ONLY
+		#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
+	#endif 
 
-	int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
-	if(rc != 0)
+	int inet_pton(int af, const char *src, void *dst)
 	{
-		return -1;
+		struct sockaddr_storage sin;
+		int addrSize = sizeof(sin);
+		char address[256];
+		strncpy(address, src, sizeof(address));
+
+		int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
+		if(rc != 0)
+		{
+			return -1;
+		}
+		if(af == AF_INET)
+		{
+			*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
+			return 1;
+		}
+		if(af == AF_INET6)
+		{
+			*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
+			return 1;
+		}
+		return 0;
 	}
-	if(af == AF_INET)
-	{
-		*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
-		return 1;
-	}
-	if(af == AF_INET6)
-	{
-		*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
-		return 1;
-	}
-	return 0;
-}
 
 #else
 
-#	if MAC_OS_X_VERSION_MIN_REQUIRED == 1020
-		// needed for socklen_t on OSX 10.2
-#		define _BSD_SOCKLEN_T_
-#	endif
+	#	if MAC_OS_X_VERSION_MIN_REQUIRED == 1020
+			// needed for socklen_t on OSX 10.2
+	#		define _BSD_SOCKLEN_T_
+	#	endif
 
-#ifdef MACOS_X
-    #define NET_NOSIGNAL SO_NOSIGPIPE
-#else
-    #define NET_NOSIGNAL MSG_NOSIGNAL
-#endif
+	#ifdef MACOS_X
+		#define NET_NOSIGNAL SO_NOSIGPIPE
+	#else
+		#define NET_NOSIGNAL MSG_NOSIGNAL
+	#endif
 
-#	include <sys/socket.h>
-#	include <errno.h>
-#	include <netdb.h>
-#	include <netinet/in.h>
-#	include <arpa/inet.h>
-#	include <net/if.h>
-#	include <sys/ioctl.h>
-#	include <sys/types.h>
-#	include <sys/time.h>
-#	include <unistd.h>
-#	if !defined(__sun) && !defined(__sgi)
-#		include <ifaddrs.h>
-#	endif
+	#include <sys/socket.h>
+	#include <errno.h>
+	#include <netdb.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+	#include <net/if.h>
+	#include <sys/ioctl.h>
+	#include <sys/types.h>
+	#include "net_game.h"
+	#include <sys/time.h>
+	#include <unistd.h>
+	#	if !defined(__sun) && !defined(__sgi)
+	#		include <ifaddrs.h>
+	#	endif
 
-#	ifdef __sun
-#		include <sys/filio.h>
-#	endif
+	#	ifdef __sun
+	#		include <sys/filio.h>
+	#	endif
 
 
-#	define INVALID_SOCKET		-1
-#	define SOCKET_ERROR		-1
-#	define closesocket		close
-#	define ioctlsocket		ioctl
-typedef int	ioctlarg_t;
-#	define socketError		errno
-typedef int SOCKET;
+	#	define INVALID_SOCKET		-1
+	#	define SOCKET_ERROR		-1
+	#	define closesocket		close
+	#	define ioctlsocket		ioctl
+	typedef int	ioctlarg_t;
+	#	define socketError		errno
+	typedef int SOCKET;
 #endif
 
 
@@ -376,6 +378,9 @@ char *NET_ErrorStringMT( char* buf, int size ) {
 
 
 static void NetadrToSockadr( netadr_t *a, struct sockaddr *s ) {
+
+	memset(s, 0, sizeof(struct sockaddr_storage));
+
 	if( a->type == NA_BROADCAST ) {
 		((struct sockaddr_in *)s)->sin_family = AF_INET;
 		((struct sockaddr_in *)s)->sin_port = a->port;
@@ -477,7 +482,7 @@ static qboolean Sys_StringToSockaddrNoDNS(const char* s, struct sockaddr *sadr, 
 {
 	char ptonaddr[32];
 	char addressstring[128];
-	char *ifstring;
+	char *ifstring = NULL;
 	struct sockaddr_storage sadrstore;
 	struct sockaddr_in *sin = (struct sockaddr_in *)&sadrstore;
 	struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sadrstore;
@@ -725,6 +730,8 @@ static struct addrinfo *SearchAddrInfo(struct addrinfo *hints, sa_family_t famil
 }
 
 
+
+
 static qboolean NET_Resolve(const char *s, struct sockaddr *sadr, int sadr_len, sa_family_t family, char* errormsg1k)
 {
 	struct addrinfo hints;
@@ -741,7 +748,6 @@ static qboolean NET_Resolve(const char *s, struct sockaddr *sadr, int sadr_len, 
 	hintsp->ai_socktype = SOCK_DGRAM;
 
 	retval = getaddrinfo(s, NULL, hintsp, &res);
-
 	if(!retval)
 	{
 		if(family == AF_UNSPEC)
@@ -824,6 +830,21 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 			ptonaddr[3] = 1;
 			memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
 			sin->sin_family = AF_INET;
+
+		}else if(family == AF_UNSPEC){
+			if(net_enabled->integer & NET_ENABLEV6)
+			{
+				ptonaddr[15] = 1;
+				memcpy(&sin6->sin6_addr, ptonaddr, sizeof(sin6->sin6_addr));
+				sin6->sin6_family = AF_INET6;
+			}
+			else
+			{
+				ptonaddr[0] = 127;
+				ptonaddr[3] = 1;
+				memcpy(&sin->sin_addr, ptonaddr, sizeof(sin->sin_addr)); 
+				sin->sin_family = AF_INET;
+			}
 		}else{
 			return qfalse;
 		}
@@ -831,11 +852,26 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 		return qtrue;
 	}
 
-
-	if(NET_DnsCacheQuery(s, &sadrstore, family))
-	{
-		memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
-		return qtrue;
+	if(family == AF_UNSPEC){
+		if(net_enabled->integer & NET_ENABLEV6)
+		{
+			if(NET_DnsCacheQuery(s, &sadrstore, AF_INET6))
+			{
+				memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+				return qtrue;
+			}
+		}
+		if(NET_DnsCacheQuery(s, &sadrstore, AF_INET))
+		{
+			memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+			return qtrue;
+		}
+	}else{
+		if(NET_DnsCacheQuery(s, &sadrstore, family))
+		{
+			memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+			return qtrue;
+		}
 	}
 
 	retval = NET_Resolve(s, (struct sockaddr*)&sadrstore , sizeof(sadrstore), family, errormsg);
@@ -845,6 +881,7 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 		NET_DnsCacheUpdate(s, &sadrstore);
 	}
 	memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
+
 	return retval;
 }
 
@@ -1840,7 +1877,7 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 	else
 		Com_Printf(CON_CHANNEL_NETWORK, "Opening IP socket: %s UDP\n", NET_AdrToStringMT(&netadr, nstring, sizeof(nstring)) );
 
-	newsocket = socket( AF_INET6, socktype, 0 );
+	newsocket = socket( PF_INET6, socktype, 0 );
 
 	if( newsocket == INVALID_SOCKET ) {
 		*err = socketError;
@@ -3425,10 +3462,26 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
   }
   NetadrToSockadr( &remoteadr, (struct sockaddr *)&address);
 
-	if( ( newsocket = socket( address.ss_family, SOCK_STREAM, IPPROTO_TCP ) ) == INVALID_SOCKET ) {
+	int sockfam = 0;
+	int sin_len = 0;
+	/* WTF BSD */
+	if(address.ss_family == AF_INET)
+	{
+		sockfam = PF_INET;
+		sin_len = sizeof(struct sockaddr_in);
+	}else if(address.ss_family == AF_INET6){
+		sockfam = PF_INET6;
+		sin_len = sizeof(struct sockaddr_in6);
+	}else{
+		sockfam = address.ss_family;
+		sin_len = sizeof(bindaddr);
+	}
+
+	if( ( newsocket = socket( sockfam, SOCK_STREAM, IPPROTO_TCP ) ) == INVALID_SOCKET ) {
 		if(!silent) Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TCPConnect: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		return INVALID_SOCKET;
 	}
+
 	// make it non-blocking
 	ioctlarg_t	_true = 1;
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
@@ -3441,16 +3494,26 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
   if(sourceadr)
   {
     NetadrToSockadr(sourceadr, (struct sockaddr *)&bindaddr);
-	if( bind( newsocket, (void *)&bindaddr, sizeof(bindaddr) ) == SOCKET_ERROR ) {
+
+	int bsin_len = 0;
+	/* WTF BSD */
+	if(bindaddr.ss_family == AF_INET)
+	{
+		bsin_len = sizeof(struct sockaddr_in);
+	}else if(address.ss_family == AF_INET6){
+		bsin_len = sizeof(struct sockaddr_in6);
+	}else{
+		bsin_len = sizeof(bindaddr);
+	}
+
+	if( bind( newsocket, (void *)&bindaddr, bsin_len ) == SOCKET_ERROR ) {
 		if(!silent) Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TcpClientConnect: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		closesocket( newsocket );
 		return INVALID_SOCKET;
 	}
   }
 
-
-
-	if( connect( newsocket, (void *)&address, sizeof(address) ) != SOCKET_ERROR )
+	if( connect( newsocket, (void *)&address, sin_len ) != SOCKET_ERROR )
 	{
 		return newsocket;
 	}
@@ -3556,8 +3619,6 @@ __optimize3 __regparm1 qboolean NET_Event(int socket)
 	}
 	return qtrue;
 }
-
-
 
 
 /*

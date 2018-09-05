@@ -621,7 +621,7 @@ PCL void OnFrame()
   for(i = 0; i < MAX_CLIENTS; ++i)
   {
     client_t* cl = Plugin_GetClientForClientNum(i);
-    if(cl->state < CS_CONNECTED)
+    if(!cl || cl->state < CS_CONNECTED)
     {
       continue;
     }

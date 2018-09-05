@@ -1,13 +1,13 @@
 ;Imports of scr_compiler:
 	extern FindVariable
-	extern Scr_EvalVariable
+	extern Scr_EvalVariableExtern
 	extern RemoveVariable
 	extern GetVariableValueAddress
 	extern GetValueType
 	extern CompileError2
 	extern GetVariable
 	extern Scr_GetSourceBuffer
-	extern scrParserPub
+	extern gScrParserPub
 	extern SL_ConvertToString
 	extern CompileError
 	extern SetNewVariableValue
@@ -16,7 +16,7 @@
 	extern var_typename
 	extern AddRefToValue
 	extern Scr_EvalBinaryOperator
-	extern scrVarPub
+	extern gScrVarPub
 	extern memcpy
 	extern Hunk_AllocateTempMemoryHigh
 	extern RemoveRefToValue
@@ -33,16 +33,16 @@
 	extern TempMemorySetPos
 	extern SL_TransferToCanonicalString
 	extern Scr_CreateCanonicalFilename
-	extern GetObjectA
+	extern SGetObjectA
 	extern GetNewVariable
 	extern SetVariableValue
 	extern Scr_GetFunction
-	extern scrAnimPub
+	extern gScrAnimPub
 	extern Scr_EmitAnimation
 	extern Scr_GetClassnumForCharId
 	extern atoi
 	extern IsObjectFree
-	extern GetObjectType
+	extern Scr_GetObjectType
 	extern Scr_GetMethod
 	extern qsort
 	extern IsValidArrayIndex
@@ -57,9 +57,12 @@
 	extern FindNextSibling
 	extern FindObject
 	extern GetVariableName
+	extern scrCompileGlob
+	extern gScrCompilePub
+
 
 ;Exports of scr_compiler:
-	global scrCompileGlob
+;	global scrCompileGlob
 	global LinkThread
 	global SpecifyThreadPosition
 	global Scr_CalcLocalVarsVariableExpressionRef
@@ -91,7 +94,7 @@
 	global EmitThreadInternal
 	global ScriptCompile
 	global CompareCaseInfo
-	global scrCompilePub
+;	global gScrCompilePub
 
 
 SECTION .text
@@ -122,7 +125,7 @@ LinkThread_90:
 	ret
 LinkThread_10:
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x20], eax
 	test eax, eax
 	jg LinkThread_20
@@ -249,7 +252,7 @@ SpecifyThreadPosition:
 	call GetVariable
 	mov ebx, eax
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x20], eax
 	mov [ebp-0x1c], edx
 	mov eax, [ebp-0x1c]
@@ -260,7 +263,7 @@ SpecifyThreadPosition:
 	jz SpecifyThreadPosition_20
 	mov [esp], eax
 	call Scr_GetSourceBuffer
-	mov edx, scrParserPub
+	mov edx, gScrParserPub
 	mov edx, [edx]
 	lea eax, [eax+eax*2]
 	mov ebx, [edx+eax*8+0x4]
@@ -1002,7 +1005,7 @@ EvalBinaryOperatorExpression_90:
 	mov eax, [ebp-0x3c]
 	mov [esp], eax
 	call Scr_EvalBinaryOperator
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	mov eax, [eax+0xc]
 	test eax, eax
 	jz EvalBinaryOperatorExpression_60
@@ -1061,7 +1064,7 @@ Scr_CalcLocalVarsStatement_2770:
 	mov ecx, [scrCompileGlob+0x48]
 	test ecx, ecx
 	jz Scr_CalcLocalVarsStatement_30
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz Scr_CalcLocalVarsStatement_30
 	mov eax, [scrCompileGlob+0x4c]
 	cmp dword [eax], 0x3ff
@@ -1374,7 +1377,7 @@ Scr_CalcLocalVarsStatement_2420:
 	mov eax, [scrCompileGlob+0x48]
 	test eax, eax
 	jz Scr_CalcLocalVarsStatement_320
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz Scr_CalcLocalVarsStatement_320
 	mov eax, [scrCompileGlob+0x4c]
 	cmp dword [eax], 0x3ff
@@ -1523,7 +1526,7 @@ Scr_CalcLocalVarsStatement_2460:
 	mov eax, [scrCompileGlob+0x48]
 	test eax, eax
 	jz Scr_CalcLocalVarsStatement_460
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz Scr_CalcLocalVarsStatement_460
 	mov eax, [scrCompileGlob+0x4c]
 	cmp dword [eax], 0x3ff
@@ -1835,7 +1838,7 @@ Scr_CalcLocalVarsStatement_760:
 	mov ebx, [scrCompileGlob+0x3c]
 	test ebx, ebx
 	jz Scr_CalcLocalVarsStatement_800
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz Scr_CalcLocalVarsStatement_800
 	mov eax, [scrCompileGlob+0x40]
 	cmp dword [eax], 0x3ff
@@ -1936,7 +1939,7 @@ Scr_CalcLocalVarsStatement_2760:
 	mov eax, [scrCompileGlob+0x3c]
 	test eax, eax
 	jz Scr_CalcLocalVarsStatement_940
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz Scr_CalcLocalVarsStatement_940
 	mov eax, [scrCompileGlob+0x40]
 	cmp dword [eax], 0x3ff
@@ -3404,7 +3407,7 @@ EmitValue_50:
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
 	mov [eax], bx
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitValue_20
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitValue_30
@@ -3518,10 +3521,10 @@ EmitOpcode:
 	mov [ebp-0x1c], eax
 	mov [ebp-0x20], edx
 	mov [ebp-0x24], ecx
-	mov edi, [scrCompilePub]
+	mov edi, [gScrCompilePub]
 	cmp edi, 0x0
 	jz EmitOpcode_10
-	mov dword [scrCompilePub], 0x0
+	mov dword [gScrCompilePub], 0x0
 	jg EmitOpcode_20
 EmitOpcode_10:
 	mov eax, [scrCompileGlob+0x10]
@@ -3536,7 +3539,7 @@ EmitOpcode_10:
 EmitOpcode_30:
 	mov edx, 0x1
 EmitOpcode_40:
-	mov [scrCompilePub+0x20021], dl
+	mov [gScrCompilePub+0x20021], dl
 	mov ecx, [ebp-0x20]
 	lea edx, [eax+ecx]
 	mov [scrCompileGlob+0x10], edx
@@ -3552,14 +3555,14 @@ EmitOpcode_40:
 	cmovl eax, edx
 	mov [scrCompileGlob+0x18], eax
 EmitOpcode_50:
-	mov ecx, scrVarPub
+	mov ecx, gScrVarPub
 	mov edx, [ecx+0x38]
 	mov eax, edx
 	shl eax, 0x5
 	sub eax, edx
 	add eax, [ebp-0x1c]
 	mov [ecx+0x38], eax
-	mov edx, [scrCompilePub+0x20028]
+	mov edx, [gScrCompilePub+0x20028]
 	test edx, edx
 	jz EmitOpcode_60
 	mov [scrCompileGlob], edx
@@ -3571,7 +3574,7 @@ EmitOpcode_60:
 	mov [scrCompileGlob+0x4], edx
 	mov dword [esp], 0x1
 	call TempMalloc
-	mov [scrCompilePub+0x20028], eax
+	mov [gScrCompilePub+0x20028], eax
 	mov [scrCompileGlob], eax
 	movzx edx, byte [ebp-0x1c]
 	mov [eax], dl
@@ -3604,7 +3607,7 @@ EmitOpcode_210:
 	cmp ebx, 0x5
 	ja EmitOpcode_60
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x1f
 	mov dword [esp], 0x1
 	call TempMalloc
@@ -3615,7 +3618,7 @@ EmitOpcode_310:
 	cmp byte [edx], 0x5c
 	jnz EmitOpcode_60
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x5f
 	jmp EmitOpcode_100
 EmitOpcode_300:
@@ -3636,7 +3639,7 @@ EmitOpcode_290:
 	cmp byte [edx], 0xf
 	jnz EmitOpcode_60
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x54
 	jmp EmitOpcode_100
 EmitOpcode_250:
@@ -3671,7 +3674,7 @@ EmitOpcode_220:
 	cmp al, 0x36
 	jnz EmitOpcode_60
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x21
 	jmp EmitOpcode_100
 EmitOpcode_270:
@@ -3683,17 +3686,17 @@ EmitOpcode_280:
 	cmp byte [edx], 0xf
 	jnz EmitOpcode_60
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x50
 	mov eax, [scrCompileGlob+0x4]
 	cmp byte [eax], 0x4e
 	jnz EmitOpcode_100
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov [esp], eax
 	call TempMemorySetPos
-	mov edx, [scrCompilePub+0x20028]
+	mov edx, [gScrCompilePub+0x20028]
 	lea eax, [edx-0x1]
-	mov [scrCompilePub+0x20028], eax
+	mov [gScrCompilePub+0x20028], eax
 	mov dword [scrCompileGlob+0x4], 0x0
 	mov [scrCompileGlob], eax
 	mov byte [edx-0x1], 0x4f
@@ -3711,7 +3714,7 @@ EmitOpcode_260:
 	cmp al, 0x2c
 	jnz EmitOpcode_60
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x3a
 	jmp EmitOpcode_100
 EmitOpcode_110:
@@ -3731,32 +3734,32 @@ EmitOpcode_150:
 	jmp EmitOpcode_100
 EmitOpcode_160:
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x22
 	jmp EmitOpcode_100
 EmitOpcode_90:
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x1f
 	jmp EmitOpcode_100
 EmitOpcode_170:
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x3d
 	jmp EmitOpcode_100
 EmitOpcode_180:
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x3c
 	jmp EmitOpcode_100
 EmitOpcode_190:
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x3b
 	jmp EmitOpcode_100
 EmitOpcode_200:
 	call RemoveOpcodePos
-	mov eax, [scrCompilePub+0x20028]
+	mov eax, [gScrCompilePub+0x20028]
 	mov byte [eax], 0x38
 	jmp EmitOpcode_100
 	
@@ -3995,7 +3998,7 @@ Scr_FindLocalVarIndex_30:
 	mov dword [esp], 0x2
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz Scr_FindLocalVarIndex_60
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz Scr_FindLocalVarIndex_70
@@ -4112,7 +4115,7 @@ EmitContinueStatement:
 	mov eax, [scrCompileGlob+0x48]
 	test eax, eax
 	jz EmitContinueStatement_20
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitContinueStatement_20
 	mov eax, [scrCompileGlob+0x4c]
 	cmp dword [eax], 0x3ff
@@ -4140,7 +4143,7 @@ EmitContinueStatement_60:
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
 	mov dword [eax], 0x0
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitContinueStatement_50
 	mov dword [esp], 0xc
 	call Hunk_AllocateTempMemoryHigh
@@ -4214,7 +4217,7 @@ EmitBreakStatement:
 	mov eax, [scrCompileGlob+0x3c]
 	test eax, eax
 	jz EmitBreakStatement_20
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitBreakStatement_20
 	mov eax, [scrCompileGlob+0x40]
 	cmp dword [eax], 0x3ff
@@ -4243,7 +4246,7 @@ EmitBreakStatement_60:
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
 	mov dword [eax], 0x0
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitBreakStatement_50
 	mov dword [esp], 0xc
 	call Hunk_AllocateTempMemoryHigh
@@ -4309,7 +4312,7 @@ EmitFunction:
 	sub esp, 0x3c
 	mov ebx, eax
 	mov [ebp-0x2c], edx
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitFunction_10
 	cmp dword [eax], 0x14
 	jz EmitFunction_20
@@ -4324,11 +4327,11 @@ EmitFunction:
 	jz EmitFunction_30
 EmitFunction_190:
 	mov [esp+0x4], esi
-	mov eax, [scrCompilePub+0x8]
+	mov eax, [gScrCompilePub+0x8]
 	mov [esp], eax
 	call FindVariable
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	mov edi, [ebp-0x24]
@@ -4346,11 +4349,11 @@ EmitFunction_180:
 	mov byte [eax+0x2], 0x0
 	add dword [scrCompileGlob+0x54], 0x8
 	mov [esp+0x4], esi
-	mov eax, [scrCompilePub+0xc]
+	mov eax, [gScrCompilePub+0xc]
 	mov [esp], eax
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov edx, eax
 	test edi, edi
 	jnz EmitFunction_50
@@ -4362,7 +4365,7 @@ EmitFunction_180:
 	mov esi, eax
 EmitFunction_110:
 	mov ebx, [edi]
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitFunction_60
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitFunction_70
@@ -4372,7 +4375,7 @@ EmitFunction_230:
 	call SL_TransferRefToUser
 EmitFunction_250:
 	mov [esp], esi
-	call GetObjectA
+	call SGetObjectA
 	mov ebx, eax
 	mov dword [esp+0x4], 0x1
 	mov [esp], eax
@@ -4391,7 +4394,7 @@ EmitFunction_170:
 	call GetVariable
 	mov esi, eax
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x20], eax
 	mov [ebp-0x1c], edx
 	mov eax, [ebp-0x1c]
@@ -4407,7 +4410,7 @@ EmitFunction_90:
 	call GetNewVariable
 	mov edx, [scrCompileGlob]
 	mov [ebp-0x28], edx
-	cmp dword [scrCompilePub+0x20024], 0x1
+	cmp dword [gScrCompilePub+0x20024], 0x1
 	sbb edx, edx
 	and edx, 0xfffffffb
 	add edx, 0xc
@@ -4461,7 +4464,7 @@ EmitFunction_260:
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jz EmitFunction_140
 EmitFunction_280:
-	sub dword [scrCompilePub+0x4], 0x1
+	sub dword [gScrCompilePub+0x4], 0x1
 	add esp, 0x3c
 	pop ebx
 	pop esi
@@ -4476,7 +4479,7 @@ EmitFunction_20:
 	call GetVariable
 	mov esi, eax
 	mov ebx, [ebx+0x4]
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitFunction_150
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitFunction_160
@@ -4486,7 +4489,7 @@ EmitFunction_270:
 	call SL_TransferRefToUser
 EmitFunction_240:
 	mov [esp], esi
-	call GetObjectA
+	call SGetObjectA
 	mov ebx, eax
 	xor esi, esi
 	jmp EmitFunction_170
@@ -4511,7 +4514,7 @@ EmitFunction_100:
 	ret
 EmitFunction_80:
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov esi, eax
 	cmp edx, 0xd
 	jz EmitFunction_100
@@ -4519,7 +4522,7 @@ EmitFunction_80:
 	jz EmitFunction_200
 	cmp edx, 0x7
 	jz EmitFunction_210
-	mov edx, [scrCompilePub+0x20024]
+	mov edx, [gScrCompilePub+0x20024]
 	test edx, edx
 	jz EmitFunction_220
 EmitFunction_210:
@@ -4614,7 +4617,7 @@ EmitCall_50:
 	mov edx, esi
 	mov eax, [ebp-0x4c]
 	call EmitPostFunctionCall
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x6], 0x0
 	jnz EmitCall_70
 EmitCall_90:
@@ -4654,7 +4657,7 @@ EmitCall_30:
 	mov edx, esi
 	mov eax, [ebp-0x4c]
 	call EmitPostFunctionCall
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x6], 0x0
 	jz EmitCall_90
 	jmp EmitCall_70
@@ -4693,13 +4696,13 @@ EmitCall_110:
 	mov eax, [eax+0x8]
 	mov [ebp-0x48], eax
 	mov [esp+0x4], esi
-	mov eax, [scrCompilePub+0x10]
+	mov eax, [gScrCompilePub+0x10]
 	mov [esp], eax
 	call FindVariable
 	test eax, eax
 	jz EmitCall_140
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	xor eax, eax
@@ -4748,7 +4751,7 @@ EmitCall_140:
 	call Scr_GetFunction
 	mov [ebp-0x40], eax
 	mov [esp+0x4], esi
-	mov eax, [scrCompilePub+0x10]
+	mov eax, [gScrCompilePub+0x10]
 	mov [esp], eax
 	call GetNewVariable
 	cmp dword [ebp-0x20], 0x1
@@ -4789,7 +4792,7 @@ EmitCall_340:
 	cmp esi, 0x44
 	jz EmitCall_240
 EmitCall_420:
-	mov edx, [scrCompilePub+0x20030]
+	mov edx, [gScrCompilePub+0x20030]
 	test edx, edx
 	jg EmitCall_250
 	xor ebx, ebx
@@ -4798,15 +4801,15 @@ EmitCall_410:
 	jz EmitCall_260
 EmitCall_400:
 	mov eax, [ebp-0x40]
-	mov [edx*4+scrCompilePub+0x20034], eax
+	mov [edx*4+gScrCompilePub+0x20034], eax
 	lea eax, [edx+0x1]
-	mov [scrCompilePub+0x20030], eax
+	mov [gScrCompilePub+0x20030], eax
 EmitCall_330:
 	mov dword [esp], 0x2
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
 	mov [eax], bx
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x6], 0x0
 	jz EmitCall_270
 	mov edx, [ebp-0x50]
@@ -4832,8 +4835,8 @@ EmitCall_270:
 EmitCall_290:
 	cmp dword [ebp-0x20], 0x1
 	jnz EmitCall_80
-	mov dword [scrCompilePub+0x20024], 0x0
-	mov eax, scrVarPub
+	mov dword [gScrCompilePub+0x20024], 0x0
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jnz EmitCall_80
 	mov eax, [ebp-0x3c]
@@ -4842,10 +4845,10 @@ EmitCall_290:
 	jmp EmitCall_80
 EmitCall_250:
 	mov eax, [ebp-0x40]
-	cmp eax, [scrCompilePub+0x20034]
+	cmp eax, [gScrCompilePub+0x20034]
 	jz EmitCall_300
 	xor ebx, ebx
-	mov ecx, scrCompilePub
+	mov ecx, gScrCompilePub
 EmitCall_320:
 	add ebx, 0x1
 	cmp edx, ebx
@@ -4864,7 +4867,7 @@ EmitCall_160:
 	mov ebx, 0x1
 	jmp EmitCall_350
 EmitCall_150:
-	mov ecx, [scrCompilePub+0x20024]
+	mov ecx, [gScrCompilePub+0x20024]
 	test ecx, ecx
 	jz EmitCall_360
 	mov dword [ebp-0x20], 0x0
@@ -4886,10 +4889,10 @@ EmitCall_210:
 	call CompileError
 	jmp EmitCall_80
 EmitCall_360:
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jz EmitCall_380
-	mov dword [scrCompilePub+0x20024], 0x1
+	mov dword [gScrCompilePub+0x20024], 0x1
 	mov dword [ebp-0x3c], 0x0
 EmitCall_430:
 	mov dword [ebp-0x20], 0x1
@@ -4898,7 +4901,7 @@ EmitCall_260:
 	mov dword [esp+0x4], _cstring_scr_func_table_s
 	mov dword [esp], 0x2
 	call Com_Error
-	mov edx, [scrCompilePub+0x20030]
+	mov edx, [gScrCompilePub+0x20030]
 	jmp EmitCall_400
 EmitCall_310:
 	mov ebx, edx
@@ -4917,7 +4920,7 @@ EmitCall_380:
 	mov dword [esp], 0x0
 	call TempMalloc
 	mov [ebp-0x3c], eax
-	mov dword [scrCompilePub+0x20024], 0x2
+	mov dword [gScrCompilePub+0x20024], 0x2
 	jmp EmitCall_430
 	nop
 
@@ -5003,7 +5006,7 @@ EmitOrEvalExpression_250:
 	call EmitOrEvalExpression_20
 	test al, al
 	jz EmitOrEvalExpression_60
-	mov ebx, [scrCompilePub]
+	mov ebx, [gScrCompilePub]
 	cmp ebx, 0x1f
 	jg EmitOrEvalExpression_70
 	mov ecx, scrCompileGlob+0x50
@@ -5016,7 +5019,7 @@ EmitOrEvalExpression_250:
 	mov eax, [ebp-0x1c]
 	mov [edx+ecx+0x10], eax
 	lea eax, [ebx+0x1]
-	mov [scrCompilePub], eax
+	mov [gScrCompilePub], eax
 EmitOrEvalExpression_130:
 	lea ebx, [ebp-0x30]
 	mov ecx, esi
@@ -5186,14 +5189,14 @@ EmitOrEvalExpression_120:
 	call EmitValue
 	jmp EmitOrEvalExpression_200
 EmitOrEvalExpression_80:
-	sub dword [scrCompilePub], 0x1
+	sub dword [gScrCompilePub], 0x1
 	mov [esp+0x8], ebx
 	lea eax, [ebp-0x24]
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x58]
 	mov [esp], edx
 	call Scr_EvalBinaryOperator
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	mov eax, [eax+0xc]
 	test eax, eax
 	jz EmitOrEvalExpression_210
@@ -5579,7 +5582,7 @@ EmitOrEvalPrimitiveExpression_140:
 	mov [ebp-0x41], al
 	test al, al
 	jz EmitOrEvalPrimitiveExpression_110
-	mov eax, [scrCompilePub]
+	mov eax, [gScrCompilePub]
 	mov [ebp-0x40], eax
 	cmp eax, 0x1f
 	jg EmitOrEvalPrimitiveExpression_120
@@ -5594,7 +5597,7 @@ EmitOrEvalPrimitiveExpression_140:
 	mov [edx+ecx+0x10], eax
 	mov eax, [ebp-0x40]
 	add eax, 0x1
-	mov [scrCompilePub], eax
+	mov [gScrCompilePub], eax
 EmitOrEvalPrimitiveExpression_110:
 	mov eax, [ebp-0x3c]
 	mov eax, [eax+0x4]
@@ -5648,7 +5651,7 @@ EmitOrEvalPrimitiveExpression_390:
 	jmp EmitOrEvalPrimitiveExpression_20
 EmitOrEvalPrimitiveExpression_410:
 	mov edi, [eax+0x4]
-	mov eax, scrAnimPub
+	mov eax, gScrAnimPub
 	mov eax, [eax+0x414]
 	test eax, eax
 	jnz EmitOrEvalPrimitiveExpression_170
@@ -5680,7 +5683,7 @@ EmitOrEvalPrimitiveExpression_400:
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
 	mov dword [eax], 0xffffffff
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitOrEvalPrimitiveExpression_180
 	mov edx, [ebp-0x48]
 	mov [esp+0x8], edx
@@ -5743,9 +5746,9 @@ EmitOrEvalPrimitiveExpression_130:
 	cmp byte [ebp-0x41], 0x0
 	jz EmitOrEvalPrimitiveExpression_220
 EmitOrEvalPrimitiveExpression_100:
-	mov eax, [scrCompilePub]
+	mov eax, [gScrCompilePub]
 	sub eax, 0x3
-	mov [scrCompilePub], eax
+	mov [gScrCompilePub], eax
 	lea eax, [eax+eax*2]
 	lea ecx, [eax*4+scrCompileGlob+0x58]
 	xor edi, edi
@@ -5793,7 +5796,7 @@ EmitOrEvalPrimitiveExpression_220:
 	mov edx, [ebp-0x48]
 	mov [esp], edx
 	call AddOpcodePos
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x6], 0x0
 	jz EmitOrEvalPrimitiveExpression_270
 	mov ebx, [edi]
@@ -5964,7 +5967,7 @@ EmitVariableExpression_10:
 	mov dword [esp], 0x2
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitVariableExpression_90
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitVariableExpression_100
@@ -5984,7 +5987,7 @@ EmitVariableExpression_40:
 	mov eax, [ecx+0x8]
 	mov [ebp-0x30], eax
 	mov ebx, [ecx+0x4]
-	cmp byte [scrCompilePub+0x20020], 0x0
+	cmp byte [gScrCompilePub+0x20020], 0x0
 	jnz EmitVariableExpression_110
 	mov [esp], ebx
 	call SL_ConvertToString
@@ -6020,7 +6023,7 @@ EmitVariableExpression_100:
 	jmp EmitVariableExpression_160
 EmitVariableExpression_30:
 	mov eax, _cstring_self_field_in_as
-	cmp byte [scrCompilePub+0x20020], 0x0
+	cmp byte [gScrCompilePub+0x20020], 0x0
 	mov edx, _cstring_self_field_can_o
 	cmovnz eax, edx
 	mov [esp+0x4], eax
@@ -6134,7 +6137,7 @@ EmitVariableExpression_120:
 	test al, al
 	jnz EmitVariableExpression_140
 	mov [esp], esi
-	call GetObjectType
+	call Scr_GetObjectType
 	mov ecx, eax
 	cmp eax, 0x16
 	ja EmitVariableExpression_140
@@ -6216,7 +6219,7 @@ EmitMethod_120:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
 	call AddOpcodePos
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x6], 0x0
 	jnz EmitMethod_80
 EmitMethod_100:
@@ -6297,13 +6300,13 @@ EmitMethod_130:
 	mov [ebp-0x48], eax
 	mov edx, [ebp-0x44]
 	mov [esp+0x4], edx
-	mov eax, [scrCompilePub+0x14]
+	mov eax, [gScrCompilePub+0x14]
 	mov [esp], eax
 	call FindVariable
 	test eax, eax
 	jz EmitMethod_160
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	xor eax, eax
@@ -6378,7 +6381,7 @@ EmitMethod_400:
 	cmp ebx, 0x4b
 	jz EmitMethod_260
 EmitMethod_410:
-	mov edx, [scrCompilePub+0x20030]
+	mov edx, [gScrCompilePub+0x20030]
 	test edx, edx
 	jg EmitMethod_270
 	xor ebx, ebx
@@ -6387,9 +6390,9 @@ EmitMethod_390:
 	jz EmitMethod_280
 EmitMethod_420:
 	mov eax, [ebp-0x40]
-	mov [edx*4+scrCompilePub+0x20034], eax
+	mov [edx*4+gScrCompilePub+0x20034], eax
 	lea eax, [edx+0x1]
-	mov [scrCompilePub+0x20030], eax
+	mov [gScrCompilePub+0x20030], eax
 EmitMethod_370:
 	mov dword [esp], 0x2
 	call TempMallocAlign
@@ -6399,7 +6402,7 @@ EmitMethod_370:
 	mov edx, [ebp+0x8]
 	mov [esp], edx
 	call AddOpcodePos
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x6], 0x0
 	jz EmitMethod_290
 	mov eax, [ebp-0x54]
@@ -6425,8 +6428,8 @@ EmitMethod_290:
 EmitMethod_310:
 	cmp dword [ebp-0x1c], 0x1
 	jnz EmitMethod_90
-	mov dword [scrCompilePub+0x20024], 0x0
-	mov eax, scrVarPub
+	mov dword [gScrCompilePub+0x20024], 0x0
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jnz EmitMethod_90
 	mov edx, [ebp-0x3c]
@@ -6443,7 +6446,7 @@ EmitMethod_160:
 	mov [ebp-0x40], eax
 	mov edx, [ebp-0x44]
 	mov [esp+0x4], edx
-	mov eax, [scrCompilePub+0x14]
+	mov eax, [gScrCompilePub+0x14]
 	mov [esp], eax
 	call GetNewVariable
 	cmp dword [ebp-0x1c], 0x1
@@ -6465,7 +6468,7 @@ EmitMethod_230:
 	call CompileError
 	jmp EmitMethod_90
 EmitMethod_170:
-	mov esi, [scrCompilePub+0x20024]
+	mov esi, [gScrCompilePub+0x20024]
 	test esi, esi
 	jz EmitMethod_330
 	mov dword [ebp-0x1c], 0x0
@@ -6482,10 +6485,10 @@ EmitMethod_440:
 	jmp EmitMethod_90
 EmitMethod_270:
 	mov eax, [ebp-0x40]
-	cmp eax, [scrCompilePub+0x20034]
+	cmp eax, [gScrCompilePub+0x20034]
 	jz EmitMethod_350
 	xor ebx, ebx
-	mov ecx, scrCompilePub
+	mov ecx, gScrCompilePub
 	jmp EmitMethod_360
 EmitMethod_380:
 	mov eax, [ecx+0x20038]
@@ -6512,13 +6515,13 @@ EmitMethod_280:
 	mov dword [esp+0x4], _cstring_scr_func_table_s
 	mov dword [esp], 0x2
 	call Com_Error
-	mov edx, [scrCompilePub+0x20030]
+	mov edx, [gScrCompilePub+0x20030]
 	jmp EmitMethod_420
 EmitMethod_330:
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jz EmitMethod_430
-	mov dword [scrCompilePub+0x20024], 0x1
+	mov dword [gScrCompilePub+0x20024], 0x1
 	mov dword [ebp-0x3c], 0x0
 EmitMethod_450:
 	mov dword [ebp-0x1c], 0x1
@@ -6530,7 +6533,7 @@ EmitMethod_430:
 	mov dword [esp], 0x0
 	call TempMalloc
 	mov [ebp-0x3c], eax
-	mov dword [scrCompilePub+0x20024], 0x2
+	mov dword [gScrCompilePub+0x20024], 0x2
 	jmp EmitMethod_450
 	nop
 
@@ -6780,7 +6783,7 @@ EmitVariableExpressionRef_10:
 	mov dword [esp], 0x2
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitVariableExpressionRef_90
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitVariableExpressionRef_100
@@ -6797,7 +6800,7 @@ EmitVariableExpressionRef_110:
 	ret
 EmitVariableExpressionRef_30:
 	mov eax, _cstring_not_an_lvalue
-	cmp byte [scrCompilePub+0x20020], 0x0
+	cmp byte [gScrCompilePub+0x20020], 0x0
 	mov edx, _cstring__and_self_field_
 	cmovnz eax, edx
 	mov [esp+0x4], eax
@@ -7254,7 +7257,7 @@ EmitStatement_210:
 	jz EmitStatement_170
 	test ebx, ebx
 	jz EmitStatement_180
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jnz EmitStatement_170
 	mov edx, ebx
@@ -7504,7 +7507,7 @@ EmitStatement_910:
 	jmp EmitStatement_10
 EmitStatement_920:
 	mov edi, [ebx+0x4]
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jz EmitStatement_360
 	cmp byte [scrCompileGlob+0x1c], 0x0
@@ -7522,7 +7525,7 @@ EmitStatement_460:
 	jmp EmitStatement_10
 EmitStatement_930:
 	mov edi, [ebx+0x4]
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jnz EmitStatement_380
 EmitStatement_360:
@@ -7726,7 +7729,7 @@ EmitStatement_40:
 	jnz EmitStatement_10
 EmitStatement_630:
 	mov eax, _cstring_not_an_lvalue
-	cmp byte [scrCompilePub+0x20020], 0x0
+	cmp byte [gScrCompilePub+0x20020], 0x0
 	mov edx, _cstring__and_self_field_
 	cmovnz eax, edx
 	mov [esp+0x4], eax
@@ -7753,7 +7756,7 @@ EmitStatement_30:
 	mov dword [esp], 0x2
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitStatement_640
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitStatement_650
@@ -8034,7 +8037,7 @@ EmitIfElseStatement_160:
 	jz EmitIfElseStatement_180
 	mov dword [ebp-0x68], 0x0
 EmitIfElseStatement_460:
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	mov ebx, [eax+0x38]
 	cmp byte [ebp-0x85], 0x0
 	jz EmitIfElseStatement_190
@@ -8054,7 +8057,7 @@ EmitIfElseStatement_460:
 	mov dword [ebp-0x6c], 0x0
 EmitIfElseStatement_450:
 	lea edx, [ebx+0x1]
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	mov [eax+0x38], edx
 	mov dword [esp], 0x0
 	call TempMalloc
@@ -8170,7 +8173,7 @@ EmitIfElseStatement_210:
 	call EmitStatement
 	mov eax, [ebp+0x20]
 	mov ebx, [eax]
-	mov edi, scrVarPub
+	mov edi, gScrVarPub
 	mov esi, [edi+0x38]
 	mov eax, [ebp-0x7c]
 	test eax, eax
@@ -8750,7 +8753,7 @@ EmitWhileStatement_350:
 	mov dword [esp], 0x2
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jnz EmitWhileStatement_380
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitWhileStatement_390
@@ -8941,7 +8944,7 @@ EmitIfStatement_30:
 	call EmitStatement
 	mov eax, [ebp+0x14]
 	mov esi, [eax]
-	mov edx, scrVarPub
+	mov edx, gScrVarPub
 	mov edi, [edx+0x38]
 	test ebx, ebx
 	jnz EmitIfStatement_160
@@ -8964,7 +8967,7 @@ EmitIfStatement_30:
 	mov [esi+0x4], eax
 EmitIfStatement_170:
 	lea eax, [edi+0x1]
-	mov edx, scrVarPub
+	mov edx, gScrVarPub
 	mov [edx+0x38], eax
 	mov dword [esp], 0x0
 	call TempMalloc
@@ -9308,7 +9311,7 @@ EmitForStatement_570:
 	mov edi, [scrCompileGlob+0x48]
 	test edi, edi
 	jz EmitForStatement_330
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitForStatement_330
 	mov eax, [scrCompileGlob+0x4c]
 	cmp dword [eax], 0x3ff
@@ -9598,7 +9601,7 @@ EmitForStatement_580:
 	mov dword [esp], 0x2
 	call TempMallocAlign
 	mov [scrCompileGlob], eax
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jnz EmitForStatement_610
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitForStatement_620
@@ -9752,7 +9755,7 @@ EmitSwitchStatement_100:
 	mov esi, [ebp-0x2c]
 	test esi, esi
 	jz EmitSwitchStatement_60
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jnz EmitSwitchStatement_50
 	mov edx, [ebp-0x2c]
@@ -9810,7 +9813,7 @@ EmitSwitchStatement_450:
 	mov [scrCompileGlob+0x44], eax
 	mov eax, [esi]
 	mov esi, [eax+0x4]
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitSwitchStatement_140
 	mov dword [esp], 0x10
 	call Hunk_AllocateTempMemoryHigh
@@ -10114,7 +10117,7 @@ EmitSwitchStatement_330:
 	mov eax, [scrCompileGlob+0x3c]
 	test eax, eax
 	jz EmitSwitchStatement_490
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitSwitchStatement_490
 	mov eax, [scrCompileGlob+0x40]
 	cmp dword [eax], 0x3ff
@@ -10231,7 +10234,7 @@ EmitSwitchStatement_20:
 	jmp EmitSwitchStatement_90
 EmitSwitchStatement_470:
 	mov esi, [esi+0x4]
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitSwitchStatement_610
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitSwitchStatement_620
@@ -10240,7 +10243,7 @@ EmitSwitchStatement_650:
 	mov [esp], esi
 	call SL_TransferRefToUser
 EmitSwitchStatement_640:
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitSwitchStatement_480
 	mov dword [esp], 0x10
 	call Hunk_AllocateTempMemoryHigh
@@ -10307,11 +10310,11 @@ EmitDeveloperStatementList:
 	sub esp, 0x3c
 	mov [ebp-0x2c], eax
 	mov [ebp-0x30], ecx
-	mov eax, [scrCompilePub+0x20024]
+	mov eax, [gScrCompilePub+0x20024]
 	test eax, eax
 	jnz EmitDeveloperStatementList_10
 	mov edx, ecx
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	mov eax, [eax+0x38]
 	mov [ebp-0x28], eax
 	mov eax, [ebp+0x8]
@@ -10416,10 +10419,10 @@ EmitDeveloperStatementList_110:
 EmitDeveloperStatementList_30:
 	mov [esi+0x4], eax
 	mov dword [esi], 0x0
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jz EmitDeveloperStatementList_170
-	mov dword [scrCompilePub+0x20024], 0x1
+	mov dword [gScrCompilePub+0x20024], 0x1
 	mov ebx, [ebp+0x8]
 	mov esi, [ebx]
 	mov edx, [ebp-0x2c]
@@ -10450,8 +10453,8 @@ EmitDeveloperStatementList_190:
 	sub ebx, [esi+0x8]
 	jnz EmitDeveloperStatementList_220
 EmitDeveloperStatementList_210:
-	mov dword [scrCompilePub+0x20024], 0x0
-	mov eax, scrVarPub
+	mov dword [gScrCompilePub+0x20024], 0x0
+	mov eax, gScrVarPub
 	mov edx, [ebp-0x28]
 	mov [eax+0x38], edx
 	add esp, 0x3c
@@ -10464,7 +10467,7 @@ EmitDeveloperStatementList_170:
 	mov dword [esp], 0x0
 	call TempMalloc
 	mov edi, eax
-	mov dword [scrCompilePub+0x20024], 0x2
+	mov dword [gScrCompilePub+0x20024], 0x2
 	mov ebx, [ebp+0x8]
 	mov esi, [ebx]
 	mov edx, [ebp-0x2c]
@@ -10536,7 +10539,7 @@ EmitThreadInternal:
 	mov dword [scrCompileGlob+0x18], 0x0
 	mov edx, [ebp-0x1c]
 	mov ebx, [edx+0x4]
-	cmp dword [scrCompilePub+0x20024], 0x2
+	cmp dword [gScrCompilePub+0x20024], 0x2
 	jz EmitThreadInternal_10
 	cmp byte [scrCompileGlob+0x1c], 0x0
 	jnz EmitThreadInternal_20
@@ -10602,7 +10605,7 @@ EmitThreadInternal_40:
 	mov edx, [eax+0x4]
 	test edx, edx
 	jz EmitThreadInternal_60
-	mov esi, scrVarPub
+	mov esi, gScrVarPub
 EmitThreadInternal_100:
 	mov ebx, [edx+0x4]
 	test ebx, ebx
@@ -10699,10 +10702,10 @@ ScriptCompile:
 	mov eax, [ebp+0xc]
 	mov [scrCompileGlob+0x8], eax
 	mov byte [scrCompileGlob+0x1c], 0x0
-	mov eax, scrAnimPub
+	mov eax, gScrAnimPub
 	mov dword [eax+0x414], 0x0
-	mov dword [scrCompilePub+0x20024], 0x0
-	mov eax, [scrCompilePub+0x4]
+	mov dword [gScrCompilePub+0x20024], 0x0
+	mov eax, [gScrCompilePub+0x4]
 	test eax, eax
 	jnz ScriptCompile_10
 	mov dword [ebp-0x6c], 0x0
@@ -10735,11 +10738,11 @@ ScriptCompile_80:
 	mov byte [eax+0x2], 0x1
 	add dword [scrCompileGlob+0x54], 0x8
 	mov [esp+0x4], esi
-	mov eax, [scrCompilePub+0xc]
+	mov eax, [gScrCompilePub+0xc]
 	mov [esp], eax
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov edi, [edi+0x4]
 	test edi, edi
 	jz ScriptCompile_60
@@ -10868,7 +10871,7 @@ ScriptCompile_570:
 	mov [esp], eax
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov edx, [ebp-0x54]
 	mov [esp], edx
 	mov ecx, esi
@@ -10885,12 +10888,12 @@ ScriptCompile_190:
 ScriptCompile_170:
 	mov dword [esp], 0x0
 	call TempMalloc
-	mov edx, scrVarPub
+	mov edx, gScrVarPub
 	sub eax, [edx+0x48]
-	mov [scrCompilePub+0x2002c], eax
+	mov [gScrCompilePub+0x2002c], eax
 	call Scr_ShutdownAllocNode
 	call Hunk_ClearTempMemoryHigh
-	mov edx, [scrCompilePub+0x4]
+	mov edx, [gScrCompilePub+0x4]
 	mov [ebp-0x68], edx
 	test edx, edx
 	jle ScriptCompile_270
@@ -10945,7 +10948,7 @@ ScriptCompile_660:
 	ret
 ScriptCompile_340:
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x30], eax
 	mov [ebp-0x2c], edx
 	cmp dword [ebp-0x2c], 0xd
@@ -11034,7 +11037,7 @@ ScriptCompile_430:
 	test eax, eax
 	jz ScriptCompile_410
 	mov [esp], eax
-	call Scr_EvalVariable
+	call Scr_EvalVariableExtern
 	mov [ebp-0x28], eax
 	mov [ebp-0x24], edx
 	cmp dword [ebp-0x24], 0xd
@@ -11047,7 +11050,7 @@ ScriptCompile_430:
 	mov [esp], edx
 	call GetVariable
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov esi, eax
 	mov eax, [ebp-0x64]
 	mov ecx, [eax+0x4]
@@ -11150,10 +11153,10 @@ ScriptCompile_500:
 ScriptCompile_490:
 	cmp byte [scrCompileGlob+0x1d], 0x0
 	jz ScriptCompile_510
-	mov ebx, scrVarPub
+	mov ebx, gScrVarPub
 	cmp byte [ebx+0x7], 0x0
 	jz ScriptCompile_520
-	mov dword [scrCompilePub+0x20024], 0x1
+	mov dword [gScrCompilePub+0x20024], 0x1
 	mov dword [scrCompileGlob+0x28], 0x0
 	mov byte [scrCompileGlob+0x2c], 0x0
 	mov dword [scrCompileGlob+0x30], 0x0
@@ -11193,7 +11196,7 @@ ScriptCompile_620:
 	mov eax, esi
 	call EmitThreadInternal
 ScriptCompile_640:
-	mov dword [scrCompilePub+0x20024], 0x0
+	mov dword [gScrCompilePub+0x20024], 0x0
 	jmp ScriptCompile_220
 ScriptCompile_460:
 	mov eax, [ebp-0x48]
@@ -11224,7 +11227,7 @@ ScriptCompile_470:
 	mov esi, [edi+0xc]
 	jmp ScriptCompile_560
 ScriptCompile_260:
-	mov eax, scrVarPub
+	mov eax, gScrVarPub
 	cmp byte [eax+0x7], 0x0
 	jz ScriptCompile_250
 	mov dword [ebp-0x54], 0xc
@@ -11337,7 +11340,7 @@ ScriptCompile_520:
 	call TempMalloc
 	mov esi, eax
 	mov edi, [ebx+0x38]
-	mov dword [scrCompilePub+0x20024], 0x2
+	mov dword [gScrCompilePub+0x20024], 0x2
 	mov dword [scrCompileGlob+0x28], 0x0
 	mov byte [scrCompileGlob+0x2c], 0x0
 	mov dword [scrCompileGlob+0x30], 0x0
@@ -11432,8 +11435,8 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of scr_compiler:
 SECTION .bss
-scrCompileGlob: resb 0x200
-scrCompilePub: resb 0x21064
+;scrCompileGlob: resb 0x200
+;gScrCompilePub: resb 0x21064
 
 
 ;All cstrings:

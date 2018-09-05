@@ -2967,14 +2967,15 @@ SECTION .rdata
 SECTION .rdata
 _double__2_00000000:		dq 0xc000000000000000	; -2
 _double_1_00000000:		dq 0x3ff0000000000000	; 1
-_data16_0:		dd 0x0, 0x80000000, 0x0, 0x0	; OWORD
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_12500000:		dd 0x3e000000	; 0.125
 _float_0_00000000:		dd 0x0	; 0
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__2_00000000:		dd 0xc0000000	; -2
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_3_00000000:		dd 0x40400000	; 3
 _float_0_50000000:		dd 0x3f000000	; 0.5
 
+align   16,db 0
+_data16_0:		dd 0x0, 0x80000000, 0x0, 0x0	; DQWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

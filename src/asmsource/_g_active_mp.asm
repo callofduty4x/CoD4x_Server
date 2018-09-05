@@ -50,6 +50,7 @@
 	extern SV_UnlinkEntity
 	extern Cmd_FollowCycle_f
 	extern StopFollowing
+	extern StopFollowingOnDeath
 	extern CM_AreaEntities
 	extern ExpandBoundsToWidth
 	extern SV_EntityContact
@@ -94,7 +95,6 @@
 
 ;Exports of g_active_mp:
 	global _ZZ15G_TouchTriggersP9gentity_sE5range
-	global ClientThink
 	global G_RunClient
 	global ClientImpacts
 	global G_PlayerEvent
@@ -113,69 +113,6 @@
 
 
 SECTION .text
-
-
-;ClientThink(int)
-ClientThink:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov ecx, [ebp+0x8]
-	lea eax, [ecx+ecx*8]
-	lea eax, [ecx+eax*2]
-	mov edx, eax
-	shl edx, 0x5
-	add eax, edx
-	lea ebx, [eax+ecx]
-	add ebx, g_entities
-	mov esi, bgs
-	mov eax, level_bgs
-	mov [esi], eax
-	mov eax, [ebx+0x15c]
-	mov edx, [eax+0x2f90]
-	mov [eax+0x2fb0], edx
-	mov edx, [eax+0x2f94]
-	mov [eax+0x2fb4], edx
-	mov edx, [eax+0x2f98]
-	mov [eax+0x2fb8], edx
-	mov edx, [eax+0x2f9c]
-	mov [eax+0x2fbc], edx
-	mov edx, [eax+0x2fa0]
-	mov [eax+0x2fc0], edx
-	mov edx, [eax+0x2fa4]
-	mov [eax+0x2fc4], edx
-	mov edx, [eax+0x2fa8]
-	mov [eax+0x2fc8], edx
-	mov edx, [eax+0x2fac]
-	mov [eax+0x2fcc], edx
-	mov eax, [ebx+0x15c]
-	add eax, 0x2f90
-	mov [esp+0x4], eax
-	mov [esp], ecx
-	call SV_GetUsercmd
-	mov edx, [ebx+0x15c]
-	mov eax, level
-	mov eax, [eax+0x1ec]
-	mov [edx+0x3084], eax
-	mov eax, g_synchronousClients
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jnz ClientThink_10
-	mov eax, [ebx+0x15c]
-	add eax, 0x2f90
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call ClientThink_real
-ClientThink_10:
-	mov dword [esi], 0x0
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-	nop
 
 
 ;G_RunClient(gentity_s*)
@@ -437,12 +374,7 @@ ClientEndFrame:
 	mov edx, [ebp+0x8]
 	mov byte [edx+0x16e], 0xb
 	mov dword [eax+0x89c], 0x0
-	mov eax, g_gravity
-	mov eax, [eax]
-	cvttss2si eax, [eax+0xc]
 	mov ecx, [ebp-0x70]
-	mov [ecx+0x58], eax
-	mov eax, [edx+0x15c]
 	mov eax, [eax+0x2ffc]
 	mov [ecx+0x5dc], eax
 	mov eax, [ecx+0x3080]
@@ -2103,11 +2035,13 @@ P_DamageFeedback_60:
 	movss xmm1, dword [_float_256_00000000]
 	mulss xmm0, xmm1
 	cvttss2si eax, xmm0
+	and eax, 0xff
 	mov [ebx+0x140], eax
 	movss xmm0, dword [ebp-0x20]
 	divss xmm0, xmm2
 	mulss xmm0, xmm1
 	cvttss2si eax, xmm0
+	and eax, 0xff
 	mov [ebx+0x13c], eax
 	mov ecx, level
 	jmp P_DamageFeedback_90
@@ -2644,7 +2578,7 @@ SpectatorClientEndFrame:
 	push edi
 	push esi
 	push ebx
-	sub esp, 0x2fec
+	sub esp, 0x2ffc
 	mov eax, [ebp+0x8]
 	mov esi, [eax+0x15c]
 	mov edx, eax
@@ -2671,6 +2605,12 @@ SpectatorClientEndFrame_60:
 	mov eax, [esi+0x2f74]
 	sub eax, [esi+0x3070]
 	mov [ebp-0x1c], eax
+	lea eax, [ebp-0x2fec] ;otherFlags
+	mov [esp+0x18], eax
+	lea eax, [ebp-0x2fe8] ;health
+	mov [esp+0x14], eax
+	xor eax, eax
+	mov [esp+0x10], eax ;origin
 	mov [esp+0xc], edi
 	lea eax, [ebp-0x2fe4]
 	mov [esp+0x8], eax
@@ -2717,6 +2657,12 @@ SpectatorClientEndFrame_140:
 	mov eax, [esi+0x2f74]
 	add eax, [esi+0x3070]
 	mov [ebp-0x1c], eax
+	lea eax, [ebp-0x2fec] ;otherFlags
+	mov [esp+0x18], eax
+	lea eax, [ebp-0x2fe8] ;health
+	mov [esp+0x14], eax
+	xor eax, eax
+	mov [esp+0x10], eax ;origin
 	lea eax, [ebp-0x80]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x2fe4]
@@ -2730,7 +2676,7 @@ SpectatorClientEndFrame_140:
 SpectatorClientEndFrame_80:
 	mov eax, [ebp+0x8]
 	mov [esp], eax
-	call StopFollowing
+	call StopFollowingOnDeath
 	mov ecx, [esi+0x14]
 	mov edx, ecx
 	and edx, 0xffffffef
@@ -2742,7 +2688,7 @@ SpectatorClientEndFrame_110:
 	or edx, 0x8
 	mov [esi+0x14], edx
 SpectatorClientEndFrame_120:
-	add esp, 0x2fec
+	add esp, 0x2ffc
 	pop ebx
 	pop esi
 	pop edi
@@ -2790,7 +2736,7 @@ SpectatorClientEndFrame_40:
 	js SpectatorClientEndFrame_130
 	and eax, 0xffffffe7
 	mov [esi+0x14], eax
-	add esp, 0x2fec
+	add esp, 0x2ffc
 	pop ebx
 	pop esi
 	pop edi
@@ -2846,7 +2792,6 @@ _cstring_game_droppedfori:		db "GAME_DROPPEDFORINACTIVITY",0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_00010000:		dd 0x38d1b717	; 0.0001
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_255_00000000:		dd 0x437f0000	; 255
 _float_20_00000000:		dd 0x41a00000	; 20
 _float_0_00100000:		dd 0x3a83126f	; 0.001
@@ -2858,3 +2803,5 @@ _float_0_01000000:		dd 0x3c23d70a	; 0.01
 _float_0_00000000:		dd 0x0	; 0
 _float_1_10000002:		dd 0x3f8ccccd	; 1.1
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

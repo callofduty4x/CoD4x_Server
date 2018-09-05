@@ -30,6 +30,7 @@
 #include "g_public.h"
 #include "dobj.h"
 #include "xassets/xmodel.h"
+#include "xassets/sounds.h"
 #include "game/botlib.h"
 #include "scr_vm.h"
 #include "sys_main.h"
@@ -130,7 +131,7 @@ void __cdecl SV_ResetSkeletonCache()
   {
     ++sv.skelTimeStamp;
   }
-  g_sv_skel_memory_start = (char*)(((int)g_sv_skel_memory) & (SKEL_MEM_ALIGNMENT - 1));
+  g_sv_skel_memory_start = (char*)(((int)g_sv_skel_memory + (SKEL_MEM_ALIGNMENT -1)) & ~(SKEL_MEM_ALIGNMENT - 1));
   sv.skelMemPos = 0;
 }
 
@@ -381,7 +382,6 @@ int __cdecl SV_EntityContact(const float *mins, const float *maxs, struct gentit
   trace.normal[0] = 0.0;
   trace.normal[1] = 0.0;
   trace.normal[2] = 0.0;
-  trace.normal[3] = 0.0;
 
   if ( gEnt->r.svFlags & (0x20 | SVF_DISK))
   {
@@ -558,11 +558,15 @@ const char* SV_GetGuid( unsigned int clnum, char* buffer, int len)
 	Com_sprintf(buffer, len, "%llu", svs.clients[clnum].playerid);
 	return buffer;
 }
-const char* SV_GetGuidBin(int clnum)
+
+uint64_t SV_GetPlayerXuid( unsigned int clnum)
 {
-	static char buf[33];
-	return SV_GetGuid( clnum, buf, sizeof(buf));
+	if(clnum > sv_maxclients->integer)
+		return 0;
+
+	return svs.clients[clnum].playerid;
 }
+
 
 qboolean __cdecl SV_MapExists(const char *name)
 {
@@ -711,9 +715,8 @@ void __cdecl SV_SetGameEndTime(int gameEndTime)
 
 void __cdecl SV_SetMapCenter(float *mapCenter)
 {
-  svs.mapCenter[0] = mapCenter[0];
-  svs.mapCenter[1] = mapCenter[1];
-  svs.mapCenter[2] = mapCenter[2];
+  assert(mapCenter);
+  VectorCopy(mapCenter, svs.mapCenter);
   SV_SetConfigstring(12, va("%g %g %g", svs.mapCenter[0], svs.mapCenter[1], svs.mapCenter[2]));
 }
 
@@ -752,11 +755,13 @@ void __cdecl SV_SetGametype()
     Q_strncpyz(gametype, sv_g_gametype->string, sizeof(gametype));
   }
   Q_strlwr(gametype);
+/*
   if ( !Scr_IsValidGameType(gametype) )
   {
     Com_Printf(CON_CHANNEL_SERVER, "g_gametype %s is not a valid gametype, defaulting to dm\n", gametype);
     strcpy(gametype, "dm");
   }
+*/
   Cvar_SetString(sv_g_gametype, gametype);
 }
 
@@ -770,7 +775,7 @@ void __cdecl SV_InitGameVM(int restart, int registerDvars)
   G_ResetEntityParsePoint();
   SV_ResetSkeletonCache();
 
-  assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= 32);
+  assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
 
   for ( i = 0; i < sv_maxclients->integer; ++i )
   {
@@ -850,4 +855,37 @@ qboolean __cdecl SV_GameCommand()
     return ConsoleCommand();
   }
   return 0;
+}
+
+
+int SV_GameGetMaxClients()
+{
+	return sv_maxclients->integer;
+}
+
+void SV_GameSetUndercoverState(unsigned int clientNum, bool state)
+{
+  if(clientNum > sv_maxclients->integer)
+  {
+    return;
+  }
+  svs.clients[clientNum].undercover = state;
+}
+
+const char* SV_GetPlayerName(unsigned int clientNum)
+{
+  if(clientNum > sv_maxclients->integer)
+  {
+    return NULL;
+  }
+  return svs.clients[clientNum].name;
+}
+
+const char* SV_GetPlayerClan(unsigned int clientNum)
+{
+  if(clientNum > sv_maxclients->integer)
+  {
+    return NULL;
+  }
+  return svs.clients[clientNum].clantag;
 }

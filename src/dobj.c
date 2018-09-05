@@ -1,10 +1,11 @@
 #include "dobj.h"
 #include "xassets/xmodel.h"
+#include "cscr_stringlist.h"
 
 void PrintDObjInfo(DObj_t* dobj)
 {
 	int idx, i, j;
-	char* duplicatePartsString;
+	const char* duplicatePartsString;
 
 	if(dobj)
 	{
@@ -56,8 +57,8 @@ void PrintDObjInfo(DObj_t* dobj)
  */
 DObj_t* GetDObjForEntity(int entNum)
 {
-	if(SV_ENTITY_DOBJS[entNum])
-		return &SV_DOBJ[SV_ENTITY_DOBJS[entNum]];
+	if(serverObjMap[entNum])
+		return &objBuf[serverObjMap[entNum]];
 	return NULL;
 }
 

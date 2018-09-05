@@ -19,12 +19,19 @@
 ===========================================================================
 */
 
+#ifndef __SYS_WIN32_H__
+#define __SYS_WIN32_H__
+
 #include "../q_shared.h"
 #include "../objfile_parser.h"
 
+#include <windows.h>
+
 //#define WIN32_LEAN_AND_MEAN // Need to test if it works with it :P
 
-#include <windows.h>
+typedef DWORD threadid_t;
+#include "../sys_thread.h"
+
 
 typedef struct
 {
@@ -51,4 +58,26 @@ extern WinVars_t g_wv;
 extern byte cod4_plt[8192];
 #define IDI_ICON1                       1
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg);
+
+LPVOID __cdecl _VirtualAlloc(LPVOID address, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect);
+BOOL __cdecl _VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType);
+DWORD __cdecl _SleepEx(DWORD dwMilliseconds, BOOL bAlertable);
+BOOL __cdecl _CloseHandle(HANDLE hObject);
+DWORD __cdecl _GetLastError();
+void __cdecl _SetLastError(DWORD dwErrCode);
+BOOL __cdecl _ReadFileEx(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPOVERLAPPED lpOverlapped, LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);
+HANDLE __cdecl _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+DWORD __cdecl _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
+DWORD __cdecl _GetFileAttributesA(const char *lpFileName);
+BOOL __cdecl _SetFileAttributesA(const char *lpFileName, DWORD dwFileAttributes);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

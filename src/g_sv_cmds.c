@@ -32,6 +32,8 @@
 #include "server.h"
 #include "scr_vm.h"
 #include "misc.h"
+#include "cscr_stringlist.h"
+
 
 #include <string.h>
 
@@ -362,9 +364,6 @@ qboolean ClientCanSpectateTeam(gclient_t *ent, team_t team)
 
 qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum)
 {
-
-    svs.clients[ent->s.number].lastFollowedClient = -1; //Reset this to prevent strange things from happening
-
     // first set them to spectator
     if ((ent->client->sess.sessionState != SESS_STATE_SPECTATOR))
     {
@@ -405,38 +404,6 @@ qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum)
 
 /*
 =================
-StopFollowing
-
-If the client being followed leaves the game, or you just want to drop
-to free floating spectator mode
-
-=================
-*/
-//Drop it not needed
-/*
-void StopFollowing( gentity_t *ent ) {
-
-	vec3_t vieworigin;
-	vec3_t forward;
-	vec3_t up;
-
-	ent->client->pers.unknownStateVar = -1;
-	ent->client->pers.unknownStateVar2 = -1;
-	ent->client->sess.spectatorClient = -1;
-
-	if(ent->client->ps.unkPlayerStateVar1 & 2)
-	{
-		G_GetPlayerViewOrigin(ent->client->ps, vieworigin);
-		BG_GetPlayerViewDirection(ent->client->ps, forward, NULL, up);
-
-
-	}
-
-}
-*/
-
-/*
-=================
 StopFollowingOnDeath
 
 If the client being followed dies in game
@@ -448,7 +415,7 @@ __cdecl void StopFollowingOnDeath(gentity_t *ent)
 {
 
     if (ent->client->spectatorClient != -1)
-        svs.clients[ent->s.number].lastFollowedClient = ent->client->spectatorClient; //saving the last followed player
+        ent->client->lastFollowedClient = ent->client->spectatorClient; //saving the last followed player
 
     StopFollowing(ent);
 }
@@ -583,6 +550,12 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
     if (Q_stricmpn(textptr, "changepassword", 14) == 0)
     {
         SV_ExecuteRemoteCmd(ent->s.number, textptr);
+        return;
+    }
+
+    if (sv_disableChat->boolean == qtrue)
+    {
+        SV_GameSendServerCommand(ent->s.number, 0, "\x67 \"Chat messages disabled on this server\"");
         return;
     }
 

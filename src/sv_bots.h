@@ -3,7 +3,7 @@
 
 #include "player.h"
 #include "sys_cod4defs.h"
-#include "q_math.h"
+#include "q_shared.h"
 
 /* Should keep attribute and this field layout.
  * Met situation where simple vector read into moveTo broke whole

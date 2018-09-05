@@ -25,3 +25,6 @@ the file extensions are only relevant when having equally named, one with gsc an
 there is a nice sideeffect that lets you favor gsx over gsc files when loading from multiple scripts locations e.g. main_shared AND dev_raw. then also the gsx is favored over gsc. 
 
 https://github.com/callofduty4x/CoD4x_Server/blob/5222e3e8746348ada01ed0fc84545c61a5b41121/scriptdocumentation/script_functions_reference.md
+
+### How to install a Plugin?
+Create a folder called `plugins` in your server directory (`fs_homepath`). Put the Plugin inside that folder (`.dll` or `.so` extension on Windows and Linux respectively). You also have to tell the server to load the plugin. This is done by putting `loadplugin <pluginname>` inside your config (omit the extension here!). Or directly as a commandline parameter with `+loadplugin <pluginname>`

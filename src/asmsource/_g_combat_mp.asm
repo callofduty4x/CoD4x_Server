@@ -21,6 +21,7 @@
 	extern Scr_PlayerDamage
 	extern BG_GetViewmodelWeaponIndex
 	extern CM_AreaEntities
+	extern CM_AreaEntities_ASM
 	extern LogAccuracyHit
 	extern AngleVectors
 	extern Com_PrintWarning
@@ -53,6 +54,7 @@
 	extern colorRed
 	extern colorWhite
 	extern DObjPhysicsGetBounds
+	extern modNames
 
 ;Exports of g_combat_mp:
 	global g_HitLocConstNames
@@ -71,7 +73,6 @@
 	global CanDamage
 	global bulletPriorityMap
 	global riflePriorityMap
-	global modNames
 	global g_fHitLocDamageMult
 
 
@@ -2338,8 +2339,6 @@ bulletPriorityMap: dd 0x3030301, 0x3030303, 0x3030303, 0x3030303, 0x303, 0x0, 0x
 		db 0x0
 riflePriorityMap: dd 0x9090901, 0x6060708, 0x5050606, 0x4040404
 		db 0x3, 0x3, 0x0
-modNames: dd 0x1708cd8, 0x1708cda, 0x1708cdc, 0x1708cde, 0x1708ce0, 0x1708ce2, 0x1708ce4, 0x1708ce6, 0x1708ce8, 0x1708cea, 0x1708cec, 0x1708cee, 0x1708cf0, 0x1708cf2, 0x1708cf4, 0x1708cf6
-
 
 ;Initialized constant data of g_combat_mp:
 SECTION .rdata
@@ -2393,9 +2392,10 @@ _float_0_00000000:		dd 0x0	; 0
 _float_24_00000000:		dd 0x41c00000	; 24
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_50000000:		dd 0x3fc00000	; 1.5
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_15_00000000:		dd 0x41700000	; 15
 _float__15_00000000:		dd 0xc1700000	; -15
 _float__1_00000000:		dd 0xbf800000	; -1
 _float_3_00000000:		dd 0x40400000	; 3
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

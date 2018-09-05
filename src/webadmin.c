@@ -280,7 +280,7 @@ void Webadmin_BuildServerStatus(xml_t* xmlobj, qboolean showfullguid)
 					Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", cl->power);//Ping
 					XA(strbuf);
 
-					Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.scoreboard.score);//Score
+					Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.score);//Score
 					XA(strbuf);
 
 
@@ -322,7 +322,7 @@ void Webadmin_BuildServerStatus(xml_t* xmlobj, qboolean showfullguid)
 			Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", cl->power);//Ping
 			XA(strbuf);
 
-			Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.scoreboard.score);//Score
+			Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.score);//Score
 			XA(strbuf);
 
 
@@ -368,7 +368,7 @@ void Webadmin_BuildServerStatus(xml_t* xmlobj, qboolean showfullguid)
 			Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", cl->power);//Ping
 			XA(strbuf);
 
-			Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.scoreboard.score);//Score
+			Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.score);//Score
 			XA(strbuf);
 
 
@@ -411,7 +411,7 @@ void Webadmin_BuildServerStatus(xml_t* xmlobj, qboolean showfullguid)
 		Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", cl->power);//Ping
 		XA(strbuf);
 
-		Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.scoreboard.score);//Score
+		Com_sprintf(strbuf, sizeof(strbuf), "<td>%d</td>", gclient->sess.score);//Score
 		XA(strbuf);
 
 

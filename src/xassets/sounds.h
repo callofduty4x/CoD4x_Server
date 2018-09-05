@@ -13,12 +13,12 @@ typedef enum
 }snd_alias_type_t;
 
 
-typedef struct SndCurve_s
+struct SndCurve
 {
   const char *filename;
   int knotCount;
   float knots[8][2];
-}SndCurve_t;
+};
 
 
 typedef struct SpeakerLevels_s
@@ -62,7 +62,7 @@ typedef struct MssSound_s
   AILSOUNDINFO ailInfo;
   void *data;
 }MssSound_t;
- 
+
 typedef struct LoadedSound_s
 {
   const char *name;
@@ -70,11 +70,11 @@ typedef struct LoadedSound_s
 }LoadedSound_t;
 
 
-typedef struct SoundFileInfo_s
+struct SoundFileInfo
 {
   const char *sndfilename;
   MssSound_t ailsoundinfo;
-}SoundFileInfo_t;
+};
 
 
 typedef struct StreamFileNamePacked_s
@@ -148,7 +148,7 @@ struct snd_alias_t
   float lfePercentage;
   float centerPercentage;
   int startDelay;
-  SndCurve_t *volumeFalloffCurve;
+  struct SndCurve *volumeFalloffCurve;
   float envelopMin;
   float envelopMax;
   float envelopPercentage;
@@ -157,12 +157,12 @@ struct snd_alias_t
 
 
 
-struct snd_alias_list_t
+typedef struct snd_alias_list_t
 {
   const char *aliasName;
   struct snd_alias_t *head; //Can be multiple
   int count;
-};
+} snd_alias_list_t;
 
 typedef union 
 {
@@ -193,7 +193,6 @@ extern "C"{
 #endif
 
 
-struct snd_alias_list_t*__cdecl Com_FindSoundAlias(const char *name);
 struct snd_alias_t *__cdecl _Com_PickSoundAliasFromList(struct snd_alias_list_t *sndaliaslist);
 void SND_PlayAmbientAlias(struct snd_alias_t *alias, int localClientNum, int fadetime);
 

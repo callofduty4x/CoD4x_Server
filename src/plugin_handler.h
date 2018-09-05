@@ -194,7 +194,6 @@ void PHandler_Load(char* );
 void PHandler_Unload(int id);
 void PHandler_UnloadByName(char *name);
 int PHandler_GetID(char *name);
-void PHandler_Event(int, ...);
 void PHandler_Init();
 void *PHandler_Malloc(int,size_t);
 void PHandler_Free(int,void *);
@@ -233,5 +232,14 @@ mov [eax], edx												2bytes
 jmp pluginFunction										5bytes
 
 */
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+void PHandler_Event(int, ...);
+#ifdef __cplusplus
+};
+#endif
+
 
 #endif /*PLUGIN_HANDLER_H*/

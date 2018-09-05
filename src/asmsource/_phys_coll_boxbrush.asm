@@ -6578,7 +6578,6 @@ SECTION .rdata
 
 ;All constant floats and doubles:
 SECTION .rdata
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_34028234663852885_float_3:		dd 0x7f7fffff	; 3.40282e+38
 _float_0_01000000:		dd 0x3c23d70a	; 0.01
 _float__3402823466385288_float__:		dd 0xff7fffff	; -3.40282e+38
@@ -6586,8 +6585,10 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _float__2_00000000:		dd 0xc0000000	; -2
 _float_2_00000000:		dd 0x40000000	; 2
 _float__0_10000000:		dd 0xbdcccccd	; -0.1
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_10000000:		dd 0x3dcccccd	; 0.1
 _float_0_00000000:		dd 0x0	; 0
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD

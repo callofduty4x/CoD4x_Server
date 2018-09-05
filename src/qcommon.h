@@ -28,7 +28,6 @@
 #include <time.h>
 #include "cvar.h"
 #include "qcommon_io.h"
-#define DEDICATEDONLY
 
 typedef enum {
 	// bk001129 - make sure SE_NONE is zero
@@ -84,8 +83,9 @@ extern unsigned int com_expectedHunkUsage;
 extern qboolean com_fixedConsolePosition;
 int Com_IsDeveloper();
 qboolean Com_LoadBinaryImage();
-
+void __cdecl Com_ErrorAbort();
 void Com_SyncThreads();
+void R_ReleaseDXDeviceOwnership();
 
 #define MAXPRINTMSG 4096
 #define	MAX_RELIABLE_COMMANDS	128	// max string commands buffered for restransmit
@@ -133,6 +133,8 @@ void Com_UnloadBsp();
 int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
 
 void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname);
+void __cdecl Com_SafeServerDObjFree(int handle);
+const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, int type);
 
 #ifdef __cplusplus
 }

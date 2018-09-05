@@ -28,7 +28,7 @@
 
 
 #ifndef NDEBUG
-static struct game_hudelem_s g_dummyHudCurrent;
+static struct hudelem_s g_dummyHudCurrent;
 #endif
 
 

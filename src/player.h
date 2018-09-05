@@ -25,8 +25,9 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include "g_public_mp.h"
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "entity.h"
 
 #define KEY_MASK_FORWARD        127
@@ -260,13 +261,7 @@ typedef struct {
 	int location;
 } playerTeamState_t;
 
-typedef enum {
-	TEAM_FREE,
-	TEAM_RED,
-	TEAM_BLUE,
-	TEAM_SPECTATOR,
-	TEAM_NUM_TEAMS
-}team_t;
+
 
 // the auto following clients don't follow a specific client
 // number, but instead follow the first two active players
@@ -317,22 +312,28 @@ typedef struct usercmd_s
     byte pad;
 } usercmd_t;
 
+typedef enum
+{	SESS_STATE_PLAYING, SESS_STATE_DEAD,
+	SESS_STATE_SPECTATOR, SESS_STATE_INTERMISSION
+}sessionState_t;//0x2f64
+
 // client data that stays across multiple respawns, but is cleared
 // on each level change or team change at ClientBegin()
 typedef struct {
 
-    enum
-	{	SESS_STATE_PLAYING, SESS_STATE_DEAD,
-		SESS_STATE_SPECTATOR, SESS_STATE_INTERMISSION
-	}sessionState;//0x2f64
+	sessionState_t sessionState; //0x2f64
 
 	int forceSpectatorClient;
-	int killCamEntity;      //unk2
-	int killCamTargetEntity; //unk3 These 2 are between int status_icon;
+	int killCamEntity;
+	int status_icon;
 	int archiveTime;			//0x2f74
 
 
-	clientScoreboard_t	scoreboard;	//0x2f78
+    int	score; //0x2f78
+    int	deaths; //0x2f7c
+    int	kills; //0x2f80
+    int	assists; //0x2f84
+	
 	uint16_t scriptPersId;          //0x2f88 the first spawn should be at a cool location
 	byte pad2;
 	byte pad;
@@ -441,66 +442,109 @@ struct gclient_s {
 
 	int inactivityTime;             //0x30cc kick players when time > this
 	qboolean inactivityWarning;     //0x30d0 qtrue if the five second warning has been given
-	int playerTalkTime;				//0x30d4 ??
-	int rewardTime;                 // clear the EF_AWARD_IMPRESSIVE, etc when time > this  N/A
-    vec3_t unk;						//0x30dc
+	int lastVoiceTime;				//0x30d4 ??
+	int switchTeamTime;             //0x30d8
+    
+	int currentAimSpreadScale;		//0x30dc
+
+	int jumpHeight; //Used for per player jump height -- bad place here. This should be part of playerState_t
+	int lastFollowedClient;
+
+	int dropWeaponTime;				//JPW NERVE last time a weapon was dropped
+
+	int sniperRifleFiredTime;       //Free member
+	float sniperRifleMuzzleYaw;		//Free member
+	int PCSpecialPickedUpCount;		//Free member
+
+	EntHandle useHoldEntity; //0x30f8
+
+	int useHoldTime;             //0x30fc time the player switched teams
+
+	int useButtonDone;
+	
+	int iLastCompassPlayerInfoEnt;
+
+	int compassPingTime;
+
+	int damageTime;
+	float v_dmg_roll;
+	float v_dmg_pitch;
+	vec3_t swayViewAngles;
+	vec3_t swayOffset;
+	vec3_t swayAngles;
+	vec3_t vLastMoveAng;
+  	float fLastIdleFactor;
+
+	vec3_t vGunOffset;
+  	vec3_t vGunSpeed;
+
+	int weapIdleTime;
+	int lastServerTime;
+  	int lastSpawnTime;
+  	unsigned int lastWeapon;
+    bool previouslyFiring;
+	bool previouslyUsingNightVision;
+	bool previouslySprinting;
+	bool pad;
+	qboolean hasRadar;
+	int lastStand;
+	int lastStandTime;
+};
 
 
-	int airOutTime;			//0x30e8 Unknown only reset
-
-	int lastKillTime;               // ???for multiple kill rewards
-	int dummy34;
-
-	qboolean fireHeld;              // ???used for hook
-	gentity_t   *persistantPowerup;              //0x30f8 grapple hook if out
-
-	int switchTeamTime;             //0x30fc time the player switched teams
+struct clientControllers_s
+{
+  vec3_t angles[6];
+  vec3_t tag_origin_angles;
+  vec3_t tag_origin_offset;
+};
 
 
 
-	int IMtooLazy[33];
-	//Not anymore resolved
+#pragma pack(push, 4)
+struct clientInfo_t
+{
+  int infoValid;
+  int nextValid;
+  int clientNum;
+  char name[16];
+  team_t team;
+  team_t oldteam;
+  int rank;
+  int unk1;
+  int unk2;
+  int score;
+  int location;
+  int health;
+  char model[64];
+  char attachModelNames[6][64];
+  char attachTagNames[6][64];
+  struct lerpFrame_t legs;
+  struct lerpFrame_t torso;
+  float lerpMoveDir;
+  float lerpLean;
+  float playerAngles[3];
+  int leftHandGun;
+  int dobjDirty;
+  struct clientControllers_s control;
+  unsigned int clientConditions[10][2];
+  struct XAnimTree_s *pXAnimTree;
+  int iDObjWeapon;
+  char weaponModel;
+  char pad[3];
+  int stanceTransitionTime;
+  int turnAnimEndTime;
+  char turnAnimType;
+  char pad2[3];
+  int attachedVehEntNum;
+  int attachedVehSlotIndex;
+  byte hideWeapon;
+  byte usingKnife;
+  char pad3[2];
+};
 
-	// timeResidual is used to handle events that happen every second
-	// like health / armor countdowns and regeneration
-/*	int timeResidual;
+#pragma pack(pop)
 
-	float currentAimSpreadScale;
-
-	int medicHealAmt;
-
-	// RF, may be shared by multiple clients/characters
-	animModelInfo_t *modelInfo;
-
-	// -------------------------------------------------------------------------------------------
-	// if working on a post release patch, new variables should ONLY be inserted after this point
-
-	gentity_t   *persistantPowerup;
-	int portalID;
-	int ammoTimes[WP_NUM_WEAPONS];
-	int invulnerabilityTime;
-
-	gentity_t   *cameraPortal;              // grapple hook if out
-	vec3_t cameraOrigin;
-
-	int dropWeaponTime;         // JPW NERVE last time a weapon was dropped
-	int limboDropWeapon;         // JPW NERVE weapon to drop in limbo
-	int deployQueueNumber;         // JPW NERVE player order in reinforcement FIFO queue
-	int sniperRifleFiredTime;         // JPW NERVE last time a sniper rifle was fired (for muzzle flip effects)
-	float sniperRifleMuzzleYaw;       // JPW NERVE for time-dependent muzzle flip in multiplayer
-	int lastBurnTime;         // JPW NERVE last time index for flamethrower burn
-	int PCSpecialPickedUpCount;         // JPW NERVE used to count # of times somebody's picked up this LTs ammo (or medic health) (for scoring)
-	int saved_persistant[MAX_PERSISTANT];           // DHM - Nerve :: Save ps->persistant here during Limbo
-
-	// g_antilag.c
-	int topMarker;
-	clientMarker_t clientMarkers[MAX_CLIENT_MARKERS];
-	clientMarker_t backupMarker;
-
-	gentity_t       *tempHead;  // Gordon: storing a temporary head for bullet head shot detection
-
-	pmoveExt_t pmext;*/
-};//Size: 0x3184
 
 #endif
 

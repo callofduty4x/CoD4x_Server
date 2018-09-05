@@ -108,22 +108,18 @@ typedef struct qfile_us {
 //Added manual buffering as the stdio file buffering has corrupted the written files
 
 typedef struct {
-	qfile_ut		handleFiles;
-	union{
-		qboolean	handleSync;
-		void*		writebuffer;
-	};
-	union{
-		int		fileSize;
-		int		bufferSize;
-	};
-	union{
-		int		zipFilePos;
-		int		bufferPos; //For buffered writes
-	};
-	qboolean		zipFile;
-	qboolean		streamed;
-	char			name[MAX_ZPATH];
+	qfile_ut	handleFiles;
+	qboolean	handleSync;
+	int		fileSize;
+	int		zipFilePos;
+	qboolean	zipFile;
+	qboolean	streamed;
+	char		name[MAX_ZPATH];
+	//Not used by filesystem api
+	void*		writebuffer;
+	int		bufferSize;
+	int		bufferPos; //For buffered writes, next write position for logfile buffering
+	int		rbufferPos; //next read position
 } fileHandleData_t; //0x11C (284) Size
 
 
@@ -232,6 +228,7 @@ void FS_RenameOSPath( const char *from_ospath, const char *to_ospath );
 qboolean FS_SetPermissionsExec(const char* ospath);
 __regparm3 void DB_BuildOSPath(const char *filename, int ffdir, int len, char *buff);
 void DB_BuildQPath(const char *filename, int ffdir, int len, char *buff);
+bool DB_GetQPathForZone(const char* zoneName, int maxlen, char* opath);
 int     FS_FOpenFileByMode( const char *qpath, fileHandle_t *f, fsMode_t mode );
 void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen);
 void FS_AddIwdPureCheckReference(searchpath_t *search);
@@ -254,10 +251,22 @@ void __cdecl FS_FileClose(FILE *stream);
 qboolean SEH_GetLanguageIndexForName(const char* language, int *langindex);
 const char* SEH_GetLanguageName(unsigned int langindex);
 int SEH_GetCurrentLanguage( );
+void FS_CloseLogFile(fileHandle_t f);
+fileHandle_t FS_OpenLogfile(const char* name, char mode);
+void FS_WriteLogFlush(fileHandle_t f);
+int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h );
 #ifdef __cplusplus
 }
 #endif
 
 
 #endif
+
+
+
+
+
+
+
+
 

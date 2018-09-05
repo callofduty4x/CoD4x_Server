@@ -377,7 +377,7 @@ void Auth_ChangeAdminPassword( uint64_t steamid, const char* password ){
 
 	NV_ProcessBegin();
 
-	for(i = 0, user2 = auth_admins.admins; i < MAX_AUTH_ADMINS; i++, user2++){
+	for(i = 0, user2 = auth_admins.admins, user = NULL; i < MAX_AUTH_ADMINS; i++, user2++){
 		if(*user2->username && user2->steamid == steamid){
 		    user = user2;
 		}
@@ -893,8 +893,8 @@ qboolean Auth_CanPlayerUseCommand(unsigned int clnum, const char* cmd)
 
 void Auth_AddCommandForClientToWhitelist(int clnum, const char* cmd)
 {
-	char *parsecmd = &svse.commandWhitelistBuf[0];
-	char *endptr = parsecmd + sizeof(svse.commandWhitelistBuf);
+	char *parsecmd = &svs.commandWhitelistBuf[0];
+	char *endptr = parsecmd + sizeof(svs.commandWhitelistBuf);
 	int i;
 	client_t* client;
 

@@ -725,7 +725,7 @@ void Sys_ExitThread(int code)
 
 }
 
-void  __attribute__ ((noreturn)) Sys_ExitForOS( int exitCode )
+void  __noreturn Sys_ExitForOS( int exitCode )
 {
 	exit(exitCode);
 }
@@ -764,25 +764,63 @@ void Sys_DoStartProcess( char *cmdline ) {
 
 }
 
-void *__cdecl VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect)
+typedef struct
+{
+    char magic[8];
+    void* realstart;
+    void* virtualstart;
+    int realsize;
+    int virtualsize;
+    int allocType;
+    int protect;
+}VirtualAllocInfo_t;
+
+void *__cdecl _VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect)
 {
   int pagesize = 0x1000;
+  void *unaligned;
+  int realsize;
 
   if ( !address )
   {
-    address = calloc(1, dwSize + pagesize);
-    address = (void*)( (unsigned int)(address + pagesize) & ~(pagesize -1));
+    realsize = dwSize + pagesize + sizeof(VirtualAllocInfo_t);
+    unaligned = calloc(1, realsize);
+    if(unaligned == NULL)
+    {
+        return NULL;
+    }
+    address = (void*)( (unsigned int)unaligned & ~(pagesize -1));
+
+    address += pagesize;
+    if(unaligned + sizeof(VirtualAllocInfo_t) > address)
+    {
+        address += pagesize;
+    }
+    VirtualAllocInfo_t *meminfo = (VirtualAllocInfo_t *)((byte*)address - sizeof(VirtualAllocInfo_t));
+    meminfo->realstart = unaligned;
+    meminfo->virtualstart = address;
+    meminfo->realsize = realsize;
+    meminfo->virtualsize = dwSize;
+    meminfo->allocType = flAllocationType;
+    meminfo->protect = flProtect;
+    memcpy(meminfo->magic, "VIRALLOC", sizeof(meminfo->magic));
   }else{
-      Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
+//      Com_Printf(CON_CHANNEL_SYSTEM,"VirtualAlloc with address != NULL\nNeed fix to handle VirtualAlloc COMMIT/RESERVE\n");
   }
   return address;
 }
 
-bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
+bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
 {
   if ( lpAddress && dwFreeType == 0x8000 )
   {
-    free(lpAddress);
+    VirtualAllocInfo_t *meminfo = (VirtualAllocInfo_t *)((byte*)lpAddress - sizeof(VirtualAllocInfo_t));
+    if(meminfo->realstart == NULL || memcmp(meminfo->magic, "VIRALLOC", sizeof(meminfo->magic)))
+    {
+        Com_Error(ERR_FATAL, "VirtualFree with invalid handle\n");
+        return false;
+    }
+    free(meminfo->realstart);
     return true;
   }
   else
@@ -792,23 +830,25 @@ bool __cdecl VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
   return false;
 }
 
-DWORD __cdecl InterlockedDecrement(DWORD volatile *Addend)
+DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend)
 {
 	return atomic_fetch_sub(Addend, 1) -1;
 }
-DWORD __cdecl InterlockedIncrement(DWORD volatile *Addend)
+DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend)
 {
 	return atomic_fetch_add(Addend, 1) +1;
 }
-DWORD __cdecl InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
+DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
 {
 	return __sync_val_compare_and_swap(Destination, Comparand, Exchange);
 }
-DWORD __cdecl InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
+DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
 {
 	return atomic_fetch_add(Addend, value);
 }
-int __cdecl SleepEx(int dwMilliseconds, BOOL alert)
+
+
+int __cdecl _SleepEx(int dwMilliseconds, BOOL alert)
 {
   return 0;
 }
@@ -830,7 +870,7 @@ typedef struct
   char name[32];
 }hObject_t;
 
-BOOL __cdecl CloseHandle(HANDLE handle)
+BOOL __cdecl _CloseHandle(HANDLE handle)
 {
 
   hObject_t *hObject = (hObject_t *)handle;
@@ -853,7 +893,7 @@ BOOL __cdecl CloseHandle(HANDLE handle)
 
 DWORD sLastError;
 
-DWORD __cdecl GetLastError()
+DWORD __cdecl _GetLastError()
 {
   DWORD result;
 
@@ -862,12 +902,12 @@ DWORD __cdecl GetLastError()
   return result;
 }
 
-void __cdecl SetLastError(DWORD error_val)
+void __cdecl _SetLastError(DWORD error_val)
 {
   sLastError = error_val;
 }
 
-BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(unsigned int, unsigned int, struct _OVERLAPPED*))
+BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead, struct _OVERLAPPED *lpOverlapped, void (__stdcall *lpCompletionRoutine)(long unsigned int, long unsigned int, struct _OVERLAPPED*))
 {
   sLastError = 0;
   hObject_t *hObject = (hObject_t*)handle;
@@ -877,12 +917,12 @@ BOOL __cdecl ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead,
   }
   if ( fseek(hObject->fh, lpOverlapped->Offset, 0) )
   {
-    SetLastError(38);
+    _SetLastError(38);
     return FALSE;
   }
   if ( (signed int)fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh) <= 0 )
   {
-    SetLastError(38);
+    _SetLastError(38);
     return FALSE;
   }
   return TRUE;
@@ -908,7 +948,7 @@ FILE* NixFOpen(const char* filen, const char* mode)
     return fopen(filename, mode);
 }
 
-HANDLE __cdecl CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, void *lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+HANDLE __cdecl _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, void *lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
 {
   FILE *fh;
   hObject_t *ho;
@@ -930,7 +970,7 @@ HANDLE __cdecl CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShar
 }
 
 
-DWORD __cdecl GetFileSize(HANDLE handle, DWORD *lpFileSizeHigh)
+DWORD __cdecl _GetFileSize(HANDLE handle, DWORD *lpFileSizeHigh)
 {
   uint32_t current;
   DWORD size;
@@ -973,7 +1013,7 @@ int NixStat(const char* filen, struct stat *b)
 }
 
 
-int __cdecl GetFileAttributesA(const char *name)
+int __cdecl _GetFileAttributesA(const char *name)
 {
   struct stat st;
 
@@ -983,7 +1023,7 @@ int __cdecl GetFileAttributesA(const char *name)
   return (st.st_uid & 0x4000u) >= 1 ? 0x10 : 0;
 }
 
-BOOL __cdecl SetFileAttributesA(const char *name, unsigned int fa)
+BOOL __cdecl _SetFileAttributesA(const char *name, unsigned int fa)
 {
   return FALSE;
 }

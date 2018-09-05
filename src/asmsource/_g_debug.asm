@@ -416,7 +416,8 @@ SECTION .rdata
 ;All constant floats and doubles:
 SECTION .rdata
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
-_data16_45300000:		dd 0x45300000, 0x43300000, 0x0, 0x0	; OWORD
-_data16_0:		dd 0x0, 0x45300000, 0x0, 0x43300000	; OWORD
 _double_0_39269908:		dq 0x3fd921fb54442d18	; 0.392699
 
+align   16,db 0
+_data16_45300000:		dd 0x45300000, 0x43300000, 0x0, 0x0	; DQWORD
+_data16_0:		dd 0x0, 0x45300000, 0x0, 0x43300000	; DQWORD

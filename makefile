@@ -6,15 +6,34 @@
 # If you want to get a debug version, use          #
 # `make DEBUG=true`                                #
 ####################################################
-########################################################################
-# TODO: linux.                                                         #
-# Check if something wrong. I got 2.3 mb file like in good old days ;D #
-########################################################################
-
 
 ##############################
 # A name of server executable.
+
+ifeq ($(DEBUG), true)
+TARGETNAME=cod4x18_dedrun_dbg
+else
 TARGETNAME=cod4x18_dedrun
+endif
+
+###################################################################
+# Build system specific information.
+# In git not exist there will be some errors, but nothing critical.
+BUILD_NUMBER=$(shell git rev-list --count HEAD)
+BUILD_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+BUILD_REVISION=$(shell git rev-parse HEAD)
+
+ifeq ($(BUILD_NUMBER), )
+BUILD_NUMBER:=0
+endif
+
+ifeq ($(BUILD_BRANCH), )
+BUILD_BRANCH:=no-branch
+endif
+
+ifeq ($(BUILD_REVISION), )
+BUILD_REVISION:=no-revision
+endif
 
 ############################################
 # Configure type of build.
@@ -30,12 +49,19 @@ CC=gcc
 CPP=g++
 WIN_DEFINES=WINVER=0x501
 LINUX_DEFINES=_GNU_SOURCE
-CFLAGS=-m32 -Wall -O0 -g -fno-omit-frame-pointer
-WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--image-base,0x8040000,--stack,0x800000 -Tlinkerscript_win32.ld -mwindows -static-libgcc -static -lm
-WIN_LLIBS=tomcrypt bot mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
-LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Tlinkerscript.ld -Wl,-rpath=./
-LINUX_LLIBS=tomcrypt bot mbedtls mbedcrypto mbedx509 dl pthread m stdc++
-COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE)
+CFLAGS=-m32 -msse2 -mfpmath=sse -Wall -fno-omit-frame-pointer -fmax-errors=15
+
+ifeq ($(DEBUG), true)
+DCFLAGS=-fno-pie -O0 -g
+else
+DCFLAGS=-fno-pie -O1 -DNDEBUG
+endif
+
+WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static -lm
+WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
+LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Wl,-rpath=./
+LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
+COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE) BUILD_NUMBER=$(BUILD_NUMBER) BUILD_BRANCH=$(BUILD_BRANCH) BUILD_REVISION=$(BUILD_REVISION)
 
 ########################
 # Setup directory names.
@@ -48,12 +74,11 @@ ZLIB_DIR=$(SRC_DIR)/zlib
 WIN_DIR=$(SRC_DIR)/win32
 LINUX_DIR=$(SRC_DIR)/unix
 ASSETS_DIR=$(SRC_DIR)/xassets
-EXTERNAL=mbedtls tomcrypt botlib
+EXTERNAL=mbedtls tomcrypt
 
 ##############################
 # Setup external applications.
 NASM=nasm
-
 
 ###########################################################
 # Setup OS-specific variables (All the garbage goes there).
@@ -61,10 +86,10 @@ ifeq ($(OS),Windows_NT)
 ####################
 # Windows variables.
 BIN_EXT=.exe
-NASMFLAGS=-f coff -dWin32 --prefix _
+NASMFLAGS=-f win -dWin32 --prefix _
 OS_SOURCES=$(wildcard $(WIN_DIR)/*.c)
 OS_OBJ=$(patsubst $(WIN_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
-C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(WIN_DEFINES))
+C_DEFINES=$(addprefix -D,$(COD4X_DEFINES) $(WIN_DEFINES))
 LFLAGS=$(WIN_LFLAGS)
 LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
 RESOURCE_FILE=src/win32/win_cod4.res
@@ -79,14 +104,13 @@ BIN_EXT=
 NASMFLAGS=-f elf
 OS_SOURCES=$(wildcard $(LINUX_DIR)/*.c)
 OS_OBJ=$(patsubst $(LINUX_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
-C_DEFINES=$(addprefix -D ,$(COD4X_DEFINES) $(LINUX_DEFINES))
+C_DEFINES=$(addprefix -D,$(COD4X_DEFINES) $(LINUX_DEFINES))
 LFLAGS=$(LINUX_LFLAGS)
 LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
 CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
 endif
-
 
 #####################
 # Source files lists.
@@ -144,15 +168,15 @@ endif
 ###############################
 # A rule to link server binary.
 $(TARGET): $(OS_OBJ) $(C_OBJ) $(CPP_OBJ) $(ZLIB_OBJ) $(ASSETS_OBJ) $(ASM_OBJ) obj/version.o
-	@echo   $(CPP)
+	@echo   $(CPP) $(TARGET)
 # CFLAGS for compiler, LFLAGS for linker.
 	@$(CPP) $(LFLAGS) -o $@ $^ $(RESOURCE_FILE) $(LLIBS)
 
 ################################
 # A rule to make version module.
 obj/version.o: src/version/version.c FORCE
-	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) -o $@ $<
+	@echo   $(CC)  $@ $(C_DEFINES)
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ############################################
 # An empty rule to force rebuild other rule.
@@ -163,44 +187,44 @@ FORCE:
 # -march=nocona
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 #####################################
 # A rule to build common c++ server code.
 # -march=nocona
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo   $(CPP)  $@
-	@$(CPP) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CPP) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ################################
 # A rule to build assemler code.
 $(OBJ_DIR)/%.o: $(SRC_DIR)/asmsource/%.asm
-	@echo   $(CC)  $@
+	@echo   $(NASM)  $@
 	@$(NASM) $(NASMFLAGS) $< -o $@
 
 ###################################
 # A rule to build zlib source code.
 $(OBJ_DIR)/%.o: $(ZLIB_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ######################################
 # A rule to build xassets source code.
 $(OBJ_DIR)/%.o: $(ASSETS_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################
 # A rule to build Windows specific code.
 $(OBJ_DIR)/%.o: $(WIN_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################
 # A rule to build Linux specific code.
 $(OBJ_DIR)/%.o: $(LINUX_DIR)/%.c
 	@echo   $(CC)  $@
-	@$(CC) -c $(CFLAGS) $(C_DEFINES) -o $@ $<
+	@$(CC) -c $(CFLAGS) $(DCFLAGS) $(C_DEFINES) -o $@ $<
 
 ########################################################
 # A rule for Windows to create server interface library.
@@ -215,8 +239,14 @@ $(DEF_FILE): $(TARGET)
 	@pexports $^ > $@
 
 ############################
-# Delete built object files.
+# Delete built object files. (Server only)
 clean:
+	@echo   clean Server
+	@$(CLEAN)
+
+############################
+# Delete built object files. (Server only)
+clean_all:
 	@echo   clean Server
 	@$(CLEAN)
 	@echo   clean Mbedtls
@@ -224,3 +254,5 @@ clean:
 	@echo   clean Tomcrypt
 	@$(MAKE) -C $(SRC_DIR)/tomcrypt clean
 
+docker: $(TARGET)
+	@docker build . -t cod4x/bleeding

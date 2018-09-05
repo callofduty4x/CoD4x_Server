@@ -1,7 +1,11 @@
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include "g_shared.h"
 #include "server.h"
+#include "cscr_stringlist.h"
+
+
+extern unsigned int bg_lastParsedWeaponIndex;
 
 struct AntilagClientStore
 {
@@ -125,3 +129,25 @@ void __cdecl G_AntiLag_RestoreClientPos(struct AntilagClientStore *antilagStore)
     }
   }
 }
+
+
+void __cdecl G_SetupWeaponDef()
+{
+  Com_DPrintf(CON_CHANNEL_PLAYERWEAP, "----------------------\n");
+  Com_DPrintf(CON_CHANNEL_PLAYERWEAP, "Game: G_SetupWeaponDef\n");
+  if ( bg_lastParsedWeaponIndex == 0)
+  {
+    Com_SetWeaponInfoMemory(1);
+    ClearRegisteredItems();
+    BG_ClearWeaponDef();
+
+//    SL_SetScriptCompile(true); //Scriptstring Glitch workaround
+
+    G_GetWeaponIndexForName("defaultweapon_mp");
+  //Not in CoD4  BG_LoadWeaponTable("_mp", G_RegisterWeapon);
+//    SL_SetScriptCompile(false); //Scriptstring Glitch workaround
+  }
+  Com_DPrintf(CON_CHANNEL_PLAYERWEAP, "----------------------\n");
+}
+
+

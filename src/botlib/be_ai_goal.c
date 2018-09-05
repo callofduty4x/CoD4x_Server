@@ -35,7 +35,7 @@ If you have questions concerning this license or the applicable additional terms
  *
  *****************************************************************************/
 
-#include "../q_shared.h"
+#include "game_inc.h"
 #include "l_utils.h"
 #include "l_libvar.h"
 #include "l_memory.h"
@@ -853,7 +853,6 @@ int BotGetNextCampSpotGoal( int num, bot_goal_t *goal ) {
 //===========================================================================
 
 //NOTE: enum entityType_t in bg_public.h
-#define ET_ITEM         2
 
 void BotUpdateEntityItems( void ) {
 	int ent, i, modelindex;

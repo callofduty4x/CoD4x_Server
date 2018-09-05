@@ -32,6 +32,8 @@ If you have questions concerning this license or the applicable additional terms
 #include "qcommon_io.h"
 #include "g_sv_shared.h"
 #include "scr_vm.h"
+#include "sv_snapshot.h"
+
 /*
 ==================
 CheatsOk
@@ -661,13 +663,12 @@ void __cdecl Cmd_Say_f(gentity_t *ent, int mode, int arg0)
     if ( arg0 )
     {
       p = SV_Cmd_Argsv(0, b, sizeof(b));
-      G_Say(ent, 0, mode, p);
     }
     else
     {
-      p = SV_Cmd_Argsv(0, b, sizeof(b));
-      G_Say(ent, 0, mode, p);
+      p = SV_Cmd_Argsv(1, b, sizeof(b));
     }
+    G_Say(ent, 0, mode, p);
   }
 }
 

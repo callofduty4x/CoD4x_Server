@@ -184,6 +184,7 @@ static void Cmd_B3Status_f()
   char stid[33];
   char address[128];
   char mapnamebuf[256];
+  char shortname[16];
 
     Plugin_Cvar_VariableStringBuffer("mapname", mapnamebuf, sizeof(mapnamebuf));
 	
@@ -191,9 +192,10 @@ static void Cmd_B3Status_f()
 	Plugin_Printf ("num score ping guid                             name            lastmsg address               qport rate\n");
 	Plugin_Printf ("--- ----- ---- -------------------------------- --------------- ------- --------------------- ----- -----\n");
 
-	for (i=0,cl=clientbase; i < MAX_CLIENTS ; i++, cl++)
+	for (i=0; i < MAX_CLIENTS ; i++)
 	{
-		if (!cl->state)
+		cl = Plugin_GetClientForClientNum(i);
+		if (!cl || !cl->state)
 			continue;
         
         clientScoreboard_t score = Plugin_GetClientScoreboard(i); //How does this work? Not returning a pointer?
@@ -224,12 +226,14 @@ static void Cmd_B3Status_f()
     			j++;
     		} while(j < l);
 
-        Plugin_Printf ("%s", cl->shortname);
+		strncpy(shortname, cl->name, sizeof(shortname));
+		shortname[sizeof(shortname) -1] = 0;
+        Plugin_Printf ("%s", shortname);
 
     		// TTimo adding a ^7 to reset the color
     		// NOTE: colored names in status breaks the padding (WONTFIX)
     		Plugin_Printf ("^7");
-    		l = 16 - Q_PrintStrlen(cl->name);
+    		l = 16 - Q_PrintStrlen(shortname);
     		j = 0;
 
     		do

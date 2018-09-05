@@ -39,6 +39,8 @@
 #endif
 
 
+cvar_t* msg_printEntityNums;
+
 /*
 This part makes msg.c undepended in case no proper qcommon_io.h is included
 */
@@ -47,6 +49,12 @@ This part makes msg.c undepended in case no proper qcommon_io.h is included
 
 //int pcount[256];
 //static char bigstring[MAX_MSGLEN];
+
+void MSG_RegisterCvars()
+{
+	msg_printEntityNums = Cvar_RegisterBool("msg_printEntityNums", 0, 0, "Print entity numbers");
+}
+
 
 /*
 ==============================================================================
@@ -81,15 +89,13 @@ void MSG_InitReadOnly( msg_t *buf, byte *data, int length ) {
 	buf->readonly = qtrue;
 }
 
-void MSG_InitReadOnlySplit( msg_t *buf, byte *data, int length, byte* splitData, int arg5 ) {
+void MSG_InitReadOnlySplit( msg_t *buf, byte *data, int length, byte* splitData, int splitlength ) {
 
-	buf->data = data;
-	buf->cursize = length;
-	buf->readonly = qtrue;
+	MSG_InitReadOnly( buf, data, length);
+
 	buf->splitData = splitData;
-	buf->maxsize = length + arg5;
-	buf->splitSize = arg5;
-	buf->readcount = 0;
+	buf->maxsize = length + splitlength;
+	buf->splitSize = splitlength;
 }
 
 
@@ -134,18 +140,18 @@ void MSG_Copy(msg_t *buf, byte *data, int length, msg_t *src)
 
 void MSG_WriteByte( msg_t *msg, int c ) {
 #ifdef PARANOID
-	if (c < 0 || c > 255)
+	if (c < -128 || c > 127)
 		Com_Error (ERR_FATAL, "MSG_WriteByte: range error");
 #endif
-	byte* dst;
+	int8_t* dst;
 
 	if ( msg->maxsize - msg->cursize < 1 ) {
 		msg->overflowed = qtrue;
 		return;
 	}
-	dst = (byte*)&msg->data[msg->cursize];
+	dst = (int8_t*)&msg->data[msg->cursize];
 	*dst = c;
-	msg->cursize += sizeof(byte);
+	msg->cursize += sizeof(int8_t);
 }
 
 
@@ -160,7 +166,7 @@ void MSG_WriteShort( msg_t *msg, int c ) {
 		msg->overflowed = qtrue;
 		return;
 	}
-	dst = (short*)&msg->data[msg->cursize];
+	dst = (int16_t*)&msg->data[msg->cursize];
 	*dst = c;
 	msg->cursize += sizeof(short);
 }
@@ -369,14 +375,17 @@ void MSG_WriteBase64(msg_t* msg, byte* inbuf, int len)
     }
 }
 
-void MSG_Write24BitFlag(int clientnum, msg_t *msg, const int oldFlags, const int newFlags)
+void MSG_WriteEFlags(int clientnum, msg_t *msg, const int oldFlags, const int newFlags)
 {
-	int xorflags;
+	int flagDiff;
 	signed int shiftedflags;
-	signed int i;
+	signed int changedBitIndex;
+	int i;
 
-	xorflags = newFlags ^ oldFlags;
-	if ( (xorflags - 1) & xorflags )
+	assert(!msg->readonly);
+
+	flagDiff = (newFlags ^ oldFlags) & MASK_EFLAGS;
+	if ( !flagDiff || (flagDiff - 1) & flagDiff)
 	{
 		MSG_WriteBit1(msg);
 		shiftedflags = newFlags;
@@ -390,14 +399,19 @@ void MSG_Write24BitFlag(int clientnum, msg_t *msg, const int oldFlags, const int
 	}
 	else
 	{
-		for ( i = 0; !(xorflags & 1); ++i )
+		for ( changedBitIndex = 0; !(flagDiff & 1); ++changedBitIndex )
 		{
-		  xorflags >>= 1;
+		  flagDiff >>= 1;
 		}
+		assert(changedBitIndex >= 0 && changedBitIndex < 24);
+		assert(( ( ( oldFlags ^ newFlags ) & MASK_EFLAGS ) ^ ( 1 << changedBitIndex ) ) == 0);
 		MSG_WriteBit0(msg);
-		MSG_WriteBits(msg, i, 5);
+		MSG_WriteBits(msg, changedBitIndex, 5);
 	}
 }
+
+
+
 
 void MSG_WriteAngle( msg_t *sb, float f ) {
 	MSG_WriteByte( sb, (int)( f * 256 / 360 ) & 255 );
@@ -411,7 +425,8 @@ void MSG_WriteAngle16( msg_t *sb, float f ) {
 
 void MSG_WriteEntityIndex(struct snapshotInfo_s *snapInfo, msg_t *msg, const int index, const int indexBits)
 {
-
+	assert(!msg->readonly);
+	assertx(index - msg->lastRefEntity > 0, "lastEntityReferenced is %i, index is %i", msg->lastRefEntity, index);
 	if ( index - msg->lastRefEntity == 1 )
 	{
 		MSG_WriteBit1(msg);
@@ -432,7 +447,7 @@ void MSG_WriteEntityIndex(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
 		msg->lastRefEntity = index;
 		return;
     }
-
+    assertx(index - msg->lastRefEntity > 0, "index was %i, lastEntityRef is %i", index, msg->lastRefEntity);
     MSG_WriteBit0(msg);
     MSG_WriteBits(msg, index - msg->lastRefEntity, 4);
     msg->lastRefEntity = index;
@@ -447,57 +462,142 @@ void MSG_WriteEntityIndex(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
 
 // returns -1 if no more characters are available
 
-int MSG_ReadByte( msg_t *msg ) {
-	byte	*c;
+int MSG_GetByte(msg_t *msg, int where)
+{
+  if ( where + sizeof(int8_t) <= msg->cursize )
+  {
+    return msg->data[where];
+  }
+  assert(msg->splitData);
+  return msg->splitData[where - msg->cursize];
+}
 
-	if ( msg->readcount+sizeof(byte) > msg->cursize ) {
+int MSG_GetShort(msg_t *msg, int where)
+{
+  if ( where + sizeof(int16_t) <= msg->cursize )
+  {
+    return *(int16_t*)&msg->data[where];
+  }
+
+  assert(msg->splitData);
+
+  if(where >= msg->cursize)
+  {
+    return *(int16_t*)&msg->splitData[where - msg->cursize];
+  }
+
+  int16_t c;
+  int i;
+
+  //2 bytes splitted up
+  for(i = 0; i < 2; ++i)
+  {
+    ((byte*)&c)[i] = MSG_GetByte(msg, where +i);
+  }
+  return c;
+}
+
+int MSG_GetLong(msg_t *msg, int where)
+{
+  if ( where +sizeof(int32_t) <= msg->cursize )
+  {
+    return *(int32_t*)&msg->data[where];
+  }
+
+  assert(msg->splitData);
+
+  if(where >= msg->cursize)
+  {
+    return *(int32_t*)&msg->splitData[where - msg->cursize];
+  }
+
+  int32_t c;
+  int i;
+
+  //4 bytes splitted up
+  for(i = 0; i < 4; ++i)
+  {
+    ((byte*)&c)[i] = MSG_GetByte(msg, where +i);
+  }
+  return c;
+}
+
+int64_t MSG_GetInt64(msg_t *msg, int where)
+{
+  if ( where + sizeof(int64_t) <= msg->cursize )
+  {
+    return *(int64_t*)&msg->data[where];
+  }
+
+  assert(msg->splitData);
+
+  if(where >= msg->cursize)
+  {
+    return *(int64_t*)&msg->splitData[where - msg->cursize];
+  }
+
+  int64_t c;
+  int i;
+  //8 bytes splitted up
+  for(i = 0; i < 8; ++i)
+  {
+    ((byte*)&c)[i] = MSG_GetByte(msg, where +i);
+  }
+  return c;
+}
+
+
+int MSG_ReadByte( msg_t *msg ) {
+	byte	c;
+
+	if ( msg->readcount+sizeof(byte) > msg->splitSize + msg->cursize ) {
 		msg->overflowed = 1;
 		return -1;
 	}
-	c = &msg->data[msg->readcount];
+	c = MSG_GetByte(msg, msg->readcount);
 
 	msg->readcount += sizeof(byte);
-	return *c;
+	return c;
 }
 
 int MSG_ReadShort( msg_t *msg ) {
-	signed short	*c;
+	int16_t	c;
 
-	if ( msg->readcount+sizeof(short) > msg->cursize ) {
+	if ( msg->readcount+sizeof(short) > msg->splitSize + msg->cursize ) {
 		msg->overflowed = 1;
 		return -1;
 	}	
-	c = (short*)&msg->data[msg->readcount];
+	c = MSG_GetShort(msg, msg->readcount);
 
 	msg->readcount += sizeof(short);
-	return *c;
+	return c;
 }
 
 int32_t MSG_ReadLong( msg_t *msg ) {
-	int32_t		*c;
+	int32_t	c;
 
-	if ( msg->readcount+sizeof(int32_t) > msg->cursize ) {
+	if ( msg->readcount+sizeof(int32_t) > msg->cursize + msg->splitSize) {
 		msg->overflowed = 1;
 		return -1;
 	}	
-	c = (int32_t*)&msg->data[msg->readcount];
+	c = MSG_GetLong(msg, msg->readcount);
 
 	msg->readcount += sizeof(int32_t);
-	return *c;
+	return c;
 
 }
 
 int64_t MSG_ReadInt64( msg_t *msg ) {
-	int64_t		*c;
+	int64_t		c;
 
-	if ( msg->readcount+sizeof(int64_t) > msg->cursize ) {
+	if ( msg->readcount+sizeof(int64_t) > msg->cursize + msg->splitSize ) {
 		msg->overflowed = 1;
 		return -1;
 	}	
-	c = (int64_t*)&msg->data[msg->readcount];
+	c = MSG_GetInt64(msg, msg->readcount);
 
 	msg->readcount += sizeof(int64_t);
-	return *c;
+	return c;
 
 }
 
@@ -567,7 +667,7 @@ char *MSG_ReadStringLine( msg_t *msg, char* bigstring, int len ) {
 
 float MSG_ReadFloat( msg_t *msg ) {
 	
-	float		*c;
+	float	*c;
 	
 	if ( msg->readcount+sizeof(int32_t) > msg->cursize ) {
 		//msg->readcount += sizeof(int32_t); /* Hmm what a bad bug is this ? O_o*/
@@ -615,15 +715,14 @@ int MSG_ReadBit(msg_t *msg)
     msg->bit = 8 * msg->readcount;
     msg->readcount++;
   }
-  
+
   numBytes = msg->bit / 8;
   if ( numBytes < msg->cursize )
   {
     bits = msg->data[numBytes] >> oldbit7;
-    msg->bit++;
-    return bits & 1;
+  }else{
+      bits = msg->splitData[numBytes - msg->cursize] >> oldbit7;
   }
-  bits = msg->splitData[numBytes - msg->cursize] >> oldbit7;
   msg->bit++;
   return bits & 1;
 }
@@ -762,10 +861,6 @@ void MSG_NUinitHuffman() {
 */
 //===========================================================================
 
-static int GetMinBitCount(int x)
-{
-	return 32 - __builtin_clz (x);
-}
 
 typedef struct{
     const char* name;
@@ -779,15 +874,10 @@ typedef struct{
     int z;
 }netEntlist_t;
 
-
-typedef struct netField_s{
-	char    *name;
-	int offset;
-	int bits;           // 0 = float
-	byte changeHints;
-	byte pad[3];
-} netField_t;
-
+static int GetMinBitCount(int x)
+{
+    return 32 - __builtin_clz (x);
+}
 
 // using the stringizing operator to save typing...
 #define NETF( x ) # x,(int)&( (entityState_t*)0 )->x
@@ -1395,7 +1485,7 @@ netField_t helicopterEntityStateFields[] =
 	{ NETF( lerp.apos.trType ), 8, 0},
 	{ NETF( un2 ), 32, 0},
 	{ NETF( weapon ), 7, 0},
-	{ NETF( lerp.u.vehicle.teamAndOwnerIndex ), 8, 0},
+	{ NETF( lerp.u.vehicle.team ), 8, 0},
 	{ NETF( weaponModel ), 4, 0},
 	{ NETF( groundEntityNum ), -96, 0},
 	{ NETF( eventParm ), -93, 0},
@@ -1443,7 +1533,7 @@ netField_t planeStateFields[] =
 	{ NETF( lerp.pos.trTime ), -97, 2},
 	{ NETF( lerp.pos.trType ), 8, 2},
 	{ NETF( lerp.pos.trDuration ), 32, 2},
-	{ NETF( lerp.u.vehicle.teamAndOwnerIndex ), 8, 2},
+	{ NETF( lerp.u.vehicle.team ), 8, 2},
 	{ NETF( lerp.apos.trBase[1] ), -100, 2},
 	{ NETF( lerp.pos.trDelta[2] ), 0, 0},
 	{ NETF( events[0] ), -94, 0},
@@ -1717,11 +1807,9 @@ void MSG_EndWriteMessageLength(msg_t* msg)
 
 int MSG_ReadEntityIndex(msg_t *msg, int numBits)
 {
-  cvar_t **msg_printEntityNums = (cvar_t**)(0x8930c18);
-
   if ( MSG_ReadBit(msg) )
   {
-    if ( (*msg_printEntityNums)->boolean )
+    if ( msg_printEntityNums->boolean )
       Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: 1 bit (inc)\n");
     ++msg->lastRefEntity;
   }
@@ -1729,63 +1817,21 @@ int MSG_ReadEntityIndex(msg_t *msg, int numBits)
   {
     if ( numBits != 10 || MSG_ReadBit(msg) )
     {
-      if ( (*msg_printEntityNums)->boolean )
+      if ( msg_printEntityNums->boolean )
         Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: %i bits (full)\n", numBits + 2);
       msg->lastRefEntity = MSG_ReadBits(msg, numBits);
     }
     else
     {
-      if ( (*msg_printEntityNums)->boolean )
+      if ( msg_printEntityNums->boolean )
         Com_Printf(CON_CHANNEL_SYSTEM,"Entity num: %i bits (delta)\n", 6);
       msg->lastRefEntity += MSG_ReadBits(msg, 4);
     }
   }
-  if ( (*msg_printEntityNums)->boolean )
+  if ( msg_printEntityNums->boolean )
     Com_Printf(CON_CHANNEL_SYSTEM,"Read entity num %i\n", msg->lastRefEntity);
   return msg->lastRefEntity;
 }
-
-#if 0
-/*
-float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
-{
-	signed int baseval;
-	int deltabits, olddelta;
-	vec3_t center;
-
-	if ( MSG_ReadBit(msg) )
-	{
-		CL_GetMapCenter(center);
-		baseval = center[bits != -92] + 0.5f;
-		deltabits = MSG_ReadBits(msg, 24);
-		olddelta = (signed int)oldValue - baseval;
-		return ((olddelta + 0x800000) ^ deltabits) + baseval - 0x800000;
-	}
-	deltabits = MSG_ReadBits(msg, 7);
-	deltabits -= 64;
-    return deltabits + oldValue;
-}
-*/
-
-float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
-{
-	signed int baseval;
-	int deltabits, olddelta;
-	vec3_t center;
-
-	if ( MSG_ReadBit(msg) )
-	{
-		CL_GetMapCenter(center);
-		baseval = center[bits != -92] + 0.5f;
-		deltabits = MSG_ReadBits(msg, 16);
-		olddelta = (signed int)oldValue - baseval;
-		return ((olddelta + 0x8000) ^ deltabits) + baseval - 0x8000;
-	}
-	deltabits = MSG_ReadBits(msg, 7);
-	deltabits -= 64;
-    return deltabits + oldValue;
-}
-#endif
 
 
 qboolean MSG_ValuesAreEqual(int bits, const int *fromF, const int *toF)
@@ -1802,12 +1848,11 @@ qboolean MSG_ValuesAreEqual(int bits, const int *fromF, const int *toF)
 		case 0:
 		case 13:
 			result = (int16_t)ANGLE2SHORT( *(float *)toF ) == (int16_t)ANGLE2SHORT( *(float *)fromF );
-//			((signed int)(182.044449f * *(float *)toF + 0.5f) == (signed int)(*(float *)fromF * 182.044449f  + 0.5f));
 			break;
 		case 8:
 		case 9:
 		case 10:
-			result = (signed int)floorf(*(float *)fromF + 0.5f) == (signed int)floorf(*(float *)toF + 0.5f);
+			result = (signed int)f2rint(*(float *)fromF) == (signed int)f2rint(*(float *)toF);
 			break;
 		case 5:
 			result = *fromF / 100 == *toF / 100;
@@ -1853,8 +1898,8 @@ void MSG_WriteOriginFloat(const int clientNum, msg_t *msg, int bits, float value
   signed int mcenterbits, delta;
   vec3_t center;
   
-  ival = (signed int)floorf(value +0.5f);
-  ioldval = (signed int)floorf(oldValue +0.5f);
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
   delta = ival - ioldval;
   
   if ( (unsigned int)(delta + 64)  > 127 )
@@ -1878,8 +1923,8 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
   signed int mcenterbits;
   vec3_t center;
   
-  ival = (signed int)floorf(value +0.5f);
-  ioldval = (signed int)floorf(oldValue +0.5f);
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
   
   if ( (unsigned int)(ival - ioldval + 64)  > 127 )
   {
@@ -1894,6 +1939,59 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
     MSG_WriteBits(msg, ival - ioldval + 64, 7);
   }
 }
+
+/*
+Before using this f2rint has to be used on client side as well
+void MSG_WriteOriginFloat(const int clientNum, msg_t *msg, int bits, float value, float oldValue)
+{
+  signed int ival;
+  signed int ioldval;
+  signed int mcenterbits, delta;
+  vec3_t center;
+  
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
+  delta = ival - ioldval;
+  
+  if ( (unsigned int)(delta + 64)  > 127 )
+  {
+    MSG_WriteBit1(msg);
+	SV_GetMapCenterFromSVSHeader(center);
+	mcenterbits = (signed int)f2rint(center[bits != -92]);
+    MSG_WriteBits(msg, (ival - mcenterbits + (1 << (24 - 1))) ^ (ioldval - mcenterbits + (1 << (24 - 1))), 24);
+  }
+  else
+  {
+    MSG_WriteBit0(msg);
+    MSG_WriteBits(msg, delta + 64, 7);
+  }
+}
+
+void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float oldValue)
+{
+  signed int ival;
+  signed int ioldval;
+  signed int mcenterbits;
+  vec3_t center;
+  
+  ival = (signed int)f2rint(value);
+  ioldval = (signed int)f2rint(oldValue);
+  
+  if ( (unsigned int)(ival - ioldval + 64)  > 127 )
+  {
+    MSG_WriteBit1(msg);
+	SV_GetMapCenterFromSVSHeader(center);
+	mcenterbits = (signed int)f2rint(center[2]);
+    MSG_WriteBits(msg, (ival - mcenterbits + (1 << (20 - 1)))) ^ (ioldval - mcenterbits + (1 << (20 - 1)))), 20);
+  }
+  else
+  {
+    MSG_WriteBit0(msg);
+    MSG_WriteBits(msg, ival - ioldval + 64, 7);
+  }
+}
+*/
+
 
 
 __regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
@@ -2023,7 +2121,7 @@ __regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg,
 			break;
 
 		case -86:
-			MSG_WriteBits(msg, floorf(((floattodata - 1.4) * 10.0) + 0.5), 5);
+			MSG_WriteBits(msg, f2rint((floattodata - 1.4) * 10.0), 5);
 			break;
 
 		case -85:
@@ -2067,7 +2165,7 @@ __regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg,
 			break;
 			
 		case -98:
-			MSG_Write24BitFlag(snapInfo->clnum, msg, uint32fromdata, uint32todata);
+			MSG_WriteEFlags(snapInfo->clnum, msg, uint32fromdata, uint32todata);
 			break;
 
 		case -96:
@@ -2183,7 +2281,6 @@ int MSG_WriteDeltaStruct(snapshotInfo_t *snapInfo, msg_t *msg, const int time, c
 			lc = i +1;
 		}
 	}
-	
 	if(lc == 0)
 	{
 	 // nothing at all changed
@@ -2208,16 +2305,15 @@ int MSG_WriteDeltaStruct(snapshotInfo_t *snapInfo, msg_t *msg, const int time, c
 	}
 	
 	MSG_WriteEntityIndex(snapInfo, msg, entityNumber, indexBits);
-	MSG_WriteBit0(msg);
-	MSG_WriteBit1(msg);
+	MSG_WriteBit0(msg);   // not removed
+	MSG_WriteBit1(msg);   // has delta
 	MSG_WriteBits(msg, lc, GetMinBitCount(numFields));
 
 	for(i = 0, field = stateFields; i < lc; i++, field++)
 	{
 		MSG_WriteDeltaField(snapInfo, msg, time, from, to, field, i, 0);
 	}
-	return MSG_GetUsedBitCount(msg) - oldbitcount;	
-	
+	return MSG_GetUsedBitCount(msg) - oldbitcount;
 }
 
 
@@ -2273,7 +2369,7 @@ void MSG_WriteDeltaEntity(struct snapshotInfo_s *snapInfo, msg_t* msg, const int
 #define PSF( x ) # x,(int)&( (playerState_t*)0 )->x
 
 
-static netField_t playerStateFields[] =
+netField_t playerStateFields[] =
 {
 	{ PSF( commandTime ), -97, 0},
 	{ PSF( viewangles[1] ), -87, 0},
@@ -2432,7 +2528,7 @@ void MSG_SetDefaultUserCmd(playerState_t *ps, usercmd_t *ucmd)
 
 	for(i = 0; i < 2; i++)
 	{
-		ucmd->angles[i] = ANGLE2SHORT(ps->viewangles[i] - ps->delta_angles[i]);  //(int)(() * (65536 / 360) + 0.5) & 0xFFFF;
+		ucmd->angles[i] = ANGLE2SHORT(ps->viewangles[i] - ps->delta_angles[i]);
 	}
   
 	if ( !(ps->otherFlags & 4) )
@@ -2631,15 +2727,7 @@ qboolean MSG_WithinAllowedPredictionError(float dist, playerState_t *to)
     {
     	return qtrue;
     }
-	return qfalse;
-}
-
-double __cdecl Vec3DistanceSq(const float *p1, const float *p2)
-{
-  vec3_t d;
-
-  VectorSubtract(p2, p1, d);
-  return VectorLengthSquared( d );
+    return qfalse;
 }
 
 
@@ -2673,22 +2761,22 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
   	}
   	else
   	{
-//	    assert(svsHeaderValid);
+//		assert(svsHeaderValid);
+//Send him 
+		predictedTime = SV_GetPredictedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
+		float dist = Vec3DistanceSq(predictedOrigin, to->origin);
 
-		predictedTime = SV_GetPredirectedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
-	    float dist = Vec3DistanceSq(predictedOrigin, to->origin);
-
-	    if ( from && svsHeader.clientArchive && MSG_WithinAllowedPredictionError(dist, to) && predictedTime == to->commandTime )
-    	{
-      		sendOriginAndVel = 0;
-      		MSG_WriteBit0(msg);
-    	}
-    	else
-    	{
-    	  sendOriginAndVel = 1;
-    	  MSG_WriteBit1(msg);
-    	}
-  	}
+		if ( from && svsHeader.clientArchive && MSG_WithinAllowedPredictionError(dist, to) && predictedTime == to->commandTime )
+		{
+			sendOriginAndVel = 0;
+			MSG_WriteBit0(msg);
+		}
+		else
+		{
+			sendOriginAndVel = 1;
+			MSG_WriteBit1(msg);
+		}
+	}
 
 	numFields = sizeof( playerStateFields ) / sizeof( playerStateFields[0] );
 	
@@ -2715,6 +2803,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 				}else{
 					forceSend = qfalse;
 				}
+
 				MSG_WriteDeltaField(snapInfo, msg, time, (byte *)from, (byte *)to, field, i, forceSend);
 
 			}else{
@@ -2862,7 +2951,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 
 #define CSF( x ) # x,(int)&( (clientState_t*)0 )->x
 
-static netField_t clientStateFields[] =
+netField_t clientStateFields[] =
 {
 	{ CSF( modelindex ), 9, 0},
 	{ CSF( netname[0] ), 32, 0},
@@ -2900,13 +2989,14 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
     from = &nullstate;
     memset(&nullstate, 0, sizeof(nullstate));
   }
+  int numFields = sizeof(clientStateFields) / sizeof(clientStateFields[0]);
   if ( to )
   {
-    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, 24, 6, clientStateFields, 1);
+    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields, 1);
   }
   else
   {
-	MSG_WriteEntityRemoval(snapInfo, msg, (byte*)from, 6, qtrue);
+	MSG_WriteEntityRemoval(snapInfo, msg, (byte*)from, GetMinBitCount(MAX_CLIENTS -1), qtrue);
   }
 }
 
@@ -3066,7 +3156,9 @@ void __cdecl MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, userc
 	  }
 	  if ( to->buttons & 4 )
       {
-        to->meleeChargeYaw = (float)MSG_ReadDeltaKeyShort(msg, key, (int16_t)(signed int)(from->meleeChargeYaw * 182.04445 + 0.5)) * 0.0054931641;
+//        to->meleeChargeYaw = (float)MSG_ReadDeltaKeyShort(msg, key, (int16_t)(signed int)(from->meleeChargeYaw * 182.04445 + 0.5)) * 0.0054931641;
+        to->meleeChargeYaw = (float)MSG_ReadDeltaKeyShort(msg, key, (int16_t)ANGLE2SHORT(from->meleeChargeYaw)) * 0.0054931641;
+
         to->meleeChargeDist = MSG_ReadDeltaKey(msg, key, from->meleeChargeDist, 8);
 	  }
       if ( to->buttons >= 0x200000 )
@@ -3131,21 +3223,63 @@ float MSG_ReadOriginZFloat(msg_t *msg, float oldValue)
   return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
 }
 
+
+/*
+float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
+{
+  signed int coord;
+
+  if ( MSG_ReadBit(msg) )
+  {
+	vec3_t center;
+	MSG_GetMapCenter(center);
+    coord = (signed int)f2rint(center[bits != -92]);
+    return (double)((((signed int)oldValue - coord + (1 << (24 - 1))) ^ MSG_ReadBits(msg, 24)) + coord - (1 << (24 - 1)));
+  }
+  return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
+}
+
+float MSG_ReadOriginZFloat(msg_t *msg, float oldValue)
+{
+  signed int coord;
+
+  if ( MSG_ReadBit(msg) )
+  {
+	vec3_t center;
+	MSG_GetMapCenter(center);
+	coord = (signed int)f2rint(center[2]);
+    return (double)((((signed int)oldValue - coord + (1 << (20 - 1))) ^ MSG_ReadBits(msg, 20)) + coord - (1 << (20 - 1)));
+  }
+  return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
+}
+*/
+
+
+
 double MSG_ReadAngle16(msg_t *msg)
 {
-  return (double)MSG_ReadShort(msg) * 0.0054931641;
+  return SHORT2ANGLE((double)MSG_ReadShort(msg));
 }
 
 int MSG_ReadEFlags(msg_t *msg, const int oldFlags)
 {
   int bitChanged;
   int value;
+  int i;
+  int b;
 
   assert(!msg->overflowed);
-  
+
   if ( MSG_ReadBit(msg) == 1 )
   {
-    value = MSG_ReadBits(msg, 24);
+    value = 0;
+    for(i = 0; i < 24; i += 8)
+    {
+        b = MSG_ReadByte(msg);
+        value |= (b << i);
+    }
+
+//    value = MSG_ReadBits(msg, 24); //That was just Blackops
   }
   else
   {
@@ -3157,6 +3291,7 @@ int MSG_ReadEFlags(msg_t *msg, const int oldFlags)
   }
   return value;
 }
+
 
 int MSG_ReadDeltaGroundEntity(msg_t *msg)
 {
@@ -3204,12 +3339,12 @@ void MSG_ReadDeltaField(msg_t *msg, int time, const void *from, const void *to, 
   toF = (byte *)to + field->offset;
   if ( field->changeHints != 2 )
   {
-    if ( !MSG_ReadBit(msg) )
+    if ( !MSG_ReadBit(msg) ) //No change?
     {
       *(uint32_t*)toF = *(uint32_t*)fromF;
       return;
     }
-  }
+  }//Changed field
   bits = field->bits;
   if ( !bits )
   {
@@ -3377,15 +3512,11 @@ void MSG_ReadDeltaField(msg_t *msg, int time, const void *from, const void *to, 
 			*(uint32_t*)toF = 0;
 			return;
 		}
-		bits = field->bits;
-		if ( field->bits < 0 )
-		{
-			bits = -bits;
-		}
+		bits = abs(field->bits);
 		bit_vect = bits & 7;
-		if ( bits & 7 )
+		if ( bit_vect )
 		{
-			t = MSG_ReadBits(msg, bits & 7);
+			t = MSG_ReadBits(msg, bit_vect);
 		}
 		else
 		{
@@ -3403,8 +3534,8 @@ void MSG_ReadDeltaField(msg_t *msg, int time, const void *from, const void *to, 
 		{
 			bit_vect = (1 << bits) - 1;
 		}
-		t = (t ^ bit_vect) & *(uint32_t*)fromF;
-		if ( field->bits < 0 && (1 << (bits - 1)) & t )
+		t = t ^ (*(uint32_t*)fromF & bit_vect);
+		if ( field->bits < 0 && (t >> (bits - 1)) & 1)
 		{
 			t |= ~bit_vect;
 		}
@@ -3503,7 +3634,6 @@ netField_t archivedEntityFields[] =
 	{ AEF( s.solid ), 24, 0},
 	{ AEF( s.eventParms[0] ), -93, 0},
 	{ AEF( s.torsoAnim ), 10, 0},
-	{ AEF( s.lerp.u.anonymous.data[1] ), 32, 0},
 	{ AEF( s.lerp.pos.trTime ), -97, 0},
 	{ AEF( s.lerp.pos.trDelta[0] ), 0, 0},
 	{ AEF( s.lerp.pos.trDelta[1] ), 0, 0},
@@ -3524,13 +3654,14 @@ netField_t archivedEntityFields[] =
 	{ AEF( r.clientMask[0] ), 32, 0},
 	{ AEF( r.clientMask[1] ), 32, 0},
 	{ AEF( s.lerp.apos.trDelta[1] ), 0, 0},
-	{ AEF( s.lerp.u.anonymous.data[0] ), 32, 0},
 	{ AEF( s.attackerEntityNum ), 10, 0},
 	{ AEF( s.time2 ), -97, 0},
-	{ AEF( s.lerp.u.anonymous.data[2] ), 32, 0},
 	{ AEF( s.un2 ), 32, 0},
 	{ AEF( s.lerp.apos.trDuration ), 32, 0},
 	{ AEF( s.loopSound ), 8, 0},
+	{ AEF( s.lerp.u.anonymous.data[0] ), 32, 0},
+	{ AEF( s.lerp.u.anonymous.data[1] ), 32, 0},
+	{ AEF( s.lerp.u.anonymous.data[2] ), 32, 0},
 	{ AEF( s.lerp.u.anonymous.data[3] ), 32, 0},
 	{ AEF( s.lerp.u.anonymous.data[4] ), 32, 0},
 	{ AEF( s.lerp.u.anonymous.data[5] ), 32, 0},
@@ -3565,7 +3696,9 @@ bool __cdecl MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, 
 	return  qtrue;
   }
 */
-  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE, 69, 10, archivedEntityFields, 0) > 0)
+  int numFields = sizeof(archivedEntityFields) / sizeof(archivedEntityFields[0]);
+
+  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE, numFields, 10, archivedEntityFields, 0) > 0)
   {
 	return  qtrue;	
   }
@@ -3638,7 +3771,6 @@ void MSG_ReadDeltaFields(msg_t *msg, const int time, const byte *from, byte *to,
     {
 /*      if ( stateFields[i].changeHints == 2 )
 		{*/
-			
         MSG_ReadDeltaField(msg, time, from, to, &stateFields[i], print, 0);
         /*}*/
     }
@@ -3646,7 +3778,7 @@ void MSG_ReadDeltaFields(msg_t *msg, const int time, const byte *from, byte *to,
     {
 		int offset = stateFields[i].offset;
 		*(uint32_t *)&to[offset] = *(uint32_t *)&from[offset];
-	}
+    }
 }
 
 
@@ -3681,17 +3813,21 @@ int MSG_ReadDeltaClient(msg_t *msg, const int time, clientState_t *from, clientS
 {
   clientState_t dummy;
 
+  int numFields = sizeof( clientStateFields ) / sizeof( clientStateFields[0] );
+
   if ( !from )
   {
     memset(&dummy, 0, sizeof(dummy));
     from = &dummy;
   }
-  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, 24, 6, clientStateFields);
+  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields);
 }
 
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number)
 {
-  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte*)to, number, 69, 10, archivedEntityFields);
+  int numFields = sizeof( archivedEntityFields ) / sizeof( archivedEntityFields[0] );
+
+  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte*)to, number, numFields, 10, archivedEntityFields);
 }
 
 
@@ -3741,13 +3877,13 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
 	}
 	for(y = 0; y <= lc; ++y)
 	{
-        MSG_ReadDeltaField(msg, time, &from[i], &to[i], &hudElemFields[y], 0, 0);
+		MSG_ReadDeltaField(msg, time, &from[i], &to[i], &hudElemFields[y], 0, 0);
 	}
 
     for ( ; y < numFields; ++y )
     {
 		int offset = hudElemFields[y].offset;
-		*(uint32_t *)&to[offset] = *(uint32_t *)&from[offset];
+		((byte*)&to[i])[offset] = ((byte*)&from[i])[offset];
 	}
 
 	assertx((!(from[i].alignOrg & ~15)), "(from[i].alignOrg) = %i", from[i].alignOrg);
@@ -3805,7 +3941,6 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 	}
 
 	numFields = sizeof( playerStateFields ) / sizeof( playerStateFields[0] );
-	
 
 	readOriginAndVel = MSG_ReadBit(msg) > 0;
 	lc = MSG_ReadLastChangedField(msg, numFields);
@@ -3822,7 +3957,7 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 	for ( i = lc; i < numFields; ++i )
 	{
 		int offset = stateFields[i].offset;
-		*(uint32_t *)&to[offset] = *(uint32_t *)&from[offset];
+		*(uint32_t *)&((byte*)to)[offset] = *(uint32_t *)&((byte*)from)[offset];
 	}
 
 	if ( !readOriginAndVel )

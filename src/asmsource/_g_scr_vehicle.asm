@@ -66,6 +66,7 @@
 	extern Scr_GetInt
 	extern _ZN9EntHandle6setEntEP9gentity_s
 	extern Q_stricmp
+	extern s_flashTags
 
 ;Exports of g_scr_vehicle:
 	global s_phys
@@ -107,7 +108,6 @@
 	global CMD_VEH_SetTurretTargetEnt
 	global CMD_VEH_SetTurretTargetVec
 	global CMD_VEH_ClearTurretTargetEnt
-	global s_flashTags
 
 
 SECTION .text
@@ -5328,8 +5328,6 @@ CMD_VEH_ClearTurretTargetEnt_10:
 
 ;Initialized global or static variables of g_scr_vehicle:
 SECTION .data
-s_flashTags: dd 0x1708c90, 0x1708c92, 0x1708c94, 0x1708c96, 0x1708c98, 0x0, 0x0, 0x0
-
 
 ;Initialized constant data of g_scr_vehicle:
 SECTION .rdata
@@ -5381,10 +5379,8 @@ _float_17_60000038:		dd 0x418ccccd	; 17.6
 _float_0_00000000:		dd 0x0	; 0
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_00000000:		dd 0x3f800000	; 1
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_360_00000000:		dd 0x43b40000	; 360
-_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; OWORD
 _float_0_05000000:		dd 0x3d4ccccd	; 0.05
 _float__0_05000000:		dd 0xbd4ccccd	; -0.05
 _float_0_00100000:		dd 0x3a83126f	; 0.001
@@ -5408,3 +5404,6 @@ _float_1000_00000000:		dd 0x447a0000	; 1000
 _float_0_25000000:		dd 0x3e800000	; 0.25
 _float__0_50000000:		dd 0xbf000000	; -0.5
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD
+_data16_7fffffff:		dd 0x7fffffff, 0x0, 0x0, 0x0	; DQWORD

@@ -1,5 +1,6 @@
+
 #include "q_shared.h"
-#include "q_math.h"
+#include "q_shared.h"
 #include <math.h>
 
 
@@ -83,30 +84,26 @@ void vectoangles( const vec3_t value1, vec3_t angles ) {
 	if ( value1[1] == 0 && value1[0] == 0 ) {
 		yaw = 0;
 		if ( value1[2] > 0 ) {
-			pitch = 90;
-		} else {
 			pitch = 270;
+		} else {
+			pitch = 90;
 		}
 	} else {
-		if ( value1[0] ) {
-			yaw = ( atan2( value1[1], value1[0] ) * 180 / M_PI );
-		} else if ( value1[1] > 0 )   {
-			yaw = 90;
-		} else {
-			yaw = 270;
+		yaw = ( atan2( value1[1], value1[0] ) * 180 / M_PI );
+		if(yaw < 0.0)
+		{
+			yaw += 360.0;
 		}
-		if ( yaw < 0 ) {
-			yaw += 360;
+		forward = sqrt( value1[0] * value1[0] + value1[1] * value1[1] );
+		pitch = ( -atan2( value1[2], forward ) * 180 / M_PI );
+		if(pitch < 0.0)
+		{
+			pitch += 360.0;
 		}
 
-		forward = sqrt( value1[0] * value1[0] + value1[1] * value1[1] );
-		pitch = ( atan2( value1[2], forward ) * 180 / M_PI );
-		if ( pitch < 0 ) {
-			pitch += 360;
-		}
 	}
 
-	angles[PITCH] = -pitch;
+	angles[PITCH] = pitch;
 	angles[YAW] = yaw;
 	angles[ROLL] = 0;
 }
@@ -486,6 +483,7 @@ float RadiusFromBounds( const vec3_t mins, const vec3_t maxs ) {
 AnglesToAxis
 =================
 */
+
 void __cdecl AnglesToAxis(const vec3_t angles, vec3_t axis[3])
 {
   float cy;
@@ -509,11 +507,11 @@ void __cdecl AnglesToAxis(const vec3_t angles, vec3_t axis[3])
   axis[0][0] = cp * cy;
   axis[0][1] = cp * sy;
   axis[0][2] = -sp;
-  axis[1][0] = sr * sp * cy + (-sy) * cr;
+  axis[1][0] = sr * sp * cy - sy * cr;
   axis[1][1] = sr * sp * sy + cr * cy;
   axis[1][2] = sr * cp;
   axis[2][0] = cr * sp * cy + (-sr) * (-sy);
-  axis[2][1] = cr * sp * sy + (-sr) * cy;
+  axis[2][1] = cr * sp * sy - sr * cy;
   axis[2][2] = cr * cp;
 }
 
@@ -553,15 +551,16 @@ void ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_t vP
 
 vec_t Vec3NormalizeTo( const vec3_t v, vec3_t out )
 {
-  float length;
+  float length, result;
 
   length = VectorLength(v);
-  if ( length == 0.0 )
+  result = length;
+  if ( length <= 0.0 )
   {
     length = 1.0;
   }
-  VectorScale(v, length, out);
-  return length;
+  VectorScale(v, 1.0 / length, out);
+  return result;
 }
 
 double __cdecl Vec2NormalizeTo(const float *v, float *out)
@@ -923,6 +922,7 @@ long double __cdecl randomf()
 {
   return ((float)(signed int)ms_rand() * 0.000030517578f);
 }
+
 
 long double crandom()
 {
@@ -1403,10 +1403,14 @@ void __cdecl ProjectPointOnPlane(const float *p, const float *normal, float *dst
   dst[2] = (d * normal[2]) + p[2];
 }
 
+
 //Lame?!
 void __cdecl Sys_SnapVector(vec3_t v)
 {
-    SnapVector(v);
+    v[0] = f2rint(v[0]);
+    v[1] = f2rint(v[1]);
+    v[2] = f2rint(v[2]);
+
 }
 
 void __cdecl MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out)
@@ -1941,5 +1945,13 @@ void __cdecl NearestPitchAndYawOnPlane(const float *angles, const float *normal,
   AngleVectors(angles, forward, 0, 0);
   ProjectPointOnPlane(forward, normal, projected);
   vectoangles(projected, result);
+}
+
+double __cdecl Vec3DistanceSq(const float *p1, const float *p2)
+{
+  vec3_t d;
+
+  VectorSubtract(p2, p1, d);
+  return VectorLengthSquared( d );
 }
 

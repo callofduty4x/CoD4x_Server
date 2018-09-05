@@ -91,7 +91,8 @@ union XAssetHeader
   struct GfxImage *image;
   struct snd_alias_list_t *sound;
   struct SndCurve *sndCurve;
-  struct clipMap_t *clipMap;
+  struct LoadedSound_s* loadedsound;
+  struct clipMap_s *clipMap;
   struct ComWorld *comWorld;
   struct GameWorldSp *gameWorldSp;
   struct GameWorldMp *gameWorldMp;
@@ -129,7 +130,7 @@ extern "C"
 #endif
 
 void R_Init();
-void __cdecl DB_SetInitializing(qboolean);
+void __cdecl DB_SetInitializing(bool);
 qboolean __cdecl DB_FileExists(const char* filename, int mode);
 qboolean __cdecl DB_ModFileExists(void);
 void __cdecl DB_LoadXAssets(XZoneInfo*, unsigned int assetscount, int);
@@ -166,6 +167,8 @@ void __cdecl Load_XModelPtr(bool atStreamStart);
 void __cdecl Load_XString(bool atStreamStart);
 void __cdecl Load_XAssetHeader(bool atStreamStart);
 const char* DB_GetXAssetName(struct XAsset*);
+void __cdecl Load_ScriptStringArray(bool atStreamStart, int count);
+void* __regparm2 DB_AddXAsset(int xassetType, void* header);
 
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For GCC

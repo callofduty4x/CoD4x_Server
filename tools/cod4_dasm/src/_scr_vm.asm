@@ -103,7 +103,7 @@
 	extern GetInternalVariableIndex
 	extern Scr_GetEntityIdRef
 	extern Com_PrintWarning
-	extern GetObjectA
+	extern SGetObjectA
 	extern longjmp
 	extern FindFirstSibling
 	extern Scr_GetAnims
@@ -4536,7 +4536,7 @@ VM_ExecuteInternal_4210:
 	call ClearVariableValue
 	mov eax, [ebx+0x30]
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov [ebp-0x34], eax
 	jmp VM_ExecuteInternal_1760
 VM_ExecuteInternal_4310:
@@ -4830,7 +4830,7 @@ VM_ExecuteInternal_4330:
 	call ClearVariableValue
 	mov eax, [ebx+0x30]
 	mov [esp], eax
-	call GetObjectA
+	call SGetObjectA
 	mov [ebp-0x34], eax
 	jmp VM_ExecuteInternal_2430
 VM_ExecuteInternal_4350:

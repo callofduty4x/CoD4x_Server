@@ -134,6 +134,7 @@ _cstring_cannot_unload_wo:		db "Cannot unload world while it is in use",0
 
 ;All constant floats and doubles:
 SECTION .rdata
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float_1_00000000:		dd 0x3f800000	; 1
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

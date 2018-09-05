@@ -82,7 +82,6 @@
 	global DB_FxImpactTableGetName
 	global DB_RawFileGetName
 	global DB_StringTableGetName
-	global DB_SetXAssetName
 	global DB_GetXAssetTypeSize
 	global g_assetNames
 
@@ -933,19 +932,6 @@ DB_StringTableGetName:
 	mov eax, [eax]
 	pop ebp
 	ret
-
-
-;DB_SetXAssetName(XAsset*, char const*)
-DB_SetXAssetName:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov edx, [eax]
-	add eax, 0x4
-	mov [ebp+0x8], eax
-	mov ecx, [edx*4+DB_XAssetSetNameHandler]
-	pop ebp
-	jmp ecx
 
 
 ;DB_GetXAssetTypeSize(int)

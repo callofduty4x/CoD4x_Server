@@ -63,7 +63,6 @@
 	global G_UseOffHand
 	global LogAccuracyHit
 	global FireWeaponMelee
-	global G_SetupWeaponDef
 	global G_GivePlayerWeapon
 	global G_SelectWeaponIndex
 	global G_SetEquippedOffHand
@@ -911,53 +910,6 @@ FireWeaponMelee_20:
 	add [eax], al
 
 
-;G_SetupWeaponDef()
-G_SetupWeaponDef:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	mov dword [esp+0x4], _cstring_game_g_setupweap
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	mov eax, bg_lastParsedWeaponIndex
-	mov eax, [eax]
-	test eax, eax
-	jz G_SetupWeaponDef_10
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	leave
-	ret
-G_SetupWeaponDef_10:
-	mov dword [esp], 0x1
-	call Com_SetWeaponInfoMemory
-	call ClearRegisteredItems
-	call BG_ClearWeaponDef
-	mov eax, level
-	mov eax, [eax+0x1c]
-	test eax, eax
-	jz G_SetupWeaponDef_20
-	mov eax, G_RegisterWeapon
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_defaultweapon_mp
-	call BG_GetWeaponIndexForName
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	leave
-	ret
-G_SetupWeaponDef_20:
-	mov dword [esp], _cstring_defaultweapon_mp
-	call BG_FindWeaponIndexForName
-	mov dword [esp+0x4], _cstring_
-	mov dword [esp], 0x11
-	call Com_DPrintf
-	leave
-	ret
-
 
 ;G_GivePlayerWeapon(playerState_s*, int, unsigned char)
 G_GivePlayerWeapon:
@@ -1589,11 +1541,7 @@ SECTION .bss
 ;All cstrings:
 SECTION .rdata
 _cstring_unknown_weapon_t:		db 15h,"Unknown weapon type %i for %s",0ah,0
-_cstring_:		db "----------------------",0ah,0
-_cstring_game_g_setupweap:		db "Game: G_SetupWeaponDef",0ah,0
-_cstring_defaultweapon_mp:		db "defaultweapon_mp",0
 _cstring_c_i:		db "%c %i",0
-
 
 
 ;All constant floats and doubles:
@@ -1602,9 +1550,10 @@ _float_0_00000000:		dd 0x0	; 0
 _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_50000000:		dd 0x3f000000	; 0.5
 _float_1_50000000:		dd 0x3fc00000	; 1.5
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _double_0_01745329:		dq 0x3f91df46a2529d39	; 0.0174533
 _float_16_00000000:		dd 0x41800000	; 16
 _float_360_00000000:		dd 0x43b40000	; 360
 _float__64_00000000:		dd 0xc2800000	; -64
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

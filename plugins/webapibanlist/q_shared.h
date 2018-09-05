@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // A user mod should never modify this file
   #include <math.h>
   #include <stdio.h>
+  #include <wchar.h>
 
 #ifdef _MSC_VER
 /*
@@ -592,4 +593,13 @@ int QDECL Com_sprintfUni(wchar_t *dest, size_t size, const wchar_t *fmt, ...);
 void Q_strcatUni( wchar_t *dest, int size, const wchar_t *src );
 void CharToHexUni(wchar_t* string, char* hexstring, int size);
 void HexToCharUni(char* hexstring, wchar_t* string, int size);
+
+int	Cmd_Argc( void );
+char	*Cmd_Argv( int arg );
+void	Cmd_ArgvBuffer( int arg, char *buffer, int bufferLength );
+char	*Cmd_Args( void );
+void	Cmd_ArgsBuffer( char *buffer, int bufferLength );
+void Cmd_TokenizeString( const char *text_in );
+
 #endif	// __Q_SHARED_H
+

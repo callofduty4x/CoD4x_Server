@@ -2168,7 +2168,7 @@ char	*Cvar_InfoString_Big( int bit, char* buf, int len )
 				Cvar_ValueToStr(var, value, sizeof(value), NULL, 0, NULL, 0);
 			else
 				Com_sprintf(value, sizeof(value), "%d", var->boolean);
-			BigInfo_SetValueForKey (info, var->name, value);		}
+			Info_SetValueForKey (info, var->name, value);		}
 	}
 
 	Q_strncpyz(buf, info, len);

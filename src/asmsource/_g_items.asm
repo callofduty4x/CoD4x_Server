@@ -10,7 +10,7 @@
 	extern BG_CanItemBeGrabbed
 	extern Q_strncpyz
 	extern Q_CleanStr
-	extern SV_GetGuid
+	extern G_GetPlayerId
 	extern G_LogPrintf
 	extern BG_PlayerCanPickUpWeaponType
 	extern BG_PlayerHasCompatibleWeapon
@@ -69,6 +69,7 @@
 	extern G_RunThink
 	extern BG_EvaluateTrajectory
 	extern SV_PointContents
+	extern CS_DisplayName
 
 ;Exports of g_items:
 	global TransferRandomAmmoToWeaponEntity
@@ -434,8 +435,11 @@ Touch_Item_150:
 Touch_Item_40:
 	mov dword [esp+0x8], 0x40
 	mov edx, [ebp+0xc]
-	mov eax, [edx+0x15c]
-	add eax, 0x3048
+	mov eax, [edx+15Ch]
+	add eax, 0x300c
+	mov dword [esp+4], 1
+	mov [esp], eax
+	call CS_DisplayName
 	mov [esp+0x4], eax
 	lea ebx, [ebp-0x94]
 	mov [esp], ebx
@@ -448,8 +452,8 @@ Touch_Item_40:
 	mov edi, [eax]
 	mov eax, [ebp+0xc]
 	mov esi, [eax]
-	mov [esp], esi
-	call SV_GetGuid
+	mov [esp], eax
+	call G_GetPlayerId
 	mov [esp+0x10], edi
 	mov [esp+0xc], ebx
 	mov [esp+0x8], esi

@@ -3008,6 +3008,7 @@ _cstring_no_dobj:		db "No Dobj",0ah,0
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
-_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; OWORD
 _float__1_00000000:		dd 0xbf800000	; -1
 
+align   16,db 0
+_data16_80000000:		dd 0x80000000, 0x0, 0x0, 0x0	; DQWORD

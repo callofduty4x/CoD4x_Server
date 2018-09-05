@@ -96,22 +96,22 @@ __optimize3 __regparm1 void SV_GetChallenge(netadr_t *from)
 	int	clientChallenge;
 	int	challenge;
 
-	if(from->type == NA_IP && svse.authorizeAddress.type != NA_DOWN)
+	if(from->type == NA_IP && svs.authorizeAddress.type != NA_DOWN)
 	{
 		/* This part is required to keep the server registered on the masterserver */
 		// look up the authorize server's IP
-		if(svse.authorizeAddress.type == NA_BAD)
+		if(svs.authorizeAddress.type == NA_BAD)
 		{
 			Com_Printf(CON_CHANNEL_SERVER, "Resolving %s\n", AUTHORIZE_SERVER_NAME );
-			if (NET_StringToAdr(AUTHORIZE_SERVER_NAME, &svse.authorizeAddress, NA_IP))
+			if (NET_StringToAdr(AUTHORIZE_SERVER_NAME, &svs.authorizeAddress, NA_IP))
 			{
-				svse.authorizeAddress.port = BigShort( PORT_AUTHORIZE );
-				Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", AUTHORIZE_SERVER_NAME, NET_AdrToString(&svse.authorizeAddress));
+				svs.authorizeAddress.port = BigShort( PORT_AUTHORIZE );
+				Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", AUTHORIZE_SERVER_NAME, NET_AdrToString(&svs.authorizeAddress));
 			}else{
-				svse.authorizeAddress.type = NA_DOWN;
+				svs.authorizeAddress.type = NA_DOWN;
 			}
 		}
-		if(svse.authorizeAddress.type == NA_IP && from->type == NA_IP && NET_CompareBaseAdr(from, &svse.authorizeAddress))
+		if(svs.authorizeAddress.type == NA_IP && from->type == NA_IP && NET_CompareBaseAdr(from, &svs.authorizeAddress))
 		{
 			from->port = BigShort(PORT_AUTHORIZE);
 			challenge = NET_CookieHash(from);
@@ -171,7 +171,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	char* xversion;
 
 	xversion = Info_ValueForKey( userinfo, "xver");
-	if(Q_stricmp(xversion, Sys_GetCommonVersionString()) && version > 6)
+	if(Q_stricmp(xversion, Sys_GetCommonVersionString()) && version > 7)
 	{
 		NET_OutOfBandPrint( NS_SERVER, from, "error\nBad subversion. Server expects subversion %s but client is %s\n", Sys_GetCommonVersionString(), xversion );
 		return;
@@ -229,12 +229,12 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	if ( version != sv_protocol->integer ) {
 
 #ifdef COD4X18UPDATE
-		if(version < 7)
+		if(version <= 7)
 		{
 			Com_Printf(CON_CHANNEL_SERVER,"Have to fix up old client which reports version %d\n", version);
 		}else{
 #endif
-			if(version < 8)
+			if(version < 9)
 			{
 				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
 							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
@@ -312,27 +312,27 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	}
 	//Process queue
 	for(i = 0 ; i < 10 ; i++){//Purge all older players from queue
-	    if(svse.connectqueue[i].lasttime+21 < Com_GetRealtime()){
-		svse.connectqueue[i].lasttime = 0;
-		svse.connectqueue[i].firsttime = 0;
-		svse.connectqueue[i].challengeslot = 0;
-		svse.connectqueue[i].attempts = 0;
+	    if(svs.connectqueue[i].lasttime+21 < Com_GetRealtime()){
+		svs.connectqueue[i].lasttime = 0;
+		svs.connectqueue[i].firsttime = 0;
+		svs.connectqueue[i].challengeslot = 0;
+		svs.connectqueue[i].attempts = 0;
 	    }
 	}
 	for(i = 0 ; i < 10 ; i++){//Move waiting players up in queue if there is a purged slot
-	    if(svse.connectqueue[i].lasttime != 0){
-		if(svse.connectqueue[i+1].challengeslot == svse.connectqueue[i].challengeslot){
-		    svse.connectqueue[i+1].lasttime = 0;
-		    svse.connectqueue[i+1].firsttime = 0;
-		    svse.connectqueue[i+1].challengeslot = 0;
-		    svse.connectqueue[i+1].attempts = 0;
+	    if(svs.connectqueue[i].lasttime != 0){
+		if(svs.connectqueue[i+1].challengeslot == svs.connectqueue[i].challengeslot){
+		    svs.connectqueue[i+1].lasttime = 0;
+		    svs.connectqueue[i+1].firsttime = 0;
+		    svs.connectqueue[i+1].challengeslot = 0;
+		    svs.connectqueue[i+1].attempts = 0;
 		}
 	    }else{
-		Com_Memcpy(&svse.connectqueue[i],&svse.connectqueue[i+1],(9-i)*sizeof(connectqueue_t));
+		Com_Memcpy(&svs.connectqueue[i],&svs.connectqueue[i+1],(9-i)*sizeof(connectqueue_t));
 	    }
 	}
 	for(i = 0 ; i < 10 ; i++){//Find highest slot or the one which is already assigned to this player
-	    if(svse.connectqueue[i].firsttime == 0 || svse.connectqueue[i].challengeslot == challenge){
+	    if(svs.connectqueue[i].firsttime == 0 || svs.connectqueue[i].challengeslot == challenge){
 			break;
 	    }
 	}
@@ -342,10 +342,10 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			cl = &svs.clients[j];
 			if (cl->state == CS_FREE) {
 				newcl = cl;
-				svse.connectqueue[0].lasttime = 0;
-				svse.connectqueue[0].firsttime = 0;
-				svse.connectqueue[0].challengeslot = 0;
-				svse.connectqueue[0].attempts = 0;
+				svs.connectqueue[0].lasttime = 0;
+				svs.connectqueue[0].firsttime = 0;
+				svs.connectqueue[0].challengeslot = 0;
+				svs.connectqueue[0].attempts = 0;
 				break;
 			}
 		}
@@ -358,22 +358,22 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		}else{
 		    NET_OutOfBandPrint( NS_SERVER, from, "print\nServer is full. %i players wait before you.\n",i);
 		}
-		if(svse.connectqueue[i].attempts > 30){
+		if(svs.connectqueue[i].attempts > 30){
 		    NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is full. %i players wait before you.\n",i);
-		    svse.connectqueue[i].attempts = 0;
-		}else if(svse.connectqueue[i].attempts > 15 && i > 1){
+		    svs.connectqueue[i].attempts = 0;
+		}else if(svs.connectqueue[i].attempts > 15 && i > 1){
 		    NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is full. %i players wait before you.\n",i);
-		    svse.connectqueue[i].attempts = 0;
-		}else if(svse.connectqueue[i].attempts > 5 && i > 3){
+		    svs.connectqueue[i].attempts = 0;
+		}else if(svs.connectqueue[i].attempts > 5 && i > 3){
 		    NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is full. %i players wait before you.\n",i);
-		    svse.connectqueue[i].attempts = 0;
+		    svs.connectqueue[i].attempts = 0;
 		}
-		if(svse.connectqueue[i].firsttime == 0){
-		    svse.connectqueue[i].firsttime = Com_GetRealtime();
+		if(svs.connectqueue[i].firsttime == 0){
+		    svs.connectqueue[i].firsttime = Com_GetRealtime();
 		}
-		svse.connectqueue[i].attempts++;
-		svse.connectqueue[i].lasttime = Com_GetRealtime();
-		svse.connectqueue[i].challengeslot = challenge;
+		svs.connectqueue[i].attempts++;
+		svs.connectqueue[i].lasttime = Com_GetRealtime();
+		svs.connectqueue[i].challengeslot = challenge;
 
 		return;
 	}
@@ -390,7 +390,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 
 
 #ifdef COD4X18UPDATE
-	if(version < 7 && newcl->challenge == challenge && newcl->state && newcl->updateconnOK)
+	if(version <= 7 && newcl->challenge == challenge && newcl->state && newcl->updateconnOK)
 	{
 		Com_Memset(newcl, 0x00, sizeof(client_t));
 		newcl->updateconnOK = qtrue;
@@ -424,10 +424,10 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
     NET_OutOfBandPrint( NS_SERVER, from, "error\n%s", denied);
 		Com_Printf(CON_CHANNEL_SERVER,"Rejecting a connection from a ? player\n");
 
-    svse.connectqueue[i].lasttime = 0;
-    svse.connectqueue[i].firsttime = 0;
-    svse.connectqueue[i].challengeslot = 0;
-		svse.connectqueue[i].attempts = 0;
+    svs.connectqueue[i].lasttime = 0;
+    svs.connectqueue[i].firsttime = 0;
+    svs.connectqueue[i].challengeslot = 0;
+		svs.connectqueue[i].attempts = 0;
 		return;
   }
 
@@ -721,7 +721,6 @@ void SV_UserinfoChanged( client_t *cl ) {
 
 	}else{
 */
-	Q_strncpyz(cl->shortname, cl->name, sizeof(cl->shortname));
 /*
 	}
 */
@@ -838,7 +837,6 @@ void SV_CloseAllClientHandles(client_t *drop)
 
 	SV_NotifySApiDisconnect(drop);
 	SV_CloseDownload(drop);
-	G_DestroyAdsForPlayer(drop);
 	SV_FreeClient(drop);
 	SV_DisconnectReliableMessageProtocol(drop);
 
@@ -1031,14 +1029,12 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 
 
 	clientNum = cl - svs.clients;
-//	extcl = &svse.extclients[clientNum];
 
 	// use the checksum feed in the key
 	key = sv.checksumFeed;
 	// also use the message acknowledge
 	key ^= cl->messageAcknowledge;
 	// also use the last acknowledged server command in the key
-//	key ^= Com_HashKey( extcl->reliableCommands[ cl->reliableAcknowledge & ( MAX_RELIABLE_COMMANDS - 1 ) ].command, 32 );
 	key ^= Com_HashKey( cl->reliableCommands[ cl->reliableAcknowledge & ( MAX_RELIABLE_COMMANDS - 1 ) ].command, 32 );
 
 	ps = SV_GameClientNum( clientNum );
@@ -1122,6 +1118,20 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		if(cl->demorecording && !cl->demowaiting && cl->demofile.handleFiles.file.o)
 			SV_WriteDemoArchive(cl);
 	}
+
+/*
+Needed to debug prediction errors. Otherwise useless
+	static vec3_t oldorigin;
+        if(VectorCompare(oldorigin, cl->predictedOrigin) != 1)
+        {
+                VectorCopy(cl->predictedOrigin, oldorigin);
+                float dist = Vec3DistanceSq(level.clients[clientNum].ps.origin, cl->predictedOrigin);
+                dist = sqrt(dist);
+                Com_Printf(CON_CHANNEL_SERVER, "Error: (%.3f)\n", dist);
+                VectorCopy(cl->predictedOrigin, level.clients[clientNum].ps.origin);
+	}
+*/
+
 }
 
 void SV_ClientCalcFramerate()
@@ -1179,6 +1189,8 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 
 	client->deltaMessage = -1;
 	client->nextSnapshotTime = svs.time;    // generate a snapshot immediately
+	client->enteredWorldTime = svs.time;
+
 
 	if(cmd)
 		client->lastUsercmd = *cmd;
@@ -1191,13 +1203,6 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 		SV_DropClient( client, "EXE_UNPURECLIENTDETECTED" );
 		return;
 	}
-	client->enteredWorldTime = svs.time;
-	if(client->connectedTime == 0)
-	{
-		client->connectedTime = svs.time;
-	}
-	//Set gravity, speed... to system default
-	Pmove_ExtendedInitForClient(client);
 
 	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
 
@@ -1209,7 +1214,7 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 			SV_RecordClient(client, va("demo_%s_", psti));
 	}
 
-	if(!client->enteredWorldForFirstTime && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6)){
+	if(client->connectedTime == 0 && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6)){
 		if(client->steamid != 0)
 		{
 			SV_SApiSteamIDToString(client->steamid, ssti, sizeof(ssti));
@@ -1220,7 +1225,11 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 		}
 	}
 
-	client->enteredWorldForFirstTime = qtrue;
+	if(client->connectedTime == 0)
+	{
+		client->connectedTime = svs.time;
+	}
+
 	client->pureAuthentic = 1;
 
 	HL2Rcon_EventClientEnterWorld( clientNum );
@@ -1335,7 +1344,7 @@ gentity_t* SV_AddBotClient(){
 		if(index < MAX_RELIABLE_COMMANDS / 2){
 			cl->reliableCommands[index] = &cl->lowReliableCommands[index & (MAX_RELIABLE_COMMANDS - 1)];
 		} else {
-			cl->reliableCommands[index] = &svse.extclients[i].highReliableCommands[index & (MAX_RELIABLE_COMMANDS - 1)];
+			cl->reliableCommands[index] = &svs.extclients[i].highReliableCommands[index & (MAX_RELIABLE_COMMANDS - 1)];
 		}
 	}
 */
@@ -1348,7 +1357,6 @@ gentity_t* SV_AddBotClient(){
 
 
 	Q_strncpyz(cl->name, name, sizeof(cl->name));
-	Q_strncpyz(cl->shortname, name, sizeof(cl->shortname));
 
 	/* ClientSetUsername(i, name); */
 
@@ -1758,7 +1766,7 @@ void SV_SendClientGameState( client_t *client ) {
 	// send the gamestate
 	SV_WriteGameState(&msg, client);
 
-	MSG_WriteLong( &msg, svse.configDataSequence );
+	MSG_WriteLong( &msg, svs.configDataSequence );
 
 	MSG_WriteLong( &msg, client - svs.clients );
 
@@ -1775,9 +1783,9 @@ void SV_SendClientGameState( client_t *client ) {
 	SV_GetServerStaticHeader();
 
 	//Gamestate contains all the config updates. So we acknowledge here all old messages
-	client->configDataAcknowledge = svse.configDataSequence;
+	client->configDataAcknowledge = svs.configDataSequence;
 
-	Com_DPrintf(CON_CHANNEL_SERVER,"configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svse.configDataSequence);
+	Com_DPrintf(CON_CHANNEL_SERVER,"configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svs.configDataSequence);
 
 	client->gamestateSent = 1;
 }
@@ -2206,9 +2214,18 @@ void SV_BeginDownloadX_f( client_t *cl, msg_t* msg ) {
 
 	// cl->downloadName is non-zero now, SV_WriteDownloadToClient will see this and open
 	// the file itself
-	cl->wwwDl_var01 = 1;
 
 	MSG_ReadString( msg, cl->downloadName, sizeof( cl->downloadName ) );
+
+	if(!SV_FileStillActive(cl->downloadName))
+	{
+		cl->downloadName[0] = 0;
+		SV_SendClientGameState(cl); //Send new gamestate when he begins to download an old file
+		return;
+	}
+	cl->wwwDl_var01 = 1;
+
+
 }
 
 /*
@@ -2761,12 +2778,12 @@ int SV_GetClientStat(int clientNum, signed int index)
 
 
 
-int SV_GetPredirectedOriginAndTimeForClientNum(int clientNum, float *origin)
+int SV_GetPredictedOriginAndTimeForClientNum(int clientNum, float *origin)
 {
 	client_t* client = &svs.clients[clientNum];
 	origin[0] = client->predictedOrigin[0];
 	origin[1] = client->predictedOrigin[1];
-	origin[2] = client->predictedOrigin[2];	
+	origin[2] = client->predictedOrigin[2];
 	return client->predictedOriginServerTime;
 }
 
@@ -2818,10 +2835,8 @@ void __cdecl SV_FreeClients()
 
 void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
 {
-  char *Name;
 
-  Name = va("SV_ClientThink '%s'", cl->name);
-  PIXBeginNamedEvent(-1, Name);
+//  PIXBeginNamedEvent(-1, va("SV_ClientThink '%s'", cl->name));
 
   if ( cmd->serverTime - svs.time <= 20000 )
   {
@@ -2830,6 +2845,7 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
     {
       G_SetLastServerTime(cl - svs.clients, cmd->serverTime);
       ClientThink(cl - svs.clients);
+
 /*
       if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
       {

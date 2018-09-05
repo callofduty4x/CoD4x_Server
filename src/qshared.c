@@ -30,6 +30,7 @@
 #include "qcommon_io.h"
 #include "sys_thread.h"
 #include "misc.h"
+#include "null_client.h"
 
 
 int Q_isprint( int c )
@@ -56,6 +57,13 @@ int Q_isupper( int c )
 int Q_isalpha( int c )
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return ( 1 );
+	return ( 0 );
+}
+
+int Q_isalphanum( int c )
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
 		return ( 1 );
 	return ( 0 );
 }
@@ -601,68 +609,12 @@ Info_RemoveKey
 */
 void Info_RemoveKey( char *s, const char *key ) {
 	char	*start;
-	char	pkey[MAX_INFO_KEY];
-	char	value[MAX_INFO_VALUE];
-	char	*o;
-
-	if ( strlen( s ) >= MAX_INFO_STRING ) {
-		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_RemoveKey: oversize infostring" );
-	}
-
-	if (strchr (key, '\\')) {
-		return;
-	}
-
-	while (1)
-	{
-		start = s;
-		if (*s == '\\')
-			s++;
-		o = pkey;
-		while (*s != '\\')
-		{
-			if (!*s)
-				return;
-			*o++ = *s++;
-		}
-		*o = 0;
-		s++;
-
-		o = value;
-		while (*s != '\\' && *s)
-		{
-			if (!*s)
-				return;
-			*o++ = *s++;
-		}
-		*o = 0;
-
-		if (!strcmp (key, pkey) )
-		{
-			Q_bstrcpy(start, s);	// remove this part - Bugfix using Q_bstrcpy() instaed strcpy()
-			return;
-		}
-
-		if (!*s)
-			return;
-	}
-
-}
-
-
-/*
-===================
-BigInfo_RemoveKey
-===================
-*/
-void BigInfo_RemoveKey( char *s, const char *key ) {
-	char	*start;
 	char	pkey[BIG_INFO_KEY];
 	char	value[BIG_INFO_VALUE];
 	char	*o;
 
 	if ( strlen( s ) >= BIG_INFO_STRING ) {
-		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: BigInfo_RemoveKey: oversize infostring" );
+		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_RemoveKey: oversize infostring\n" );
 	}
 
 	if (strchr (key, '\\')) {
@@ -704,6 +656,7 @@ void BigInfo_RemoveKey( char *s, const char *key ) {
 	}
 
 }
+
 
 
 /*
@@ -717,17 +670,13 @@ FIXME: overflow check?
 */
 char *Info_ValueForKey( const char *s, const char *key ) {
 	char	pkey[BIG_INFO_KEY];
-	static	char value[2][BIG_INFO_VALUE];	// use two buffers so compares
+	static	char value[2][MAX_INFO_VALUE];	// use two buffers so compares
 						// work without stomping on each other
 	static	int	valueindex = 0;
 	char	*o;
 
 	if ( !s || !key ) {
 		return "";
-	}
-
-	if ( strlen( s ) >= BIG_INFO_STRING ) {
-		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_ValueForKey: oversize infostring" );
 	}
 
 	valueindex ^= 1;
@@ -740,7 +689,14 @@ char *Info_ValueForKey( const char *s, const char *key ) {
 		{
 			if (!*s)
 				return "";
+
 			*o++ = *s++;
+
+			if(o +1 >= pkey + sizeof(pkey))
+			{
+				Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_ValueForKey: oversize key in infostring\n" );
+				return "";
+			}
 		}
 		*o = 0;
 		s++;
@@ -750,6 +706,12 @@ char *Info_ValueForKey( const char *s, const char *key ) {
 		while (*s != '\\' && *s)
 		{
 			*o++ = *s++;
+
+			if(o +1 >= value[valueindex] + sizeof(value[0]))
+			{
+				Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_ValueForKey: oversize key in infostring\n" );
+				return "";
+			}
 		}
 		*o = 0;
 
@@ -773,10 +735,10 @@ Changes or adds a key/value pair
 ==================
 */
 void Info_SetValueForKey( char *s, const char *key, const char *value ) {
-	char	newi[MAX_INFO_STRING];
+	char	newi[BIG_INFO_STRING];
 
-	if ( strlen( s ) >= MAX_INFO_STRING ) {
-		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Unexpected error - Info_SetValueForKey: oversize infostring" );
+	if ( strlen( s ) >= BIG_INFO_STRING ) {
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Unexpected error - Info_SetValueForKey: oversize infostring\n" );
 	}
 
 	if (strchr (key, '\\'))
@@ -827,7 +789,7 @@ void Info_SetValueForKey( char *s, const char *key, const char *value ) {
 
 	Com_sprintf (newi, sizeof(newi), "\\%s\\%s", key, value);
 
-	if (strlen(newi) + strlen(s) > MAX_INFO_STRING)
+	if (strlen(newi) + strlen(s) > BIG_INFO_STRING)
 	{
 		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Info string length exceeded\n");
 		return;
@@ -837,54 +799,6 @@ void Info_SetValueForKey( char *s, const char *key, const char *value ) {
 	strcpy (s, newi);
 }
 
-
-/*
-==================
-Info_SetValueForKey
-
-Changes or adds a key/value pair
-==================
-*/
-void BigInfo_SetValueForKey( char *s, const char *key, const char *value ) {
-	char	newi[BIG_INFO_STRING];
-
-	if ( strlen( s ) >= BIG_INFO_STRING ) {
-		Com_Printf(CON_CHANNEL_SYSTEM,  "Error: Info_SetValueForKey: oversize infostring" );
-	}
-
-	if (strchr (key, '\\') || strchr (value, '\\'))
-	{
-		Com_Printf(CON_CHANNEL_SYSTEM,"Error: Can't use keys or values with a \\\n");
-		return;
-	}
-
-	if (strchr (key, ';') || strchr (value, ';'))
-	{
-		Com_Printf(CON_CHANNEL_SYSTEM,"Error: Can't use keys or values with a semicolon\n");
-		return;
-	}
-
-	if (strchr (key, '\"') || strchr (value, '\"'))
-	{
-		Com_Printf(CON_CHANNEL_SYSTEM,"Error: Can't use keys or values with a \"\n");
-		return;
-	}
-
-	BigInfo_RemoveKey (s, key);
-	if (!value || !strlen(value))
-		return;
-
-	Com_sprintf (newi, sizeof(newi), "\\%s\\%s", key, value);
-
-	if (strlen(newi) + strlen(s) > BIG_INFO_STRING)
-	{
-		Com_Printf(CON_CHANNEL_SYSTEM, "Error: Info string length exceeded\n");
-		return;
-	}
-
-	strcat (newi, s);
-	strcpy (s, newi);
-}
 
 
 void Info_Print( const char *s ) {
@@ -1008,16 +922,16 @@ int Info_Decode(const char* inurl, char* outdecodedurl, int buflen)
 	return i;
 }
 
-void BigInfo_SetEncodedValueForKey( char *s, const char *key, const char *value, int len )
+void Info_SetEncodedValueForKey( char *s, const char *key, const char *value, int len )
 {
     char codedvalue[BIG_INFO_STRING];
 
     Info_Encode(value, len, codedvalue, sizeof(codedvalue));
 
-    BigInfo_SetValueForKey( s, key, codedvalue );
+    Info_SetValueForKey( s, key, codedvalue );
 }
 
-int BigInfo_DecodedValueForKey( const char *s, const char *key, char *out, int outbuflen)
+int Info_DecodedValueForKey( const char *s, const char *key, char *out, int outbuflen)
 {
     const char* value;
 
@@ -1912,7 +1826,7 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
 {
   char dest[0x2000];
 
-  if ( pField->iFieldType < 15 )
+  if ( pField->iFieldType <= 11 )
   {
     switch ( pField->iFieldType )
     {
@@ -1952,17 +1866,23 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
           return 1;
         }
         return 0;
-      case 0xA:
+      case 10:
         Q_strncpyz(dest, pszKeyValue, sizeof(dest));
-        *(uint32_t *)&pStruct[pField->iOffset] = Material_RegisterHandle(dest);
-        if ( *(uint32_t *)&pStruct[pField->iOffset] )
+        *(uint32_t *)&pStruct[pField->iOffset] = (uint32_t)Material_RegisterHandle(dest, 0);
+#ifdef DEDICATEDONLY
+		return 1;
+#else
+        if ( *(uint32_t *)&pStruct[pField->iOffset] || (com_dedicated && com_dedicated->integer))
         {
           return 1;
         }
         return 0;
-      case 0xB:
+#endif
+      case 11:
         Q_strncpyz(dest, pszKeyValue, sizeof(dest));
         *(uint32_t *)&pStruct[pField->iOffset] = (uint32_t)Com_FindSoundAlias(dest);
+        return 1;
+      case 12:
         return 1;
       default:
         if ( pField->iFieldType >= 0 )
@@ -2009,7 +1929,7 @@ bool __cdecl ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, co
     if ( *pszKeyValue )
     {
       error |= KeyValueToField(pStruct, pField, pszKeyValue, iMaxFieldTypes, parseSpecialFieldType, parseStrCpy) == 0;
-    }
+	}
     ++iField;
     ++pField;
   }
@@ -2076,7 +1996,7 @@ char __cdecl Q_CleanChar(char character)
 
 
 qboolean __cdecl I_iscsym(int c){
-    if(c == '_' || Q_isalpha( c ))
+    if(c == '_' || Q_isalphanum( c ))
     {
         return qtrue;
     }
@@ -2210,3 +2130,4 @@ double __cdecl UnGetLeanFraction(const float fFrac)
   assert(fFrac <= 1.f);
   return 1.0 - sqrt(1.0 - fFrac);
 }
+

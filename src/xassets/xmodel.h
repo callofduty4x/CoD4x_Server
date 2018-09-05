@@ -13,15 +13,6 @@ enum XModelLodRampType
 };
 
 
-#pragma pack(push, 2)
-typedef struct cbrushside_s
-{
-  cplane_t *plane;
-  unsigned int materialNum;
-  short firstAdjacentSideOffset;
-  char edgeCount;
-}cbrushside_t;
-#pragma pack(pop)
  
 typedef struct XSurfaceVertexInfo_s
 {
@@ -148,7 +139,7 @@ typedef struct BrushWrapper_s
   int contents;
   float maxs[3];
   unsigned int numsides;
-  cbrushside_t *sides;
+  struct cbrushside_s *sides;
   short axialMaterialNum[2][3];
   char *baseAdjacentSide;
   short firstAdjacentSideOffsets[2][3];
@@ -253,6 +244,21 @@ typedef struct XModel
   xPhysPreset_t *physPreset;
   PhysGeomList_t *physGeoms;
 }XModel;
+
+
+struct XModelPiece
+{
+  XModel *model;
+  vec3_t offset;
+};
+
+struct XModelPieces
+{
+  const char *name;
+  int numpieces;
+  struct XModelPiece *pieces;
+};
+
 
 #ifdef __cplusplus
 extern "C"{
