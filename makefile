@@ -257,8 +257,8 @@ clean_all:
 
 docker: $(TARGET)
 	@docker build . -t cod4x/bleeding
-	
+
 plugins: 
 	@$(MAKE) -C $(PLUGIN_DIR)/screenshotsender
-	
+
 .PHONY: plugins
