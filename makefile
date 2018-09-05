@@ -260,3 +260,5 @@ docker: $(TARGET)
 	
 plugins: 
 	@$(MAKE) -C $(PLUGIN_DIR)/screenshotsender
+	
+.PHONY: plugins
