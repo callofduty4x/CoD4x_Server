@@ -1,12 +1,10 @@
 #!/bin/bash
 
-PLUGIN_COMP_CC=$1
-
 echo Compiling: release
-$(PLUGIN_COMP_CC) -m32 -Wall -O1 -g -fvisibility=hidden -mtune=core2 -c *.c
+gcc -m32 -Wall -O1 -g -fvisibility=hidden -mtune=core2 -c *.c
 
 echo Linking
-$(PLUGIN_COMP_CC) -m32 -g -shared -o nehoscreenshotuploader.so *.o
+gcc -m32 -g -shared -o nehoscreenshotuploader.so *.o
 echo Cleaning up
 rm *.o
 
