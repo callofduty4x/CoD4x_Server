@@ -66,6 +66,7 @@ COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE) BUILD_NUMBER=$(BUILD_NUMBER) BUILD_BRA
 ########################
 # Setup directory names.
 SRC_DIR=src
+PLUGIN_DIR=plugins
 BIN_DIR=bin
 LIB_DIR=lib
 OBJ_DIR=obj
@@ -256,3 +257,6 @@ clean_all:
 
 docker: $(TARGET)
 	@docker build . -t cod4x/bleeding
+	
+plugins: 
+	@$(MAKE) -C $(PLUGIN_DIR)/screenshotsender
