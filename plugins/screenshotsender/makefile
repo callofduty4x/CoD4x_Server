@@ -8,5 +8,3 @@ all: qshared.c qshared.h main.c
   
 clean:
   rm *.o
-
-.PHONY: all
