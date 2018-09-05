@@ -7,13 +7,23 @@ branches:
    - master
    - dev_newarch
    
-env:
-  #- CC=gcc     CXX=g++
-  #- CC=gcc-4.8 CXX=g++-4.8
-  - CC=gcc-4.9 CXX=g++-4.9
-  #- CC=gcc-5   CXX=g++-5
-  #- CC=clang   CXX=clang++
-   
+matrix:
+  fast_finish: true
+  include:
+    # works on Precise and Trusty
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-4.9
+            - g++-4.9
+            - gcc-4.9-multilib 
+            - g++-4.9-multilib
+      env:
+         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+
 addons:
   apt:
     sources:
@@ -21,25 +31,22 @@ addons:
     packages:
       #- gcc-4.8
       #- g++-4.8
-      - gcc-4.9
-      - g++-4.9
-      - gcc-4.9-multilib 
-      - g++-4.9-multilib
+
       #- gcc-5
       #- g++-5
 
 before_install:
   - echo "before install"
+  - eval "${MATRIX_EVAL}" # required for the matrix build stuff
   - arch
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
   - sudo ls /etc/dpkg/dpkg.cfg.d/
-#  - sudo dpkg --add-architecture i386
   - sudo apt-get update
   - sudo apt-get install nasm:i386 paxctl:i386 libtommath-dev:i386
   
 # stackoverflow magic, didn't actually check why .. but works
-  - sudo ln -s /usr/include/asm-generic /usr/include/asm
+#  - sudo ln -s /usr/include/asm-generic /usr/include/asm
   
 install:
   - echo "install"
@@ -49,8 +56,8 @@ script:
   - gcc --version
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
   - echo $TRAVIS_TAG
-  - make CC=gcc-4.9 CPP=g++-4.9
-  - make CC=gcc-4.9 CPP=g++-4.9 DEBUG=true
+  - make
+  - make DEBUG=true
   - PLUGIN_COMP_CC=gcc-4.9
   - PLUGIN_COMP_CXX=g++-4.9
   - cd plugins/screenshotsender && chmod +x makedll.sh && ./makedll.sh && cd ../..
