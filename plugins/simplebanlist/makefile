@@ -1,6 +1,6 @@
 CC=gcc
 CPP=g++
-TARGET_NAME=censor
+TARGET_NAME=simplebanlist
 
 all: qshared.c main.c
 	$(CC) -m32 -Wall -O1 -g -fvisibility=hidden -mtune=core2 -c *.c
