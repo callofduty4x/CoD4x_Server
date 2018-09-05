@@ -18,7 +18,15 @@ matrix:
          - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
 
 before_install:
+  - echo "before install"
   - eval "${MATRIX_EVAL}"
+  - arch
+  - sudo ls /etc/dpkg/dpkg.cfg.d/
+  - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
+  - sudo ls /etc/dpkg/dpkg.cfg.d/
+#  - sudo dpkg --add-architecture i386
+  - sudo apt-get update
+  - sudo apt-get install nasm:i386 paxctl:i386 libtommath-dev:i386
 
 script: 
   - make CC=$CC CPP=$CXX
