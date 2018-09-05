@@ -8,3 +8,5 @@ all:
   
 clean:
   rm *.o
+
+.PHONY: all
