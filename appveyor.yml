@@ -37,7 +37,7 @@ build_script:
     
     mingw32-make.exe DEBUG=true
     
-    mingw32-make.exe plugins
+    cd plugins && build_plugins.cmd && cd ..
 
     Write-Host "Done."
     
