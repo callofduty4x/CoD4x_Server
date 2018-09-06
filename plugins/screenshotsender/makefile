@@ -17,6 +17,6 @@ endif
 
 all: qshared.c main.c
 	$(CC) -m32 -g -Wall -O1 -c *.c
-	$(CC) -m32 -g -shared -o $(TARGET_NAME).$(EXT) *.o $(LFLAGS)
+	$(CC) -m32 -g -shared $(LFLAGS) -o $(TARGET_NAME).$(EXT) *.o 
 clean:
 	rm *.o
