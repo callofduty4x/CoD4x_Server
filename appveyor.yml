@@ -25,7 +25,7 @@ before_build:
     
     Write-Host "Setting up environment variables."
     
-    ls C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0
+    ls C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32
     
     [Environment]::SetEnvironmentVariable("PATH",  "C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
 
