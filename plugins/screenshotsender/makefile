@@ -4,10 +4,10 @@ TARGET_NAME=nehoscreenshotuploader
 
 ifeq ($(OS),Windows_NT)
 EXT=dll
-LFLAGS=
+LFLAGS=-L..\ -lcom_plugin -static-libgcc -static-libstdc++
 else
 EXT=so
-LFLAGS=-L..\ -lcom_plugin
+LFLAGS=
 endif
 
 # gcc -m32 -Wall -O1 -g -mtune=core2 -c *.c || goto :error
