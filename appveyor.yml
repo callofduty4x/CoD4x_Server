@@ -45,8 +45,6 @@ build_script:
 
     Write-Host "Done."
     
-    cd plugins && build_plugins.cmd && cd ..
-    
     echo "Done."
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
