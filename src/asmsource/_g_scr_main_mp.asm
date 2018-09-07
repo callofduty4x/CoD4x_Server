@@ -263,7 +263,6 @@
 	global assertexCmd
 	global assertmsgCmd
 	global GScr_IsDefined
-	global GScr_IsString
 	global GScr_IsAlive
 	global GScr_GetDvar
 	global GScr_GetDvarInt
@@ -1279,23 +1278,6 @@ GScr_IsDefined_20:
 	call Scr_AddInt
 	leave
 	ret
-
-
-;GScr_IsString()
-GScr_IsString:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x18
-	mov dword [esp], 0x0
-	call Scr_GetType
-	cmp eax, 0x2
-	setz al
-	movzx eax, al
-	mov [esp], eax
-	call Scr_AddInt
-	leave
-	ret
-	nop
 
 
 ;GScr_IsAlive()
