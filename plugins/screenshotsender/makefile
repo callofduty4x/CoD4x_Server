@@ -19,8 +19,8 @@ all: qshared.c main.c
 	#$(CC) -m32 -g -Wall -O1 -c *.c
 	#$(CC) -m32 -g -shared $(LFLAGS) -o $(TARGET_NAME).$(EXT) *.o 
 	
-	$(CC) -m32 -Wall -O1 -g -mtune=core2 -c *.c
-	$(CC) -m32 -g -shared -static-libgcc -static-libstdc++ -o nehoscreenshotuploader.dll *.o -L..\ -lcom_plugin
+	$(CPP) -m32 -Wall -O1 -g -mtune=core2 -c *.c
+	$(CPP) -m32 -g -shared -static-libgcc -static-libstdc++ -o nehoscreenshotuploader.dll *.o -L..\ -lcom_plugin
 	#$(CC) -m32 -Wall -O1 -g -fvisibility=hidden -mtune=core2 -c *.c
 	#$(CC) -m32 -g -shared -o nehoscreenshotuploader.so *.o
 
