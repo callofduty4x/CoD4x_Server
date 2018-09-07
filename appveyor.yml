@@ -37,7 +37,7 @@ build_script:
     
     mingw32-make.exe DEBUG=true
     
-    cd plugins/screenshotsender && call makedll_win32.cmd && cd ..
+    mingw32-make.exe plugins
 
     Write-Host "Done."
     
