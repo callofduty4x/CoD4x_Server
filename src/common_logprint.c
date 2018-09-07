@@ -38,11 +38,17 @@
 
 #define MAXPRINTMSG 8*1024
 
-static fileHandle_t logfile;
-static fileHandle_t adminlogfile;
-static fileHandle_t debuglogfile;
-static fileHandle_t enterleavelogfile;
-static fileHandle_t gamelogfile; //copy of level.logfile
+struct logfileInfo_t
+{
+    fileHandle_t fh;
+    qboolean wantclose;
+};
+
+static volatile fileHandle_t logfile;
+static volatile fileHandle_t adminlogfile;
+static volatile fileHandle_t debuglogfile;
+static volatile fileHandle_t enterleavelogfile;
+static volatile fileHandle_t gamelogfile; //copy of level.logfile
 
 
 fileHandle_t Com_OpenLogfile(const char* name, char mode);
@@ -280,8 +286,8 @@ void QDECL Com_DPrintfLogfile( const char *fmt, ... ) {
 }
 
 
-static HANDLE wakelogfilewriter;
-
+static volatile HANDLE wakelogfilewriter;
+static volatile DWORD logfilewriterworking;
 
 void* Com_WriteLogThread(void* null)
 {
@@ -290,19 +296,33 @@ void* Com_WriteLogThread(void* null)
 		Sys_WaitForObject(wakelogfilewriter);
 		Sys_ResetEvent(wakelogfilewriter);
 
-		FS_WriteLogFlush(adminlogfile);
-		FS_WriteLogFlush(logfile);
-		FS_WriteLogFlush(debuglogfile);
-		FS_WriteLogFlush(enterleavelogfile);
-		FS_WriteLogFlush(gamelogfile);
+		if(Sys_InterlockedIncrement(&logfilewriterworking) == 1)
+		{
+
+			FS_WriteLogFlush(adminlogfile);
+			FS_WriteLogFlush(logfile);
+			FS_WriteLogFlush(debuglogfile);
+			FS_WriteLogFlush(enterleavelogfile);
+			FS_WriteLogFlush(gamelogfile);
+		}
+		Sys_InterlockedDecrement(&logfilewriterworking);
 	}
 	return NULL;
 }
 
 
-void Com_CloseLogFile(fileHandle_t f)
+void Com_CloseLogFile(volatile fileHandle_t* f)
 {
-	FS_CloseLogFile(f);
+	while(Sys_InterlockedIncrement(&logfilewriterworking) != 1) //Spin here until worker thread is ready
+	{
+		Sys_InterlockedDecrement(&logfilewriterworking);
+		Sys_SleepUSec(0);
+	}
+	
+	FS_CloseLogFile(*f);
+	*f = 0;
+	Sys_InterlockedDecrement(&logfilewriterworking);
+	Sys_SetEvent(wakelogfilewriter);
 }
 
 fileHandle_t Com_OpenLogfile(const char* name, char mode)
@@ -346,20 +366,15 @@ void Com_CloseLogFiles()
 
 	Cvar_SetInt(com_logfile, 0);
 
-	Com_CloseLogFile( adminlogfile );
-	adminlogfile = 0;
+	Com_CloseLogFile( &adminlogfile );
 
-	Com_CloseLogFile( logfile );
-	logfile = 0;
+	Com_CloseLogFile( &logfile );
 
-	Com_CloseLogFile( debuglogfile );
-	debuglogfile = 0;
+	Com_CloseLogFile( &debuglogfile );
 
-	Com_CloseLogFile( enterleavelogfile );
-	enterleavelogfile = 0;
+	Com_CloseLogFile( &enterleavelogfile );
 
-	Com_CloseLogFile( gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
-	gamelogfile = 0;
+	Com_CloseLogFile( &gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
 
 	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 
@@ -385,8 +400,7 @@ fileHandle_t Com_OpenGameLogfile(const char* name, char mode, qboolean sync)
 
 void Com_CloseGameLogfile()
 {
-	Com_CloseLogFile( gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
-	gamelogfile = 0;
+	Com_CloseLogFile( &gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
 }
 
 int Com_WriteGameLogfile(const char* data, int ilen)
