@@ -1495,6 +1495,36 @@ void GScr_Pow()
 
 /*
 ============
+GScr_HttpPostRequest
+This function fires an HTTP POST request and returns the server's response
+You can optionally set the receive argument to false to not receive any responses
+============
+*/
+void GScr_HttpPostRequest() {
+	int params;
+	int getResponse = 1;
+	
+	params = Scr_GetNumParam();
+    
+	if( params < 4 || params > 5 ) {
+        Scr_Error( "Usage: httpPostRequest( <host>, <port>, <path>, <postData>, <optional: receive> )" );
+        return;
+    }
+
+    // Where are we going to send it?
+    char* host = Scr_GetString( 0 );
+    int port = Scr_GetInt( 1 );
+    char* path = Scr_GetString( 2 );
+    char* data = Scr_GetString( 3 );
+	
+	if( params == 5 )
+		getResponse = Scr_GetInt( 4 );
+	
+	Scr_AddString( asyncPostRequest( host, port, path, data, getResponse ) );
+}
+
+/*
+============
 GScr_GetRealTime
 
 Returns the current time in seconds since 01/01/2012 UTC
