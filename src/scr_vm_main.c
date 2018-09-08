@@ -367,6 +367,7 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("isint", GScr_IsInt, 0);
     Scr_AddFunction("float", GScr_Float, 0); // like int(...) but to convert to floating point number.
     Scr_AddFunction("pow", GScr_Pow, 0);
+    Scr_AddFunction( "httppostrequest", GScr_HttpPostRequest, 0 );
 }
 
 void Scr_AddStockMethods()
