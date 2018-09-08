@@ -40,6 +40,7 @@
 #include "scr_vm_functions.h"
 #include "tomcrypt/tomcrypt_misc.h"
 #include "bg.h"
+#include "httprequest.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 
