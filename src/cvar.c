@@ -668,9 +668,11 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 		{
 			case CVAR_BOOL:
 				var->resetBoolean = value.boolean;
+				var->boolean = value.boolean;
 				break;
 			case CVAR_FLOAT:
 				var->resetFloatval = value.floatval;
+				var->floatval = value.floatval;
 				var->fmin = limits.fmin;
 				var->fmax = limits.fmax;
 				break;
@@ -679,17 +681,22 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 			case CVAR_VEC4:
 				var->fmin = limits.fmin;
 				var->fmax = limits.fmax;
+				memcpy(var->vec4, value.vec4, sizeof(var->vec4));
+				memcpy(var->resetVec4, value.vec4, sizeof(var->resetVec4));
 				break;
 			case CVAR_COLOR:
 				var->resetColor = value.color;
+				var->color = value.color;
 				break;
 			case CVAR_ENUM:
 				var->resetInteger = value.enumval.integer;
+				var->integer = value.integer;
 				var->imin = 0;
 				var->enumStr = value.enumval.strings;
 				break;
 			case CVAR_INT:
 				var->resetInteger = value.integer;
+				var->integer = value.integer;
 				var->imin = limits.imin;
 				var->imax = limits.imax;
 				break;

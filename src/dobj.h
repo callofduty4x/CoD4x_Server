@@ -121,7 +121,8 @@ void __cdecl ConvertQuatToMat(struct DObjAnimMat *mat, vec3_t axis[3]);
 void __cdecl DObjSetLocalTag(DObj *obj, int *partBits, unsigned int boneIndex, const float *trans, const float *angles);
 void __cdecl DObjSetControlTagAngles(DObj *obj, int *partBits, unsigned int boneIndex, float *angles);
 void Com_InitDObj();
-
+void __cdecl DObjGetHierarchyBits(DObj *obj, int boneIndex, int *partBits);
+void __cdecl DObjCalcSkel(DObj *obj, int *partBits);
 #ifdef __cplusplus
 }
 #endif

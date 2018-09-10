@@ -110,7 +110,6 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("acos", GScr_acos, 0 );
 	Scr_AddFunction("atan", GScr_atan, 0 );
 	Scr_AddFunction("int", GScr_CastInt, 0 );
-//	Scr_AddFunction("float", GScr_CastFloat, 0 );
 	Scr_AddFunction("abs", GScr_abs, 0 );
 	Scr_AddFunction("min", GScr_min, 0 );
 	Scr_AddFunction("max", GScr_max, 0 );
@@ -292,10 +291,8 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("base64decode", GScr_Base64Decode, 0);
     Scr_AddFunction("isentity", GScr_IsEntity, 0);
     Scr_AddFunction("isvector", GScr_IsVector, 0);
-    Scr_AddFunction("isstring", GScr_IsString, 0);
     Scr_AddFunction("isfloat", GScr_IsFloat, 0);
     Scr_AddFunction("isint", GScr_IsInt, 0);
-    Scr_AddFunction("float", GScr_Float, 0); // like int(...) but to convert to floating point number.
     Scr_AddFunction("pow", GScr_Pow, 0);
 }
 

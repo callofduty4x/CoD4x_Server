@@ -4830,6 +4830,9 @@ void FS_CloseLogFile(fileHandle_t f)
     }
 
     fhd = &fsh[f];
+
+    FS_WriteLogFlush( f );
+
     Z_Free(fhd->writebuffer);
     FS_FCloseFile( f );
 }
@@ -4911,7 +4914,7 @@ int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h )
 }
 
 
-void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the logwrite thread
+void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the logwrite thread and fileclose function
 {
 	fileHandleData_t *fhd;
 	int remaining;
@@ -4926,7 +4929,7 @@ void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the log
 	fhd = &fsh[h];
 	if(fhd->writebuffer == NULL)
 	{
-		Com_Error(ERR_FATAL, "attempted to use FS_WriteLog on a non logfile handle");
+		Com_Error(ERR_FATAL, "attempted to use FS_WriteLogFlush on a non logfile handle");
 	}
 
 	Sys_EnterCriticalSection(CRITSECT_LOGFILETHREAD);

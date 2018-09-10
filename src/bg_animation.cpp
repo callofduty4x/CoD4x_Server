@@ -23,3 +23,4 @@ uint16_t* controller_names[] =
     &scr_const.head,
     &scr_const.pelvis
 };
+  

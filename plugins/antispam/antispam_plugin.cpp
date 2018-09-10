@@ -421,14 +421,14 @@ PCL void OnPlayerDC(client_t* client,const char* reason)
 
 	userData_t* IDiterator;
 
-	if(data.players[Plugin_ClientToSlot(client)].playerID == client->playerid) // just to be sure you know, incase of some weird swapping of clients without info to antispam
+	if(data.players[Plugin_GetClientNumForClient(client)].playerID == client->playerid) // just to be sure you know, incase of some weird swapping of clients without info to antispam
 	{
-	 IDiterator = &(data.players[Plugin_ClientToSlot(client)]);
+	 IDiterator = &(data.players[Plugin_GetClientNumForClient(client)]);
 	}
 
 	else
 	{
-		data.players[Plugin_ClientToSlot(client)].clear();
+		data.players[Plugin_GetClientNumForClient(client)].clear();
 		return;
 	}
 	
@@ -444,7 +444,7 @@ PCL void OnPlayerDC(client_t* client,const char* reason)
 	else
 	{
 		//Plugin_Printf("Size of vector : %d", data.players.size());
-		data.players[Plugin_ClientToSlot(client)].clear();
+		data.players[Plugin_GetClientNumForClient(client)].clear();
 		return;
 	}
 		//playerID = IDiterator->playerID;
@@ -484,7 +484,7 @@ PCL void OnPlayerGotAuthInfo(netadr_t* from, uint64_t* playerid, uint64_t *steam
 		return;
 	}
 	//Plugin_Printf("Executing OnPlayerConnect\n" );
-	int slotnum = Plugin_ClientToSlot(cl);
+	int slotnum = Plugin_GetClientNumForClient(cl);
 	//Plugin_Printf("Connect clientnum : %d\n",slotnum );
 	//Plugin_Printf("Connect playerID : %d\n", data.players[slotnum].playerID );
 	data.players[slotnum].playerID = *playerid;
