@@ -71,6 +71,7 @@
 	extern SL_FindString
 	extern ms_rand
 	extern SV_LocateGameData
+	extern G_DObjCalcBone
 
 ;Exports of g_utils_mp:
 	global cached_models
@@ -95,7 +96,6 @@
 	global G_EffectIndex
 	global G_GeneralLink
 	global G_InitGentity
-	global G_DObjCalcBone
 	global G_DObjCalcPose
 	global G_EntDetachAll
 	global _Z14G_SafeDObjFreeP9gentity_s
@@ -1362,60 +1362,6 @@ G_InitGentity:
 	pop ebp
 	ret
 	nop
-
-
-;G_DObjCalcBone(gentity_s const*, int)
-G_DObjCalcBone:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov esi, [ebp+0x8]
-	mov eax, [esi]
-	mov [esp], eax
-	call Com_GetServerDObj
-	mov ebx, eax
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call SV_DObjCreateSkelForBone
-	test eax, eax
-	jz G_DObjCalcBone_10
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-G_DObjCalcBone_10:
-	lea edi, [ebp-0x28]
-	mov [esp+0x8], edi
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	mov [esp], ebx
-	call DObjGetHierarchyBits
-	movzx eax, byte [esi+0x16e]
-	lea eax, [eax+eax*4]
-	shl eax, 0x3
-	add eax, entityHandlers
-	mov eax, [eax+0x1c]
-	test eax, eax
-	jz G_DObjCalcBone_20
-	mov [esp+0x4], edi
-	mov [esp], esi
-	call eax
-G_DObjCalcBone_20:
-	mov [esp+0x4], edi
-	mov [esp], ebx
-	call DObjCalcSkel
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
 
 
 ;G_DObjCalcPose(gentity_s*, int*)

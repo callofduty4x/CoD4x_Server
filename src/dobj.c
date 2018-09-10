@@ -71,7 +71,6 @@ qboolean EntHasDObj(gentity_t* ent)
 }
 
 
-
 void __cdecl ConvertQuatToMat(DObjAnimMat *mat, vec3_t axis[3])
 {
   vec3_t scaledQuat;

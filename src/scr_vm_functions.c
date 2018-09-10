@@ -3009,7 +3009,7 @@ qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *c
 
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
 {
-    gentity_t *gentity;
+    gentity_t *gentity = NULL;
     int entityNum = 0;		
     mvabuf;		
 		
@@ -3166,7 +3166,7 @@ void GScr_IsVector()
     Scr_AddBool(Scr_GetType(0) == 4);
 }
 
-/*void GScr_IsString()
+void GScr_IsString()
 {
     if (Scr_GetNumParam() != 1)
     {
@@ -3174,8 +3174,8 @@ void GScr_IsVector()
         return;
     }
 
-    Scr_AddBool(Scr_GetType(0) == 2);
-}*/
+    Scr_AddInt(Scr_GetType(0) == 2);
+}
 
 void GScr_IsFloat()
 {

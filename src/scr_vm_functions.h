@@ -135,7 +135,6 @@ void assertCmd();
 void assertexCmd();
 void assertmsgCmd();
 void GScr_IsDefined();
-void GScr_IsString();
 void GScr_IsAlive();
 void GScr_GetDvar();
 void GScr_GetDvarInt();
@@ -556,7 +555,6 @@ void GScr_IsVector();
 void GScr_IsString();
 void GScr_IsFloat();
 void GScr_IsInt();
-void GScr_Float();
 void GScr_Pow();
 
 void GScr_CloneBrushModelToScriptModel(scr_entref_t brushModelEnt);
