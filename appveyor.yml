@@ -22,6 +22,8 @@ before_build:
     Write-Host "    Installing NASM..."
     
     .\nasminst.exe /S
+
+    nasm -v
     
     Write-Host "Setting up environment variables."
     
