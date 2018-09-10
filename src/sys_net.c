@@ -20,6 +20,24 @@
 ===========================================================================
 */
 
+#ifdef _WIN32
+	#include <winsock2.h>
+	#include <ws2tcpip.h>
+	#include <iphlpapi.h>
+	#if WINVER < 0x501
+		#ifdef __MINGW32__
+					// wspiapi.h isn't available on MinGW, so if it's
+					// present it's because the end user has added it
+					// and we should look for it in our tree
+			#include "wspiapi.h"
+		#else
+			#include <wspiapi.h>
+		#endif
+	#else
+		#include <ws2spi.h>
+	#endif
+#endif
+
 #include "qcommon_io.h"
 #include "sys_net.h"
 #include "cvar.h"
@@ -37,23 +55,6 @@
 #include <stddef.h>		/* for offsetof*/
 
 #ifdef _WIN32
-	#include <winsock2.h>
-	#include <ws2tcpip.h>
-	#include <iphlpapi.h>
-	#if WINVER < 0x501
-		#ifdef __MINGW32__
-					// wspiapi.h isn't available on MinGW, so if it's
-					// present it's because the end user has added it
-					// and we should look for it in our tree
-			#include "wspiapi.h"
-		#else
-			#include <wspiapi.h>
-		#endif
-	#else
-		#include <ws2spi.h>
-	#endif
-
-	
 
 	typedef int socklen_t;
 	#	ifdef ADDRESS_FAMILY
