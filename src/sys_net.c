@@ -2835,6 +2835,7 @@ void NET_Config( qboolean enableNetworking ) {
 		Com_Printf(CON_CHANNEL_NETWORK, "Winsock Initialized\n" );
 #endif
 
+
 		if (net_enabled->integer)
 		{
 			NET_OpenIP();
@@ -3628,9 +3629,15 @@ NET_Init
 */
 void NET_Init( void ) {
 
+	ip4_socket.sock = INVALID_SOCKET;
+	ip6_socket.sock = INVALID_SOCKET;
+	tcp_socket = INVALID_SOCKET;
+	tcp6_socket = INVALID_SOCKET;
+
 	NET_Config( qtrue );
 
 	Cmd_AddCommand ("net_restart", NET_Restart_f);
+
 
 }
 
