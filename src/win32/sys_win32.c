@@ -947,11 +947,11 @@ DWORD __cdecl Sys_InterlockedExchangeAdd(LONG volatile *Addend, DWORD value)
 	return InterlockedExchangeAdd(Addend, value);
 }
 
-DWORD __cdecl Sys_InterlockedDecrement(LONG volatile *Addend)
+DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend)
 {
 	return InterlockedDecrement(Addend);
 }
-DWORD __cdecl Sys_InterlockedIncrement(LONG volatile *Addend)
+DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend)
 {
 	return InterlockedIncrement(Addend);
 }
