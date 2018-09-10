@@ -4,10 +4,14 @@ TARGET_NAME=nehoscreenshotuploader
 
 ifeq ($(OS),Windows_NT)
 EXT=dll
-LFLAGS=-L..\ -lcom_plugin -static-libgcc -static-libstdc++
+CFLAGS=-m32 -Wall -O1 -g -mtune=core2
+LFLAGS=-m32 -g -shared -static-libgcc -static-libstdc++ 
+LIBS=-L.. -lcom_plugin
 else
 EXT=so
-LFLAGS=
+CFLAGS=-m32 -Wall -O1 -g -fvisibility=hidden -mtune=core2
+LFLAGS=-m32 -g -shared
+LIBS=
 endif
 
 # gcc -m32 -Wall -O1 -g -mtune=core2 -c *.c || goto :error
@@ -16,11 +20,11 @@ endif
 # -fvisibility=hidden -mtune=core2 -c *.c
 
 all: qshared.c main.c
-	#$(CC) -m32 -g -Wall -O1 -c *.c
-	#$(CC) -m32 -g -shared $(LFLAGS) -o $(TARGET_NAME).$(EXT) *.o 
+	$(CC) $(CFLAGS) -c *.c
+	$(CC) $(LFLAGS) -o $(TARGET_NAME).$(EXT) *.o $(LIBS)
 	
-	$(CPP) -m32 -Wall -O1 -g -mtune=core2 -c *.c
-	$(CPP) -m32 -g -shared -static-libgcc -static-libstdc++ -o nehoscreenshotuploader.dll *.o -L..\ -lcom_plugin
+	#$(CC) -m32 -Wall -O1 -g -mtune=core2 -c *.c
+	#$(CC) -m32 -g -shared -static-libgcc -static-libstdc++ -L.. -o nehoscreenshotuploader.dll *.o -lcom_plugin
 	#$(CC) -m32 -Wall -O1 -g -fvisibility=hidden -mtune=core2 -c *.c
 	#$(CC) -m32 -g -shared -o nehoscreenshotuploader.so *.o
 
