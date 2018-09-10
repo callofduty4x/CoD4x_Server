@@ -942,22 +942,22 @@ unsigned int Sys_GetProcessAffinityMask()
   return processAffinityMask;
 }
 
-DWORD __cdecl Sys_InterlockedExchangeAdd(LONG volatile *Addend, DWORD value)
+DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
 {
-	return InterlockedExchangeAdd(Addend, value);
+	return InterlockedExchangeAdd((LONG volatile *)Addend, value);
 }
 
 DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend)
 {
-	return InterlockedDecrement(Addend);
+	return InterlockedDecrement((LONG volatile *)Addend);
 }
 DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend)
 {
-	return InterlockedIncrement(Addend);
+	return InterlockedIncrement((LONG volatile *)Addend);
 }
-DWORD __cdecl Sys_InterlockedCompareExchange(LONG volatile *Destination, DWORD Exchange, DWORD Comparand)
+DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
 {
-	return InterlockedCompareExchange(Destination, Exchange, Comparand);
+	return InterlockedCompareExchange((LONG volatile *)Destination, Exchange, Comparand);
 }
 
 int __cdecl __cxa_atexit(void (__cdecl *func) (void*), void *arg, void *dso_handle)
