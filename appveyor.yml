@@ -32,7 +32,7 @@ before_build:
     [Environment]::SetEnvironmentVariable("PATH",  "C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
 
 build_script:
-- cmd: >-
+- ps: >-
     echo "Building server code:"
     
     mingw32-make.exe
@@ -42,8 +42,6 @@ build_script:
     mingw32-make.exe plugins
 
     Write-Host "Done."
-    
-    echo "Done."
 test_script:
 - ps: ./bin/cod4x18_dedrun.exe
 branches:
