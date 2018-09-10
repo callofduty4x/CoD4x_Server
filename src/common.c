@@ -1320,7 +1320,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 	mvabuf;
 	char l_errorMessage[4096];
 
-#ifdef DEBUG
+#ifndef NDEBUG
 	Com_Printf(CON_CHANNEL_ERROR,"Com_Error entered:\n");
 	Sys_PrintBacktrace();
 #endif

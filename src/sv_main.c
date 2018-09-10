@@ -135,6 +135,7 @@ cvar_t* sv_updatebackendname;
 cvar_t* sv_legacymode;
 cvar_t* sv_steamgroup;
 cvar_t* sv_authtoken;
+cvar_t* sv_disableChat;
 
 serverStatic_t		svs;
 server_t		sv;
@@ -2105,7 +2106,7 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                     MSG_ReadString(&singlemsg, newchallenge, 65);
                     if(strcmp(challenge, newchallenge) == 0)
                     {
-                        Com_Printf(CON_CHANNEL_SERVER, "sv_token is invalid! Abandoning master server registration\n");
+                        Com_Printf(CON_CHANNEL_SERVER, "sv_authtoken is invalid! Abandoning master server registration\n");
                         svs.nextHeartbeatTime = com_uFrameTime + 3600000000; //Try again in 1 hour
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER, "Bad challenge! Retrying...\n");
@@ -3172,6 +3173,7 @@ void SV_InitCvarsOnce(void){
     sv_updatebackendname = Cvar_RegisterString("sv_updatebackendname", UPDATE_PROXYSERVER_NAME, CVAR_ARCHIVE, "Hostname for the used clientupdatebackend");
     sv_legacymode = Cvar_RegisterBool("sv_legacyguidmode", qfalse, CVAR_ARCHIVE, "outputs pbguid on status command and games_mp.log");
     sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.me");
+    sv_disableChat = Cvar_RegisterBool("sv_disablechat", qfalse, CVAR_ARCHIVE, "Disable chat messages from clients");
 }
 
 

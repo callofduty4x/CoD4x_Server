@@ -34,17 +34,20 @@
 #include "sec_crypto.h"
 #include "sv_auth.h"
 #include "cscr_stringlist.h"
+#include "bg.h"
 
 #include "sapi.h"
-
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
+#include "tomcrypt/tomcrypt_misc.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 extern char* var_typename[];
 
+
+extern char* var_typename[];
 
 /*
 ============
@@ -1439,6 +1442,31 @@ void GScr_StrRepl()
     Scr_AddString(buffer);
 }
 
+
+/*
+============
+GScr_Pow
+
+Calculate a number with exponent.
+Usage: float = pow(base <float>, exponent <float>);
+============
+*/
+
+void GScr_Pow()
+{
+    float base, exponent;
+    
+    if (Scr_GetNumParam() != 2)
+    {
+        Scr_Error("Usage: pow(<float> ,<float>)");
+        return;
+    }
+
+    base = Scr_GetFloat(0);
+    exponent = Scr_GetFloat(1);
+    
+    Scr_AddFloat(powf(base, exponent));
+}
 
 /*
 ============
@@ -2981,7 +3009,38 @@ qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *c
 
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
 {
-    Scr_Error("Functionality dropped. To get/set spectator client number, use 'ent.spectatorClient' member instead.");
+    gentity_t *gentity = NULL;
+    int entityNum = 0;		
+    mvabuf;		
+		
+    if (arg.classnum)		
+    {		
+        Scr_ObjectError("Not an entity");		
+    }		
+    else		
+    {		
+        entityNum = arg.entnum;
+        gentity = &g_entities[entityNum];		
+		
+        if (!gentity->client)		
+        {		
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));		
+        }		
+    }		
+    if (Scr_GetNumParam())		
+    {		
+        Scr_Error("Usage: self getSpectatorClient()\n");		
+    }		
+		
+    // Player isn't spectating anyone.		
+    if (gentity->client->spectatorClient == -1)		
+    {		
+        Scr_AddUndefined();		
+    }		
+    else		
+    {		
+        Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);		
+    }		
 }
 
 void PlayerCmd_SetVelocity(scr_entref_t arg)
@@ -3025,13 +3084,13 @@ void Scr_LogString()
 
 void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
 {
-  gentity_t *pSelf;
-  char svcmd[128];
+    gentity_t *pSelf;
+    char svcmd[128];
 
-  if (Scr_GetNumParam())
-  {
-    Scr_Error("Usage: <client> getXuid()\n");
-  }
+    if (Scr_GetNumParam())
+    {
+        Scr_Error("Usage: <client> getXuid()\n");
+    }
     if (arg.classnum)
     {
 
@@ -3043,15 +3102,101 @@ void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
         pSelf = &g_entities[arg.entnum];
     }
 
-  if ( pSelf->client )
-  {
-    Com_sprintf(svcmd, sizeof(svcmd), "%llx", SV_GetPlayerXuid(pSelf->client->sess.cs.clientIndex));
-    Scr_AddString(svcmd);
-  }
-  else
-  {
-    Scr_AddString("0");
-  }
+    if ( pSelf->client )
+    {
+        Com_sprintf(svcmd, sizeof(svcmd), "%llx", SV_GetPlayerXuid(pSelf->client->sess.cs.clientIndex));
+        Scr_AddString(svcmd);
+    }
+    else
+    {
+        Scr_AddString("0");
+    }
+}
+void GScr_Base64Encode()
+{
+    char encoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: encoded = base64Encode(\"String to be encoded\");");
+        return;
+    }
+
+    char* toEncode = Scr_GetString(0);
+    unsigned long encodedLen = sizeof(encoded);
+    base64_encode((byte*)toEncode, strlen(toEncode), (byte*)encoded, &encodedLen);
+    encoded[sizeof(encoded) - 1] = '\0';
+    Scr_AddString(encoded);
+}
+
+void GScr_Base64Decode()
+{
+    char decoded[1024] = {'\0'};
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: decoded = base64Decode(\"bla-bla-bla too lazy to write proper example==\");");
+        return;
+    }
+
+    char* toDecode = Scr_GetString(0);
+    unsigned long decodedLen = sizeof(decoded);
+    base64_decode((byte*)toDecode, strlen(toDecode), (byte*)decoded, &decodedLen);
+    decoded[sizeof(decoded) - 1] = '\0';
+    Scr_AddString(decoded);
+}
+
+void GScr_IsEntity()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isEntity(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 20);
+}
+
+void GScr_IsVector()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isVector(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 4);
+}
+
+void GScr_IsString()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isString(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddInt(Scr_GetType(0) == 2);
+}
+
+void GScr_IsFloat()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isFloat(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 5);
+}
+
+void GScr_IsInt()
+{
+    if (Scr_GetNumParam() != 1)
+    {
+        Scr_Error("Usage: if (isInt(testVariable)) { ... }");
+        return;
+    }
+
+    Scr_AddBool(Scr_GetType(0) == 6);
 }
 
 void GScr_Float()
@@ -3073,10 +3218,60 @@ void GScr_Float()
     {
         char* strFloat = Scr_GetString(0);
         double result = 0.0;
-        if (isdigit(strFloat[0]))
+        if ( isdigit(strFloat[0]) || (strFloat[0] == '-' && isdigit(strFloat[1])))
             result = atof(strFloat);
         Scr_AddFloat((float)result);
     }
     else
         Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
+}
+
+void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
+{
+    // Common checks.
+    if (Scr_GetNumParam() != 1)
+        Scr_Error("usage: <scriptModelEnt> CloneBrushModelToScriptModel(<brushModelEnt>)");
+
+    // Object checks.
+    gentity_t* scriptEnt = VM_GetGEntityForNum(scriptModelEntNum);
+    if (scriptEnt->classname != (unsigned short)scr_const.script_model)
+        Scr_ObjectError("passed entity is not a script_model entity");
+
+    if (scriptEnt->s.eType != 6)
+        Scr_ObjectError("passed entity type is not 6 (TODO: what is it?)");
+
+    // Arguments checks.
+    gentity_t* brushEnt = Scr_GetEntity(0);
+    if (brushEnt->classname != (unsigned short)scr_const.script_brushmodel && brushEnt->classname != (unsigned short)scr_const.script_model && brushEnt->classname != (unsigned short)scr_const.script_origin && brushEnt->classname != (unsigned short)scr_const.light)
+        Scr_ParamError(0, "brush model entity classname must be one of {script_brushmodel, script_model, script_origin, light}");
+
+    if (!brushEnt->s.index)
+        Scr_ParamError(0, "brush model entity has no collision model");
+
+    // Let's do this...
+    SV_UnlinkEntity(scriptEnt);
+    scriptEnt->s.index = brushEnt->s.index;
+    int contents = scriptEnt->r.contents;
+    SV_SetBrushModel(scriptEnt);
+    scriptEnt->r.contents |= contents;
+    SV_LinkEntity(scriptEnt);
+}
+
+void PlayerCmd_SetStance(scr_entref_t playerEntNum)
+{
+    if (Scr_GetNumParam() != 1)
+    Scr_Error("usage: <client> setStance(<string stance>);");
+
+    // Object check.
+    gclient_t* cl = VM_GetGClientForEntityNumber(playerEntNum);
+    if (!cl)
+        Scr_ObjectError("entity is not a client");
+
+    // Param check.
+    short stanceIdx = Scr_GetConstString(0);
+    if (stanceIdx != (unsigned short)scr_const.stand && stanceIdx != (unsigned short)scr_const.crouch && stanceIdx != (unsigned short)scr_const.prone)
+        Scr_ParamError(0, "stance must be one of {stand, crouch, prone}");
+
+    BGEvent event = stanceIdx == (unsigned short)scr_const.stand ? EV_STANCE_FORCE_STAND : stanceIdx == (unsigned short)scr_const.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
+    BG_AddPredictableEventToPlayerstate(event, 0, cl);
 }

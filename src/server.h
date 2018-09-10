@@ -782,6 +782,7 @@ __cdecl qboolean SV_GameCommand(void);
 void SV_GetConfigstring( int index, char *buffer, int bufferSize );
 int SV_GetConfigstringIndex(int num);
 int SV_GetModelConfigstringIndex(int num);
+extern cvar_t* sv_disableChat;
 void __cdecl SV_StringUsage_f(void);
 void __cdecl SV_ScriptUsage_f(void);
 void __cdecl SV_BeginClientSnapshot( client_t *cl, msg_t* msg);
