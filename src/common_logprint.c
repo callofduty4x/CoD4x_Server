@@ -288,10 +288,15 @@ void QDECL Com_DPrintfLogfile( const char *fmt, ... ) {
 
 static volatile HANDLE wakelogfilewriter;
 static volatile DWORD logfilewriterworking;
+static volatile qboolean logwriterenabled;
+static volatile threadid_t logthreadid = -1;
+
 
 void* Com_WriteLogThread(void* null)
 {
-	while(1)
+	logwriterenabled = qtrue;
+
+	while(logwriterenabled)
 	{
 		Sys_WaitForObject(wakelogfilewriter);
 		Sys_ResetEvent(wakelogfilewriter);
@@ -307,12 +312,20 @@ void* Com_WriteLogThread(void* null)
 		}
 		Sys_InterlockedDecrement(&logfilewriterworking);
 	}
+	logthreadid = -1;
+	_CloseHandle(wakelogfilewriter);
+	wakelogfilewriter = 0;
 	return NULL;
 }
 
 
 void Com_CloseLogFile(volatile fileHandle_t* f)
 {
+	if(*f == 0)
+	{
+		return;
+	}
+
 	while(Sys_InterlockedIncrement(&logfilewriterworking) != 1) //Spin here until worker thread is ready
 	{
 		Sys_InterlockedDecrement(&logfilewriterworking);
@@ -375,6 +388,8 @@ void Com_CloseLogFiles()
 	Com_CloseLogFile( &enterleavelogfile );
 
 	Com_CloseLogFile( &gamelogfile ); //possible duplicate because this happens in G_ShutdownGame
+
+	logwriterenabled = qfalse;
 
 	Sys_LeaveCriticalSection(CRITSECT_LOGFILE);
 
