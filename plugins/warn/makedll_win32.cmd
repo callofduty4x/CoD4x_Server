@@ -14,4 +14,5 @@ del *.o
 goto :EOF
 :error
 echo Failed with error #%errorlevel%.
+pause
 exit /b 1
