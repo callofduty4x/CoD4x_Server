@@ -37,7 +37,7 @@ build_script:
     
     mingw32-make.exe DEBUG=true
     
-    7z a bin\cod4x18_dedrun.exe cod4x18_dedrun_DEBUG.zip
+    7z a cod4x18_dedrun_DEBUG.zip bin\cod4x18_dedrun.exe
     
     mingw32-make.exe
     
