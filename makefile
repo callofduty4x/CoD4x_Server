@@ -10,11 +10,8 @@
 ##############################
 # A name of server executable.
 
-ifeq ($(DEBUG), true)
-TARGETNAME=cod4x18_dedrun_dbg
-else
+
 TARGETNAME=cod4x18_dedrun
-endif
 
 ###################################################################
 # Build system specific information.
@@ -94,10 +91,10 @@ C_DEFINES=$(addprefix -D,$(COD4X_DEFINES) $(WIN_DEFINES))
 LFLAGS=$(WIN_LFLAGS)
 LLIBS=-L$(LIB_DIR)/ $(addprefix -l,$(WIN_LLIBS))
 RESOURCE_FILE=src/win32/win_cod4.res
-DEF_FILE=$(BIN_DIR)/cod4x18_dedrun.def
+DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
 INTERFACE_LIB=$(PLUGINS_DIR)/libcom_plugin.a
 ADDITIONAL_OBJ=$(INTERFACE_LIB)
-CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB))
+CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
 else
 #################
 # LINUX variables.
