@@ -2640,7 +2640,6 @@ void NET_OpenIP( void ) {
 	{
 		Com_Error(ERR_FATAL,"No IPv4 or IPv6 support");
 	}
-	NET_TcpServerInit();
 
 }
 
@@ -3636,6 +3635,7 @@ void NET_Init( void ) {
 	tcp6_socket = INVALID_SOCKET;
 
 	NET_Config( qtrue );
+	NET_TcpServerInit();
 
 	Cmd_AddCommand ("net_restart", NET_Restart_f);
 
