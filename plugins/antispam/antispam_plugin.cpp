@@ -122,7 +122,7 @@ private:
 	friend void OnPlayerGotAuthInfo(netadr_t* from, uint64_t* playerid, uint64_t *steamid, char *rejectmsg, qboolean *returnNow, client_t* cl);
 	friend void OnPlayerDC(client_t* client,const char* reason);
 
-	std::multimap<int,std::string,std::less<int>> messagecontent; //Deletes messages older than userdefined seconds
+	std::multimap<int,std::string,std::less<int> > messagecontent; //Deletes messages older than userdefined seconds
 
 	void msgtimecheck(const int& timer)
 	{
@@ -215,7 +215,7 @@ userData_t()
 		return bantime;
 	}
 
-	std::multimap<int,std::string,std::less<int>> GetMessageContent() const
+	std::multimap<int,std::string,std::less<int> > GetMessageContent() const
 	{
 		return messagecontent;
 	}
@@ -259,7 +259,7 @@ userData_t()
 	}
 	
 };
-std::map<uint64_t,userData_t,std::less<uint64_t>> banmemory;
+std::map<uint64_t,userData_t,std::less<uint64_t> > banmemory;
 
 struct antispam_t
 {
