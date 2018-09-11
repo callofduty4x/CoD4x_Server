@@ -480,6 +480,25 @@ static const char *g_he_vertalign[] =
 
 */
 
+
+struct entityHandler_t
+{
+  void (__cdecl *think)(struct gentity_s *);
+  void (__cdecl *reached)(struct gentity_s *);
+  void (__cdecl *blocked)(struct gentity_s *, struct gentity_s *);
+  void (__cdecl *touch)(struct gentity_s *, struct gentity_s *, int);
+  void (__cdecl *use)(struct gentity_s *, struct gentity_s *, struct gentity_s *);
+  void (__cdecl *pain)(struct gentity_s *, struct gentity_s *, int, const float *, const int, const float *, enum hitLocation_t, const int);
+  void (__cdecl *die)(struct gentity_s *, struct gentity_s *, struct gentity_s *, int, int, const int, const float *, enum hitLocation_t, int);
+  void (__cdecl *controller)(struct gentity_s *, int *);
+  int methodOfDeath;
+  int splashMethodOfDeath;
+};
+
+
+extern struct entityHandler_t entityHandlers[24];
+
+
 extern cvar_t *g_allowConsoleSay;
 extern cvar_t *g_disabledefcmdprefix;
 extern cvar_t *g_votedMapName;

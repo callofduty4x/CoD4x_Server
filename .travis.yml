@@ -1,45 +1,42 @@
 language: cpp
+compiler: gcc
 
-branches:
-  only:
-   - master
-   - dev_newarch
-   
-env:
-  #- CC=gcc     CXX=g++
-  #- CC=gcc-4.8 CXX=g++-4.8
-  - CC=gcc-4.9 CXX=g++-4.9
-  #- CC=gcc-5   CXX=g++-5
-  #- CC=clang   CXX=clang++
-   
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      #- gcc-4.8
-      #- g++-4.8
-      - gcc-4.9
-      - g++-4.9
-      #- gcc-5
-      #- g++-5
+matrix:
+  fast_finish: true
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+            - gcc-4.9
+            - g++-4.9-multilib
+            - gcc-4.9-multilib
+      env:
+         - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
 
 before_install:
+  - echo "before install"
+  - eval "${MATRIX_EVAL}"
   - arch
-  - $CC --version
-  - $CXX --version
   - sudo ls /etc/dpkg/dpkg.cfg.d/
   - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
   - sudo ls /etc/dpkg/dpkg.cfg.d/
-#  - sudo dpkg --add-architecture i386
   - sudo apt-get update
-  - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
-script:
-  - gcc --version
+  - sudo apt-get install nasm:i386 paxctl:i386 libtommath-dev:i386
+  
+  # stackoverflow magic, didn't actually check why .. but works
+  - sudo ln -s /usr/include/asm-generic /usr/include/asm
+
+script: 
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]]; then TRAVIS_TAG=$(git tag --contains $TRAVIS_COMMIT); fi
   - echo $TRAVIS_TAG
-  - make
-  - make DEBUG=true
+  - make CC=$CC CPP=$CXX
+  - make CC=$CC CPP=$CXX DEBUG=true
+  - make CC=$CC CPP=$CXX plugins
+
 deploy:
   skip_cleanup: true
   provider: releases
@@ -48,7 +45,17 @@ deploy:
   file: 
     - ./bin/cod4x18_dedrun
     - ./bin/cod4x18_dedrun_dbg
+    - ./plugins/screenshotsender/nehoscreenshotuploader.so
+    - ./plugins/censor/censor.so
+    - ./plugins/cod4x_b3hide/b3hide.so
+    - ./plugins/simplebanlist/simplebanlist.so
+    - ./plugins/example_cpp_plugin/cpptest.so
+    - ./plugins/pchat/pchat.so
+    - ./plugins/sourcebansplugin/sourcebansplugin.so
+    - ./plugins/warn/warn.so
+    # - ./plugins/antispam/antispam.so
   on:
     tags: true
     #condition: "$DODEPLOY = YES"
     #repo: D4edalus/CoD4x1.8_Server_Pub
+

@@ -185,8 +185,8 @@ void __cdecl ClientScr_SetScore(gclient_s *pSelf, client_fields_s *pField)
   assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
   score = Scr_GetInt(0);
 
-  score = std::max(score, -30000);
-  score = std::min(score, 30000);
+  score = std::max(score, -900000000);
+  score = std::min(score, 900000000);
 
   pSelf->sess.score = score;
   CalculateRanks();

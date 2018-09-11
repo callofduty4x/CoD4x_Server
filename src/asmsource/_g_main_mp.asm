@@ -1,3 +1,5 @@
+;Edited: Inverted registerDvars in G_InitGame
+
 ;Imports of g_main_mp:
 	extern Cvar_RegisterBool
 	extern Cvar_RegisterString
@@ -685,7 +687,7 @@ G_InitGame:
 	jz G_InitGame_10
 	mov eax, [ebp+0x14]
 	test eax, eax
-	jz G_InitGame_10
+	jnz G_InitGame_10		;Inverted registerDvars - Now it is like in BlackOps
 G_InitGame_110:
 	mov dword [esp], _cstring_sv_cheats
 	call Cvar_VariableBooleanValue

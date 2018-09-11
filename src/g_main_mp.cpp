@@ -109,9 +109,9 @@ __cdecl void QDECL G_LogPrintf( const char *fmt, ... ) {
 #ifdef _WIN32
 	char outstring[2048];
 	stringlen = Q_strLF2CRLF(string, outstring, sizeof(outstring) );
-	FS_Write( outstring, stringlen, level.logFile );
+	Com_WriteGameLogfile( outstring, stringlen );
 #else
-	FS_Write( string, stringlen, level.logFile );
+	Com_WriteGameLogfile( string, stringlen );
 #endif
 }
 

@@ -75,6 +75,8 @@ HANDLE __cdecl _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwSha
 DWORD __cdecl _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
 DWORD __cdecl _GetFileAttributesA(const char *lpFileName);
 BOOL __cdecl _SetFileAttributesA(const char *lpFileName, DWORD dwFileAttributes);
+DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend);
+DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend);
 
 #ifdef __cplusplus
 }

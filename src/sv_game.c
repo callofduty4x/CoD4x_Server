@@ -172,7 +172,7 @@ char *__cdecl SV_AllocSkelMemory(unsigned int size)
 
 
 
-int __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
+qboolean __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
 {
   int size;
   char *buf;

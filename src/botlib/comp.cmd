@@ -1,3 +1,4 @@
+@echo off
 gcc.exe -D BOTLIB -c *.c
 REM gcc.exe -c ..\q_math.c
 REM gcc.exe -c ..\qshared.c

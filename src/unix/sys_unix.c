@@ -886,6 +886,11 @@ BOOL __cdecl _CloseHandle(HANDLE handle)
 //    _ZdlPv_stub(hObject);
     free(hObject);
     return TRUE;
+  }else if(hObject->type == 'Evnt'){
+    hObject->type = 'DEAD';
+    pthread_mutex_destroy(&hObject->mutex);
+    free(hObject);
+    return TRUE;
   }
   return FALSE;
 }
