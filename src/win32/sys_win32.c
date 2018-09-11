@@ -1038,3 +1038,8 @@ signed int __cdecl Sys_IsObjectSignaled(HANDLE hHandle)
 	}
 	return 0;
 }
+
+void Sys_PrintBacktrace()
+{
+	
+}
