@@ -35,9 +35,9 @@ build_script:
 - ps: >-
     echo "Building server code:"
     
-    mingw32-make.exe
-    
     mingw32-make.exe DEBUG=true
+    
+    mingw32-make.exe
     
     mingw32-make.exe plugins
 
