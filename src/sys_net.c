@@ -790,7 +790,7 @@ static qboolean NET_Resolve(const char *s, struct sockaddr *sadr, int sadr_len, 
 	}
 	else
 	{
-		Com_PrintError(CON_CHANNEL_NETWORK,errormsg1k, 1024, "Sys_StringToSockaddr: Error resolving %s: %s\n", s, gai_strerror(retval));
+		Com_sprintf(errormsg1k, 1024, "Sys_StringToSockaddr: Error resolving %s: %s\n", s, gai_strerror(retval));
 	}
 	if(res)
 	{
