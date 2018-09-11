@@ -3727,7 +3727,7 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 	if((signed int)highestfd < 0)
 	{
 		// windows ain't happy when select is called without valid FDs
-		SleepEx(usec, 0);
+		SleepEx(usec / 1000, 0);
 		return qfalse;
 	}
 #endif
