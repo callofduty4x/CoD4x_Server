@@ -326,6 +326,3 @@ PCL void OnInfoRequest(pluginInfo_t *info){	// Function used to obtain informati
     strncpy(info->shortDescription,"This plugin will enable admins to warn players before being banned.",sizeof(info->shortDescription)); // Short plugin description
     strncpy(info->longDescription,"This plugin will enable admins to issue warnings to players at which after a certain limit will ban these players",sizeof(info->longDescription));
 }
-
-
-
