@@ -35,9 +35,11 @@ build_script:
 - ps: >-
     echo "Building server code:"
     
-    mingw32-make.exe
-    
     mingw32-make.exe DEBUG=true
+    
+    7z a cod4x18_dedrun_DEBUG.zip bin\cod4x18_dedrun.exe
+    
+    mingw32-make.exe
     
     mingw32-make.exe plugins
 
@@ -52,7 +54,7 @@ artifacts:
   - path: bin\cod4x18_dedrun.exe
     name: cod4exe
     
-  - path: bin\cod4x18_dedrun_dbg.exe
+  - path: cod4x18_dedrun_DEBUG.zip
     name: cod4exe_dbg
 
   - path: plugins\**\*.dll
