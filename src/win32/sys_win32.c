@@ -1012,7 +1012,12 @@ void Sys_SetThreadName(threadid_t tid, const char* szThreadName)
 
 HANDLE __cdecl Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)
 {
-	return CreateEventA(NULL, bManualReset, bInitialState, name);
+	SECURITY_ATTRIBUTES sa;
+	sa.nLength = sizeof(sa);
+	sa.lpSecurityDescriptor = NULL;
+	sa.bInheritHandle = false;
+	
+	return CreateEventA(&sa, bManualReset, bInitialState, NULL); //Name must be NULL or it will interact with other processes
 }
 
 signed int __cdecl Sys_ResetEvent(HANDLE hEvent)

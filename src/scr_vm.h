@@ -740,7 +740,7 @@ void __cdecl Scr_AddUndefined(void);
 void __cdecl Scr_AddVector( const float* vec );
 void __cdecl Scr_AddArray( void );
 void __cdecl Scr_MakeArray( void );
-void __cdecl Scr_AddArrayKey( int strIdx );
+void __cdecl Scr_AddArrayKeys( unsigned int strIdx );
 void __cdecl Scr_Notify( gentity_t*, unsigned short, unsigned int);
 void __cdecl Scr_NotifyNum( int, unsigned int, unsigned int, unsigned int);
 

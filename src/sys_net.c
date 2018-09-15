@@ -791,7 +791,7 @@ static qboolean NET_Resolve(const char *s, struct sockaddr *sadr, int sadr_len, 
 	}
 	else
 	{
-		Com_PrintError(CON_CHANNEL_NETWORK,errormsg1k, 1024, "Sys_StringToSockaddr: Error resolving %s: %s\n", s, gai_strerror(retval));
+		Com_sprintf(errormsg1k, 1024, "Sys_StringToSockaddr: Error resolving %s: %s\n", s, gai_strerror(retval));
 	}
 	if(res)
 	{
@@ -3727,7 +3727,7 @@ __optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
 	if((signed int)highestfd < 0)
 	{
 		// windows ain't happy when select is called without valid FDs
-		SleepEx(usec, 0);
+		SleepEx(usec / 1000, 0);
 		return qfalse;
 	}
 #endif
