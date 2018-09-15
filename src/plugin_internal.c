@@ -159,9 +159,10 @@ void PHandler_BoldPrintf(int slot, char *fmt, ... )
     SV_SendServerCommand(cl, "c \"%s\"", str);
 }
 
+//Ninja: Why this spam? Nobody want to know it in normal operation.
 void PHandler_CmdExecute_f()
 {
-    Com_Printf(CON_CHANNEL_PLUGINS,"Attempting to execute a plugin command '%s'.\n",Cmd_Argv(0));
+//    Com_Printf(CON_CHANNEL_PLUGINS,"Attempting to execute a plugin command '%s'.\n",Cmd_Argv(0));
     if(!pluginFunctions.enabled){
         Com_Printf(CON_CHANNEL_PLUGINS,"Error! Tried executing a plugin command with plugins being disabled! Command name: '%s'.\n",Cmd_Argv(1));
         return;
@@ -178,7 +179,7 @@ void PHandler_CmdExecute_f()
             {
                 if(strcmp(name,pluginFunctions.plugins[i].cmd[j].name)==0)
                 {
-                    Com_Printf(CON_CHANNEL_PLUGINS,"Executing plugin command '%s' for plugin '%s', plugin ID: %d.\n",name,pluginFunctions.plugins[i].name,i);
+//                    Com_Printf(CON_CHANNEL_PLUGINS,"Executing plugin command '%s' for plugin '%s', plugin ID: %d.\n",name,pluginFunctions.plugins[i].name,i);
                     func = (void (*)())(pluginFunctions.plugins[i].cmd[j].xcommand);
 		                pluginFunctions.hasControl = i;
                     func();
