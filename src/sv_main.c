@@ -1768,6 +1768,12 @@ void SV_ConnectWithUpdateProxy(client_t *cl)
 
             if(update_connection.updateserveradr.type == NA_BAD || sv_updatebackendname->modified)
             {
+                if(!sv_updatebackendname->string[0])
+                {
+                    Com_Printf(CON_CHANNEL_SERVER,"Cvar sv_updatebackendname is empty. Can not update cod4 client.\n");
+                    return;
+                }
+
                 Com_Printf(CON_CHANNEL_SERVER,"Resolving %s\n", sv_updatebackendname->string);
                 Cvar_ClearModified(sv_updatebackendname);
                 res = NET_StringToAdr(sv_updatebackendname->string, &update_connection.updateserveradr, NA_IP);
