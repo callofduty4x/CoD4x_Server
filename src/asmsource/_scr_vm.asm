@@ -140,6 +140,8 @@
 	extern Scr_DecNumScriptThreads
 	extern Scr_IncNumScriptThreads
 	extern Scr_ScriptRuntimecheckInfiniteLoop
+	extern VM_CalcWaitTime
+
 
 ;Exports of scr_vm:
 	global gScrVmGlob
@@ -1450,14 +1452,8 @@ VM_ExecuteInternal_1900:
 	call Sys_Error
 VM_ExecuteInternal_260:
 	mov eax, [gFs+0xc]
-	mov edx, [eax+0x4]
-	cmp edx, 0x5
-	jz VM_ExecuteInternal_270
-	cmp edx, 0x6
-	jnz VM_ExecuteInternal_280
-	mov eax, [eax]
-	lea eax, [eax+eax*4]
-	shl eax, 0x2
+	mov [esp], eax
+	call VM_CalcWaitTime
 	mov [ebp-0x30], eax
 VM_ExecuteInternal_1650:
 	mov esi, eax
@@ -3503,18 +3499,6 @@ VM_ExecuteInternal_820:
 	mov [esp], eax
 	call SetVariableFieldValue
 	jmp VM_ExecuteInternal_800
-VM_ExecuteInternal_280:
-	mov ebx, gScrVarPub
-	mov dword [ebx+0x10], 0x2
-	mov eax, [eax+0x4]
-	mov edx, var_typename
-	mov eax, [edx+eax*4]
-	mov [esp+0x4], eax
-	mov dword [esp], _cstring_type_s_is_not_a_
-	call va
-	mov ecx, [ebx+0xc]
-	test ecx, ecx
-	jz VM_ExecuteInternal_1590
 VM_ExecuteInternal_2460:
 	cmp byte [ebx+0x8], 0x0
 	jnz VM_ExecuteInternal_1600
@@ -3532,29 +3516,6 @@ VM_ExecuteInternal_2110:
 	call Sys_Error
 VM_ExecuteInternal_1620:
 	mov esi, [ebp-0x30]
-	jmp VM_ExecuteInternal_1630
-VM_ExecuteInternal_270:
-	movss xmm0, dword [eax]
-	movss [ebp-0x40], xmm0
-	ucomiss xmm0, [_float_0_00000000]
-	jp VM_ExecuteInternal_1640
-	jb VM_ExecuteInternal_580
-VM_ExecuteInternal_1640:
-	mulss xmm0, [_float_20_00000000]
-	addss xmm0, [_float_0_50000000]
-	movss [esp], xmm0
-	call floorf
-	fstp dword [ebp-0x44]
-	cvttss2si eax, [ebp-0x44]
-	mov [ebp-0x30], eax
-	test eax, eax
-	jnz VM_ExecuteInternal_1650
-	movss xmm0, dword [ebp-0x40]
-	ucomiss xmm0, [_float_0_00000000]
-	jp VM_ExecuteInternal_1660
-	jnz VM_ExecuteInternal_1660
-	mov dword [ebp-0x30], 0x0
-	xor esi, esi
 	jmp VM_ExecuteInternal_1630
 VM_ExecuteInternal_930:
 	mov eax, [eax]
@@ -4300,13 +4261,6 @@ VM_ExecuteInternal_550:
 	call Q_strncpyz
 	mov dword [ebx+0xc], error_message
 	jmp VM_ExecuteInternal_2450
-VM_ExecuteInternal_1590:
-	mov dword [esp+0x8], 0x400
-	mov [esp+0x4], eax
-	mov dword [esp], error_message
-	call Q_strncpyz
-	mov dword [ebx+0xc], error_message
-	jmp VM_ExecuteInternal_2460
 VM_ExecuteInternal_1200:
 	mov eax, 0x1
 	mov edi, [gScrVmGlob+0x14]

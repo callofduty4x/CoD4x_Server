@@ -5,6 +5,7 @@
 
 #include "server_public.h"
 
+level_locals_t level;
 
 const char* g_dedicatedEnumNames[] = { "listen server", "dedicated LAN server", "dedicated internet server" };
 
@@ -147,5 +148,10 @@ void G_CloseLogFile()
 	level.logFile = 0;
 }
 
+
+void G_InitSomeVariables(int framerate)
+{
+    level.framerate = framerate;
+}
 
 };

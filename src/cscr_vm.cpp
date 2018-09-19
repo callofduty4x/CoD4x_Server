@@ -4,6 +4,7 @@
 #include "cscr_stringlist.h"
 #include "sys_main.h"
 #include "cmd.h"
+#include "g_shared.h"
 #include <setjmp.h>
 
 int g_script_error_level;
@@ -542,6 +543,35 @@ void Scr_UpdateDebugger()
 }
 
 
+
+int VM_CalcWaitTime(VariableValue *waitval)
+{
+    int waitTime;
+    if ( waitval->type == VAR_FLOAT )
+    {
+        if ( waitval->u.floatValue < 0.0 )
+        {
+            Scr_Error("negative wait is not allowed");
+            return 1;
+        }
+        waitTime = f2rint(level.framerate * waitval->u.floatValue);
+        if ( !waitTime && waitval->u.floatValue != 0.0 )
+        {
+          waitTime = 1;
+        }
+    }
+    else if ( waitval->type == VAR_INTEGER )
+    {
+        waitTime = waitval->u.intValue * level.framerate;
+    }
+    else
+    {
+        gScrVarPub.error_index = 2;
+        Scr_Error(va("type %s is not a float", var_typename[waitval->type]));
+        waitTime = 1;
+    }
+    return waitTime;
+}
 
 
 };

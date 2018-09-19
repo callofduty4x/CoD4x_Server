@@ -155,6 +155,9 @@
 	extern G_SafeServerDObjFree
 	extern G_RegisterCvars
 	extern G_CloseLogFile
+	extern level
+	extern G_InitSomeVariables
+
 ;Exports of g_main_mp:
 	global g_clients
 	global g_entinfoNames
@@ -183,7 +186,6 @@
 	global bullet_penetrationEnabled
 	global g_debugLocDamage
 	global g_entities
-	global level
 	global g_dropForwardSpeed
 	global g_dropHorzSpeedRand
 	global g_dropUpSpeedBase
@@ -221,7 +223,6 @@
 	global g_inactivity
 	global g_mantleBlockTimeBuffer
 	global g_playerCollisionEjectSpeed
-	global g_smoothClients
 	global g_speed
 	global g_synchronousClients
 	global g_ScoresColor_Allies
@@ -644,7 +645,7 @@ ShowEntityInfo_50:
 	jmp ShowEntityInfo_60
 
 
-;G_InitGame(int, int, int, int)
+;G_InitGame(int, int, int, int, int)
 G_InitGame:
 	push ebp
 	mov ebp, esp
@@ -706,6 +707,9 @@ G_InitGame_20:
 	mov dword [level_bgs+0x99a00], Hunk_AllocXAnimServer
 	mov dword [level_bgs+0x999e8], 0x1
 	call G_OpenLogFile
+	mov eax, [ebp+0x18]
+	mov [esp], eax
+	call G_InitSomeVariables
 G_InitGame_130:
 	mov dword [level+0x2df4], 0x0
 	mov dword [level+0x2df8], 0x0
@@ -1992,7 +1996,6 @@ g_compassShowEnemies: resb 0x4
 bullet_penetrationEnabled: resb 0x4
 g_debugLocDamage: resb 0x4
 g_entities: resb 0x9d000
-level: resb 0x2ea0
 g_dropForwardSpeed: resb 0x4
 g_dropHorzSpeedRand: resb 0x4
 g_dropUpSpeedBase: resb 0x4
@@ -2030,7 +2033,6 @@ g_voiceChatTalkingDuration: resb 0x4
 g_inactivity: resb 0x4
 g_mantleBlockTimeBuffer: resb 0x4
 g_playerCollisionEjectSpeed: resb 0x4
-g_smoothClients: resb 0x8
 g_speed: resb 0x4
 g_synchronousClients: resb 0x4
 g_ScoresColor_Allies: resb 0x4
@@ -2186,7 +2188,6 @@ _cstring_g_teamcolor_spec:		db "g_TeamColor_Spectator",0
 _cstring_free_team_color:		db "Free Team color",0
 _cstring_g_teamcolor_free:		db "g_TeamColor_Free",0
 _cstring_enable_extrapola:		db "Enable extrapolation between client states",0
-_cstring_g_smoothclients:		db "g_smoothClients",0
 _cstring_turn_on_antilag_:		db "Turn on antilag checks for weapon hits",0
 _cstring_g_antilag:		db "g_antilag",0
 _cstring_use_old_voting_m:		db "Use old voting method",0

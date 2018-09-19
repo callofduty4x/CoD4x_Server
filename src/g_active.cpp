@@ -72,6 +72,16 @@ void __cdecl ClientThink(int clientNum)
 }
 
 
+void __cdecl G_PlayerStateToEntityStateExtrapolate(playerState_s *ps, entityState_s *s, int time, int snap)
+{
+  VectorCopy(ps->velocity, s->lerp.pos.trDelta);
+
+  s->lerp.pos.trTime = time;
+  s->lerp.pos.trDuration = 50;
+  BG_PlayerStateToEntityState(ps, s, snap, 1);
+  s->lerp.pos.trType = TR_LINEAR_STOP;
+}
+
 
 };
 

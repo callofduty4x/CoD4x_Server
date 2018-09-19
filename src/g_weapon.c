@@ -34,7 +34,7 @@ void __cdecl G_AntiLagRewindClientPos(int gameTime, struct AntilagClientStore *a
   {
     gameTime = level.time - 400;
   }
-  if ( level.time - gameTime > 1000 / sv_fps->integer )
+  if ( level.time - gameTime > 1000 / level.framerate )
   {
     memset(success, 0, sizeof(success));
     if ( SV_GetClientPositionsAtTime(gameTime, clientPositions, clientAngles, success) )

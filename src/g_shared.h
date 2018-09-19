@@ -174,6 +174,7 @@ typedef struct
     float compassMapWorldSize[2];
     float compassNorth[2];
     struct scr_vehicle_s *vehicles;
+    int framerate;
 } level_locals_t;
 
 extern level_locals_t level;
