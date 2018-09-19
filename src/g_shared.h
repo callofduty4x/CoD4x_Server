@@ -519,7 +519,7 @@ extern cvar_t *g_synchronousClients;
 extern cvar_t *g_log;
 extern cvar_t *g_logSync;
 extern cvar_t *g_logTimeStampInSeconds;
-
+extern cvar_t *g_smoothClients;
 
 extern qboolean onExitLevelExecuted;
 

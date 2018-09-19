@@ -77,11 +77,23 @@ void __cdecl G_PlayerStateToEntityStateExtrapolate(playerState_s *ps, entityStat
   VectorCopy(ps->velocity, s->lerp.pos.trDelta);
 
   s->lerp.pos.trTime = time;
-  s->lerp.pos.trDuration = 50;
+  s->lerp.pos.trDuration = 1000 / level.framerate;
   BG_PlayerStateToEntityState(ps, s, snap, 1);
   s->lerp.pos.trType = TR_LINEAR_STOP;
 }
 
+
+void G_UpdateEntityStateFromPlayerState(struct gclient_s *client, struct gentity_s *ent)
+{
+      if ( g_smoothClients->boolean )
+      {
+        G_PlayerStateToEntityStateExtrapolate(&client->ps, &ent->s, client->ps.commandTime, 1);
+      }
+      else
+      {
+        BG_PlayerStateToEntityState(&client->ps, &ent->s, 1, 1);
+      }
+}
 
 };
 

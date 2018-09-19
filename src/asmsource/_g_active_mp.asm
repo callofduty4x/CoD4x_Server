@@ -28,7 +28,6 @@
 	extern ClientSpawn
 	extern Com_PrintWarning
 	extern Player_UpdateCursorHints
-	extern g_smoothClients
 	extern BG_PlayerStateToEntityState
 	extern G_GetPlayerViewOrigin
 	extern G_GetNonPVSPlayerInfo
@@ -92,6 +91,7 @@
 	extern SV_GetArchivedClientInfo
 	extern HudElem_UpdateClient
 	extern StuckInClient
+	extern G_UpdateEntityStateFromPlayerState
 
 ;Exports of g_active_mp:
 	global _ZZ15G_TouchTriggersP9gentity_sE5range
@@ -671,32 +671,13 @@ ClientEndFrame_230:
 ClientEndFrame_420:
 	mov edx, [ebp-0x70]
 	mov [edx+0x5b0], eax
-	mov eax, g_smoothClients
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz ClientEndFrame_250
-	mov ebx, [edx]
-	mov ecx, [ebp+0x8]
-	add ecx, 0x24
-	mov edx, [ebp-0x70]
-	add edx, 0x28
-	mov esi, [ebp-0x70]
-	mov eax, [esi+0x28]
+
 	mov esi, [ebp+0x8]
-	mov [esi+0x24], eax
-	mov eax, [edx+0x4]
-	mov [ecx+0x4], eax
-	mov eax, [edx+0x8]
-	mov [ecx+0x8], eax
-	mov [esi+0x10], ebx
-	mov dword [esi+0x14], 0x32
-	mov dword [esp+0xc], 0x1
-	mov dword [esp+0x8], 0x1
 	mov [esp+0x4], esi
 	mov eax, [ebp-0x70]
 	mov [esp], eax
-	call BG_PlayerStateToEntityState
-	mov dword [esi+0xc], 0x3
+	call G_UpdateEntityStateFromPlayerState
+
 ClientEndFrame_350:
 	mov esi, [ebp+0x8]
 	mov eax, [esi+0x1a0]
@@ -852,15 +833,6 @@ ClientEndFrame_330:
 	mov [esp], eax
 	call CL_AddDebugStarWithText
 	jmp ClientEndFrame_130
-ClientEndFrame_250:
-	mov dword [esp+0xc], 0x1
-	mov dword [esp+0x8], 0x1
-	mov edx, [ebp+0x8]
-	mov [esp+0x4], edx
-	mov ecx, [ebp-0x70]
-	mov [esp], ecx
-	call BG_PlayerStateToEntityState
-	jmp ClientEndFrame_350
 ClientEndFrame_210:
 	mov ecx, [esi+0x307c]
 	test ecx, ecx
@@ -1592,29 +1564,10 @@ ClientThink_real_260:
 	mov eax, [eax+0x1ec]
 	mov [esi+0x158], eax
 ClientThink_real_170:
-	mov eax, g_smoothClients
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz ClientThink_real_180
-	mov ebx, [edi]
-	mov ecx, [ebp+0x8]
-	add ecx, 0x24
-	lea edx, [edi+0x28]
-	mov eax, [edi+0x28]
 	mov esi, [ebp+0x8]
-	mov [esi+0x24], eax
-	mov eax, [edx+0x4]
-	mov [ecx+0x4], eax
-	mov eax, [edx+0x8]
-	mov [ecx+0x8], eax
-	mov [esi+0x10], ebx
-	mov dword [esi+0x14], 0x32
-	mov dword [esp+0xc], 0x1
-	mov dword [esp+0x8], 0x1
 	mov [esp+0x4], esi
 	mov [esp], edi
-	call BG_PlayerStateToEntityState
-	mov dword [esi+0xc], 0x3
+	call G_UpdateEntityStateFromPlayerState
 ClientThink_real_240:
 	mov edx, [ebp+0x8]
 	add edx, 0x13c
@@ -1756,14 +1709,6 @@ ClientThink_real_60:
 	mov [esp], ecx
 	call SpectatorThink
 	jmp ClientThink_real_70
-ClientThink_real_180:
-	mov dword [esp+0xc], 0x1
-	mov dword [esp+0x8], 0x1
-	mov eax, [ebp+0x8]
-	mov [esp+0x4], eax
-	mov [esp], edi
-	call BG_PlayerStateToEntityState
-	jmp ClientThink_real_240
 ClientThink_real_150:
 	mov ecx, [ebp-0x258]
 	mov esi, [ecx+0x438]
