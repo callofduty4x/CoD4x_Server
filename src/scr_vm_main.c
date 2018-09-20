@@ -49,15 +49,8 @@ typedef struct
 void __cdecl GScr_AddFieldsForEntity();
 
 
-void Scr_PrintScriptTiming()
-{
-    Com_Printf(CON_CHANNEL_SYSTEM, "scripttime: %d, realtime: %d\n", gScrVarPub.time, Sys_Milliseconds());
-}
-
-
 void Scr_AddStockFunctions()
 {
-	Scr_AddFunction("printscripttime", Scr_PrintScriptTiming,0);
 	Scr_AddFunction("createprintchannel", GScr_CreatePrintChannel, 1 );
 	Scr_AddFunction("setprintchannel", GScr_printChannelSet, 1 );
 	Scr_AddFunction("print", print, 0 );

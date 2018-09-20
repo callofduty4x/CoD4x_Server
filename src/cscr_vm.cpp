@@ -565,6 +565,11 @@ int VM_CalcWaitTime(VariableValue *waitval)
     }
     else if ( waitval->type == VAR_INTEGER )
     {
+        if ( waitval->u.intValue < 0.0 )
+        {
+            Scr_Error("negative wait is not allowed");
+            return 1;
+        }
         waitTime = waitval->u.intValue * level.framerate;
     }
     else
