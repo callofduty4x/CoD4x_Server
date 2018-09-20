@@ -1,4 +1,5 @@
 #include "q_shared.h"
+#include "g_shared.h"
 
 #define MAX_TURRETS 32
 
@@ -34,6 +35,11 @@ void G_InitTurrets()
   for(i = 0; i < MAX_TURRETS; ++i){
     turretInfo[i].inuse = 0;
   }
+}
+
+int G_TurretCalcFireTime()
+{
+    return 1000 / level.framerate;
 }
 
 }
