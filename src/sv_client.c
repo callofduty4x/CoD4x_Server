@@ -753,14 +753,12 @@ void SV_UserinfoChanged( client_t *cl ) {
 		if(i < 10)
 			i = 10;
 		else if(i > sv_fps->integer)
-			i = sv_fps->integer;
-		else if(i == 30)
-			i = sv_fps->integer;
+			i = 1000;
 
 		cl->snapshotMsec = 1000 / i;
 	}
 	else
-		cl->snapshotMsec = 50;
+		cl->snapshotMsec = 1;
 
 	val = Info_ValueForKey(cl->userinfo, "cl_voice");
 	cl->sendVoice = atoi(val);
