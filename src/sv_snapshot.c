@@ -831,17 +831,10 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 		SV_AddEntToSnapshot( e, eNums );
 	}
 }
-/*
-cachedSnapshot_t* REGPARM(1) SV_GetCachedSnapshotInternal(signed int snapTime)
-{
-	//Com_DPrintf(CON_CHANNEL_SERVER,"Archived SnapFrame: %d Current ServerFrame: %d\n", snapTime, (svs.time * sv_fps->integer)/1000);
-	Com_DPrintf(CON_CHANNEL_SERVER,"Archived SnapFrame %d behind\n", svs.nextArchivedSnapshotFrames - snapTime);
-	return NULL;
-}
-*/
+
 static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
 {
-  int msec;
+  int usec;
   int snapTime;
   cachedSnapshot_t *cachedSnap;
 
@@ -850,19 +843,19 @@ static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
 	return 0;
   }
 
-  msec = *pArchiveTime * sv_fps->integer / 1000;
-  snapTime = svs.nextArchivedSnapshotFrames - msec;
+  usec = *pArchiveTime * sv_fps->integer;
+  snapTime = ((int64_t)svs.nextArchivedSnapshotFrames*(int64_t)1000 - (int64_t)usec) / 1000;
 
   if ( snapTime < svs.nextArchivedSnapshotFrames - 1200 )
   {
     snapTime = svs.nextArchivedSnapshotFrames - 1200;
-    *pArchiveTime = 1000 * (svs.nextArchivedSnapshotFrames - (svs.nextArchivedSnapshotFrames - 1200)) / sv_fps->integer;
+    *pArchiveTime = (1000 * (svs.nextArchivedSnapshotFrames - (svs.nextArchivedSnapshotFrames - 1200))) / sv_fps->integer;
   }
 
   if ( snapTime < 0 )
   {
     snapTime = 0;
-    *pArchiveTime = 1000 * svs.nextArchivedSnapshotFrames / sv_fps->integer;
+    *pArchiveTime = (1000 * svs.nextArchivedSnapshotFrames) / sv_fps->integer;
   }
 
   for( ; snapTime < svs.nextArchivedSnapshotFrames; ++snapTime)
@@ -1288,10 +1281,10 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
 
 
   rewindDeltaTime = svs.time - gametime;
-  int frametime = 1000 / sv_fps->integer;
-  int frameHistCount = rewindDeltaTime / frametime;
-  startOffset = frametime * (frameHistCount + 2);
-  endOffset = frametime * (frameHistCount + 1);
+  int frametime = 1000000 / sv_fps->integer; //in usec for accuracy
+  int frameHistCount = (1000*rewindDeltaTime) / frametime;
+  startOffset = (frametime * (frameHistCount + 2)) / 1000;
+  endOffset = (frametime * (frameHistCount + 1)) / 1000;
   frameStart = SV_GetCachedSnapshot(&startOffset);
   frameEnd = SV_GetCachedSnapshot(&endOffset);
   if ( frameStart || frameEnd )
@@ -1300,7 +1293,7 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
     while ( frameEnd && frameEnd->time < gametime )
     {
       frameStart = frameEnd;
-      endOffset = frametime * (--snapOffset + frameHistCount);
+      endOffset = (frametime * (--snapOffset + frameHistCount)) / 1000;
       frameEnd = SV_GetCachedSnapshot(&endOffset);
     }
     if ( frameEnd && snapOffset != 1 )
@@ -1311,7 +1304,7 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
     while ( frameStart && frameStart->time > gametime )
     {
       frameStart = frameEnd;
-      startOffset = frametime * (++snapOffset + frameHistCount);
+      startOffset = (frametime * (++snapOffset + frameHistCount)) / 1000;
       frameStart = SV_GetCachedSnapshot(&startOffset);
     }
     if ( frameStart && snapOffset != 2 )

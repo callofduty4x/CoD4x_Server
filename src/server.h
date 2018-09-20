@@ -326,6 +326,7 @@ typedef struct {//0x8c51780
 	qboolean	initialized;				//0x90b4f80 sv_init has completed
 
 	int		time;					// will be strictly increasing across level changes
+	int		timeResidual;				// Used for remainder of the integer division of frametime / 1000 and prodive exact timing for svs.time
 
 	int		snapFlagServerBit;			// ^= SNAPFLAG_SERVERCOUNT every SV_SpawnServer()
 

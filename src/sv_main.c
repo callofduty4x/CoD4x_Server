@@ -4279,8 +4279,10 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     // run the game simulation in chunks
     while ( sv.timeResidual >= frameUsec ) {
         sv.timeResidual -= frameUsec;
-        svs.time += frameUsec / 1000;
+        div_t svtimeinc = div(frameUsec + svs.timeResidual, 1000);
 
+        svs.time += svtimeinc.quot;
+        svs.timeResidual = svtimeinc.rem;
         // let everything in the world think and move
         G_RunFrame( svs.time );
     }

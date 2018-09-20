@@ -162,7 +162,6 @@
 	global Scr_Cleanup
 	global Scr_GetAnim
 	global Scr_GetType
-	global Scr_IncTime
 	global Scr_GetFloat
 	global Scr_Settings
 	global Scr_Shutdown
@@ -191,7 +190,6 @@
 	global SetEntityFieldValue
 	global Scr_CancelNotifyList
 	global Scr_ExecEntThreadNum
-	global Scr_RunCurrentThreads
 	global Scr_SetDynamicEntityField
 	global Scr_GetConstLowercaseString
 	global g_EndPos
@@ -5900,55 +5898,6 @@ Scr_GetType_20:
 	jmp Scr_GetType_80
 
 
-;Scr_IncTime()
-Scr_IncTime:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, gScrVarPub
-	mov edx, [ebx+0x18]
-	test edx, edx
-	jnz Scr_IncTime_10
-Scr_IncTime_20:
-	call Scr_FreeEntityList
-	mov edx, gScrVarPub
-	mov eax, [edx+0x14]
-	add eax, 0x1
-	and eax, 0xffffff
-	mov [edx+0x14], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_IncTime_10:
-	mov eax, [ebx+0x14]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call FindVariable
-	test eax, eax
-	jz Scr_IncTime_20
-	mov [esp], eax
-	call FindObject
-	call VM_Resume
-	mov eax, [ebx+0x14]
-	mov [esp+0x4], eax
-	mov eax, [ebx+0x18]
-	mov [esp], eax
-	call SafeRemoveVariable
-	call Scr_FreeEntityList
-	mov edx, gScrVarPub
-	mov eax, [edx+0x14]
-	add eax, 0x1
-	and eax, 0xffffff
-	mov [edx+0x14], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-
-
-
 ;Scr_GetFloat(unsigned int)
 Scr_GetFloat:
 	push ebp
@@ -8288,42 +8237,6 @@ Scr_ExecEntThreadNum_10:
 	pop ebp
 	ret
 	nop
-
-
-;Scr_RunCurrentThreads()
-Scr_RunCurrentThreads:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, gScrVarPub
-	mov edx, [ebx+0x18]
-	test edx, edx
-	jnz Scr_RunCurrentThreads_10
-Scr_RunCurrentThreads_20:
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-Scr_RunCurrentThreads_10:
-	mov eax, [ebx+0x14]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call FindVariable
-	test eax, eax
-	jz Scr_RunCurrentThreads_20
-	mov [esp], eax
-	call FindObject
-	call VM_Resume
-	mov eax, [ebx+0x14]
-	mov [esp+0x4], eax
-	mov eax, [ebx+0x18]
-	mov [esp], eax
-	call SafeRemoveVariable
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
 
 
 ;Scr_SetDynamicEntityField(int, unsigned int, unsigned int)
