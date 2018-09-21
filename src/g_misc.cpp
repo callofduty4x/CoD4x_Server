@@ -42,4 +42,5 @@ int G_TurretCalcFireTime()
     return 1000 / level.framerate;
 }
 
+
 }

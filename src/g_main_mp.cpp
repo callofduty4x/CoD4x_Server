@@ -149,9 +149,12 @@ void G_CloseLogFile()
 }
 
 
+float missile_frametime;
+
 void G_InitSomeVariables(int framerate)
 {
     level.framerate = framerate;
+    missile_frametime = 1.0f / (float)level.framerate;
 }
 
 };
