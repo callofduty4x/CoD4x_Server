@@ -1,7 +1,6 @@
 ;Imports of g_missile:
 	extern level
 	extern BG_EvaluateTrajectory
-	extern BG_EvaluateTrajectory_debug
 	extern G_rand
 	extern AngleNormalize360
 	extern PitchForYawOnNormal
@@ -4857,7 +4856,7 @@ G_ExplodeMissile_70:
 	mov [esp+0x4], eax
 	lea eax, [esi+0xc]
 	mov [esp], eax
-	call BG_EvaluateTrajectory_debug
+	call BG_EvaluateTrajectory
 	cvttss2si eax, [ebp-0x24]
 	cvtsi2ss xmm0, eax
 	movss [ebp-0x24], xmm0

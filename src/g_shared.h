@@ -572,6 +572,7 @@ int G_GetClientArchiveTime(int clientindex);
 void G_SetClientArchiveTime(int clindex, int time);
 void G_ClientStopUsingTurret(gentity_t* ent);
 void G_EarlyInit();
+void Scr_Vehicle_Think(struct gentity_s* ent);
 #ifdef __cplusplus
 }
 #endif

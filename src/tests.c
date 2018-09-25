@@ -7,7 +7,7 @@
 #include "cmd.h"
 #include "dobj.h"
 #include "xassets/xmodel.h"
-#include "g_scr_vehicle.h"
+//#include "g_scr_vehicle.h"
 #include "g_shared.h"
 
 extern byte* archivedEntityFields[];
@@ -329,7 +329,7 @@ __asm__("int $3");
 
 void Tests_Init()
 {
-	Cmd_AddCommand("testpscode", MSG_TestPSCode);
+//	Cmd_AddCommand("testpscode", MSG_TestPSCode);
 /*	Cmd_AddCommand("testmsgreadlong", Test_MSG_WriteReadLong);
 	Cmd_AddCommand("printdobj", FindAndPrintDObj_f);
 	Cmd_AddCommand("dumpvehicles", DumpVehicleInfo_f);

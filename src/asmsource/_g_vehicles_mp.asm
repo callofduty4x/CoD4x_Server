@@ -86,6 +86,8 @@
 	extern Com_IsLegacyXModelName
 	extern SV_SetBrushModel
 	extern s_wheelTags
+	extern s_vehicleInfos
+
 
 ;Exports of g_vehicles_mp:
 	global s_vehicleFields
@@ -121,7 +123,6 @@
 	global G_VehEntHandler_Touch
 	global G_VehEntHandler_Controller
 	global G_VehiclesSetupSpawnedEnts
-	global s_vehicleInfos
 	global s_numVehicleInfos
 	global s_vehicles
 	global s_wheelTags
@@ -6458,7 +6459,6 @@ SECTION .rdata
 SECTION .bss
 s_phys: resb 0x40
 s_backup: resb 0x1c0
-s_vehicleInfos: resb 0x4e00
 s_numVehicleInfos: resb 0x1c
 s_vehicles: resb 0x1aa0
 vehDebugServer: resb 0x30

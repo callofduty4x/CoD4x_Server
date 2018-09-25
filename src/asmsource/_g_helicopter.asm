@@ -1509,6 +1509,7 @@ SECTION .rdata
 SECTION .rdata
 _float_127_00000000:		dd 0x42fe0000	; 127
 _float_0_05000000:		dd 0x3d4ccccd	; 0.05
+
 _float_17_60000038:		dd 0x418ccccd	; 17.6
 _float_1_00000000:		dd 0x3f800000	; 1
 _float__1_00000000:		dd 0xbf800000	; -1

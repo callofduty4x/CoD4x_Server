@@ -1497,7 +1497,7 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
 //    char g_fileBuf[DBFILE_BUFFER_SIZE];
 
     ff_dir = DB_BuildZoneFilePath(zoneName, filename, sizeof(filename));
-    zoneFile = 0;
+    zoneFile = (HANDLE)-1;
 
     if(ff_dir >= 0)
     {
@@ -1516,6 +1516,14 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
       }
       return 0;
     }
+    if (zoneFile == (HANDLE)-1 )
+    {
+        Sys_DatabaseCompleted();
+//        Com_Error(ERR_DROP, "ERROR: Could not find zone '%s'\n", filename);
+        Com_PrintError(CON_CHANNEL_FILES, "ERROR: Could not find zone '%s'\n", filename);
+        return 0;
+    }
+
     g_zoneIndex = 0;
     for ( i = 1; i < ARRAY_COUNT(g_zones); ++i )
     {

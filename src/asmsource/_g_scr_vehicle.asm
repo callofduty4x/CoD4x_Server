@@ -67,6 +67,7 @@
 	extern _ZN9EntHandle6setEntEP9gentity_s
 	extern Q_stricmp
 	extern s_flashTags
+	extern vehicle_frametime
 
 ;Exports of g_scr_vehicle:
 	global s_phys
@@ -562,7 +563,7 @@ VEH_UpdateAngleAndAngularVel_30:
 	ucomiss xmm2, xmm3
 	ja VEH_UpdateAngleAndAngularVel_50
 VEH_UpdateAngleAndAngularVel_80:
-	movss xmm2, dword [_float_0_05000000]
+	movss xmm2, dword [vehicle_frametime]
 	mulss xmm1, xmm2
 	ucomiss xmm1, xmm7
 	jbe VEH_UpdateAngleAndAngularVel_60
@@ -614,7 +615,7 @@ VEH_UpdateAngleAndAngularVel_40:
 	jbe VEH_UpdateAngleAndAngularVel_80
 VEH_UpdateAngleAndAngularVel_50:
 	xorps xmm6, [_data16_80000000]
-	movss xmm2, dword [_float_0_05000000]
+	movss xmm2, dword [vehicle_frametime]
 	mulss xmm1, xmm2
 	ucomiss xmm1, xmm7
 	jbe VEH_UpdateAngleAndAngularVel_60
@@ -691,7 +692,7 @@ VEH_UpdateMoveToGoal_500:
 	ucomiss xmm3, xmm4
 	ja VEH_UpdateMoveToGoal_30
 	movaps xmm0, xmm6
-	mulss xmm0, [_float_0_05000000]
+	mulss xmm0, [vehicle_frametime]
 	movaps xmm1, xmm4
 	subss xmm1, xmm0
 	movaps xmm0, xmm1
@@ -708,7 +709,9 @@ VEH_UpdateMoveToGoal_550:
 	movss [ebp-0xd0], xmm0
 	mulss xmm0, xmm1
 	mulss xmm2, xmm0
-	mulss xmm1, [_float__0_05000000]
+	movss xmm0, [vehicle_frametime] ;get real frametime
+	xorps xmm0, [_data16_80000000] ;and negate
+	mulss xmm1, xmm0 ;finally mul
 	addss xmm1, [ebp-0xbc]
 	ucomiss xmm2, xmm1
 	jb VEH_UpdateMoveToGoal_40
@@ -716,7 +719,8 @@ VEH_UpdateMoveToGoal_550:
 	ja VEH_UpdateMoveToGoal_50
 VEH_UpdateMoveToGoal_40:
 	mov dword [edi+0x278], 0x0
-	mov dword [ebp-0xb0], 0x3d4ccccd
+	mov eax, [vehicle_frametime] ;get real frametime
+	mov dword [ebp-0xb0], eax
 VEH_UpdateMoveToGoal_770:
 	cmp byte [ebp-0xbd], 0x0
 	jz VEH_UpdateMoveToGoal_60
@@ -858,7 +862,7 @@ VEH_UpdateMoveToGoal_140:
 	mulss xmm3, [ebp-0xd0]
 	mulss xmm1, [ebp-0xd0]
 	mulss xmm2, [ebp-0xd0]
-	movss xmm0, dword [_float_0_05000000]
+	movss xmm0, dword [vehicle_frametime]
 	ucomiss xmm0, [ebp-0xb0]
 	ja VEH_UpdateMoveToGoal_160
 	lea edx, [ebx+0x4]
@@ -1068,7 +1072,7 @@ VEH_UpdateMoveToGoal_670:
 	mulss xmm0, xmm4
 	addss xmm1, xmm0
 	sqrtss xmm0, xmm1
-	divss xmm0, dword [_float_0_05000000]
+	divss xmm0, dword [vehicle_frametime]
 	movss [ebp-0x48], xmm0
 	movss xmm3, dword [ebp-0x118]
 	mulss xmm3, xmm3
@@ -1300,7 +1304,7 @@ VEH_UpdateMoveToGoal_420:
 VEH_UpdateMoveToGoal_20:
 	cmp byte [ebp-0xbd], 0x0
 	jnz VEH_UpdateMoveToGoal_500
-	movss xmm2, dword [_float_0_05000000]
+	movss xmm2, dword [vehicle_frametime]
 	movss [ebp-0xb0], xmm2
 	movss xmm6, dword [edi+0x250]
 	movss xmm3, dword [edi+0x24c]
@@ -1328,7 +1332,7 @@ VEH_UpdateMoveToGoal_530:
 	jmp VEH_UpdateMoveToGoal_540
 VEH_UpdateMoveToGoal_30:
 	movaps xmm0, xmm6
-	mulss xmm0, [_float_0_05000000]
+	mulss xmm0, [vehicle_frametime]
 	addss xmm0, xmm4
 	ucomiss xmm0, xmm3
 	ja VEH_UpdateMoveToGoal_550
@@ -1372,7 +1376,7 @@ VEH_UpdateMoveToGoal_160:
 	movss [ebx+0x8], xmm0
 	jmp VEH_UpdateMoveToGoal_600
 VEH_UpdateMoveToGoal_460:
-	movss xmm0, dword [_float_0_05000000]
+	movss xmm0, dword [vehicle_frametime]
 	mulss xmm0, [ebx+0x25c]
 	ucomiss xmm0, [ebp-0xbc]
 	jb VEH_UpdateMoveToGoal_420
@@ -1478,7 +1482,7 @@ VEH_UpdateMoveToGoal_860:
 VEH_UpdateMoveToGoal_900:
 	mulss xmm0, xmm1
 	divss xmm0, dword [ebp-0x4c]
-	mulss xmm0, [_float_0_05000000]
+	mulss xmm0, [vehicle_frametime]
 	movaps xmm2, xmm0
 	mulss xmm2, [esi]
 	mulss xmm0, [ebp-0xa4]
@@ -1651,7 +1655,8 @@ VEH_UpdateMoveToGoal_50:
 	movss xmm1, dword [ebp-0xbc]
 	ucomiss xmm1, xmm2
 	ja VEH_UpdateMoveToGoal_760
-	mov dword [ebp-0xb0], 0x3d4ccccd
+	mov eax, [vehicle_frametime] ;get real frametime
+	mov dword [ebp-0xb0], eax
 VEH_UpdateMoveToGoal_890:
 	mov dword [edi+0x278], 0x1
 	jmp VEH_UpdateMoveToGoal_770
@@ -1719,7 +1724,7 @@ VEH_UpdateMoveToGoal_620:
 	mulss xmm1, xmm1
 	addss xmm3, xmm3
 	divss xmm1, xmm3
-	mulss xmm1, [_float_0_05000000]
+	mulss xmm1, [vehicle_frametime]
 	movaps xmm0, xmm2
 	subss xmm0, [ebp-0x4c]
 	andps xmm0, [_data16_7fffffff]
@@ -1778,17 +1783,17 @@ VEH_UpdateMoveToGoal_760:
 	movaps xmm0, xmm1
 	subss xmm0, xmm2
 	divss xmm0, xmm4
-	movss xmm1, dword [_float_0_05000000]
+	movss xmm1, dword [vehicle_frametime]
 	subss xmm1, xmm0
 	movaps xmm0, xmm1
-	subss xmm0, [_float_0_05000000]
+	subss xmm0, [vehicle_frametime]
 	movss xmm2, dword [ebp-0xcc]
 	cmpss xmm2, xmm0, 0x6
 	movaps xmm0, xmm2
 	movaps xmm2, xmm1
 	andps xmm2, xmm0
 	movss [ebp-0x160], xmm2
-	movss xmm2, dword [_float_0_05000000]
+	movss xmm2, dword [vehicle_frametime]
 	andnps xmm0, xmm2
 	movss xmm2, dword [ebp-0x160]
 	orps xmm0, xmm2
@@ -1832,7 +1837,9 @@ VEH_UpdateMoveToGoal_840:
 	ucomiss xmm0, xmm1
 	jbe VEH_UpdateMoveToGoal_800
 	movaps xmm2, xmm5
-	mulss xmm2, [_float__0_05000000]
+	movss xmm0, [vehicle_frametime] ;get real frametime
+	xorps xmm0, [_data16_80000000] ;and negate
+	mulss xmm2, xmm0 ;finally mul
 	movss xmm3, dword [_float_0_50000000]
 	movss [ebp-0xd0], xmm3
 	movaps xmm0, xmm3
@@ -1851,7 +1858,7 @@ VEH_UpdateMoveToGoal_840:
 	ucomiss xmm1, xmm0
 	jbe VEH_UpdateMoveToGoal_850
 	movss xmm0, dword [edi+0x250]
-	mulss xmm0, [_float_0_05000000]
+	mulss xmm0, [vehicle_frametime]
 	mulss xmm0, [_float_3_00000000]
 	movaps xmm7, xmm0
 	xorps xmm7, [_data16_80000000]
@@ -3398,7 +3405,8 @@ Scr_Vehicle_Think_470:
 	movss xmm0, dword [ebp-0x2c]
 	andps xmm0, xmm1
 	movss [ebp-0x2c], xmm0
-	mov ebx, 0x3d4ccccd
+	;mov ebx, 0x3d4ccccd
+	mov ebx, [vehicle_frametime]
 	mov [esp+0xc], ebx
 	mov ecx, [ebp-0x10f4]
 	mov eax, [ecx+0xe0]
@@ -5382,7 +5390,6 @@ _float_1_00000000:		dd 0x3f800000	; 1
 _float_0_00277778:		dd 0x3b360b61	; 0.00277778
 _float_360_00000000:		dd 0x43b40000	; 360
 _float_0_05000000:		dd 0x3d4ccccd	; 0.05
-_float__0_05000000:		dd 0xbd4ccccd	; -0.05
 _float_0_00100000:		dd 0x3a83126f	; 0.001
 _float_0_20000000:		dd 0x3e4ccccd	; 0.2
 _float_5_00000000:		dd 0x40a00000	; 5

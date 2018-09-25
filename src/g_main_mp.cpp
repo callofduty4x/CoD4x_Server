@@ -150,11 +150,15 @@ void G_CloseLogFile()
 
 
 float missile_frametime;
+extern int helicopter_thinktime;
+extern float vehicle_frametime;
 
 void G_InitSomeVariables(int framerate)
 {
     level.framerate = framerate;
     missile_frametime = 1.0f / (float)level.framerate;
+    helicopter_thinktime = 1000 / level.framerate;
+    vehicle_frametime = 1.0f / (float)level.framerate;
 }
 
 };
