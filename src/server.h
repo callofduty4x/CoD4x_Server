@@ -317,6 +317,7 @@ typedef struct{
 
 #define MAX_SNAPSHOT_ENTITIES	1024
 #define MAX_CONFIGDATACACHE 4096
+#define NUM_ARCHIVED_FRAMES 1200
 
 typedef struct {//0x8c51780
 
@@ -344,7 +345,7 @@ typedef struct {//0x8c51780
 
 	int nextArchivedSnapshotFrames; //0xee95e9c
 
-	archivedSnapshot_t archivedSnapshotFrames[1200];
+	archivedSnapshot_t archivedSnapshotFrames[NUM_ARCHIVED_FRAMES];
 	byte archivedSnapshotBuffer[ARCHIVEDSSBUF_SIZE];
 	int nextArchivedSnapshotBuffer;
 	int nextCachedSnapshotEntities; //0x10e98420
