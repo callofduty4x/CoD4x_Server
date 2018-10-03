@@ -3607,7 +3607,7 @@ void SV_PreLevelLoad(){
             continue;
         }
 
-        if(SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, buf, sizeof(buf))){
+        if(SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, client->name, buf, sizeof(buf))){
             SV_DropClient(client, "Prior kick/ban");
             continue;
         }

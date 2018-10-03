@@ -175,13 +175,13 @@ void SV_RemoveBanByip(netadr_t *remote)
 }
 
 
-char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, char* message, int len)
+char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, const char* name, char* message, int len)
 {
 
   baninfo_t baninfo;
 
   //Banning
-  Q_strncpyz(baninfo.playername, "", sizeof(baninfo.playername));
+  Q_strncpyz(baninfo.playername, name, sizeof(baninfo.playername));
   baninfo.steamid = steamid;
   baninfo.playerid = playerid;
   if(addr)

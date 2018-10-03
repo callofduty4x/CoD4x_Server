@@ -1711,7 +1711,7 @@ void SV_SendClientGameState( client_t *client ) {
 		return;
 	}
 
-	if(banrejectmsg[0] || SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, banrejectmsg, sizeof(banrejectmsg)))
+	if(banrejectmsg[0] || SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, client->name, banrejectmsg, sizeof(banrejectmsg)))
 	{
 		SV_DropClient(client, banrejectmsg);
 		return;
