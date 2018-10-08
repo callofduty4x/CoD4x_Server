@@ -1332,6 +1332,8 @@ static void* BanUnbanPlayerThread(void* q)
   delete sw;
 
 
+  Plugin_Printf("%s\n",querystring );
+
   //3 attempts to put data
   attempts = 0;
   do

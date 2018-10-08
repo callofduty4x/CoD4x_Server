@@ -817,6 +817,7 @@ static void Cmd_UnbanPlayer_f() {
 
     if ( Cmd_Argc() < 2) {
             Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: unban <id?>\n" );
+            return;
     }
 
     invokerSteamId = Cmd_GetInvokerSteamID();
@@ -835,6 +836,8 @@ static void Cmd_UnbanPlayer_f() {
     baninfo.playerid = 0;
     baninfo.expire = 0;
     baninfo.duration = 0;
+    baninfo.created = Com_GetRealtime();
+    baninfo.message[0] = 0;
 
     steamid = SV_Cmd_GetPlayerByHandle().steamid;
     if(steamid > 0)
@@ -1020,6 +1023,7 @@ gothandle:
       Q_strncpyz(baninfo.adminname, Cmd_GetInvokerName(name, sizeof(name)), sizeof(baninfo.adminname));
       baninfo.adminsteamid = invokerSteamId;
   }
+  baninfo.created = Com_GetRealtime();
   baninfo.expire = (time_t)-1;
   baninfo.duration = (time_t)-1;
   Q_strncpyz(baninfo.message, banreason, sizeof(baninfo.message));
@@ -1190,6 +1194,7 @@ gothandle:
       Q_strncpyz(baninfo.adminname, Cmd_GetInvokerName(name, sizeof(name)), sizeof(baninfo.adminname));
       baninfo.adminsteamid = invokerSteamId;
     }
+    baninfo.created = Com_GetRealtime();
     baninfo.expire = expire;
     baninfo.duration = (time_t)duration;
     Q_strncpyz(baninfo.message, banreason, sizeof(baninfo.message));
