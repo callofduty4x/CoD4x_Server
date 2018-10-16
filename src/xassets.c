@@ -92,7 +92,6 @@ extern const char* g_assetNames[];
 extern int g_zoneCount;
 extern int g_poolSize[];
 
-void __cdecl DB_EnumXAssets_FastFile(enum XAssetType type, void (__cdecl *func)(union XAssetHeader, void *), void *inData, bool includeOverride);
 
 
 qboolean DB_FileExists(const char* filename, int FF_DIR)

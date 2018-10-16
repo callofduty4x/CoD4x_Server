@@ -821,7 +821,7 @@ void SV_InitGameProgs(int a1);
 //sv_banlist.c
 void SV_InitBanlist( void );
 void  SV_ReloadBanlist();
-char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, char* message, int len);
+char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, const char* name, char* message, int len);
 char* SV_PlayerBannedByip(netadr_t *netadr, char* message, int len);	//Gets called in SV_DirectConnect
 void SV_PlayerAddBanByip(netadr_t *remote, char *message, int expire);
 void SV_RemoveBanByip(netadr_t *remote);

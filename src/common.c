@@ -883,7 +883,7 @@ void Com_Init(char* commandLine){
         Sys_Error(va("Error during Initialization:\n%s\n", com_errorMessage));
     }
     Tests_Init();
-
+    CM_DebugInit();
 
 
 //    Init_Watchdog();

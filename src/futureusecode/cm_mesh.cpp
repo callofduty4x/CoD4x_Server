@@ -669,7 +669,7 @@ void CM_TraceThroughAabbTree_work(traceWork_t *tw, CollisionAabbTree *aabbTree, 
   CollisionPartition *partition;
 
   orig_frac = trace->fraction;
-  partitionIndex = aabbTree->u.firstChildIndex;
+  partitionIndex = aabbTree->u.partitionIndex;
   checkStamp = tw->threadInfo.checkcount.global;
   if ( tw->threadInfo.checkcount.partitions && tw->threadInfo.checkcount.partitions[partitionIndex] != checkStamp )
   {
