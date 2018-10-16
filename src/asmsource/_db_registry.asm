@@ -22,7 +22,6 @@
 	extern _ZN10MacDisplay17SetCurrentContextEP16OpaqueContextRef
 	extern _CreateFileA
 	extern Com_PrintWarning
-	extern g_loadingAssets
 	extern Q_stricmp
 	extern memset
 	extern _GetFileSize

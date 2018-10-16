@@ -573,6 +573,7 @@ void G_SetClientArchiveTime(int clindex, int time);
 void G_ClientStopUsingTurret(gentity_t* ent);
 void G_EarlyInit();
 void Scr_Vehicle_Think(struct gentity_s* ent);
+uint16_t __cdecl G_GetHitLocationString(enum hitLocation_t hitLoc);
 #ifdef __cplusplus
 }
 #endif
@@ -581,5 +582,5 @@ void Scr_Vehicle_Think(struct gentity_s* ent);
 
 extern cvar_t* g_maxclients;
 extern vec3_t playerMins, playerMaxs;
-
+extern uint16_t *modNames[16];
 #endif /*G_SHARED_H*/

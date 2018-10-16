@@ -1842,9 +1842,10 @@ void __cdecl DB_LoadXZone(XZoneInfo *zoneInfo, unsigned int zoneCount)
   if ( zoneInfoCount )
   {
     g_loadingAssets = zoneInfoCount;
+    g_zoneInfoCount = zoneInfoCount;
+
     Sys_WakeDatabase2();
     Sys_WakeDatabase();
-    g_zoneInfoCount = zoneInfoCount;
     Sys_NotifyDatabase();
   }
 }

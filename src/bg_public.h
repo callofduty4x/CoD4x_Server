@@ -3,9 +3,22 @@
 
 #include "entity.h"
 #include "cm_public.h"
+#include "xassets/weapondef.h"
 
 void __cdecl BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
 void __cdecl BG_ShutdownWeaponDefFiles();
+const char *__cdecl BG_WeaponName(int weapon);
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+WeaponDef *__cdecl BG_GetWeaponDef(int weapon);
+
+#ifdef __cplusplus
+};
+#endif
+
 
 struct DObjModel_s;
 

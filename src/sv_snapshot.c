@@ -1859,10 +1859,11 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
 
   if ( !SV_FrameIsStillInArchivedSnapshotBuffer(frame->start) )
   {
-    if ( expectedToSucceed )
+    if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time)
     {
       Com_Printf(CON_CHANNEL_SERVER, "Failed to get archived snapshot for archived frame %i - frame->start is too old - %i < %i - %i\n",
         archivedFrame, frame->start, svs.nextArchivedSnapshotBuffer, ARCHIVEDSSBUF_SIZE);
+      svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
     }
     return 0;
   }
@@ -1991,30 +1992,33 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
     oldArchivedFrame = MSG_ReadLong(&msg);
     if ( oldArchivedFrame < svs.nextArchivedSnapshotFrames - NUM_ARCHIVED_FRAMES )
     {
-      if ( expectedToSucceed )
+      if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time )
       {
         Com_Printf(CON_CHANNEL_SERVER, "getting archive snapshot failed for time %i - oldArchiveFrame(%i) < svs.nextArchivedSnapshotFrames(%i) - NUM_ARCHIVED_FRAMES(%i)\n",
           archivedFrame, oldArchivedFrame, svs.nextArchivedSnapshotFrames, NUM_ARCHIVED_FRAMES);
+        svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
       }
       return 0;
     }
     frame = &svs.archivedSnapshotFrames[oldArchivedFrame % NUM_ARCHIVED_FRAMES];
     if ( !SV_FrameIsStillInArchivedSnapshotBuffer(frame->start) )
     {
-      if ( expectedToSucceed )
+      if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time )
       {
 	Com_Printf(CON_CHANNEL_SERVER, "getting archive snapshot failed for time %i - frame->start(%i) < svs.nextArchivedSnapshotBuffer(%i) - ARCHIVEDSSBUF_SIZE(%i)\n",
 	  archivedFrame, frame->start, svs.nextArchivedSnapshotBuffer, ARCHIVEDSSBUF_SIZE);
+        svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
       }
       return 0;
     }
     oldCachedFrame = SV_GetCachedSnapshotInternal(oldArchivedFrame, depth + 1, expectedToSucceed);
     if ( !oldCachedFrame )
     {
-      if ( expectedToSucceed )
+      if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time )
       {
         Com_Printf(CON_CHANNEL_SERVER, "failed to get snapshot for time %i - it was delta'd off time %i, and we couldn't get that snapshot\n",
           archivedFrame, oldArchivedFrame);
+        svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
       }
       return 0;
     }

@@ -4303,6 +4303,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     // send a heartbeat to the master if needed
     SV_MasterHeartbeat( HEARTBEAT_GAME );
 
+
 /*
     for(i = 0; i < sv_maxclients->integer; ++i)
     {

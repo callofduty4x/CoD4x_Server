@@ -356,6 +356,7 @@ typedef struct {//0x8c51780
 	int numCachedSnapshotEntities;
 	int numCachedSnapshotClients;
 	int archivedEntityCount;
+	int nextArchivedSnapshotErrorTime; //stop error message flooding which can stall the whole server
 
 	int nextStatusResponseTime;
 
