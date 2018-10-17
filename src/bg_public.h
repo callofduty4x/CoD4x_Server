@@ -13,7 +13,7 @@ const char *__cdecl BG_WeaponName(int weapon);
 extern "C"{
 #endif
 
-WeaponDef *__cdecl BG_GetWeaponDef(int weapon);
+struct WeaponDef *__cdecl BG_GetWeaponDef(int weapon);
 
 #ifdef __cplusplus
 };
