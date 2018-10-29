@@ -46,11 +46,12 @@ extern "C" void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, c
     {
       assert(client->ps.clientNum == ent->s.number);
       assert(client->ps.viewlocked_entNum != ENTITYNUM_NONE);
+      assert(level.gentities[client->ps.viewlocked_entNum].r.ownerNum - 1 == index);
 
-      assert(level.gentities[client->ps.viewlocked_entNum].r.ownerNum == index);
-      if(level.gentities[client->ps.viewlocked_entNum].client)
+      gentity_s *turretent = &level.gentities[client->ps.viewlocked_entNum];
+      if(level.gentities[turretent->r.ownerNum - 1].client)
       {
-        G_ClientStopUsingTurret(&level.gentities[client->ps.viewlocked_entNum]);
+        G_ClientStopUsingTurret(turretent);
       }
     }
   }
