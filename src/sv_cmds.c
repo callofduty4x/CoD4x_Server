@@ -658,10 +658,12 @@ static void SV_Status_f( void ) {
 	int			i, j, l;
 	client_t	*cl;
 	gclient_t	*gclient;
-	const char		*s;
+	const char* s;
 	int			ping;
-  char psti[128];
-  char ssti[128];
+	char 		psti[128];
+	char 		ssti[128];
+
+	
 
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
@@ -669,32 +671,38 @@ static void SV_Status_f( void ) {
 		return;
 	}
 
+	CON_DisableDraw();
 
-  if(sv_legacymode->boolean)
-  {
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"map: %s\n", sv_mapname->string );
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"num score ping guid                             name            lastmsg address                                              qport rate\n");
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"--- ----- ---- -------------------------------- --------------- ------- ---------------------------------------------------- ----- -----\n");
-  }else{
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"hostname: %s\n", sv_hostname->string);
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"version : %s\n", com_version->string);
-	netadr_t* outadr = NET_GetDefaultCommunicationSocket(NA_IP);
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"udp/ip  : %s\n", NET_AdrToString(outadr));
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"os      : %s\n", OS_STRING);
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"type    : dedicated server\n");
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"map     : %s\n", sv_mapname->string);
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
+	if(sv_legacymode->boolean)
+	{
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"map: %s\n", sv_mapname->string );
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"num score ping guid                             name            lastmsg address                                              qport rate\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"--- ----- ---- -------------------------------- --------------- ------- ---------------------------------------------------- ----- -----\n");
+	}
+	else
+	{
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"hostname: %s\n", sv_hostname->string);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"version : %s\n", com_version->string);
+		netadr_t* outadr = NET_GetDefaultCommunicationSocket(NA_IP);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"udp/ip  : %s\n", NET_AdrToString(outadr));
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"os      : %s\n", OS_STRING);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"type    : dedicated server\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"map     : %s\n", sv_mapname->string);
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"num score ping playerid            steamid           name                             lastmsg address                                              qport rate\n");
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"--- ----- ---- ------------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
-  }
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"num score ping playerid            steamid           name                             lastmsg address                                              qport rate\n");
+		Com_Printf(CON_CHANNEL_DONT_FILTER,"--- ----- ---- ------------------- ----------------- -------------------------------- ------- ---------------------------------------------------- ----- -----\n");
+	}
+
 
 	for (i=0,cl=svs.clients, gclient = level.clients; i < sv_maxclients->integer ; i++, cl++, gclient++)
 	{
 		if (!cl->state)
 			continue;
+		
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"%3i ", i);
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"%5i ", gclient->sess.score);
+		
 		if (cl->state == CS_CONNECTED)
 			Com_Printf(CON_CHANNEL_DONT_FILTER,"CNCT ");
 		else if (cl->state == CS_ZOMBIE)
@@ -710,77 +718,79 @@ static void SV_Status_f( void ) {
     char psti[128];
     SV_SApiSteamIDToString(cl.cl->playerid, psti, sizeof(psti));
 */
-    if(sv_legacymode->boolean)
-    {
-        Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", cl->legacy_pbguid );
+		if(sv_legacymode->boolean)
+		{
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", cl->legacy_pbguid );
 
-    		l = 33 - strlen(cl->legacy_pbguid);
-    		j = 0;
+			l = 33 - strlen(cl->legacy_pbguid);
+			j = 0;
 
-    		do
-    		{
-    			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-    			j++;
-    		} while(j < l);
+			do
+			{
+				Com_Printf(CON_CHANNEL_DONT_FILTER," ");
+				j++;
+			} while(j < l);
 
-        Com_Printf(CON_CHANNEL_DONT_FILTER,"%.15s", cl->name);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"%.15s", cl->name);
 
-    		// TTimo adding a ^7 to reset the color
-    		// NOTE: colored names in status breaks the padding (WONTFIX)
-    		Com_Printf(CON_CHANNEL_DONT_FILTER,"^7");
-    		l = 16 - Q_PrintStrlen(cl->name);
-    		if(l < 1){
+			// TTimo adding a ^7 to reset the color
+			// NOTE: colored names in status breaks the padding (WONTFIX)
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"^7");
+			l = 16 - Q_PrintStrlen(cl->name);
+			if(l < 1){
 				l = 1;
 			}
 			j = 0;
-    		do
-    		{
-    			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-    			j++;
-    		} while(j < l);
+			do
+			{
+				Com_Printf(CON_CHANNEL_DONT_FILTER," ");
+				j++;
+			} while(j < l);
+		}
+		else
+		{
+			SV_SApiSteamIDToString(cl->steamid, ssti, sizeof(ssti));
+			SV_SApiSteamIDToString(cl->playerid, psti, sizeof(psti));
 
-    }else{
-      SV_SApiSteamIDToString(cl->steamid, ssti, sizeof(ssti));
-      SV_SApiSteamIDToString(cl->playerid, psti, sizeof(psti));
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", psti );
 
-      Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", psti );
+			l = 20 - strlen(psti);
+			j = 0;
 
-      l = 20 - strlen(psti);
-      j = 0;
+			do
+			{
+				Com_Printf(CON_CHANNEL_DONT_FILTER," ");
+				j++;
+			} while(j < l);
 
-      do
-      {
-        Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-        j++;
-      } while(j < l);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", ssti );
 
-      Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", ssti );
+			l = 18 - strlen(ssti);
+			j = 0;
 
-      l = 18 - strlen(ssti);
-      j = 0;
-
-      do
-      {
-        Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-        j++;
-      } while(j < l);
+			do
+			{
+				Com_Printf(CON_CHANNEL_DONT_FILTER," ");
+				j++;
+			} while(j < l);
 
 
-      Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", cl->name);
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", cl->name);
 
-      // TTimo adding a ^7 to reset the color
-      // NOTE: colored names in status breaks the padding (WONTFIX)
-      Com_Printf(CON_CHANNEL_DONT_FILTER,"^7");
-      l = 33 - Q_PrintStrlen(cl->name);
-      j = 0;
+			// TTimo adding a ^7 to reset the color
+			// NOTE: colored names in status breaks the padding (WONTFIX)
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"^7");
 
-      do
-      {
-        Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-        j++;
-      } while(j < l);
+			l = 33 - Q_PrintStrlen(cl->name);
+			j = 0;
 
-    }
+			do
+			{
+				Com_Printf(CON_CHANNEL_DONT_FILTER," ");
+				j++;
+			} 
+			while(j < l);
+		}
 
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"%7i ", svs.time - cl->lastPacketTime );
 		/* Length must be: [0000:1111:2222:3333:4444:5555:6666:7777:8888]:65535 = 52 */
@@ -800,7 +810,10 @@ static void SV_Status_f( void ) {
 
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 	}
+
 	Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
+
+	CON_EnableDraw();
 }
 
 /*

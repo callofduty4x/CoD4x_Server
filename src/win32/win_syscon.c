@@ -571,5 +571,19 @@ void CON_Print( const char *pMsg ) {
 	//
 	SendMessageA( s_wcd.hwndBuffer, EM_LINESCROLL, 0, 0xffff );
 	SendMessageA( s_wcd.hwndBuffer, EM_SCROLLCARET, 0, 0 );
+
+	
 	SendMessageA( s_wcd.hwndBuffer, EM_REPLACESEL, 0, (LPARAM) buffer );
+	//
+    //InvalidateRect(s_wcd.hwndBuffer, NULL, TRUE);
+}
+
+void CON_DisableDraw() 
+{
+	SendMessage(  s_wcd.hwndBuffer, WM_SETREDRAW, (WPARAM) FALSE, 0);
+}
+
+void CON_EnableDraw() 
+{
+	SendMessageA( s_wcd.hwndBuffer, WM_SETREDRAW,  (WPARAM) TRUE, 0);
 }
