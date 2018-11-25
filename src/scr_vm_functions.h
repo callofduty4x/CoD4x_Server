@@ -48,6 +48,7 @@ void PlayerCmd_SetJumpHeight(scr_entref_t arg);
 void PlayerCmd_SetMoveSpeed(scr_entref_t arg);
 void PlayerCmd_GetGeoLocation(scr_entref_t arg);
 void PlayerCmd_GetCountedFPS(scr_entref_t arg);
+void PlayerCmd_GetCountedFPSSweetspot(scr_entref_t arg);
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg);
 void PlayerCmd_SetVelocity(scr_entref_t arg);
 
@@ -121,6 +122,7 @@ void GScr_IsString();
 void GScr_IsFloat();
 void GScr_IsInt();
 void GScr_Float();
+void GScr_Pow();
 
 void GScr_CloneBrushModelToScriptModel(scr_entref_t brushModelEnt);
 void PlayerCmd_SetStance(scr_entref_t playerEntNum);

@@ -366,6 +366,7 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("isfloat", GScr_IsFloat, 0);
     Scr_AddFunction("isint", GScr_IsInt, 0);
     Scr_AddFunction("float", GScr_Float, 0); // like int(...) but to convert to floating point number.
+    Scr_AddFunction("pow", GScr_Pow, 0);
 }
 
 void Scr_AddStockMethods()
@@ -621,6 +622,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("setdamagestage", (void *)0x80ba890, 0);
     Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
     Scr_AddMethod("getcountedfps", PlayerCmd_GetCountedFPS, 0);
+    Scr_AddMethod("getcountedfpssweetspot", PlayerCmd_GetCountedFPSSweetspot, 0);
     Scr_AddMethod("getspectatorclient", PlayerCmd_GetSpectatorClient, 0);
 
     // Player movement detection.

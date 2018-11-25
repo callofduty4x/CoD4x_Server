@@ -1470,6 +1470,31 @@ void GScr_CopyString()
 
 /*
 ============
+GScr_Pow
+
+Calculate a number with exponent.
+Usage: float = pow(base <float>, exponent <float>);
+============
+*/
+
+void GScr_Pow()
+{
+    float base, exponent;
+    
+    if (Scr_GetNumParam() != 2)
+    {
+        Scr_Error("Usage: pow(<float> ,<float>)");
+        return;
+    }
+
+    base = Scr_GetFloat(0);
+    exponent = Scr_GetFloat(1);
+    
+    Scr_AddFloat(powf(base, exponent));
+}
+
+/*
+============
 GScr_GetRealTime
 
 Returns the current time in seconds since 01/01/2012 UTC
@@ -2966,6 +2991,26 @@ void PlayerCmd_GetCountedFPS(scr_entref_t arg)
     Scr_AddInt(cl->clFPS);
 }
 
+void PlayerCmd_GetCountedFPSSweetspot(scr_entref_t arg)
+{
+    if (Scr_GetNumParam())
+        Scr_Error("Usage: <player entity> GetCountedFPSSweetspot()\n");
+
+    client_t *cl = VM_GetClientForEntityNumber(arg);
+
+    if (!cl)
+        Scr_ObjectError("not a client\n");
+
+    if(abs(125 - cl->clFPS) < 20)
+        Scr_AddInt(125);
+    else if(abs(250 - cl->clFPS) < 20)
+        Scr_AddInt(250);
+    else if(abs(333 - cl->clFPS) < 20)
+        Scr_AddInt(333);
+    else
+        Scr_AddInt(cl->clFPS);
+}
+
 static void PlayerCmd_GetSteamGroupMembershipCallback(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer)
 {
     char sidstring[128], gidstring[128];
@@ -3134,7 +3179,38 @@ qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *c
 
 void PlayerCmd_GetSpectatorClient(scr_entref_t arg)
 {
-    Scr_Error("Functionality dropped. To get/set spectator client number, use 'ent.spectatorClient' member instead.");
+    gentity_t *gentity;
+    int entityNum = 0;		
+    mvabuf;		
+		
+    if (HIWORD(arg))		
+    {		
+        Scr_ObjectError("Not an entity");		
+    }		
+    else		
+    {		
+        entityNum = LOWORD(arg);		
+        gentity = &g_entities[entityNum];		
+		
+        if (!gentity->client)		
+        {		
+            Scr_ObjectError(va("Entity: %i is not a player", entityNum));		
+        }		
+    }		
+    if (Scr_GetNumParam())		
+    {		
+        Scr_Error("Usage: self getSpectatorClient()\n");		
+    }		
+		
+    // Player isn't spectating anyone.		
+    if (gentity->client->spectatorClient == -1)		
+    {		
+        Scr_AddUndefined();		
+    }		
+    else		
+    {		
+        Scr_AddEntity(&g_entities[gentity->client->spectatorClient]);		
+    }		
 }
 
 void PlayerCmd_SetVelocity(scr_entref_t arg)
@@ -3270,7 +3346,7 @@ void GScr_Float()
     {
         char* strFloat = Scr_GetString(0);
         double result = 0.0;
-        if (isdigit(strFloat[0]))
+        if ( isdigit(strFloat[0]) || (strFloat[0] == '-' && isdigit(strFloat[1])))
             result = atof(strFloat);
         Scr_AddFloat((float)result);
     }

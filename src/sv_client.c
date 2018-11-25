@@ -1136,19 +1136,19 @@ void SV_ClientCalcFramerate()
 		elapsed = 1;
 	}
 
-	int calcfactor = ((1000 << 8) / (elapsed << 8));
-
-	for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
+	if(elapsed > 1000)
 	{
-		if(cl->state == CS_ACTIVE)
+		for(i = 0, cl = svs.clients; i < sv_maxclients->integer; ++i, ++cl)
 		{
-			cl->clFPS = cl->clFrames * calcfactor;
-		}else{
-			cl->clFPS = 0;
+			if(cl->state == CS_ACTIVE)
+				cl->clFPS = (float)cl->clFrames * 1000.0f / elapsed;
+			else
+				cl->clFPS = 0;
+			
+			cl->clFrames = 0;
 		}
-		cl->clFrames = 0;
+		oldtime = now;
 	}
-	oldtime = now;
 }
 
 /*

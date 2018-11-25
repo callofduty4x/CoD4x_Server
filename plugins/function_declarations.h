@@ -274,7 +274,7 @@
 
     __cdecl gentity_t* Plugin_GetGentityForEntityNum(int entnum);
     __cdecl client_t* Plugin_GetClientForClientNum(int clientnum);
-
+	__cdecl int Plugin_ClientToSlot(client_t *client); //Returns Slot number on client_t argument
     __cdecl const char* Plugin_SL_ConvertToString(int index);
 
     __cdecl void Plugin_SV_SetConfigstring(int index, const char *text);
@@ -282,7 +282,7 @@
 
     /* If someone called a command the following functions return data about who invoked it */
     __cdecl int Plugin_Cmd_GetInvokerSlot();                              //clientnum of commandinvoker. -1 if undefined
-    __cdecl int Plugin_Cmd_GetInvokerUID();                              //UID of commandinvoker. 0 if undefined
+    __cdecl int Plugin_Cmd_GetInvokerUID();                              //UID of commandinvoker. 0 if undefined . Deprecated in COD4x18 Do not Use this !
     __cdecl int Plugin_Cmd_GetInvokerClnum();                            //Client slot number of invoker. -1 if undefined
     __cdecl int Plugin_Cmd_GetInvokerPower();                            //Power points of command invoker. 100 if undefined or have all permissions
     __cdecl uint64_t Plugin_Cmd_GetInvokerSteamID();                     //Steam ID of invoker. 0 if undefined

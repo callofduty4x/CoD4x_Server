@@ -3408,7 +3408,7 @@ void SV_SetServerStaticHeader()
     svsHeader.maxClients = sv_maxclients->integer;
     svsHeader.fps = sv_fps->integer;
     svsHeader.gentitySize = sv.gentitySize;
-    svsHeader.canArchiveData = sv_clientArchive->integer;
+    svsHeader.clientArchive = sv_clientArchive->integer;
 
     svsHeader.gentities = sv.gentities;
     svsHeader.gclientstate = G_GetClientState( 0 );

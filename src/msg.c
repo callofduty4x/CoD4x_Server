@@ -2657,7 +2657,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 	int numEntries;
 	int predictedTime;
 	vec3_t predictedOrigin;
-	int startoffset = msg->cursize;
+	//int startoffset = msg->cursize;
 
 	if ( !from )
 	{

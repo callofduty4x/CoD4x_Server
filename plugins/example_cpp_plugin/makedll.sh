@@ -12,3 +12,9 @@ echo `g++ -m32 -shared -fvisibility=hidden -o $NAME''.so *.o`
 
 #Cleaning up
 echo `rm *.o`
+
+if [ $? -ne 0 ]
+then
+    echo "Compile failed!"
+    exit 1
+fi
