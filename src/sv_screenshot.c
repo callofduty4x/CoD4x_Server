@@ -155,8 +155,12 @@ A screenshot has arrived
 void SV_ScreenshotArrived( client_t* cl, const char* filename )
 {
 	static char cmdline[1024];
+	char filepath[1024];
 
-	PHandler_Event(PLUGINS_ONSCREENSHOTARRIVED, cl, filename);
+	Com_sprintf(filepath, sizeof(filepath), "%s/%s", fs_homepath->string, filename);
+
+
+	PHandler_Event(PLUGINS_ONSCREENSHOTARRIVED, cl, filepath);
 
 
 	if(!*sv_screenshotArrivedCmd->string)
@@ -167,7 +171,7 @@ void SV_ScreenshotArrived( client_t* cl, const char* filename )
 		Com_PrintWarning(CON_CHANNEL_SERVER,"Commandlines containing \"..\" are not allowed\n");
 		return;
 	}
-	Com_sprintf(cmdline, sizeof(cmdline), "\"%s/apps/%s\" \"%s/%s\"", fs_homepath->string, sv_screenshotArrivedCmd->string, fs_homepath->string, filename);
+	Com_sprintf(cmdline, sizeof(cmdline), "\"%s/apps/%s\" \"%s\"", fs_homepath->string, sv_screenshotArrivedCmd->string, filepath);
 
 	Sys_DoStartProcess(cmdline);
 }

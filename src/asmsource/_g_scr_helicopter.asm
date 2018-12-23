@@ -201,25 +201,6 @@ Helicopter_Pain_20:
 	jmp VEH_JoltBody_copy
 
 
-;Helicopter_Think(gentity_s*)
-Helicopter_Think:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, [ebp+0x8]
-	mov [esp], ebx
-	call Scr_Vehicle_Think
-	mov eax, level
-	mov eax, [eax+0x1ec]
-	add eax, 0x32
-	mov [ebx+0x19c], eax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-
-
 ;G_SpawnHelicopter(gentity_s*, gentity_s*, char const*, char const*)
 G_SpawnHelicopter:
 	push ebp

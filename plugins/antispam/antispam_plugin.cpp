@@ -310,7 +310,7 @@ PCL void OnMessageSent(char *message,int slot, qboolean *show, int type)
 	}
 	
 	client_t* client = Plugin_GetClientForClientNum(slot);
-	if(client->netchan.remoteAddress.type == NA_BOT || client->playerid == 0)
+	if(!client || client->netchan.remoteAddress.type == NA_BOT || client->playerid == 0)
 	{
 		return;
 	}

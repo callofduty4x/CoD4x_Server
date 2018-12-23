@@ -151,6 +151,7 @@ pexport Scr_AddArrayKeys
 pexport Scr_ExecEntThread
 pexport Scr_ExecThread
 pexport Scr_FreeThread
+ralias Plugin_GetCommonVersionString, Sys_GetCommonVersionString
 
 pexport Scr_Notify
 pexport Scr_NotifyNum

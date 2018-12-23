@@ -65,6 +65,7 @@
 	extern vectoangles
 	extern G_LevelSpawnString
 	extern DB_DiscardBspWeapons
+	extern G_TurretCalcFireTime
 
 ;Exports of g_misc_mp:
 	global turretInfo
@@ -328,7 +329,7 @@ turret_think:
 	mov esi, [ebp+0x8]
 	mov eax, level
 	mov eax, [eax+0x1ec]
-	add eax, 0x32
+	add eax, 50
 	mov [esi+0x19c], eax
 	mov edi, [esi+0x218]
 	test edi, edi
@@ -371,7 +372,7 @@ turret_think_30:
 	movzx eax, byte [edi+0x44]
 	mov [esi+0x80], eax
 	mov eax, [edi+0x28]
-	sub eax, 0x32
+	sub eax, 50
 	mov [edi+0x28], eax
 	test eax, eax
 	jle turret_think_60
@@ -713,7 +714,7 @@ G_SpawnTurret_220:
 	mov byte [edi+0x16e], 0xe
 	mov eax, level
 	mov eax, [eax+0x1ec]
-	add eax, 0x32
+	add eax, 50
 	mov [edi+0x19c], eax
 	mov dword [edi+0x30], 0x3
 	mov byte [edi+0x16b], 0x0
@@ -1176,7 +1177,7 @@ turret_think_init:
 	mov byte [edi+0x16e], 0xf
 	mov eax, level
 	mov eax, [eax+0x1ec]
-	add eax, 0x32
+	add eax, 50
 	mov [edi+0x19c], eax
 	mov edx, [ebp-0xe4]
 	movss xmm0, dword [edx+0x1c]
@@ -1473,16 +1474,14 @@ turret_think_client_30:
 	test byte [eax+0x50], 0x4
 	jnz turret_think_client_50
 turret_think_client_40:
-	mov eax, [edi+0xc4]
-	mov [esp], eax
-	call BG_GetWeaponDef
+	call G_TurretCalcFireTime
 	mov edx, eax
 	mov eax, [esi+0x15c]
 	mov dword [eax+0x598], 0x1
 	and dword [edi+0x8], 0xffffffbf
 	mov ecx, [ebp-0x1b4]
 	mov eax, [ecx+0x8]
-	sub eax, 0x32
+	sub eax, edx
 	mov [ecx+0x8], eax
 	test eax, eax
 	jle turret_think_client_60
@@ -1495,7 +1494,7 @@ turret_think_client_200:
 	movzx eax, byte [edx+0x44]
 	mov [edi+0x80], eax
 	mov eax, [edx+0x28]
-	sub eax, 0x32
+	sub eax, 50
 	mov [edx+0x28], eax
 	test eax, eax
 	jg turret_think_client_70
@@ -1722,6 +1721,10 @@ turret_think_client_250:
 	movaps xmm1, xmm0
 	jmp turret_think_client_170
 turret_think_client_60:
+	mov eax, [edi+0xc4]
+	mov [esp], eax
+	call BG_GetWeaponDef
+	mov edx, eax
 	mov dword [ecx+0x8], 0x0
 	mov eax, [esi+0x15c]
 	test byte [eax+0xd], 0x8

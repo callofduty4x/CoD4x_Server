@@ -126,6 +126,48 @@ void CM_DebugSubModels()
 
 }
 
+
+
+void CM_WalkAABB_Trees()
+{
+
+    int i, j;
+    CollisionAabbTree_t* tr;
+    CollisionPartition_t* pat;
+    vec3_t *vert;
+    uint16_t* triIndice;
+
+    FS_Printf( f, "*****************************************************************************************");
+    FS_Printf( f, "******************************** AABB-Tree **********************************************");
+    FS_Printf( f, "*****************************************************************************************");
+
+    for(i = 0; i < cm.aabbTreeCount; ++i)
+    {
+        tr = &cm.aabbTrees[i];
+        assert(tr->materialIndex < cm.numMaterials);
+        FS_Printf( f, "AABBTree num=%d, Mat: %s, childs=%d, firstChild=%d\n", i, cm.materials[tr->materialIndex].material, tr->childCount, tr->u.firstChildIndex);
+        if(tr->childCount == 0)
+        {
+            assert(tr->u.partitionIndex < cm.partitionCount);
+            pat = &cm.partitions[tr->u.partitionIndex];
+            assert(pat->triCount + pat->firstTri <= cm.triCount);
+            triIndice = &cm.triIndices[pat->firstTri *3];
+            for(j = 0; j < pat->triCount; ++j)
+            {
+                uint16_t* vertset = &triIndice[3 * j];
+                FS_Printf( f, "Vertex1: %g %g %g\n", cm.verts[vertset[0]][0], cm.verts[vertset[0]][1], cm.verts[vertset[0]][2]);
+                FS_Printf( f, "Vertex2: %g %g %g\n", cm.verts[vertset[1]][0], cm.verts[vertset[1]][1], cm.verts[vertset[1]][2]);
+                FS_Printf( f, "Vertex3: %g %g %g\n", cm.verts[vertset[2]][0], cm.verts[vertset[2]][1], cm.verts[vertset[2]][2]);
+            }
+
+        }
+
+
+    }
+
+}
+
+
 void CM_DebugDoAll_f()
 {
     f = FS_FOpenFileWrite("cm_debug.log");
@@ -140,6 +182,7 @@ void CM_DebugDoAll_f()
     CM_DebugCBrush();
     CM_DebugCLeaf();
     CM_DebugSubModels();
+    CM_WalkAABB_Trees();
     FS_FCloseFile(f);
 
 }

@@ -785,7 +785,7 @@ void __cdecl SV_InitGameVM(int restart, int registerDvars)
 /*  Sys_LoadingKeepAlive();*/
 
   time = Sys_MillisecondsRaw();
-  G_InitGame(svs.time, time, restart, registerDvars);
+  G_InitGame(svs.time, time, restart, registerDvars, sv_fps->integer);
 /*
   float sprinttime;
 

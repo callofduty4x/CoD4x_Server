@@ -1768,6 +1768,12 @@ void SV_ConnectWithUpdateProxy(client_t *cl)
 
             if(update_connection.updateserveradr.type == NA_BAD || sv_updatebackendname->modified)
             {
+                if(!sv_updatebackendname->string[0])
+                {
+                    Com_Printf(CON_CHANNEL_SERVER,"Cvar sv_updatebackendname is empty. Can not update cod4 client.\n");
+                    return;
+                }
+
                 Com_Printf(CON_CHANNEL_SERVER,"Resolving %s\n", sv_updatebackendname->string);
                 Cvar_ClearModified(sv_updatebackendname);
                 res = NET_StringToAdr(sv_updatebackendname->string, &update_connection.updateserveradr, NA_IP);
@@ -3601,7 +3607,7 @@ void SV_PreLevelLoad(){
             continue;
         }
 
-        if(SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, buf, sizeof(buf))){
+        if(SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, client->name, buf, sizeof(buf))){
             SV_DropClient(client, "Prior kick/ban");
             continue;
         }
@@ -4273,8 +4279,10 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     // run the game simulation in chunks
     while ( sv.timeResidual >= frameUsec ) {
         sv.timeResidual -= frameUsec;
-        svs.time += frameUsec / 1000;
+        div_t svtimeinc = div(frameUsec + svs.timeResidual, 1000);
 
+        svs.time += svtimeinc.quot;
+        svs.timeResidual = svtimeinc.rem;
         // let everything in the world think and move
         G_RunFrame( svs.time );
     }
@@ -4294,6 +4302,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 
     // send a heartbeat to the master if needed
     SV_MasterHeartbeat( HEARTBEAT_GAME );
+
 
 /*
     for(i = 0; i < sv_maxclients->integer; ++i)

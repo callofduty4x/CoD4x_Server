@@ -5,6 +5,7 @@
 
 #include "server_public.h"
 
+level_locals_t level;
 
 const char* g_dedicatedEnumNames[] = { "listen server", "dedicated LAN server", "dedicated internet server" };
 
@@ -147,5 +148,17 @@ void G_CloseLogFile()
 	level.logFile = 0;
 }
 
+
+float missile_frametime;
+extern int helicopter_thinktime;
+extern float vehicle_frametime;
+
+void G_InitSomeVariables(int framerate)
+{
+    level.framerate = framerate;
+    missile_frametime = 1.0f / (float)level.framerate;
+    helicopter_thinktime = 1000 / level.framerate;
+    vehicle_frametime = 1.0f / (float)level.framerate;
+}
 
 };

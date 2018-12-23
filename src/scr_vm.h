@@ -449,6 +449,8 @@ enum $0E0E04F36A22A28F2C0A7A22DC12DAE9
 };
 
 
+#define VAR_NAME_LOW_MASK 0x00FFFFFF
+
 
 typedef struct
 {
@@ -705,6 +707,7 @@ void __cdecl Scr_GetVector( unsigned int, float* );
 unsigned int __cdecl Scr_GetObject( unsigned int );
 void __cdecl Scr_GetObjectField(unsigned int classnum, int entnum, int offset);
 const char *__cdecl Scr_GetIString(unsigned int index);
+void VM_Resume(unsigned int id);
 
 int Scr_GetFunc(unsigned int paramnum);
 extern char* (__cdecl *Scr_GetLocalizedString)(unsigned int arg);

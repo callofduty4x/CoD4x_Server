@@ -174,6 +174,7 @@ typedef struct
     float compassMapWorldSize[2];
     float compassNorth[2];
     struct scr_vehicle_s *vehicles;
+    int framerate;
 } level_locals_t;
 
 extern level_locals_t level;
@@ -518,7 +519,7 @@ extern cvar_t *g_synchronousClients;
 extern cvar_t *g_log;
 extern cvar_t *g_logSync;
 extern cvar_t *g_logTimeStampInSeconds;
-
+extern cvar_t *g_smoothClients;
 
 extern qboolean onExitLevelExecuted;
 
@@ -571,6 +572,8 @@ int G_GetClientArchiveTime(int clientindex);
 void G_SetClientArchiveTime(int clindex, int time);
 void G_ClientStopUsingTurret(gentity_t* ent);
 void G_EarlyInit();
+void Scr_Vehicle_Think(struct gentity_s* ent);
+uint16_t __cdecl G_GetHitLocationString(enum hitLocation_t hitLoc);
 #ifdef __cplusplus
 }
 #endif
@@ -579,5 +582,5 @@ void G_EarlyInit();
 
 extern cvar_t* g_maxclients;
 extern vec3_t playerMins, playerMaxs;
-
+extern uint16_t *modNames[16];
 #endif /*G_SHARED_H*/

@@ -513,7 +513,6 @@
 	global Scr_SetAngles
 	global Scr_SetHealth
 	global Scr_SetOrigin
-	global GScr_AddEntity
 	global GScr_IsRagdoll
 	global Scr_VoteCalled
 	global GScr_IsMantling
@@ -524,7 +523,6 @@
 	global G_InitObjectives
 	global Scr_LoadGameType
 	global Scr_PlayerDamage
-	global Scr_PlayerKilled
 	global GScr_GetTagAngles
 	global GScr_GetTagOrigin
 	global GScr_StartRagdoll
@@ -13762,20 +13760,6 @@ Scr_SetOrigin_10:
 	ret
 
 
-;GScr_AddEntity(gentity_s*)
-GScr_AddEntity:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	test eax, eax
-	jz GScr_AddEntity_10
-	pop ebp
-	jmp Scr_AddEntity
-GScr_AddEntity_10:
-	pop ebp
-	jmp Scr_AddUndefined
-
-
 ;GScr_IsRagdoll(scr_entref_t)
 GScr_IsRagdoll:
 	push ebp
@@ -14204,113 +14188,6 @@ Scr_PlayerDamage_10:
 Scr_PlayerDamage_20:
 	call Scr_AddUndefined
 	jmp Scr_PlayerDamage_100
-
-
-;Scr_PlayerKilled(gentity_s*, gentity_s*, gentity_s*, int, int, int, float const*, hitLocation_t, int, int)
-Scr_PlayerKilled:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x3c
-	mov eax, [ebp+0x8]
-	mov [ebp-0x1c], eax
-	mov edx, [ebp+0xc]
-	mov [ebp-0x20], edx
-	mov eax, [ebp+0x10]
-	mov [ebp-0x24], eax
-	mov edx, [ebp+0x14]
-	mov [ebp-0x28], edx
-	mov eax, [ebp+0x18]
-	mov [ebp-0x2c], eax
-	mov edx, [ebp+0x1c]
-	mov [ebp-0x30], edx
-	mov edi, [ebp+0x20]
-	mov esi, [ebp+0x24]
-	mov ebx, [ebp+0x28]
-	mov eax, [ebp+0x2c]
-	mov [esp], eax
-	call Scr_AddInt
-	mov [esp], ebx
-	call Scr_AddInt
-	mov [esp], esi
-	call G_GetHitLocationString
-	movzx eax, ax
-	mov [esp], eax
-	call Scr_AddConstString
-	test edi, edi
-	jz Scr_PlayerKilled_10
-	mov [esp], edi
-	call Scr_AddVector
-Scr_PlayerKilled_80:
-	mov eax, [ebp-0x30]
-	mov [esp], eax
-	call BG_GetWeaponDef
-	mov eax, [eax]
-	mov [esp], eax
-	call Scr_AddString
-	cmp dword [ebp-0x2c], 0xf
-	jbe Scr_PlayerKilled_20
-	mov dword [esp], _cstring_badmod
-	call Scr_AddString
-	mov eax, [ebp-0x28]
-	mov [esp], eax
-	call Scr_AddInt
-	mov edx, [ebp-0x24]
-	test edx, edx
-	jz Scr_PlayerKilled_30
-Scr_PlayerKilled_50:
-	mov edx, [ebp-0x24]
-	mov [esp], edx
-	call Scr_AddEntity
-	mov eax, [ebp-0x20]
-	test eax, eax
-	jz Scr_PlayerKilled_40
-Scr_PlayerKilled_60:
-	mov eax, [ebp-0x20]
-	mov [esp], eax
-	call Scr_AddEntity
-Scr_PlayerKilled_70:
-	mov dword [esp+0x8], 0x9
-	mov eax, [g_scr_data+0x1c]
-	mov [esp+0x4], eax
-	mov edx, [ebp-0x1c]
-	mov [esp], edx
-	call Scr_ExecEntThread
-	movzx eax, ax
-	mov [ebp+0x8], eax
-	add esp, 0x3c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	jmp Scr_FreeThread
-Scr_PlayerKilled_20:
-	mov eax, modNames
-	mov edx, [ebp-0x2c]
-	mov eax, [eax+edx*4]
-	movzx eax, word [eax]
-	mov [esp], eax
-	call Scr_AddConstString
-	mov eax, [ebp-0x28]
-	mov [esp], eax
-	call Scr_AddInt
-	mov edx, [ebp-0x24]
-	test edx, edx
-	jnz Scr_PlayerKilled_50
-Scr_PlayerKilled_30:
-	call Scr_AddUndefined
-	mov eax, [ebp-0x20]
-	test eax, eax
-	jnz Scr_PlayerKilled_60
-Scr_PlayerKilled_40:
-	call Scr_AddUndefined
-	jmp Scr_PlayerKilled_70
-Scr_PlayerKilled_10:
-	call Scr_AddUndefined
-	jmp Scr_PlayerKilled_80
-	nop
 
 
 ;GScr_GetTagAngles(scr_entref_t)

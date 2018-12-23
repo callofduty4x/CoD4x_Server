@@ -86,6 +86,7 @@ struct XFile
   unsigned int blockSize[XBLOCK_COUNT];
 };
 
+int XAssetEntryHighCount, XAssetEntryHighWaterMark;
 byte* g_streamPos;
 unsigned int g_streamPosIndex;
 
@@ -1497,7 +1498,7 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
 //    char g_fileBuf[DBFILE_BUFFER_SIZE];
 
     ff_dir = DB_BuildZoneFilePath(zoneName, filename, sizeof(filename));
-    zoneFile = 0;
+    zoneFile = (HANDLE)-1;
 
     if(ff_dir >= 0)
     {
@@ -1516,6 +1517,14 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
       }
       return 0;
     }
+    if (zoneFile == (HANDLE)-1 )
+    {
+        Sys_DatabaseCompleted();
+//        Com_Error(ERR_DROP, "ERROR: Could not find zone '%s'\n", filename);
+        Com_PrintError(CON_CHANNEL_FILES, "ERROR: Could not find zone '%s'\n", filename);
+        return 0;
+    }
+
     g_zoneIndex = 0;
     for ( i = 1; i < ARRAY_COUNT(g_zones); ++i )
     {
@@ -1834,9 +1843,10 @@ void __cdecl DB_LoadXZone(XZoneInfo *zoneInfo, unsigned int zoneCount)
   if ( zoneInfoCount )
   {
     g_loadingAssets = zoneInfoCount;
+    g_zoneInfoCount = zoneInfoCount;
+
     Sys_WakeDatabase2();
     Sys_WakeDatabase();
-    g_zoneInfoCount = zoneInfoCount;
     Sys_NotifyDatabase();
   }
 }
@@ -1939,6 +1949,7 @@ void __cdecl DB_FreeXAssetEntry(XAssetEntry *assetEntry)
   XAssetEntryPoolEntry *oldFreeHead;
 
   DB_FreeXAssetHeader(assetEntry->asset.type, assetEntry->asset.header);
+  --XAssetEntryHighCount;
   oldFreeHead = g_freeAssetEntryHead;
   g_freeAssetEntryHead = (XAssetEntryPoolEntry *)assetEntry;
   *(XAssetEntryPoolEntry **)assetEntry = oldFreeHead;
@@ -3091,6 +3102,97 @@ void XAssetUsage_f()
 
 }
 
+void __cdecl DB_PrintXAssetsForType_FastFile(XAssetType type, void *inData, bool includeOverride)
+{
+  unsigned int hash;
+  unsigned int assetEntryIndex;
+  XAssetEntryPoolEntry *assetEntry;
+  unsigned int overrideAssetEntryIndex;
+
+  Sys_EnterCriticalSection(CRITSECT_DBHASH);
+  for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
+  {
+    for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = assetEntry->entry.nextHash )
+    {
+      assetEntry = &g_assetEntryPool[assetEntryIndex];
+      if ( g_assetEntryPool[assetEntryIndex].entry.asset.type == type )
+      {
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "'%s','%s'\n", DB_GetXAssetHeaderName(type, &assetEntry->entry.asset.header), g_zones[assetEntry->entry.zoneIndex].zoneinfo.name);
+        if ( includeOverride )
+        {
+          for ( overrideAssetEntryIndex = assetEntry->entry.nextOverride; overrideAssetEntryIndex; overrideAssetEntryIndex = g_assetEntryPool[overrideAssetEntryIndex].entry.nextOverride )
+          {
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "'%s','%s'\n", DB_GetXAssetHeaderName(type, &g_assetEntryPool[overrideAssetEntryIndex].entry.asset.header), g_zones[(uint8_t)g_assetEntryPool[overrideAssetEntryIndex].entry.zoneIndex].zoneinfo.name);
+          }
+        }
+      }
+    }
+  }
+  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
+}
+
+
+void __cdecl DB_PrintXAssetsForType(XAssetType type, void (__cdecl *func)(XAssetHeader, void *), void *inData, bool includeOverride)
+{
+  if ( useFastFile->boolean )
+  {
+    DB_PrintXAssetsForType_FastFile(type, &inData, includeOverride);
+  }
+  else
+  {
+    DB_EnumXAssets(type, func, &inData, includeOverride);
+  }
+}
+
+void __cdecl DB_PrintAssetName(XAssetHeader header, void *data)
+{
+  const char *name;
+
+  name = DB_GetXAssetHeaderName(*(DWORD *)data, &header);
+  Com_Printf(CON_CHANNEL_DONT_FILTER, "%s\n", name);
+}
+//actually XAssetHeader
+extern void* (__cdecl *DB_AllocXAssetHeaderHandler[ ])(void *);
+
+XAssetHeader __cdecl DB_AllocXAssetHeader(XAssetType type)
+{
+  XAssetHeader header;
+
+  header.data = DB_AllocXAssetHeaderHandler[type](DB_XAssetPool[type]);
+  if ( !header.data )
+  {
+    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
+    Com_PrintError(CON_CHANNEL_ERROR, "Exceeded limit of %d '%s' assets.\n", g_poolSize[type], g_assetNames[type]);
+    DB_PrintXAssetsForType(type, DB_PrintAssetName, &type, 1);
+    Com_Error(ERR_DROP, "Exceeded limit of %d '%s' assets.\n", g_poolSize[type], g_assetNames[type]);
+  }
+  return header;
+}
+
+
+XAssetEntryPoolEntry *__cdecl DB_AllocXAssetEntry(XAssetType type, unsigned int zoneIndex)
+{
+  XAssetEntryPoolEntry *freeHead;
+
+  freeHead = g_freeAssetEntryHead;
+  if ( !g_freeAssetEntryHead )
+  {
+    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
+    Com_Error(ERR_DROP, "Could not allocate asset - increase XASSET_ENTRY_POOL_SIZE");
+  }
+  if ( ++XAssetEntryHighCount > XAssetEntryHighWaterMark )
+  {
+    XAssetEntryHighWaterMark = XAssetEntryHighCount;
+  }
+  g_freeAssetEntryHead = freeHead->next;
+  freeHead->entry.asset.type = type;
+  freeHead->entry.asset.header = DB_AllocXAssetHeader(type);
+  freeHead->entry.zoneIndex = zoneIndex;
+  freeHead->entry.inuse = 0;
+  freeHead->entry.nextHash = 0;
+  freeHead->entry.nextOverride = 0;
+  return freeHead;
+}
 
 extern "C"
 {

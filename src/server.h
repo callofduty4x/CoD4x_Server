@@ -317,6 +317,7 @@ typedef struct{
 
 #define MAX_SNAPSHOT_ENTITIES	1024
 #define MAX_CONFIGDATACACHE 4096
+#define NUM_ARCHIVED_FRAMES 1200
 
 typedef struct {//0x8c51780
 
@@ -326,6 +327,7 @@ typedef struct {//0x8c51780
 	qboolean	initialized;				//0x90b4f80 sv_init has completed
 
 	int		time;					// will be strictly increasing across level changes
+	int		timeResidual;				// Used for remainder of the integer division of frametime / 1000 and prodive exact timing for svs.time
 
 	int		snapFlagServerBit;			// ^= SNAPFLAG_SERVERCOUNT every SV_SpawnServer()
 
@@ -343,7 +345,7 @@ typedef struct {//0x8c51780
 
 	int nextArchivedSnapshotFrames; //0xee95e9c
 
-	archivedSnapshot_t archivedSnapshotFrames[1200];
+	archivedSnapshot_t archivedSnapshotFrames[NUM_ARCHIVED_FRAMES];
 	byte archivedSnapshotBuffer[ARCHIVEDSSBUF_SIZE];
 	int nextArchivedSnapshotBuffer;
 	int nextCachedSnapshotEntities; //0x10e98420
@@ -354,6 +356,7 @@ typedef struct {//0x8c51780
 	int numCachedSnapshotEntities;
 	int numCachedSnapshotClients;
 	int archivedEntityCount;
+	int nextArchivedSnapshotErrorTime; //stop error message flooding which can stall the whole server
 
 	int nextStatusResponseTime;
 
@@ -818,7 +821,7 @@ void SV_InitGameProgs(int a1);
 //sv_banlist.c
 void SV_InitBanlist( void );
 void  SV_ReloadBanlist();
-char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, char* message, int len);
+char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, const char* name, char* message, int len);
 char* SV_PlayerBannedByip(netadr_t *netadr, char* message, int len);	//Gets called in SV_DirectConnect
 void SV_PlayerAddBanByip(netadr_t *remote, char *message, int expire);
 void SV_RemoveBanByip(netadr_t *remote);

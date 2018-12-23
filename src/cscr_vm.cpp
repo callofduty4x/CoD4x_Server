@@ -4,12 +4,15 @@
 #include "cscr_stringlist.h"
 #include "sys_main.h"
 #include "cmd.h"
+#include "g_shared.h"
 #include <setjmp.h>
 
 int g_script_error_level;
 jmp_buf g_script_error[33];
 char error_message[1024];
-
+cvar_t* logScriptTimes;
+cvar_t* scrVmEnableScripts;
+int gScrExecuteTime;
 
 extern "C" VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
 {
@@ -114,9 +117,10 @@ void __cdecl Scr_VM_Init( )
   */
   gScrVarPub.numScriptThreads = 0;
   gScrVarPub.varUsagePos = 0;
+
+  logScriptTimes = Cvar_RegisterBool("logScriptTimes", qfalse, 0, "Log times for every print called from script");
+  scrVmEnableScripts = Cvar_RegisterBool("scrVmEnableScripts", qtrue, 0, "Enables script execution");
 /*
-  logScriptTimes = _Dvar_RegisterBool("logScriptTimes", 0, 0, "Log times for every print called from script");
-  scrVmEnableScripts = _Dvar_RegisterBool("scrVmEnableScripts", 1, 0, "Enables script execution");
   scrShowVarUseage = _Dvar_RegisterBool("scrShowVarUseage", 0, 0, "Displays var useage at compile time.");
   scrShowStrUsage = _Dvar_RegisterBool("scrShowStrUsage", 0, 0, "Displays script string usage at compile time.");
 
@@ -543,6 +547,106 @@ void Scr_UpdateDebugger()
 
 
 
+int VM_CalcWaitTime(VariableValue *waitval)
+{
+    int waitTime;
+    if ( waitval->type == VAR_FLOAT )
+    {
+        if ( waitval->u.floatValue < 0.0 )
+        {
+            Scr_Error("negative wait is not allowed");
+            return 1;
+        }
+        waitTime = f2rint(level.framerate * waitval->u.floatValue);
+        if ( !waitTime && waitval->u.floatValue != 0.0 )
+        {
+          waitTime = 1;
+        }
+    }
+    else if ( waitval->type == VAR_INTEGER )
+    {
+        if ( waitval->u.intValue < 0.0 )
+        {
+            Scr_Error("negative wait is not allowed");
+            return 1;
+        }
+        waitTime = waitval->u.intValue * level.framerate;
+    }
+    else
+    {
+        gScrVarPub.error_index = 2;
+        Scr_Error(va("type %s is not a float", var_typename[waitval->type]));
+        waitTime = 1;
+    }
+    return waitTime;
+}
+
+
+void __cdecl VM_SetTime( )
+{
+  unsigned int id;
+
+  assert(!(gScrVarPub.time & ~VAR_NAME_LOW_MASK));
+
+  if ( gScrVarPub.timeArrayId )
+  {
+    id = FindVariable(gScrVarPub.timeArrayId, gScrVarPub.time);
+    if ( id )
+    {
+
+      assert(logScriptTimes);
+      if ( logScriptTimes->boolean )
+      {
+        Com_Printf(CON_CHANNEL_PARSERSCRIPT, "SET TIME: %d\n", Sys_Milliseconds());
+      }
+
+      VM_Resume(FindObject(id));
+      SafeRemoveVariable(gScrVarPub.timeArrayId, gScrVarPub.time);
+    }
+  }
+}
+
+void __cdecl Scr_RunCurrentThreads( )
+{
+  int pre_time;
+
+  if ( scrVmEnableScripts->boolean )
+  {
+    pre_time = Sys_MillisecondsRaw();
+    assert(!gScrVmPub.function_count);
+    assert(!gScrVarPub.error_message);
+    assert(!gScrVarPub.error_index);
+    assert(!gScrVmPub.outparamcount);
+    assert(!gScrVmPub.inparamcount);
+    assert(gScrVmPub.top == gScrVmPub.stack);
+
+    VM_SetTime();
+    gScrExecuteTime += Sys_MillisecondsRaw() - pre_time;
+  }
+}
+
+
+void __cdecl Scr_IncTime( )
+{
+  Scr_RunCurrentThreads();
+  Scr_FreeEntityList();
+
+  assert(!(gScrVarPub.time & ~VAR_NAME_LOW_MASK));
+
+  ++gScrVarPub.time;
+  gScrVarPub.time &= VAR_NAME_LOW_MASK;
+//  gScrVmPub.showError = gScrVmPub.abort_on_error != 0;
+
+}
+
+void __cdecl Scr_DecTime()
+{
+
+  assert(!(gScrVarPub.time & ~VAR_NAME_LOW_MASK));
+
+  --gScrVarPub.time;
+  gScrVarPub.time &= VAR_NAME_LOW_MASK;
+}
 
 };
 

@@ -169,6 +169,8 @@ void __cdecl Load_XAssetHeader(bool atStreamStart);
 const char* DB_GetXAssetName(struct XAsset*);
 void __cdecl Load_ScriptStringArray(bool atStreamStart, int count);
 void* __regparm2 DB_AddXAsset(int xassetType, void* header);
+void __cdecl DB_EnumXAssets_FastFile(enum XAssetType type, void (__cdecl *func)(union XAssetHeader, void *), void *inData, bool includeOverride);
+void __cdecl DB_EnumXAssets(enum XAssetType type, void (__cdecl *func)(union XAssetHeader, void *), void *inData, bool includeOverride);
 
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For GCC

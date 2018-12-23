@@ -321,7 +321,8 @@ P_P_F void Plugin_ServerPacketEvent(netadr_t* to, void* data, int len)
     msg.bit = 0;
     msg.overflowed = qfalse;
     msg.readonly = qtrue;
-
+    msg.splitData = NULL;
+    msg.splitSize = 0;
     SV_PacketEvent( to, &msg );
 }
 

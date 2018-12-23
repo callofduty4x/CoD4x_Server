@@ -3,6 +3,7 @@
 #include "g_shared.h"
 #include "cscr_stringlist.h"
 #include "stringed_interface.h"
+#include "bg_public.h"
 
 #include <ctype.h>
 
@@ -304,7 +305,82 @@ void __cdecl Scr_ConstructMessageString(int firstParmIndex, int lastParmIndex, c
 }
 
 
+
+void __cdecl GScr_AddVector(const float *vVec)
+{
+    if ( vVec )
+    {
+      Scr_AddVector(vVec);
+    }
+    else
+    {
+      Scr_AddUndefined( );
+    }
+}
+
+void __cdecl GScr_AddEntity(gentity_s *pEnt)
+{
+    if ( pEnt )
+    {
+        Scr_AddEntity(pEnt);
+    }
+    else
+    {
+      Scr_AddUndefined( );
+    }
+}
+
+
+
+void __cdecl Scr_PlayerKilled(gentity_s *self, gentity_s *inflictor, gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, hitLocation_t hitLoc, int psTimeOffset, int deathAnimDuration)
+{
+  uint16_t hitloc;
+  const char *weapname;
+  uint16_t callback;
+
+  Scr_AddInt(deathAnimDuration);
+  Scr_AddInt(psTimeOffset);
+  hitloc = G_GetHitLocationString(hitLoc);
+  Scr_AddConstString(hitloc);
+  GScr_AddVector(vDir);
+  weapname = BG_WeaponName(iWeapon);
+  Scr_AddString(weapname);
+  if ( meansOfDeath >= 0 && meansOfDeath < 21 )
+  {
+    Scr_AddConstString(*modNames[meansOfDeath]);
+  }
+  else
+  {
+    Scr_AddString("badMOD");
+  }
+  Scr_AddInt(damage);
+  GScr_AddEntity(attacker);
+  GScr_AddEntity(inflictor);
+/*
+  int attack = -1;
+  int inf = -1;
+
+  if(attacker)
+  {
+      attack = attacker->s.number;
+  }
+  if(inflictor)
+  {
+      inf = inflictor->s.number;
+  }
+
+
+  Com_Printf(CON_CHANNEL_PLAYERWEAP, "Inflictor=%d, Attacker=%d\n", inf, attack);
+
+*/
+  callback = Scr_ExecEntThread(self, g_scr_data.gametype.playerkilled, 9u);
+  Scr_FreeThread(callback);
+}
+
+
+
 };
+
 
 unsigned int __cdecl GScr_AllocString(const char *s)
 {
@@ -315,4 +391,3 @@ unsigned int __cdecl GScr_AllocString(const char *s)
   return stringVal;
 
 }
-

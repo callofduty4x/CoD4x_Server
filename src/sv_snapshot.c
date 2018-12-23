@@ -831,18 +831,11 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 		SV_AddEntToSnapshot( e, eNums );
 	}
 }
-/*
-cachedSnapshot_t* REGPARM(1) SV_GetCachedSnapshotInternal(signed int snapTime)
-{
-	//Com_DPrintf(CON_CHANNEL_SERVER,"Archived SnapFrame: %d Current ServerFrame: %d\n", snapTime, (svs.time * sv_fps->integer)/1000);
-	Com_DPrintf(CON_CHANNEL_SERVER,"Archived SnapFrame %d behind\n", svs.nextArchivedSnapshotFrames - snapTime);
-	return NULL;
-}
-*/
+
 static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
 {
-  int msec;
-  int snapTime;
+  int frame;
+  int archivedFrame;
   cachedSnapshot_t *cachedSnap;
 
   if ( *pArchiveTime <= 0 )
@@ -850,29 +843,29 @@ static cachedSnapshot_t *SV_GetCachedSnapshot(int *pArchiveTime)
 	return 0;
   }
 
-  msec = *pArchiveTime * sv_fps->integer / 1000;
-  snapTime = svs.nextArchivedSnapshotFrames - msec;
+  frame = ((uint64_t)*pArchiveTime * (uint64_t)sv_fps->integer) / (uint64_t)1000;
+  archivedFrame = svs.nextArchivedSnapshotFrames - frame;
 
-  if ( snapTime < svs.nextArchivedSnapshotFrames - 1200 )
+  if ( archivedFrame < svs.nextArchivedSnapshotFrames - NUM_ARCHIVED_FRAMES )
   {
-    snapTime = svs.nextArchivedSnapshotFrames - 1200;
-    *pArchiveTime = 1000 * (svs.nextArchivedSnapshotFrames - (svs.nextArchivedSnapshotFrames - 1200)) / sv_fps->integer;
+    archivedFrame = svs.nextArchivedSnapshotFrames - NUM_ARCHIVED_FRAMES;
+    *pArchiveTime = ((uint64_t)1000 * (uint64_t)(svs.nextArchivedSnapshotFrames - (svs.nextArchivedSnapshotFrames - NUM_ARCHIVED_FRAMES))) / (uint64_t)sv_fps->integer;
   }
 
-  if ( snapTime < 0 )
+  if ( archivedFrame < 0 )
   {
-    snapTime = 0;
-    *pArchiveTime = 1000 * svs.nextArchivedSnapshotFrames / sv_fps->integer;
+    archivedFrame = 0;
+    *pArchiveTime = ((uint64_t)1000 * (uint64_t)svs.nextArchivedSnapshotFrames) / (uint64_t)sv_fps->integer;
   }
 
-  for( ; snapTime < svs.nextArchivedSnapshotFrames; ++snapTime)
+  for( ; archivedFrame < svs.nextArchivedSnapshotFrames; ++archivedFrame)
   {
-    cachedSnap = SV_GetCachedSnapshotInternal(snapTime, 0, 1);
+    cachedSnap = SV_GetCachedSnapshotInternal(archivedFrame, 0, 1);
 
     if ( cachedSnap )
-	{
+    {
       return cachedSnap;
-	}
+    }
   }
   *pArchiveTime = 0;
   return NULL;
@@ -1288,10 +1281,10 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
 
 
   rewindDeltaTime = svs.time - gametime;
-  int frametime = 1000 / sv_fps->integer;
-  int frameHistCount = rewindDeltaTime / frametime;
-  startOffset = frametime * (frameHistCount + 2);
-  endOffset = frametime * (frameHistCount + 1);
+  int frametime = 1000000 / sv_fps->integer; //in usec for accuracy
+  int frameHistCount = (1000*rewindDeltaTime) / frametime;
+  startOffset = (frametime * (frameHistCount + 2)) / 1000;
+  endOffset = (frametime * (frameHistCount + 1)) / 1000;
   frameStart = SV_GetCachedSnapshot(&startOffset);
   frameEnd = SV_GetCachedSnapshot(&endOffset);
   if ( frameStart || frameEnd )
@@ -1300,7 +1293,7 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
     while ( frameEnd && frameEnd->time < gametime )
     {
       frameStart = frameEnd;
-      endOffset = frametime * (--snapOffset + frameHistCount);
+      endOffset = (frametime * (--snapOffset + frameHistCount)) / 1000;
       frameEnd = SV_GetCachedSnapshot(&endOffset);
     }
     if ( frameEnd && snapOffset != 1 )
@@ -1311,7 +1304,7 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
     while ( frameStart && frameStart->time > gametime )
     {
       frameStart = frameEnd;
-      startOffset = frametime * (++snapOffset + frameHistCount);
+      startOffset = (frametime * (++snapOffset + frameHistCount)) / 1000;
       frameStart = SV_GetCachedSnapshot(&startOffset);
     }
     if ( frameStart && snapOffset != 2 )
@@ -1861,15 +1854,16 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
   cachedSnapshot_t *oldCachedFrame;
   cachedClient_t *cachedClient;
 
-  frame = &svs.archivedSnapshotFrames[archivedFrame % 1200];
+  frame = &svs.archivedSnapshotFrames[archivedFrame % NUM_ARCHIVED_FRAMES];
   assertx(frame->size, "(archivedFrame) = %i", archivedFrame);
 
   if ( !SV_FrameIsStillInArchivedSnapshotBuffer(frame->start) )
   {
-    if ( expectedToSucceed )
+    if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time)
     {
       Com_Printf(CON_CHANNEL_SERVER, "Failed to get archived snapshot for archived frame %i - frame->start is too old - %i < %i - %i\n",
         archivedFrame, frame->start, svs.nextArchivedSnapshotBuffer, ARCHIVEDSSBUF_SIZE);
+      svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
     }
     return 0;
   }
@@ -1996,32 +1990,35 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
     assert(MSG_ReadLong(&msg) == 0xdeadbee0);
 
     oldArchivedFrame = MSG_ReadLong(&msg);
-    if ( oldArchivedFrame < svs.nextArchivedSnapshotFrames - 1200 )
+    if ( oldArchivedFrame < svs.nextArchivedSnapshotFrames - NUM_ARCHIVED_FRAMES )
     {
-      if ( expectedToSucceed )
+      if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time )
       {
         Com_Printf(CON_CHANNEL_SERVER, "getting archive snapshot failed for time %i - oldArchiveFrame(%i) < svs.nextArchivedSnapshotFrames(%i) - NUM_ARCHIVED_FRAMES(%i)\n",
-          archivedFrame, oldArchivedFrame, svs.nextArchivedSnapshotFrames, 1200);
+          archivedFrame, oldArchivedFrame, svs.nextArchivedSnapshotFrames, NUM_ARCHIVED_FRAMES);
+        svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
       }
       return 0;
     }
-    frame = &svs.archivedSnapshotFrames[oldArchivedFrame % 1200];
+    frame = &svs.archivedSnapshotFrames[oldArchivedFrame % NUM_ARCHIVED_FRAMES];
     if ( !SV_FrameIsStillInArchivedSnapshotBuffer(frame->start) )
     {
-      if ( expectedToSucceed )
+      if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time )
       {
 	Com_Printf(CON_CHANNEL_SERVER, "getting archive snapshot failed for time %i - frame->start(%i) < svs.nextArchivedSnapshotBuffer(%i) - ARCHIVEDSSBUF_SIZE(%i)\n",
 	  archivedFrame, frame->start, svs.nextArchivedSnapshotBuffer, ARCHIVEDSSBUF_SIZE);
+        svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
       }
       return 0;
     }
     oldCachedFrame = SV_GetCachedSnapshotInternal(oldArchivedFrame, depth + 1, expectedToSucceed);
     if ( !oldCachedFrame )
     {
-      if ( expectedToSucceed )
+      if ( expectedToSucceed && svs.nextArchivedSnapshotErrorTime < svs.time )
       {
         Com_Printf(CON_CHANNEL_SERVER, "failed to get snapshot for time %i - it was delta'd off time %i, and we couldn't get that snapshot\n",
           archivedFrame, oldArchivedFrame);
+        svs.nextArchivedSnapshotErrorTime = svs.time + 1000;
       }
       return 0;
     }
