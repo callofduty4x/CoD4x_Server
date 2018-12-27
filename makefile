@@ -267,4 +267,3 @@ plugins:
 	@$(MAKE) -C $(PLUGIN_DIR)/legacybanlist
 
 
-.PHONY: plugins
