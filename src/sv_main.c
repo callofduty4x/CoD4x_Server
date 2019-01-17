@@ -4114,7 +4114,7 @@ void SV_BotUserMove(client_t *client)
             if (!g_botai[num].doMove)
             {
                 Scr_Notify(ent, scr_const.movedone, 0);
-                Com_Printf(CON_CHANNEL_SERVER,"Bot movement done at (%3.3f, %3.3f)\n",
+                Com_DPrintf(CON_CHANNEL_SERVER,"Bot movement done at (%3.3f, %3.3f)\n",
                             ent->r.currentOrigin[0], ent->r.currentOrigin[1]);
             }
 
