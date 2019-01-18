@@ -3226,6 +3226,8 @@ void GScr_Float()
         Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
 }
 
+bool __cdecl SV_SetBrushModel(struct gentity_s *ent);
+
 void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
 {
     // Common checks.

@@ -5123,14 +5123,9 @@ qboolean SV_FileStillActive(const char* name)
 {
     int i;
     char filename[MAX_OSPATH];
-    //char* str;
-    int len, crc32;
 
     Cmd_TokenizeString(sv_referencedIwdNames->string);
-
-
     Com_Printf(CON_CHANNEL_SERVER,"Check for file %s\n", name);
-
 
     for(i = 0; i < Cmd_Argc(); ++i)
     {
@@ -5143,9 +5138,7 @@ qboolean SV_FileStillActive(const char* name)
     }
     Cmd_EndTokenizedString();
 
-
     Cmd_TokenizeString(sv_referencedFFNames->string);
-
     for(i = 0; i < Cmd_Argc(); ++i)
     {
         DB_GetQPathForZone(Cmd_Argv(i), sizeof(filename), filename);

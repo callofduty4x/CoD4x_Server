@@ -1,8 +1,6 @@
 #include "q_shared.h"
 #include "qcommon_io.h"
-#if __linux
-void Sys_PrintBacktrace();
-#endif
+#include "sys_main.h"
 
 qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const char* func, const char *fmt, ...)
 {
@@ -20,11 +18,7 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
         message = buf;
     }
     Com_PrintError(CON_CHANNEL_ERROR, "Assert failed - Exp: %s, File: %s, Line: %d, Function: %s %s\n",exp, filename, line, func, message);
-#ifdef __linux
-    void Sys_PrintBacktrace();
-
     Sys_PrintBacktrace();
-#endif
     asm("int $3");
     return 0;
 }

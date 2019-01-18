@@ -134,7 +134,6 @@ void CM_WalkAABB_Trees()
     int i, j;
     CollisionAabbTree_t* tr;
     CollisionPartition_t* pat;
-    vec3_t *vert;
     uint16_t* triIndice;
 
     FS_Printf( f, "*****************************************************************************************");

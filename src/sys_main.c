@@ -549,8 +549,6 @@ void Sys_BeginShutdownWatchdog()
 
 }
 
-void Sys_SleepMSec(int msec);
-
 void Sys_Sleep(int msec)
 {
     Sys_SleepMSec(msec);

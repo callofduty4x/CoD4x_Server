@@ -1045,6 +1045,4 @@ signed int __cdecl Sys_IsObjectSignaled(HANDLE hHandle)
 }
 
 void Sys_PrintBacktrace()
-{
-	
-}
+{}

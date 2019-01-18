@@ -1612,14 +1612,11 @@ void* Debug_HitchWatchdog(void* arg)
     while(true)
     {
         Sys_EnterCriticalSection(CRITSECT_WATCHDOG);
-
-	++watchdog_timer;
-	if(watchdog_timer >= 40)
-	{
-		asm("int $3");
-	}
-	Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
-
+        ++watchdog_timer;
+        if(watchdog_timer >= 40)
+            asm("int $3");
+            
+        Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
         Sys_SleepMSec(100);
     }
     return NULL;

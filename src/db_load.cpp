@@ -606,7 +606,7 @@ void __cdecl DB_AllocXBlocks(unsigned int *blockSize, const char *filename, XBlo
   }
   Com_Printf(CON_CHANNEL_SYSTEM, "used %0.2f MB memory in DB alloc\n", (float)(total_size / 1048576.0));
 
-#pragma message "StaticIndexBuffer? StaticVertexBuffer?"
+//#pragma message "StaticIndexBuffer? StaticVertexBuffer?"
 }
 
 
