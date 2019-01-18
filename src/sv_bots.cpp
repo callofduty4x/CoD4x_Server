@@ -10,11 +10,11 @@
 
 BotMovementInfo_t g_botai[MAX_CLIENTS];
 
-typedef struct BotAction_t
+struct BotAction_t
 {
-    char* action;
+    const char* action;
     int key;
-}BotAction_t;
+};
 
 const BotAction_t BotActions[] =
 {
@@ -187,7 +187,6 @@ scr_botaction
 /* bot botAction(<str action>); */
 static void scr_botaction(scr_entref_t ent_num)
 {
-    int i;
     int argc;
     gentity_t *bot;
     char* action;
@@ -212,7 +211,7 @@ static void scr_botaction(scr_entref_t ent_num)
         Scr_ParamError(0, "Sign for action must be '+' or '-'.");
 
     key_found = qfalse;
-    for (i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
+    for (size_t i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
     {
         if (!Q_stricmp(&action[1], BotActions[i].action))
         {
@@ -229,7 +228,7 @@ static void scr_botaction(scr_entref_t ent_num)
     if (!key_found)
     {
         buffer[0] = '\0';
-        for (i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
+        for (size_t i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
         {
             Q_strncat(buffer, 1024, " ");
             Q_strncat(buffer, 1024, BotActions[i].action);
@@ -297,6 +296,9 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     Bot_CalculateRotationForOrigin(bot, look_origin, 1.0/sv_fps->integer);
 }
 
+extern "C"
+{
+
 void Scr_AddBotsMovement()
 {
     Scr_AddMethod("botmoveto",       scr_botmoveto,       qfalse);
@@ -330,3 +332,4 @@ qboolean shouldSpamUseButton(gentity_t *bot)
     return is_alive == qfalse && ai->useSpamDelay == 0 ? qtrue : qfalse;
 }
 
+}

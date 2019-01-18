@@ -111,7 +111,17 @@ void GScr_IsCvarDefined();
 void Scr_IsArray_f();
 void GScr_ArrayTest();
 
-qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+    qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
+
+#ifdef __cplusplus
+}
+#endif
+
 void PrintModelBonesInfo(gentity_t *ent);
 
 
