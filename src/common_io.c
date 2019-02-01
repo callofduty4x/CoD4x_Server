@@ -53,6 +53,8 @@ qboolean Com_IsDeveloper( void ){ return qtrue; }
 #pragma message "Undefined function: Com_IsDeveloper"
 #endif
 
+cvar_t* com_logrcon;
+
 //============================================================================
 static char	*rd_buffer;
 static int	rd_buffersize;
@@ -122,8 +124,11 @@ __cdecl void Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type) 
 				// TTimo nooo .. that would defeat the purpose
 				//rd_flush(rd_buffer);
 				//*rd_buffer = 0;
-//				Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
-//				return;
+				if(!com_logrcon->boolean)
+				{
+					Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
+					return;
+				}
 			}
 		}
 		

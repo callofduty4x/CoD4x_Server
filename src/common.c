@@ -649,6 +649,7 @@ static void Com_InitCvars( void ){
     com_developer = Cvar_RegisterInt("developer", 0, 0, 2, 0, "Enable development options");
     com_developer_script = Cvar_RegisterBool ("developer_script", qfalse, 16, "Enable developer script comments");
     com_logfile = Cvar_RegisterEnum("logfile", logfileEnum, 0, 0, "Write to logfile");
+    com_logrcon = Cvar_RegisterBool("logrcon", 0, 0, "Write response of rcon commands to logfile");
     com_sv_running = Cvar_RegisterBool("sv_running", qfalse, 64, "Server is running");
     com_securemodevar = Cvar_RegisterBool("securemode", qfalse, CVAR_INIT, "CoD4 runs in secure mode which restricts execution of external scripts/programs and loading of unauthorized shared libraries/plugins. This is recommended in a shared hosting environment");
     com_securemode = com_securemodevar->boolean;

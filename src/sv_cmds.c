@@ -671,8 +671,6 @@ static void SV_Status_f( void ) {
 		return;
 	}
 
-	CON_DisableDraw();
-
 	if(sv_legacymode->boolean)
 	{
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"map: %s\n", sv_mapname->string );
@@ -813,7 +811,6 @@ static void SV_Status_f( void ) {
 
 	Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 
-	CON_EnableDraw();
 }
 
 /*
