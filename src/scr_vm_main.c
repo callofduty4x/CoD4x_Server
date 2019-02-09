@@ -57,7 +57,8 @@ void Scr_AddStockFunctions()
 	Scr_AddFunction("println", println, 1 );
 	Scr_AddFunction("iprintln", iprintln, 0 );
 	Scr_AddFunction("iprintlnbold", iprintlnbold, 0 );
-	Scr_AddFunction("print3d", GScr_print3d, 1 );
+	Scr_AddFunction("print3d", GScr_Print3D, 1 );
+	Scr_AddFunction("printstar", GScr_PrintDebugStar, 1 );
 	Scr_AddFunction("line", GScr_line, 1 );
 	Scr_AddFunction("getent", Scr_GetEnt, 0 );
 	Scr_AddFunction("getentarray", Scr_GetEntArray, 0 );

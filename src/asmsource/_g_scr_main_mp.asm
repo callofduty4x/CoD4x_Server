@@ -254,7 +254,6 @@
 	global println
 	global iprintln
 	global iprintlnbold
-	global GScr_print3d
 	global GScr_line
 	global GScr_SpawnPlane
 	global GScr_SpawnTurret
@@ -816,109 +815,6 @@ iprintlnbold:
 	pop ebp
 	ret
 	nop
-
-
-;GScr_print3d()
-GScr_print3d:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x6c
-	mov eax, 0x3f800000
-	mov [ebp-0x40], eax
-	mov [ebp-0x3c], eax
-	mov [ebp-0x38], eax
-	mov [ebp-0x34], eax
-	call Scr_GetNumParam
-	cmp eax, 0x6
-	ja GScr_print3d_10
-	jmp dword [eax*4+GScr_print3d_jumptab_0]
-GScr_print3d_10:
-	mov dword [esp], _cstring_illegal_call_to_2
-	call Scr_Error
-	add esp, 0x6c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_print3d_60:
-	mov edi, 0x1
-	movss xmm0, dword [_float_1_00000000]
-	movss [ebp-0x4c], xmm0
-GScr_print3d_20:
-	mov dword [esp], 0x1
-	call Scr_GetString
-	mov ebx, eax
-	lea esi, [ebp-0x24]
-	mov [esp+0x4], esi
-	mov dword [esp], 0x0
-	call Scr_GetVector
-	mov [esp+0x10], edi
-	mov [esp+0xc], ebx
-	movss xmm0, dword [ebp-0x4c]
-	movss [esp+0x8], xmm0
-	lea eax, [ebp-0x40]
-	mov [esp+0x4], eax
-	mov [esp], esi
-	call G_AddDebugString
-	add esp, 0x6c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-GScr_print3d_100:
-	mov dword [esp], 0x5
-	call Scr_GetInt
-	mov edi, eax
-GScr_print3d_30:
-	mov dword [esp], 0x4
-	call Scr_GetFloat
-	fstp dword [ebp-0x4c]
-GScr_print3d_40:
-	mov dword [esp], 0x3
-	call Scr_GetFloat
-	fstp dword [ebp-0x34]
-GScr_print3d_50:
-	lea eax, [ebp-0x30]
-	mov [esp+0x4], eax
-	mov dword [esp], 0x2
-	call Scr_GetVector
-	mov eax, [ebp-0x30]
-	mov [ebp-0x40], eax
-	mov eax, [ebp-0x2c]
-	mov [ebp-0x3c], eax
-	mov eax, [ebp-0x28]
-	mov [ebp-0x38], eax
-	jmp GScr_print3d_20
-GScr_print3d_90:
-	mov edi, 0x1
-	jmp GScr_print3d_30
-GScr_print3d_80:
-	mov edi, 0x1
-	movss xmm0, dword [_float_1_00000000]
-	movss [ebp-0x4c], xmm0
-	jmp GScr_print3d_40
-GScr_print3d_70:
-	mov edi, 0x1
-	movss xmm0, dword [_float_1_00000000]
-	movss [ebp-0x4c], xmm0
-	jmp GScr_print3d_50
-	nop
-	
-	
-GScr_print3d_jumptab_0:
-	dd GScr_print3d_10
-	dd GScr_print3d_10
-	dd GScr_print3d_60
-	dd GScr_print3d_70
-	dd GScr_print3d_80
-	dd GScr_print3d_90
-	dd GScr_print3d_100
-
 
 ;GScr_line()
 GScr_line:
@@ -15195,7 +15091,6 @@ _cstring_:		db 0ah,0
 _cstring_c:		db "%c",0
 _cstring_game_message:		db "Game Message",0
 _cstring_s_s:		db "%s ",22h,"%s",22h,0
-_cstring_illegal_call_to_2:		db "illegal call to print3d()",0
 _cstring_illegal_call_to_3:		db "illegal call to line()",0
 _cstring_unable_to_spawn_:		db "unable to spawn ",22h,"%s",22h," entity",0
 _cstring_owner_entity_is_:		db "Owner entity is not a player",0

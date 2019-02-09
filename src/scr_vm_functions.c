@@ -35,6 +35,7 @@
 #include "sv_auth.h"
 #include "cscr_stringlist.h"
 #include "bg.h"
+#include "client_dedicated.h"
 
 #include "sapi.h"
 #include <string.h>
@@ -3277,3 +3278,102 @@ void PlayerCmd_SetStance(scr_entref_t playerEntNum)
     BGEvent event = stanceIdx == (unsigned short)scr_const.stand ? EV_STANCE_FORCE_STAND : stanceIdx == (unsigned short)scr_const.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
     BG_AddPredictableEventToPlayerstate(event, 0, cl);
 }
+
+
+
+void GScr_Print3D()
+{
+  signed int duration;
+  vec3_t origin;
+  vec3_t rgb;
+  float scale;
+  vec4_t color;
+  const char *text;
+
+  duration = 1;
+  scale = 1.0;
+  color[0] = 1.0;
+  color[1] = 1.0;
+  color[2] = 1.0;
+  color[3] = 1.0;
+  switch ( Scr_GetNumParam( ) )
+  {
+    case 6u:
+      duration = Scr_GetInt(5u);
+    case 5u:
+      scale = Scr_GetFloat(4u);
+    case 4u:
+      color[3] = Scr_GetFloat(3u);
+    case 3u:
+      Scr_GetVector(2u, rgb);
+      VectorCopy(rgb, color);
+    case 2u:
+      text = Scr_GetString(1u);
+      Scr_GetVector(0, origin);
+      CL_AddDebugString(origin, color, scale, text, duration);
+      break;
+    default:
+      Scr_Error("illegal call to print3d()");
+      break;
+  }
+}
+
+//printstar(<point>, <starcolor>, <staralpha>, <duration>, <text>, <textcolor>, <textalpha>, <textscale>);
+
+void GScr_PrintDebugStar()
+{
+  signed int duration;
+  vec3_t point;
+  vec3_t rgb;
+  float scale;
+  vec4_t starColor, textColor;
+  const char *text;
+
+  duration = 1;
+  scale = 1.0;
+  text = NULL;
+  starColor[0] = 1.0;
+  starColor[1] = 1.0;
+  starColor[2] = 1.0;
+  starColor[3] = 1.0;
+
+  textColor[0] = 1.0;
+  textColor[1] = 1.0;
+  textColor[2] = 1.0;
+  textColor[3] = 1.0;
+
+  switch ( Scr_GetNumParam( ) )
+  {
+
+    case 8u:
+      scale = Scr_GetFloat(7u);
+
+    case 7u:
+      textColor[3] = Scr_GetFloat(6u);
+    case 6u:
+      Scr_GetVector(5u, rgb);
+      VectorCopy(rgb, textColor);
+
+
+    case 5u:
+      text = Scr_GetString(4u);
+
+    case 4u:
+      duration = Scr_GetInt(3u);
+
+    case 3u:
+      starColor[3] = Scr_GetFloat(2u);
+    case 2u:
+      Scr_GetVector(1u, rgb);
+      VectorCopy(rgb, starColor);
+
+    case 1u:
+      Scr_GetVector(0, point);
+      CL_AddDebugStarWithText(point, starColor, textColor, text, scale, duration);
+      break;
+    default:
+      Scr_Error("illegal call to printstar()");
+      break;
+  }
+}
+
