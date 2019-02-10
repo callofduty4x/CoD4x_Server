@@ -740,11 +740,13 @@ void SV_UserinfoChanged( client_t *cl ) {
 				cl->rate = sv_maxRate->integer;
 			}
 		} else {
-			cl->rate = 2500;
+			cl->rate = 5000;
 		}
 	}
 	// snaps command
 	val = Info_ValueForKey (cl->userinfo, "snaps");
+
+	i = sv_fps->integer;
 
 	if(strlen(val))
 	{
@@ -753,12 +755,10 @@ void SV_UserinfoChanged( client_t *cl ) {
 		if(i < 10)
 			i = 10;
 		else if(i > sv_fps->integer)
-			i = 1000;
-
-		cl->snapshotMsec = 1000 / i;
+			i = sv_fps->integer;
 	}
-	else
-		cl->snapshotMsec = 1;
+	
+	cl->snapshotMsec = 1000 / i;
 
 	val = Info_ValueForKey(cl->userinfo, "cl_voice");
 	cl->sendVoice = atoi(val);
