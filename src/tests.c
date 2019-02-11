@@ -267,7 +267,7 @@ int __cdecl SV_DObjGetBoneIndex_Debug(struct gentity_s *ent, unsigned int boneNa
 
   obj = Com_GetServerDObj(ent->s.number);
 
-  PrintDObjInfo(obj);
+  DObjDumpInfo(obj);
 
   if ( obj )
   {

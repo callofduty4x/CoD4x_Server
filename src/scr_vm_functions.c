@@ -2287,7 +2287,7 @@ void GScr_GetCvarFloat()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: getcvarfloat <cvarname>");
+        Scr_Error("Usage: getcvarfloat( <cvarname> )");
     }
     stringval = Cvar_GetVariantString(Scr_GetString(0));
     Scr_AddFloat(atof(stringval));
@@ -2299,7 +2299,7 @@ void GScr_GetCvarInt()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: getcvarint <cvarname>");
+        Scr_Error("Usage: getcvarint(<cvarname>)");
     }
     stringval = Cvar_GetVariantString(Scr_GetString(0));
     Scr_AddInt(atoi(stringval));
@@ -2314,7 +2314,7 @@ void GScr_GetCvar()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: getcvar <cvarname>");
+        Scr_Error("Usage: getcvar(<cvarname>)");
     }
 
     querystr = Scr_GetString(0);
@@ -2961,20 +2961,6 @@ void Scr_IsArray_f()
     Scr_AddBool(Scr_GetType(0) == 1 ? qtrue : qfalse);
 }
 
-/* PrintModelBonesInfo
- * 0x0817CBEC
- */
-void PrintModelBonesInfo(gentity_t *ent)
-{
-    if (com_developer->boolean)
-    {
-        DObj_t *dobj = GetDObjForEntity(ent->s.number);
-        if (dobj)
-            PrintDObjInfo(dobj);
-        else
-            Com_Printf(CON_CHANNEL_SCRIPT,"no model.\n");
-    }
-}
 
 /* GetTagInfoForEntity
  *
@@ -2984,26 +2970,29 @@ void PrintModelBonesInfo(gentity_t *ent)
  *
  * Based on 0x080BFFB6. Similar functionality (except script error messages).
  */
-qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels)
+qboolean GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError)
 {
     // Here used some kind of caching.
     // Checked if latest requested tag is the same as previous - just return from function.
     // Find tag origin otherwise.
 
-    if (cache->svsFrameTime == svs.time && cache->entNum == ent->s.number && cache->partNameIdx == partNameIdx)
-        return qtrue;
-
-    if (EntHasDObj(ent))
+    if ( ent->s.number == cachedTag->entnum && level.time == cachedTag->time && tagName == cachedTag->name )
     {
-        if (G_DObjGetWorldTagMatrix(ent, partNameIdx, (float (*)[3])&cache->vectorSet))
+            return qtrue;
+    }
+
+    if (SV_DObjExists(ent))
+    {
+        if (G_DObjGetWorldTagMatrix(ent, tagName, cachedTag->tagMat))
         {
-            cache->entNum = ent->s.number;
-            cache->svsFrameTime = svs.time;
-            Scr_SetString(&cache->partNameIdx, partNameIdx);
+            cachedTag->entnum = ent->s.number;
+            cachedTag->time = level.time;
+            Scr_SetString(&cachedTag->name, tagName);
             return qtrue;
         }
-        if (seekInSubModels)
-            PrintModelBonesInfo(ent);
+        if (showScriptError){
+            SV_DObjDumpInfo(ent);
+        }
     }
     return qfalse;
 }

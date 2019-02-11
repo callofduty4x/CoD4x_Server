@@ -1,6 +1,8 @@
 #include "dobj.h"
 #include "xassets/xmodel.h"
 #include "cscr_stringlist.h"
+/*
+duplicate of void __cdecl DObjDumpInfo(DObj *obj)
 
 void PrintDObjInfo(DObj_t* dobj)
 {
@@ -50,26 +52,7 @@ void PrintDObjInfo(DObj_t* dobj)
 	else
 		Com_Printf(CON_FIRST_DEBUG_CHANNEL,"No Dobj\n");
 }
-
-
-/* GetDObjForEntity
- * 0x08125E32
- */
-DObj_t* GetDObjForEntity(int entNum)
-{
-	if(serverObjMap[entNum])
-		return &objBuf[serverObjMap[entNum]];
-	return NULL;
-}
-
-/* EntHasDObj
- * 0x0817C89E
- */
-qboolean EntHasDObj(gentity_t* ent)
-{
-	return GetDObjForEntity(ent->s.number) != NULL;
-}
-
+*/
 
 void __cdecl ConvertQuatToMat(DObjAnimMat *mat, vec3_t axis[3])
 {

@@ -890,6 +890,8 @@ qboolean SV_FileStillActive(const char* name);
 void SV_ConnectWithUpdateProxy(client_t *cl);
 #endif
 void SV_WriteChecksumInfo(msg_t* msg, const char* filename);
+void __cdecl SV_DObjDumpInfo(gentity_t *ent);
+int __cdecl SV_DObjExists(gentity_t *ent);
 
 #ifdef __cplusplus
 }

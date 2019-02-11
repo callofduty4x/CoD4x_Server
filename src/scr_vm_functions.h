@@ -22,6 +22,7 @@
 
 #include "scr_vm.h"
 #include "g_sv_shared.h"
+#include "g_shared.h"
 #include "dobj.h"
 
 #ifndef SCR_ENTREF_DEFINED
@@ -115,8 +116,7 @@ void GScr_ArrayTest();
 extern "C"
 {
 #endif
-
-    qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
+qboolean __cdecl GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
 
 #ifdef __cplusplus
 }

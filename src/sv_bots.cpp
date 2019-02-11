@@ -4,7 +4,6 @@
 #include "q_shared.h"
 #include "scr_vm_functions.h"
 #include "misc.h"
-#include "dobj_part_cache.h"
 #include "server.h"
 #include "cscr_stringlist.h"
 
@@ -273,7 +272,7 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     if(argc == 2)
         tag_name = Scr_GetConstString(1);
 
-    if(!GetTagInfoForEntity(target, tag_name, &DOBJ_PART_CACHE, qtrue))
+    if(!GScr_UpdateTagInternal2(target, tag_name, &level.cachedTagMat, qtrue))
         Scr_ParamError(1, va("tag '%s' does not exist in model '%s' "
                              "(or any attached submodels)",
                              SL_ConvertToString(tag_name),
@@ -291,7 +290,7 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     /* Divide it to represent units per frame. */
     vec3_multiply(look_origin, multiplier/sv_fps->integer);
     /* Add tag origin. */
-    vec3_add(look_origin, DOBJ_PART_CACHE.vectorSet.origin);
+    vec3_add(look_origin, level.cachedTagMat.tagMat[3]);
 
     Bot_CalculateRotationForOrigin(bot, look_origin, 1.0/sv_fps->integer);
 }
