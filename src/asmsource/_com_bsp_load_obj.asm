@@ -31,7 +31,6 @@
 	global Com_UnloadBsp
 	global Com_BspHasLump
 	global Com_CleanupBsp
-	global Com_GetBspLump
 	global Com_EntityString
 	global Com_GetBspVersion
 	global Com_ShutdownWorld
