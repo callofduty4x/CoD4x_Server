@@ -56,37 +56,6 @@ int			cvar_numIndexes;
 #define FILE_HASH_SIZE		512
 static	cvar_t*		hashTable[FILE_HASH_SIZE];
 
-typedef struct{
-		int integer;
-		const char** strings;
-}EnumValueStr_t;
-
-typedef struct{
-	union{
-		float floatval;
-		int integer;
-		const char* string;
-		byte boolean;
-		vec4_t vec4;
-		vec3_t vec3;
-		vec2_t vec2;
-		ucolor_t color;
-		EnumValueStr_t enumval; /* For Cvar_Register and Cvar_ValidateNewVar only */
-	};
-}CvarValue;
-
-
-typedef struct{
-	union{
-		int imin;
-		float fmin;
-	};
-	union{
-		int imax;
-		float fmax;
-	};
-}CvarLimits;
-
 
 static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force );
 void Cvar_ValueToStr(cvar_t const *cvar, char* bufvalue, int sizevalue, char* bufreset, int sizereset, char* buflatch, int sizelatch);
@@ -346,23 +315,11 @@ void	Cvar_CommandCompletion( void(*callback)(const char *s) ) {
 }
 
 
-
-
-static qboolean Cvar_ValidateNewVar(const char* var_name, cvarType_t type, CvarValue *value, CvarLimits *limits)
+static qboolean Cvar_ClampToLimits(cvarType_t type, CvarValue *value, CvarLimits *limits)
 {
 	qboolean retval = qtrue;
-	int i;
 	static const char* enumFailDummy[2];
-
-	if ( !var_name ) {
-		Com_Error( ERR_FATAL, "Cvar_Register: NULL parameter" );
-		return qfalse;
-	}
-
-	if ( !Cvar_ValidateString( var_name ) ) {
-		Com_Error( ERR_FATAL, "Cvar_Register: invalid cvar name string: %s\n", var_name );
-		return qfalse;
-	}
+	int i;
 
 	switch(type)
 	{
@@ -503,6 +460,24 @@ static qboolean Cvar_ValidateNewVar(const char* var_name, cvarType_t type, CvarV
 			Com_Error( ERR_FATAL, "Cvar_Register: Invalid type" );
 			return qfalse;
 	}
+
+}
+
+
+
+static qboolean Cvar_ValidateNewVar(const char* var_name, cvarType_t type, CvarValue *value, CvarLimits *limits)
+{
+	if ( !var_name ) {
+		Com_Error( ERR_FATAL, "Cvar_Register: NULL parameter" );
+		return qfalse;
+	}
+
+	if ( !Cvar_ValidateString( var_name ) ) {
+		Com_Error( ERR_FATAL, "Cvar_Register: invalid cvar name string: %s\n", var_name );
+		return qfalse;
+	}
+	return Cvar_ClampToLimits(type, value, limits);
+
 }
 /*
 
@@ -671,14 +646,12 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 				break;
 			case CVAR_FLOAT:
 				var->resetFloatval = value.floatval;
-				var->fmin = limits.fmin;
-				var->fmax = limits.fmax;
+				var->limits = limits;
 				break;
 			case CVAR_VEC2:
 			case CVAR_VEC3:
 			case CVAR_VEC4:
-				var->fmin = limits.fmin;
-				var->fmax = limits.fmax;
+				var->limits = limits;
 				memcpy(var->resetVec4, value.vec4, sizeof(var->resetVec4));
 				break;
 			case CVAR_COLOR:
@@ -686,13 +659,12 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 				break;
 			case CVAR_ENUM:
 				var->resetInteger = value.enumval.integer;
-				var->imin = 0;
-				var->enumStr = value.enumval.strings;
+				var->limits.imin = 0;
+				var->limits.enumStr = value.enumval.strings;
 				break;
 			case CVAR_INT:
 				var->resetInteger = value.integer;
-				var->imin = limits.imin;
-				var->imax = limits.imax;
+				var->limits = limits;
 				break;
 			case CVAR_STRING:
 				var->resetString = CopyString( value.string );
@@ -715,6 +687,8 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 
 		// Take the latched value now
 		Cvar_Set2( var_name, latchedStr, qtrue );
+		Cvar_ClampToLimits(var->type, &var->current, &var->limits);
+
 		Sys_LeaveCriticalSection(CRITSECT_CVAR);
 		return var;
 	}
@@ -771,14 +745,12 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 			var->floatval = value.floatval;
 			var->resetFloatval = value.floatval;
 			var->latchedFloatval = value.floatval;
-			var->fmin = limits.fmin;
-			var->fmax = limits.fmax;
+			var->limits = limits;
 			break;
 		case CVAR_VEC2:
 		case CVAR_VEC3:
 		case CVAR_VEC4:
-			var->fmin = limits.fmin;
-			var->fmax = limits.fmax;
+			var->limits = limits;
 			memcpy(var->vec4, value.vec4, sizeof(var->vec4));
 			memcpy(var->resetVec4, value.vec4, sizeof(var->resetVec4));
 			memcpy(var->latchedVec4, value.vec4, sizeof(var->latchedVec4));
@@ -792,15 +764,14 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 			var->integer = value.enumval.integer;
 			var->resetInteger = value.enumval.integer;
 			var->latchedInteger = value.enumval.integer;
-			var->imin = 0;
-			var->enumStr = value.enumval.strings;
+			var->limits.imin = 0;
+			var->limits.enumStr = value.enumval.strings;
 			break;
 		case CVAR_INT:
 			var->integer = value.integer;
 			var->resetInteger = value.integer;
 			var->latchedInteger = value.integer;
-			var->imin = limits.imin;
-			var->imax = limits.imax;
+			var->limits = limits;
 			break;
 		case CVAR_STRING:
 			var->string = CopyString( value.string );
@@ -885,10 +856,10 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
 			}
-			if(value.floatval < var->fmin || value.floatval > var->fmax)
+			if(value.floatval < var->limits.fmin || value.floatval > var->limits.fmax)
 			{
 				Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.floatval, var->name);
-				Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+				Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->limits.fmin, var->limits.fmax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
 			}
@@ -903,10 +874,10 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
-				if(value.vec2[i] < var->fmin || value.vec2[i] > var->fmax)
+				if(value.vec2[i] < var->limits.fmin || value.vec2[i] > var->limits.fmax)
 				{
 					Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.vec2[i], var->name);
-					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->limits.fmin, var->limits.fmax);
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
@@ -925,10 +896,10 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
-				if(value.vec3[i] < var->fmin || value.vec3[i] > var->fmax)
+				if(value.vec3[i] < var->limits.fmin || value.vec3[i] > var->limits.fmax)
 				{
 					Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.vec3[i], var->name);
-					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->limits.fmin, var->limits.fmax);
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
@@ -947,10 +918,10 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
-				if(value.vec4[i] < var->fmin || value.vec4[i] > var->fmax)
+				if(value.vec4[i] < var->limits.fmin || value.vec4[i] > var->limits.fmax)
 				{
 					Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.vec4[i], var->name);
-					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+					Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->limits.fmin, var->limits.fmax);
 					Sys_LeaveCriticalSection(CRITSECT_CVAR);
 					return -1;
 				}
@@ -971,18 +942,18 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return 0;
 			}
-			if(var->enumStr == NULL)
+			if(var->limits.enumStr == NULL)
 			{
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
 			}
-			for(i = 0; var->enumStr[i] != NULL && i != value.integer; i++ );
-			if(var->enumStr[i] == NULL)
+			for(i = 0; var->limits.enumStr[i] != NULL && i != value.integer; i++ );
+			if(var->limits.enumStr[i] == NULL)
 			{
 				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
 				Com_Printf(CON_CHANNEL_CVAR,"  Domain is one of the following:\n");
-				for(i = 0; var->enumStr[i] != NULL; i++ ){
-					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n",i, var->enumStr[i]);
+				for(i = 0; var->limits.enumStr[i] != NULL; i++ ){
+					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n",i, var->limits.enumStr[i]);
 				}
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
@@ -996,10 +967,10 @@ static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force ) {
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return 0;
 			}
-			if(value.integer < var->imin || value.integer > var->imax)
+			if(value.integer < var->limits.imin || value.integer > var->limits.imax)
 			{
 				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
-				Com_Printf(CON_CHANNEL_CVAR,"  Domain is any integer in range between \'%d\' and \'%d\'\n", var->imin, var->imax);
+				Com_Printf(CON_CHANNEL_CVAR,"  Domain is any integer in range between \'%d\' and \'%d\'\n", var->limits.imin, var->limits.imax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return -1;
 			}
@@ -1616,29 +1587,29 @@ void Cvar_ValueToStr(cvar_t const *cvar, char* bufvalue, int sizevalue, char* bu
 			if(buflatch) Com_sprintf(buflatch, sizelatch, "%s", cvar->latchedString);
 			return;
 		case CVAR_ENUM:
-			if(cvar->enumStr)
+			if(cvar->limits.enumStr)
 			{
 				if(bufvalue)
 				{
-					for(i = 0; cvar->enumStr[i] != NULL && i != cvar->integer; i++ );
-					if(cvar->enumStr[i] != NULL)
-						Com_sprintf(bufvalue, sizevalue, "%s", cvar->enumStr[i]);
+					for(i = 0; cvar->limits.enumStr[i] != NULL && i != cvar->integer; i++ );
+					if(cvar->limits.enumStr[i] != NULL)
+						Com_sprintf(bufvalue, sizevalue, "%s", cvar->limits.enumStr[i]);
 					else
 						Com_sprintf(bufvalue, sizevalue, "Out of Range value");
 				}
 				if(bufreset)
 				{
-					for(i = 0; cvar->enumStr[i] != NULL && i != cvar->resetInteger; i++ );
-					if(cvar->enumStr[i] != NULL)
-						Com_sprintf(bufreset, sizereset, "%s", cvar->enumStr[i]);
+					for(i = 0; cvar->limits.enumStr[i] != NULL && i != cvar->resetInteger; i++ );
+					if(cvar->limits.enumStr[i] != NULL)
+						Com_sprintf(bufreset, sizereset, "%s", cvar->limits.enumStr[i]);
 					else
 						Com_sprintf(bufreset, sizereset, "Out of Range value");
 				}
 				if(buflatch)
 				{
-					for(i = 0; cvar->enumStr[i] != NULL && i != cvar->latchedInteger; i++ );
-					if(cvar->enumStr[i] != NULL)
-						Com_sprintf(buflatch, sizelatch, "%s", cvar->enumStr[i]);
+					for(i = 0; cvar->limits.enumStr[i] != NULL && i != cvar->latchedInteger; i++ );
+					if(cvar->limits.enumStr[i] != NULL)
+						Com_sprintf(buflatch, sizelatch, "%s", cvar->limits.enumStr[i]);
 					else
 						Com_sprintf(buflatch, sizelatch, "Out of Range value");
 				}
@@ -2494,10 +2465,10 @@ void Cvar_ChangeResetValue(cvar_t* var, CvarValue value)
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
-			if(value.floatval < var->fmin || value.floatval > var->fmax)
+			if(value.floatval < var->limits.fmin || value.floatval > var->limits.fmax)
 			{
 				Com_Printf(CON_CHANNEL_CVAR,"\'%g\' is not a valid value for cvar '%s'\n", value.floatval, var->name);
-				Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->fmin, var->fmax);
+				Com_Printf(CON_CHANNEL_CVAR,"Domain is any float in range between \'%g\' and \'%g\'\n", var->limits.fmin, var->limits.fmax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
@@ -2543,18 +2514,18 @@ void Cvar_ChangeResetValue(cvar_t* var, CvarValue value)
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
-			if(var->enumStr == NULL)
+			if(var->limits.enumStr == NULL)
 			{
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
-			for(i = 0; var->enumStr[i] != NULL && i != value.integer; i++ );
-			if(var->enumStr[i] == NULL)
+			for(i = 0; var->limits.enumStr[i] != NULL && i != value.integer; i++ );
+			if(var->limits.enumStr[i] == NULL)
 			{
 				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
 				Com_Printf(CON_CHANNEL_CVAR,"  Domain is one of the following:\n");
-				for(i = 0; var->enumStr[i] != NULL; i++ )
-					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n", var->enumStr[i]);
+				for(i = 0; var->limits.enumStr[i] != NULL; i++ )
+					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n", var->limits.enumStr[i]);
 
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
@@ -2567,10 +2538,10 @@ void Cvar_ChangeResetValue(cvar_t* var, CvarValue value)
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
-			if(value.integer < var->imin || value.integer > var->imax)
+			if(value.integer < var->limits.imin || value.integer > var->limits.imax)
 			{
 				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
-				Com_Printf(CON_CHANNEL_CVAR,"  Domain is any integer in range between \'%d\' and \'%d\'\n", var->imin, var->imax);
+				Com_Printf(CON_CHANNEL_CVAR,"  Domain is any integer in range between \'%d\' and \'%d\'\n", var->limits.imin, var->limits.imax);
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;
 			}
