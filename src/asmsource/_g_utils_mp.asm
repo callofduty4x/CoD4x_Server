@@ -78,7 +78,6 @@
 	global _ZZ22G_LocalizedStringIndexPKcE12origErrorMsg
 	global G_EntLinkToInternal
 	global G_AddEvent
-;	global G_SetAngle
 	global G_SetModel
 	global G_TagIndex
 	global G_EntAttach
@@ -297,40 +296,6 @@ G_AddEvent_10:
 	pop ebp
 	ret
 	nop
-
-
-;G_SetAngle(gentity_s*, float const*)
-DISG_SetAngle:
-	push ebp
-	mov ebp, esp
-	push ebx
-	mov edx, [ebp+0x8]
-	mov ebx, [ebp+0xc]
-	lea ecx, [edx+0x3c]
-	mov eax, [ebx]
-	mov [edx+0x3c], eax
-	mov eax, [ebx+0x4]
-	mov [ecx+0x4], eax
-	mov eax, [ebx+0x8]
-	mov [ecx+0x8], eax
-	mov dword [edx+0x30], 0x0
-	mov dword [edx+0x34], 0x0
-	mov dword [edx+0x38], 0x0
-	lea ecx, [edx+0x48]
-	xor eax, eax
-	mov [edx+0x48], eax
-	mov [ecx+0x4], eax
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0x148]
-	mov eax, [ebx]
-	mov [edx+0x148], eax
-	mov eax, [ebx+0x4]
-	mov [ecx+0x4], eax
-	mov eax, [ebx+0x8]
-	mov [ecx+0x8], eax
-	pop ebx
-	pop ebp
-	ret
 
 
 ;G_SetModel(gentity_s*, char const*)

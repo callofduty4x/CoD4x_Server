@@ -91,6 +91,7 @@
 	extern DebugValidateEntity
 	extern DebugValidateEntity2
 	extern DebugValidateEntity3
+	extern DebugValidateVec3
 
 ;Exports of g_missile:
 	global attrGlob
@@ -1043,6 +1044,8 @@ BounceMissile_130:
 	lea eax, [edi+0x30]
 	mov [esp], eax
 	call BG_EvaluateTrajectory
+	mov [esp], ebx
+	call DebugValidateVec3
 	mov ecx, [ebp-0x84]
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x2c]
