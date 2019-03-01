@@ -121,7 +121,7 @@
 	global G_FreeEntityAfterEvent
 	global G_LocalizedStringIndex
 	global G_DObjGetLocalTagMatrix
-	global G_DObjGetWorldTagMatrix
+;	global G_DObjGetWorldTagMatrix
 	global G_FindConfigstringIndex
 	global G_DObjGetWorldBoneIndexPos
 	global G_DObjGetLocalBoneIndexMatrix
@@ -2492,7 +2492,7 @@ G_DObjGetLocalTagMatrix_10:
 
 
 ;G_DObjGetWorldTagMatrix(gentity_s*, unsigned int, float (*) [3])
-G_DObjGetWorldTagMatrix:
+NoG_DObjGetWorldTagMatrix:
 	push ebp
 	mov ebp, esp
 	push edi

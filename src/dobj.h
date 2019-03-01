@@ -121,6 +121,8 @@ void __cdecl DObjSetControlTagAngles(DObj *obj, int *partBits, unsigned int bone
 void Com_InitDObj();
 void __cdecl DObjGetHierarchyBits(DObj *obj, int boneIndex, int *partBits);
 void __cdecl DObjCalcSkel(DObj *obj, int *partBits);
+struct DObjAnimMat *__cdecl G_DObjGetLocalTagMatrix(struct gentity_s *ent, unsigned int tagName);
+
 #ifdef __cplusplus
 }
 #endif
