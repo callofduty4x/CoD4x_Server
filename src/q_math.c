@@ -1331,6 +1331,7 @@ double __cdecl DiffTrack(float tgt, float cur, float rate, float deltaTime)
 double __cdecl PitchForYawOnNormal(const float fYaw, const vec3_t normal)
 {
   vec3_t forward;
+  double result;
 
   assert(!IS_NAN(fYaw));
 	assert(!IS_NAN(normal[0]) && !IS_NAN(normal[1]) && !IS_NAN(normal[2]));
@@ -1341,9 +1342,12 @@ double __cdecl PitchForYawOnNormal(const float fYaw, const vec3_t normal)
   if ( normal[2] != 0 )
   {
     forward[2] = (normal[0] * forward[0] + normal[1] * forward[1]) / normal[2];
-    return atan(forward[2]) * 180.0 / M_PI;
+    result = atan(forward[2]) * 180.0 / M_PI;
+  }else{
+    result = 270.0;
   }
-  return 270.0;
+  assert(!IS_NAN(result));
+  return result;
 }
 
 
