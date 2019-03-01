@@ -93,4 +93,19 @@ signed int __cdecl G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int t
   return 1;
 }
 
+void __cdecl G_SetAngle(gentity_s *ent, const float *angle)
+{
+	assert(!IS_NAN(angle[0]) && !IS_NAN(angle[1]) && !IS_NAN(angle[2]));
+
+  VectorCopy(angle, ent->s.lerp.apos.trBase);
+
+  ent->s.lerp.apos.trType = TR_STATIONARY;
+  ent->s.lerp.apos.trTime = 0;
+  ent->s.lerp.apos.trDuration = 0;
+
+  VectorClear(ent->s.lerp.apos.trDelta);
+  VectorCopy(angle, ent->r.currentAngles);
+
+}
+
 }

@@ -210,7 +210,7 @@ OpcodeLookup * Scr_GetPrevSourcePosOpcodeLookup(const char *codePos)
   high = gScrParserGlob.opcodeLookupLen - 1;
   while ( low <= high )
   {
-    middle = (high + low) >> 1;
+    middle = (high + low) / 2;
     if ( codePos < gScrParserGlob.opcodeLookup[middle].codePos )
     {
       high = middle - 1;

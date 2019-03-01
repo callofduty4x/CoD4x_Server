@@ -78,7 +78,7 @@
 	global _ZZ22G_LocalizedStringIndexPKcE12origErrorMsg
 	global G_EntLinkToInternal
 	global G_AddEvent
-	global G_SetAngle
+;	global G_SetAngle
 	global G_SetModel
 	global G_TagIndex
 	global G_EntAttach
@@ -300,7 +300,7 @@ G_AddEvent_10:
 
 
 ;G_SetAngle(gentity_s*, float const*)
-G_SetAngle:
+DISG_SetAngle:
 	push ebp
 	mov ebp, esp
 	push ebx
