@@ -67,6 +67,10 @@ signed int __cdecl G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int t
   DObjAnimMat *mat;
   float axis[3][3];
 
+  assert(!IS_NAN(ent->r.currentAngles[0]) && !IS_NAN(ent->r.currentAngles[1]) && !IS_NAN(ent->r.currentAngles[2]));
+  assert(!IS_NAN(ent->r.currentOrigin[0]) && !IS_NAN(ent->r.currentOrigin[1]) && !IS_NAN(ent->r.currentOrigin[2]));
+
+
   mat = G_DObjGetLocalTagMatrix(ent, tagName);
   if ( !mat )
   {
@@ -76,6 +80,12 @@ signed int __cdecl G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int t
   ent_axis[3][0] = ent->r.currentOrigin[0];
   ent_axis[3][1] = ent->r.currentOrigin[1];
   ent_axis[3][2] = ent->r.currentOrigin[2];
+
+  assert(!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3]));
+  assert(!IS_NAN((ent_axis)[0][0]) && !IS_NAN((ent_axis)[0][1]) && !IS_NAN((ent_axis)[0][2]));
+  assert(!IS_NAN((ent_axis)[1][0]) && !IS_NAN((ent_axis)[1][1]) && !IS_NAN((ent_axis)[1][2]));
+  assert(!IS_NAN((ent_axis)[2][0]) && !IS_NAN((ent_axis)[2][1]) && !IS_NAN((ent_axis)[2][2]));
+
   ConvertQuatToMat(mat, axis);
   MatrixMultiply(axis, ent_axis, tagMat);
   MatrixTransformVector43(mat->trans, ent_axis, &(*tagMat)[9]);
