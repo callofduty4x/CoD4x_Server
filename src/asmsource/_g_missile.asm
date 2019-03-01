@@ -88,6 +88,9 @@
 	extern Scr_Error
 	extern Scr_GetVector
 	extern missile_frametime
+	extern DebugValidateEntity
+	extern DebugValidateEntity2
+	extern DebugValidateEntity3
 
 ;Exports of g_missile:
 	global attrGlob
@@ -4670,6 +4673,12 @@ G_FireGrenade:
 	push esi
 	push ebx
 	sub esp, 0x2c
+
+	mov eax, [ebp+0x8]
+	mov [esp], eax
+	call DebugValidateEntity
+
+
 	mov esi, [ebp+0x14]
 	movzx ebx, byte [ebp+0x18]
 	mov [esp], esi
@@ -4677,6 +4686,8 @@ G_FireGrenade:
 	mov [ebp-0x1c], eax
 	call G_Spawn
 	mov edi, eax
+	mov [esp], eax
+	call DebugValidateEntity2
 	mov eax, scr_const
 	movzx eax, word [eax+0x3e]
 	mov [esp+0x4], eax
@@ -4786,6 +4797,10 @@ G_FireGrenade_110:
 	mov eax, [eax]
 	mov [esp], eax
 	call Scr_AddString
+
+	mov [esp], edi
+	call DebugValidateEntity3
+
 	mov [esp], edi
 	call Scr_AddEntity
 	mov dword [esp+0x8], 0x2

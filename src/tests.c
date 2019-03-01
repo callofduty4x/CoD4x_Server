@@ -338,3 +338,20 @@ void Tests_Init()
 
 
 
+void DebugValidateEntity(gentity_t* ent)
+{
+	assert(ent != NULL);
+	assert(!IS_NAN(ent->r.currentAngles[0]) && !IS_NAN(ent->r.currentAngles[1]) && !IS_NAN(ent->r.currentAngles[2]));
+}
+
+void DebugValidateEntity2(gentity_t* ent)
+{
+	assert(ent != NULL);
+	assert(!IS_NAN(ent->r.currentAngles[0]) && !IS_NAN(ent->r.currentAngles[1]) && !IS_NAN(ent->r.currentAngles[2]));
+}
+
+void DebugValidateEntity3(gentity_t* ent)
+{
+	assert(ent != NULL);
+	assert(!IS_NAN(ent->r.currentAngles[0]) && !IS_NAN(ent->r.currentAngles[1]) && !IS_NAN(ent->r.currentAngles[2]));
+}
