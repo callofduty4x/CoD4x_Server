@@ -42,8 +42,8 @@ void checkinClient() {
         clients[slot] = client;
 
         if(level >= Plugin_Cvar_GetInteger(cvar_b3HideLvl)) {
-            Plugin_BoldPrintf(slot, "^5You are checked in with ^3Level ^2%i.\n^5Your ^3!b3 ^5commands are now ^3hidden!\n", level);
-            Plugin_BoldPrintf(slot, "^5Use ^3!auth <password> ^5to complete the ^3authentication.^7\n");
+            Plugin_BoldPrintf(slot, "", level);
+            Plugin_BoldPrintf(slot, "");
         }
     } else {
         Plugin_Printf("Invalid Arguments, usage:\n");
