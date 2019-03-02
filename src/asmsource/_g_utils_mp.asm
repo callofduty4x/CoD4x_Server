@@ -120,7 +120,6 @@
 	global G_FreeEntityAfterEvent
 	global G_LocalizedStringIndex
 	global G_DObjGetLocalTagMatrix
-;	global G_DObjGetWorldTagMatrix
 	global G_FindConfigstringIndex
 	global G_DObjGetWorldBoneIndexPos
 	global G_DObjGetLocalBoneIndexMatrix
@@ -2454,130 +2453,6 @@ G_DObjGetLocalTagMatrix_10:
 	pop ebp
 	ret
 	nop
-
-
-;G_DObjGetWorldTagMatrix(gentity_s*, unsigned int, float (*) [3])
-NoG_DObjGetWorldTagMatrix:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x9c
-	mov edi, [ebp+0x8]
-	mov eax, [ebp+0xc]
-	mov [esp+0x4], eax
-	mov [esp], edi
-	call SV_DObjGetBoneIndex
-	mov ebx, eax
-	test eax, eax
-	js G_DObjGetWorldTagMatrix_10
-	mov [esp+0x4], eax
-	mov [esp], edi
-	call G_DObjCalcBone
-	mov [esp], edi
-	call SV_DObjGetMatrixArray
-	shl ebx, 0x5
-	mov esi, eax
-	add esi, ebx
-	jz G_DObjGetWorldTagMatrix_10
-	lea ebx, [ebp-0x6c]
-	mov [esp+0x4], ebx
-	lea eax, [edi+0x148]
-	mov [esp], eax
-	call AnglesToAxis
-	lea edx, [edi+0x13c]
-	mov eax, [edi+0x13c]
-	mov [ebp-0x48], eax
-	mov eax, [edx+0x4]
-	mov [ebp-0x44], eax
-	mov eax, [edx+0x8]
-	mov [ebp-0x40], eax
-	movss xmm1, dword [esi+0x1c]
-	movaps xmm4, xmm1
-	mulss xmm4, [esi]
-	movaps xmm6, xmm1
-	mulss xmm6, [esi+0x4]
-	mulss xmm1, [esi+0x8]
-	movaps xmm0, xmm4
-	mulss xmm0, [esi]
-	movss [ebp-0x84], xmm0
-	movss xmm3, dword [esi+0x4]
-	movaps xmm5, xmm4
-	mulss xmm5, xmm3
-	movss xmm2, dword [esi+0x8]
-	movaps xmm0, xmm4
-	mulss xmm0, xmm2
-	movss [ebp-0x80], xmm0
-	movss xmm0, dword [esi+0xc]
-	mulss xmm4, xmm0
-	mulss xmm3, xmm6
-	movss [ebp-0x7c], xmm3
-	movaps xmm7, xmm6
-	mulss xmm7, xmm2
-	mulss xmm6, xmm0
-	movaps xmm3, xmm1
-	mulss xmm3, xmm2
-	mulss xmm1, xmm0
-	movss [ebp-0x8c], xmm1
-	movss xmm0, dword [ebp-0x7c]
-	addss xmm0, xmm3
-	movss xmm2, dword [_float_1_00000000]
-	movaps xmm1, xmm2
-	subss xmm1, xmm0
-	movss [ebp-0x3c], xmm1
-	movss xmm0, dword [ebp-0x8c]
-	addss xmm0, xmm5
-	movss [ebp-0x38], xmm0
-	movss xmm0, dword [ebp-0x80]
-	subss xmm0, xmm6
-	movss [ebp-0x34], xmm0
-	subss xmm5, [ebp-0x8c]
-	movss [ebp-0x30], xmm5
-	addss xmm3, [ebp-0x84]
-	movaps xmm0, xmm2
-	subss xmm0, xmm3
-	movss [ebp-0x2c], xmm0
-	movaps xmm0, xmm4
-	addss xmm0, xmm7
-	movss [ebp-0x28], xmm0
-	addss xmm6, [ebp-0x80]
-	movss [ebp-0x24], xmm6
-	subss xmm7, xmm4
-	movss [ebp-0x20], xmm7
-	movss xmm1, dword [ebp-0x84]
-	addss xmm1, [ebp-0x7c]
-	subss xmm2, xmm1
-	movss [ebp-0x1c], xmm2
-	mov eax, [ebp+0x10]
-	mov [esp+0x8], eax
-	mov [esp+0x4], ebx
-	lea eax, [ebp-0x3c]
-	mov [esp], eax
-	call MatrixMultiply
-	mov eax, [ebp+0x10]
-	add eax, 0x24
-	mov [esp+0x8], eax
-	mov [esp+0x4], ebx
-	lea eax, [esi+0x10]
-	mov [esp], eax
-	call MatrixTransformVector43
-	mov eax, 0x1
-	add esp, 0x9c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-G_DObjGetWorldTagMatrix_10:
-	xor eax, eax
-	add esp, 0x9c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-
 
 ;G_FindConfigstringIndex(char const*, int, int, int, char const*)
 G_FindConfigstringIndex:

@@ -88,10 +88,6 @@
 	extern Scr_Error
 	extern Scr_GetVector
 	extern missile_frametime
-	extern DebugValidateEntity
-	extern DebugValidateEntity2
-	extern DebugValidateEntity3
-	extern DebugValidateVec3
 
 ;Exports of g_missile:
 	global attrGlob
@@ -1044,8 +1040,6 @@ BounceMissile_130:
 	lea eax, [edi+0x30]
 	mov [esp], eax
 	call BG_EvaluateTrajectory
-	mov [esp], ebx
-	call DebugValidateVec3
 	mov ecx, [ebp-0x84]
 	mov [esp+0x4], ecx
 	mov eax, [ebp-0x2c]
@@ -3574,6 +3568,7 @@ G_RunMissile_210:
 	lea edx, [ebp-0xb8]
 	mov [esp], edx
 	call Vec3Normalize
+	fstp st0
 	lea eax, [ebp-0x48]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x24]
@@ -4676,12 +4671,6 @@ G_FireGrenade:
 	push esi
 	push ebx
 	sub esp, 0x2c
-
-	mov eax, [ebp+0x8]
-	mov [esp], eax
-	call DebugValidateEntity
-
-
 	mov esi, [ebp+0x14]
 	movzx ebx, byte [ebp+0x18]
 	mov [esp], esi
@@ -4689,8 +4678,6 @@ G_FireGrenade:
 	mov [ebp-0x1c], eax
 	call G_Spawn
 	mov edi, eax
-	mov [esp], eax
-	call DebugValidateEntity2
 	mov eax, scr_const
 	movzx eax, word [eax+0x3e]
 	mov [esp+0x4], eax
@@ -4800,10 +4787,6 @@ G_FireGrenade_110:
 	mov eax, [eax]
 	mov [esp], eax
 	call Scr_AddString
-
-	mov [esp], edi
-	call DebugValidateEntity3
-
 	mov [esp], edi
 	call Scr_AddEntity
 	mov dword [esp+0x8], 0x2
