@@ -2,6 +2,7 @@
 #include "q_shared.h"
 #include "g_shared.h"
 #include "server.h"
+#include "server_public.h"
 #include "cscr_stringlist.h"
 
 

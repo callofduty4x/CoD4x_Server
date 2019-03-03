@@ -106,6 +106,13 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
             return ent;
         }
 
+        int __cdecl EntHandle::entnum( )
+        {
+          assertx((unsigned int)number - 1 < ENTITYNUM_NONE, "number - 1 doesn't index ENTITYNUM_NONE\n\t%i not in [0, %i)", number -1, ENTITYNUM_NONE);
+          assertx(g_entities[number - 1].r.inuse, "(number - 1) = %i", number -1);
+          return number - 1;
+        }
+
         void __cdecl EntHandle::setEnt(gentity_s *ent)
         {
             gentity_s *oldEnt;
@@ -209,11 +216,7 @@ void __cdecl EntHandleDissociateInternal(EntHandleList *entHandleList)
   }
 }
 
-
-extern "C"
+void __cdecl EntHandleDissociate(gentity_s *ent)
 {
-    void __cdecl EntHandleDissociate(gentity_s *ent)
-    {
-        EntHandleDissociateInternal(&g_entitiesHandleList[ent - g_entities]);
-    }
+  EntHandleDissociateInternal(&g_entitiesHandleList[ent - g_entities]);
 }

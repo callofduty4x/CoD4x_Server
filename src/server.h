@@ -583,13 +583,6 @@ typedef struct
 }baninfo_t;
 
 
-int SV_NumForGentity( gentity_t *ent );
-gentity_t *SV_GentityNum( int num );
-playerState_t *SV_GameClientNum( int num );
-svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
-gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
-
-
 extern	permServerStatic_t	psvs;	// persistant even if server does shutdown
 extern	qboolean		svsHeaderValid;
 struct moveclip_s;
@@ -641,6 +634,11 @@ extern cvar_t* sv_voice;
 extern "C"{
 #endif
 
+gentity_t *SV_GentityNum( int num );
+int SV_NumForGentity( gentity_t *ent );
+playerState_t *SV_GameClientNum( int num );
+svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
+gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
 //
 // sv_client.c
 //
@@ -808,7 +806,6 @@ void __cdecl SV_SetConfigstring(int index, const char *text);
 void __cdecl SV_FreeClient(client_t* drop);
 void __cdecl SV_FreeClientScriptId(client_t *cl);
 void __cdecl SV_LinkEntity(gentity_t*);
-void __cdecl SV_UnlinkEntity(gentity_t*);
 void SV_SpawnServerResetPlayers();
 void serverStatus_Write();
 

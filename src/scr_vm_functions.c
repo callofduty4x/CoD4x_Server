@@ -26,6 +26,7 @@
 #include "scr_vm.h"
 #include "cmd.h"
 #include "server.h"
+#include "server_public.h"
 #include "maxmind_geoip.h"
 #include "q_platform.h"
 #include "g_sv_shared.h"

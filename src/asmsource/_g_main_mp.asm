@@ -157,6 +157,7 @@
 	extern G_CloseLogFile
 	extern level
 	extern G_InitSomeVariables
+	extern G_RunFrameForEntity
 
 ;Exports of g_main_mp:
 	global g_clients
@@ -165,11 +166,9 @@
 	global G_GetDObj
 	global _Z14G_SafeDObjFreeii
 	global SortRanks
-	global G_RunFrameForEntity
 	global ShowEntityInfo
 	global G_InitGame
 	global G_RunFrame
-	global G_RunThink
 	global G_SightTrace
 	global CalculateRanks
 	global G_ShutdownGame
@@ -373,146 +372,6 @@ SortRanks_30:
 	jbe SortRanks_60
 	mov eax, 0x1
 	jmp SortRanks_70
-	nop
-
-
-;G_RunFrameForEntity(gentity_s*)
-G_RunFrameForEntity:
-G_RunFrameForEntity_30:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov ebx, eax
-	mov eax, [level+0x1e8]
-	cmp [ebx+0x194], eax
-	jz G_RunFrameForEntity_10
-	mov [ebx+0x194], eax
-	mov eax, [ebx+0x218]
-	test eax, eax
-	jz G_RunFrameForEntity_20
-	mov eax, [eax]
-	call G_RunFrameForEntity_30
-G_RunFrameForEntity_20:
-	test byte [ebx+0xa], 0x1
-	jz G_RunFrameForEntity_40
-	mov eax, [level+0x1ec]
-	cmp eax, [ebx+0x70]
-	jg G_RunFrameForEntity_50
-G_RunFrameForEntity_140:
-	sub eax, [ebx+0x184]
-	cmp eax, 0x12c
-	jle G_RunFrameForEntity_60
-	mov eax, [ebx+0x188]
-	test eax, eax
-	jnz G_RunFrameForEntity_50
-	mov eax, [ebx+0x18c]
-	test eax, eax
-	jnz G_RunFrameForEntity_70
-G_RunFrameForEntity_60:
-	mov esi, [ebx+0x188]
-	test esi, esi
-	jnz G_RunFrameForEntity_10
-	mov eax, [ebx+0x4]
-	cmp eax, 0x4
-	jz G_RunFrameForEntity_80
-	cmp eax, 0x3
-	jz G_RunFrameForEntity_90
-	cmp eax, 0x2
-	jz G_RunFrameForEntity_100
-	cmp byte [ebx+0x16a], 0x0
-	jnz G_RunFrameForEntity_110
-	cmp eax, 0x6
-	jz G_RunFrameForEntity_120
-	cmp eax, 0xd
-	jz G_RunFrameForEntity_120
-	cmp eax, 0xa
-	jz G_RunFrameForEntity_120
-	mov edx, [ebx+0x15c]
-	test edx, edx
-	jz G_RunFrameForEntity_130
-	mov [esp], ebx
-	call G_RunClient
-G_RunFrameForEntity_10:
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-G_RunFrameForEntity_40:
-	mov eax, [level+0x1ec]
-	jmp G_RunFrameForEntity_140
-G_RunFrameForEntity_50:
-	mov [esp], ebx
-	call G_FreeEntity
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-G_RunFrameForEntity_70:
-	mov dword [ebx+0x18c], 0x0
-	mov [esp], ebx
-	call SV_UnlinkEntity
-	jmp G_RunFrameForEntity_60
-G_RunFrameForEntity_110:
-	mov [esp], ebx
-	call G_RunItem
-	jmp G_RunFrameForEntity_10
-G_RunFrameForEntity_90:
-	mov ecx, [ebx+0x218]
-	test ecx, ecx
-	jz G_RunFrameForEntity_110
-	mov [esp], ebx
-	call G_GeneralLink
-	mov eax, [ebx+0x19c]
-	test eax, eax
-	jle G_RunFrameForEntity_10
-G_RunFrameForEntity_170:
-	cmp eax, [level+0x1ec]
-	jg G_RunFrameForEntity_10
-	mov dword [ebx+0x19c], 0x0
-	movzx eax, byte [ebx+0x16e]
-	lea eax, [eax+eax*4]
-	mov esi, [eax*8+entityHandlers]
-	test esi, esi
-	jz G_RunFrameForEntity_150
-	mov [esp], ebx
-	call esi
-	jmp G_RunFrameForEntity_10
-G_RunFrameForEntity_120:
-	mov [esp], ebx
-	call G_RunMover
-	jmp G_RunFrameForEntity_10
-G_RunFrameForEntity_80:
-	mov [esp], ebx
-	call G_RunMissile
-	jmp G_RunFrameForEntity_10
-G_RunFrameForEntity_130:
-	test eax, eax
-	jnz G_RunFrameForEntity_160
-	mov eax, [ebx+0x218]
-	test eax, eax
-	jz G_RunFrameForEntity_160
-	mov [esp], ebx
-	call G_GeneralLink
-G_RunFrameForEntity_160:
-	mov eax, [ebx+0x19c]
-	test eax, eax
-	jg G_RunFrameForEntity_170
-	jmp G_RunFrameForEntity_10
-G_RunFrameForEntity_150:
-	mov dword [esp+0x4], _cstring_null_entthink
-	mov dword [esp], 0x2
-	call Com_Error
-	mov [esp], ebx
-	call esi
-	jmp G_RunFrameForEntity_10
-G_RunFrameForEntity_100:
-	mov [esp], ebx
-	call G_RunCorpse
-	jmp G_RunFrameForEntity_10
 	nop
 
 
@@ -1358,7 +1217,7 @@ G_RunFrame_510:
 G_RunFrame_490:
 	cmp byte [ebx+0x100], 0x0
 	jz G_RunFrame_510
-	mov eax, ebx
+	mov [esp], ebx
 	call G_RunFrameForEntity
 	jmp G_RunFrame_510
 G_RunFrame_240:
@@ -1443,49 +1302,6 @@ G_RunFrame_620:
 	mov [esp], eax
 	call Cvar_SetBool
 	jmp G_RunFrame_630
-
-
-;G_RunThink(gentity_s*)
-G_RunThink:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov ebx, [ebp+0x8]
-	mov eax, [ebx+0x19c]
-	test eax, eax
-	jle G_RunThink_10
-	cmp eax, [level+0x1ec]
-	jg G_RunThink_10
-	mov dword [ebx+0x19c], 0x0
-	movzx eax, byte [ebx+0x16e]
-	lea eax, [eax+eax*4]
-	mov esi, [eax*8+entityHandlers]
-	test esi, esi
-	jz G_RunThink_20
-G_RunThink_30:
-	mov [ebp+0x8], ebx
-	mov ecx, esi
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	jmp ecx
-G_RunThink_10:
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-G_RunThink_20:
-	mov dword [esp+0x4], _cstring_null_entthink
-	mov dword [esp], 0x2
-	call Com_Error
-	jmp G_RunThink_30
-	add [eax], al
-
-
 
 ;G_SightTrace(int*, float const*, float const*, int, int)
 G_SightTrace:

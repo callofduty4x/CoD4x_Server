@@ -32,6 +32,97 @@
 vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
 
+
+DObj_t *__cdecl SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gentity_t *touch)
+{
+  if ( clip->locational )
+  {
+    if ( touch->r.svFlags & 6 )
+    {
+      if ( !(touch->r.svFlags & 2) || clip->priorityMap )
+      {
+        return Com_GetServerDObj(touch->s.number);
+      }
+    }
+  }
+  return NULL;
+}
+
+
+DObj_t *__cdecl SV_LocationalTraceDObj(struct pointtrace_t *clip, gentity_t *touch)
+{
+  if ( clip->bLocational )
+  {
+    if ( touch->r.svFlags & 6 )
+    {
+      if ( !(touch->r.svFlags & 2) || clip->priorityMap )
+      {
+        return Com_GetServerDObj(touch->s.number);
+      }
+    }
+  }
+  return NULL;
+}
+
+
+void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
+{
+  struct worldSector_s *node;
+  gentity_t *gcheck;
+  int en;
+  unsigned int nextNodeIndex;
+  int gnum;
+
+  for (node = &cm_world.sectors[nodeIndex] ;node->contents.contentsEntities & ap->contentmask; node = &cm_world.sectors[nodeIndex])
+  {
+		for(en = node->contents.entities; en > 0; en = sv.svEntities[gnum].nextEntityInWorldSector)
+		{
+    	gnum = en -1;
+			gcheck = SV_GentityNum(gnum);
+			if ( gcheck->r.contents & ap->contentmask )
+			{
+				if ( gcheck->r.absmin[0] > ap->maxs[0]
+					|| gcheck->r.absmin[1] > ap->maxs[1]
+					|| gcheck->r.absmin[2] > ap->maxs[2]
+					|| gcheck->r.absmax[0] < ap->mins[0]
+					|| gcheck->r.absmax[1] < ap->mins[1]
+					|| gcheck->r.absmax[2] < ap->mins[2] ) {
+					continue;
+				}
+				if ( ap->count == ap->maxcount )
+				{
+					Com_DPrintf(CON_CHANNEL_SERVER,"CM_AreaEntities: MAXCOUNT\n");
+					return;
+				}
+				ap->list[ap->count] = gnum;
+				++ap->count;
+	    }
+    }
+      
+	  if ( node->tree.dist >= ap->maxs[node->tree.axis] )
+		{
+			nodeIndex = node->tree.child[1];
+			if ( node->tree.dist <= ap->mins[node->tree.axis] )
+			{
+  			return;
+			}
+		}
+		else if ( node->tree.dist <= ap->mins[node->tree.axis] )
+		{
+			nodeIndex = node->tree.child[0];
+		}
+		else
+		{
+			nextNodeIndex = node->tree.child[1];
+			CM_AreaEntities_r(node->tree.child[0], ap);
+      nodeIndex = nextNodeIndex;
+    }
+  }
+}
+
+extern "C"
+{
+
 clipHandle_t SV_ClipHandleForEntity(gentity_t *touch)
 {
 	if(!touch->r.bmodel)
@@ -51,7 +142,7 @@ qboolean G_ShouldEntitiesClip(moveclip_t *clip, int touchNum, gentity_t *touch)
 				{
 					return qfalse;
 
-				}else if(touch->r.ownerNum -1 < 64 && touch->r.contents & CONTENTS_PLAYERCLIP){
+				}else if(touch->r.ownerNum.entnum() < 64 && touch->r.contents & CONTENTS_PLAYERCLIP){
 					return qfalse;
 				}
 			}
@@ -65,9 +156,9 @@ qboolean G_ShouldEntitiesClip(moveclip_t *clip, int touchNum, gentity_t *touch)
 					return qfalse;
 				}
 			}
-			else if( touch->r.ownerNum && touch->r.ownerNum <= 64 && touch->r.contents & CONTENTS_PLAYERCLIP)
+			else if( touch->r.ownerNum.isDefined() && touch->r.ownerNum.entnum() < 64 && touch->r.contents & CONTENTS_PLAYERCLIP)
 			{
-				if(OnSameTeam( &g_entities[clip->passEntityNum], &g_entities[touch->r.ownerNum -1]))
+				if(OnSameTeam( &g_entities[clip->passEntityNum], touch->r.ownerNum.ent()))
 				{
 					return qfalse;
 				}
@@ -144,13 +235,13 @@ __cdecl void SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *
 		if( touchNum == clip->passEntityNum )
 			return;
 
-		if(touch->r.ownerNum){
+		if(touch->r.ownerNum.isDefined()){
 		
-			if( touch->r.ownerNum - 1 == clip->passEntityNum )
+			if( touch->r.ownerNum.entnum() == clip->passEntityNum )
 			    return;
 
 
-			if( touch->r.ownerNum - 1 == clip->passOwnerNum )
+			if( touch->r.ownerNum.entnum() == clip->passOwnerNum )
 			    return;
 		
 		}
@@ -196,9 +287,9 @@ void __cdecl SV_SetupIgnoreEntParams(IgnoreEntParams *ignoreEntParams, int baseE
 	  ent = SV_GentityNum(baseEntity);
   }
   
-  if ( ent && ent->r.ownerNum )
+  if ( ent && ent->r.ownerNum.isDefined() )
   {
-    ignoreEntParams->parentEntity = ent->r.ownerNum - 1;
+    ignoreEntParams->parentEntity = ent->r.ownerNum.entnum();
     ignoreEntParams->ignoreSelf = 1;
     ignoreEntParams->ignoreChildren = 1;
     ignoreEntParams->ignoreSiblings = 1;
@@ -223,61 +314,6 @@ void G_TraceCapsule(trace_t *results, const float *start, const float *mins, con
 }
 
 
-
-void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
-{
-  struct worldSector_s *node;
-  gentity_t *gcheck;
-  int en;
-  unsigned int nextNodeIndex;
-  int gnum;
-
-  for (node = &cm_world.sectors[nodeIndex] ;node->contents.contentsEntities & ap->contentmask; node = &cm_world.sectors[nodeIndex])
-  {
-		for(en = node->contents.entities; en > 0; en = sv.svEntities[gnum].nextEntityInWorldSector)
-		{
-    	gnum = en -1;
-			gcheck = SV_GentityNum(gnum);
-			if ( gcheck->r.contents & ap->contentmask )
-			{
-				if ( gcheck->r.absmin[0] > ap->maxs[0]
-					|| gcheck->r.absmin[1] > ap->maxs[1]
-					|| gcheck->r.absmin[2] > ap->maxs[2]
-					|| gcheck->r.absmax[0] < ap->mins[0]
-					|| gcheck->r.absmax[1] < ap->mins[1]
-					|| gcheck->r.absmax[2] < ap->mins[2] ) {
-					continue;
-				}
-				if ( ap->count == ap->maxcount )
-				{
-					Com_DPrintf(CON_CHANNEL_SERVER,"CM_AreaEntities: MAXCOUNT\n");
-					return;
-				}
-				ap->list[ap->count] = gnum;
-				++ap->count;
-	    }
-    }
-      
-	  if ( node->tree.dist >= ap->maxs[node->tree.axis] )
-		{
-			nodeIndex = node->tree.child[1];
-			if ( node->tree.dist <= ap->mins[node->tree.axis] )
-			{
-  			return;
-			}
-		}
-		else if ( node->tree.dist <= ap->mins[node->tree.axis] )
-		{
-			nodeIndex = node->tree.child[0];
-		}
-		else
-		{
-			nextNodeIndex = node->tree.child[1];
-			CM_AreaEntities_r(node->tree.child[0], ap);
-      nodeIndex = nextNodeIndex;
-    }
-  }
-}
 
 
 int CM_AreaEntities(const float *mins, const float *maxs, int *entityList, int maxcount, int contentmask)
@@ -677,35 +713,6 @@ void __cdecl SV_UnlinkEntity(struct gentity_s *gEnt)
   CM_UnlinkEntity(ent);
 }
 
-DObj_t *__cdecl SV_LocationalTraceDObj(struct pointtrace_t *clip, gentity_t *touch)
-{
-  if ( clip->bLocational )
-  {
-    if ( touch->r.svFlags & 6 )
-    {
-      if ( !(touch->r.svFlags & 2) || clip->priorityMap )
-      {
-        return Com_GetServerDObj(touch->s.number);
-      }
-    }
-  }
-  return NULL;
-}
-
-DObj_t *__cdecl SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gentity_t *touch)
-{
-  if ( clip->locational )
-  {
-    if ( touch->r.svFlags & 6 )
-    {
-      if ( !(touch->r.svFlags & 2) || clip->priorityMap )
-      {
-        return Com_GetServerDObj(touch->s.number);
-      }
-    }
-  }
-  return NULL;
-}
 
 #if 0
 void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
@@ -1121,9 +1128,9 @@ void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check,
   int B = inp->baseEntity == 1023;
   int C = (!inp->ignoreSelf || entnum != inp->baseEntity);
   int D = (!inp->ignoreParent || entnum != inp->parentEntity);
-  int E = touch->r.ownerNum == 0;
-  int F = (!inp->ignoreSiblings || touch->r.ownerNum - 1 != inp->parentEntity || entnum == inp->baseEntity);
-  int G = (!inp->ignoreChildren || touch->r.ownerNum - 1 != inp->baseEntity);
+  int E = !touch->r.ownerNum.isDefined();
+  int F = (!inp->ignoreSiblings || touch->r.ownerNum.entnum() != inp->parentEntity || entnum == inp->baseEntity);
+  int G = (!inp->ignoreChildren || touch->r.ownerNum.entnum() != inp->baseEntity);
   if(!(A || B || (C && D && (E || (F && G)))))
     return;
 
@@ -1146,7 +1153,7 @@ void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check,
           trace->modelIndex = 0;
           trace->partName = 0;
           trace->partGroup = 0;
-          trace->hitType = 1;
+          trace->hitType = TRACE_HITTYPE_ENTITY;
           trace->hitId = touch->s.number;
           trace->cflags = touch->r.contents;
           trace->material = 0;
@@ -1289,9 +1296,6 @@ int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_
   entnum = check - sv.svEntities;
   touch = SV_GentityNum(entnum);
 
-
-//EntHandle::isDefined(&touch->r.ownerNum) --> touch->r.ownerNum != 0
-//EntHandle::entnum(&touch->r.ownerNum) --> touch->r.ownerNum -1
   if ( !(touch->r.contents & clip->contentmask) )
   {
     return 0;
@@ -1300,7 +1304,7 @@ int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_
   for(i = 0; i < 2; ++i)
   {
     if ( clip->passEntityNum[i] != 1023 && (entnum == clip->passEntityNum[i] ||
-         (touch->r.ownerNum && touch->r.ownerNum - 1 == clip->passEntityNum[i])) )
+         (touch->r.ownerNum.isDefined() && touch->r.ownerNum.entnum() == clip->passEntityNum[i])) )
     {
       return 0;
     }
@@ -1396,11 +1400,11 @@ int __cdecl SV_ClipSightToEntity(struct sightclip_t *clip, svEntity_t *check)
   {
     return 0;
   }
-  if(clip->passEntityNum[0] != 1023 && (entnum == clip->passEntityNum[0] || (touch->r.ownerNum != 0 && touch->r.ownerNum - 1 == clip->passEntityNum[0])))
+  if(clip->passEntityNum[0] != 1023 && (entnum == clip->passEntityNum[0] || (touch->r.ownerNum.isDefined() && touch->r.ownerNum.entnum() == clip->passEntityNum[0])))
   {
     return 0;
   }
-  if(clip->passEntityNum[1] != 1023 && (entnum == clip->passEntityNum[1] || (touch->r.ownerNum != 0 && touch->r.ownerNum - 1 == clip->passEntityNum[1])))
+  if(clip->passEntityNum[1] != 1023 && (entnum == clip->passEntityNum[1] || (touch->r.ownerNum.isDefined() && touch->r.ownerNum.entnum() == clip->passEntityNum[1])))
   {
     return 0;
   }
@@ -1492,3 +1496,4 @@ void __cdecl SV_Trace(trace_t *results, const float *start, const float *mins, c
 }
 
 
+};

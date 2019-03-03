@@ -35,6 +35,8 @@
 #include <ctype.h>
 
 
+extern "C"
+{
 
 /*
 ===========
@@ -209,10 +211,11 @@ void ClientCleanName( const char *in, char *out, int outSize, qboolean allowColo
 
 void G_ClientStopUsingTurret_hook(gentity_t* ent)
 {
-	gentity_t *playerent = &g_entities[ent->r.ownerNum -1];
+	gentity_t *playerent = ent->r.ownerNum.ent();
 	if(playerent->client)
 	{
 		G_ClientStopUsingTurret(ent);
 	}
 }
 
+};

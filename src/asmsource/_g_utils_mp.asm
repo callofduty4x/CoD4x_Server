@@ -18,9 +18,6 @@
 	extern SV_DObjGetTree
 	extern XAnimClearTree
 	extern G_FreeTurret
-	extern G_VehFreeEntity
-	extern EntHandleDissociate
-	extern _ZN9EntHandle6setEntEP9gentity_s
 	extern Scr_FreeEntity
 	extern memset
 	extern PlayerCorpse_Free
@@ -72,6 +69,8 @@
 	extern ms_rand
 	extern SV_LocateGameData
 	extern G_DObjCalcBone
+	extern G_FreeEntity
+
 
 ;Exports of g_utils_mp:
 	global cached_models
@@ -88,7 +87,6 @@
 	global G_SetOrigin
 	global G_XModelBad
 	global G_DObjUpdate
-	global G_FreeEntity
 	global G_ModelIndex
 	global G_TempEntity
 	global G_CalcTagAxis
@@ -872,107 +870,6 @@ G_DObjUpdate_90:
 	jmp G_DObjUpdate_160
 	nop
 
-
-;G_FreeEntity(gentity_s*)
-G_FreeEntity:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov ebx, [ebp+0x8]
-	mov [esp], ebx
-	call G_EntUnlink
-	mov eax, [ebx+0x21c]
-	test eax, eax
-	jz G_FreeEntity_10
-G_FreeEntity_20:
-	mov [esp], eax
-	call G_EntUnlink
-	mov eax, [ebx+0x21c]
-	test eax, eax
-	jnz G_FreeEntity_20
-G_FreeEntity_10:
-	mov [esp], ebx
-	call SV_UnlinkEntity
-	mov [esp], ebx
-	call SV_DObjGetTree
-	test eax, eax
-	jz G_FreeEntity_30
-	mov [esp], eax
-	call XAnimClearTree
-G_FreeEntity_30:
-	mov eax, [ebx]
-	mov [esp], eax
-	call Com_SafeServerDObjFree
-	mov [esp], ebx
-	call G_FreeEntityRefs
-	mov esi, [ebx+0x160]
-	test esi, esi
-	jz G_FreeEntity_40
-	mov [esp], ebx
-	call G_FreeTurret
-G_FreeEntity_40:
-	mov ecx, [ebx+0x164]
-	test ecx, ecx
-	jz G_FreeEntity_50
-	mov [esp], ebx
-	call G_VehFreeEntity
-G_FreeEntity_50:
-	cmp dword [ebx+0x4], 0x2
-	jz G_FreeEntity_60
-G_FreeEntity_90:
-	mov [esp], ebx
-	call EntHandleDissociate
-	mov dword [esp+0x4], 0x0
-	lea eax, [ebx+0x154]
-	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
-	mov dword [esp+0x4], 0x0
-	lea eax, [ebx+0x198]
-	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
-	mov dword [esp+0x4], 0x0
-	lea eax, [ebx+0x214]
-	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
-	mov [esp], ebx
-	call Scr_FreeEntity
-	mov esi, [ebx+0x26c]
-	mov dword [esp+0x8], 0x274
-	mov dword [esp+0x4], 0x0
-	mov [esp], ebx
-	call memset
-	mov edx, level
-	mov eax, [edx+0x1ec]
-	mov [ebx+0x184], eax
-	mov eax, ebx
-	sub eax, [edx+0x4]
-	cmp eax, 0xb09f
-	jle G_FreeEntity_70
-	mov eax, [edx+0x14]
-	test eax, eax
-	jz G_FreeEntity_80
-	mov [eax+0x270], ebx
-G_FreeEntity_100:
-	mov [edx+0x14], ebx
-	mov dword [ebx+0x270], 0x0
-G_FreeEntity_70:
-	lea eax, [esi+0x1]
-	mov [ebx+0x26c], eax
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-G_FreeEntity_60:
-	mov [esp], ebx
-	call PlayerCorpse_Free
-	jmp G_FreeEntity_90
-G_FreeEntity_80:
-	mov [edx+0x10], ebx
-	jmp G_FreeEntity_100
-	nop
 
 
 ;G_ModelIndex(char const*)
