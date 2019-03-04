@@ -538,6 +538,7 @@ struct DB_LoadData
   int flags;
   int startTime;
   bool abort;
+  bool ateof;
   byte deflateBuffer[DEFLATE_BUFFER_SIZE];
 };
 
@@ -772,16 +773,25 @@ qboolean __cdecl DB_ReadData()
   return qfalse;
 }
 
+//g_load.outstandingReads get increased by 1 when we have read data of amount 0x40000 or less on end of file
+//g_load.outstandingReads gets lowered by 1 when 
+
 void DB_ReadXFileStage()
 {
+    g_load.ateof = false;
     if ( !g_load.f )
     {
         return;
     }
     assert ( !g_load.outstandingReads );
-    if ( !DB_ReadData() && _GetLastError() != 38 )
+    if ( !DB_ReadData() )
     {
-      Com_Error(ERR_DROP, "Read error of file '%s'", g_load.filename);
+      if(_GetLastError() == 38)
+      {
+        g_load.ateof = true;
+      }else{
+        Com_Error(ERR_DROP, "Read error of file '%s'", g_load.filename);
+      }
     }
 }
 
@@ -816,7 +826,7 @@ void __cdecl DB_CancelLoadXFile()
 {
   if ( g_load.compressBufferStart )
   {
-    while ( g_load.outstandingReads )
+    while ( g_load.outstandingReads > 0)
     {
       DB_WaitXFileStage();
     }
@@ -900,6 +910,15 @@ void __cdecl DB_LoadXFileData(byte *pos, int size)
           //R_ShowDirtyDiscError();
           DB_CancelLoadXFile();
           Com_Error(ERR_DROP, "Fastfile for zone '%s' appears corrupt or unreadable (code %i.)", g_load.filename, err + 110);
+        }
+        if(err == Z_STREAM_END)
+        {
+          if(g_load.stream.avail_out > 0 && g_load.stream.avail_in == 0 && g_load.ateof)
+          {
+            DB_CancelLoadXFile();
+            Com_Error(ERR_DROP, "Fastfile for zone '%s' appears corrupt or unreadable. Unexpected end of stream. Missing %d bytes.",
+              g_load.filename, g_load.stream.avail_out + g_load.deflateRemainingFileSize);
+          }
         }
         if ( g_load.f)
         {

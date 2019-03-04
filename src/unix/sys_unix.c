@@ -925,7 +925,8 @@ BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead
     _SetLastError(38);
     return FALSE;
   }
-  if ( (signed int)fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh) <= 0 )
+  signed int r = fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh);
+  if ( (signed int) <= 0 )
   {
     _SetLastError(38);
     return FALSE;
