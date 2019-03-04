@@ -1124,15 +1124,29 @@ void __cdecl SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check,
   }
 
   inp = clip->ignoreEntParams;
-  int A = inp == 0;
-  int B = inp->baseEntity == 1023;
-  int C = (!inp->ignoreSelf || entnum != inp->baseEntity);
-  int D = (!inp->ignoreParent || entnum != inp->parentEntity);
-  int E = !touch->r.ownerNum.isDefined();
-  int F = (!inp->ignoreSiblings || touch->r.ownerNum.entnum() != inp->parentEntity || entnum == inp->baseEntity);
-  int G = (!inp->ignoreChildren || touch->r.ownerNum.entnum() != inp->baseEntity);
-  if(!(A || B || (C && D && (E || (F && G)))))
-    return;
+
+  if(inp != NULL && inp->baseEntity != ENTITYNUM_NONE)
+  {
+      if(inp->ignoreSelf && entnum == inp->baseEntity)
+      {
+        return;
+      }
+      if(inp->ignoreParent && entnum == inp->parentEntity)
+      {
+        return;
+      }
+      if(touch->r.ownerNum.isDefined())
+      {
+        if(inp->ignoreSiblings && touch->r.ownerNum.entnum() == inp->parentEntity && entnum != inp->baseEntity)
+        {
+          return;
+        }
+        if(inp->ignoreChildren && touch->r.ownerNum.entnum() == inp->baseEntity)
+        {
+          return;
+        }
+      }
+  }
 
   obj = SV_LocationalTraceDObj(clip, touch);
 

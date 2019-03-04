@@ -108,7 +108,7 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
 
         int __cdecl EntHandle::entnum( )
         {
-          assertx((unsigned int)number - 1 < ENTITYNUM_NONE, "number - 1 doesn't index ENTITYNUM_NONE\n\t%i not in [0, %i)", number -1, ENTITYNUM_NONE);
+          assertx((unsigned int)number - 1 < ENTITYNUM_NONE, "number - 1 doesn't index ENTITYNUM_NONE - %i not in [0, %i)", number -1, ENTITYNUM_NONE);
           assertx(g_entities[number - 1].r.inuse, "(number - 1) = %i", number -1);
           return number - 1;
         }
