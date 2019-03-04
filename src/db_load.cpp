@@ -913,7 +913,7 @@ void __cdecl DB_LoadXFileData(byte *pos, int size)
         }
         if(err == Z_STREAM_END)
         {
-          if(g_load.stream.avail_out > 0 && g_load.stream.avail_in == 0 && g_load.ateof)
+          if(g_load.stream.avail_out > 0 && g_load.ateof)
           {
             DB_CancelLoadXFile();
             Com_Error(ERR_DROP, "Fastfile for zone '%s' appears corrupt or unreadable. Unexpected end of stream. Missing %d bytes.",

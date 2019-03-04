@@ -922,13 +922,22 @@ BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead
   }
   if ( fseek(hObject->fh, lpOverlapped->Offset, 0) )
   {
-    _SetLastError(38);
+    if(feof(hObject->fh))
+    {
+        _SetLastError(38); //EOF error
+    }else{
+        _SetLastError(25); //Seek error
+    }
     return FALSE;
   }
-  signed int r = fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh);
-  if ( (signed int) <= 0 )
+  if((signed int)fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh) <= 0)
   {
-    _SetLastError(38);
+    if(feof(hObject->fh))
+    {
+        _SetLastError(38);
+    }else{
+        _SetLastError(30); //Read fault
+    }
     return FALSE;
   }
   return TRUE;
