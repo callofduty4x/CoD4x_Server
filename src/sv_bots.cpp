@@ -6,6 +6,7 @@
 #include "misc.h"
 #include "server.h"
 #include "cscr_stringlist.h"
+#include "sv_bots_astar.h"
 
 BotMovementInfo_t g_botai[MAX_CLIENTS];
 
@@ -294,6 +295,14 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
 
     Bot_CalculateRotationForOrigin(bot, look_origin, 1.0/sv_fps->integer);
 }
+
+
+
+
+
+
+
+
 
 extern "C"
 {
