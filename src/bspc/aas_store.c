@@ -688,7 +688,7 @@ qboolean AAS_FindPlane( vec3_t normal, float dist, int *planenum ) {
 //===========================================================================
 qboolean AAS_FindHashedPlane( vec3_t normal, float dist, int *planenum ) {
 	int i, p;
-	aas_plane_t *plane;
+//	aas_plane_t *plane;
 	int hash, h;
 
 	hash = (int)fabs( dist ) / 8;
@@ -700,7 +700,7 @@ qboolean AAS_FindHashedPlane( vec3_t normal, float dist, int *planenum ) {
 		h = ( hash + i ) & ( PLANE_HASH_SIZE - 1 );
 		for ( p = aas_hashplanes[h]; p >= 0; p = aas_planechain[p] )
 		{
-			plane = &( *aasworld ).planes[p];
+//			plane = &( *aasworld ).planes[p];
 			if ( AAS_PlaneEqual( normal, dist, p ) ) {
 				*planenum = p;
 				return true;

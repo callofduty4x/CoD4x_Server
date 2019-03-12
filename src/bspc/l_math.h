@@ -32,6 +32,7 @@ If you have questions concerning this license or the applicable additional terms
 // mathlib.h
 
 #include <math.h>
+#include "../q_math.h"
 
 #ifdef DOUBLEVEC_T
 typedef double vec_t;
@@ -54,13 +55,11 @@ typedef vec_t vec4_t[4];
 
 #define DEG2RAD( a ) ( a * M_PI ) / 180.0F
 
-#ifndef M_PI
-#define M_PI        3.14159265358979323846  // matches value in gcc v2 math.h
-#endif
 
 extern vec3_t vec3_origin;
 
-#define EQUAL_EPSILON   0.001
+
+#if 0
 
 qboolean VectorCompare( vec3_t v1, vec3_t v2 );
 
@@ -97,4 +96,5 @@ void R_ConcatRotations( float in1[3][3], float in2[3][3], float out[3][3] );
 void RotatePoint( vec3_t point, float matrix[3][3] );
 void CreateRotationMatrix( vec3_t angles, float matrix[3][3] );
 
+#endif
 #endif

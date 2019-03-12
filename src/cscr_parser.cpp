@@ -366,7 +366,7 @@ char *__cdecl Scr_ReadFile_FastFile(const char *filename, const char *extFilenam
 
   if ( useFastFile->boolean )
   {
-    rawfile = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE, extFilename).rawfile;
+    rawfile = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE, extFilename, true, 100).rawfile;
     if ( rawfile )
     {
       sourceBuf = rawfile->buffer;

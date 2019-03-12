@@ -26,6 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
+#include "../q_shared.h"
 
 /*****************************************************************************
  * name:		l_precomp.h
@@ -69,7 +70,7 @@ If you have questions concerning this license or the applicable additional terms
 #define INDENT_IFDEF            0x0008
 #define INDENT_IFNDEF           0x0010
 
-#ifdef BSPC
+#if 0
 #define MAX_TOKENLENGTH     1024
 
 typedef struct pc_token_s

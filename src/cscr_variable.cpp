@@ -3613,7 +3613,7 @@ const char *Scr_GetSourceFile_FastFile(const char *filename)
 {
   RawFile *rawfile;
 
-  rawfile = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE, filename).rawfile;
+  rawfile = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE, filename, true, 100).rawfile;
   if ( !rawfile )
   {
     Com_Error(ERR_DROP, "cannot find %s'", filename);

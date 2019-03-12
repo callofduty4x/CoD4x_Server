@@ -73,7 +73,6 @@
 	extern Load_WeaponDefSounds
 	extern Load_WeaponDef
 	extern Load_XModelBoneNames
-	extern Load_MaterialHandle
 
 ;Exports of db_load:
 	global Load_XModel
@@ -140,7 +139,7 @@
 	global Load_GfxTextureLoad
 	global Load_ItemKeyHandler
 	global Load_LoadedSoundPtr
-;	global Load_MaterialHandle
+	global Load_MaterialHandle
 	global Load_StringTablePtr
 	global Load_XAnimDeltaPart
 	global Load_listBoxDef_ptr
@@ -11586,7 +11585,7 @@ Load_LoadedSoundPtr_30:
 
 
 ;Load_MaterialHandle(unsigned char)
-NNNLoad_MaterialHandle:
+Load_MaterialHandle:
 	push ebp
 	mov ebp, esp
 	push esi

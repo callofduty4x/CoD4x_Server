@@ -404,103 +404,7 @@ void AASOuputFile( quakefile_t *qf, char *outputpath, char *filename ) {
 		strcat( filename, "aas" );
 	} //end else
 } //end of the function AASOutputFile
-//===========================================================================
-//
-// Parameter:			-
-// Returns:				-
-// Changes Globals:		-
-//===========================================================================
-void CreateAASFilesForAllBSPFiles( char *quakepath ) {
-#if defined( WIN32 ) | defined( _WIN32 )
-	WIN32_FIND_DATA filedata;
-	HWND handle;
-	struct _stat statbuf;
-#else
-	glob_t globbuf;
-	struct stat statbuf;
-	int j;
-#endif
-	int done;
-	char filter[_MAX_PATH], bspfilter[_MAX_PATH], aasfilter[_MAX_PATH];
-	char aasfile[_MAX_PATH], buf[_MAX_PATH], foldername[_MAX_PATH];
-	quakefile_t *qf, *qf2, *files, *bspfiles, *aasfiles;
 
-	strcpy( filter, quakepath );
-	AppendPathSeperator( filter, sizeof( filter ) );
-	strcat( filter, "*" );
-
-#if defined( WIN32 ) | defined( _WIN32 )
-	handle = FindFirstFile( filter, &filedata );
-	done = ( handle == INVALID_HANDLE_VALUE );
-	while ( !done )
-	{
-		_splitpath( filter, foldername, NULL, NULL, NULL );
-		_splitpath( filter, NULL, &foldername[strlen( foldername )], NULL, NULL );
-		AppendPathSeperator( foldername, _MAX_PATH );
-		strcat( foldername, filedata.cFileName );
-		_stat( foldername, &statbuf );
-#else
-	glob( filter, 0, NULL, &globbuf );
-	for ( j = 0; j < globbuf.gl_pathc; j++ )
-	{
-		strcpy( foldername, globbuf.gl_pathv[j] );
-		stat( foldername, &statbuf );
-#endif
-		//if it is a folder
-		if ( statbuf.st_mode & S_IFDIR ) {
-			//
-			AppendPathSeperator( foldername, sizeof( foldername ) );
-			//get all the bsp files
-			strcpy( bspfilter, foldername );
-			strcat( bspfilter, "maps/*.bsp" );
-			files = FindQuakeFiles( bspfilter );
-			strcpy( bspfilter, foldername );
-			strcat( bspfilter, "*.pk3/maps/*.bsp" );
-			bspfiles = FindQuakeFiles( bspfilter );
-			for ( qf = bspfiles; qf; qf = qf->next ) if ( !qf->next ) {
-					break;
-				}
-			if ( qf ) {
-				qf->next = files;
-			} else { bspfiles = files;}
-			//get all the aas files
-			strcpy( aasfilter, foldername );
-			strcat( aasfilter, "maps/*.aas" );
-			files = FindQuakeFiles( aasfilter );
-			strcpy( aasfilter, foldername );
-			strcat( aasfilter, "*.pk3/maps/*.aas" );
-			aasfiles = FindQuakeFiles( aasfilter );
-			for ( qf = aasfiles; qf; qf = qf->next ) if ( !qf->next ) {
-					break;
-				}
-			if ( qf ) {
-				qf->next = files;
-			} else { aasfiles = files;}
-			//
-			for ( qf = bspfiles; qf; qf = qf->next )
-			{
-				sprintf( aasfile, "%s/%s", qf->pakfile, qf->origname );
-				Log_Print( "found %s\n", aasfile );
-				strcpy( &aasfile[strlen( aasfile ) - strlen( ".bsp" )], ".aas" );
-				for ( qf2 = aasfiles; qf2; qf2 = qf2->next )
-				{
-					sprintf( buf, "%s/%s", qf2->pakfile, qf2->origname );
-					if ( !stricmp( aasfile, buf ) ) {
-						Log_Print( "found %s\n", buf );
-						break;
-					} //end if
-				} //end for
-			} //end for
-		} //end if
-#if defined( WIN32 ) | defined( _WIN32 )
-		//find the next file
-		done = !FindNextFile( handle, &filedata );
-	} //end while
-#else
-	} //end for
-	globfree( &globbuf );
-#endif
-} //end of the function CreateAASFilesForAllBSPFiles
 //===========================================================================
 //
 // Parameter:				-
@@ -735,12 +639,6 @@ int main( int argc, char **argv ) {
 			}
 			comp = COMP_BSP2AAS;
 			qfiles = GetArgumentFiles( argc, argv, &i, "bsp" );
-		} //end else if
-		else if ( !stricmp( argv[i], "-aasall" ) ) {
-			if ( i + 1 >= argc ) {
-				i = 0; break;
-			}
-			CreateAASFilesForAllBSPFiles( argv[++i] );
 		} //end else if
 		else if ( !stricmp( argv[i], "-reach" ) ) {
 			if ( i + 1 >= argc ) {

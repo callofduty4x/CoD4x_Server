@@ -147,6 +147,7 @@ extern vec4_t colorBlackBlank;
 #define Square( x ) ( ( x ) * ( x ) )
 
 
+
 #ifndef EQUAL_EPSILON
 #define EQUAL_EPSILON   0.001
 #endif
@@ -160,7 +161,11 @@ extern "C"{
 
 void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanFrac, const float fViewRoll, const float fLeanDist);
 int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd);
+
+#ifndef BSPC
 int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
+#endif
+
 // 0x081921A2
 void Math_VectorToAngles(vec3_t vector, vec3_t angles);
 void vectoangles( const vec3_t value1, vec3_t angles );
@@ -187,6 +192,7 @@ float vec2_maxabs    (vec2_t v);
 
 
 float Q_fabs(float f);
+vec_t Q_rint( vec_t in );
 
 void MatrixTransposeTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out);
 void MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out);
@@ -194,6 +200,9 @@ void Vec3Lerp(const float *start, const float *end, const float fraction, float 
 double Vec2DistanceSq(const float *v0, const float *v1);
 void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out);
 void MatrixMultiply( float in1[3][3], float in2[3][3], float out[3][3] );
+void AddPointToBounds( const vec3_t v, vec3_t mins, vec3_t maxs );
+void ClearBounds(vec3_t mins, vec3_t maxs);
+
 
 #include <xmmintrin.h>
 
@@ -208,7 +217,6 @@ static inline int f2rint(float f)
 #ifdef __cplusplus
 }
 #endif
-
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))

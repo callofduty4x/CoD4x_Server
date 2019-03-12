@@ -1712,6 +1712,9 @@ void Com_Memcpy(void* d, const void* s, int len)
     memcpy(d, s, len);
 }
 
+
+#ifndef BSPC
+
 char *va(const char *format, ...)
 {
   struct va_info_t *info;
@@ -1731,6 +1734,8 @@ char *va(const char *format, ...)
   }
   return info->va_string[index];
 }
+
+#endif
 
 bool __cdecl Com_IsLegacyXModelName(const char *name)
 {

@@ -383,9 +383,9 @@ void AAS_Accelerate( vec3_t velocity, float frametime, vec3_t wishdir, float wis
 // Changes Globals:		-
 //===========================================================================
 void AAS_AirControl( vec3_t start, vec3_t end, vec3_t velocity, vec3_t cmdmove ) {
-	vec3_t dir;
+//	vec3_t dir;
 
-	VectorSubtract( end, start, dir );
+//	VectorSubtract( end, start, dir );
 } //end of the function AAS_AirControl
 //===========================================================================
 // applies ground friction to the given velocity
@@ -443,7 +443,8 @@ int AAS_PredictClientMovement( struct aas_clientmove_s *move,
 	float sv_maxstep, sv_maxsteepness, sv_jumpvel, friction;
 	float gravity, delta, maxvel, wishspeed, accelerate;
 	//float velchange, newvel;
-	int n, i, j, pc, step, swimming, ax, crouch, event, jump_frame, areanum;
+	int n, i, j, pc, step, swimming, crouch, event, jump_frame, areanum;
+//	int ax;
 	int areas[20], numareas;
 	vec3_t points[20];
 	vec3_t org, end, feet, start, stepend, lastorg, wishdir;
@@ -499,7 +500,7 @@ int AAS_PredictClientMovement( struct aas_clientmove_s *move,
 		crouch = qfalse;
 		//apply command movement
 		if ( n < cmdframes ) {
-			ax = 0;
+//			ax = 0;
 			maxvel = sv_maxwalkvelocity;
 			accelerate = sv_airaccelerate;
 			VectorCopy( cmdmove, wishdir );
@@ -520,12 +521,12 @@ int AAS_PredictClientMovement( struct aas_clientmove_s *move,
 				{
 					accelerate = sv_walkaccelerate;
 				} //end else
-				ax = 2;
+//				ax = 2;
 			} //end if
 			if ( swimming ) {
 				maxvel = sv_maxswimvelocity;
 				accelerate = sv_swimaccelerate;
-				ax = 3;
+//				ax = 3;
 			} //end if
 			else
 			{
