@@ -876,7 +876,7 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
     Info_SetValueForKey( infostring, "gametype", sv_g_gametype->string );
     Info_SetValueForKey( infostring, "pure", va("%i", sv_pure->boolean ) );
     Info_SetValueForKey( infostring, "build", va("%i", Sys_GetBuild()));
-    Info_SetValueForKey( infostring, "shortversion", Q3_VERSION );
+    Info_SetValueForKey( infostring, "shortversion", va("x%d", PROTOCOL_VERSION) );
 
         if(*sv_password->string)
     {
