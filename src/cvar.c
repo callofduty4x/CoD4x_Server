@@ -419,15 +419,16 @@ static qboolean Cvar_ClampToLimits(cvarType_t type, CvarValue *value, CvarLimits
 		case CVAR_ENUM:
 			enumFailDummy[0] = "";
 			enumFailDummy[1] = NULL;
-			if((*value).enumval.strings == NULL)
+			if((*limits).enumStr == NULL)
 			{
-				(*value).enumval.strings = enumFailDummy;
-				(*value).enumval.integer = 0;
+				(*limits).enumStr = enumFailDummy;
+				(*value).integer = 0;
 				return qfalse;
 			}
-			for(i = 0; (*value).enumval.strings[i] != NULL && i < (*value).enumval.integer; i++ );
-			if(i != (*value).enumval.integer)
+			for(i = 0; (*limits).enumStr[i] != NULL && i < (*value).integer; i++ );
+			if(i != (*value).integer)
 			{
+				(*value).integer = 0;
 				return qfalse;
 			}
 			return qtrue;
@@ -588,7 +589,6 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 	cvar_t* safenext;
 	cvar_t* safehashNext;
 	char latchedStr[8192];
-	int i;
 
 	Sys_EnterCriticalSection(CRITSECT_CVAR);
 
@@ -659,12 +659,9 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 				var->resetColor = value.color;
 				break;
 			case CVAR_ENUM:
-				var->resetInteger = value.enumval.integer;
+				var->resetInteger = value.integer;
 				var->limits.imin = 0;
-				for(i = 0; value.enumval.strings[i]; ++i);
-				var->limits.imax = i -1;
-				assert(var->limits.imax >= 0);
-				var->limits.enumStr = value.enumval.strings;
+				var->limits.enumStr = limits.enumStr;
 				break;
 			case CVAR_INT:
 				var->resetInteger = value.integer;
@@ -765,11 +762,11 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 			var->latchedColor = value.color;
 			break;
 		case CVAR_ENUM:
-			var->integer = value.enumval.integer;
-			var->resetInteger = value.enumval.integer;
-			var->latchedInteger = value.enumval.integer;
+			var->integer = value.integer;
+			var->resetInteger = value.integer;
+			var->latchedInteger = value.integer;
 			var->limits.imin = 0;
-			var->limits.enumStr = value.enumval.strings;
+			var->limits.enumStr = limits.enumStr;
 			break;
 		case CVAR_INT:
 			var->integer = value.integer;
@@ -2387,17 +2384,13 @@ cvar_t* Cvar_RegisterEnum(const char* name, const char** strings, int integer, u
 	cvar_t* cvar;
 	CvarLimits limits;
 	CvarValue value;
-	int i;
 
 	assert(strings[0] != NULL);
 
-	for(i = 0; strings[i]; ++i);
-
 	limits.imin = 0;
-	limits.imax = i-1;
+	limits.enumStr = strings;
 
-	value.enumval.strings = strings;
-	value.enumval.integer = integer;
+	value.integer = integer;
 
 	cvar = Cvar_Register(name, CVAR_ENUM, flags, value, limits, description);
 
