@@ -588,6 +588,7 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 	cvar_t* safenext;
 	cvar_t* safehashNext;
 	char latchedStr[8192];
+	int i;
 
 	Sys_EnterCriticalSection(CRITSECT_CVAR);
 
@@ -660,6 +661,9 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 			case CVAR_ENUM:
 				var->resetInteger = value.enumval.integer;
 				var->limits.imin = 0;
+				for(i = 0; value.enumval.strings[i]; ++i);
+				var->limits.imax = i -1;
+				assert(var->limits.imax >= 0);
 				var->limits.enumStr = value.enumval.strings;
 				break;
 			case CVAR_INT:
