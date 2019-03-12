@@ -718,8 +718,17 @@ void Com_Init(char* commandLine){
 
     Cbuf_AddText( "exec default_mp.cfg\n");
     Cbuf_Execute(0,0); // Always execute after exec to prevent text buffer overflowing
+
+/*
+    Good bye
+    With broken cvars we kinda also broke the query limiting which gets happy abused now.
+    The q3server_config.cfg contains now crap values. To fix this I decided to no longer execute it on startup.
+    If you need it add to commandline +exec q3server_config.cfg
+    However this file gets still written so you can still use it if needed when you exec it on commandline
+
     Cbuf_AddText( "exec " Q3CONFIG_CFG "\n");
     Cbuf_Execute(0,0); // Always execute after exec to prevent text buffer overflowing
+*/
     if(com_securemode)
     {
         Cvar_SetStringByName("sv_democompletedCmd", "");
