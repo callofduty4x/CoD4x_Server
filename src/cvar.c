@@ -2383,9 +2383,14 @@ cvar_t* Cvar_RegisterEnum(const char* name, const char** strings, int integer, u
 	cvar_t* cvar;
 	CvarLimits limits;
 	CvarValue value;
+	int i;
 
-	limits.fmin = 0;
-	limits.fmax = 0;
+	assert(strings[0] != NULL);
+
+	for(i = 0; strings[i]; ++i);
+
+	limits.imin = 0;
+	limits.imax = i-1;
 
 	value.enumval.strings = strings;
 	value.enumval.integer = integer;
