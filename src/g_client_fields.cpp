@@ -390,6 +390,19 @@ void __cdecl ClientScr_GetName(gclient_s *pSelf, client_fields_s *pField)
   Scr_AddString(CS_DisplayName(&pSelf->sess.cs, 3));
 }
 
+void __cdecl ClientScr_GetBotStatus(gclient_s *pSelf, client_fields_s *pField)
+{
+	assert(pSelf != NULL);
+	
+	client_t* cl = &svs.clients[ pSelf->sess.cs.clientIndex ];
+	
+	Scr_AddBool(cl->netchan.remoteAddress.type == NA_BOT);
+}
+
+void __cdecl ClientScr_SetBotStatus(gclient_s *pSelf, client_fields_s *pField)
+{
+}
+
 static client_fields_s fields[] =
 {
   { "sessionteam", 0, F_STRING, &ClientScr_SetSessionTeam, &ClientScr_GetSessionTeam },
@@ -410,6 +423,7 @@ static client_fields_s fields[] =
   { "headicon", 0, F_STRING, &ClientScr_SetHeadIcon, &ClientScr_GetHeadIcon },
   { "groundentity", CSF(ps.groundEntityNum), F_ENTITY, &ClientScr_ReadOnly, &ClientScr_GetEntityFromIndex },
   { "hasradar", CSF(hasRadar), F_INT, NULL, NULL },
+  { "isbot", 0, F_INT, &ClientScr_SetBotStatus, &ClientScr_GetBotStatus },
   { NULL, 0, F_INT, NULL, NULL }
 };
 

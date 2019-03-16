@@ -759,7 +759,7 @@ qboolean SV_ExecuteRemoteCmd(int, const char*);
 qboolean SV_UseUids();
 int SV_GetUid(unsigned int);
 void SV_SetUid(unsigned int clnum, unsigned int uid);
-gentity_t* SV_AddBotClient();
+gentity_t* SV_AddBotClient(char* requested_name);
 gentity_t* SV_RemoveBot();
 void SV_AddBan(baninfo_t* baninfo);
 
