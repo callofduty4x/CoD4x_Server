@@ -2005,20 +2005,17 @@ void GScr_SpawnBot()
 	gentity_t *clEnt;
 	
 	if ( Scr_GetNumParam() == 1 )
-    {
-        char *string = Scr_GetString( 0 );
+        {
+       	 	char *string = Scr_GetString( 0 );
 		char name[36];
 		int i, j;
 		
-		for( i = 0, j = 0; string[i]; ++i )
+		for( i = 0, j = 0; string[i] && j < sizeof(name) - 1; ++i )
 		{
 			if( (byte)string[i] >= 0x20 )
 			{
 				name[j] = string[i];
-				
 				++j;
-				if( j == 36 )
-					break;
 			}
 		}
 		name[j] = '\0';
@@ -2029,14 +2026,14 @@ void GScr_SpawnBot()
 		}
 		
 		clEnt = (gentity_t *)SV_AddBotClient( name );
-    }
+        }
 	else
 	{
 		clEnt = (gentity_t *)SV_AddBotClient( NULL );
 	}
 
-    if (clEnt)
-        Scr_AddEntity(clEnt);
+        if (clEnt)
+            	Scr_AddEntity(clEnt);
 }
 
 /*
