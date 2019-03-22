@@ -1,0 +1,16 @@
+BSPC version 2.1c, Mar 22 2019 20:14:25 by Mr Elusive
+bsp2aas: mp_backlot.ff to mp_backlot.aas
+Loading fastfile 'mp_backlot.ff'
+used 51.89 MB memory in DB alloc
+Loaded fastfile 'mp_backlot.ff' in 1935ms (61ms waiting)
+BSP tree created in     0 seconds
+------- Prune Nodes --------
+    0 pruned nodes
+---- Node Portalization ----
+     1 nodes portalized
+     0 tiny portals
+     0 KB of portal memory
+     0 KB of winding memory
+------ FloodEntities -------
+WARNING: no entities inside
+**** leaked ****

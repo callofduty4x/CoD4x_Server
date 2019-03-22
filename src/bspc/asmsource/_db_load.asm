@@ -13,7 +13,6 @@
 	extern Mark_GfxImageAsset
 	extern Mark_LightDefAsset
 	extern Load_FxEffectDefFromName
-	extern Load_SndAliasCustom
 	extern Load_XModelAsset
 	extern Mark_ScriptStringCustom
 	extern Mark_snd_alias_list_Asset
@@ -73,6 +72,8 @@
 	extern Load_WeaponDefSounds
 	extern Load_WeaponDef
 	extern Load_XModelBoneNames
+	extern Load_MaterialHandle
+
 
 ;Exports of db_load:
 	global Load_XModel
@@ -139,7 +140,6 @@
 	global Load_GfxTextureLoad
 	global Load_ItemKeyHandler
 	global Load_LoadedSoundPtr
-	global Load_MaterialHandle
 	global Load_StringTablePtr
 	global Load_XAnimDeltaPart
 	global Load_listBoxDef_ptr
@@ -11580,70 +11580,6 @@ Load_LoadedSoundPtr_30:
 	call DB_InsertPointer
 	mov esi, eax
 	jmp Load_LoadedSoundPtr_60
-	nop
-	add [eax], al
-
-
-;Load_MaterialHandle(unsigned char)
-Load_MaterialHandle:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov dword [esp+0x8], 0x4
-	mov eax, [varMaterialHandle]
-	mov [esp+0x4], eax
-	movzx eax, byte [ebp+0x8]
-	mov [esp], eax
-	call Load_Stream
-	mov dword [esp], 0x0
-	call DB_PushStreamPos
-	mov ebx, [varMaterialHandle]
-	mov esi, [ebx]
-	test esi, esi
-	jz Load_MaterialHandle_10
-	lea eax, [esi+0x2]
-	cmp eax, 0x1
-	jbe Load_MaterialHandle_20
-	mov [esp], ebx
-	call DB_ConvertOffsetToAlias
-Load_MaterialHandle_10:
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	jmp DB_PopStreamPos
-Load_MaterialHandle_20:
-	mov dword [esp], 0x3
-	call DB_AllocStreamPos
-	mov [ebx], eax
-	mov eax, [varMaterialHandle]
-	mov eax, [eax]
-	mov [varMaterial], eax
-	cmp esi, 0xfffffffe
-	jz Load_MaterialHandle_30
-	xor ebx, ebx
-Load_MaterialHandle_40:
-	mov dword [esp], 0x1
-	call Load_Material
-	mov eax, [varMaterialHandle]
-	mov [esp], eax
-	call Load_MaterialAsset
-	test ebx, ebx
-	jz Load_MaterialHandle_10
-	mov eax, [varMaterialHandle]
-	mov eax, [eax]
-	mov [ebx], eax
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	jmp DB_PopStreamPos
-Load_MaterialHandle_30:
-	call DB_InsertPointer
-	mov ebx, eax
-	jmp Load_MaterialHandle_40
 	nop
 	add [eax], al
 

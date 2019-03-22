@@ -23,40 +23,39 @@
 #include <d3d9.h>
 #endif
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "cvar.h"
-#include "xassets.h"
-#include "sys_patch.h"
-#include "sys_main.h"
-#include "qcommon_mem.h"
-#include "filesystem.h"
-#include "qcommon.h"
-#include "cmd.h"
-#include "xassets/xmodel.h"
-#include "xassets/phys.h"
-#include "xassets/xanims.h"
-#include "xassets/gfximage.h"
-#include "xassets/sounds.h"
-#include "xassets/mapents.h"
-#include "xassets/gfxworld.h"
-#include "xassets/menu.h"
-#include "xassets/menulist.h"
-#include "xassets/font.h"
-#include "xassets/localized.h"
-#include "xassets/weapondef.h"
-#include "xassets/rawfile.h"
-#include "xassets/stringtable.h"
-#include "xassets/fx.h"
-#include "world.h"
-#include "cm_local.h"
-#include "sys_thread.h"
-#include "zlib/unzip.h"
-#include "physicalmemory.h"
-#include "cscr_stringlist.h"
-#include "r_public.h"
+#include "../q_shared.h"
+#include "../qcommon_io.h"
+#include "../cvar.h"
+#include "../xassets.h"
+#include "../sys_patch.h"
+#include "../sys_main.h"
+#include "../qcommon_mem.h"
+#include "../filesystem.h"
+#include "../qcommon.h"
+#include "../cmd.h"
+#include "../xassets/xmodel.h"
+#include "../xassets/phys.h"
+#include "../xassets/xanims.h"
+#include "../xassets/gfximage.h"
+#include "../xassets/sounds.h"
+#include "../xassets/mapents.h"
+#include "../xassets/gfxworld.h"
+#include "../xassets/menu.h"
+#include "../xassets/menulist.h"
+#include "../xassets/font.h"
+#include "../xassets/localized.h"
+#include "../xassets/weapondef.h"
+#include "../xassets/rawfile.h"
+#include "../xassets/stringtable.h"
+#include "../xassets/fx.h"
+#include "../world.h"
+#include "../cm_local.h"
+#include "../zlib/unzip.h"
+#include "../physicalmemory.h"
+#include "../cscr_stringlist.h"
+#include "../r_public.h"
+#include "db_load.h"
 #include <ctype.h>
-
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -67,7 +66,6 @@
 #define XBLOCK_COUNT XBLOCK_COUNT_IW3
 #define DM_MEMORY_PHYSICAL 2
 #define DEFLATE_BUFFER_SIZE 0x8000
-#define DBFILE_BUFFER_SIZE 0x80000
 #define FASTFILE_VERSION 5
 #define XASSET_ENTRY_POOL_SIZE 32768
 
@@ -108,18 +106,17 @@ volatile unsigned int g_zoneInfoCount;
 unsigned int g_zoneIndex;
 bool g_initializing;
 int g_zoneCount;
-bool g_isRecoveringLostDevice;
 bool g_mayRecoverLostAssets;
-extern bool g_archiveBuf;
-extern int g_sync;
-extern unsigned int g_copyInfoCount;
+bool g_archiveBuf;
+int g_sync;
+unsigned int g_copyInfoCount;
 int g_poolSize[ASSET_TYPE_COUNT];
 bool g_poolSizeModified[ASSET_TYPE_COUNT];
-extern int g_defaultAssetCount;
+int g_defaultAssetCount;
 
-cvar_t* db_xassetdebug;
-cvar_t* db_xassetdebugtype;
-
+int db_xassetdebugtype = 0;
+bool db_xassetdebug = qfalse;
+char db_xassetdebugname[256];
 
 struct XAssetEntry
 {
@@ -137,18 +134,6 @@ union XAssetEntryPoolEntry
   union XAssetEntryPoolEntry *next;
 };
 
-extern union XAssetEntryPoolEntry *g_freeAssetEntryHead;
-extern union XAssetEntryPoolEntry g_assetEntryPool[32768];
-
-
-
-struct XZoneInfoInternal
-{
-  char name[64];
-  int flags;
-};
-
-XZoneInfoInternal g_zoneInfo[32];
 
 
 typedef struct
@@ -160,6 +145,11 @@ typedef struct
   IDirect3DIndexBuffer9 *indexBufferHandle;
 }XZoneMemory;
 
+struct XZoneInfoInternal
+{
+  char name[64];
+  int flags;
+};
 
 typedef struct
 {
@@ -170,11 +160,12 @@ typedef struct
   int ff_dir;
 }XZone;
 
+union XAssetEntryPoolEntry *g_freeAssetEntryHead;
 XZone g_zones[33];
 uint8_t g_zoneHandles[ARRAY_COUNT(g_zones)];
 union XAssetEntryPoolEntry g_assetEntryPool[32768];
 uint16_t db_hashTable[32768];
-extern XAssetEntry *g_copyInfo[2048];
+XAssetEntry *g_copyInfo[2048];
 
 extern void (__cdecl *DB_InitPoolHeaderHandler[ASSET_TYPE_COUNT])(void *, int);
 XAnimParts g_XAnimPartsPool[4096];
@@ -191,9 +182,8 @@ extern void (__cdecl *DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void *, XAss
 void *DB_XAssetPool[ASSET_TYPE_COUNT];
 
 
+
 extern "C"{
-  void DB_SaveSounds();
-  void DB_SaveDObjs();
   //void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
   void DB_LoadSounds();
   void __cdecl Load_SndAliasCustom(snd_alias_list_t **var);
@@ -266,53 +256,6 @@ qboolean DB_XAssetNoAlloc(enum XAssetType i)
 	return qfalse;
 }
 
-void DB_ParseRequestedXAssetNum()
-{
-	char toparse[1024];
-	const char* type_name;
-	char* scanpos;
-	char scanstring[64];
-	int i, count;
-
-	cvar_t *r_xassetnum = Cvar_RegisterString("r_xassetnum", "", CVAR_INIT, "The list of xassets with their count in the key=value key=value... format");
-
-	Com_sprintf(toparse, sizeof(toparse), " %s", r_xassetnum->string);
-
-	for(i = 0;  i < ASSET_TYPE_COUNT; ++i)
-	{
-		if(DB_XAssetNoAlloc((XAssetType)i) || i == ASSET_TYPE_MENU || i == ASSET_TYPE_WEAPON || i == ASSET_TYPE_STRINGTABLE)
-		{
-			continue;
-		}
-
-		type_name = g_assetNames[ i ];
-
-		Com_sprintf(scanstring, sizeof(scanstring), " %s=", type_name);
-
-		scanpos = strstr(toparse, scanstring);
-		if(scanpos == NULL)
-		{
-			continue;
-		}
-
-		scanpos += strlen(scanstring);
-
-		count = atoi(scanpos);
-		if(count < 1 || count > 65535)
-		{
-			continue;
-		}
-		
-		if(count <= g_poolSize[i])
-		{
-			continue;
-		}
-		g_poolSize[i] = count;
-		g_poolSizeModified[i] = true;
-	}
-}
-
-
 
 void DB_InitPoolSize( )
 {
@@ -355,7 +298,6 @@ void DB_InitPoolSize( )
 void DB_InitXAssetPools( )
 {
         DB_InitPoolSize();
-        DB_ParseRequestedXAssetNum();
 
         DB_XAssetPool[ASSET_TYPE_XMODELPIECES] = XAssetAllocPool(ASSET_TYPE_XMODELPIECES, sizeof(XModelPieces));
         DB_XAssetPool[ASSET_TYPE_PHYSPRESET] = XAssetAllocPool(ASSET_TYPE_PHYSPRESET, sizeof(PhysPreset));
@@ -393,7 +335,6 @@ void DB_InitXAssetPools( )
 
 }
 
-
 bool DB_CanFreeXAssetPool(int type )
 {
     switch(type)
@@ -414,8 +355,6 @@ bool DB_CanFreeXAssetPool(int type )
     }
     return false;
 }
-
-
 
 extern "C"
 {
@@ -687,18 +626,21 @@ const void **__cdecl DB_InsertPointer()
   return pData;
 }
 
+
 void __cdecl Load_TempStringCustom(const char **str)
 {
   Load_XStringCustom(str);
   if ( *str )
   {
-    *str = (const char *)SL_GetString(*str, 4u);
+    *str = strdup(*str);
   }
   else
   {
     *str = 0;
   }
 }
+
+
 
 void __cdecl Load_Stream(bool atStreamStart, const void *ptr, int size)
 {
@@ -762,8 +704,6 @@ qboolean __cdecl DB_ReadData()
     g_load.interrupt();
   }
   fileBuffer = &g_load.compressBufferStart[g_load.overlapped.Offset % DBFILE_BUFFER_SIZE];
-
-  Sys_WaitDatabaseThread();
 
   if ( _ReadFileEx(g_load.f, fileBuffer, 0x40000u, &g_load.overlapped, DB_FileReadCompletionDummyCallback) )
   {
@@ -961,91 +901,12 @@ void __cdecl DB_LoadXFileData(byte *pos, int size)
 
 
 
-
-
-
-
-
-
-
-
-#if 0
-void __cdecl DB_LoadXFileData(byte *pos, int count)
-{
-  unsigned int err;
-  int i;
-
-  assert( size );
-  assert( g_load.f );
-  assert ( !g_load.stream.avail_out );
-
-  g_load.stream.next_out = (byte *)pos;
-  g_load.stream.avail_out = count;
-  while ( 1 )
-  {
-    if ( g_load.stream.avail_in )
-    {
-        err = DB_AuthLoad_Inflate(&g_load.stream, 2);
-        if ( err > 1 )
-        {
-//          R_ShowDirtyDiscError();
-          if ( g_load.compressBufferStart )
-          {
-            for ( i = g_load.outstandingReads; g_load.outstandingReads; i = g_load.outstandingReads )
-            {
-              g_load.outstandingReads = i - 1;
-              SleepEx(-1, TRUE);
-              InterlockedIncrement((DWORD*)&g_loadedSize);
-              g_load.stream.avail_in += 0x40000;
-            }
-            DB_AuthLoad_InflateEnd(&g_load.stream);
-            _CloseHandle(g_load.f);
-          }
-          Com_Error(2, "Fastfile for zone '%s' appears corrupt or unreadable (code %i.)", g_load.filename, err + 110);
-        }
-        if ( g_load.f && g_load.stream.next_in == (byte*)g_load.compressBufferEnd )
-        {
-          g_load.stream.next_in = (byte*)g_load.compressBufferStart;
-        }
-        if ( !g_load.stream.avail_out )
-        {
-          return;
-        }
-    }
-    DB_WaitXFileStage();
-    DB_ReadXFileStage();
-  }
-}
-#endif
-
-
 void __cdecl DB_LoadXFileSetSize(int size)
 {
   assert(g_load.deflateRemainingFileSize == 0);
   g_load.deflateRemainingFileSize = size;
 }
 
-
-
-bool s_usageUpToDate[ASSET_TYPE_COUNT];
-int s_usageCounts[ASSET_TYPE_COUNT];
-
-void __cdecl DB_GetAssetTypeUsageInfo(XAssetType assetType, const char **outName, int *outUsed, int *outPool)
-{
-  if ( !s_usageUpToDate[assetType] )
-  {
-    s_usageUpToDate[assetType] = 1;
-    s_usageCounts[assetType] = DB_GetAllXAssetOfType(assetType, 0, 0);
-  }
-  *outUsed = s_usageCounts[assetType];
-  *outPool = g_poolSize[assetType];
-  *outName = g_assetNames[assetType];
-}
-
-void __cdecl DB_MarkAssetTypeUsageDirty()
-{
-  memset(s_usageUpToDate, 0, sizeof(s_usageUpToDate));
-}
 
 void __cdecl Load_DelayStream()
 {
@@ -1209,9 +1070,6 @@ void __cdecl DB_LoadXFileInternal()
   Load_DelayStream();
 
   --g_loadingAssets;
-
-  DB_MarkAssetTypeUsageDirty();
-  DB_LoadDelayedImages();
 
   assert(g_load.compressBufferStart);
 
@@ -1393,102 +1251,15 @@ void Load_XModelBoneNames()
 
 int DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
 {
-    if(fs_gameDirVar->string && fs_gameDirVar->string[0] && Q_stricmp(zoneName, "mod") == 0)
-    {
-        //We look for mod files
-        DB_BuildOSPath(zoneName, 1, maxlen, oFilename);
-        return 1;
-    }
-
-    if(fs_gameDirVar->string && fs_gameDirVar->string[0]) //Load from fs_gamedirvar or from zone/language
-    {
-      if ( Q_stricmp(zoneName, "common_mp") == 0 || Q_stricmp(zoneName, "localized_common_mp") == 0 ||
-         Q_stricmp(zoneName, "code_post_gfx_mp") == 0 || Q_stricmp(zoneName, "localized_code_post_gfx_mp") == 0
-      ){
-        DB_BuildOSPath(zoneName, 1, maxlen, oFilename);
-
-        if(FS_FileExistsOSPath(oFilename))
-        {
-          return 1;
-        }
-      }
-    }
-
-    //We look for files in zone/language/*
-    DB_BuildOSPath(zoneName, 0, maxlen, oFilename);
-
-    if(FS_FileExistsOSPath(oFilename))
-    {
-      return 0;
-    }
-
-    //Nothing found in zone dir? Look in Usermaps if running mods
-    if(fs_gameDirVar->string && fs_gameDirVar->string[0])
-    {
-        //We look for usermap files
-        DB_BuildOSPath(zoneName, 2, maxlen, oFilename);
-        return 2;
-    }
-    return -1;
+  Com_sprintf(oFilename, maxlen, "%s.ff", zoneName);
+  return 1;
 }
 
-
-bool DB_GetQPathForZone(const char* zonePath, int maxlen, char* opath)
-{
-	int i;
-	XZone *zone;
-	const char* fi;
-	char zoneName[256];
-	int zoneNameLen;
-	bool loadimage;
-  assert(opath);
-  assert(zonePath);
-
-	opath[0] = '\0';
-
-  if(zonePath[0] == 0)
-  {
-    return false;
-  }
-    if((fi = strrchr(zonePath, '/')) != NULL)
-    {
-        Q_strncpyz(zoneName, fi +1, sizeof(zoneName));
-    }else{
-        Q_strncpyz(zoneName, zonePath, sizeof(zoneName));
-    }
-    zoneNameLen = strlen(zoneName);
-    if(zoneNameLen > 5 && Q_stricmp(zoneName + zoneNameLen -5, "_load") == 0)
-    {
-        loadimage = true;
-        zoneName[zoneNameLen -5] = 0;
-    }else{
-        loadimage = false;
-    }
-
-	for(i = 0, zone = g_zones; i < 32; i++, ++zone)
-	{
-		if ( Q_stricmp(zone->zoneinfo.name, zoneName) != 0 )
-		{
-			continue;
-		}
-    if(loadimage)
-    {
-        Q_strncat(zoneName,  sizeof(zoneName), "_load");
-    }
-    DB_BuildQPath(zoneName, zone->ff_dir, maxlen, opath);
-    if(*opath)
-    {
-      return true;
-    }
-    return false;
-  }
-  return false;
-}
 
 
 void __cdecl DB_Sleep(int usec)
 {
-    Sys_SleepUSec(usec);
+    _SleepEx(usec * 1000, false);
 }
 
 int DB_GetZoneAllocType(int zoneFlags)
@@ -1506,43 +1277,21 @@ int DB_GetZoneAllocType(int zoneFlags)
 }
 
 
-bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags, char* g_fileBuf)
+bool __cdecl DB_TryLoadXFileInternal(const char *filename, signed int zoneFlags, char* g_fileBuf)
 {
     HANDLE zoneFile;
-    char filename[256];
     unsigned int i;
-    int ff_dir;
     XZone* z;
     unsigned int startWaitingTime;
     unsigned int g_zoneAllocType;
 //    char g_fileBuf[DBFILE_BUFFER_SIZE];
 
-    ff_dir = DB_BuildZoneFilePath(zoneName, filename, sizeof(filename));
     zoneFile = (HANDLE)-1;
-
-    if(ff_dir >= 0)
-    {
-      zoneFile = _CreateFileA(filename, 0x80000000, 1, 0, 3, 0x60000000, 0);
-    }
-    if (ff_dir >= 0 && zoneFile == (HANDLE)-1 )
-    {
-      if ( strstr(filename, "_load") )
-      {
-        Com_PrintWarning(CON_CHANNEL_FILES, "WARNING: Could not find zone '%s'\n", filename);
-      }
-      else
-      {
-        Sys_DatabaseCompleted();
-        Com_Error(ERR_DROP, "ERROR: Could not find zone '%s'\n", filename);
-      }
-      return 0;
-    }
+    zoneFile = _CreateFileA((char*)filename, 0x80000000, 1, 0, 3, 0x60000000, 0);
     if (zoneFile == (HANDLE)-1 )
     {
-        Sys_DatabaseCompleted();
-//        Com_Error(ERR_DROP, "ERROR: Could not find zone '%s'\n", filename);
-        Com_PrintError(CON_CHANNEL_FILES, "ERROR: Could not find zone '%s'\n", filename);
-        return 0;
+      Com_Error(ERR_DROP, "ERROR: Could not find zone '%s'\n", filename);
+      return 0;
     }
 
     g_zoneIndex = 0;
@@ -1559,18 +1308,14 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
     memset(z, 0, sizeof(XZone));
     g_zoneHandles[g_zoneCount] = g_zoneIndex;
 
-    Q_strncpyz(z->zoneinfo.name, zoneName, sizeof(z->zoneinfo.name));
+    Q_strncpyz(z->zoneinfo.name, filename, sizeof(z->zoneinfo.name));
     z->zoneinfo.flags = zoneFlags;
     z->zoneSize = _GetFileSize(zoneFile, 0);
-    z->ff_dir = ff_dir;
+    z->ff_dir = 0;
 
     ++g_zoneCount;
     g_loadingZone = 1;
 
-    while ( g_isRecoveringLostDevice )
-    {
-      Sys_SleepUSec(25000);
-    }
     g_mayRecoverLostAssets = 0;
 
     g_zoneAllocType = DB_GetZoneAllocType(zoneFlags);
@@ -1602,90 +1347,12 @@ bool __cdecl DB_TryLoadXFileInternal(const char *zoneName, signed int zoneFlags,
 }
 
 
-void DB_TryLoadXFile()
-{
-  //bool isCodeZone;
-  unsigned int j;
-  unsigned int zoneInfoCount;
-
-  if ( g_zoneInfoCount )
-  {
-    zoneInfoCount = g_zoneInfoCount;
-    g_zoneInfoCount = 0;
-    assert(!g_loadingZone);
-    char *g_fileBuf = (char*)Z_Malloc(DBFILE_BUFFER_SIZE);
-
-    for ( j = 0; j < zoneInfoCount; ++j )
-    {
-      //isCodeZone = (g_zoneInfo[j].flags & 1) != 0;
-      if ( !DB_TryLoadXFileInternal(g_zoneInfo[j].name, g_zoneInfo[j].flags, g_fileBuf) )
-      {
-          --g_loadingAssets;
-      }
-    }
-    assert(!g_loadingZone);
-    assert(!g_loadingAssets);
-/*
-    Sys_LockWrite(&s_dbReorder.critSect);
-    DB_EndReorderZone();
-    Sys_UnlockWrite(&s_dbReorder.critSect);
-*/
-    Sys_DatabaseCompleted();
-    Z_Free(g_fileBuf);
-    return;
-  }
-  assert(!g_loadingAssets);
-}
-
-
-
-void __cdecl __noreturn DB_Thread(unsigned int threadContext)
-{
-  jmp_buf* savestate;
-
-  assertx( threadContext == THREAD_CONTEXT_DATABASE, "%i, %i", threadContext, THREAD_CONTEXT_DATABASE);
-
-  savestate = (jmp_buf*)Sys_GetValue(2);
-  if ( setjmp( *savestate ) )
-  {
-    Com_ErrorAbort();
-  }
-
-  R_ReleaseDXDeviceOwnership();
-
-  while ( 1 )
-  {
-    Sys_WaitStartDatabase();
-    DB_TryLoadXFile();
-  }
-}
-
-
-void __cdecl DB_InitThread()
-{
-  if ( !Sys_SpawnDatabaseThread(DB_Thread) )
-  {
-    Sys_Error("Failed to create database thread");
-  }
-}
-
 
 void __cdecl DB_SetInitializing(bool inUse)
 {
   g_initializing = inUse;
 }
 
-void DB_ArchiveAssets()
-{
-  if ( !g_archiveBuf )
-  {
-    g_archiveBuf = 1;
-    R_SyncRenderThread();
-    R_ClearAllStaticModelCacheRefs();
-    DB_SaveSounds();
-    DB_SaveDObjs();
-  }
-}
 
 void __cdecl DB_InitPoolHeader(XAssetType type)
 {
@@ -1695,17 +1362,10 @@ void __cdecl DB_InitPoolHeader(XAssetType type)
   }
 }
 
-cvar_t* db_nobspweapon;
-
-
 void __cdecl DB_Init()
 {
   int type;
   unsigned int i;
-
-  db_xassetdebug = Cvar_RegisterBool("db_xassetdebug", qfalse, 0, "debug assets loading");
-  db_xassetdebugtype = Cvar_RegisterInt("db_xassetdebugtype", -2, -2, 43, 0, "debug assets loading type: -1 all; indexes start at 0");
-  db_nobspweapon = Cvar_RegisterBool("db_nobspweapon", qfalse, 0, "Do not load weapons from map/usermap fastfiles. Can free up to 2 weapons");
 
   DB_InitXAssetPools( );
 
@@ -1720,8 +1380,6 @@ void __cdecl DB_Init()
   }
   g_assetEntryPool[XASSET_ENTRY_POOL_SIZE -1].next = NULL;
 
-  Cmd_AddCommand("XAssetUsage", XAssetUsage_f);
-
 }
 
 
@@ -1732,24 +1390,11 @@ void DB_FreeXBlocks(XBlock *blocks)
 
 void DB_FreeXZoneMemory(XZoneMemory* zonemem)
 {
-	if(zonemem->vertexBufferHandle)
-	{
-		R_UnlockVertexBuffer(zonemem->vertexBufferHandle);
-		R_FreeStaticVertexBuffer(zonemem->vertexBufferHandle);
-	}
-
-	if(zonemem->indexBufferHandle)
-	{
-		R_UnlockIndexBuffer(zonemem->indexBufferHandle);
-		R_FreeStaticIndexBuffer(zonemem->indexBufferHandle);
-	}
 	DB_FreeXBlocks(zonemem->blocks);
 }
 
 void __cdecl DB_UnloadXZoneMemory(XZone *zone)
 {
-  Sys_WaitDatabaseThread(); //Required here so it can not clash with PMem_Free()
-
   DB_FreeXZoneMemory(&zone->zonememory);
 
   Com_Printf(CON_CHANNEL_SYSTEM, "Unloaded fastfile '%s'\n", zone->zoneinfo.name);
@@ -1794,142 +1439,6 @@ void __cdecl DB_UnloadXAssetsMemoryForZone(int zoneFreeFlags, int zoneFreeBit)
     }
   }
 }
-
-
-void DB_UnarchiveAssets()
-{
-  assert(g_archiveBuf);
-  assert(Sys_IsMainThread() || Sys_IsRenderThread());
-
-  g_archiveBuf = 0;
-  DB_LoadSounds();
-  DB_LoadDObjs();
-  Material_DirtyTechniqueSetOverrides();
-  BG_FillInAllWeaponItems();
-}
-
-
-void __cdecl DB_LoadXZone(XZoneInfo *zoneInfo, unsigned int zoneCount)
-{
-  unsigned int j;
-  const char *zoneName;
-  unsigned int zoneInfoCount;
-
-  if ( g_zoneCount == ARRAY_COUNT( g_zoneInfo ) )
-  {
-    Com_Error(ERR_DROP, "Max zone count exceeded");
-  }
-  assert(!g_zoneInfoCount);
-  assert(!g_loadingAssets);
-
-  zoneInfoCount = 0;
-  for ( j = 0; j < zoneCount; ++j )
-  {
-    zoneName = zoneInfo[j].name;
-    if ( zoneName )
-    {
-      assert(zoneInfoCount < ARRAY_COUNT( g_zoneInfo ));
-
-      Q_strncpyz(g_zoneInfo[zoneInfoCount].name, zoneName, sizeof(g_zoneInfo[zoneInfoCount].name));
-      Com_Printf(CON_CHANNEL_SYSTEM, "Adding fastfile '%s' to queue\n", g_zoneInfo[zoneInfoCount].name);
-      g_zoneInfo[zoneInfoCount].flags = zoneInfo[j].allocFlags;
-      zoneInfoCount++;
-    }
-  }
-  if ( zoneInfoCount )
-  {
-    g_loadingAssets = zoneInfoCount;
-    g_zoneInfoCount = zoneInfoCount;
-
-    Sys_WakeDatabase2();
-    Sys_WakeDatabase();
-    Sys_NotifyDatabase();
-  }
-}
-
-
-
-void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int sync)
-{
-  static bool g_zoneInited = false;
-  bool unloadedZone;
-  int zh;
-  unsigned int j;
-  int i;
-  int zoneFreeFlags;
-
-  assert(Sys_IsMainThread() || Sys_IsRenderThread());
-  assert(zoneCount);
-
-
-  if ( !g_zoneInited )
-  {
-    g_zoneInited = true;
-    DB_Init();
-    /*
-    Cmd_AddCommandInternal("loadzone", DB_LoadZone_f, &DB_LoadZone_f_VAR);
-    Cmd_AddCommandInternal("listdefaultassets", DB_ListDefaultEntries_f, &DB_ListDefaultEntries_f_VAR);
-    Cmd_AddCommandInternal("listassetpool", DB_ListAssetPool_f, &DB_ListAssetPool_f_VAR);
-    Cmd_AddCommandInternal("dumpmateriallist", DB_DumpMaterialList_f, &DB_DumpMaterialList_f_VAR);
-  */
-  }
-  unloadedZone = 0;
-  Material_ClearShaderUploadList();
-  Sys_SyncDatabase();
-  DB_PostLoadXZone();
-
-  assert(!g_archiveBuf);
-
-  for ( j = 0; j < zoneCount; ++j )
-  {
-    zoneFreeFlags = zoneInfo[j].freeFlags;
-    for ( i = g_zoneCount - 1; i >= 0; --i )
-    {
-      zh = g_zoneHandles[i];
-      if ( zoneFreeFlags & g_zones[zh].zoneinfo.flags )
-      {
-        if ( !unloadedZone )
-        {
-            unloadedZone = 1;
-            DB_ArchiveAssets( );
-            Sys_EnterCriticalSection(CRITSECT_DBHASH);
-        }
-        DB_UnloadXZoneInternal(zh, true);
-      }
-    }
-  }
-
-  if ( unloadedZone )
-  {
-    for ( j = 0; j < zoneCount; ++j )
-    {
-      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 64);
-      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 32);
-      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 16);
-      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 8);
-      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 4);
-      DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 1);
-    }
-    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-    DB_UnarchiveAssets();
-  }
-
-  if ( sync )
-  {
-    DB_ArchiveAssets();
-  }
-
-  g_sync = sync;
-  DB_LoadXZone(zoneInfo, zoneCount);
-
-  if ( sync )
-  {
-    assert(!g_copyInfoCount);
-    Sys_SyncDatabase();
-    DB_UnarchiveAssets();
-  }
-}
-
 
 
 void __cdecl DB_FreeXAssetHeader(XAssetType type, XAssetHeader header)
@@ -1983,13 +1492,11 @@ void __cdecl DB_ShutdownXAssets()
   int i, zh;
 
   DB_SyncXAssets();
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
   for ( i = g_zoneCount - 1; i >= 0; --i )
   {
     DB_UnloadXZoneInternal(g_zoneHandles[i], false);
   }
   DB_FreeDefaultEntries();
-  DB_FreeUnusedResources();
   for ( i = g_zoneCount - 1; i >= 0; --i )
   {
     zh = g_zoneHandles[i];
@@ -1998,111 +1505,13 @@ void __cdecl DB_ShutdownXAssets()
   g_zoneCount = 0;
   DB_ResetMinimumFastFileLoaded();
 
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
 }
 
 
-
-
-
-
-
-int DB_FileSize(const char *filename, int FF_DIR)
-{
-    char ospath[MAX_OSPATH];
-    DB_BuildOSPath(filename, FF_DIR, sizeof(ospath), ospath);
-    return FS_filelengthForOSPath(ospath);
-}
-
-
-
-void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsize)
-{
-	int i;
-	XZone *zone;
-	char fileName[MAX_OSPATH];
-	int filesize;
-	char checkSum[64];
-
-	g_zoneSumList[0] = '\0';
-	g_zoneNameList[0] = '\0';
-
-	for(i = 0, zone = g_zones; i < 32; i++, ++zone)
-	{
-		if ( zone->zoneinfo.name[0] == '\0' || !Q_strncmp(zone->zoneinfo.name, "localized_", 10) )
-		{
-			continue;
-		}
-
-		if ( zone->ff_dir == 1 )
-		{
-			if ( g_zoneNameList[0] )
-			{
-				Q_strncat(g_zoneNameList, maxsize, " ");
-			}
-          Q_strncat(g_zoneNameList, maxsize, fs_gameDirVar->string);
-          Q_strncat(g_zoneNameList, maxsize, "/");
-          Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
-		if ( g_zoneSumList[0] )
-		{
-			Q_strncat(g_zoneSumList, maxsize, " ");
-		}
-		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
-		Q_strncat(g_zoneSumList, maxsize, checkSum);
-
-		  continue;
-		}
-		if ( zone->ff_dir != 2 )
-		{
-			if ( g_zoneNameList[0] )
-			{
-				Q_strncat(g_zoneNameList, maxsize, " ");
-			}
-			Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
-		if ( g_zoneSumList[0] )
-		{
-			Q_strncat(g_zoneSumList, maxsize, " ");
-		}
-		Com_sprintf(checkSum, sizeof(checkSum), "%u", zone->zoneSize);
-		Q_strncat(g_zoneSumList, maxsize, checkSum);
-
-			continue;
-		}
-
-/* Can't be right...? Hmm. Won't have effect anyway
-		if ( !(com_dedicated->integer) )
-		{
-			continue;
-		}
-*/
-		Com_sprintf(fileName, sizeof(fileName), "%s_load", zone->zoneinfo.name);
-        filesize = DB_FileSize(fileName, 2);
-        if ( !filesize )
-        {
-			continue;
-		}
-
-		if ( g_zoneSumList[0] )
-		{
-			Q_strncat(g_zoneSumList, maxsize, " ");
-		}
-		Com_sprintf(checkSum, sizeof(checkSum), "%u %u", zone->zoneSize, filesize);
-		Q_strncat(g_zoneSumList, maxsize, checkSum);
-
-
-		Q_strncat(g_zoneNameList, maxsize, " usermaps/");
-		Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
-		Q_strncat(g_zoneNameList, maxsize, " usermaps/");
-		Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
-		Q_strncat(g_zoneNameList, maxsize, "_load");
-
-	}
-}
 
 
 void DB_SyncXAssets()
 {
-    Sys_SyncDatabase();
     DB_PostLoadXZone();
 }
 
@@ -2156,12 +1565,109 @@ enum DBCloneMethod
   DB_CLONE_SWAP = 0x2,
 };
 
+void DB_RemoveClipMap(void*)
+{
+  CM_Unload();
+}
 
 
-extern void (__cdecl *DB_RemoveXAssetHandler[])(void*);
+void DB_RemoveComWorld(void* header)
+{
+  //Com_UnloadWorld();
+}
+
+
+void __cdecl DB_RemoveLoadedSound(void* headersound)
+{
+  XAssetHeader sound;
+  sound.data = headersound;
+
+    if(sound.loadedsound->sounds.data == NULL)
+    {
+        return;
+    }
+    Z_Free(sound.loadedsound->sounds.data);
+}
+
+
+void (__cdecl *DB_RemoveXAssetHandler[33])(void* head) =
+{
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  &DB_RemoveLoadedSound,
+  &DB_RemoveClipMap,
+  &DB_RemoveClipMap,
+  &DB_RemoveComWorld,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL
+};
+
+
 extern void (__cdecl *DB_DynamicCloneXAssetHandler[])(void*, void*, DBCloneMethod);
 extern void (__cdecl *DB_XAssetSetNameHandler[])(void *, const char *);
-extern const char* g_defaultAssetName[];
+
+const char *g_defaultAssetName[] =
+{
+  "",
+  "default",
+  "void",
+  "void",
+  "$default",
+  "default",
+  "$white",
+  "null",
+  "default",
+  "null.wav",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "light_dynamic",
+  "",
+  "fonts/consolefont",
+  "ui/default.menu",
+  "default_menu",
+  "CGAME_UNKNOWN",
+  "defaultweapon_mp",
+  "",
+  "misc/missing_fx",
+  "default",
+  "",
+  "",
+  "",
+  "",
+  ""
+};
+
+
 
 unsigned int DB_HashForName(const char *name, enum XAssetType type)
 {
@@ -2771,10 +2277,6 @@ void __cdecl DB_ReleaseXAssets()
   unsigned int hash;
   unsigned int assetEntryIndex;
 
-  assert( Sys_IsMainThread());
-
-  Sys_SyncDatabase();
-
   for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
   {
     for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = g_assetEntryPool[assetEntryIndex].entry.nextHash )
@@ -2782,93 +2284,6 @@ void __cdecl DB_ReleaseXAssets()
       g_assetEntryPool[assetEntryIndex].entry.inuse = 0;
     }
   }
-}
-
-
-
-void __cdecl Mark_SndCurveAsset(struct SndCurve *sndCurve)
-{
-  const char *name;
-  int hash, index;
-  union XAssetEntryPoolEntry *entry;
-  struct XAsset asset;
-
-  asset.type = ASSET_TYPE_SOUND_CURVE;
-  asset.header.sndCurve = sndCurve;
-  name = DB_GetXAssetName(&asset);
-  hash = DB_HashForName(name, asset.type);
-
-  for( index = db_hashTable[hash & (ARRAY_COUNT(db_hashTable) -1)]; ; index = entry->entry.nextHash)
-  {
-    entry = &g_assetEntryPool[index];
-    if(entry->entry.asset.type != ASSET_TYPE_SOUND_CURVE)
-    {
-        continue;
-    }
-    if(entry->entry.asset.header.sndCurve == sndCurve)
-    {
-        break;
-    }
-  }
-  entry->entry.inuse = 1;
-}
-
-void __cdecl Mark_snd_alias_list_Asset(struct snd_alias_list_t *sound)
-{
-  const char *name;
-  int hash, index;
-  union XAssetEntryPoolEntry *entry;
-  struct XAsset asset;
-
-  asset.type = ASSET_TYPE_SOUND;
-  asset.header.sound = sound;
-  name = DB_GetXAssetName(&asset);
-  hash = DB_HashForName(name, asset.type);
-
-  for( index = db_hashTable[hash & (ARRAY_COUNT(db_hashTable) -1)]; ; index = entry->entry.nextHash)
-  {
-    entry = &g_assetEntryPool[index];
-    if(entry->entry.asset.type != ASSET_TYPE_SOUND)
-    {
-        continue;
-    }
-    if(entry->entry.asset.header.sound == sound)
-    {
-        break;
-    }
-  }
-  entry->entry.inuse = 1;
-}
-
-void __cdecl DB_RemoveLoadedSound(union XAssetHeader sound)
-{
-    if(sound.loadedsound->sounds.data == NULL)
-    {
-        return;
-    }
-    Z_Free(sound.loadedsound->sounds.data);
-}
-
-
-
-void DB_BuildOverallocatedXAssetList(char* configstring, int len)
-{
-    int i;
-    char cstring[64];
-
-    configstring[0] = '\0';
-
-    for(i = 0; i < ASSET_TYPE_COUNT; ++i)
-    {
-        if(!g_poolSizeModified[i])
-        {
-            continue;
-        }
-
-        Com_sprintf(cstring, sizeof(cstring), "%s=%d ", g_assetNames[i], g_poolSize[i]);
-        Q_strncat(configstring, len, cstring);
-    }
-
 }
 
 
@@ -2919,10 +2334,10 @@ void __cdecl DB_UnloadXZoneInternal(unsigned int zoneIndex, bool createDefault)
             Mark_XAsset();
           }
         }
-        if ( db_xassetdebug->boolean )
+        if ( db_xassetdebug )
         {
-          debugname = Cvar_GetVariantString("db_xassetdebugname");
-          if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == assetEntry->asset.type
+          debugname = db_xassetdebugname;
+          if ( db_xassetdebugtype == -1 || db_xassetdebugtype == assetEntry->asset.type
               || (debugname[0] && !Q_stricmp(DB_GetXAssetName(&assetEntry->asset), debugname)) )
           {
             Com_Printf(CON_CHANNEL_SYSTEM, "DB_UnloadXZoneInternal: removing asset: '%s','%s'\n",
@@ -2936,10 +2351,10 @@ void __cdecl DB_UnloadXZoneInternal(unsigned int zoneIndex, bool createDefault)
           DB_CloneXAssetEntry(&g_assetEntryPool[overrideAssetEntryIndex].entry, assetEntry, DB_CLONE_NORMAL);
           assetEntry->nextOverride = g_assetEntryPool[overrideAssetEntryIndex].entry.nextOverride;
           DB_FreeXAssetEntry(&g_assetEntryPool[overrideAssetEntryIndex].entry);
-          if ( db_xassetdebug->boolean )
+          if ( db_xassetdebug )
           {
-            debugname = Cvar_GetVariantString("db_xassetdebugname");
-            if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == assetEntry->asset.type
+            debugname = db_xassetdebugname;
+            if ( db_xassetdebugtype == -1 || db_xassetdebugtype == assetEntry->asset.type
               || (debugname[0] && !Q_stricmp(DB_GetXAssetName(&assetEntry->asset), debugname)) )
             {
 
@@ -2961,10 +2376,10 @@ void __cdecl DB_UnloadXZoneInternal(unsigned int zoneIndex, bool createDefault)
             name = DB_GetXAssetName(&assetEntry->asset);
             DB_CloneXAssetInternal(&asset, &assetEntry->asset);
             DB_SetXAssetName(&assetEntry->asset, name);
-            if ( db_xassetdebug->boolean )
+            if ( db_xassetdebug )
             {
-              debugname = Cvar_GetVariantString("db_xassetdebugname");
-              if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == assetEntry->asset.type
+              debugname = db_xassetdebugname;
+              if ( db_xassetdebugtype == -1 || db_xassetdebugtype == assetEntry->asset.type
                   || (debugname[0] && !Q_stricmp(DB_GetXAssetName(&assetEntry->asset), debugname)) )
               {
                 Com_Printf(CON_CHANNEL_SYSTEM, "DB_UnloadXZoneInternal: using default for asset: '%s','%s'\n", 
@@ -2981,7 +2396,6 @@ void __cdecl DB_UnloadXZoneInternal(unsigned int zoneIndex, bool createDefault)
           DB_FreeXAssetEntry(assetEntry);
           if ( *g_defaultAssetName[asset.type] )
           {
-            Sys_LeaveCriticalSection(CRITSECT_DBHASH);
             Sys_Error("Could not load default asset for asset type '%s'", (&g_assetNames)[asset.type]);
           }
         }
@@ -3038,8 +2452,6 @@ void DB_CountXAssets(int *count, int len ,qboolean a4)
   union XAssetEntryPoolEntry *listselector, *slistselect;
   enum XAssetType type;
 
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
-
   if((len / sizeof(int)) < ASSET_TYPE_COUNT)
   {
     return;
@@ -3072,7 +2484,6 @@ void DB_CountXAssets(int *count, int len ,qboolean a4)
 	}
     }
   }
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
 }
 
 
@@ -3118,7 +2529,6 @@ void __cdecl DB_PrintXAssetsForType_FastFile(XAssetType type, void *inData, bool
   XAssetEntryPoolEntry *assetEntry;
   unsigned int overrideAssetEntryIndex;
 
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
   for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
   {
     for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = assetEntry->entry.nextHash )
@@ -3137,20 +2547,12 @@ void __cdecl DB_PrintXAssetsForType_FastFile(XAssetType type, void *inData, bool
       }
     }
   }
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
 }
 
 
 void __cdecl DB_PrintXAssetsForType(XAssetType type, void (__cdecl *func)(XAssetHeader, void *), void *inData, bool includeOverride)
 {
-  if ( useFastFile->boolean )
-  {
-    DB_PrintXAssetsForType_FastFile(type, &inData, includeOverride);
-  }
-  else
-  {
-    DB_EnumXAssets(type, func, &inData, includeOverride);
-  }
+  DB_PrintXAssetsForType_FastFile(type, &inData, includeOverride);
 }
 
 void __cdecl DB_PrintAssetName(XAssetHeader header, void *data)
@@ -3170,7 +2572,6 @@ XAssetHeader __cdecl DB_AllocXAssetHeader(XAssetType type)
   header.data = DB_AllocXAssetHeaderHandler[type](DB_XAssetPool[type]);
   if ( !header.data )
   {
-    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
     Com_PrintError(CON_CHANNEL_ERROR, "Exceeded limit of %d '%s' assets.\n", g_poolSize[type], g_assetNames[type]);
     DB_PrintXAssetsForType(type, DB_PrintAssetName, &type, 1);
     Com_Error(ERR_DROP, "Exceeded limit of %d '%s' assets.\n", g_poolSize[type], g_assetNames[type]);
@@ -3186,7 +2587,6 @@ XAssetEntryPoolEntry *__cdecl DB_AllocXAssetEntry(XAssetType type, unsigned int 
   freeHead = g_freeAssetEntryHead;
   if ( !g_freeAssetEntryHead )
   {
-    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
     Com_Error(ERR_DROP, "Could not allocate asset - increase XASSET_ENTRY_POOL_SIZE");
   }
   if ( ++XAssetEntryHighCount > XAssetEntryHighWaterMark )
@@ -3206,34 +2606,12 @@ XAssetEntryPoolEntry *__cdecl DB_AllocXAssetEntry(XAssetType type, unsigned int 
 extern "C"
 {
 
-bool DB_DiscardBspWeapons()
-{
-    return db_nobspweapon->boolean;
-}
-
 void __cdecl Load_WeaponDefAsset(struct WeaponDef **weapon)
 {
-    const char* weapname;
-    weapname = (*weapon)->szInternalName;
-
-    if(DB_DiscardBspWeapons()) //saving high valuable resources when we don't use weapons from maps
-    {
-        if(Q_stricmp(g_load.filename, "common_mp") && Q_stricmp(g_load.filename, "mod") && Q_stricmp(g_load.filename, "ui_mp"))
-        {
-          Com_Printf(CON_CHANNEL_SYSTEM, "Skip weapon '%s' from '%s'\n", weapname, g_load.filename);
-          *weapon = NULL;
-          return;
-        }
-    }
     XAssetHeader hweapon;
     hweapon.weapon = *weapon;
     *weapon = DB_AddXAsset(ASSET_TYPE_WEAPON, hweapon).weapon;
 
-}
-
-bool IsFastFileLoad()
-{
-  return useFastFile->boolean;
 }
 
 XAssetEntryPoolEntry *__cdecl DB_FindXAssetEntry(XAssetType type, const char *name)
@@ -3261,11 +2639,11 @@ bool __cdecl DB_GetInitializing()
   return g_initializing;
 }
 
-fileHandle_t g_missingAssetFile;
 
 void __cdecl DB_LogMissingAsset(XAssetType type, const char *name)
 {
   char msg[1024];
+  FILE* g_missingAssetFile;
 
   switch ( type )
   {
@@ -3282,21 +2660,40 @@ void __cdecl DB_LogMissingAsset(XAssetType type, const char *name)
       Com_sprintf(msg, sizeof(msg), "%s,%s\n", g_assetNames[type], name);
       break;
   }
-  Sys_EnterCriticalSection(CRITSECT_MISSING_ASSET);
+
+  g_missingAssetFile = fopen("missingasset.csv", "a");
   if ( g_missingAssetFile )
   {
-    g_missingAssetFile = FS_FOpenFileAppend("missingasset.csv");
+    fwrite(msg, 0, strlen(msg), g_missingAssetFile);
+    fclose(g_missingAssetFile);
+    g_missingAssetFile = NULL;
   }
-  else
+}
+
+
+XAssetEntryPoolEntry *__cdecl DB_CreateDummyEntry(XAssetType type, const char *name)
+{
+  unsigned int nhash;
+  XAssetEntryPoolEntry *newEntry;
+
+  ++g_defaultAssetCount;
+  newEntry = DB_AllocXAssetEntry(type, 0);
+  nhash = DB_HashForName(name, type);
+  newEntry->entry.nextHash  = db_hashTable[nhash % ARRAY_COUNT(db_hashTable)];
+  db_hashTable[nhash % ARRAY_COUNT(db_hashTable)] = newEntry - g_assetEntryPool;
+
+  newEntry->entry.inuse = 0;
+  if ( db_xassetdebug )
   {
-    g_missingAssetFile = FS_FOpenFileWrite("missingasset.csv");
+    const char* debugname = db_xassetdebugname;
+
+    if ( db_xassetdebugtype == -1 || db_xassetdebugtype == type
+      || (debugname[0] && !Q_stricmp(name, debugname)) )
+    {
+      Com_Printf(CON_CHANNEL_SYSTEM, "DB_CreateDummyEntry for asset name: '%s'\n", name);
+    }
   }
-  if ( g_missingAssetFile )
-  {
-    FS_Write(msg, strlen(msg), g_missingAssetFile);
-    FS_FCloseFile(g_missingAssetFile);
-  }
-  Sys_LeaveCriticalSection(CRITSECT_MISSING_ASSET);
+  return newEntry;
 }
 
 
@@ -3307,9 +2704,8 @@ XAssetEntryPoolEntry *__cdecl DB_CreateDefaultEntry(XAssetType type, const char 
   XAssetEntryPoolEntry *newEntry;
 
   asset.header.data = DB_FindXAssetDefaultHeaderInternal(type);
-  if ( !asset.header.xmodelPieces )
+  if ( !asset.header.data )
   {
-    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
     if ( type != ASSET_TYPE_CLIPMAP && type != ASSET_TYPE_CLIPMAP_PVS )
     {
       Com_Error(ERR_DROP, "Could not load default asset '%s' for asset type '%s'.\nTried to load asset '%s'.", g_defaultAssetName[type], DB_GetXAssetTypeName(type), name);
@@ -3327,14 +2723,14 @@ XAssetEntryPoolEntry *__cdecl DB_CreateDefaultEntry(XAssetType type, const char 
   newEntry->entry.nextHash  = db_hashTable[nhash % ARRAY_COUNT(db_hashTable)];
   db_hashTable[nhash % ARRAY_COUNT(db_hashTable)] = newEntry - g_assetEntryPool;
 
-  DB_SetXAssetName(&newEntry->entry.asset, SL_ConvertToString(SL_GetString(name, 4u)));
+  DB_SetXAssetName(&newEntry->entry.asset, strdup(name));
   newEntry->entry.inuse = 1;
-  if ( db_xassetdebug->boolean )
+  if ( db_xassetdebug )
   {
-    const char* db_xassetdebugname = Cvar_GetVariantString("db_xassetdebugname");
+    const char* debugname = db_xassetdebugname;
 
-    if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == type
-      || (db_xassetdebugname[0] && !Q_stricmp(name, db_xassetdebugname)) )
+    if ( db_xassetdebugtype == -1 || db_xassetdebugtype == type
+      || (debugname[0] && !Q_stricmp(name, debugname)) )
     {
       Com_Printf(CON_CHANNEL_SYSTEM, "DB_CreateDefaultEntry: used default asset: '%s','%s' for asset name: '%s'\n", DB_GetXAssetTypeName(asset.type), DB_GetXAssetName(&asset), name);
     }
@@ -3371,17 +2767,7 @@ void __cdecl PrintWaitedError(XAssetType type, const char *name, int waitedMsec)
     case ASSET_TYPE_SOUND:
       return;
     case ASSET_TYPE_LOCALIZE_ENTRY:
-      if ( loc_warnings->boolean )
-      {
-        if ( loc_warningsAsErrors->boolean )
-        {
-          Com_PrintError(CON_CHANNEL_ERROR, "Could not load %s \"%s\".\n", g_assetNames[type], name);
-        }
-        else
-        {
-          Com_PrintWarning(CON_CHANNEL_FILES, "Could not load %s \"%s\".\n", g_assetNames[type], name);
-        }
-      }
+      Com_PrintWarning(CON_CHANNEL_FILES, "Could not load %s \"%s\".\n", g_assetNames[type], name);
       break;
     case ASSET_TYPE_RAWFILE:
       if ( IsConfigFile(name) )
@@ -3402,7 +2788,6 @@ XAssetHeader __cdecl DB_FindXAssetHeader(XAssetType type, const char *name, bool
   const char *n;
   signed int bspextlen;
   signed int namelen;
-  bool suspendedThread;
   const char *basename;
   unsigned int start;
   char so_name[64];
@@ -3412,8 +2797,6 @@ XAssetHeader __cdecl DB_FindXAssetHeader(XAssetType type, const char *name, bool
   XAssetEntry *newEntry;
   const char *bspext;
   XAssetEntryPoolEntry *newEntryPoolEntry;
-
-  assert(IsFastFileLoad());
 
   start = 0;
   so_prefix = "maps/so_";
@@ -3442,117 +2825,6 @@ XAssetHeader __cdecl DB_FindXAssetHeader(XAssetType type, const char *name, bool
       use_so_name = 1;
     }
   }
-
-  do
-  {
-    while ( 1 )
-    {
-      Sys_EnterCriticalSection(CRITSECT_DBHASH);
-      if ( use_so_name )
-      {
-        ent = DB_FindXAssetEntry(type, so_name);
-      }
-      else
-      {
-        ent = DB_FindXAssetEntry(type, name);
-      }
-      assetEntry = &ent->entry;
-      Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-      /*
-      if ( use_so_name )
-      {
-        DB_RegisteredReorderAsset(type, so_name, assetEntry);
-      }
-      else
-      {
-        DB_RegisteredReorderAsset(type, name, assetEntry);
-      }
-      */
-      if ( assetEntry && (assetEntry->zoneIndex || Sys_IsDatabaseReady2()) )
-      {
-        goto returnAsset;
-      }
-      if ( Sys_IsDatabaseThread() )
-      {
-        goto LABEL_62;
-      }
-      if ( start )
-      {
-        break;
-      }
-//      ProfLoad_Begin("Wait for fastfile asset");
-      start = Sys_Milliseconds();
-      if ( !Sys_IsDatabaseReady2() )
-      {
-        break;
-      }
-    }
-    if ( Sys_IsDatabaseReady2() )
-    {
-      break;
-    }
-    if ( DB_IsMinimumFastFileLoaded() && DB_GetInitializing() )
-    {
-      break;
-    }
-
-    if ( Sys_IsDatabaseReady() && (Sys_IsMainThread()
-    /* || Sys_IsRenderThread() && R_IsInRemoteScreenUpdate() && Sys_QueryRGRegisteredEvent()*/))
-    {
-      DB_PostLoadXZone();
-    }
-    else
-    {
-//      if ( Sys_IsRenderThread() )
-      {
-//        RB_Resource_Update(5);
-      }
-      suspendedThread = Sys_HaveSuspendedDatabaseThread(THREAD_OWNER_DATABASE);
-      if ( suspendedThread )
-      {
-        Sys_ResumeDatabaseThread(THREAD_OWNER_DATABASE);
-      }
-      /*
-      semaphore = R_ReleaseDXDeviceOwnership();
-      DB_Sleep(0);
-      if ( semaphore )
-      {
-        R_AcquireDXDeviceOwnership(0);
-      }
-      */
-      DB_Sleep(0);
-
-      if ( suspendedThread )
-      {
-        Sys_SuspendDatabaseThread(THREAD_OWNER_DATABASE);
-      }
-    }
-  }
-  while ( waitTime == -1 || Sys_Milliseconds() - start < (unsigned int)waitTime || !Sys_IsDatabaseReady2());
-//  ProfLoad_End();
-LABEL_62:
-  if ( assetEntry )
-  {
-returnAsset:
-    assert(assetEntry->asset.header.data);
-
-    assetEntry->inuse = 1;
-    if ( start )
-    {
-      if ( use_so_name )
-      {
-        n = so_name;
-      }
-      else
-      {
-        n = name;
-      }
-      Com_Printf(CON_CHANNEL_FILES, "Waited %i msec for asset '%s' of type '%s'.\n", Sys_Milliseconds() - start, n, g_assetNames[type]);
-//      ProfLoad_End();
-    }
-    return assetEntry->asset.header;
-  }
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
   if ( use_so_name )
   {
     ent = DB_FindXAssetEntry(type, so_name);
@@ -3562,40 +2834,36 @@ returnAsset:
     ent = DB_FindXAssetEntry(type, name);
   }
   assetEntry = &ent->entry;
-  if ( ent )
+
+  if ( assetEntry && assetEntry->zoneIndex )
   {
     assert(assetEntry->asset.header.data);
-    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-    goto returnAsset;
+    assetEntry->inuse = 1;
+    return assetEntry->asset.header;
   }
+
   if ( errorIfMissing && type != ASSET_TYPE_XANIMPARTS )
   {
-    if ( com_developer->boolean )
+    if ( use_so_name )
     {
-      if ( use_so_name )
-      {
-        DB_LogMissingAsset(type, so_name);
-      }
-      else
-      {
-        DB_LogMissingAsset(type, name);
-      }
+      DB_LogMissingAsset(type, so_name);
+    }
+    else
+    {
+      DB_LogMissingAsset(type, name);
     }
   }
-  if ( start )
+  if ( errorIfMissing )
   {
-    if ( errorIfMissing )
+    if ( use_so_name )
     {
-      if ( use_so_name )
-      {
-        n = so_name;
-      }
-      else
-      {
-        n = name;
-      }
-      PrintWaitedError(type, n, Sys_Milliseconds() - start);
+      n = so_name;
     }
+    else
+    {
+      n = name;
+    }
+    PrintWaitedError(type, n, Sys_Milliseconds() - start);
   }
   switch ( type )
   {
@@ -3603,32 +2871,37 @@ returnAsset:
     case ASSET_TYPE_RAWFILE:
 //    case ASSET_TYPE_XGLOBALS:
 //    case ASSET_TYPE_GLASSES:
-      Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-      result.xmodelPieces = 0;
+      result.data = 0;
       break;
     default:
       if ( db_xassetdebug )
       {
-        if ( db_xassetdebug->boolean )
+        if ( db_xassetdebug )
         {
-          const char* db_xassetdebugname = Cvar_GetVariantString("db_xassetdebugname");
-          if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == type
-            || (db_xassetdebugname[0] && !Q_stricmp(name, db_xassetdebugname)) )
+          const char* debugname = db_xassetdebugname;
+          if ( db_xassetdebugtype == -1 || db_xassetdebugtype == type
+            || (debugname[0] && !Q_stricmp(name, debugname)) )
           {
             Com_Printf(CON_CHANNEL_SYSTEM, "***db_xassetdebug:***\nDB_FindXAssetHeader: missing asset: '%s','%s'\n", DB_GetXAssetTypeName(type), name);
           }
         }
       }
+      
       if ( use_so_name )
       {
-        newEntryPoolEntry = DB_CreateDefaultEntry(type, so_name);
+        Com_PrintWarning(CON_CHANNEL_SYSTEM, "Tried to use non loaded asset '%s'\n", so_name);
+        result.data = NULL;
+        return result;
+//        newEntryPoolEntry = DB_CreateDefaultEntry(type, so_name);
       }
       else
       {
-        newEntryPoolEntry = DB_CreateDefaultEntry(type, name);
+         Com_PrintWarning(CON_CHANNEL_SYSTEM, "Tried to use non loaded asset '%s'\n", name);
+        result.data = NULL;
+        return result;
+//        newEntryPoolEntry = DB_CreateDefaultEntry(type, name);
       }
       newEntry = &newEntryPoolEntry->entry;
-      Sys_LeaveCriticalSection(CRITSECT_DBHASH);
       result.data = newEntry->asset.header.data;
       break;
   }
@@ -3645,20 +2918,6 @@ void* __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name)
   return r.data;
 }
 
-void DB_SyncLostDevice()
-{
-  if ( g_isRecoveringLostDevice )
-  {
-    assert(!g_mayRecoverLostAssets);
-    g_mayRecoverLostAssets = 1;
-    do
-    {
-      Sys_SleepSec(0);
-    }
-    while ( g_isRecoveringLostDevice );
-    assert(!g_mayRecoverLostAssets);
-  }
-}
 
 XAssetHeader __cdecl DB_AddXAsset(XAssetType type, XAssetHeader header)
 {
@@ -3667,29 +2926,9 @@ XAssetHeader __cdecl DB_AddXAsset(XAssetType type, XAssetHeader header)
 
   newEntry.asset.type = type;
   newEntry.asset.header = header;
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
-
-
-  //Debug start...
-/*
-  const char* name = DB_GetXAssetName(&newEntry.asset);
-
-  XAssetEntryPoolEntry *pEntry = DB_FindXAssetEntry(newEntry.asset.type, name);
-  if(pEntry != NULL)
-  {
-    if(pEntry->entry.zoneIndex == g_zoneIndex)
-    {
-      Com_Printf(CON_CHANNEL_SYSTEM, "Duplicate asset %d %s\n", g_zoneIndex, name);
-    }
-  }
-*/
-  //End
-
 
 
   existingEntry = DB_LinkXAssetEntry(&newEntry, 0);
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-  DB_SyncLostDevice();
   return existingEntry->entry.asset.header;
 }
 
@@ -3704,34 +2943,21 @@ void DB_PostLoadXZone()
 {
   unsigned int i;
 
-  assert(Sys_IsMainThread() || Sys_IsRenderThread());
   assert(!g_loadingZone);
   assert(!g_zoneInfoCount);
 
-  if ( Sys_IsDatabaseReady2() )
-  {
-    return;
-  }
   if ( g_copyInfoCount ){
 
-    DB_ArchiveAssets();
-    Sys_EnterCriticalSection(CRITSECT_DBHASH);
     for ( i = 0; i < g_copyInfoCount; ++i )
     {
-      if(db_xassetdebug->boolean)
+      if(db_xassetdebug)
       {
         Com_Printf(CON_CHANNEL_SYSTEM, "Redundant asset: '%s','%s'\n", DB_GetXAssetTypeName(g_copyInfo[i]->asset.type), DB_GetXAssetName(&g_copyInfo[i]->asset));
       }
       DB_LinkXAssetEntry(g_copyInfo[i], 1);
     }
     g_copyInfoCount = 0;
-    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-
-    DB_UnarchiveAssets();
   }
-  Material_DirtyTechniqueSetOverrides();
-  BG_FillInAllWeaponItems();
-  Sys_DatabaseCompleted2();
 }
 
 
@@ -3742,7 +2968,6 @@ bool __cdecl DB_IsXAssetDefault(XAssetType type, const char *name)
   XAssetEntryPoolEntry *assetEntry;
 
   hash = DB_HashForName(name, type);
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
   for ( assetEntryIndex = db_hashTable[hash % ARRAY_COUNT(db_hashTable)]; assetEntryIndex; assetEntryIndex = assetEntry->entry.nextHash )
   {
     assetEntry = &g_assetEntryPool[assetEntryIndex];
@@ -3750,34 +2975,11 @@ bool __cdecl DB_IsXAssetDefault(XAssetType type, const char *name)
     {
       if ( !Q_stricmp(DB_GetXAssetName(&assetEntry->entry.asset), name) )
       {
-        Sys_LeaveCriticalSection(CRITSECT_DBHASH);
         return assetEntry->entry.zoneIndex == 0;
       }
     }
   }
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
   return 1;
-}
-
-void DB_EndRecoverLostDevice()
-{
-  int i;
-
-  assert(Sys_IsRenderThread());
-  assert(g_isRecoveringLostDevice);
-  assert(g_mayRecoverLostAssets);
-
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
-
-  for( i = 0; i < g_zoneCount; ++i)
-  {
-    DB_RecoverGeometryBuffers(&g_zones[g_zoneHandles[i]].zonememory);
-  }
-  g_mayRecoverLostAssets = g_loadingZone == 0;
-  g_isRecoveringLostDevice = 0;
-
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-
 }
 
 void __cdecl DB_EnumXAssets_FastFile(XAssetType type, void (__cdecl *func)(void* header, void * indata), void *inData, bool includeOverride)
@@ -3787,7 +2989,6 @@ void __cdecl DB_EnumXAssets_FastFile(XAssetType type, void (__cdecl *func)(void*
   XAssetEntryPoolEntry *assetEntry;
   unsigned int overrideAssetEntryIndex;
 
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
   for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
   {
     for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = assetEntry->entry.nextHash )
@@ -3806,27 +3007,8 @@ void __cdecl DB_EnumXAssets_FastFile(XAssetType type, void (__cdecl *func)(void*
       }
     }
   }
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
 }
 
-
-void __cdecl DB_BeginRecoverLostDevice()
-{
-  int i;
-
-  g_isRecoveringLostDevice = 1;
-  while ( !g_mayRecoverLostAssets )
-  {
-    Sys_SleepSec(0);
-  }
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
-
-  for ( i = 0; i < g_zoneCount; ++i )
-  {
-    DB_ReleaseGeometryBuffers(&g_zones[g_zoneHandles[i]].zonememory);
-  }
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-}
 
 int __cdecl DB_GetAllXAssetOfType_FastFile(XAssetType type, XAssetHeader *assets, int maxCount)
 {
@@ -3836,7 +3018,6 @@ int __cdecl DB_GetAllXAssetOfType_FastFile(XAssetType type, XAssetHeader *assets
   XAssetEntryPoolEntry *assetEntry;
 
   assetCount = 0;
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
   for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
   {
     for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = assetEntry->entry.nextHash )
@@ -3853,7 +3034,6 @@ int __cdecl DB_GetAllXAssetOfType_FastFile(XAssetType type, XAssetHeader *assets
       }
     }
   }
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
   return assetCount;
 }
 
@@ -3867,12 +3047,12 @@ void __cdecl DB_DelayedCloneXAsset(XAssetEntry *newEntry)
   
   if ( g_sync )
   {
-    if ( db_xassetdebug->boolean )
+    if ( db_xassetdebug )
     {
-      debugname = Cvar_GetVariantString("db_xassetdebugname");
+      debugname = db_xassetdebugname;
       assetname = DB_GetXAssetName(&newEntry->asset);
-      if ( db_xassetdebugtype->integer == -1
-        || db_xassetdebugtype->integer == newEntry->asset.type
+      if ( db_xassetdebugtype == -1
+        || db_xassetdebugtype == newEntry->asset.type
         || (debugname[0] && !Q_stricmp(debugname, assetname)) )
       {
         assetname = DB_GetXAssetName(&newEntry->asset);
@@ -3893,12 +3073,12 @@ void __cdecl DB_DelayedCloneXAsset(XAssetEntry *newEntry)
       }
       Sys_Error("g_copyInfo exceeded");
     }
-    if ( db_xassetdebug->boolean )
+    if ( db_xassetdebug )
     {
-      debugname = Cvar_GetVariantString("db_xassetdebugname");
+      debugname = db_xassetdebugname;
       assetname = DB_GetXAssetName(&newEntry->asset);
-      if ( db_xassetdebugtype->integer == -1
-        || db_xassetdebugtype->integer == newEntry->asset.type
+      if ( db_xassetdebugtype == -1
+        || db_xassetdebugtype == newEntry->asset.type
         || (debugname[0] && !Q_stricmp(debugname, assetname)) )
       {
         assetname = DB_GetXAssetName(&newEntry->asset);
@@ -3942,11 +3122,11 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
   XAssetEntryPoolEntry *newEntry = (XAssetEntryPoolEntry*)argNewEntry;
 
   name = DB_GetXAssetName(&newEntry->entry.asset);
-  if ( db_xassetdebug->boolean )
+  if ( db_xassetdebug )
   {
-    debugname = Cvar_GetVariantString("db_xassetdebugname");
+    debugname = db_xassetdebugname;
 
-    if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+    if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
       || (debugname[0] && !Q_stricmp(name, debugname)) )
     {
       Com_Printf(CON_CHANNEL_SYSTEM, "***db_xassetdebug:***\nDB_LinkXAssetEntry: link asset: '%s','%s'\n", DB_GetXAssetTypeName(newEntry->entry.asset.type), name);
@@ -3984,10 +3164,10 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
       locname = DB_GetXAssetName(&existingEntry->entry.asset);
       if ( !Q_stricmp(locname, name) )
       {
-        if ( db_xassetdebug->boolean )
+        if ( db_xassetdebug )
         {
-          debugname = Cvar_GetVariantString("db_xassetdebugname");
-          if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+          debugname = db_xassetdebugname;
+          if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
             || (debugname[0] && !Q_stricmp(name, debugname)) )
           {
             if ( g_zones[existingEntry->entry.zoneIndex].zoneinfo.name[0] )
@@ -4016,13 +3196,13 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
     {
       if ( !existingEntryIndex )
       {
-        return DB_CreateDefaultEntry(type, name);
+        return DB_CreateDummyEntry(type, name); //DB_CreateDefaultEntry(type, name);
       }
       assert(existingEntry);
-      if ( db_xassetdebug->boolean )
+      if ( db_xassetdebug )
       {
-        debugname = Cvar_GetVariantString("db_xassetdebugname");
-        if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+        debugname = db_xassetdebugname;
+        if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
           || (debugname[0] && !Q_stricmp(name, debugname)) )
         {
           locname = DB_GetXAssetTypeName(newEntry->entry.asset.type);
@@ -4038,10 +3218,10 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
   }
   if ( !existingEntryIndex )
   {
-    if ( db_xassetdebug->boolean )
+    if ( db_xassetdebug )
     {
-      debugname = Cvar_GetVariantString("db_xassetdebugname");
-      if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+      debugname = db_xassetdebugname;
+      if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
         || (debugname[0] && !Q_stricmp(name, debugname)) )
       {
         locname = DB_GetXAssetTypeName(newEntry->entry.asset.type);
@@ -4050,10 +3230,10 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
     }
     newEntry->entry.nextHash = db_hashTable[hash % ARRAY_COUNT(db_hashTable)];
     db_hashTable[hash % ARRAY_COUNT(db_hashTable)] = newEntry - g_assetEntryPool;
-    if ( db_xassetdebug->boolean )
+    if ( db_xassetdebug )
     {
-      debugname = Cvar_GetVariantString("db_xassetdebugname");
-      if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+      debugname = db_xassetdebugname;
+      if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
         || (debugname[0] && !Q_stricmp(name, debugname)) )
       {
         locname = DB_GetXAssetTypeName(newEntry->entry.asset.type);
@@ -4069,7 +3249,6 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
 //    assert(existingEntry->entry.zoneIndex != newEntry->entry.zoneIndex);
     if ( !g_defaultAssetName[type][0] && type != ASSET_TYPE_RAWFILE && type != ASSET_TYPE_MAP_ENTS )
     {
-      Sys_LeaveCriticalSection(CRITSECT_DBHASH);
       Com_Error(ERR_DROP, "Attempting to override asset '%s' from zone '%s' with zone '%s'", name,
         g_zones[existingEntry->entry.zoneIndex].zoneinfo.name, g_zones[newEntry->entry.zoneIndex].zoneinfo.name);
     }
@@ -4083,10 +3262,10 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
           break;
         }
       }
-      if ( db_xassetdebug->boolean )
+      if ( db_xassetdebug )
       {
-        debugname = Cvar_GetVariantString("db_xassetdebugname");
-        if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+        debugname = db_xassetdebugname;
+        if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
           || (debugname[0] && !Q_stricmp(name, debugname)) )
         {
           Com_Printf(CON_CHANNEL_SYSTEM, "DB_LinkXAssetEntry: keep existing asset, and put new in its override position\n");
@@ -4112,10 +3291,10 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
         varXAsset = &existingEntry->entry.asset;
         Mark_XAsset();
       }
-      if ( db_xassetdebug->boolean )
+      if ( db_xassetdebug )
       {
-        debugname = Cvar_GetVariantString("db_xassetdebugname");
-        if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+        debugname = db_xassetdebugname;
+        if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
           || (debugname[0] && !Q_stricmp(name, debugname)) )
         {
           locname = DB_GetXAssetTypeName(newEntry->entry.asset.type);
@@ -4134,10 +3313,10 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
     {
       DB_DelayedCloneXAsset(&newEntry->entry);
     }
-    if ( db_xassetdebug->boolean )
+    if ( db_xassetdebug )
     {
-      debugname = Cvar_GetVariantString("db_xassetdebugname");
-      if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == existingEntry->entry.asset.type
+      debugname = db_xassetdebugname;
+      if ( db_xassetdebugtype == -1 || db_xassetdebugtype == existingEntry->entry.asset.type
         || (debugname[0] && !Q_stricmp(name, debugname)) )
       {
         if ( g_zones[existingEntry->entry.zoneIndex].zoneinfo.name[0] )
@@ -4154,10 +3333,10 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
     }
     return existingEntry;
   }
-  if ( db_xassetdebug->boolean )
+  if ( db_xassetdebug )
   {
-    debugname = Cvar_GetVariantString("db_xassetdebugname");
-    if ( db_xassetdebugtype->integer == -1 || db_xassetdebugtype->integer == newEntry->entry.asset.type
+    debugname = db_xassetdebugname;
+    if ( db_xassetdebugtype == -1 || db_xassetdebugtype == newEntry->entry.asset.type
       || (debugname[0] && !Q_stricmp(name, debugname)) )
     {
       locname = DB_GetXAssetTypeName(newEntry->entry.asset.type);
@@ -4232,5 +3411,10 @@ void __cdecl Load_MaterialHandle(bool atStreamStart)
   DB_PopStreamPos();
 }
 
+
+void __cdecl Load_GetCurrentZoneHandle(byte *outhandle)
+{
+  *outhandle = g_zoneIndex;
+}
 
 };

@@ -1,14 +1,9 @@
 ;Imports of com_memory:
-	extern Com_Printf
-	extern PMem_DumpMemStats
 	extern XAnimFreeList
 	extern XModelPartsFree
 	extern XAnimFree
-	extern R_ReflectionProbeRegisterDvars
-	extern r_reflectionProbeGenerate
 	extern _VirtualAlloc
 	extern _VirtualFree
-	extern Cmd_AddCommand
 	extern Com_Error
 	extern Sys_OutOfMemErrorInternal
 	extern malloc

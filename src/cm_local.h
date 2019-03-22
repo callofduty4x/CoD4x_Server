@@ -3,6 +3,7 @@
 
 #include "q_shared.h"
 #include "sys_thread.h"
+#include "cm_public.h"
 
 
 #define BOX_MODEL_HANDLE 4095
@@ -259,6 +260,7 @@ extern clipMap_t cm;
 void __cdecl CM_LoadMapFromBsp(const char *name, char a2);
 void __cdecl CM_LoadStaticModels();
 void __cdecl DynEnt_LoadEntities();
+
 
 
 #endif

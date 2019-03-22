@@ -46,6 +46,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "aas_cfg.h"
 #include "../q_math.h"
 #include "../game/surfaceflags.h"
+#include "db_load.h"
+#include "../physicalmemory.h"
+
 
 #define Sign( x )     ( x < 0 ? 1 : 0 )
 
@@ -1339,3 +1342,24 @@ int LoadMapFromBSP( struct quakefile_s *qf ) {
 	  //
 	return true;
 } //end of the function LoadMapFromBSP
+
+
+int LoadMapFromFastFile( struct quakefile_s *qf ) {
+
+	PMem_Init();
+	DB_Init();
+
+	if(qf == NULL){
+		return false;
+	}
+
+    char *g_fileBuf = (char*)malloc(DBFILE_BUFFER_SIZE);
+
+	//filename, flags, buffer 
+    if ( !DB_TryLoadXFileInternal(qf->filename, 0, g_fileBuf) )
+    {
+
+    }
+    free(g_fileBuf);
+	return true;
+}

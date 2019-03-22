@@ -1,9 +1,18 @@
 @echo off
 
 echo Compiling C-code...
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c map.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/inflate.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/adler32.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/crc32.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/inffast.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/inftrees.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/cod4x_utils.c
 
-REM gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -c *.c
-g++ -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c db_loaddummy.cpp
+g++ -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../mem_track.cpp
+g++ -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../physicalmemory.cpp
+g++ -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c db_miniregistry.cpp
+g++ -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c db_miniload.cpp
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c bspc.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c l_log.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c l_cmd.c
@@ -37,8 +46,7 @@ gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBS
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c aas_edgemelting.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c aas_store.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c aas_file.c
-REM gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c aas_map.c
-gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c map.c
+
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c tree.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c portals.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c brushbsp.c
@@ -54,15 +62,14 @@ gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBS
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../cm_load.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../cm_test.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../cmodel.c
-g++ -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../db_load.cpp
+
+
 
 nasm -f win32 ../asmsource/_cm_tracebox.asm --prefix _ -o_cm_tracebox.o
 nasm -f win32 ../asmsource/_cm_trace.asm --prefix _ -o_cm_trace.o
 nasm -f win32 ../asmsource/_cm_mesh.asm --prefix _ -o_cm_mesh.o
-nasm -f win32 asmsource/_db_registry.asm --prefix _ -o_db_registry.o
 nasm -f win32 asmsource/_db_load.asm --prefix _ -o_db_load.o
-nasm -f win32 asmsource/_db_memory.asm --prefix _ -o_db_memory.o
-nasm -f win32 asmsource/_db_stringtable_load.asm --prefix _ -o_db_stringtable_load.o
+nasm -f win32 asmsource/_db_registry.asm --prefix _ -o_db_registry.o
 nasm -f win32 asmsource/_com_memory.asm --prefix _ -o_com_memory.o
 nasm -f win32 asmsource/_db_assetnames.asm --prefix _ -o_db_assetnames.o
 nasm -f win32 asmsource/_com_bsp.asm --prefix _ -o_com_bsp.o

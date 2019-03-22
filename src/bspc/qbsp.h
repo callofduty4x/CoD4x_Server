@@ -301,6 +301,10 @@ extern int c_areaportals;
 extern int c_clipbrushes;
 extern int c_squattbrushes;
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 //finds a float plane for the given normal and distance
 int FindFloatPlane( vec3_t normal, vec_t dist );
 //returns the plane type for the given normal
@@ -317,6 +321,8 @@ void MarkBrushBevels( mapbrush_t *brush );
 int BrushExists( mapbrush_t *brush );
 //loads a map from a bsp file
 int LoadMapFromBSP( struct quakefile_s *qf );
+//loads a map from a fastfile
+int LoadMapFromFastFile( struct quakefile_s *qf );
 //resets map loading
 void ResetMapLoading( void );
 //print some map info
@@ -498,3 +504,7 @@ void MakeFaces( node_t *headnode );
 void FixTjuncs( node_t *headnode );
 int GetEdge2( int v1, int v2, face_t *f );
 void MergeNodeFaces( node_t *node );
+
+#ifdef __cplusplus
+};
+#endif

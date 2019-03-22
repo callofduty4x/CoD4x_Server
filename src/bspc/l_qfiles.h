@@ -46,12 +46,14 @@ If you have questions concerning this license or the applicable additional terms
 #define QFILETYPE_WAL               0x0080
 #define QFILETYPE_WAV               0x0100
 #define QFILETYPE_AAS               0x4000
+#define QFILETYPE_FF                0x2000
 
 #define QFILEEXT_UNKNOWN            ""
 #define QFILEEXT_PAK                ".PAK"
 #define QFILEEXT_PK3                ".PK3"
 #define QFILEEXT_SIN                ".SIN"
 #define QFILEEXT_BSP                ".BSP"
+#define QFILEEXT_FF                 ".FF"
 #define QFILEEXT_MAP                ".MAP"
 #define QFILEEXT_MDL                ".MDL"
 #define QFILEEXT_MD2                ".MD2"

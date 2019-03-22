@@ -631,28 +631,28 @@ int main( int argc, char **argv ) {
 				i = 0; break;
 			}
 			comp = COMP_BSP2MAP;
-			qfiles = GetArgumentFiles( argc, argv, &i, "bsp" );
+			qfiles = GetArgumentFiles( argc, argv, &i, "ff" );
 		} //end else if
 		else if ( !stricmp( argv[i], "-bsp2aas" ) ) {
 			if ( i + 1 >= argc ) {
 				i = 0; break;
 			}
 			comp = COMP_BSP2AAS;
-			qfiles = GetArgumentFiles( argc, argv, &i, "bsp" );
+			qfiles = GetArgumentFiles( argc, argv, &i, "ff" );
 		} //end else if
 		else if ( !stricmp( argv[i], "-reach" ) ) {
 			if ( i + 1 >= argc ) {
 				i = 0; break;
 			}
 			comp = COMP_REACH;
-			qfiles = GetArgumentFiles( argc, argv, &i, "bsp" );
+			qfiles = GetArgumentFiles( argc, argv, &i, "ff" );
 		} //end else if
 		else if ( !stricmp( argv[i], "-cluster" ) ) {
 			if ( i + 1 >= argc ) {
 				i = 0; break;
 			}
 			comp = COMP_CLUSTER;
-			qfiles = GetArgumentFiles( argc, argv, &i, "bsp" );
+			qfiles = GetArgumentFiles( argc, argv, &i, "ff" );
 		} //end else if
 		else if ( !stricmp( argv[i], "-aasinfo" ) ) {
 			if ( i + 1 >= argc ) {
@@ -712,11 +712,11 @@ int main( int argc, char **argv ) {
 				strcat( filename, ".map" );
 				//
 				Log_Print( "bsp2map: %s to %s\n", qf->origname, filename );
-				if ( qf->type != QFILETYPE_BSP ) {
-					Warning( "%s is probably not a BSP file\n", qf->origname );
+				if ( qf->type != QFILETYPE_FF ) {
+					Warning( "%s is probably not a Fastfile\n", qf->origname );
 				}
 				//
-				LoadMapFromBSP( qf );
+				LoadMapFromFastFile( qf );
 				//write the map file
 				WriteMapFile( filename );
 			}     //end for
@@ -732,12 +732,12 @@ int main( int argc, char **argv ) {
 				AASOuputFile( qf, outputpath, filename );
 				//
 				Log_Print( "bsp2aas: %s to %s\n", qf->origname, filename );
-				if ( qf->type != QFILETYPE_BSP ) {
-					Warning( "%s is probably not a BSP file\n", qf->origname );
+				if ( qf->type != QFILETYPE_FF ) {
+					Warning( "%s is probably not a Fastfile\n", qf->origname );
 				}
 				//set before map loading
 				create_aas = 1;
-				LoadMapFromBSP( qf );
+				LoadMapFromFastFile( qf );
 				//create the AAS file
 				AAS_Create( filename );
 				//if it's a Quake3 map calculate the reachabilities and clusters
@@ -768,8 +768,8 @@ int main( int argc, char **argv ) {
 				AASOuputFile( qf, outputpath, filename );
 				//
 				Log_Print( "reach: %s to %s\n", qf->origname, filename );
-				if ( qf->type != QFILETYPE_BSP ) {
-					Warning( "%s is probably not a BSP file\n", qf->origname );
+				if ( qf->type != QFILETYPE_FF ) {
+					Warning( "%s is probably not a Fastfile\n", qf->origname );
 				}
 				//if the AAS file exists in the output directory
 				if ( !access( filename, 0x04 ) ) {
@@ -785,7 +785,7 @@ int main( int argc, char **argv ) {
 					Log_Print( "creating %s...\n", filename );
 					//set before map loading
 					create_aas = 1;
-					LoadMapFromBSP( qf );
+					LoadMapFromFastFile( qf );
 					//create the AAS file
 					AAS_Create( filename );
 				}     //end else
@@ -816,8 +816,8 @@ int main( int argc, char **argv ) {
 				AASOuputFile( qf, outputpath, filename );
 				//
 				Log_Print( "cluster: %s to %s\n", qf->origname, filename );
-				if ( qf->type != QFILETYPE_BSP ) {
-					Warning( "%s is probably not a BSP file\n", qf->origname );
+				if ( qf->type != QFILETYPE_FF ) {
+					Warning( "%s is probably not a Fastfile\n", qf->origname );
 				}
 				//if the AAS file exists in the output directory
 				if ( !access( filename, 0x04 ) ) {
@@ -839,7 +839,7 @@ int main( int argc, char **argv ) {
 					Log_Print( "creating %s...\n", filename );
 					//set before map loading
 					create_aas = 1;
-					LoadMapFromBSP( qf );
+					LoadMapFromFastFile( qf );
 					//create the AAS file
 					AAS_Create( filename );
 					//if it's a Quake3 map calculate the reachabilities and clusters

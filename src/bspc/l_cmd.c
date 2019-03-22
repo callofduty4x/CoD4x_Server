@@ -239,7 +239,7 @@ void Com_Error( int level, const char *error, ... ) {
 	Error( text );
 } //end of the funcion Com_Error
 
-void Com_Printf( const char *fmt, ... ) {
+void Com_Printf( int channel, const char *fmt, ... ) {
 	va_list argptr;
 	char text[1024];
 
