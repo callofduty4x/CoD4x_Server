@@ -2002,13 +2002,38 @@ Usage: entity = AddTestClient()
 
 void GScr_SpawnBot()
 {
+	gentity_t *clEnt;
+	
+	if ( Scr_GetNumParam() == 1 )
+        {
+       	 	char *string = Scr_GetString( 0 );
+		char name[36];
+		int i, j;
+		
+		for( i = 0, j = 0; string[i] && j < sizeof(name) - 1; ++i )
+		{
+			if( (byte)string[i] >= 0x20 )
+			{
+				name[j] = string[i];
+				++j;
+			}
+		}
+		name[j] = '\0';
+		
+		if ( strlen( name ) < 3 )
+		{
+			Scr_Error( "AddTestClient(): Name must be atleast 3 characters long\n" );
+		}
+		
+		clEnt = (gentity_t *)SV_AddBotClient( name );
+        }
+	else
+	{
+		clEnt = (gentity_t *)SV_AddBotClient( NULL );
+	}
 
-    gentity_t *clEnt;
-
-    clEnt = (gentity_t *)SV_AddBotClient();
-
-    if (clEnt)
-        Scr_AddEntity(clEnt);
+        if (clEnt)
+            	Scr_AddEntity(clEnt);
 }
 
 /*
