@@ -1346,6 +1346,8 @@ int LoadMapFromBSP( struct quakefile_s *qf ) {
 
 int LoadMapFromFastFile( struct quakefile_s *qf ) {
 
+	ResetMapLoading();
+	
 	PMem_Init();
 	DB_Init();
 

@@ -278,7 +278,7 @@ void SND_ShutdownChannels()
 {
 }
 
-void __cdecl CG_TraceCapsule(struct trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentMask)
+void __cdecl CG_TraceCapsule(struct trace_s *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentMask)
 {
 
 }
