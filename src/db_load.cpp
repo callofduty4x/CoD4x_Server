@@ -194,6 +194,7 @@ void *DB_XAssetPool[ASSET_TYPE_COUNT];
 extern "C"{
   void DB_SaveSounds();
   void DB_SaveDObjs();
+  void DB_SyncExternalAssets();
   //void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
   void DB_LoadSounds();
   void __cdecl Load_SndAliasCustom(snd_alias_list_t **var);
@@ -1891,6 +1892,7 @@ void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int syn
         if ( !unloadedZone )
         {
             unloadedZone = 1;
+			DB_SyncExternalAssets( );
             DB_ArchiveAssets( );
             Sys_EnterCriticalSection(CRITSECT_DBHASH);
         }
@@ -1901,6 +1903,7 @@ void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int syn
 
   if ( unloadedZone )
   {
+    DB_FreeUnusedResources();
     for ( j = 0; j < zoneCount; ++j )
     {
       DB_UnloadXAssetsMemoryForZone(zoneInfo[j].freeFlags, 64);
@@ -1983,6 +1986,7 @@ void __cdecl DB_ShutdownXAssets()
   int i, zh;
 
   DB_SyncXAssets();
+  DB_SyncExternalAssets();
   Sys_EnterCriticalSection(CRITSECT_DBHASH);
   for ( i = g_zoneCount - 1; i >= 0; --i )
   {
