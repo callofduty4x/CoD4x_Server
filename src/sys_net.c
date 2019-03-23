@@ -371,8 +371,13 @@ char *NET_ErrorStringMT( char* buf, int size ) {
 #ifdef _WIN32
 	Q_strncpyz(buf,NET_ErrorString(), size);
 #else
+
+#ifdef __BSD__
+	strerror_r(socketError, buf, size); //strerror_r() is broken with some versions of libc6
+#else
 	__xpg_strerror_r(socketError, buf, size);
-//	strerror_r(socketError, buf, size); //strerror_r() is broken with some versions of libc6
+#endif
+
 #endif
 	return buf;
 }

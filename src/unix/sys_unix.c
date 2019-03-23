@@ -545,17 +545,6 @@ void Sys_SleepUSec(int usec)
 	usleep(usec);
 }
 
-/*
-==================
-Sys_Backtrace
-==================
-*/
-
-int Sys_Backtrace(void** buffer, int size)
-{
-    return backtrace(buffer, size);
-}
-
 void Sys_EventLoop()
 {
 
@@ -1184,18 +1173,6 @@ HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char
   return (HANDLE)h;
 }
 
-
-void Sys_SetThreadName(threadid_t tid, const char* name)
-{
-    pthread_t ti;
-    if(tid == -1)
-    {
-        ti = pthread_self();
-    }else{
-        ti = tid;
-    }
-    pthread_setname_np(ti, name);
-}
 
 pthread_key_t g_dwTlsKey;
 
