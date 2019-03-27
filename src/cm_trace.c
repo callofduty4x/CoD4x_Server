@@ -66,3 +66,4 @@ qboolean CM_TraceBox(TraceExtents *extents, const float *mins, const float *maxs
   }
   return qfalse;
 }
+

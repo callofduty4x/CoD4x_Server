@@ -40,14 +40,13 @@ If you have questions concerning this license or the applicable additional terms
 #include "l_bsp_q2.h"
 #include "l_bsp_q3.h"
 #include "l_bsp_sin.h"
+#include "l_bsp_iw3.h"
 #include "l_mem.h"
 #include "..\botlib\aasfile.h"         //aas_bbox_t
 #include "aas_store.h"       //AAS_MAX_BBOXES
 #include "aas_cfg.h"
 #include "../q_math.h"
 #include "../game/surfaceflags.h"
-#include "db_load.h"
-#include "../physicalmemory.h"
 
 
 #define Sign( x )     ( x < 0 ? 1 : 0 )
@@ -1304,10 +1303,15 @@ int LoadMapFromBSP( struct quakefile_s *qf ) {
 	idheader.ident = LittleLong( idheader.ident );
 	idheader.version = LittleLong( idheader.version );
 	//Quake3 BSP file
-	if ( idheader.ident == Q3_BSP_IDENT && idheader.version == Q3_BSP_VERSION ) {
+
+	if(idheader.ident == IW_FF_IDENT && idheader.version == IW3_FF_VERSION)
+	{
+		IW3_LoadMapFromFastfile( qf );
+	}
+	else if ( idheader.ident == Q3_BSP_IDENT && idheader.version == Q3_BSP_VERSION ) {
 		ResetMapLoading();
-		Q3_LoadMapFromBSP( qf );
-		Q3_FreeMaxBSP();
+//		Q3_LoadMapFromBSP( qf );
+//		Q3_FreeMaxBSP();
 	} //end if
 	  //Quake2 BSP file
 	else if ( idheader.ident == Q2_BSPHEADER && idheader.version == Q2_BSPVERSION ) {
@@ -1343,25 +1347,3 @@ int LoadMapFromBSP( struct quakefile_s *qf ) {
 	return true;
 } //end of the function LoadMapFromBSP
 
-
-int LoadMapFromFastFile( struct quakefile_s *qf ) {
-
-	ResetMapLoading();
-	
-	PMem_Init();
-	DB_Init();
-
-	if(qf == NULL){
-		return false;
-	}
-
-    char *g_fileBuf = (char*)malloc(DBFILE_BUFFER_SIZE);
-
-	//filename, flags, buffer 
-    if ( !DB_TryLoadXFileInternal(qf->filename, 0, g_fileBuf) )
-    {
-
-    }
-    free(g_fileBuf);
-	return true;
-}

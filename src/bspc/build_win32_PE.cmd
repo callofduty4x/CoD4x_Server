@@ -1,7 +1,11 @@
 @echo off
 
 echo Compiling C-code...
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c aas_map.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c l_bsp_iw3.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c map_iw3.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c map.c
+gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c cm_patch.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/inflate.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/adler32.c
 gcc -m32 -Wall -O0 -g -fno-omit-frame-pointer -march=nocona -D WINVER=0x501 -DBSPC -c ../zlib/crc32.c
@@ -70,9 +74,7 @@ nasm -f win32 ../asmsource/_cm_trace.asm --prefix _ -o_cm_trace.o
 nasm -f win32 ../asmsource/_cm_mesh.asm --prefix _ -o_cm_mesh.o
 nasm -f win32 asmsource/_db_load.asm --prefix _ -o_db_load.o
 nasm -f win32 asmsource/_db_registry.asm --prefix _ -o_db_registry.o
-nasm -f win32 asmsource/_com_memory.asm --prefix _ -o_com_memory.o
 nasm -f win32 asmsource/_db_assetnames.asm --prefix _ -o_db_assetnames.o
-nasm -f win32 asmsource/_com_bsp.asm --prefix _ -o_com_bsp.o
 
 echo Linking...
 gcc -m32 -g -Wl,--nxcompat -o bspc.exe *.o -static-libgcc -static -lstdc++ -lws2_32

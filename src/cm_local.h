@@ -8,7 +8,7 @@
 
 #define BOX_MODEL_HANDLE 4095
 #define CAPSULE_MODEL_HANDLE BOX_MODEL_HANDLE
-
+#define SURFACE_CLIP_EPSILON    ( 0.125 )
 
 #pragma pack(push, 2)
 typedef struct cbrushside_s

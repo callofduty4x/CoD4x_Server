@@ -68,7 +68,6 @@ void __cdecl Com_InitHunkMemory(void);
 void __cdecl Hunk_InitDebugMemory(void);
 void __cdecl Hunk_ClearTempMemory(void);
 void __cdecl Hunk_ClearTempMemoryHigh(void);
-void __cdecl Hunk_Clear();
 void* __cdecl Hunk_AllocateTempMemory(int size);
 void* __cdecl Hunk_AllocateTempMemoryHigh(int size);
 void __cdecl Hunk_ResetDebugMem();
@@ -83,7 +82,12 @@ void Z_FreeTags( int tag );
 void Com_InitSmallZoneMemory( void );
 void Com_InitZoneMemory( void );
 char* Z_MallocGarbage(int, const char*, int);
+
+#ifndef BSPC
 void* Hunk_Alloc(int size, const char* name, int type);
+void __cdecl Hunk_Clear();
+#endif
+
 void __cdecl Hunk_UserDestroy(struct HunkUser *user);
 void *__cdecl Hunk_AllocInternal(int size);
 #define L_Malloc malloc

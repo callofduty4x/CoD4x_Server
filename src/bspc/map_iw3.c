@@ -41,9 +41,9 @@ If you have questions concerning this license or the applicable additional terms
 #include "aas_store.h"       //AAS_MAX_BBOXES
 #include "aas_cfg.h"
 #include "aas_map.h"         //AAS_CreateMapBrushes
-#include "l_bsp_q3.h"
-#include "..\qcommon\cm_patch.h"
+#include "l_bsp_iw3.h"
 #include "..\game\surfaceflags.h"
+#include "cm_patch.h"
 
 #define NODESTACKSIZE       1024
 //===========================================================================
@@ -54,7 +54,16 @@ If you have questions concerning this license or the applicable additional terms
 //===========================================================================
 void PrintContents( int contents );
 
-int Q3_BrushContents( mapbrush_t *b ) {
+#define NODESTACKSIZE       1024
+
+int nodestack[NODESTACKSIZE];
+int *nodestackptr;
+int nodestacksize = 0;
+int brushmodelnumbers[MAX_MAPFILE_BRUSHES];
+int dbrushleafnums[MAX_MAPFILE_BRUSHES];
+int dplanes2mapplanes[MAX_MAPFILE_PLANES];
+
+int IW3_BrushContents( mapbrush_t *b ) {
 	int contents, i, mixed, hint;
 	side_t *s;
 
@@ -143,12 +152,12 @@ int Q3_BrushContents( mapbrush_t *b ) {
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-void Q3_DPlanes2MapPlanes( void ) {
+void IW3_DPlanes2MapPlanes( void ) {
 	int i;
 
-	for ( i = 0; i < q3_numplanes; i++ )
+	for ( i = 0; i < iw3_numplanes; i++ )
 	{
-		dplanes2mapplanes[i] = FindFloatPlane( q3_dplanes[i].normal, q3_dplanes[i].dist );
+		dplanes2mapplanes[i] = FindFloatPlane( iw3_dplanes[i].normal, iw3_dplanes[i].dist );
 	} //end for
 } //end of the function Q3_DPlanes2MapPlanes
 //===========================================================================
@@ -157,7 +166,7 @@ void Q3_DPlanes2MapPlanes( void ) {
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
+void IW3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 	mapbrush_t *b;
 	int i, k, n;
 	side_t *side, *s2;
@@ -174,12 +183,12 @@ void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 	b->original_sides = &brushsides[nummapbrushsides];
 	b->entitynum = mapent - entities;
 	b->brushnum = nummapbrushes - mapent->firstbrush;
-	b->leafnum = dbrushleafnums[bspbrush - q3_dbrushes];
+	b->leafnum = dbrushleafnums[bspbrush - iw3_dbrushes];
 
 	for ( n = 0; n < bspbrush->numSides; n++ )
 	{
 		//pointer to the bsp brush side
-		bspbrushside = &q3_dbrushsides[bspbrush->firstSide + n];
+		bspbrushside = &iw3_dbrushsides[bspbrush->firstSide + n];
 
 		if ( nummapbrushsides >= MAX_MAPFILE_BRUSHSIDES ) {
 			Error( "MAX_MAPFILE_BRUSHSIDES" );
@@ -187,7 +196,7 @@ void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 		  //pointer to the map brush side
 		side = &brushsides[nummapbrushsides];
 		//if the BSP brush side is textured
-		if ( q3_dbrushsidetextured[bspbrush->firstSide + n] ) {
+		if ( iw3_dbrushsidetextured[bspbrush->firstSide + n] ) {
 			side->flags |= SFL_TEXTURED | SFL_VISIBLE;
 		} else { side->flags &= ~SFL_TEXTURED;}
 		//NOTE: all Quake3 sides are assumed textured
@@ -199,15 +208,15 @@ void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 		} //end if
 		else
 		{
-			side->contents = q3_dshaders[bspbrushside->shaderNum].contentFlags;
-			side->surf = q3_dshaders[bspbrushside->shaderNum].surfaceFlags;
-			if ( strstr( q3_dshaders[bspbrushside->shaderNum].shader, "common/hint" ) ) {
+			side->contents = iw3_dshaders[bspbrushside->shaderNum].contentFlags;
+			side->surf = iw3_dshaders[bspbrushside->shaderNum].surfaceFlags;
+			if ( strstr( iw3_dshaders[bspbrushside->shaderNum].shader, "common/hint" ) ) {
 				//Log_Print("found hint side\n");
 				side->surf |= SURF_HINT;
 			} //end if
 
 			// Ridah, mark ladder brushes
-			if ( strstr( q3_dshaders[bspbrushside->shaderNum].shader, "common/ladder" ) ) {
+			if ( strstr( iw3_dshaders[bspbrushside->shaderNum].shader, "common/ladder" ) ) {
 				//Log_Print("found ladder side\n");
 				side->contents |= CONTENTS_LADDER;
 				contentFlags |= CONTENTS_LADDER;
@@ -217,7 +226,7 @@ void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 		} //end else
 		  //
 
-		if ( !( strstr( q3_dshaders[bspbrushside->shaderNum].shader, "common/slip" ) ) ) {
+		if ( !( strstr( iw3_dshaders[bspbrushside->shaderNum].shader, "common/slip" ) ) ) {
 			side->flags |= SFL_VISIBLE;
 		} else if ( side->surf & SURF_NODRAW )     {
 			side->flags |= SFL_TEXTURED | SFL_VISIBLE;
@@ -242,7 +251,7 @@ void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 		} //end if*/
 
 		//ME: get a plane for this side
-		bspplane = &q3_dplanes[bspbrushside->planeNum];
+		bspplane = &iw3_dplanes[bspbrushside->planeNum];
 		planenum = FindFloatPlane( bspplane->normal, bspplane->dist );
 		//
 		// see if the plane has been used already
@@ -296,7 +305,7 @@ void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 
 	// get the content for the entire brush
 	//Quake3 bsp brushes don't have a contents
-	b->contents = q3_dshaders[bspbrush->shaderNum].contentFlags | contentFlags;
+	b->contents = iw3_dshaders[bspbrush->shaderNum].contentFlags | contentFlags;
 	// Ridah, Wolf has ladders (if we call Q3_BrushContents(), we'll get the solid area bug
 	b->contents &= ~( /*CONTENTS_LADDER|*/ CONTENTS_FOG | CONTENTS_STRUCTURAL );
 	//b->contents = Q3_BrushContents(b);
@@ -401,7 +410,7 @@ void Q3_BSPBrushToMapBrush( q3_dbrush_t *bspbrush, entity_t *mapent ) {
 } //end of the function Q3_BSPBrushToMapBrush
 //===========================================================================
 //===========================================================================
-void Q3_ParseBSPBrushes( entity_t *mapent ) {
+void IW3_ParseBSPBrushes( entity_t *mapent ) {
 	int i;
 
 	/*
@@ -409,22 +418,22 @@ void Q3_ParseBSPBrushes( entity_t *mapent ) {
 	//BSP model used by this entity
 	Q3_SetBrushModelNumbers(mapent);
 	//now parse all the brushes with the correct mapent->modelnum
-	for (i = 0; i < q3_numbrushes; i++)
+	for (i = 0; i < iw3_numbrushes; i++)
 	{
 		if (brushmodelnumbers[i] == mapent->modelnum)
 		{
-			Q3_BSPBrushToMapBrush(&q3_dbrushes[i], mapent);
+			Q3_BSPBrushToMapBrush(&iw3_dbrushes[i], mapent);
 		} //end if
 	} //end for
 	*/
-	for ( i = 0; i < q3_dmodels[mapent->modelnum].numBrushes; i++ )
+	for ( i = 0; i < iw3_dmodels[mapent->modelnum].numBrushes; i++ )
 	{
-		Q3_BSPBrushToMapBrush( &q3_dbrushes[q3_dmodels[mapent->modelnum].firstBrush + i], mapent );
+		IW3_BSPBrushToMapBrush( &iw3_dbrushes[iw3_dmodels[mapent->modelnum].firstBrush + i], mapent );
 	} //end for
 } //end of the function Q3_ParseBSPBrushes
 //===========================================================================
 //===========================================================================
-qboolean Q3_ParseBSPEntity( int entnum ) {
+qboolean IW3_ParseBSPEntity( int entnum ) {
 	entity_t *mapent;
 	char *model;
 	int startbrush, startsides;
@@ -456,7 +465,7 @@ qboolean Q3_ParseBSPEntity( int entnum ) {
 	  //entities that aren't using a BSP model)
 	if ( mapent->modelnum >= 0 ) {
 		//parse the bsp brushes
-		Q3_ParseBSPBrushes( mapent );
+		IW3_ParseBSPBrushes( mapent );
 	} //end if
 	  //
 	  //the origin of the entity is already taken into account
@@ -494,14 +503,14 @@ void AAS_CreateCurveBrushes( void ) {
 
 	qprintf( "nummapbrushsides = %d\n", nummapbrushsides );
 	mapent = &entities[0];
-	for ( i = 0; i < q3_numDrawSurfaces; i++ )
+	for ( i = 0; i < iw3_numDrawSurfaces; i++ )
 	{
-		surface = &q3_drawSurfaces[i];
+		surface = &iw3_drawSurfaces[i];
 		if ( !surface->patchWidth ) {
 			continue;
 		}
 		//if the curve is not solid
-		if ( !( q3_dshaders[surface->shaderNum].contentFlags & ( CONTENTS_SOLID | CONTENTS_PLAYERCLIP ) ) ) {
+		if ( !( iw3_dshaders[surface->shaderNum].contentFlags & ( CONTENTS_SOLID | CONTENTS_PLAYERCLIP ) ) ) {
 			//Log_Print("skipped non-solid curve\n");
 			continue;
 		} //end if
@@ -513,7 +522,7 @@ void AAS_CreateCurveBrushes( void ) {
 			Error( "ParseMesh: MAX_PATCH_VERTS" );
 		} //end if
 
-		dv_p = q3_drawVerts + surface->firstVert;
+		dv_p = iw3_drawVerts + surface->firstVert;
 		for ( j = 0 ; j < c ; j++, dv_p++ )
 		{
 			points[j][0] = dv_p->xyz[0];
@@ -634,17 +643,17 @@ void AAS_CreateCurveBrushes( void ) {
 //===========================================================================
 void AAS_ExpandMapBrush( mapbrush_t *brush, vec3_t mins, vec3_t maxs );
 
-void Q3_LoadMapFromBSP( struct quakefile_s *qf ) {
+void IW3_LoadMapFromBSP( struct quakefile_s *qf ) {
 	int i;
 	vec3_t mins = {-1,-1,-1}, maxs = {1, 1, 1};
 
 	Log_Print( "-- Q3_LoadMapFromBSP --\n" );
 	//loaded map type
-	loadedmaptype = MAPTYPE_QUAKE3;
+	loadedmaptype = MAPTYPE_IW3;
 
 	Log_Print( "Loading map from %s...\n", qf->filename );
 	//load the bsp file
-	Q3_LoadBSPFile( qf );
+	IW3_LoadFastfile( qf );
 
 	//create an index from bsp planes to map planes
 	//DPlanes2MapPlanes();
@@ -655,11 +664,11 @@ void Q3_LoadMapFromBSP( struct quakefile_s *qf ) {
 	nummapbrushsides = 0;
 	num_entities = 0;
 
-	Q3_ParseEntities();
+	IW3_ParseEntities();
 	//
 	for ( i = 0; i < num_entities; i++ )
 	{
-		Q3_ParseBSPEntity( i );
+		IW3_ParseBSPEntity( i );
 	} //end for
 
 	AAS_CreateCurveBrushes();
@@ -695,13 +704,34 @@ void Q3_LoadMapFromBSP( struct quakefile_s *qf ) {
 		  Log_Print("\n");
 	  } //end for*/
 } //end of the function Q3_LoadMapFromBSP
+
+void IW3_LoadMapFromFastfile( struct quakefile_s *qf )
+{
+
+	Log_Print( "-- IW3_LoadMapFromFastfile --\n" );
+	Log_Print( "Loading map from %s...\n", qf->filename );
+
+	//load the bsp file
+	IW3_LoadFastfile( qf );
+
+	//loaded map type
+	loadedmaptype = MAPTYPE_IW3;
+
+
+
+
+	ResetMapLoading();
+
+	return;
+}
+
 //===========================================================================
 //
 // Parameter:				-
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void Q3_ResetMapLoading( void ) {
+void IW3_ResetMapLoading( void ) {
 	//reset for map loading from bsp
 	memset( nodestack, 0, NODESTACKSIZE * sizeof( int ) );
 	nodestackptr = NULL;

@@ -716,7 +716,7 @@ int main( int argc, char **argv ) {
 					Warning( "%s is probably not a Fastfile\n", qf->origname );
 				}
 				//
-				LoadMapFromFastFile( qf );
+				LoadMapFromBSP( qf );
 				//write the map file
 				WriteMapFile( filename );
 			}     //end for
@@ -737,7 +737,7 @@ int main( int argc, char **argv ) {
 				}
 				//set before map loading
 				create_aas = 1;
-				LoadMapFromFastFile( qf );
+				LoadMapFromBSP( qf );
 				//create the AAS file
 				AAS_Create( filename );
 				//if it's a Quake3 map calculate the reachabilities and clusters
@@ -785,7 +785,7 @@ int main( int argc, char **argv ) {
 					Log_Print( "creating %s...\n", filename );
 					//set before map loading
 					create_aas = 1;
-					LoadMapFromFastFile( qf );
+					LoadMapFromBSP( qf );
 					//create the AAS file
 					AAS_Create( filename );
 				}     //end else
@@ -839,7 +839,7 @@ int main( int argc, char **argv ) {
 					Log_Print( "creating %s...\n", filename );
 					//set before map loading
 					create_aas = 1;
-					LoadMapFromFastFile( qf );
+					LoadMapFromBSP( qf );
 					//create the AAS file
 					AAS_Create( filename );
 					//if it's a Quake3 map calculate the reachabilities and clusters

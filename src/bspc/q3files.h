@@ -207,13 +207,16 @@ typedef struct {
 
 #define Q3_BSP_IDENT    ( ( 'P' << 24 ) + ( 'S' << 16 ) + ( 'B' << 8 ) + 'I' )
 // little-endian "IBSP"
+#define IW_FF_IDENT    ( ( 'f' << 24 ) + ( 'f' << 16 ) + ( 'W' << 8 ) + 'I' )
+// little-endian "IWff"
 
 #define Q3_BSP_VERSION          47
-
+#define IW3_FF_VERSION			( ( '0' << 24 ) + ( '0' << 16 ) + ( '1' << 8 ) + 'u' )
 
 // there shouldn't be any problem with increasing these values at the
 // expense of more memory allocation in the utilities
 #define Q3_MAX_MAP_MODELS       0x400
+#define IW3_MAX_MAP_MODELS      0x1000
 #define Q3_MAX_MAP_BRUSHES      0x8000
 #define Q3_MAX_MAP_ENTITIES 0x800
 #define Q3_MAX_MAP_ENTSTRING    0x10000

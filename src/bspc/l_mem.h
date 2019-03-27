@@ -55,4 +55,5 @@ void FreeMemory( void *ptr );
 int MemorySize( void *ptr );
 void PrintMemorySize( unsigned long size );
 int TotalAllocatedMemory( void );
+void *Hunk_Alloc( int size );
 

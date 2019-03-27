@@ -284,6 +284,8 @@ extern int map_numtexinfo;
 #define MAPTYPE_QUAKE3      3
 #define MAPTYPE_HALFLIFE    4
 #define MAPTYPE_SIN         5
+#define MAPTYPE_IW3         6
+
 
 extern int nodestack[NODESTACKSIZE];
 extern int *nodestackptr;
@@ -356,6 +358,12 @@ void Q1_LoadMapFromBSP( char *filename, int offset, int length );
 void Q3_ResetMapLoading( void );
 //loads a map from a Quake3 bsp file
 void Q3_LoadMapFromBSP( struct quakefile_s *qf );
+
+//=============================================================================
+// map_iw3.c
+//=============================================================================
+void IW3_LoadMapFromFastfile( struct quakefile_s *qf );
+
 
 //=============================================================================
 // map_sin.c

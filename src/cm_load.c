@@ -4,6 +4,7 @@
 #include "xassets.h"
 #include "qcommon_mem.h"
 
+
 cbrush_t g_box_brush[NUMTHREADS];
 cmodel_t g_box_model[NUMTHREADS];
 clipMap_t cm;
@@ -136,6 +137,7 @@ void __cdecl CM_LoadMapData(const char *name)
 #endif
 
 
+
 void __cdecl CM_InitThreadData(int threadContext)
 {
   TraceThreadInfo *traceThreadInfo;
@@ -143,7 +145,12 @@ void __cdecl CM_InitThreadData(int threadContext)
 
   traceThreadInfo = &g_traceThreadInfo[threadContext];
   traceThreadInfo->checkcount.global = 0;
+#ifndef BSPC
   traceThreadInfo->checkcount.partitions = (int *)Hunk_Alloc(4 * cm.partitionCount, "CM_InitThreadData", 29);
+#else
+	void* Hunk_Alloc(int size);
+  traceThreadInfo->checkcount.partitions = (int *)Hunk_Alloc(4 * cm.partitionCount);
+#endif
   traceThreadInfo->box_brush = &g_box_brush[threadContext];
   memcpy(traceThreadInfo->box_brush, cm.box_brush, sizeof(cbrush_t));
   traceThreadInfo->box_model = &g_box_model[threadContext];
@@ -160,6 +167,7 @@ void CM_InitAllThreadData()
     CM_InitThreadData(workerIndex);
   }
 }
+
 
 void __cdecl CM_LoadMap(const char *name, int *checksum)
 {

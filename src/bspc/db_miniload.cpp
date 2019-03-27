@@ -184,8 +184,6 @@ void *DB_XAssetPool[ASSET_TYPE_COUNT];
 
 
 extern "C"{
-  //void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
-  void DB_LoadSounds();
   void __cdecl Load_SndAliasCustom(snd_alias_list_t **var);
   void Mark_XAsset();
   XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *newEntry, int allowOverride);

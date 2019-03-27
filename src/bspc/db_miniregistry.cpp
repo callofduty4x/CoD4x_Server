@@ -10,6 +10,7 @@
 
 
 class IDirect3DIndexBuffer9;
+ComWorld comWorld;
 
 extern "C"{
 
@@ -57,86 +58,6 @@ void __cdecl Load_PicmipWater(struct water_t **water)
 {
 }
 
-void *__cdecl R_AllocStaticVertexBuffer(IDirect3DVertexBuffer9 **a1, int a2)
-{
-	return NULL;
-}
-
-void R_ShowDirtyDiscError()
-{
-	Com_PrintError(CON_CHANNEL_FILES,"Error reading fastfile?\n");
-}
-
-void *__cdecl R_AllocStaticIndexBuffer(IDirect3DIndexBuffer9 **ib, int sizeInBytes)
-{
-	return NULL;
-}
-
-void __cdecl R_SyncRenderThread()
-{
-
-}
-
-
-void __cdecl R_FinishStaticVertexBuffer(IDirect3DVertexBuffer9 *vb)
-{
-}
-
-void __cdecl R_FinishStaticIndexBuffer(IDirect3DIndexBuffer9 *ib)
-{
-}
-
-void __cdecl R_EnumImages(void (__cdecl *func)(union XAssetHeader, void *), void *data)
-{
-}
-
-void __cdecl R_EnumMaterials(void (__cdecl *func)(union XAssetHeader, void *), void *data)
-{
-}
-
-void __cdecl R_EnumTechniqueSets(void (__cdecl *func)(union XAssetHeader, void *), void *data)
-{
-}
-
-void __cdecl R_ShutdownStreams()
-{
-}
-
-void __cdecl RB_UnbindAllImages()
-{
-}
-
-void __cdecl R_DelayLoadImage(union XAssetHeader header)
-{
-}
-
-void __cdecl R_ClearAllStaticModelCacheRefs()
-{
-}
-
-void __cdecl R_UnloadWorld()
-{
-}
-
-void __cdecl RB_ClearPixelShader()
-{
-}
-
-void __cdecl RB_ClearVertexShader()
-{
-}
-
-void __cdecl RB_ClearVertexDecl()
-{
-}
-
-void __cdecl DB_LoadSounds()
-{
-}
-
-void __cdecl DB_SaveSounds()
-{
-}
 
 #include <windows.h>
 
@@ -180,60 +101,6 @@ DWORD __cdecl _GetLastError()
     return GetLastError();
 }
 
-void __cdecl Sys_OutOfMemError(const char* filename, int line)
-{
-	Error("System is out of memory! Filename: %s, Line: %d\n", filename, line);
-}
-
-void __cdecl Sys_OutOfMemErrorInternal(const char* filename, int line)
-{
-	Sys_OutOfMemError(filename, line);
-}
-
-
-void __cdecl XAnimFree(int a1)
-{
-}
-
-void __cdecl XAnimFreeList(int *a1)
-{
-}
-
-void __cdecl XModelPartsFree(unsigned char *a1)
-{
-}
-
-/*
-================
-return a hash value for the filename
-================
-*/
-long FS_HashFileName( const char *fname, int hashSize ) {
-	int i;
-	long hash;
-	char letter;
-
-	hash = 0;
-	i = 0;
-	while ( fname[i] != '\0' ) {
-		letter = tolower( fname[i] );
-		if ( letter == '.' ) {
-			break;                          // don't include extension
-		}
-		if ( letter == '\\' ) {
-			letter = '/';                   // damn path names
-		}
-		if ( letter == PATH_SEP ) {
-			letter = '/';                           // damn path names
-		}
-		hash += (long)( letter ) * ( i + 119 );
-		i++;
-	}
-	hash = ( hash ^ ( hash >> 10 ) ^ ( hash >> 20 ) );
-	hash &= ( hashSize - 1 );
-	return hash;
-}
-
 void Com_Memset(void* ptr, byte s, int count)
 {
   memset(ptr, s, count);
@@ -275,33 +142,6 @@ void QDECL Com_PrintWarning( conChannel_t channel, const char *fmt, ... ) {
   printf("%s", msg);
 }
 
-DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
-{
-	return InterlockedExchangeAdd((LONG volatile *)Addend, value);
-}
-
-DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend)
-{
-	return InterlockedDecrement((LONG volatile *)Addend);
-}
-DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend)
-{
-	return InterlockedIncrement((LONG volatile *)Addend);
-}
-DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
-{
-	return InterlockedCompareExchange((LONG volatile *)Destination, Exchange, Comparand);
-}
-
-void Sys_SleepMSec(int msec)
-{
-    Sleep(msec);
-}
-
-void Sys_Sleep(int msec)
-{
-    Sys_SleepMSec(msec);
-}
 
 void QDECL Sys_Error( const char *fmt, ... ) {
 	va_list		argptr;
@@ -322,27 +162,6 @@ void QDECL Sys_Error( const char *fmt, ... ) {
 int Sys_Milliseconds( void ) {
 	return clock() * 1000 / CLOCKS_PER_SEC;
 } //end of the function Sys_MilliSeconds
-
-void Sys_WakeDatabase()
-{
-//  Sys_ResetEvent(databaseCompletedEvent);
-}
-
-void Sys_WakeDatabase2()
-{
-//  Sys_ResetEvent(databaseCompletedEvent2);
-}
-
-void __cdecl Sys_DatabaseCompleted2()
-{
-//  Sys_SetEvent(databaseCompletedEvent2);
-}
-
-void __cdecl Sys_NotifyDatabase()
-{
-//  Sys_SetEvent(wakeDatabaseEvent);
-}
-
 
 int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...)
 {
@@ -378,6 +197,12 @@ int Q_strncmp (const char *s1, const char *s2, int n) {
 	return 0;		// strings are equal
 }
 
+
+void __cdecl Sys_OutOfMemError(const char* filename, int line)
+{
+	Error("System is out of memory! Filename: %s, Line: %d\n", filename, line);
+}
+
 void __cdecl Mark_SndCurveAsset(void* asset){}
 void __cdecl Mark_GfxImageAsset(void* asset){}
 void __cdecl Mark_LightDefAsset(void* asset){}
@@ -407,9 +232,6 @@ void __cdecl Mark_MaterialAsset(void* asset){}
 void Sys_EnterCriticalSection(){};
 void Sys_LeaveCriticalSection(){};
 
-
-void Q3_LoadMapFromBSP( struct quakefile_s *qf ){};
-void Q3_FreeMaxBSP(){};
 
 #define MAX_MAP_TEXINFO     8192
 
