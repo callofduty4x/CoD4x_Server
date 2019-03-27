@@ -266,6 +266,8 @@ extern "C"{
 
 XModel *__cdecl XModelPrecache(const char *name, void *(__cdecl *Alloc)(int), void *(__cdecl *AllocColl)(int));
 int __cdecl XModelNumBones(struct XModel *model);
+int __cdecl XModelGetStaticBounds(XModel *model, float (*axis)[3], float *mins, float *maxs);
+
 #ifdef __cplusplus
 }
 #endif

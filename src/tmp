@@ -1,0 +1,18 @@
+
+void CM_DebugCLeafBrushNodes()
+{
+    int i;
+    FS_Printf( f, "--------------- CLeafBrushNodes ------------------\n");
+
+    uint32_t content = 0;
+    for(i = 0; i < cm.leafbrushNodesCount; ++i)
+    {
+        FS_Printf( f, "Count: %d cont: 0x%08x\n", cm.leafbrushNodes[i].leafBrushCount, cm.leafbrushNodes[i].contents);
+        content |= cm.leafbrushNodes[i].contents;
+    }
+    FS_Printf( f, "\n");
+    FS_Printf( f, "used content flags: 0x%08x\n", content);
+    FS_Printf( f, "\n");
+    FS_Printf( f, "-------------------------------------------------\n");
+}
+

@@ -193,6 +193,7 @@ void MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out);
 void Vec3Lerp(const float *start, const float *end, const float fraction, float *endpos);
 double Vec2DistanceSq(const float *v0, const float *v1);
 void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out);
+void __cdecl MatrixTranspose(const float (*in)[3], float (*out)[3]);
 
 #include <xmmintrin.h>
 

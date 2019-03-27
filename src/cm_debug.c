@@ -187,7 +187,28 @@ void CM_DebugDoAll_f()
 
 }
 
+
+void CM_ReadBrushBsp_f()
+{
+    unsigned int count;
+    int i;
+
+    struct dbrush_t* d = (struct dbrush_t*)Com_GetBspLump(8, 4, &count);
+
+
+
+    for(i = 0; i < count; ++i)
+    {
+        Com_Printf(CON_CHANNEL_SYSTEM, "Mat: %d, numSides: %d\n", d->materialNum, d->numSides);
+        ++d;
+    }
+
+
+}
+
+
 void CM_DebugInit()
 {
     Cmd_AddCommand("cm_printall", CM_DebugDoAll_f);
+    Cmd_AddCommand("readbrushbsp", CM_ReadBrushBsp_f);
 }

@@ -29,7 +29,6 @@
 	global Com_SaveLump
 	global Com_LoadWorld
 	global Com_UnloadBsp
-	global Com_BspHasLump
 	global Com_CleanupBsp
 	global Com_GetBspLump
 	global Com_EntityString
@@ -722,18 +721,6 @@ Com_EntityString_10:
 	pop ebx
 	pop ebp
 	ret
-
-
-;Com_GetBspVersion()
-Com_GetBspVersion:
-	push ebp
-	mov ebp, esp
-	mov eax, [comBspGlob+0x40]
-	mov eax, [eax+0x4]
-	pop ebp
-	ret
-	nop
-	add [eax], al
 
 
 ;Com_ShutdownWorld()
