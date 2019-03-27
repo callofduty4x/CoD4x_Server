@@ -149,7 +149,6 @@
 	global gFs
 	global caseCount
 	global opcode
-	global error_message
 	global VM_CancelNotifyInternal
 	global VM_ArchiveStack
 	global VM_TerminateStack

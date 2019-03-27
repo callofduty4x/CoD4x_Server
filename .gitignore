@@ -13,6 +13,8 @@
 
 *.def
 
+*.ff
+*.iwd
 
 #Git files
 

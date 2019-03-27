@@ -62,8 +62,6 @@
 	global SEH_LocalizeTextMessage
 	global SEH_SafeTranslateString
 	global SEH_VerifyLanguageSelection
-	global loc_warnings
-	global loc_warningsAsErrors
 	global loc_language
 	global loc_forceEnglish
 	global loc_translate

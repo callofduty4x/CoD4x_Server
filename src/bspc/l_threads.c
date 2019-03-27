@@ -264,7 +264,7 @@ void ThreadSemaphoreIncrease( int count ) {
 // Changes Globals:		-
 //===========================================================================
 void RunThreadsOn( int workcnt, qboolean showpacifier, void ( *func )(int) ) {
-	int threadid[MAX_THREADS];
+	unsigned long threadid[MAX_THREADS];
 	HANDLE threadhandle[MAX_THREADS];
 	int i;
 	int start, end;
@@ -358,7 +358,7 @@ void AddThread( void ( *func )(int) ) {
 			(LPTHREAD_START_ROUTINE)func,           // LPTHREAD_START_ROUTINE lpStartAddr,
 			(LPVOID) thread->threadid,                  // LPVOID lpvThreadParm,
 			0,                              // DWORD fdwCreate,
-			&thread->id );
+			(unsigned long*)&thread->id );
 
 		//add the thread to the end of the list
 		thread->next = NULL;

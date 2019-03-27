@@ -545,17 +545,6 @@ void Sys_SleepUSec(int usec)
 	usleep(usec);
 }
 
-/*
-==================
-Sys_Backtrace
-==================
-*/
-
-int Sys_Backtrace(void** buffer, int size)
-{
-    return backtrace(buffer, size);
-}
-
 void Sys_EventLoop()
 {
 
@@ -922,12 +911,22 @@ BOOL __cdecl _ReadFileEx(HANDLE handle, void *lpBuffer, int nNumberOfBytesToRead
   }
   if ( fseek(hObject->fh, lpOverlapped->Offset, 0) )
   {
-    _SetLastError(38);
+    if(feof(hObject->fh))
+    {
+        _SetLastError(38); //EOF error
+    }else{
+        _SetLastError(25); //Seek error
+    }
     return FALSE;
   }
-  if ( (signed int)fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh) <= 0 )
+  if((signed int)fread(lpBuffer, 1u, nNumberOfBytesToRead, hObject->fh) <= 0)
   {
-    _SetLastError(38);
+    if(feof(hObject->fh))
+    {
+        _SetLastError(38);
+    }else{
+        _SetLastError(30); //Read fault
+    }
     return FALSE;
   }
   return TRUE;
@@ -1174,18 +1173,6 @@ HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char
   return (HANDLE)h;
 }
 
-
-void Sys_SetThreadName(threadid_t tid, const char* name)
-{
-    pthread_t ti;
-    if(tid == -1)
-    {
-        ti = pthread_self();
-    }else{
-        ti = tid;
-    }
-    pthread_setname_np(ti, name);
-}
 
 pthread_key_t g_dwTlsKey;
 

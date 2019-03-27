@@ -42,16 +42,35 @@ typedef enum{
 }cvarType_t;
 
 
-typedef	union value_s{
-		float floatval;
-		float value;
+typedef struct{
 		int integer;
-		char* string;
-		byte boolean;
-		vec3_t vec3;
-		vec4_t vec4;
-	}value_t;
+		const char** strings;
+}EnumValueStr_t;
 
+typedef union{
+		float floatval;
+		int integer;
+		const char* string;
+		byte boolean;
+		vec4_t vec4;
+		vec3_t vec3;
+		vec2_t vec2;
+		ucolor_t color;
+		EnumValueStr_t enumval; /* For Cvar_Register and Cvar_ValidateNewVar only */
+}CvarValue;
+
+
+typedef struct{
+	union{
+		int imin;
+		float fmin;
+	};
+	union{
+		int imax;
+		float fmax;
+		const char** enumStr; //Not everywhere valid!
+	};
+}CvarLimits;
 
 
 typedef struct cvar_s {
@@ -70,6 +89,7 @@ typedef struct cvar_s {
 		vec3_t vec3;
 		vec4_t vec4;
 		ucolor_t color;
+		CvarValue current;
 	};
 	union{
 		float latchedFloatval;
@@ -80,6 +100,7 @@ typedef struct cvar_s {
 		vec3_t latchedVec3;
 		vec4_t latchedVec4;
 		ucolor_t latchedColor;
+		CvarValue latched;
 	};
 	union{
 		float resetFloatval;
@@ -90,16 +111,10 @@ typedef struct cvar_s {
 		vec3_t resetVec3;
 		vec4_t resetVec4;
 		ucolor_t resetColor;
+		CvarValue reset;
 	};
-	union{
-		int imin;
-		float fmin;
-	};
-	union{
-		int imax;
-		float fmax;
-		const char** enumStr;
-	};
+	CvarLimits limits;
+	
 	struct cvar_s *next;
 	struct cvar_s *hashNext;
 } cvar_t;

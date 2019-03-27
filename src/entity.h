@@ -278,8 +278,7 @@ typedef struct {
 	// ent->s.number == passEntityNum	(don't interact with self)
 	// ent->r.ownerNum == passEntityNum	(don't interact with your own missiles)
 	// entity[ent->r.ownerNum].r.ownerNum == passEntityNum	(don't interact with other missiles from owner)
-	uint16_t	ownerNum;	//0x154
-	uint16_t	pad3;
+  EntHandle ownerNum;
 	int		eventTime;
 } entityShared_t;
 
@@ -389,10 +388,10 @@ struct gentity_s {
 	int unlinkAfterEvent;
 	int clipmask;
 	int processedFrame;
-	struct gentity_s *parent;
+	EntHandle parent;
 	int nextthink;
 
-  	int health; /* 0x1A0 */
+  int health; /* 0x1A0 */
 	int maxHealth;
 	int damage;
 	int count;
@@ -419,6 +418,18 @@ struct gentity_s {
 }; /* Size: 0x274 */
 
 extern gentity_t g_entities[];
+
+
+struct tagInfo_s
+{
+  struct gentity_s *parent;
+  struct gentity_s *next;
+  uint16_t name;
+  uint16_t pad;
+  int index;
+  float axis[4][3];
+  float parentInvAxis[4][3];
+};
 
 
 /***************** Verified *******************************/

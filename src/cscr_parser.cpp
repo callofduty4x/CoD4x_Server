@@ -210,7 +210,7 @@ OpcodeLookup * Scr_GetPrevSourcePosOpcodeLookup(const char *codePos)
   high = gScrParserGlob.opcodeLookupLen - 1;
   while ( low <= high )
   {
-    middle = (high + low) >> 1;
+    middle = (high + low) / 2;
     if ( codePos < gScrParserGlob.opcodeLookup[middle].codePos )
     {
       high = middle - 1;
@@ -366,7 +366,7 @@ char *__cdecl Scr_ReadFile_FastFile(const char *filename, const char *extFilenam
 
   if ( useFastFile->boolean )
   {
-    rawfile = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE, extFilename).rawfile;
+    rawfile = DB_FindXAssetHeader(ASSET_TYPE_RAWFILE, extFilename, true, 100).rawfile;
     if ( rawfile )
     {
       sourceBuf = rawfile->buffer;

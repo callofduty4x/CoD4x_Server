@@ -31,15 +31,12 @@
 #include <stdbool.h>
 
 
-#define NUMTHREADS 2
-
-typedef int ThreadOwner;
 
 HANDLE databaseCompletedEvent;
 HANDLE databaseCompletedEvent2;
 HANDLE wakeDatabaseEvent;
 HANDLE resumedDatabaseEvent;
-ThreadOwner g_databaseThreadOwner;
+enum ThreadOwner g_databaseThreadOwner;
 threadid_t threadId[NUMTHREADS];
 #ifdef __WIN32
 HANDLE threadHandle[NUMTHREADS];
@@ -53,6 +50,7 @@ void (*threadFunc[NUMTHREADS])(unsigned int p);
 struct va_info_t va_info[NUMTHREADS];
 jmp_buf g_com_error[NUMTHREADS];
 TraceThreadInfo g_traceThreadInfo[NUMTHREADS];
+
 
 
 
@@ -352,7 +350,7 @@ void Sys_WakeDatabase()
   Sys_ResetEvent(databaseCompletedEvent);
 }
 
-void __cdecl Sys_SuspendDatabaseThread(ThreadOwner owner)
+void __cdecl Sys_SuspendDatabaseThread(enum ThreadOwner owner)
 {
   g_databaseThreadOwner = owner;
   Sys_ResetEvent(resumedDatabaseEvent);
@@ -364,7 +362,7 @@ void __cdecl Sys_DatabaseCompleted()
 }
 
 
-void __cdecl Sys_ResumeDatabaseThread(ThreadOwner to)
+void __cdecl Sys_ResumeDatabaseThread(enum ThreadOwner to)
 {
   g_databaseThreadOwner = 0;
   Sys_SetEvent(resumedDatabaseEvent);
@@ -377,7 +375,8 @@ void Sys_WakeDatabase2()
 
 qboolean __cdecl Sys_IsDatabaseReady2()
 {
-  return Sys_IsObjectSignaled(databaseCompletedEvent2) == 1;
+  bool signaled = Sys_IsObjectSignaled(databaseCompletedEvent2) == 1;
+  return signaled;
 }
 
 void __cdecl Sys_DatabaseCompleted2()
@@ -390,7 +389,7 @@ void __cdecl Sys_SyncDatabase()
   Sys_WaitForObject(databaseCompletedEvent);
 }
 
-qboolean __cdecl Sys_HaveSuspendedDatabaseThread(ThreadOwner to)
+qboolean __cdecl Sys_HaveSuspendedDatabaseThread(enum ThreadOwner to)
 {
   return g_databaseThreadOwner == to;
 }

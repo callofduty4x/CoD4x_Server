@@ -166,7 +166,8 @@ qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle);
 int __cdecl CM_ContentsOfModel(unsigned int handle);
 void __cdecl CM_TransformedBoxTraceExternal(trace_t *results, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
 int16_t __cdecl Trace_GetEntityHitId(trace_t *trace);
-
+void CM_LoadMap(const char *name, int *checksum);
+void CM_Unload();
 #ifdef __cplusplus
 }
 #endif

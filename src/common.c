@@ -649,6 +649,7 @@ static void Com_InitCvars( void ){
     com_developer = Cvar_RegisterInt("developer", 0, 0, 2, 0, "Enable development options");
     com_developer_script = Cvar_RegisterBool ("developer_script", qfalse, 16, "Enable developer script comments");
     com_logfile = Cvar_RegisterEnum("logfile", logfileEnum, 0, 0, "Write to logfile");
+    com_logrcon = Cvar_RegisterBool("logrcon", 0, 0, "Write response of rcon commands to logfile");
     com_sv_running = Cvar_RegisterBool("sv_running", qfalse, 64, "Server is running");
     com_securemodevar = Cvar_RegisterBool("securemode", qfalse, CVAR_INIT, "CoD4 runs in secure mode which restricts execution of external scripts/programs and loading of unauthorized shared libraries/plugins. This is recommended in a shared hosting environment");
     com_securemode = com_securemodevar->boolean;
@@ -717,8 +718,17 @@ void Com_Init(char* commandLine){
 
     Cbuf_AddText( "exec default_mp.cfg\n");
     Cbuf_Execute(0,0); // Always execute after exec to prevent text buffer overflowing
+
+/*
+    Good bye
+    With broken cvars we kinda also broke the query limiting which gets happy abused now.
+    The q3server_config.cfg contains now crap values. To fix this I decided to no longer execute it on startup.
+    If you need it add to commandline +exec q3server_config.cfg
+    However this file gets still written so you can still use it if needed when you exec it on commandline
+
     Cbuf_AddText( "exec " Q3CONFIG_CFG "\n");
     Cbuf_Execute(0,0); // Always execute after exec to prevent text buffer overflowing
+*/
     if(com_securemode)
     {
         Cvar_SetStringByName("sv_democompletedCmd", "");
@@ -1612,14 +1622,11 @@ void* Debug_HitchWatchdog(void* arg)
     while(true)
     {
         Sys_EnterCriticalSection(CRITSECT_WATCHDOG);
-
-	++watchdog_timer;
-	if(watchdog_timer >= 40)
-	{
-		asm("int $3");
-	}
-	Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
-
+        ++watchdog_timer;
+        if(watchdog_timer >= 40)
+            asm("int $3");
+            
+        Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
         Sys_SleepMSec(100);
     }
     return NULL;

@@ -161,7 +161,7 @@ void __cdecl Load_SndAliasCustom(snd_alias_list_t **name)
   {
     varXStringPtr = (char***)name;
     Load_XStringPtr(0);
-    XAssetHeader xah = DB_FindXAssetHeader(ASSET_TYPE_SOUND, **varXStringPtr);
+    XAssetHeader xah = DB_FindXAssetHeader(ASSET_TYPE_SOUND, **varXStringPtr, true, 100);
     *name = xah.sound;
   }
 }
@@ -259,20 +259,6 @@ void __cdecl CG_VisionSetMyChanges()
 {
 }
 
-void __cdecl CL_AddDebugLine(const float *start, const float *end, const float *color, int depthTest, int duration)
-{
-}
-void __cdecl CL_AddDebugStarWithText(const float *point, const float *starColor, const float *textColor, const char *string, float fontsize, int duration)
-{
-}
-
-void __cdecl CL_AddDebugStar(const float *point, const float *color, int duration)
-{
-}
-
-void __cdecl CL_AddDebugString(const float *xyz, const float *color, float scale, const char *text, int duration)
-{
-}
 
 int SND_GetEntChannelCount(void)
 {
@@ -292,7 +278,7 @@ void SND_ShutdownChannels()
 {
 }
 
-void __cdecl CG_TraceCapsule(struct trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentMask)
+void __cdecl CG_TraceCapsule(struct trace_s *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentMask)
 {
 
 }

@@ -3,6 +3,7 @@
 
 #include "q_shared.h"
 #include "sys_thread.h"
+#include "cm_public.h"
 
 
 #define BOX_MODEL_HANDLE 4095
@@ -176,7 +177,7 @@ typedef void DynEntityColl;
 typedef struct clipMap_s
 {
   const char *name;
-  qboolean loaded;
+  qboolean isInUse;
   int planeCount;
   cplane_t *planes;
   unsigned int numStaticModels;
@@ -255,6 +256,10 @@ typedef struct
 
 cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle );
 extern clipMap_t cm;
+void __cdecl CM_LoadMapFromBsp(const char *name, char a2);
+void __cdecl CM_LoadStaticModels();
+void __cdecl DynEnt_LoadEntities();
+
 
 
 //For BSP

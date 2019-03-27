@@ -22,6 +22,7 @@
 
 #include "scr_vm.h"
 #include "g_sv_shared.h"
+#include "g_shared.h"
 #include "dobj.h"
 
 #ifndef SCR_ENTREF_DEFINED
@@ -111,7 +112,16 @@ void GScr_IsCvarDefined();
 void Scr_IsArray_f();
 void GScr_ArrayTest();
 
-qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels);
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+qboolean __cdecl GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
+
+#ifdef __cplusplus
+}
+#endif
+
 void PrintModelBonesInfo(gentity_t *ent);
 
 
@@ -121,7 +131,8 @@ void print();
 void println();
 void iprintln();
 void iprintlnbold();
-void GScr_print3d();
+void GScr_Print3D();
+void GScr_PrintDebugStar();
 void GScr_line();
 void Scr_GetEnt();
 void Scr_GetEntArray();

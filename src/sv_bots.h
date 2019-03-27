@@ -27,7 +27,17 @@ typedef struct __attribute__ ((aligned (4))) BotMovementInfo_t
 
 extern BotMovementInfo_t g_botai[MAX_CLIENTS];
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif // __cplusplus
+
+
 void Scr_AddBotsMovement();
 qboolean shouldSpamUseButton(gentity_t *bot);
 
-#endif
+
+#ifdef __cplusplus
+}
+#endif //__cplusplus
+#endif //_SV_BOTS_H

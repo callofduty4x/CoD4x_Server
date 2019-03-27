@@ -502,6 +502,30 @@ Usage example 1: `bot botLookAt(ent.origin); // Instant look at ent's origin`
 
 Usage example 2: `bot botLookAt((0, 0, 0), 5.0); // Look at map center. Rotation will take 5.0 seconds.`
 
+### Script Debug Functions
+The following functions need the next yet unreleased client version. Also on clientside "set developer 1" has to be enabled.
+
+print3d() and line() function will do something useful now. The duration parameter is internally multiplied by 10. All objects are shown for 10*duration client frames.
+
+
+#### `printstar(<point>[, <starcolor>, <staralpha>, <duration>, <text>, <textcolor>, <textalpha>, <textscale>]);`
+
+Will print a debug-star into the 3D space.
+
+*point*: 3-dimensional origin (x, y, z) where to print.
+*starcolor*: Color of the star (r, g, b) - optional
+*staralpha*: Transparence of the star - optional
+*duration*: 10 times number of clientframes this shows - optional, defaults to 10 frames
+*text*: Optional text printed near star - optional
+*textcolor*: Color of text - optional
+*textalpha*: Transparence of the text - optional
+*textscale*: Size of text - optional
+
+Usage example 1: `printstar((0, 0, 200), (1, 0, 0), 1, 20); //Prints a red star at 0,0,200 for 200 clientframes
+Usage example 2: `printstar((0, 0, 200), (1, 0, 0), 1, 5, "example", (0, 1, 0), 1, 0.5); //Prints a red star at 0,0,200 for 50 clientframes with text "example" with color green and textscale 0.5
+
+
+
 ## Appendix: All Known Script Functions
 
 ### Player Functions

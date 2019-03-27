@@ -356,6 +356,7 @@ typedef struct {//0x8c51780
 	int numCachedSnapshotEntities;
 	int numCachedSnapshotClients;
 	int archivedEntityCount;
+	int nextArchivedSnapshotErrorTime; //stop error message flooding which can stall the whole server
 
 	int nextStatusResponseTime;
 
@@ -582,13 +583,6 @@ typedef struct
 }baninfo_t;
 
 
-int SV_NumForGentity( gentity_t *ent );
-gentity_t *SV_GentityNum( int num );
-playerState_t *SV_GameClientNum( int num );
-svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
-gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
-
-
 extern	permServerStatic_t	psvs;	// persistant even if server does shutdown
 extern	qboolean		svsHeaderValid;
 struct moveclip_s;
@@ -640,6 +634,11 @@ extern cvar_t* sv_voice;
 extern "C"{
 #endif
 
+gentity_t *SV_GentityNum( int num );
+int SV_NumForGentity( gentity_t *ent );
+playerState_t *SV_GameClientNum( int num );
+svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
+gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
 //
 // sv_client.c
 //
@@ -760,7 +759,7 @@ qboolean SV_ExecuteRemoteCmd(int, const char*);
 qboolean SV_UseUids();
 int SV_GetUid(unsigned int);
 void SV_SetUid(unsigned int clnum, unsigned int uid);
-gentity_t* SV_AddBotClient();
+gentity_t* SV_AddBotClient(char* requested_name);
 gentity_t* SV_RemoveBot();
 void SV_AddBan(baninfo_t* baninfo);
 
@@ -807,7 +806,6 @@ void __cdecl SV_SetConfigstring(int index, const char *text);
 void __cdecl SV_FreeClient(client_t* drop);
 void __cdecl SV_FreeClientScriptId(client_t *cl);
 void __cdecl SV_LinkEntity(gentity_t*);
-void __cdecl SV_UnlinkEntity(gentity_t*);
 void SV_SpawnServerResetPlayers();
 void serverStatus_Write();
 
@@ -889,6 +887,8 @@ qboolean SV_FileStillActive(const char* name);
 void SV_ConnectWithUpdateProxy(client_t *cl);
 #endif
 void SV_WriteChecksumInfo(msg_t* msg, const char* filename);
+void __cdecl SV_DObjDumpInfo(gentity_t *ent);
+int __cdecl SV_DObjExists(gentity_t *ent);
 
 #ifdef __cplusplus
 }

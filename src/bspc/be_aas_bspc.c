@@ -139,7 +139,7 @@ void BotImport_Trace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, vec3_t m
 	VectorCopy( trace.normal, bsptrace->plane.normal );
 	SetPlaneSignbits( &bsptrace->plane ); //And again stupid gussing how to solve: bsptrace->plane.signbits = trace.plane.signbits;
 	bsptrace->plane.type = PlaneTypeForNormal( bsptrace->plane.normal ); //Another guess bsptrace->plane.type = trace.plane.type;
-	bsptrace->surface.value = trace.surfaceFlags;
+	bsptrace->surface.value = trace.sflags;
 	bsptrace->ent = trace.hitId;
 	bsptrace->exp_dist = 0;
 	bsptrace->sidenum = 0;
@@ -292,7 +292,7 @@ void AAS_CalcReachAndClusters( struct quakefile_s *qf ) {
 		strcpy( qf->pakfile, qf->filename );
 	}
 	//load the map
-	CM_LoadMap( (char *) qf, qfalse, &( *aasworld ).bspchecksum );
+	CM_LoadMap( (char *) qf, &( *aasworld ).bspchecksum );
 	//get a handle to the world model
 	worldmodel = CM_InlineModel( 0 );     // 0 = world, 1 + are bmodels
 	//initialize bot import structure

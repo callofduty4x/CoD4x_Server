@@ -5,7 +5,6 @@
 
 #include "q_shared.h"
 #include "entity.h"
-#include "dobj_part_cache.h"
 #include "qcommon_io.h"
 #include "misc.h"
 
@@ -87,7 +86,6 @@ extern "C"{
 
 DObj_t* GetDObjForEntity(int entNum);
 qboolean EntHasDObj(gentity_t* ent);
-void PrintDObjInfo(DObj_t* dobj);
 extern signed int __cdecl G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int tagName, float (*tagMat)[3]);
 extern void DObjInit();
 extern void DB_LoadDObjs();
@@ -123,6 +121,8 @@ void __cdecl DObjSetControlTagAngles(DObj *obj, int *partBits, unsigned int bone
 void Com_InitDObj();
 void __cdecl DObjGetHierarchyBits(DObj *obj, int boneIndex, int *partBits);
 void __cdecl DObjCalcSkel(DObj *obj, int *partBits);
+struct DObjAnimMat *__cdecl G_DObjGetLocalTagMatrix(struct gentity_s *ent, unsigned int tagName);
+
 #ifdef __cplusplus
 }
 #endif

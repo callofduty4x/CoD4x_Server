@@ -2765,7 +2765,10 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 //Send him 
 		predictedTime = SV_GetPredictedOriginAndTimeForClientNum(snapInfo->clnum, predictedOrigin);
 		float dist = Vec3DistanceSq(predictedOrigin, to->origin);
-
+/*
+if(dist < 200)
+VectorCopy(predictedOrigin, to->origin);
+*/
 		if ( from && svsHeader.clientArchive && MSG_WithinAllowedPredictionError(dist, to) && predictedTime == to->commandTime )
 		{
 			sendOriginAndVel = 0;

@@ -212,6 +212,8 @@ int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *or
     return qfalse;
 }
 
+#ifndef BSPC
+
 int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p ) {
     float dist1, dist2;
     int sides;
@@ -294,6 +296,8 @@ int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p ) {
     return sides;
 }
 
+
+#endif
 /* Returns maximum absolute value of vector's components. */
 float vec2_maxabs(vec2_t v)
 {
@@ -387,6 +391,8 @@ void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up 
 	float angle;
 	static float sr, sp, sy, cr, cp, cy;
 	// static to help MS compiler fp bugs
+
+ 	assert(!IS_NAN(angles[0]) && !IS_NAN(angles[1]) && !IS_NAN(angles[2]));
 
 	angle = angles[YAW] * ( M_PI * 2 / 360 );
 	sy = sin( angle );
@@ -599,8 +605,8 @@ void MatrixMultiply( float in1[3][3], float in2[3][3], float out[3][3] ) {
 
 void __cdecl MatrixMultiply43(const float (*in1)[3], const float (*in2)[3], float (*out)[3])
 {
-  assert(in1 != out);
-  assert(in2 != out);
+  assert((void*)in1 != (void*)out);
+  assert((void*)in2 != (void*)out);
 
   (*out)[0] = (((*in1)[0] * (*in2)[0]) + ((*in1)[1] * (*in2)[3])) + ((*in1)[2] * (*in2)[6]);
   (*out)[3] = (((*in1)[3] * (*in2)[0]) + ((*in1)[4] * (*in2)[3])) + ((*in1)[5] * (*in2)[6]);
@@ -619,7 +625,7 @@ void __cdecl MatrixMultiply43(const float (*in1)[3], const float (*in2)[3], floa
 
 void __cdecl MatrixTranspose(const float (*in)[3], float (*out)[3])
 {
-  assert( in != out);
+  assert( (void*)in != (void*)out);
 
   (*out)[0] = (*in)[0];
   (*out)[1] = (*in)[3];
@@ -998,6 +1004,7 @@ void __cdecl Vec3Cross(const vec3_t v0, const vec3_t v1, vec3_t cross)
     cross[2] = v0[0] * v1[1] - v0[1] * v1[0];
 }
 
+#ifndef BSPC
 
 qboolean __cdecl PlaneFromPoints(float *plane, const float *v0, const float *v1, const float *v2)
 {
@@ -1033,6 +1040,8 @@ qboolean __cdecl PlaneFromPoints(float *plane, const float *v0, const float *v1,
   plane[3] = DotProduct(v0, plane);
   return 1;
 }
+
+#endif
 
 vec_t Q_rint( vec_t in ) {
 	return floor( in + 0.5 );
@@ -1330,6 +1339,8 @@ double __cdecl PitchForYawOnNormal(const float fYaw, const vec3_t normal)
 {
   vec3_t forward;
 
+  assert(!IS_NAN(fYaw));
+	assert(!IS_NAN(normal[0]) && !IS_NAN(normal[1]) && !IS_NAN(normal[2]));
   assert(normal[0] != 0.0 || normal[1] != 0.0 || normal[2] != 0.0);
 
   YawVectors(fYaw, forward, 0);
@@ -1430,7 +1441,7 @@ void __cdecl MatrixInverseOrthogonal43(const float in[4][3], float out[4][3])
   origin[0] = 0.0 - in[3][0];
   origin[1] = 0.0 - in[3][1];
   origin[2] = 0.0 - in[3][2];
-  MatrixTransformVector(origin, out, out[3]);
+  MatrixTransformVector(origin, (const float (*)[3])out, out[3]);
 }
 
 void __cdecl PerpendicularVector(const vec3_t src, vec3_t dst)

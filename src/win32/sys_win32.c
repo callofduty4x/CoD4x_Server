@@ -777,17 +777,6 @@ threadid_t __cdecl Sys_GetCurrentThreadId( void )
 }
 
 
-/*
-==================
-Sys_Backtrace
-==================
-*/
-
-int Sys_Backtrace(void** buffer, int size)
-{
-    return 0;
-}
-
 char** GetStrTable(void* filebuf, int len, sharedlib_data_t *text)
 {
 	return PE32_GetStrTable(filebuf, len, text);
@@ -1045,6 +1034,4 @@ signed int __cdecl Sys_IsObjectSignaled(HANDLE hHandle)
 }
 
 void Sys_PrintBacktrace()
-{
-	
-}
+{}

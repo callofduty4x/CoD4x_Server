@@ -44,6 +44,11 @@ If you have questions concerning this license or the applicable additional terms
 #include "..\botlib\aasfile.h"         //aas_bbox_t
 #include "aas_store.h"       //AAS_MAX_BBOXES
 #include "aas_cfg.h"
+#include "../q_math.h"
+#include "../game/surfaceflags.h"
+#include "db_load.h"
+#include "../physicalmemory.h"
+
 
 #define Sign( x )     ( x < 0 ? 1 : 0 )
 
@@ -234,7 +239,7 @@ int CreateNewFloatPlane( vec3_t normal, vec_t dist ) {
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void SnapVector( vec3_t normal ) {
+static void Map_SnapVector( vec3_t normal ) {
 	int i;
 
 	for ( i = 0 ; i < 3 ; i++ )
@@ -258,7 +263,7 @@ void SnapVector( vec3_t normal ) {
 // Changes Globals:		-
 //===========================================================================
 void SnapPlane( vec3_t normal, vec_t *dist ) {
-	SnapVector( normal );
+	Map_SnapVector( normal );
 
 	if ( fabs( *dist - Q_rint( *dist ) ) < DIST_EPSILON ) {
 		*dist = Q_rint( *dist );
@@ -437,7 +442,7 @@ void AddBrushBevels( mapbrush_t *b ) {
 			if ( VectorNormalize( vec ) < 0.5 ) {
 				continue;
 			}
-			SnapVector( vec );
+			Map_SnapVector( vec );
 			for ( k = 0 ; k < 3 ; k++ )
 				if ( vec[k] == -1 || vec[k] == 1 ) {
 					break;
@@ -900,7 +905,7 @@ qboolean WriteMapBrush( FILE *fp, mapbrush_t *brush, vec3_t origin ) {
 				} //end else
 				  //write the extra brush side info
 				if ( loadedmaptype == MAPTYPE_QUAKE2 ) {
-					if ( fprintf( fp, " %ld %ld %ld", s->contents, ti->flags, ti->value ) < 0 ) {
+					if ( fprintf( fp, " %ld %ld %ld", (long int)s->contents, (long int)ti->flags, (long int)ti->value ) < 0 ) {
 						return false;
 					}
 				} //end if
@@ -1215,9 +1220,6 @@ void ResetMapLoading( void ) {
 	int i;
 	epair_t *ep, *nextep;
 
-	Q2_ResetMapLoading();
-	Sin_ResetMapLoading();
-
 	//free all map brush side windings
 	for ( i = 0; i < nummapbrushsides; i++ )
 	{
@@ -1309,33 +1311,24 @@ int LoadMapFromBSP( struct quakefile_s *qf ) {
 	} //end if
 	  //Quake2 BSP file
 	else if ( idheader.ident == Q2_BSPHEADER && idheader.version == Q2_BSPVERSION ) {
-		ResetMapLoading();
-		Q2_AllocMaxBSP();
-		Q2_LoadMapFromBSP( qf->filename, qf->offset, qf->length );
-		Q2_FreeMaxBSP();
+
 	} //endif
 	  //Sin BSP file
 	else if ( ( idheader.ident == SIN_BSPHEADER && idheader.version == SIN_BSPVERSION ) ||
 			  //the dorks gave the same format another ident and verions
 			  ( idheader.ident == SINGAME_BSPHEADER && idheader.version == SINGAME_BSPVERSION ) ) {
-		ResetMapLoading();
-		Sin_AllocMaxBSP();
-		Sin_LoadMapFromBSP( qf->filename, qf->offset, qf->length );
-		Sin_FreeMaxBSP();
+
 	} //end if
 	  //the Quake1 bsp files don't have a ident only a version
 	else if ( idheader.ident == Q1_BSPVERSION ) {
-		ResetMapLoading();
-		Q1_AllocMaxBSP();
-		Q1_LoadMapFromBSP( qf->filename, qf->offset, qf->length );
-		Q1_FreeMaxBSP();
+
 	} //end if
 	  //Half-Life also only uses a version number
 	else if ( idheader.ident == HL_BSPVERSION ) {
-		ResetMapLoading();
-		HL_AllocMaxBSP();
-		HL_LoadMapFromBSP( qf->filename, qf->offset, qf->length );
-		HL_FreeMaxBSP();
+	//	ResetMapLoading();
+	//	HL_AllocMaxBSP();
+	//	HL_LoadMapFromBSP( qf->filename, qf->offset, qf->length );
+	//	HL_FreeMaxBSP();
 	} //end if
 	else
 	{
@@ -1349,3 +1342,26 @@ int LoadMapFromBSP( struct quakefile_s *qf ) {
 	  //
 	return true;
 } //end of the function LoadMapFromBSP
+
+
+int LoadMapFromFastFile( struct quakefile_s *qf ) {
+
+	ResetMapLoading();
+	
+	PMem_Init();
+	DB_Init();
+
+	if(qf == NULL){
+		return false;
+	}
+
+    char *g_fileBuf = (char*)malloc(DBFILE_BUFFER_SIZE);
+
+	//filename, flags, buffer 
+    if ( !DB_TryLoadXFileInternal(qf->filename, 0, g_fileBuf) )
+    {
+
+    }
+    free(g_fileBuf);
+	return true;
+}

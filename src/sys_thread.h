@@ -62,8 +62,18 @@ enum CriticalSection
   CRITSECT_DL_MAP = 23,
   CRITSECT_PHYSICAL_MEMORY = 24,
   CRITSECT_WATCHDOG = 25,
-  CRITSECT_COUNT = 26
+  CRITSECT_MISSING_ASSET = 26,
+  CRITSECT_COUNT = 27
 };
+
+enum ThreadOwner
+{
+  THREAD_OWNER_NONE = 0x0,
+  THREAD_OWNER_DATABASE = 0x1,
+  THREAD_OWNER_CINEMATICS = 0x2,
+  THREAD_OWNER_SHUTDOWN = 0x3
+};
+
 
 #ifdef __cplusplus
 extern "C"{
@@ -98,8 +108,12 @@ void __cdecl Sys_DatabaseCompleted();
 void Sys_WakeDatabase();
 void Sys_WakeDatabase2();
 void Sys_NotifyDatabase();
-
-
+qboolean Sys_IsDatabaseReady();
+qboolean __cdecl Sys_IsDatabaseReady2();
+void __cdecl Sys_SuspendDatabaseThread(enum ThreadOwner owner);
+qboolean __cdecl Sys_HaveSuspendedDatabaseThread(enum ThreadOwner to);
+void __cdecl Sys_ResumeDatabaseThread(enum ThreadOwner to);
+void __cdecl Sys_DatabaseCompleted2();
 
 
 signed int __cdecl Sys_WaitForObject(HANDLE handle);
@@ -112,6 +126,8 @@ struct va_info_t
   char va_string[MAX_VASTRINGS][1024];
   int index;
 };
+
+#define NUMTHREADS 2
 
 struct TraceCheckCount
 {
@@ -127,6 +143,7 @@ typedef struct TraceThreadInfo
   struct cmodel_t *box_model;
 }TraceThreadInfo;
 
+extern TraceThreadInfo g_traceThreadInfo[NUMTHREADS];
 
 unsigned int Sys_GetProcessAffinityMask();
 void** Sys_GetThreadLocalStorage();

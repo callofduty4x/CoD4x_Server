@@ -4,17 +4,17 @@
 #include "q_shared.h"
 #include "scr_vm_functions.h"
 #include "misc.h"
-#include "dobj_part_cache.h"
 #include "server.h"
 #include "cscr_stringlist.h"
+#include "sv_bots_astar.h"
 
 BotMovementInfo_t g_botai[MAX_CLIENTS];
 
-typedef struct BotAction_t
+struct BotAction_t
 {
-    char* action;
+    const char* action;
     int key;
-}BotAction_t;
+};
 
 const BotAction_t BotActions[] =
 {
@@ -187,7 +187,6 @@ scr_botaction
 /* bot botAction(<str action>); */
 static void scr_botaction(scr_entref_t ent_num)
 {
-    int i;
     int argc;
     gentity_t *bot;
     char* action;
@@ -212,7 +211,7 @@ static void scr_botaction(scr_entref_t ent_num)
         Scr_ParamError(0, "Sign for action must be '+' or '-'.");
 
     key_found = qfalse;
-    for (i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
+    for (size_t i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
     {
         if (!Q_stricmp(&action[1], BotActions[i].action))
         {
@@ -229,7 +228,7 @@ static void scr_botaction(scr_entref_t ent_num)
     if (!key_found)
     {
         buffer[0] = '\0';
-        for (i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
+        for (size_t i = 0; i < sizeof(BotActions) / sizeof(BotAction_t); ++i)
         {
             Q_strncat(buffer, 1024, " ");
             Q_strncat(buffer, 1024, BotActions[i].action);
@@ -274,7 +273,7 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     if(argc == 2)
         tag_name = Scr_GetConstString(1);
 
-    if(!GetTagInfoForEntity(target, tag_name, &DOBJ_PART_CACHE, qtrue))
+    if(!GScr_UpdateTagInternal2(target, tag_name, &level.cachedTagMat, qtrue))
         Scr_ParamError(1, va("tag '%s' does not exist in model '%s' "
                              "(or any attached submodels)",
                              SL_ConvertToString(tag_name),
@@ -292,10 +291,21 @@ static void scr_botlookatplayer(scr_entref_t ent_num)
     /* Divide it to represent units per frame. */
     vec3_multiply(look_origin, multiplier/sv_fps->integer);
     /* Add tag origin. */
-    vec3_add(look_origin, DOBJ_PART_CACHE.vectorSet.origin);
+    vec3_add(look_origin, level.cachedTagMat.tagMat[3]);
 
     Bot_CalculateRotationForOrigin(bot, look_origin, 1.0/sv_fps->integer);
 }
+
+
+
+
+
+
+
+
+
+extern "C"
+{
 
 void Scr_AddBotsMovement()
 {
@@ -330,3 +340,4 @@ qboolean shouldSpamUseButton(gentity_t *bot)
     return is_alive == qfalse && ai->useSpamDelay == 0 ? qtrue : qfalse;
 }
 
+}

@@ -372,8 +372,17 @@ typedef struct{
 
 extern scr_const_t scr_const;
 
+#ifndef SCR_ENTREF_DEFINED
+#define SCR_ENTREF_DEFINED
+typedef struct
+{
+  uint16_t entnum;
+  uint16_t classnum;
+}scr_entref_t;
+#endif
 
 typedef void (*xfunction_t)();
+typedef void (*xmethod_t)(scr_entref_t EntRef_);
 
 typedef struct scr_function_s
 {
@@ -383,19 +392,17 @@ typedef struct scr_function_s
 	qboolean		developer;
 } scr_function_t;
 
-
+typedef struct scr_method_s
+{
+    struct scr_method_s *next;
+    char *name;
+    xmethod_t function;
+    qboolean developer;
+} scr_method_t;
 
 typedef byte PrecacheEntry[8192];
 typedef unsigned int sval_u;
 
-#ifndef SCR_ENTREF_DEFINED
-#define SCR_ENTREF_DEFINED
-typedef struct
-{
-  uint16_t entnum;
-  uint16_t classnum;
-}scr_entref_t;
-#endif
 /**************** Additional *************************/
 
 typedef enum{
@@ -785,7 +792,7 @@ qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean d
 qboolean Scr_RemoveFunction( const char *cmd_name );
 void Scr_ClearFunctions( void );
 __cdecl void* Scr_GetFunction( const char** v_functionName, qboolean* v_developer );
-qboolean Scr_AddMethod( const char *cmd_name, xfunction_t function, qboolean developer);
+qboolean Scr_AddMethod( const char *cmd_name, xmethod_t function, qboolean developer);
 qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
 __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer );

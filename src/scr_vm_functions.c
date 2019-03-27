@@ -26,6 +26,7 @@
 #include "scr_vm.h"
 #include "cmd.h"
 #include "server.h"
+#include "server_public.h"
 #include "maxmind_geoip.h"
 #include "q_platform.h"
 #include "g_sv_shared.h"
@@ -35,6 +36,7 @@
 #include "sv_auth.h"
 #include "cscr_stringlist.h"
 #include "bg.h"
+#include "client_dedicated.h"
 
 #include "sapi.h"
 #include <string.h>
@@ -2000,13 +2002,38 @@ Usage: entity = AddTestClient()
 
 void GScr_SpawnBot()
 {
+	gentity_t *clEnt;
+	
+	if ( Scr_GetNumParam() == 1 )
+        {
+       	 	char *string = Scr_GetString( 0 );
+		char name[36];
+		int i, j;
+		
+		for( i = 0, j = 0; string[i] && j < sizeof(name) - 1; ++i )
+		{
+			if( (byte)string[i] >= 0x20 )
+			{
+				name[j] = string[i];
+				++j;
+			}
+		}
+		name[j] = '\0';
+		
+		if ( strlen( name ) < 3 )
+		{
+			Scr_Error( "AddTestClient(): Name must be atleast 3 characters long\n" );
+		}
+		
+		clEnt = (gentity_t *)SV_AddBotClient( name );
+        }
+	else
+	{
+		clEnt = (gentity_t *)SV_AddBotClient( NULL );
+	}
 
-    gentity_t *clEnt;
-
-    clEnt = (gentity_t *)SV_AddBotClient();
-
-    if (clEnt)
-        Scr_AddEntity(clEnt);
+        if (clEnt)
+            	Scr_AddEntity(clEnt);
 }
 
 /*
@@ -2286,7 +2313,7 @@ void GScr_GetCvarFloat()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: getcvarfloat <cvarname>");
+        Scr_Error("Usage: getcvarfloat( <cvarname> )");
     }
     stringval = Cvar_GetVariantString(Scr_GetString(0));
     Scr_AddFloat(atof(stringval));
@@ -2298,7 +2325,7 @@ void GScr_GetCvarInt()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: getcvarint <cvarname>");
+        Scr_Error("Usage: getcvarint(<cvarname>)");
     }
     stringval = Cvar_GetVariantString(Scr_GetString(0));
     Scr_AddInt(atoi(stringval));
@@ -2313,7 +2340,7 @@ void GScr_GetCvar()
 
     if (Scr_GetNumParam() != 1)
     {
-        Scr_Error("Usage: getcvar <cvarname>");
+        Scr_Error("Usage: getcvar(<cvarname>)");
     }
 
     querystr = Scr_GetString(0);
@@ -2960,20 +2987,6 @@ void Scr_IsArray_f()
     Scr_AddBool(Scr_GetType(0) == 1 ? qtrue : qfalse);
 }
 
-/* PrintModelBonesInfo
- * 0x0817CBEC
- */
-void PrintModelBonesInfo(gentity_t *ent)
-{
-    if (com_developer->boolean)
-    {
-        DObj_t *dobj = GetDObjForEntity(ent->s.number);
-        if (dobj)
-            PrintDObjInfo(dobj);
-        else
-            Com_Printf(CON_CHANNEL_SCRIPT,"no model.\n");
-    }
-}
 
 /* GetTagInfoForEntity
  *
@@ -2983,26 +2996,29 @@ void PrintModelBonesInfo(gentity_t *ent)
  *
  * Based on 0x080BFFB6. Similar functionality (except script error messages).
  */
-qboolean GetTagInfoForEntity(gentity_t *ent, int partNameIdx, DObjPartCache_t *cache, int seekInSubModels)
+qboolean GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError)
 {
     // Here used some kind of caching.
     // Checked if latest requested tag is the same as previous - just return from function.
     // Find tag origin otherwise.
 
-    if (cache->svsFrameTime == svs.time && cache->entNum == ent->s.number && cache->partNameIdx == partNameIdx)
-        return qtrue;
-
-    if (EntHasDObj(ent))
+    if ( ent->s.number == cachedTag->entnum && level.time == cachedTag->time && tagName == cachedTag->name )
     {
-        if (G_DObjGetWorldTagMatrix(ent, partNameIdx, (float (*)[3])&cache->vectorSet))
+            return qtrue;
+    }
+
+    if (SV_DObjExists(ent))
+    {
+        if (G_DObjGetWorldTagMatrix(ent, tagName, cachedTag->tagMat))
         {
-            cache->entNum = ent->s.number;
-            cache->svsFrameTime = svs.time;
-            Scr_SetString(&cache->partNameIdx, partNameIdx);
+            cachedTag->entnum = ent->s.number;
+            cachedTag->time = level.time;
+            Scr_SetString(&cachedTag->name, tagName);
             return qtrue;
         }
-        if (seekInSubModels)
-            PrintModelBonesInfo(ent);
+        if (showScriptError){
+            SV_DObjDumpInfo(ent);
+        }
     }
     return qfalse;
 }
@@ -3226,6 +3242,8 @@ void GScr_Float()
         Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
 }
 
+bool __cdecl SV_SetBrushModel(struct gentity_s *ent);
+
 void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
 {
     // Common checks.
@@ -3275,3 +3293,102 @@ void PlayerCmd_SetStance(scr_entref_t playerEntNum)
     BGEvent event = stanceIdx == (unsigned short)scr_const.stand ? EV_STANCE_FORCE_STAND : stanceIdx == (unsigned short)scr_const.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
     BG_AddPredictableEventToPlayerstate(event, 0, cl);
 }
+
+
+
+void GScr_Print3D()
+{
+  signed int duration;
+  vec3_t origin;
+  vec3_t rgb;
+  float scale;
+  vec4_t color;
+  const char *text;
+
+  duration = 1;
+  scale = 1.0;
+  color[0] = 1.0;
+  color[1] = 1.0;
+  color[2] = 1.0;
+  color[3] = 1.0;
+  switch ( Scr_GetNumParam( ) )
+  {
+    case 6u:
+      duration = Scr_GetInt(5u);
+    case 5u:
+      scale = Scr_GetFloat(4u);
+    case 4u:
+      color[3] = Scr_GetFloat(3u);
+    case 3u:
+      Scr_GetVector(2u, rgb);
+      VectorCopy(rgb, color);
+    case 2u:
+      text = Scr_GetString(1u);
+      Scr_GetVector(0, origin);
+      CL_AddDebugString(origin, color, scale, text, duration);
+      break;
+    default:
+      Scr_Error("illegal call to print3d()");
+      break;
+  }
+}
+
+//printstar(<point>, <starcolor>, <staralpha>, <duration>, <text>, <textcolor>, <textalpha>, <textscale>);
+
+void GScr_PrintDebugStar()
+{
+  signed int duration;
+  vec3_t point;
+  vec3_t rgb;
+  float scale;
+  vec4_t starColor, textColor;
+  const char *text;
+
+  duration = 1;
+  scale = 1.0;
+  text = NULL;
+  starColor[0] = 1.0;
+  starColor[1] = 1.0;
+  starColor[2] = 1.0;
+  starColor[3] = 1.0;
+
+  textColor[0] = 1.0;
+  textColor[1] = 1.0;
+  textColor[2] = 1.0;
+  textColor[3] = 1.0;
+
+  switch ( Scr_GetNumParam( ) )
+  {
+
+    case 8u:
+      scale = Scr_GetFloat(7u);
+
+    case 7u:
+      textColor[3] = Scr_GetFloat(6u);
+    case 6u:
+      Scr_GetVector(5u, rgb);
+      VectorCopy(rgb, textColor);
+
+
+    case 5u:
+      text = Scr_GetString(4u);
+
+    case 4u:
+      duration = Scr_GetInt(3u);
+
+    case 3u:
+      starColor[3] = Scr_GetFloat(2u);
+    case 2u:
+      Scr_GetVector(1u, rgb);
+      VectorCopy(rgb, starColor);
+
+    case 1u:
+      Scr_GetVector(0, point);
+      CL_AddDebugStarWithText(point, starColor, textColor, text, scale, duration);
+      break;
+    default:
+      Scr_Error("illegal call to printstar()");
+      break;
+  }
+}
+

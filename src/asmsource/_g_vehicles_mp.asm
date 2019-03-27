@@ -125,7 +125,6 @@
 	global G_VehiclesSetupSpawnedEnts
 	global s_numVehicleInfos
 	global s_vehicles
-	global s_wheelTags
 	global vehDebugServer
 	global vehTestHorsepower
 	global vehTestMaxMPH

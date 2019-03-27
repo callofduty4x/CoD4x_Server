@@ -876,7 +876,7 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
     Info_SetValueForKey( infostring, "gametype", sv_g_gametype->string );
     Info_SetValueForKey( infostring, "pure", va("%i", sv_pure->boolean ) );
     Info_SetValueForKey( infostring, "build", va("%i", Sys_GetBuild()));
-    Info_SetValueForKey( infostring, "shortversion", Q3_VERSION );
+    Info_SetValueForKey( infostring, "shortversion", va("x%d", PROTOCOL_VERSION) );
 
         if(*sv_password->string)
     {
@@ -4114,7 +4114,7 @@ void SV_BotUserMove(client_t *client)
             if (!g_botai[num].doMove)
             {
                 Scr_Notify(ent, scr_const.movedone, 0);
-                Com_Printf(CON_CHANNEL_SERVER,"Bot movement done at (%3.3f, %3.3f)\n",
+                Com_DPrintf(CON_CHANNEL_SERVER,"Bot movement done at (%3.3f, %3.3f)\n",
                             ent->r.currentOrigin[0], ent->r.currentOrigin[1]);
             }
 
@@ -4302,6 +4302,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
 
     // send a heartbeat to the master if needed
     SV_MasterHeartbeat( HEARTBEAT_GAME );
+
 
 /*
     for(i = 0; i < sv_maxclients->integer; ++i)
@@ -5122,14 +5123,9 @@ qboolean SV_FileStillActive(const char* name)
 {
     int i;
     char filename[MAX_OSPATH];
-    //char* str;
-    int len, crc32;
 
     Cmd_TokenizeString(sv_referencedIwdNames->string);
-
-
     Com_Printf(CON_CHANNEL_SERVER,"Check for file %s\n", name);
-
 
     for(i = 0; i < Cmd_Argc(); ++i)
     {
@@ -5142,9 +5138,7 @@ qboolean SV_FileStillActive(const char* name)
     }
     Cmd_EndTokenizedString();
 
-
     Cmd_TokenizeString(sv_referencedFFNames->string);
-
     for(i = 0; i < Cmd_Argc(); ++i)
     {
         DB_GetQPathForZone(Cmd_Argv(i), sizeof(filename), filename);

@@ -179,6 +179,26 @@ typedef struct
 
 extern level_locals_t level;
 
+struct turretInfo_s
+{
+  int inuse;
+  int flags;
+  int fireTime;
+  vec2_t arcmin;
+  vec2_t arcmax;
+  float dropPitch;
+  int stance;
+  int prevStance;
+  int fireSndDelay;
+  vec3_t userOrigin;
+  float playerSpread;
+  float pitchCap;
+  int triggerDown;
+  char fireSnd;
+  char fireSndPlayer;
+  char stopSnd;
+  char stopSndPlayer;
+};
 
 /* Max count = 32, started at 0x08583C10 */
 /*typedef struct gametype_t
@@ -577,6 +597,21 @@ void G_SetClientArchiveTime(int clindex, int time);
 void G_ClientStopUsingTurret(gentity_t* ent);
 void G_EarlyInit();
 void Scr_Vehicle_Think(struct gentity_s* ent);
+uint16_t __cdecl G_GetHitLocationString(enum hitLocation_t hitLoc);
+void __cdecl G_FreeEntity(struct gentity_s *gEnt);
+void __cdecl G_RunMissile(gentity_t *gEnt);
+void __cdecl G_GeneralLink(struct gentity_s *gEnt);
+void __cdecl G_RunItem(gentity_t *gEnt);
+void __cdecl G_RunMover(struct gentity_s *gEnt);
+void __cdecl G_RunClient(gentity_t *gEnt);
+void __cdecl G_RunCorpse(gentity_t *gEnt);
+void __cdecl Scr_FreeEntity(struct gentity_s *ent);
+void __cdecl PlayerCorpse_Free(struct gentity_s *ent);
+void __cdecl G_VehFreeEntity(struct gentity_s *ent);
+void __cdecl G_FreeTurret(struct gentity_s *ent);
+void __cdecl G_FreeEntityRefs(struct gentity_s *ent);
+void __cdecl XAnimClearTree(struct XAnimTree_s *tree);
+
 #ifdef __cplusplus
 }
 #endif
@@ -585,5 +620,5 @@ void Scr_Vehicle_Think(struct gentity_s* ent);
 
 extern cvar_t* g_maxclients;
 extern vec3_t playerMins, playerMaxs;
-
+extern uint16_t *modNames[16];
 #endif /*G_SHARED_H*/

@@ -193,6 +193,7 @@ Begins recording a demo from the current position
 void SV_RecordClient( client_t* cl, char* basename ) {
 	char name[MAX_OSPATH];
 	byte bufData[MAX_MSGLEN];
+	byte compressData[2*MAX_MSGLEN];
 	msg_t msg;
 	int len, compLen, swlen;
 	char demoName[MAX_QPATH];
@@ -277,8 +278,8 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 	// finished writing the client packet
 	MSG_WriteByte( &msg, svc_EOF );
 
-	*(int32_t*)0x13f39080 = *(int32_t*)msg.data;
-	compLen = 4 + MSG_WriteBitsCompress( msg.data + 4 ,(byte*)0x13f39084 ,msg.cursize - 4);
+	*(int32_t*)compressData = *(int32_t*)msg.data;
+	compLen = 4 + MSG_WriteBitsCompress( msg.data + 4 , compressData ,msg.cursize - 4);
 
 	len = 0;
 	FS_DemoWrite( &len, 1, &cl->demofile );
@@ -292,7 +293,7 @@ void SV_RecordClient( client_t* cl, char* basename ) {
 
 	len = LittleLong( compLen );
 	FS_DemoWrite( &len, 4, &cl->demofile );
-	FS_DemoWrite((byte*)0x13f39080, compLen, &cl->demofile );
+	FS_DemoWrite(compressData, compLen, &cl->demofile );
 
 	// the rest of the demo file will be copied from net messages
 }

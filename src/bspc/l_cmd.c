@@ -134,7 +134,7 @@ Error
 For abnormal program terminations in windowed apps
 =================
 */
-void Error( char *error, ... ) {
+void Error( const char *error, ... ) {
 	va_list argptr;
 	char text[1024];
 	char text2[1024];
@@ -177,7 +177,7 @@ Error
 For abnormal program terminations in console apps
 =================
 */
-void Error( char *error, ... ) {
+void Error( const char *error, ... ) {
 	va_list argptr;
 	char text[1024];
 
@@ -229,7 +229,7 @@ void qprintf( char *format, ... ) {
 	va_end( argptr );
 } //end of the function qprintf
 
-void Com_Error( int level, char *error, ... ) {
+void Com_Error( int level, const char *error, ... ) {
 	va_list argptr;
 	char text[1024];
 
@@ -239,7 +239,7 @@ void Com_Error( int level, char *error, ... ) {
 	Error( text );
 } //end of the funcion Com_Error
 
-void Com_Printf( const char *fmt, ... ) {
+void Com_Printf( int channel, const char *fmt, ... ) {
 	va_list argptr;
 	char text[1024];
 
@@ -494,7 +494,7 @@ skipwhite:
 }
 
 
-int Q_strncasecmp( char *s1, char *s2, int n ) {
+int Q_strncasecmp( const char *s1, const char *s2, int n ) {
 	int c1, c2;
 
 	do
@@ -522,11 +522,11 @@ int Q_strncasecmp( char *s1, char *s2, int n ) {
 	return 0;       // strings are equal
 }
 
-int Q_strcasecmp( char *s1, char *s2 ) {
+int Q_strcasecmp( const char *s1, const char *s2 ) {
 	return Q_strncasecmp( s1, s2, 99999 );
 }
 
-int Q_stricmp( char *s1, char *s2 ) {
+int Q_stricmp( const char *s1, const char *s2 ) {
 	return Q_strncasecmp( s1, s2, 99999 );
 }
 
@@ -985,50 +985,6 @@ unsigned    BigUnsigned( unsigned l ) {
 #else
 
 
-short   BigShort( short l ) {
-	byte b1,b2;
-
-	b1 = l & 255;
-	b2 = ( l >> 8 ) & 255;
-
-	return ( b1 << 8 ) + b2;
-}
-
-short   LittleShort( short l ) {
-	return l;
-}
-
-
-int    BigLong( int l ) {
-	byte b1,b2,b3,b4;
-
-	b1 = l & 255;
-	b2 = ( l >> 8 ) & 255;
-	b3 = ( l >> 16 ) & 255;
-	b4 = ( l >> 24 ) & 255;
-
-	return ( (int)b1 << 24 ) + ( (int)b2 << 16 ) + ( (int)b3 << 8 ) + b4;
-}
-
-int    LittleLong( int l ) {
-	return l;
-}
-
-float   BigFloat( float l ) {
-	union {byte b[4]; float f;} in, out;
-
-	in.f = l;
-	out.b[0] = in.b[3];
-	out.b[1] = in.b[2];
-	out.b[2] = in.b[1];
-	out.b[3] = in.b[0];
-
-	return out.f;
-}
-
-float   LittleFloat( float l ) {
-	return l;
-}
 
 #ifdef SIN
 unsigned short   BigUnsignedShort( unsigned short l ) {

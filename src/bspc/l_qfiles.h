@@ -35,8 +35,6 @@ If you have questions concerning this license or the applicable additional terms
 // Tab Size:     3
 //===========================================================================
 
-#include "../zlib/unzip.h"
-
 #define QFILETYPE_UNKNOWN           0x8000
 #define QFILETYPE_PAK               0x0001
 #define QFILETYPE_PK3               0x0002
@@ -48,12 +46,14 @@ If you have questions concerning this license or the applicable additional terms
 #define QFILETYPE_WAL               0x0080
 #define QFILETYPE_WAV               0x0100
 #define QFILETYPE_AAS               0x4000
+#define QFILETYPE_FF                0x2000
 
 #define QFILEEXT_UNKNOWN            ""
 #define QFILEEXT_PAK                ".PAK"
 #define QFILEEXT_PK3                ".PK3"
 #define QFILEEXT_SIN                ".SIN"
 #define QFILEEXT_BSP                ".BSP"
+#define QFILEEXT_FF                 ".FF"
 #define QFILEEXT_MAP                ".MAP"
 #define QFILEEXT_MDL                ".MDL"
 #define QFILEEXT_MD2                ".MD2"
@@ -86,7 +86,6 @@ typedef struct quakefile_s
 	int type;
 	int offset;
 	int length;
-	unz_s zipinfo;
 	struct quakefile_s *next;
 } quakefile_t;
 

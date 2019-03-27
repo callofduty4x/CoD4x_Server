@@ -3568,6 +3568,7 @@ G_RunMissile_210:
 	lea edx, [ebp-0xb8]
 	mov [esp], edx
 	call Vec3Normalize
+	fstp st0
 	lea eax, [ebp-0x48]
 	mov [esp+0xc], eax
 	lea eax, [ebp-0x24]

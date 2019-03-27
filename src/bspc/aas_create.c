@@ -675,7 +675,6 @@ tmp_node_t *AAS_CreateArea( node_t *node ) {
 	tmp_face_t *tmpface;
 	tmp_area_t *tmparea;
 	tmp_node_t *tmpnode;
-	vec3_t up = {0, 0, 1};
 
 	//create an area from this leaf
 	tmparea = AAS_AllocTmpArea();

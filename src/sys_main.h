@@ -96,7 +96,6 @@ void  __noreturn Sys_ExitForOS( int exitCode );
 
 
 void Sys_SleepSec(int seconds);
-int Sys_Backtrace(void** buffer, int size);
 void Sys_EventLoop(void);
 uint32_t Sys_MillisecondsRaw();
 void Sys_LoadLibraryError(char* errormessage, int maxlen);
@@ -109,6 +108,8 @@ void CON_Shutdown( void );
 void CON_Init(void);
 char *CON_Input( void );
 void CON_Print( const char *msg );
+void CON_DisableDraw();
+void CON_EnableDraw();
 int Sys_Chmod(const char* filename, int mode);
 void Sys_Restart(const char* reason);
 
@@ -119,6 +120,8 @@ void Sys_BeginShutdownWatchdog();
 signed int __cdecl Sys_ResetEvent(HANDLE handle);
 signed int __cdecl Sys_SetEvent(HANDLE handle);
 HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name);
+void Sys_PrintBacktrace();
+void Sys_SleepMSec(int msec);
 
 #ifdef __cplusplus
 }

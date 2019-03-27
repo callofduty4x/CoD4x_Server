@@ -78,6 +78,7 @@ extern cvar_t* com_developer;
 extern cvar_t* useFastFile;
 extern cvar_t* com_animCheck;
 extern cvar_t* com_version;
+extern cvar_t* com_logrcon; //Output response to rcon commands to internal console
 extern qboolean com_securemode;
 extern unsigned int com_expectedHunkUsage;
 extern qboolean com_fixedConsolePosition;

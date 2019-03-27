@@ -4,6 +4,7 @@
 #include "qcommon_logprint.h"
 
 #include "server_public.h"
+#include "cscr_stringlist.h"
 
 level_locals_t level;
 
@@ -160,5 +161,175 @@ void G_InitSomeVariables(int framerate)
     helicopter_thinktime = 1000 / level.framerate;
     vehicle_frametime = 1.0f / (float)level.framerate;
 }
+
+
+void __cdecl G_RunThink(struct gentity_s *ent)
+{
+  void (__cdecl *think)(struct gentity_s *);
+  int thinktime;
+
+  thinktime = ent->nextthink;
+  if ( thinktime > 0 && thinktime <= level.time )
+  {
+    ent->nextthink = 0;
+    think = entityHandlers[(uint8_t)ent->handler].think;
+    if ( !think )
+    {
+      Com_Error(ERR_DROP, "NULL ent->think");
+    }
+    think(ent);
+  }
+}
+
+void G_RunFrameForEntity(struct gentity_s *ent)
+{
+  assert(ent->r.inuse);
+
+  if ( ent->processedFrame == level.framenum )
+  {
+    return;
+  }
+  ent->processedFrame = level.framenum;
+  if ( ent->tagInfo )
+  {
+    assert(ent->tagInfo->parent != NULL);
+    assert(ent->tagInfo->parent != ent);
+    G_RunFrameForEntity(ent->tagInfo->parent);
+  }
+  assert(ent->r.inuse);
+
+  assertx(ent->r.maxs[0] >= ent->r.mins[0], "entnum: %d, origin: %g %g %g, classname: %s", ent->s.number, ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2], SL_ConvertToString(ent->classname));
+  assertx(ent->r.maxs[1] >= ent->r.mins[1], "entnum: %d, origin: %g %g %g, classname: %s", ent->s.number, ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2], SL_ConvertToString(ent->classname));
+  assertx(ent->r.maxs[2] >= ent->r.mins[2], "entnum: %d, origin: %g %g %g, classname: %s", ent->s.number, ent->r.currentOrigin[0], ent->r.currentOrigin[1], ent->r.currentOrigin[2], SL_ConvertToString(ent->classname));
+
+  if ( ent->s.lerp.eFlags & 0x10000 )
+  {
+    if ( level.time > ent->s.time2 )
+    {
+      G_FreeEntity(ent);
+      return;
+    }
+  }
+  if ( level.time - ent->eventTime > 300 )
+  {
+    if ( ent->freeAfterEvent )
+    {
+      G_FreeEntity(ent);
+      return;
+    }
+    if ( ent->unlinkAfterEvent )
+    {
+      ent->unlinkAfterEvent = 0;
+      SV_UnlinkEntity(ent);
+    }
+  }
+  if ( ent->freeAfterEvent )
+  {
+    return;
+  }
+  switch ( ent->s.eType )
+  {
+    case ET_MISSILE:
+      G_RunMissile(ent);
+      return;
+    case ET_ITEM:
+      if ( ent->tagInfo )
+      {
+        G_GeneralLink(ent);
+        G_RunThink(ent);
+        return;
+      }
+      G_RunItem(ent);
+      return;
+    case ET_PLAYER_CORPSE:
+      G_RunCorpse(ent);
+      return;
+    default:
+      break;
+  }
+  if ( ent->physicsObject )
+  {
+    G_RunItem(ent);
+    return;
+  }
+  if ( ent->s.eType == ET_SCRIPTMOVER || ent->s.eType == ET_PLANE || ent->s.eType == ET_PRIMARY_LIGHT )
+  {
+    G_RunMover(ent);
+    return;
+  }
+  if ( ent->client )
+  {
+    G_RunClient(ent);
+    return;
+  }
+  if ( ent->s.eType == ET_GENERAL && ent->tagInfo )
+  {
+    G_GeneralLink(ent);
+  }
+  G_RunThink(ent);
+}
+
+
+void __cdecl G_FreeEntity(gentity_s *gEnt)
+{
+  struct XAnimTree_s *tree;
+
+  G_EntUnlink(gEnt);
+  while ( gEnt->tagChildren )
+  {
+    G_EntUnlink(gEnt->tagChildren);
+  }
+
+  SV_UnlinkEntity(gEnt);
+  tree = SV_DObjGetTree(gEnt);
+  if ( tree )
+  {
+    XAnimClearTree(tree);
+  }
+  Com_SafeServerDObjFree(gEnt->s.number);
+  G_FreeEntityRefs(gEnt);
+  if ( gEnt->pTurretInfo )
+  {
+    assert(gEnt->pTurretInfo->inuse);
+    G_FreeTurret(gEnt);
+    assert(gEnt->pTurretInfo == NULL);
+  }
+  if ( gEnt->scr_vehicle )
+  {
+    G_VehFreeEntity(gEnt);
+    assert(gEnt->scr_vehicle == NULL);
+  }
+  if ( gEnt->s.eType == 2 )
+  {
+    PlayerCorpse_Free(gEnt);
+  }
+
+  EntHandleDissociate(gEnt);
+  gEnt->r.ownerNum.setEnt( NULL);
+  gEnt->parent.setEnt(NULL);
+  gEnt->missileTargetEnt.setEnt(NULL);
+
+  Scr_FreeEntity(gEnt);
+
+  int useCount = gEnt->useCount;
+  memset(gEnt, 0, sizeof(*gEnt));
+  gEnt->eventTime = level.time;
+
+  if ( gEnt - level.gentities >= 72 )
+  {
+    if ( level.lastFreeEnt )
+    {
+      level.lastFreeEnt->nextFree = gEnt;
+    }
+    else
+    {
+      level.firstFreeEnt = gEnt;
+    }
+    level.lastFreeEnt = gEnt;
+    gEnt->nextFree = 0;
+  }
+  gEnt->useCount = useCount + 1;
+}
+
 
 };

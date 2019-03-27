@@ -22,7 +22,6 @@
 	extern _ZN10MacDisplay17SetCurrentContextEP16OpaqueContextRef
 	extern _CreateFileA
 	extern Com_PrintWarning
-	extern g_loadingAssets
 	extern Q_stricmp
 	extern memset
 	extern _GetFileSize
@@ -139,6 +138,9 @@
 	extern g_poolSize
 	extern DB_LoadXAssets
 	extern Load_WeaponDefAsset
+	extern DB_CreateDefaultEntry
+	extern DB_FindXAssetHeaderReal
+	extern DB_AddXAssetInternal
 
 ;Exports of db_registry:
 	global DB_DynamicCloneXAssetHandler
@@ -229,16 +231,11 @@
 	global DB_AllocXAsset_RawFile
 	global DB_AllocXAsset_StringTable
 	global g_debugZoneName
-	global g_missingAssetFile
 	global DB_PrintAssetName
 	global DB_SyncExternalAssets
 	global DB_AllocXAssetHeader
 	global DB_FreeUnusedResources
-	global DB_CreateDefaultEntry
-	global DB_LinkXAssetEntry
 	global DB_UnloadXZone
-	global DB_AddXAsset
-	global DB_PostLoadXZone
 	global DB_Cleanup
 	global Load_FontAsset
 	global Load_MenuAsset
@@ -257,13 +254,11 @@
 	global Mark_ClipMapAsset
 	global Mark_MapEntsAsset
 	global Mark_RawFileAsset
-	global DB_IsXAssetDefault
 	global DB_UpdateDebugZone
 	global Load_ComWorldAsset
 	global Load_GfxImageAsset
 	global Load_GfxWorldAsset
 	global Load_LightDefAsset
-	global Load_MaterialAsset
 	global Load_MenuListAsset
 	global Load_SndCurveAsset
 	global Mark_ComWorldAsset
@@ -272,7 +267,6 @@
 	global Mark_LightDefAsset
 	global Mark_MaterialAsset
 	global Mark_MenuListAsset
-	global DB_FindXAssetHeaderReal
 	global Mark_WeaponDefAsset
 	global DB_LoadDelayedImages
 	global Load_PhysPresetAsset
@@ -289,19 +283,15 @@
 	global Mark_GameWorldSpAsset
 	global Mark_LoadedSoundAsset
 	global Mark_StringTableAsset
-	global DB_EndRecoverLostDevice
-	global DB_EnumXAssets_FastFile
 	global Load_FxImpactTableAsset
 	global Load_LocalizeEntryAsset
 	global Mark_FxImpactTableAsset
 	global Mark_LocalizeEntryAsset
 	global DB_GetIndexBufferAndBase
 	global Load_FxEffectDefFromName
-	global DB_BeginRecoverLostDevice
 	global Load_GetCurrentZoneHandle
 	global Load_snd_alias_list_Asset
 	global DB_GetVertexBufferAndOffset
-	global DB_GetAllXAssetOfType_FastFile
 	global Load_MaterialTechniqueSetAsset
 	global Mark_MaterialTechniqueSetAsset
 	global DB_Update
@@ -2063,619 +2053,6 @@ DB_FreeUnusedResources_70:
 	jmp DB_FreeUnusedResources_100
 
 
-;DB_CreateDefaultEntry(XAssetType, char const*)
-DB_CreateDefaultEntry:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x3c
-	mov [ebp-0x1c], eax
-	mov [ebp-0x20], edx
-	mov edi, [eax*4+g_defaultAssetName]
-	mov esi, eax
-	mov ebx, edi
-	jmp DB_CreateDefaultEntry_10
-DB_CreateDefaultEntry_30:
-	test eax, eax
-	jz DB_CreateDefaultEntry_20
-	mov edx, eax
-DB_CreateDefaultEntry_40:
-	mov eax, esi
-	shl eax, 0x5
-	sub eax, esi
-	lea esi, [eax+edx]
-	add ebx, 0x1
-DB_CreateDefaultEntry_10:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz DB_CreateDefaultEntry_30
-	mov edx, 0x2f
-	jmp DB_CreateDefaultEntry_40
-DB_CreateDefaultEntry_20:
-	and esi, 0x7fff
-	movzx eax, word [esi+esi+db_hashTable]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_CreateDefaultEntry_50
-	jmp DB_CreateDefaultEntry_60
-DB_CreateDefaultEntry_70:
-	movzx eax, word [ebx+0xa]
-	movzx edx, ax
-	test ax, ax
-	jz DB_CreateDefaultEntry_60
-DB_CreateDefaultEntry_50:
-	mov eax, edx
-	shl eax, 0x4
-	lea ebx, [eax+g_assetEntryPool]
-	mov edx, [ebp-0x1c]
-	cmp edx, [eax+g_assetEntryPool]
-	jnz DB_CreateDefaultEntry_70
-	mov [esp], ebx
-	call DB_GetXAssetName
-	mov [esp+0x4], edi
-	mov [esp], eax
-	call Q_stricmp
-	test eax, eax
-	jz DB_CreateDefaultEntry_80
-	movzx eax, word [ebx+0xa]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_CreateDefaultEntry_50
-DB_CreateDefaultEntry_60:
-	xor ebx, ebx
-DB_CreateDefaultEntry_180:
-	test ebx, ebx
-	jz DB_CreateDefaultEntry_90
-DB_CreateDefaultEntry_200:
-	add dword [g_defaultAssetCount], 0x1
-	mov edi, [g_freeAssetEntryHead]
-	test edi, edi
-	jz DB_CreateDefaultEntry_100
-DB_CreateDefaultEntry_210:
-	mov eax, [edi]
-	mov [g_freeAssetEntryHead], eax
-	mov eax, [ebp-0x1c]
-	mov [edi], eax
-	mov eax, [ebp-0x1c]
-	call DB_AllocXAssetHeader
-	mov [edi+0x4], eax
-	mov byte [edi+0x8], 0x0
-	mov byte [edi+0x9], 0x0
-	mov word [edi+0xa], 0x0
-	mov word [edi+0xc], 0x0
-	mov edx, [ebp-0x1c]
-	mov [esp], edx
-	call DB_GetXAssetTypeSize
-	mov edx, [edi+0x4]
-	mov [esp+0x8], eax
-	mov [esp+0x4], ebx
-	mov [esp], edx
-	call memcpy
-	cmp dword [ebp-0x1c], 0x7
-	jz DB_CreateDefaultEntry_110
-DB_CreateDefaultEntry_160:
-	mov esi, [ebp-0x1c]
-	mov ebx, [ebp-0x20]
-	jmp DB_CreateDefaultEntry_120
-DB_CreateDefaultEntry_140:
-	test eax, eax
-	jz DB_CreateDefaultEntry_130
-	mov edx, eax
-DB_CreateDefaultEntry_150:
-	mov eax, esi
-	shl eax, 0x5
-	sub eax, esi
-	lea esi, [eax+edx]
-	add ebx, 0x1
-DB_CreateDefaultEntry_120:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz DB_CreateDefaultEntry_140
-	mov edx, 0x2f
-	jmp DB_CreateDefaultEntry_150
-DB_CreateDefaultEntry_130:
-	mov edx, esi
-	and edx, 0x7fff
-	movzx eax, word [edx+edx+db_hashTable]
-	mov [edi+0xa], ax
-	mov eax, edi
-	sub eax, g_assetEntryPool
-	sar eax, 0x4
-	mov [edx+edx+db_hashTable], ax
-	mov dword [esp+0x4], 0x4
-	mov eax, [ebp-0x20]
-	mov [esp], eax
-	call SL_GetString
-	mov [esp], eax
-	call SL_ConvertToString
-	mov [esp+0x4], eax
-	mov [esp], edi
-	call DB_SetXAssetName
-	mov byte [edi+0x9], 0x1
-	mov eax, edi
-	add esp, 0x3c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_CreateDefaultEntry_110:
-	mov eax, [edi+0x4]
-	mov dword [eax+0x8], 0x0
-	mov eax, [edi+0x4]
-	mov dword [eax+0x4], 0x0
-	jmp DB_CreateDefaultEntry_160
-DB_CreateDefaultEntry_170:
-	movzx eax, ax
-	shl eax, 0x4
-	lea ebx, [eax+g_assetEntryPool]
-DB_CreateDefaultEntry_80:
-	movzx eax, word [ebx+0xc]
-	test ax, ax
-	jnz DB_CreateDefaultEntry_170
-	mov ebx, [ebx+0x4]
-	jmp DB_CreateDefaultEntry_180
-DB_CreateDefaultEntry_90:
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	mov eax, [ebp-0x1c]
-	sub eax, 0xa
-	cmp eax, 0x1
-	jbe DB_CreateDefaultEntry_190
-	mov edx, [ebp-0x20]
-	mov [esp+0x10], edx
-	mov eax, g_assetNames
-	mov edx, [ebp-0x1c]
-	mov eax, [eax+edx*4]
-	mov [esp+0xc], eax
-	mov eax, [edx*4+g_defaultAssetName]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_could_not_load_d
-	mov dword [esp], 0x2
-	call Com_Error
-	jmp DB_CreateDefaultEntry_200
-DB_CreateDefaultEntry_100:
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	mov dword [esp+0x4], _cstring_could_not_alloca
-	mov dword [esp], 0x2
-	call Com_Error
-	jmp DB_CreateDefaultEntry_210
-DB_CreateDefaultEntry_190:
-	mov eax, [ebp-0x20]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_couldnt_find_the
-	mov dword [esp], 0x2
-	call Com_Error
-	jmp DB_CreateDefaultEntry_200
-	nop
-
-
-;DB_LinkXAssetEntry(XAssetEntry*, int)
-DB_LinkXAssetEntry:
-DB_LinkXAssetEntry_290:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x8dc
-	mov [ebp-0x8b4], eax
-	mov [ebp-0x8b8], edx
-	mov [esp], eax
-	call DB_GetXAssetName
-	mov [ebp-0x8ac], eax
-	cmp byte [eax], 0x2c
-	setz al
-	mov edi, eax
-	cmp al, 0x1
-	sbb dword [ebp-0x8ac], 0xffffffff
-	mov edx, [ebp-0x8b4]
-	mov edx, [edx]
-	mov [ebp-0x8a4], edx
-	mov esi, edx
-	mov ebx, [ebp-0x8ac]
-	jmp DB_LinkXAssetEntry_10
-DB_LinkXAssetEntry_30:
-	test eax, eax
-	jz DB_LinkXAssetEntry_20
-	mov edx, eax
-DB_LinkXAssetEntry_40:
-	mov eax, esi
-	shl eax, 0x5
-	sub eax, esi
-	lea esi, [eax+edx]
-	add ebx, 0x1
-DB_LinkXAssetEntry_10:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz DB_LinkXAssetEntry_30
-	mov edx, 0x2f
-	jmp DB_LinkXAssetEntry_40
-DB_LinkXAssetEntry_20:
-	and esi, 0x7fff
-	mov [ebp-0x8a8], esi
-	movzx eax, word [esi+esi+db_hashTable]
-	movzx ebx, ax
-	test ax, ax
-	jnz DB_LinkXAssetEntry_50
-	mov dword [ebp-0x8b0], 0x0
-DB_LinkXAssetEntry_80:
-	mov edx, [ebp-0x8b8]
-	test edx, edx
-	jz DB_LinkXAssetEntry_60
-	test ebx, ebx
-	jnz DB_LinkXAssetEntry_70
-DB_LinkXAssetEntry_130:
-	mov ebx, [ebp-0x8a8]
-	movzx eax, word [ebx+ebx+db_hashTable]
-	mov esi, [ebp-0x8b4]
-	mov [esi+0xa], ax
-	mov eax, esi
-	sub eax, g_assetEntryPool
-	sar eax, 0x4
-	mov [ebx+ebx+db_hashTable], ax
-	mov [ebp-0x8b0], esi
-	mov eax, esi
-DB_LinkXAssetEntry_180:
-	add esp, 0x8dc
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_LinkXAssetEntry_100:
-	mov [esp], ecx
-	call DB_GetXAssetName
-	mov edx, [ebp-0x8ac]
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call Q_stricmp
-	test eax, eax
-	jz DB_LinkXAssetEntry_80
-	mov ecx, [ebp-0x8b0]
-DB_LinkXAssetEntry_90:
-	movzx eax, word [ecx+0xa]
-	movzx ebx, ax
-	test ax, ax
-	jz DB_LinkXAssetEntry_80
-DB_LinkXAssetEntry_50:
-	mov eax, ebx
-	shl eax, 0x4
-	lea ecx, [eax+g_assetEntryPool]
-	mov [ebp-0x8b0], ecx
-	mov esi, [ebp-0x8a4]
-	cmp esi, [eax+g_assetEntryPool]
-	jnz DB_LinkXAssetEntry_90
-	jmp DB_LinkXAssetEntry_100
-DB_LinkXAssetEntry_60:
-	mov eax, edi
-	test al, al
-	jnz DB_LinkXAssetEntry_110
-	mov edx, [ebp-0x8b4]
-	mov esi, [edx]
-	mov edi, [edx+0x4]
-	mov ecx, [g_zoneIndex]
-	mov [ebp-0x8a0], ecx
-	mov eax, [g_freeAssetEntryHead]
-	mov [ebp-0x89c], eax
-	test eax, eax
-	jz DB_LinkXAssetEntry_120
-	mov edx, eax
-DB_LinkXAssetEntry_320:
-	mov [ebp-0x8b4], edx
-	mov eax, [edx]
-	mov [g_freeAssetEntryHead], eax
-	mov [edx], esi
-	mov eax, esi
-	call DB_AllocXAssetHeader
-	mov ecx, [ebp-0x8b4]
-	mov [ecx+0x4], eax
-	movzx eax, byte [ebp-0x8a0]
-	mov [ecx+0x8], al
-	mov byte [ecx+0x9], 0x0
-	mov word [ecx+0xa], 0x0
-	mov word [ecx+0xc], 0x0
-	mov [esp], esi
-	call DB_GetXAssetTypeSize
-	mov ecx, [ebp-0x8b4]
-	mov edx, [ecx+0x4]
-	mov [esp+0x8], eax
-	mov [esp+0x4], edi
-	mov [esp], edx
-	call memcpy
-	test ebx, ebx
-	jz DB_LinkXAssetEntry_130
-DB_LinkXAssetEntry_70:
-	mov eax, [ebp-0x8b0]
-	cmp byte [eax+0x8], 0x0
-	jnz DB_LinkXAssetEntry_140
-	mov eax, [ebp-0x8b8]
-	test eax, eax
-	jz DB_LinkXAssetEntry_150
-	sub dword [g_defaultAssetCount], 0x1
-	mov ebx, [ebp-0x8b0]
-	cmp byte [ebx+0x9], 0x0
-	jnz DB_LinkXAssetEntry_160
-	mov esi, ebx
-DB_LinkXAssetEntry_310:
-	xor ebx, ebx
-	cmp byte [esi+0x8], 0x0
-	setz bl
-	mov eax, [esi]
-	mov edx, [ebp-0x8b4]
-	mov ecx, [edx+0x4]
-	mov edx, [esi+0x4]
-	mov eax, [eax*4+DB_DynamicCloneXAssetHandler]
-	test eax, eax
-	jz DB_LinkXAssetEntry_170
-	mov [esp+0x8], ebx
-	mov [esp+0x4], ecx
-	mov [esp], edx
-	call eax
-DB_LinkXAssetEntry_170:
-	mov ecx, [ebp-0x8b4]
-	mov eax, [ecx]
-	mov [esp], eax
-	call DB_GetXAssetTypeSize
-	mov ebx, [ebp-0x8b4]
-	mov edx, [ebx+0x4]
-	mov esi, [ebp-0x8b0]
-	mov ecx, [esi+0x4]
-	mov [esp+0x8], eax
-	mov [esp+0x4], edx
-	mov [esp], ecx
-	call memcpy
-	movzx eax, byte [ebx+0x8]
-	mov [esi+0x8], al
-	mov edx, [ebx+0x4]
-	mov eax, [ebx]
-	mov ecx, [eax*4+DB_FreeXAssetHeaderHandler]
-	mov [esp+0x4], edx
-	mov eax, [eax*4+DB_XAssetPool]
-	mov [esp], eax
-	call ecx
-	mov eax, [g_freeAssetEntryHead]
-	mov [g_freeAssetEntryHead], ebx
-	mov [ebx], eax
-	mov eax, [ebp-0x8b0]
-	jmp DB_LinkXAssetEntry_180
-DB_LinkXAssetEntry_110:
-	test ebx, ebx
-	jz DB_LinkXAssetEntry_190
-	mov eax, [ebp-0x8b0]
-	add esp, 0x8dc
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_LinkXAssetEntry_140:
-	mov edx, [ebp-0x8a4]
-	mov eax, [edx*4+g_defaultAssetName]
-	cmp byte [eax], 0x0
-	jnz DB_LinkXAssetEntry_200
-	cmp edx, 0x1f
-	jz DB_LinkXAssetEntry_200
-	cmp edx, 0xf
-	jz DB_LinkXAssetEntry_200
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	mov ecx, [ebp-0x8b4]
-	movzx eax, byte [ecx+0x8]
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	lea edx, [edx*8+g_zones]
-	mov [esp+0x10], edx
-	mov ebx, [ebp-0x8b0]
-	movzx eax, byte [ebx+0x8]
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	lea edx, [edx*8+g_zones]
-	mov [esp+0xc], edx
-	mov esi, [ebp-0x8ac]
-	mov [esp+0x8], esi
-	mov dword [esp+0x4], _cstring_attempting_to_ov
-	mov dword [esp], 0x2
-	call Com_Error
-DB_LinkXAssetEntry_200:
-	mov eax, [ebp-0x8b4]
-	movzx edi, byte [eax+0x8]
-	mov edx, edi
-	movzx eax, dl
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	lea ecx, [edx*8]
-	mov ebx, [ebp-0x8b0]
-	movzx eax, byte [ebx+0x8]
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	mov eax, [ecx+g_zones+0x40]
-	cmp eax, [edx*8+g_zones+0x40]
-	jge DB_LinkXAssetEntry_210
-	mov esi, ebx
-	add esi, 0xc
-	movzx eax, word [ebx+0xc]
-	test ax, ax
-	jz DB_LinkXAssetEntry_220
-	movzx eax, ax
-	shl eax, 0x4
-	lea ebx, [eax+g_assetEntryPool]
-	movzx eax, byte [ebx+0x8]
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	mov eax, [edx*8+g_zones+0x40]
-	cmp eax, [ecx+g_zones+0x40]
-	jle DB_LinkXAssetEntry_220
-DB_LinkXAssetEntry_230:
-	lea esi, [ebx+0xc]
-	movzx eax, word [ebx+0xc]
-	test ax, ax
-	jz DB_LinkXAssetEntry_220
-	movzx eax, ax
-	shl eax, 0x4
-	lea ebx, [eax+g_assetEntryPool]
-	movzx eax, byte [ebx+0x8]
-	lea ecx, [eax+eax*4]
-	lea ecx, [eax+ecx*4]
-	mov edx, edi
-	movzx eax, dl
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	mov eax, [ecx*8+g_zones+0x40]
-	cmp eax, [edx*8+g_zones+0x40]
-	jg DB_LinkXAssetEntry_230
-DB_LinkXAssetEntry_220:
-	movzx eax, word [esi]
-	mov ecx, [ebp-0x8b4]
-	mov [ecx+0xc], ax
-	sub ecx, g_assetEntryPool
-	mov [ebp-0x8b4], ecx
-	sar ecx, 0x4
-	mov [esi], cx
-	mov eax, [ebp-0x8b0]
-	jmp DB_LinkXAssetEntry_180
-DB_LinkXAssetEntry_190:
-	mov edx, [ebp-0x8ac]
-	mov eax, [ebp-0x8a4]
-	call DB_CreateDefaultEntry
-	mov [ebp-0x8b0], eax
-	add esp, 0x8dc
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_LinkXAssetEntry_210:
-	mov eax, [ebp-0x8b8]
-	test eax, eax
-	jnz DB_LinkXAssetEntry_240
-DB_LinkXAssetEntry_150:
-	mov eax, [g_sync]
-	test eax, eax
-	jnz DB_LinkXAssetEntry_250
-	cmp dword [g_copyInfoCount], 0x7ff
-	ja DB_LinkXAssetEntry_260
-DB_LinkXAssetEntry_300:
-	mov eax, [g_copyInfoCount]
-	mov edx, [ebp-0x8b4]
-	mov [eax*4+g_copyInfo], edx
-	add eax, 0x1
-	mov [g_copyInfoCount], eax
-	mov eax, [ebp-0x8b0]
-	jmp DB_LinkXAssetEntry_180
-DB_LinkXAssetEntry_240:
-	mov eax, [ebp-0x8b0]
-	cmp byte [eax+0x9], 0x0
-	jnz DB_LinkXAssetEntry_270
-	mov ecx, eax
-DB_LinkXAssetEntry_330:
-	movzx eax, word [ecx+0xc]
-	mov ebx, [ebp-0x8b4]
-	mov [ebx+0xc], ax
-	mov eax, ebx
-	sub eax, g_assetEntryPool
-	sar eax, 0x4
-	mov [ecx+0xc], ax
-	mov eax, [ecx]
-	mov [esp], eax
-	call DB_GetXAssetTypeSize
-	mov esi, [ebp-0x8b0]
-	mov edx, [esi+0x4]
-	lea edi, [ebp-0x890]
-	mov [esp+0x8], eax
-	mov [esp+0x4], edx
-	mov [esp], edi
-	call memcpy
-	mov eax, [ebp-0x8b0]
-	movzx esi, byte [eax+0x8]
-	mov edx, esi
-	xor ebx, ebx
-	test dl, dl
-	setz bl
-	mov ecx, [ebp-0x8b0]
-	mov eax, [ecx]
-	mov edx, [ebp-0x8b4]
-	mov ecx, [edx+0x4]
-	mov edx, [ebp-0x8b0]
-	mov edx, [edx+0x4]
-	mov [ebp-0x8bc], edx
-	mov eax, [eax*4+DB_DynamicCloneXAssetHandler]
-	test eax, eax
-	jz DB_LinkXAssetEntry_280
-	mov [esp+0x8], ebx
-	mov [esp+0x4], ecx
-	mov [esp], edx
-	call eax
-DB_LinkXAssetEntry_280:
-	mov ecx, [ebp-0x8b4]
-	mov eax, [ecx]
-	mov [esp], eax
-	call DB_GetXAssetTypeSize
-	mov ebx, [ebp-0x8b4]
-	mov edx, [ebx+0x4]
-	mov ebx, [ebp-0x8b0]
-	mov ecx, [ebx+0x4]
-	mov [esp+0x8], eax
-	mov [esp+0x4], edx
-	mov [esp], ecx
-	call memcpy
-	mov edx, [ebp-0x8b4]
-	movzx eax, byte [edx+0x8]
-	mov [ebx+0x8], al
-	mov ecx, [ebp-0x8a4]
-	mov [esp], ecx
-	call DB_GetXAssetTypeSize
-	mov ebx, [ebp-0x8b4]
-	mov edx, [ebx+0x4]
-	mov [esp+0x8], eax
-	mov [esp+0x4], edi
-	mov [esp], edx
-	call memcpy
-	mov eax, esi
-	mov [ebx+0x8], al
-	mov eax, [ebp-0x8b0]
-	jmp DB_LinkXAssetEntry_180
-DB_LinkXAssetEntry_250:
-	mov edx, 0x1
-	mov eax, [ebp-0x8b4]
-	call DB_LinkXAssetEntry_290
-	mov eax, [ebp-0x8b0]
-	jmp DB_LinkXAssetEntry_180
-DB_LinkXAssetEntry_260:
-	mov dword [esp], _cstring_g_copyinfo_excee
-	call Sys_Error
-	jmp DB_LinkXAssetEntry_300
-DB_LinkXAssetEntry_160:
-	mov eax, varXAsset
-	mov [eax], ebx
-	call Mark_XAsset
-	mov esi, [ebp-0x8b0]
-	jmp DB_LinkXAssetEntry_310
-DB_LinkXAssetEntry_120:
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	mov dword [esp+0x4], _cstring_could_not_alloca
-	mov dword [esp], 0x2
-	call Com_Error
-	mov edx, [ebp-0x89c]
-	jmp DB_LinkXAssetEntry_320
-DB_LinkXAssetEntry_270:
-	mov edx, eax
-	mov eax, varXAsset
-	mov [eax], edx
-	call Mark_XAsset
-	mov ecx, [ebp-0x8b0]
-	jmp DB_LinkXAssetEntry_330
-	nop
 
 
 ;DB_UnloadXZone(unsigned int, unsigned char)
@@ -2978,134 +2355,6 @@ DB_UnloadXZone_110:
 	jmp DB_UnloadXZone_100
 
 
-;DB_AddXAsset(XAssetType, XAssetHeader)
-DB_AddXAsset:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x24
-	mov [ebp-0x18], eax
-	mov [ebp-0x14], edx
-	jmp DB_AddXAsset_10
-DB_AddXAsset_30:
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-DB_AddXAsset_20:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-DB_AddXAsset_10:
-	mov eax, [db_hashCritSect]
-	test eax, eax
-	jnz DB_AddXAsset_20
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedIncrement
-	sub eax, 0x1
-	jnz DB_AddXAsset_30
-	mov eax, [db_hashCritSect]
-	test eax, eax
-	jnz DB_AddXAsset_30
-	lea eax, [ebp-0x18]
-	xor edx, edx
-	call DB_LinkXAssetEntry
-	mov ebx, eax
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	cmp byte [g_isRecoveringLostDevice], 0x0
-	jz DB_AddXAsset_40
-	mov byte [g_mayRecoverLostAssets], 0x1
-DB_AddXAsset_50:
-	mov dword [esp], 0x19
-	call Sys_Sleep
-	cmp byte [g_isRecoveringLostDevice], 0x0
-	jnz DB_AddXAsset_50
-DB_AddXAsset_40:
-	mov eax, [ebx+0x4]
-	add esp, 0x24
-	pop ebx
-	pop ebp
-	ret
-
-
-;DB_PostLoadXZone()
-DB_PostLoadXZone:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	call Sys_IsDatabaseReady2
-	test eax, eax
-	jnz DB_PostLoadXZone_10
-	mov eax, [g_copyInfoCount]
-	test eax, eax
-	jz DB_PostLoadXZone_20
-	cmp byte [g_archiveBuf], 0x0
-	jnz DB_PostLoadXZone_30
-	jmp DB_PostLoadXZone_40
-DB_PostLoadXZone_60:
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-DB_PostLoadXZone_50:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-DB_PostLoadXZone_30:
-	mov eax, [db_hashCritSect]
-	test eax, eax
-	jnz DB_PostLoadXZone_50
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedIncrement
-	sub eax, 0x1
-	jnz DB_PostLoadXZone_60
-	mov eax, [db_hashCritSect]
-	test eax, eax
-	jnz DB_PostLoadXZone_60
-	mov eax, [g_copyInfoCount]
-	test eax, eax
-	jnz DB_PostLoadXZone_70
-DB_PostLoadXZone_90:
-	mov dword [g_copyInfoCount], 0x0
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	call Material_DirtyTechniqueSetOverrides
-	call Material_OverrideTechniqueSets
-	mov byte [g_archiveBuf], 0x0
-	call DB_LoadSounds
-	call DB_LoadDObjs
-DB_PostLoadXZone_20:
-	call Material_DirtyTechniqueSetOverrides
-	call BG_FillInAllWeaponItems
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	jmp Sys_DatabaseCompleted2
-DB_PostLoadXZone_10:
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-DB_PostLoadXZone_40:
-	mov byte [g_archiveBuf], 0x1
-	call R_SyncRenderThread
-	call R_ClearAllStaticModelCacheRefs
-	call DB_SaveSounds
-	call DB_SaveDObjs
-	jmp DB_PostLoadXZone_30
-DB_PostLoadXZone_70:
-	xor esi, esi
-	mov ebx, g_copyInfo
-DB_PostLoadXZone_80:
-	mov edx, 0x1
-	mov eax, [ebx]
-	call DB_LinkXAssetEntry
-	add esi, 0x1
-	add ebx, 0x4
-	cmp esi, [g_copyInfoCount]
-	jb DB_PostLoadXZone_80
-	jmp DB_PostLoadXZone_90
-	nop
-
 
 ;DB_Cleanup()
 DB_Cleanup:
@@ -3126,7 +2375,7 @@ Load_FontAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x13
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3144,7 +2393,7 @@ Load_MenuAsset:
 	mov ebx, [esi]
 	mov edx, ebx
 	mov eax, 0x15
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [esi], eax
 	mov eax, [ebx+0xa4]
 	test eax, eax
@@ -3448,7 +2697,7 @@ Load_XModelAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x3
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3535,7 +2784,7 @@ Load_ClipMapAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0xb
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3552,7 +2801,7 @@ Load_MapEntsAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0xf
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3569,7 +2818,7 @@ Load_RawFileAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x1f
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3760,100 +3009,6 @@ Mark_RawFileAsset_50:
 	add [eax], al
 
 
-;DB_IsXAssetDefault(XAssetType, char const*)
-DB_IsXAssetDefault:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x1c
-	mov edi, [ebp+0x8]
-	mov esi, edi
-	mov ebx, [ebp+0xc]
-	jmp DB_IsXAssetDefault_10
-DB_IsXAssetDefault_30:
-	test eax, eax
-	jz DB_IsXAssetDefault_20
-	mov edx, eax
-DB_IsXAssetDefault_40:
-	mov eax, esi
-	shl eax, 0x5
-	sub eax, esi
-	lea esi, [eax+edx]
-	add ebx, 0x1
-DB_IsXAssetDefault_10:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz DB_IsXAssetDefault_30
-	mov edx, 0x2f
-	jmp DB_IsXAssetDefault_40
-DB_IsXAssetDefault_20:
-	mov ebx, esi
-	and ebx, 0x7fff
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedIncrement
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_IsXAssetDefault_50
-DB_IsXAssetDefault_100:
-	movzx eax, word [ebx+ebx+db_hashTable]
-	movzx edx, ax
-	test ax, ax
-	jz DB_IsXAssetDefault_60
-	jmp DB_IsXAssetDefault_70
-DB_IsXAssetDefault_80:
-	movzx eax, word [ebx+0xa]
-	movzx edx, ax
-	test ax, ax
-	jz DB_IsXAssetDefault_60
-DB_IsXAssetDefault_70:
-	mov eax, edx
-	shl eax, 0x4
-	lea ebx, [eax+g_assetEntryPool]
-	cmp edi, [eax+g_assetEntryPool]
-	jnz DB_IsXAssetDefault_80
-	mov [esp], ebx
-	call DB_GetXAssetName
-	mov edx, [ebp+0xc]
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call Q_stricmp
-	test eax, eax
-	jnz DB_IsXAssetDefault_80
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedDecrement
-	xor eax, eax
-	cmp byte [ebx+0x8], 0x0
-	setz al
-	jmp DB_IsXAssetDefault_90
-DB_IsXAssetDefault_50:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jz DB_IsXAssetDefault_100
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_IsXAssetDefault_50
-	jmp DB_IsXAssetDefault_100
-DB_IsXAssetDefault_60:
-	mov eax, 0x1
-DB_IsXAssetDefault_90:
-	add esp, 0x1c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-	nop
-
-
-
 ;DB_UpdateDebugZone()
 DB_UpdateDebugZone:
 	push ebp
@@ -3897,7 +3052,7 @@ Load_ComWorldAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0xc
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3914,7 +3069,7 @@ Load_GfxImageAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x6
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3931,7 +3086,7 @@ Load_GfxWorldAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x10
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3948,24 +3103,7 @@ Load_LightDefAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x11
-	call DB_AddXAsset
-	mov [ebx], eax
-	add esp, 0x4
-	pop ebx
-	pop ebp
-	ret
-
-
-;Load_MaterialAsset(Material**)
-Load_MaterialAsset:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x4
-	mov ebx, [ebp+0x8]
-	mov edx, [ebx]
-	mov eax, 0x4
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3982,7 +3120,7 @@ Load_MenuListAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x14
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -3999,7 +3137,7 @@ Load_SndCurveAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x8
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -4373,449 +3511,6 @@ Mark_MenuListAsset_50:
 	nop
 
 
-;DB_FindXAssetHeaderReal(XAssetType, char const*)
-DB_FindXAssetHeaderReal:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x43c
-	mov esi, [ebp+0x8]
-	mov dword [ebp-0x41c], 0x0
-DB_FindXAssetHeader_140:
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedIncrement
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_FindXAssetHeader_10
-DB_FindXAssetHeader_60:
-	mov edi, esi
-	mov ebx, [ebp+0xc]
-	jmp DB_FindXAssetHeader_20
-DB_FindXAssetHeader_40:
-	test eax, eax
-	jz DB_FindXAssetHeader_30
-	mov edx, eax
-DB_FindXAssetHeader_50:
-	mov eax, edi
-	shl eax, 0x5
-	sub eax, edi
-	lea edi, [eax+edx]
-	add ebx, 0x1
-DB_FindXAssetHeader_20:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz DB_FindXAssetHeader_40
-	mov edx, 0x2f
-	jmp DB_FindXAssetHeader_50
-DB_FindXAssetHeader_10:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jz DB_FindXAssetHeader_60
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_FindXAssetHeader_10
-	jmp DB_FindXAssetHeader_60
-DB_FindXAssetHeader_30:
-	and edi, 0x7fff
-	movzx eax, word [edi+edi+db_hashTable]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_FindXAssetHeader_70
-	jmp DB_FindXAssetHeader_80
-DB_FindXAssetHeader_90:
-	movzx eax, word [edi+0xa]
-	movzx edx, ax
-	test ax, ax
-	jz DB_FindXAssetHeader_80
-DB_FindXAssetHeader_70:
-	mov eax, edx
-	shl eax, 0x4
-	lea edi, [eax+g_assetEntryPool]
-	cmp esi, [eax+g_assetEntryPool]
-	jnz DB_FindXAssetHeader_90
-	mov [esp], edi
-	call DB_GetXAssetName
-	mov edx, [ebp+0xc]
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call Q_stricmp
-	test eax, eax
-	jnz DB_FindXAssetHeader_90
-DB_FindXAssetHeader_210:
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedDecrement
-	test edi, edi
-	jz DB_FindXAssetHeader_100
-	cmp byte [edi+0x8], 0x0
-	jnz DB_FindXAssetHeader_110
-	call Sys_IsDatabaseReady2
-	test eax, eax
-	jnz DB_FindXAssetHeader_110
-DB_FindXAssetHeader_100:
-	call Sys_IsDatabaseThread
-	test al, al
-	jnz DB_FindXAssetHeader_120
-	mov edx, [ebp-0x41c]
-	test edx, edx
-	jnz DB_FindXAssetHeader_130
-	call Sys_Milliseconds
-	mov [ebp-0x41c], eax
-	call Sys_IsDatabaseReady2
-	test eax, eax
-	jnz DB_FindXAssetHeader_140
-DB_FindXAssetHeader_130:
-	call Sys_IsDatabaseReady2
-	test eax, eax
-	jnz DB_FindXAssetHeader_120
-	call DB_IsMinimumFastFileLoaded
-	test al, al
-	jz DB_FindXAssetHeader_150
-	cmp byte [g_initializing], 0x0
-	jnz DB_FindXAssetHeader_120
-DB_FindXAssetHeader_150:
-	call Sys_IsRenderThread
-	test al, al
-	jz DB_FindXAssetHeader_160
-	mov eax, [g_mainThreadBlocked]
-	test eax, eax
-	jz DB_FindXAssetHeader_160
-	mov ebx, 0x1
-DB_FindXAssetHeader_220:
-	call Sys_IsDatabaseReady
-	test eax, eax
-	jz DB_FindXAssetHeader_170
-	call Sys_IsMainThread
-	test al, al
-	jnz DB_FindXAssetHeader_180
-	test bl, bl
-	jnz DB_FindXAssetHeader_180
-DB_FindXAssetHeader_170:
-	call Sys_IsMainThread
-	test al, al
-	jnz DB_FindXAssetHeader_190
-	mov dword [esp], 0x1
-	call Sys_HaveSuspendedDatabaseThread
-	mov ebx, eax
-	test eax, eax
-	jnz DB_FindXAssetHeader_200
-DB_FindXAssetHeader_230:
-	mov dword [esp], 0x1
-	call Sys_Sleep
-	test ebx, ebx
-	jz DB_FindXAssetHeader_140
-	mov dword [esp], 0x1
-	call Sys_SuspendDatabaseThread
-	jmp DB_FindXAssetHeader_140
-DB_FindXAssetHeader_80:
-	xor edi, edi
-	jmp DB_FindXAssetHeader_210
-DB_FindXAssetHeader_160:
-	xor ebx, ebx
-	jmp DB_FindXAssetHeader_220
-DB_FindXAssetHeader_180:
-	call DB_PostLoadXZone
-	jmp DB_FindXAssetHeader_140
-DB_FindXAssetHeader_190:
-	call Sys_FastFileBlockedCallback
-	mov dword [esp], 0x1
-	call Sys_HaveSuspendedDatabaseThread
-	mov ebx, eax
-	test eax, eax
-	jz DB_FindXAssetHeader_230
-DB_FindXAssetHeader_200:
-	mov dword [esp], 0x1
-	call Sys_ResumeDatabaseThread
-	jmp DB_FindXAssetHeader_230
-DB_FindXAssetHeader_250:
-	movzx eax, word [edi+0xa]
-	movzx edx, ax
-	test ax, ax
-	jz DB_FindXAssetHeader_240
-DB_FindXAssetHeader_350:
-	mov eax, edx
-	shl eax, 0x4
-	lea edi, [eax+g_assetEntryPool]
-	cmp esi, [eax+g_assetEntryPool]
-	jnz DB_FindXAssetHeader_250
-	mov [esp], edi
-	call DB_GetXAssetName
-	mov edx, [ebp+0xc]
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call Q_stricmp
-	test eax, eax
-	jnz DB_FindXAssetHeader_250
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-DB_FindXAssetHeader_110:
-	mov byte [edi+0x9], 0x1
-	mov ecx, [ebp-0x41c]
-	test ecx, ecx
-	jnz DB_FindXAssetHeader_260
-DB_FindXAssetHeader_280:
-	mov eax, [edi+0x4]
-DB_FindXAssetHeader_410:
-	add esp, 0x43c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_FindXAssetHeader_120:
-	test edi, edi
-	jz DB_FindXAssetHeader_270
-	mov byte [edi+0x9], 0x1
-	mov ecx, [ebp-0x41c]
-	test ecx, ecx
-	jz DB_FindXAssetHeader_280
-	jmp DB_FindXAssetHeader_260
-DB_FindXAssetHeader_300:
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-DB_FindXAssetHeader_290:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-DB_FindXAssetHeader_270:
-	mov eax, [db_hashCritSect]
-	test eax, eax
-	jnz DB_FindXAssetHeader_290
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedIncrement
-	sub eax, 0x1
-	jnz DB_FindXAssetHeader_300
-	mov eax, [db_hashCritSect]
-	test eax, eax
-	jnz DB_FindXAssetHeader_300
-	mov edi, esi
-	mov ebx, [ebp+0xc]
-	jmp DB_FindXAssetHeader_310
-DB_FindXAssetHeader_330:
-	test eax, eax
-	jz DB_FindXAssetHeader_320
-	mov edx, eax
-DB_FindXAssetHeader_340:
-	mov eax, edi
-	shl eax, 0x5
-	sub eax, edi
-	lea edi, [eax+edx]
-	add ebx, 0x1
-DB_FindXAssetHeader_310:
-	movsx eax, byte [ebx]
-	mov [esp], eax
-	call tolower
-	cmp eax, 0x5c
-	jnz DB_FindXAssetHeader_330
-	mov edx, 0x2f
-	jmp DB_FindXAssetHeader_340
-DB_FindXAssetHeader_260:
-	mov eax, g_assetNames
-	mov ebx, [eax+esi*4]
-	call Sys_Milliseconds
-	mov [esp+0x10], ebx
-	mov ecx, [ebp+0xc]
-	mov [esp+0xc], ecx
-	sub eax, [ebp-0x41c]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_waited_i_msec_fo
-	mov dword [esp], 0xa
-	call Com_Printf
-	jmp DB_FindXAssetHeader_280
-DB_FindXAssetHeader_320:
-	and edi, 0x7fff
-	movzx eax, word [edi+edi+db_hashTable]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_FindXAssetHeader_350
-DB_FindXAssetHeader_240:
-	mov eax, com_developer
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz DB_FindXAssetHeader_360
-	cmp esi, 0x18
-	ja DB_FindXAssetHeader_370
-	mov eax, 0x1
-	mov ecx, esi
-	shl eax, cl
-	test eax, 0x1600080
-	jz DB_FindXAssetHeader_380
-DB_FindXAssetHeader_360:
-	mov eax, [ebp-0x41c]
-	test eax, eax
-	jnz DB_FindXAssetHeader_390
-DB_FindXAssetHeader_470:
-	cmp esi, 0x16
-	jz DB_FindXAssetHeader_400
-	cmp esi, 0x1f
-	jz DB_FindXAssetHeader_400
-DB_FindXAssetHeader_530:
-	mov edx, [ebp+0xc]
-	mov eax, esi
-	call DB_CreateDefaultEntry
-	mov ebx, eax
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	mov eax, [ebx+0x4]
-	jmp DB_FindXAssetHeader_410
-DB_FindXAssetHeader_450:
-	mov eax, loc_warnings
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz DB_FindXAssetHeader_400
-	mov eax, loc_warningsAsErrors
-	mov eax, [eax]
-	cmp byte [eax+0xc], 0x0
-	jz DB_FindXAssetHeader_420
-	mov ecx, [ebp+0xc]
-	mov [esp+0xc], ecx
-	mov eax, g_assetNames
-	mov eax, [eax+0x58]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_could_not_load_s
-	mov dword [esp], 0x1
-	call Com_PrintError
-DB_FindXAssetHeader_400:
-	mov dword [esp], db_hashCritSect+0x4
-	call Sys_InterlockedDecrement
-	xor eax, eax
-	jmp DB_FindXAssetHeader_410
-DB_FindXAssetHeader_390:
-	call Sys_Milliseconds
-	sub eax, [ebp-0x41c]
-	cmp eax, 0x64
-	jle DB_FindXAssetHeader_430
-	cmp esi, 0x7
-	jz DB_FindXAssetHeader_440
-	mov edx, [ebp+0xc]
-	mov [esp+0xc], edx
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_waited_i_msec_fo1
-	mov dword [esp], 0x1
-	call Com_PrintError
-DB_FindXAssetHeader_430:
-	cmp esi, 0x16
-	jz DB_FindXAssetHeader_450
-	cmp esi, 0x1f
-	jz DB_FindXAssetHeader_460
-	cmp esi, 0x7
-	jz DB_FindXAssetHeader_470
-DB_FindXAssetHeader_540:
-	mov ecx, [ebp+0xc]
-	mov [esp+0xc], ecx
-	mov eax, g_assetNames
-	mov eax, [eax+esi*4]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_could_not_load_s
-	mov dword [esp], 0x1
-	call Com_PrintError
-	jmp DB_FindXAssetHeader_470
-DB_FindXAssetHeader_370:
-	mov edx, [ebp+0xc]
-	mov [esp+0x10], edx
-	mov eax, g_assetNames
-	mov eax, [eax+esi*4]
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_ss1
-	mov dword [esp+0x4], 0x400
-	lea ebx, [ebp-0x418]
-	mov [esp], ebx
-	call Com_sprintf
-DB_FindXAssetHeader_510:
-	mov dword [esp], 0xa
-	call Sys_EnterCriticalSection
-	mov eax, [g_missingAssetFile]
-	test eax, eax
-	jnz DB_FindXAssetHeader_480
-	mov dword [esp], _cstring_missingassetcsv
-	call FS_FOpenTextFileWrite
-	mov [g_missingAssetFile], eax
-DB_FindXAssetHeader_500:
-	mov eax, [g_missingAssetFile]
-	test eax, eax
-	jnz DB_FindXAssetHeader_490
-	mov eax, com_missingAssetOpenFailed
-	mov dword [eax], 0x1
-DB_FindXAssetHeader_520:
-	mov dword [esp], 0xa
-	call Sys_LeaveCriticalSection
-	jmp DB_FindXAssetHeader_360
-DB_FindXAssetHeader_480:
-	mov dword [esp], _cstring_missingassetcsv
-	call FS_FOpenFileAppend
-	mov [g_missingAssetFile], eax
-	jmp DB_FindXAssetHeader_500
-DB_FindXAssetHeader_380:
-	test eax, 0x800000
-	jz DB_FindXAssetHeader_370
-	mov eax, [ebp+0xc]
-	mov [esp+0x10], eax
-	mov eax, g_assetNames
-	mov eax, [eax+0x5c]
-	mov [esp+0xc], eax
-	mov dword [esp+0x8], _cstring_smps
-	mov dword [esp+0x4], 0x400
-	lea ebx, [ebp-0x418]
-	mov [esp], ebx
-	call Com_sprintf
-	jmp DB_FindXAssetHeader_510
-DB_FindXAssetHeader_490:
-	mov [esp+0x8], eax
-	cld
-	mov ecx, 0xffffffff
-	xor eax, eax
-	mov edi, ebx
-	repne scasb
-	not ecx
-	sub ecx, 0x1
-	mov [esp+0x4], ecx
-	mov [esp], ebx
-	call FS_Write
-	mov eax, [g_missingAssetFile]
-	mov [esp], eax
-	call FS_FCloseFile
-	jmp DB_FindXAssetHeader_520
-DB_FindXAssetHeader_440:
-	mov ecx, [ebp+0xc]
-	mov [esp+0xc], ecx
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_waited_i_msec_fo1
-	mov dword [esp], 0xa
-	call Com_Printf
-	jmp DB_FindXAssetHeader_530
-DB_FindXAssetHeader_460:
-	mov dword [esp+0x4], _cstring_cfg
-	mov edx, [ebp+0xc]
-	mov [esp], edx
-	call strstr
-	test eax, eax
-	jnz DB_FindXAssetHeader_400
-	mov dword [esp+0x4], _cstring_gsx
-	mov edx, [ebp+0xc]
-	mov [esp], edx
-	call strstr
-	test eax, eax
-	jnz DB_FindXAssetHeader_400
-	jmp DB_FindXAssetHeader_540
-DB_FindXAssetHeader_420:
-	mov eax, [ebp+0xc]
-	mov [esp+0xc], eax
-	mov eax, g_assetNames
-	mov eax, [eax+0x58]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_could_not_load_s
-	mov dword [esp], 0xa
-	call Com_PrintWarning
-	jmp DB_FindXAssetHeader_400
-	nop
-
-
 ;Mark_WeaponDefAsset(WeaponDef*)
 Mark_WeaponDefAsset:
 	push ebp
@@ -4931,7 +3626,7 @@ Load_PhysPresetAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x1
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -4948,7 +3643,7 @@ Load_XAnimPartsAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x2
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5087,7 +3782,7 @@ Load_FxEffectDefAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x19
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5104,7 +3799,7 @@ Load_GameWorldMpAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0xe
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5121,7 +3816,7 @@ Load_GameWorldSpAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0xd
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5138,7 +3833,7 @@ Load_LoadedSoundAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x9
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5155,7 +3850,7 @@ Load_StringTableAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x20
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5468,143 +4163,6 @@ Mark_StringTableAsset_50:
 	nop
 
 
-;DB_EndRecoverLostDevice()
-DB_EndRecoverLostDevice:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedIncrement
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_EndRecoverLostDevice_10
-DB_EndRecoverLostDevice_30:
-	mov ecx, [g_zoneCount]
-	test ecx, ecx
-	jg DB_EndRecoverLostDevice_20
-DB_EndRecoverLostDevice_50:
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedDecrement
-	movzx eax, byte [g_loadingZone]
-	test al, al
-	setz byte [g_mayRecoverLostAssets]
-	mov byte [g_isRecoveringLostDevice], 0x0
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-DB_EndRecoverLostDevice_10:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jz DB_EndRecoverLostDevice_30
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_EndRecoverLostDevice_10
-	jmp DB_EndRecoverLostDevice_30
-DB_EndRecoverLostDevice_20:
-	xor ebx, ebx
-DB_EndRecoverLostDevice_40:
-	movzx eax, byte [ebx+g_zoneHandles]
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	lea edx, [edx*8+g_zones+0x48]
-	mov [esp], edx
-	call DB_RecoverGeometryBuffers
-	add ebx, 0x1
-	cmp ebx, [g_zoneCount]
-	jl DB_EndRecoverLostDevice_40
-	jmp DB_EndRecoverLostDevice_50
-
-
-;DB_EnumXAssets_FastFile(XAssetType, void (*)(XAssetHeader, void*), void*, unsigned char)
-DB_EnumXAssets_FastFile:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	movzx eax, byte [ebp+0x14]
-	mov [ebp-0x19], al
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedIncrement
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_EnumXAssets_FastFile_10
-DB_EnumXAssets_FastFile_60:
-	xor edi, edi
-DB_EnumXAssets_FastFile_70:
-	mov eax, db_hashTable
-	add eax, edi
-	movzx eax, word [eax]
-	movzx edx, ax
-	test ax, ax
-	jz DB_EnumXAssets_FastFile_20
-	jmp DB_EnumXAssets_FastFile_30
-DB_EnumXAssets_FastFile_40:
-	movzx eax, word [esi+0xa]
-	movzx edx, ax
-	test ax, ax
-	jz DB_EnumXAssets_FastFile_20
-DB_EnumXAssets_FastFile_30:
-	mov eax, edx
-	shl eax, 0x4
-	lea esi, [eax+g_assetEntryPool]
-	mov edx, [ebp+0x8]
-	cmp [eax+g_assetEntryPool], edx
-	jnz DB_EnumXAssets_FastFile_40
-	mov eax, [esi+0x4]
-	mov edx, [ebp+0x10]
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call dword [ebp+0xc]
-	cmp byte [ebp-0x19], 0x0
-	jz DB_EnumXAssets_FastFile_40
-	movzx eax, word [esi+0xc]
-	movzx edx, ax
-	test ax, ax
-	jz DB_EnumXAssets_FastFile_40
-DB_EnumXAssets_FastFile_50:
-	shl edx, 0x4
-	lea ebx, [edx+g_assetEntryPool]
-	mov eax, [ebx+0x4]
-	mov edx, [ebp+0x10]
-	mov [esp+0x4], edx
-	mov [esp], eax
-	call dword [ebp+0xc]
-	movzx eax, word [ebx+0xc]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_EnumXAssets_FastFile_50
-	jmp DB_EnumXAssets_FastFile_40
-DB_EnumXAssets_FastFile_10:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_EnumXAssets_FastFile_10
-	jmp DB_EnumXAssets_FastFile_60
-DB_EnumXAssets_FastFile_20:
-	add edi, 0x2
-	mov eax, 65536
-	cmp eax, edi
-	jnz DB_EnumXAssets_FastFile_70
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedDecrement
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-
-
-
 ;Load_FxImpactTableAsset(FxImpactTable**)
 Load_FxImpactTableAsset:
 	push ebp
@@ -5614,7 +4172,7 @@ Load_FxImpactTableAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x1a
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5631,7 +4189,7 @@ Load_LocalizeEntryAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x16
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5806,73 +4364,6 @@ Load_FxEffectDefFromName_10:
 	ret
 
 
-;DB_BeginRecoverLostDevice()
-DB_BeginRecoverLostDevice:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov byte [g_isRecoveringLostDevice], 0x1
-	cmp byte [g_mayRecoverLostAssets], 0x0
-	jz DB_BeginRecoverLostDevice_10
-DB_BeginRecoverLostDevice_40:
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedIncrement
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_BeginRecoverLostDevice_20
-DB_BeginRecoverLostDevice_50:
-	mov eax, [g_zoneCount]
-	test eax, eax
-	jg DB_BeginRecoverLostDevice_30
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedDecrement
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-DB_BeginRecoverLostDevice_10:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	cmp byte [g_mayRecoverLostAssets], 0x0
-	jnz DB_BeginRecoverLostDevice_40
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	cmp byte [g_mayRecoverLostAssets], 0x0
-	jz DB_BeginRecoverLostDevice_10
-	jmp DB_BeginRecoverLostDevice_40
-DB_BeginRecoverLostDevice_20:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jz DB_BeginRecoverLostDevice_50
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_BeginRecoverLostDevice_20
-	jmp DB_BeginRecoverLostDevice_50
-DB_BeginRecoverLostDevice_30:
-	xor ebx, ebx
-DB_BeginRecoverLostDevice_60:
-	movzx eax, byte [ebx+g_zoneHandles]
-	lea edx, [eax+eax*4]
-	lea edx, [eax+edx*4]
-	lea edx, [edx*8+g_zones+0x48]
-	mov [esp], edx
-	call DB_ReleaseGeometryBuffers
-	add ebx, 0x1
-	cmp ebx, [g_zoneCount]
-	jl DB_BeginRecoverLostDevice_60
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedDecrement
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-
-
 ;Load_GetCurrentZoneHandle(unsigned char*)
 Load_GetCurrentZoneHandle:
 	push ebp
@@ -5894,7 +4385,7 @@ Load_snd_alias_list_Asset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x7
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	add esp, 0x4
 	pop ebx
@@ -5922,99 +4413,6 @@ DB_GetVertexBufferAndOffset:
 	nop
 
 
-;DB_GetAllXAssetOfType_FastFile(XAssetType, XAssetHeader*, int)
-DB_GetAllXAssetOfType_FastFile:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x4c
-	mov esi, [ebp+0x8]
-	mov edi, [ebp+0xc]
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedIncrement
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_GetAllXAssetOfType_FastFile_10
-DB_GetAllXAssetOfType_FastFile_70:
-	xor ebx, ebx
-	xor ecx, ecx
-DB_GetAllXAssetOfType_FastFile_60:
-	lea eax, [db_hashTable+ecx]
-	movzx eax, word [eax]
-	movzx edx, ax
-	test ax, ax
-	jz DB_GetAllXAssetOfType_FastFile_20
-	test edi, edi
-	jz DB_GetAllXAssetOfType_FastFile_30
-	jmp DB_GetAllXAssetOfType_FastFile_40
-DB_GetAllXAssetOfType_FastFile_50:
-	movzx eax, word [edx+0xa]
-	movzx edx, ax
-	test ax, ax
-	jz DB_GetAllXAssetOfType_FastFile_20
-DB_GetAllXAssetOfType_FastFile_30:
-	mov eax, edx
-	shl eax, 0x4
-	lea edx, [eax+g_assetEntryPool]
-	cmp [eax+g_assetEntryPool], esi
-	jnz DB_GetAllXAssetOfType_FastFile_50
-	add ebx, 0x1
-	movzx eax, word [edx+0xa]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_GetAllXAssetOfType_FastFile_30
-DB_GetAllXAssetOfType_FastFile_20:
-	add ecx, 0x2
-	cmp ecx, 65536
-	jnz DB_GetAllXAssetOfType_FastFile_60
-DB_GetAllXAssetOfType_FastFile_100:
-	mov dword [esp], db_hashCritSect
-	call Sys_InterlockedDecrement
-	mov eax, ebx
-	add esp, 0x4c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-DB_GetAllXAssetOfType_FastFile_10:
-	mov dword [esp], 0x0
-	call Sys_Sleep
-	mov eax, [db_hashCritSect+0x4]
-	test eax, eax
-	jnz DB_GetAllXAssetOfType_FastFile_10
-	jmp DB_GetAllXAssetOfType_FastFile_70
-DB_GetAllXAssetOfType_FastFile_40:
-	lea eax, [edi+ebx*4]
-	mov [ebp-0x1c], eax
-DB_GetAllXAssetOfType_FastFile_90:
-	mov eax, edx
-	shl eax, 0x4
-	lea edx, [eax+g_assetEntryPool]
-	mov [ebp-0x2c], edx
-	cmp [eax+g_assetEntryPool], esi
-	jnz DB_GetAllXAssetOfType_FastFile_80
-	mov eax, [edx+0x4]
-	mov edx, [ebp-0x1c]
-	mov [edx], eax
-	add ebx, 0x1
-	add edx, 0x4
-	mov [ebp-0x1c], edx
-DB_GetAllXAssetOfType_FastFile_80:
-	mov edx, [ebp-0x2c]
-	movzx eax, word [edx+0xa]
-	movzx edx, ax
-	test ax, ax
-	jnz DB_GetAllXAssetOfType_FastFile_90
-	add ecx, 0x2
-	cmp ecx, 65536
-	jnz DB_GetAllXAssetOfType_FastFile_60
-	jmp DB_GetAllXAssetOfType_FastFile_100
-	nop
-
-
 ;Load_MaterialTechniqueSetAsset(MaterialTechniqueSet**)
 Load_MaterialTechniqueSetAsset:
 	push ebp
@@ -6024,7 +4422,7 @@ Load_MaterialTechniqueSetAsset:
 	mov ebx, [ebp+0x8]
 	mov edx, [ebx]
 	mov eax, 0x5
-	call DB_AddXAsset
+	call DB_AddXAssetInternal
 	mov [ebx], eax
 	mov [esp], eax
 	call Material_OriginalRemapTechniqueSet
@@ -6098,24 +4496,6 @@ Mark_MaterialTechniqueSetAsset_50:
 	nop
 
 
-;DB_Update()
-DB_Update:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x8
-	call Sys_IsDatabaseReady2
-	test eax, eax
-	jz DB_Update_10
-DB_Update_20:
-	leave
-	ret
-DB_Update_10:
-	call Sys_IsDatabaseReady
-	test eax, eax
-	jz DB_Update_20
-	leave
-	jmp DB_PostLoadXZone
-
 
 ;Zero initialized global or static variables of db_registry:
 SECTION .bss
@@ -6129,7 +4509,6 @@ g_archiveBuf: resb 0xf
 g_copyInfo: resb 0x2000
 g_copyInfoCount: resb 0x20
 g_debugZoneName: resb 0x40
-g_missingAssetFile: resb 0x80
 g_mainThreadBlocked: resb 0x80
 
 
@@ -6179,7 +4558,6 @@ _cstring_waited_i_msec_fo:		db "Waited %i msec for asset ",27h,"%s",27h," of typ
 _cstring_could_not_load_s:		db "Could not load %s ",22h,"%s",22h,".",0ah,0
 _cstring_waited_i_msec_fo1:		db "Waited %i msec for missing asset ",22h,"%s",22h,".",0ah,0
 _cstring_ss1:		db "%s,%s",0ah,0
-_cstring_missingassetcsv:		db "missingasset.csv",0
 _cstring_smps:		db "%s,mp/%s",0ah,0
 _cstring_cfg:		db ".cfg",0
 _cstring_gsx:		db ".gsx",0

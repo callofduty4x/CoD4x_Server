@@ -740,11 +740,13 @@ void SV_UserinfoChanged( client_t *cl ) {
 				cl->rate = sv_maxRate->integer;
 			}
 		} else {
-			cl->rate = 2500;
+			cl->rate = 5000;
 		}
 	}
 	// snaps command
 	val = Info_ValueForKey (cl->userinfo, "snaps");
+
+	i = sv_fps->integer;
 
 	if(strlen(val))
 	{
@@ -753,12 +755,10 @@ void SV_UserinfoChanged( client_t *cl ) {
 		if(i < 10)
 			i = 10;
 		else if(i > sv_fps->integer)
-			i = 1000;
-
-		cl->snapshotMsec = 1000 / i;
+			i = sv_fps->integer;
 	}
-	else
-		cl->snapshotMsec = 1;
+	
+	cl->snapshotMsec = 1000 / i;
 
 	val = Info_ValueForKey(cl->userinfo, "cl_voice");
 	cl->sendVoice = atoi(val);
@@ -1236,22 +1236,19 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 }
 
 
-gentity_t* SV_AddBotClient(){
+gentity_t* SV_AddBotClient( char* requested_name ){
 
-    int i, p, cntnames, read;
+    int i;
     unsigned short qport;
     client_t *cl = NULL;
     const char* denied;
-    char name[16];
-    char botnames[128][16];
+    char name[36];
     char userinfo[MAX_INFO_STRING];
     netadr_t botnet;
     usercmd_t ucmd;
-    fileHandle_t file;
     mvabuf;
 
 	//Find a free serverslot for our bot
-
 	for ( i = sv_privateClients->integer; i < sv_maxclients->integer; i++) {
 		cl = &svs.clients[i];
 		if (cl->state == CS_FREE) {
@@ -1261,29 +1258,10 @@ gentity_t* SV_AddBotClient(){
 	if( i == sv_maxclients->integer )
 		return NULL;		//No free slot
 
-        //Getting a new name for our bot
-	FS_SV_FOpenFileRead("botnames.txt", &file);
-
-	if(!file){
-		cntnames = 0;
-	}else{
-		for(cntnames = 0; cntnames < 128; cntnames++){
-			read = FS_ReadLine(botnames[cntnames], 16, file);
-			if(read <= 0)
-				break;
-			if(strlen(botnames[cntnames]) < 2)
-				break;
-		}
-		FS_FCloseFile(file);
-	}
-	if(!cntnames){
+	if(!requested_name){
 		Q_strncpyz(name,va("bot%d", i),sizeof(name));
 	}else{
-		Q_strncpyz(name,botnames[rand() % cntnames],sizeof(name));
-		for(p = 0; p < sizeof(name); p++){
-			if(name[p] == '\n' || name[p] == '\r')
-				name[p] = 0;
-		}
+		Q_strncpyz(name,requested_name,sizeof(name));
 	}
 
 
@@ -1352,7 +1330,6 @@ gentity_t* SV_AddBotClient(){
 	cl->lastConnectTime = svs.time;
 
 	SV_UserinfoChanged(cl);
-
 
 	Q_strncpyz(cl->name, name, sizeof(cl->name));
 

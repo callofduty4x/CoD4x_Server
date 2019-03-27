@@ -61,4 +61,41 @@ void __cdecl G_DObjCalcBone(gentity_s *ent, int boneIndex)
   }
 }
 
+signed int __cdecl G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int tagName, float (*tagMat)[3])
+{
+  float ent_axis[4][3];
+  DObjAnimMat *mat;
+  float axis[3][3];
+
+  mat = G_DObjGetLocalTagMatrix(ent, tagName);
+  if ( !mat )
+  {
+    return 0;
+  }
+  AnglesToAxis(ent->r.currentAngles, ent_axis);
+  ent_axis[3][0] = ent->r.currentOrigin[0];
+  ent_axis[3][1] = ent->r.currentOrigin[1];
+  ent_axis[3][2] = ent->r.currentOrigin[2];
+
+  ConvertQuatToMat(mat, axis);
+  MatrixMultiply(axis, ent_axis, tagMat);
+  MatrixTransformVector43(mat->trans, ent_axis, &(*tagMat)[9]);
+  return 1;
+}
+
+void __cdecl G_SetAngle(gentity_s *ent, const float *angle)
+{
+	assert(!IS_NAN(angle[0]) && !IS_NAN(angle[1]) && !IS_NAN(angle[2]));
+
+  VectorCopy(angle, ent->s.lerp.apos.trBase);
+
+  ent->s.lerp.apos.trType = TR_STATIONARY;
+  ent->s.lerp.apos.trTime = 0;
+  ent->s.lerp.apos.trDuration = 0;
+
+  VectorClear(ent->s.lerp.apos.trDelta);
+  VectorCopy(angle, ent->r.currentAngles);
+
+}
+
 }

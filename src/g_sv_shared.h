@@ -49,16 +49,26 @@ extern cvar_t* g_speed;
 void __cdecl SV_GameSendServerCommand(int clientnum, int svscmd_type, const char *text);
 
 #ifdef __cplusplus
-extern "C" void G_ShowMotd(unsigned int clnum);
-extern "C" qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);
+extern "C"{
+    void G_ShowMotd(unsigned int clnum);
+    qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);
+};
 
+extern "C"{
 #endif
+    __cdecl void ClientUserinfoChanged( int clientNum );
+    void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
+
+#ifdef __cplusplus
+};
+#endif
+
+
 
 void QDECL G_LogPrintf( const char *fmt, ... );
 void G_PrintRedirect(char* msg, int len);
 void G_PrintAddRedirect(void (*rd_dest)( const char *, int));
 __cdecl void ClientSpawn(gentity_t* ent, float* px, float* py);
-__cdecl void ClientUserinfoChanged( int clientNum );
 
 
 void Pmove_ExtendedResetState( void );
@@ -88,5 +98,4 @@ void G_AddRule(const char* newtext);
 void G_AddAdvert(const char* newtext);
 void G_InitMotd();
 void G_ClearAllMessages();
-void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
 #endif

@@ -243,8 +243,12 @@ int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...);
 void Q_strchrrepl(char *string, char torepl, char repl);
 char* Q_BitConv(int val);
 int Q_strLF2CRLF(const char* input, char* output, int outputlimit );
+
+#ifndef BSPC
 char* va( const char *format, ... );
 #define mvabuf
+#endif
+
 /*
 #ifndef __QSHARED_C__
 char* QDECL va_replacement(char *dest, int size, const char *fmt, ...);
@@ -435,7 +439,7 @@ typedef enum {
 	ERR_SCRIPT					// script error occured
 } errorParm_t;
 
-void QDECL Com_Error( int a, const char *error, ...);
+void QDECL Com_Error( int level, const char *error, ...);
 
 
 #ifndef M_PI
@@ -462,9 +466,9 @@ void QDECL Com_Error( int a, const char *error, ...);
 PlaneTypeForNormal
 =================
 */
-
+#ifndef BSPC
 #define PlaneTypeForNormal( x ) ( x[0] == 1.0 ? PLANE_X : ( x[1] == 1.0 ? PLANE_Y : ( x[2] == 1.0 ? PLANE_Z : PLANE_NON_AXIAL ) ) )
-
+#endif
 
 // plane_t structure
 // !!! if this is changed, it must be changed in asm code too !!!
@@ -658,6 +662,9 @@ struct lerpFrame_t
 
 float Com_Clamp( float min, float max, float value );
 
+
+#ifndef BSPC
+
 char    *COM_SkipPath( char *pathname );
 void    COM_StripExtension( const char *in, char *out );
 void    COM_StripExtension2( const char *in, char *out, int destsize );
@@ -679,6 +686,8 @@ qboolean COM_BitCheck( const int array[], int bitNum );
 void COM_BitSet( int array[], int bitNum );
 void COM_BitClear( int array[], int bitNum );
 
+
+#endif
 
 typedef struct
 {

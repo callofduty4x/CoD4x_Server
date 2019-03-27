@@ -103,9 +103,11 @@ qboolean DB_FileExists(const char* filename, int FF_DIR)
 	return FS_FileExistsOSPath(ospath);
 }
 
-void DB_PrintXAsset(union XAssetHeader header, void *none)
+void DB_PrintXAsset(void* header, void *none)
 {
-    XModel* xmodelhead = header.model;
+    union XAssetHeader head;
+    head.data = header;
+    XModel* xmodelhead = head.model;
 
     Com_Printf(CON_CHANNEL_DONT_FILTER,"%s\n", xmodelhead->name);
 }

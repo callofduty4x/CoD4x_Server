@@ -23,6 +23,9 @@
 
 #include "../q_shared.h"
 #include "../q_platform.h"
+
+#ifndef __BSD__
+
 #include "../qcommon_mem.h"
 #include "../qcommon_io.h"
 #include "../qcommon.h"
@@ -48,6 +51,7 @@
 #include <execinfo.h>
 #include <wait.h>
 #include <sched.h>
+#include <pthread.h>
 
 char** ELF32_GetStrTable(void* buff, int len, sharedlib_data_t *text);
 
@@ -119,7 +123,7 @@ void Sys_PrintBacktrace()
 	void** traces;
 	char** symbols;
 
-	Com_Printf(CON_CHANNEL_SYSTEM,"---------- Crash Backtrace ----------\n");
+	Com_Printf(CON_CHANNEL_SYSTEM,"---------- Backtrace ----------\n");
 	traces = malloc(65536*sizeof(void*));
 	numFrames = backtrace(traces, 65536);
 	symbols = backtrace_symbols(traces, numFrames);
@@ -219,3 +223,20 @@ unsigned int Sys_GetProcessAffinityMask()
 
     return AffinityMask;
 }
+
+
+
+void Sys_SetThreadName(threadid_t tid, const char* name)
+{
+    pthread_t ti;
+    if(tid == -1)
+    {
+        ti = pthread_self();
+    }else{
+        ti = tid;
+    }
+    pthread_setname_np(ti, name);
+}
+
+
+#endif

@@ -49,8 +49,8 @@ If you have questions concerning this license or the applicable additional terms
 PCX files are used for 8 bit images
 
 ========================================================================
-*
-
+*/
+/*
 typedef struct {
 	char	manufacturer;
 	char	version;
@@ -66,7 +66,7 @@ typedef struct {
 	char	filler[58];
 	unsigned char	data;			// unbounded
 } pcx_t;
-
+*/
 
 /*
 ========================================================================
@@ -74,8 +74,8 @@ typedef struct {
 TGA files are used for 24/32 bit images
 
 ========================================================================
-*
-
+*/
+/*
 typedef struct _TargaHeader {
 	unsigned char   id_length, colormap_type, image_type;
 	unsigned short	colormap_index, colormap_length;
