@@ -547,6 +547,10 @@ extern qboolean onExitLevelExecuted;
 extern "C"{
 #endif
 
+qboolean __cdecl G_SpawnString(SpawnVar *spawnVar, const char *key, const char *defaultString, const char **out);
+const char *__cdecl G_GetEntityParsePoint();
+void __cdecl G_SetEntityParsePoint(const char *beginParsePoint);
+qboolean __cdecl G_ParseSpawnVars(SpawnVar *spawnVar);
 
 int BG_GetPerkIndexForName(const char *name);
 void G_SetSavePersist(int val);

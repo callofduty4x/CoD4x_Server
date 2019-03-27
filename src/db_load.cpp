@@ -38,7 +38,6 @@
 #include "xassets/xanims.h"
 #include "xassets/gfximage.h"
 #include "xassets/sounds.h"
-#include "xassets/mapents.h"
 #include "xassets/gfxworld.h"
 #include "xassets/menu.h"
 #include "xassets/menulist.h"

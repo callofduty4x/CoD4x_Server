@@ -18,6 +18,8 @@
 // - crc32_16bytes  needs all of Crc32Lookup
 
 
+
+#include "q_platform.h"
 #include <stdlib.h>
 
 // define endianess and some integer data types
@@ -26,17 +28,11 @@
   typedef unsigned __int32 uint32_t;
   typedef   signed __int32  int32_t;
 
-  #define __LITTLE_ENDIAN 1234
-  #define __BIG_ENDIAN    4321
-  #define __BYTE_ORDER    __LITTLE_ENDIAN
-
   #include <xmmintrin.h>
   #define PREFETCH(location) _mm_prefetch(location, _MM_HINT_T0)
 #else
   // uint8_t, uint32_t, in32_t
   #include <stdint.h>
-  // defines __BYTE_ORDER as __LITTLE_ENDIAN or __BIG_ENDIAN
-  #include <endian.h>
 
   #ifdef __GNUC__
     #define PREFETCH(location) __builtin_prefetch(location)
@@ -52,6 +48,8 @@ const uint32_t Polynomial = 0xEDB88320;
 
 /// Slicing-By-16
 #define MaxSlice 16
+
+
 
 
 // //////////////////////////////////////////////////////////
@@ -660,7 +658,7 @@ uint32_t crc32_16bytes(const void* data, size_t length, uint32_t previousCrc32)
   {
     for (unrolling = 0; unrolling < Unroll; unrolling++)
     {
-#if __BYTE_ORDER == __BIG_ENDIAN
+#ifdef Q3_BIG_ENDIAN
     uint32_t one   = *current++ ^ swap(crc);
     uint32_t two   = *current++;
     uint32_t three = *current++;

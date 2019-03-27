@@ -1,92 +1,10 @@
 #include "q_shared.h"
 #include "qcommon_mem.h"
 #include "filesystem.h"
+#include "cm_local.h"
 #include <stdbool.h>
 
 unsigned int lumpsForVersion[] = { 41u, 41u, 42u, 43u, 43u, 43u, 43u, 44u, 44u, 44u, 46u, 46u, 47u };
-
-enum LumpType
-{
-  LUMP_MATERIALS = 0x0,
-  LUMP_LIGHTBYTES = 0x1,
-  LUMP_LIGHTGRIDENTRIES = 0x2,
-  LUMP_LIGHTGRIDCOLORS = 0x3,
-  LUMP_PLANES = 0x4,
-  LUMP_BRUSHSIDES = 0x5,
-  LUMP_BRUSHSIDEEDGECOUNTS = 0x6,
-  LUMP_BRUSHEDGES = 0x7,
-  LUMP_BRUSHES = 0x8,
-  LUMP_TRIANGLES = 0x9,
-  LUMP_DRAWVERTS = 0xA,
-  LUMP_DRAWINDICES = 0xB,
-  LUMP_CULLGROUPS = 0xC,
-  LUMP_CULLGROUPINDICES = 0xD,
-  LUMP_OBSOLETE_1 = 0xE,
-  LUMP_OBSOLETE_2 = 0xF,
-  LUMP_OBSOLETE_3 = 0x10,
-  LUMP_OBSOLETE_4 = 0x11,
-  LUMP_OBSOLETE_5 = 0x12,
-  LUMP_PORTALVERTS = 0x13,
-  LUMP_OBSOLETE_6 = 0x14,
-  LUMP_UINDS = 0x15,
-  LUMP_BRUSHVERTSCOUNTS = 0x16,
-  LUMP_BRUSHVERTS = 0x17,
-  LUMP_AABBTREES = 0x18,
-  LUMP_CELLS = 0x19,
-  LUMP_PORTALS = 0x1A,
-  LUMP_NODES = 0x1B,
-  LUMP_LEAFS = 0x1C,
-  LUMP_LEAFBRUSHES = 0x1D,
-  LUMP_LEAFSURFACES = 0x1E,
-  LUMP_COLLISIONVERTS = 0x1F,
-  LUMP_COLLISIONTRIS = 0x20,
-  LUMP_COLLISIONEDGEWALKABLE = 0x21,
-  LUMP_COLLISIONBORDERS = 0x22,
-  LUMP_COLLISIONPARTITIONS = 0x23,
-  LUMP_COLLISIONAABBS = 0x24,
-  LUMP_MODELS = 0x25,
-  LUMP_VISIBILITY = 0x26,
-  LUMP_ENTITIES = 0x27,
-  LUMP_PATHCONNECTIONS = 0x28,
-  LUMP_REFLECTION_PROBES = 0x29,
-  LUMP_VERTEX_LAYER_DATA = 0x2A,
-  LUMP_PRIMARY_LIGHTS = 0x2B,
-  LUMP_LIGHTGRIDHEADER = 0x2C,
-  LUMP_LIGHTGRIDROWS = 0x2D,
-  LUMP_OBSOLETE_10 = 0x2E,
-  LUMP_OBSOLETE_11 = 0x2F,
-  LUMP_OBSOLETE_12 = 0x30,
-  LUMP_OBSOLETE_13 = 0x31,
-  LUMP_OBSOLETE_14 = 0x32,
-  LUMP_OBSOLETE_15 = 0x33,
-  LUMP_WATERHEADER = 0x34,
-  LUMP_WATERCELLS = 0x35,
-  LUMP_WATERCELLDATA = 0x36,
-  LUMP_BURNABLEHEADER = 0x37,
-  LUMP_BURNABLECELLS = 0x38,
-  LUMP_BURNABLECELLDATA = 0x39,
-  LUMP_SIMPLELIGHTMAPBYTES = 0x3A,
-  LUMP_LODCHAINS = 0x3B,
-  LUMP_LODINFOS = 0x3C,
-  LUMP_LODSURFACES = 0x3D,
-  LUMP_LIGHTREGIONS = 0x3E,
-  LUMP_LIGHTREGION_HULLS = 0x3F,
-  LUMP_LIGHTREGION_AXES = 0x40,
-  LUMP_WIILIGHTGRID = 0x41,
-  LUMP_LIGHTGRID2D_LIGHTS = 0x42,
-  LUMP_LIGHTGRID2D_INDICES = 0x43,
-  LUMP_LIGHTGRID2D_POINTS = 0x44,
-  LUMP_LIGHTGRID2D_CELLS = 0x45,
-  LUMP_LIGHT_CORONAS = 0x46,
-  LUMP_SHADOWMAP_VOLUMES = 0x47,
-  LUMP_SHADOWMAP_VOLUME_PLANES = 0x48,
-  LUMP_EXPOSURE_VOLUMES = 0x49,
-  LUMP_EXPOSURE_VOLUME_PLANES = 0x4A,
-  LUMP_OCCLUDERS = 0x4B,
-  LUMP_OUTDOORBOUNDS = 0x4C,
-  LUMP_HERO_ONLY_LIGHTS = 0x4D,
-};
-
 
 struct BspChunk
 {
@@ -125,7 +43,7 @@ bool __cdecl Com_IsBspLoaded()
 
 int __cdecl Com_GetBspLumpCountForVersion(const int version)
 {
-  assert(version >= 6 &&version <= 18);
+  assert(version >= 6 && version <= 18);
 
   return lumpsForVersion[version -6];
 }
@@ -202,7 +120,7 @@ void __cdecl Com_LoadBsp(const char *filename)
 
   memcpy(comBspGlob.name, filename, len + 1);
 
-  assert(!Com_IsBspLoaded());
+  assert(Com_IsBspLoaded());
 
 }
 
@@ -262,3 +180,19 @@ byte *__cdecl Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned
   return NULL;
 
 }
+
+
+unsigned int __cdecl Com_GetBspVersion()
+{
+  assert(Com_IsBspLoaded());
+
+  return comBspGlob.header->version;
+}
+
+bool __cdecl Com_BspHasLump(enum LumpType type)
+{
+  unsigned int count;
+  Com_GetBspLump(type, 1u, &count);
+  return count != 0;
+}
+

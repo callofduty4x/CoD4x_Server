@@ -765,8 +765,8 @@ DynEnt_LoadEntities_430:
 DynEnt_LoadEntities_180:
 	mov [esp+0x8], esi
 	mov dword [esp+0x4], _cstring_dyn_entity_xmode
-	mov dword [esp], 0x2
-	call Com_Error
+	mov dword [esp], 0x0
+	call Com_PrintError
 	jmp DynEnt_LoadEntities_140
 DynEnt_LoadEntities_390:
 	mov eax, edi

@@ -2309,6 +2309,18 @@ void SV_GetModules_f()
 	BuildModuleRequests(cl.cl);
 }
 
+void SV_LoadMapFromBsp()
+{
+    if ( Cmd_Argc() != 2) {
+		Com_Printf(CON_CHANNEL_DONT_FILTER, "loadmap <d3dbspfile>\n" );
+		return;
+    }
+    Com_LoadBsp(Cmd_Argv(1));
+    CM_LoadMapData_LoadObj(Cmd_Argv(1));
+
+
+}
+
 
 void SV_AddOperatorCommands()
 {
@@ -2325,6 +2337,9 @@ void SV_AddOperatorCommands()
 	Cmd_AddCommand ("addCommand", Cmd_AddTranslatedCommand_f);
 	Cmd_AddCommand ("downloadmap", SV_DownloadMap_f);
 	Cmd_AddPCommand ("gametype", SV_ChangeGametype_f, 80);
+
+
+	Cmd_AddCommand ("loadmap", SV_LoadMapFromBsp);
 
 
 	//Other commands

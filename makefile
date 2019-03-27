@@ -58,6 +58,7 @@ WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -sta
 WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 winmm stdc++
 LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Wl,-rpath=./
 LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
+BSD_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 pthread m execinfo stdc++
 COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE) BUILD_NUMBER=$(BUILD_NUMBER) BUILD_BRANCH=$(BUILD_BRANCH) BUILD_REVISION=$(BUILD_REVISION)
 
 ########################
@@ -104,7 +105,14 @@ OS_SOURCES=$(wildcard $(LINUX_DIR)/*.c)
 OS_OBJ=$(patsubst $(LINUX_DIR)/%.c,$(OBJ_DIR)/%.o,$(OS_SOURCES))
 C_DEFINES=$(addprefix -D,$(COD4X_DEFINES) $(LINUX_DEFINES))
 LFLAGS=$(LINUX_LFLAGS)
+
+UNAME := $(shell uname)
+ifeq ($(UNAME),FreeBSD)
+LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(BSD_LLIBS))
+else
 LLIBS=-L./$(LIB_DIR) $(addprefix -l,$(LINUX_LLIBS))
+endif
+
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
 CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)

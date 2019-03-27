@@ -199,11 +199,13 @@ void MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out);
 void Vec3Lerp(const float *start, const float *end, const float fraction, float *endpos);
 double Vec2DistanceSq(const float *v0, const float *v1);
 void MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out);
+void __cdecl MatrixTranspose(const float (*in)[3], float (*out)[3]);
 void MatrixMultiply( float in1[3][3], float in2[3][3], float out[3][3] );
 void AddPointToBounds( const vec3_t v, vec3_t mins, vec3_t maxs );
 void ClearBounds(vec3_t mins, vec3_t maxs);
 void CreateRotationMatrix( const vec3_t angles, vec3_t matrix[3] );
 void RotatePoint( vec3_t point, const vec3_t matrix[3] );
+
 
 #include <xmmintrin.h>
 
