@@ -202,9 +202,9 @@ void CM_Unload()
 
 #ifndef BSPC
 
-char *__cdecl CM_Hunk_Alloc(int size)
+void *__cdecl CM_Hunk_Alloc(int size, const char* what)
 {
-  return Hunk_Alloc(size, "CM_Load", 0);
+  return Hunk_Alloc(size, what, 0);
 }
 
 char *__cdecl CM_Hunk_AllocateTempMemoryHigh(int size)

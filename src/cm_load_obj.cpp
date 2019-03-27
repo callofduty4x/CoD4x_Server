@@ -1190,7 +1190,7 @@ cLeafBrushNode_s *__cdecl CMod_PartionLeafBrushes_r(uint16_t *leafBrushes, int n
     {
       brushnum = leafBrushes[k];
       b = &cm.brushes[brushnum];
-      testDist = cm.brushes[brushnum].mins[testAxis];
+      testDist = b->mins[testAxis];
       score = CMod_GetPartitionScore(leafBrushes, numLeafBrushes, testAxis, mins, maxs, &testDist);
       if ( score > bestScore )
       {

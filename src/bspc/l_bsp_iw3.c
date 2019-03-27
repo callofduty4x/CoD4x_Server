@@ -663,8 +663,9 @@ int IW3_DumpLeafs( q3_dleaf_t** pout, int size )
 		{
 			if(node->leafBrushCount == 0)
 			{
-				firstleafbrush = node->data.leaf.brushes - cm.leafbrushes;
-				printf("%d leafbrushes ? first %d\n", i, firstleafbrush);
+				printf("%d leafbrushes box %g %g %g, %g %g %g\n", i, 
+				in->mins[0],in->mins[1],in->mins[2], 
+				in->maxs[0],in->maxs[1],in->maxs[2]);
 				continue;
 			}
 

@@ -280,6 +280,8 @@ struct dbrushside_t
   int materialNum;
 };
 
+#ifndef BSPC
+
 enum LumpType
 {
   LUMP_MATERIALS = 0x0,
@@ -362,7 +364,7 @@ enum LumpType
   LUMP_HERO_ONLY_LIGHTS = 0x4D,
 };
 
-
+#endif
 
 #define MAX_SUBMODELS 4095
 
@@ -370,10 +372,13 @@ enum LumpType
 extern "C"{
 #endif
 
+#ifndef BSPC
 byte *__cdecl Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned int *count);
+bool __cdecl Com_BspHasLump(enum LumpType type);
+#endif
+
 void *__cdecl CM_Hunk_Alloc(int numBytes, const char *what);
 unsigned int __cdecl Com_GetBspVersion();
-bool __cdecl Com_BspHasLump(enum LumpType type);
 void __cdecl CM_Hunk_ClearTempMemoryHigh();
 void CM_Hunk_CheckTempMemoryHighClear();
 char *__cdecl CM_Hunk_AllocateTempMemoryHigh(int size);
