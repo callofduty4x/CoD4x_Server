@@ -1,6 +1,6 @@
 
 #include "q_shared.h"
-#include "q_shared.h"
+#include "q_math.h"
 #include <math.h>
 
 
@@ -1989,3 +1989,5 @@ void RotatePoint( vec3_t point, const vec3_t matrix[3] ) {
 	point[1] = DotProduct( matrix[1], tvec );
 	point[2] = DotProduct( matrix[2], tvec );
 }
+
+

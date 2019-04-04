@@ -84,7 +84,8 @@ void R_Init(){
             ++i;
         }
         DB_LoadXAssets(&XZoneInfoStack[0], i, 0);
-
+		
+		
 }
 
 
@@ -120,6 +121,28 @@ void XModelList_f()
     Com_Printf(CON_CHANNEL_DONT_FILTER,"------------------------------\n");
 
     DB_EnumXAssets_FastFile(ASSET_TYPE_XMODEL, DB_PrintXAsset, NULL, qtrue);
+
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
+}
+
+
+void DB_PrintMaterialAsset(void* header, void *none)
+{
+    union XAssetHeader head;
+    head.data = header;
+    struct Material* mathead = head.material;
+
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"%s\n", mathead->info.name);
+}
+
+void MaterialList_f()
+{
+
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Material list:\n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Name                          \n");
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"------------------------------\n");
+
+    DB_EnumXAssets_FastFile(ASSET_TYPE_MATERIAL, DB_PrintMaterialAsset, NULL, qtrue);
 
     Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 }

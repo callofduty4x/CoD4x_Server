@@ -14,5 +14,12 @@ union PackedTexCoords
   uint16_t w;
 };
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+	void __cdecl Vec3UnpackUnitVec(union PackedUnitVec in, float *out);
+#ifdef __cplusplus
+};
+#endif
 
 #endif

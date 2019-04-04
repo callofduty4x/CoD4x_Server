@@ -4,6 +4,7 @@
 
 #include "../xassets.h"
 #include "../xassets/gfxworld.h"
+#include "../xassets/gfximage.h"
 #include "../world.h"
 #include "l_cmd.h"
 #include "qbsp.h"
@@ -16,7 +17,29 @@ extern "C"{
 
 void __cdecl Load_Texture(struct GfxImageLoadDef **remoteLoadDef, struct GfxImage *image)
 {
-    //image->texture.basemap = 0;
+	int size;
+	struct GfxImageLoadDef *loadDef;
+	loadDef = *remoteLoadDef;
+
+	image->texture.loadDef = 0;
+	if ( loadDef->resourceSize )
+	{
+		size = sizeof(GfxImageLoadDef) + loadDef->resourceSize -1;
+	}else{
+		size = sizeof(GfxImageLoadDef);
+	}
+	
+	struct GfxImageLoadDef *outmem = (struct GfxImageLoadDef *)Hunk_Alloc(size);
+
+	if(outmem == NULL)
+	{
+		Error("Out of memory to load image %s\n", image->name);
+	}
+
+	memcpy(outmem, loadDef, size);
+
+	image->texture.loadDef = outmem;
+
 }
 
 void __cdecl Load_VertexBuffer(struct IDirect3DVertexBuffer9 **vb, void *bufferData, int sizeInBytes)

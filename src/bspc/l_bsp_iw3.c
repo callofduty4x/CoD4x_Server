@@ -36,9 +36,15 @@ If you have questions concerning this license or the applicable additional terms
 #include "l_qfiles.h"
 #include "l_bsp_q3.h"
 #include "l_bsp_ent.h"
+#include "l_bsp_iw3.h"
 #include "db_load.h"
 #include "../physicalmemory.h"
 #include "../xassets.h"
+#include "../xassets/material.h"
+#include "../xassets/gfxworld.h"
+#include "../xassets/gfximage.h"
+#include "../com_pack.h"
+
 
 
 void IW3_ParseEntities( void );
@@ -78,7 +84,7 @@ int iw3_numbrushes;
 q3_dbrush_t     *iw3_dbrushes; //[Q3_MAX_MAP_BRUSHES];
 
 int iw3_numbrushsides;
-q3_dbrushside_t *iw3_dbrushsides; //[Q3_MAX_MAP_BRUSHSIDES];
+q3_dbrushside_t *iw3_dbrushsides; //[IW3_MAX_MAP_BRUSHSIDES];
 
 int iw3_numLightBytes;
 byte            *iw3_lightBytes; //[Q3_MAX_MAP_LIGHTING];
@@ -90,10 +96,10 @@ int iw3_numVisBytes;
 byte            *iw3_visBytes; //[Q3_MAX_MAP_VISIBILITY];
 
 int iw3_numDrawVerts;
-q3_drawVert_t   *iw3_drawVerts; //[Q3_MAX_MAP_DRAW_VERTS];
+iw3_drawVert_t   *iw3_drawVerts; //[Q3_MAX_MAP_DRAW_VERTS];
 
 int iw3_numDrawIndexes;
-int             *iw3_drawIndexes; //[Q3_MAX_MAP_DRAW_INDEXES];
+uint16_t         *iw3_drawIndexes; //[Q3_MAX_MAP_DRAW_INDEXES];
 
 int iw3_numDrawSurfaces;
 q3_dsurface_t   *iw3_drawSurfaces; //[Q3_MAX_MAP_DRAW_SURFS];
@@ -101,7 +107,7 @@ q3_dsurface_t   *iw3_drawSurfaces; //[Q3_MAX_MAP_DRAW_SURFS];
 int iw3_numFogs;
 q3_dfog_t       *iw3_dfogs; //[Q3_MAX_MAP_FOGS];
 
-char iw3_dbrushsidetextured[Q3_MAX_MAP_BRUSHSIDES];
+char iw3_dbrushsidetextured[IW3_MAX_MAP_BRUSHSIDES];
 
 extern qboolean forcesidesvisible;
 
@@ -407,7 +413,13 @@ void IW3_FindVisibleBrushSides( void ) {
 	q3_dsurface_t *surface;
 	winding_t *w;
 
-	memset( iw3_dbrushsidetextured, false, Q3_MAX_MAP_BRUSHSIDES );
+	memset( iw3_dbrushsidetextured, false, IW3_MAX_MAP_BRUSHSIDES );
+
+	if(IW3_MAX_MAP_BRUSHSIDES <= iw3_numbrushsides)
+	{
+		Error("Exceeded brushsides limit. Increase IW3_MAX_MAP_BRUSHSIDES.");
+	}
+
 	//
 	numsides = 0;
 	//create planes for the planar surfaces
@@ -535,9 +547,75 @@ int IW3_CopyLump( void* cmdata, int count, void **dest, int size ) {
 }
 
 
+typedef struct
+{
+	uint32_t count;
+	uint32_t first;
+}findNode_t;
+
+findNode_t __cdecl CM_FindLeafBrushNode_r(cLeafBrushNode_t *node, bool findLeafBrush)
+{
+  findNode_t found, ret;
+  found.count = 0;
+  found.first = 0xFFFF;
+  assert ( node != NULL );
+  unsigned int firstbrush;
+
+  if ( node->leafBrushCount <= 0 )
+  {
+    if ( node->leafBrushCount == -1)
+    {
+	    ret = CM_FindLeafBrushNode_r(node + 1, findLeafBrush);
+		found.count += ret.count;
+		if(ret.first < found.first)
+		{
+			found.first = ret.first;
+		}
+	}
+	//Look for front-child and back-child node
+    ret = CM_FindLeafBrushNode_r(node + node->data.children.childOffset[0], findLeafBrush);
+	found.count += ret.count;
+	if(ret.first < found.first)
+	{
+		found.first = ret.first;
+	}
+    ret = CM_FindLeafBrushNode_r(node + node->data.children.childOffset[1], findLeafBrush);
+	found.count += ret.count;
+	if(ret.first < found.first)
+	{
+		found.first = ret.first;
+	}
+	return found;
+  }
+  found.count = node->leafBrushCount;
+  if(findLeafBrush)
+  {
+	firstbrush = node->data.leaf.brushes - cm.leafbrushes;
+	if(firstbrush + found.count > cm.numLeafBrushes)
+	{
+		Error("Invalid leafbrush index/count");
+	}
+	found.first = firstbrush;
+	assert(cm.leafbrushes[found.first] == node->data.leaf.brushes[0]);
+  }else{
+	firstbrush = node->data.leaf.brushes[0];
+	if(firstbrush + found.count > cm.numBrushes)
+	{
+		Error("Invalid brush index/count");
+	}
+	found.first = firstbrush;
+  }
+  return found;
+}
+
+
+
 int IW3_DumpSubmodels(q3_dmodel_t **pout, int size ) {
 	int length;
 	int i, j;
+
+	findNode_t found;
+
 
 	if ( cm.numSubModels < 1 ) {
 		Error("Map with no models" );
@@ -554,7 +632,9 @@ int IW3_DumpSubmodels(q3_dmodel_t **pout, int size ) {
 	}
 
 	cmodel_t* in = cm.cmodels;
-	
+	found.first = 0;
+	found.count = 0;
+
 	for ( i = 0 ; i < cm.numSubModels ; i++, in++, out++ )
 	{
 		for ( j = 0 ; j < 3 ; j++ )
@@ -576,30 +656,61 @@ int IW3_DumpSubmodels(q3_dmodel_t **pout, int size ) {
 			return 0;
 		}
 
-		out->firstBrush = 0;
 
 		if(in->leaf.leafBrushNode == 0)
 		{
+			assert(!in->leaf.brushContents);
 			out->numBrushes = 0;
-			continue;
-		}
-
-		cLeafBrushNode_t *node = &cm.leafbrushNodes[in->leaf.leafBrushNode];
-
-		out->numBrushes = node->leafBrushCount;
-		if(out->numBrushes < 0) //out->numBrushes == 0 means childrens present
-		{
-			//In parsing this would be node+1 now
-			Error( "IW3_DumpSubmodels: In leafBrushNode %d are %d brushes referenced. This case is not handled at the moment.", in->leaf.leafBrushNode, out->numBrushes);
-			return 0;
-		}
-		if(out->numBrushes > 0)
-		{
-			out->firstBrush = node->data.leaf.brushes[0];
+			out->firstBrush = found.first + found.count; //Using the older data here
+		}else{
+			cLeafBrushNode_t *node = &cm.leafbrushNodes[in->leaf.leafBrushNode];
+			found = CM_FindLeafBrushNode_r(node, false);
+			out->firstBrush = found.first;
+			out->numBrushes = found.count;
 		}
 	}
 	return i;
 }
+
+//ME NOTE: changed from 0.00001
+#define NORMAL_EPSILON  0.000000001
+//ME NOTE: changed from 0.01
+#define DIST_EPSILON    0.000000002
+
+//Inserts a new plane if not yet defined or finds a plane
+int IW3_PlaneByNormalDist(vec3_t normal, vec_t dist)
+{
+	int i;
+	q3_dplane_t* p;
+	for(i = 0; i < iw3_numplanes; i++)
+	{
+		p = &iw3_dplanes[i];
+
+		if (fabs( p->normal[0] - normal[0] ) < NORMAL_EPSILON
+				&& fabs( p->normal[1] - normal[1] ) < NORMAL_EPSILON
+				&& fabs( p->normal[2] - normal[2] ) < NORMAL_EPSILON
+				&& fabs( p->dist - dist ) < DIST_EPSILON ) {
+			break;
+		}
+	}
+	if(i < iw3_numplanes)
+	{
+		return i;
+	}
+	p = &iw3_dplanes[iw3_numplanes];
+
+	VectorCopy(normal, p->normal); 
+	p->dist = dist;
+
+	++iw3_numplanes;
+
+	if(iw3_numplanes > cm.planeCount + 6 * (uint32_t)cm.numBrushes)
+	{
+		Error("max plane storagecount exceeded!");
+	}
+	return i;
+}
+
 
 int IW3_DumpPlanes(q3_dplane_t** pout, int size)
 {
@@ -613,6 +724,7 @@ int IW3_DumpPlanes(q3_dplane_t** pout, int size)
 	}
 
 	length = cm.planeCount * size;
+	length += 6 * (uint32_t)cm.numBrushes; //have space for boundingbox sides
 	*pout = GetMemory( length );
 	out = *pout;
 	cplane_t* in = cm.planes;
@@ -626,12 +738,23 @@ int IW3_DumpPlanes(q3_dplane_t** pout, int size)
 }
 
 
+signed int IW3_RoundToAbsInt(float z)
+{
+	if(z > 0)
+	{
+		return (int)ceilf(z);
+	}else if(z < 0){
+		return (int)floorf(z);
+	}
+	return 0;
+}
+
+
 int IW3_DumpLeafs( q3_dleaf_t** pout, int size )
 {
 	int length;
-	int i;
-	int findcount;
-	int firstleafbrush;
+	int i, j;
+	findNode_t found;
 
 	if ( cm.numLeafs < 1 ) {
 		Error("Map with no leafs" );
@@ -641,7 +764,9 @@ int IW3_DumpLeafs( q3_dleaf_t** pout, int size )
 	*pout = GetMemory( length );
 	q3_dleaf_t* out = *pout;
 	cLeaf_t* in = cm.leafs;
-	
+	found.first = 0;
+	found.count = 0;
+
 	for(i = 0; i < cm.numLeafs; i++, in++, out++)
 	{
 		out->cluster = in->cluster;
@@ -652,36 +777,392 @@ int IW3_DumpLeafs( q3_dleaf_t** pout, int size )
 
 		if(in->leafBrushNode == 0)
 		{
-			if(in->brushContents)
-			{
-				printf("No leafbrushnode but contents!\n");
-			}
-			continue;
+			assert(!in->brushContents);
+			out->numLeafBrushes = 0;
+			out->firstLeafBrush = found.first + found.count; //Using the older data here
+		}else{
+			cLeafBrushNode_t *node = &cm.leafbrushNodes[in->leafBrushNode];
+			found = CM_FindLeafBrushNode_r(node, true);
+			out->firstLeafBrush = found.first;
+			out->numLeafBrushes = found.count;
 		}
-		cLeafBrushNode_t *node = &cm.leafbrushNodes[in->leafBrushNode];
-		if(node->leafBrushCount <= 0)
+
+
+		for ( j = 0 ; j < 3 ; j++ )
 		{
-			if(node->leafBrushCount == 0)
-			{
-				printf("%d leafbrushes box %g %g %g, %g %g %g\n", i, 
-				in->mins[0],in->mins[1],in->mins[2], 
-				in->maxs[0],in->maxs[1],in->maxs[2]);
-				continue;
-			}
-
-			printf("%d No leafbrushes - count: %d\n", i, node->leafBrushCount);
-			continue;
+			out->mins[j] = IW3_RoundToAbsInt(in->mins[j] + 0.120); //Signs inverted
+			out->maxs[j] = IW3_RoundToAbsInt(in->maxs[j] - 0.120);
 		}
-		firstleafbrush = node->data.leaf.brushes - cm.leafbrushes;
-
-		assert(cm.leafbrushes[firstleafbrush] == node->data.leaf.brushes[0]);
-
-		out->firstLeafBrush = firstleafbrush;
-		out->numLeafBrushes = node->leafBrushCount;
-		printf("%d leafbrushes %d first %d\n", i, node->leafBrushCount, firstleafbrush);
-
 	}
 	return i;
+}
+
+
+int IW3_DumpNodes( q3_dnode_t** pout, int size )
+{
+	int length;
+	int i, j;
+
+	if ( cm.numNodes < 1 ) {
+		Error("Map with no nodes" );
+		return 0;
+	}
+	length = cm.numNodes * size;
+	*pout = GetMemory( length );
+	q3_dnode_t* out = *pout;
+	cNode_t* in = cm.nodes;
+
+	for(i = 0; i < cm.numNodes; i++, in++, out++)
+	{
+		out->planeNum = in->plane - cm.planes;
+		out->children[0] = in->children[0];
+		out->children[1] = in->children[1];
+		for ( j = 0 ; j < 3 ; j++ )
+		{
+			out->mins[j] = 0e-99;
+			out->maxs[j] = 0e-99;
+		}
+	}
+	return i;
+}
+
+int IW3_DumpLeafBrushes(int** pout, int size)
+{
+	int length;
+	int i;
+	int* out;
+
+	if ( cm.numLeafBrushes < 1 ) {
+		Error("Map with no leaf-brushes" );
+		return 0;
+	}
+
+	length = cm.numLeafBrushes * size;
+	*pout = GetMemory( length );
+	out = *pout;
+
+	for(i = 0; i < cm.numLeafBrushes; i++)
+	{
+		out[i] = cm.leafbrushes[i];
+	  assert(out[i] < (signed int)cm.numBrushes);
+	}
+	return i;
+}
+
+int IW3_FindSuitableShader(cbrush_t* b)
+{
+	int i, k;
+
+	for(k = 0; k < 2; ++k)
+	{
+		for(i = 0; i < 3; ++i)
+		{
+			unsigned int shader = b->axialMaterialNum[k][i];
+			if(shader >= cm.numMaterials)
+			{
+				Error("IW3_DumpBrushes: Out of range shader index.");
+			}
+
+			if(b->contents == cm.materials[shader].contentFlags)
+			{
+				return shader;
+			}
+		}
+	}
+
+	for(i = 0; i < b->numsides; ++i)
+	{
+		unsigned int shader = b->sides[i].materialNum;
+		if(shader >= cm.numMaterials)
+		{
+			Error("IW3_DumpBrushes: Out of range shader index.");
+		}
+
+		if(b->contents == cm.materials[shader].contentFlags)
+		{
+			return shader;
+		}
+	}
+
+	for(i = 0; i < cm.numMaterials; ++i)
+	{
+		if(b->contents == cm.materials[i].contentFlags)
+		{
+			return i;
+		}
+	}
+	Error("IW3_DumpBrushes: No shader with wanted contentflags found.");
+	return 0;
+}
+
+
+
+int IW3_DumpBrushes( q3_dbrush_t** pout, int size )
+{
+	int length, sidescounter;
+	int i;
+
+	if ( cm.numBrushes < 1 ) {
+		Error("Map with no brushes" );
+		return 0;
+	}
+	length = cm.numBrushes * size;
+	*pout = GetMemory( length );
+	q3_dbrush_t* out = *pout;
+	cbrush_t* in = cm.brushes;
+
+	for(i = 0, sidescounter = 0; i < cm.numBrushes; i++, in++, out++)
+	{
+		out->numSides = in->numsides + 6;
+		//We can not really know anymore which shader was used for this.
+		//So all we can do is to find some shader which does match the content flags.
+		//At first it appears to make sense to check all the materials of the associated brush sides.
+		//Then just pick the first best matching shader when nothing was found in sides
+		out->shaderNum = IW3_FindSuitableShader(in);
+
+		out->firstSide = sidescounter; //Will dump the brushsides in same order
+		sidescounter += out->numSides;
+	}
+	return i;
+}
+
+
+
+int IW3_DumpBrushSides( q3_dbrushside_t** pout, int size )
+{
+	int i, j, k, z, numsides;
+	cbrush_t* in = cm.brushes;
+
+	for(i = 0, numsides = 0; i < cm.numBrushes; ++i, ++in)
+	{
+		numsides += 6;
+		numsides += in->numsides;
+	}
+
+	int length = numsides * size;
+	*pout = GetMemory( length );
+	q3_dbrushside_t* out = *pout;
+
+	in = cm.brushes;
+	
+	int y;
+
+	for(i = 0, y = 0; i < cm.numBrushes; i++, in++)
+	{
+		q3_dplane_t bbox[2][3];
+		vec3_t normal;
+		vec_t dist;
+		
+		for ( z = 0 ; z < 3 ; z++ )
+		{
+			VectorClear( normal );
+			normal[z] = 1;
+			dist = in->maxs[z];
+
+			VectorCopy(normal, bbox[0][z].normal);
+			bbox[0][z].dist = dist;
+
+			normal[z] = -1;
+			dist = -in->mins[z];
+
+			VectorCopy(normal, bbox[1][z].normal);
+			bbox[1][z].dist = dist;
+		}
+
+		for(j = 0; j < 2; ++j)
+		{
+			for(k = 0; k < 3; ++k, ++out)
+			{
+				out->planeNum = IW3_PlaneByNormalDist(bbox[j][k].normal, bbox[j][k].dist);
+				out->shaderNum = in->axialMaterialNum[j][k];
+				++y;
+			}
+		}
+		for(k = 0; k < in->numsides; ++k, ++out)
+		{
+			out->planeNum = in->sides[k].plane - cm.planes;
+			out->shaderNum = in->sides[k].materialNum;
+			++y;
+		}
+	}
+	assert(y == numsides);
+	return y;
+}
+
+
+#define VIS_HEADER  8
+int IW3_DumpVisBytes(byte** pout, int size)
+{
+	if(!cm.vised)
+	{
+		return 0;
+	}
+	int length = (unsigned)cm.numClusters * (unsigned)cm.clusterBytes + VIS_HEADER;
+	*pout = GetMemory( length );	
+	byte* out = *pout;
+
+  ( (int *)out )[0] = cm.numClusters;
+  ( (int *)out )[1] = cm.clusterBytes;
+
+	memcpy(out + VIS_HEADER, cm.visibility, (unsigned)cm.numClusters * (unsigned)cm.clusterBytes);
+	return length;
+}
+
+
+void Byte4CopyBgraToVertexColor(const byte *rgbaFrom, byte *nativeTo)
+{
+    *(uint32_t*)nativeTo = *(uint32_t*)rgbaFrom;
+    
+}
+
+int IW3_DumpDrawVerts( iw3_drawVert_t** pout, int size )
+{
+	int i;
+	int length = s_world.vertexCount * size;
+	*pout = GetMemory( length );
+	iw3_drawVert_t* out = *pout;
+
+	struct GfxWorldVertex* in = s_world.vd.vertices;
+
+	for(i = 0; i < s_world.vertexCount; ++i, ++in, ++out)
+	{
+		VectorCopy(in->xyz, out->xyz);
+		vec2_copy(in->texCoord, out->st);
+		vec2_copy(in->lmapCoord, out->lightmap);
+		Vec3UnpackUnitVec(in->normal, out->normal);
+		Vec3UnpackUnitVec(in->tangent, out->tangent);
+		Byte4CopyBgraToVertexColor(in->color.array, out->color);
+		VectorClear(out->binormal);
+	}
+	return i;
+}
+
+int IW3_FindShaderNumByName(const char* name)
+{
+	int i;
+	for(i = 0; i < cm.numMaterials; ++i)
+	{
+		if(Q_stricmp(cm.materials[i].material, name) == 0)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+
+int IW3_DumpDrawSurfaces( q3_dsurface_t** pout, int size )
+{
+	int i;
+	int length = s_world.surfaceCount * size;
+	*pout = GetMemory( length );
+	q3_dsurface_t* out = *pout;
+
+	struct GfxSurface* in = s_world.dpvs.surfaces;
+
+	for(i = 0; i < s_world.surfaceCount; ++i, ++in, ++out)
+	{
+		char matname[1024];
+		Q_strncpyz(matname, in->material->info.name, sizeof(matname));
+
+		char* f = strrchr(matname, '/');
+		if(f)
+		{
+			*f = '\0';
+			++f;
+		}else{
+			f = matname;
+		}
+
+
+		out->shaderNum = IW3_FindShaderNumByName(f);
+		if(out->shaderNum == -1)
+		{
+			qprintf("@%d Surface material %s is not in list of cm.materials!\n", i, f);
+		}
+		out->firstVert = in->tris.firstVertex;
+		out->numVerts = in->tris.vertexCount;
+		out->numIndexes = in->tris.triCount * 3;
+		out->firstIndex = in->tris.baseIndex; //has to be based on s_world.draw.indices 
+		out->lightmapNum = in->lightmapIndex; //is lmapMergeInfo based index. Not going to be valid without tricks
+//		printf("%d Lightmap num: %d\n", i, out->lightmapNum);
+		//in->primaryLightIndex;
+	}
+	printf("Num Draw surfs: %d\n", i);
+	return i;
+}
+
+
+struct __attribute__((aligned(1),packed)) TGA_HEADER{
+   char  idlength;
+   char  colourmaptype;
+   char  datatypecode;
+   short int colourmaporigin;
+   short int colourmaplength;
+   char  colourmapdepth;
+   short int x_origin;
+   short int y_origin;
+   short width;
+   short height;
+   char  bitsperpixel;
+   char  imagedescriptor;
+};
+
+int IW3_DumpLightMaps()
+{
+	int i;
+	struct GfxLightmapArray* in = s_world.lightmaps;
+
+	for(i = 0; i < s_world.lightmapCount; ++i, ++in)
+	{
+		struct GfxImage* primary = in->primary;
+		struct GfxImage* secondary = in->secondary;
+		struct GfxImageLoadDef* pritex = primary->texture.loadDef;
+		struct GfxImageLoadDef* sectex = secondary->texture.loadDef;
+
+		printf("%d %d %d Pri Lightmap %s size %d\n", pritex->dimensions[0], pritex->dimensions[1], pritex->dimensions[2],
+		primary->name, pritex->resourceSize);
+		printf("%d %d %d Sec Lightmap %s size %d\n", sectex->dimensions[0], sectex->dimensions[1], sectex->dimensions[2],
+		secondary->name, sectex->resourceSize);
+
+		int height = pritex->dimensions[0];
+		int width = pritex->dimensions[1];
+
+		char header[18];
+		memset( header, 0, 18 );
+		header[2] = 3; //monochrom uncompressed
+		header[12] = width & 255;
+		header[13] = width >> 8;
+		header[14] = height & 255;
+		header[15] = height >> 8;
+		header[16] = 8; // pixel size
+		header[17] = 32;
+
+		FILE* f = fopen("lightmap0_primary.tga", "wb");
+		if(f)
+		{
+			fwrite(&header, 1, 18, f);
+			fwrite(pritex->data, 1, pritex->resourceSize, f);
+			fclose(f);
+		}
+
+	}
+	return 0;
+
+}
+
+int IW3_DumpEntityString( char** iw3_dentdata, int size )
+{
+
+	printf("EntStr: %s\n", cm.mapEnts->entityString);
+/*
+	int i;
+	int length = s_world.surfaceCount * size;
+	*pout = GetMemory( length );
+	q3_dsurface_t* out = *pout;
+*/
+
+	return 0;
 }
 
 /*
@@ -728,32 +1209,36 @@ void IW3_LoadFastfile( struct quakefile_s *qf ) {
 		Error( "Could not find needed asset %s in %s\n", bspfilename, qf->filename);
 	}
 
-	//When we got until here we have a loaded clipmap. Next step is to extract the ClipMap
+	qprintf("-- Begin dumping lumps from clipMap and gfxWorld --\n");
+
+	//When we got until here we have a loaded clipmap. Next step is to extract the ClipMap into BSP-Lumps
 
 	iw3_numShaders = IW3_CopyLump( cm.materials, cm.numMaterials, (void *) &iw3_dshaders, sizeof( q3_dshader_t ) ); //Called materials in IWx
 	iw3_nummodels = IW3_DumpSubmodels( &iw3_dmodels, sizeof( q3_dmodel_t ) );
-	iw3_numplanes = IW3_DumpPlanes( &iw3_dplanes, sizeof( q3_dplane_t ) );
+	iw3_numplanes = IW3_DumpPlanes( &iw3_dplanes, sizeof( q3_dplane_t ) ); //Important step to do early as leaf and brushsides depend on this
 	iw3_numleafs = IW3_DumpLeafs( &iw3_dleafs, sizeof( q3_dleaf_t ) );
+	iw3_numnodes = IW3_DumpNodes( &iw3_dnodes, sizeof( q3_dnode_t ) );
+	iw3_numleafsurfaces = IW3_CopyLump( cm.leafsurfaces, cm.numLeafSurfaces, (void *) &iw3_dleafsurfaces, sizeof( iw3_dleafsurfaces[0] ) );
+	iw3_numleafbrushes = IW3_DumpLeafBrushes( &iw3_dleafbrushes, sizeof( iw3_dleafbrushes[0] ) );
+	iw3_numbrushes = IW3_DumpBrushes(&iw3_dbrushes, sizeof( q3_dbrush_t ));
+	iw3_numbrushsides = IW3_DumpBrushSides( &iw3_dbrushsides, sizeof( q3_dbrushside_t ) );
+	iw3_numVisBytes = IW3_DumpVisBytes( &iw3_visBytes, 1 );
+	iw3_numDrawVerts = IW3_DumpDrawVerts( &iw3_drawVerts, sizeof( iw3_drawVert_t ) );
+	iw3_numDrawSurfaces = IW3_DumpDrawSurfaces( &iw3_drawSurfaces, sizeof( q3_dsurface_t ) );
+	iw3_numDrawIndexes = IW3_CopyLump( s_world.indices, s_world.indexCount, (void *) &iw3_drawIndexes, sizeof( iw3_drawIndexes[0] ) );
+	iw3_entdatasize = IW3_CopyLump( cm.mapEnts->entityString, cm.mapEnts->numEntityChars, (void *) &iw3_dentdata, 1 );
 
-/*	iw3_numnodes = IW3_CopyLump( header, Q3_LUMP_NODES, (void *) &iw3_dnodes, sizeof( q3_dnode_t ) );
-	iw3_numleafsurfaces = IW3_CopyLump( header, Q3_LUMP_LEAFSURFACES, (void *) &iw3_dleafsurfaces, sizeof( iw3_dleafsurfaces[0] ) );
-	iw3_numleafbrushes = IW3_CopyLump( header, Q3_LUMP_LEAFBRUSHES, (void *) &iw3_dleafbrushes, sizeof( iw3_dleafbrushes[0] ) );
-	iw3_numbrushes = IW3_CopyLump( header, Q3_LUMP_BRUSHES, (void *) &iw3_dbrushes, sizeof( q3_dbrush_t ) );
-	iw3_numbrushsides = IW3_CopyLump( header, Q3_LUMP_BRUSHSIDES, (void *) &iw3_dbrushsides, sizeof( q3_dbrushside_t ) );
-	iw3_numDrawVerts = IW3_CopyLump( header, Q3_LUMP_DRAWVERTS, (void *) &iw3_drawVerts, sizeof( q3_drawVert_t ) );
-	iw3_numDrawSurfaces = IW3_CopyLump( header, Q3_LUMP_SURFACES, (void *) &iw3_drawSurfaces, sizeof( q3_dsurface_t ) );
+/*
+	Ignore lightmaps and fog. Too difficult.
+	iw3_numLightBytes = IW3_DumpLightMaps();
 	iw3_numFogs = IW3_CopyLump( header, Q3_LUMP_FOGS, (void *) &iw3_dfogs, sizeof( q3_dfog_t ) );
-	iw3_numDrawIndexes = IW3_CopyLump( header, Q3_LUMP_DRAWINDEXES, (void *) &iw3_drawIndexes, sizeof( iw3_drawIndexes[0] ) );
-
-	iw3_numVisBytes = IW3_CopyLump( header, Q3_LUMP_VISIBILITY, (void *) &iw3_visBytes, 1 );
 	iw3_numLightBytes = IW3_CopyLump( header, Q3_LUMP_LIGHTMAPS, (void *) &iw3_lightBytes, 1 );
-	iw3_entdatasize = IW3_CopyLump( header, Q3_LUMP_ENTITIES, (void *) &iw3_dentdata, 1 );
-
 	iw3_numGridPoints = IW3_CopyLump( header, Q3_LUMP_LIGHTGRID, (void *) &iw3_gridData, 8 );
 
-	IW3_FindVisibleBrushSides();
 */
-	//Q3_PrintBSPFileSizes();
+
+	IW3_FindVisibleBrushSides();
+	IW3_PrintBSPFileSizes();
 }
 
 
@@ -929,7 +1414,7 @@ void IW3_PrintBSPFileSizes( void ) {
 			   ,iw3_numleafsurfaces, (int)( iw3_numleafsurfaces * sizeof( iw3_dleafsurfaces[0] ) ) );
 	Log_Print( "%6i leafbrushes  %7i\n"
 			   ,iw3_numleafbrushes, (int)( iw3_numleafbrushes * sizeof( iw3_dleafbrushes[0] ) ) );
-	Log_Print( "%6i drawverts    %7i\n"
+	Log_Print( "%6i drawverts   %8i\n"
 			   ,iw3_numDrawVerts, (int)( iw3_numDrawVerts * sizeof( iw3_drawVerts[0] ) ) );
 	Log_Print( "%6i drawindexes  %7i\n"
 			   ,iw3_numDrawIndexes, (int)( iw3_numDrawIndexes * sizeof( iw3_drawIndexes[0] ) ) );

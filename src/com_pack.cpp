@@ -5,7 +5,7 @@
 extern "C"
 {
 
-void __cdecl Vec3UnpackUnitVec(PackedUnitVec in, float *out)
+void __cdecl Vec3UnpackUnitVec(union PackedUnitVec in, float *out)
 {
   float decodeScale;
 

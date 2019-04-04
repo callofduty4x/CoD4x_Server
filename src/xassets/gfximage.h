@@ -12,8 +12,7 @@ typedef struct IDirect3DCubeTexture9           D3DCubeTexture;
 typedef struct IDirect3DSurface9			   D3DSurface;
 
 #ifndef DIRECT3D_VERSION
-typedef unsigned int D3DFORMAT;
-
+typedef unsigned int _D3DFORMAT;
 #endif
 
 typedef enum MapType_s
@@ -27,47 +26,49 @@ typedef enum MapType_s
   MAPTYPE_COUNT = 0x6,
 }MapType_t;
 
-typedef union
+struct GfxImageLoadDef
 {
-	D3DBaseTexture *basemap;
-	D3DTexture *map;
-	D3DVolumeTexture *volmap;	// if GfxImageLoadDef::flags & 8
-	D3DCubeTexture *cubemap;	// if GfxImageLoadDef::flags & 4
-	struct GfxImageLoadDef_t *loadDef;
-}GfxTexture_t;
- 
-struct GfxImageLoadDef_t
-{
-	char levelCount;
-	char flags;
-	short dimensions[3];
-	D3DFORMAT format;
-	GfxTexture_t texture;
+  char levelCount;
+  char flags;
+  uint16_t dimensions[3];
+  _D3DFORMAT format;
+  int resourceSize;
+  byte data[1]; //Dummy. This will be resourceSize bytes.
 };
 
-typedef struct
+
+union GfxTexture
 {
-	struct GfxImageLoadDef_t *loadDef;
-}GfxTextureLoad_t;
+  struct IDirect3DBaseTexture9 *basemap;
+  struct IDirect3DTexture9 *map;
+  struct IDirect3DVolumeTexture9 *volmap;	// if GfxImageLoadDef::flags & 8
+  struct IDirect3DCubeTexture9 *cubemap;	// if GfxImageLoadDef::flags & 4
+  struct GfxImageLoadDef *loadDef;			//Initial type - getting overridden on loading
+};
+
+struct Picmip
+{
+	byte platform[2];
+};
 
 
 typedef struct GfxImage
 {
-	MapType_t mapType;
-	GfxTextureLoad_t texture;
-	byte array_00[2];
-	byte field_02;
-	byte field_03;	
-	byte flags;
-	byte field_05;
-	unsigned short field_06;
-	int array_08[2];
-	unsigned short width;
-	unsigned short height;
-	unsigned short depth;
-	byte category;
-	byte streaming;
-	const char *name;
+  MapType_t mapType;
+  union GfxTexture texture;
+  struct Picmip picmip;
+  byte noPicmip;
+  byte semantic;
+  byte flags;
+  byte field_05;
+  unsigned short field_06;
+  int cardMemoryAmounts[2];
+  unsigned short width;
+  unsigned short height;
+  unsigned short depth;
+  byte category;
+  byte streaming;
+  const char *name;
 }GfxImage_t;
 
 struct GfxLightImage

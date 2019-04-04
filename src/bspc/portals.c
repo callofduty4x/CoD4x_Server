@@ -334,6 +334,7 @@ void MakeHeadnodePortals( tree_t *tree ) {
 	tree->outside_node.contents = 0;
 
 	for ( i = 0 ; i < 3 ; i++ )
+	{
 		for ( j = 0 ; j < 2 ; j++ )
 		{
 			n = j * 3 + i;
@@ -355,7 +356,7 @@ void MakeHeadnodePortals( tree_t *tree ) {
 			p->winding = BaseWindingForPlane( pl->normal, pl->dist );
 			AddPortalToNodes( p, node, &tree->outside_node );
 		}
-
+	}
 // clip the basewindings by all the other planes
 	for ( i = 0 ; i < 6 ; i++ )
 	{

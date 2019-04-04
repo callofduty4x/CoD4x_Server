@@ -491,7 +491,7 @@ qboolean IW3_ParseBSPEntity( int entnum ) {
 void AAS_CreateCurveBrushes( void ) {
 	int i, j, n, planenum, numcurvebrushes = 0;
 	q3_dsurface_t *surface;
-	q3_drawVert_t *dv_p;
+	iw3_drawVert_t *dv_p;
 	vec3_t points[MAX_PATCH_VERTS];
 	int width, height, c;
 	patchCollide_t *pc;
@@ -643,11 +643,11 @@ void AAS_CreateCurveBrushes( void ) {
 //===========================================================================
 void AAS_ExpandMapBrush( mapbrush_t *brush, vec3_t mins, vec3_t maxs );
 
-void IW3_LoadMapFromBSP( struct quakefile_s *qf ) {
+void IW3_LoadMapFromFastfile( struct quakefile_s *qf ) {
 	int i;
 	vec3_t mins = {-1,-1,-1}, maxs = {1, 1, 1};
 
-	Log_Print( "-- Q3_LoadMapFromBSP --\n" );
+	Log_Print( "-- IW3_LoadMapFromBSP --\n" );
 	//loaded map type
 	loadedmaptype = MAPTYPE_IW3;
 
@@ -705,25 +705,7 @@ void IW3_LoadMapFromBSP( struct quakefile_s *qf ) {
 	  } //end for*/
 } //end of the function Q3_LoadMapFromBSP
 
-void IW3_LoadMapFromFastfile( struct quakefile_s *qf )
-{
 
-	Log_Print( "-- IW3_LoadMapFromFastfile --\n" );
-	Log_Print( "Loading map from %s...\n", qf->filename );
-
-	//load the bsp file
-	IW3_LoadFastfile( qf );
-
-	//loaded map type
-	loadedmaptype = MAPTYPE_IW3;
-
-
-
-
-	ResetMapLoading();
-
-	return;
-}
 
 //===========================================================================
 //

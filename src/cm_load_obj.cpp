@@ -178,7 +178,6 @@ void CMod_LoadLeafBrushNodes()
 
   for (leafIter = 0; leafIter < cm.numLeafs; ++leafIter )
   {
-    Com_Printf(CON_CHANNEL_SYSTEM, "%d leafbrushes %d first %d\n", leafIter, in->numLeafBrushes,in->firstLeafBrush);
     numLeafBrushes = in->numLeafBrushes;
     indexFirstLeafBrush = in->firstLeafBrush;
     contents = 0;
@@ -523,6 +522,7 @@ void __cdecl CMod_LoadSubmodelBrushNodes()
     numLeafBrushes = in->numBrushes;
     indexes = (uint16_t *)CM_Hunk_Alloc(2 * numLeafBrushes, "CMod_LoadSubmodelBrushNodes");
     contents = 0;
+
     for ( leafBrushIndex = 0; leafBrushIndex < numLeafBrushes; ++leafBrushIndex )
     {
       firstBrush = leafBrushIndex + in->firstBrush;
@@ -675,6 +675,9 @@ void __cdecl CMod_LoadNodes()
   nodeIter = 0;
   while ( nodeIter < count )
   {
+    Com_Printf(CON_CHANNEL_SYSTEM, "Node %d, plane %d, childs %d %d, mins %g %g %g, maxs %g %g %g\n", 
+      nodeIter, in->planeNum, in->children[0], in->children[1], in->mins[0], in->mins[1], in->mins[2],
+      in->maxs[0], in->maxs[1], in->maxs[2]);
     out->plane = &cm.planes[in->planeNum];
     for ( j = 0; j < 2; ++j )
     {

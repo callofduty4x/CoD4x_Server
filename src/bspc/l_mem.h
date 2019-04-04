@@ -34,6 +34,10 @@ If you have questions concerning this license or the applicable additional terms
 //#define MEMDEBUG
 #undef MEMDEBUG
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #ifndef MEMDEBUG
 
 void *GetClearedMemory( int size );
@@ -57,3 +61,6 @@ void PrintMemorySize( unsigned long size );
 int TotalAllocatedMemory( void );
 void *Hunk_Alloc( int size );
 
+#ifdef __cplusplus
+};
+#endif

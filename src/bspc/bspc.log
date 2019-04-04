@@ -1,18 +1,0 @@
-BSPC version 2.1c, Mar 27 2019 18:28:48 by Mr Elusive
-bsp2aas: mp_backlot.ff to mp_backlot.aas
--- IW3_LoadMapFromFastfile --
-Loading map from mp_backlot.ff...
-Loading fastfile 'mp_backlot.ff'
-used 51.89 MB memory in DB alloc
-Loaded fastfile 'mp_backlot.ff' in 2114ms (156ms waiting)
-BSP tree created in     1 seconds
-------- Prune Nodes --------
-    0 pruned nodes
----- Node Portalization ----
-     1 nodes portalized
-     0 tiny portals
-     0 KB of portal memory
-     0 KB of winding memory
------- FloodEntities -------
-WARNING: no entities inside
-**** leaked ****

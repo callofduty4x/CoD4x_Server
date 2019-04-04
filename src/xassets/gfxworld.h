@@ -1,6 +1,8 @@
 #ifndef __GFXWORLD_H__
 #define __GFXWORLD_H__
 
+#include "../com_pack.h"
+
 typedef uint16_t r_index_t;
 typedef unsigned int raw_uint;
 typedef unsigned char raw_byte;
@@ -9,7 +11,7 @@ typedef char raw_byte16;
 
 typedef struct
 {
-    IDirect3DVertexBuffer9 *d3dVb;
+    struct IDirect3DVertexBuffer9 *d3dVb;
 }GfxVertexBuffer;
 
 typedef struct 
@@ -26,18 +28,25 @@ typedef struct
   unsigned int startSurfIndex;
 }GfxBrushModel;
 
-/*
+
+union GfxColor
+{
+  unsigned int packed;
+  byte array[4];
+};
+
+
 struct GfxWorldVertex
 {
-  float xyz[3];
+  vec3_t xyz;
   float binormalSign;
-  GfxColor color;
+  union GfxColor color;
   float texCoord[2];
   float lmapCoord[2];
-  PackedUnitVec normal;
-  PackedUnitVec tangent;
-}; Size = 44!
-*/
+  union PackedUnitVec normal;
+  union PackedUnitVec tangent;
+};
+
 
 typedef struct 
 {
@@ -107,8 +116,8 @@ typedef struct
 {
   byte hasValidData;
   byte pad[3];
-  Material *spriteMaterial;
-  Material *flareMaterial;
+  struct Material *spriteMaterial;
+  struct Material *flareMaterial;
   float spriteSize;
   float flareMinSize;
   float flareMinDot;
@@ -172,10 +181,37 @@ typedef struct
 
 typedef struct 
 {
-  Material *material;
+  struct Material *material;
   int memory;
 }MaterialMemory;
 
+
+struct srfTriangles_t
+{
+  int vertexLayerData; //goed
+  int firstVertex;	//goed
+  uint16_t vertexCount; //goed
+  uint16_t triCount; //goed
+  int baseIndex;	//goed
+};
+
+
+struct GfxSurface
+{
+  struct srfTriangles_t tris;
+  struct Material *material;
+  char lightmapIndex;
+  char reflectionProbeIndex;
+  char primaryLightIndex;
+  char flags;
+  float bounds[2][3];
+};
+
+struct GfxLightmapArray
+{
+  struct GfxImage *primary;
+  struct GfxImage *secondary;
+};
 
 #pragma pack(push, 4)
 typedef struct GfxWorld
