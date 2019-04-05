@@ -304,7 +304,7 @@ void Q3_SurfacePlane(q3_dsurface_t *surface, vec3_t normal, float *dist)
 	//take the plane information from the lightmap vector
 	//VectorCopy(surface->lightmapVecs[2], normal);
 	//calculate plane dist with first surface vertex
-	//*dist = DotProduct(q3_drawVerts[surface->firstVert].xyz, normal);
+	// *dist = DotProduct(q3_drawVerts[surface->firstVert].xyz, normal);
 	Q3_PlaneFromPoints(q3_drawVerts[surface->firstVert].xyz,
 						q3_drawVerts[surface->firstVert+1].xyz,
 						q3_drawVerts[surface->firstVert+2].xyz, normal, dist);
@@ -403,6 +403,12 @@ void Q3_FindVisibleBrushSides( void ) {
 	winding_t *w;
 
 	memset( q3_dbrushsidetextured, false, Q3_MAX_MAP_BRUSHSIDES );
+
+	if(Q3_MAX_MAP_BRUSHSIDES <= q3_numbrushsides)
+	{
+		Error("Exceeded brushsides limit. Increase Q3_MAX_MAP_BRUSHSIDES.");
+	}
+
 	//
 	numsides = 0;
 	//create planes for the planar surfaces

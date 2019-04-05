@@ -625,6 +625,7 @@ int IW3_DumpSubmodels(q3_dmodel_t **pout, int size ) {
 	length = cm.numSubModels * size;
 	*pout = GetMemory( length );
 	q3_dmodel_t *out = *pout;
+	q3_dmodel_t *worldmodel = *pout;
 
 	if ( cm.numSubModels > IW3_MAX_MAP_MODELS ) {
 		Error( "IW3_MAX_MAP_MODELS exceeded" );
@@ -644,7 +645,8 @@ int IW3_DumpSubmodels(q3_dmodel_t **pout, int size ) {
 		}
 
 		if ( i == 0 ) {
-			continue;   // world model doesn't need other info
+			continue;   // world model does not contain our info directly. 
+									//We have to hack it from next model back into worldmodel 
 		}
 
 		out->firstSurface = in->leaf.firstCollAabbIndex;
@@ -667,6 +669,14 @@ int IW3_DumpSubmodels(q3_dmodel_t **pout, int size ) {
 			found = CM_FindLeafBrushNode_r(node, false);
 			out->firstBrush = found.first;
 			out->numBrushes = found.count;
+		}
+		if(i == 1)
+		{
+			//Hack to write data back into worldmodel
+			worldmodel->firstBrush = 0;
+			worldmodel->firstSurface = 0;
+			worldmodel->numBrushes = found.first; //First brush of 2nd model must be count for first
+			worldmodel->numSurfaces = in->leaf.firstCollAabbIndex; //same as above
 		}
 	}
 	return i;
@@ -724,7 +734,7 @@ int IW3_DumpPlanes(q3_dplane_t** pout, int size)
 	}
 
 	length = cm.planeCount * size;
-	length += 6 * (uint32_t)cm.numBrushes; //have space for boundingbox sides
+	length += (6 * (uint32_t)cm.numBrushes) * size; //have space for boundingbox sides
 	*pout = GetMemory( length );
 	out = *pout;
 	cplane_t* in = cm.planes;

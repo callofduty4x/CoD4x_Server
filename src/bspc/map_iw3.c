@@ -488,7 +488,7 @@ qboolean IW3_ParseBSPEntity( int entnum ) {
 //===========================================================================
 #define MAX_PATCH_VERTS     1024
 
-void AAS_CreateCurveBrushes( void ) {
+static void AAS_CreateCurveBrushes( void ) {
 	int i, j, n, planenum, numcurvebrushes = 0;
 	q3_dsurface_t *surface;
 	iw3_drawVert_t *dv_p;
@@ -685,6 +685,10 @@ void IW3_LoadMapFromFastfile( struct quakefile_s *qf ) {
 		AddPointToBounds( mapbrushes[i].mins, map_mins, map_maxs );
 		AddPointToBounds( mapbrushes[i].maxs, map_mins, map_maxs );
 	} //end for
+	assert(map_mins[0] < map_maxs[0]);
+	assert(map_mins[1] < map_maxs[1]);
+	assert(map_mins[2] < map_maxs[2]);
+
 	  /*/
 	  for (i = 0; i < nummapbrushes; i++)
 	  {

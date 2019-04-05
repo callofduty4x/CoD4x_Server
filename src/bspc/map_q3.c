@@ -42,7 +42,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "aas_cfg.h"
 #include "aas_map.h"         //AAS_CreateMapBrushes
 #include "l_bsp_q3.h"
-#include "..\qcommon\cm_patch.h"
+#include "cm_patch.h"
 #include "..\game\surfaceflags.h"
 
 #define NODESTACKSIZE       1024
@@ -479,7 +479,7 @@ qboolean Q3_ParseBSPEntity( int entnum ) {
 //===========================================================================
 #define MAX_PATCH_VERTS     1024
 
-void AAS_CreateCurveBrushes( void ) {
+static void AAS_CreateCurveBrushes( void ) {
 	int i, j, n, planenum, numcurvebrushes = 0;
 	q3_dsurface_t *surface;
 	q3_drawVert_t *dv_p;

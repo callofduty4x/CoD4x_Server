@@ -244,7 +244,7 @@ extern char source[1024];
 // map.c
 //=============================================================================
 
-#define MAX_MAPFILE_PLANES          128000
+#define MAX_MAPFILE_PLANES          256000 //Doesn't process all RTCW maps with 256
 #define MAX_MAPFILE_BRUSHES         65535 //16384
 #define MAX_MAPFILE_BRUSHSIDES      ( MAX_MAPFILE_BRUSHES * 8 )
 #define MAX_MAPFILE_TEXINFO         8192

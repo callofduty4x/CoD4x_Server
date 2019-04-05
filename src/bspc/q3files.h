@@ -226,7 +226,7 @@ typedef struct {
 #define Q3_MAX_MAP_FOGS     0x100
 #define Q3_MAX_MAP_PLANES       0x10000
 #define Q3_MAX_MAP_NODES        0x10000
-#define Q3_MAX_MAP_BRUSHSIDES   0x10000
+#define Q3_MAX_MAP_BRUSHSIDES   0x40000 //Also some RTCW maps do crash with just 0x10000 xD
 #define IW3_MAX_MAP_BRUSHSIDES   0x40000
 #define Q3_MAX_MAP_LEAFS        0x10000
 #define Q3_MAX_MAP_LEAFFACES    0x10000

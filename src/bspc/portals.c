@@ -321,6 +321,10 @@ void MakeHeadnodePortals( tree_t *tree ) {
 
 	node = tree->headnode;
 
+	assert(tree->mins[0] < tree->maxs[0]);
+	assert(tree->mins[1] < tree->maxs[1]);
+	assert(tree->mins[2] < tree->maxs[2]);
+
 // pad with some space so there will never be null volume leaves
 	for ( i = 0 ; i < 3 ; i++ )
 	{
@@ -365,6 +369,13 @@ void MakeHeadnodePortals( tree_t *tree ) {
 			if ( j == i ) {
 				continue;
 			}
+			float dbg_dist;
+			vec3_t dbg_normal;
+			WindingPlane( portals[i]->winding, dbg_normal, &dbg_dist );
+			printf("dist %g, Normal %g %g %g\n", dbg_dist, dbg_normal[0], dbg_normal[1], dbg_normal[2]);
+			printf("in-dist %g, in-Normal %g %g %g\n", bplanes[j].dist, 
+					bplanes[j].normal[0], bplanes[j].normal[1], bplanes[j].normal[2]);
+
 			ChopWindingInPlace( &portals[i]->winding, bplanes[j].normal, bplanes[j].dist, ON_EPSILON );
 		} //end for
 	} //end for
