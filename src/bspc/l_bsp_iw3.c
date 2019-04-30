@@ -1063,13 +1063,15 @@ int IW3_FindShaderNumByName(const char* name)
 
 int IW3_DumpDrawSurfaces( q3_dsurface_t** pout, int size )
 {
-	int i;
+	int i, j, z;
 	int length = s_world.surfaceCount * size;
 	*pout = GetMemory( length );
 	q3_dsurface_t* out = *pout;
 
 	struct GfxSurface* in = s_world.dpvs.surfaces;
 
+	FILE* fp = fopen("dump.obj", "wb");
+  z = 0;
 	for(i = 0; i < s_world.surfaceCount; ++i, ++in, ++out)
 	{
 		char matname[1024];
@@ -1092,15 +1094,78 @@ int IW3_DumpDrawSurfaces( q3_dsurface_t** pout, int size )
 		}
 		out->firstVert = in->tris.firstVertex;
 		out->numVerts = in->tris.vertexCount;
+
+		uint16_t* indices = &s_world.indices[in->tris.baseIndex];
+		struct GfxWorldVertex* triVerts0 = &s_world.vd.vertices[in->tris.firstVertex];
+
+		fprintf(fp, "o Surface%d\n", i);
+
+		for(j = 0; j < in->tris.triCount; ++j, z += 3)
+		{
+			float* vect;
+			//qprintf("triangle %d\n", j);
+
+			vect = triVerts0[*indices].xyz;
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+			indices++;
+			
+			vect = triVerts0[*indices].xyz;
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+			indices++;
+			
+			vect = triVerts0[*indices].xyz;
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+			indices++;
+			fprintf(fp, "f %d %d %d\n\n", z+1, z+2, z+3);
+		}
+		qprintf("%d NumVerts: %d\n", i, out->numVerts);
+		out->surfaceType = MST_TRIANGLE_SOUP; //CoD4 has only triangle surfaces
 		out->numIndexes = in->tris.triCount * 3;
 		out->firstIndex = in->tris.baseIndex; //has to be based on s_world.draw.indices 
 		out->lightmapNum = in->lightmapIndex; //is lmapMergeInfo based index. Not going to be valid without tricks
+		out->surfaceType = MST_TRIANGLE_SOUP;
 //		printf("%d Lightmap num: %d\n", i, out->lightmapNum);
 		//in->primaryLightIndex;
 	}
-	printf("Num Draw surfs: %d\n", i);
+	fclose(fp);
 	return i;
 }
+
+void IW3_DumpCollisionVerts()
+{
+	int triIndex, i, z;
+
+	FILE* fp = fopen("collisionverts.obj", "wb");
+
+	for(z = 0, i = 0; i < cm.partitionCount; ++i)
+	{
+		CollisionPartition_t* partition = &cm.partitions[i];
+
+		fprintf(fp, "o Mesh%d\n", i);
+
+		for(triIndex = partition->firstTri; triIndex < partition->firstTri + partition->triCount; ++triIndex, z += 3)
+		{
+			float* vect;
+			uint16_t* indices = &cm.triIndices[3 * triIndex];
+			vect = cm.verts[indices[0]];
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+
+			vect = cm.verts[indices[1]];
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+
+			vect = cm.verts[indices[2]];
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+
+			fprintf(fp, "f %d %d %d\n\n", z+1, z+2, z+3);
+
+		}
+
+	}
+
+	fclose(fp);
+
+}
+
 
 
 struct __attribute__((aligned(1),packed)) TGA_HEADER{
@@ -1237,7 +1302,7 @@ void IW3_LoadFastfile( struct quakefile_s *qf ) {
 	iw3_numDrawSurfaces = IW3_DumpDrawSurfaces( &iw3_drawSurfaces, sizeof( q3_dsurface_t ) );
 	iw3_numDrawIndexes = IW3_CopyLump( s_world.indices, s_world.indexCount, (void *) &iw3_drawIndexes, sizeof( iw3_drawIndexes[0] ) );
 	iw3_entdatasize = IW3_CopyLump( cm.mapEnts->entityString, cm.mapEnts->numEntityChars, (void *) &iw3_dentdata, 1 );
-
+IW3_DumpCollisionVerts();
 /*
 	Ignore lightmaps and fog. Too difficult.
 	iw3_numLightBytes = IW3_DumpLightMaps();

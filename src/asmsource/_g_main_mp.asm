@@ -242,7 +242,6 @@
 	global g_TeamIcon_Spectator
 	global g_TeamName_Allies
 	global g_TeamName_Axis
-	global g_debugBullets
 	global g_dumpAnims
 	global g_entinfo
 	global g_friendlyNameDist
@@ -1869,7 +1868,6 @@ g_TeamIcon_Free: resb 0x4
 g_TeamIcon_Spectator: resb 0x4
 g_TeamName_Allies: resb 0x4
 g_TeamName_Axis: resb 0x4
-g_debugBullets: resb 0x4
 g_dumpAnims: resb 0x4
 g_entinfo: resb 0x4
 g_friendlyNameDist: resb 0x4
@@ -1930,7 +1928,6 @@ _cstring_g_inactivity:		db "g_inactivity",0
 _cstring_show_debug_infor:		db "Show debug information for damage",0
 _cstring_g_debugdamage:		db "g_debugDamage",0
 _cstring_show_debug_infor1:		db "Show debug information for bullets",0
-_cstring_g_debugbullets:		db "g_debugBullets",0
 _cstring_enabledisable_bu:		db "Enable/Disable bullet penetration.",0
 _cstring_bullet_penetrati:		db "bullet_penetrationEnabled",0
 _cstring_display_entity_i:		db "Display entity information",0

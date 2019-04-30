@@ -62,5 +62,27 @@ void __cdecl CL_AddDebugString(const float *xyz, const float *color, float scale
                           color[0], color[1], color[2], color[3], scale, duration, text);
 }
 
+void __cdecl SV_AddDebugStarWithText(unsigned int clnum, const float *point, const float *starColor, const float *textColor, const char *string, float fontsize, int duration)
+{
+    if(clnum >= sv_maxclients->integer)
+    {
+        return;
+    }
+    client_t* cl = &svs.clients[clnum];
+
+    duration *= 10;
+    if(string == NULL){
+        string = "";
+    }
+    SV_SendServerCommand(cl, "M S %f %f %f;%f %f %f %f;%f %f %f %f;%f;%d;%s", point[0], point[1], point[2],
+                          starColor[0], starColor[1], starColor[2], starColor[3],
+                          textColor[0], textColor[1], textColor[2], textColor[3], fontsize, duration, string);
+}
+
+void __cdecl SV_AddDebugStar(unsigned int clnum, const float *point, const float *color, int duration)
+{
+    SV_AddDebugStarWithText(clnum, point, color, MYNULLTEXTCOLOR, NULL, 1.0, duration);
+}
+
 };
 

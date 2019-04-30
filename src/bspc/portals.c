@@ -369,13 +369,6 @@ void MakeHeadnodePortals( tree_t *tree ) {
 			if ( j == i ) {
 				continue;
 			}
-			float dbg_dist;
-			vec3_t dbg_normal;
-			WindingPlane( portals[i]->winding, dbg_normal, &dbg_dist );
-			printf("dist %g, Normal %g %g %g\n", dbg_dist, dbg_normal[0], dbg_normal[1], dbg_normal[2]);
-			printf("in-dist %g, in-Normal %g %g %g\n", bplanes[j].dist, 
-					bplanes[j].normal[0], bplanes[j].normal[1], bplanes[j].normal[2]);
-
 			ChopWindingInPlace( &portals[i]->winding, bplanes[j].normal, bplanes[j].dist, ON_EPSILON );
 		} //end for
 	} //end for

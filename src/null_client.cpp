@@ -2,7 +2,7 @@
 #include "q_shared.h"
 #include "sys_thread.h"
 #include "cvar.h"
-
+#include "client_dedicated.h"
 
 
 
@@ -241,6 +241,7 @@ snd_alias_list_t* __cdecl Com_FindSoundAlias(const char *name)
 
 void __cdecl CG_DebugLine(const float *start, const float *end, const float *color, int depthTest, int duration)
 {
+    CL_AddDebugLine(start, end, color, depthTest, duration);
 }
 
 void __cdecl CG_DebugBox(const float *origin, const float *mins, const float *maxs, float yaw, const float *color, int depthTest, int duration)

@@ -619,6 +619,7 @@ void __cdecl XAnimClearTree(struct XAnimTree_s *tree);
 //This defines Cvars directly related to executable file
 
 extern cvar_t* g_maxclients;
+extern cvar_t* g_debugBullets;
 extern vec3_t playerMins, playerMaxs;
 extern uint16_t *modNames[16];
 #endif /*G_SHARED_H*/

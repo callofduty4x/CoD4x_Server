@@ -29,6 +29,7 @@
 	extern tan
 	extern cosf
 	extern sinf
+	extern G_DebugBulletImpact
 
 ;Exports of bullet:
 	global Bullet_Trace
@@ -537,6 +538,13 @@ Bullet_Fire_150:
 	add eax, [ebp-0x490]
 	mov [esp], eax
 	call Bullet_Endpos
+
+	lea edx, [ebp-0x38]
+	mov [esp+4], edx
+	mov edx, [ebp+8]
+	mov [esp], edx
+	call G_DebugBulletImpact ;For enabling bullet debugging
+
 	mov eax, bullet_penetrationEnabled
 	mov eax, [eax]
 	cmp byte [eax+0xc], 0x0

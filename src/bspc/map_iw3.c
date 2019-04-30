@@ -518,8 +518,9 @@ static void AAS_CreateCurveBrushes( void ) {
 		width = surface->patchWidth;
 		height = surface->patchHeight;
 		c = width * height;
+		printf("width: %d height %d c %d\n", width, height, c);
 		if ( c > MAX_PATCH_VERTS ) {
-			Error( "ParseMesh: MAX_PATCH_VERTS" );
+			Error( "ParseMesh: MAX_PATCH_VERTS %d", c );
 		} //end if
 
 		dv_p = iw3_drawVerts + surface->firstVert;
