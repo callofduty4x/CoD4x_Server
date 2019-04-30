@@ -11,7 +11,7 @@ typedef char raw_byte16;
 
 typedef struct
 {
-    struct IDirect3DVertexBuffer9 *d3dVb;
+    IDirect3DVertexBuffer9 *d3dVb;
 }GfxVertexBuffer;
 
 typedef struct 

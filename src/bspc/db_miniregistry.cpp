@@ -42,7 +42,7 @@ void __cdecl Load_Texture(struct GfxImageLoadDef **remoteLoadDef, struct GfxImag
 
 }
 
-void __cdecl Load_VertexBuffer(struct IDirect3DVertexBuffer9 **vb, void *bufferData, int sizeInBytes)
+void __cdecl Load_VertexBuffer(IDirect3DVertexBuffer9 **vb, void *bufferData, int sizeInBytes)
 {
     *vb = 0;
 }

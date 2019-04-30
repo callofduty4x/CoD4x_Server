@@ -17,7 +17,7 @@ union PackedTexCoords
 #ifdef __cplusplus
 extern "C"{
 #endif
-	void __cdecl Vec3UnpackUnitVec(union PackedUnitVec in, float *out);
+	void Vec3UnpackUnitVec(union PackedUnitVec in, float *out);
 #ifdef __cplusplus
 };
 #endif
