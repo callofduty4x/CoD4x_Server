@@ -540,6 +540,8 @@ Bullet_Fire_150:
 	call Bullet_Endpos
 
 	lea edx, [ebp-0x38]
+	mov [esp+8], edx
+	lea edx, [ebp-0x44]
 	mov [esp+4], edx
 	mov edx, [ebp+8]
 	mov [esp], edx

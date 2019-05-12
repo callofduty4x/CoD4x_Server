@@ -26,7 +26,7 @@
 #include "entity.h"
 #include "player.h"
 #include "cvar.h"
-
+#include "cm_public.h"
 #include "sys_cod4defs.h"
 
 
@@ -611,6 +611,7 @@ void __cdecl G_VehFreeEntity(struct gentity_s *ent);
 void __cdecl G_FreeTurret(struct gentity_s *ent);
 void __cdecl G_FreeEntityRefs(struct gentity_s *ent);
 void __cdecl XAnimClearTree(struct XAnimTree_s *tree);
+void __cdecl G_LocationalTrace(trace_t *results, const float *start, const float *end, int passEntityNum, int contentmask, char *priorityMap);
 
 #ifdef __cplusplus
 }

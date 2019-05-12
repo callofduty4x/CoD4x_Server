@@ -37,7 +37,7 @@ float Dirty_GetJumpHeight(unsigned int num)
 {
     if(num > level.maxclients)
     {
-        return 800;
+        return 40;
     }
 	return level.clients[num].jumpHeight;
 }

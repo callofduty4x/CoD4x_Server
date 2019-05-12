@@ -1112,10 +1112,11 @@ signed int __cdecl Sys_WaitForObject(HANDLE handle)
             break;
           }
         }
-        if ( !h->manualreset )
-        {
+      }
+      //Ty icekobrin pointing me in this direction
+      if ( !h->manualreset )
+      {
           h->signaled = 0;
-        }
       }
       pthread_mutex_unlock(&h->mutex);
       if ( signaled )
