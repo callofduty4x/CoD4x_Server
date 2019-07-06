@@ -2,6 +2,8 @@ option(USE_STATIC_MBEDTLS_LIBRARY "Build mbed TLS static library." ON)
 option(USE_SHARED_MBEDTLS_LIBRARY "Build mbed TLS shared library." OFF)
 option(LINK_WITH_PTHREAD "Explicitly link mbed TLS library to pthread." OFF)
 
+include_directories("${CMAKE_SOURCE_DIR}/src")
+
 set(src_crypto
     aes.c
     aesni.c

@@ -1,18 +1,11 @@
-
 #C file types to ignore
 
 *.o
-
 *.dll
-
 *.so
-
 *.exe
-
 *.lib
-
 *.def
-
 *.ff
 *.iwd
 *.bsp
@@ -21,9 +14,7 @@
 #Git files
 
 git-pull.sh
-
 git-push.sh
-
 git-status.sh
 
 
@@ -58,3 +49,9 @@ plugins/mysql
 
 # Wth this is here?
 sys_error.txt
+
+#T-Max: build dir
+cmake-build-debug
+
+#T-Max: CLion dirs
+.idea

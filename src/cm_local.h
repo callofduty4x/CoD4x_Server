@@ -364,6 +364,8 @@ enum LumpType
   LUMP_HERO_ONLY_LIGHTS = 0x4D,
 };
 
+void __cdecl CM_LoadMapData_LoadObj(const char *name);
+
 #endif
 
 #define MAX_SUBMODELS 4095

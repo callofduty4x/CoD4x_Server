@@ -52,7 +52,7 @@ Capsules are handled differently though.
 
 clipHandle_t CM_TempBoxModel( const vec3_t mins, const vec3_t maxs, int capsule ) {
 
-	TraceThreadInfo* tti = Sys_GetValue(3);
+	TraceThreadInfo* tti = (TraceThreadInfo*)Sys_GetValue(3);
 
 	struct cmodel_t* box_model = tti->box_model;
 	struct cbrush_t* box_brush = tti->box_brush;
@@ -80,7 +80,7 @@ cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle ) {
 	if ( handle < cm.numSubModels ) {
 		return &cm.cmodels[handle];
 	}else{
-		TraceThreadInfo* tti = Sys_GetValue(3);
+		TraceThreadInfo* tti = (TraceThreadInfo*)Sys_GetValue(3);
 		cmodel_t* box_model = tti->box_model;
 		return box_model;
 	}
