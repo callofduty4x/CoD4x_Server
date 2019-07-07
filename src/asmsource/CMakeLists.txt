@@ -1,3 +1,5 @@
+set(LIBRARY_NAME asmsource)
+
 file(GLOB_RECURSE ASM_SRC *.asm)
 
-target_sources(${PROJECT_NAME} PRIVATE ${ASM_SRC})
+add_library(${LIBRARY_NAME} STATIC ${ASM_SRC})

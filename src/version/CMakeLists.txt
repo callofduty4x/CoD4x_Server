@@ -1,4 +1,30 @@
+set(LIBRARY_NAME version)
+
 file(GLOB_RECURSE CPP_SRC *.c *.cpp)
 file(GLOB_RECURSE CPP_INC *.h *.hpp)
 
-target_sources(${PROJECT_NAME} PRIVATE ${CPP_SRC} ${CPP_INC})
+execute_process(COMMAND git rev-list --count HEAD OUTPUT_VARIABLE BUILD_NUMBER OUTPUT_STRIP_TRAILING_WHITESPACE)
+execute_process(COMMAND git rev-parse --abbrev-ref HEAD OUTPUT_VARIABLE BUILD_BRANCH OUTPUT_STRIP_TRAILING_WHITESPACE)
+execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE BUILD_REVISION OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+if ("${BUILD_NUMBER}" STREQUAL "")
+    set(BUILD_NUMBER 0)
+endif()
+
+if ("${BUILD_BRANCH}" STREQUAL "")
+    set(BUILD_BRANCH "no-branch")
+endif()
+
+if ("${BUILD_REVISION}" STREQUAL "")
+    set(BUILD_REVISION "no-revision")
+endif()
+
+message("Detected build number: ${BUILD_NUMBER}")
+message("Detected build branch: ${BUILD_BRANCH}")
+message("Detected build revision: ${BUILD_REVISION}")
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_BRANCH=${BUILD_BRANCH} -DBUILD_REVISION=${BUILD_REVISION}")
+#message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+add_definitions(-DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_BRANCH="${BUILD_BRANCH}" -DBUILD_REVISION="${BUILD_REVISION}")
+
+add_library(${LIBRARY_NAME} STATIC ${CPP_SRC} ${CPP_INC})
