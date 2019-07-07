@@ -49,7 +49,7 @@ test_script:
 branches:
   only:
     - master    # Ignore all other branches.
-    - dev_newarch
+    - cmake
 artifacts: 
   - path: bin\cod4x18_dedrun.exe
     name: cod4exe
