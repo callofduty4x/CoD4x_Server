@@ -570,3 +570,5 @@ void GScr_Pow();
 
 void GScr_CloneBrushModelToScriptModel(scr_entref_t brushModelEnt);
 void PlayerCmd_SetStance(scr_entref_t playerEntNum);
+void EntityCmd_GetHandlerType(scr_entref_t entref);
+

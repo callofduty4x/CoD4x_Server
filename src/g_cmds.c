@@ -731,6 +731,7 @@ int __cdecl Cmd_FollowCycle_f(gentity_t *ent, int dir)
   {
     return qfalse;
   }
+  ent->client->lastFollowedClient = -1; //Clear this so we never jump back onto old player
   if ( ent->client->sess.forceSpectatorClient < 0 )
   {
       clientNum = ent->client->spectatorClient;

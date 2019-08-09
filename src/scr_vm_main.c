@@ -601,6 +601,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("clonebrushmodeltoscriptmodel", GScr_CloneBrushModelToScriptModel, qfalse);
     // Force player stance.
     Scr_AddMethod("setstance", PlayerCmd_SetStance, qfalse);
+    Scr_AddMethod("getentityhandlertype", EntityCmd_GetHandlerType, qfalse);
 }
 
 void Scr_InitFunctions()

@@ -3392,3 +3392,27 @@ void GScr_PrintDebugStar()
   }
 }
 
+
+
+
+void EntityCmd_GetHandlerType(scr_entref_t arg)
+{
+
+    gentity_t *gentity;
+    int entityNum = 0;
+
+    if (arg.classnum)
+    {
+
+        Scr_ObjectError("Not an entity");
+        return;
+    }
+    else
+    {
+
+        entityNum = arg.entnum;
+        gentity = &g_entities[entityNum];
+    }
+
+    Scr_AddInt(gentity->handler);
+}
