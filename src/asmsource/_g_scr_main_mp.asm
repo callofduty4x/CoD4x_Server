@@ -530,7 +530,6 @@
 	global GScr_GetLocSelIndex
 	global ScrCmd_ShowToPlayer
 	global Scr_MakeGameMessage
-	global Scr_PlayerLastStand
 	global Scr_StartupGameType
 	global GScr_EnableAimAssist
 	global G_GetHintStringIndex
@@ -14465,112 +14464,6 @@ Scr_MakeGameMessage:
 	pop ebp
 	ret
 	nop
-
-
-;Scr_PlayerLastStand(gentity_s*, gentity_s*, gentity_s*, int, int, int, float const*, hitLocation_t, int)
-Scr_PlayerLastStand:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x3c
-	mov eax, [ebp+0x8]
-	mov [ebp-0x1c], eax
-	mov edx, [ebp+0xc]
-	mov [ebp-0x20], edx
-	mov eax, [ebp+0x10]
-	mov [ebp-0x24], eax
-	mov edx, [ebp+0x14]
-	mov [ebp-0x28], edx
-	mov eax, [ebp+0x18]
-	mov [ebp-0x2c], eax
-	mov edx, [ebp+0x1c]
-	mov [ebp-0x30], edx
-	mov edi, [ebp+0x20]
-	mov esi, [ebp+0x24]
-	mov ebx, [ebp+0x28]
-	mov dword [esp], 0x0
-	call Scr_AddInt
-	mov [esp], ebx
-	call Scr_AddInt
-	mov [esp], esi
-	call G_GetHitLocationString
-	movzx eax, ax
-	mov [esp], eax
-	call Scr_AddConstString
-	test edi, edi
-	jz Scr_PlayerLastStand_10
-	mov [esp], edi
-	call Scr_AddVector
-Scr_PlayerLastStand_80:
-	mov eax, [ebp-0x30]
-	mov [esp], eax
-	call BG_GetWeaponDef
-	mov eax, [eax]
-	mov [esp], eax
-	call Scr_AddString
-	cmp dword [ebp-0x2c], 0xf
-	jbe Scr_PlayerLastStand_20
-	mov dword [esp], _cstring_badmod
-	call Scr_AddString
-	mov eax, [ebp-0x28]
-	mov [esp], eax
-	call Scr_AddInt
-	mov ebx, [ebp-0x24]
-	test ebx, ebx
-	jz Scr_PlayerLastStand_30
-Scr_PlayerLastStand_50:
-	mov edx, [ebp-0x24]
-	mov [esp], edx
-	call Scr_AddEntity
-	mov ecx, [ebp-0x20]
-	test ecx, ecx
-	jz Scr_PlayerLastStand_40
-Scr_PlayerLastStand_60:
-	mov eax, [ebp-0x20]
-	mov [esp], eax
-	call Scr_AddEntity
-Scr_PlayerLastStand_70:
-	mov dword [esp+0x8], 0x9
-	mov eax, [g_scr_data+0x28]
-	mov [esp+0x4], eax
-	mov edx, [ebp-0x1c]
-	mov [esp], edx
-	call Scr_ExecEntThread
-	movzx eax, ax
-	mov [ebp+0x8], eax
-	add esp, 0x3c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	jmp Scr_FreeThread
-Scr_PlayerLastStand_20:
-	mov eax, modNames
-	mov edx, [ebp-0x2c]
-	mov eax, [eax+edx*4]
-	movzx eax, word [eax]
-	mov [esp], eax
-	call Scr_AddConstString
-	mov eax, [ebp-0x28]
-	mov [esp], eax
-	call Scr_AddInt
-	mov ebx, [ebp-0x24]
-	test ebx, ebx
-	jnz Scr_PlayerLastStand_50
-Scr_PlayerLastStand_30:
-	call Scr_AddUndefined
-	mov ecx, [ebp-0x20]
-	test ecx, ecx
-	jnz Scr_PlayerLastStand_60
-Scr_PlayerLastStand_40:
-	call Scr_AddUndefined
-	jmp Scr_PlayerLastStand_70
-Scr_PlayerLastStand_10:
-	call Scr_AddUndefined
-	jmp Scr_PlayerLastStand_80
-
 
 ;Scr_StartupGameType()
 Scr_StartupGameType:

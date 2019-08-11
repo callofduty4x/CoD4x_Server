@@ -479,6 +479,67 @@ qboolean Q3_ParseBSPEntity( int entnum ) {
 //===========================================================================
 #define MAX_PATCH_VERTS     1024
 
+
+static void DumpTris(vec3_t* points, int width, int height, FILE* fp)
+{
+	vec3_t gridpoints[129][129];
+	int i, j, z;
+
+	static int objs;
+	static int verts;
+	static int vertcnt = 1;	
+
+	fprintf(fp, "o Surface%d\n", objs);
+	++objs;
+
+	for ( i = 0 ; i < width ; i++ ) {
+		for ( j = 0 ; j < height ; j++ ) {
+			VectorCopy( points[j * width + i], gridpoints[i][j] );
+		}
+	}
+
+	float* p1, *p2, *p3;
+		// find the planes for each triangle of the grid
+	for ( i = 0 ; i < width - 1 ; i++ ) {
+		for ( j = 0 ; j < height - 1 ; j++ ) {
+			p1 = gridpoints[i][j];
+			p2 = gridpoints[i + 1][j];
+			p3 = gridpoints[i + 1][j + 1];
+
+			fprintf(fp, "v %g %g %g\n", p1[0], p1[1], p1[2]);
+			fprintf(fp, "v %g %g %g\n", p2[0], p2[1], p2[2]);
+			fprintf(fp, "v %g %g %g\n", p3[0], p3[1], p3[2]);
+			
+			fprintf(fp, "f ");
+			for(z = 0; z < 3; ++z)
+			{
+				fprintf(fp, "%d ", vertcnt);
+				vertcnt++;	
+			}
+			fprintf(fp, "\n\n");
+
+
+			p1 = gridpoints[i + 1][j + 1];
+			p2 = gridpoints[i][j + 1];
+			p3 = gridpoints[i][j];
+
+			fprintf(fp, "v %g %g %g\n", p1[0], p1[1], p1[2]);
+			fprintf(fp, "v %g %g %g\n", p2[0], p2[1], p2[2]);
+			fprintf(fp, "v %g %g %g\n", p3[0], p3[1], p3[2]);
+
+			fprintf(fp, "f ");
+			for(z = 0; z < 3; ++z)
+			{
+				fprintf(fp, "%d ", vertcnt);
+				vertcnt++;	
+			}
+			fprintf(fp, "\n\n");
+		}
+	}
+
+}
+
+
 static void AAS_CreateCurveBrushes( void ) {
 	int i, j, n, planenum, numcurvebrushes = 0;
 	q3_dsurface_t *surface;
@@ -496,12 +557,15 @@ static void AAS_CreateCurveBrushes( void ) {
 	mapent = &entities[0];
 
 	FILE* fp = fopen("patches.obj", "wb");
+	FILE* fptri = fopen("triangles.obj", "wb");
+
 	int vertcnt = 1;
+	int r = 0;
 	for ( i = 0; i < q3_numDrawSurfaces; i++ )
 	{
 		if(i == 362)
 		{
-			qprintf("Start:\n");
+//			qprintf("Start:\n");
 		}
 		surface = &q3_drawSurfaces[i];
 		if ( !surface->patchWidth ) {
@@ -527,13 +591,17 @@ static void AAS_CreateCurveBrushes( void ) {
 			points[j][1] = dv_p->xyz[1];
 			points[j][2] = dv_p->xyz[2];
 		} //end for
+
+		DumpTris(points, width, height, fptri);
+
 		  // create the internal facet structure
 		pc = CM_GeneratePatchCollide( width, height, points );
 		//
 		fprintf(fp, "o Surface%d\n", i);
-		for ( j = 0; j < pc->numFacets; j++ )
+		
+		for ( j = 0; j < pc->numFacets; j++, ++r )
 		{
-			fprintf(fp, "g Brush%d\n", j);
+			fprintf(fp, "g Brush%d\n", r);
 			facet = &pc->facets[j];
 			//
 			brush = &mapbrushes[nummapbrushes];
@@ -571,6 +639,7 @@ static void AAS_CreateCurveBrushes( void ) {
 			side->flags |= SFL_CURVE;
 			side->surf = 0;
 			//
+#if 0			
 			plane_t *plane = &mapplanes[brush->original_sides[0].planenum];
 			qprintf("\nBottom-Plane Dist: %g Normal: %g %g %g\n", plane->dist, plane->normal[0], plane->normal[1], plane->normal[2]);
 			plane = &mapplanes[brush->original_sides[1].planenum];
@@ -580,7 +649,7 @@ static void AAS_CreateCurveBrushes( void ) {
 			{
 				qprintf("Add Winding Num Facet: %d Num Sides: %d\n", pc->numFacets, brush->numsides);
 			}
-
+#endif
 			winding = BaseWindingForPlane( mapplanes[side->planenum].normal, mapplanes[side->planenum].dist );
 			for ( n = 0; n < facet->numBorders; n++ )
 			{
@@ -630,11 +699,11 @@ static void AAS_CreateCurveBrushes( void ) {
 			} //end for
 
 
-
-
-
-
 			int y;
+
+#if 0
+
+
 
 			if(i == 362)
 			{
@@ -650,14 +719,26 @@ static void AAS_CreateCurveBrushes( void ) {
 					qprintf("%dPlane Dist: %g Normal: %g %g %g\n", y, plane->dist, plane->normal[0], plane->normal[1], plane->normal[2]);
 				}
 			}
+#endif
+
 
 			if ( create_aas ) {
 				//NOTE: brush bevels now already added
 				//AddBrushBevels(brush);
 				AAS_CreateMapBrushes( brush, mapent, false );
 
+			} //end if
+			else
+			{
+				// create windings for sides and bounds for brush
+				MakeBrushWindings( brush );
+				AddBrushBevels( brush );
+				nummapbrushes++;
+				mapent->numbrushes++;
+			} //end else
 
 
+qprintf("%d sides\n", brush->numsides);
 			for(y = 0; y < brush->numsides; ++y)
 			{
 				winding = brush->original_sides[y].winding;
@@ -689,18 +770,15 @@ static void AAS_CreateCurveBrushes( void ) {
 
 
 
-			} //end if
-			else
-			{
-				// create windings for sides and bounds for brush
-				MakeBrushWindings( brush );
-				AddBrushBevels( brush );
-				nummapbrushes++;
-				mapent->numbrushes++;
-			} //end else
+
+
+
+
+
 		} //end for j < pc->numFacets
 	} //end for i < q3_numDrawSurfaces
 	fclose(fp);
+	fclose(fptri);
 	  //qprintf("\r%6d curve brushes", nummapbrushsides);//++numcurvebrushes);
 	qprintf( "\r%6d curve brushes\n", numcurvebrushes );
 } //end of the function AAS_CreateCurveBrushes

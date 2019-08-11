@@ -9,6 +9,14 @@ typedef unsigned char raw_byte;
 typedef unsigned int raw_uint128;
 typedef char raw_byte16;
 
+#ifdef BSPC
+  #ifndef DIRECT3D_VERSION
+    typedef void* IDirect3DVertexBuffer9;
+  #endif
+#endif
+
+
+
 typedef struct
 {
     IDirect3DVertexBuffer9 *d3dVb;

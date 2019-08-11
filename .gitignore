@@ -17,6 +17,7 @@
 *.iwd
 *.bsp
 *.log
+src/bspc/*.obj
 
 #Git files
 

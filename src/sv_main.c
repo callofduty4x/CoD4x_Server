@@ -5152,3 +5152,15 @@ qboolean SV_FileStillActive(const char* name)
     Cmd_EndTokenizedString();
     return qfalse;
 }
+
+SV_StartHostMigration(netadr_t* to)
+{
+    msg_t msg;
+    byte buf[MAX_INFO_STRING];
+
+    MSG_Init(&msg, buf, sizeof(buf));
+    MSG_WriteLong(&msg, -1);
+    MSG_WriteString(&msg, );
+
+    NET_SendPacket(NS_SERVER, msg.cursize, msg.data, from);
+}

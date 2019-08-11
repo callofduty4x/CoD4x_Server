@@ -1131,35 +1131,299 @@ int IW3_DumpDrawSurfaces( q3_dsurface_t** pout, int size )
 	return i;
 }
 
+
+typedef struct
+{
+	bool active;
+	vec3_t tri[3];
+}iw3_triangle_t;
+
+typedef struct
+{
+	iw3_triangle_t *tris;
+	int numtris;
+}iw3_tripartition_t;
+
+iw3_tripartition_t *iw3_partitions;
+
+
+bool IsBadTriangle(float** tri)
+{
+	if(VectorCompare(tri[0], tri[1]) || VectorCompare(tri[0], tri[2]) || VectorCompare(tri[1], tri[2]))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool AreNeighbourTriangles(iw3_triangle_t* tri1, iw3_triangle_t* tri2)
+{
+	int connectingpts = 0;
+	if(VectorCompare(tri1->tri[0], tri2->tri[0]) || VectorCompare(tri1->tri[0], tri2->tri[1]) || VectorCompare(tri1->tri[0], tri2->tri[2]))
+	{
+		++connectingpts;
+	}
+	if(VectorCompare(tri1->tri[1], tri2->tri[0]) || VectorCompare(tri1->tri[1], tri2->tri[1]) || VectorCompare(tri1->tri[1], tri2->tri[2]))
+	{
+		++connectingpts;
+	}
+	if(connectingpts == 2)
+	{
+		return true;
+	}
+	if(connectingpts == 0)
+	{
+		return false;
+	}
+	if(VectorCompare(tri1->tri[2], tri2->tri[0]) || VectorCompare(tri1->tri[2], tri2->tri[1]) || VectorCompare(tri1->tri[2], tri2->tri[2]))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool IsDegeneratedTriangle(iw3_triangle_t* tri, iw3_tripartition_t* part)
+{
+	int i;
+	//If this triangle has no other triangle with 2 connecting points in same partition it is degenerated 
+	for(i = 0; i < part->numtris; ++i)
+	{
+		if(tri == &part->tris[i])
+		{
+			continue;
+		}
+		if(AreNeighbourTriangles(tri, &part->tris[i]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+
+bool CompareTriangle(vec3_t* tri1, vec3_t* tri2)
+{
+	if(!VectorCompare(tri1[0], tri2[0]) && !VectorCompare(tri1[0], tri2[1]) && !VectorCompare(tri1[0], tri2[2]))
+	{
+		return false;
+	}
+	if(!VectorCompare(tri1[1], tri2[0]) && !VectorCompare(tri1[1], tri2[1]) && !VectorCompare(tri1[1], tri2[2]))
+	{
+		return false;
+	}
+	if(!VectorCompare(tri1[2], tri2[0]) && !VectorCompare(tri1[2], tri2[1]) && !VectorCompare(tri1[2], tri2[2]))
+	{
+		return false;
+	}
+	return true;
+}
+
+
+void RemoveDuplicateTriangle(iw3_triangle_t* tri)
+{
+	int triIndex;
+	int i;
+	
+	for(i = 0; i < cm.partitionCount; ++i)
+	{
+		iw3_tripartition_t *part = &iw3_partitions[i];
+
+		for(triIndex = 0; triIndex < part->numtris; ++triIndex)
+		{
+			if(tri == &part->tris[triIndex])
+			{
+				continue;
+			}
+			if(CompareTriangle(tri->tri, part->tris[triIndex].tri))
+			{
+				part->tris[triIndex].active = false;
+			}
+		}
+	}
+}
+
+
+
+void IW3_RemoveDuplicateTriangles()
+{
+	int triIndex;
+	int i;
+
+	for(i = 0; i < cm.partitionCount; ++i)
+	{
+		iw3_tripartition_t *part = &iw3_partitions[i];
+
+		for(triIndex = 0; triIndex < part->numtris; ++triIndex)
+		{
+			if(!part->tris[triIndex].active)
+			{
+				continue;
+			}
+			RemoveDuplicateTriangle(&part->tris[triIndex]);
+		}
+	}
+}
+
+void IW3_FindLoneTriangles()
+{
+	int triIndex;
+	int i;
+	int numlonetris = 0;
+	//count them first
+	for(i = 0; i < cm.partitionCount; ++i)
+	{
+		iw3_tripartition_t *part = &iw3_partitions[i];
+
+		for(triIndex = 0; triIndex < part->numtris; ++triIndex)
+		{
+			if(!part->tris[triIndex].active)
+			{
+				continue;
+			}
+			if(IsDegeneratedTriangle(&part->tris[triIndex], part))
+			{
+				++numlonetris;
+			}
+
+		}
+	}
+	qprintf("Found %d lone tris\n", numlonetris);
+
+	iw3_partitions[cm.partitionCount].tris = malloc(numlonetris * sizeof(iw3_triangle_t)); //Lone triangles are here
+	iw3_partitions[cm.partitionCount].numtris = 0;
+	// numlonetris;
+
+	//after we got the memory we copy them out and delete them from original unit
+	for(i = 0; i < cm.partitionCount; ++i)
+	{
+		iw3_tripartition_t *part = &iw3_partitions[i];
+
+		for(triIndex = 0; triIndex < part->numtris; ++triIndex)
+		{
+			if(!part->tris[triIndex].active)
+			{
+				continue;
+			}
+			if(IsDegeneratedTriangle(&part->tris[triIndex], part))
+			{
+				memcpy(&iw3_partitions[cm.partitionCount].tris[iw3_partitions[cm.partitionCount].numtris] , &part->tris[triIndex], sizeof(iw3_triangle_t));
+				part->tris[triIndex].active = false;
+				iw3_partitions[cm.partitionCount].numtris++;
+			}
+
+		}
+	}
+
+}
+
+void IW3_InsertLoneTris()
+{
+	int i, j;
+	iw3_tripartition_t *lonetris = &iw3_partitions[cm.partitionCount];
+	iw3_triangle_t *lonetri;
+	for(i = 0, lonetri = lonetris->tris; i < lonetris->numtris; ++i, ++lonetri)
+	{
+		for(j = 0; j < cm.partitionCount; ++j)
+		{
+			iw3_tripartition_t *part = &iw3_partitions[j];
+
+			if(!IsDegeneratedTriangle(lonetri, part))
+			{
+				iw3_triangle_t *newtris = malloc((part->numtris +1 )* sizeof(iw3_triangle_t));
+				memcpy(newtris, iw3_partitions[j].tris, part->numtris * sizeof(iw3_triangle_t));
+				free(iw3_partitions[j].tris);
+				iw3_partitions[j].tris = newtris;
+				part = &iw3_partitions[j];
+				memcpy(&part->tris[part->numtris], lonetri, sizeof(iw3_triangle_t));
+				++part->numtris;
+				lonetri->active = false;
+			}
+		}
+	}
+
+
+}
+
+
+
+
 void IW3_DumpCollisionVerts()
 {
-	int triIndex, i, z;
+	int triIndex, i, z, j;
 
-	FILE* fp = fopen("collisionverts.obj", "wb");
+	for(triIndex = 0; triIndex < cm.triCount; ++triIndex)
+	{
+			float *tri[3];
+			uint16_t* indices = &cm.triIndices[3 * triIndex];
+			tri[0] = cm.verts[indices[0]];
+			tri[1] = cm.verts[indices[1]];
+			tri[2] = cm.verts[indices[2]];
+			if(IsBadTriangle(tri))
+			{
+				Error("Bad triangle found\n");
+			}
+	}
 
-	for(z = 0, i = 0; i < cm.partitionCount; ++i)
+
+	iw3_partitions = malloc((cm.partitionCount + 1) * sizeof(iw3_tripartition_t));
+	
+	for(i = 0; i < cm.partitionCount; ++i)
 	{
 		CollisionPartition_t* partition = &cm.partitions[i];
 
-		fprintf(fp, "o Mesh%d\n", i);
+		iw3_partitions[i].tris = malloc(partition->triCount * sizeof(iw3_triangle_t));
+		iw3_partitions[i].numtris = partition->triCount;
 
-		for(triIndex = partition->firstTri; triIndex < partition->firstTri + partition->triCount; ++triIndex, z += 3)
+		for(triIndex = partition->firstTri, j = 0; triIndex < partition->firstTri + partition->triCount; ++triIndex, ++j)
 		{
 			float* vect;
 			uint16_t* indices = &cm.triIndices[3 * triIndex];
 			vect = cm.verts[indices[0]];
-			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+			VectorCopy(vect, iw3_partitions[i].tris[j].tri[0]);
 
 			vect = cm.verts[indices[1]];
-			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+			VectorCopy(vect, iw3_partitions[i].tris[j].tri[1]);
 
 			vect = cm.verts[indices[2]];
+			VectorCopy(vect, iw3_partitions[i].tris[j].tri[2]);
+
+			iw3_partitions[i].tris[j].active = true;
+		}
+
+	}
+
+	IW3_RemoveDuplicateTriangles();
+	IW3_FindLoneTriangles(); 
+	IW3_InsertLoneTris();
+
+	FILE* fp = fopen("collisionverts.obj", "wb");
+
+	for(z = 0, i = 0; i < cm.partitionCount + 1; ++i)
+	{
+		fprintf(fp, "o Mesh%d\n", i);
+		iw3_tripartition_t *part = &iw3_partitions[i];
+
+		for(triIndex = 0; triIndex < part->numtris; ++triIndex)
+		{
+			float* vect;
+
+			if(!part->tris[triIndex].active)
+			{
+				continue;
+			}
+
+			vect = part->tris[triIndex].tri[0];
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+
+			vect = part->tris[triIndex].tri[1];
+			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
+
+			vect = part->tris[triIndex].tri[2];
 			fprintf(fp, "v %g %g %g\n", vect[0], vect[1], vect[2]);
 
 			fprintf(fp, "f %d %d %d\n\n", z+1, z+2, z+3);
-
+			z += 3;
 		}
-
 	}
 
 	fclose(fp);
