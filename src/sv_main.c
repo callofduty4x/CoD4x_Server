@@ -5152,7 +5152,7 @@ qboolean SV_FileStillActive(const char* name)
     Cmd_EndTokenizedString();
     return qfalse;
 }
-
+/*
 SV_StartHostMigration(netadr_t* to)
 {
     msg_t msg;
@@ -5163,4 +5163,4 @@ SV_StartHostMigration(netadr_t* to)
     MSG_WriteString(&msg, );
 
     NET_SendPacket(NS_SERVER, msg.cursize, msg.data, from);
-}
+}*/
