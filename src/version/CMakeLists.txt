@@ -19,9 +19,9 @@ if ("${BUILD_REVISION}" STREQUAL "")
     set(BUILD_REVISION "no-revision")
 endif()
 
-message("Detected build number: ${BUILD_NUMBER}")
-message("Detected build branch: ${BUILD_BRANCH}")
-message("Detected build revision: ${BUILD_REVISION}")
+message(STATUS "Detected build number: ${BUILD_NUMBER}")
+message(STATUS "Detected build branch: ${BUILD_BRANCH}")
+message(STATUS "Detected build revision: ${BUILD_REVISION}")
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_BRANCH=${BUILD_BRANCH} -DBUILD_REVISION=${BUILD_REVISION}")
 #message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")

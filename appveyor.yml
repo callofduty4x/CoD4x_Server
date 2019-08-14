@@ -1,4 +1,5 @@
 version: 1.0.{build}
+image: Visual Studio 2015
 
 before_build:
 - ps: >-
@@ -15,50 +16,53 @@ before_build:
 
     Write-Host "Setting up NASM:"
     
-    Write-Host "    Downloading NASM..."
-    
-    curl -o nasminst.exe https://www.nasm.us/pub/nasm/releasebuilds/2.14rc15/win32/nasm-2.14rc15-installer-x86.exe
-    
     Write-Host "    Installing NASM..."
     
-    .\nasminst.exe /S
+    choco install nasm
+
+    Write-Host "Setting up environment variables."
+
+    [Environment]::SetEnvironmentVariable("PATH",  "C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32\bin;$pwd\bin;$env:PROGRAMFILES\nasm;$($env:path)")
+
+    refreshenv
+
+    Write-Host "    Checking NASM..."
 
     nasm -v
-    
-    Write-Host "Setting up environment variables."
-    
-    ls C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32
-    
-    [Environment]::SetEnvironmentVariable("PATH",  "C:\mingw-w64\i686-5.3.0-posix-dwarf-rt_v4-rev0\mingw32\bin;$pwd\bin;C:\Program Files (x86)\nasm;$($env:path)")
 
 build_script:
 - ps: >-
-    echo "Building server code:"
-    
-    mingw32-make.exe DEBUG=true
-    
-    7z a cod4x18_dedrun_DEBUG.zip bin\cod4x18_dedrun.exe
-    
-    mingw32-make.exe
-    
-    mingw32-make.exe plugins
+    Write-Host "Configuring build directory:"
 
+    mkdir build
+
+    cd build
+
+    cmake -DCMAKE_SH="CMAKE_SH-NOTFOUND" -G "MinGW Makefiles" ..
+
+    echo "Building server code:"
+
+    cmake --build .
+    
+    7z a cod4x_server_DEBUG.zip bin\cod4x_server.exe
+    
     Write-Host "Done."
 test_script:
-- ps: ./bin/cod4x18_dedrun.exe
+- ps: bin\cod4x_server.exe
 branches:
   only:
     - master    # Ignore all other branches.
     - cmake
 artifacts: 
-  - path: bin\cod4x18_dedrun.exe
+  - path: build\bin\cod4x_server.exe
     name: cod4exe
     
-  - path: cod4x18_dedrun_DEBUG.zip
+  - path: build\cod4x_server_DEBUG.zip
     name: cod4exe_dbg
 
-  - path: plugins\**\*.dll
-    name: plugins
+#  - path: plugins\**\*.dll
+#    name: plugins
+
 deploy:
 - provider: GitHub
   auth_token:
