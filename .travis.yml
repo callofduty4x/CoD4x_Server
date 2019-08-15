@@ -15,10 +15,10 @@ before_install:
   - "sudo apt-get -qq update"
 
   - arch
-  - sudo ls /etc/dpkg/dpkg.cfg.d/
-  - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
-  - sudo ls /etc/dpkg/dpkg.cfg.d/
-#  - sudo dpkg --add-architecture i386
+#  - sudo ls /etc/dpkg/dpkg.cfg.d/
+#  - sudo sh -c "echo 'foreign-architecture i386' > /etc/dpkg/dpkg.cfg.d/multiarch"
+#  - sudo ls /etc/dpkg/dpkg.cfg.d/
+  - sudo dpkg --add-architecture i386
   - sudo apt-get update
   - sudo apt-get install nasm:i386 gcc-multilib g++-multilib paxctl:i386 libtommath-dev:i386
 script:
