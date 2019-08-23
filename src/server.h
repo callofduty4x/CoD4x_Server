@@ -377,6 +377,11 @@ typedef struct {//0x8c51780
 	int				configDataSequence;
 	char			commandWhitelistBuf[1024];
 	char			sysrestartmessage[1024];
+	bool			isIdleHost;
+	int				migrationChallenge;
+	char			migrationAddr[32];
+	msg_t			migrationMsg;
+	byte			migrationPacketReceivedBits[32];
 }serverStatic_t; //Size: 0xb227580
 
 
