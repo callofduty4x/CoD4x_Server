@@ -5153,7 +5153,6 @@ qboolean SV_FileStillActive(const char* name)
     return qfalse;
 }
 
-
 /*
 void SV_StartHostMigration(netadr_t* to)
 {
