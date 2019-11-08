@@ -1,1 +1,2 @@
 PATH <- XXX/mingw-w64/mingw32/bin
+PATH <- <NASM root>

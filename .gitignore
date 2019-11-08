@@ -53,7 +53,7 @@ sys_error.txt
 
 #T-Max: build dir
 cmake-build-debug
-build
+*build*
 
 #T-Max: CLion dirs
 .idea

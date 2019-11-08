@@ -12,8 +12,15 @@ set(CMAKE_ASM_NASM_COMPILE_OBJECT "<CMAKE_ASM_NASM_COMPILER> <INCLUDES> \
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Adding dependencies...
+# ... mbedtls
+option(INSTALL_MBEDTLS_HEADERS OFF)
+option(ENABLE_TESTING OFF)
+add_subdirectory(deps/mbedtls)
+set(mbedtls_SOURCE_DIR ${CMAKE_SOURCE_DIR}/deps/mbedtls CACHE PATH "Path to a root of mbedtls dependency")
+
+# Adding sources...
 add_subdirectory(src)
-add_subdirectory(src/mbedtls)
 add_subdirectory(src/tomcrypt)
 add_subdirectory(src/asmsource)
 add_subdirectory(src/version)

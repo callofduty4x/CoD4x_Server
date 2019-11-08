@@ -1,5 +1,5 @@
-rem @echo off
+@echo off
 mkdir build
 cd build
 cmake -G "MinGW Makefiles" ..
-rem pause
+timeout /t 10
