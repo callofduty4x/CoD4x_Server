@@ -502,6 +502,36 @@ static const char *g_he_vertalign[] =
 */
 
 
+enum entHandlers_s
+{
+  ENT_HANDLER_NULL = 0x0,
+  ENT_HANDLER_TRIGGER_MULTIPLE = 0x1,
+  ENT_HANDLER_TRIGGER_HURT = 0x2,
+  ENT_HANDLER_TRIGGER_HURT_TOUCH = 0x3,
+  ENT_HANDLER_TRIGGER_DAMAGE = 0x4,
+  ENT_HANDLER_SCRIPT_MOVER = 0x5,
+  ENT_HANDLER_SCRIPT_MODEL = 0x6,
+  ENT_HANDLER_GRENADE = 0x7,
+  ENT_HANDLER_TIMED_OBJECT = 0x8,
+  ENT_HANDLER_ROCKET = 0x9,
+  ENT_HANDLER_CLIENT = 0xA,
+  ENT_HANDLER_CLIENT_SPECTATOR = 0xB,
+  ENT_HANDLER_CLIENT_DEAD = 0xC,
+  ENT_HANDLER_PLAYER_CLONE = 0xD,
+  ENT_HANDLER_TURRET_INIT = 0xE,
+  ENT_HANDLER_TURRET = 0xF,
+  ENT_HANDLER_DROPPED_ITEM = 0x10,
+  ENT_HANDLER_ITEM_INIT = 0x11,
+  ENT_HANDLER_ITEM = 0x12,
+  ENT_HANDLER_TRIGGER_USE = 0x13,
+  ENT_HANDLER_PRIMARY_LIGHT = 0x14,
+  ENT_HANDLER_PLAYER_BLOCK = 0x15,
+  ENT_HANDLER_VEHICLE = 0x16,
+  ENT_HANDLER_HELICOPTER = 0x17,
+  ENT_HANDLER_COUNT = 0x18
+};
+
+
 struct entityHandler_t
 {
   void (__cdecl *think)(struct gentity_s *);
@@ -516,8 +546,8 @@ struct entityHandler_t
   int splashMethodOfDeath;
 };
 
+extern const struct entityHandler_t entityHandlers[ENT_HANDLER_COUNT];
 
-extern struct entityHandler_t entityHandlers[24];
 
 
 extern cvar_t *g_allowConsoleSay;
@@ -612,6 +642,38 @@ void __cdecl G_FreeTurret(struct gentity_s *ent);
 void __cdecl G_FreeEntityRefs(struct gentity_s *ent);
 void __cdecl XAnimClearTree(struct XAnimTree_s *tree);
 void __cdecl G_LocationalTrace(trace_t *results, const float *start, const float *end, int passEntityNum, int contentmask, char *priorityMap);
+
+
+void __cdecl Touch_Multi(struct gentity_s *, struct gentity_s *, int);
+void __cdecl hurt_use(struct gentity_s *, struct gentity_s *, struct gentity_s *);
+void __cdecl hurt_touch(struct gentity_s *, struct gentity_s *, int);
+void __cdecl Use_trigger_damage(struct gentity_s *, struct gentity_s *, struct gentity_s *);
+void __cdecl Reached_ScriptMover(struct gentity_s *);
+void __cdecl Pain_trigger_damage(struct gentity_s *, struct gentity_s *, int, const float *, const int, const float *, enum hitLocation_t, const int);
+void __cdecl Die_trigger_damage(struct gentity_s *, struct gentity_s *, struct gentity_s *, int, int, const int, const float *, enum hitLocation_t, int);
+void __cdecl Touch_Item_Auto(struct gentity_s *, struct gentity_s *, int);
+void __cdecl G_TimedObjectThink(struct gentity_s *);
+void __cdecl G_PlayerController(struct gentity_s *, int *);
+void __cdecl turret_use(struct gentity_s *, struct gentity_s *, struct gentity_s *);
+void __cdecl turret_controller(struct gentity_s *, int *);
+void __cdecl turret_think(struct gentity_s *);
+void __cdecl G_VehEntHandler_Think(struct gentity_s *);
+void __cdecl G_VehEntHandler_Touch(struct gentity_s *, struct gentity_s *, int);
+void __cdecl G_VehEntHandler_Use(struct gentity_s *, struct gentity_s *, struct gentity_s *);
+void __cdecl G_VehEntHandler_Pain(struct gentity_s *, struct gentity_s *, int, const float *, const int, const float *, enum hitLocation_t, const int);
+void __cdecl G_VehEntHandler_Die(struct gentity_s *, struct gentity_s *, struct gentity_s *, int, int, const int, const float *, enum hitLocation_t, int);
+void __cdecl G_VehEntHandler_Controller(struct gentity_s *, int *);
+void __cdecl Helicopter_Think(struct gentity_s *);
+void __cdecl Helicopter_Pain(struct gentity_s *, struct gentity_s *, int, const float *, const int, const float *, enum hitLocation_t, const int);
+void __cdecl Helicopter_Die(struct gentity_s *, struct gentity_s *, struct gentity_s *, int, int, const int, const float *, enum hitLocation_t, int);
+void __cdecl Helicopter_Controller(struct gentity_s *, int *);
+void __cdecl G_ExplodeMissile(struct gentity_s *);
+void __cdecl BodyEnd(struct gentity_s *);
+void __cdecl turret_think_init(struct gentity_s *);
+void __cdecl DroppedItemClearOwner(struct gentity_s *);
+void __cdecl FinishSpawningItem(struct gentity_s *);
+void __cdecl use_trigger_use(struct gentity_s *, struct gentity_s *, struct gentity_s *);
+
 
 #ifdef __cplusplus
 }

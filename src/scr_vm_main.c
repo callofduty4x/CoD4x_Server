@@ -295,6 +295,8 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("isfloat", GScr_IsFloat, 0);
     Scr_AddFunction("isint", GScr_IsInt, 0);
     Scr_AddFunction("pow", GScr_Pow, 0);
+	Scr_AddFunction("strctrlstrip", GScr_StrCtrlStrip, 0 );
+	Scr_AddFunction("toupper", GScr_ToUpper, 0 );
 }
 
 void Scr_AddStockMethods()
@@ -601,6 +603,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("clonebrushmodeltoscriptmodel", GScr_CloneBrushModelToScriptModel, qfalse);
     // Force player stance.
     Scr_AddMethod("setstance", PlayerCmd_SetStance, qfalse);
+    Scr_AddMethod("getentityhandlertype", EntityCmd_GetHandlerType, qtrue);
 }
 
 void Scr_InitFunctions()

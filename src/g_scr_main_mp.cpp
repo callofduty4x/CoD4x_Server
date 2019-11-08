@@ -345,7 +345,7 @@ void __cdecl Scr_PlayerKilled(gentity_s *self, gentity_s *inflictor, gentity_s *
   GScr_AddVector(vDir);
   weapname = BG_WeaponName(iWeapon);
   Scr_AddString(weapname);
-  if ( meansOfDeath >= 0 && meansOfDeath < 21 )
+  if ( meansOfDeath >= 0 && meansOfDeath < 16 )
   {
     Scr_AddConstString(*modNames[meansOfDeath]);
   }
@@ -377,6 +377,43 @@ void __cdecl Scr_PlayerKilled(gentity_s *self, gentity_s *inflictor, gentity_s *
   Scr_FreeThread(callback);
 }
 
+void __cdecl Scr_PlayerLastStand(gentity_s *self, gentity_s *inflictor, gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, hitLocation_t hitLoc, int psTimeOffset)
+{
+  uint16_t cstr;
+  const char *weapname;
+  uint16_t callback;
+
+  Scr_AddInt(0);
+  Scr_AddInt(psTimeOffset);
+  cstr = G_GetHitLocationString(hitLoc);
+  Scr_AddConstString(cstr);
+  GScr_AddVector(vDir);
+  weapname = BG_WeaponName(iWeapon);
+  Scr_AddString(weapname);
+  if ( meansOfDeath >= 0 && meansOfDeath < 16 )
+  {
+    Scr_AddConstString(*modNames[meansOfDeath]);
+  }
+  else
+  {
+    Scr_AddString("badMOD");
+  }
+  Scr_AddInt(damage);
+  GScr_AddEntity(attacker);
+  GScr_AddEntity(inflictor);
+  callback = Scr_ExecEntThread(self, g_scr_data.gametype.playerlaststand, 9u);
+  Scr_FreeThread(callback);
+
+  //Fixing bad scripts not killing player in LastStand callback or setting health > 0
+  if(self->health <= 0 && self->client->ps.stats[0] != 0)
+  {
+    self->flags &= 0xFFFFFFFC;
+    self->health = 0;
+    self->client->ps.stats[0] = 0;
+    player_die(self, inflictor, attacker, 100000, 12, 0, 0, HITLOC_NONE, 0);
+  }
+}
+
 
 
 };
@@ -391,3 +428,5 @@ unsigned int __cdecl GScr_AllocString(const char *s)
   return stringVal;
 
 }
+
+

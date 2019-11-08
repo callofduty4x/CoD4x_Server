@@ -3392,3 +3392,73 @@ void GScr_PrintDebugStar()
   }
 }
 
+
+void EntityCmd_GetHandlerType(scr_entref_t arg)
+{
+
+    gentity_t *gentity;
+    int entityNum = 0;
+
+    if (arg.classnum)
+    {
+
+        Scr_ObjectError("Not an entity");
+        return;
+    }
+    else
+    {
+
+        entityNum = arg.entnum;
+        gentity = &g_entities[entityNum];
+    }
+
+    Scr_AddInt(gentity->handler);
+}
+
+
+void GScr_StrCtrlStrip()
+{
+	if( Scr_GetNumParam() != 1 )
+	{
+		Scr_Error( "Usage: string = StrCtrlStrip ( <string> )" );
+	}
+
+	char *string = Scr_GetString( 0 );
+	char buffer[ 1024 ];
+	
+	int i, j;
+	for( i = 0, j = 0; string[ i ]; ++i )
+	{
+		if( (byte)string[ i ] >= 0x20 )
+		{
+			buffer[ j ] = string[ i ];
+			++j;
+		}
+	}
+	buffer[ j ] = '\0';
+	
+	Scr_AddString( buffer );
+}
+
+void GScr_ToUpper()
+{
+	if( Scr_GetNumParam() != 1 )
+	{
+		Scr_Error( "Usage: string = ToUpper ( <string> )" );
+	}
+
+	char *string = Scr_GetString( 0 );
+	char buffer[ 1024 ];
+	
+	int i;
+	for( i = 0; string[ i ]; ++i )
+	{
+		if ( (byte)string[ i ] > 0x60 && (byte)string[ i ] < 0x7B )
+			buffer[ i ] = (char)( (byte)string[ i ] & 0x5F );
+		else
+			buffer[ i ] = string[ i ];
+	}
+	buffer[ i ] = '\0';
+	
+	Scr_AddString( buffer );
+}

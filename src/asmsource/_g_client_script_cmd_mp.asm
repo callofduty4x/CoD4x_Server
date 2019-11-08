@@ -50,6 +50,7 @@
 	extern G_TempEntity
 	extern DirToByte
 	extern Scr_Error
+	extern Scr_Errorf
 	extern Scr_PlayerLastStand
 	extern Com_Printf
 	extern player_die
@@ -1637,10 +1638,9 @@ PlayerCmd_finishPlayerDamage_440:
 	mov eax, 0x1
 	jmp PlayerCmd_finishPlayerDamage_580
 PlayerCmd_finishPlayerDamage_210:
-	mov [esp+0x8], edx
-	mov dword [esp+0x4], _cstring_no_die_handler_f
-	mov dword [esp], 0x1
-	call Com_Printf
+	mov [esp+0x4], edx
+	mov dword [esp], _cstring_no_die_handler_f
+	call Scr_Errorf
 	jmp PlayerCmd_finishPlayerDamage_590
 PlayerCmd_finishPlayerDamage_400:
 	mov dword [esi+0xa8], 0x3

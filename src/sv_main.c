@@ -5152,3 +5152,200 @@ qboolean SV_FileStillActive(const char* name)
     Cmd_EndTokenizedString();
     return qfalse;
 }
+
+/*
+void SV_StartHostMigration(netadr_t* to)
+{
+    msg_t msg;
+    byte buf[MAX_INFO_STRING];
+
+    if(strlen(sv_authtoken->string) != 32)
+    {
+        Com_PrintError(CON_CHANNEL_SERVER, "Needs a valid sv_authtoken to start a hostmigration!\n");
+        return;
+    }
+    MSG_Init(&msg, buf, sizeof(buf));
+    MSG_WriteString(&msg, "StartHostMigration\n");
+    MSG_WriteLong(sv.checksumFeed);
+    MSG_WriteLong(sv_maxclient->integer);
+
+    NET_OutOfBandData( NS_SERVER, from, msg.data, msg.cursize);
+}
+
+void SV_ReadHostMigrationStart(netadr_t* from, msg_t* msg)
+{
+    msg_t outmsg;
+    byte buf[MAX_INFO_STRING];
+
+    MSG_Init(&outmsg, buf, sizeof(buf));
+    MSG_WriteString(&msg, "AcceptHostMigration\n");
+
+    int feed = MSG_ReadLong(msg);
+    int foreignmaxclients = MSG_ReadLong(msg);
+
+    if(svs.isIdleHost == false) //This server accepts regular clients and can not accept a hostmigration
+    {
+        MSG_WriteLong(0);
+        return;
+    }    
+
+    MSG_WriteLong(1);
+    Com_RandomBytes((byte*)&svs.migrationChallenge, sizeof(svs.migrationChallenge));
+
+    MSG_WriteLong(svs.migrationChallenge);    //This will be used to encode the token
+
+    NET_OutOfBandData( NS_SERVER, from, msg.data, msg.cursize);
+}
+*/
+
+
+void SV_HostMigrationPackSingleClientData(client_t *cl, msg_t* msg)
+{
+    MSG_WriteData(msg, cl->netchan.remoteAddress.ip6, sizeof(cl->netchan.remoteAddress.ip6));
+    MSG_WriteByte(msg, cl->netchan.remoteAddress.type);
+    MSG_WriteShort(msg, cl->netchan.qport);
+    MSG_WriteLong(msg, cl->power);
+    MSG_WriteLong(msg, cl->connectedTime);
+    MSG_WriteData(msg, cl->xversion, sizeof(cl->xversion));
+    MSG_WriteLong(msg, cl->protocol);
+    MSG_WriteInt64(msg, cl->steamid);
+    MSG_WriteInt64(msg, cl->steamidPending);
+    MSG_WriteInt64(msg, cl->clanid);
+    MSG_WriteInt64(msg, cl->clanidPending);
+    MSG_WriteInt64(msg, cl->playerid);
+    MSG_WriteLong(msg, cl->steamstatus);
+    MSG_WriteLong(msg, cl->isMember);
+    MSG_WriteLong(msg, cl->mutelevel);
+    MSG_WriteString(msg, cl->name);
+    MSG_WriteString(msg, cl->clantag);
+    MSG_WriteString(msg, cl->userinfo);
+    MSG_WriteLong(msg, cl->challenge);
+    MSG_WriteLong(msg, cl->rate);
+    MSG_WriteLong(msg, cl->serverId);
+    MSG_WriteByte(msg, cl->hasValidPassword);
+
+}
+
+#define MIGRATION_PACKETSIZE 1000
+
+void SV_HostMigrationSendData(msg_t* inmsg, netadr_t* dest)
+{
+    msg_t msg;
+    byte buffer[1200];
+
+    int offset, datalen;
+    int numpackets = inmsg->cursize / MIGRATION_PACKETSIZE;
+    if(inmsg->cursize % MIGRATION_PACKETSIZE > 0)
+    {
+        ++numpackets;
+    }
+
+    for(offset = 0; offset < inmsg->cursize; offset += MIGRATION_PACKETSIZE)
+    {
+        datalen = inmsg->cursize - offset;
+        if(datalen > MIGRATION_PACKETSIZE)
+        {
+            datalen = MIGRATION_PACKETSIZE;
+        }
+        MSG_Init(&msg, buffer, sizeof(buffer));
+        MSG_WriteString(&msg, "HostMigrationPacket\n");
+        MSG_WriteLong(&msg, inmsg->cursize);
+        MSG_WriteLong(&msg, offset);
+        MSG_WriteData(&msg, inmsg->data + offset, datalen);
+
+        NET_OutOfBandData( NS_SERVER, dest, msg.data, msg.cursize);
+    }
+
+}
+
+
+void SV_HostMigrationWriteData(netadr_t* dest)
+{
+    msg_t msg;
+    byte buffer[0x40000];
+
+    int i, count;
+    for(i = 0, count = 0; i < sv_maxclients->integer; ++i)
+    {
+        if(svs.clients[i].state >= CS_ACTIVE)
+        {
+            count++;
+        }
+    }
+
+    MSG_Init(&msg, buffer, sizeof(buffer));
+    MSG_WriteLong(&msg, svs.time);
+    MSG_WriteLong(&msg, count); //clientcount
+    
+    for(i = 0; i < sv_maxclients->integer; ++i)
+    {
+        SV_HostMigrationPackSingleClientData(&svs.clients[i], &msg);
+    }
+
+
+    SV_HostMigrationSendData(&msg, dest);
+
+}
+
+void SV_HostMigrationParsePacket(msg_t* msg)
+{
+    Com_Printf(CON_CHANNEL_SERVER, "Parsing host migration message!\n");
+}
+
+
+
+void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg)
+{
+    int messagesize = MSG_ReadLong(msg);
+    int messageoffset = MSG_ReadLong(msg);
+    int i, l;
+
+    if(messageoffset > messagesize)
+    {
+        Com_PrintError(CON_CHANNEL_SERVER, "Bad migration message\n");
+        return;
+    }
+
+    if(messagesize > 0x40000)
+    {
+        Com_PrintError(CON_CHANNEL_SERVER, "Bad migration message (size)\n");
+        return;
+    }
+
+    if(svs.migrationMsg.data == NULL || messagesize != svs.migrationMsg.maxsize)
+    {
+        if(svs.migrationMsg.data)
+        {
+            free(svs.migrationMsg.data);
+        }
+        void* newmsgbuf = malloc(messagesize);
+        if(newmsgbuf == NULL)
+        {
+            return;
+        }
+        MSG_Init(&svs.migrationMsg, newmsgbuf, messagesize);
+    }
+    MSG_ReadData(msg, svs.migrationMsg.data + messageoffset, msg->cursize - msg->readcount);
+
+    int packetId = messageoffset / MIGRATION_PACKETSIZE;
+    int maxPacketId = (messagesize -1) / MIGRATION_PACKETSIZE;
+    //Complete?
+    svs.migrationPacketReceivedBits[packetId / 8] |= (1 << packetId % 8);
+
+    for(i = 0; i < maxPacketId /8; ++i)
+    {
+        if(svs.migrationPacketReceivedBits[i] != 0xff)
+        {
+            return; //Still incomplete
+        }
+    }
+    for(l = 0; l < maxPacketId % 8; ++l)
+    {
+        if(!(svs.migrationPacketReceivedBits[i] & (1 << l)))
+        {
+            return;
+        }
+    }
+    SV_HostMigrationParsePacket(&svs.migrationMsg);
+    
+}

@@ -204,6 +204,19 @@ void __cdecl Scr_Error(const char *error)
   Scr_ErrorInternal( );
 }
 
+
+void __cdecl Scr_Errorf(const char *fmt, ...)
+{
+  char buf[MAX_STRING_CHARS];
+
+  va_list argptr;
+  va_start(argptr,fmt);
+  Q_vsnprintf(buf, sizeof(buf), fmt, argptr);
+  va_end (argptr);
+
+  Scr_Error(buf);
+}
+
 void __cdecl Scr_TerminalError(const char *error)
 {
 

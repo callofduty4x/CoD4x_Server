@@ -798,8 +798,8 @@ void Auth_StoreUndercoverStatus(client_t* cl)
 
 int Auth_GetClPower(client_t* cl){
 
-	if(cl->steamid == 0) return 1;
 	if(cl->power > 1) return cl->power;
+	if(cl->steamid == 0) return 1;
 
 	return Auth_GetClPowerBySteamID(cl->steamid);
 }
