@@ -26,7 +26,7 @@
 
 #include "q_shared.h"
 #include "sec_common.h"
-#include "tomcrypt/tomcrypt.h"
+#include "tomcrypt.h"
 
 #include <time.h>
 #include <stdio.h>

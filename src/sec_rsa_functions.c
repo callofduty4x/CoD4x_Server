@@ -1,5 +1,5 @@
 
-#include "tomcrypt/tomcrypt.h"
+#include "tomcrypt.h"
 
 int rsa_decrypt_puplickey_nnj(const unsigned char *in,unsigned long inlen,unsigned char *out,unsigned long *outlen,int *stat, rsa_key *key){
 	unsigned long modulus_bitlen, modulus_bytelen, x;
@@ -31,7 +31,7 @@ int rsa_decrypt_puplickey_nnj(const unsigned char *in,unsigned long inlen,unsign
 	 return err;
 	}
 
-	err = pkcs_1_v1_5_decode(tmp ,x, LTC_LTC_PKCS_1_V1_5, modulus_bitlen, out, outlen, stat);
+	err = pkcs_1_v1_5_decode(tmp ,x, LTC_PKCS_1_V1_5, modulus_bitlen, out, outlen, stat);
 
 	XFREE(tmp);
 	return err;

@@ -20,7 +20,7 @@
 */
 
 #include "q_shared.h"
-#include "tomcrypt/tomcrypt.h"
+#include "tomcrypt.h"
 #include "sec_common.h"
 
 
@@ -66,9 +66,9 @@ char *Sec_CryptErrStr(int code){
     case CRYPT_FILE_NOTFOUND: return "CRYPT_FILE_NOTFOUND";
 
     case CRYPT_PK_INVALID_TYPE: return "CRYPT_PK_INVALID_TYPE";
-    case CRYPT_PK_INVALID_SYSTEM: return "CRYPT_PK_INVALID_SYSTEM";
-    case CRYPT_PK_DUP: return "CRYPT_PK_DUP";
-    case CRYPT_PK_NOT_FOUND: return "CRYPT_NO_FOUND";
+    //case CRYPT_PK_INVALID_SYSTEM: return "CRYPT_PK_INVALID_SYSTEM";
+    //case CRYPT_PK_DUP: return "CRYPT_PK_DUP";
+    //case CRYPT_PK_NOT_FOUND: return "CRYPT_NO_FOUND";
     case CRYPT_PK_INVALID_SIZE: return "CRYPT_INVALID_SIZE";
 
     case CRYPT_INVALID_PRIME_SIZE: return "CRYPT_INVALID_PRIME_SIZE";

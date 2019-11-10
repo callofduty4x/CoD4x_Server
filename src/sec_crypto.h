@@ -23,7 +23,7 @@
 
 
 #include "q_shared.h"
-#include "tomcrypt/tomcrypt.h"
+#include "tomcrypt.h"
 
 extern int SEC_HASH_SHA1;
 extern int SEC_HASH_SHA256;

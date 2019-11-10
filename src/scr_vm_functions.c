@@ -43,7 +43,7 @@
 #include <time.h>
 #include "plugin_handler.h"
 #include "scr_vm_functions.h"
-#include "tomcrypt/tomcrypt_misc.h"
+#include "tomcrypt.h"
 
 static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 extern char* var_typename[];

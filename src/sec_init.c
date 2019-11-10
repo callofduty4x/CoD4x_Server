@@ -25,7 +25,7 @@
 
 #include "sec_common.h"
 #include "sec_crypto.h"
-#include "tomcrypt/tomcrypt.h"
+#include "tomcrypt.h"
 
 
 qboolean initialized = qfalse;
@@ -41,7 +41,7 @@ void Sec_Init(void)
 {
     int result,i;
     // Connect the math library with the crypt library
-	ltc_mp = ltm_desc;
+    //ltc_mp = ltm_desc;
     //Cmd_AddCommand("createCert", Sec_MakeCert_f);
 
     Com_Printf(CON_CHANNEL_SYSTEM,"--- Crypto Initializing ---\n");

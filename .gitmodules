@@ -1,3 +1,6 @@
 [submodule "deps/mbedtls"]
 	path = deps/mbedtls
 	url = git@github.com:ARMmbed/mbedtls.git
+[submodule "deps/tomcrypt/libtomcrypt"]
+	path = deps/tomcrypt/libtomcrypt
+	url = git@github.com:libtom/libtomcrypt.git

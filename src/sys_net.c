@@ -61,20 +61,21 @@
 	#		define sa_family_t	ADDRESS_FAMILY
 	#	else
 	typedef unsigned short sa_family_t;
-	#	endif
+    #	endif
 
-	/* no epipe yet */
-	#ifndef WSAEPIPE
-		#define WSAEPIPE       -12345
-	#endif
-	#	define EAGAIN			WSAEWOULDBLOCK
-	#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
-	#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
-	#	define ECONNRESET		WSAECONNRESET
-	#	define EINPROGRESS		WSAEINPROGRESS
-	#	define EINTR			WSAEINTR
-	# define EPIPE      WSAEPIPE
-	typedef u_long	ioctlarg_t;
+    // Win10 mingw-w64 - not required!
+	///* no epipe yet */
+	//#ifndef WSAEPIPE
+	//	#define WSAEPIPE       -12345
+	//#endif
+	//#	define EAGAIN			WSAEWOULDBLOCK // Related to Warning: NET_GetPacket on (0.0.0.0:28960 - 1120): WSAEWOULDBLOCK?
+	//#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
+	//#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
+	//#	define ECONNRESET		WSAECONNRESET
+	//#	define EINPROGRESS		WSAEINPROGRESS
+	//#	define EINTR			WSAEINTR
+	//# define EPIPE      WSAEPIPE
+    typedef u_long ioctlarg_t;
 	#	define socketError		WSAGetLastError( )
 
 	#define NET_NOSIGNAL 0x0
