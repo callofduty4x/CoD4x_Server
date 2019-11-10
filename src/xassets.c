@@ -33,7 +33,7 @@
 #include "xassets/xmodel.h"
 #include "xassets/sounds.h"
 #include "sys_thread.h"
-#include "zlib/unzip.h"
+//#include "contrib/minizip/unzip.h"
 #include "physicalmemory.h"
 
 #include <string.h>

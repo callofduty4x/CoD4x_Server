@@ -50,7 +50,7 @@
 #include "world.h"
 #include "cm_local.h"
 #include "sys_thread.h"
-#include "zlib/unzip.h"
+#include "contrib/minizip/unzip.h"
 #include "physicalmemory.h"
 #include "cscr_stringlist.h"
 #include "r_public.h"

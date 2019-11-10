@@ -19,11 +19,15 @@ option(ENABLE_TESTING OFF)
 add_subdirectory(deps/mbedtls)
 set(mbedtls_SOURCE_DIR ${CMAKE_SOURCE_DIR}/deps/mbedtls CACHE PATH "Path to a root of mbedtls dependency")
 
+# ... libtomcrypt
+add_subdirectory(deps/tomcrypt)
+
+# .. zlib
+add_subdirectory(deps/zlib)
+
 # Adding sources...
 add_subdirectory(src)
-add_subdirectory(src/tomcrypt)
 add_subdirectory(src/asmsource)
 add_subdirectory(src/version)
 add_subdirectory(src/win32)
 add_subdirectory(src/xassets)
-add_subdirectory(src/zlib)

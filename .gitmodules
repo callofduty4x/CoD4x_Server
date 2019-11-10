@@ -4,3 +4,6 @@
 [submodule "deps/tomcrypt/libtomcrypt"]
 	path = deps/tomcrypt/libtomcrypt
 	url = git@github.com:libtom/libtomcrypt.git
+[submodule "deps/zlib/zlib"]
+	path = deps/zlib/zlib
+	url = git@github.com:madler/zlib.git

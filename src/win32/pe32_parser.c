@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include "../qcommon_io.h" // Com_Printf
-#include "../g_shared.h"   // qboolean
+//#include "../g_shared.h"   // qboolean
 #include "../objfile_parser.h"
 #include "../sys_cod4defs.h"
 #include "../sys_main.h"

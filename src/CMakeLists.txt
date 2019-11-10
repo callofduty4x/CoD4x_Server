@@ -11,11 +11,15 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -m32 -Wl,--nxcompat,--stac
 add_definitions(-DCOD4X18UPDATE)
 
 add_executable(${PROJECT_NAME} ${ASM_SRC} ${CPP_INC} ${CPP_SRC})
-target_link_libraries(${PROJECT_NAME} m stdc++ mbedtls mbedcrypto mbedx509 tomcrypt asmsource version xassets zlib)
+target_link_libraries(${PROJECT_NAME} m stdc++ mbedtls mbedcrypto mbedx509 tomcrypt asmsource version xassets
+    zlibstatic zlib_minizip
+)
 
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} win32)
 else()
 endif()
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${mbedtls_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${mbedtls_SOURCE_DIR}/include
+    ${zlib_SOURCE_DIR}
+)
