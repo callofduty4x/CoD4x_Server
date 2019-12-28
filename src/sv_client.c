@@ -225,7 +225,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	    return;
 	}
 
-	if ( version != sv_protocol->integer ) {
+	if ( version != sv_protocol->integer && version != 18) {
 
 #ifdef COD4X18UPDATE
 		if(version < 7)
@@ -437,7 +437,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	newcl->protocol = version;
 
 #ifdef COD4X18UPDATE
-	if(newcl->protocol != sv_protocol->integer)
+	if(newcl->protocol != sv_protocol->integer && newcl->protocol != 18)
 	{
 		newcl->needupdate = qtrue;
 	}else{

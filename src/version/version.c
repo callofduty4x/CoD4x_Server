@@ -1,7 +1,7 @@
 #include "version.h"
 #include "version_build.h"
 
-#define SYS_COMMONVERSION 17.6
+#define SYS_COMMONVERSION 17.11
 #define _STRINGIFY(s) #s
 #define STRINGIFY(s) _STRINGIFY(s)
 
