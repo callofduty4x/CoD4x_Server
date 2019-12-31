@@ -1,6 +1,6 @@
 #include "version.h"
 
-#define SYS_COMMONVERSION 17.10
+#define SYS_COMMONVERSION 18.0
 #define _STRINGIFY(s) #s
 #define STRINGIFY(s) _STRINGIFY(s)
 
