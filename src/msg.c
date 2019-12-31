@@ -1893,51 +1893,12 @@ int __cdecl MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fi
 
 void MSG_WriteOriginFloat(const int clientNum, msg_t *msg, int bits, float value, float oldValue)
 {
-  signed int ival;
-  signed int ioldval;
-  signed int mcenterbits, delta;
-  vec3_t center;
-  
-  ival = (signed int)f2rint(value);
-  ioldval = (signed int)f2rint(oldValue);
-  delta = ival - ioldval;
-  
-  if ( (unsigned int)(delta + 64)  > 127 )
-  {
-    MSG_WriteBit1(msg);
-	SV_GetMapCenterFromSVSHeader(center);
-	mcenterbits = (signed int)(center[bits != -92] + 0.5);
-    MSG_WriteBits(msg, (ival - mcenterbits + 0x8000) ^ (ioldval - mcenterbits + 0x8000), 16);
-  }
-  else
-  {
-    MSG_WriteBit0(msg);
-    MSG_WriteBits(msg, delta + 64, 7);
-  }
+  MSG_WriteFloat(msg, value);
 }
 
 void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float oldValue)
 {
-  signed int ival;
-  signed int ioldval;
-  signed int mcenterbits;
-  vec3_t center;
-  
-  ival = (signed int)f2rint(value);
-  ioldval = (signed int)f2rint(oldValue);
-  
-  if ( (unsigned int)(ival - ioldval + 64)  > 127 )
-  {
-    MSG_WriteBit1(msg);
-	SV_GetMapCenterFromSVSHeader(center);
-	mcenterbits = (signed int)(center[2] + 0.5);
-    MSG_WriteBits(msg, (ival - mcenterbits + 0x8000) ^ (ioldval - mcenterbits + 0x8000), 16);
-  }
-  else
-  {
-    MSG_WriteBit0(msg);
-    MSG_WriteBits(msg, ival - ioldval + 64, 7);
-  }
+  MSG_WriteFloat(msg, value);
 }
 
 /*
@@ -3200,30 +3161,12 @@ void __cdecl MSG_GetMapCenter(float *center)
 
 float MSG_ReadOriginFloat(msg_t *msg, int bits, float oldValue)
 {
-  signed int coord;
-
-  if ( MSG_ReadBit(msg) )
-  {
-	vec3_t center;
-	MSG_GetMapCenter(center);
-    coord = (signed int)(center[bits != -92] + 0.5);
-    return (double)((((signed int)oldValue - coord + 0x8000) ^ MSG_ReadBits(msg, 16)) + coord - 0x8000);
-  }
-  return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
+    return MSG_ReadFloat(msg);
 }
 
 float MSG_ReadOriginZFloat(msg_t *msg, float oldValue)
 {
-  signed int coord;
-
-  if ( MSG_ReadBit(msg) )
-  {
-	vec3_t center;
-	MSG_GetMapCenter(center);
-	coord = (signed int)(center[2] + 0.5);
-    return (double)((((signed int)oldValue - coord + 0x8000) ^ MSG_ReadBits(msg, 16)) + coord - 0x8000);
-  }
-  return (double)(MSG_ReadBits(msg, 7) - 64) + oldValue;
+    return MSG_ReadFloat(msg);
 }
 
 

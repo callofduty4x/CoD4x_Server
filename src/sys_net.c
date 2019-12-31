@@ -3407,6 +3407,10 @@ int NET_TcpWaitForSocketIsReady(int socket, int timeoutsec)
 
 int NET_TcpIsSocketReady(int socket) //return: 1 ready, 0 not ready, -1 select error, -2 other error
 {
+	if(socket < 0 || socket >= 1024)
+	{
+		__asm__("int $3");
+	}
 	return NET_TcpWaitForSocketIsReady(socket, 0);
 }
 
@@ -3841,7 +3845,11 @@ int NET_StringToAdr( const char *s, netadr_t *a, netadrtype_t family )
 		a->type = NA_BAD;
 		return 0;
 	}
-
+	netadr_t* defif = NET_GetDefaultCommunicationSocket(a->type);
+	if(defif != NULL)
+	{
+		a->sock = defif->sock;
+	}
 	if(port)
 	{
 		a->port = BigShort((short) atoi(port));
