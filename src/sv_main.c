@@ -1835,6 +1835,7 @@ void SV_ConnectWithUpdateProxy(client_t *cl)
 #endif
 
 
+void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg);
 
 
 /*
@@ -1894,7 +1895,8 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
 
 #endif
 
-
+    } else if (!Q_stricmp(c, "HostMigrationPacket")) {
+        SV_HostMigrationReadPacket(from, msg);
 
     } else if (!strcmp(c, "v")) {
         SV_VoicePacket(from, msg);
@@ -5165,7 +5167,7 @@ void SV_StartHostMigration(netadr_t* to)
         return;
     }
     MSG_Init(&msg, buf, sizeof(buf));
-    MSG_WriteString(&msg, "StartHostMigration\n");
+    MSG_WriteString(&msg, "StartHostMigration");
     MSG_WriteLong(sv.checksumFeed);
     MSG_WriteLong(sv_maxclient->integer);
 
@@ -5178,7 +5180,7 @@ void SV_ReadHostMigrationStart(netadr_t* from, msg_t* msg)
     byte buf[MAX_INFO_STRING];
 
     MSG_Init(&outmsg, buf, sizeof(buf));
-    MSG_WriteString(&msg, "AcceptHostMigration\n");
+    MSG_WriteString(&msg, "AcceptHostMigration");
 
     int feed = MSG_ReadLong(msg);
     int foreignmaxclients = MSG_ReadLong(msg);
@@ -5234,24 +5236,39 @@ void SV_HostMigrationSendData(msg_t* inmsg, netadr_t* dest)
     byte buffer[1200];
 
     int offset, datalen;
+    
+    if(inmsg->cursize > 0x40000)
+    {
+        Com_PrintError(CON_CHANNEL_SERVER, "Oversize hostmigration message generated!\n");
+        return;
+    }
+    
     int numpackets = inmsg->cursize / MIGRATION_PACKETSIZE;
     if(inmsg->cursize % MIGRATION_PACKETSIZE > 0)
     {
         ++numpackets;
     }
+    Com_Printf(CON_CHANNEL_SERVER, "Writing %d packets to %s.%d\n", numpackets, NET_AdrToString(dest), dest->sock);
+
+
+    int crc = crc32_16bytes(inmsg->data, inmsg->cursize, 0);
 
     for(offset = 0; offset < inmsg->cursize; offset += MIGRATION_PACKETSIZE)
     {
+        Sys_SleepMSec(5);
         datalen = inmsg->cursize - offset;
         if(datalen > MIGRATION_PACKETSIZE)
         {
             datalen = MIGRATION_PACKETSIZE;
         }
         MSG_Init(&msg, buffer, sizeof(buffer));
-        MSG_WriteString(&msg, "HostMigrationPacket\n");
+        MSG_WriteString(&msg, "HostMigrationPacket");
         MSG_WriteLong(&msg, inmsg->cursize);
+        MSG_WriteLong(&msg, crc);
         MSG_WriteLong(&msg, offset);
         MSG_WriteData(&msg, inmsg->data + offset, datalen);
+
+        Com_Printf(CON_CHANNEL_SERVER, "Write packet with offset %d total size %d\n", offset, inmsg->cursize);
 
         NET_OutOfBandData( NS_SERVER, dest, msg.data, msg.cursize);
     }
@@ -5276,16 +5293,37 @@ void SV_HostMigrationWriteData(netadr_t* dest)
     MSG_Init(&msg, buffer, sizeof(buffer));
     MSG_WriteLong(&msg, svs.time);
     MSG_WriteLong(&msg, count); //clientcount
-    
+
     for(i = 0; i < sv_maxclients->integer; ++i)
     {
-        SV_HostMigrationPackSingleClientData(&svs.clients[i], &msg);
+        if(svs.clients[i].state >= CS_PRIMED)
+        {
+            SV_HostMigrationPackSingleClientData(&svs.clients[i], &msg);
+        }
     }
 
+    //Add alibidata
+    for(i =0; i < 56565; ++i)
+    {
+        MSG_WriteLong(&msg, 0xdeadbeef);
+    }
 
     SV_HostMigrationSendData(&msg, dest);
 
 }
+
+void SV_DoHostMigration_f()
+{
+
+    const char* s = Cvar_GetVariantString("sv_hostmigrationtarget");
+    netadr_t to;
+
+    NET_StringToAdr(s, &to, NA_IP);
+    SV_HostMigrationWriteData(&to);
+
+
+}
+
 
 void SV_HostMigrationParsePacket(msg_t* msg)
 {
@@ -5296,7 +5334,9 @@ void SV_HostMigrationParsePacket(msg_t* msg)
 
 void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg)
 {
+    return;
     int messagesize = MSG_ReadLong(msg);
+    int messagecrc = MSG_ReadLong(msg);
     int messageoffset = MSG_ReadLong(msg);
     int i, l;
 
@@ -5308,22 +5348,24 @@ void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg)
 
     if(messagesize > 0x40000)
     {
-        Com_PrintError(CON_CHANNEL_SERVER, "Bad migration message (size)\n");
+        Com_PrintError(CON_CHANNEL_SERVER, "Bad migration message (size=%d)\n", messagesize);
         return;
     }
 
-    if(svs.migrationMsg.data == NULL || messagesize != svs.migrationMsg.maxsize)
+    if(svs.migrationMsg.data == NULL || messagesize != svs.migrationMsg.maxsize || svs.migrationMsgCrc != messagecrc)
     {
         if(svs.migrationMsg.data)
         {
             free(svs.migrationMsg.data);
         }
         void* newmsgbuf = malloc(messagesize);
+        memset(svs.migrationPacketReceivedBits, 0, sizeof(svs.migrationPacketReceivedBits));
         if(newmsgbuf == NULL)
         {
             return;
         }
         MSG_Init(&svs.migrationMsg, newmsgbuf, messagesize);
+        svs.migrationMsgCrc = messagecrc;
     }
     MSG_ReadData(msg, svs.migrationMsg.data + messageoffset, msg->cursize - msg->readcount);
 
@@ -5332,6 +5374,9 @@ void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg)
     //Complete?
     svs.migrationPacketReceivedBits[packetId / 8] |= (1 << packetId % 8);
 
+    Com_Printf(CON_CHANNEL_SERVER, "Received migration packet %d of %d\n", packetId, maxPacketId);
+
+
     for(i = 0; i < maxPacketId /8; ++i)
     {
         if(svs.migrationPacketReceivedBits[i] != 0xff)
@@ -5339,13 +5384,23 @@ void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg)
             return; //Still incomplete
         }
     }
-    for(l = 0; l < maxPacketId % 8; ++l)
+    for(l = 0; l <= maxPacketId % 8; ++l)
     {
         if(!(svs.migrationPacketReceivedBits[i] & (1 << l)))
         {
             return;
         }
     }
+
+    svs.migrationMsg.cursize = svs.migrationMsg.maxsize;
+
+    int crc = crc32_16bytes(svs.migrationMsg.data, svs.migrationMsg.cursize, 0);
+
+    if(svs.migrationMsgCrc != crc)
+    {
+        Com_PrintWarning(CON_CHANNEL_SERVER, "Hostmigration: CRC error\n");
+        return;
+    }
+
     SV_HostMigrationParsePacket(&svs.migrationMsg);
-    
 }

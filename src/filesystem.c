@@ -2432,7 +2432,28 @@ qboolean FS_VerifyPak( const char *pak ) {
 		}
 
 	}
+	
 	Com_sprintf(teststring, sizeof( teststring ), "%s/mod.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/common_mp.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/localized_common_mp.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/code_post_gfx_mp.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/localized_code_post_gfx_mp.ff", fs_gameDirVar->string);
 	if ( !Q_stricmp( teststring, pak ) ){
 		return qtrue;
 	}

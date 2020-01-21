@@ -381,6 +381,7 @@ typedef struct {//0x8c51780
 	int				migrationChallenge;
 	char			migrationAddr[32];
 	msg_t			migrationMsg;
+	int			migrationMsgCrc;
 	byte			migrationPacketReceivedBits[32];
 }serverStatic_t; //Size: 0xb227580
 
