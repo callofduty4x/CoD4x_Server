@@ -1,8 +1,8 @@
-#include "player.h"
-#include "g_shared.h"
-#include "bg_public.h"
-#include "server_public.h"
-#include "qcommon_io.h"
+#include "player.hpp"
+#include "g_shared.hpp"
+#include "bg_public.hpp"
+#include "server_public.hpp"
+#include "qcommon_io.hpp"
 
 
 extern "C"{

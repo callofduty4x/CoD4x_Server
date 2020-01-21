@@ -25,8 +25,8 @@
 #define __SYS_THREAD_H__
 
 //#define THREAD_DEBUG
-#include "cm_local.h"
-#include "sys_main.h"
+#include "cm_local.hpp"
+#include "sys_main.hpp"
 #include <stdarg.h>
 
 

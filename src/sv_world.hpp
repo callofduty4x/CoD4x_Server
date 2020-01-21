@@ -1,8 +1,8 @@
 #ifndef _SV_WORLD_H_
 #define _SV_WORLD_H_
-#include "cm_public.h"
-#include "entity.h"
-#include "dobj.h"
+#include "cm_public.hpp"
+#include "entity.hpp"
+#include "dobj.hpp"
 
 #ifdef __cplusplus
 extern "C"{

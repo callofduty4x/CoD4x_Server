@@ -21,9 +21,9 @@
 
 
 
-#include "plugin_handler.h"
-#include "sys_main.h"
-#include "sys_patch.h"
+#include "plugin_handler.hpp"
+#include "sys_main.hpp"
+#include "sys_patch.hpp"
 /*==========================================*
  *                                          *
  *   Plugin Handler's internal functions    *

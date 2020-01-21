@@ -1,3 +1,5 @@
+#pragma once
+
 enum fieldtype_t
 {
   F_INT = 0x0,

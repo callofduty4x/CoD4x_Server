@@ -21,20 +21,19 @@
 
 
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "cvar.h"
-#include "xassets.h"
-#include "sys_patch.h"
-#include "qcommon_mem.h"
-#include "filesystem.h"
-#include "qcommon.h"
-#include "cmd.h"
-#include "xassets/xmodel.h"
-#include "xassets/sounds.h"
-#include "sys_thread.h"
-//#include "contrib/minizip/unzip.h"
-#include "physicalmemory.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "cvar.hpp"
+#include "xassets.hpp"
+#include "sys_patch.hpp"
+#include "qcommon_mem.hpp"
+#include "filesystem.hpp"
+#include "qcommon.hpp"
+#include "cmd.hpp"
+#include "xassets/xmodel.hpp"
+#include "xassets/sounds.hpp"
+#include "sys_thread.hpp"
+#include "physicalmemory.hpp"
 
 #include <string.h>
 #include <stdlib.h>

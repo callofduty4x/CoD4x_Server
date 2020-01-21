@@ -18,23 +18,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-#include "q_shared.h"
-#include "qcommon.h"
-#include "sec_update.h"
-#include "sec_crypto.h"
-#include "sec_common.h"
-#include "sec_sign.h"
-#include "sys_main.h"
-#include "msg.h"
-#include "sys_net.h"
-#include "netchan.h"
-#include "filesystem.h"
-#include "cmd.h"
-#include "cvar.h"
-#include "sys_cod4defs.h"
-#include "httpftp.h"
-#include "sys_thread.h"
-//#include <windows.h>
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "sec_update.hpp"
+#include "sec_crypto.hpp"
+#include "sec_common.hpp"
+#include "sec_sign.hpp"
+#include "sys_main.hpp"
+#include "msg.hpp"
+#include "sys_net.hpp"
+#include "netchan.hpp"
+#include "filesystem.hpp"
+#include "cmd.hpp"
+#include "cvar.hpp"
+#include "sys_cod4defs.hpp"
+#include "httpftp.hpp"
+#include "sys_thread.hpp"
 #include <unistd.h>
 #include <errno.h>
 

@@ -3,10 +3,10 @@
 #ifndef __DOBJ_H__
 #define __DOBJ_H__
 
-#include "q_shared.h"
-#include "entity.h"
-#include "qcommon_io.h"
-#include "misc.h"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "qcommon_io.hpp"
+#include "misc.hpp"
 
 
 #define DOBJ_MAX_PARTS 160

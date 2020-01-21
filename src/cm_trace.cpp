@@ -1,7 +1,7 @@
-#include "q_shared.h"
-#include "cm_public.h"
-#include "cm_local.h"
-#include "sys_thread.h"
+#include "q_shared.hpp"
+#include "cm_public.hpp"
+#include "cm_local.hpp"
+#include "sys_thread.hpp"
 
 
 /*

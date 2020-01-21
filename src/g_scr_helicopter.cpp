@@ -1,5 +1,5 @@
-#include "g_shared.h"
-#include "g_scr_vehicle.h"
+#include "g_shared.hpp"
+#include "g_scr_vehicle.hpp"
 
 
 int helicopter_thinktime;

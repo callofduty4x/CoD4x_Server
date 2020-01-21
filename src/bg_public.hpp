@@ -1,9 +1,9 @@
 #ifndef __BG_PUBLIC_H__
 #define __BG_PUBLIC_H__
 
-#include "entity.h"
-#include "cm_public.h"
-#include "xassets/weapondef.h"
+#include "entity.hpp"
+#include "cm_public.hpp"
+#include "xassets/weapondef.hpp"
 
 void __cdecl BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
 void __cdecl BG_ShutdownWeaponDefFiles();

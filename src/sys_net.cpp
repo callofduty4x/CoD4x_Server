@@ -38,14 +38,14 @@
 	#endif
 #endif
 
-#include "qcommon_io.h"
-#include "sys_net.h"
-#include "cvar.h"
-#include "q_platform.h"
-#include "net_game_conf.h"
-#include "cmd.h"
-#include "net_game.h"
-#include "sys_thread.h"
+#include "qcommon_io.hpp"
+#include "sys_net.hpp"
+#include "cvar.hpp"
+#include "q_platform.hpp"
+#include "net_game_conf.hpp"
+#include "cmd.hpp"
+#include "net_game.hpp"
+#include "sys_thread.hpp"
 
 #include <string.h>
 #include <stdlib.h>
@@ -133,7 +133,7 @@
 	#include <net/if.h>
 	#include <sys/ioctl.h>
 	#include <sys/types.h>
-	#include "net_game.h"
+	#include "net_game.hpp"
 	#include <sys/time.h>
 	#include <unistd.h>
 	#	if !defined(__sun) && !defined(__sgi)

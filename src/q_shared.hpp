@@ -285,7 +285,7 @@ char	*SV_ExpandNewlines( char *in );
 void PIXBeginNamedEvent(int, const char*,...);
 
 
-#include "q_math.h"
+#include "q_math.hpp"
 
 
 /*****************************************************
@@ -781,9 +781,9 @@ typedef enum team_s{
 typedef unsigned int clipHandle_t;
 #endif
 
-#include "q_platform.h"
-#include "q_shared.h"
-#include "sys_cod4defs.h"
+#include "q_platform.hpp"
+#include "q_shared.hpp"
+#include "sys_cod4defs.hpp"
 
 #endif
 

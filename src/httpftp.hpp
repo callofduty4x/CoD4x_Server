@@ -5,9 +5,9 @@
 #ifndef _HTTPFTP_H_
 #define _HTTPFTP_H_
 
-#include "q_shared.h"
-#include "msg.h"
-#include "sys_net.h"
+#include "q_shared.hpp"
+#include "msg.hpp"
+#include "sys_net.hpp"
 
 #define HTTP_CONNECTTIMEOUT 15000
 

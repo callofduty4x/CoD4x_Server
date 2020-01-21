@@ -1,5 +1,5 @@
-#include "win_localize.h"
-#include "filesystem.h"
+#include "win_localize.hpp"
+#include "filesystem.hpp"
 
 #define LANGUAGE_BUF_SIZE 4096
 

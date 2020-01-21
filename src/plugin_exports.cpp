@@ -21,10 +21,10 @@
 
 
 
-#include "plugin_handler.h"
-#include "sys_main.h"
-#include "sys_thread.h"
-#include "httpftp.h"
+#include "plugin_handler.hpp"
+#include "sys_main.hpp"
+#include "sys_thread.hpp"
+#include "httpftp.hpp"
 #include "sapi.h"
 /*=========================================*
  *                                         *

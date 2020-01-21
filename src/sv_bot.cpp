@@ -27,12 +27,12 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 // sv_bot.c
-#include "cvar.h"
-#include "server.h"
-#include "scr_vm.h"
-#include "g_sv_shared.h"
-#include "cm_public.h"
-#include "qcommon_mem.h"
+#include "cvar.hpp"
+#include "server.hpp"
+#include "scr_vm.hpp"
+#include "g_sv_shared.hpp"
+#include "cm_public.hpp"
+#include "qcommon_mem.hpp"
 #include "game/botlib.h"
 //#include "../botai/botai.h"
 

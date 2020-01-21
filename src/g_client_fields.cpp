@@ -1,11 +1,9 @@
-
-
-#include "player.h"
-#include "scr_vm.h"
-#include "g_shared.h"
-#include "cscr_stringlist.h"
-#include "g_fields.h"
-#include "cscr_variable.h"
+#include "player.hpp"
+#include "scr_vm.hpp"
+#include "g_shared.hpp"
+#include "cscr_stringlist.hpp"
+#include "g_fields.hpp"
+#include "cscr_variable.hpp"
 
 #include <algorithm>
 

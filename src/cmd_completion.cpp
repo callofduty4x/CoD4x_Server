@@ -24,9 +24,9 @@
 
 #include <string.h>
 #include <ctype.h>
-#include "q_shared.h"
-#include "cmd_completion.h"
-#include "qcommon_io.h"
+#include "q_shared.hpp"
+#include "cmd_completion.hpp"
+#include "qcommon_io.hpp"
 
 /*
 ===========================================

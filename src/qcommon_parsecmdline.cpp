@@ -22,8 +22,8 @@
 
 
 #include <string.h>
-#include "cmd.h"
-#include "cvar.h"
+#include "cmd.hpp"
+#include "cvar.hpp"
 
 /*
 ========================================================================

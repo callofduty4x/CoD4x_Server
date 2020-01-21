@@ -1,6 +1,6 @@
-#include "entity.h"
-#include "g_public_mp.h"
-#include "qcommon_io.h"
+#include "entity.hpp"
+#include "g_public_mp.hpp"
+#include "qcommon_io.hpp"
 
 
 struct EntHandleList

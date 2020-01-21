@@ -6,18 +6,18 @@
  *
  */
 
-#include "q_shared.h"
-#include "httpftp.h"
-#include "qcommon_mem.h"
-#include "qcommon_io.h"
-#include "msg.h"
-#include "filesystem.h"
-#include "sv_auth.h"
-#include "webadmin.h"
-#include "server.h"
-#include "cmd.h"
-#include "g_sv_shared.h"
-#include "g_shared.h"
+#include "q_shared.hpp"
+#include "httpftp.hpp"
+#include "qcommon_mem.hpp"
+#include "qcommon_io.hpp"
+#include "msg.hpp"
+#include "filesystem.hpp"
+#include "sv_auth.hpp"
+#include "webadmin.hpp"
+#include "server.hpp"
+#include "cmd.hpp"
+#include "g_sv_shared.hpp"
+#include "g_shared.hpp"
 #include "sapi.h"
 
 #include <string.h>

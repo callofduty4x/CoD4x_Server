@@ -24,16 +24,16 @@
 
 #include <string.h>
 
-#include "cmd.h"
-#include "cvar.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "qcommon.h"
-#include "filesystem.h"
-#include "server.h"
-#include "punkbuster.h"
-#include "sys_thread.h"
-#include "sv_auth.h"
+#include "cmd.hpp"
+#include "cvar.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "qcommon.hpp"
+#include "filesystem.hpp"
+#include "server.hpp"
+#include "punkbuster.hpp"
+#include "sys_thread.hpp"
+#include "sv_auth.hpp"
 
 /*
 =============================================================================

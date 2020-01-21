@@ -26,11 +26,11 @@
 #include <string.h>
 #include <ctype.h>
 #define __QSHARED_C__
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "sys_thread.h"
-#include "misc.h"
-#include "null_client.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "sys_thread.hpp"
+#include "misc.hpp"
+#include "null_client.hpp"
 
 
 int Q_isprint( int c )

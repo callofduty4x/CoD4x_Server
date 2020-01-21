@@ -1,6 +1,6 @@
-#include "cmd.h"
-#include "cvar.h"
-#include "qcommon_io.h"
+#include "cmd.hpp"
+#include "cvar.hpp"
+#include "qcommon_io.hpp"
 
 enum print_msg_dest_t
 {

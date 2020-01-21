@@ -1,3 +1,4 @@
+#pragma once
 
 struct scr_animtree_t
 {

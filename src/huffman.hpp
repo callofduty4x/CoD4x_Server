@@ -24,7 +24,7 @@
 #ifndef __HUFFMAN_H__
 #define __HUFFMAN_H__
 
-#include "msg.h"
+#include "msg.hpp"
 
 #define NYT HMAX                    /* NYT = Not Yet Transmitted */
 #define INTERNAL_NODE ( HMAX + 1 )

@@ -1,3 +1,4 @@
+#pragma once
 
 struct vehicle_info_t
 {

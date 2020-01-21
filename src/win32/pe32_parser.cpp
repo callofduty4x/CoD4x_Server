@@ -23,11 +23,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <windows.h>
-#include "../qcommon_io.h" // Com_Printf
+#include "../qcommon_io.hpp" // Com_Printf
 //#include "../g_shared.h"   // qboolean
-#include "../objfile_parser.h"
-#include "../sys_cod4defs.h"
-#include "../sys_main.h"
+#include "../objfile_parser.hpp"
+#include "../sys_cod4defs.hpp"
+#include "../sys_main.hpp"
 
 void* PE32_FindFileOffset(void *buff, int len, DWORD RVA)
 {

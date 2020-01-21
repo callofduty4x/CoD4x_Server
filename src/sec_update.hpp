@@ -21,7 +21,7 @@
 #ifndef SEC_UPDATE_H
 #define SEC_UPDATE_H
 
-#include "q_platform.h"
+#include "q_platform.hpp"
 
 
 void Sec_Update( qboolean getbasefiles );

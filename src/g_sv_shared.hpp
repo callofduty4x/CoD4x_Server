@@ -25,11 +25,11 @@
 #ifndef __G_SV_SHARED_H__
 #define __G_SV_SHARED_H__
 
-#include "q_shared.h"
-#include "q_shared.h"
-#include "entity.h"
-#include "cvar.h"
-#include "server.h"
+#include "q_shared.hpp"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "cvar.hpp"
+#include "server.hpp"
 
 void Init_CallVote(void);
 __cdecl void Cmd_CallVote_f( gentity_t *ent );

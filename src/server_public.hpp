@@ -1,4 +1,6 @@
-#include "player.h"
+#pragma once
+
+#include "player.hpp"
 
 #ifdef __cplusplus
 extern "C"{

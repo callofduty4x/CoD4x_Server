@@ -1,11 +1,11 @@
 #ifndef __WEAPONDEF_H__
 #define __WEAPONDEF_H__
 
-#include "../q_shared.h"
-#include "xmodel.h"
-#include "sounds.h"
-#include "material.h"
-#include "../dobj.h"
+#include "../q_shared.hpp"
+#include "xmodel.hpp"
+#include "sounds.hpp"
+#include "material.hpp"
+#include "../dobj.hpp"
 
 typedef enum 
 {

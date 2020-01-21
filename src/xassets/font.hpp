@@ -1,6 +1,6 @@
 #ifndef __FONT_H__
 #define __FONT_H__
-#include "material.h"
+#include "material.hpp"
 
 /* 7043 */
 #pragma pack(push, 2)

@@ -2,8 +2,8 @@
  * SHA transform algorithm, originally taken from code written by
  * Peter Gutmann, and placed in the public domain.
  */
-#include "sha.h"
-#include "q_platform.h"
+#include "sha.hpp"
+#include "q_platform.hpp"
 /* The SHA f()-functions.  */
 
 #define f1(x,y,z)   (z ^ (x & (y ^ z)))		/* x ? y : z */

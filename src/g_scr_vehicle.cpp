@@ -1,5 +1,5 @@
-#include "scr_vm.h"
-#include "g_scr_vehicle.h"
+#include "scr_vm.hpp"
+#include "g_scr_vehicle.hpp"
 
 uint16_t* s_flashTags[] = { 
     &scr_const.tag_flash,

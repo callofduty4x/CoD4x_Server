@@ -22,15 +22,15 @@
 #ifndef __SYS_WIN32_H__
 #define __SYS_WIN32_H__
 
-#include "../q_shared.h"
-#include "../objfile_parser.h"
+#include "../q_shared.hpp"
+#include "../objfile_parser.hpp"
 
 #include <windows.h>
 
 //#define WIN32_LEAN_AND_MEAN // Need to test if it works with it :P
 
 typedef DWORD threadid_t;
-#include "../sys_thread.h"
+#include "../sys_thread.hpp"
 
 
 typedef struct

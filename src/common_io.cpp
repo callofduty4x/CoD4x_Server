@@ -22,12 +22,12 @@
 
 
 
-#include "q_shared.h"
-#include "sys_thread.h"
-#include "qcommon_io.h"
-#include "qcommon_logprint.h"
-#include "qcommon.h"
-#include "sys_main.h"
+#include "q_shared.hpp"
+#include "sys_thread.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_logprint.hpp"
+#include "qcommon.hpp"
+#include "sys_main.hpp"
 #include <string.h>
 #include <time.h>
 #include <stdarg.h>

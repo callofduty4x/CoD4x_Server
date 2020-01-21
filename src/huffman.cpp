@@ -23,7 +23,7 @@
 
 #include <string.h>
 
-#include "huffman.h"
+#include "huffman.hpp"
 
 /* This is based on the Adaptive Huffman algorithm described in Sayood's Data
  * Compression book.  The ranks are not actually stored, but implicitly defined

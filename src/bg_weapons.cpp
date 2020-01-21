@@ -1,4 +1,4 @@
-#include "bg_public.h"
+#include "bg_public.hpp"
 
 const char *__cdecl BG_WeaponName(int weapon)
 {

@@ -19,7 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
+#pragma once
 
 
 unsigned int _GeoIP_seek_record ( unsigned long ipnum );

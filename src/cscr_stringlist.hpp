@@ -1,3 +1,5 @@
+#pragma once
+
 bool SL_IsDebugging();
 
 #ifdef __cplusplus

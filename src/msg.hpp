@@ -24,10 +24,10 @@
 #ifndef __MSG_H__
 #define __MSG_H__
 
-#include "q_shared.h"
-#include "entity.h"
-#include "q_shared.h"
-#include "player.h"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "q_shared.hpp"
+#include "player.hpp"
 
 #include <stdint.h>
 

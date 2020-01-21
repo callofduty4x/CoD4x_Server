@@ -13,7 +13,7 @@ T-Max has to fix it. Or better make it a standalone program
 /* CoD4X includes: */
 #include "extractor.h"
 #include "../zlib/unzip.h"
-#include "../q_shared.h"
+#include "../q_shared.hpp"
 #include "../cmd.h"
 #include "../qcommon_io.h"
 #include "../sys_main.h"
@@ -25,7 +25,7 @@ T-Max has to fix it. Or better make it a standalone program
 #include "localized.h"
 #include "stringtable.h"
 #include "menulist.h"
-#include "menu.h"
+#include "menu.hpp"
 
 #define MAX_STORE_FASTFILES (32)
 #define ACTION_OPTIMIZER_BUFFER_SIZE (2560)

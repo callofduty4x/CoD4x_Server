@@ -1,6 +1,6 @@
-#include "cm_local.h"
-#include "q_math.h"
-#include "xassets/xmodel.h"
+#include "cm_local.hpp"
+#include "q_math.hpp"
+#include "xassets/xmodel.hpp"
 
 
 void __cdecl CM_InitStaticModel(cStaticModel_s *staticModel, float *origin, float *angles, float scale)

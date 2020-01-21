@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "plugin_crypto.h"
+#include "plugin_crypto.hpp"
 
 qboolean PHandler_Hash(pluginHash_t algo, void *in, size_t inSize, void *out, size_t outSize){
     if(in == NULL || out == NULL || inSize < 1 || outSize < (1)){

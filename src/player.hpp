@@ -25,10 +25,10 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "g_public_mp.h"
-#include "q_shared.h"
-#include "q_shared.h"
-#include "entity.h"
+#include "g_public_mp.hpp"
+#include "q_shared.hpp"
+#include "q_shared.hpp"
+#include "entity.hpp"
 
 #define KEY_MASK_FORWARD        127
 #define KEY_MASK_MOVERIGHT      127

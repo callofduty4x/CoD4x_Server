@@ -22,13 +22,13 @@
 
 
 
-#include "q_shared.h"
-#include "entity.h"
-#include "player.h"
-#include "plugin_handler.h"
-#include "g_sv_shared.h"
-#include "cvar.h"
-#include "server.h"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "plugin_handler.hpp"
+#include "g_sv_shared.hpp"
+#include "cvar.hpp"
+#include "server.hpp"
 
 #include <string.h>
 #include <stdlib.h>

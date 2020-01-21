@@ -25,8 +25,8 @@
 #ifndef __CMD_COMPLETION_H__
 #define __CMD_COMPLETION_H__
 
-#include "cvar.h"
-#include "cmd.h"
+#include "cvar.hpp"
+#include "cmd.hpp"
 /*
 ==============================================================
 

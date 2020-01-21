@@ -22,16 +22,16 @@
 
 
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "sys_net.h"
-#include "cvar.h"
-#include "msg.h"
-#include "netchan.h"
-#include "q_platform.h"
-#include "plugin_handler.h"
-#include "net_game_conf.h"
-#include "sha.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "sys_net.hpp"
+#include "cvar.hpp"
+#include "msg.hpp"
+#include "netchan.hpp"
+#include "q_platform.hpp"
+#include "plugin_handler.hpp"
+#include "net_game_conf.hpp"
+#include "sha.hpp"
 
 #include <string.h>
 #include <stdarg.h>

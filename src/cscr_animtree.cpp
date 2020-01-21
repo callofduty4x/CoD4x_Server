@@ -1,8 +1,8 @@
-#include "q_shared.h"
-#include "scr_vm.h"
-#include "cscr_stringlist.h"
-#include "cscr_variable.h"
-#include "cscr_animtree.h"
+#include "q_shared.hpp"
+#include "scr_vm.hpp"
+#include "cscr_stringlist.hpp"
+#include "cscr_variable.hpp"
+#include "cscr_animtree.hpp"
 
 const char *propertyNames[] =
 {

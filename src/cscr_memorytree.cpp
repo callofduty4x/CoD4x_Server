@@ -1,8 +1,8 @@
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "sys_thread.h"
-#include "misc.h"
-#include "cscr_stringlist.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "sys_thread.hpp"
+#include "misc.hpp"
+#include "cscr_stringlist.hpp"
 
 #define MEMORY_NODE_BITS 16
 #define MEMORY_NODE_COUNT (1 << MEMORY_NODE_BITS)

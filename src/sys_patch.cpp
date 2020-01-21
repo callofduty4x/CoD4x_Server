@@ -24,7 +24,7 @@
 
 //typedef int32_t DWORD;
 
-#include "sys_patch.h"
+#include "sys_patch.hpp"
 #include <string.h>
 
 #if 0

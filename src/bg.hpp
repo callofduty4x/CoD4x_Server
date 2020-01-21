@@ -1,5 +1,5 @@
 #pragma once
-#include "player.h"
+#include "player.hpp"
 
 typedef enum BGEvent
 {

@@ -1,5 +1,5 @@
-#include "q_shared.h"
-#include "cm_local.h"
+#include "q_shared.hpp"
+#include "cm_local.hpp"
 
 /*
 ===================

@@ -24,8 +24,8 @@
 #ifndef __MISC_H__
 #define __MISC_H__
 
-#include "q_shared.h"
-#include "player.h"
+#include "q_shared.hpp"
+#include "player.hpp"
 
 #ifdef __cplusplus
 extern "C" {

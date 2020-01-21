@@ -1,5 +1,5 @@
-#include "scr_vm.h"
-#include "qcommon_io.h"
+#include "scr_vm.hpp"
+#include "qcommon_io.hpp"
 
 uint16_t* modNames[] =
 {

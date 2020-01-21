@@ -22,10 +22,10 @@
 
 
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "scr_vm.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "scr_vm.hpp"
 
 #include <string.h>
 

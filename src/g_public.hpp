@@ -1,7 +1,7 @@
 #ifndef __G_PUBLIC_H__
 #define __G_PUBLIC_H__
 
-#include "player.h"
+#include "player.hpp"
 
 // entity->svFlags
 // the server does not know how to interpret most of the values

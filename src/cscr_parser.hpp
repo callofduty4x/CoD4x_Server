@@ -1,3 +1,5 @@
+#pragma once
+
 extern char g_EndPos;
 
 bool Scr_PrevCodePosFileNameMatches(const char *codePos, const char *fileName);

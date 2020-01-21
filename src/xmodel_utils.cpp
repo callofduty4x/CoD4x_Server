@@ -1,6 +1,6 @@
-#include "xassets.h"
-#include "xassets/xmodel.h"
-#include "dobj.h"
+#include "xassets.hpp"
+#include "xassets/xmodel.hpp"
+#include "dobj.hpp"
 
 extern "C"{
 

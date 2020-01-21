@@ -22,14 +22,14 @@
 
 
 
-#include "misc.h"
-#include "q_shared.h"
-#include "qcommon.h"
-#include "qcommon_io.h"
-#include "g_sv_shared.h"
-#include "punkbuster.h"
-#include "hl2rcon.h"
-#include "cvar.h"
+#include "misc.hpp"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "qcommon_io.hpp"
+#include "g_sv_shared.hpp"
+#include "punkbuster.hpp"
+#include "hl2rcon.hpp"
+#include "cvar.hpp"
 
 #include <string.h>
 #include <stdarg.h>

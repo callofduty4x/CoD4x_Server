@@ -1,6 +1,6 @@
-#include "dobj.h"
-#include "xassets/xmodel.h"
-#include "cscr_stringlist.h"
+#include "dobj.hpp"
+#include "xassets/xmodel.hpp"
+#include "cscr_stringlist.hpp"
 /*
 duplicate of void __cdecl DObjDumpInfo(DObj *obj)
 

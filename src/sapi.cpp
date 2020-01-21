@@ -6,15 +6,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
-#include "q_shared.h"
-#include "q_platform.h"
-#include "g_shared.h"
-#include "server.h"
+#include "q_shared.hpp"
+#include "q_platform.hpp"
+#include "g_shared.hpp"
+#include "server.hpp"
 #include "sapi.h"
-#include "sys_main.h"
-#include "cmd.h"
-#include "sec_crypto.h"
-#include "g_sv_shared.h"
+#include "sys_main.hpp"
+#include "cmd.hpp"
+#include "sec_crypto.hpp"
+#include "g_sv_shared.hpp"
 
 cvar_t* sv_usesteam64id;
 

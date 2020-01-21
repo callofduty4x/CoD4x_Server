@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdint.h>
 
 void sha_transform(uint32_t *digest, const char *in, uint32_t *W);

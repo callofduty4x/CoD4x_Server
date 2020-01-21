@@ -21,16 +21,16 @@
 
 
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "qcommon.h"
-#include "filesystem.h"
-#include "cvar.h"
-#include "sys_net.h"
-#include "sys_main.h"
-#include "server.h"
-#include "cmd.h"
-#include "plugin_handler.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon.hpp"
+#include "filesystem.hpp"
+#include "cvar.hpp"
+#include "sys_net.hpp"
+#include "sys_main.hpp"
+#include "server.hpp"
+#include "cmd.hpp"
+#include "plugin_handler.hpp"
 
 #include <stdlib.h>
 #include <string.h>

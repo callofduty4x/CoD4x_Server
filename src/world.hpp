@@ -1,3 +1,5 @@
+#pragma once
+
 struct GameWorldMp
 {
   const char *name;

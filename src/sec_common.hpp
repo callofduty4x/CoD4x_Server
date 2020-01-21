@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
+#pragma once
 
 
 //#define Sec_Malloc(x) malloc(x)

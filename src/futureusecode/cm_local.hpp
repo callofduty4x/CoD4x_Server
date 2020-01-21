@@ -1,8 +1,8 @@
 #ifndef __CM_LOCAL_H__
 #define __CM_LOCAL_H__
 
-#include "q_shared.h"
-#include "cm_public.h"
+#include "q_shared.hpp"
+#include "cm_public.hpp"
 
 #define IS_NAN isnan
 

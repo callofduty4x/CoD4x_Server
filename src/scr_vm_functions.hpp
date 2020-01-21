@@ -20,10 +20,10 @@
 */
 #pragma once
 
-#include "scr_vm.h"
-#include "g_sv_shared.h"
-#include "g_shared.h"
-#include "dobj.h"
+#include "scr_vm.hpp"
+#include "g_sv_shared.hpp"
+#include "g_shared.hpp"
+#include "dobj.hpp"
 
 #ifndef SCR_ENTREF_DEFINED
 #define SCR_ENTREF_DEFINED

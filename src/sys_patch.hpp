@@ -18,10 +18,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
+#pragma once
 
 
-
-#include "q_shared.h"
+#include "q_shared.hpp"
 
 void Sys_PatchImageWithBlock(byte *block, int blocksize);
 DWORD SetCall(DWORD addr, void* destination);

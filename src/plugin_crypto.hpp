@@ -18,8 +18,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
+#pragma once
 
-#include "plugin_handler.h"
-#include "sec_crypto.h"
+#include "plugin_handler.hpp"
+#include "sec_crypto.hpp"
 
 qboolean PHandler_Hash(pluginHash_t algo, void *in, size_t inSize, void *out, size_t outSize);

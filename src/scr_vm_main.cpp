@@ -19,21 +19,21 @@
 ===========================================================================
 */
 
-#include "q_shared.h"
-#include "scr_vm.h"
-#include "scr_vm_functions.h"
-#include "qcommon_io.h"
-#include "cvar.h"
-#include "cmd.h"
-#include "misc.h"
-#include "sys_main.h"
-#include "sv_bots.h"
+#include "q_shared.hpp"
+#include "scr_vm.hpp"
+#include "scr_vm_functions.hpp"
+#include "qcommon_io.hpp"
+#include "cvar.hpp"
+#include "cmd.hpp"
+#include "misc.hpp"
+#include "sys_main.hpp"
+#include "sv_bots.hpp"
 //#include "scr_vm_classfunc.h"
-#include "stringed_interface.h"
-#include "cscr_stringlist.h"
-#include "cscr_variable.h"
-#include "cscr_animtree.h"
-#include "cscr_parser.h"
+#include "stringed_interface.hpp"
+#include "cscr_stringlist.hpp"
+#include "cscr_variable.hpp"
+#include "cscr_animtree.hpp"
+#include "cscr_parser.hpp"
 
 #include <stdarg.h>
 #include <ctype.h>

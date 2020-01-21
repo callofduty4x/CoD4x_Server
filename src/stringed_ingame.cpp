@@ -9,10 +9,10 @@
 //////////////////////////////////////////////////
 //
 // stuff common to all qcommon files...
-#include "server.h"
-#include "q_shared.h"
-#include "qcommon.h"
-#include "qcommon_mem.h"
+#include "server.hpp"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "qcommon_mem.hpp"
 //
 //////////////////////////////////////////////////
 
@@ -20,8 +20,8 @@
 //#pragma warning ( disable : 4511 )			// copy constructor could not be generated
 //#pragma warning ( disable : 4512 )			// assignment operator could not be generated
 //#pragma warning ( disable : 4663 )			// C++ language change: blah blah template crap blah blah
-#include "stringed_ingame.h"
-#include "stringed_interface.h"
+#include "stringed_ingame.hpp"
+#include "stringed_interface.hpp"
 
 ///////////////////////////////////////////////
 //

@@ -1,6 +1,6 @@
-#include "cm_local.h"
-#include "cm_public.h"
-#include "sys_thread.h"
+#include "cm_local.hpp"
+#include "cm_public.hpp"
+#include "sys_thread.hpp"
 
 col_context_t::col_context_t( )
 {

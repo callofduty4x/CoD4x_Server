@@ -21,17 +21,17 @@
 
 
 
-#include "q_shared.h"
-#include "qcommon.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "qcommon_logprint.h"
-#include "cvar.h"
-#include "cmd.h"
-#include "server.h"
-#include "punkbuster.h"
-#include "nvconfig.h"
-#include "sv_auth.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "qcommon_logprint.hpp"
+#include "cvar.hpp"
+#include "cmd.hpp"
+#include "server.hpp"
+#include "punkbuster.hpp"
+#include "nvconfig.hpp"
+#include "sv_auth.hpp"
 #include "sapi.h"
 
 #include <string.h>

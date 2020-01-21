@@ -1,6 +1,6 @@
-#include "q_shared.h"
-#include "qcommon_mem.h"
-#include "server.h"
+#include "q_shared.hpp"
+#include "qcommon_mem.hpp"
+#include "server.hpp"
 
 extern "C"
 {

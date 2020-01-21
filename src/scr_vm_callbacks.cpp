@@ -21,9 +21,9 @@
 
 
 
-#include "q_shared.h"
-#include "entity.h"
-#include "scr_vm.h"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "scr_vm.hpp"
 
 //Only CoD4 gamescript callback functions here
 

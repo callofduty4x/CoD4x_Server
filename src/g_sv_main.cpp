@@ -20,17 +20,17 @@
 ===========================================================================
 */
 
-#include "g_sv_main.h"
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "cvar.h"
-#include "entity.h"
-#include "player.h"
-#include "plugin_handler.h"
-#include "g_shared.h"
-#include "g_sv_shared.h"
-#include "cmd.h"
-#include "server.h"
+#include "g_sv_main.hpp"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "cvar.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "plugin_handler.hpp"
+#include "g_shared.hpp"
+#include "g_sv_shared.hpp"
+#include "cmd.hpp"
+#include "server.hpp"
 
 #include <string.h>
 #include <stdarg.h>

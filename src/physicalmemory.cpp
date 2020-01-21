@@ -1,10 +1,10 @@
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "mem_track.h"
-#include "sys_main.h"
-#include "physicalmemory.h"
-#include "sys_thread.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "mem_track.hpp"
+#include "sys_main.hpp"
+#include "physicalmemory.hpp"
+#include "sys_thread.hpp"
 
 #define PHYS_ALLOC_HIGH 1
 #define MAX_PHYSICAL_ALLOCATIONS 32

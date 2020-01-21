@@ -1,9 +1,9 @@
 #ifndef __XMODEL_H__
 #define __XMODEL_H__
 
-#include "../q_shared.h"
-#include "../q_math.h"
-#include "../dobj.h"
+#include "../q_shared.hpp"
+#include "../q_math.hpp"
+#include "../dobj.hpp"
 
 enum XModelLodRampType
 {

@@ -25,21 +25,21 @@
 #ifndef __SERVER_H__
 #define __SERVER_H__
 
-#include "q_shared.h"
-#include "qcommon.h"
-#include "sys_net.h"
-#include "netchan.h"
-#include "entity.h"
-#include "player.h"
-#include "filesystem.h"
-#include "g_hud.h"
-#include "g_public.h"
-#include "sys_cod4defs.h"
-#include "cvar.h"
-#include "net_game_conf.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "sys_net.hpp"
+#include "netchan.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "filesystem.hpp"
+#include "g_hud.hpp"
+#include "g_public.hpp"
+#include "sys_cod4defs.hpp"
+#include "cvar.hpp"
+#include "net_game_conf.hpp"
 
-#include "net_reliabletransport.h"
-#include "cm_public.h"
+#include "net_reliabletransport.hpp"
+#include "cm_public.hpp"
 
 #include <time.h>
 
@@ -122,7 +122,7 @@ typedef struct svEntity_s {
 	float		linkmax[2];
 }svEntity_t; //size: 0x178
 
-#include "cm_public.h"
+#include "cm_public.hpp"
 
 
 

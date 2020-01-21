@@ -31,20 +31,20 @@ static mbedtls_x509_crt cacert;
 static int ca_loaded;
 #endif
 
-#include "q_shared.h"
-#include "q_platform.h"
-#include "httpftp.h"
-#include "qcommon.h"
-#include "qcommon_mem.h"
-#include "qcommon_io.h"
-#include "filesystem.h"
-#include "netchan.h"
-#include "msg.h"
-#include "sys_main.h"
-#include "net_game.h"
-#include "net_game_conf.h"
-#include "webadmin.h"
-#include "sys_thread.h"
+#include "q_shared.hpp"
+#include "q_platform.hpp"
+#include "httpftp.hpp"
+#include "qcommon.hpp"
+#include "qcommon_mem.hpp"
+#include "qcommon_io.hpp"
+#include "filesystem.hpp"
+#include "netchan.hpp"
+#include "msg.hpp"
+#include "sys_main.hpp"
+#include "net_game.hpp"
+#include "net_game_conf.hpp"
+#include "webadmin.hpp"
+#include "sys_thread.hpp"
 
 #include <string.h>
 #include <stdint.h>
@@ -2666,7 +2666,7 @@ void DL_Test_CB(const char* filename, qboolean success, ftRequest_t *handle)
 }
 
 
-#include "sys_thread.h"
+#include "sys_thread.hpp"
 
 void DL_File(char* url)
 {

@@ -21,13 +21,13 @@
 */
 
 #include <string.h>
-#include "q_shared.h"
-#include "qcommon_mem.h"
-#include "qcommon.h"
-#include "qcommon_logprint.h"
-#include "filesystem.h"
-#include "cvar.h"
-#include "cmd.h"
+#include "q_shared.hpp"
+#include "qcommon_mem.hpp"
+#include "qcommon.hpp"
+#include "qcommon_logprint.hpp"
+#include "filesystem.hpp"
+#include "cvar.hpp"
+#include "cmd.hpp"
 
 cvar_t* com_hunkMegs;
 cvar_t* com_hunkused;

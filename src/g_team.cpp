@@ -22,8 +22,8 @@
 
 //
 
-#include "q_shared.h"
-#include "player.h"
+#include "q_shared.hpp"
+#include "player.hpp"
 
 
 /*

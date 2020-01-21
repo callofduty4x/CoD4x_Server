@@ -24,13 +24,13 @@
 //Non volatile config
 //Changed settings will be written to / loaded from a file called nvconfig.cfg
 //If a nonvolatile setting is changed it is saved to that file immediately
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "filesystem.h"
-#include "cmd.h"
-#include "server.h"
-#include "sv_auth.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "filesystem.hpp"
+#include "cmd.hpp"
+#include "server.hpp"
+#include "sv_auth.hpp"
 
 #include <string.h>
 

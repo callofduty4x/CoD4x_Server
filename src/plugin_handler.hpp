@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "q_platform.h"
+#include "q_platform.hpp"
 
 #ifndef PLUGIN_HANDLER_H
 #define PLUGIN_HANDLER_H
@@ -43,18 +43,18 @@ typedef void convariable_t; //For plugins
 #include <stdlib.h>
 #include <string.h>
 
-#include "cmd.h"        // xcommand_t
-#include "sys_net.h"    // netadr
-#include "msg.h"        // msg_t
-#include "g_shared.h"   // level
-#include "qcommon_io.h" // Com_Printf
-#include "server.h"     // client_t
-#include "sys_net.h"    // Tcp stuff
-#include "scr_vm.h"
-#include "sys_thread.h"
+#include "cmd.hpp"        // xcommand_t
+#include "sys_net.hpp"    // netadr
+#include "msg.hpp"        // msg_t
+#include "g_shared.hpp"   // level
+#include "qcommon_io.hpp" // Com_Printf
+#include "server.hpp"     // client_t
+#include "sys_net.hpp"    // Tcp stuff
+#include "scr_vm.hpp"
+#include "sys_thread.hpp"
 
 #include "../plugins/plugin_declarations.h"
-#include "plugin_events.h"
+#include "plugin_events.hpp"
 
 #define PLUGIN_MAX_MALLOCS 50
 #define PLUGIN_MAX_SOCKETS 4

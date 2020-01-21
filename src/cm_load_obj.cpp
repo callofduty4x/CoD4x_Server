@@ -1,8 +1,8 @@
-#include "q_shared.h"
-#include "cm_local.h"
-#include "qcommon_mem.h"
-#include "qcommon_io.h"
-#include "g_shared.h"
+#include "q_shared.hpp"
+#include "cm_local.hpp"
+#include "qcommon_mem.hpp"
+#include "qcommon_io.hpp"
+#include "g_shared.hpp"
 
 
 void CMod_LoadBrushes()

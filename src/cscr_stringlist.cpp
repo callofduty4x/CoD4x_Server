@@ -19,16 +19,16 @@
 ===========================================================================
 */
 
-#include "q_shared.h"
-#include "cscr_stringlist.h"
-#include "qcommon.h"
-#include "qcommon_io.h"
-#include "sys_main.h"
-#include "sys_thread.h"
-#include "scr_vm.h"
-#include "cscr_memorytree.h"
-#include "qcommon_mem.h"
-#include "cscr_variable.h"
+#include "q_shared.hpp"
+#include "cscr_stringlist.hpp"
+#include "qcommon.hpp"
+#include "qcommon_io.hpp"
+#include "sys_main.hpp"
+#include "sys_thread.hpp"
+#include "scr_vm.hpp"
+#include "cscr_memorytree.hpp"
+#include "qcommon_mem.hpp"
+#include "cscr_variable.hpp"
 
 #include <string.h>
 #include <stdarg.h>

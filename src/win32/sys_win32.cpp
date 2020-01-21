@@ -18,14 +18,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-#include "../q_shared.h"
-#include "../cmd.h"
-#include "../qcommon.h"
-#include "../qcommon_mem.h"
-#include "../objfile_parser.h"
-#include "../sys_main.h"
-#include "../sys_cod4defs.h"
-#include "sys_win32.h"
+#include "../q_shared.hpp"
+#include "../cmd.hpp"
+#include "../qcommon.hpp"
+#include "../qcommon_mem.hpp"
+#include "../objfile_parser.hpp"
+#include "../sys_main.hpp"
+#include "../sys_cod4defs.hpp"
+#include "sys_win32.hpp"
 
 #include <windows.h>
 #include <wincrypt.h>

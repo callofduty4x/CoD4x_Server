@@ -21,10 +21,10 @@
 
 
 
-#include "q_shared.h"
-#include "q_shared.h"
-#include "g_shared.h"
-#include "entity.h"
+#include "q_shared.hpp"
+#include "q_shared.hpp"
+#include "g_shared.hpp"
+#include "entity.hpp"
 
 
 

@@ -1,7 +1,8 @@
-#ifndef __IN_EXTSAPIMODULE__
+#pragma once
 
-#include "msg.h"
-#include "server.h"
+#ifndef __IN_EXTSAPIMODULE__
+#include "msg.hpp"
+#include "server.hpp"
 #include <stdbool.h>
 
 void SV_InitSApi();

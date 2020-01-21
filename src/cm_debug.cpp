@@ -1,8 +1,8 @@
-#include "q_shared.h"
-#include "cm_local.h"
-#include "qcommon.h"
-#include "cmd.h"
-#include "filesystem.h"
+#include "q_shared.hpp"
+#include "cm_local.hpp"
+#include "qcommon.hpp"
+#include "cmd.hpp"
+#include "filesystem.hpp"
 
 static fileHandle_t f;
 

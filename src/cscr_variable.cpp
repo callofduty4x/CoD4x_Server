@@ -1,16 +1,16 @@
 #include <ctype.h>
-#include "q_shared.h"
-#include "misc.h"
-#include "scr_vm.h"
-#include "cscr_stringlist.h"
-#include "qcommon_mem.h"
-#include "cscr_parser.h"
-#include "mem_track.h"
-#include "physicalmemory.h"
-#include "cscr_animtree.h"
-#include "xassets.h"
-#include "xassets/rawfile.h"
-#include "cscr_variable.h"
+#include "q_shared.hpp"
+#include "misc.hpp"
+#include "scr_vm.hpp"
+#include "cscr_stringlist.hpp"
+#include "qcommon_mem.hpp"
+#include "cscr_parser.hpp"
+#include "mem_track.hpp"
+#include "physicalmemory.hpp"
+#include "cscr_animtree.hpp"
+#include "xassets.hpp"
+#include "xassets/rawfile.hpp"
+#include "cscr_variable.hpp"
 
 #define VAR_STAT_MASK 0x60
 #define VAR_MASK 0x1F

@@ -1,7 +1,7 @@
-#include "q_shared.h"
-#include "entity.h"
-#include "g_shared.h"
-#include "scr_vm.h"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "g_shared.hpp"
+#include "scr_vm.hpp"
 
 
 

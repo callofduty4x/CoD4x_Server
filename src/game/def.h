@@ -1,7 +1,7 @@
 #ifndef __DEF_H__
 #define __DEF_H__
 
-#include "../sys_cod4defs.h"
+#include "../sys_cod4defs.hpp"
 
 #define MAX_QPATH 64
 #define MAX_TOKENLENGTH     1024

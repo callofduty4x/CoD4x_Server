@@ -21,9 +21,9 @@
 */
 
 
-#include "q_shared.h"
-#include "netchan.h"
-#include "server.h"
+#include "q_shared.hpp"
+#include "netchan.hpp"
+#include "server.hpp"
 
 #include <string.h>
 

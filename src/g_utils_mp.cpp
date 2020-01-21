@@ -1,8 +1,8 @@
-#include "q_shared.h"
-#include "entity.h"
-#include "dobj.h"
-#include "g_shared.h"
-#include "server_public.h"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "dobj.hpp"
+#include "g_shared.hpp"
+#include "server_public.hpp"
 
 const char *entityTypeNames[] =
 {

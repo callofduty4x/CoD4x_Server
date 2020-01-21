@@ -1,9 +1,9 @@
 #ifndef _SV_BOTS_H
 #define _SV_BOTS_H
 
-#include "player.h"
-#include "sys_cod4defs.h"
-#include "q_shared.h"
+#include "player.hpp"
+#include "sys_cod4defs.hpp"
+#include "q_shared.hpp"
 
 /* Should keep attribute and this field layout.
  * Met situation where simple vector read into moveTo broke whole

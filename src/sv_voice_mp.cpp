@@ -1,6 +1,6 @@
-#include "q_shared.h"
-#include "server.h"
-#include "g_public.h"
+#include "q_shared.hpp"
+#include "server.hpp"
+#include "g_public.hpp"
 
 void SV_WriteClientVoiceData(msg_t *msg, client_s *client)
 {

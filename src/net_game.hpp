@@ -24,9 +24,9 @@
 #ifndef __NET_GAME_H__
 #define __NET_GAME_H__
 
-#include "q_shared.h"
-#include "sys_net.h"
-#include "msg.h"
+#include "q_shared.hpp"
+#include "sys_net.hpp"
+#include "msg.hpp"
 
 void NET_UDPPacketEvent(netadr_t* from, void* data, int len, int buflen);
 unsigned int NET_TimeGetTime();

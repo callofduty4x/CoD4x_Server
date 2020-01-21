@@ -1,6 +1,6 @@
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "sys_main.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "sys_main.hpp"
 
 qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const char* func, const char *fmt, ...)
 {

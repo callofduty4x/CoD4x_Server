@@ -21,9 +21,9 @@
 
 
 
-#include "q_shared.h"
-#include "sys_net.h"
-#include "msg.h"
+#include "q_shared.hpp"
+#include "sys_net.hpp"
+#include "msg.hpp"
 
 #ifndef __HL2RCON_H__
 #define __HL2RCON_H__

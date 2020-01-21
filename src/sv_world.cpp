@@ -22,12 +22,12 @@
 
 
 
-#include "q_shared.h"
-#include "g_shared.h"
-#include "server.h"
-#include "cm_public.h"
-#include "dobj.h"
-#include "sv_world.h"
+#include "q_shared.hpp"
+#include "g_shared.hpp"
+#include "server.hpp"
+#include "cm_public.hpp"
+#include "dobj.hpp"
+#include "sv_world.hpp"
 
 vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };

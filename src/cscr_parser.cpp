@@ -1,11 +1,11 @@
-#include "q_shared.h"
-#include "scr_vm.h"
-#include "cscr_parser.h"
-#include "cscr_main.h"
-#include "cscr_variable.h"
-#include "xassets/rawfile.h"
-#include "xassets.h"
-#include "qcommon_mem.h"
+#include "q_shared.hpp"
+#include "scr_vm.hpp"
+#include "cscr_parser.hpp"
+#include "cscr_main.hpp"
+#include "cscr_variable.hpp"
+#include "xassets/rawfile.hpp"
+#include "xassets.hpp"
+#include "qcommon_mem.hpp"
 
 struct SaveSourceBufferInfo
 {

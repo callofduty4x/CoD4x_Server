@@ -26,13 +26,13 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#include "g_shared.h"
-#include "cmd.h"
-#include "cvar.h"
-#include "qcommon_io.h"
-#include "g_sv_shared.h"
-#include "scr_vm.h"
-#include "sv_snapshot.h"
+#include "g_shared.hpp"
+#include "cmd.hpp"
+#include "cvar.hpp"
+#include "qcommon_io.hpp"
+#include "g_sv_shared.hpp"
+#include "scr_vm.hpp"
+#include "sv_snapshot.hpp"
 
 /*
 ==================

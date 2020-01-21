@@ -19,12 +19,12 @@
 ===========================================================================
 */
 
-#include "q_shared.h"
-#include "sys_thread.h"
-#include "qcommon.h"
-#include "qcommon_io.h"
-#include "sys_main.h"
-#include "sys_thread.h"
+#include "q_shared.hpp"
+#include "sys_thread.hpp"
+#include "qcommon.hpp"
+#include "qcommon_io.hpp"
+#include "sys_main.hpp"
+#include "sys_thread.hpp"
 
 #include <string.h>
 #include <stdarg.h>

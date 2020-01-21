@@ -1,10 +1,10 @@
-#include "g_shared.h"
-#include "qcommon_io.h"
-#include "qcommon.h"
-#include "qcommon_logprint.h"
+#include "g_shared.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon.hpp"
+#include "qcommon_logprint.hpp"
 
-#include "server_public.h"
-#include "cscr_stringlist.h"
+#include "server_public.hpp"
+#include "cscr_stringlist.hpp"
 
 level_locals_t level;
 

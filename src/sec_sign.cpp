@@ -1,7 +1,6 @@
-
-#include "qcommon.h"
-#include "sec_sign.h"
-#include "sec_crypto.h"
+#include "qcommon.hpp"
+#include "sec_sign.hpp"
+#include "sec_crypto.hpp"
 #include "tomcrypt.h"
 
 

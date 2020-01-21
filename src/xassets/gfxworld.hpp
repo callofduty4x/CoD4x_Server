@@ -1,7 +1,7 @@
 #ifndef __GFXWORLD_H__
 #define __GFXWORLD_H__
 
-#include "../com_pack.h"
+#include "../com_pack.hpp"
 
 typedef uint16_t r_index_t;
 typedef unsigned int raw_uint;

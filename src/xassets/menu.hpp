@@ -1,6 +1,6 @@
 #pragma once
-#include "../q_shared.h"
-#include "keyword.h"
+#include "../q_shared.hpp"
+#include "keyword.hpp"
 
 typedef unsigned int uint;
 

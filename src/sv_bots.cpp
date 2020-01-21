@@ -1,12 +1,12 @@
-#include "sv_bots.h"
-#include "scr_vm.h"
-#include "sys_main.h"
-#include "q_shared.h"
-#include "scr_vm_functions.h"
-#include "misc.h"
-#include "server.h"
-#include "cscr_stringlist.h"
-#include "sv_bots_astar.h"
+#include "sv_bots.hpp"
+#include "scr_vm.hpp"
+#include "sys_main.hpp"
+#include "q_shared.hpp"
+#include "scr_vm_functions.hpp"
+#include "misc.hpp"
+#include "server.hpp"
+#include "cscr_stringlist.hpp"
+#include "sv_bots_astar.hpp"
 
 BotMovementInfo_t g_botai[MAX_CLIENTS];
 

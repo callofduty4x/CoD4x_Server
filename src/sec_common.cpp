@@ -19,9 +19,9 @@
 ===========================================================================
 */
 
-#include "q_shared.h"
+#include "q_shared.hpp"
 #include "tomcrypt.h"
-#include "sec_common.h"
+#include "sec_common.hpp"
 
 
 void *Sec_Malloc(size_t size){

@@ -19,12 +19,12 @@
 ===========================================================================
 */
 
-#include "../q_shared.h"
-#include "../sys_main.h"
-#include "../qcommon.h"
-#include "../cmd.h"
-#include "../sys_cod4defs.h"
-#include "sys_win32.h"
+#include "../q_shared.hpp"
+#include "../sys_main.hpp"
+#include "../qcommon.hpp"
+#include "../cmd.hpp"
+#include "../sys_cod4defs.hpp"
+#include "sys_win32.hpp"
 
 
 #include <errno.h>

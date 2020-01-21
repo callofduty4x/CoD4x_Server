@@ -22,11 +22,11 @@
 
 
 
-#include "q_shared.h"
-#include "qcommon.h"
-#include "filesystem.h"
-#include "sys_thread.h"
-#include "sys_main.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "filesystem.hpp"
+#include "sys_thread.hpp"
+#include "sys_main.hpp"
 
 #include <stdarg.h>
 #include <time.h>

@@ -26,8 +26,8 @@
 #define __QCOMMON_H__
 
 #include <time.h>
-#include "cvar.h"
-#include "qcommon_io.h"
+#include "cvar.hpp"
+#include "qcommon_io.hpp"
 
 typedef enum {
 	// bk001129 - make sure SE_NONE is zero

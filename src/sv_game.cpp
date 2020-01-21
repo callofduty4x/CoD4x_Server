@@ -20,21 +20,21 @@
 */
 
 
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "entity.h"
-#include "player.h"
-#include "cvar.h"
-#include "server.h"
-#include "cm_public.h"
-#include "g_public.h"
-#include "dobj.h"
-#include "xassets/xmodel.h"
-#include "xassets/sounds.h"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "cvar.hpp"
+#include "server.hpp"
+#include "cm_public.hpp"
+#include "g_public.hpp"
+#include "dobj.hpp"
+#include "xassets/xmodel.hpp"
+#include "xassets/sounds.hpp"
 #include "game/botlib.h"
-#include "scr_vm.h"
-#include "sys_main.h"
-#include "sys_thread.h"
+#include "scr_vm.hpp"
+#include "sys_main.hpp"
+#include "sys_thread.hpp"
 
 botlib_export_t *botlib_export;
 

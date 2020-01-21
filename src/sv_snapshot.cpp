@@ -21,17 +21,17 @@
 */
 
 
-#include "q_shared.h"
-#include "bg_public.h"
-#include "qcommon_io.h"
-#include "net_game_conf.h"
-#include "server.h"
-#include "huffman.h"
-#include "msg.h"
-#include "sys_main.h"
-#include "g_sv_shared.h"
-#include "cm_public.h"
-#include "g_shared.h"
+#include "q_shared.hpp"
+#include "bg_public.hpp"
+#include "qcommon_io.hpp"
+#include "net_game_conf.hpp"
+#include "server.hpp"
+#include "huffman.hpp"
+#include "msg.hpp"
+#include "sys_main.hpp"
+#include "g_sv_shared.hpp"
+#include "cm_public.hpp"
+#include "g_shared.hpp"
 
 #include <stdint.h>
 #include <stdlib.h>

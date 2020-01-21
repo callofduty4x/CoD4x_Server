@@ -24,9 +24,9 @@
 #ifndef __NETCHAN_H__
 #define __NETCHAN_H__
 
-#include "q_shared.h"
-#include "sys_net.h"
-#include "msg.h"
+#include "q_shared.hpp"
+#include "sys_net.hpp"
+#include "msg.hpp"
 
 
 //#define	MAC_STATIC			// be fragmented into multiple packets

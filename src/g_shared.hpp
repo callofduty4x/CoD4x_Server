@@ -22,12 +22,12 @@
 #ifndef G_SHARED_H
 #define G_SHARED_H
 
-#include "filesystem.h"
-#include "entity.h"
-#include "player.h"
-#include "cvar.h"
-#include "cm_public.h"
-#include "sys_cod4defs.h"
+#include "filesystem.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "cvar.hpp"
+#include "cm_public.hpp"
+#include "sys_cod4defs.hpp"
 
 
 /* Unfortunately, this can't be used to check\get gametypes... At least for now... */

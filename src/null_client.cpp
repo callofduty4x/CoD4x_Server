@@ -1,8 +1,8 @@
-#include "null_client.h"
-#include "q_shared.h"
-#include "sys_thread.h"
-#include "cvar.h"
-#include "client_dedicated.h"
+#include "null_client.hpp"
+#include "q_shared.hpp"
+#include "sys_thread.hpp"
+#include "cvar.hpp"
+#include "client_dedicated.hpp"
 
 
 
@@ -11,11 +11,11 @@
 #endif
 
 
-#include "qcommon_io.h"
-#include "xassets.h"
-#include "qcommon_mem.h"
-#include "xassets/xmodel.h"
-#include "xassets/gfxworld.h"
+#include "qcommon_io.hpp"
+#include "xassets.hpp"
+#include "qcommon_mem.hpp"
+#include "xassets/xmodel.hpp"
+#include "xassets/gfxworld.hpp"
 
 
 cvar_t* r_reflectionProbeGenerate;

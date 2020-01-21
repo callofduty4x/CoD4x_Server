@@ -1,5 +1,5 @@
-#include "scr_vm.h"
-#include "g_public_mp.h"
+#include "scr_vm.hpp"
+#include "g_public_mp.hpp"
 
 scr_const_t scr_const;
 

@@ -25,7 +25,7 @@
 #ifndef __QCOMMON_LOGPRINT_H__
 #define __QCOMMON_LOGPRINT_H__
 
-#include "q_shared.h"
+#include "q_shared.hpp"
 
 #ifdef __cplusplus
 extern "C"{

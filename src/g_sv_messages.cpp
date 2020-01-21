@@ -21,12 +21,12 @@
 
 #if 0
 
-#include "q_shared.h"
-#include "qcommon.h"
-#include "g_hud.h"
-#include "server.h"
-#include "qcommon_io.h"
-#include "g_sv_shared.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "g_hud.hpp"
+#include "server.hpp"
+#include "qcommon_io.hpp"
+#include "g_sv_shared.hpp"
 
 #include <string.h>
 

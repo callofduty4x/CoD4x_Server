@@ -1,8 +1,8 @@
-#include "scr_vm.h"
-#include "g_shared.h"
-#include "g_fields.h"
-#include "player.h"
-#include "g_public_mp.h"
+#include "scr_vm.hpp"
+#include "g_shared.hpp"
+#include "g_fields.hpp"
+#include "player.hpp"
+#include "g_public_mp.hpp"
 
 
 void __cdecl Scr_GetGenericField2(const void *data, fieldtype_t type, int ofs)

@@ -1,8 +1,8 @@
-#include "q_shared.h"
-#include "player.h"
-#include "cvar.h"
-#include "bg_local.h"
-#include "q_shared.h"
+#include "q_shared.hpp"
+#include "player.hpp"
+#include "cvar.hpp"
+#include "bg_local.hpp"
+#include "q_shared.hpp"
 
 #define PMF_JUMPING 0x4000
 #define PMF_LADDER 0x8

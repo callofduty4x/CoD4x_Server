@@ -21,7 +21,7 @@
 
 
 
-#include "plugin_handler.h"
+#include "plugin_handler.hpp"
 
 P_P_F qboolean Plugin_IsLoaded(char *name){
 

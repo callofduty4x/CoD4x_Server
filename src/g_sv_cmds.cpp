@@ -20,19 +20,19 @@
 ===========================================================================
 */
 
-#include "q_shared.h"
-#include "cvar.h"
-#include "entity.h"
-#include "player.h"
-#include "g_sv_shared.h"
-#include "g_shared.h"
-#include "plugin_handler.h"
-#include "cmd.h"
-#include "qcommon_io.h"
-#include "server.h"
-#include "scr_vm.h"
-#include "misc.h"
-#include "cscr_stringlist.h"
+#include "q_shared.hpp"
+#include "cvar.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "g_sv_shared.hpp"
+#include "g_shared.hpp"
+#include "plugin_handler.hpp"
+#include "cmd.hpp"
+#include "qcommon_io.hpp"
+#include "server.hpp"
+#include "scr_vm.hpp"
+#include "misc.hpp"
+#include "cscr_stringlist.hpp"
 
 
 #include <string.h>

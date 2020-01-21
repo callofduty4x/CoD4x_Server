@@ -26,13 +26,13 @@
 
 
 
-#include "q_shared.h"
-#include "q_shared.h"
-#include "entity.h"
-#include "player.h"
-#include "g_hud.h"
-#include "filesystem.h"
-#include "g_sv_shared.h"
+#include "q_shared.hpp"
+#include "q_shared.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "g_hud.hpp"
+#include "filesystem.hpp"
+#include "g_sv_shared.hpp"
 
 
 enum scr_opcode

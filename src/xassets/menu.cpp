@@ -1,6 +1,6 @@
 /* This file WILL contain all fast-conversions to strings for enums and types located in menu.h */
-#include "menu.h"
-#include "keyword.h"
+#include "menu.hpp"
+#include "keyword.hpp"
 
 #include <stdio.h> /* snprintf. */
 

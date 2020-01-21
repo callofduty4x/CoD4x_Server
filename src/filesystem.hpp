@@ -25,8 +25,8 @@
 #ifndef __FILESYSTEM_H__
 #define __FILESYSTEM_H__
 
-#include "q_shared.h"
-#include "cvar.h"
+#include "q_shared.hpp"
+#include "cvar.hpp"
 #include "contrib/minizip/unzip.h"
 /* #define fs_searchpaths (searchpath_t*)*((int*)(0x13f9da28)) */
 

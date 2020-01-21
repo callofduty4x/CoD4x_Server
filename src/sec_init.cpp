@@ -18,13 +18,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-#include "q_shared.h"
-#include "qcommon.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
 
 #define LTM_DESC
 
-#include "sec_common.h"
-#include "sec_crypto.h"
+#include "sec_common.hpp"
+#include "sec_crypto.hpp"
 #include "tomcrypt.h"
 
 

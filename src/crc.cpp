@@ -19,7 +19,7 @@
 
 
 
-#include "q_platform.h"
+#include "q_platform.hpp"
 #include <stdlib.h>
 
 // define endianess and some integer data types

@@ -22,8 +22,8 @@
 
 
 
-#include "qcommon_io.h"
-#include "filesystem.h"
+#include "qcommon_io.hpp"
+#include "filesystem.hpp"
 
 
 #define SEGMENT_RECORD_LENGTH 3

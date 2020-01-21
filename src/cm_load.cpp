@@ -1,8 +1,8 @@
-#include "qcommon.h"
-#include "cm_local.h"
-#include "sys_thread.h"
-#include "xassets.h"
-#include "qcommon_mem.h"
+#include "qcommon.hpp"
+#include "cm_local.hpp"
+#include "sys_thread.hpp"
+#include "xassets.hpp"
+#include "qcommon_mem.hpp"
 
 
 cbrush_t g_box_brush[NUMTHREADS];

@@ -1,5 +1,5 @@
-#include "q_shared.h"
-#include "cvar.h"
+#include "q_shared.hpp"
+#include "cvar.hpp"
 
 cvar_t* perk_weapSpreadMultiplier;
 cvar_t* perk_weapReloadMultiplier;

@@ -1,7 +1,7 @@
-#include "q_shared.h"
-#include "qcommon_mem.h"
-#include "filesystem.h"
-#include "cm_local.h"
+#include "q_shared.hpp"
+#include "qcommon_mem.hpp"
+#include "filesystem.hpp"
+#include "cm_local.hpp"
 #include <stdbool.h>
 
 unsigned int lumpsForVersion[] = { 41u, 41u, 42u, 43u, 43u, 43u, 43u, 44u, 44u, 44u, 46u, 46u, 47u };

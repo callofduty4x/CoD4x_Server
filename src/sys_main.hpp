@@ -25,7 +25,7 @@
 #ifndef __SYS_MAIN_H__
 #define __SYS_MAIN_H__
 
-#include "q_shared.h"
+#include "q_shared.hpp"
 
 
 #include <setjmp.h>
@@ -33,7 +33,7 @@
 #include <stdbool.h>
 
 #ifdef _WIN32
-#include "win32/sys_win32.h"
+#include "win32/sys_win32.hpp"
 #else
 #include "unix/sys_unix.h"
 #endif

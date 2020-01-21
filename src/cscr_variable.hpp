@@ -2,7 +2,7 @@
 #define __CSCR_VARIABLE_H__
 
 
-#include "scr_vm.h"
+#include "scr_vm.hpp"
 
 typedef struct
 {

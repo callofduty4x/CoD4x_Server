@@ -1,9 +1,9 @@
 #ifndef _NULL_CLIENT_H_
 #define _NULL_CLIENT_H_
-#include "xassets/xmodel.h"
-#include "xassets/material.h"
-#include "xassets/fx.h"
-#include "xassets/sounds.h"
+#include "xassets/xmodel.hpp"
+#include "xassets/material.hpp"
+#include "xassets/fx.hpp"
+#include "xassets/sounds.hpp"
 
 #ifdef __cplusplus
 extern "C"{

@@ -1,4 +1,4 @@
-#include "bg_public.h"
+#include "bg_public.hpp"
 
 enum scriptAnimEventTypes_t
 {

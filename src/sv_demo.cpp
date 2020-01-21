@@ -21,16 +21,16 @@
 */
 
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "msg.h"
-#include "huffman.h"
-#include "netchan.h"
-#include "server.h"
-#include "q_platform.h"
-#include "sys_main.h"
-#include "net_game_conf.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "msg.hpp"
+#include "huffman.hpp"
+#include "netchan.hpp"
+#include "server.hpp"
+#include "q_platform.hpp"
+#include "sys_main.hpp"
+#include "net_game_conf.hpp"
 
 #include <stdint.h>
 #include <string.h>

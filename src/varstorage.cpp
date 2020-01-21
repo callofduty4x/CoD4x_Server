@@ -1,7 +1,7 @@
-#include "q_shared.h"
-#include "filesystem.h"
-#include "qcommon_io.h"
-#include "murmurhash1.h"
+#include "q_shared.hpp"
+#include "filesystem.hpp"
+#include "qcommon_io.hpp"
+#include "murmurhash1.hpp"
 
 #include <string.h>
 #include <stdlib.h>

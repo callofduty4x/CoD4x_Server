@@ -22,7 +22,7 @@
 #define SEC_CRYPTO_H
 
 
-#include "q_shared.h"
+#include "q_shared.hpp"
 #include "tomcrypt.h"
 
 extern int SEC_HASH_SHA1;

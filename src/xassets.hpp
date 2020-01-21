@@ -24,10 +24,10 @@
 #ifndef __XASSETS_H__
 #define __XASSETS_H__
 
-#include "q_shared.h"
-#include "dobj.h"
-#include "xassets/weapondef.h"
-#include "xassets/material.h"
+#include "q_shared.hpp"
+#include "dobj.hpp"
+#include "xassets/weapondef.hpp"
+#include "xassets/material.hpp"
 #ifndef __cplusplus
 #include <stdbool.h>
 #endif

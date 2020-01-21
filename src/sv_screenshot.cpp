@@ -21,13 +21,13 @@
 */
 
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "server.h"
-#include "sys_main.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "server.hpp"
+#include "sys_main.hpp"
 #include "sapi.h"
-#include "plugin_handler.h"
+#include "plugin_handler.hpp"
 
 #include <stdint.h>
 #include <string.h>

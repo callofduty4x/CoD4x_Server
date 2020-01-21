@@ -19,8 +19,8 @@
 ===========================================================================
 */
 
-#include "sec_crypto.h"
-#include "sec_common.h"
+#include "sec_crypto.hpp"
+#include "sec_common.hpp"
 
 
 qboolean Sec_BinaryToHex(char *in,unsigned long inSize,char *out, unsigned long *outSize){

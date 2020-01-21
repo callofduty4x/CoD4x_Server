@@ -1,7 +1,7 @@
-#include "q_shared.h"
-#include "g_public.h"
-#include "dobj.h"
-#include "scr_vm.h"
+#include "q_shared.hpp"
+#include "g_public.hpp"
+#include "dobj.hpp"
+#include "scr_vm.hpp"
 
 extern "C" void __cdecl BG_Player_DoControllers(CEntPlayerInfo *player, DObj *obj, int *partBits)
 {

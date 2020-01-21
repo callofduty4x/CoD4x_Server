@@ -23,8 +23,8 @@
 #ifndef __G_HUD_H__
 #define __G_HUD_H__
 
-#include "q_shared.h"
-#include "entity.h"
+#include "q_shared.hpp"
+#include "entity.hpp"
 
 #define HUDELEM_ADDR 0x8335620
 #define MAX_HUDELEMS 1024

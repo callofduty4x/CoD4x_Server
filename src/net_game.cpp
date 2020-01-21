@@ -21,15 +21,15 @@
 
 
 
-#include "q_shared.h"
-#include "qcommon.h"
-#include "qcommon_io.h"
-#include "msg.h"
-#include "sys_net.h"
-#include "server.h"
-#include "net_game.h"
-#include "net_game_conf.h"
-#include "plugin_handler.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "qcommon_io.hpp"
+#include "msg.hpp"
+#include "sys_net.hpp"
+#include "server.hpp"
+#include "net_game.hpp"
+#include "net_game_conf.hpp"
+#include "plugin_handler.hpp"
 
 void NET_UDPPacketEvent(netadr_t* from, void* data, int len, int buflen)
 {

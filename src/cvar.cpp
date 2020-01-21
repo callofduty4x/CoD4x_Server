@@ -21,16 +21,16 @@
 */
 // cvar.c -- dynamic variable tracking
 
-#include "q_shared.h"
-#include "qcommon.h"
-#include "qcommon_io.h"
-#include "qcommon_mem.h"
-#include "cvar.h"
-#include "cmd.h"
-#include "cmd_completion.h"
-#include "filesystem.h"
-#include "sys_main.h"
-#include "sys_thread.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
+#include "qcommon_io.hpp"
+#include "qcommon_mem.hpp"
+#include "cvar.hpp"
+#include "cmd.hpp"
+#include "cmd_completion.hpp"
+#include "filesystem.hpp"
+#include "sys_main.hpp"
+#include "sys_thread.hpp"
 // nothing outside the Cvar_*() functions should modify these fields!
 
 #include <string.h>

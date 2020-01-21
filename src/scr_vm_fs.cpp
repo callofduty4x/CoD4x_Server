@@ -21,11 +21,11 @@
 */
 
 
-#include "q_shared.h"
-#include "qcommon_io.h"
-#include "filesystem.h"
-#include "scr_vm.h"
-#include "cvar.h"
+#include "q_shared.hpp"
+#include "qcommon_io.hpp"
+#include "filesystem.hpp"
+#include "scr_vm.hpp"
+#include "cvar.hpp"
 
 #include <string.h>
 

@@ -1,7 +1,7 @@
 #ifndef __G_PUBLIC_MP_H__
 #define __G_PUBLIC_MP_H__
 
-#include "q_shared.h"
+#include "q_shared.hpp"
 
 #ifndef __cplusplus
 
@@ -31,8 +31,8 @@ void __cdecl EntHandleDissociate(struct gentity_s *ent);
 
 #endif
 
-#include "entity.h"
-#include "player.h"
+#include "entity.hpp"
+#include "player.hpp"
 
 unsigned int __cdecl GScr_AllocString(const char *s);
 

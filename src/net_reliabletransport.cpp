@@ -1,14 +1,14 @@
-#include "q_shared.h"
-#include "qcommon.h"
+#include "q_shared.hpp"
+#include "qcommon.hpp"
 
 #define MAX_PACKETLEN           1400        // max size of a network packet
 #define MAX_FRAGMENT_SIZE         ( MAX_PACKETLEN - 200 )
 #define DEFAULT_BUFFER_SIZE		32
 
-#include "sys_net.h"
-#include "msg.h"
-#include "net_reliabletransport.h"
-#include "sys_main.h"
+#include "sys_net.hpp"
+#include "msg.hpp"
+#include "net_reliabletransport.hpp"
+#include "sys_main.hpp"
 #include <string.h>
 #include <stdlib.h>
 

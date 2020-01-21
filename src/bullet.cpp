@@ -1,7 +1,7 @@
-#include "client_dedicated.h"
-#include "g_shared.h"
-#include "cm_public.h"
-#include "qcommon_io.h"
+#include "client_dedicated.hpp"
+#include "g_shared.hpp"
+#include "cm_public.hpp"
+#include "qcommon_io.hpp"
 
 extern "C" void G_DebugBulletImpact(gentity_s *attacker, float* start, float* end)
 {

@@ -26,13 +26,13 @@
 #include <stdint.h>
 #include <math.h>
 
-#include "msg.h"
-#include "entity.h"
-#include "player.h"
-#include "qcommon_io.h"
-#include "net_game_conf.h"
-#include "huffman.h"
-#include "server.h"
+#include "msg.hpp"
+#include "entity.hpp"
+#include "player.hpp"
+#include "qcommon_io.hpp"
+#include "net_game_conf.hpp"
+#include "huffman.hpp"
+#include "server.hpp"
 
 #ifndef	MAX_MSGLEN
 #define	MAX_MSGLEN	0x20000		// max length of a message, which may

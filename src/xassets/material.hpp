@@ -1,7 +1,7 @@
 #ifndef __MATERIAL_ASSET_H__
 #define __MATERIAL_ASSET_H__
 
-#include "../q_shared.h"
+#include "../q_shared.hpp"
 
 /* 709 */
 typedef enum 
