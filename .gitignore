@@ -41,6 +41,7 @@ CoD4x_Server.files
 CoD4x_Server.includes
 build_win32_PE_nopause.cmd
 build_linux32_ELF_nopause.sh
+*.user
 
 #fraggy: ignore .vscode
 .vscode/
@@ -57,3 +58,7 @@ cmake-build-debug
 
 #T-Max: CLion dirs
 .idea
+
+#T-Max: Zlib stuff
+zconf.h.included
+zconf.h
