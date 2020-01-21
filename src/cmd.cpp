@@ -78,41 +78,40 @@ Cbuf_AddText
 Adds command text at the end of the buffer, does NOT add a final \n
 ============
 */
-void Cbuf_AddText( const char *text ) {
-	int		len;
-	byte*		new_buf;
-	len = strlen (text) +1;
+void Cbuf_AddText(const char *text)
+{
+    int len;
+    void* new_buf;
+    len = strlen (text) + 1;
 
-	Sys_EnterCriticalSection(CRITSECT_CBUF);
+    Sys_EnterCriticalSection(CRITSECT_CBUF);
 
-	if ( len + cmd_text.cursize > cmd_text.maxsize ) {
+    if ( len + cmd_text.cursize > cmd_text.maxsize )
+    {
 
-		if(cmd_text.data == cmd_text_buf)
-		{
-			new_buf = realloc(NULL, len + cmd_text.cursize);
-			if(new_buf != NULL)
-			{
-				Com_Memcpy(new_buf, cmd_text_buf, len + cmd_text.cursize);
-			}
-		}else{
-			new_buf = realloc(cmd_text.data, len + cmd_text.cursize);
-		}
+        if(cmd_text.data == cmd_text_buf)
+        {
+            new_buf = realloc(NULL, len + cmd_text.cursize);
+            if(new_buf)
+                Com_Memcpy(new_buf, cmd_text_buf, len + cmd_text.cursize);
+        }
+        else
+            new_buf = realloc(cmd_text.data, len + cmd_text.cursize);
 
-		if(new_buf == NULL)
-		{
-			Com_PrintError(CON_CHANNEL_SYSTEM, "Cbuf_AddText overflowed ; realloc failed\n" );
-			Sys_LeaveCriticalSection(CRITSECT_CBUF);
-			return;
-		}
-		cmd_text.data = new_buf;
-		cmd_text.maxsize = len + cmd_text.cursize;
-	}
+        if(!new_buf)
+        {
+            Com_PrintError(CON_CHANNEL_SYSTEM, "Cbuf_AddText overflowed ; realloc failed\n" );
+            Sys_LeaveCriticalSection(CRITSECT_CBUF);
+            return;
+        }
+        cmd_text.data = reinterpret_cast<byte*>(new_buf);
+        cmd_text.maxsize = len + cmd_text.cursize;
+    }
 
-	Com_Memcpy(&cmd_text.data[cmd_text.cursize], text, len -1);
-	cmd_text.cursize += len -1;
+    Com_Memcpy(&cmd_text.data[cmd_text.cursize], text, len -1);
+    cmd_text.cursize += len -1;
 
-	Sys_LeaveCriticalSection(CRITSECT_CBUF);
-
+    Sys_LeaveCriticalSection(CRITSECT_CBUF);
 }
 
 /*
@@ -123,54 +122,48 @@ Adds command text immediately after the current command
 Adds a \n to the text
 ============
 */
-void Cbuf_InsertText( const char *text ) {
-	int		len;
-	int		i;
-	byte*		new_buf;
+void Cbuf_InsertText(const char *text)
+{
+    void* new_buf;
+    int len = strlen( text ) + 1;
 
-	len = strlen( text ) + 1;
+    Sys_EnterCriticalSection(CRITSECT_CBUF);
 
-	Sys_EnterCriticalSection(CRITSECT_CBUF);
+    if ( len + cmd_text.cursize > cmd_text.maxsize )
+    {
+        if(cmd_text.data == cmd_text_buf)
+        {
+            new_buf = realloc(NULL, len + cmd_text.cursize);
+            if(new_buf)
+                Com_Memcpy(new_buf, cmd_text_buf, len + cmd_text.cursize);
+        }
+        else
+            new_buf = realloc(cmd_text.data, len + cmd_text.cursize);
 
+        if(!new_buf)
+        {
+            Com_PrintError(CON_CHANNEL_SYSTEM, "Cbuf_InsertText overflowed ; realloc failed\n" );
+            Sys_LeaveCriticalSection(CRITSECT_CBUF);
+            return;
+        }
 
-	if ( len + cmd_text.cursize > cmd_text.maxsize ) {
+        cmd_text.data = reinterpret_cast<byte*>(new_buf);
+        cmd_text.maxsize = len + cmd_text.cursize;
+    }
 
-		if(cmd_text.data == cmd_text_buf)
-		{
-			new_buf = realloc(NULL, len + cmd_text.cursize);
-			if(new_buf != NULL)
-			{
-				Com_Memcpy(new_buf, cmd_text_buf, len + cmd_text.cursize);
-			}
-		}else{
-			new_buf = realloc(cmd_text.data, len + cmd_text.cursize);
-		}
+    // move the existing command text
+    for (int i = cmd_text.cursize - 1 ; i >= 0 ; i-- )
+        cmd_text.data[ i + len ] = cmd_text.data[ i ];
 
-		if(new_buf == NULL)
-		{
-			Com_PrintError(CON_CHANNEL_SYSTEM, "Cbuf_InsertText overflowed ; realloc failed\n" );
+    // copy the new text in
+    Com_Memcpy( cmd_text.data, text, len - 1 );
 
-			Sys_LeaveCriticalSection(CRITSECT_CBUF);
-			return;
-		}
-		cmd_text.data = new_buf;
-		cmd_text.maxsize = len + cmd_text.cursize;
-	}
+    // add a \n
+    cmd_text.data[ len - 1 ] = '\n';
 
-	// move the existing command text
-	for ( i = cmd_text.cursize - 1 ; i >= 0 ; i-- ) {
-		cmd_text.data[ i + len ] = cmd_text.data[ i ];
-	}
+    cmd_text.cursize += len;
 
-	// copy the new text in
-	Com_Memcpy( cmd_text.data, text, len - 1 );
-
-	// add a \n
-	cmd_text.data[ len - 1 ] = '\n';
-
-	cmd_text.cursize += len;
-
-	Sys_LeaveCriticalSection(CRITSECT_CBUF);
+    Sys_LeaveCriticalSection(CRITSECT_CBUF);
 }
 
 /*
@@ -334,36 +327,40 @@ static cmd_function_t *cmd_functions;
 Cmd_AddCommand
 ============
 */
-qboolean Cmd_AddCommandGeneric( const char *cmd_name, const char* helptext, xcommand_t function, qboolean warn, int power ) {
+qboolean Cmd_AddCommandGeneric(const char *cmd_name, const char* helptext, xcommand_t function, qboolean warn, int power)
+{
+    cmd_function_t  *cmd;
 
-	cmd_function_t  *cmd;
+    // fail if the command already exists
+    for ( cmd = cmd_functions ; cmd ; cmd = cmd->next )
+    {
+        if ( !strcmp( cmd_name, cmd->name ))
+        {
+            // allow completion-only commands to be silently doubled
+            if (function && warn)
+                Com_PrintWarning(CON_CHANNEL_SYSTEM, "Cmd_AddCommand: %s already defined\n", cmd_name );
 
-	// fail if the command already exists
-	for ( cmd = cmd_functions ; cmd ; cmd = cmd->next ) {
-		if ( !strcmp( cmd_name, cmd->name )) {
-			// allow completion-only commands to be silently doubled
-			if ( function != NULL && warn) {
-				Com_PrintWarning(CON_CHANNEL_SYSTEM, "Cmd_AddCommand: %s already defined\n", cmd_name );
-			}
-			return qfalse;
-		}
-	}
-	// use a small malloc to avoid zone fragmentation
-	if(helptext != NULL)
-	{
-		cmd = S_Malloc( sizeof( cmd_function_t ) + strlen(cmd_name) + 1 + strlen(helptext) + 1);
-		strcpy((char*)(cmd +1) + strlen(cmd_name) +1, helptext);
-		cmd->helptext = (char*)(cmd +1) + strlen(cmd_name) +1;
-	}else{
-		cmd = S_Malloc( sizeof( cmd_function_t ) + strlen(cmd_name) + 1);
-	}
-	strcpy((char*)(cmd +1), cmd_name);
-	cmd->name = (char*)(cmd +1);
-	cmd->function = function;
-	cmd->minPower = power;
-	cmd->next = cmd_functions;
-	cmd_functions = cmd;
-	return qtrue;
+            return qfalse;
+        }
+    }
+
+    // use a small malloc to avoid zone fragmentation
+    if(helptext != NULL)
+    {
+        cmd = reinterpret_cast<cmd_function_t*>(S_Malloc( sizeof( cmd_function_t ) + strlen(cmd_name) + 1 + strlen(helptext) + 1));
+        strcpy((char*)(cmd +1) + strlen(cmd_name) +1, helptext);
+        cmd->helptext = (char*)(cmd +1) + strlen(cmd_name) +1;
+    }
+    else
+        cmd = reinterpret_cast<cmd_function_t*>(S_Malloc( sizeof( cmd_function_t ) + strlen(cmd_name) + 1));
+
+    strcpy((char*)(cmd +1), cmd_name);
+    cmd->name = (char*)(cmd +1);
+    cmd->function = function;
+    cmd->minPower = power;
+    cmd->next = cmd_functions;
+    cmd_functions = cmd;
+    return qtrue;
 }
 
 qboolean Cmd_AddPCommand( const char *cmd_name, xcommand_t function, int power )
@@ -578,47 +575,38 @@ Cmd_Argv	Returns commandline argument by number
 ============
 */
 
-char	*Cmd_Argv( int arg ) {
+const char* Cmd_Argv(int arg)
+{
+    int final_argc = 0;
+    int cmd_argc = Cmd_Argc();
 
-	int cmd_argc;
-	int final_argc;
+    if(cmd_argc == 0)
+        return "";
 
-	cmd_argc = Cmd_Argc();
+    if(cmd_argc - arg <= 0)
+        return "";
 
-	if(cmd_argc == 0)
-	    return "";
+    final_argc = tokenStrings.cmd_argc - cmd_argc + arg;
 
-	if(cmd_argc - arg <= 0)
-            return "";
-
-        final_argc = tokenStrings.cmd_argc - cmd_argc + arg;
-
-	if(tokenStrings.cmd_argv[final_argc] == NULL)
-	    return "";
-
-	return tokenStrings.cmd_argv[final_argc];
+    const char* pResult = tokenStrings.cmd_argv[final_argc];
+    return pResult ? pResult : "";
 }
 
 
-char	*SV_Cmd_Argv( int arg ) {
+const char* SV_Cmd_Argv(int arg)
+{
+    int cmd_argc = SV_Cmd_Argc();
 
-	int cmd_argc;
-	int final_argc;
+    if(cmd_argc == 0)
+        return "";
 
-	cmd_argc = SV_Cmd_Argc();
+    if(cmd_argc - arg <= 0)
+        return "";
 
-	if(cmd_argc == 0)
-	    return "";
+    int final_argc = sv_tokenStrings.cmd_argc - cmd_argc + arg;
 
-	if(cmd_argc - arg <= 0)
-            return "";
-
-        final_argc = sv_tokenStrings.cmd_argc - cmd_argc + arg;
-
-	if(sv_tokenStrings.cmd_argv[final_argc] == NULL)
-	    return "";
-
-	return sv_tokenStrings.cmd_argv[final_argc];
+    const char* pArgv = sv_tokenStrings.cmd_argv[final_argc];
+    return pArgv ? pArgv : "";
 }
 
 
@@ -1095,45 +1083,42 @@ Cmd_ListPower_f
 ============
 */
 
-static void Cmd_ListPower_f() {
+static void Cmd_ListPower_f()
+{
+    cmd_function_t  *cmd;
+    int i, hidden, j, l;
+    const char* match = Cmd_Argc() > 1 ? Cmd_Argv(1) : nullptr;
 
-	cmd_function_t  *cmd;
-	int i, hidden, j, l;
-	char            *match;
+    i = 0;
+    hidden = 0;
+    for ( cmd = cmd_functions ; cmd ; cmd = cmd->next )
+    {
+        if ( (match && !Com_Filter( match, (char*)cmd->name, qfalse )))
+            continue;
 
-	if ( Cmd_Argc() > 1 ) {
-		match = Cmd_Argv( 1 );
-	} else {
-		match = NULL;
-	}
+        if(cmd->minPower == 100 || cmd->minPower == 0)
+        {
+            hidden++;
+            continue;
+        }
 
-	i = 0;
-	hidden = 0;
-	for ( cmd = cmd_functions ; cmd ; cmd = cmd->next ) {
-		if ( (match && !Com_Filter( match, (char*)cmd->name, qfalse ))) {
-			continue;
-		}
-		if(cmd->minPower == 100 || cmd->minPower == 0){
-			hidden++;
-			continue;
-		}
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", cmd->name );
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"%s", cmd->name );
 
-		l = 24 - strlen(cmd->name);
-		j = 0;
+        l = 24 - strlen(cmd->name);
+        j = 0;
 
-		do
-		{
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-			j++;
-		} while(j < l);
+        do
+        {
+            Com_Printf(CON_CHANNEL_DONT_FILTER," ");
+            j++;
+        } while(j < l);
 
-		Com_Printf(CON_CHANNEL_DONT_FILTER, "%d\n", cmd->minPower );
-		i++;
-	}
-	Com_Printf(CON_CHANNEL_DONT_FILTER, "\n%i commands with specified power settings are shown\n", i );
-	Com_Printf(CON_CHANNEL_DONT_FILTER, "%i commands are hidden because the required power level for those commands is set to 100 or 0\n", hidden );
-	Com_Printf(CON_CHANNEL_DONT_FILTER, "Type cmdlist to get a complete list of all commands\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "%d\n", cmd->minPower );
+        i++;
+    }
+    Com_Printf(CON_CHANNEL_DONT_FILTER, "\n%i commands with specified power settings are shown\n", i );
+    Com_Printf(CON_CHANNEL_DONT_FILTER, "%i commands are hidden because the required power level for those commands is set to 100 or 0\n", hidden );
+    Com_Printf(CON_CHANNEL_DONT_FILTER, "Type cmdlist to get a complete list of all commands\n");
 }
 
 
@@ -1254,31 +1239,27 @@ void Cmd_ExecuteSingleCommand(int arg1, int arg2, const char* text)
 Cmd_List_f
 ============
 */
-static void Cmd_List_f( void ) {
-	cmd_function_t  *cmd;
-	int i;
-	char            *match;
+static void Cmd_List_f( void )
+{
+    cmd_function_t  *cmd;
+    int i;
+    const char* match = Cmd_Argc() > 1 ? Cmd_Argv( 1 ) : nullptr;
 
-	if ( Cmd_Argc() > 1 ) {
-		match = Cmd_Argv( 1 );
-	} else {
-		match = NULL;
-	}
+    i = 0;
+    for ( cmd = cmd_functions ; cmd ; cmd = cmd->next )
+    {
+        if ( (match && !Com_Filter( match, (char*)cmd->name, qfalse ))
+             || Cmd_GetInvokerPower() < cmd->minPower || ((cmd->minPower == 0) && Cmd_GetInvokerPower() != 100))
+        {
+            if(!Auth_CanPlayerUseCommand(Cmd_GetInvokerClnum(), (char*)cmd->name))
+                continue;
+        }
 
-	i = 0;
-	for ( cmd = cmd_functions ; cmd ; cmd = cmd->next ) {
-		if ( (match && !Com_Filter( match, (char*)cmd->name, qfalse ))
-		|| Cmd_GetInvokerPower() < cmd->minPower || ((cmd->minPower == 0) && Cmd_GetInvokerPower() != 100))
-		{
-			if(!Auth_CanPlayerUseCommand(Cmd_GetInvokerClnum(), (char*)cmd->name))
-			{
-				continue;
-			}
-		}
-		Com_Printf(CON_CHANNEL_DONT_FILTER, "%s\n", cmd->name );
-		i++;
-	}
-	Com_Printf(CON_CHANNEL_DONT_FILTER, "%i commands\n", i );
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "%s\n", cmd->name );
+        i++;
+    }
+
+    Com_Printf(CON_CHANNEL_DONT_FILTER, "%i commands\n", i );
 }
 
 

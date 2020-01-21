@@ -76,7 +76,7 @@ void SV_Cmd_EndTokenizedString();
 
 
 int	Cmd_Argc( void );
-char	*Cmd_Argv( int arg );
+const char* Cmd_Argv( int arg );
 char	*Cmd_Args( char* buff, int bufsize );
 char	*Cmd_Argsv( int arg, char* buff, int bufsize );
 char	*SV_Cmd_Argsv( int arg, char* buff, int bufsize );

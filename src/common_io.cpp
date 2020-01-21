@@ -48,11 +48,6 @@ void Com_PrintLogfile( const char* msg ){}
 #pragma message "Undefined function: Com_PrintLogfile"
 #endif
 
-#ifndef __QCOMMON_H__
-qboolean Com_IsDeveloper( void ){ return qtrue; }
-#pragma message "Undefined function: Com_IsDeveloper"
-#endif
-
 cvar_t* com_logrcon;
 
 //============================================================================
@@ -88,61 +83,58 @@ void Com_StopRedirect (void)
 	rd_flush = NULL;
 }
 
-__cdecl void Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type) {
+__cdecl void Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type)
+{
+    //secures calls to Com_PrintMessage from recursion while redirect printing
+    static qboolean lock = qfalse;
 
-	//secures calls to Com_PrintMessage from recursion while redirect printing
-	static qboolean lock = qfalse;
+    if(channel == CON_CHANNEL_LOGFILEONLY)
+    {
+        Com_PrintLogfile( msg );
+        return;
+    }
+    size_t msglen = strlen(msg);
 
-	if(channel == CON_CHANNEL_LOGFILEONLY)
-	{
-		Com_PrintLogfile( msg );
-		return;
-	}
-	int msglen = strlen(msg);
+    if(type != MSG_NORDPRINT && !lock)
+    {
+        Sys_EnterCriticalSection(CRITSECT_RD_BUFFER);
 
-	if(type != MSG_NORDPRINT && !lock)
-	{
-	
-		Sys_EnterCriticalSection(CRITSECT_RD_BUFFER);
+        if ( !lock)
+        {
+            lock = qtrue;
+            Com_PrintRedirect(msg, static_cast<int>(msglen));
+            lock = qfalse;
 
-		if ( !lock) {
+            if ( rd_buffer && rd_flush)
+            {
+                if ((msglen + strlen(rd_buffer)) > (rd_buffersize - 1))
+                {
+                    lock = qtrue;
+                    rd_flush(rd_buffer, qfalse);
+                    lock = qfalse;
 
-			lock = qtrue;
-			Com_PrintRedirect(msg, msglen);
-			lock = qfalse;
+                    *rd_buffer = 0;
+                }
 
-			if ( rd_buffer && rd_flush) {
-				if ((msglen + strlen(rd_buffer)) > (rd_buffersize - 1)) {
+                Q_strncat(rd_buffer, rd_buffersize, msg);
+                // TTimo nooo .. that would defeat the purpose
+                //rd_flush(rd_buffer);
+                //*rd_buffer = 0;
+                if(!com_logrcon->boolean)
+                {
+                    Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
+                    return;
+                }
+            }
+        }
 
-					lock = qtrue;
-					rd_flush(rd_buffer, qfalse);
-					lock = qfalse;
+        Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
+    }
 
-					*rd_buffer = 0;
-				}
-				Q_strncat(rd_buffer, rd_buffersize, msg);
-				// TTimo nooo .. that would defeat the purpose
-				//rd_flush(rd_buffer);
-				//*rd_buffer = 0;
-				if(!com_logrcon->boolean)
-				{
-					Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
-					return;
-				}
-			}
-		}
-		
-		Sys_LeaveCriticalSection(CRITSECT_RD_BUFFER);
-	
-	}
-
-	
-	// echo to dedicated console and early console
-	Sys_Print( msg );
-
-	// logfile
-	Com_PrintLogfile( msg );
-
+    // echo to dedicated console and early console
+    Sys_Print( msg );
+    // logfile
+    Com_PrintLogfile( msg );
 }
 
 /*
@@ -198,17 +190,18 @@ to the apropriate place.
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void QDECL Com_PrintWarning( conChannel_t channel, const char *fmt, ... ) {
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
+void QDECL Com_PrintWarning( conChannel_t channel, const char *fmt, ... )
+{
+    va_list		argptr;
+    char msg[MAXPRINTMSG] = {'\0'};
 
-	memcpy(msg,"^3Warning: ", sizeof(msg));
+    strcpy(msg, "^3Warning: ");
 
-	va_start (argptr,fmt);
-	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
-	va_end (argptr);
+    va_start (argptr,fmt);
+    Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
+    va_end (argptr);
 
-        Com_PrintMessage( channel, msg, MSG_WARNING);
+    Com_PrintMessage( channel, msg, MSG_WARNING);
 }
 
 
@@ -222,17 +215,18 @@ to the apropriate place.
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void QDECL Com_PrintWarningNoRedirect( conChannel_t channel, const char *fmt, ... ) {
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
+void QDECL Com_PrintWarningNoRedirect( conChannel_t channel, const char *fmt, ... )
+{
+    va_list argptr;
+    char msg[MAXPRINTMSG] = {'\0'};
 
-	memcpy(msg,"^3Warning: ", sizeof(msg));
+    strcpy(msg, "^3Warning: ");
 
-	va_start (argptr,fmt);
-	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
-	va_end (argptr);
+    va_start (argptr,fmt);
+    Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
+    va_end (argptr);
 
-        Com_PrintMessage( channel, msg, MSG_NORDPRINT);
+    Com_PrintMessage( channel, msg, MSG_NORDPRINT);
 }
 
 
@@ -246,17 +240,18 @@ to the apropriate place.
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void QDECL Com_PrintError( conChannel_t channel, const char *fmt, ... ) {
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
+void QDECL Com_PrintError( conChannel_t channel, const char *fmt, ... )
+{
+    va_list argptr;
+    char msg[MAXPRINTMSG] = {'\0'};
 
-	memcpy(msg,"^1Error: ", sizeof(msg));
+    strcpy(msg, "^1Error: ");
 
-	va_start (argptr,fmt);
-	Q_vsnprintf (&msg[9], (sizeof(msg)-10), fmt, argptr);
-	va_end (argptr);
+    va_start (argptr,fmt);
+    Q_vsnprintf (&msg[9], (sizeof(msg)-10), fmt, argptr);
+    va_end (argptr);
 
-        Com_PrintMessage( channel, msg, MSG_ERROR);
+    Com_PrintMessage( channel, msg, MSG_ERROR);
 }
 
 /*

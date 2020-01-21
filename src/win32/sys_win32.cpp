@@ -58,7 +58,7 @@ Set FPU control word to default value
 	#define _RC_NEAR 0x00000000U
 	#define _PC_53 0x00010000U
 
-	unsigned int _controlfp(unsigned int new, unsigned int mask);
+    unsigned int _controlfp(unsigned int new_, unsigned int mask_);
 #endif
 
 #define FPUCWMASK1 (_MCW_RC | _MCW_EM)
@@ -106,7 +106,7 @@ Sys_Mkdir
 qboolean Sys_Mkdir(const char *path)
 {
     int result = SHCreateDirectoryExA(0, path, 0);
-    return result == ERROR_SUCCESS || result == ERROR_FILE_EXISTS || result == ERROR_ALREADY_EXISTS;
+    return (result == ERROR_SUCCESS || result == ERROR_FILE_EXISTS || result == ERROR_ALREADY_EXISTS) ? qtrue : qfalse;
 }
 
 /*
@@ -227,7 +227,7 @@ qboolean Sys_MemoryProtectReadonly(void* startoffset, int len)
 
 void Sys_ShowErrorDialog(const char* functionName)
 {
-	void* HWND = NULL;
+    HWND hwnd = nullptr;
 	char errMessageBuf[1024];
 	char displayMessageBuf[1024];
 	DWORD lastError = GetLastError();
@@ -241,7 +241,7 @@ void Sys_ShowErrorDialog(const char* functionName)
 
 	Com_sprintf(displayMessageBuf, sizeof(displayMessageBuf), "Error in function: %s\nThe error is: %s", functionName, errMessageBuf);
 
-	MessageBoxA(HWND, displayMessageBuf, "System Error", MB_OK | MB_ICONERROR);
+    MessageBoxA(hwnd, displayMessageBuf, "System Error", MB_OK | MB_ICONERROR);
 }
 
 const char *Sys_DefaultHomePath( void ) {
@@ -265,7 +265,7 @@ DIRECTORY SCANNING
 Sys_ListFilteredFiles
 ==============
 */
-void Sys_ListFilteredFiles( const char *basedir, char *subdirs, char *filter, char **list, int *numfiles )
+static void Sys_ListFilteredFiles( const char *basedir, const char *subdirs, char *filter, char **list, int *numfiles )
 {
 	char	search[MAX_OSPATH], newsubdirs[MAX_OSPATH];
 	char	filename[MAX_OSPATH];
@@ -370,7 +370,7 @@ char **Sys_ListFiles( const char *directory, const char *extension, char *filter
 		if (!nfiles)
 		return NULL;
 
-		listCopy = Z_Malloc( ( nfiles + 1 ) * sizeof( *listCopy ) );
+        listCopy = reinterpret_cast<char**>(Z_Malloc( ( nfiles + 1 ) * sizeof( *listCopy ) ));
 		for ( i = 0 ; i < nfiles ; i++ ) {
 			listCopy[i] = list[i];
 		}
@@ -423,7 +423,7 @@ char **Sys_ListFiles( const char *directory, const char *extension, char *filter
 		return NULL;
 	}
 
-	listCopy = Z_Malloc( ( nfiles + 1 ) * sizeof( *listCopy ) );
+    listCopy = reinterpret_cast<char**>(Z_Malloc( ( nfiles + 1 ) * sizeof( *listCopy ) ));
 	for ( i = 0 ; i < nfiles ; i++ ) {
 		listCopy[i] = list[i];
 	}
@@ -655,7 +655,7 @@ void* Sys_GetProcedure(const char* lpProcName)
 		return NULL;
 	}
 	FARPROC procedure = GetProcAddress( currentLibHandle, lpProcName );
-	return procedure;
+    return reinterpret_cast<void*>(procedure);
 }
 
 void Sys_CloseLibrary(void* hModule)
@@ -669,7 +669,7 @@ void Sys_CloseLibrary(void* hModule)
 	{
 		currentLibHandle = NULL;
 	}
-	FreeLibrary(hModule);
+    FreeLibrary(reinterpret_cast<HMODULE>(hModule));
 }
 
 static CRITICAL_SECTION crit_sections[CRITSECT_COUNT];
@@ -761,7 +761,7 @@ qboolean Sys_ThreadisSame(threadid_t threadid)
 {
 	threadid_t thread = GetCurrentThreadId();
 
-	return threadid == thread;
+    return threadid == thread ? qtrue : qfalse;
 
 }
 
@@ -813,7 +813,7 @@ void Sys_EventLoop()
 
 void CON_Init()
 {
-	static qboolean messageThreadActive = 0;
+    static qboolean messageThreadActive = qfalse;
 	threadid_t tid;
 
 	if(messageThreadActive)
@@ -971,7 +971,7 @@ void Sys_SetThreadLocalStorage(void** localvar)
 
 void** Sys_GetThreadLocalStorage()
 {
-    return TlsGetValue(tlsKey);
+    return reinterpret_cast<void**>(TlsGetValue(tlsKey));
 }
 
 #ifdef __GNUC__

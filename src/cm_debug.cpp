@@ -34,13 +34,11 @@ void CM_DebugViewBasicDetails()
 
 void CM_DebugPrintMaterialInfo()
 {
-    int i;
-    uint32_t content = 0;
-    uint32_t surface = 0;
-
     FS_Printf( f, "--------------- MaterialInfo --------------------\n");
 
-    for(i = 0; i < cm.numMaterials; ++i)
+    uint32_t content = 0;
+    uint32_t surface = 0;
+    for(unsigned int i = 0; i < cm.numMaterials; ++i)
     {
         FS_Printf( f, "%s surf: 0x%08x cont: 0x%08x\n", cm.materials[i].material, cm.materials[i].surfaceFlags, cm.materials[i].contentFlags);
         surface |= cm.materials[i].surfaceFlags;
@@ -57,11 +55,10 @@ void CM_DebugPrintMaterialInfo()
 
 void CM_DebugCLeafBrushNodes()
 {
-    int i;
     FS_Printf( f, "--------------- CLeafBrushNodes ------------------\n");
 
     uint32_t content = 0;
-    for(i = 0; i < cm.leafbrushNodesCount; ++i)
+    for(unsigned int i = 0; i < cm.leafbrushNodesCount; ++i)
     {
         FS_Printf( f, "Count: %d cont: 0x%08x\n", cm.leafbrushNodes[i].leafBrushCount, cm.leafbrushNodes[i].contents);
         content |= cm.leafbrushNodes[i].contents;
@@ -91,17 +88,17 @@ void CM_DebugCBrush()
 
 void CM_DebugCLeaf()
 {
-    int i;
     FS_Printf( f, "-------------------- cLeaf ----------------------\n");
+
     uint32_t brushcontent = 0;
     uint32_t terriancontent = 0;
-
-    for(i = 0; i < cm.numLeafs; ++i)
+    for(unsigned int i = 0; i < cm.numLeafs; ++i)
     {
         FS_Printf( f, "brushContents: 0x%08x  terrainContents: 0x%08x\n", cm.leafs[i].brushContents, cm.leafs[i].terrainContents);
         brushcontent |= cm.leafs[i].brushContents;
         terriancontent |= cm.leafs[i].terrainContents;
     }
+
     FS_Printf( f, "\n");
     FS_Printf( f, "used content flags: 0x%08x  0x%08x\n", brushcontent, terriancontent);
     FS_Printf( f, "\n");
@@ -110,11 +107,10 @@ void CM_DebugCLeaf()
 
 void CM_DebugSubModels()
 {
-    int i;
     FS_Printf( f, "------------- SubModels.cLeaf -----------------\n");
-    uint32_t brushcontent = 0;
 
-    for(i = 0; i < cm.numSubModels; ++i)
+    uint32_t brushcontent = 0;
+    for(unsigned int i = 0; i < cm.numSubModels; ++i)
     {
         FS_Printf( f, "brushContents: 0x%08x\n", cm.cmodels[i].leaf.brushContents);
         brushcontent |= cm.cmodels[i].leaf.brushContents;
@@ -190,19 +186,13 @@ void CM_DebugDoAll_f()
 void CM_ReadBrushBsp_f()
 {
     unsigned int count;
-    int i;
+    dbrush_t* d = reinterpret_cast<dbrush_t*>(Com_GetBspLump(LUMP_BRUSHES, 4, &count));
 
-    struct dbrush_t* d = (struct dbrush_t*)Com_GetBspLump(8, 4, &count);
-
-
-
-    for(i = 0; i < count; ++i)
+    for(unsigned int i = 0; i < count; ++i)
     {
         Com_Printf(CON_CHANNEL_SYSTEM, "Mat: %d, numSides: %d\n", d->materialNum, d->numSides);
         ++d;
     }
-
-
 }
 
 

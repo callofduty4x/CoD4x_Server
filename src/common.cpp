@@ -49,9 +49,9 @@
 #include "sec_common.hpp"
 #include "httpftp.hpp"
 #include "huffman.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 #include "dobj.hpp"
-#include "xassets/extractor.h"
+#include "xassets/extractor.hpp"
 #include "sec_update.hpp"
 #include "bg_public.hpp"
 #include "cscr_stringlist.hpp"
@@ -59,7 +59,7 @@
 #include "win_localize.hpp"
 #include "tests.hpp"
 #include "null_client.hpp"
-#include "db_load.h"
+#include "db_load.hpp"
 
 #include <string.h>
 #include <setjmp.h>
@@ -80,7 +80,6 @@ cvar_t* com_maxFrameTime;
 cvar_t* com_animCheck;
 cvar_t* com_developer;
 cvar_t* useFastFile;
-cvar_t* com_developer;
 cvar_t* com_developer_script;
 cvar_t* com_logfile;
 cvar_t* com_sv_running;
@@ -143,7 +142,7 @@ typedef timedEventArg_t timedEventArgs_t[MAX_TIMEDEVENTARGS];
 typedef struct{
 	int evTime, evTriggerTime;
 	timedEventArgs_t evArguments;
-	void (*evFunction)();
+    void (*evFunction)(...);
 }timedSysEvent_t;
 
 
@@ -199,67 +198,63 @@ Com_AddTimedEvent
 */
 int QDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...)
 {
-	timedSysEvent_t  *ev;
-	int index;
-	int i;
-	int time;
-	int triggerTime;
+    timedSysEvent_t  *ev;
+    int index;
+    int time;
+    int triggerTime;
 
-	if ( timedEventHead >= MAX_TIMED_EVENTS )
-	{
-		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Com_AddTimedEvent: overflow - Lost one event\n");
-		// we are discarding an event, but don't leak memory
-		return -1;
-	}
+    if ( timedEventHead >= MAX_TIMED_EVENTS )
+    {
+        Com_PrintWarning(CON_CHANNEL_SYSTEM,"Com_AddTimedEvent: overflow - Lost one event\n");
+        // we are discarding an event, but don't leak memory
+        return -1;
+    }
 
-	index = timedEventHead;
+    index = timedEventHead;
+    time = Sys_Milliseconds();
+    triggerTime = delay + time;
 
-	time = Sys_Milliseconds();
+    while(qtrue)
+    {
+        if(index > 0)
+        {
+            ev = &timedEventBuffer[index -1];
 
-	triggerTime = delay + time;
+            if(ev->evTriggerTime < triggerTime)
+            {
+                timedEventBuffer[index] = *ev;
+                index--;
+                continue;
+            }
+        }
+        break;
+    }
 
-	while(qtrue)
-	{
-		if(index > 0){
+    if(argcount > MAX_TIMEDEVENTARGS)
+    {
+        Com_Error(ERR_FATAL, "Com_AddTimedEvent: Bad number of function arguments. Allowed range is 0 - %d arguments", MAX_TIMEDEVENTARGS);
+        return -1;
+    }
 
-			ev = &timedEventBuffer[index -1];
+    ev = &timedEventBuffer[index];
+    va_list		argptr;
+    va_start(argptr, argcount);
 
-			if(ev->evTriggerTime < triggerTime)
-			{
-				timedEventBuffer[index] = *ev;
-				index--;
-				continue;
-			}
-		}
-		break;
-	}
+    for(unsigned int i = 0; i < MAX_TIMEDEVENTARGS; i++)
+    {
+        if(i < argcount)
+            ev->evArguments[i].arg = va_arg(argptr, universalArg_t);
 
-	if(argcount > MAX_TIMEDEVENTARGS)
-	{
-		Com_Error(ERR_FATAL, "Com_AddTimedEvent: Bad number of function arguments. Allowed range is 0 - %d arguments", MAX_TIMEDEVENTARGS);
-		return -1;
-	}
+        ev->evArguments[i].size = 0;
+    }
 
-	ev = &timedEventBuffer[index];
+    va_end(argptr);
 
-	va_list		argptr;
-	va_start(argptr, argcount);
-
-	for(i = 0; i < MAX_TIMEDEVENTARGS; i++)
-	{
-		if(i < argcount)
-			ev->evArguments[i].arg = va_arg(argptr, universalArg_t);
-
-		ev->evArguments[i].size = 0;
-	}
-
-	va_end(argptr);
-
-	ev->evTime = time;
-	ev->evTriggerTime = triggerTime;
-	ev->evFunction = function;
-	timedEventHead++;
-	return index;
+    ev->evTime = time;
+    ev->evTriggerTime = triggerTime;
+    ev->evFunction = reinterpret_cast<void(*)(...)>(function);
+    timedEventHead++;
+    return index;
 }
 
 
@@ -342,39 +337,36 @@ Com_GetSystemEvent
 */
 sysEvent_t* Com_GetSystemEvent( void )
 {
-	char        *s;
-	// return if we have data
+    char        *s;
+    // return if we have data
 
-	if ( eventHead > eventTail )
-	{
-		eventTail++;
-		return &eventQueue[ ( eventTail - 1 ) & MASK_QUEUED_EVENTS ];
-	}
+    if ( eventHead > eventTail )
+    {
+        eventTail++;
+        return &eventQueue[ ( eventTail - 1 ) & MASK_QUEUED_EVENTS ];
+    }
 
-	Sys_EventLoop();
+    Sys_EventLoop();
 
-	// check for console commands
-	s = Sys_ConsoleInput();
-	if ( s )
-	{
-		char  *b;
-		int   len;
+    // check for console commands
+    s = Sys_ConsoleInput();
+    if ( s )
+    {
+        int   len = strlen( s ) + 1;
+        char *b = reinterpret_cast<char*>(S_Malloc( len ));
+        strcpy( b, s );
+        Com_QueueEvent( 0, SE_CONSOLE, 0, 0, len, b );
+    }
 
-		len = strlen( s ) + 1;
-		b = S_Malloc( len );
-		strcpy( b, s );
-		Com_QueueEvent( 0, SE_CONSOLE, 0, 0, len, b );
-	}
+    // return if we have data
+    if ( eventHead > eventTail )
+    {
+        eventTail++;
+        return &eventQueue[ ( eventTail - 1 ) & MASK_QUEUED_EVENTS ];
+    }
 
-	// return if we have data
-	if ( eventHead > eventTail )
-	{
-		eventTail++;
-		return &eventQueue[ ( eventTail - 1 ) & MASK_QUEUED_EVENTS ];
-	}
-
-	// create an empty event to return
-	return NULL;
+    // create an empty event to return
+    return nullptr;
 }
 
 
@@ -452,12 +444,12 @@ void Com_TimedEventLoop( void ) {
 }
 
 
-int Com_IsDeveloper()
+qboolean Com_IsDeveloper()
 {
     if(com_developer && com_developer->integer)
-        return com_developer->integer;
+        return qtrue;
 
-    return 0;
+    return qfalse;
 
 }
 
@@ -557,15 +549,14 @@ int Com_RandomInt()
 Com_HashKey
 ============
 */
-int Com_HashKey( char *string, int maxlen ) {
-	int register hash, i;
+int Com_HashKey( char *string, int maxlen )
+{
+    int hash = 0;
+    for (int i = 0; i < maxlen && string[i] != '\0'; i++ )
+        hash += string[i] * ( 119 + i );
 
-	hash = 0;
-	for ( i = 0; i < maxlen && string[i] != '\0'; i++ ) {
-		hash += string[i] * ( 119 + i );
-	}
-	hash = ( hash ^ ( hash >> 10 ) ^ ( hash >> 20 ) );
-	return hash;
+    hash = ( hash ^ ( hash >> 10 ) ^ ( hash >> 20 ) );
+    return hash;
 }
 
 
@@ -649,10 +640,10 @@ static void Com_InitCvars( void ){
     com_developer = Cvar_RegisterInt("developer", 0, 0, 2, 0, "Enable development options");
     com_developer_script = Cvar_RegisterBool ("developer_script", qfalse, 16, "Enable developer script comments");
     com_logfile = Cvar_RegisterEnum("logfile", logfileEnum, 0, 0, "Write to logfile");
-    com_logrcon = Cvar_RegisterBool("logrcon", 0, 0, "Write response of rcon commands to logfile");
+    com_logrcon = Cvar_RegisterBool("logrcon", qfalse, 0, "Write response of rcon commands to logfile");
     com_sv_running = Cvar_RegisterBool("sv_running", qfalse, 64, "Server is running");
     com_securemodevar = Cvar_RegisterBool("securemode", qfalse, CVAR_INIT, "CoD4 runs in secure mode which restricts execution of external scripts/programs and loading of unauthorized shared libraries/plugins. This is recommended in a shared hosting environment");
-    com_securemode = com_securemodevar->boolean;
+    com_securemode = com_securemodevar->boolean ? qtrue : qfalse;
 }
 
 
@@ -717,7 +708,7 @@ void Com_Init(char* commandLine){
     }
 
     Cbuf_AddText( "exec default_mp.cfg\n");
-    Cbuf_Execute(0,0); // Always execute after exec to prevent text buffer overflowing
+    Cbuf_Execute(); // Always execute after exec to prevent text buffer overflowing
 
 /*
     Good bye
@@ -805,7 +796,7 @@ void Com_Init(char* commandLine){
     com_frameTime = Sys_Milliseconds();
 
     NV_LoadConfig();
-    Cbuf_Execute( 0, 0 );
+    Cbuf_Execute();
 
 
 
@@ -908,55 +899,52 @@ Com_ModifyUsec
 ================
 */
 
-unsigned int Com_ModifyUsec( unsigned int usec ) {
-	int		clampTime;
+unsigned int Com_ModifyUsec( unsigned int usec )
+{
+    unsigned int clampTime = 0;
 
-	//
-	// modify time for debugging values
-	//
-	if ( com_fixedtime->integer ) {
-		usec = com_fixedtime->integer*1000;
-	} else if ( com_timescale->value ) {
-		usec *= com_timescale->value;
-	}
+    //
+    // modify time for debugging values
+    //
+    if ( com_fixedtime->integer ) {
+        usec = com_fixedtime->integer*1000;
+    } else if ( com_timescale->value ) {
+        usec *= com_timescale->value;
+    }
 
-	// don't let it scale below 1 usec
-	if ( usec < 1 && com_timescale->value) {
-		usec = 1;
-	}
+    // don't let it scale below 1 usec
+    if ( usec < 1 && com_timescale->value) {
+        usec = 1;
+    }
 
-	if ( com_dedicated->integer ) {
-		// dedicated servers don't want to clamp for a much longer
-		// period, because it would mess up all the client's views
-		// of time.
+    if ( com_dedicated->integer ) {
+        // dedicated servers don't want to clamp for a much longer
+        // period, because it would mess up all the client's views
+        // of time.
 #ifdef _LAGDEBUG
-		if (usec > 280000)
+        if (usec > 280000)
 #else
-		if (usec > 500000)
+        if (usec > 500000)
 #endif
-		{
-			Com_Printf(CON_CHANNEL_SYSTEM, "^5Hitch warning: %i msec frame time\n", usec / 1000 );
+        {
+            Com_Printf(CON_CHANNEL_SYSTEM, "^5Hitch warning: %i msec frame time\n", usec / 1000 );
 #ifdef _LAGDEBUG
-			Com_DPrintfLogfile("^5Hitch warning: %i msec frame time\n", usec / 1000);
+            Com_DPrintfLogfile("^5Hitch warning: %i msec frame time\n", usec / 1000);
 #endif
-		}
-		clampTime = 5000000;
-	} else if ( !com_sv_running->boolean ) {
-		// clients of remote servers do not want to clamp time, because
-		// it would skew their view of the server's time temporarily
-		clampTime = 5000000;
-	} else {
-		// for local single player gaming
-		// we may want to clamp the time to prevent players from
-		// flying off edges when something hitches.
-		clampTime = 200000;
-	}
+        }
+        clampTime = 5000000;
+    } else if ( !com_sv_running->boolean ) {
+        // clients of remote servers do not want to clamp time, because
+        // it would skew their view of the server's time temporarily
+        clampTime = 5000000;
+    } else {
+        // for local single player gaming
+        // we may want to clamp the time to prevent players from
+        // flying off edges when something hitches.
+        clampTime = 200000;
+    }
 
-	if ( usec > clampTime ) {
-		usec = clampTime;
-	}
-
-	return usec;
+    return usec <= clampTime ? usec : clampTime;
 }
 
 static time_t realtime;
@@ -1057,7 +1045,7 @@ __optimize3 void Com_Frame( void ) {
 	// mess with msec if needed
 	usec = Com_ModifyUsec(usec);
 
-	Cbuf_Execute (0 ,0);
+    Cbuf_Execute();
 	//
 	// server side
 	//
@@ -1076,12 +1064,12 @@ __optimize3 void Com_Frame( void ) {
 	PHandler_Event(PLUGINS_ONFRAME);
 
 	Com_TimedEventLoop();
-	Cbuf_Execute (0 ,0);
+    Cbuf_Execute();
 	NET_Sleep(0);
 	NET_TcpServerPacketEventLoop();
 	Sys_RunThreadCallbacks();
-  Plugin_RunThreadCallbacks();
-	Cbuf_Execute (0 ,0);
+    Plugin_RunThreadCallbacks();
+    Cbuf_Execute();
 
 #ifdef TIMEDEBUG
 	if ( com_speeds->integer ) {
@@ -1189,92 +1177,93 @@ char *Com_StringContains( char *str1, char *str2, int casesensitive ) {
 Com_Filter
 ============
 */
-int Com_Filter( char *filter, char *name, int casesensitive ) {
-	char buf[MAX_TOKEN_CHARS];
-	char *ptr;
-	int i, found;
+int Com_Filter(const char *filter, char *name, int casesensitive )
+{
+    char buf[MAX_TOKEN_CHARS];
+    char *ptr;
+    int i, found;
 
-	while ( *filter ) {
-		if ( *filter == '*' ) {
-			filter++;
-			for ( i = 0; *filter; i++ ) {
-				if ( *filter == '*' || *filter == '?' ) {
-					break;
-				}
-				buf[i] = *filter;
-				filter++;
-			}
-			buf[i] = '\0';
-			if ( strlen( buf ) ) {
-				ptr = Com_StringContains( name, buf, casesensitive );
-				if ( !ptr ) {
-					return qfalse;
-				}
-				name = ptr + strlen( buf );
-			}
-		} else if ( *filter == '?' )      {
-			filter++;
-			name++;
-		} else if ( *filter == '[' && *( filter + 1 ) == '[' )           {
-			filter++;
-		} else if ( *filter == '[' )      {
-			filter++;
-			found = qfalse;
-			while ( *filter && !found ) {
-				if ( *filter == ']' && *( filter + 1 ) != ']' ) {
-					break;
-				}
-				if ( *( filter + 1 ) == '-' && *( filter + 2 ) && ( *( filter + 2 ) != ']' || *( filter + 3 ) == ']' ) ) {
-					if ( casesensitive ) {
-						if ( *name >= *filter && *name <= *( filter + 2 ) ) {
-							found = qtrue;
-						}
-					} else {
-						if ( toupper( *name ) >= toupper( *filter ) &&
-							 toupper( *name ) <= toupper( *( filter + 2 ) ) ) {
-							found = qtrue;
-						}
-					}
-					filter += 3;
-				} else {
-					if ( casesensitive ) {
-						if ( *filter == *name ) {
-							found = qtrue;
-						}
-					} else {
-						if ( toupper( *filter ) == toupper( *name ) ) {
-							found = qtrue;
-						}
-					}
-					filter++;
-				}
-			}
-			if ( !found ) {
-				return qfalse;
-			}
-			while ( *filter ) {
-				if ( *filter == ']' && *( filter + 1 ) != ']' ) {
-					break;
-				}
-				filter++;
-			}
-			filter++;
-			name++;
-		} else {
-			if ( casesensitive ) {
-				if ( *filter != *name ) {
-					return qfalse;
-				}
-			} else {
-				if ( toupper( *filter ) != toupper( *name ) ) {
-					return qfalse;
-				}
-			}
-			filter++;
-			name++;
-		}
-	}
-	return qtrue;
+    while ( *filter ) {
+        if ( *filter == '*' ) {
+            filter++;
+            for ( i = 0; *filter; i++ ) {
+                if ( *filter == '*' || *filter == '?' ) {
+                    break;
+                }
+                buf[i] = *filter;
+                filter++;
+            }
+            buf[i] = '\0';
+            if ( strlen( buf ) ) {
+                ptr = Com_StringContains( name, buf, casesensitive );
+                if ( !ptr ) {
+                    return qfalse;
+                }
+                name = ptr + strlen( buf );
+            }
+        } else if ( *filter == '?' )      {
+            filter++;
+            name++;
+        } else if ( *filter == '[' && *( filter + 1 ) == '[' )           {
+            filter++;
+        } else if ( *filter == '[' )      {
+            filter++;
+            found = qfalse;
+            while ( *filter && !found ) {
+                if ( *filter == ']' && *( filter + 1 ) != ']' ) {
+                    break;
+                }
+                if ( *( filter + 1 ) == '-' && *( filter + 2 ) && ( *( filter + 2 ) != ']' || *( filter + 3 ) == ']' ) ) {
+                    if ( casesensitive ) {
+                        if ( *name >= *filter && *name <= *( filter + 2 ) ) {
+                            found = qtrue;
+                        }
+                    } else {
+                        if ( toupper( *name ) >= toupper( *filter ) &&
+                             toupper( *name ) <= toupper( *( filter + 2 ) ) ) {
+                            found = qtrue;
+                        }
+                    }
+                    filter += 3;
+                } else {
+                    if ( casesensitive ) {
+                        if ( *filter == *name ) {
+                            found = qtrue;
+                        }
+                    } else {
+                        if ( toupper( *filter ) == toupper( *name ) ) {
+                            found = qtrue;
+                        }
+                    }
+                    filter++;
+                }
+            }
+            if ( !found ) {
+                return qfalse;
+            }
+            while ( *filter ) {
+                if ( *filter == ']' && *( filter + 1 ) != ']' ) {
+                    break;
+                }
+                filter++;
+            }
+            filter++;
+            name++;
+        } else {
+            if ( casesensitive ) {
+                if ( *filter != *name ) {
+                    return qfalse;
+                }
+            } else {
+                if ( toupper( *filter ) != toupper( *name ) ) {
+                    return qfalse;
+                }
+            }
+            filter++;
+            name++;
+        }
+    }
+    return qtrue;
 }
 
 /*
@@ -1550,7 +1539,7 @@ void __cdecl Com_Restart()
     DB_ReleaseXAssets();
   }
   Com_SetScriptSettings();
-  com_fixedConsolePosition = 0;
+  com_fixedConsolePosition = qfalse;
   XAnimInit();
   DObjInit();
   Com_InitDObj();

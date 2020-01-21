@@ -5,11 +5,11 @@ typedef unsigned int uint;
 
 #define KEYWORD_END ((uint)0xFFFFFFFF)
 
-typedef struct KeyWord_t
+struct KeyWord_t
 {
     uint key;
-    char *word;
-} KeyWord_t;
+    const char *word;
+};
 
 const char *find_word(const KeyWord_t *table, const uint idx);
 

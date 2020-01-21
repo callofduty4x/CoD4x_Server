@@ -61,29 +61,27 @@ FindMatches
 
 ===============
 */
-static void FindMatches( const char *s ) {
-	int		i;
+static void FindMatches( const char *s )
+{
+    if ( Q_stricmpn( s, completionString, strlen( completionString ) ) )
+        return;
 
-	if ( Q_stricmpn( s, completionString, strlen( completionString ) ) ) {
-		return;
-	}
-	matchCount++;
-	if ( matchCount == 1 ) {
-		Q_strncpyz( shortestMatch, s, sizeof( shortestMatch ) );
-		return;
-	}
+    matchCount++;
+    if ( matchCount == 1 )
+        return Q_strncpyz( shortestMatch, s, sizeof( shortestMatch ) );
 
-	// cut shortestMatch to the amount common with s
-	for ( i = 0 ; shortestMatch[i] ; i++ ) {
-		if ( i >= strlen( s ) ) {
-			shortestMatch[i] = 0;
-			break;
-		}
+    // cut shortestMatch to the amount common with s
+    for (int i = 0 ; shortestMatch[i] ; ++i )
+    {
+        if ( i >= static_cast<int>(strlen(s)))
+        {
+            shortestMatch[i] = 0;
+            break;
+        }
 
-		if ( tolower(shortestMatch[i]) != tolower(s[i]) ) {
-			shortestMatch[i] = 0;
-		}
-	}
+        if ( tolower(shortestMatch[i]) != tolower(s[i]) )
+            shortestMatch[i] = 0;
+    }
 }
 
 /*
@@ -120,17 +118,14 @@ static void PrintCvarMatches( const char *s ) {
 Field_FindFirstSeparator
 ===============
 */
-static char *Field_FindFirstSeparator( char *s )
+static char* Field_FindFirstSeparator( char *s )
 {
-	int i;
+    int len = strlen(s);
+    for(int i = 0; i < len; ++i)
+        if( s[i] == ';' )
+            return &s[i];
 
-	for( i = 0; i < strlen( s ); i++ )
-	{
-		if( s[ i ] == ';' )
-			return &s[ i ];
-	}
-
-	return NULL;
+    return nullptr;
 }
 
 /*
@@ -190,71 +185,61 @@ Field_CompleteCommand
 
 void Field_CompleteCommand( char *cmd, qboolean doCommands, qboolean doCvars )
 {
-	int		completionArgument = 0;
+    int completionArgument = 0;
 
-	// Skip leading whitespace and quotes
-	cmd = Com_SkipCharset( cmd, " \"" );
+    // Skip leading whitespace and quotes
+    cmd = Com_SkipCharset( cmd, " \"" );
 
-	Cmd_TokenizeString( cmd );
-	completionArgument = Cmd_Argc( );
+    Cmd_TokenizeString( cmd );
+    completionArgument = Cmd_Argc( );
 
+    // If there is trailing whitespace on the cmd
+    if( *( cmd + strlen( cmd ) - 1 ) == ' ' )
+    {
+        completionString = "";
+        completionArgument++;
+    }
+    else
+        completionString = Cmd_Argv( completionArgument - 1 );
 
+    if( completionArgument > 1 )
+    {
+        if (char* p = Field_FindFirstSeparator( cmd ))
+            Field_CompleteCommand( p + 1, qtrue, qtrue ); // Compound command
+        else
+        {
+            const char *baseCmd = Cmd_Argv( 0 );
+            Cmd_CompleteArgument( baseCmd, cmd, completionArgument );
+        }
+    }
+    else
+    {
+        if( completionString[0] == '\\' || completionString[0] == '/' )
+            completionString++;
 
+        matchCount = 0;
+        shortestMatch[ 0 ] = 0;
 
-	// If there is trailing whitespace on the cmd
-	if( *( cmd + strlen( cmd ) - 1 ) == ' ' )
-	{
-		completionString = "";
-		completionArgument++;
-	}
-	else
-		completionString = Cmd_Argv( completionArgument - 1 );
+        if( strlen( completionString ) == 0 )
+            return Cmd_EndTokenizedString();
 
+        if( doCommands )
+            Cmd_CommandCompletion( FindMatches, completionString );
 
+        if( doCvars )
+            Cvar_CommandCompletion( FindMatches );
 
+        if( !Field_Complete( ) )
+        {
+            // run through again, printing matches
+            if( doCommands )
+                Cmd_CommandCompletion( PrintMatches, completionString );
 
-	if( completionArgument > 1 )
-	{
-		const char *baseCmd = Cmd_Argv( 0 );
-		char *p;
-
-		if( ( p = Field_FindFirstSeparator( cmd ) ) )
-			Field_CompleteCommand( p + 1, qtrue, qtrue ); // Compound command
-		else
-			Cmd_CompleteArgument( baseCmd, cmd, completionArgument );
-
-	}else{
-
-
-
-		if( completionString[0] == '\\' || completionString[0] == '/' )
-			completionString++;
-
-		matchCount = 0;
-		shortestMatch[ 0 ] = 0;
-
-		if( strlen( completionString ) == 0 ){
-			Cmd_EndTokenizedString( );
-			return;
-		}
-
-		if( doCommands )
-			Cmd_CommandCompletion( FindMatches, completionString );
-
-		if( doCvars )
-			Cvar_CommandCompletion( FindMatches );
-
-		if( !Field_Complete( ) )
-		{
-			// run through again, printing matches
-			if( doCommands )
-				Cmd_CommandCompletion( PrintMatches, completionString );
-
-			if( doCvars )
-				Cvar_CommandCompletion( PrintCvarMatches );
-		}
-	}
-	Cmd_EndTokenizedString( );
+            if( doCvars )
+                Cvar_CommandCompletion( PrintCvarMatches );
+        }
+    }
+    Cmd_EndTokenizedString( );
 }
 
 /*

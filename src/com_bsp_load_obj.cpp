@@ -16,7 +16,7 @@ struct BspChunk
 
 typedef struct BspHeader
 {
-  unsigned int ident;
+  unsigned int ident; // "IBSP"
   unsigned int version;
   unsigned int chunkCount;
   struct BspChunk chunks[100];
@@ -41,7 +41,7 @@ bool __cdecl Com_IsBspLoaded()
   return comBspGlob.header != 0;
 }
 
-int __cdecl Com_GetBspLumpCountForVersion(const int version)
+unsigned int __cdecl Com_GetBspLumpCountForVersion(const int version)
 {
   assert(version >= 6 && version <= 18);
 
@@ -70,14 +70,10 @@ bool __cdecl Com_CheckVersionLumpCountError(int version)
 
 bool __cdecl Com_BspError()
 {
-  if ( comBspGlob.header->ident == (uint32_t)'PSBI' && comBspGlob.header->version >= 6 && comBspGlob.header->version <= 45 )
-  {
-    if(Com_CheckVersionLumpCountError(comBspGlob.header->version) == 0)
-    {
-        return false;
-    }
-  }
-  return true;
+    if ( comBspGlob.header->ident == 0x50534249 && comBspGlob.header->version >= 6 && comBspGlob.header->version <= 45 )
+        if(Com_CheckVersionLumpCountError(comBspGlob.header->version) == 0)
+            return false;
+    return true;
 }
 
 void __cdecl Com_LoadBsp(const char *filename)

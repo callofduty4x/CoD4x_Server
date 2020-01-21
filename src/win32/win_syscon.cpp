@@ -259,7 +259,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		return DefWindowProc( hWnd, uMsg, wParam, lParam );
 	case WM_TIMER:
 		if ( wParam == 1 ) {
-			s_timePolarity = !s_timePolarity;
+            s_timePolarity = s_timePolarity ? qfalse : qtrue;
 			if ( s_wcd.hwndErrorBox ) {
 				InvalidateRect( s_wcd.hwndErrorBox, NULL, FALSE );
 			}
@@ -322,7 +322,7 @@ void CON_InitInternal( void ) {
 	wc.hInstance     = g_wv.hInstance;
 	wc.hIcon         = LoadIcon( g_wv.hInstance, MAKEINTRESOURCE( IDI_ICON1 ) );
 	wc.hCursor       = LoadCursor( NULL,IDC_ARROW );
-	wc.hbrBackground = (void *)COLOR_WINDOW;
+    wc.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW);
 	wc.lpszMenuName  = 0;
 	wc.lpszClassName = DEDCLASS;
 

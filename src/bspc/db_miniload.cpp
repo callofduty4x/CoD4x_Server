@@ -53,7 +53,7 @@
 #include "../physicalmemory.h"
 #include "../cscr_stringlist.h"
 #include "../r_public.h"
-#include "db_load.h"
+#include "db_load.hpp"
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>

@@ -272,9 +272,8 @@ qboolean __cdecl I_iscsym(int c);
 
 int SV_Cmd_Argc( void );
 int	Cmd_Argc( void );
-char	*SV_Cmd_Argv( int arg );
+const char* SV_Cmd_Argv( int arg );
 void	SV_Cmd_ArgvBuffer( int arg, char *buffer, int bufferLength );
-char	*Cmd_Argv( int arg );
 char	*Cmd_Args( char* buff, int bufsize );
 char	*Cmd_Argsv( int arg, char* buff, int bufsize );
 
@@ -330,7 +329,7 @@ qboolean QDECL XML_OpenTag( xml_t *base, char* root, int count,... );
 void XML_CloseTag(xml_t *base);
 void XML_AppendToBuffer( xml_t *base, const char* s );
 
-char *Com_SkipCharset( char *s, char *sep );
+char *Com_SkipCharset( char *s, const char *sep );
 char *Com_SkipTokens( char *s, int numTokens, char *sep );
 
 void COM_DefaultExtension( char *path, int maxSize, const char *extension );

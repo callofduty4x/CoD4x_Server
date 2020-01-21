@@ -37,7 +37,7 @@
 #include "sec_crypto.hpp"
 #include "cmd.hpp"
 #include "sapi.h"
-#include "xassets/extractor.h"
+#include "xassets/extractor.hpp"
 #include <libgen.h>
 #include <signal.h>
 #include <stdarg.h>

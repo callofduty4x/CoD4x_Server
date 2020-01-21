@@ -1340,17 +1340,13 @@ void XML_CloseTag(xml_t *base) {
 Com_CharIsOneOfCharset
 ==================
 */
-static qboolean Com_CharIsOneOfCharset( char c, char *set )
+static qboolean Com_CharIsOneOfCharset( char c, const char *set )
 {
-	int i;
+    for(size_t i = 0; i < strlen(len); ++i)
+        if( set[i] == c )
+            return qtrue;
 
-	for( i = 0; i < strlen( set ); i++ )
-	{
-		if( set[ i ] == c )
-			return qtrue;
-	}
-
-	return qfalse;
+    return qfalse;
 }
 
 /*
@@ -1358,19 +1354,19 @@ static qboolean Com_CharIsOneOfCharset( char c, char *set )
 Com_SkipCharset
 ==================
 */
-char *Com_SkipCharset( char *s, char *sep )
+char* Com_SkipCharset( char *s, const char *sep )
 {
-	char	*p = s;
+    char *p = s;
 
-	while( p )
-	{
-		if( Com_CharIsOneOfCharset( *p, sep ) )
-			p++;
-		else
-			break;
-	}
+    while( p )
+    {
+        if(Com_CharIsOneOfCharset( *p, sep ))
+            p++;
+        else
+            break;
+    }
 
-	return p;
+    return p;
 }
 
 /*

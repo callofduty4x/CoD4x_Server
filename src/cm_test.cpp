@@ -153,7 +153,7 @@ int CM_PointContentsLeafBrushNode_r(const float *p, cLeafBrushNode_t *node)
 {
   int contents;
   cbrush_t *b;
-  signed int i, k, u;
+  signed int k, u;
   float d;
 
   contents = 0;
@@ -177,12 +177,13 @@ int CM_PointContentsLeafBrushNode_r(const float *p, cLeafBrushNode_t *node)
     for(u = 0; b->mins[u] <= p[u] && b->maxs[u] >= p[u] && u < 3; ++u);
     if ( u >= 3 )
     {
-		// see if the point is in the brush
-        for ( i = 0 ; i < b->numsides ; i++ ) {
+        // see if the point is in the brush
+        unsigned int i = 0;
+        for (; i < b->numsides; i++)
+        {
             d = DotProduct( p, b->sides[i].plane->normal );
-            if ( d > b->sides[i].plane->dist ) {
+            if ( d > b->sides[i].plane->dist )
                 break;
-            }
         }
         if ( i == b->numsides ) {
             contents |= b->contents;

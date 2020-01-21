@@ -51,7 +51,7 @@
 #include "cscr_variable.hpp"
 #include "g_sv_main.hpp"
 #include "sapi.h"
-#include "db_load.h"
+#include "db_load.hpp"
 #include "sec_crypto.hpp"
 
 #include <string.h>

@@ -20,7 +20,7 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
     Com_PrintError(CON_CHANNEL_ERROR, "Assert failed - Exp: %s, File: %s, Line: %d, Function: %s %s\n",exp, filename, line, func, message);
     Sys_PrintBacktrace();
     asm("int $3");
-    return 0;
+    return qfalse;
 }
 
 

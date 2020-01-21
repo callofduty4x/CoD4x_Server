@@ -19,11 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
-
-
-#ifndef __QCOMMON_H__
-#define __QCOMMON_H__
+#pragma once
 
 #include <time.h>
 #include "cvar.hpp"
@@ -47,7 +43,7 @@ void __cdecl Com_Restart(void);
 void __cdecl Com_WriteConfig_f(void);
 void __cdecl Com_WriteDefaults_f(void);
 void __cdecl Com_Close(void);
-int __cdecl Com_Filter( char* filter, char *name, int casesensitive);
+int __cdecl Com_Filter(const char* filter, char *name, int casesensitive);
 
 void Com_Frame(void);
 void Com_Init(char* cmdline);
@@ -82,7 +78,7 @@ extern cvar_t* com_logrcon; //Output response to rcon commands to internal conso
 extern qboolean com_securemode;
 extern unsigned int com_expectedHunkUsage;
 extern qboolean com_fixedConsolePosition;
-int Com_IsDeveloper();
+qboolean Com_IsDeveloper();
 qboolean Com_LoadBinaryImage();
 void __cdecl Com_ErrorAbort();
 void Com_SyncThreads();
@@ -140,7 +136,3 @@ const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, in
 #ifdef __cplusplus
 }
 #endif
-
-
-#endif
-

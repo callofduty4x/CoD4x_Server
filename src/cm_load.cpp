@@ -11,11 +11,12 @@ clipMap_t cm;
 
 #ifndef BSPC
 int CM_LeafCluster( int leafnum ) {
-	if ( leafnum < 0 || leafnum >= cm.numLeafs ) {
-		Com_PrintError(CON_CHANNEL_ERROR, "CM_LeafCluster: bad number" );
-		return 0;
-	}
-	return cm.leafs[leafnum].cluster;
+    if (leafnum < 0 || leafnum >= static_cast<int>(cm.numLeafs))
+    {
+        Com_PrintError(CON_CHANNEL_ERROR, "CM_LeafCluster: bad number" );
+        return 0;
+    }
+    return cm.leafs[leafnum].cluster;
 }
 
 #endif
@@ -25,11 +26,12 @@ int CM_LeafCluster( int leafnum ) {
 CM_InlineModel
 ==================
 */
-clipHandle_t    CM_InlineModel( int index ) {
-	if ( index < 0 || index >= cm.numSubModels ) {
-		Com_Error( ERR_DROP, "CM_InlineModel: bad number" );
-	}
-	return index;
+clipHandle_t CM_InlineModel(int index)
+{
+    if (index < 0 || index >= static_cast<int>(cm.numSubModels))
+        Com_Error( ERR_DROP, "CM_InlineModel: bad number" );
+
+    return index;
 }
 
 int     CM_NumInlineModels( void ) {
@@ -110,12 +112,12 @@ void __cdecl CM_LoadMapData_FastFile(const char *name)
 
 void __cdecl CM_LoadMapData_LoadObj(const char *name)
 {
-  if ( cm.isInUse == qfalse || Q_stricmp(cm.name, name) )
-  {
-    CM_LoadMapFromBsp(name, 1);
-    CM_LoadStaticModels();
-    DynEnt_LoadEntities(name);
-  }
+    if (cm.isInUse == qfalse || Q_stricmp(cm.name, name))
+    {
+        CM_LoadMapFromBsp(name, 1);
+        CM_LoadStaticModels();
+        DynEnt_LoadEntities();
+    }
 }
 
 void __cdecl CM_LoadMapData(const char *name)
@@ -178,7 +180,7 @@ void __cdecl CM_LoadMap(const char *name, int *checksum)
  
   CM_LoadMapData(name);
   CM_InitAllThreadData();
-  cm.isInUse = 1;
+  cm.isInUse = qtrue;
   *checksum = cm.checksum;
 }
 
@@ -207,9 +209,9 @@ void *__cdecl CM_Hunk_Alloc(int size, const char* what)
   return Hunk_Alloc(size, what, 0);
 }
 
-char *__cdecl CM_Hunk_AllocateTempMemoryHigh(int size)
+char* __cdecl CM_Hunk_AllocateTempMemoryHigh(int size)
 {
-  return Hunk_AllocateTempMemoryHigh(size);
+    return reinterpret_cast<char*>(Hunk_AllocateTempMemoryHigh(size));
 }
 
 void __cdecl CM_Hunk_CheckTempMemoryHighClear()

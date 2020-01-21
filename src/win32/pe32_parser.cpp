@@ -188,7 +188,7 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 
 	do
 	{
-		char* modulname = PE32_FindFileOffset(buff, len ,imports->Name);
+        char* modulname = reinterpret_cast<char*>(PE32_FindFileOffset(buff, len ,imports->Name));
 		if(modulname == NULL)
 		{
 			Com_Printf(CON_CHANNEL_SYSTEM,"PE file has an invalid importtable\n");
@@ -201,9 +201,9 @@ char** PE32_GetStrTable(void *buff, int len, sharedlib_data_t *text)
 //		Com_Printf(CON_CHANNEL_SYSTEM,"Module: %s\n", modulname);
 		if(imports->OriginalFirstThunk > 0)
 		{
-			Thunk = PE32_FindFileOffset(buff, len, imports->OriginalFirstThunk);
+            Thunk = reinterpret_cast<IMAGE_THUNK_DATA*>(PE32_FindFileOffset(buff, len, imports->OriginalFirstThunk));
 		}else if(imports->FirstThunk > 0){
-			Thunk = PE32_FindFileOffset(buff, len, imports->FirstThunk);			
+            Thunk = reinterpret_cast<IMAGE_THUNK_DATA*>(PE32_FindFileOffset(buff, len, imports->FirstThunk));
 		}else{
 			Thunk = NULL;
 		}
