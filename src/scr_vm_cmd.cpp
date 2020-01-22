@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -53,7 +53,7 @@ qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean d
 	}
 
 	// use a small malloc to avoid zone fragmentation
-	cmd = S_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1);
+    cmd = reinterpret_cast<scr_function_t*>(S_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1));
 	strcpy((char*)(cmd +1), cmd_name);
 	cmd->name = (char*)(cmd +1);
 	cmd->function = function;
@@ -119,7 +119,7 @@ void Scr_ClearFunctions( )
 Scr_GetFunction
 ============
 */
-__cdecl void* Scr_GetFunction( const char** v_functionName, qboolean* v_developer ) {
+__cdecl xfunction_t Scr_GetFunction( const char** v_functionName, qboolean* v_developer ) {
 
 	scr_function_t  *cmd;
 
@@ -129,7 +129,7 @@ __cdecl void* Scr_GetFunction( const char** v_functionName, qboolean* v_develope
 		{
 			*v_developer = cmd->developer;
 			*v_functionName = cmd->name;
-			return cmd->function;
+            return cmd->function;
 		}
 	}
 	return NULL;
@@ -156,10 +156,10 @@ qboolean Scr_AddMethod( const char *cmd_name, xmethod_t method, qboolean develop
 	}
 
 	// use a small malloc to avoid zone fragmentation
-	cmd = S_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1);
+    cmd = reinterpret_cast<scr_method_t*>(S_Malloc( sizeof( scr_function_t ) + strlen(cmd_name) + 1));
 	strcpy((char*)(cmd +1), cmd_name);
 	cmd->name = (char*)(cmd +1);
-	cmd->function = (xfunction_t)method;
+    cmd->function = method;
 	cmd->developer = developer;
 	cmd->next = scr_methods;
 	scr_methods = cmd;
@@ -221,7 +221,7 @@ void Scr_ClearMethods(  )
 Scr_GetMethod
 ============
 */
-__cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer ) {
+__cdecl xmethod_t Scr_GetMethod( const char** v_functionName, qboolean* v_developer ) {
 
 	scr_method_t  *cmd;
 
@@ -231,7 +231,7 @@ __cdecl void* Scr_GetMethod( const char** v_functionName, qboolean* v_developer 
 		{
 			*v_developer = cmd->developer;
 			*v_functionName = cmd->name;
-			return cmd->function;
+            return cmd->function;
 		}
 	}
 	return NULL;

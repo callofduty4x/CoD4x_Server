@@ -7,24 +7,23 @@
 
 qboolean __cdecl G_SpawnString(SpawnVar *spawnVar, const char *key, const char *defaultString, const char **out)
 {
-	int i;
+    if ( spawnVar->numSpawnVars <= 0 )
+    {
+        *out = defaultString;
+        return qfalse;
+    }
 
-	if ( spawnVar->numSpawnVars <= 0 )
-	{
-		*out = defaultString;
-		return 0;
-	}
+    for(int i = 0; i < spawnVar->numSpawnVars; ++i)
+    {
+        if(!Q_stricmp(key, spawnVar->spawnVars[i].key))
+        {
+            *out = spawnVar->spawnVars[i].value;
+            return qtrue;
+        }
+    }
 
-	for(i = 0; i < spawnVar->numSpawnVars; i++)
-	{
-		if(!Q_stricmp(key, spawnVar->spawnVars[i].key))
-		{
-			*out = spawnVar->spawnVars[i].value;
-			return 1;
-		}
-	}
-	*out = defaultString;
-	return 0;
+    *out = defaultString;
+    return qfalse;
 }
 
 qboolean __cdecl G_LevelSpawnString(const char *key, const char *defaultString, const char **out)
@@ -69,9 +68,6 @@ void __cdecl G_VehSpawner(gentity_t *ent)
 
 void __cdecl G_VehCollmapSpawner(gentity_t *ent)
 {
-
     ent->r.contents = 0;
-    ent->s.eType = 15;
-
+    ent->s.eType = ET_VEHICLE_COLLMAP;
 }
-

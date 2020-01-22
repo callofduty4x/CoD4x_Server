@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -583,9 +583,9 @@ NET_TCPData
 Sends a data message in an out-of-band datagram
 ================
 */
-qboolean NET_SendData( int sock, msg_t* msg) {
-
-	return NET_TcpSendData( sock, msg->data, msg->cursize, NULL, 0 );
+qboolean NET_SendData( int sock, msg_t* msg)
+{
+    return NET_TcpSendData( sock, msg->data, msg->cursize, NULL, 0 ) ? qtrue : qfalse;
 }
 
 

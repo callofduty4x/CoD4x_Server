@@ -238,7 +238,7 @@ void FS_StripSeperators(char* path);
 void FS_StripTrailingSeperator( char *path );
 void FS_ReplaceSeparators( char *path );
 int FS_CalculateChecksumForFile(const char* filename, int *crc32);
-int FS_WriteChecksumInfo(const char* filename, byte* data, int maxsize);
+int FS_WriteChecksumInfo(const char* filename, byte* data, size_t maxsize);
 int FS_WriteFileOSPath( char *ospath, const void *buffer, int size );
 void FS_ClearPakReferences( int flags );
 int FS_filelengthForOSPath( const char* ospath );
@@ -257,6 +257,8 @@ void FS_CloseLogFile(fileHandle_t f);
 fileHandle_t FS_OpenLogfile(const char* name, char mode);
 void FS_WriteLogFlush(fileHandle_t f);
 int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h );
+void FS_AddGameDirectory_Single(const char *path, const char *dir_nolocal, qboolean localized, int index);
+
 #ifdef __cplusplus
 }
 #endif

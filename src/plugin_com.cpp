@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -45,6 +45,7 @@ P_P_F qboolean Plugin_IsLoaded(char *name){
     }
     return qfalse;
 }
+
 P_P_F version_t *Plugin_GetVersion(char *name)
 {
     static pluginInfo_t info;
@@ -52,22 +53,26 @@ P_P_F version_t *Plugin_GetVersion(char *name)
     //Identify the calling plugin
     pID = PHandler_CallerID();
 
-    if(pID<0){
+    if(pID<0)
+    {
         Com_Printf(CON_CHANNEL_PLUGINS,"^1Plugin_GetVersion: Error! Called from an unknown plugin!\n");
-        return NULL;
+        return nullptr;
     }
-for(i=0;i<MAX_PLUGINS;++i){
 
-        if(pluginFunctions.plugins[i].loaded){
-            if(Q_strncmp(pluginFunctions.plugins[i].name,name,sizeof(pluginFunctions.plugins[i].name))==0){
-                (*pluginFunctions.plugins[i].OnInfoRequest)(&info);
+    for(int i = 0; i < MAX_PLUGINS; ++i)
+    {
+        if(pluginFunctions.plugins[i].loaded)
+        {
+            if(Q_strncmp(pluginFunctions.plugins[i].name,name,sizeof(pluginFunctions.plugins[i].name))==0)
+            {
+                pluginFunctions.plugins[i].OnInfoRequest(&info);
                 return &(info.pluginVersion);
             }
         }
-
     }
-    return NULL;
+    return nullptr;
 }
+
 P_P_F qboolean Plugin_ExportFunction(char *name, void *(*function)()){
 
     int pID,i;
@@ -103,27 +108,33 @@ P_P_F qboolean Plugin_ExportFunction(char *name, void *(*function)()){
     ++pluginFunctions.plugins[pID].exports;
     return qtrue;
 }
+
+
 P_P_F void *Plugin_ImportFunction(char *pluginName, char *name){
 
-    int pID,i,j;
     //Identify the calling plugin
-    pID = PHandler_CallerID();
+    int pID = PHandler_CallerID();
 
-    if(pID<0){
+    if(pID < 0)
+    {
         Com_Printf(CON_CHANNEL_PLUGINS,"^1Plugin_ImportFunction: Error! Called from an unknown plugin!\n");
-        return NULL;
+        return nullptr;
     }
 
-    for(i=0;i<MAX_PLUGINS;++i){
-        if(strncmp(pluginFunctions.plugins[i].name,pluginName,20)==0){
-            for(j=0;j<pluginFunctions.plugins[i].exports;++j){
-                if(strncmp(pluginFunctions.plugins[i].exportedFunctions[j].name,name,PLUGIN_COM_MAXNAMELEN)==0){
+    for(int i = 0; i < MAX_PLUGINS; ++i)
+    {
+        if(!strncmp(pluginFunctions.plugins[i].name, pluginName, 20))
+        {
+            for(int j = 0; j < pluginFunctions.plugins[i].exports; ++j)
+            {
+                if(!strncmp(pluginFunctions.plugins[i].exportedFunctions[j].name,name,PLUGIN_COM_MAXNAMELEN))
+                {
                     Com_DPrintf(CON_CHANNEL_PLUGINS,"^2Notice:^7 Plugin #%d imported plugin's #%d function \"%s\"\n.",pID,i,name);
-                    return pluginFunctions.plugins[i].exportedFunctions[j].function;
+                    return reinterpret_cast<void*>(pluginFunctions.plugins[i].exportedFunctions[j].function);
                 }
             }
-            return NULL;
+            return nullptr;
         }
     }
-    return NULL;
+    return nullptr;
 }

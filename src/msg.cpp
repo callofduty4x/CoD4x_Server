@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -52,7 +52,7 @@ This part makes msg.c undepended in case no proper qcommon_io.h is included
 
 void MSG_RegisterCvars()
 {
-	msg_printEntityNums = Cvar_RegisterBool("msg_printEntityNums", 0, 0, "Print entity numbers");
+    msg_printEntityNums = Cvar_RegisterBool("msg_printEntityNums", qfalse, 0, "Print entity numbers");
 }
 
 
@@ -308,29 +308,29 @@ void MSG_WriteBits(msg_t *msg, int bits, int bitcount)
 
     if ( msg->maxsize - msg->cursize < 4 )
     {
-        msg->overflowed = 1;
+        msg->overflowed = qtrue;
         return;
     }
 
     if ( bitcount )
     {
 
-      for (i = 0 ; bitcount != i; i++)
-      {
-
-        if ( !(msg->bit & 7) )
+        for (i = 0 ; bitcount != i; i++)
         {
-          msg->bit = 8 * msg->cursize;
-          msg->data[msg->cursize] = 0;
-          msg->cursize++;
+
+            if ( !(msg->bit & 7) )
+            {
+                msg->bit = 8 * msg->cursize;
+                msg->data[msg->cursize] = 0;
+                msg->cursize++;
+            }
+
+            if ( bits & 1 )
+                msg->data[msg->bit >> 3] |= 1 << (msg->bit & 7);
+
+            msg->bit++;
+            bits >>= 1;
         }
-
-        if ( bits & 1 )
-          msg->data[msg->bit >> 3] |= 1 << (msg->bit & 7);
-
-        msg->bit++;
-        bits >>= 1;
-      }
     }
 }
 
@@ -551,7 +551,7 @@ int MSG_ReadByte( msg_t *msg ) {
 	byte	c;
 
 	if ( msg->readcount+sizeof(byte) > msg->splitSize + msg->cursize ) {
-		msg->overflowed = 1;
+        msg->overflowed = qtrue;
 		return -1;
 	}
 	c = MSG_GetByte(msg, msg->readcount);
@@ -564,7 +564,7 @@ int MSG_ReadShort( msg_t *msg ) {
 	int16_t	c;
 
 	if ( msg->readcount+sizeof(short) > msg->splitSize + msg->cursize ) {
-		msg->overflowed = 1;
+        msg->overflowed = qtrue;
 		return -1;
 	}	
 	c = MSG_GetShort(msg, msg->readcount);
@@ -577,7 +577,7 @@ int32_t MSG_ReadLong( msg_t *msg ) {
 	int32_t	c;
 
 	if ( msg->readcount+sizeof(int32_t) > msg->cursize + msg->splitSize) {
-		msg->overflowed = 1;
+        msg->overflowed = qtrue;
 		return -1;
 	}	
 	c = MSG_GetLong(msg, msg->readcount);
@@ -591,7 +591,7 @@ int64_t MSG_ReadInt64( msg_t *msg ) {
 	int64_t		c;
 
 	if ( msg->readcount+sizeof(int64_t) > msg->cursize + msg->splitSize ) {
-		msg->overflowed = 1;
+        msg->overflowed = qtrue;
 		return -1;
 	}	
 	c = MSG_GetInt64(msg, msg->readcount);
@@ -709,7 +709,7 @@ int MSG_ReadBit(msg_t *msg)
   {
     if ( msg->readcount >= msg->cursize + msg->splitSize )
     {
-      msg->overflowed = 1;
+      msg->overflowed = qtrue;
       return -1;
     }
     msg->bit = 8 * msg->readcount;
@@ -746,7 +746,7 @@ int MSG_ReadBits(msg_t *msg, int numBits)
       {
         if ( msg->readcount >= msg->splitSize + msg->cursize )
         {
-          msg->overflowed = 1;
+          msg->overflowed = qtrue;
           return -1;
         }
         msg->bit = 8 * msg->readcount;
@@ -1847,18 +1847,18 @@ qboolean MSG_ValuesAreEqual(int bits, const int *fromF, const int *toF)
 	{
 		case 0:
 		case 13:
-			result = (int16_t)ANGLE2SHORT( *(float *)toF ) == (int16_t)ANGLE2SHORT( *(float *)fromF );
+            result = ((int16_t)ANGLE2SHORT( *(float *)toF ) == (int16_t)ANGLE2SHORT( *(float *)fromF )) ? qtrue : qfalse;
 			break;
 		case 8:
 		case 9:
 		case 10:
-			result = (signed int)f2rint(*(float *)fromF) == (signed int)f2rint(*(float *)toF);
+            result = ((signed int)f2rint(*(float *)fromF) == (signed int)f2rint(*(float *)toF)) ? qtrue : qfalse;
 			break;
 		case 5:
-			result = *fromF / 100 == *toF / 100;
+            result = *fromF / 100 == *toF / 100 ? qtrue : qfalse;
 			break;
 		default:
-			result = 0;
+            result = qfalse;
 			break;
 	}
 
@@ -2280,7 +2280,7 @@ int MSG_WriteDeltaStruct(snapshotInfo_t *snapInfo, msg_t *msg, const int time, c
 
 int MSG_WriteEntityDelta(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, qboolean force, int numFields, int indexBits, netField_t *stateFields)
 {
-	return MSG_WriteDeltaStruct(snapInfo, msg, time, from, to, force, numFields, indexBits, stateFields, 0);
+    return MSG_WriteDeltaStruct(snapInfo, msg, time, from, to, force, numFields, indexBits, stateFields, qfalse);
 }
 
 void MSG_WriteDeltaEntity(struct snapshotInfo_s *snapInfo, msg_t* msg, const int time, entityState_t* from, entityState_t* to, qboolean force){
@@ -2662,9 +2662,9 @@ qboolean MSG_ShouldSendPSField(struct snapshotInfo_s *snapInfo, byte sendOriginA
   {
     if ( snapInfo->archived || ps->otherFlags & 2 || ((oldPs->eFlags & 0xFF) ^ (ps->eFlags & 0xFF)) & 2 || ps->viewlocked_entNum != 1023 || ps->pm_type == 5)
 	{
-      return 1;
+      return qtrue;
     }
-	return 0;
+    return qfalse;
   }
   
 	if ( field->changeHints != 3 || snapInfo->archived )
@@ -2674,11 +2674,11 @@ qboolean MSG_ShouldSendPSField(struct snapshotInfo_s *snapInfo, byte sendOriginA
 
 		if(MSG_ValuesAreEqual(field->bits, fromF, toF))
 		{
-			return 0;
+            return qfalse;
 		}
-		return 1;
+        return qtrue;
 	}
-	return sendOriginAndVel;
+    return sendOriginAndVel ? qtrue : qfalse;
 }
 
 
@@ -2717,7 +2717,7 @@ void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, cons
 
 	if ( snapInfo->archived )
 	{
-	    sendOriginAndVel = 1;
+        sendOriginAndVel = qtrue;
 	    MSG_WriteBit1(msg);
   	}
   	else
@@ -2732,12 +2732,12 @@ VectorCopy(predictedOrigin, to->origin);
 */
 		if ( from && svsHeader.clientArchive && MSG_WithinAllowedPredictionError(dist, to) && predictedTime == to->commandTime )
 		{
-			sendOriginAndVel = 0;
+            sendOriginAndVel = qfalse;
 			MSG_WriteBit0(msg);
 		}
 		else
 		{
-			sendOriginAndVel = 1;
+            sendOriginAndVel = qtrue;
 			MSG_WriteBit1(msg);
 		}
 	}
@@ -2956,7 +2956,7 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
   int numFields = sizeof(clientStateFields) / sizeof(clientStateFields[0]);
   if ( to )
   {
-    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields, 1);
+    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields, qtrue);
   }
   else
   {
@@ -2965,7 +2965,7 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
 }
 
 
-int kbitmask[33] =
+unsigned int kbitmask[33] =
 {
   0,
   1,
@@ -3644,7 +3644,7 @@ bool __cdecl MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, 
 */
   int numFields = sizeof(archivedEntityFields) / sizeof(archivedEntityFields[0]);
 
-  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE, numFields, 10, archivedEntityFields, 0) > 0)
+  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE ? qtrue : qfalse, numFields, 10, archivedEntityFields, qfalse) > 0)
   {
 	return  qtrue;	
   }
@@ -3698,7 +3698,7 @@ void MSG_ReadDeltaFields(msg_t *msg, const int time, const byte *from, byte *to,
 	if ( lc > numFields )
     {
 		Com_PrintError(CON_CHANNEL_NETWORK, "Got lastChanged field of %i, but there are only %i fields\n", lc, numFields);
-		msg->overflowed = 1;
+        msg->overflowed = qtrue;
 		return;
 	}
 #ifndef DEDICATEDONLY
@@ -3749,7 +3749,7 @@ int __cdecl MSG_ReadDeltaStruct(msg_t *msg, const int time, const void *from, vo
     return 1;
   }
   *(uint32_t*)to = number;
-  MSG_ReadDeltaFields(msg, time, from, to, numFields, stateFields);
+  MSG_ReadDeltaFields(msg, time, reinterpret_cast<const byte*>(from), reinterpret_cast<byte*>(to), numFields, stateFields);
   return 0;
 }
 
@@ -4011,7 +4011,7 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
     {
       for ( fieldNum = 0; fieldNum < numObjective; ++fieldNum )
       {
-		to->objective[fieldNum].state = MSG_ReadBits(msg, 3);
+        to->objective[fieldNum].state = static_cast<objectiveState_t>(MSG_ReadBits(msg, 3));
 		MSG_ReadDeltaObjectiveFields(msg, time, &from->objective[fieldNum], &to->objective[fieldNum]);
       }
     }

@@ -16,6 +16,7 @@ set(CMAKE_CXX_STANDARD 17)
 # ... mbedtls
 option(INSTALL_MBEDTLS_HEADERS OFF)
 option(ENABLE_TESTING OFF)
+option(ENABLE_PROGRAMS OFF)
 add_subdirectory(deps/mbedtls)
 set(mbedtls_SOURCE_DIR ${CMAKE_SOURCE_DIR}/deps/mbedtls CACHE PATH "Path to a root of mbedtls dependency")
 

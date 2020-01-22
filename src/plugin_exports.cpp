@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -25,7 +25,7 @@
 #include "sys_main.hpp"
 #include "sys_thread.hpp"
 #include "httpftp.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 /*=========================================*
  *                                         *
  *        Plugin Handler's exports         *
@@ -111,13 +111,17 @@ P_P_F int Plugin_GetSlotCount()
 {
     return sv_maxclients->integer;
 }
+
+
 P_P_F qboolean Plugin_IsSvRunning()
 {
     if(com_sv_running)
-        return com_sv_running->boolean;
-    else
-        return qfalse;
+        return com_sv_running->boolean ? qtrue : qfalse;
+
+    return qfalse;
 }
+
+
 P_P_F char *Plugin_GetPlayerName(int slot)
 {
     return svs.clients[slot].name;
@@ -251,7 +255,7 @@ P_P_F qboolean Plugin_TcpSendDataMT(int pID, int connection, void* data, int len
         return qfalse;
     }
 
-    return PHandler_TcpSendData(pID, connection, data, len);
+    return PHandler_TcpSendData(pID, connection, data, len) ? qtrue : qfalse;
 }
 
 P_P_F qboolean Plugin_TcpSendData(int connection, void* data, int len)
@@ -315,7 +319,7 @@ P_P_F qboolean Plugin_UdpSendData(netadr_t* to, void* data, int len)
 P_P_F void Plugin_ServerPacketEvent(netadr_t* to, void* data, int len)
 {
     msg_t msg;
-    msg.data = data;
+    msg.data = reinterpret_cast<byte*>(data);
     msg.cursize = len;
     msg.maxsize = len;
     msg.bit = 0;
@@ -477,7 +481,7 @@ P_P_F void Plugin_BoldPrintf(int slot, const char *fmt, ... )
 
 P_P_F int Plugin_Cvar_GetInteger(void *cvar)
 {
-    cvar_t* var = cvar;
+    cvar_t* var = reinterpret_cast<cvar_t*>(cvar);
     int PID = PHandler_CallerID();
     int v;
     if(var == NULL)
@@ -500,14 +504,14 @@ P_P_F int Plugin_Cvar_GetInteger(void *cvar)
 
 P_P_F qboolean Plugin_Cvar_GetBoolean(void *cvar)
 {
-    cvar_t* var = cvar;
+    cvar_t* var = reinterpret_cast<cvar_t*>(cvar);
     qboolean b;
     int PID = PHandler_CallerID();
 
     if(var == NULL)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin to get Cvar of NULL-Pointer\n");
-        return 0;
+        return qfalse;
     }
 
     Sys_EnterCriticalSection(CRITSECT_CVAR);
@@ -515,23 +519,23 @@ P_P_F qboolean Plugin_Cvar_GetBoolean(void *cvar)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
         Sys_LeaveCriticalSection(CRITSECT_CVAR);
-        return 0;
+        return qtrue;
     }
-    b = var->boolean;
+    b = var->boolean ? qtrue : qfalse;
     Sys_LeaveCriticalSection(CRITSECT_CVAR);
     return b;
 }
 
 P_P_F float Plugin_Cvar_GetValue(void *cvar)
 {
-    cvar_t* var = cvar;
+    cvar_t* var = reinterpret_cast<cvar_t*>(cvar);
     float v;
     int PID = PHandler_CallerID();
 
     if(var == NULL)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin to get Cvar of NULL-Pointer\n");
-        return 0;
+        return 0.0;
     }
 
     Sys_EnterCriticalSection(CRITSECT_CVAR);
@@ -540,7 +544,7 @@ P_P_F float Plugin_Cvar_GetValue(void *cvar)
     {
         PHandler_Error(PID, P_ERROR_DISABLE, "Plugin tried to get Cvar of different type\n");
         Sys_LeaveCriticalSection(CRITSECT_CVAR);
-        return 0;
+        return 0.0;
     }
     v = var->value;
     Sys_LeaveCriticalSection(CRITSECT_CVAR);
@@ -549,7 +553,7 @@ P_P_F float Plugin_Cvar_GetValue(void *cvar)
 
 P_P_F const char* Plugin_Cvar_GetString(void *cvar, char* buf, int sizebuf)
 {
-    cvar_t* var = cvar;
+    cvar_t* var = reinterpret_cast<cvar_t*>(cvar);
     int PID = PHandler_CallerID();
 
     if(var == NULL)
@@ -713,7 +717,7 @@ P_P_F ftRequest_t* Plugin_HTTP_MakeHttpRequest(const char* url, const char* meth
   if(curfileobj == NULL)
   {
     Com_Printf(CON_CHANNEL_PLUGINS,"Couldn't connect to server.\n");
-    return qfalse;
+    return nullptr;
   }
 
   return curfileobj;
@@ -745,7 +749,7 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
   if(curfileobj == NULL)
   {
     Com_Printf(CON_CHANNEL_PLUGINS,"Couldn't connect to server.\n");
-    return qfalse;
+    return nullptr;
   }
 
   do
@@ -758,7 +762,7 @@ P_P_F ftRequest_t* Plugin_HTTP_Request(const char* url, const char* method, byte
   {
     Com_Printf(CON_CHANNEL_PLUGINS,"Receiving data has failed\n");
     FileDownloadFreeRequest(curfileobj);
-    return qfalse;
+    return nullptr;
   }
   return curfileobj;
 }
@@ -858,33 +862,29 @@ P_P_F void Plugin_DisableThreadDebug()
     enable_threaddebug = qfalse;
 }
 
+using FPCallbackMain = void(*)(void*, void*, void*, void*, void*, void*, void*, void*);
 
 void Plugin_RunThreadCallbacks()
 {
-	int i, j;
-	plugin_thread_callback_t* tcb;
-  for(j = 0; j < MAX_PLUGINS; ++j)
-  {
-    if(pluginFunctions.plugins[j].loaded == qfalse || pluginFunctions.plugins[j].enabled == qfalse)
+    int i, j;
+    plugin_thread_callback_t* tcb;
+    for(j = 0; j < MAX_PLUGINS; ++j)
     {
-      continue;
+        if(pluginFunctions.plugins[j].loaded == qfalse || pluginFunctions.plugins[j].enabled == qfalse)
+            continue;
+
+        for ( tcb = pluginFunctions.plugins[j].thread_callbacks, i = 0; i < MAX_PLUGINCALLBACKS ; i++)
+        {
+            if(tcb->lock == qfalse || tcb->isActive == qfalse)
+                continue;
+
+            if(tcb->callbackMain != NULL)
+                ((FPCallbackMain)tcb->callbackMain)(tcb->callback_args[0], tcb->callback_args[1], tcb->callback_args[2], tcb->callback_args[3],
+                        tcb->callback_args[4], tcb->callback_args[5], tcb->callback_args[6], tcb->callback_args[7]);
+
+            Com_Memset(tcb, 0, sizeof(plugin_thread_callback_t));
+        }
     }
-
-  	for ( tcb = pluginFunctions.plugins[j].thread_callbacks, i = 0; i < MAX_PLUGINCALLBACKS ; i++)
-    {
-  		if(tcb->lock == qfalse || tcb->isActive == qfalse)
-      {
-  			continue;
-  		}
-
-  		if(tcb->callbackMain != NULL)
-  			tcb->callbackMain(tcb->callback_args[0], tcb->callback_args[1], tcb->callback_args[2], tcb->callback_args[3],
-  											 tcb->callback_args[4], tcb->callback_args[5], tcb->callback_args[6], tcb->callback_args[7]);
-
-  		Com_Memset(tcb, 0, sizeof(plugin_thread_callback_t));
-
-  	}
-  }
 }
 
 
@@ -898,7 +898,7 @@ void* Plugin_CbThreadStub(void* arg)
   	Sys_Print( va("^6Created new Thread: %d\n", Sys_GetCurrentThreadId()) );
   }
 
-	plugin_thread_callback_t *tcb = arg;
+    plugin_thread_callback_t *tcb = reinterpret_cast<plugin_thread_callback_t*>(arg);
 
 	tcb->threadMain(tcb->thread_args[0], tcb->thread_args[1], tcb->thread_args[2], tcb->thread_args[3],
 					tcb->thread_args[4], tcb->thread_args[5], tcb->thread_args[6], tcb->thread_args[7]); //real main-thread
@@ -945,7 +945,7 @@ P_P_F qboolean Plugin_SetupThreadCallback(void* callbackMain,...)
 
 	va_end(argptr);
 
-	tcb->callbackMain = callbackMain;
+    tcb->callbackMain = reinterpret_cast<void(*)()>(callbackMain);
 	return qtrue;
 
 }
@@ -993,7 +993,7 @@ P_P_F qboolean Plugin_CreateCallbackThread(void* threadMain,...)
 
 	tcb->lock = qtrue;
 	tcb->isActive = qfalse;
-	tcb->threadMain = threadMain;
+    tcb->threadMain = reinterpret_cast<void(*)(void* a, ...)>(threadMain);
 	tcb->callbackMain = NULL;
 	success = Sys_CreateNewThread(Plugin_CbThreadStub, &tcb->tid, tcb);
 	if(success == qfalse)

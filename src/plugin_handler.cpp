@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -129,7 +129,7 @@ qboolean PHandler_VerifyPlugin(void* buf, int len)
 	return qtrue;
 }
 
-const char* PHandler_OpenTempFile(char* name, char* fullfilepath, int fplen){ // Load a plugin, safe for use
+static const char* PHandler_OpenTempFile(const char* name, char* fullfilepath, int fplen){ // Load a plugin, safe for use
 
     void *buf;
     int len;
@@ -195,7 +195,7 @@ void PHandler_CloseTempFile(char* filepath)
 #define PLUGINGAMERANGER_HASH "6609a69715a41b486611fa1c461f90acfed836eac0e699d8"
 
 
-void PHandler_Load(char* name) // Load a plugin, safe for use
+void PHandler_Load(const char* name) // Load a plugin, safe for use
 {
     int i,j;
     char* realpath;
@@ -270,13 +270,13 @@ void PHandler_Load(char* name) // Load a plugin, safe for use
         if(!(pluginFunctions.plugins[i].loaded))
             break;
     }
-    pluginFunctions.plugins[i].OnInit = Sys_GetProcedure("OnInit");
+    pluginFunctions.plugins[i].OnInit = reinterpret_cast<FPOnInit>(Sys_GetProcedure("OnInit"));
     for(j=0;j<PLUGINS_ITEMCOUNT;++j){
-        pluginFunctions.plugins[i].OnEvent[j] = Sys_GetProcedure(PHandler_Events[j]);
+        pluginFunctions.plugins[i].OnEvent[j] = reinterpret_cast<FPOnEvent>(Sys_GetProcedure(PHandler_Events[j]));
 
     }
-    pluginFunctions.plugins[i].OnInfoRequest = pluginFunctions.plugins[i].OnEvent[PLUGINS_ONINFOREQUEST];
-    pluginFunctions.plugins[i].OnUnload = Sys_GetProcedure("OnUnload");
+    pluginFunctions.plugins[i].OnInfoRequest = reinterpret_cast<FPOnInfoRequest>(pluginFunctions.plugins[i].OnEvent[PLUGINS_ONINFOREQUEST]);
+    pluginFunctions.plugins[i].OnUnload = reinterpret_cast<FPOnUnload>(Sys_GetProcedure("OnUnload"));
     pluginFunctions.plugins[i].loaded = qtrue;
     pluginFunctions.plugins[i].enabled = qtrue;
     Q_strncpyz(pluginFunctions.plugins[i].name, name, sizeof(pluginFunctions.plugins[i].name));
@@ -299,7 +299,7 @@ void PHandler_Load(char* name) // Load a plugin, safe for use
     if(pluginFunctions.plugins[i].OnInfoRequest){
         Com_DPrintf(CON_CHANNEL_PLUGINS,"Fetching plugin information...\n");
         pluginFunctions.hasControl = i;
-        (*pluginFunctions.plugins[i].OnInfoRequest)(&info);
+        pluginFunctions.plugins[i].OnInfoRequest(&info);
         pluginFunctions.hasControl = PLUGIN_UNKNOWN;
 
         if(info.handlerVersion.major != PLUGIN_HANDLER_VERSION_MAJOR || (info.handlerVersion.minor - info.handlerVersion.minor %100) != (PLUGIN_HANDLER_VERSION_MINOR - PLUGIN_HANDLER_VERSION_MINOR %100))
@@ -380,7 +380,7 @@ void PHandler_Unload(int id) // Unload a plugin, safe for use.
         Com_Printf(CON_CHANNEL_PLUGINS,"Tried unloading a not loaded plugin!\nPlugin ID: %d.",id);
     }
 }
-int PHandler_GetID(char *name) // Get ID of a plugin by name, safe for use
+int PHandler_GetID(const char *name) // Get ID of a plugin by name, safe for use
 {
     int i;
     for(i=0;i<MAX_PLUGINS;i++){
@@ -392,7 +392,7 @@ int PHandler_GetID(char *name) // Get ID of a plugin by name, safe for use
 }
 
 
-void PHandler_UnloadByName(char *name) // Unload a plugin, safe for use
+void PHandler_UnloadByName(const char *name) // Unload a plugin, safe for use
 {
     int id = PHandler_GetID(name);
     if(id<0)
@@ -432,7 +432,7 @@ void PHandler_Event(int eventID,...) // Fire a plugin event, safe for use
     for(i=0;i < pluginFunctions.loadedPlugins; i++){
         if(pluginFunctions.plugins[i].OnEvent[eventID]!= NULL){
             pluginFunctions.hasControl = i;
-            (*pluginFunctions.plugins[i].OnEvent[eventID])(arg_0, arg_1, arg_2, arg_3, arg_4, arg_5);
+            pluginFunctions.plugins[i].OnEvent[eventID](arg_0, arg_1, arg_2, arg_3, arg_4, arg_5);
     	    pluginFunctions.hasControl = PLUGIN_UNKNOWN;
         }
     }

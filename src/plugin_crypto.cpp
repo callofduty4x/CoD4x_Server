@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -21,30 +21,36 @@
 
 #include "plugin_crypto.hpp"
 
-qboolean PHandler_Hash(pluginHash_t algo, void *in, size_t inSize, void *out, size_t outSize){
-    if(in == NULL || out == NULL || inSize < 1 || outSize < (1)){
-	return qfalse;
-    }
+qboolean PHandler_Hash(pluginHash_t algo, void *in, size_t inSize, void *out, size_t outSize)
+{
+    if(!in || !out || inSize < 1 || outSize < (1))
+        return qfalse;
+
     hash_state md;
     struct ltc_hash_descriptor *hs;
-    switch(algo){
-	case P_HASH_SHA1:
-	    hs = (struct ltc_hash_descriptor *)&sha1_desc;
-	    break;
-	case P_HASH_SHA256:
-	    hs = (struct ltc_hash_descriptor *)&sha256_desc;
-	    break;
-	case P_HASH_TIGER:
-	    hs = (struct ltc_hash_descriptor *)&tiger_desc;
-	    break;
-	default:
-	    return qfalse;
-    }
-    if(hs->hashsize >= outSize){
+    switch(algo)
+    {
+    case P_HASH_SHA1:
+        hs = (struct ltc_hash_descriptor *)&sha1_desc;
+        break;
+
+    case P_HASH_SHA256:
+        hs = (struct ltc_hash_descriptor *)&sha256_desc;
+        break;
+
+    case P_HASH_TIGER:
+        hs = (struct ltc_hash_descriptor *)&tiger_desc;
+        break;
+
+    default:
         return qfalse;
     }
+
+    if(hs->hashsize >= outSize)
+        return qfalse;
+
     hs->init(&md);
-    hs->process(&md, in, inSize);
-    hs->done(&md,out);
+    hs->process(&md, reinterpret_cast<unsigned char*>(in), inSize);
+    hs->done(&md, reinterpret_cast<unsigned char*>(out));
     return qtrue;
 }

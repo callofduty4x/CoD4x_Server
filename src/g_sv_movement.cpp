@@ -26,20 +26,13 @@
 #include "g_shared.hpp"
 #include "entity.hpp"
 
-
-
 __cdecl __optimize3 void StuckInClient( gentity_t* gen )
 {
 
 }
 
+
 float Dirty_GetJumpHeight(unsigned int num)
 {
-    if(num > level.maxclients)
-    {
-        return 40;
-    }
-	return level.clients[num].jumpHeight;
+    return static_cast<int>(num) > level.maxclients ? 40 : level.clients[num].jumpHeight;
 }
-
-

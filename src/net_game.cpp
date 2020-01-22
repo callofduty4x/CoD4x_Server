@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -42,7 +42,7 @@ void NET_UDPPacketEvent(netadr_t* from, void* data, int len, int buflen)
         {
             return;
         }
-        MSG_InitReadOnly(&msg, data, len);
+        MSG_InitReadOnly(&msg, reinterpret_cast<byte*>(data), len);
 
         SV_PacketEvent(from, &msg);
 }

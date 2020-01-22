@@ -200,39 +200,25 @@ int Cvar_VariableIntegerValue( const char *var_name )
 Cvar_VariableBooleanValue
 ============
 */
-qboolean Cvar_VariableBooleanValueInternal( const char *var_name ) {
-	cvar_t	*var;
-	int aival;
+qboolean Cvar_VariableBooleanValueInternal( const char *var_name )
+{
+    cvar_t* var = Cvar_FindVar(var_name);
+    if (!var)
+        return qfalse;
 
-	var = Cvar_FindVar (var_name);
-	if (!var)
-		return 0;
-	if(var->type == CVAR_BOOL)
-		return var->boolean;
-	if(var->type == CVAR_FLOAT)
-	{
-		if(var->value != 0.0)
-			return qfalse;
-		else
-			return qtrue;
-	}
-	if(var->type == CVAR_INT)
-	{
-		if(var->integer == 0)
-			return qfalse;
-		else
-			return qtrue;
-	}
-	if(var->type == CVAR_STRING && var->string)
-	{
-		aival = atoi(var->string);
-		if(aival)
-			return qtrue;
-		else
-			return qfalse;
-	}
-	return 0;
+    if(var->type == CVAR_BOOL)
+        return var->boolean ? qtrue : qfalse;
+    else if (var->type == CVAR_FLOAT)
+        return var->value != 0.0 ? qfalse : qtrue;
+    else if(var->type == CVAR_INT)
+        return var->integer ? qtrue : qfalse;
+    else if(var->type == CVAR_STRING && var->string)
+        return atoi(var->string) ? qtrue : qfalse;
+
+    return qfalse;
 }
+
+
 qboolean Cvar_VariableBooleanValue( const char *var_name )
 {
 	Sys_EnterCriticalSection(CRITSECT_CVAR);
@@ -247,14 +233,10 @@ qboolean Cvar_VariableBooleanValue( const char *var_name )
 Cvar_VariableString
 ============
 */
-char *Cvar_VariableString( const char *var_name ) {
-	cvar_t *var;
-
-	var = Cvar_FindVar (var_name);
-	if (!var)
-		return "";
-
-	return Cvar_DisplayableValue(var);
+const char* Cvar_VariableString( const char *var_name )
+{
+    cvar_t* var = Cvar_FindVar (var_name);
+    return var ? Cvar_DisplayableValue(var) : "";
 }
 
 
@@ -688,7 +670,7 @@ static cvar_t *Cvar_Register(const char* var_name, cvarType_t type, unsigned sho
 
 		// Take the latched value now
 		Cvar_Set2( var_name, latchedStr, qtrue );
-		Cvar_ClampToLimits(var->type, &var->current, &var->limits);
+        Cvar_ClampToLimits(static_cast<cvarType_t>(var->type), &var->current, &var->limits);
 
 		Sys_LeaveCriticalSection(CRITSECT_CVAR);
 		return var;
@@ -1703,30 +1685,29 @@ Allows setting and defining of arbitrary cvars from console, even if they
 weren't declared in C code.
 ============
 */
-void Cvar_Set_f( void ) {
-	int		i, c, l, len;
-	char	combined[8192];
+void Cvar_Set_f( void )
+{
+    char combined[8192];
 
-	c = Cmd_Argc();
-	if ( c < 3 ) {
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: set <variable> <value>\n");
-		return;
-	}
+    int c = Cmd_Argc();
+    if ( c < 3 )
+        return Com_Printf(CON_CHANNEL_DONT_FILTER,"usage: set <variable> <value>\n");
 
-	combined[0] = 0;
-	l = 0;
-	for ( i = 2 ; i < c ; i++ ) {
-		len = strlen ( Cmd_Argv( i ) + 1 );
-		if ( l + len >= sizeof(combined) - 2 ) {
-			break;
-		}
-		strcat( combined, Cmd_Argv( i ) );
-		if ( i != c-1 ) {
-			strcat( combined, " " );
-		}
-		l += len;
-	}
-	Cvar_Set2 (Cmd_Argv(1), combined, qfalse);
+    combined[0] = 0;
+    size_t l = 0;
+    for (int i = 2 ; i < c ; ++i)
+    {
+        size_t len = strlen( Cmd_Argv( i ) + 1 );
+        if (l + len >= sizeof(combined) - 2 )
+            break;
+
+        strcat( combined, Cmd_Argv( i ) );
+        if ( i != c-1 )
+            strcat( combined, " " );
+
+        l += len;
+    }
+    Cvar_Set2 (Cmd_Argv(1), combined, qfalse);
 }
 
 
@@ -1942,71 +1923,46 @@ void Cvar_WriteVariables(fileHandle_t f)
 Cvar_List_f
 ============
 */
-void Cvar_List_f( void ) {
-	cvar_t	*var;
-	int	i;
-	char	*match;
-	char value[1024];
+void Cvar_List_f( void )
+{
+    cvar_t	*var;
+    int	i;
+    const char* match = nullptr;
+    char value[1024];
 
-	if ( Cmd_Argc() > 1 ) {
-		match = Cmd_Argv( 1 );
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"Displaying all cvars starting with: %s\n", match);
-	} else {
-		match = NULL;
-	}
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"====================================== Cvar List ======================================\n");
+    if ( Cmd_Argc() > 1 )
+    {
+        match = Cmd_Argv( 1 );
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Displaying all cvars starting with: %s\n", match);
+    }
 
-	Sys_EnterCriticalSection(CRITSECT_CVAR);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"====================================== Cvar List ======================================\n");
+    Sys_EnterCriticalSection(CRITSECT_CVAR);
 
-	i = 0;
-	for (var = cvar_vars ; var ; var = var->next, i++)
-	{
-		if (match && !Com_Filter(match, var->name, qfalse)) continue;
+    i = 0;
+    for (var = cvar_vars ; var ; var = var->next, i++)
+    {
+        if (match && !Com_Filter(match, var->name, qfalse))
+            continue;
 
-		if (var->flags & CVAR_SERVERINFO) {
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"S");
-		} else {
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-		}
-		if (var->flags & CVAR_USERINFO) {
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"U");
-		} else {
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-		}
-		if (var->flags & CVAR_ROM) {
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"R");
-		} else {
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-		}
-		if (var->flags & CVAR_INIT) {
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"I");
-		} else {
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-		}
-		if (var->flags & CVAR_ARCHIVE) {
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"A");
-		} else {
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-		}
-		if (var->flags & CVAR_LATCH) {
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"L");
-		} else {
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-		}
-		if (var->flags & CVAR_CHEAT) {
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"C");
-		} else {
-			Com_Printf(CON_CHANNEL_DONT_FILTER," ");
-		}
-		Cvar_ValueToStr(var, value, sizeof(value), NULL, 0, NULL, 0);
-		Com_Printf(CON_CHANNEL_DONT_FILTER," %s \"%s\"\n", var->name, value);
-	}
+        Com_Printf(CON_CHANNEL_DONT_FILTER, var->flags & CVAR_SERVERINFO ? "S" : " ");
 
-	Sys_LeaveCriticalSection(CRITSECT_CVAR);
+        Com_Printf(CON_CHANNEL_DONT_FILTER, var->flags & CVAR_USERINFO ? "U" : " ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER, var->flags & CVAR_ROM ? "R" : " ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER, var->flags & CVAR_INIT ? "I" : " ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER, var->flags & CVAR_ARCHIVE ? "A" : " ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER, var->flags & CVAR_LATCH ? "L" : " ");
+        Com_Printf(CON_CHANNEL_DONT_FILTER, var->flags & CVAR_CHEAT ? "C" : " ");
 
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"\n%i total cvars\n", i);
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"%i cvar indexes\n", cvar_numIndexes);
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"==================================== End Cvar List ====================================\n");
+        Cvar_ValueToStr(var, value, sizeof(value), NULL, 0, NULL, 0);
+        Com_Printf(CON_CHANNEL_DONT_FILTER," %s \"%s\"\n", var->name, value);
+    }
+
+    Sys_LeaveCriticalSection(CRITSECT_CVAR);
+
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"\n%i total cvars\n", i);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"%i cvar indexes\n", cvar_numIndexes);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"==================================== End Cvar List ====================================\n");
 }
 
 /*
@@ -2200,13 +2156,10 @@ char	*Cvar_DisplayableValueMT( cvar_t const *var, char* value, int maxlen) {
 Cvar_GetVariantString
 =====================
 */
-char	*Cvar_GetVariantString( const char* cvar_name ) {
-
-	cvar_t	const *var = Cvar_FindVar(cvar_name);
-	if(var == NULL)
-		return "";
-
-	return Cvar_DisplayableValue( var );
+const char* Cvar_GetVariantString(const char* cvar_name)
+{
+    const cvar_t* var = Cvar_FindVar(cvar_name);
+    return var ? Cvar_DisplayableValue(var) : "";
 }
 
 
@@ -2227,14 +2180,14 @@ Cvar_CompleteCvarName
 */
 void Cvar_CompleteCvarName( char *args, int argNum )
 {
-	if( argNum == 2 )
-	{
-		// Skip "<cmd> "
-		char *p = Com_SkipTokens( args, 1, " " );
+    if( argNum == 2 )
+    {
+        // Skip "<cmd> "
+        char *p = Com_SkipTokens(args, 1, " ");
 
-		if( p > args )
-			Field_CompleteCommand( p, qfalse, qtrue );
-	}
+        if( p > args )
+            Field_CompleteCommand( p, qfalse, qtrue );
+    }
 }
 
 
@@ -2432,7 +2385,7 @@ void Cvar_Init (void)
 	Cmd_SetCommandCompletionFunc( "setu", Cvar_CompleteCvarName );
 	Cmd_AddPCommand ("cvarlist", Cvar_List_f, 98);
 	cvar_cheats = Cvar_RegisterBool("cvar_cheats", qfalse, CVAR_INIT, "Enable cheating");
-	cheating_enabled = cvar_cheats->boolean;
+    cheating_enabled = cvar_cheats->boolean ? qtrue : qfalse;
 }
 
 

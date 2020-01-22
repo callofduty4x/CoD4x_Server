@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  httpftp.c
  *  CoD4X18-Server_testing
  *
@@ -104,58 +104,49 @@ static void FT_FreeRequest(ftRequest_t* request)
 
 static ftRequest_t* FT_CreateRequest(const char* address, const char* url)
 {
-	void* buf;
-	int size;
-
-	ftRequest_t* request;
-
-
+    size_t size =
 #ifndef NO_TLS
-	size = sizeof(ftRequest_t) + sizeof(tlsstate_t);
+        sizeof(ftRequest_t) + sizeof(tlsstate_t);
 #else
-	size = sizeof(ftRequest_t);
+        sizeof(ftRequest_t);
 #endif
 
-	request = L_Malloc(size);
-	if(request == NULL)
-		return NULL;
+    ftRequest_t* request = reinterpret_cast<ftRequest_t*>(L_Malloc(size));
+    if(!request)
+        return nullptr;
 
-	Com_Memset(request, 0, size);
-	request->lock = qtrue;
-	request->finallen = -1;
-	request->socket = -1;
-	request->transfersocket = -1;
+    Com_Memset(request, 0, size);
+    request->lock = qtrue;
+    request->finallen = -1;
+    request->socket = -1;
+    request->transfersocket = -1;
 
-	if(address != NULL)
-	{
-		Q_strncpyz(request->address, address, sizeof(request->address));
-	}
+    if(address)
+        Q_strncpyz(request->address, address, sizeof(request->address));
 
-	/* For proper terminating of string data +1 */
-	buf = L_Malloc(INITIAL_BUFFERLEN +1);
-	if( buf == NULL)
-	{
-		FT_FreeRequest(request);
-		return NULL;
-	}
-	MSG_Init(&request->recvmsg, buf, INITIAL_BUFFERLEN);
+    /* For proper terminating of string data +1 */
+    void* buf = L_Malloc(INITIAL_BUFFERLEN +1);
+    if(!buf)
+    {
+        FT_FreeRequest(request);
+        return nullptr;
+    }
 
-	buf = L_Malloc(INITIAL_BUFFERLEN);
-	if( buf == NULL)
-	{
-		FT_FreeRequest(request);
-		return NULL;
-	}
-	MSG_Init(&request->sendmsg, buf, INITIAL_BUFFERLEN);
+    MSG_Init(&request->recvmsg, reinterpret_cast<byte*>(buf), INITIAL_BUFFERLEN);
 
-	if(url != NULL)
-	{
-		Q_strncpyz(request->url, url, sizeof(request->url));
-	}
+    buf = L_Malloc(INITIAL_BUFFERLEN);
+    if(!buf)
+    {
+        FT_FreeRequest(request);
+        return nullptr;
+    }
 
-	request->startTime = Sys_Milliseconds();
-	return request;
+    MSG_Init(&request->sendmsg, reinterpret_cast<byte*>(buf), INITIAL_BUFFERLEN);
+    if(url)
+        Q_strncpyz(request->url, url, sizeof(request->url));
 
+    request->startTime = Sys_Milliseconds();
+    return request;
 }
 
 
@@ -209,7 +200,7 @@ static void FT_ResetRequest( ftRequest_t* request )
 	request->extrecvmsg = NULL;
 	request->extsendmsg = NULL;
 	request->mode = 0;
-	request->protocol = 0;
+    request->protocol = FT_PROTO_HTTP;
 	request->cookie[0] = '\0';
 
 	MSG_Clear(&request->recvmsg);
@@ -224,26 +215,22 @@ static void FT_ResetRequest( ftRequest_t* request )
 
 static void FT_AddData(ftRequest_t* request, void* data, int len)
 {
-	void* newbuf;
-	int newsize;
+    if (request->sendmsg.cursize + len > request->sendmsg.maxsize)
+    {
+        int newsize = request->sendmsg.cursize + len;
 
-	if (request->sendmsg.cursize + len > request->sendmsg.maxsize)
-	{
-		newsize = request->sendmsg.cursize + len;
+        byte* newbuf = reinterpret_cast<byte*>(L_Malloc(newsize));
+        if(!newbuf)
+            return MSG_WriteData(&request->sendmsg, data, len);
 
-		newbuf = L_Malloc(newsize);
-		if(newbuf == NULL)
-		{
-			MSG_WriteData(&request->sendmsg, data, len);
-			return;
-		}
-		Com_Memcpy(newbuf, request->sendmsg.data, request->sendmsg.cursize);
+        Com_Memcpy(newbuf, request->sendmsg.data, request->sendmsg.cursize);
 
-		L_Free(request->sendmsg.data);
-		request->sendmsg.data = newbuf;
-		request->sendmsg.maxsize = newsize;
-	}
-	MSG_WriteData(&request->sendmsg, data, len);
+        L_Free(request->sendmsg.data);
+        request->sendmsg.data = newbuf;
+        request->sendmsg.maxsize = newsize;
+    }
+
+    MSG_WriteData(&request->sendmsg, data, len);
 }
 
 
@@ -354,66 +341,64 @@ int HTTP_TcpReceiveData( ftRequest_t *request) {
 
 static int FT_ReceiveData(ftRequest_t* request)
 {
-	void* newbuf;
-	int newsize, status, numbytes;
 
-	if(request->socket == -1)
-		return -2;
 
-	/* In case our buffer is already too small enlarge it */
-	if (request->recvmsg.cursize == request->recvmsg.maxsize)
-	{
-		newsize = 2 * request->recvmsg.maxsize;
-		if(request->finallen > 0 && newsize > request->finallen)
-		{
-			newsize = request->finallen;
-		}
-	}else
-		newsize = 0;
+    if(request->socket == -1)
+        return -2;
 
-	if (newsize)
-	{
-		/* For proper terminating of string data +1 */
-		newbuf = L_Malloc(newsize +1);
-		if(newbuf == NULL)
-		{
-			NET_TcpCloseSocket(request->socket);
-			request->socket = -1;
-			return -2;
-		}
-		Com_Memcpy(newbuf, request->recvmsg.data, request->recvmsg.cursize);
+    int newsize = 0;
+    /* In case our buffer is already too small enlarge it */
+    if (request->recvmsg.cursize == request->recvmsg.maxsize)
+    {
+        newsize = 2 * request->recvmsg.maxsize;
+        if(request->finallen > 0 && newsize > request->finallen)
+            newsize = request->finallen;
+    }
+    else
+        newsize = 0;
 
-		L_Free(request->recvmsg.data);
-		request->recvmsg.data = newbuf;
-		request->recvmsg.maxsize = newsize;
-	}
-	numbytes = request->recvmsg.cursize;
-	/* Receive new bytes */
+    if (newsize)
+    {
+        /* For proper terminating of string data +1 */
+        byte* newbuf = reinterpret_cast<byte*>(L_Malloc(newsize +1));
+        if(!newbuf)
+        {
+            NET_TcpCloseSocket(request->socket);
+            request->socket = -1;
+            return -2;
+        }
 
-  /* status:
-  2: Got new data + Connection okay
-  1: Got no data + Connection okay
-  0: Got no data + Connection closed expected
-  -1: Got no data + Connection closed unexpected
-  */
-	status = HTTP_TcpReceiveData(request);
+        Com_Memcpy(newbuf, request->recvmsg.data, request->recvmsg.cursize);
 
-	numbytes = request->recvmsg.cursize - numbytes;
-	request->totalreceivedbytes += numbytes;
+        L_Free(request->recvmsg.data);
+        request->recvmsg.data = newbuf;
+        request->recvmsg.maxsize = newsize;
+    }
 
-  if(status == 2){
-    /* Proper terminating of string data */
-  	request->recvmsg.data[request->recvmsg.cursize] = '\0';
-    return 1;
+    int numbytes = request->recvmsg.cursize;
+    /* Receive new bytes */
+    /* status:
+           2: Got new data + Connection okay
+           1: Got no data + Connection okay
+           0: Got no data + Connection closed expected
+          -1: Got no data + Connection closed unexpected
+    */
+    int status = HTTP_TcpReceiveData(request);
+    numbytes = request->recvmsg.cursize - numbytes;
+    request->totalreceivedbytes += numbytes;
 
-  }else if(status == 1){
-		return 0; //Read again
+    if(status == 2)
+    {
+        /* Proper terminating of string data */
+        request->recvmsg.data[request->recvmsg.cursize] = '\0';
+        return 1;
+    }
+    else if(status == 1)
+        return 0; //Read again
+    else if(status == 0)
+        return -1;
 
-	}else if(status == 0){
-		return -1;
-	}else{
     return -2;
-  }
 }
 
 
@@ -589,7 +574,7 @@ qboolean HTTP_BuildNewRequest( ftRequest_t* request, const char* method, msg_t* 
 	}
 	if(request->tls)
 	{
-		return HTTPS_Prepare(request, address);
+        return HTTPS_Prepare(request, address) ? qtrue : qfalse;
 	}
 	return qtrue;
 }
@@ -740,21 +725,14 @@ int HTTP_SendReceiveData(ftRequest_t* request)
 		}
 
 
-		//Test if the socket is connected (3-way hanndshake completed)
-		status = NET_TcpIsSocketReady(request->socket);
-		if(status == 0)
-		{
-			if(request->startTime + HTTP_CONNECTTIMEOUT < Sys_Milliseconds())
-			{
-				return -1;
-			}
-			return 0;
-		}
-		if(status < 0)
-		{
-			return -1;
-		}
-		request->socketReady = qtrue;
+        //Test if the socket is connected (3-way hanndshake completed)
+        status = NET_TcpIsSocketReady(request->socket);
+        if(status == 0)
+            return (static_cast<unsigned int>(request->startTime) + HTTP_CONNECTTIMEOUT < Sys_Milliseconds()) ? -1 : 0;
+        else if(status < 0)
+            return -1;
+
+        request->socketReady = qtrue;
 	}
 
 
@@ -1471,59 +1449,50 @@ static void FTP_GetExtendedPassiveAddress(const char* line, const char* address,
 
 static int FTP_ReceiveData(ftRequest_t* request)
 {
-	byte* newbuf;
-	int newsize, status;
+    int newsize = 0;
 
-	newsize = 0;
+    /* In case our buffer is already too small enlarge it */
+    if (request->transfermsg.cursize == request->transfermsg.maxsize)
+    {
+        newsize = 2 * request->transfermsg.maxsize;
+        if(request->finallen > 0 && newsize > request->finallen)
+        {
+            if(request->finallen < request->transfermsg.cursize)
+                return -1;
 
-	/* In case our buffer is already too small enlarge it */
-	if (request->transfermsg.cursize == request->transfermsg.maxsize)
-	{
-		newsize = 2 * request->transfermsg.maxsize;
-		if(request->finallen > 0 && newsize > request->finallen)
-		{
-      if(request->finallen < request->transfermsg.cursize)
-      {
-        return -1;
-      }
-			newsize = request->finallen;
-		}
+            newsize = request->finallen;
+        }
+    }
 
-	}
+    if (newsize)
+    {
+        byte* newbuf = reinterpret_cast<byte*>(L_Malloc(newsize +1));
+        if(!newbuf)
+            return -1;
 
-	if (newsize)
-	{
-		newbuf = L_Malloc(newsize +1);
-		if(newbuf == NULL)
-		{
-			return -1;
-		}
-		Com_Memcpy(newbuf, request->transfermsg.data, request->transfermsg.cursize);
+        Com_Memcpy(newbuf, request->transfermsg.data, request->transfermsg.cursize);
+        L_Free(request->transfermsg.data);
+        request->transfermsg.data = newbuf;
+        request->transfermsg.maxsize = newsize;
+    }
 
-		L_Free(request->transfermsg.data);
-		request->transfermsg.data = newbuf;
-		request->transfermsg.maxsize = newsize;
-	}
+    /* Receive new bytes */
+    int len = request->transfermsg.maxsize - request->transfermsg.cursize;
+    int status = NET_TcpClientGetData( request->transfersocket, request->transfermsg.data + request->transfermsg.cursize, len, NULL, 0);
 
-	/* Receive new bytes */
-  int len = request->transfermsg.maxsize - request->transfermsg.cursize;
-  status = NET_TcpClientGetData( request->transfersocket, request->transfermsg.data + request->transfermsg.cursize, len, NULL, 0);
+    if(status == NET_WANT_READ)
+        return 0;
 
-  if(status == NET_WANT_READ)
-  {
-    return 0;
-  }
+    if(status > 0)
+    {
+        request->transfermsg.cursize += status;
+        request->transfertotalreceivedbytes += status;
+        return 1;
+    }
 
-  if(status > 0)
-  {
-    request->transfermsg.cursize += status;
-  	request->transfertotalreceivedbytes += status;
-    return 1;
-  }
-  NET_TcpCloseSocket(request->transfersocket);
-	request->transfersocket = -1;
-	return -1;
-
+    NET_TcpCloseSocket(request->transfersocket);
+    request->transfersocket = -1;
+    return -1;
 }
 
 
@@ -1532,7 +1501,6 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 	char* line;
 	char command[MAX_STRING_CHARS];
 	int status, bytes;
-	byte* buf;
 	netadr_t pasvadr;
 	char stringlinebuf[MAX_STRING_CHARS];
 
@@ -1726,16 +1694,16 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 					request->headerLength = 0;
 					request->transfertotalreceivedbytes = 0;
 
-					buf = L_Malloc(INITIAL_BUFFERLEN +1);
-					if( buf == NULL)
+                    byte* buf = reinterpret_cast<byte*>(L_Malloc(INITIAL_BUFFERLEN +1));
+                    if(!buf)
 					{
 						Com_PrintWarning(CON_CHANNEL_FILEDL,"FTP_SendReceiveData: Failed to allocate %d bytes for download file!\n", bytes);
 						return -1;
 					}
+
 					MSG_Init(&request->transfermsg, buf, INITIAL_BUFFERLEN);
 					request->extrecvmsg = &request->transfermsg;
 					request->stage = 51;
-
 				}
 				break;
 			case 150:
@@ -1966,9 +1934,7 @@ static int FTP_SendReceiveData(ftRequest_t* request)
 
 int HTTPServer_ReadMessage(netadr_t* from, msg_t* msg, ftRequest_t* request)
 {
-
 	char stringlinebuf[MAX_STRING_CHARS];
-	byte* newbuf;
 	char* line;
 	int newsize, i;
 	qboolean gotheader;
@@ -1989,11 +1955,9 @@ int HTTPServer_ReadMessage(netadr_t* from, msg_t* msg, ftRequest_t* request)
 			newsize = 2 * request->recvmsg.maxsize + msg->cursize;
 		}
 
-		newbuf = L_Malloc(newsize);
-		if(newbuf == NULL)
-		{
+        byte* newbuf = reinterpret_cast<byte*>(L_Malloc(newsize));
+        if(!newbuf)
 			return -1;
-		}
 
 		Com_Memcpy(newbuf, request->recvmsg.data, request->recvmsg.cursize);
 
@@ -2138,64 +2102,49 @@ int HTTPServer_ReadMessage(netadr_t* from, msg_t* msg, ftRequest_t* request)
 
 void HTTPServer_BuildMessage( ftRequest_t* request, char* status, char* message, int len, char* sessionkey)
 {
-	int headerlen;
-	byte* newbuf;
-
-	char header[MAX_STRING_CHARS];
-	headerlen = Com_sprintf(header, sizeof(header),
-					  "HTTP/1.0 %s\r\n"
-					  "Connection: close\r\n"
-					  "Content-Length: %d\r\n"
-					  "Access-Control-Allow-Origin: none\r\n"
-					  "Content-Type: text/html\r\n"
-					  "Set-Cookie: SessionId=%s; Path=/; HttpOnly\r\n"
-					  "\r\n", status, len, sessionkey);
+    char header[MAX_STRING_CHARS] = {'\0'};
+    int headerlen = Com_sprintf(header, sizeof(header),
+                            "HTTP/1.0 %s\r\n"
+                            "Connection: close\r\n"
+                            "Content-Length: %d\r\n"
+                            "Access-Control-Allow-Origin: none\r\n"
+                            "Content-Type: text/html\r\n"
+                            "Set-Cookie: SessionId=%s; Path=/; HttpOnly\r\n"
+                            "\r\n", status, len, sessionkey);
 
 
-	newbuf = L_Malloc(headerlen + len);
-	if(newbuf == NULL)
-	{
-		return;
-	}
-	if(request->sendmsg.data)
-	{
-		L_Free(request->sendmsg.data);
-	}
-	request->sendmsg.data = newbuf;
-	request->sendmsg.maxsize = headerlen + len;
+    byte* newbuf = reinterpret_cast<byte*>(L_Malloc(headerlen + len));
+    if(!newbuf)
+        return;
 
-	MSG_WriteData(&request->sendmsg, header, headerlen);
-	MSG_WriteData(&request->sendmsg, message, len);
+    if(request->sendmsg.data)
+        L_Free(request->sendmsg.data);
+
+    request->sendmsg.data = newbuf;
+    request->sendmsg.maxsize = headerlen + len;
+
+    MSG_WriteData(&request->sendmsg, header, headerlen);
+    MSG_WriteData(&request->sendmsg, message, len);
 }
 
 
 qboolean HTTPServer_WriteMessage( ftRequest_t* request, netadr_t* from)
 {
-	int bytes;
-  char errormsg[1024];
+    char errormsg[1024] = {'\0'};
 
-	bytes = NET_TcpSendData(from->sock, request->sendmsg.data + request->sentBytes, request->sendmsg.cursize - request->sentBytes, errormsg, sizeof(errormsg));
-  if(bytes == NET_WANT_WRITE)
-  {
-    return 1;
-//Want write
-  }
-	if(bytes < 0 || bytes > (request->sendmsg.cursize - request->sentBytes))
-	{
-		return -1;
-//Error close it
-	}
-	request->sentBytes += bytes;
+    int bytes = NET_TcpSendData(from->sock, request->sendmsg.data + request->sentBytes, request->sendmsg.cursize - request->sentBytes, errormsg, sizeof(errormsg));
+    if(bytes == NET_WANT_WRITE)
+        return qtrue;
 
-	if(request->sendmsg.cursize != request->sentBytes)
-	{
-		return 1;//Want write
-	}
-	return -1;//We are done so close it
+    if(bytes < 0 || bytes > (request->sendmsg.cursize - request->sentBytes))
+        return qtrue; // ??? Was -1.
+
+    request->sentBytes += bytes;
+    if(request->sendmsg.cursize != request->sentBytes)
+        return qtrue; //Want write
+
+    return qtrue;// ??? was -1. We are done so close it
 }
-
-
-
 
 
 void HTTPServer_BuildResponse(ftRequest_t* request, char* sessionkey, httpPostVals_t* values)
@@ -2480,42 +2429,44 @@ void HTTPServer_Init()
 
 ftRequest_t* FileDownloadRequest( const char* url)
 {
-	/* Strip away leading spaces */
-	ftprotocols_t proto;
+    /* Strip away leading spaces */
+    while(*url == ' ')
+        url++;
+
+    ftprotocols_t proto;
+    if(!Q_stricmpn("ftp://", url, 6))
+    {
+        url += 6;
+        proto = FT_PROTO_FTP;
+    }
+    else if(!Q_stricmpn("http://", url, 7))
+    {
+        url += 7;
+        proto = FT_PROTO_HTTP;
+    }
+    else if(!Q_stricmpn("https://", url, 8))
+    {
+        url += 8;
+        proto = FT_PROTO_HTTP;
+    }
+    else
+    {
+        Com_PrintError(CON_CHANNEL_FILEDL,"Unsupported File Transfer Protocol in url: %s!\n", url);
+        return nullptr;
+    }
 
 
-	while(*url == ' ')
-		url++;
+    switch(proto)
+    {
+    case FT_PROTO_FTP:
+        return FTP_DLRequest(url);
+    case FT_PROTO_HTTPS:
+    case FT_PROTO_HTTP:
+        return HTTPRequest(url, "GET", NULL, NULL);
+    default: break;
+    }
 
-	if(!Q_stricmpn("ftp://", url, 6)){
-
-		url += 6;
-		proto = FT_PROTO_FTP;
-	}else if(!Q_stricmpn("http://", url, 7)){
-
-		url += 7;
-		proto = FT_PROTO_HTTP;
-	}else if(!Q_stricmpn("https://", url, 8)){
-
-		url += 8;
-		proto = FT_PROTO_HTTP;
-	}else {
-		proto = -1;
-	}
-
-
-	switch(proto)
-	{
-		case FT_PROTO_FTP:
-			return FTP_DLRequest(url);
-		case FT_PROTO_HTTPS:
-		case FT_PROTO_HTTP:
-			return HTTPRequest(url, "GET", NULL, NULL);
-		default:
-			Com_PrintError(CON_CHANNEL_FILEDL,"Unsupported File Transfer Protocol in url: %s!\n", url);
-			return NULL;
-	}
-	return NULL;
+    return nullptr;
 }
 
 

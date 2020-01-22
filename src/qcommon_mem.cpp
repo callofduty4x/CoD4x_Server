@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -151,34 +151,33 @@ void Z_ClearZone( memzone_t *zone, int size ) {
 Com_InitZoneMemory
 =================
 */
-void Com_InitSmallZoneMemory( void ) {
-	int s_smallZoneTotal = 1024 * 1024;
-	// bk001205 - was malloc
-	smallzone = calloc( s_smallZoneTotal, 1 );
-	if ( !smallzone ) {
-		Com_Error( ERR_FATAL, "Small zone data failed to allocate %1.1f megs", (float)s_smallZoneTotal / ( 1024 * 1024 ) );
-	}
-	Z_ClearZone( smallzone, s_smallZoneTotal );
+void Com_InitSmallZoneMemory( void )
+{
+    int s_smallZoneTotal = 1024 * 1024;
+    // bk001205 - was malloc
+    smallzone = reinterpret_cast<memzone_t*>(calloc( s_smallZoneTotal, 1 ));
+    if ( !smallzone )
+        return Com_Error( ERR_FATAL, "Small zone data failed to allocate %1.1f megs", (float)s_smallZoneTotal / ( 1024 * 1024 ) );
 
-	return;
+    Z_ClearZone( smallzone, s_smallZoneTotal );
 }
 
-void Com_InitZoneMemory( void ) {
-	cvar_t  *cv;
+void Com_InitZoneMemory( void )
+{
+    cvar_t  *cv;
     int s_zoneTotal;
-	// allocate the random block zone
-	cv = Cvar_RegisterInt("com_zoneMegs", DEF_COMZONEMEGS, 8, 64*1024*1024, CVAR_LATCH | CVAR_ARCHIVE, "Amount of main zone memory allocated - needs to be increased when Z_Malloc fails");
+    // allocate the random block zone
+    cv = Cvar_RegisterInt("com_zoneMegs", DEF_COMZONEMEGS, 8, 64*1024*1024, CVAR_LATCH | CVAR_ARCHIVE, "Amount of main zone memory allocated - needs to be increased when Z_Malloc fails");
 
-	s_zoneTotal = cv->integer * 1024 * 1024;
+    s_zoneTotal = cv->integer * 1024 * 1024;
 
-	// bk001205 - was malloc
-	mainzone = calloc( s_zoneTotal, 1 );
-	if ( !mainzone ) {
-		Com_Error( ERR_FATAL, "Zone data failed to allocate %i megs", s_zoneTotal / ( 1024 * 1024 ) );
-	}
-	Z_ClearZone( mainzone, s_zoneTotal );
-	Cmd_AddCommand("zonememinfo", Z_PrintHeap_f);
+    // bk001205 - was malloc
+    mainzone = reinterpret_cast<memzone_t*>(calloc( s_zoneTotal, 1 ));
+    if ( !mainzone )
+        return Com_Error( ERR_FATAL, "Zone data failed to allocate %i megs", s_zoneTotal / ( 1024 * 1024 ) );
 
+    Z_ClearZone( mainzone, s_zoneTotal );
+    Cmd_AddCommand("zonememinfo", Z_PrintHeap_f);
 }
 
 
@@ -298,7 +297,7 @@ void *Z_TagMalloc( int size, int tag ) {
 	int extra;
 	int allocSize;
 
-	memblock_t  *start, *rover, *new, *base;
+    memblock_t  *start, *rover, *_new, *base;
 	memzone_t *zone;
 
 	if ( !tag ) {
@@ -349,14 +348,14 @@ void *Z_TagMalloc( int size, int tag ) {
 	extra = base->size - size;
 	if ( extra > MINFRAGMENT ) {
 		// there will be a free fragment after the allocated block
-		new = ( memblock_t * )( (byte *)base + size );
-		new->size = extra;
-		new->tag = 0;           // free block
-		new->prev = base;
-		new->id = ZONEID;
-		new->next = base->next;
-		new->next->prev = new;
-		base->next = new;
+        _new = ( memblock_t * )( (byte *)base + size );
+        _new->size = extra;
+        _new->tag = 0;           // free block
+        _new->prev = base;
+        _new->id = ZONEID;
+        _new->next = base->next;
+        _new->next->prev = _new;
+        base->next = _new;
 		base->size = size;
 	}
 
@@ -601,41 +600,36 @@ CopyString
 		memory from a memstatic_t might be returned
 ========================
 */
-char *CopyString( const char *in ) {
-	char    *out;
+char *CopyString( const char *in )
+{
+    char    *out;
 
-	if ( !in[0] ) {
-		return ( (char *)&emptystring ) + sizeof( memblock_t );
-	} else if ( !in[1] )     {
-		if ( in[0] >= '0' && in[0] <= '9' ) {
-			return ( (char *)&numberstring[in[0] - '0'] ) + sizeof( memblock_t );
-		}
-	}
-	out = S_Malloc( strlen( in ) + 1 );
-	strcpy( out, in );
-	return out;
+    if ( !in[0] ) {
+        return ( (char *)&emptystring ) + sizeof( memblock_t );
+    } else if ( !in[1] )     {
+        if ( in[0] >= '0' && in[0] <= '9' ) {
+            return ( (char *)&numberstring[in[0] - '0'] ) + sizeof( memblock_t );
+        }
+    }
+    out = reinterpret_cast<char*>(S_Malloc( strlen( in ) + 1 ));
+    strcpy( out, in );
+    return out;
 }
 
 
 char *__cdecl Z_TryMallocGarbage(int size, const char *name, int type)
 {
-  char *buf;
-
-  buf = Z_Malloc(size + 164);
+  char *buf = reinterpret_cast<char*>(Z_Malloc(size + 164));
   if ( buf )
-  {
     buf += 164;
-    //track_z_alloc(size + 72, name, type, buf, 0, 164);
-  }
+
   return buf;
 }
 
-#define CON_CHANNEL_SYSTEM 0
-
 void __cdecl Z_MallocFailed(int size)
 {
-  Com_PrintError(CON_CHANNEL_SYSTEM, "Failed to Z_Malloc %i bytes\n", size);
-  Sys_OutOfMemErrorInternal("C:\\projects_pc\\cod\\codsrc\\src\\universal\\com_memory.cpp", 436);
+    Com_PrintError(CON_CHANNEL_DONT_FILTER, "Failed to Z_Malloc %i bytes\n", size);
+    Sys_OutOfMemErrorInternal("C:\\projects_pc\\cod\\codsrc\\src\\universal\\com_memory.cpp", 436);
 }
 
 char *__cdecl Z_MallocGarbage(int size, const char *name, int type)

@@ -1,4 +1,4 @@
-/*
+﻿/*
 C standard version of vsnprintf located at msvcrt.dll does lockup in a critical section under certain conditions.
 _lock() function call will not return.
 Replacement function below. However this could just move the real problem around. We will see.
@@ -606,7 +606,7 @@ int Q_vsnprintf(char *str, size_t size, const char *format, va_list args)
 				 * characters, in an implementation-defined
 				 * manner." (C99: 7.19.6.1, 8)
 				 */
-				if ((strvalue = va_arg(args, void *)) == NULL)
+                if ((strvalue = va_arg(args, char*)) == NULL)
 					/*
 					 * We use the glibc format.  BSD prints
 					 * "0x0", SysV "0".

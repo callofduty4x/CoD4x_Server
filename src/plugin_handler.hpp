@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -131,13 +131,17 @@ typedef struct{
   threadid_t tid;
 }plugin_thread_callback_t;
 
+using FPOnInit = int(*)();
+using FPOnInfoRequest = void(*)(pluginInfo_t*);
+using FPOnEvent = void(*)(void*, void*, void*, void*, void*, void*);
+using FPOnUnload = void(*)();
 
 typedef struct{
-    int (*OnInit)();            // Initialization function
-    void (*OnInfoRequest)();    // Info gathering function
+    FPOnInit OnInit;                // Initialization function
+    FPOnInfoRequest OnInfoRequest;  // Info gathering function
 
-    void (*OnEvent[PLUGINS_ITEMCOUNT])();
-    void (*OnUnload)();    // De-initialization function
+    FPOnEvent OnEvent[PLUGINS_ITEMCOUNT];
+    FPOnUnload OnUnload;            // De-initialization function
 
     pluginCmd_t cmd[20];
     int cmds;
@@ -190,10 +194,10 @@ extern pluginScriptCallStubBase_t pluginScriptCallStubs;
 // --------------------------------//
 //  Plugin Handler's own functions //
 // --------------------------------//
-void PHandler_Load(char* );
+void PHandler_Load(const char* Name_);
 void PHandler_Unload(int id);
-void PHandler_UnloadByName(char *name);
-int PHandler_GetID(char *name);
+void PHandler_UnloadByName(const char *name);
+int PHandler_GetID(const char *name);
 void PHandler_Init();
 void *PHandler_Malloc(int,size_t);
 void PHandler_Free(int,void *);

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -107,7 +107,7 @@ char* SV_PlayerBannedByip(netadr_t *netadr, char* message, int len){	//Gets call
 
 
 //duration is in minutes
-void SV_PlayerAddBanByip(netadr_t *remote, char *message, int expire){		//Gets called by future implemented ban-commands and if a prior ban got enforced again
+void SV_PlayerAddBanByip(netadr_t *remote, const char *message, int expire){		//Gets called by future implemented ban-commands and if a prior ban got enforced again
 
     ipBanList_t *list;
     int i;

@@ -114,14 +114,14 @@ game_hudelem_t* G_GetNewHudElem(unsigned int clientnum)
   return hud;
 }
 
-void __cdecl HudElem_Free(struct game_hudelem_s *hud)
+static void __cdecl HudElem_Free(game_hudelem_t *hud)
 {
-  assert(hud != NULL);
-  assert(hud - g_hudelems < 1024);
-  assert(hud->elem.type > HE_TYPE_FREE && hud->elem.type < HE_TYPE_COUNT);
+    assert(hud != NULL);
+    assert(hud - g_hudelems < 1024);
+    assert(hud->elem.type > HE_TYPE_FREE && hud->elem.type < HE_TYPE_COUNT);
 
-  Scr_FreeHudElem(hud);
-  hud->elem.type = 0;
+    Scr_FreeHudElem(hud);
+    hud->elem.type = HE_TYPE_FREE;
 }
 
 
@@ -185,7 +185,7 @@ void G_HudSetFadingOverTime(game_hudelem_t* element ,int time, ucolor_t newcolor
 }
 
 
-void G_HudSetText(game_hudelem_t* element ,const char *text)
+void G_HudSetText(game_hudelem_t* element, const char *text)
 {
     element->elem.width = 0;
     element->elem.height = 0;
@@ -206,16 +206,16 @@ void G_HudSetText(game_hudelem_t* element ,const char *text)
     element->elem.value = 0;
 
     element->elem.text = G_LocalizedStringIndex(text);
-    element->elem.type = 1;
-
+    element->elem.type = HE_TYPE_TEXT;
 }
 
-void G_HudDestroy(game_hudelem_t* element){
 
+void G_HudDestroy(game_hudelem_t* element)
+{
     Scr_FreeHudElem(element);
-    element->elem.type = 0;
-
+    element->elem.type = HE_TYPE_FREE;
 }
+
 
 void __cdecl HudElem_ClientDisconnect(struct gentity_s *ent)
 {

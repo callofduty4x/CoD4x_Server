@@ -359,7 +359,7 @@ void Cmd_CallVote_f(gentity_t *ent)
 
 qboolean ClientCanSpectateTeam(gclient_t *ent, team_t team)
 {
-    return 1 & ((ent->sess.noSpectate >> team) ^ 1);
+    return (1 & ((ent->sess.noSpectate >> team) ^ 1)) ? qtrue : qfalse;
 }
 
 qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum)
@@ -512,8 +512,7 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
     char name[64];
     char buf[128];
     // don't let text be too long for malicious reasons
-    char text[MAX_SAY_TEXT];
-    char *teamname;
+    char text[MAX_SAY_TEXT] = {'\0'};
 
     if (mode == 1)
     {
@@ -559,28 +558,20 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
         return;
     }
 
+    const char* teamname = "";
     switch (mode)
     {
     default:
     case SAY_ALL:
         G_LogPrintf("say;%s;%d;%s;%s\n", SV_GetGuid(ent->s.number, buf, sizeof(buf)), ent->s.number, name, text);
-        teamname = "";
         color = COLOR_WHITE;
         break;
     case SAY_TEAM:
         G_LogPrintf("sayteam;%s;%d;%s;%s\n", SV_GetGuid(ent->s.number, buf, sizeof(buf)), ent->s.number, name, text);
-        if (ent->client->sess.cs.team == TEAM_RED)
-        {
-            teamname = g_TeamName_Axis->string;
-        }
-        else
-        {
-            teamname = g_TeamName_Allies->string;
-        }
+        teamname = ent->client->sess.cs.team == TEAM_RED ? g_TeamName_Axis->string : g_TeamName_Allies->string;
         color = COLOR_CYAN;
         break;
     case SAY_TELL:
-        teamname = "";
         color = COLOR_YELLOW;
         break;
     }
@@ -696,19 +687,19 @@ void __cdecl Svcmd_EntityList_f()
 
 qboolean __cdecl ConsoleCommand()
 {
-  char *cmd;
+    const char* cmd = Cmd_Argv(0);
+    if ( !Q_stricmp(cmd, "entitylist") )
+    {
+        Svcmd_EntityList_f();
+        return qtrue;
+    }
 
-  cmd = Cmd_Argv(0);
-  if ( !Q_stricmp(cmd, "entitylist") )
-  {
-    Svcmd_EntityList_f();
-    return qtrue;
-  }
-  if ( !Q_stricmp(cmd, "say") )
-  {
-    char b[1024];
-    SV_GameSendServerCommand(-1, 0, va("%c \"GAME_SERVER\x15: %s\"", 101, SV_Cmd_Argsv(1, b, sizeof(b))));
-    return qtrue;
-  }
-  return qfalse;
+    if ( !Q_stricmp(cmd, "say") )
+    {
+        char b[1024];
+        SV_GameSendServerCommand(-1, 0, va("%c \"GAME_SERVER\x15: %s\"", 101, SV_Cmd_Argsv(1, b, sizeof(b))));
+        return qtrue;
+    }
+
+    return qfalse;
 }

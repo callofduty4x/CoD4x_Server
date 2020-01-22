@@ -1,4 +1,4 @@
-
+﻿
 #include "q_shared.hpp"
 #include "q_math.hpp"
 #include <math.h>
@@ -794,9 +794,9 @@ qboolean __cdecl VecNCompareCustomEpsilon(const float *v0, const float *v1, floa
   for ( i = 0; i < coordCount; ++i )
   {
     if ( (v0[i] - v1[i]) * (v0[i] - v1[i]) > epsilon * epsilon )
-        return 0;
+        return qfalse;
   }
-  return 1;
+  return qtrue;
 }
 
 
@@ -988,9 +988,9 @@ qboolean __cdecl IntersectPlanes(const float **plane, float *xyz)
 
     VectorScale(xyz, revdet, xyz);
 
-    return 1;
+    return qtrue;
   }
-  return 0;
+  return qfalse;
 }
 
 
@@ -1020,7 +1020,7 @@ qboolean __cdecl PlaneFromPoints(float *plane, const float *v0, const float *v1,
   lengthSq = VectorLengthSquared(plane);
 
   if ( lengthSq == 0 ){
-    return 0;
+    return qfalse;
   }
 
   if(lengthSq < 2.0 && (VectorLengthSquared(v2_v0) * VectorLengthSquared(v1_v0) * 0.0000010000001) >= lengthSq)
@@ -1030,7 +1030,7 @@ qboolean __cdecl PlaneFromPoints(float *plane, const float *v0, const float *v1,
     Vec3Cross(v2_v0, v1_v0, plane);
     if((VectorLengthSquared(v2_v0) * VectorLengthSquared(v1_v0) * 0.0000010000001) >= lengthSq)
     {
-        return 0;
+        return qfalse;
     }
   }
   length = sqrt(lengthSq);
@@ -1038,7 +1038,7 @@ qboolean __cdecl PlaneFromPoints(float *plane, const float *v0, const float *v1,
   plane[1] = plane[1] / length;
   plane[2] = plane[2] / length;
   plane[3] = DotProduct(v0, plane);
-  return 1;
+  return qtrue;
 }
 
 #endif

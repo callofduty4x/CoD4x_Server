@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 1999-2005 Id Software, Inc.
 
@@ -355,8 +355,6 @@
 //endianness
 void CopyShortSwap (void *dest, void *src);
 void CopyLongSwap (void *dest, void *src);
-short ShortSwap (short l);
-int LongSwap (int l);
 float FloatSwap (const float f);
 
 #if defined( Q3_BIG_ENDIAN ) && defined( Q3_LITTLE_ENDIAN )

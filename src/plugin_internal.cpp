@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -334,7 +334,7 @@ void PHandler_PluginInfo_f()
         Com_Printf(CON_CHANNEL_PLUGINS,"Plugin \"%s\" is not loaded!\n",Cmd_Argv(1));
         return;
     }
-    (*pluginFunctions.plugins[id].OnInfoRequest)(&info);
+    pluginFunctions.plugins[id].OnInfoRequest(&info);
     Com_Printf(CON_CHANNEL_PLUGINS,"\n");
     Com_Printf(CON_CHANNEL_PLUGINS,"^2Plugin name:^7\n%s\n\n",pluginFunctions.plugins[id].name);
     vMajor = info.pluginVersion.major;
@@ -548,7 +548,7 @@ void PHandler_ScrAddMethod(char *name, xfunction_t function, qboolean replace, i
     {
         Scr_RemoveMethod(name);
     }
-    if(Scr_AddMethod(name, (xfunction_t)&pluginScriptCallStubs.s[pID * MAX_SCRIPTFUNCTIONS + i].dyncallstub, qfalse) == qfalse)
+    if(Scr_AddMethod(name, (xmethod_t)&pluginScriptCallStubs.s[pID * MAX_SCRIPTFUNCTIONS + i].dyncallstub, qfalse) == qfalse)
     {
         Com_PrintError(CON_CHANNEL_PLUGINS,"Failed to add this script method: %s for plugin\n", name);
         return;

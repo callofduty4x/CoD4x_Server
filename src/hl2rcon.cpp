@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -35,7 +35,7 @@
 #include "g_sv_shared.hpp"
 #include "sv_auth.hpp"
 #include "q_platform.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 
 #include <stdint.h>
 #include <string.h>
@@ -58,78 +58,42 @@ sourceRcon_t sourceRcon;
 #define HL2RCON_SOURCEOUTPUTBUF_LENGTH 4096
 
 
-void HL2Rcon_SourceRconStreaming_enable( int type, uint64_t steamid ){
+void HL2Rcon_SourceRconStreaming_enable( int type, uint64_t steamid )
+{
+    if(sourceRcon.redirectUser < 1 || sourceRcon.redirectUser > MAX_RCONUSERS)
+        return Com_Printf(CON_CHANNEL_DONT_FILTER,"This command can only be used from SourceRcon\n");
 
-	rconUser_t* user;
-	int power;
-	char* c;
-	char* cg;
-	char* ch;
-	char* ev;
+    rconUser_t& user = sourceRcon.activeRconUsers[sourceRcon.redirectUser -1];
 
-	if(sourceRcon.redirectUser < 1 || sourceRcon.redirectUser > MAX_RCONUSERS){
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"This command can only be used from SourceRcon\n");
-		return;
-	}
+    int power = steamid != 0 ? Auth_GetClPowerBySteamID(steamid) : 100;
 
-	user = &sourceRcon.activeRconUsers[sourceRcon.redirectUser -1];
+    if(power > 98 || !(type & 1))
+        user.streamlog = type & 1 ? qtrue : qfalse;
+    else if(type & 1)
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "Insufficient permissions to open console logfile!\n");
 
+    user.streamgamelog = type & 2 ? qtrue : qfalse;
+    user.streamchat = type & 4 ? qtrue : qfalse;
+    user.streamevents = type & 8 ? qtrue : qfalse;
 
-	if(steamid != 0)
-	{
-		power = Auth_GetClPowerBySteamID(steamid);
-	}else{
-		power = 100;
-	}
+    const char* c = user.streamlog ? "logfile" : "";
+    const char* cg = user.streamgamelog ? "gamelog" : "";
+    const char* ch = user.streamchat ? "chat" : "";
+    const char* ev = user.streamevents ? "events" : "";
 
-	if(power > 98 || !(type & 1))
-	{
-		user->streamlog = type & 1;
-
-	}else if(type & 1){
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"Insufficient permissions to open console logfile!\n");
-
-	}
-	user->streamgamelog = type & 2;
-	user->streamchat = type & 4;
-	user->streamevents = type & 8;
-
-	if(user->streamlog)
-		c = "logfile";
-	else
-		c = "";
-
-	if(user->streamgamelog)
-		cg = "gamelog";
-	else
-		cg = "";
-
-	if(user->streamchat)
-		ch = "chat";
-	else
-		ch = "";
-
-	if(user->streamevents)
-		ev = "events";
-	else
-		ev = "";
-
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"Streaming turned on for: %s %s %s %s\n", c, cg, ch, ev);
+    Com_Printf(CON_CHANNEL_DONT_FILTER,"Streaming turned on for: %s %s %s %s\n", c, cg, ch, ev);
 }
 
 void HL2Rcon_SourceRconDisconnect(netadr_t *from, int connectionId)
 {
+    if(connectionId < 0 || connectionId >=  MAX_RCONUSERS)
+        Com_Error(ERR_FATAL, "HL2Rcon_SourceRconDisconnect: bad connectionId: %i", connectionId);
 
-	if(connectionId < 0 || connectionId >=  MAX_RCONUSERS){
-		Com_Error(ERR_FATAL, "HL2Rcon_SourceRconDisconnect: bad connectionId: %i", connectionId);
-		return;
-	}
-	sourceRcon.activeRconUsers[connectionId].remote.type = NA_BAD;
-	sourceRcon.activeRconUsers[connectionId].streamlog = 0;
-	sourceRcon.activeRconUsers[connectionId].streamchat = 0;
-	sourceRcon.activeRconUsers[connectionId].streamgamelog = 0;
-	sourceRcon.activeRconUsers[connectionId].streamevents = 0;
-
+    sourceRcon.activeRconUsers[connectionId].remote.type = NA_BAD;
+    sourceRcon.activeRconUsers[connectionId].streamlog = qfalse;
+    sourceRcon.activeRconUsers[connectionId].streamchat = qfalse;
+    sourceRcon.activeRconUsers[connectionId].streamgamelog = qfalse;
+    sourceRcon.activeRconUsers[connectionId].streamevents = qfalse;
 }
 
 
@@ -172,8 +136,8 @@ qboolean HL2Rcon_SourceRconIdentEvent(netadr_t *from, msg_t *msg, int *connectio
 	user->remote = *from;
 	user->steamid = -1;
 	user->rconUsername[0] = '\0';
-	user->streamchat = 0;
-	user->streamlog = 0;
+    user->streamchat = qfalse;
+    user->streamlog = qfalse;
 	user->lastpacketid = 0;
 	*connectionId = i;
 
@@ -185,8 +149,6 @@ qboolean HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, rconUser_t* user){
 	//int packettype;
 	int packetid;
 	char* loginstring;
-	char* username;
-	char* password;
 	byte msgbuf[32];
 	msg_t sendmsg;
 	//int i;
@@ -219,6 +181,8 @@ qboolean HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, rconUser_t* user){
 
 	loginstring = MSG_ReadStringLine(msg, stringlinebuf, sizeof(stringlinebuf));
 
+    const char* username = nullptr;
+    const char* password = nullptr;
 	if(strlen( sv_rconPassword->string) < 8 || strcmp (loginstring, sv_rconPassword->string ))
 	{
 		Cmd_TokenizeString(loginstring);
@@ -424,9 +388,7 @@ void HL2Rcon_SourceRconFlushRedirect(char* outputbuf, qboolean lastcommand){
 	*updatelen = msg.cursize - 4;
 
 	if(NET_SendData(user->remote.sock, &msg) != msg.cursize)
-	{
-		sourceRcon.writeerror = 1;
-	}
+        sourceRcon.writeerror = qtrue;
 }
 
 
@@ -600,7 +562,7 @@ int HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 		    Com_Printf(CON_CHANNEL_DONT_FILTER,"Rcon from: %s command: %s\n", NET_AdrToString(from), command);
 
 		    sourceRcon.redirectUser = connectionId+1;
-		    sourceRcon.writeerror = 0;
+            sourceRcon.writeerror = qfalse;
 
 		    if(user->steamid != 0 || strcmp(user->rconUsername, "console") == 0)
 		    {
@@ -621,7 +583,7 @@ int HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId){
 		    MSG_ReadByte(msg);
 
 		    sourceRcon.redirectUser = connectionId+1;
-		    sourceRcon.writeerror = 0;
+            sourceRcon.writeerror = qfalse;
 		    Com_BeginRedirect (sv_outputbuf, sizeof(sv_outputbuf), HL2Rcon_SourceRconFlushRedirect);
 		    HL2Rcon_SourceRconStreaming_enable( type, user->steamid );
 		    Com_EndRedirect ();

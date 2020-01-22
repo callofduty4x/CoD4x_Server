@@ -330,7 +330,7 @@ void XML_CloseTag(xml_t *base);
 void XML_AppendToBuffer( xml_t *base, const char* s );
 
 char *Com_SkipCharset( char *s, const char *sep );
-char *Com_SkipTokens( char *s, int numTokens, char *sep );
+char *Com_SkipTokens( char *s, int numTokens, const char *sep );
 
 void COM_DefaultExtension( char *path, int maxSize, const char *extension );
 

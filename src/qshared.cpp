@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -68,31 +68,39 @@ int Q_isalphanum( int c )
 	return ( 0 );
 }
 
+
 qboolean Q_isanumber( const char *s )
 {
-	char *p;
+    char *p;
 
-	if( *s == '\0' )
-		return qfalse;
+    if( *s == '\0' )
+        return qfalse;
 
-	strtod( s, &p );
+    strtod( s, &p );
 
-	return *p == '\0';
+    return *p == '\0' ? qtrue : qfalse;
 }
+
 
 qboolean Q_isintegral( float f )
 {
-	return (int)f == f;
+    return (int)f == f ? qtrue : qfalse;
 }
 
-qboolean Q_isprintstring( char* s ){
+
+qboolean Q_isprintstring( char* s )
+{
     char* a = s;
-    while( *a ){
-        if ( *a < 0x20 || *a > 0x7E ) return 0;
+    while( *a )
+    {
+        if ( *a < 0x20 || *a > 0x7E )
+            return qfalse;
         a++;
     }
-    return 1;
+
+    return qtrue;
 }
+
 
 /*
 This part makes qshared.c undepended in case no proper qcommon.h is included
@@ -129,20 +137,19 @@ Q_strncpyz
 Safe strncpy that ensures a trailing zero
 =============
 */
-void Q_strncpyz( char *dest, const char *src, int destsize ) {
+void Q_strncpyz( char *dest, const char *src, size_t destsize )
+{
+    if (!dest )
+        Com_Error( ERR_FATAL, "Q_strncpyz: NULL dest" );
 
-	if (!dest ) {
-	    Com_Error( ERR_FATAL, "Q_strncpyz: NULL dest" );
-	}
-	if ( !src ) {
-		Com_Error( ERR_FATAL, "Q_strncpyz: NULL src" );
-	}
-	if ( destsize < 1 ) {
-		Com_Error(ERR_FATAL,"Q_strncpyz: destsize < 1" );
-	}
+    if ( !src )
+        Com_Error( ERR_FATAL, "Q_strncpyz: NULL src" );
 
-	strncpy( dest, src, destsize-1 );
-  dest[destsize-1] = 0;
+    if ( destsize < 1 )
+        Com_Error(ERR_FATAL,"Q_strncpyz: destsize < 1" );
+
+    strncpy( dest, src, destsize-1 );
+    dest[destsize-1] = 0;
 }
 
 
@@ -340,16 +347,16 @@ Q_strrepl
 */
 void Q_strnrepl( char *dest, size_t size, const char *src, const char* find, const char* replacement)
 {
-    char* new;
+    char* _new;
     *dest = 0;
 
     int findlen = strlen(find);
 
-    while((new = strstr(src, find)) != NULL)
+    while((_new = strstr(src, find)) != NULL)
     {
-        Q_strlcat(dest, size, src, new - src);
+        Q_strlcat(dest, size, src, _new - src);
         Q_strlcat(dest, size, replacement, -1);
-        src = &new[findlen];
+        src = &_new[findlen];
     }
     Q_strlcat(dest, size, src, -1);
 }
@@ -1116,9 +1123,9 @@ qboolean stack_push(void *array[], int size, void* pointer){
 	void** base;
 
 	if(array[0] == &array[1]) return qfalse;	//Stackoverflow
-	array[0] -= sizeof(void*);
+    array[0] = (void*)((size_t)array[0] - sizeof(void*));
 
-	base = *array;
+    base = (void**)*array;
 	*base = pointer;
 	return qtrue;
 }
@@ -1128,8 +1135,8 @@ void* stack_pop(void *array[], int size){
     void** base;
 
     if(array[0] < (void*)((size_t)array+size )){
-        base = *array;
-        array[0] += sizeof(void*);
+        base = (void**)*array;
+        array[0] = (void*)(size_t(array[0]) + sizeof(void*));
         return *base;
     }
     return NULL;	//Stack reached bottom
@@ -1319,7 +1326,7 @@ void XML_CloseTag(xml_t *base) {
 
 	buffer[0] = '\0';
 
-	root = stack_pop(base->stack,sizeof(base->stack));
+    root = reinterpret_cast<char*>(stack_pop(base->stack,sizeof(base->stack)));
 	for(i=0 ;*root != ' ' && *root != 0 && *root != '>' && i < sizeof(buffer); stringptr++, root++, i++) *stringptr = *root;
 	*stringptr = 0;
 	if(base->last){
@@ -1342,7 +1349,7 @@ Com_CharIsOneOfCharset
 */
 static qboolean Com_CharIsOneOfCharset( char c, const char *set )
 {
-    for(size_t i = 0; i < strlen(len); ++i)
+    for(size_t i = 0; i < strlen(set); ++i)
         if( set[i] == c )
             return qtrue;
 
@@ -1374,27 +1381,27 @@ char* Com_SkipCharset( char *s, const char *sep )
 Com_SkipTokens
 ==================
 */
-char *Com_SkipTokens( char *s, int numTokens, char *sep )
+char *Com_SkipTokens( char *s, int numTokens, const char *sep )
 {
-	int		sepCount = 0;
-	char	*p = s;
+    int		sepCount = 0;
+    char	*p = s;
 
-	while( sepCount < numTokens )
-	{
-		if( Com_CharIsOneOfCharset( *p++, sep ) )
-		{
-			sepCount++;
-			while( Com_CharIsOneOfCharset( *p, sep ) )
-				p++;
-		}
-		else if( *p == '\0' )
-			break;
-	}
+    while( sepCount < numTokens )
+    {
+        if( Com_CharIsOneOfCharset( *p++, sep ) )
+        {
+            sepCount++;
+            while( Com_CharIsOneOfCharset( *p, sep ) )
+                p++;
+        }
+        else if( *p == '\0' )
+            break;
+    }
 
-	if( sepCount == numTokens )
-		return p;
-	else
-		return s;
+    if( sepCount == numTokens )
+        return p;
+    else
+        return s;
 }
 
 
@@ -1474,7 +1481,7 @@ qboolean I_IsEqualUnitWSpace(char *cmp1, char *cmp2)
 		return qfalse;
 	}
 
-	return 1;
+    return qtrue;
 }
 
 unsigned char I_CleanChar(unsigned char in)
@@ -1719,7 +1726,7 @@ char *va(const char *format, ...)
   va_list va;
 
   va_start(va, format);
-  info = Sys_GetValue(1);
+  info = reinterpret_cast<va_info_t*>(Sys_GetValue(1));
   index = info->index;
   info->index = (info->index + 1) % MAX_VASTRINGS;
   len = Q_vsnprintf(info->va_string[index], sizeof(info->va_string[0]), format, va);

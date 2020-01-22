@@ -169,7 +169,7 @@ char* Cvar_InfoString_Big(int bit, char*, int);
 void Cvar_ForEach(void (*callback)(cvar_t const*, void* passedhere), void* passback);
 char* Cvar_DisplayableValue(cvar_t const*);
 char* Cvar_DisplayableValueMT( cvar_t const *var, char* value, int maxlen);
-char* Cvar_GetVariantString(const char* name);
+const char* Cvar_GetVariantString(const char* name);
 cvar_t* Cvar_FindMalleableVar(const char* name);
 void Cvar_Init(void);
 void Cvar_CommandCompletion( void(*callback)(const char *s) );
@@ -204,35 +204,6 @@ qboolean Cvar_IsDefined(const char* varname);
 #define Cvar_GetFloat Cvar_VariableValue
 #define Cvar_GetBool Cvar_VariableBooleanValue
 #define Dvar_InfoString(X,Y) Cvar_InfoString(Y)
-
-/*
-void __cdecl Cvar_SetInt(cvar_t const* var, int val);
-void __cdecl Cvar_SetBool(cvar_t const* var, qboolean val);
-void __cdecl Cvar_SetString(cvar_t const* var, char const* string);
-void __cdecl Cvar_SetFloat(cvar_t const* var, float val);
-void __cdecl Cvar_Set_f(void);
-void __cdecl Cvar_SetS_f(void);
-void __cdecl Cvar_Toggle_f(void);
-void __cdecl Cvar_TogglePrint_f(void);
-void __cdecl Cvar_SetA_f(void);
-void __cdecl Cvar_SetFromCvar_f(void);
-void __cdecl Cvar_SetFromLocalizedStr_f(void);
-void __cdecl Cvar_SetToTime_f(void);
-void __cdecl Cvar_Reset_f(void);
-void __cdecl Cvar_List_f(void);
-void __cdecl Cvar_Dump_f(void);
-void __cdecl Cvar_RegisterBool_f(void);
-void __cdecl Cvar_RegisterInt_f(void);
-void __cdecl Cvar_RegisterFloat_f(void);
-void __cdecl Cvar_SetU_f(void);
-int __cdecl g_cvar_valueforkey(char* key);
-char* __cdecl Cvar_InfoString(int unk, int bit);
-void __cdecl Cvar_ForEach(void (*callback)(cvar_t const*, void* passedhere), void* passback);
-char* __cdecl Cvar_DisplayableValue(cvar_t const*);
-char* __cdecl Cvar_GetVariantString(const char* name);
-cvar_t* __regparm1 Cvar_FindMalleableVar(const char* name);
-void Cvar_Init(void);
-*/
 
 //defines Cvarflags
 #define	CVAR_ARCHIVE		1	// set to cause it to be saved to vars.rc

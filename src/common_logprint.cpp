@@ -341,9 +341,9 @@ void Com_CloseLogFile(volatile fileHandle_t* f)
 fileHandle_t Com_OpenLogfile(const char* name, char mode)
 {
 	static threadid_t logthreadid = -1;
-	if(logthreadid == -1)
+    if(logthreadid == static_cast<threadid_t>(-1))
 	{
-		wakelogfilewriter = Sys_CreateEvent(1, 1, "wakelogfilewriter");
+        wakelogfilewriter = Sys_CreateEvent(qtrue, qtrue, "wakelogfilewriter");
 		Sys_CreateNewThread(Com_WriteLogThread, &logthreadid, NULL);
 		Sys_SetThreadName(logthreadid, "LogfileWriter");
 	}

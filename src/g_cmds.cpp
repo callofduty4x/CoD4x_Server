@@ -547,7 +547,7 @@ void Cmd_Where_f( gentity_t *ent ) {
 }
 
 
-void __cdecl Scr_PlayerVote(gentity_t *self, char *option)
+static void Scr_PlayerVote(gentity_t *self, const char* option)
 {
   Scr_AddString(option);
   Scr_Notify(self, scr_const.vote, 1u);
@@ -556,50 +556,30 @@ void __cdecl Scr_PlayerVote(gentity_t *self, char *option)
 
 void __cdecl Cmd_Vote_f(gentity_t *ent)
 {
-  const char *msg;
-
-  if ( g_oldVoting->boolean )
-  {
-    if ( !level.voteTime )
-    {
-      SV_GameSendServerCommand(ent - g_entities, 0, va("%c \"GAME_NOVOTEINPROGRESS\"", 'e'));
-      return;
-    }
-    if ( ent->client->ps.eFlags & 0x100000 )
-    {
-      SV_GameSendServerCommand(ent - g_entities, 0, va("%c \"GAME_VOTEALREADYCAST\"", 'e'));
-      return;
-    }
-/*
-    if ( ent->client->sess.cs.team == 3 )
-    {
-      SV_GameSendServerCommand(ent - g_entities, 0, va("%c \"GAME_NOSPECTATORVOTE\"", 'e'));
-      return;
-    }
-*/
-    SV_GameSendServerCommand(ent - g_entities, 0, va("%c \"GAME_VOTECAST\"", 'e'));
-    ent->client->ps.eFlags |= 0x100000u;
-  }
-  msg = SV_Cmd_Argv(1);
-  if ( msg[0] != 'y' && msg[1] != 'Y' && msg[1] != '1' )
-  {
     if ( g_oldVoting->boolean )
     {
-      SV_SetConfigstring(CS_VOTE_NO, va("%i", ++level.voteNo));
+        if ( !level.voteTime )
+            return SV_GameSendServerCommand(ent - g_entities, 0, va("%c \"GAME_NOVOTEINPROGRESS\"", 'e'));
+
+        if ( ent->client->ps.eFlags & 0x100000 )
+            return SV_GameSendServerCommand(ent - g_entities, 0, va("%c \"GAME_VOTEALREADYCAST\"", 'e'));
+
+        SV_GameSendServerCommand(ent - g_entities, 0, va("%c \"GAME_VOTECAST\"", 'e'));
+        ent->client->ps.eFlags |= 0x100000u;
     }
-    else
+
+    const char* msg = SV_Cmd_Argv(1);
+    if ( msg[0] != 'y' && msg[1] != 'Y' && msg[1] != '1' )
     {
-      Scr_PlayerVote(ent, "no");
+        if ( g_oldVoting->boolean )
+            SV_SetConfigstring(CS_VOTE_NO, va("%i", ++level.voteNo));
+        else
+            Scr_PlayerVote(ent, "no");
     }
-  }
-  else if ( g_oldVoting->boolean )
-  {
-    SV_SetConfigstring(CS_VOTE_YES, va("%i", ++level.voteYes));
-  }
-  else
-  {
-    Scr_PlayerVote(ent, "yes");
-  }
+    else if ( g_oldVoting->boolean )
+        SV_SetConfigstring(CS_VOTE_YES, va("%i", ++level.voteYes));
+    else
+        Scr_PlayerVote(ent, "yes");
 }
 
 
@@ -834,7 +814,7 @@ void __cdecl StopFollowing(gentity_t *ent)
 
 //Not in Blackops
     client->ps.eFlags &= 0xFFFFFCFF;
-    client->ps.viewlocked = 0;
+    client->ps.viewlocked = PLAYERVIEWLOCK_NONE;
     client->ps.viewlocked_entNum = 1023;
 ///
     client->ps.pm_flags &= 0xFFFEFFEF;
@@ -883,79 +863,53 @@ void __cdecl StopFollowing(gentity_t *ent)
 ClientCommand
 =================
 */
-void ClientCommand( int clientNum ) {
-	gentity_t *ent;
-	char cmd[MAX_TOKEN_CHARS];
+void ClientCommand( int clientNum )
+{
+    gentity_t* ent = g_entities + clientNum;
+    if ( !ent->client )
+        return;
 
-	ent = g_entities + clientNum;
-	if ( !ent->client ) {
-		return;     // not fully in game yet
-	}
+    char cmd[MAX_TOKEN_CHARS] = {'\0'};
+    SV_Cmd_ArgvBuffer( 0, cmd, sizeof( cmd ) );
 
-	SV_Cmd_ArgvBuffer( 0, cmd, sizeof( cmd ) );
+    if (!Q_stricmp(cmd, "say"))
+        return Cmd_Say_f( ent, SAY_ALL, qfalse );
+    else if (!Q_stricmp(cmd, "say_team"))
+        return Cmd_Say_f( ent, SAY_TEAM, qfalse );
+    else if (!Q_stricmp( cmd, "tell" ))
+        return;
+    else if (!Q_stricmp( cmd, "score" ))
+        return Cmd_Score_f( ent );
+    else if (!Q_stricmp( cmd, "mr" ))
+        return Cmd_MenuResponse_f(ent);
+    else if (!Q_stricmp( cmd, "give" ))
+        return Cmd_Give_f( ent );
+    else if (!Q_stricmp( cmd, "god" ))
+        return Cmd_God_f( ent );
+    else if (!Q_stricmp( cmd, "demigod" ))
+        return Cmd_DemiGod_f( ent );
+    else if (!Q_stricmp( cmd, "take" ))
+        return Cmd_Take_f( ent );
+    else if (!Q_stricmp( cmd, "notarget" ))
+        return Cmd_Notarget_f( ent );
+    else if (!Q_stricmp( cmd, "noclip" ))
+        return Cmd_Noclip_f( ent );
+    else if (!Q_stricmp( cmd, "ufo" ))
+        return Cmd_UFO_f( ent );
+    else if (!Q_stricmp( cmd, "kill" ))
+        return Cmd_Kill_f( ent );
+    else if (!Q_stricmp( cmd, "where" ))
+        return Cmd_Where_f( ent );
+    else if (!Q_stricmp( cmd, "callvote" ))
+        return Cmd_CallVote_f( ent );
+    else if (!Q_stricmp( cmd, "vote" ))
+        return Cmd_Vote_f( ent );
+    else if (!Q_stricmp( cmd, "setviewpos" ))
+        return Cmd_SetViewpos_f( ent );
+    else if (!Q_stricmp( cmd, "entitycount" ))
+        return Cmd_EntityCount_f( ent );
+    else if (!Q_stricmp( cmd, "printentities" ))
+        return Cmd_PrintEntities_f();
 
-	if ( Q_stricmp( cmd, "say" ) == 0 ) {
-		Cmd_Say_f( ent, SAY_ALL, qfalse );
-		return;
-	}
-	if ( Q_stricmp( cmd, "say_team" ) == 0 ) {
-		Cmd_Say_f( ent, SAY_TEAM, qfalse );
-		return;
-	}
-	// -NERVE - SMF
-
-	if ( Q_stricmp( cmd, "tell" ) == 0 ) {
-//		Cmd_Tell_f( ent );
-		return;
-	}
-	if ( Q_stricmp( cmd, "score" ) == 0 ) {
-		Cmd_Score_f( ent );
-		return;
-	}
-	if ( Q_stricmp( cmd, "mr" ) == 0 ) {
-		Cmd_MenuResponse_f(ent);
-		return;
-	}
-
-	// ignore all other commands when at intermission
-//	if ( level.intermissiontime ) {
-//		Cmd_Say_f (ent, qfalse, qtrue);			// NERVE - SMF - we don't want to spam the clients with this.
-//		return;
-//	}
-
-	if ( Q_stricmp( cmd, "give" ) == 0 ) {
-		Cmd_Give_f( ent );
-	} else if ( Q_stricmp( cmd, "god" ) == 0 )  {
-		Cmd_God_f( ent );
-	} else if ( Q_stricmp( cmd, "demigod" ) == 0 )  {
-		Cmd_DemiGod_f( ent );
-	} else if ( Q_stricmp( cmd, "take" ) == 0 )  {
-		Cmd_Take_f( ent );
-	} else if ( Q_stricmp( cmd, "notarget" ) == 0 )  {
-		Cmd_Notarget_f( ent );
-	} else if ( Q_stricmp( cmd, "noclip" ) == 0 )  {
-		Cmd_Noclip_f( ent );
-	} else if ( Q_stricmp( cmd, "ufo" ) == 0 )  {
-		Cmd_UFO_f( ent );
-	} else if ( Q_stricmp( cmd, "kill" ) == 0 )  {
-		Cmd_Kill_f( ent );
-	} else if ( Q_stricmp( cmd, "where" ) == 0 ) {
-		Cmd_Where_f( ent );
-	} else if ( Q_stricmp( cmd, "callvote" ) == 0 )  {
-		Cmd_CallVote_f( ent );
-	} else if ( Q_stricmp( cmd, "vote" ) == 0 )  {
-		Cmd_Vote_f( ent );
-	} else if ( Q_stricmp( cmd, "setviewpos" ) == 0 ) {
-		Cmd_SetViewpos_f( ent );
-	} else if ( Q_stricmp( cmd, "entitycount" ) == 0 )  {
-		Cmd_EntityCount_f( ent );
-	} else if ( Q_stricmp( cmd, "printentities" ) == 0 )  {
-		Cmd_PrintEntities_f( ent );
-	} else {
-		SV_GameSendServerCommand( clientNum, 0, va( "%c \"GAME_UNKNOWNCLIENTCOMMAND\x15%s\"", 101, cmd ) );
-	}
+    SV_GameSendServerCommand( clientNum, 0, va( "%c \"GAME_UNKNOWNCLIENTCOMMAND\x15%s\"", 101, cmd ) );
 }
-
-
-
-

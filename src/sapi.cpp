@@ -1,4 +1,4 @@
-#define __STDC_FORMAT_MACROS
+﻿#define __STDC_FORMAT_MACROS
 #define __IN_EXTSAPIMODULE__
 
 #include <stdlib.h>
@@ -10,7 +10,7 @@
 #include "q_platform.hpp"
 #include "g_shared.hpp"
 #include "server.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 #include "sys_main.hpp"
 #include "cmd.hpp"
 #include "sec_crypto.hpp"
@@ -18,7 +18,8 @@
 
 cvar_t* sv_usesteam64id;
 
-int (*Init)(imports_t* sapi_imports, exports_t* exports);
+using FPInit = int(*)(imports_t* sapi_imports, exports_t* exports);
+static FPInit Init;
 
 
 void SV_SApiSteamIDTo64String(uint64_t steamid, char* string, int length)
@@ -361,8 +362,8 @@ int pkcs_5_alg2_200sleep(const unsigned char *password, unsigned long password_l
       return err;
    }
 
-   buf[0] = XMALLOC(MAXBLOCKSIZE * 2);
-   hmac   = XMALLOC(sizeof(hmac_state));
+   buf[0] = reinterpret_cast<unsigned char*>(XMALLOC(MAXBLOCKSIZE * 2));
+   hmac   = reinterpret_cast<hmac_state*>(XMALLOC(sizeof(hmac_state)));
    if (hmac == NULL || buf[0] == NULL) {
       if (hmac != NULL) {
          XFREE(hmac);
@@ -759,7 +760,7 @@ void SV_InitSApi()
 		SApi_PrintError("steam_api" DLL_EXT " not found or it was not possible to load. Error is: %s. Steam is not going to work.\n", errormsg);
 		return;
 	}
-	Init = Sys_GetProcedure("Init");
+    Init = reinterpret_cast<FPInit>(Sys_GetProcedure("Init"));
 	if(Init == NULL)
 	{
 		Sys_CloseLibrary(hmodule);
@@ -846,7 +847,7 @@ void SV_SApiProcessModules( client_t* cl, msg_t* msg )
 qboolean SV_SApiGetGroupMemberStatusByClientNum(int clnum, uint64_t groupid, uint64_t reference, void (*callback)(int clientnum, uint64_t steamid, uint64_t groupid, uint64_t reference, bool m_bMember, bool m_bOfficer))
 {
 	if(sapi_imp.SteamGetGroupMemberStatusByClientNum)
-			return sapi_imp.SteamGetGroupMemberStatusByClientNum(clnum, groupid, reference, callback);
+            return sapi_imp.SteamGetGroupMemberStatusByClientNum(clnum, groupid, reference, callback) ? qtrue : qfalse;
 
 	return qfalse;
 }
