@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include "q_shared.hpp"
 
@@ -29,7 +29,7 @@ yy_buffer_state* __cdecl yy_create_buffer(FILE *file, int bufferSize)
 
   yybufState->yy_buf_size = bufferSize;
 
-  yybufState->yy_ch_buf = malloc(bufferSize + 2);
+  yybufState->yy_ch_buf = reinterpret_cast<byte*>(malloc(bufferSize + 2));
 
   if (yybufState->yy_ch_buf == NULL)
   {

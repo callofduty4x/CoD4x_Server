@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  webadmin.c
  *  CoD4X18-Server_testing
  *
@@ -18,7 +18,7 @@
 #include "cmd.hpp"
 #include "g_sv_shared.hpp"
 #include "g_shared.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 
 #include <string.h>
 
@@ -746,13 +746,12 @@ void Webadmin_BuildMessage(msg_t* msg, const char* username, qboolean invalidlog
 
 qboolean HTTPCreateWebadminMessage(ftRequest_t* request, msg_t* msg, char* sessionkey, httpPostVals_t* values)
 {
-	byte *buf;
 	char qpath[MAX_QPATH];
 	int len;
 	const char *session;
 	char banmsg[1024];
 
-	buf = NULL;
+    byte* buf = NULL;
 
 	MSG_Init(msg, buf, 0);
 	Com_Printf(CON_CHANNEL_SERVER,"URL: %s\n", request->url);
@@ -783,7 +782,7 @@ qboolean HTTPCreateWebadminMessage(ftRequest_t* request, msg_t* msg, char* sessi
 
 	len = 0x20000;
 
-	buf = L_Malloc(len);
+    buf = reinterpret_cast<byte*>(L_Malloc(len));
 	if(buf == NULL)
 	{
 		return qfalse;

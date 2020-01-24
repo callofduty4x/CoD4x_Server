@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -74,31 +74,29 @@ Properly handles line reads
 =================
 */
 
-int Scr_FS_ReadLine( void *buffer, int len, fileHandle_t f ) {
-	char		*read;
-	char		*buf;
+int Scr_FS_ReadLine( void *buffer, int len, fileHandle_t f )
+{
+    if ( !FS_Initialized() ) {
+        Com_Error( ERR_FATAL, "Filesystem call made without initialization\n" );
+    }
 
-	if ( !FS_Initialized() ) {
-		Com_Error( ERR_FATAL, "Filesystem call made without initialization\n" );
-	}
+    if(f > MAX_SCRIPT_FILEHANDLES || f < 1){
+        Scr_Error("Scr_FS_ReadLine: Out of range filehandle\n");
+        return 0;
+    }
 
-        if(f > MAX_SCRIPT_FILEHANDLES || f < 1){
-            Scr_Error("Scr_FS_ReadLine: Out of range filehandle\n");
+    char* buf = reinterpret_cast<char*>(buffer);
+    *buf = 0;
+    char* read = fgets (buf, len, scr_fsh[f -1].fh);
+    if (read == NULL) {	//Error
+
+        if(feof(scr_fsh[f -1].fh))
             return 0;
-        }
 
-	buf = buffer;
-        *buf = 0;
-	read = fgets (buf, len, scr_fsh[f -1].fh);
-	if (read == NULL) {	//Error
-
-		if(feof(scr_fsh[f -1].fh)) 
-			return 0;
-
-		Com_PrintScriptRuntimeWarning("Scr_FS_ReadLine: couldn't read line");
-		return -1;
-	}
-	return 1;
+        Com_PrintScriptRuntimeWarning("Scr_FS_ReadLine: couldn't read line");
+        return -1;
+    }
+    return 1;
 }
 
 
@@ -214,19 +212,15 @@ qboolean Scr_FS_FOpenFile( const char *filename, fsMode_t mode, scr_fileHandle_t
 
 qboolean Scr_FileExists( const char* qpath )
 {
-
     scr_fileHandle_t fh;
 
     Com_Memset( &fh, 0, sizeof( fh ));
 
     if(!Scr_FS_FOpenFile(qpath, FS_READ, &fh))
-    {
-        return 0;
-    }
+        return qfalse;
 
     Scr_FS_CloseFile(&fh);
     return qtrue;
-
 }
 
 fileHandle_t Scr_OpenScriptFile( char* qpath, scr_fileHandleType_t ft, fsMode_t mode){

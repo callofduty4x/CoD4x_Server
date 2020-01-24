@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -190,7 +190,7 @@ Begins recording a demo from the current position
 ====================
 */
 
-void SV_RecordClient( client_t* cl, char* basename ) {
+void SV_RecordClient( client_t* cl, const char* basename ) {
 	char name[MAX_OSPATH];
 	byte bufData[MAX_MSGLEN];
 	byte compressData[2*MAX_MSGLEN];

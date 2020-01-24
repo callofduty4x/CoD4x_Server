@@ -676,7 +676,7 @@ void SV_AddServerCommand( client_t *cl, int type, const char *cmd );
 
 void Scr_SpawnBot(void);
 
-char*	SV_IsGUID(char* guid);
+const char* SV_IsGUID(const char* guid);
 
 void SV_Shutdown( const char* finalmsg);
 
@@ -689,7 +689,7 @@ void SV_ShowClientUnAckCommands( client_t *client );
 
 void SV_WriteDemoMessageForClient( byte *msg, int dataLen, client_t *client );
 void SV_StopRecord( client_t *cl );
-void SV_RecordClient( client_t* cl, char* basename );
+void SV_RecordClient( client_t* cl, const char* basename );
 void SV_DemoSystemShutdown( void );
 void SV_WriteDemoArchive(client_t *client);
 

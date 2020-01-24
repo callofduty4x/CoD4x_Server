@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -43,7 +43,7 @@
 #include "sec_crypto.hpp"
 #include "g_public.hpp"
 
-#include "sapi.h"
+#include "sapi.hpp"
 
 
 #include <stdint.h>
@@ -215,7 +215,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	Com_sprintf(ip_str, sizeof(ip_str), "%s", NET_AdrToConnectionString( from ));
 	Info_SetValueForKey( userinfo, "ip", ip_str );
 
-    ClientCleanName(Info_ValueForKey(userinfo, "name"), nick, 33, false);
+    ClientCleanName(Info_ValueForKey(userinfo, "name"), nick, 33, qfalse);
 
 	denied[0] = '\0';
 
@@ -892,7 +892,7 @@ __cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 		//Just disconnect him and don't tell anyone about it
 		if(drop->netchan.remoteAddress.type == NA_BOT){
 			drop->state = CS_FREE;  // become free now
-			drop->netchan.remoteAddress.type = 0; //Reset the botflag
+            drop->netchan.remoteAddress.type = NA_BAD; //Reset the botflag
 			Com_DPrintf(CON_CHANNEL_SERVER, "Going to CS_FREE for Bot %s\n", clientName );
 		}else{
 
@@ -931,7 +931,7 @@ __cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 
 	if(drop->netchan.remoteAddress.type == NA_BOT){
 		drop->state = CS_FREE;  // become free now
-		drop->netchan.remoteAddress.type = 0; //Reset the botflag
+        drop->netchan.remoteAddress.type = NA_BAD; //Reset the botflag
 		Com_DPrintf(CON_CHANNEL_SERVER, "Going to CS_FREE for Bot %s\n", clientName );
 	}else{
 
@@ -1530,8 +1530,8 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 		cl->downloadEOF = qtrue;
 		cl->downloadNumBytes = 0;
 		cl->downloadBeginOffset = 0;
-		cl->wwwDownloadStarted = 0;
-		cl->wwwDl_failed = 0;
+        cl->wwwDownloadStarted = qfalse;
+        cl->wwwDl_failed = qfalse;
 
 		MSG_WriteByte(&msg, DLSUBCMD_FILEINIT);
 		MSG_WriteLong(&msg, cl->downloadSize);
@@ -1663,7 +1663,7 @@ void SV_SendClientGameState( client_t *client ) {
 		SV_Netchan_TransmitNextFragment(client);
 	}
 
-	sapi = SV_ConnectSApi(client);
+    sapi = SV_ConnectSApi(client) ? qtrue : qfalse;
 	stats = SV_RequestStats(client);
 
 	if(!sapi || !stats)
@@ -1868,7 +1868,7 @@ __optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) 
 				return;
 
 			case clc_clientCommand: //2
-				if ( !SV_ClientCommand( cl, &decompressMsg, 0 ) || cl->state == CS_ZOMBIE )
+                if ( !SV_ClientCommand( cl, &decompressMsg, qfalse ) || cl->state == CS_ZOMBIE )
 				{
 					return; // we couldn't execute it because of the flood protection
 				}
@@ -2123,8 +2123,8 @@ void SV_WWWDownload_Done_f(client_t *cl)
 	}
 	cl->download = 0;
 	*cl->downloadName = 0;
-	cl->wwwDownloadStarted = 0;
-	cl->wwwDlAck = 0;
+    cl->wwwDownloadStarted = qfalse;
+    cl->wwwDlAck = qfalse;
 }
 
 
@@ -2144,9 +2144,9 @@ void SV_WWWDownload_Fail_f(client_t *cl)
 	}
 	cl->download = 0;
 	*cl->downloadName = 0;
-	cl->wwwDownloadStarted = 0;
-	cl->wwwDlAck = 0;
-	cl->wwwDl_failed = 1;
+    cl->wwwDownloadStarted = qfalse;
+    cl->wwwDlAck = qfalse;
+    cl->wwwDl_failed = qtrue;
 
 	SV_SendClientGameState(cl);
 }
@@ -2169,9 +2169,9 @@ void SV_WWWDownload_ChkFail_f(client_t *cl)
 	}
 	cl->download = 0;
 	*cl->downloadName = 0;
-	cl->wwwDownloadStarted = 0;
-	cl->wwwDlAck = 0;
-	cl->wwwDl_failed = 1;
+    cl->wwwDownloadStarted = qfalse;
+    cl->wwwDlAck = qfalse;
+    cl->wwwDl_failed = qtrue;
 	SV_SendClientGameState(cl);
 }
 
@@ -2321,28 +2321,28 @@ void SV_UnmutePlayer_f(client_t* cl){
 
 
 typedef struct {
-	char    *name;
+    const char *name;
 	void ( *func )( client_t *cl );
 	qboolean indlcmd;
 } ucmd_t;
 
 static ucmd_t ucmds[] = {
-	{"userinfo", SV_UpdateUserinfo_f, 0},
-	{"disconnect", SV_Disconnect_f, 1},
-	{"cp", SV_VerifyPaks_f, 0},
-	{"vdr", SV_ResetPureClient_f, 0},
-/*
-	{"download", SV_BeginDownload_f, 0},
-	{"nextdl", SV_NextDownload_f, 0},
-	{"stopdl", SV_StopDownload_f, 0},
-	{"donedl", SV_DoneDownload_f, 0},
-	{"retransdl", SV_RetransmitDownload_f, 0},
+    {"userinfo", SV_UpdateUserinfo_f, qfalse},
+    {"disconnect", SV_Disconnect_f, qtrue},
+    {"cp", SV_VerifyPaks_f, qfalse},
+    {"vdr", SV_ResetPureClient_f, qfalse},
+    /*
+        {"download", SV_BeginDownload_f, 0},
+        {"nextdl", SV_NextDownload_f, 0},
+        {"stopdl", SV_StopDownload_f, 0},
+        {"donedl", SV_DoneDownload_f, 0},
+        {"retransdl", SV_RetransmitDownload_f, 0},
 
-	{"wwwdl", SV_WWWDownload_f, 0},
-*/
-	{"muteplayer", SV_MutePlayer_f, 0},
-	{"unmuteplayer", SV_UnmutePlayer_f, 0},
-	{NULL, NULL, 0}
+        {"wwwdl", SV_WWWDownload_f, 0},
+    */
+    {"muteplayer", SV_MutePlayer_f, qfalse},
+    {"unmuteplayer", SV_UnmutePlayer_f, qfalse},
+    {NULL, NULL, qfalse}
 };
 
 /*
@@ -2515,13 +2515,11 @@ client_t* SV_ReadPackets(netadr_t *from, unsigned short qport)
 
 void SV_RelocateReliableMessageProtocolBuffer(msg_t* msg, int newsize)
 {
-
-	byte* newbuffer;
 	if(msg->cursize > newsize)
 	{
 		newsize = msg->cursize;
 	}
-	newbuffer = L_Malloc(newsize);
+    byte* newbuffer = reinterpret_cast<byte*>(L_Malloc(newsize));
 
 	if(newbuffer == NULL)
 	{
@@ -2639,11 +2637,10 @@ void SV_ReceiveReliableMessages(client_t* client)
 /* Note: Netchan has to be setup already before you can do this */
 qboolean SV_SetupReliableMessageProtocol(client_t* client)
 {
-    byte* defaultbuffer;
     int size;
 
     size = RNET_DEFAULT_BUFFER_SIZE;
-    defaultbuffer = L_Malloc(size);
+    byte* defaultbuffer = reinterpret_cast<byte*>(L_Malloc(size));
 
     if(client->netchan.remoteAddress.type == NA_BAD)
     {

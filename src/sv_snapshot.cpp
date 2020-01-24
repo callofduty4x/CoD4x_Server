@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -120,7 +120,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
     int var_x, from_first_entity, from_num_clients, from_first_client;
 
     snapInfo.clnum = client - svsHeader.clients;
-    snapInfo.client = (void*)client;
+    snapInfo.client = client;
 	snapInfo.snapshotDeltaTime = 0;
     snapInfo.fromBaseline = 0;
     snapInfo.archived = 0;
@@ -1547,7 +1547,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
               cs2 = G_GetClientStateLocal(clientNum);
               MSG_TestDeltaCS(&snapInfo, svsHeader.time, &cachedClient2->cs, cs2);
 
-              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, &cachedClient2->cs, cs2, 1);
+              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, &cachedClient2->cs, cs2, qtrue);
               if ( GetFollowPlayerStateLocal(clientNum, &ps) )
               {
                 MSG_WriteBit1(msg);
@@ -1585,7 +1585,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
 
               MSG_TestDeltaCS(&snapInfo, svsHeader.time, NULL, cs3);
 
-              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, NULL, cs3, 1);
+              MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, NULL, cs3, qtrue);
               if ( GetFollowPlayerStateLocal(clientNum, &ps) )
               {
                 MSG_WriteBit1(msg);
@@ -1657,7 +1657,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
 
 	      MSG_TestDeltaAE(&snapInfo, svsHeader.time, baseline, &to, msg->lastRefEntity);
 
-              if ( MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, &to, 0) )
+              if ( MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, &to, DELTA_FLAGS_FORCE) )
               {
                 ++svsHeader.archivedEntityCount;
               }
@@ -1723,7 +1723,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
 
       MSG_TestDeltaCS(&snapInfo, svsHeader.time, NULL, &cachedCl->cs);
 
-      MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, 0, &cachedCl->cs, 1);
+      MSG_WriteDeltaClient(&snapInfo, msg, svsHeader.time, 0, &cachedCl->cs, qtrue);
       cachedCl->playerStateExists = GetFollowPlayerStateLocal(i, &cachedCl->ps);
       if ( cachedCl->playerStateExists )
       {
@@ -1789,7 +1789,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
 #endif
 	MSG_TestDeltaAE(&snapInfo, svsHeader.time, baseline, archEnt, msg->lastRefEntity);
 
-        MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, archEnt, 0);
+        MSG_WriteDeltaArchivedEntity(&snapInfo, msg, svsHeader.time, baseline, archEnt, DELTA_FLAGS_FORCE);
         ++svsHeader.archivedEntityCount;
         snapInfo.fromBaseline = 0;
         if ( ++svsHeader.nextCachedSnapshotEntities >= 0x7FFFFFFE )

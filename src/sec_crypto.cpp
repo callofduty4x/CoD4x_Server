@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -72,20 +72,20 @@ qboolean Sec_HashMemory(int algo, void *in, size_t inSize, void *out, long unsig
     }
 
     if(!binaryOutput) {buff = (unsigned char *)Sec_Malloc(sizeof(unsigned char) * size); buff2 = buff; }
-    else {buff2 = NULL; buff = out; }
+    else {buff2 = NULL; buff = reinterpret_cast<byte*>(out); }
 
     if((result = hs->init(&md)) != CRYPT_OK)		   { Sec_Free(buff2); SecCryptErr = result; return qfalse; }
-    if((result = hs->process(&md, in, inSize)) != CRYPT_OK){ Sec_Free(buff2); SecCryptErr = result; return qfalse; }
+    if((result = hs->process(&md, reinterpret_cast<byte*>(in), inSize)) != CRYPT_OK){ Sec_Free(buff2); SecCryptErr = result; return qfalse; }
     if((result = hs->done(&md,buff)) != CRYPT_OK)	   { Sec_Free(buff2); SecCryptErr = result; return qfalse; }
 
     if(!binaryOutput){
-	Sec_BinaryToHex((char *)buff,hs->hashsize,out,outSize);
+    Sec_BinaryToHex((char *)buff,hs->hashsize, reinterpret_cast<char*>(out), outSize);
     }
     else *outSize = hs->hashsize;
 
     Sec_Free(buff2);
 
-    return (SecCryptErr == CRYPT_OK);
+    return SecCryptErr == CRYPT_OK ? qtrue : qfalse;
 }
 
 qboolean Sec_HashFile(int algo, const char *fname, void *out, long unsigned *outSize,qboolean binaryOutput)
@@ -100,7 +100,6 @@ qboolean Sec_HashFile(int algo, const char *fname, void *out, long unsigned *out
     hash_state md;
     FILE *fp;
     unsigned char buff[1024];
-    unsigned char *ptr;
     int x,result,size;
     struct ltc_hash_descriptor *hs = &hash_descriptor[algo];
     SecCryptErr = CRYPT_OK;
@@ -135,11 +134,11 @@ qboolean Sec_HashFile(int algo, const char *fname, void *out, long unsigned *out
     }while (x == sizeof(buff));
     //printf("File size: %lu\n",dbg);
     fclose(fp);
-    ptr = binaryOutput ? out : buff;
+    byte* ptr = binaryOutput ? reinterpret_cast<byte*>(out) : buff;
     if((result = hs->done(&md,buff))!=CRYPT_OK){ SecCryptErr = result; return qfalse; }
     if(!binaryOutput){
-	Sec_BinaryToHex((char *)ptr,hs->hashsize,out,outSize);
+    Sec_BinaryToHex((char *)ptr,hs->hashsize, reinterpret_cast<char*>(out), outSize);
     }
     else *outSize = hs->hashsize;
-    return (SecCryptErr == CRYPT_OK);
+    return SecCryptErr == CRYPT_OK ? qtrue : qfalse;
 }

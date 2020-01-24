@@ -26,7 +26,7 @@
 #include "qcommon_mem.hpp"
 #include "server.hpp"
 #include "sys_main.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 #include "plugin_handler.hpp"
 
 #include <stdint.h>

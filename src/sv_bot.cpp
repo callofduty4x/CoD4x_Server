@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Return to Castle Wolfenstein multiplayer GPL Source Code
@@ -279,8 +279,8 @@ void BotImport_Trace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, vec3_t m
 	// always use bounding box for bot stuff ?
 	G_TraceCapsule( &trace, start, mins, maxs, end, passent, contentmask );
 	//copy the trace information
-	bsptrace->allsolid = trace.allsolid;
-	bsptrace->startsolid = trace.startsolid;
+    bsptrace->allsolid = trace.allsolid ? qtrue : qfalse;
+    bsptrace->startsolid = trace.startsolid ? qtrue : qfalse;
 	bsptrace->fraction = trace.fraction;
 	//RTCW calculates endpos in CM_Trace() but not cod4
 	// generate endpos from the original, unmodified start/end
@@ -314,8 +314,8 @@ void BotImport_EntityTrace( bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, ve
 	// always use bounding box for bot stuff ?
 	SV_ClipToEntity( &trace, start, mins, maxs, end, entnum, contentmask, qfalse );
 	//copy the trace information
-	bsptrace->allsolid = trace.allsolid;
-	bsptrace->startsolid = trace.startsolid;
+    bsptrace->allsolid = trace.allsolid ? qtrue : qfalse;
+    bsptrace->startsolid = trace.startsolid ? qtrue : qfalse;
 	bsptrace->fraction = trace.fraction;
 	//RTCW calculates endpos in CM_TransformedBoxTrace() but not cod4
 	for ( i = 0 ; i < 3 ; i++ ) {
@@ -655,7 +655,7 @@ BotImport_AICast_VisibleFromPos
 qboolean BotImport_AICast_VisibleFromPos(   vec3_t srcpos, int srcnum,
 											vec3_t destpos, int destnum, qboolean updateVisPos ) {
 //	return VM_Call( gvm, AICAST_VISIBLEFROMPOS, (int)srcpos, srcnum, (int)destpos, destnum, updateVisPos );
-	return 0;
+    return qfalse;
 }
 
 /*
@@ -665,7 +665,7 @@ BotImport_AICast_CheckAttackAtPos
 */
 qboolean BotImport_AICast_CheckAttackAtPos( int entnum, int enemy, vec3_t pos, qboolean ducking, qboolean allowHitWorld ) {
 //	return VM_Call( gvm, AICAST_CHECKATTACKATPOS, entnum, enemy, (int)pos, ducking, allowHitWorld );
-	return 0;
+    return qfalse;
 
 }
 // done.

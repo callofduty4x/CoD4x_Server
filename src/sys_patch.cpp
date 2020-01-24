@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -126,11 +126,10 @@ void Sys_PatchImageWithBlock(byte *block, int blocksize)
 
 DWORD SetCall(DWORD addr, void* destination){
 
-	DWORD callwidth;
 	DWORD restore;
 	byte* baddr = (byte*)addr;
 
-	callwidth = (DWORD)( destination - (void*)baddr - 5);
+    DWORD callwidth = (DWORD)destination - (DWORD)baddr - 5;
 	*baddr = 0xe8;
 	baddr++;
 
@@ -143,11 +142,10 @@ DWORD SetCall(DWORD addr, void* destination){
 
 DWORD SetJump(DWORD addr, void* destination){
 
-	DWORD jmpwidth;
 	DWORD restore;
 	byte* baddr = (byte*)addr;
 
-	jmpwidth = (DWORD)( destination - (void*)baddr - 5);
+    DWORD jmpwidth = (DWORD)destination - (DWORD)baddr - 5;
 	*baddr = 0xe9;
 	baddr++;
 

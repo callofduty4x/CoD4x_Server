@@ -1,4 +1,4 @@
-#include "tests.hpp"
+﻿#include "tests.hpp"
 #include "q_shared.hpp"
 #include "qcommon.hpp"
 #include "qcommon_io.hpp"
@@ -29,7 +29,7 @@ void MSG_TestDeltaAE(snapshotInfo_t* snapInfo, int time, archivedEntity_t* basel
 
 	msg.lastRefEntity = refent;
 
-        if ( MSG_WriteDeltaArchivedEntity(snapInfo, &msg, time, baseline, to, 0) == 0)
+        if ( MSG_WriteDeltaArchivedEntity(snapInfo, &msg, time, baseline, to, DELTA_FLAGS_FORCE) == 0)
 	{
 		return;
 	}
@@ -108,7 +108,7 @@ void MSG_TestDeltaCS(snapshotInfo_t* snapInfo, int time, clientState_t* baseline
 
 	msg.lastRefEntity = -1;
 
-        MSG_WriteDeltaClient(snapInfo, &msg, time, baseline, to, true);
+        MSG_WriteDeltaClient(snapInfo, &msg, time, baseline, to, qtrue);
 
 	msg.lastRefEntity = -1;
 	msg.bit = 0;
@@ -222,12 +222,12 @@ void MSG_TestPSCode()
 	int len;
 	len = FS_ReadFile("ps_from.bin", (void**)&from);
 	if(len < 1){
-		Com_Printf(0,"Empty/Ivalid file\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Empty/Ivalid file\n");
 		return;
 	}
 	len = FS_ReadFile("ps_to.bin", (void**)&to);
 	if(len < 1){
-		Com_Printf(0,"Empty/Ivalid file\n");
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Empty/Ivalid file\n");
 		return;
 	}
 

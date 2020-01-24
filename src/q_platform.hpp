@@ -364,10 +364,8 @@ float FloatSwap (const float f);
 #define CopyLittleShort(dest, src) CopyShortSwap(dest, src)
 #define CopyLittleLong(dest, src) CopyLongSwap(dest, src)
 #define LittleShort(x) ShortSwap(x)
-#define LittleLong(x) LongSwap(x)
 #define LittleFloat(x) FloatSwap(&x)
 #define BigShort
-#define BigLong
 #define BigFloat
 
 #elif defined( Q3_LITTLE_ENDIAN )
@@ -378,7 +376,6 @@ float FloatSwap (const float f);
 #define LittleLong
 #define LittleFloat
 #define BigShort(x) ShortSwap(x)
-#define BigLong(x) LongSwap(x)
 #define BigFloat(x) FloatSwap(&x)
 
 #elif defined( Q3_VM )
@@ -387,7 +384,6 @@ float FloatSwap (const float f);
 #define LittleLong
 #define LittleFloat
 #define BigShort
-#define BigLong
 #define BigFloat
 
 #else

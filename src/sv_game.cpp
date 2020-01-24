@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 1999-2005 Id Software, Inc.
 
@@ -179,12 +179,12 @@ qboolean __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
 
   if ( DObjSkelExists(obj, sv.skelTimeStamp) )
   {
-    return DObjSkelIsBoneUpToDate(obj, boneIndex);
+    return DObjSkelIsBoneUpToDate(obj, boneIndex) ? qtrue : qfalse;
   }
   size = DObjGetAllocSkelSize(obj);
   buf = SV_AllocSkelMemory(size);
   DObjCreateSkel(obj, buf, sv.skelTimeStamp);
-  return 0;
+  return qfalse;
 }
 
 
@@ -575,7 +575,7 @@ qboolean __cdecl SV_MapExists(const char *name)
 
   basename = SV_GetMapBaseName(name);
   Com_GetBspFilename(fullpath, sizeof(fullpath), basename);
-  return FS_ReadFile(fullpath, 0) >= 0;
+  return FS_ReadFile(fullpath, 0) >= 0 ? qtrue : qfalse;
 }
 
 
@@ -822,7 +822,7 @@ static qboolean gameInitialized;
 
 void __cdecl SV_InitGameProgs(int savepersist)
 {
-  gameInitialized = 1;
+  gameInitialized = qtrue;
   SV_InitGameVM(0, savepersist == 0);
 }
 
@@ -835,7 +835,7 @@ void __cdecl SV_ShutdownGameProgs()
   if ( gameInitialized )
   {
     SV_ShutdownGameVM(1);
-    gameInitialized = 0;
+    gameInitialized = qfalse;
   }
 }
 
@@ -843,7 +843,7 @@ void __cdecl SV_RestartGameProgs(int savepersist)
 {
   Com_SyncThreads();
   SV_ShutdownGameVM(0);
-  com_fixedConsolePosition = 0;
+  com_fixedConsolePosition = qtrue;
   SV_InitGameVM(1, savepersist == 0);
 }
 
@@ -854,7 +854,7 @@ qboolean __cdecl SV_GameCommand()
   {
     return ConsoleCommand();
   }
-  return 0;
+  return qfalse;
 }
 
 
@@ -869,7 +869,7 @@ void SV_GameSetUndercoverState(unsigned int clientNum, bool state)
   {
     return;
   }
-  svs.clients[clientNum].undercover = state;
+  svs.clients[clientNum].undercover = state ? qtrue : qfalse;
 }
 
 const char* SV_GetPlayerName(unsigned int clientNum)

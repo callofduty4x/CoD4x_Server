@@ -1,4 +1,4 @@
-#include "q_shared.hpp"
+﻿#include "q_shared.hpp"
 #include "filesystem.hpp"
 #include "qcommon_io.hpp"
 #include "murmurhash1.hpp"
@@ -183,10 +183,10 @@ qboolean HStorage_StringToValue(varType_t type, char* string, vsValue_t* value)
         case VSVAR_BOOLEAN:
             if(!isInteger(string, 0))
             {
-                value->boolean = 0;
+                value->boolean = qfalse;
                 return qfalse;
             }
-            value->boolean = atoi(string);
+            value->boolean = atoi(string) ? qtrue : qfalse;
             if(value->boolean != 0 && value->boolean != 1)
             {
                 return qfalse;
@@ -317,14 +317,12 @@ int HStorage_GetHashtableUsage( vsMemObj_t* obj )
 
 vsMemObj_t* HStorage_NewObjectInternal( int numbytes )
 {
-    vsMemObj_t* obj;
-
     if(numbytes < VSINITIAL_STORAGE_SIZE)
     {
         numbytes = VSINITIAL_STORAGE_SIZE;
     }
 
-    obj = malloc(sizeof(vsMemObj_t) + numbytes);
+    auto obj = reinterpret_cast<vsMemObj_t*>(malloc(sizeof(vsMemObj_t) + numbytes));
     if(obj == NULL)
     {
         return obj;
@@ -450,7 +448,7 @@ qboolean HStorage_AddDataFromStringInternal( vsMemObj_t* obj, char* varValue)
 
     header = &(obj->iter.tempunits[0].header);
 
-    if(HStorage_StringToValue(header->type, varValue, &value) == qfalse)
+    if(HStorage_StringToValue(static_cast<varType_t>(header->type), varValue, &value) == qfalse)
     {
         obj->lastError = "HStorage_AddStringData: Parse Error";
         return qfalse;
@@ -634,7 +632,7 @@ int HStorage_GetBeginDataInternal( vsMemObj_t* obj, char* name, varType_t* type 
     header = &units[obj->iter.unit].header;
 
     Q_strncpyz(name, (char*)&header->dataStart, MAX_VARNAME);
-    *type = header->type;
+    *type = static_cast<varType_t>(header->type);
     obj->lastError = "HStorage_GetBeginData: Success";
 
     return header->numelements;
@@ -670,7 +668,7 @@ int HStorage_GetDataInternal(vsMemObj_t* obj, vsValue_t* value )
 
         case VSVAR_BOOLEAN:
             datalen = sizeof(byte);
-            value->boolean = ((byte*)(((byte*)(&header->dataStart) + obj->iter.dataOffset)))[0];
+            value->boolean = ((byte*)(((byte*)(&header->dataStart) + obj->iter.dataOffset)))[0] ? qtrue : qfalse;
             break;
 
         case VSVAR_INTEGER:
@@ -725,7 +723,7 @@ int HStorage_IterGetNextInfo( vsMemObj_t* obj, char *name, varType_t* type )
         }
         header = &units[obj->iter.unit].header;
         Q_strncpyz(name, (char*)&header->dataStart, MAX_VARNAME);
-        *type = header->type;
+        *type = static_cast<varType_t>(header->type);
         obj->lastError = "HStorage_IterGetNextInfo: Success";
         return header->numelements;
     }

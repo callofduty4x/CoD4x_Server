@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -248,7 +248,7 @@ qboolean Sec_BuildNeededList(sec_file_t *argcurrFile)
 		Sec_GetStoreFilename(currFile->name, name1, sizeof(name1));
 
 		//Does our file already exist?
-		len = FS_ReadFileOSPath(name1, (void*)&filebuf);
+        len = FS_ReadFileOSPath(name1, reinterpret_cast<void**>(&filebuf));
 		
 		if(len > 0)
 		{	//Is it already the file we need? Then don't download it.

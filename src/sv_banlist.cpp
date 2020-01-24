@@ -80,22 +80,22 @@ const char* SV_WriteBanTimelimit(int timeleftsecs, char *outbuffer, int outbuffe
 
 
 char* SV_PlayerBannedByip(netadr_t *netadr, char* message, int len){	//Gets called in SV_DirectConnect
-    ipBanList_t *this;
+    ipBanList_t *self;
     int i;
     char outbuffer[512];
     int timeleftsecs;
 
     message[0] = 0;
 
-    for(this = &ipBans[0], i = 0; i < MAX_IPBANS; this++, i++)
+    for(self = &ipBans[0], i = 0; i < MAX_IPBANS; self++, i++)
     {
 
-        if(NET_CompareBaseAdr(netadr, &this->remote)){
+        if(NET_CompareBaseAdr(netadr, &self->remote)){
 
-            timeleftsecs = this->timeout - Com_GetRealtime();
+            timeleftsecs = self->timeout - Com_GetRealtime();
             if(timeleftsecs > 1)
             {
-              Com_sprintf(message, len, "%s\n%s\n", this->banmsg, SV_WriteBanTimelimit(timeleftsecs, outbuffer, sizeof(outbuffer)));
+              Com_sprintf(message, len, "%s\n%s\n", self->banmsg, SV_WriteBanTimelimit(timeleftsecs, outbuffer, sizeof(outbuffer)));
               return message;
             }
         }

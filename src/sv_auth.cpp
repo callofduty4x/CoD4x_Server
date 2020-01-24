@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -35,7 +35,7 @@
 #include "net_game.hpp"
 #include "g_sv_shared.hpp"
 #include "sec_crypto.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 
 #include <stdint.h>
 #include <string.h>
@@ -683,7 +683,7 @@ qboolean Auth_InfoAddAdmin(const char* line)
         qboolean undercover;
 
         power = atoi(Info_ValueForKey(line, "power"));
-        undercover = atoi(Info_ValueForKey(line, "undercov"));
+        undercover = atoi(Info_ValueForKey(line, "undercov")) ? qtrue : qfalse;
         Q_strncpyz(password, Info_ValueForKey(line, "password") , sizeof(password));
         Q_strncpyz(salt, Info_ValueForKey(line, "salt") , sizeof(salt));
         Q_strncpyz(username, Info_ValueForKey(line, "username") , sizeof(username));

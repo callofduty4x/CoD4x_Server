@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -50,7 +50,7 @@
 #include "cscr_stringlist.hpp"
 #include "cscr_variable.hpp"
 #include "g_sv_main.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 #include "db_load.hpp"
 #include "sec_crypto.hpp"
 
@@ -527,7 +527,7 @@ static void SVC_RateLimitInit( ){
 
     int totalsize = querylimit.max_buckets * sizeof(leakyBucket_t) + querylimit.max_hashes * sizeof(leakyBucket_t*);
 
-    querylimit.buckets = L_Malloc(totalsize);
+    querylimit.buckets = reinterpret_cast<leakyBucket_t*>(L_Malloc(totalsize));
 
     if(!querylimit.buckets)
     {
@@ -810,11 +810,10 @@ if a user is interested in a server to do a full status
 __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
     int		i, count, humans;
     char		infostring[MAX_INFO_STRING];
-    char*		s;
     mvabuf;
 
 
-    s = SV_Cmd_Argv(1);
+    const char* s = SV_Cmd_Argv(1);
 
 
     // Prevent using getstatus as an amplifier
@@ -1396,7 +1395,7 @@ struct sourceEngineCvars_s
 };
 
 void	SVC_SourceEngineQuery_WriteCvars(cvar_t const* cvar, void *var ){
-    struct sourceEngineCvars_s *data = var;
+    sourceEngineCvars_s *data = reinterpret_cast<sourceEngineCvars_s*>(var);
 
     if(cvar->flags & (CVAR_SERVERINFO | CVAR_NORESTART) )
     {
@@ -1850,7 +1849,6 @@ connectionless packets.
 */
 __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg ) {
     char	*s;
-    char	*c;
     char	stringlinebuf[MAX_STRING_CHARS];
 
     MSG_BeginReading( msg );
@@ -1859,7 +1857,7 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
     s = MSG_ReadStringLine( msg, stringlinebuf, sizeof(stringlinebuf) );
     SV_Cmd_TokenizeString( s );
 
-    c = SV_Cmd_Argv(0);
+    const char* c = SV_Cmd_Argv(0);
     Com_DPrintf(CON_CHANNEL_SERVER,"SV packet %s: %s\n", NET_AdrToString(from), s);
     //Most sensitive OOB commands first
         if (!Q_stricmp(c, "getstatus")) {
@@ -2275,7 +2273,7 @@ void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* messag
 
 void* SV_SendHeartbeatThread(void* arg)
 {
-    masterHeartbeatThreadOptions_t* opts = arg;
+    auto opts = reinterpret_cast<masterHeartbeatThreadOptions_t*>(arg);
     int count = opts->ipcount;
     int i;
     char challengehash[512];
@@ -2480,7 +2478,7 @@ void SV_MasterHeartbeatInit()
     {
         tok = strtok(NULL, ";");
     }
-    masterservers.servers = Z_Malloc(i*sizeof(masterserver_t));
+    masterservers.servers = reinterpret_cast<masterserver_t*>(Z_Malloc(i*sizeof(masterserver_t)));
 
     Q_strncpyz(svlist, sv_masterservers->string, sizeof(svlist));
 
@@ -2841,7 +2839,7 @@ This can be usefull to display serverinfo on a website
 */
 
 void	serverStatus_WriteCvars(cvar_t const* cvar, void *var ){
-    xml_t *xmlbase = var;
+    auto xmlbase = reinterpret_cast<xml_t*>(var);
 
     if(cvar->flags & (CVAR_SERVERINFO | CVAR_NORESTART)){
         XML_OpenTag(xmlbase,"Data",2, "Name",cvar->name, "Value",Cvar_DisplayableValue(cvar));
@@ -3475,7 +3473,7 @@ void SV_GetServerStaticHeader(){
     svs.nextCachedSnapshotClients = svsHeader.nextCachedSnapshotClients;
     svs.archivedEntityCount = svsHeader.archivedEntityCount;
     
-    svsHeaderValid = 0;
+    svsHeaderValid = qfalse;
 }
 
 void SV_SetServerStaticHeader()
@@ -3506,7 +3504,7 @@ void SV_SetServerStaticHeader()
     svsHeader.maxclients = sv_maxclients->integer;
     svsHeader.fps = sv_fps->integer;
     svsHeader.gentitySize = sv.gentitySize;
-    svsHeader.clientArchive = sv_clientArchive->integer;
+    svsHeader.clientArchive = sv_clientArchive->integer ? qtrue : qfalse;
 
     svsHeader.gentities = sv.gentities;
     svsHeader.firstClientState = G_GetClientState( 0 );
@@ -3517,7 +3515,7 @@ void SV_SetServerStaticHeader()
     svsHeader.numCachedSnapshotClients = svs.numCachedSnapshotClients;
     svsHeader.archivedEntityCount = svs.archivedEntityCount;
 
-    svsHeaderValid = 1;
+    svsHeaderValid = qtrue;
 }
 
 
@@ -3560,13 +3558,13 @@ const char* SV_GetMessageOfTheDay(){
 
 qboolean SV_FriendlyPlayerCanBlock(){
 
-    return g_friendlyPlayerCanBlock->boolean;
+    return g_friendlyPlayerCanBlock->boolean ? qtrue : qfalse;
 
 }
 
 qboolean SV_FFAPlayerCanBlock(){
 
-    return g_FFAPlayerCanBlock->boolean;
+    return g_FFAPlayerCanBlock->boolean ? qtrue : qfalse;
 
 }
 
@@ -3811,7 +3809,7 @@ void SV_MapRestart( qboolean fastRestart ){
     SV_InitArchivedSnapshot();
     svs.snapFlagServerBit ^= 4;
 
-    SV_GenerateServerId(qfalse); //Short restart
+    SV_GenerateServerId(); //Short restart
 
     //sv.inFrame = 0;
 
@@ -4294,7 +4292,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     // send messages back to the clients
     SV_SendClientMessages();
 
-    Scr_SetLoading(0);
+    Scr_SetLoading(qfalse);
 
     // update ping based on the all received frames
     SV_CalcPings();
@@ -4517,7 +4515,7 @@ void SV_SayToPlayers(int clnum, int team, char* text)
 
 qboolean SV_UseUids()
 {
-    return psvs.useuids;
+    return psvs.useuids ? qtrue : qfalse;
 }
 
 const char* SV_GetMapRotation()
@@ -4739,7 +4737,7 @@ void SV_Startup( void ) {
 
     //1st OOBProfilepacket would get time = svs.time
 
-    Cvar_SetBool( com_sv_running, 1 );
+    Cvar_SetBool( com_sv_running, qtrue );
 }
 
 
@@ -5358,7 +5356,7 @@ void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg)
         {
             free(svs.migrationMsg.data);
         }
-        void* newmsgbuf = malloc(messagesize);
+        auto newmsgbuf = reinterpret_cast<byte*>(malloc(messagesize));
         memset(svs.migrationPacketReceivedBits, 0, sizeof(svs.migrationPacketReceivedBits));
         if(newmsgbuf == NULL)
         {

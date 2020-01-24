@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -139,7 +139,7 @@ netadr_t* NET_GetLocalAddressList(int* count);
 qboolean Sys_IsReservedAddress( netadr_t *adr );
 
 typedef enum {
-	TCP_AUTHWAIT,
+    TCP_AUTHWAIT = 0,
 	TCP_AUTHNOTME,
 	TCP_AUTHBAD,
 	TCP_AUTHAGAIN,

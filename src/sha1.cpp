@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SHA transform algorithm, originally taken from code written by
  * Peter Gutmann, and placed in the public domain.
  */
@@ -42,7 +42,7 @@ void sha_transform(uint32_t *digest, const char *in, uint32_t *W)
 	uint32_t a, b, c, d, e, t, i;
 
 	for (i = 0; i < 16; i++)
-		W[i] = BigLong(((const uint32_t *)in)[i]);
+        W[i] = ((const uint32_t *)in)[i];
 
 	for (i = 0; i < 64; i++)
 		W[i+16] = rol32(W[i+13] ^ W[i+8] ^ W[i+2] ^ W[i], 1);

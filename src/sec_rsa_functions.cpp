@@ -1,9 +1,8 @@
-#include "tomcrypt.h"
+﻿#include "tomcrypt.h"
 
 int rsa_decrypt_puplickey_nnj(const unsigned char *in,unsigned long inlen,unsigned char *out,unsigned long *outlen,int *stat, rsa_key *key){
 	unsigned long modulus_bitlen, modulus_bytelen, x;
 	int err;
-	unsigned char *tmp;
 
 	LTC_ARGCHK(out		!= NULL);
 	LTC_ARGCHK(outlen != NULL);
@@ -19,7 +18,7 @@ int rsa_decrypt_puplickey_nnj(const unsigned char *in,unsigned long inlen,unsign
 		return CRYPT_INVALID_PACKET;
 	}
 
-	tmp = XMALLOC(inlen);
+    unsigned char* tmp = reinterpret_cast<unsigned char*>(XMALLOC(inlen));
 	if (tmp == NULL) {
 	 return CRYPT_MEM;
 	}

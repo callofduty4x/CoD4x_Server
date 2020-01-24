@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -36,7 +36,7 @@
 #include "server.hpp"
 #include "sec_crypto.hpp"
 #include "cmd.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 #include "xassets/extractor.hpp"
 #include <libgen.h>
 #include <signal.h>
@@ -533,7 +533,7 @@ void* Sys_ShutdownWatchdogThread(void* arg)
 
 void Sys_BeginShutdownWatchdog()
 {
-	static qboolean watchdogActive = false;
+    static qboolean watchdogActive = qfalse;
 	if(watchdogActive)
 	{
 		return;
@@ -544,7 +544,7 @@ void Sys_BeginShutdownWatchdog()
 	{
 		timeout = sys_shutdowntimeout->integer;
 	}
-	watchdogActive = true;
+    watchdogActive = qtrue;
 	Sys_CreateNewThread(Sys_ShutdownWatchdogThread, &tinfo, (void*)timeout);
 
 }

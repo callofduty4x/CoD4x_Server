@@ -1,4 +1,4 @@
-#include "qcommon.hpp"
+﻿#include "qcommon.hpp"
 #include "sec_sign.hpp"
 #include "sec_crypto.hpp"
 #include "tomcrypt.h"
@@ -6,14 +6,14 @@
 
 qboolean Sec_MakeRsaKey(int size,const rsa_key *key){
     int res = rsa_make_key(NULL,0,size,65537,(rsa_key *)key);
-    return res;
+    return res ? qtrue : qfalse;
 }
 
 qboolean Sec_SignHash(const char *in, size_t inSize, rsa_key *key, char *out, size_t *outSize){
     long unsigned int is = inSize,os = *outSize;
     int res = rsa_sign_hash_ex((const unsigned char *)in,is,(unsigned char *)out,&os,LTC_PKCS_1_V1_5,NULL,0,0,16,key);
     *outSize = os;
-    return res;
+    return res ? qtrue : qfalse;
 }
 
 qboolean Sec_VerifyHash(const char *sig, size_t sigSize, const rsa_key *key, const char *hash, int hashSize){

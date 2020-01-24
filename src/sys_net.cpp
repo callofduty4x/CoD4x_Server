@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -55,26 +55,23 @@
 #include <stddef.h>		/* for offsetof*/
 
 #ifdef _WIN32
-
 	typedef int socklen_t;
 	#	ifdef ADDRESS_FAMILY
 	#		define sa_family_t	ADDRESS_FAMILY
 	#	else
 	typedef unsigned short sa_family_t;
     #	endif
-
-    // Win10 mingw-w64 - not required!
-	///* no epipe yet */
-	//#ifndef WSAEPIPE
-	//	#define WSAEPIPE       -12345
-	//#endif
-	//#	define EAGAIN			WSAEWOULDBLOCK // Related to Warning: NET_GetPacket on (0.0.0.0:28960 - 1120): WSAEWOULDBLOCK?
-	//#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
-	//#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
-	//#	define ECONNRESET		WSAECONNRESET
-	//#	define EINPROGRESS		WSAEINPROGRESS
-	//#	define EINTR			WSAEINTR
-	//# define EPIPE      WSAEPIPE
+    /* no epipe yet */
+    #ifndef WSAEPIPE
+        #define WSAEPIPE       -12345
+    #endif
+    #	define EAGAIN			WSAEWOULDBLOCK // Related to Warning: NET_GetPacket on (0.0.0.0:28960 - 1120): WSAEWOULDBLOCK?
+    #	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
+    #	define EAFNOSUPPORT		WSAEAFNOSUPPORT
+    #	define ECONNRESET		WSAECONNRESET
+    #	define EINPROGRESS		WSAEINPROGRESS
+    #	define EINTR			WSAEINTR
+    # define EPIPE      WSAEPIPE
     typedef u_long ioctlarg_t;
 	#	define socketError		WSAGetLastError( )
 
@@ -207,7 +204,7 @@ qboolean NET_TCPPacketEvent(netadr_t* remote, byte* bufData, int cursize, int* s
 //static struct sockaddr	socksRelayAddr;
 //static char socksBuf[4096];
 
-static int networkingEnabled = 0;
+static qboolean networkingEnabled = qfalse;
 
 cvar_t		*net_enabled;
 /*
@@ -889,7 +886,7 @@ static qboolean Sys_StringToSockaddr(const char *s, struct sockaddr *sadr, int s
 	}
 	memcpy(sadr, &sadrstore, sadr_len > sizeof(sadrstore) ? sizeof(sadrstore) : sadr_len);
 
-	return retval;
+    return retval ? qtrue : qfalse;
 }
 
 
@@ -1234,7 +1231,7 @@ qboolean	NET_CompareAdr (netadr_t *a, netadr_t *b)
 
 
 qboolean	NET_IsLocalAddress( netadr_t adr ) {
-	return adr.type == NA_LOOPBACK;
+    return adr.type == NA_LOOPBACK ? qtrue : qfalse;
 }
 
 //=============================================================================
@@ -1251,20 +1248,20 @@ Wipe out all remaining packets. This is only called when server is under attack
 
 void NET_Clear(){
 
-    byte buff[65535];
+    char buff[65535] = {'\0'};
     int ret;
 
     if(ip4_socket.sock != INVALID_SOCKET)
     {
         do{
-	ret = recv(ip4_socket.sock, (void *)buff, sizeof(buff), 0);
+    ret = recv(ip4_socket.sock, buff, sizeof(buff), 0);
         }while(ret != SOCKET_ERROR);
     }
 
     if(ip6_socket.sock != INVALID_SOCKET)
     {
         do{
-		ret = recv(ip6_socket.sock, (void *)buff, sizeof(buff), 0);
+        ret = recv(ip6_socket.sock, buff, sizeof(buff), 0);
         }while(ret != SOCKET_ERROR);
     }
 }
@@ -1296,7 +1293,7 @@ __optimize3 __regparm3 int NET_GetPacket(netadr_t *net_from, void *net_message, 
 	if(socket != INVALID_SOCKET)
 	{
 		fromlen = sizeof(from);
-		ret = recvfrom( socket, net_message, maxsize, 0, (struct sockaddr *) &from, &fromlen );
+        ret = recvfrom( socket, reinterpret_cast<char*>(net_message), maxsize, 0, (struct sockaddr *) &from, &fromlen );
 
 		if (ret == SOCKET_ERROR)
 		{
@@ -1387,10 +1384,10 @@ qboolean Sys_SendPacket( int length, const void *data, netadr_t *to ) {
 	if(to->sock != 0)
 	{
 		if( to->type == NA_IP || to->type == NA_BROADCAST )
-			ret = sendto( to->sock, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in) );
+            ret = sendto( to->sock, reinterpret_cast<const char*>(data), length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in) );
 		else if( to->type == NA_IP6 || to->type == NA_MULTICAST6 )
 		{
-			ret = sendto( to->sock, data, length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in6) );
+            ret = sendto( to->sock, reinterpret_cast<const char*>(data), length, 0, (struct sockaddr *) &addr, sizeof(struct sockaddr_in6) );
 		}
 #ifdef SOCKET_DEBUG
 
@@ -1635,7 +1632,7 @@ int NET_IP4Socket( char *net_interface, int port, int *err, qboolean tcp) {
 		address.sin_port = htons( (short)port );
 	}
 
-	if( bind( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
+    if( bind( newsocket, reinterpret_cast<sockaddr*>(&address), sizeof(address) ) == SOCKET_ERROR ) {
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IP4Socket: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		*err = socketError;
 		closesocket( newsocket );
@@ -1786,7 +1783,7 @@ int NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto, i
 		address.sin6_port = htons( (short)port );
 	}
 
-	if( bind( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
+    if( bind( newsocket, reinterpret_cast<sockaddr*>(&address), sizeof(address) ) == SOCKET_ERROR ) {
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IP6Socket: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		*err = socketError;
 		closesocket( newsocket );
@@ -1919,7 +1916,7 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 	}
 
 
-	if( bind( newsocket, (void *)&address, sizeof(address) ) == SOCKET_ERROR ) {
+    if( bind( newsocket, reinterpret_cast<sockaddr*>(&address), sizeof(address) ) == SOCKET_ERROR ) {
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IPSocket: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		*err = socketError;
 		closesocket( newsocket );
@@ -2340,7 +2337,7 @@ qboolean IsStaticIP6Addr(nip_localaddr_t* localaddr)
 qboolean NET_FlagStaticIP6Addresses()
 {
 	int i;
-	qboolean hasstaticip6 = 0;
+    qboolean hasstaticip6 = qfalse;
 
 	for(i = 0; i < MAX_IPS; ++i)
 	{
@@ -2736,7 +2733,7 @@ void NET_Config( qboolean enableNetworking ) {
 	modified = NET_GetCvars();
 
 	if( !net_enabled->integer ) {
-		enableNetworking = 0;
+        enableNetworking = qfalse;
 	}
 
 	// if enable state is the same and no cvars were modified, we have nothing to do
@@ -2886,7 +2883,7 @@ void NET_TcpCloseSocket(int socket)
 			{
 				FD_CLR(conn->remote.sock, &tcpServer.fdw);
 			}
-			conn->state = 0;
+            conn->state = TCP_AUTHWAIT;
 
 			tcpServer.activeConnectionCount--;
 			NET_TCPConnectionClosed(&conn->remote, conn->connectionId, conn->serviceId);
@@ -2912,7 +2909,7 @@ int NET_TcpSendData( int sock, const void *data, int length, char* errormsg, int
 	if(sock < 1)
 		return -1;
 
-	state = send( sock, data, length, NET_NOSIGNAL); // FIX: flag NOSIGNAL prevents SIGPIPE in case of connection problems
+    state = send( sock, reinterpret_cast<const char*>(data), length, NET_NOSIGNAL); // FIX: flag NOSIGNAL prevents SIGPIPE in case of connection problems
 
 	if(state == SOCKET_ERROR)
 	{
@@ -2954,7 +2951,7 @@ int NET_TcpServerGetPacket(tcpConnections_t *conn, void *netmsg, int maxsize, qb
 	char errstr[256];
 	char adrstr[256];
 
-	ret = recv(conn->remote.sock, netmsg, maxsize , 0);
+    ret = recv(conn->remote.sock, reinterpret_cast<char*>(netmsg), maxsize , 0);
 
 	if(ret == SOCKET_ERROR){
 
@@ -3339,7 +3336,7 @@ int NET_TcpClientGetData(int sock, void* buf, int buflen, char* errormsg, int ma
 	if(sock < 1)
 		return -1;
 
-	ret = recv(sock, buf, buflen, 0);
+    ret = recv(sock, reinterpret_cast<char*>(buf), buflen, 0);
 
 	if(ret == SOCKET_ERROR)
   {
@@ -3517,14 +3514,14 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
 		bsin_len = sizeof(bindaddr);
 	}
 
-	if( bind( newsocket, (void *)&bindaddr, bsin_len ) == SOCKET_ERROR ) {
+    if( bind( newsocket, reinterpret_cast<sockaddr*>(&bindaddr), bsin_len ) == SOCKET_ERROR ) {
 		if(!silent) Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TcpClientConnect: bind: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		closesocket( newsocket );
 		return INVALID_SOCKET;
 	}
   }
 
-	if( connect( newsocket, (void *)&address, sin_len ) != SOCKET_ERROR )
+    if( connect( newsocket, reinterpret_cast<sockaddr*>(&address), sin_len ) != SOCKET_ERROR )
 	{
 		return newsocket;
 	}

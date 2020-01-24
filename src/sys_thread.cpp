@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -175,7 +175,7 @@ void Sys_LeaveCriticalSection(int section)
 #define MAX_CALLBACKS 20
 #define MAX_CALLBACKARGS 8
 typedef struct{
-	void (*callbackMain)();
+    void (*callbackMain)(...);
 	void (*threadMain)(void* a, ...);
 	qboolean isActive;
 	qboolean lock;
@@ -215,7 +215,7 @@ void* Sys_CbThreadStub(void* arg)
 	threadDebugPrint( "Created new Thread: %d\n", Sys_GetCurrentThreadId());
 #endif
 
-	thread_callback_t *tcb = arg;
+    auto tcb = reinterpret_cast<thread_callback_t*>(arg);
 
 	tcb->threadMain(tcb->thread_args[0], tcb->thread_args[1], tcb->thread_args[2], tcb->thread_args[3],
 					tcb->thread_args[4], tcb->thread_args[5], tcb->thread_args[6], tcb->thread_args[7]); //real main-thread
@@ -254,7 +254,7 @@ qboolean Sys_SetupThreadCallback(void* callbackMain,...)
 
 	va_end(argptr);
 
-	tcb->callbackMain = callbackMain;
+    tcb->callbackMain = reinterpret_cast<void(*)(...)>(callbackMain);
 	return qtrue;
 
 }
@@ -294,7 +294,7 @@ qboolean Sys_CreateCallbackThread(void* threadMain,...)
 
 	tcb->lock = qtrue;
 	tcb->isActive = qfalse;
-	tcb->threadMain = threadMain;
+    tcb->threadMain = reinterpret_cast<void(*)(void*, ...)>(threadMain);
 	tcb->callbackMain = NULL;
 	success = Sys_CreateNewThread(Sys_CbThreadStub, &tcb->tid, tcb);
 	if(success == qfalse)
@@ -305,7 +305,7 @@ qboolean Sys_CreateCallbackThread(void* threadMain,...)
 
 qboolean Sys_IsDatabaseReady()
 {
-  return Sys_IsObjectSignaled(databaseCompletedEvent) == 1;
+  return Sys_IsObjectSignaled(databaseCompletedEvent) == 1 ? qtrue : qfalse;
 }
 
 void Sys_WaitStartDatabase()
@@ -318,7 +318,7 @@ qboolean Sys_IsDatabaseThread()
   threadid_t curtid;
 
   curtid = Sys_GetCurrentThreadId();
-  return curtid == threadId[1];
+  return curtid == threadId[1] ? qtrue : qfalse;
 }
 
 qboolean Sys_IsServerThread()
@@ -329,7 +329,7 @@ qboolean Sys_IsServerThread()
   curtid = Sys_GetCurrentThreadId();
   return curtid == threadId[2];
 */
-    return false;
+    return qfalse;
 }
 
 
@@ -341,7 +341,7 @@ qboolean Sys_IsRenderThread()
   curtid = Sys_GetCurrentThreadId();
   return curtid == threadId[3];
 */
-    return false;
+    return qfalse;
 }
 
 
@@ -364,7 +364,7 @@ void __cdecl Sys_DatabaseCompleted()
 
 void __cdecl Sys_ResumeDatabaseThread(enum ThreadOwner to)
 {
-  g_databaseThreadOwner = 0;
+  g_databaseThreadOwner = THREAD_OWNER_NONE;
   Sys_SetEvent(resumedDatabaseEvent);
 }
 
@@ -375,8 +375,7 @@ void Sys_WakeDatabase2()
 
 qboolean __cdecl Sys_IsDatabaseReady2()
 {
-  bool signaled = Sys_IsObjectSignaled(databaseCompletedEvent2) == 1;
-  return signaled;
+  return Sys_IsObjectSignaled(databaseCompletedEvent2) == 1 ? qtrue : qfalse;
 }
 
 void __cdecl Sys_DatabaseCompleted2()
@@ -391,7 +390,7 @@ void __cdecl Sys_SyncDatabase()
 
 qboolean __cdecl Sys_HaveSuspendedDatabaseThread(enum ThreadOwner to)
 {
-  return g_databaseThreadOwner == to;
+  return g_databaseThreadOwner == to ? qtrue : qfalse;
 }
 
 void __cdecl Sys_NotifyDatabase()
@@ -425,10 +424,10 @@ unsigned int s_affinityMaskForCpu[8];
 
 qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p))
 {
-  wakeDatabaseEvent = Sys_CreateEvent(0, 0, "wakeDatabaseEvent");
-  databaseCompletedEvent = Sys_CreateEvent(1, 1, "databaseCompletedEvent");
-  databaseCompletedEvent2 = Sys_CreateEvent(1, 1, "databaseCompletedEvent2");
-  resumedDatabaseEvent = Sys_CreateEvent(1, 1, "resumedDatabaseEvent");
+  wakeDatabaseEvent = Sys_CreateEvent(qfalse, qfalse, "wakeDatabaseEvent");
+  databaseCompletedEvent = Sys_CreateEvent(qtrue, qtrue, "databaseCompletedEvent");
+  databaseCompletedEvent2 = Sys_CreateEvent(qtrue, qtrue, "databaseCompletedEvent2");
+  resumedDatabaseEvent = Sys_CreateEvent(qtrue, qtrue, "resumedDatabaseEvent");
   threadFunc[THREAD_CONTEXT_DATABASE] = db_proc;
 
   threadId[THREAD_CONTEXT_DATABASE] = 0;

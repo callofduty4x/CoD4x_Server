@@ -32,7 +32,7 @@
 #include "punkbuster.hpp"
 #include "nvconfig.hpp"
 #include "sv_auth.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 
 #include <string.h>
 #include <stdarg.h>

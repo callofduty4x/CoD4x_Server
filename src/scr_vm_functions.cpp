@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -38,7 +38,7 @@
 #include "bg.hpp"
 #include "client_dedicated.hpp"
 
-#include "sapi.h"
+#include "sapi.hpp"
 #include <string.h>
 #include <time.h>
 #include "plugin_handler.hpp"
@@ -847,7 +847,7 @@ void PlayerCmd_GetGeoLocation(scr_entref_t arg)
 
     rettype = Scr_GetInt(0);
 
-    locIndex = _GeoIP_seek_record(BigLong(*(unsigned long *)&svs.clients[entityNum].netchan.remoteAddress.ip));
+    locIndex = _GeoIP_seek_record(*(unsigned long *)&svs.clients[entityNum].netchan.remoteAddress.ip);
 
     switch (rettype)
     {
@@ -2973,7 +2973,7 @@ void Scr_Destroy_f(scr_entref_t hud_elem_num)
         SV_SetConfigstring(CS_LOCALIZEDSTRINGS + cs_index, "");
 
     Scr_FreeHudElem(hud_elem);
-    hud_elem->elem.type = 0;
+    hud_elem->elem.type = HE_TYPE_FREE;
 }
 
 void Scr_IsArray_f()

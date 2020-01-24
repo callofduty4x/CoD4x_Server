@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -45,7 +45,7 @@ These commands can only be entered from stdin or by a remote operator datagram
 #include "sv_auth.hpp"
 #include "sys_thread.hpp"
 #include "sys_main.hpp"
-#include "sapi.h"
+#include "sapi.hpp"
 #include "scr_vm.hpp"
 #include "cscr_memorytree.hpp"
 #include "cscr_variable.hpp"
@@ -259,8 +259,6 @@ static void SV_GetPlayerByHandleInternal( const char* s, clanduid_t* cl) {
 
 static clanduid_t SV_Cmd_GetPlayerByHandle( void ) {
 	clanduid_t	cl;
-	char		*s;
-
 	cl.steamid = 0;
 	cl.cl = NULL;
 
@@ -275,7 +273,7 @@ static clanduid_t SV_Cmd_GetPlayerByHandle( void ) {
 		return cl;
 	}
 
-	s = Cmd_Argv(1);
+    const char* s = Cmd_Argv(1);
 
 	SV_GetPlayerByHandleInternal(s, &cl);
 	return cl;
@@ -350,7 +348,6 @@ static client_t *SV_GetPlayerByNum( void ) {
 	client_t	*cl;
 	int			i;
 	int			idnum;
-	char		*s;
 
 	// make sure server is running
 	if ( !com_sv_running->boolean ) {
@@ -362,7 +359,7 @@ static client_t *SV_GetPlayerByNum( void ) {
 		return NULL;
 	}
 
-	s = Cmd_Argv(1);
+    const char* s = Cmd_Argv(1);
 
 	for (i = 0; s[i]; i++) {
 		if (s[i] < '0' || s[i] > '9') {
@@ -642,7 +639,7 @@ static void SV_MiniStatus_f( void ) {
 			break;
 		}
 
-		odd = ~odd;
+        odd = odd ? qfalse : qtrue;
 		Com_Printf(CON_CHANNEL_DONT_FILTER,"\n");
 	}
 }
@@ -887,7 +884,7 @@ static void Cmd_Undercover_f() {
 			return;
 		}
 
-		cl->undercover ^= 1;
+        cl->undercover = cl->undercover ? qfalse : qtrue;
         Com_Printf(CON_CHANNEL_DONT_FILTER, "Undercover mode is now turned %s\n", cl->undercover ? "off" : "on");
 
 		Auth_StoreUndercoverStatus(cl);
@@ -911,11 +908,11 @@ static void Cmd_Undercover_f() {
 	}
 	if(Cmd_Argv(2)[0] == '0')
 	{
-		cl->undercover = 0;
+        cl->undercover = qfalse;
 	}
 	else if(Cmd_Argv(2)[0] == '1')
 	{
-		cl->undercover = 1;
+        cl->undercover = qtrue;
 	}
 	else
 	{
@@ -925,32 +922,32 @@ static void Cmd_Undercover_f() {
 }
 
 
-char* SV_IsGUID(char* GUID){
+const char* SV_IsGUID(const char* GUID)
+{
+    int j, k;
 
-	int j, k;
-
-	if(strlen(GUID) == 8){
-		k = 8;
-	}else if(strlen(GUID) == 32){
-		k = 32;
-	}else{
-		return NULL;
-	}
-
-
-
-  j = 0;
-  while(j < k){
-    if(GUID[j] < 0x30 || GUID[j] > 0x66 || (GUID[j] < 0x41 && GUID[j] > 0x39) || (GUID[j] < 0x61 && GUID[j] > 0x46)){
-      return NULL;
+    if(strlen(GUID) == 8){
+        k = 8;
+    }else if(strlen(GUID) == 32){
+        k = 32;
+    }else{
+        return NULL;
     }
-    j++;
-  }
-  Q_strlwr(GUID);
-  if(k == 8)
-    return GUID;
-  else
-    return &GUID[24];
+
+
+
+    j = 0;
+    while(j < k){
+        if(GUID[j] < 0x30 || GUID[j] > 0x66 || (GUID[j] < 0x41 && GUID[j] > 0x39) || (GUID[j] < 0x61 && GUID[j] > 0x46)){
+            return NULL;
+        }
+        j++;
+    }
+
+    if(k == 8)
+        return GUID;
+    else
+        return &GUID[24];
 }
 
 
@@ -963,7 +960,6 @@ Cmd_BanPlayer_f
 static void Cmd_BanPlayer_f() {
 
     int i;
-    char* guid = NULL;
     clanduid_t cl = { 0 };
     char banreason[256];
     char dropmsg[MAX_STRING_CHARS];
@@ -973,41 +969,42 @@ static void Cmd_BanPlayer_f() {
     char name[64];
 
     if(!Q_stricmp(Cmd_Argv(0), "banUser") || !Q_stricmp(Cmd_Argv(0), "banClient"))
-	  {
+    {
         if(Cmd_Argc() < 2){
             Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: banUser <user>\n" );
-			      Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
-			      Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
             return;
         }
 
-	  }else{
-	     if ( Cmd_Argc() < 3) {
+    }else{
+        if ( Cmd_Argc() < 3) {
             Com_Printf(CON_CHANNEL_DONT_FILTER, "Usage: permban <user> <Reason for this ban (max 126 chars)>\n" );
-			      Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
-			      Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "Where user is one of the following: online-playername | online-playerslot | playerid\n" );
+            Com_Printf(CON_CHANNEL_DONT_FILTER, "online-playername can be a fraction of the playername. Playerid is in format [U:V:W]\n" );
             return;
         }
     }
 
-	cl = SV_Cmd_GetPlayerByHandle();
-	if(cl.cl || cl.steamid){
-		goto gothandle;
-	}
-
-  guid = SV_IsGUID(Cmd_Argv(1));
-  if(guid){
-    cl.steamid = SV_SApiGUID2PlayerID(guid);
-    if(cl.steamid)
+    cl = SV_Cmd_GetPlayerByHandle();
+    if(!cl.cl && !cl.steamid)
     {
-      goto gothandle;
+        char longGuid[32] = {'\0'};
+        strncpy(longGuid, Cmd_Argv(1), sizeof(longGuid));
+        Q_strlwr(longGuid);
+        const char* guid = SV_IsGUID(longGuid);
+        if(guid)
+        {
+            cl.steamid = SV_SApiGUID2PlayerID(guid);
+            if(!cl.steamid)
+            {
+                Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player can not be banned, no such player\n");
+                return;
+            }
+        }
+
+
     }
-  }
-
-	Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player can not be banned, no such player\n");
-	return;
-
-gothandle:
 
   banreason[0] = 0;
   if ( Cmd_Argc() > 2) {
@@ -1109,7 +1106,6 @@ static void Cmd_TempBanPlayer_f() {
     time(&aclock);
     int length;
     char buff[8];
-    char *guid = NULL;
     char dropmsg[MAX_STRING_CHARS];
     baninfo_t baninfo;
     char name[64];
@@ -1127,23 +1123,22 @@ static void Cmd_TempBanPlayer_f() {
     }
   	/* Get the handle for this player */
     cl = SV_Cmd_GetPlayerByHandle();
-  	if(cl.cl || cl.steamid){
-  		goto gothandle;
-  	}
-
-    guid = SV_IsGUID(Cmd_Argv(1));
-    if(guid){
-      cl.steamid = SV_SApiGUID2PlayerID(guid);
-      if(cl.steamid)
-      {
-        goto gothandle;
-      }
+    if(!cl.cl && !cl.steamid)
+    {
+        char longGuid[32] = {'\0'};
+        strncpy(longGuid, Cmd_Argv(1), sizeof(longGuid));
+        Q_strlwr(longGuid);
+        const char* guid = SV_IsGUID(longGuid);
+        if(guid)
+        {
+            cl.steamid = SV_SApiGUID2PlayerID(guid);
+            if(!cl.steamid)
+            {
+                Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player can not be banned, no such player\n");
+                return;
+            }
+        }
     }
-
-  	Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player can not be banned, no such player\n");
-  	return;
-
-gothandle:
 
 	/* Get the time this ban should last */
     length = strlen(Cmd_Argv(2));
@@ -1389,7 +1384,7 @@ static void Cmd_ExecuteTranslatedCommand_f(){
 
     int i;
     char outstr[128];
-    char *cmdname = Cmd_Argv(0);
+    const char *cmdname = Cmd_Argv(0);
     char *cmdstring = NULL;
     char *tmp;
     char ssti[128];
@@ -1476,8 +1471,6 @@ Cmd_AddTranslatedCommand_f
 
 static void Cmd_AddTranslatedCommand_f() {
 
-    char *cmdname;
-    char *string;
     int free;
     int i;
 
@@ -1486,8 +1479,8 @@ static void Cmd_AddTranslatedCommand_f() {
         return;
     }
 
-    cmdname = Cmd_Argv(1);
-    string = Cmd_Argv(2);
+    const char* cmdname = Cmd_Argv(1);
+    const char* string = Cmd_Argv(2);
 
     for(i=0, free = -1; i < MAX_TRANSCMDS; i++){
         if(!Q_stricmp(cmdname, psvs.translatedCmd[i].cmdname)){
@@ -1561,50 +1554,46 @@ Begins recording a demo from the current position
 //static char demoName[MAX_QPATH];        // compiler bug workaround
 static void SV_Record_f( void ) {
 
-	char* s;
-	char name[MAX_QPATH];
-	clanduid_t cl;
-	int i;
-  char psti[128];
 
-	if ( Cmd_Argc() > 3 || Cmd_Argc() < 2) {
-		Com_Printf(CON_CHANNEL_DONT_FILTER, "record <client> <demoname>\n" );
-		return;
-	}
+    char name[MAX_QPATH];
+    clanduid_t cl;
+    int i;
+    char psti[128];
 
-	if ( Cmd_Argc() == 3 ) {
-		s = Cmd_Argv( 2 );
-	} else {
-		s = NULL;
-	}
+    if ( Cmd_Argc() > 3 || Cmd_Argc() < 2) {
+        Com_Printf(CON_CHANNEL_DONT_FILTER, "record <client> <demoname>\n" );
+        return;
+    }
 
-	if(!Q_stricmp(Cmd_Argv( 1 ), "all"))
-	{
-		for(i = 0, cl.cl = svs.clients; i < sv_maxclients->integer; i++, cl.cl++)
-		{
-			if(cl.cl->state == CS_ACTIVE && !cl.cl->demorecording){
+    const char* s = Cmd_Argc() == 3 ? Cmd_Argv(2) : nullptr;
+
+    if(!Q_stricmp(Cmd_Argv( 1 ), "all"))
+    {
+        for(i = 0, cl.cl = svs.clients; i < sv_maxclients->integer; i++, cl.cl++)
+        {
+            if(cl.cl->state == CS_ACTIVE && !cl.cl->demorecording){
+                SV_SApiSteamIDTo64String(cl.cl->playerid, psti, sizeof(psti));
+                Com_sprintf(name, sizeof(name), "demo_%s_", psti);
+                SV_RecordClient(cl.cl, name);
+            }
+        }
+        return;
+    }
+
+    cl = SV_Cmd_GetPlayerByHandle();
+    if(!cl.cl){
+        Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player is not online and can not be recorded\n");
+        return;
+    }
+
+    if(s){
+
+        SV_RecordClient(cl.cl, s);
+    }else{
         SV_SApiSteamIDTo64String(cl.cl->playerid, psti, sizeof(psti));
         Com_sprintf(name, sizeof(name), "demo_%s_", psti);
-				SV_RecordClient(cl.cl, name);
-			}
-		}
-		return;
-	}
-
-	cl = SV_Cmd_GetPlayerByHandle();
-	if(!cl.cl){
-		Com_Printf(CON_CHANNEL_DONT_FILTER,"Error: This player is not online and can not be recorded\n");
-		return;
-	}
-
-	if(s){
-
-		SV_RecordClient(cl.cl, s);
-	}else{
-    SV_SApiSteamIDTo64String(cl.cl->playerid, psti, sizeof(psti));
-    Com_sprintf(name, sizeof(name), "demo_%s_", psti);
-    SV_RecordClient(cl.cl, name);
-  }
+        SV_RecordClient(cl.cl, name);
+    }
 }
 
 
@@ -2076,7 +2065,7 @@ void SV_DownloadMapThread(char *inurl)
 	char dlurl[MAX_STRING_CHARS];
 	char *mapname;
 	char filename[MAX_OSPATH];
-	static qboolean downloadActive = 0;
+    static qboolean downloadActive = qfalse;
 
 
 	Q_strncpyz(url, inurl, sizeof(url));
@@ -2158,13 +2147,12 @@ void SV_DownloadMapThread(char *inurl)
 	Com_Printf(CON_CHANNEL_DONT_FILTER,"Download of map \"%s\" has been completed\n", mapname);
 	downloadActive = qfalse;
 
-	Sys_SetupThreadCallback(SV_MapCompletedExec, mapname);
-
+    Sys_SetupThreadCallback(reinterpret_cast<void*>(SV_MapCompletedExec), mapname);
 }
+
 
 void SV_DownloadMap_f()
 {
-	char *url;
 	int len;
 	char buf[128];
 
@@ -2184,7 +2172,7 @@ void SV_DownloadMap_f()
 		return;
 	}
 
-	url = S_Malloc(len +1);
+    char* url = reinterpret_cast<char*>(S_Malloc(len +1));
 	if(url == NULL)
 	{
 		Com_PrintError(CON_CHANNEL_DONT_FILTER,"SV_DownloadMap_f(): Out of memory\n");
@@ -2193,12 +2181,13 @@ void SV_DownloadMap_f()
 
 	Q_strncpyz(url, Cmd_Argv(1), len +1);
 
-	if(Sys_CreateCallbackThread(SV_DownloadMapThread, url) == qfalse)
+    if(Sys_CreateCallbackThread(reinterpret_cast<void*>(SV_DownloadMapThread), url) == qfalse)
 	{
 		Com_PrintError(CON_CHANNEL_DONT_FILTER,"SV_DownloadMap_f(): Failed to start download thread\n");
 		Z_Free(url);
 	}
 }
+
 
 void SV_ChangeGametype_f()
 {
