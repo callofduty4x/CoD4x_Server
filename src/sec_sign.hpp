@@ -24,7 +24,7 @@
 #define SEC_SIGN_VER 0x00010000;
 
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sec_common.hpp"
 #include "tomcrypt.h"
 

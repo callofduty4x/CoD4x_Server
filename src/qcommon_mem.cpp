@@ -21,7 +21,7 @@
 */
 
 #include <string.h>
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon_mem.hpp"
 #include "qcommon.hpp"
 #include "qcommon_logprint.hpp"

@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "sv_voice_mp.hpp"
+#include "qshared.hpp"
 #include "server.hpp"
 #include "g_public.hpp"
 

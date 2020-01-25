@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "cscr_stringlist.hpp"
 #include "qcommon.hpp"
 #include "qcommon_io.hpp"

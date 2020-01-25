@@ -20,8 +20,8 @@
 ===========================================================================
 */
 
-
-#include "q_shared.hpp"
+#include "scr_vm_fs.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "filesystem.hpp"
 #include "scr_vm.hpp"

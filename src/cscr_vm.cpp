@@ -1,4 +1,5 @@
-﻿#include "scr_vm.hpp"
+﻿#include "cscr_vm.hpp"
+#include "scr_vm.hpp"
 #include "cscr_variable.hpp"
 #include "cscr_animtree.hpp"
 #include "cscr_stringlist.hpp"

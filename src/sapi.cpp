@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "q_platform.hpp"
 #include "g_shared.hpp"
 #include "server.hpp"

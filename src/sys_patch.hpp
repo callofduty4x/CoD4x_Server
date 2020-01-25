@@ -21,7 +21,7 @@
 #pragma once
 
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 void Sys_PatchImageWithBlock(byte *block, int blocksize);
 DWORD SetCall(DWORD addr, void* destination);

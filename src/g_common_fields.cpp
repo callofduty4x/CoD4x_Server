@@ -1,4 +1,5 @@
-﻿#include "scr_vm.hpp"
+﻿#include "g_common_fields.hpp"
+#include "scr_vm.hpp"
 #include "g_shared.hpp"
 #include "g_fields.hpp"
 #include "player.hpp"

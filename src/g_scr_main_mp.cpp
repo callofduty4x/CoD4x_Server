@@ -1,4 +1,5 @@
-﻿#include "q_shared.hpp"
+﻿#include "g_scr_main_mp.hpp"
+#include "qshared.hpp"
 #include "scr_vm.hpp"
 #include "g_shared.hpp"
 #include "cscr_stringlist.hpp"

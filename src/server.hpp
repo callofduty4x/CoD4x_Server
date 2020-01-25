@@ -25,7 +25,7 @@
 #ifndef __SERVER_H__
 #define __SERVER_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 #include "sys_net.hpp"
 #include "netchan.hpp"

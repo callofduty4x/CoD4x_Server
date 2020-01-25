@@ -1,3 +1,4 @@
+#include "cscr_const.hpp"
 #include "scr_vm.hpp"
 #include "g_public_mp.hpp"
 

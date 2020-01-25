@@ -1,3 +1,4 @@
+#include "cm_staticmodel_load_obj.hpp"
 #include "cm_local.hpp"
 #include "q_math.hpp"
 #include "xassets/xmodel.hpp"

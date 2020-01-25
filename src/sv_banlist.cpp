@@ -19,9 +19,8 @@
 ===========================================================================
 */
 
-
-
-#include "q_shared.hpp"
+#include "sv_banlist.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"
 #include "filesystem.hpp"

@@ -1,4 +1,5 @@
-﻿#include "qcommon.hpp"
+﻿#include "cm_load.hpp"
+#include "qcommon.hpp"
 #include "cm_local.hpp"
 #include "sys_thread.hpp"
 #include "xassets.hpp"

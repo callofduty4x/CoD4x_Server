@@ -19,11 +19,11 @@
 ===========================================================================
 */
 
-#include "q_shared.hpp"
+#include "cl_dedicated.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"
 #include "server.hpp"
-#include "client_dedicated.hpp"
 #include <string.h>
 
 

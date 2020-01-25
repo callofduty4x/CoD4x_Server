@@ -23,7 +23,7 @@
 #include <cstdarg>
 
 #include "g_sv_main.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "cvar.hpp"
 #include "entity.hpp"

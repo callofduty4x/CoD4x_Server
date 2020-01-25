@@ -1,4 +1,5 @@
-﻿#include "client_dedicated.hpp"
+﻿#include "bullet.hpp"
+#include "cl_dedicated.hpp"
 #include "g_shared.hpp"
 #include "cm_public.hpp"
 #include "qcommon_io.hpp"

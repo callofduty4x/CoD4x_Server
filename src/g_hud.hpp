@@ -23,7 +23,7 @@
 #ifndef __G_HUD_H__
 #define __G_HUD_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 
 #define HUDELEM_ADDR 0x8335620

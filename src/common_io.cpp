@@ -24,7 +24,8 @@
 #include <ctime>
 #include <cstdarg>
 
-#include "q_shared.hpp"
+#include "common_io.hpp"
+#include "qshared.hpp"
 #include "sys_thread.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_logprint.hpp"

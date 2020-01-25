@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "bg_animation.hpp"
+#include "qshared.hpp"
 #include "g_public.hpp"
 #include "dobj.hpp"
 #include "scr_vm.hpp"

@@ -19,8 +19,7 @@
 ===========================================================================
 */
 
-
-
+#include "plugin_exports.hpp"
 #include "plugin_handler.hpp"
 #include "sys_main.hpp"
 #include "sys_thread.hpp"

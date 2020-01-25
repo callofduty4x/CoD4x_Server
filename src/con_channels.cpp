@@ -1,3 +1,4 @@
+#include "con_channels.hpp"
 #include "cmd.hpp"
 #include "cvar.hpp"
 #include "qcommon_io.hpp"

@@ -1,5 +1,5 @@
 #pragma once
-#include "../q_shared.hpp"
+#include "../qshared.hpp"
 #include "keyword.hpp"
 
 typedef unsigned int uint;

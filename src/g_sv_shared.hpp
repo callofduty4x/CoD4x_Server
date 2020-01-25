@@ -25,8 +25,8 @@
 #ifndef __G_SV_SHARED_H__
 #define __G_SV_SHARED_H__
 
-#include "q_shared.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 #include "cvar.hpp"
 #include "server.hpp"

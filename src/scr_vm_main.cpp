@@ -19,7 +19,8 @@
 ===========================================================================
 */
 
-#include "q_shared.hpp"
+#include "scr_vm_main.hpp"
+#include "qshared.hpp"
 #include "scr_vm.hpp"
 #include "scr_vm_functions.hpp"
 #include "qcommon_io.hpp"

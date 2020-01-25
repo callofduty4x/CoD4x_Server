@@ -26,6 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
+#include "g_cmds.hpp"
 #include "g_shared.hpp"
 #include "cmd.hpp"
 #include "cvar.hpp"

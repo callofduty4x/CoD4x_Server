@@ -13,7 +13,7 @@ T-Max has to fix it. Or better make it a standalone program
 /* CoD4X includes: */
 #include "extractor.h"
 #include "../zlib/unzip.h"
-#include "../q_shared.hpp"
+#include "../qshared.hpp"
 #include "../cmd.h"
 #include "../qcommon_io.h"
 #include "../sys_main.h"

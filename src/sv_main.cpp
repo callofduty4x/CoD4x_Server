@@ -20,8 +20,8 @@
 ===========================================================================
 */
 
-
-#include "q_shared.hpp"
+#include "sv_main.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"
 #include "qcommon.hpp"
@@ -44,7 +44,7 @@
 #include "hl2rcon.hpp"
 #include "crc.hpp"
 #include "sv_bots.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "math.h"
 #include "httpftp.hpp"
 #include "cscr_stringlist.hpp"

@@ -1,8 +1,8 @@
-#include "null_client.hpp"
-#include "q_shared.hpp"
+﻿#include "null_client.hpp"
+#include "qshared.hpp"
 #include "sys_thread.hpp"
 #include "cvar.hpp"
-#include "client_dedicated.hpp"
+#include "cl_dedicated.hpp"
 
 
 

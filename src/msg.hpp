@@ -24,9 +24,9 @@
 #ifndef __MSG_H__
 #define __MSG_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "player.hpp"
 
 #include <stdint.h>

@@ -772,7 +772,7 @@ typedef unsigned int clipHandle_t;
 #endif
 
 #include "q_platform.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sys_cod4defs.hpp"
 
 #endif

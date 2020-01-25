@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "sv_init_mp.hpp"
+#include "qshared.hpp"
 #include "qcommon_mem.hpp"
 #include "server.hpp"
 

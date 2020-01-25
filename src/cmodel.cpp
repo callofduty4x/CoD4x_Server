@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "cmodel.hpp"
+#include "qshared.hpp"
 #include "cm_local.hpp"
 
 /*

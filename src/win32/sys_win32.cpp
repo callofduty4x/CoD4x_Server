@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-#include "../q_shared.hpp"
+#include "../qshared.hpp"
 #include "../cmd.hpp"
 #include "../qcommon.hpp"
 #include "../qcommon_mem.hpp"

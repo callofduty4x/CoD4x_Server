@@ -1,3 +1,4 @@
+#include "g_combat_mp.hpp"
 #include "scr_vm.hpp"
 #include "qcommon_io.hpp"
 

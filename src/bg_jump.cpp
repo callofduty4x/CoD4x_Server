@@ -1,8 +1,8 @@
 ﻿#include "bg_jump.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "player.hpp"
 #include "bg_local.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "g_sv_movement.hpp"
 
 #define PMF_JUMPING 0x4000

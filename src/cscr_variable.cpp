@@ -1,5 +1,5 @@
 #include <ctype.h>
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "misc.hpp"
 #include "scr_vm.hpp"
 #include "cscr_stringlist.hpp"

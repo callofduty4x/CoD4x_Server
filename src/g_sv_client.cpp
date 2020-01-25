@@ -23,8 +23,8 @@
 #include <cstdlib>
 #include <cctype>
 
-
-#include "q_shared.hpp"
+#include "g_sv_client.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 #include "player.hpp"
 #include "plugin_handler.hpp"

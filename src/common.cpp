@@ -20,9 +20,8 @@
 ===========================================================================
 */
 
-
-
-#include "q_shared.hpp"
+#include "common.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_parsecmdline.hpp"
 #include "qcommon_logprint.hpp"

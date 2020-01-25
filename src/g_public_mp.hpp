@@ -1,7 +1,7 @@
 #ifndef __G_PUBLIC_MP_H__
 #define __G_PUBLIC_MP_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 #ifndef __cplusplus
 

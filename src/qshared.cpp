@@ -26,7 +26,7 @@
 #include <string.h>
 #include <ctype.h>
 #define __QSHARED_C__
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "sys_thread.hpp"
 #include "misc.hpp"

@@ -21,7 +21,7 @@
 
 
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "cvar.hpp"
 #include "xassets.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"
 #include "mem_track.hpp"

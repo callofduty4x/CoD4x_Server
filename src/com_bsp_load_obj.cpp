@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "com_bsp_load_obj.hpp"
+#include "qshared.hpp"
 #include "qcommon_mem.hpp"
 #include "filesystem.hpp"
 #include "cm_local.hpp"

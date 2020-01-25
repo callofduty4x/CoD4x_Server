@@ -1,7 +1,7 @@
 #pragma once
 
-#include "q_shared.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
+#include "qshared.hpp"
 #include <stdint.h>
 
 typedef enum

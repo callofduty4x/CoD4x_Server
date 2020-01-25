@@ -1,4 +1,5 @@
-﻿#include "player.hpp"
+﻿#include "g_active.hpp"
+#include "player.hpp"
 #include "g_shared.hpp"
 #include "bg_public.hpp"
 #include "server_public.hpp"

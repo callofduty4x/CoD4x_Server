@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "g_misc.hpp"
+#include "qshared.hpp"
 #include "g_shared.hpp"
 
 #define MAX_TURRETS 32

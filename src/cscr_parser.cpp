@@ -1,4 +1,4 @@
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "scr_vm.hpp"
 #include "cscr_parser.hpp"
 #include "cscr_main.hpp"

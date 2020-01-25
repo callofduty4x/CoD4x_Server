@@ -20,8 +20,8 @@
 ===========================================================================
 */
 
-
-#include "q_shared.hpp"
+#include "sv_net_chan.hpp"
+#include "qshared.hpp"
 #include "netchan.hpp"
 #include "server.hpp"
 

@@ -21,7 +21,7 @@
 */
 
 #include "sv_client.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"
 #include "qcommon.hpp"

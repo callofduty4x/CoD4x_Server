@@ -1,4 +1,4 @@
-﻿#include "q_shared.hpp"
+﻿#include "qshared.hpp"
 #include "qcommon.hpp"
 
 #define MAX_PACKETLEN           1400        // max size of a network packet

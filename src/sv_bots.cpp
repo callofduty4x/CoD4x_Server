@@ -1,7 +1,7 @@
 #include "sv_bots.hpp"
 #include "scr_vm.hpp"
 #include "sys_main.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "scr_vm_functions.hpp"
 #include "misc.hpp"
 #include "server.hpp"

@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "g_utils_mp.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 #include "dobj.hpp"
 #include "g_shared.hpp"

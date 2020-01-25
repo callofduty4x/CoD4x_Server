@@ -19,9 +19,11 @@
 ===========================================================================
 */
 
+#include "g_sv_messages.hpp"
+
 #if 0
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 #include "g_hud.hpp"
 #include "server.hpp"

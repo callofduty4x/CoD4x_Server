@@ -28,7 +28,7 @@
 //#define ZONE_DEBUG
 
 #include <stdlib.h>
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 
 typedef enum {

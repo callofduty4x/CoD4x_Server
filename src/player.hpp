@@ -26,8 +26,8 @@
 #define __PLAYER_H__
 
 #include "g_public_mp.hpp"
-#include "q_shared.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 
 #define KEY_MASK_FORWARD        127

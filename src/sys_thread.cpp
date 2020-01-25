@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sys_thread.hpp"
 #include "qcommon.hpp"
 #include "qcommon_io.hpp"

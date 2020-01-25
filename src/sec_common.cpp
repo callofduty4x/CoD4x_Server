@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "tomcrypt.h"
 #include "sec_common.hpp"
 

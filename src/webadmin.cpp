@@ -6,7 +6,7 @@
  *
  */
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "httpftp.hpp"
 #include "qcommon_mem.hpp"
 #include "qcommon_io.hpp"

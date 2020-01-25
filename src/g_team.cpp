@@ -19,12 +19,9 @@
 ===========================================================================
 */
 
-
-//
-
-#include "q_shared.hpp"
+#include "g_team.hpp"
+#include "qshared.hpp"
 #include "player.hpp"
-
 
 /*
 ==============

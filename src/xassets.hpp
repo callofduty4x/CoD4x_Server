@@ -24,7 +24,7 @@
 #ifndef __XASSETS_H__
 #define __XASSETS_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "dobj.hpp"
 #include "xassets/weapondef.hpp"
 #include "xassets/material.hpp"

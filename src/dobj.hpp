@@ -3,7 +3,7 @@
 #ifndef __DOBJ_H__
 #define __DOBJ_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 #include "qcommon_io.hpp"
 #include "misc.hpp"

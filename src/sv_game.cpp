@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-
+#include "sv_game.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"
 #include "entity.hpp"

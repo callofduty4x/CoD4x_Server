@@ -24,7 +24,7 @@
 #ifndef __NETCHAN_H__
 #define __NETCHAN_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sys_net.hpp"
 #include "msg.hpp"
 

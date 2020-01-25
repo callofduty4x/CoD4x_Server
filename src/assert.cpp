@@ -1,4 +1,5 @@
-﻿#include "q_shared.hpp"
+﻿#include "assert.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "sys_main.hpp"
 #include "qvsnprintf.hpp"

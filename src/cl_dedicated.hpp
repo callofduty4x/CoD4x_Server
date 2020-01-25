@@ -1,6 +1,6 @@
 #pragma once
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 #ifdef __cplusplus
 extern "C"{

@@ -19,9 +19,8 @@
 ===========================================================================
 */
 
-
-
-#include "q_shared.hpp"
+#include "scr_vm_callbacks.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 #include "scr_vm.hpp"
 #include "g_main_mp.hpp"

@@ -1,7 +1,7 @@
 #ifndef __WEAPONDEF_H__
 #define __WEAPONDEF_H__
 
-#include "../q_shared.hpp"
+#include "../qshared.hpp"
 #include "xmodel.hpp"
 #include "sounds.hpp"
 #include "material.hpp"

@@ -31,7 +31,8 @@ These commands can only be entered from stdin or by a remote operator datagram
 ===============================================================================
 */
 
-#include "q_shared.hpp"
+#include "sv_cmds.hpp"
+#include "qshared.hpp"
 #include "q_platform.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"

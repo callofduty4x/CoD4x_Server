@@ -22,7 +22,7 @@
 
 
 #include "hl2rcon.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 #include "qcommon_io.hpp"
 #include "cmd.hpp"

@@ -19,8 +19,7 @@
 ===========================================================================
 */
 
-
-
+#include "plugin_com.hpp"
 #include "plugin_handler.hpp"
 
 P_P_F qboolean Plugin_IsLoaded(char *name){

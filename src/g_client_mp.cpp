@@ -1,5 +1,6 @@
-﻿#include "g_public_mp.hpp"
-#include "q_shared.hpp"
+﻿#include "g_client_mp.hpp"
+#include "g_public_mp.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 #include "g_shared.hpp"
 #include "scr_vm.hpp"

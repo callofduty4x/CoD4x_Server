@@ -21,7 +21,7 @@
 
 
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sys_net.hpp"
 #include "msg.hpp"
 

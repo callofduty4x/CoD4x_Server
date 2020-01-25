@@ -1,6 +1,9 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
-#include "q_shared.hpp"
+﻿#include "yyparse.hpp"
+
+#include <cstdio>
+#include <cstdlib>
+
+#include "qshared.hpp"
 
 typedef struct
 {

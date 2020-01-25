@@ -10,7 +10,7 @@
 //
 // stuff common to all qcommon files...
 #include "server.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 #include "qcommon_mem.hpp"
 //

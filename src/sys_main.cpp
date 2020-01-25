@@ -22,7 +22,7 @@
 
 
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sys_main.hpp"
 #include "q_platform.hpp"
 #include "qcommon_io.hpp"

@@ -25,7 +25,7 @@
 #ifndef __SYS_NET_H__
 #define __SYS_NET_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "cvar.hpp"
 /*
 ==============================================================

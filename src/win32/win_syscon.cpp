@@ -19,7 +19,9 @@
 ===========================================================================
 */
 
-#include "../q_shared.hpp"
+#include "win_syscon.hpp"
+
+#include "../qshared.hpp"
 #include "../sys_main.hpp"
 #include "../qcommon.hpp"
 #include "../cmd.hpp"

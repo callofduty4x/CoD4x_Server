@@ -21,7 +21,7 @@
 */
 // cvar.c -- dynamic variable tracking
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"

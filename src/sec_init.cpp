@@ -18,7 +18,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-#include "q_shared.hpp"
+
+#include "sec_init.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 
 #define LTM_DESC

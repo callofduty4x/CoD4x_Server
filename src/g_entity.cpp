@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "g_entity.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 #include "g_shared.hpp"
 #include "scr_vm.hpp"

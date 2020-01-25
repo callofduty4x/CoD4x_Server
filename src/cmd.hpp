@@ -25,7 +25,7 @@
 #ifndef __CMD_H__
 #define __CMD_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 // paramters for command buffer stuffing
 typedef enum {

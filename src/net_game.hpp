@@ -24,7 +24,7 @@
 #ifndef __NET_GAME_H__
 #define __NET_GAME_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sys_net.hpp"
 #include "msg.hpp"
 

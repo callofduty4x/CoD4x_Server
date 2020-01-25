@@ -1,6 +1,6 @@
 #include "com_pack.hpp"
-#include "q_shared.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
+#include "qshared.hpp"
 
 extern "C"
 {

@@ -31,7 +31,7 @@ static mbedtls_x509_crt cacert;
 static int ca_loaded;
 #endif
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "q_platform.hpp"
 #include "httpftp.hpp"
 #include "qcommon.hpp"

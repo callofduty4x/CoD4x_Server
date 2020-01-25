@@ -1,5 +1,5 @@
 ﻿
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "q_math.hpp"
 #include <math.h>
 

@@ -21,7 +21,8 @@
 */
 #include <cstring>
 
-#include "q_shared.hpp"
+#include "g_sv_cmds.hpp"
+#include "qshared.hpp"
 #include "cvar.hpp"
 #include "entity.hpp"
 #include "player.hpp"

@@ -25,7 +25,7 @@
 #ifndef __SYS_MAIN_H__
 #define __SYS_MAIN_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 
 #include <setjmp.h>

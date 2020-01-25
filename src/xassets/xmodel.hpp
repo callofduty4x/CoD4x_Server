@@ -1,7 +1,7 @@
 #ifndef __XMODEL_H__
 #define __XMODEL_H__
 
-#include "../q_shared.hpp"
+#include "../qshared.hpp"
 #include "../q_math.hpp"
 #include "../dobj.hpp"
 

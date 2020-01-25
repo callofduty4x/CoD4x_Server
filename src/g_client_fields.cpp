@@ -1,4 +1,5 @@
-﻿#include "player.hpp"
+﻿#include "g_client_fields.hpp"
+#include "player.hpp"
 #include "scr_vm.hpp"
 #include "g_shared.hpp"
 #include "cscr_stringlist.hpp"

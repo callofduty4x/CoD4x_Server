@@ -5,7 +5,7 @@
 #ifndef _HTTPFTP_H_
 #define _HTTPFTP_H_
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "msg.hpp"
 #include "sys_net.hpp"
 

@@ -26,8 +26,8 @@
 
 
 
-#include "q_shared.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
+#include "qshared.hpp"
 #include "entity.hpp"
 #include "player.hpp"
 #include "g_hud.hpp"

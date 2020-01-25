@@ -1,3 +1,4 @@
+#include "xmodel_utils.hpp"
 #include "xassets.hpp"
 #include "xassets/xmodel.hpp"
 #include "dobj.hpp"

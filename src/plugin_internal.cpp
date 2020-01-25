@@ -19,8 +19,7 @@
 ===========================================================================
 */
 
-
-
+#include "plugin_internal.hpp"
 #include "plugin_handler.hpp"
 #include "sys_main.hpp"
 #include "sys_patch.hpp"

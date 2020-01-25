@@ -20,8 +20,8 @@
 ===========================================================================
 */
 
-
-#include "q_shared.hpp"
+#include "sv_demo.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"
 #include "msg.hpp"

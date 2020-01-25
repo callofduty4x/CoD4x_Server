@@ -26,7 +26,7 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-// sv_bot.c
+#include "sv_bot.hpp"
 #include "cvar.hpp"
 #include "server.hpp"
 #include "scr_vm.hpp"

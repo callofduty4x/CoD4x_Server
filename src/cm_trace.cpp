@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "cm_trace.hpp"
+#include "qshared.hpp"
 #include "cm_public.hpp"
 #include "cm_local.hpp"
 #include "sys_thread.hpp"

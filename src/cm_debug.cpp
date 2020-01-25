@@ -1,4 +1,5 @@
-#include "q_shared.hpp"
+#include "cm_debug.hpp"
+#include "qshared.hpp"
 #include "cm_local.hpp"
 #include "qcommon.hpp"
 #include "cmd.hpp"

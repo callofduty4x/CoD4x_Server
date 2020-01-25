@@ -21,7 +21,7 @@
 */
 
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "g_shared.hpp"
 #include "server.hpp"
 #include "cm_public.hpp"

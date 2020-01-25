@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -25,7 +25,7 @@
 #ifndef __QCOMMON_STDIO_H__
 #define __QCOMMON_STDIO_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 typedef enum{
     MSG_DEFAULT,

@@ -1,7 +1,7 @@
 ﻿#ifndef __CM_LOCAL_H__
 #define __CM_LOCAL_H__
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "sys_thread.hpp"
 #include "cm_public.hpp"
 

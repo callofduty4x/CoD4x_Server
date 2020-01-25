@@ -21,7 +21,7 @@
 */
 
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "bg_public.hpp"
 #include "qcommon_io.hpp"
 #include "net_game_conf.hpp"

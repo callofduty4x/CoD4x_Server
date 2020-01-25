@@ -19,7 +19,7 @@
 ===========================================================================
 */
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"
 #include "g_hud.hpp"
@@ -36,7 +36,7 @@
 #include "sv_auth.hpp"
 #include "cscr_stringlist.hpp"
 #include "bg.hpp"
-#include "client_dedicated.hpp"
+#include "cl_dedicated.hpp"
 #include "g_main_mp.hpp"
 
 #include "sapi.hpp"

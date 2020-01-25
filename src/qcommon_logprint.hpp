@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "q_shared.hpp"
+#include "qshared.hpp"
 
 
 void QDECL SV_EnterLeaveLog( const char *fmt, ... );

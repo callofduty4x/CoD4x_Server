@@ -20,9 +20,8 @@
 ===========================================================================
 */
 
-
-
-#include "q_shared.hpp"
+#include "common_logprint.hpp"
+#include "qshared.hpp"
 #include "qcommon.hpp"
 #include "filesystem.hpp"
 #include "sys_thread.hpp"

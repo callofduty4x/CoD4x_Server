@@ -24,8 +24,8 @@
 #ifndef __CVAR_H__
 #define __CVAR_H__
 
-#include "q_shared.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
+#include "qshared.hpp"
 
 // nothing outside the Cvar_*() functions should modify these fields!
 

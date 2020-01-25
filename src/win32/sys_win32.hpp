@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "../q_shared.hpp"
+#include "../qshared.hpp"
 #include "../objfile_parser.hpp"
 
 #include <windows.h>

@@ -21,8 +21,8 @@
 
 
 #include "g_sv_movement.hpp"
-#include "q_shared.hpp"
-#include "q_shared.hpp"
+#include "qshared.hpp"
+#include "qshared.hpp"
 #include "g_shared.hpp"
 #include "entity.hpp"
 

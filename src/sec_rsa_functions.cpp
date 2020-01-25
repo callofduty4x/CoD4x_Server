@@ -1,4 +1,5 @@
-﻿#include "tomcrypt.h"
+﻿#include "sec_rsa_functions.hpp"
+#include "tomcrypt.h"
 
 int rsa_decrypt_puplickey_nnj(const unsigned char *in,unsigned long inlen,unsigned char *out,unsigned long *outlen,int *stat, rsa_key *key){
 	unsigned long modulus_bitlen, modulus_bytelen, x;
