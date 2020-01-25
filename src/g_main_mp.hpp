@@ -75,7 +75,7 @@ extern cvar_t* g_voteAbstainWeight;
 extern cvar_t* voice_deadChat;
 extern cvar_t* voice_global;
 extern cvar_t* voice_localEcho;
+extern cvar_t* g_gametype;
 extern byte g_clients[0xc6100];
 extern gentity_t g_entities[1024];
-extern byte g_gametype[0x14];
 extern bgs_s level_bgs;

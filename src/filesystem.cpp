@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -209,6 +209,8 @@ or configs will never get loaded from disk!
 #include "sys_thread.hpp"
 #include "plugin_handler.hpp"
 #include "crc.hpp"
+#include "stringed_hooks.hpp"
+#include "qvsnprintf.hpp"
 
 #include <sys/stat.h>
 #include <sys/file.h>
@@ -232,13 +234,8 @@ cvar_t* fs_homepath;
 cvar_t* fs_restrict;
 cvar_t* fs_usedevdir;
 
-cvar_t* loc_language;
-cvar_t* loc_forceEnglish;
-cvar_t* loc_translate;
 cvar_t* loc_warnings;
 cvar_t* loc_warningsAsErrors;
-qboolean g_currentAsian;
-
 
 
 int fs_packFiles;

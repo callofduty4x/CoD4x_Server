@@ -6,7 +6,7 @@
 #include "xassets/weapondef.hpp"
 
 void __cdecl BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
-void __cdecl BG_ShutdownWeaponDefFiles();
+extern "C" void __cdecl BG_ShutdownWeaponDefFiles();
 const char *__cdecl BG_WeaponName(int weapon);
 
 #ifdef __cplusplus

@@ -30,6 +30,8 @@
 #include "punkbuster.hpp"
 #include "hl2rcon.hpp"
 #include "cvar.hpp"
+#include "qvsnprintf.hpp"
+
 
 #include <string.h>
 #include <stdarg.h>

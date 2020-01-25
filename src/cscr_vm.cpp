@@ -1,10 +1,12 @@
-#include "scr_vm.hpp"
+﻿#include "scr_vm.hpp"
 #include "cscr_variable.hpp"
 #include "cscr_animtree.hpp"
 #include "cscr_stringlist.hpp"
 #include "sys_main.hpp"
 #include "cmd.hpp"
 #include "g_shared.hpp"
+#include "qvsnprintf.hpp"
+
 #include <setjmp.h>
 
 int g_script_error_level;

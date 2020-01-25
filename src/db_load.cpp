@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -419,23 +419,6 @@ bool DB_CanFreeXAssetPool(int type )
 
 extern "C"
 {
-
-void __cdecl DB_ShutdownXAssetPools()
-{
-    int i;
-
-    for(i = 0; i < ASSET_TYPE_COUNT; ++i)
-    {
-        if(DB_CanFreeXAssetPool(i ))
-        {
-            Z_Free(DB_XAssetPool[i]);
-            DB_XAssetPool[i] = NULL;
-        }
-    }
-
-}
-
-
 
 void __cdecl DB_LoadedExternalData(int size)
 {
@@ -1661,15 +1644,6 @@ void __cdecl __noreturn DB_Thread(unsigned int threadContext)
 }
 
 
-void __cdecl DB_InitThread()
-{
-  if ( !Sys_SpawnDatabaseThread(DB_Thread) )
-  {
-    Sys_Error("Failed to create database thread");
-  }
-}
-
-
 void __cdecl DB_SetInitializing(bool inUse)
 {
   g_initializing = inUse;
@@ -1977,37 +1951,6 @@ void DB_FreeDefaultEntries()
   }
 //  assert(!g_defaultAssetCount);
 }
-
-
-
-void __cdecl DB_ShutdownXAssets()
-{
-  int i, zh;
-
-  DB_SyncXAssets();
-  DB_SyncExternalAssets();
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
-  for ( i = g_zoneCount - 1; i >= 0; --i )
-  {
-    DB_UnloadXZoneInternal(g_zoneHandles[i], false);
-  }
-  DB_FreeDefaultEntries();
-  DB_FreeUnusedResources();
-  for ( i = g_zoneCount - 1; i >= 0; --i )
-  {
-    zh = g_zoneHandles[i];
-    DB_UnloadXZoneMemory(&g_zones[zh]);
-  }
-  g_zoneCount = 0;
-  DB_ResetMinimumFastFileLoaded();
-
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-}
-
-
-
-
-
 
 
 int DB_FileSize(const char *filename, int FF_DIR)
@@ -2767,26 +2710,6 @@ void __cdecl Load_WeaponDef(bool atStreamStart)
   Load_XString(0);
   DB_PopStreamPos( );
 }
-
-
-void __cdecl DB_ReleaseXAssets()
-{
-  unsigned int hash;
-  unsigned int assetEntryIndex;
-
-  assert( Sys_IsMainThread());
-
-  Sys_SyncDatabase();
-
-  for ( hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
-  {
-    for ( assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = g_assetEntryPool[assetEntryIndex].entry.nextHash )
-    {
-      g_assetEntryPool[assetEntryIndex].entry.inuse = 0;
-    }
-  }
-}
-
 
 
 void __cdecl Mark_SndCurveAsset(struct SndCurve *sndCurve)
@@ -4237,3 +4160,50 @@ void __cdecl Load_MaterialHandle(bool atStreamStart)
 
 
 };
+
+
+void DB_InitThread()
+{
+    if (!Sys_SpawnDatabaseThread(DB_Thread))
+        Sys_Error("Failed to create database thread");
+}
+
+
+void DB_ReleaseXAssets()
+{
+    assert(Sys_IsMainThread());
+    Sys_SyncDatabase();
+    for (size_t hash = 0; hash < ARRAY_COUNT(db_hashTable); ++hash )
+        for (size_t assetEntryIndex = db_hashTable[hash]; assetEntryIndex; assetEntryIndex = g_assetEntryPool[assetEntryIndex].entry.nextHash )
+            g_assetEntryPool[assetEntryIndex].entry.inuse = 0;
+}
+
+
+void DB_ShutdownXAssets()
+{
+    DB_SyncXAssets();
+    DB_SyncExternalAssets();
+    Sys_EnterCriticalSection(CRITSECT_DBHASH);
+    for (int i = g_zoneCount - 1; i >= 0; --i )
+        DB_UnloadXZoneInternal(g_zoneHandles[i], false);
+
+    DB_FreeDefaultEntries();
+    DB_FreeUnusedResources();
+    for (int i = g_zoneCount - 1; i >= 0; --i )
+        DB_UnloadXZoneMemory(&g_zones[g_zoneHandles[i]]);
+
+    g_zoneCount = 0;
+    DB_ResetMinimumFastFileLoaded();
+    Sys_LeaveCriticalSection(CRITSECT_DBHASH);
+}
+
+
+void DB_ShutdownXAssetPools()
+{
+    for(int i = 0; i < ASSET_TYPE_COUNT; ++i)
+        if(DB_CanFreeXAssetPool(i))
+        {
+            Z_Free(DB_XAssetPool[i]);
+            DB_XAssetPool[i] = nullptr;
+        }
+}

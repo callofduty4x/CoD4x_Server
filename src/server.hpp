@@ -734,8 +734,6 @@ qboolean SV_FriendlyPlayerCanBlock(void);
 qboolean SV_FFAPlayerCanBlock(void);
 const char* SV_GetMessageOfTheDay(void);
 const char* SV_GetNextMap(void);
-void QDECL SV_EnterLeaveLog( const char *fmt, ... );
-
 
 qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl);
 
@@ -869,7 +867,6 @@ void SV_ScreenshotArrived(client_t* cl, const char* filename);
 void SV_ModuleArrived(client_t* cl, const char* filename, long checksum);
 void SV_AddBanForSteamIDGUID(uint64_t id, const char* guid, const char* name, int bantime, const char* banreason);
 void SV_ClientCalcFramerate();
-int SV_GetPredictedOriginAndTimeForClientNum(int clientNum, float *origin);
 void SV_SetMapCenterInSVSHeader(float* center);
 void SV_GetMapCenterFromSVSHeader(float* center);
 qboolean SV_Loaded();

@@ -23,35 +23,17 @@
 	extern Q_stricmp
 	extern loc_warnings
 	extern loc_warningsAsErrors
+	extern g_currentAsian
+	extern _ZZ23SEH_SafeTranslateStringPKcE13szErrorString
+	extern _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE9szStrings
+	extern _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE11iCurrString
+	extern loc_language
+	extern loc_forceEnglish
+	extern loc_translate
 
 ;Exports of stringed_hooks:
-	global g_languages
-	global g_currentAsian
-	global _ZZ21SE_GetString_FastFilePKcE1s_17
-	global _ZZ21SE_GetString_FastFilePKcE1s_16
-	global _ZZ21SE_GetString_FastFilePKcE1s_15
-	global _ZZ21SE_GetString_FastFilePKcE1s_14
-	global _ZZ21SE_GetString_FastFilePKcE1s_13
-	global _ZZ21SE_GetString_FastFilePKcE1s_12
-	global _ZZ21SE_GetString_FastFilePKcE1s_11
-	global _ZZ21SE_GetString_FastFilePKcE1s_10
-	global _ZZ21SE_GetString_FastFilePKcE1s_9
-	global _ZZ21SE_GetString_FastFilePKcE1s_8
-	global _ZZ21SE_GetString_FastFilePKcE1s_7
-	global _ZZ21SE_GetString_FastFilePKcE1s_6
-	global _ZZ21SE_GetString_FastFilePKcE1s_5
-	global _ZZ21SE_GetString_FastFilePKcE1s_4
-	global _ZZ21SE_GetString_FastFilePKcE1s_3
-	global _ZZ21SE_GetString_FastFilePKcE1s_2
-	global _ZZ21SE_GetString_FastFilePKcE1s_1
-	global _ZZ21SE_GetString_FastFilePKcE1s_0
-	global _ZZ21SE_GetString_FastFilePKcE1s
-	global _ZZ21SE_GetString_FastFilePKcE9langIndex
 	global SE_GetString_FastFile
 	global SEH_StringEd_SetLanguageStrings
-	global _ZZ23SEH_SafeTranslateStringPKcE13szErrorString
-	global _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE9szStrings
-	global _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE11iCurrString
 	global SEH_PrintStrlen
 	global SEH_DecodeLetter
 	global SEH_Init_StringEd
@@ -62,9 +44,6 @@
 	global SEH_LocalizeTextMessage
 	global SEH_SafeTranslateString
 	global SEH_VerifyLanguageSelection
-	global loc_language
-	global loc_forceEnglish
-	global loc_translate
 
 
 SECTION .text
@@ -1655,21 +1634,6 @@ _ZZ21SE_GetString_FastFilePKcE1s_1: dd _cstring_option, _cstring_alt1, _cstring_
 _ZZ21SE_GetString_FastFilePKcE1s_0: dd _cstring_delete, _cstring_effacement, _cstring_rckschritt, _cstring_cancella
 _ZZ21SE_GetString_FastFilePKcE1s: dd _cstring_return, _cstring_retour, _cstring_eingabe, _cstring_invio
 _ZZ21SE_GetString_FastFilePKcE9langIndex: dd 0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of stringed_hooks:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of stringed_hooks:
-SECTION .bss
-g_currentAsian: resb 0x20
-_ZZ23SEH_SafeTranslateStringPKcE13szErrorString: resb 0x400
-_ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE9szStrings: resb 0x2800
-_ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE11iCurrString: resb 0x60
-loc_language: resb 0x70
-loc_forceEnglish: resb 0x4
-loc_translate: resb 0x4
 
 
 ;All cstrings:

@@ -111,6 +111,8 @@ Replacement function below. However this could just move the real problem around
 #include <string.h>	/* For strcmp(3). */
 #include <stdio.h>	/* For NULL, size_t, vsnprintf(3), and vasprintf(3). */
 
+#include "qvsnprintf.hpp"
+
 #ifdef VA_START
 #undef VA_START
 #endif	/* defined(VA_START) */

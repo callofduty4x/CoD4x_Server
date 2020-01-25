@@ -163,7 +163,7 @@ extern "C" void __cdecl ClientSpawn(gentity_s *ent, const float *spawn_origin, c
 
 	if(ent->client->sess.sessionState == SESS_STATE_PLAYING)
 	{
-    SV_GameSetUndercoverState(index, false);
+        SV_GameSetUndercoverState(index, false);
 	}
 
 }

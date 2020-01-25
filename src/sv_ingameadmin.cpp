@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -33,6 +33,7 @@
 #include "nvconfig.hpp"
 #include "sv_auth.hpp"
 #include "sapi.hpp"
+#include "qvsnprintf.hpp"
 
 #include <string.h>
 #include <stdarg.h>

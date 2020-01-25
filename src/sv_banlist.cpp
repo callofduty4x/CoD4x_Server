@@ -31,6 +31,8 @@
 #include "server.hpp"
 #include "cmd.hpp"
 #include "plugin_handler.hpp"
+#include "qvsnprintf.hpp"
+
 
 #include <stdlib.h>
 #include <string.h>

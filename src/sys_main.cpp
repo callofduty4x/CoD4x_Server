@@ -38,6 +38,9 @@
 #include "cmd.hpp"
 #include "sapi.hpp"
 #include "xassets/extractor.hpp"
+#include "qvsnprintf.hpp"
+
+
 #include <libgen.h>
 #include <signal.h>
 #include <stdarg.h>

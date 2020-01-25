@@ -3,9 +3,10 @@
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"
 #include "qcommon_logprint.hpp"
-
+#include "qvsnprintf.hpp"
 #include "server_public.hpp"
 #include "cscr_stringlist.hpp"
+
 
 level_locals_t level;
 
@@ -80,11 +81,10 @@ cvar_t* g_voteAbstainWeight;
 cvar_t* voice_deadChat;
 cvar_t* voice_global;
 cvar_t* voice_localEcho;
+cvar_t* g_gametype;
 byte g_clients[0xc6100];
 gentity_t g_entities[1024];
-byte g_gametype[0x14];
 bgs_s level_bgs;
-
 
 
 const char* g_dedicatedEnumNames[] = { "listen server", "dedicated LAN server", "dedicated internet server" };

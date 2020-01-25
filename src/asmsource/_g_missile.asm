@@ -88,19 +88,36 @@
 	extern Scr_Error
 	extern Scr_GetVector
 	extern missile_frametime
+	extern attrGlob
+	extern missileDebugAttractors
+	extern missileDebugDraw
+	extern missileDebugText
+	extern missileHellfireMaxSlope
+	extern missileHellfireUpAccel
+	extern missileJavAccelClimb
+	extern missileJavAccelDescend
+	extern missileJavClimbAngleDirect
+	extern missileJavClimbAngleTop
+	extern missileJavClimbCeilingDirect
+	extern missileJavClimbCeilingTop
+	extern missileJavClimbHeightDirect
+	extern missileJavClimbHeightTop
+	extern missileJavClimbToOwner
+	extern missileJavSpeedLimitClimb
+	extern missileJavSpeedLimitDescend
+	extern missileJavTurnDecel
+	extern missileJavTurnRateDirect
+	extern missileJavTurnRateTop
+	extern missileWaterMaxDepth
+
 
 ;Exports of g_missile:
-	global attrGlob
 	global MissileLandAngles
-	global _ZZ16G_ExplodeMissileP9gentity_sE19MY_STRAIGHTUPNORMAL
 	global JavelinRotateDir
 	global BounceMissile
 	global CheckCrumpleMissile
-	global _ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL
 	global MissileImpact
 	global MissileTrajectory
-	global _ZZ12G_FireRocketP9gentity_sjPfS1_PKfS0_S3_E21MYJAVELINOFFSET_RIGHT
-	global _ZZ12G_FireRocketP9gentity_sjPfS1_PKfS0_S3_E15MYJAVELINOFFSET
 	global G_FireRocket
 	global G_RunMissile
 	global G_FireGrenade
@@ -117,26 +134,6 @@
 	global Scr_MissileCreateAttractorEnt
 	global Scr_MissileCreateRepulsorOrigin
 	global Scr_MissileCreateAttractorOrigin
-	global missileDebugAttractors
-	global missileDebugDraw
-	global missileDebugText
-	global missileHellfireMaxSlope
-	global missileHellfireUpAccel
-	global missileJavAccelClimb
-	global missileJavAccelDescend
-	global missileJavClimbAngleDirect
-	global missileJavClimbAngleTop
-	global missileJavClimbCeilingDirect
-	global missileJavClimbCeilingTop
-	global missileJavClimbHeightDirect
-	global missileJavClimbHeightTop
-	global missileJavClimbToOwner
-	global missileJavSpeedLimitClimb
-	global missileJavSpeedLimitDescend
-	global missileJavTurnDecel
-	global missileJavTurnRateDirect
-	global missileJavTurnRateTop
-	global missileWaterMaxDepth
 
 
 SECTION .text
@@ -6154,31 +6151,6 @@ _ZZ12G_FireRocketP9gentity_sjPfS1_PKfS0_S3_E15MYJAVELINOFFSET: dd 0x3e99999a, 0x
 SECTION .rdata
 _ZZ16G_ExplodeMissileP9gentity_sE19MY_STRAIGHTUPNORMAL: dd 0x0, 0x0, 0x3f800000, 0x0, 0x80000000, 0x0, 0x0, 0x0
 _ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL: dd 0x0, 0x0, 0x3f800000, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
-
-
-;Zero initialized global or static variables of g_missile:
-SECTION .bss
-attrGlob: resb 0x380
-missileDebugAttractors: resb 0x4
-missileDebugDraw: resb 0x4
-missileDebugText: resb 0x4
-missileHellfireMaxSlope: resb 0x30
-missileHellfireUpAccel: resb 0x4
-missileJavAccelClimb: resb 0x4
-missileJavAccelDescend: resb 0x4
-missileJavClimbAngleDirect: resb 0x4
-missileJavClimbAngleTop: resb 0x4
-missileJavClimbCeilingDirect: resb 0x4
-missileJavClimbCeilingTop: resb 0x4
-missileJavClimbHeightDirect: resb 0x4
-missileJavClimbHeightTop: resb 0x4
-missileJavClimbToOwner: resb 0x4
-missileJavSpeedLimitClimb: resb 0x4
-missileJavSpeedLimitDescend: resb 0x4
-missileJavTurnDecel: resb 0x4
-missileJavTurnRateDirect: resb 0x4
-missileJavTurnRateTop: resb 0x4
-missileWaterMaxDepth: resb 0x4
 
 
 ;All cstrings:

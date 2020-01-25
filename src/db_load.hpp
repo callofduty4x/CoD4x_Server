@@ -1,9 +1,7 @@
-#ifndef _DB_LOAD_H_
-#define _DB_LOAD_H_
+﻿#pragma once
 
-void __cdecl DB_InitThread();
-void __cdecl DB_ReleaseXAssets();
-void __cdecl DB_ShutdownXAssets();
-void __cdecl DB_ShutdownXAssetPools();
+void DB_InitThread();
+void DB_ReleaseXAssets();
+void DB_ShutdownXAssets();
+void DB_ShutdownXAssetPools();
 bool __cdecl DB_DiscardBspWeapons();
-#endif

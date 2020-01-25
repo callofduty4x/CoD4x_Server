@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -707,35 +707,7 @@ HANDLE Sys_GetThreadHandleFromID(threadid_t tid)
 
 
 
-HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)
-{
-	char errMessageBuf[512];
-	DWORD lastError;
 
-
-	HANDLE thid = CreateThread(	NULL, // LPSECURITY_ATTRIBUTES lpsa,
-								0, // DWORD cbStack,
-								(LPTHREAD_START_ROUTINE)ThreadMain, // LPTHREAD_START_ROUTINE lpStartAddr,
-								arg, // LPVOID lpvThreadParm,
-								0, // DWORD fdwCreate,
-								tid );
-
-	if(thid == NULL)
-	{
-		lastError = GetLastError();
-
-		if(lastError != 0)
-		{
-			FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT), (LPSTR)errMessageBuf, sizeof(errMessageBuf) -1, NULL);
-			Com_PrintError(CON_CHANNEL_SYSTEM,"Failed to start thread with error: %s\n", errMessageBuf);
-
-		}else{
-			Com_PrintError(CON_CHANNEL_SYSTEM,"Failed to start thread!\n");
-		}
-		return NULL;
-	}
-	return thid;
-}
 
 qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)
 {
@@ -1033,5 +1005,36 @@ signed int __cdecl Sys_IsObjectSignaled(HANDLE hHandle)
 	return 0;
 }
 
+
 void Sys_PrintBacktrace()
 {}
+
+
+HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg)
+{
+    char errMessageBuf[512];
+    HANDLE thid = CreateThread(nullptr, // LPSECURITY_ATTRIBUTES lpsa,
+                               0, // DWORD cbStack,
+                               (LPTHREAD_START_ROUTINE)ThreadMain, // LPTHREAD_START_ROUTINE lpStartAddr,
+                               arg, // LPVOID lpvThreadParm,
+                               0, // DWORD fdwCreate,
+                               tid );
+
+    if(!thid)
+    {
+        DWORD lastError = GetLastError();
+
+        if(lastError != 0)
+        {
+            FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, lastError, MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT), (LPSTR)errMessageBuf, sizeof(errMessageBuf) -1, NULL);
+            Com_PrintError(CON_CHANNEL_SYSTEM,"Failed to start thread with error: %s\n", errMessageBuf);
+
+        }
+        else
+            Com_PrintError(CON_CHANNEL_SYSTEM,"Failed to start thread!\n");
+
+        return nullptr;
+    }
+
+    return thid;
+}

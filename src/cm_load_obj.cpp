@@ -1,4 +1,4 @@
-#include "q_shared.hpp"
+﻿#include "q_shared.hpp"
 #include "cm_local.hpp"
 #include "qcommon_mem.hpp"
 #include "qcommon_io.hpp"
@@ -1063,7 +1063,7 @@ MapEnts *__cdecl MapEnts_GetFromString(const char *name, const char *entityStrin
 
 
 
-extern "C" void __cdecl CM_LoadMapFromBsp(const char *name, bool usePvs)
+void CM_LoadMapFromBsp(const char *name, bool usePvs)
 {
   unsigned int version;
 

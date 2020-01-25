@@ -87,16 +87,22 @@
 	extern SV_SetBrushModel
 	extern s_wheelTags
 	extern s_vehicleInfos
+	extern s_phys
+	extern s_backup
+	extern s_numVehicleInfos
+	extern s_vehicles
+	extern vehDebugServer
+	extern vehTestHorsepower
+	extern vehTestMaxMPH
+	extern vehTestWeight
+	extern vehTextureScrollScale
 
 
 ;Exports of g_vehicles_mp:
-	global s_vehicleFields
-	global s_vehicleTypeNames
 	global VEH_Strcpy
 	global VEH_ParseSpecificField
 	global G_LoadVehicle
 	global VEH_GetVehicleInfoFromName
-	global VEH_PlayerRotation
 	global VEH_GetWheelOrigin
 	global VEH_PushEntity
 	global VEH_TouchEntities
@@ -123,13 +129,6 @@
 	global G_VehEntHandler_Touch
 	global G_VehEntHandler_Controller
 	global G_VehiclesSetupSpawnedEnts
-	global s_numVehicleInfos
-	global s_vehicles
-	global vehDebugServer
-	global vehTestHorsepower
-	global vehTestMaxMPH
-	global vehTestWeight
-	global vehTextureScrollScale
 
 
 SECTION .text
@@ -6448,23 +6447,6 @@ G_VehiclesSetupSpawnedEnts_80:
 SECTION .data
 s_vehicleFields: dd _cstring_type, 0x40, 0xc, _cstring_steerwheels, 0x44, 0x5, _cstring_texurescroll, 0x48, 0x5, _cstring_quadbarrel, 0x4c, 0x5, _cstring_bulletdamage, 0x50, 0x5, _cstring_armorpiercingdam, 0x54, 0x5, _cstring_grenadedamage, 0x58, 0x5, _cstring_projectiledamage, 0x5c, 0x5, _cstring_projectilesplash, 0x60, 0x5, _cstring_heavyexplosiveda, 0x64, 0x5, _cstring_texurescrollscal, 0x68, 0x6, _cstring_maxspeed, 0x6c, 0x6, _cstring_accel, 0x70, 0x6, _cstring_rotrate, 0x74, 0x6, _cstring_rotaccel, 0x78, 0x6, _cstring_collisiondamage, 0x84, 0x6, _cstring_collisionspeed, 0x88, 0x6, _cstring_suspensiontravel, 0x8c, 0x6, _cstring_maxbodypitch, 0x7c, 0x6, _cstring_maxbodyroll, 0x80, 0x6, _cstring_turretweapon, 0x90, 0x0, _cstring_turrethorizspanl, 0xd0, 0x6, _cstring_turrethorizspanr, 0xd4, 0x6, _cstring_turretvertspanup, 0xd8, 0x6, _cstring_turretvertspando, 0xdc, 0x6, _cstring_turretrotrate, 0xe0, 0x6, _cstring_lowidlesnd, 0xe4, 0x0, _cstring_highidlesnd, 0x124, 0x0, _cstring_lowenginesnd, 0x164, 0x0, _cstring_highenginesnd, 0x1a4, 0x0, _cstring_turretspinsnd, 0x1e4, 0x0, _cstring_turretstopsnd, 0x224, 0x0, _cstring_enginesndspeed, 0x26c, 0x6
 s_vehicleTypeNames: dd _cstring_4_wheel, _cstring_tank, _cstring_plane, _cstring_boat, _cstring_artillery, _cstring_helicopter, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of g_vehicles_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_vehicles_mp:
-SECTION .bss
-s_phys: resb 0x40
-s_backup: resb 0x1c0
-s_numVehicleInfos: resb 0x1c
-s_vehicles: resb 0x1aa0
-vehDebugServer: resb 0x30
-vehTestHorsepower: resb 0x4
-vehTestMaxMPH: resb 0x4
-vehTestWeight: resb 0x4
-vehTextureScrollScale: resb 0x4
 
 
 ;All cstrings:

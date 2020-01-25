@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -187,11 +187,6 @@ typedef enum {qfalse, qtrue}	qboolean;
 extern "C"{
 #endif
 
-#ifndef Q_vsnprintf
-int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
-#endif
-
-
 void Com_Memset(void*, byte, int);
 //#define Com_Memset memset
 void Com_Memcpy(void*, const void*, int);
@@ -220,11 +215,7 @@ qboolean Q_isprintstring( char* s );
 
 typedef int fileHandle_t;
 
-#ifdef _MSC_VER
-int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
-#endif
-
-void Q_strncpyz( char *dest, const char *src, int destsize );
+void Q_strncpyz( char *dest, const char *src, size_t destsize );
 int Q_stricmpn (const char *s1, const char *s2, int n);
 int Q_strncmp (const char *s1, const char *s2, int n);
 int Q_stricmp (const char *s1, const char *s2);

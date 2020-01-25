@@ -19,6 +19,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
+#include <cstring>
+#include <cstdarg>
 
 #include "g_sv_main.hpp"
 #include "q_shared.hpp"
@@ -34,152 +36,19 @@
 #include "bg_jump.hpp"
 #include "bg_perks_mp.hpp"
 #include "bg_misc.hpp"
-
-#include <string.h>
-#include <stdarg.h>
+#include "g_main_mp.hpp"
+#include "g_missile.hpp"
+#include "g_scr_helicopter.hpp"
+#include "g_vehicles_mp.hpp"
+#include "bg_mantle.hpp"
 
 
 /* G_Cvars */
-
-cvar_t*  g_speed;
 cvar_t*  g_disabledefcmdprefix;
 cvar_t*  g_allowConsoleSay;
-cvar_t*  g_cheats;
-cvar_t*  g_gametype;
-cvar_t*  g_synchronousClients;
-cvar_t*  g_log;
-cvar_t*  g_logSync;
 cvar_t*  g_logTimeStampInSeconds;
-cvar_t*  g_banIPs;
-cvar_t*  g_gravity;
-cvar_t*  g_knockback;
-cvar_t*  g_maxDroppedWeapons;
-cvar_t*  g_inactivity;
-cvar_t*  g_debugDamage;
 cvar_t*  g_debugBullets;
-cvar_t*  bullet_penetrationEnabled;
-cvar_t*  g_entinfo;
-cvar_t*  g_motd;
-cvar_t*  g_playerCollisionEjectSpeed;
-cvar_t*  g_dropForwardSpeed;
-cvar_t*  g_dropUpSpeedBase;
-cvar_t*  g_dropUpSpeedRand;
-cvar_t*  g_dropHorzSpeedRand;
-cvar_t*  g_clonePlayerMaxVelocity;
-cvar_t*  voice_global;
-cvar_t*  voice_localEcho;
-cvar_t*  voice_deadChat;
-cvar_t*  g_allowVote;
-cvar_t*  g_listEntity;
-cvar_t*  g_deadChat;
-cvar_t*  g_voiceChatTalkingDuration;
-cvar_t*  g_TeamIcon_Allies;
-cvar_t*  g_TeamIcon_Axis;
-cvar_t*  g_TeamIcon_Free;
-cvar_t*  g_TeamIcon_Spectator;
-cvar_t*  g_ScoresColor_MyTeam;
-cvar_t*  g_ScoresColor_EnemyTeam;
-cvar_t*  g_ScoresColor_Spectator;
-cvar_t*  g_ScoresColor_Free;
-cvar_t*  g_ScoresColor_Allies;
-cvar_t*  g_ScoresColor_Axis;
-cvar_t*  g_TeamName_Allies;
-cvar_t*  g_TeamName_Axis;
-cvar_t*  g_TeamColor_Allies;
-cvar_t*  g_TeamColor_Axis;
-cvar_t*  g_TeamColor_MyTeam;
-cvar_t*  g_TeamColor_EnemyTeam;
-cvar_t*  g_TeamColor_Spectator;
-cvar_t*  g_TeamColor_Free;
 cvar_t*  g_smoothClients;
-cvar_t*  g_antilag;
-cvar_t*  g_oldVoting;
-cvar_t*  g_voteAbstainWeight;
-cvar_t*  g_NoScriptSpam;
-cvar_t*  g_debugLocDamage;
-cvar_t*  g_friendlyfireDist;
-cvar_t*  g_friendlyNameDist;
-cvar_t*  melee_debug;
-cvar_t*  radius_damage_debug;
-cvar_t*  player_throwbackInnerRadius;
-cvar_t*  player_throwbackOuterRadius;
-cvar_t*  player_MGUseRadius;
-cvar_t*  g_minGrenadeDamageSpeed;
-cvar_t*  g_compassShowEnemies;
-cvar_t*  pickupPrints;
-cvar_t*  g_dumpAnims;
-cvar_t*  g_useholdtime;
-cvar_t*  g_useholdspawndelay;
-cvar_t*  g_redCrosshairs;
-cvar_t*  g_mantleBlockTimeBuffer;
-cvar_t*  g_fogColorReadOnly;
-cvar_t*  g_fogStartDistReadOnly;
-cvar_t*  g_fogHalfDistReadOnly;
-
-/* Vehicle Cvars */
-
-cvar_t*  vehHelicopterMaxSpeed;
-cvar_t*  vehHelicopterMaxSpeedVertical;
-cvar_t*  vehHelicopterMaxAccel;
-cvar_t*  vehHelicopterMaxAccelVertical;
-cvar_t*  vehHelicopterMaxYawRate;
-cvar_t*  vehHelicopterMaxYawAccel;
-cvar_t*  vehHelicopterMaxPitch;
-cvar_t*  vehHelicopterMaxRoll;
-cvar_t*  vehHelicopterLookaheadTime;
-cvar_t*  vehHelicopterHoverSpeedThreshold;
-cvar_t*  vehHelicopterRightStickDeadzone;
-cvar_t*  vehHelicopterStrafeDeadzone;
-cvar_t*  vehHelicopterScaleMovement;
-cvar_t*  vehHelicopterSoftCollisions;
-cvar_t*  vehHelicopterDecelerationFwd;
-cvar_t*  vehHelicopterDecelerationSide;
-cvar_t*  vehHelicopterInvertUpDown;
-cvar_t*  vehHelicopterYawOnLeftStick;
-cvar_t*  vehHelicopterTiltSpeed;
-cvar_t*  vehHelicopterTiltFromAcceleration;
-cvar_t*  vehHelicopterTiltFromDeceleration;
-cvar_t*  vehHelicopterTiltFromVelocity;
-cvar_t*  vehHelicopterTiltFromControllerAxes;
-cvar_t*  vehHelicopterTiltFromFwdAndYaw;
-cvar_t*  vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt;
-cvar_t*  vehHelicopterJitterJerkyness;
-cvar_t*  vehHelicopterHeadSwayDontSwayTheTurret;
-cvar_t*  vehHelicopterTiltMomentum;
-cvar_t*  vehDebugServer;
-cvar_t*  vehTextureScrollScale;
-cvar_t*  vehTestHorsepower;
-cvar_t*  vehTestWeight;
-cvar_t*  vehTestMaxMPH;
-
-
-/* Missle Cvars */
-
-cvar_t*  missileHellfireMaxSlope;
-cvar_t*  missileHellfireUpAccel;
-cvar_t*  missileJavClimbHeightDirect;
-cvar_t*  missileJavClimbHeightTop;
-cvar_t*  missileJavClimbAngleDirect;
-cvar_t*  missileJavClimbAngleTop;
-cvar_t*  missileJavClimbCeilingDirect;
-cvar_t*  missileJavClimbCeilingTop;
-cvar_t*  missileJavTurnRateDirect;
-cvar_t*  missileJavTurnRateTop;
-cvar_t*  missileJavAccelClimb;
-cvar_t*  missileJavAccelDescend;
-cvar_t*  missileJavSpeedLimitClimb;
-cvar_t*  missileJavSpeedLimitDescend;
-cvar_t*  missileJavTurnDecel;
-cvar_t*  missileJavClimbToOwner;
-cvar_t*  missileWaterMaxDepth;
-
-
-/* Missle Debug Cvars */
-
-cvar_t*  missileDebugDraw;
-cvar_t*  missileDebugText;
-cvar_t*  missileDebugAttractors;
-
 
 
 /* BG Cvars */
@@ -188,12 +57,6 @@ cvar_t*  bg_shock_lookControl;
 
 
 /* BG Mantle Cvars */
-cvar_t*  mantle_enable;
-cvar_t*  mantle_debug;
-cvar_t*  mantle_check_range;
-cvar_t*  mantle_check_radius;
-cvar_t*  mantle_check_angle;
-cvar_t*  mantle_view_yawcap;
 
 
 void G_CopyCvars();

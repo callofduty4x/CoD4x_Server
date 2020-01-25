@@ -20,7 +20,7 @@
 ===========================================================================
 */
 
-
+#include "sv_client.hpp"
 #include "q_shared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"
@@ -42,8 +42,8 @@
 #include "sv_auth.hpp"
 #include "sec_crypto.hpp"
 #include "g_public.hpp"
-
 #include "sapi.hpp"
+#include "qcommon_logprint.hpp"
 
 
 #include <stdint.h>
@@ -2748,18 +2748,6 @@ int SV_GetClientStat(int clientNum, signed int index)
 }
 
 
-
-
-int SV_GetPredictedOriginAndTimeForClientNum(int clientNum, float *origin)
-{
-	client_t* client = &svs.clients[clientNum];
-	origin[0] = client->predictedOrigin[0];
-	origin[1] = client->predictedOrigin[1];
-	origin[2] = client->predictedOrigin[2];
-	return client->predictedOriginServerTime;
-}
-
-
 void __cdecl SV_FreeClientScriptPers()
 {
   client_t *cl;
@@ -2844,3 +2832,12 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
   }
 }
 
+
+int SV_GetPredictedOriginAndTimeForClientNum(int clientNum, float *origin)
+{
+    client_t* client = &svs.clients[clientNum];
+    origin[0] = client->predictedOrigin[0];
+    origin[1] = client->predictedOrigin[1];
+    origin[2] = client->predictedOrigin[2];
+    return client->predictedOriginServerTime;
+}

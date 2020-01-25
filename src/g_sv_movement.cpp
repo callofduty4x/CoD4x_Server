@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -20,7 +20,7 @@
 */
 
 
-
+#include "g_sv_movement.hpp"
 #include "q_shared.hpp"
 #include "q_shared.hpp"
 #include "g_shared.hpp"

@@ -599,26 +599,13 @@ void __cdecl SV_GameDropClient(int clientNum, const char *reason)
   }
 }
 
-void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd)
+extern "C" void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd)
 {
   assert(clientNum >= 0);
   assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
   assert(clientNum < sv_maxclients->integer);
 
   memcpy(cmd, &svs.clients[clientNum].lastUsercmd, sizeof(struct usercmd_s));
-}
-
-
-void __cdecl SV_GetServerinfo(char *buffer, int bufferSize)
-{
-  const char *infostring;
-
-  if ( bufferSize < 1 )
-  {
-    Com_Error(ERR_DROP, "SV_GetServerinfo: bufferSize == %i", bufferSize);
-  }
-  infostring = Cvar_InfoString(CVAR_SERVERINFO);
-  Q_strncpyz(buffer, infostring, bufferSize);
 }
 
 int __cdecl SV_GetClientPing(int clientNum)
@@ -888,4 +875,17 @@ const char* SV_GetPlayerClan(unsigned int clientNum)
     return NULL;
   }
   return svs.clients[clientNum].clantag;
+}
+
+
+void SV_GetServerinfo(char *buffer, int bufferSize)
+{
+  const char *infostring;
+
+  if ( bufferSize < 1 )
+  {
+    Com_Error(ERR_DROP, "SV_GetServerinfo: bufferSize == %i", bufferSize);
+  }
+  infostring = Cvar_InfoString(CVAR_SERVERINFO);
+  Q_strncpyz(buffer, infostring, bufferSize);
 }

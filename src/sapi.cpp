@@ -15,6 +15,8 @@
 #include "cmd.hpp"
 #include "sec_crypto.hpp"
 #include "g_sv_shared.hpp"
+#include "qvsnprintf.hpp"
+
 
 cvar_t* sv_usesteam64id;
 

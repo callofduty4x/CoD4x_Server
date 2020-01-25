@@ -31,6 +31,7 @@
 #include "sys_thread.hpp"
 #include "misc.hpp"
 #include "null_client.hpp"
+#include "qvsnprintf.hpp"
 
 
 int Q_isprint( int c )

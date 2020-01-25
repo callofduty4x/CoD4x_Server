@@ -25,6 +25,7 @@
 #include "qcommon_io.hpp"
 #include "sys_main.hpp"
 #include "sys_thread.hpp"
+#include "qvsnprintf.hpp"
 
 #include <string.h>
 #include <stdarg.h>

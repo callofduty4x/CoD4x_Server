@@ -1,4 +1,4 @@
-#ifndef __CM_LOCAL_H__
+﻿#ifndef __CM_LOCAL_H__
 #define __CM_LOCAL_H__
 
 #include "q_shared.hpp"
@@ -256,9 +256,9 @@ typedef struct
 
 cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle );
 extern clipMap_t cm;
-void __cdecl CM_LoadMapFromBsp(const char *name, char a2);
-void __cdecl CM_LoadStaticModels();
-void __cdecl DynEnt_LoadEntities();
+//void __cdecl CM_LoadMapFromBsp(const char *name, char a2);
+extern "C" void __cdecl CM_LoadStaticModels();
+extern "C" void __cdecl DynEnt_LoadEntities();
 
 
 

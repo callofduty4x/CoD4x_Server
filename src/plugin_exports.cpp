@@ -27,6 +27,8 @@
 #include "httpftp.hpp"
 #include "sapi.hpp"
 #include "g_main_mp.hpp"
+#include "qvsnprintf.hpp"
+
 /*=========================================*
  *                                         *
  *        Plugin Handler's exports         *

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -20,7 +20,9 @@
 ===========================================================================
 */
 
-
+#include <cstring>
+#include <ctime>
+#include <cstdarg>
 
 #include "q_shared.hpp"
 #include "sys_thread.hpp"
@@ -28,9 +30,8 @@
 #include "qcommon_logprint.hpp"
 #include "qcommon.hpp"
 #include "sys_main.hpp"
-#include <string.h>
-#include <time.h>
-#include <stdarg.h>
+#include "qvsnprintf.hpp"
+#include "qcommon_logprint.hpp"
 
 
 #ifndef __SYS_THREAD_H__
@@ -41,11 +42,6 @@ void Sys_LeaveCriticalSection(int section){}
 #ifndef __SYS_MAIN_H__
 #define Sys_Print(x) fputs(x, stdout);
 #pragma message "Undefined function: Sys_Print"
-#endif
-
-#ifndef __QCOMMON_LOGPRINT_H__
-void Com_PrintLogfile( const char* msg ){}
-#pragma message "Undefined function: Com_PrintLogfile"
 #endif
 
 cvar_t* com_logrcon;

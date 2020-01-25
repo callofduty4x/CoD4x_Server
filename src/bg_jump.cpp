@@ -3,6 +3,7 @@
 #include "player.hpp"
 #include "bg_local.hpp"
 #include "q_shared.hpp"
+#include "g_sv_movement.hpp"
 
 #define PMF_JUMPING 0x4000
 #define PMF_LADDER 0x8
@@ -13,8 +14,6 @@ cvar_t* jump_stepSize;
 cvar_t* jump_slowdownEnable;
 cvar_t* jump_ladderPushVel;
 cvar_t* jump_spreadAdd;
-
-extern "C" float Dirty_GetJumpHeight(unsigned int num);
 
 
 

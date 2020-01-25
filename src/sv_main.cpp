@@ -53,6 +53,8 @@
 #include "sapi.hpp"
 #include "db_load.hpp"
 #include "sec_crypto.hpp"
+#include "qvsnprintf.hpp"
+
 
 #include <string.h>
 #include <stdarg.h>

@@ -34,8 +34,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "cm_public.hpp"
 #include "qcommon_mem.hpp"
 #include "game/botlib.h"
-//#include "../botai/botai.h"
-
+#include "qvsnprintf.hpp"
 
 
 #define MAX_DEBUGPOLYS      128

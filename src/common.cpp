@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -60,6 +60,8 @@
 #include "tests.hpp"
 #include "null_client.hpp"
 #include "db_load.hpp"
+#include "qvsnprintf.hpp"
+#include "dobj_management.hpp"
 
 #include <string.h>
 #include <setjmp.h>
@@ -159,11 +161,10 @@ void EventTimerTest(int time, int triggerTime, int value, char* s){
 
 }
 
-void CCS_InitConstantConfigStrings();
-void Com_ShutdownDObj();
-void DObjShutdown();
-void XAnimShutdown();
-void Com_ShutdownWorld();
+extern "C" void CCS_InitConstantConfigStrings();
+extern "C" void DObjShutdown();
+extern "C" void XAnimShutdown();
+extern "C" void Com_ShutdownWorld();
 void CM_Shutdown();
 void Init_Watchdog();
 
@@ -594,7 +595,7 @@ void Com_Quit_f( void ) {
 		SV_Shutdown("EXE_SERVERQUIT");
 		Com_Close();
 
-		Com_CloseLogFiles( );
+        Com_CloseLogFiles();
 
 		FS_Shutdown(qtrue);
 
@@ -1422,7 +1423,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 		SV_Shutdown(va("Server fatal crashed: %s", com_errorMessage));
 	}
 	NET_Shutdown();
-	Com_CloseLogFiles( );
+    Com_CloseLogFiles();
 	Sys_Error ("%s", com_errorMessage);
 
 }

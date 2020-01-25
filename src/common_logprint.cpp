@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -27,6 +27,7 @@
 #include "filesystem.hpp"
 #include "sys_thread.hpp"
 #include "sys_main.hpp"
+#include "qvsnprintf.hpp"
 
 #include <stdarg.h>
 #include <time.h>

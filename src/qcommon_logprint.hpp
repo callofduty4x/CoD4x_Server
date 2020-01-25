@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -19,30 +19,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
-
-
-#ifndef __QCOMMON_LOGPRINT_H__
-#define __QCOMMON_LOGPRINT_H__
+#pragma once
 
 #include "q_shared.hpp"
 
-#ifdef __cplusplus
-extern "C"{
-#endif
 
 void QDECL SV_EnterLeaveLog( const char *fmt, ... );
 void QDECL Com_PrintAdministrativeLog( const char *msg );
 void Com_PrintLogfile( const char *msg );
-void Com_CloseLogFiles(void);
+void Com_CloseLogFiles();
 fileHandle_t Com_OpenGameLogfile(const char* name, char mode, qboolean sync);
 void Com_CloseGameLogfile();
 int Com_WriteGameLogfile(const char* data, int len);
-
-#ifdef __cplusplus
-};
-#endif
-
-
-#endif
-

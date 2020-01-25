@@ -32,6 +32,8 @@
 #include "plugin_handler.hpp"
 #include "net_game_conf.hpp"
 #include "sha.hpp"
+#include "qvsnprintf.hpp"
+
 
 #include <string.h>
 #include <stdarg.h>
