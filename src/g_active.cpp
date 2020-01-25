@@ -1,8 +1,9 @@
-#include "player.hpp"
+﻿#include "player.hpp"
 #include "g_shared.hpp"
 #include "bg_public.hpp"
 #include "server_public.hpp"
 #include "qcommon_io.hpp"
+#include "g_main_mp.hpp"
 
 
 extern "C"{

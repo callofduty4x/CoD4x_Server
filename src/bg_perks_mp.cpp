@@ -1,5 +1,5 @@
+﻿#include "bg_perks_mp.hpp"
 #include "q_shared.hpp"
-#include "cvar.hpp"
 
 cvar_t* perk_weapSpreadMultiplier;
 cvar_t* perk_weapReloadMultiplier;

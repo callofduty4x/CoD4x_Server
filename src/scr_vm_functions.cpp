@@ -37,6 +37,7 @@
 #include "cscr_stringlist.hpp"
 #include "bg.hpp"
 #include "client_dedicated.hpp"
+#include "g_main_mp.hpp"
 
 #include "sapi.hpp"
 #include <string.h>

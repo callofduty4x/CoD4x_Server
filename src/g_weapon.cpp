@@ -1,9 +1,10 @@
-#include "q_shared.hpp"
+﻿#include "q_shared.hpp"
 #include "q_shared.hpp"
 #include "g_shared.hpp"
 #include "server.hpp"
 #include "server_public.hpp"
 #include "cscr_stringlist.hpp"
+#include "g_main_mp.hpp"
 
 
 extern unsigned int bg_lastParsedWeaponIndex;

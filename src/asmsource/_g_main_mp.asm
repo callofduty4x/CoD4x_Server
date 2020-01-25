@@ -1,35 +1,90 @@
 ;Edited: Inverted registerDvars in G_InitGame
 
 ;Imports of g_main_mp:
-	extern Cvar_RegisterBool
-	extern Cvar_RegisterString
-	extern Cvar_RegisterInt
-	extern g_dedicatedEnumNames
-	extern Cvar_RegisterEnum
-	extern Cvar_RegisterFloat
-	extern Cvar_RegisterColor
-	extern Helicopter_RegisterDvars
-	extern G_VehRegisterDvars
-	extern G_RegisterMissileDvars
-	extern G_RegisterMissileDebugDvars
+extern g_compassShowEnemies
+	extern bullet_penetrationEnabled
+	extern g_debugLocDamage
+	extern g_dropForwardSpeed
+	extern g_dropHorzSpeedRand
+	extern g_dropUpSpeedBase
+	extern g_dropUpSpeedRand
+	extern g_maxDroppedWeapons
+	extern pickupPrints
+	extern g_minGrenadeDamageSpeed
+	extern g_banIPs
+	extern g_dedicated
+	extern g_antilag
+	extern melee_debug
+	extern g_useholdspawndelay
+	extern g_useholdtime
+	extern player_MGUseRadius
+	extern player_throwbackInnerRadius
+	extern player_throwbackOuterRadius
+	extern g_NoScriptSpam
+	extern g_fogColorReadOnly
+	extern g_fogHalfDistReadOnly
+	extern g_fogStartDistReadOnly
+	extern g_maxclients
+	extern g_debugDamage
+	extern radius_damage_debug
+	extern g_allowVote
+	extern g_cheats
+	extern g_deadChat
+	extern g_oldVoting
+	extern g_gravity
+	extern g_motd
+	extern g_clonePlayerMaxVelocity
+	extern g_knockback
+	extern g_voiceChatTalkingDuration
+	extern g_inactivity
+	extern g_mantleBlockTimeBuffer
+	extern g_playerCollisionEjectSpeed
+	extern g_speed
+	extern g_synchronousClients
+	extern g_ScoresColor_Allies
+	extern g_ScoresColor_Axis
+	extern g_ScoresColor_EnemyTeam
+	extern g_ScoresColor_Free
+	extern g_ScoresColor_MyTeam
+	extern g_ScoresColor_Spectator
+	extern g_TeamColor_Allies
+	extern g_TeamColor_Axis
+	extern g_TeamColor_EnemyTeam
+	extern g_TeamColor_Free
+	extern g_TeamColor_MyTeam
+	extern g_TeamColor_Spectator
+	extern g_TeamIcon_Allies
+	extern g_TeamIcon_Axis
+	extern g_TeamIcon_Free
+	extern g_TeamIcon_Spectator
+	extern g_TeamName_Allies
+	extern g_TeamName_Axis
+	extern g_dumpAnims
+	extern g_entinfo
+	extern g_friendlyNameDist
+	extern g_friendlyfireDist
+	extern g_listEntity
+	extern g_log
+	extern g_logSync
+	extern g_password
+	extern g_redCrosshairs
+	extern g_voteAbstainWeight
+	extern voice_deadChat
+	extern voice_global
+	extern voice_localEcho
+	extern g_clients
+	extern g_entities
+	extern g_gametype
+	extern level_bgs
 	extern Com_ServerDObjCreate
 	extern Com_GetServerDObj
 	extern Com_SafeServerDObjFree
-	extern G_RunClient
-	extern G_FreeEntity
-	extern SV_UnlinkEntity
-	extern G_RunItem
-	extern G_GeneralLink
-	extern G_RunMover
-	extern G_RunMissile
-	extern Com_Error
-	extern G_RunCorpse
+	extern level
 	extern G_GetEntityTypeName
 	extern va
 	extern colorWhiteFaded
 	extern CL_AddDebugString
 	extern BG_GetWeaponDef
-	extern colorRedFaded
 	extern Com_Printf
 	extern Swap_Init
 	extern _ZN9EntHandle4InitEv
@@ -40,8 +95,9 @@
 	extern G_SetupWeaponDef
 	extern Cvar_VariableBooleanValue
 	extern SV_XModelGet
+	extern G_SafeServerDObjFree
 	extern G_OpenLogFile
-	extern Com_PrintWarning
+	extern G_InitSomeVariables
 	extern Mantle_CreateAnims
 	extern bgs
 	extern SV_GetConfigstring
@@ -68,9 +124,10 @@
 	extern g_scr_data
 	extern SaveRegisteredWeapons
 	extern SaveRegisteredItems
-	extern SV_GetServerinfo
+	extern G_RegisterCvars
 	extern Com_FindSoundAlias
 	extern G_AnimScriptSound
+	extern colorRedFaded
 	extern GScr_LoadScripts
 	extern BG_LoadAnim
 	extern XAnimCreateTree
@@ -78,10 +135,9 @@
 	extern G_TouchTriggers
 	extern SV_DObjInitServerTime
 	extern Com_Memcpy
-	extern Scr_RunCurrentThreads
 	extern Scr_AddString
-	extern scr_const
 	extern Scr_Notify
+	extern scr_const
 	extern PM_IsSprinting
 	extern Scr_IncTime
 	extern SV_ResetSkeletonCache
@@ -90,23 +146,24 @@
 	extern CheckTeamStatus
 	extern SV_DObjDisplayAnim
 	extern Scr_AddEntity
+	extern G_RunFrameForEntity
 	extern G_DObjUpdateServerTime
+	extern Scr_RunCurrentThreads
 	extern SendScoreboard
 	extern SL_ConvertToString
 	extern Cvar_SetBool
-	extern vsnprintf
-	extern Com_sprintf
-	extern FS_Write
 	extern vec3_origin
 	extern SV_SightTrace
 	extern qsort
+	extern G_CloseLogFile
 	extern _ZN9EntHandle6setEntEP9gentity_s
 	extern HudElem_DestroyAll
 	extern Scr_IsSystemActive
 	extern Scr_ShutdownSystem
 	extern Z_VirtualFreeInternal
-	extern _ZN9EntHandle8ShutdownEv
+	extern G_FreeEntity
 	extern FS_FCloseFile
+	extern _ZN9EntHandle8ShutdownEv
 	extern Mantle_ShutdownAnims
 	extern GScr_FreeScripts
 	extern Scr_FreeScripts
@@ -121,47 +178,9 @@
 	extern ceilf
 	extern SV_GameSendServerCommand
 	extern Cbuf_AddText
-	extern Touch_Multi
-	extern hurt_use
-	extern hurt_touch
-	extern Use_trigger_damage
-	extern Pain_trigger_damage
-	extern Die_trigger_damage
-	extern Reached_ScriptMover
-	extern G_ExplodeMissile
-	extern Touch_Item_Auto
-	extern G_TimedObjectThink
-	extern player_die
-	extern G_PlayerController
-	extern BodyEnd
-	extern turret_think_init
-	extern turret_use
-	extern turret_controller
-	extern turret_think
-	extern DroppedItemClearOwner
-	extern FinishSpawningItem
-	extern use_trigger_use
-	extern G_VehEntHandler_Think
-	extern G_VehEntHandler_Touch
-	extern G_VehEntHandler_Use
-	extern G_VehEntHandler_Pain
-	extern G_VehEntHandler_Die
-	extern G_VehEntHandler_Controller
-	extern Helicopter_Think
-	extern Helicopter_Pain
-	extern Helicopter_Die
-	extern Helicopter_Controller
-	extern G_LogPrintf
-	extern G_SafeServerDObjFree
-	extern G_RegisterCvars
-	extern G_CloseLogFile
-	extern level
-	extern G_InitSomeVariables
-	extern G_RunFrameForEntity
+	
 
 ;Exports of g_main_mp:
-	global g_clients
-	global g_entinfoNames
 	global G_CreateDObj
 	global G_GetDObj
 	global _Z14G_SafeDObjFreeii
@@ -181,79 +200,6 @@
 	global G_LocationalTracePassed
 	global G_LocationalTraceAllowChildren
 	global CheckVote
-	global g_compassShowEnemies
-	global bullet_penetrationEnabled
-	global g_debugLocDamage
-	global g_entities
-	global g_dropForwardSpeed
-	global g_dropHorzSpeedRand
-	global g_dropUpSpeedBase
-	global g_dropUpSpeedRand
-	global g_maxDroppedWeapons
-	global pickupPrints
-	global g_minGrenadeDamageSpeed
-	global g_banIPs
-	global g_dedicated
-	global g_antilag
-	global melee_debug
-	global g_useholdspawndelay
-	global g_useholdtime
-	global player_MGUseRadius
-	global player_throwbackInnerRadius
-	global player_throwbackOuterRadius
-	global g_NoScriptSpam
-	global g_fogColorReadOnly
-	global g_fogHalfDistReadOnly
-	global g_fogStartDistReadOnly
-	global g_maxclients
-	global level_bgs
-	global g_debugDamage
-	global radius_damage_debug
-	global g_allowVote
-	global g_cheats
-	global g_deadChat
-	global g_oldVoting
-	global g_gravity
-	global g_motd
-	global g_clonePlayerMaxVelocity
-	global g_knockback
-	global g_voiceChatTalkingDuration
-	global g_inactivity
-	global g_mantleBlockTimeBuffer
-	global g_playerCollisionEjectSpeed
-	global g_speed
-	global g_synchronousClients
-	global g_ScoresColor_Allies
-	global g_ScoresColor_Axis
-	global g_ScoresColor_EnemyTeam
-	global g_ScoresColor_Free
-	global g_ScoresColor_MyTeam
-	global g_ScoresColor_Spectator
-	global g_TeamColor_Allies
-	global g_TeamColor_Axis
-	global g_TeamColor_EnemyTeam
-	global g_TeamColor_Free
-	global g_TeamColor_MyTeam
-	global g_TeamColor_Spectator
-	global g_TeamIcon_Allies
-	global g_TeamIcon_Axis
-	global g_TeamIcon_Free
-	global g_TeamIcon_Spectator
-	global g_TeamName_Allies
-	global g_TeamName_Axis
-	global g_dumpAnims
-	global g_entinfo
-	global g_friendlyNameDist
-	global g_friendlyfireDist
-	global g_listEntity
-	global g_log
-	global g_logSync
-	global g_password
-	global g_redCrosshairs
-	global g_voteAbstainWeight
-	global voice_deadChat
-	global voice_global
-	global voice_localEcho
 
 
 SECTION .text
@@ -1791,93 +1737,6 @@ CheckVote_20:
 	mov [esp], eax
 	call Cbuf_AddText
 	jmp CheckVote_10
-
-
-;Initialized global or static variables of g_main_mp:
-SECTION .data
-g_entinfoNames: dd _cstring_off, _cstring_all_ents, 0x0
-
-;Initialized constant data of g_main_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_main_mp:
-SECTION .bss
-g_clients: resb 0xc6100
-g_compassShowEnemies: resb 0x4
-bullet_penetrationEnabled: resb 0x4
-g_debugLocDamage: resb 0x4
-g_entities: resb 0x9d000
-g_dropForwardSpeed: resb 0x4
-g_dropHorzSpeedRand: resb 0x4
-g_dropUpSpeedBase: resb 0x4
-g_dropUpSpeedRand: resb 0x4
-g_maxDroppedWeapons: resb 0x4
-pickupPrints: resb 0x4
-g_minGrenadeDamageSpeed: resb 0x4
-g_banIPs: resb 0x4
-g_dedicated: resb 0x4
-g_antilag: resb 0x4
-melee_debug: resb 0x4
-g_useholdspawndelay: resb 0x4
-g_useholdtime: resb 0x4
-player_MGUseRadius: resb 0x4
-player_throwbackInnerRadius: resb 0x4
-player_throwbackOuterRadius: resb 0x4
-g_NoScriptSpam: resb 0x4
-g_fogColorReadOnly: resb 0x4
-g_fogHalfDistReadOnly: resb 0x4
-g_fogStartDistReadOnly: resb 0x4
-g_gametype: resb 0x14
-g_maxclients: resb 0x4
-level_bgs: resb 0xacd20
-g_debugDamage: resb 0x4
-radius_damage_debug: resb 0x4
-g_allowVote: resb 0x4
-g_cheats: resb 0x4
-g_deadChat: resb 0x8
-g_oldVoting: resb 0x4
-g_gravity: resb 0x4
-g_motd: resb 0x4
-g_clonePlayerMaxVelocity: resb 0x4
-g_knockback: resb 0x4
-g_voiceChatTalkingDuration: resb 0x4
-g_inactivity: resb 0x4
-g_mantleBlockTimeBuffer: resb 0x4
-g_playerCollisionEjectSpeed: resb 0x4
-g_speed: resb 0x4
-g_synchronousClients: resb 0x4
-g_ScoresColor_Allies: resb 0x4
-g_ScoresColor_Axis: resb 0x4
-g_ScoresColor_EnemyTeam: resb 0x4
-g_ScoresColor_Free: resb 0x4
-g_ScoresColor_MyTeam: resb 0x4
-g_ScoresColor_Spectator: resb 0x4
-g_TeamColor_Allies: resb 0x4
-g_TeamColor_Axis: resb 0x4
-g_TeamColor_EnemyTeam: resb 0x4
-g_TeamColor_Free: resb 0x4
-g_TeamColor_MyTeam: resb 0x4
-g_TeamColor_Spectator: resb 0x4
-g_TeamIcon_Allies: resb 0x4
-g_TeamIcon_Axis: resb 0x4
-g_TeamIcon_Free: resb 0x4
-g_TeamIcon_Spectator: resb 0x4
-g_TeamName_Allies: resb 0x4
-g_TeamName_Axis: resb 0x4
-g_dumpAnims: resb 0x4
-g_entinfo: resb 0x4
-g_friendlyNameDist: resb 0x4
-g_friendlyfireDist: resb 0x4
-g_listEntity: resb 0x4
-g_log: resb 0x4
-g_logSync: resb 0x4
-g_password: resb 0x4
-g_redCrosshairs: resb 0x4
-g_voteAbstainWeight: resb 0x4
-voice_deadChat: resb 0x4
-voice_global: resb 0x4
-voice_localEcho: resb 0x4
 
 
 ;All cstrings:

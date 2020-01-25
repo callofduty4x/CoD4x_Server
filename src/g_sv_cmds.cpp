@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -19,6 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
+#include <cstring>
 
 #include "q_shared.hpp"
 #include "cvar.hpp"
@@ -33,9 +34,8 @@
 #include "scr_vm.hpp"
 #include "misc.hpp"
 #include "cscr_stringlist.hpp"
+#include "g_main_mp.hpp"
 
-
-#include <string.h>
 
 extern cvar_t *g_deadChat;
 static cvar_t *g_voteTime;

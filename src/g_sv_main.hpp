@@ -1,5 +1,4 @@
-#ifndef _G_SV_MAIN_H_
-#define _G_SV_MAIN_H_
+﻿#pragma once
+#include "cvar.hpp"
 
-
-#endif
+extern cvar_t* g_motd;

@@ -1,10 +1,11 @@
-#include "g_public_mp.hpp"
+﻿#include "g_public_mp.hpp"
 #include "q_shared.hpp"
 #include "qcommon.hpp"
 #include "g_shared.hpp"
 #include "scr_vm.hpp"
 #include "server_public.hpp"
 #include "plugin_handler.hpp"
+#include "g_main_mp.hpp"
 
 void __cdecl ClientClearFields(gclient_s *client)
 {

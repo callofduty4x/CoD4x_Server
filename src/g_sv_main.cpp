@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -31,6 +31,9 @@
 #include "g_sv_shared.hpp"
 #include "cmd.hpp"
 #include "server.hpp"
+#include "bg_jump.hpp"
+#include "bg_perks_mp.hpp"
+#include "bg_misc.hpp"
 
 #include <string.h>
 #include <stdarg.h>
@@ -180,147 +183,17 @@ cvar_t*  missileDebugAttractors;
 
 
 /* BG Cvars */
-
-
-cvar_t*  bg_viewKickScale;
-cvar_t*  bg_viewKickMax;
-cvar_t*  bg_viewKickMin;
-cvar_t*  bg_viewKickRandom;
-cvar_t*  player_view_pitch_up;
-cvar_t*  player_view_pitch_down;
-cvar_t*  player_lean_shift_left;
-cvar_t*  player_lean_shift_right;
-cvar_t*  player_lean_shift_crouch_left;
-cvar_t*  player_lean_shift_crouch_right;
-cvar_t*  player_lean_rotate_left;
-cvar_t*  player_lean_rotate_right;
-cvar_t*  player_lean_rotate_crouch_left;
-cvar_t*  player_lean_rotate_crouch_right;
-cvar_t*  bg_ladder_yawcap;
-cvar_t*  bg_prone_yawcap;
-cvar_t*  bg_foliagesnd_minspeed;
-cvar_t*  bg_foliagesnd_maxspeed;
-cvar_t*  bg_foliagesnd_slowinterval;
-cvar_t*  bg_foliagesnd_fastinterval;
-cvar_t*  bg_foliagesnd_resetinterval;
-cvar_t*  bg_fallDamageMinHeight;
-cvar_t*  bg_fallDamageMaxHeight;
-cvar_t*  inertiaMax;
-cvar_t*  inertiaDebug;
-cvar_t*  inertiaAngle;
-cvar_t*  friction;
-cvar_t*  stopspeed;
-cvar_t*  bg_swingSpeed;
-cvar_t*  bg_legYawTolerance;
-cvar_t*  bg_bobAmplitudeSprinting;
-cvar_t*  bg_bobAmplitudeStanding;
-cvar_t*  bg_bobAmplitudeDucked;
-cvar_t*  bg_bobAmplitudeProne;
-cvar_t*  bg_bobMax;
-cvar_t*  bg_aimSpreadMoveSpeedThreshold;
-cvar_t*  bg_maxGrenadeIndicatorSpeed;
-cvar_t*  player_breath_hold_time;
-cvar_t*  player_breath_gasp_time;
-cvar_t*  player_breath_fire_delay;
-cvar_t*  player_breath_gasp_scale;
-cvar_t*  player_breath_hold_lerp;
-cvar_t*  player_breath_gasp_lerp;
-cvar_t*  player_breath_snd_lerp;
-cvar_t*  player_breath_snd_delay;
-cvar_t*  player_scopeExitOnDamage;
-cvar_t*  player_adsExitDelay;
-cvar_t*  player_move_factor_on_torso;
-cvar_t*  player_debugHealth;
-cvar_t*  player_sustainAmmo;
-cvar_t*  player_moveThreshhold;
-cvar_t*  player_footstepsThreshhold;
-cvar_t*  player_strafeSpeedScale;
-cvar_t*  player_backSpeedScale;
-cvar_t*  player_strafeAnimCosAngle;
-cvar_t*  player_spectateSpeedScale;
-cvar_t*  player_sprintForwardMinimum;
-cvar_t*  player_sprintSpeedScale;
-cvar_t*  player_sprintTime;
-cvar_t*  player_sprintMinTime;
-cvar_t*  player_sprintRechargePause;
-cvar_t*  player_sprintStrafeSpeedScale;
-cvar_t*  player_sprintCameraBob;
-cvar_t*  player_turnAnims;
-cvar_t*  player_dmgtimer_timePerPoint;
-cvar_t*  player_dmgtimer_maxTime;
-cvar_t*  player_dmgtimer_minScale;
-cvar_t*  player_dmgtimer_stumbleTime;
-cvar_t*  player_dmgtimer_flinchTime;
-cvar_t*  bg_shock_soundLoop;
-cvar_t*  bg_shock_soundLoopSilent;
-cvar_t*  bg_shock_soundEnd;
-cvar_t*  bg_shock_soundEndAbort;
 cvar_t*  bg_shock_screenType;
-cvar_t*  bg_shock_screenBlurBlendTime;
-cvar_t*  bg_shock_screenBlurBlendFadeTime;
-cvar_t*  bg_shock_screenFlashWhiteFadeTime;
-cvar_t*  bg_shock_screenFlashShotFadeTime;
-cvar_t*  bg_shock_viewKickPeriod;
-cvar_t*  bg_shock_viewKickRadius;
-cvar_t*  bg_shock_viewKickFadeTime;
-cvar_t*  bg_shock_sound;
-cvar_t*  bg_shock_soundFadeInTime;
-cvar_t*  bg_shock_soundFadeOutTime;
-cvar_t*  bg_shock_soundLoopFadeTime;
-cvar_t*  bg_shock_soundLoopEndDelay;
-cvar_t*  bg_shock_soundRoomType;
-cvar_t*  bg_shock_soundDryLevel;
-cvar_t*  bg_shock_soundWetLevel;
-cvar_t*  bg_shock_soundModEndDelay;
 cvar_t*  bg_shock_lookControl;
-cvar_t*  bg_shock_lookControl_maxpitchspeed;
-cvar_t*  bg_shock_lookControl_maxyawspeed;
-cvar_t*  bg_shock_lookControl_mousesensitivityscale;
-cvar_t*  bg_shock_lookControl_fadeTime;
-cvar_t*  bg_shock_movement;
-cvar_t*  player_meleeRange;
-cvar_t*  player_meleeWidth;
-cvar_t*  player_meleeHeight;
-cvar_t*  player_meleeChargeFriction;
-cvar_t*  player_burstFireCooldown;
-cvar_t*  bullet_penetrationMinFxDist;
-
-
-/* BG Jump Cvars */
-
-
-cvar_t*  jump_height;
-cvar_t*  jump_stepSize;
-cvar_t*  jump_slowdownEnable;
-cvar_t*  jump_ladderPushVel;
-cvar_t*  jump_spreadAdd;
 
 
 /* BG Mantle Cvars */
-
-
 cvar_t*  mantle_enable;
 cvar_t*  mantle_debug;
 cvar_t*  mantle_check_range;
 cvar_t*  mantle_check_radius;
 cvar_t*  mantle_check_angle;
 cvar_t*  mantle_view_yawcap;
-
-
-/* BG Perk Cvars */
-
-
-cvar_t*  perk_weapSpreadMultiplier;
-cvar_t*  perk_weapReloadMultiplier;
-cvar_t*  perk_weapRateMultiplier;
-cvar_t*  perk_extraBreath;
-cvar_t*  perk_bulletPenetrationMultiplier;
-cvar_t*  perk_grenadeDeath;
-cvar_t*  perk_parabolicRadius;
-cvar_t*  perk_parabolicAngle;
-cvar_t*  perk_parabolicIcon;
-cvar_t*  perk_sprintMultiplier;
-
 
 
 void G_CopyCvars();

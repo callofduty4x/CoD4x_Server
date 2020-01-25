@@ -1,9 +1,10 @@
-#include "q_shared.hpp"
+﻿#include "q_shared.hpp"
 #include "scr_vm.hpp"
 #include "g_shared.hpp"
 #include "cscr_stringlist.hpp"
 #include "stringed_interface.hpp"
 #include "bg_public.hpp"
+#include "g_main_mp.hpp"
 
 #include <ctype.h>
 

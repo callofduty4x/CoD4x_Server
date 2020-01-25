@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -19,7 +19,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
+#include <cstring>
+#include <cstdlib>
+#include <cctype>
 
 
 #include "q_shared.hpp"
@@ -29,11 +31,7 @@
 #include "g_sv_shared.hpp"
 #include "cvar.hpp"
 #include "server.hpp"
-
-#include <string.h>
-#include <stdlib.h>
-#include <ctype.h>
-
+#include "g_main_mp.hpp"
 
 extern "C"
 {

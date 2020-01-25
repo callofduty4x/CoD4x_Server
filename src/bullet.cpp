@@ -1,7 +1,8 @@
-#include "client_dedicated.hpp"
+﻿#include "client_dedicated.hpp"
 #include "g_shared.hpp"
 #include "cm_public.hpp"
 #include "qcommon_io.hpp"
+#include "g_main_mp.hpp"
 
 extern "C" void G_DebugBulletImpact(gentity_s *attacker, float* start, float* end)
 {

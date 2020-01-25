@@ -1,3 +1,4 @@
+﻿#include "g_main_mp.hpp"
 #include "g_shared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"
@@ -7,6 +8,84 @@
 #include "cscr_stringlist.hpp"
 
 level_locals_t level;
+
+cvar_t* g_compassShowEnemies;
+cvar_t* bullet_penetrationEnabled;
+cvar_t* g_debugLocDamage;
+cvar_t* g_dropForwardSpeed;
+cvar_t* g_dropHorzSpeedRand;
+cvar_t* g_dropUpSpeedBase;
+cvar_t* g_dropUpSpeedRand;
+cvar_t* g_maxDroppedWeapons;
+cvar_t* pickupPrints;
+cvar_t* g_minGrenadeDamageSpeed;
+cvar_t* g_banIPs;
+cvar_t* g_dedicated;
+cvar_t* g_antilag;
+cvar_t* melee_debug;
+cvar_t* g_useholdspawndelay;
+cvar_t* g_useholdtime;
+cvar_t* player_MGUseRadius;
+cvar_t* player_throwbackInnerRadius;
+cvar_t* player_throwbackOuterRadius;
+cvar_t* g_NoScriptSpam;
+cvar_t* g_fogColorReadOnly;
+cvar_t* g_fogHalfDistReadOnly;
+cvar_t* g_fogStartDistReadOnly;
+cvar_t* g_maxclients;
+cvar_t* g_debugDamage;
+cvar_t* radius_damage_debug;
+cvar_t* g_allowVote;
+cvar_t* g_cheats;
+cvar_t* g_deadChat;
+cvar_t* g_oldVoting;
+cvar_t* g_gravity;
+cvar_t* g_motd;
+cvar_t* g_clonePlayerMaxVelocity;
+cvar_t* g_knockback;
+cvar_t* g_voiceChatTalkingDuration;
+cvar_t* g_inactivity;
+cvar_t* g_mantleBlockTimeBuffer;
+cvar_t* g_playerCollisionEjectSpeed;
+cvar_t* g_speed;
+cvar_t* g_synchronousClients;
+cvar_t* g_ScoresColor_Allies;
+cvar_t* g_ScoresColor_Axis;
+cvar_t* g_ScoresColor_EnemyTeam;
+cvar_t* g_ScoresColor_Free;
+cvar_t* g_ScoresColor_MyTeam;
+cvar_t* g_ScoresColor_Spectator;
+cvar_t* g_TeamColor_Allies;
+cvar_t* g_TeamColor_Axis;
+cvar_t* g_TeamColor_EnemyTeam;
+cvar_t* g_TeamColor_Free;
+cvar_t* g_TeamColor_MyTeam;
+cvar_t* g_TeamColor_Spectator;
+cvar_t* g_TeamIcon_Allies;
+cvar_t* g_TeamIcon_Axis;
+cvar_t* g_TeamIcon_Free;
+cvar_t* g_TeamIcon_Spectator;
+cvar_t* g_TeamName_Allies;
+cvar_t* g_TeamName_Axis;
+cvar_t* g_dumpAnims;
+cvar_t* g_entinfo;
+cvar_t* g_friendlyNameDist;
+cvar_t* g_friendlyfireDist;
+cvar_t* g_listEntity;
+cvar_t* g_log;
+cvar_t* g_logSync;
+cvar_t* g_password;
+cvar_t* g_redCrosshairs;
+cvar_t* g_voteAbstainWeight;
+cvar_t* voice_deadChat;
+cvar_t* voice_global;
+cvar_t* voice_localEcho;
+byte g_clients[0xc6100];
+gentity_t g_entities[1024];
+byte g_gametype[0x14];
+bgs_s level_bgs;
+
+
 
 const char* g_dedicatedEnumNames[] = { "listen server", "dedicated LAN server", "dedicated internet server" };
 

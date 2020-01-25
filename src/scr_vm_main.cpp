@@ -34,6 +34,7 @@
 #include "cscr_variable.hpp"
 #include "cscr_animtree.hpp"
 #include "cscr_parser.hpp"
+#include "g_main_mp.hpp"
 
 #include <stdarg.h>
 #include <ctype.h>

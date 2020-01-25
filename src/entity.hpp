@@ -1,4 +1,4 @@
-
+﻿
 /*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
@@ -415,8 +415,6 @@ struct gentity_s {
 	int useCount;
 	struct gentity_s *nextFree;
 }; /* Size: 0x274 */
-
-extern gentity_t g_entities[];
 
 
 struct tagInfo_s

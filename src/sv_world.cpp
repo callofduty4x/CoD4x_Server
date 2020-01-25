@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -21,13 +21,13 @@
 */
 
 
-
 #include "q_shared.hpp"
 #include "g_shared.hpp"
 #include "server.hpp"
 #include "cm_public.hpp"
 #include "dobj.hpp"
 #include "sv_world.hpp"
+#include "g_main_mp.hpp"
 
 vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };

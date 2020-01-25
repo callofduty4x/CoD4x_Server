@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
 Return to Castle Wolfenstein multiplayer GPL Source Code
@@ -33,6 +33,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "g_sv_shared.hpp"
 #include "scr_vm.hpp"
 #include "sv_snapshot.hpp"
+#include "g_main_mp.hpp"
 
 /*
 ==================

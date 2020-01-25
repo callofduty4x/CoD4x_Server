@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -24,6 +24,7 @@
 #include "q_shared.hpp"
 #include "entity.hpp"
 #include "scr_vm.hpp"
+#include "g_main_mp.hpp"
 
 //Only CoD4 gamescript callback functions here
 

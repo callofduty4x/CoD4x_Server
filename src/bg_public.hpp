@@ -1,4 +1,4 @@
-#ifndef __BG_PUBLIC_H__
+﻿#ifndef __BG_PUBLIC_H__
 #define __BG_PUBLIC_H__
 
 #include "entity.hpp"
@@ -120,7 +120,7 @@ struct __align(8) bgs_s
 #pragma pack(pop)
 */
 
-struct __align(8) bgs_s
+struct __align(8) bgs_s // TODO: must be of size 0xADD08 (asm).
 {
   byte animScriptData[0x9a9d0];
   byte generic_human[0x10];
@@ -137,7 +137,6 @@ struct __align(8) bgs_s
   struct clientInfo_t clientinfo[64];
 };
 
-extern struct bgs_s level_bgs;
 extern struct bgs_s *bgs;
 #endif
 

@@ -1,6 +1,6 @@
+﻿#include "bg_jump.hpp"
 #include "q_shared.hpp"
 #include "player.hpp"
-#include "cvar.hpp"
 #include "bg_local.hpp"
 #include "q_shared.hpp"
 

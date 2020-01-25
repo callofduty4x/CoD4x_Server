@@ -1,9 +1,10 @@
-#include "player.hpp"
+﻿#include "player.hpp"
 #include "scr_vm.hpp"
 #include "g_shared.hpp"
 #include "cscr_stringlist.hpp"
 #include "g_fields.hpp"
 #include "cscr_variable.hpp"
+#include "g_main_mp.hpp"
 
 #include <algorithm>
 

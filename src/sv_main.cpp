@@ -91,7 +91,6 @@ cvar_t	*sv_zombieTime;			// seconds to sink messages after disconnect
 cvar_t	*sv_consayname;
 cvar_t	*sv_contellname;
 cvar_t	*sv_password;
-cvar_t	*g_motd;
 cvar_t	*sv_modStats;
 cvar_t	*sv_authorizemode;
 cvar_t	*sv_showasranked;
