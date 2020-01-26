@@ -32,6 +32,7 @@
 #include "g_sv_shared.hpp"
 #include "cm_public.hpp"
 #include "g_shared.hpp"
+#include "bg_misc.hpp"
 
 #include <stdint.h>
 #include <stdlib.h>

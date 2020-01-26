@@ -35,6 +35,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "qcommon_mem.hpp"
 #include "game/botlib.h"
 #include "qvsnprintf.hpp"
+#include "g_client_mp.hpp"
 
 
 #define MAX_DEBUGPOLYS      128

@@ -4,7 +4,6 @@
 
 extern "C"
 {
-    qboolean __cdecl SV_DObjCreateSkelForBone(struct DObj_s *obj, int boneIndex);
     void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd);
     void __cdecl SV_UnlinkEntity(gentity_t*);
     struct XAnimTree_s *__cdecl SV_DObjGetTree(struct gentity_s *ent);

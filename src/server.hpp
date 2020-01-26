@@ -856,7 +856,6 @@ qboolean SV_SetupReliableMessageProtocol(client_t* client);
 void SV_DisconnectReliableMessageProtocol(client_t* client);
 void SV_ReceiveReliableMessages(client_t* client);
 void SV_SendReliableServerCommand(client_t* client, msg_t *msg);
-void SV_GenerateServerId( );
 qboolean SV_RequestStats(client_t* client);
 void SV_GetUsername(int clientNum, char* name, int maxlen);
 void SV_CalculateChecksums();

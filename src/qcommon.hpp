@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -125,7 +125,6 @@ typedef struct
 void Com_LoadWorld(const char *name);
 void CM_LinkWorld();
 void CM_LoadMap(const char *name, int *checksum);
-void Com_LoadBsp(const char *bspname);
 void Com_UnloadBsp();
 int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
 

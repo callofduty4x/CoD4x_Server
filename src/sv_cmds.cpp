@@ -50,6 +50,7 @@ These commands can only be entered from stdin or by a remote operator datagram
 #include "scr_vm.hpp"
 #include "cscr_memorytree.hpp"
 #include "cscr_variable.hpp"
+#include "com_bsp_load_obj.hpp"
 
 #include <string.h>
 #include <stdlib.h>
@@ -2301,14 +2302,11 @@ void SV_GetModules_f()
 
 void SV_LoadMapFromBsp()
 {
-    if ( Cmd_Argc() != 2) {
-		Com_Printf(CON_CHANNEL_DONT_FILTER, "loadmap <d3dbspfile>\n" );
-		return;
-    }
+    if ( Cmd_Argc() != 2)
+        return Com_Printf(CON_CHANNEL_DONT_FILTER, "loadmap <d3dbspfile>\n" );
+
     Com_LoadBsp(Cmd_Argv(1));
     CM_LoadMapData_LoadObj(Cmd_Argv(1));
-
-
 }
 
 

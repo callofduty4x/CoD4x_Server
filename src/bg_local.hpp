@@ -1,4 +1,4 @@
-#include "bg_public.hpp"
+﻿#include "bg_public.hpp"
 
 enum scriptAnimEventTypes_t
 {
@@ -40,7 +40,6 @@ extern "C"{
 #endif
 
 unsigned int __cdecl PM_GroundSurfaceType(pml_t *pml);
-void __cdecl BG_AddPredictableEventToPlayerstate(int newEvent, unsigned int eventParm, playerState_s *ps);
 int __cdecl BG_AnimScriptEvent(struct playerState_s* ps, enum scriptAnimEventTypes_t event, int isContinue, int force);
 enum StanceState __cdecl PM_GetEffectiveStance(struct playerState_s *ps);
 

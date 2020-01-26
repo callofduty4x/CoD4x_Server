@@ -117,30 +117,6 @@ void G_PrintRedirect(char* msg, int len)
     HL2Rcon_SourceRconSendGameLog(string, stringlen);
 */
 
-
-void G_PrintAddRedirect(void (*rd_dest)( const char *, int))
-{
-    int i;
-
-    for(i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
-    {
-        if(rd_destinations[i] == rd_dest)
-        {
-            Com_Error(ERR_FATAL, "G_PrintAddRedirect: Attempt to add an already defined redirect function twice.");
-            return;
-        }
-
-        if(rd_destinations[i] == NULL)
-        {
-            rd_destinations[i] = rd_dest;
-            return;
-        }
-    }
-    Com_Error(ERR_FATAL, "G_PrintAddRedirect: Out of redirect handles. Increase MAX_REDIRECTDESTINATIONS to add more redirect destinations");
-}
-
-
-
 /*
 =================
 G_LogPrintf
@@ -148,7 +124,8 @@ G_LogPrintf
 Print to the logfile with a time stamp if it is open
 =================
 */
-__cdecl void QDECL G_LogPrintf( const char *fmt, ... ) {
+void QDECL __cdecl G_LogPrintf( const char *fmt, ... )
+{
 
 	va_list argptr;
 
@@ -443,3 +420,19 @@ const entityHandler_t entityHandlers[] =
 };
 
 
+void G_PrintAddRedirect(void (*rd_dest)( const char *, int))
+{
+    for(int i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
+    {
+        if(rd_destinations[i] == rd_dest)
+            return Com_Error(ERR_FATAL, "G_PrintAddRedirect: Attempt to add an already defined redirect function twice.");
+
+        if(rd_destinations[i] == NULL)
+        {
+            rd_destinations[i] = rd_dest;
+            return;
+        }
+    }
+
+    Com_Error(ERR_FATAL, "G_PrintAddRedirect: Out of redirect handles. Increase MAX_REDIRECTDESTINATIONS to add more redirect destinations");
+}

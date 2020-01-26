@@ -38,6 +38,13 @@
 #include "bg.hpp"
 #include "cl_dedicated.hpp"
 #include "g_main_mp.hpp"
+#include "g_client_mp.hpp"
+#include "g_utils_mp.hpp"
+#include "g_spawn_mp.hpp"
+#include "g_scr_helicopter.hpp"
+#include "bg_misc.hpp"
+#include "g_hudelem.hpp"
+
 
 #include "sapi.hpp"
 #include <string.h>
@@ -46,7 +53,6 @@
 #include "scr_vm_functions.hpp"
 #include "tomcrypt.h"
 
-static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 extern char* var_typename[];
 
 
@@ -245,55 +251,6 @@ void PlayerCmd_GetPlayerID64(scr_entref_t arg)
     Scr_AddString(str);
 }
 
-/*
-============
-PlayerCmd_GetGuid
-
-Returns the players Guid.
-Usage: string = self getGuid();
-============
-*/
-
-void PlayerCmd_GetGuid(scr_entref_t arg)
-{
-
-    gentity_t *gentity;
-    int entityNum = 0;
-    const char *guid;
-    char buf[128];
-    mvabuf;
-
-    if (arg.classnum)
-    {
-
-        Scr_ObjectError("Not an entity");
-    }
-    else
-    {
-
-        entityNum = arg.entnum;
-        gentity = &g_entities[entityNum];
-
-        if (!gentity->client)
-        {
-            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
-        }
-    }
-    if (Scr_GetNumParam())
-    {
-        Scr_Error("Usage: self getGuid()\n");
-    }
-
-    guid = SV_GetGuid(entityNum, buf, sizeof(buf));
-
-    if (guid == NULL)
-    {
-        Scr_AddString("");
-        return;
-    }
-
-    Scr_AddString(guid);
-}
 
 /*
 ============
@@ -2115,38 +2072,6 @@ void GScr_BanClient()
     SV_DropClient(cl, baninfo.message);
 }
 
-void PlayerCmd_spawn(scr_entref_t arg)
-{
-
-    gentity_t *gentity = NULL;
-    vec3_t position;
-    vec3_t direction;
-    mvabuf;
-
-    int entityNum = 0;
-
-    if (arg.classnum)
-    {
-
-        Scr_ObjectError("Not an entity");
-    }
-    else
-    {
-
-        entityNum = arg.entnum;
-        gentity = &g_entities[entityNum];
-
-        if (!gentity->client)
-        {
-            Scr_ObjectError(va("Entity: %i is not a player", entityNum));
-        }
-    }
-
-    Scr_GetVector(0, position);
-    Scr_GetVector(1, direction);
-
-    ClientSpawn(gentity, position, direction);
-}
 
 
 void GScr_NewHudElem()
@@ -2177,67 +2102,6 @@ void GScr_NewClientHudElem()
     Scr_Error("GScr_NewClientHudElem: Exceeded limit of Hudelems");
 }
 
-static qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
-{
-    int i = 0;
-    mvabuf;
-
-    /* Index not set + fast return from function */
-    if (!index)
-        return qfalse;
-
-    /* Overflow protection */
-    if (index >= MAX_CONFIGSTRINGS)
-    {
-        Scr_Error(va("localized configstring index must be between 0 and %d",
-                     MAX_CONFIGSTRINGS - 1));
-        return qfalse;
-    }
-
-    /* Better not to free precached strings... + fast return */
-    if (g_isLocStringPrecached[index] == qtrue)
-        return qfalse;
-
-    /* Check all script hud elements if index in use SLOOOOW :C */
-    while (i < 1024)
-    {
-        game_hudelem_t *elem = &g_hudelems[i];
-        if (elem->elem.text &&
-            elem->elem.text == index)
-            return qfalse;
-        ++i;
-    }
-
-    return qtrue;
-}
-
-void HECmd_SetText(scr_entref_t entnum)
-{
-    char buffer[1024];
-
-    if (entnum.classnum != 1)
-    {
-        Scr_ObjectError("G_HudSetText: Not a hud element");
-        return;
-    }
-
-    game_hudelem_t *element = &g_hudelems[entnum.entnum];
-
-    int cs_index = element->elem.text;
-	
-    HudElem_ClearTypeSettings(element);
-
-    /* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
-    element->elem.text = 0;
-
-    /* Attempt to avoid CS overflow using "SetText()" */
-    if (Scr_CanFreeLocalizedConfigString(cs_index))
-        SV_SetConfigstring(cs_index + CS_LOCALIZEDSTRINGS, "");
-
-    Scr_ConstructMessageString(0, Scr_GetNumParam() -1, "Hud Elem String", buffer, sizeof(buffer));
-    element->elem.type = HE_TYPE_TEXT;
-    element->elem.text = G_LocalizedStringIndex(buffer);
-}
 
 void GScr_MakeCvarServerInfo(void)
 {
@@ -3291,8 +3155,8 @@ void PlayerCmd_SetStance(scr_entref_t playerEntNum)
     if (stanceIdx != (unsigned short)scr_const.stand && stanceIdx != (unsigned short)scr_const.crouch && stanceIdx != (unsigned short)scr_const.prone)
         Scr_ParamError(0, "stance must be one of {stand, crouch, prone}");
 
-    BGEvent event = stanceIdx == (unsigned short)scr_const.stand ? EV_STANCE_FORCE_STAND : stanceIdx == (unsigned short)scr_const.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
-    BG_AddPredictableEventToPlayerstate(event, 0, cl);
+    EBGEvent event = stanceIdx == (unsigned short)scr_const.stand ? EV_STANCE_FORCE_STAND : stanceIdx == (unsigned short)scr_const.crouch ? EV_STANCE_FORCE_CROUCH : EV_STANCE_FORCE_PRONE;
+    BG_AddPredictableEventToPlayerstate(event, 0, &cl->ps);
 }
 
 

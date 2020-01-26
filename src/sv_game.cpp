@@ -35,6 +35,7 @@
 #include "scr_vm.hpp"
 #include "sys_main.hpp"
 #include "sys_thread.hpp"
+#include "cl_dedicated.hpp"
 
 botlib_export_t *botlib_export;
 
@@ -172,7 +173,7 @@ char *__cdecl SV_AllocSkelMemory(unsigned int size)
 
 
 
-qboolean __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
+extern "C" qboolean __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
 {
   int size;
   char *buf;
@@ -260,7 +261,7 @@ int __cdecl SV_DObjCreateSkelForBones(DObj *obj, int *partBits)
 }
 
 
-struct XAnimTree_s *__cdecl SV_DObjGetTree(struct gentity_s *ent)
+extern "C" struct XAnimTree_s *__cdecl SV_DObjGetTree(struct gentity_s *ent)
 {
   DObj *obj;
 
@@ -447,8 +448,6 @@ int boxVerts[24][3] =
   { 1, 1, 1 }
 };
 
-
-void __cdecl CL_AddDebugLine(const float *start, const float *end, const float *color, int depthTest, int duration);
 
 void __cdecl SV_XModelDebugBoxesInternal(struct gentity_s *ent, const float *color, int *partBits, int duration)
 {

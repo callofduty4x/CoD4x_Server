@@ -44,6 +44,7 @@
 #include "g_public.hpp"
 #include "sapi.hpp"
 #include "qcommon_logprint.hpp"
+#include "g_client_mp.hpp"
 
 
 #include <stdint.h>

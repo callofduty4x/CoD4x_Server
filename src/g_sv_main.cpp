@@ -41,6 +41,7 @@
 #include "g_scr_helicopter.hpp"
 #include "g_vehicles_mp.hpp"
 #include "bg_mantle.hpp"
+#include "g_main_mp.hpp"
 
 
 /* G_Cvars */

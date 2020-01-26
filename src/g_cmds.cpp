@@ -35,6 +35,8 @@ If you have questions concerning this license or the applicable additional terms
 #include "scr_vm.hpp"
 #include "sv_snapshot.hpp"
 #include "g_main_mp.hpp"
+#include "g_main_mp.hpp"
+#include "g_utils_mp.hpp"
 
 /*
 ==================

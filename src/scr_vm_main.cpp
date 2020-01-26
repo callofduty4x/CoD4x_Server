@@ -37,7 +37,16 @@
 #include "cscr_parser.hpp"
 #include "g_main_mp.hpp"
 #include "qvsnprintf.hpp"
-
+#include "g_scr_main_mp.hpp"
+#include "cscr_vm.hpp"
+#include "g_spawn_mp.hpp"
+#include "g_missile.hpp"
+#include "scr_vm.hpp"
+#include "g_client_script_cmd_mp.hpp"
+#include "g_hudelem.hpp"
+#include "g_scr_vehicle.hpp"
+#include "g_scr_mover.hpp"
+#include "g_scr_helicopter.hpp"
 
 #include <stdarg.h>
 #include <ctype.h>
@@ -48,9 +57,6 @@ typedef struct
     xfunction_t offset;
     qboolean developer;
 } v_function_t;
-
-
-void __cdecl GScr_AddFieldsForEntity();
 
 
 void Scr_AddStockFunctions()

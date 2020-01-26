@@ -19,8 +19,6 @@
 ===========================================================================
 */
 
-
-
 #include "hl2rcon.hpp"
 #include "qshared.hpp"
 #include "qcommon.hpp"
@@ -36,6 +34,7 @@
 #include "sv_auth.hpp"
 #include "q_platform.hpp"
 #include "sapi.hpp"
+#include "g_main_mp.hpp"
 
 #include <stdint.h>
 #include <string.h>

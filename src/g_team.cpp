@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 1999-2005 Id Software, Inc.
 
@@ -28,7 +28,7 @@
 OnSameTeam
 ==============
 */
-qboolean OnSameTeam( gentity_t *ent1, gentity_t *ent2 ) {
+extern "C" qboolean OnSameTeam( gentity_t *ent1, gentity_t *ent2 ) {
 	if ( !ent1->client || !ent2->client ) {
 		return qfalse;
 	}

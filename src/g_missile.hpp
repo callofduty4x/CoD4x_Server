@@ -22,3 +22,12 @@ extern cvar_t* missileJavTurnDecel;
 extern cvar_t* missileJavTurnRateDirect;
 extern cvar_t* missileJavTurnRateTop;
 extern cvar_t* missileWaterMaxDepth;
+
+extern "C"
+{
+    void Scr_MissileCreateAttractorEnt();
+    void Scr_MissileCreateAttractorOrigin();
+    void Scr_MissileCreateRepulsorEnt();
+    void Scr_MissileCreateRepulsorOrigin();
+    void Scr_MissileDeleteAttractor();
+}

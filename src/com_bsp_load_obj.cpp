@@ -1,4 +1,4 @@
-#include "com_bsp_load_obj.hpp"
+﻿#include "com_bsp_load_obj.hpp"
 #include "qshared.hpp"
 #include "qcommon_mem.hpp"
 #include "filesystem.hpp"
@@ -77,7 +77,7 @@ bool __cdecl Com_BspError()
     return true;
 }
 
-void __cdecl Com_LoadBsp(const char *filename)
+extern "C" void __cdecl Com_LoadBsp(const char *filename)
 {
   unsigned int bytesRead;
   unsigned int len;

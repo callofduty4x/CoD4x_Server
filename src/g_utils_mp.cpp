@@ -1,9 +1,11 @@
-#include "g_utils_mp.hpp"
+﻿#include "g_utils_mp.hpp"
 #include "qshared.hpp"
 #include "entity.hpp"
 #include "dobj.hpp"
 #include "g_shared.hpp"
 #include "server_public.hpp"
+#include "sv_game.hpp"
+
 
 const char *entityTypeNames[] =
 {

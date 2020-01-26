@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -39,7 +39,6 @@ __cdecl void StopFollowingOnDeath( gentity_t *ent );
 __cdecl void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText );
 __cdecl void ExitLevel( void );
 void G_RegisterCvars( );
-void QDECL G_LogPrintf( const char *fmt, ... );
 void __cdecl StopFollowing( gentity_t* ent );
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
 void __cdecl GScr_LoadScripts(void);
@@ -65,12 +64,7 @@ extern "C"{
 
 
 
-void QDECL G_LogPrintf( const char *fmt, ... );
 void G_PrintRedirect(char* msg, int len);
-void G_PrintAddRedirect(void (*rd_dest)( const char *, int));
-__cdecl void ClientSpawn(gentity_t* ent, float* px, float* py);
-
-
 void Pmove_ExtendedResetState( void );
 void Pmove_ExtendedInitForClient(client_t *cl);
 void Pmove_ExtendedTurnOn( void );
@@ -83,12 +77,9 @@ __cdecl __optimize3 qboolean Jump_GetStepHeight(playerState_t* ps, const vec3_t 
 __cdecl __optimize3 float Jump_CalcHeight( playerState_t* ps );
 __cdecl __optimize3 void StuckInClient( gentity_t* gen );
 
-void __cdecl G_RunFrame( int time );
-int __cdecl G_LocalizedStringIndex( const char* );
+extern "C" int __cdecl G_LocalizedStringIndex( const char* );
 
 void __cdecl ClientCommand( int );
-const char* __cdecl ClientConnect(int clnum, short clscriptid);  //Something simular to VM_Call
-void __cdecl ClientBegin( int clientNum );
 
 void G_PrintRuleForPlayer(client_t *cl);
 void G_PrintAdvertForPlayer(client_t *cl);

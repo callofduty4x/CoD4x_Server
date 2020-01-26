@@ -28,6 +28,7 @@
 #include "dobj.hpp"
 #include "sv_world.hpp"
 #include "g_main_mp.hpp"
+#include "g_team.hpp"
 
 vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };

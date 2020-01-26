@@ -36,6 +36,8 @@
 #include "misc.hpp"
 #include "cscr_stringlist.hpp"
 #include "g_main_mp.hpp"
+#include "g_team.hpp"
+#include "g_main_mp.hpp"
 
 
 extern cvar_t *g_deadChat;

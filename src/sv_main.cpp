@@ -54,6 +54,9 @@
 #include "db_load.hpp"
 #include "sec_crypto.hpp"
 #include "qvsnprintf.hpp"
+#include "g_client_mp.hpp"
+#include "g_main_mp.hpp"
+#include "com_bsp_load_obj.hpp"
 
 
 #include <string.h>
@@ -3538,7 +3541,8 @@ void SV_InitArchivedSnapshot()
   svs.numCachedSnapshotClients = sizeof(svs.cachedSnapshotClients)/sizeof(svs.cachedSnapshotClients[0]);
 }
 
-void SV_RunFrame(){
+void SV_RunFrame()
+{
     SV_ResetSkeletonCache();
     G_RunFrame(svs.time);
 }
@@ -3749,6 +3753,18 @@ void __cdecl SV_ReconnectClients(int savepersist)
 }
 
 
+static void SV_GenerateServerId(qboolean longrestart)
+{
+    if(longrestart)
+        sv.start_frameTime = com_frameTime;
+
+    int playcount = sv_serverid->integer & 0x000000ff;
+    ++playcount;
+    int serverid = (sv.start_frameTime & 0xffffff00) | (playcount & 0x000000ff);
+    Cvar_SetInt(sv_serverid, serverid);
+}
+
+
 /*
 ================
 SV_MapRestart
@@ -3810,7 +3826,7 @@ void SV_MapRestart( qboolean fastRestart ){
     SV_InitArchivedSnapshot();
     svs.snapFlagServerBit ^= 4;
 
-    SV_GenerateServerId(); //Short restart
+    SV_GenerateServerId(qfalse); //Short restart
 
     //sv.inFrame = 0;
 
@@ -4675,27 +4691,6 @@ void SV_SetConfigstring( int index, const char *val ) {
             SV_SendServerCommandNoLoss( client, "%c %i %s", cmd, index, val );
         }
     }
-
-}
-
-
-void SV_GenerateServerId(qboolean longrestart)
-{
-    int serverid;
-    int playcount;
-
-    if(longrestart)
-    {
-        sv.start_frameTime = com_frameTime;
-    }
-
-    playcount = sv_serverid->integer & 0x000000ff;
-
-    ++playcount;
-
-    serverid = (sv.start_frameTime & 0xffffff00) | (playcount & 0x000000ff);
-
-    Cvar_SetInt(sv_serverid, serverid);
 
 }
 

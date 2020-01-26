@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "cvar.hpp"
+#include "entity.hpp"
+#include "scr_vm.hpp"
 
 
 extern cvar_t* vehHelicopterDecelerationFwd;
@@ -30,3 +32,11 @@ extern cvar_t* vehHelicopterTiltSpeed;
 extern cvar_t* vehHelicopterYawOnLeftStick;
 extern cvar_t* vehHelicopterHeadSwayDontSwayTheTurret;
 extern cvar_t* vehHelicopterInvertUpDown;
+
+
+extern "C"
+{
+    void G_SpawnHelicopter( gentity_t* vehent, gentity_t* ownerent, const char* type, const char* model );
+    void CMD_Heli_FreeHelicopter(scr_entref_t entref);
+    void CMD_Heli_SetDamageStage(scr_entref_t entref);
+}

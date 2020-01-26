@@ -79,3 +79,11 @@ extern cvar_t* g_gametype;
 extern byte g_clients[0xc6100];
 extern gentity_t g_entities[1024];
 extern bgs_s level_bgs;
+
+void G_PrintAddRedirect(void (*rd_dest)( const char *, int));
+
+extern "C"
+{
+    void QDECL __cdecl G_LogPrintf( const char *fmt, ... );
+    void __cdecl G_RunFrame( int time );
+}

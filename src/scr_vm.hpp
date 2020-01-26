@@ -860,4 +860,9 @@ extern int g_script_error_level;
 extern struct scrAnimPub_t scrAnimPub;
 extern struct scrParserPub_t gScrParserPub;
 
+extern "C"
+{
+    void Scr_ResetTimeout();
+}
+
 #endif

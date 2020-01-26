@@ -1,4 +1,6 @@
-#pragma once
+﻿#pragma once
+#include "scr_vm.hpp"
+
 
 struct vehicle_info_t
 {
@@ -227,3 +229,30 @@ struct scr_vehicle_s
 };
 
 extern struct vehicle_info_t s_vehicleInfos[32];
+
+extern "C"
+{
+    void CMD_VEH_SetSpeed(scr_entref_t entref);
+    void CMD_VEH_GetSpeed(scr_entref_t entref);
+    void CMD_VEH_GetSpeedMPH(scr_entref_t entref);
+    void CMD_VEH_ResumeSpeed(scr_entref_t entref);
+    void CMD_VEH_SetYawSpeed(scr_entref_t entref);
+    void CMD_VEH_SetMaxPitchRoll(scr_entref_t entref);
+    void CMD_VEH_SetTurningAbility(scr_entref_t entref);
+    void CMD_VEH_SetAirResitance(scr_entref_t entref);
+    void CMD_VEH_SetHoverParams(scr_entref_t entref);
+    void CMD_VEH_NearGoalNotifyDist(scr_entref_t entref);
+    void CMD_VEH_SetGoalPos(scr_entref_t entref);
+    void CMD_VEH_SetGoalYaw(scr_entref_t entref);
+    void CMD_VEH_ClearGoalYaw(scr_entref_t entref);
+    void CMD_VEH_SetTargetYaw(scr_entref_t entref);
+    void CMD_VEH_ClearTargetYaw(scr_entref_t entref);
+    void CMD_VEH_SetLookAtEnt(scr_entref_t entref);
+    void CMD_VEH_ClearLookAtEnt(scr_entref_t entref);
+    void CMD_VEH_SetWeapon(scr_entref_t entref);
+    void CMD_VEH_FireWeapon(scr_entref_t entref);
+    void CMD_VEH_SetTurretTargetVec(scr_entref_t entref);
+    void CMD_VEH_SetTurretTargetEnt(scr_entref_t entref);
+    void CMD_VEH_ClearTurretTargetEnt(scr_entref_t entref);
+    void CMD_VEH_SetVehicleTeam(scr_entref_t entref);
+}

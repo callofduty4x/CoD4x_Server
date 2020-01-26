@@ -36,6 +36,7 @@
 #include <inttypes.h>
 #include <io.h>
 #include <Shlobj.h>
+#include <cfloat>
 
 void Sys_ShowErrorDialog(const char* functionName);
 void Sys_InitThreadContext();
@@ -57,8 +58,6 @@ Set FPU control word to default value
 	#define _MCW_PC 0x00030000U
 	#define _RC_NEAR 0x00000000U
 	#define _PC_53 0x00010000U
-
-    unsigned int _controlfp(unsigned int new_, unsigned int mask_);
 #endif
 
 #define FPUCWMASK1 (_MCW_RC | _MCW_EM)

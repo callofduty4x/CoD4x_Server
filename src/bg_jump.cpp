@@ -4,6 +4,8 @@
 #include "bg_local.hpp"
 #include "qshared.hpp"
 #include "g_sv_movement.hpp"
+#include "bg_misc.hpp"
+
 
 #define PMF_JUMPING 0x4000
 #define PMF_LADDER 0x8
@@ -85,14 +87,14 @@ void __cdecl Jump_AddSurfaceEvent(playerState_s *ps, pml_t *pml)
 
   if ( ps->pm_flags & PMF_LADDER )
   {
-    BG_AddPredictableEventToPlayerstate(76, 0x15u, ps);
+    BG_AddPredictableEventToPlayerstate(EV_JUMP, 0x15u, ps);
   }
   else
   {
     surfType = PM_GroundSurfaceType(pml);
     if ( surfType )
     {
-      BG_AddPredictableEventToPlayerstate(76, surfType, ps);
+      BG_AddPredictableEventToPlayerstate(EV_JUMP, surfType, ps);
     }
   }
 }

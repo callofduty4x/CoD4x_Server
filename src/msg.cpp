@@ -35,6 +35,8 @@
 #include "server.hpp"
 #include "g_main_mp.hpp"
 #include "sv_client.hpp"
+#include "g_team.hpp"
+
 #ifndef	MAX_MSGLEN
 #define	MAX_MSGLEN	0x20000		// max length of a message, which may
 #endif
