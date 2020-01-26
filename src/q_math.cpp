@@ -360,7 +360,7 @@ void AngleVectors( const vec3_t angles, vec3_t forward, vec3_t right, vec3_t up 
 	static float sr, sp, sy, cr, cp, cy;
 	// static to help MS compiler fp bugs
 
- 	assert(!IS_NAN(angles[0]) && !IS_NAN(angles[1]) && !IS_NAN(angles[2]));
+    assert(!isnan(angles[0]) && !isnan(angles[1]) && !isnan(angles[2]));
 
 	angle = angles[YAW] * ( M_PI * 2 / 360 );
 	sy = sin( angle );
@@ -1105,8 +1105,8 @@ extern "C"
 
     double __cdecl PitchForYawOnNormal(const float fYaw, const vec3_t normal)
     {
-        assert(!IS_NAN(fYaw));
-        assert(!IS_NAN(normal[0]) && !IS_NAN(normal[1]) && !IS_NAN(normal[2]));
+        assert(!isnan(fYaw));
+        assert(!isnan(normal[0]) && !isnan(normal[1]) && !isnan(normal[2]));
         assert(normal[0] != 0.0 || normal[1] != 0.0 || normal[2] != 0.0);
 
         vec3_t forward;

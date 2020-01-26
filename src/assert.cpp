@@ -21,7 +21,12 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
     }
     Com_PrintError(CON_CHANNEL_ERROR, "Assert failed - Exp: %s, File: %s, Line: %d, Function: %s %s\n",exp, filename, line, func, message);
     Sys_PrintBacktrace();
+#ifdef _MSC_VER
+    __asm int 3;
+#else
     asm("int $3");
+#endif
+
     return qfalse;
 }
 

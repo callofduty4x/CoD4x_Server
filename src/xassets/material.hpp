@@ -208,7 +208,7 @@ typedef struct
 }GfxStateBits;	
 
     
-typedef struct __attribute__((aligned (8))) 
+typedef struct __align(8)
 {
     const char *name;
     char gameFlags;

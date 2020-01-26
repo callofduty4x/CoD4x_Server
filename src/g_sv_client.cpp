@@ -47,7 +47,7 @@ The game can override any of the settings and call trap_SetUserinfo
 if desired.
 ============
 */
-__cdecl void ClientUserinfoChanged( int clientNum ) {
+void __cdecl ClientUserinfoChanged( int clientNum ) {
 
 	gentity_t *ent;
 	char    *s;

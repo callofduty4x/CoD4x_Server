@@ -1383,7 +1383,7 @@ int DB_BuildZoneFilePath(const char* zoneName, char* oFilename, int maxlen)
         return 1;
     }
 
-    if(fs_gameDirVar->string && fs_gameDirVar->string[0]) //Load from fs_gamedirvar or from zone/language
+    if(fs_gameDirVar->string && fs_gameDirVar->string[0]) //Load from fs_gameDirVar or from zone/language
     {
       if ( Q_stricmp(zoneName, "common_mp") == 0 || Q_stricmp(zoneName, "localized_common_mp") == 0 ||
          Q_stricmp(zoneName, "code_post_gfx_mp") == 0 || Q_stricmp(zoneName, "localized_code_post_gfx_mp") == 0
@@ -1622,7 +1622,7 @@ void DB_TryLoadXFile()
 
 
 
-void __cdecl __noreturn DB_Thread(unsigned int threadContext)
+__noreturn void __cdecl DB_Thread(unsigned int threadContext)
 {
   jmp_buf* savestate;
 

@@ -2787,7 +2787,7 @@ before Sys_Quit or Sys_Error
 ================
 */
 
-__cdecl void SV_Shutdown( const char *finalmsg ) {
+void __cdecl SV_Shutdown( const char *finalmsg ) {
 
     if ( !com_sv_running || !com_sv_running->integer ) {
         return;

@@ -287,7 +287,7 @@ Sys_Error
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-__cdecl void QDECL Sys_Error( const char *fmt, ... ) {
+void __cdecl Sys_Error( const char *fmt, ... ) {
 
 	FILE * fdout;
 	char* fileout = "sys_error.txt";

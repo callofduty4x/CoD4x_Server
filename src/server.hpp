@@ -131,8 +131,6 @@ typedef enum {
     UN_NEEDUID,
     UN_OK
 }username_t;
-#pragma pack(1)
-
 
 struct client_s
 {
@@ -782,7 +780,7 @@ void SV_RemoteCmdSetAdmin(int uid, char* guid, int power);
 void SV_RemoteCmdUnsetAdmin(int uid, char* guid);
 void SV_RemoteCmdSetPermission(char* command, int power);
 void SV_RemoteCmdListAdmins( void );
-__cdecl qboolean SV_GameCommand(void);
+qboolean __cdecl SV_GameCommand(void);
 
 void SV_GetConfigstring( int index, char *buffer, int bufferSize );
 int SV_GetConfigstringIndex(int num);

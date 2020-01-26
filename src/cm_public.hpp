@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -19,10 +19,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
+#pragma once
 
-
-#ifndef __CM_PUBLIC_H__
-#define __CM_PUBLIC_H__
+#include "q_math.hpp"
 
 #ifndef CLIPHANDLE_DEFINED
 #define CLIPHANDLE_DEFINED
@@ -172,7 +171,3 @@ void CM_Unload();
 #ifdef __cplusplus
 }
 #endif
-
-
-#endif
-

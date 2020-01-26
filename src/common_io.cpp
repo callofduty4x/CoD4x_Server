@@ -80,7 +80,7 @@ void Com_StopRedirect (void)
 	rd_flush = NULL;
 }
 
-__cdecl void Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type)
+void __cdecl Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type)
 {
     //secures calls to Com_PrintMessage from recursion while redirect printing
     static qboolean lock = qfalse;

@@ -11,7 +11,7 @@
 */
 /* !!!DO NOT CHANGE ALIGNED TO 1!!! */
 /* T-Max: I have no idea why it changes ints' sizes to 1 byte and brokes whole structure x2. */
-typedef struct __attribute__ ((aligned (4))) BotMovementInfo_t
+typedef struct __align(4) BotMovementInfo_t
 {
     /* Actions */
     int buttons;

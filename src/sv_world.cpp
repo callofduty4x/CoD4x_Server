@@ -19,7 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
+#include "sv_world.hpp"
 
 #include "qshared.hpp"
 #include "g_shared.hpp"
@@ -29,6 +29,8 @@
 #include "sv_world.hpp"
 #include "g_main_mp.hpp"
 #include "g_team.hpp"
+
+using namespace std;
 
 vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
@@ -215,7 +217,7 @@ void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, con
 
 
 
-__cdecl void SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *trace){
+void __cdecl SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *trace){
 
 	gentity_t	*touch;
 	int		touchNum;
@@ -611,8 +613,8 @@ BLACKOPS
 	origin = gEnt->r.currentOrigin;
 	angles = gEnt->r.currentAngles;
 
-	assert(!IS_NAN((angles)[0]) && !IS_NAN((angles)[1]) && !IS_NAN((angles)[2]));
-	assert(!IS_NAN((origin)[0]) && !IS_NAN((origin)[1]) && !IS_NAN((origin)[2]));
+	assert(!isnan((angles)[0]) && !isnan((angles)[1]) && !isnan((angles)[2]));
+	assert(!isnan((origin)[0]) && !isnan((origin)[1]) && !isnan((origin)[2]));
 
 	SnapAngles(angles);
 

@@ -181,7 +181,7 @@ const char *__cdecl CS_DisplayName(clientState_t *cs, int type)
   return "";
 }
 
-extern "C" __cdecl const char* G_GetPlayerId(struct gentity_s* ent)
+extern "C" const char* __cdecl G_GetPlayerId(struct gentity_s* ent)
 {
     char id[33];
 

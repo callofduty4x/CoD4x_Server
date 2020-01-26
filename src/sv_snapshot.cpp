@@ -20,6 +20,11 @@
 ===========================================================================
 */
 
+#include "sv_snapshot.hpp"
+
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
 
 #include "qshared.hpp"
 #include "bg_public.hpp"
@@ -34,9 +39,7 @@
 #include "g_shared.hpp"
 #include "bg_misc.hpp"
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
+using namespace std;
 
 #define SV_SEND_HUFFMAN
 /*
@@ -68,7 +71,7 @@ SV_UpdateServerCommandsToClient
 (re)send all server commands the client hasn't acknowledged yet
 ==================
 */
-__cdecl void SV_UpdateServerCommandsToClient( client_t *client, msg_t *msg ) {
+void __cdecl SV_UpdateServerCommandsToClient( client_t *client, msg_t *msg ) {
 	int i;
 //	extclient_t* extcl = &svs.extclients[ client - svs.clients ];
 
@@ -107,7 +110,7 @@ void SV_UpdateServerCommandsToClientRecover( client_t *client, msg_t *msg )
 }
 
 
-__cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
+void __cdecl SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 
     snapshotInfo_t snapInfo;
     int lastframe;
@@ -445,7 +448,7 @@ SV_SendMessageToClient
 Called by SV_SendClientSnapshot and SV_SendClientGameState
 =======================
 */
-__cdecl void SV_SendMessageToClient( msg_t *msg, client_t *client ) {
+void __cdecl SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 	int rateMsec;
 
 	byte svCompressBuf[4*65536];
@@ -1358,13 +1361,13 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
         Vec3Lerp(startPos[clientNum], endPos[clientNum], progress, pos[clientNum]);
         Vec3Lerp(startAngles[clientNum], endAngles[clientNum], progress, angles[clientNum]);
 
-	assert(!IS_NAN( pos[clientNum][0] ));
-	assert(!IS_NAN( pos[clientNum][1] ));
-	assert(!IS_NAN( pos[clientNum][2] ));
+	assert(!isnan( pos[clientNum][0] ));
+	assert(!isnan( pos[clientNum][1] ));
+	assert(!isnan( pos[clientNum][2] ));
 
-	assert(!IS_NAN( angles[clientNum][0] ));
-	assert(!IS_NAN( angles[clientNum][1] ));
-	assert(!IS_NAN( angles[clientNum][2] ));
+	assert(!isnan( angles[clientNum][0] ));
+	assert(!isnan( angles[clientNum][1] ));
+	assert(!isnan( angles[clientNum][2] ));
       }
       else if ( startSuccess[clientNum] )
       {
@@ -1372,13 +1375,13 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
         VectorCopy(startPos[clientNum], pos[clientNum]);
         VectorCopy(startAngles[clientNum], angles[clientNum]);
 
-        assert(!IS_NAN( pos[clientNum][0]));
-        assert(!IS_NAN( pos[clientNum][1]));
-        assert(!IS_NAN( pos[clientNum][2]));
+        assert(!isnan( pos[clientNum][0]));
+        assert(!isnan( pos[clientNum][1]));
+        assert(!isnan( pos[clientNum][2]));
 
-        assert(!IS_NAN( angles[clientNum][0]));
-        assert(!IS_NAN( angles[clientNum][1]));
-        assert(!IS_NAN( angles[clientNum][2]));
+        assert(!isnan( angles[clientNum][0]));
+        assert(!isnan( angles[clientNum][1]));
+        assert(!isnan( angles[clientNum][2]));
 
       }
       else if ( endSuccess[clientNum] )
@@ -1388,13 +1391,13 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
         VectorCopy(endPos[clientNum], pos[clientNum]);
         VectorCopy(endAngles[clientNum], angles[clientNum]);
 
-        assert(!IS_NAN( pos[clientNum][0]));
-        assert(!IS_NAN( pos[clientNum][1]));
-        assert(!IS_NAN( pos[clientNum][2]));
+        assert(!isnan( pos[clientNum][0]));
+        assert(!isnan( pos[clientNum][1]));
+        assert(!isnan( pos[clientNum][2]));
 
-        assert(!IS_NAN( angles[clientNum][0]));
-        assert(!IS_NAN( angles[clientNum][1]));
-        assert(!IS_NAN( angles[clientNum][2]));
+        assert(!isnan( angles[clientNum][0]));
+        assert(!isnan( angles[clientNum][1]));
+        assert(!isnan( angles[clientNum][2]));
       }
     }
     return true;

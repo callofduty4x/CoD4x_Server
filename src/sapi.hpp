@@ -34,12 +34,6 @@ void SV_SApiCancelAuthenticationTicket(uint32_t ticket);
 
 #if defined(__IN_EXTSAPIMODULE__) || defined(__IN_SAPIMODULE__)
 
-#ifdef __GNUC__
-#define __packed __attribute__((__packed__))
-#else
-#define __packed
-#endif 
-
 struct __packed clientEmu_t
 {
 	//Large members first. GCC is error prone in packaging...

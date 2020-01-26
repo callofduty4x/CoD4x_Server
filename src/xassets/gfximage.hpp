@@ -4,6 +4,7 @@
 /*
 d3d9.h must be included before this file if used at all
 */
+#include <d3d9.h>
 
 typedef struct IDirect3DBaseTexture9           D3DBaseTexture;
 typedef struct IDirect3DTexture9               D3DTexture;
@@ -11,9 +12,9 @@ typedef struct IDirect3DVolumeTexture9         D3DVolumeTexture;
 typedef struct IDirect3DCubeTexture9           D3DCubeTexture;
 typedef struct IDirect3DSurface9			   D3DSurface;
 
-#ifndef DIRECT3D_VERSION
-typedef unsigned int _D3DFORMAT;
-#endif
+//#ifndef DIRECT3D_VERSION
+//typedef unsigned int _D3DFORMAT;
+//#endif
 
 typedef enum MapType_s
 {

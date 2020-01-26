@@ -32,7 +32,7 @@
 #include "server.hpp"
 
 void Init_CallVote(void);
-__cdecl void Cmd_CallVote_f( gentity_t *ent );
+void __cdecl Cmd_CallVote_f( gentity_t *ent );
 void G_ChatRedirect(char* msg, int client, int mode);
 void G_AddChatRedirect(void (*rd_dest)( const char *, int, int));
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
@@ -45,7 +45,7 @@ extern "C"
 {
     void G_ShowMotd(unsigned int clnum);
     qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);
-    __cdecl void ClientUserinfoChanged( int clientNum );
+    void __cdeclClientUserinfoChanged( int clientNum );
     void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
     int __cdecl G_LocalizedStringIndex( const char* );
 }; //extern "C"
@@ -56,13 +56,13 @@ void G_PrintRedirect(char* msg, int len);
 void Pmove_ExtendedResetState( void );
 void Pmove_ExtendedInitForClient(client_t *cl);
 void Pmove_ExtendedTurnOn( void );
-__cdecl __optimize3 int Pmove_GetSpeed( playerState_t *ps );
-__cdecl __optimize3 int Pmove_GetGravity( playerState_t *ps );
-__cdecl __optimize3 float Jump_GetHeight( playerState_t *ps);
-__cdecl __optimize3 void Jump_ClampVelocity(playerState_t* ps, vec3_t vec);
-__cdecl __optimize3 qboolean Jump_IsPlayerAboveMax(playerState_t* ps);
-__cdecl __optimize3 qboolean Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2);
-__cdecl __optimize3 float Jump_CalcHeight( playerState_t* ps );
+__optimize3 int __cdecl Pmove_GetSpeed( playerState_t *ps );
+__optimize3 int __cdecl Pmove_GetGravity( playerState_t *ps );
+__optimize3 float __cdecl Jump_GetHeight( playerState_t *ps);
+__optimize3 void __cdecl Jump_ClampVelocity(playerState_t* ps, vec3_t vec);
+__optimize3 qboolean __cdecl Jump_IsPlayerAboveMax(playerState_t* ps);
+__optimize3 qboolean __cdecl Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2);
+__optimize3 float __cdecl Jump_CalcHeight( playerState_t* ps );
 
 void __cdecl ClientCommand( int );
 

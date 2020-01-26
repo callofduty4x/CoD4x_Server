@@ -72,7 +72,7 @@ const char *var_typename[] =
 };
 
 
-struct __attribute__((aligned (64))) scrVarGlob_t
+struct __align(64) scrVarGlob_t
 {
   VariableValueInternal* variableList;
 };

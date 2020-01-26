@@ -19,7 +19,7 @@ cvar_t* jump_spreadAdd;
 
 
 
-__cdecl __optimize3 float Jump_GetHeight( playerState_t *ps) {
+__optimize3 float __cdecl Jump_GetHeight( playerState_t *ps) {
 
     float jumph = Dirty_GetJumpHeight(ps->clientNum);
 	if(jumph > 0)
@@ -32,7 +32,7 @@ __cdecl __optimize3 float Jump_GetHeight( playerState_t *ps) {
 
 
 
-__cdecl __optimize3 float Jump_CalcHeight( playerState_t* ps ) {
+__optimize3 float __cdecl Jump_CalcHeight( playerState_t* ps ) {
 	
 	float val;
 	float newdiv;
@@ -196,7 +196,7 @@ double __cdecl Jump_ReduceFriction(playerState_s *ps)
   return control;
 }
 
-__cdecl __optimize3 void Jump_ClampVelocity(playerState_t* ps, vec3_t vec){
+__optimize3 void __cdecl Jump_ClampVelocity(playerState_t* ps, vec3_t vec){
 
 	float comp;
 	float newZVelocity;
@@ -224,7 +224,7 @@ __cdecl __optimize3 void Jump_ClampVelocity(playerState_t* ps, vec3_t vec){
 }
 
 
-__cdecl __optimize3 qboolean Jump_IsPlayerAboveMax(playerState_t* ps){
+__optimize3 qboolean __cdecl Jump_IsPlayerAboveMax(playerState_t* ps){
 
 	float jumpHeight = Jump_GetHeight(ps);
 
@@ -236,7 +236,7 @@ __cdecl __optimize3 qboolean Jump_IsPlayerAboveMax(playerState_t* ps){
 }
 
 
-__cdecl __optimize3 qboolean Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2){
+__optimize3 qboolean __cdecl Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2){
 
 	float jumpHeight = Jump_GetHeight(ps);
 

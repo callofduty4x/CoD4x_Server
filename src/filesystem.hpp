@@ -165,7 +165,7 @@ void FS_Rename( const char *from, const char *to );
 void FS_SV_Rename( const char *from, const char *to );
 qboolean FS_FCloseFile( fileHandle_t f );
 qboolean FS_FilenameCompare( const char *s1, const char *s2 );
-char *FS_ShiftedStrStr(const char *string, const char *substring, int shift);
+const char *FS_ShiftedStrStr(const char *string, const char *substring, int shift);
 long FS_fplength(FILE *h);
 
 qboolean FS_IsExt(const char *filename, const char *ext, int namelen);
@@ -195,7 +195,7 @@ void FS_BuildOSPathForThread(const char *base, const char *game, const char *qpa
 
 void QDECL FS_Printf( fileHandle_t h, const char *fmt, ... );
 int FS_Seek( fileHandle_t f, long offset, int origin );
-__cdecl const char* FS_GetBasepath();
+const char* __cdecl FS_GetBasepath();
 qboolean FS_VerifyPak( const char *pak );
 void	FS_ForceFlush( fileHandle_t f );
 void __cdecl FS_InitFilesystem(void);

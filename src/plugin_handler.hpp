@@ -37,7 +37,7 @@
 
 typedef void convariable_t; //For plugins
 
-#define P_P_F __attribute__((__noinline__)) __attribute__((__cdecl__)) DLLEXPORT
+#define P_P_F DLLEXPORT
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -76,7 +76,7 @@ typedef struct{
     xcommand_t xcommand;
 }pluginCmd_t;
 
-struct __attribute__((__packed__)) dyncallstub_s
+struct __packed dyncallstub_s
 {
 		byte mov_eax_esp4[4];
 		byte push_eax;
@@ -186,7 +186,7 @@ typedef union
 {
 	byte pad[MAX_SCRIPTFUNCTIONS * MAX_PLUGINS * 64];
 	pluginScriptCmd_t s[MAX_SCRIPTFUNCTIONS * MAX_PLUGINS];
-}__attribute__((aligned (4096))) pluginScriptCallStubBase_t;
+}__align(4096) pluginScriptCallStubBase_t;
 
 extern pluginWrapper_t pluginFunctions; // defined in plugin_handler.c
 extern pluginScriptCallStubBase_t pluginScriptCallStubs;

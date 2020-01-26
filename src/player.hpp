@@ -542,7 +542,6 @@ struct clientInfo_t
   byte usingKnife;
   char pad3[2];
 };
-
 #pragma pack(pop)
 
 

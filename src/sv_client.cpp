@@ -45,6 +45,7 @@
 #include "sapi.hpp"
 #include "qcommon_logprint.hpp"
 #include "g_client_mp.hpp"
+#include "g_sv_client.hpp"
 
 
 #include <stdint.h>
@@ -843,7 +844,7 @@ void SV_CloseAllClientHandles(client_t *drop)
 }
 
 
-__cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean notifyOthers ) {
+void __cdecl SV_DropClientInternal( client_t *drop, const char *reason, qboolean notifyOthers ) {
 	int i;
 	int clientnum;
 	char var_01[2];
@@ -955,14 +956,14 @@ __cdecl void SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 	}
 }
 
-__cdecl void SV_DropClient( client_t *drop, const char *reason )
+void __cdecl SV_DropClient( client_t *drop, const char *reason )
 {
 
     SV_DropClientInternal( drop, reason, qtrue );
 
 }
 
-__cdecl void SV_DropClientNoNotify( client_t *drop, const char *reason )
+void __cdecl SV_DropClientNoNotify( client_t *drop, const char *reason )
 {
 
     SV_DropClientInternal( drop, reason, qfalse );
@@ -1447,7 +1448,7 @@ Fill up msg with data
 ==================
 */
 
-__cdecl void SV_WriteDownloadToClient( client_t *cl ) {
+void __cdecl SV_WriteDownloadToClient( client_t *cl ) {
 	char errorMessage[1024];
 	byte downloadBlock[0xffff];
 	int blockSize, filepos, remaining;

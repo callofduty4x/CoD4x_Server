@@ -57,7 +57,7 @@ char *Sys_ConsoleInput(void);
 void Sys_AnsiColorPrint( const char *msg );
 void Sys_PrintBinVersion( const char* name );
 void Sys_ParseArgs( int argc, char* argv[] );
-__cdecl void QDECL Sys_Error( const char *fmt, ... );
+void __cdecl Sys_Error( const char *fmt, ... );
 void Sys_SetBinaryPath(const char *path);
 const char *Sys_BinaryPath(void);
 const char *Sys_ExeFile(void);
@@ -92,7 +92,7 @@ const char *Sys_Basename( char *path );
 qboolean Sys_Mkdir( const char *path );
 qboolean Sys_SetPermissionsExec(const char* ospath);
 void Sys_WaitForErrorConfirmation(const char* error);
-void  __noreturn Sys_ExitForOS( int exitCode );
+void Sys_ExitForOS( int exitCode );
 
 
 void Sys_SleepSec(int seconds);

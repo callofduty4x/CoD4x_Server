@@ -23,21 +23,22 @@
 
 //#define _LAGDEBUG
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <stdarg.h>
-#include <string.h>
-#include <time.h>
-#include <math.h>
-#include <stdbool.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstdint>
+#include <cstdarg>
+#include <cstring>
+#include <ctime>
+#include <cmath>
+#include <cstdbool>
 
 using byte = unsigned char;
-enum qboolean
+enum EQBoolean
 {
     qfalse = 0,
     qtrue
 };
+using qboolean = EQBoolean;
 
 #include "q_math.hpp"
 
@@ -46,61 +47,46 @@ enum qboolean
 
 #include "game/def.h"
 
-#ifndef __stdcall
+#ifndef WIN32
+
 #define __stdcall __attribute__((stdcall))
-#endif
-
-#ifndef __noreturn
 #define __noreturn __attribute__((noreturn))
-#endif
-
-
-#ifndef __cdecl
 #define __cdecl __attribute__((cdecl))
-#endif
-
-#define DLL_PUBLIC __attribute__ ((visibility ("default")))
-#define DLL_LOCAL __attribute__ ((visibility ("hidden")))
-
-#ifdef __linux
-
+#define __fastcall __attribute__((fastcall))
+#define __regparm1 __attribute__((regparm(1)))
+#define __regparm2 __attribute__((regparm(2)))
+#define __regparm3 __attribute__((regparm(3)))
 #define __optimize2 __attribute__ ((optimize("-O2")))
 #define __optimize3 __attribute__ ((optimize("-O3"))) __attribute__ ((noinline))
 
+#define DLL_PUBLIC __attribute__ ((visibility ("default")))
+#define DLL_LOCAL __attribute__ ((visibility ("hidden")))
+#define REGPARM(X)   __attribute__ ((regparm(X)))
+
+#define __align(X) __attribute__((aligned(X)))
+#define __packed __attribute__((__packed__))
 
 #else
 
+#define __noreturn [[ noreturn ]]
+#define __regparm1
+#define __regparm2
+#define __regparm3
 #define __optimize2
 #define __optimize3
 
-#endif
+#define DLL_PUBLIC __declspec(dllexport);
+#define DLL_LOCAL
+#define REGPARM(X)
 
-#ifdef _MSC_VER
 #define __align(X) __declspec(align(X))
-#else
-#define __align(X) __attribute__((aligned (X)))
+#define __packed
+
 #endif
 
-#define REGPARM(X)   __attribute__ ((regparm(X)))
 
 #ifndef QDECL
 #define QDECL
-#endif
-
-#ifndef __fastcall
-#define __fastcall __attribute__((fastcall))
-#endif
-
-#ifndef __regparm1
-#define __regparm1 __attribute__((regparm(1)))
-#endif
-
-#ifndef __regparm2
-#define __regparm2 __attribute__((regparm(2)))
-#endif
-
-#ifndef __regparm3
-#define __regparm3 __attribute__((regparm(3)))
 #endif
 
 typedef unsigned int long DWORD;

@@ -503,7 +503,7 @@ Sends a text message in an out-of-band datagram
 ================
 */
 
-__cdecl void QDECL NET_OutOfBandPrint( netsrc_t sock, netadr_t *adr, const char *format, ... ) {
+void __cdecl NET_OutOfBandPrint( netsrc_t sock, netadr_t *adr, const char *format, ... ) {
 	va_list		argptr;
 	char		string[MAX_MSGLEN];
 

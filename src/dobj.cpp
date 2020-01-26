@@ -1,6 +1,8 @@
-#include "dobj.hpp"
+﻿#include "dobj.hpp"
 #include "xassets/xmodel.hpp"
 #include "cscr_stringlist.hpp"
+
+using namespace std;
 /*
 duplicate of void __cdecl DObjDumpInfo(DObj *obj)
 
@@ -67,8 +69,8 @@ void __cdecl ConvertQuatToMat(DObjAnimMat *mat, vec3_t axis[3])
   float zz;
   float zw;
 
-  assert(!IS_NAN((mat->quat)[0]) && !IS_NAN((mat->quat)[1]) && !IS_NAN((mat->quat)[2]) && !IS_NAN((mat->quat)[3]));
-  assert(!IS_NAN(mat->transWeight));
+  assert(!isnan((mat->quat)[0]) && !isnan((mat->quat)[1]) && !isnan((mat->quat)[2]) && !isnan((mat->quat)[3]));
+  assert(!isnan(mat->transWeight));
 
   VectorScale(mat->quat, mat->transWeight, scaledQuat);
   xx = scaledQuat[0] * mat->quat[0];

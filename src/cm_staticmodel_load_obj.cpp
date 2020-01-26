@@ -1,16 +1,15 @@
-#include "cm_staticmodel_load_obj.hpp"
+﻿#include "cm_staticmodel_load_obj.hpp"
 #include "cm_local.hpp"
 #include "q_math.hpp"
 #include "xassets/xmodel.hpp"
 
-
+using namespace std;
 void __cdecl CM_InitStaticModel(cStaticModel_s *staticModel, float *origin, float *angles, float scale)
 {
   vec3_t axis[3];
-
-  assert(!IS_NAN((origin)[0]) && !IS_NAN((origin)[1]) && !IS_NAN((origin)[2]));
-  assert(!IS_NAN((angles)[0]) && !IS_NAN((angles)[1]) && !IS_NAN((angles)[2]));
-  assert(!IS_NAN(scale));
+  assert(!isnan((origin)[0]) && !isnan((origin)[1]) && !isnan((origin)[2]));
+  assert(!isnan((angles)[0]) && !isnan((angles)[1]) && !isnan((angles)[2]));
+  assert(!isnan(scale));
 
   VectorCopy(origin, staticModel->origin);
 

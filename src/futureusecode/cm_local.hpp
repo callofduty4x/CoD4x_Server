@@ -4,8 +4,6 @@
 #include "qshared.hpp"
 #include "cm_public.hpp"
 
-#define IS_NAN isnan
-
 #define cm (*((clipMap_t*)(0x889EBC0)))
 
 #ifdef BLACKOPS

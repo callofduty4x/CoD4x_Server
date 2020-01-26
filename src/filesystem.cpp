@@ -193,9 +193,12 @@ or configs will never get loaded from disk!
 
 */
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdarg.h>
+#include <cstring>
+#include <cstdlib>
+#include <cstdarg>
+#include <cctype>
+#include <algorithm>
+
 #include "filesystem.hpp"
 #include "qcommon.hpp"
 #include "qcommon_io.hpp"
@@ -212,16 +215,16 @@ or configs will never get loaded from disk!
 #include "stringed_hooks.hpp"
 #include "qvsnprintf.hpp"
 
+#ifndef WIN32
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <errno.h>
 #include <unistd.h>
-#include <ctype.h>
-
+#endif
+#include <string.h>
 
 
 #define BASEGAME "main"
-#define fs_gamedirvar fs_gameDirVar
 
 cvar_t* fs_debug;
 cvar_t* fs_copyfiles;
@@ -516,7 +519,7 @@ void FS_StripTrailingSeperator( char *path ) {
 void FS_StripSeperators(char* qpath)
 {
     char newpath[4096];
-    size_t len = std::min(strlen(qpath), sizeof(newpath));
+    size_t len = std::min(sizeof(newpath), strlen(qpath));
 
     size_t y = 0;
     for(size_t i = 0; i < len; ++i)
@@ -977,7 +980,7 @@ qboolean FS_FilenameCompare( const char *s1, const char *s2 )
 FS_ShiftedStrStr
 ===========
 */
-char *FS_ShiftedStrStr(const char *string, const char *substring, int shift) {
+const char *FS_ShiftedStrStr(const char *string, const char *substring, int shift) {
 	char buf[MAX_STRING_TOKENS];
 	int i;
 
@@ -2260,13 +2263,12 @@ int FS_Seek( fileHandle_t f, long offset, int origin ) {
 }
 
 
-__cdecl const char* FS_GetBasepath(){
-
-    if(fs_basepath && *fs_basepath->string){
+const char* __cdecl FS_GetBasepath()
+{
+    if(fs_basepath && *fs_basepath->string)
         return fs_basepath->string;
-    }else{
-        return "";
-    }
+    
+    return "";
 }
 
 
@@ -2277,7 +2279,7 @@ FS_SV_HomeCopyFile
 Copy a fully specified file from one place to another
 =================
 */
-void FS_SV_HomeCopyFile( char *from, char *to )
+void FS_SV_HomeCopyFile(char *from, char *to)
 {
     char from_ospath[MAX_OSPATH] = {'\0'};
     FS_BuildOSPathForThread( fs_homepath->string, from, "", from_ospath, 0 );
@@ -3292,7 +3294,7 @@ void FS_Restart( int checksumFeed ) {
 		if ( lastValidBase[0] ) {
 			FS_PureServerSetLoadedPaks( "", "" );
 			Cvar_Set( "fs_basepath", lastValidBase );
-			Cvar_Set( "fs_gamedirvar", lastValidGame );
+			Cvar_Set( "fs_gameDirVar", lastValidGame );
 			lastValidBase[0] = '\0';
 			lastValidGame[0] = '\0';
 			Cvar_Set( "fs_restrict", "0" );
@@ -3304,7 +3306,7 @@ void FS_Restart( int checksumFeed ) {
 	}
 */
 	// bk010116 - new check before safeMode
-	if ( Q_stricmp( fs_gamedirvar->string, lastValidGame ) ) {
+	if ( Q_stricmp( fs_gameDirVar->string, lastValidGame ) ) {
 		// skip the wolfconfig.cfg if "safe" is on the command line
 		if ( !Com_SafeMode() ) {
 			Cbuf_AddText( "exec config_mp.cfg\n" );
@@ -3312,7 +3314,7 @@ void FS_Restart( int checksumFeed ) {
 	}
 
 	Q_strncpyz( lastValidBase, fs_basepath->string, sizeof( lastValidBase ) );
-	Q_strncpyz( lastValidGame, fs_gamedirvar->string, sizeof( lastValidGame ) );
+	Q_strncpyz( lastValidGame, fs_gameDirVar->string, sizeof( lastValidGame ) );
 
 	Sys_LeaveCriticalSection(CRITSECT_FILESYSTEM);
 
@@ -3514,7 +3516,7 @@ __regparm3 void DB_BuildOSPath(const char *filename, int ffdir, int len, char *b
 
         case 1:
 
-            Com_sprintf(ospath, sizeof(ospath), "%s/%s.ff", fs_gamedirvar->string, filename);
+            Com_sprintf(ospath, sizeof(ospath), "%s/%s.ff", fs_gameDirVar->string, filename);
             FS_SV_GetFilepath( ospath, buff, len );
             return;
 
@@ -3553,7 +3555,7 @@ void DB_BuildQPath(const char *filename, int ffdir, int len, char *buff)
 
         case 1:
 
-            Com_sprintf(buff, len, "%s/%s.ff", fs_gamedirvar->string, filename);
+            Com_sprintf(buff, len, "%s/%s.ff", fs_gameDirVar->string, filename);
             return;
 
         case 2:

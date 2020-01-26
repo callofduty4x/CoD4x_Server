@@ -75,7 +75,6 @@
 
 // for windows fastcall option
 #define QDECL
-#define QCALL
 
 //================================================================= WIN64/32 ===
 
@@ -86,9 +85,6 @@
 
 #undef QDECL
 #define QDECL __cdecl
-
-#undef QCALL
-#define QCALL __stdcall
 
 #if defined( _MSC_VER )
 #define OS_STRING "win_msvc64"
@@ -113,9 +109,6 @@
 
 #undef QDECL
 #define QDECL __cdecl
-
-#undef QCALL
-#define QCALL __stdcall
 
 #undef DLLEXPORT
 #define DLLEXPORT __declspec(dllexport)

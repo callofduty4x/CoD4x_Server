@@ -876,9 +876,9 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 }
 
 
-void  __noreturn Sys_ExitForOS( int exitCode )
+__noreturn void Sys_ExitForOS( int exitCode )
 {
-	ExitProcess( exitCode );
+    ExitProcess( exitCode );
 }
 
 int Sys_Chmod(const char* filename, int mode)
@@ -960,14 +960,14 @@ struct tagTHREADNAME_INFO
 
 void Sys_SetThreadName(threadid_t tid, const char* szThreadName)
 {
-	return;
-  struct tagTHREADNAME_INFO info;
+  return;
+  //struct tagTHREADNAME_INFO info;
 
-  info.dwType = 4096;
-  info.szName = szThreadName;
-  info.dwThreadID = tid;
-  info.dwFlags = 0;
-  RaiseException(0x406D1388u, 0, 4u, &info.dwType);
+  //info.dwType = 4096;
+  //info.szName = szThreadName;
+  //info.dwThreadID = tid;
+  //info.dwFlags = 0;
+  //RaiseException(0x406D1388u, 0, 4u, &info.dwType);
 }
 
 HANDLE __cdecl Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)

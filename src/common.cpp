@@ -1324,8 +1324,12 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 	Sys_PrintBacktrace();
 #endif
 
-	if(com_developer && com_developer->integer > 1)
-		asm ("int $3"); // SIGILL on windows - crash. Have to do something?
+    if (com_developer && com_developer->integer > 1)
+#ifdef MSC_VER
+        __asm int 3;
+#else
+        asm("int $3"); // SIGILL on windows - crash. Have to do something?
+#endif
 
 	Sys_EnterCriticalSection(CRITSECT_COM_ERROR);
 
@@ -1612,8 +1616,14 @@ void* Debug_HitchWatchdog(void* arg)
     {
         Sys_EnterCriticalSection(CRITSECT_WATCHDOG);
         ++watchdog_timer;
-        if(watchdog_timer >= 40)
+        if (watchdog_timer >= 40)
+        {
+#ifdef _MSC_VER
+            __asm int 3;
+#else
             asm("int $3");
+#endif
+        }
             
         Sys_LeaveCriticalSection(CRITSECT_WATCHDOG);
         Sys_SleepMSec(100);

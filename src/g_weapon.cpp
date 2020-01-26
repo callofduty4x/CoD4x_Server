@@ -7,6 +7,7 @@
 #include "cscr_stringlist.hpp"
 #include "g_main_mp.hpp"
 
+using namespace std;
 
 extern unsigned int bg_lastParsedWeaponIndex;
 
@@ -55,13 +56,13 @@ extern "C"
                         antilagStore->clientMoved[client] = false;
                     else
                     {
-                        assert(!IS_NAN(clientPositions[client][0]) && !IS_NAN(clientPositions[client][1]) && !IS_NAN(clientPositions[client][2]));
-                        assert(!IS_NAN(clientAngles[client][0]) && !IS_NAN(clientAngles[client][1]) && !IS_NAN(clientAngles[client][2]));
+                        assert(!isnan(clientPositions[client][0]) && !isnan(clientPositions[client][1]) && !isnan(clientPositions[client][2]));
+                        assert(!isnan(clientAngles[client][0]) && !isnan(clientAngles[client][1]) && !isnan(clientAngles[client][2]));
 
                         VectorCopy(g_entities[client].r.currentOrigin, antilagStore->realClientPositions[client]);
-                        assertx(!IS_NAN( antilagStore->realClientPositions[client][0]) &&
-                                !IS_NAN(antilagStore->realClientPositions[client][1]) &&
-                                !IS_NAN(antilagStore->realClientPositions[client][2]),
+                        assertx(!isnan( antilagStore->realClientPositions[client][0]) &&
+                                !isnan(antilagStore->realClientPositions[client][1]) &&
+                                !isnan(antilagStore->realClientPositions[client][2]),
                                 "client %i's origin is invalid - (%f, %f, %f)", client,
                                 antilagStore->realClientPositions[client][0],
                                 antilagStore->realClientPositions[client][1],
@@ -91,9 +92,9 @@ extern "C"
         {
             if ( antilagStore->clientMoved[client] )
             {
-                assertx(!IS_NAN(antilagStore->realClientPositions[client][0]) &&
-                        !IS_NAN(antilagStore->realClientPositions[client][1]) &&
-                        !IS_NAN(antilagStore->realClientPositions[client][2]),
+                assertx(!isnan(antilagStore->realClientPositions[client][0]) &&
+                        !isnan(antilagStore->realClientPositions[client][1]) &&
+                        !isnan(antilagStore->realClientPositions[client][2]),
                         "client %i's origin is invalid - (%f, %f, %f)", client,
                         antilagStore->realClientPositions[client][0],
                         antilagStore->realClientPositions[client][1],

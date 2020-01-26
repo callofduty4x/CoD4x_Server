@@ -6,6 +6,7 @@
 #include "server_public.hpp"
 #include "sv_game.hpp"
 
+using namespace std;
 
 const char *entityTypeNames[] =
 {
@@ -88,7 +89,7 @@ signed int __cdecl G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int t
 
 void __cdecl G_SetAngle(gentity_s *ent, const float *angle)
 {
-	assert(!IS_NAN(angle[0]) && !IS_NAN(angle[1]) && !IS_NAN(angle[2]));
+    assert(!isnan(angle[0]) && !isnan(angle[1]) && !isnan(angle[2]));
 
   VectorCopy(angle, ent->s.lerp.apos.trBase);
 

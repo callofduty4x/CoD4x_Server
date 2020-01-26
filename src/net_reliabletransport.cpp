@@ -307,7 +307,6 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 {	
 	int sequence, acknowledge;
-	unsigned __attribute__((__unused__)) int windowsize;
 	unsigned int numselectiveack, fragmentsize, length, startack;
 	int i, j;
 	int usedfragmentcnt;
@@ -365,7 +364,7 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 		}
 	}
 
-	windowsize = MSG_ReadShort(buf);
+	int windowsize = MSG_ReadShort(buf);
 	fragmentsize = MSG_ReadShort(buf);
 #ifdef RELIABLE_DEBUG
 	Com_Printf(CON_CHANNEL_NETWORK,"^5Received ACK %d SEQ: %d\n", acknowledge, sequence);

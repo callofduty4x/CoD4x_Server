@@ -148,7 +148,7 @@ typedef struct CollisionAabbTree_s
 }CollisionAabbTree_t;
 
 /* 6981 */
-typedef struct __attribute__((aligned(16))) cbrush_t
+typedef struct __align(16) cbrush_t
 {
   float mins[3];
   int contents;

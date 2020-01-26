@@ -791,11 +791,11 @@ void Scr_AddStockMethods();
 qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean developer);
 qboolean Scr_RemoveFunction( const char *cmd_name );
 void Scr_ClearFunctions( void );
-__cdecl xfunction_t Scr_GetFunction( const char** v_functionName, qboolean* v_developer );
+xfunction_t __cdecl Scr_GetFunction( const char** v_functionName, qboolean* v_developer );
 qboolean Scr_AddMethod( const char *cmd_name, xmethod_t function, qboolean developer);
 qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
-__cdecl xmethod_t Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
+xmethod_t __cdecl Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
 void __regparm3 VM_Notify(int, int, VariableValue* val);
 
 
@@ -830,7 +830,7 @@ gclient_t *VM_GetGClientForEntRef(scr_entref_t ref);
 gentity_t *VM_GetGEntityForEntRef(scr_entref_t num);
 
 
-void __noreturn CompileError(unsigned int sourcePos, const char *msg, ...);
+void CompileError(unsigned int sourcePos, const char *msg, ...);
 void __cdecl CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
 void __cdecl Scr_ParseGameTypeList();
