@@ -65,8 +65,6 @@ void G_ResetAllCvars();
 
 /*
 =============
-ExitLevel
-
 When the intermission has been exited, the server is either killed
 or moved to a new level based on the "nextmap" cvar
 
@@ -74,45 +72,6 @@ or moved to a new level based on the "nextmap" cvar
 */
 
 qboolean onExitLevelExecuted;
-
-__cdecl void ExitLevel( void ) {
-	int i;
-	gclient_t *gcl;
-	client_t *cl;
-	mvabuf;
-
-	onExitLevelExecuted = qtrue;
-
-        PHandler_Event(PLUGINS_ONEXITLEVEL,NULL);
-
-	if(*g_votedMapName->string){
-		if(*g_votedGametype->string)
-			Cbuf_AddText( va("set g_gametype %s; map %s; set g_votedGametype \"\"; set g_votedMapName \"\"\n", g_votedGametype->string, g_votedMapName->string));
-		else
-			Cbuf_AddText( va("map %s; set g_votedMapName \"\"\n", g_votedMapName->string));
-	}else if(*SV_GetNextMap()){
-		Cbuf_AddText( "vstr nextmap\n" );
-	}else{
-		Cbuf_AddText( "map_rotate\n" );
-	}
-
-	// reset all the scores so we don't enter the intermission again
-	level.teamScores[TEAM_RED] = 0;
-	level.teamScores[TEAM_BLUE] = 0;
-	for ( i = 0 ; i < level.maxclients ; i++ ) {
-		gcl = &level.clients[i];
-		cl = &svs.clients[i];
-		if ( gcl->sess.connected != CON_CONNECTED ) {
-			continue;
-		}
-		gcl->sess.score = 0;
-		// change all client states to connecting, so the early players into the
-		// next level will know the others aren't done reconnecting
-		if(cl->netchan.remoteAddress.type != NA_BOT)
-			gcl->sess.connected = CON_CONNECTING;
-	}
-	G_LogPrintf( "ExitLevel: executed\n" );
-}
 
 
 int BG_GetPerkIndexForName(const char* name)
@@ -378,99 +337,6 @@ void BG_RegisterCvars()
 }
 
 
-
-
-void __cdecl G_RegisterCvars()
-{
-    static const char *g_entinfoNames[] = { "off", "all_ents", nullptr };
-
-    g_speed = Cvar_RegisterInt("g_speed", 190, 1, 6000, 0, "Player's global movement speed is set here");
-    g_disabledefcmdprefix = Cvar_RegisterBool("g_disabledefcmdprefix", qtrue, 0, "Disable the interpretation of the !-sign as command");
-    g_allowConsoleSay = Cvar_RegisterBool("g_allowConsoleSay", qtrue, 0, "Flag whether to allow chat from ingame console");
-    g_cheats = Cvar_RegisterBool("sv_cheats", qfalse, 0, "Enable cheats");
-    Cvar_RegisterString("gamename", "Call of Duty 4", 0x44u, "The name of the game");
-    Cvar_RegisterString("gamedate", "Feb 12 2009", 0x40u, "The date compiled");
-    Cvar_RegisterString("sv_mapname", "", 0x44u, "The current map name");
-    g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24u, "The current campaign");
-    g_maxclients = Cvar_RegisterInt("g_maxclients", SV_GameGetMaxClients(), 1, 64, CVAR_ROM, "Max clients allowed on server - use sv_maxclients to change");
-    g_synchronousClients = Cvar_RegisterBool("g_synchronousClients", qfalse, 8u, "Call 'client think' exactly once for each server frame to make smooth demos");
-    g_log = Cvar_RegisterString("g_log", "games_mp.log", 1u, "Log file name");
-    g_logTimeStampInSeconds = Cvar_RegisterBool("g_logTimeStampInSeconds", qfalse, 1u, "Enable logging with time stamps in seconds since UTC 1/1/1970");
-    g_logSync = Cvar_RegisterBool("g_logSync", qfalse, 1u, "Enable synchronous logging");
-    g_banIPs = Cvar_RegisterString("g_banIPs", "", 1u, "IP addresses to ban from playing");
-    g_gravity = Cvar_RegisterFloat("g_gravity", 800.0, 1.0, 3.4028235e38, 0, "Game gravity in inches per second per second");
-    g_knockback = Cvar_RegisterFloat("g_knockback", 1000.0, -3.4028235e38, 3.4028235e38, 0, "Maximum knockback");
-    g_maxDroppedWeapons = Cvar_RegisterInt("g_maxDroppedWeapons", 16, 2, 32, 0, "Maximum number of dropped weapons");
-    g_inactivity = Cvar_RegisterInt("g_inactivity", 0, 0, 2147483647, 0, "Time delay before player is kicked for inactivity");
-    g_debugDamage = Cvar_RegisterBool("g_debugDamage", qfalse, 0x80u, "Show debug information for damage");
-    g_debugBullets = Cvar_RegisterInt("g_debugBullets", 0, -3, 6, 0x80u, "Show debug information for bullets");
-    bullet_penetrationEnabled = Cvar_RegisterBool("bullet_penetrationEnabled", qtrue, 0x80u, "Enable/Disable bullet penetration.");
-    g_entinfo = Cvar_RegisterEnum("g_entinfo", g_entinfoNames, 0, 0x80u, "Display entity information");
-    g_motd = Cvar_RegisterString("g_motd", "", 0, "The message of the day");
-    g_playerCollisionEjectSpeed = Cvar_RegisterInt("g_playerCollisionEjectSpeed", 25, 0, 32000, 1u, "Speed at which to push intersecting players away from each other");
-    g_dropForwardSpeed = Cvar_RegisterFloat("g_dropForwardSpeed", 10.0, 0.0, 1000.0, 1u, "Forward speed of a dropped item");
-    g_dropUpSpeedBase = Cvar_RegisterFloat("g_dropUpSpeedBase", 10.0, 0.0, 1000.0, 1u, "Base component of the initial vertical speed of a dropped item");
-    g_dropUpSpeedRand = Cvar_RegisterFloat("g_dropUpSpeedRand", 5.0, 0.0, 1000.0, 1u, "Random component of the initial vertical speed of a dropped item");
-    g_dropHorzSpeedRand = Cvar_RegisterFloat("g_dropHorzSpeedRand", 100.0, 0.0, 1000.0, 1u, "Random component of the initial horizontal speed of a dropped item");
-    g_clonePlayerMaxVelocity = Cvar_RegisterFloat("g_clonePlayerMaxVelocity", 80.0, 0.0, 3.4028235e38, 1u, "Maximum velocity in each axis of a cloned player\n(for death animations)");
-    voice_global = Cvar_RegisterBool("voice_global", qfalse, 1u, "Send voice messages to everybody");
-    voice_localEcho = Cvar_RegisterBool("voice_localEcho", qfalse, 1u, "Echo voice chat back to the player");
-    voice_deadChat = Cvar_RegisterBool("voice_deadChat", qfalse, 1u, "Allow dead players to talk to living players");
-    g_allowVote = Cvar_RegisterBool("g_allowVote", qtrue, 0, "Enable voting on this server");
-    g_listEntity = Cvar_RegisterBool("g_listEntity", qfalse, 0, "List the entities");
-    g_deadChat = Cvar_RegisterBool("g_deadChat", qfalse, 1u, "Allow dead players to chat with living players");
-    g_voiceChatTalkingDuration = Cvar_RegisterInt("g_voiceChatTalkingDuration", 500, 0, 10000, 1u, "Time after the last talk packet was received that the player is considered by the\nserver to still be talking in milliseconds");
-    g_TeamIcon_Allies = Cvar_RegisterString("g_TeamIcon_Allies", "faction_128_usmc", 0x100u, "Shader name for the allied scores banner");
-    g_TeamIcon_Axis = Cvar_RegisterString( "g_TeamIcon_Axis", "faction_128_arab", 0x100u, "Shader name for the axis scores banner");
-    g_TeamIcon_Free = Cvar_RegisterString( "g_TeamIcon_Free", "", 0x100u, "Shader name for the scores of players with no team");
-    g_TeamIcon_Spectator = Cvar_RegisterString("g_TeamIcon_Spectator", "", 0x100u, "Shader name for the scores of players who are spectators");
-    g_ScoresColor_MyTeam = Cvar_RegisterColor("g_ScoresColor_MyTeam", 0.25, 0.72000003, 0.25, 1.0, 0x100u, "Player team color on scoreboard");
-    g_ScoresColor_EnemyTeam = Cvar_RegisterColor("g_ScoresColor_EnemyTeam", 0.69, 0.07, 0.050000001, 1.0, 0x100u, "Enemy team color on scoreboard");
-    g_ScoresColor_Spectator = Cvar_RegisterColor("g_ScoresColor_Spectator", 0.25, 0.25, 0.25, 1.0, 0x100u, "Spectator team color on scoreboard");
-    g_ScoresColor_Free = Cvar_RegisterColor("g_ScoresColor_Free", 0.75999999, 0.77999997, 0.1, 1.0, 0x100u, "Free Team color on scoreboard");
-    g_ScoresColor_Allies = Cvar_RegisterColor("g_ScoresColor_Allies", 0.090000004, 0.46000001, 0.07, 1.0, 0x100u, "Allies team color on scoreboard");
-    g_ScoresColor_Axis = Cvar_RegisterColor( "g_ScoresColor_Axis", 0.69, 0.07, 0.050000001, 1.0, 0x100u, "Axis team color on scoreboard");
-    g_TeamName_Allies = Cvar_RegisterString("g_TeamName_Allies", "GAME_ALLIES", 0x100u, "Allied team name");
-    g_TeamName_Axis = Cvar_RegisterString("g_TeamName_Axis", "GAME_AXIS", 0x100u, "Axis team name");
-    g_TeamColor_Allies = Cvar_RegisterColor( "g_TeamColor_Allies", 0.60000002, 0.63999999, 0.69, 1.0, 0x100u, "Allies team color");
-    g_TeamColor_Axis = Cvar_RegisterColor( "g_TeamColor_Axis", 0.64999998, 0.56999999, 0.41, 1.0, 0x100u, "Axis team color");
-    g_TeamColor_MyTeam = Cvar_RegisterColor( "g_TeamColor_MyTeam", 0.40000001, 0.60000002, 0.85000002, 1.0, 0x100u, "Player team color");
-    g_TeamColor_EnemyTeam = Cvar_RegisterColor("g_TeamColor_EnemyTeam", 0.75, 0.25, 0.25, 1.0, 0x100u, "Enemy team color");
-    g_TeamColor_Spectator = Cvar_RegisterColor( "g_TeamColor_Spectator", 0.25, 0.25, 0.25, 1.0, 0x100u, "Spectator team color");
-    g_TeamColor_Free = Cvar_RegisterColor("g_TeamColor_Free", 0.75, 0.25, 0.25, 1.0, 0x100u, "Free Team color");
-    g_smoothClients = Cvar_RegisterBool("g_smoothClients", qtrue, 0, "Enable extrapolation between client states");
-    g_antilag = Cvar_RegisterBool("g_antilag", qtrue, 0x0u, "Turn on antilag checks for weapon hits");
-    g_oldVoting = Cvar_RegisterBool("g_oldVoting", qtrue, 1u, "Use old voting method");
-    g_voteAbstainWeight = Cvar_RegisterFloat( "g_voteAbstainWeight", 0.5, 0.0, 1.0, 1u, "How much an abstained vote counts as a 'no' vote");
-    g_NoScriptSpam = Cvar_RegisterBool("g_no_script_spam", qfalse, 0, "Turn off script debugging info");
-    g_debugLocDamage = Cvar_RegisterBool( "g_debugLocDamage", qfalse, 0x80u, "Turn on debugging information for locational damage");
-    g_friendlyfireDist = Cvar_RegisterFloat( "g_friendlyfireDist", 256.0, 0.0, 15000.0, 0x80u, "Maximum range for disabling fire at a friendly");
-    g_friendlyNameDist = Cvar_RegisterFloat( "g_friendlyNameDist", 15000.0, 0.0, 15000.0, 0x80u, "Maximum range for seeing a friendly's name");
-    melee_debug = Cvar_RegisterBool("melee_debug", qfalse, 0x80u, "Turn on debug lines for melee traces");
-    radius_damage_debug = Cvar_RegisterBool( "radius_damage_debug", qfalse, 0x80u, "Turn on debug lines for radius damage traces");
-    player_throwbackInnerRadius = Cvar_RegisterFloat( "player_throwbackInnerRadius", 90.0, 0.0, 3.4028235e38, 0x80u, "The radius to a live grenade player must be within initially to do a throwback");
-    player_throwbackOuterRadius = Cvar_RegisterFloat( "player_throwbackOuterRadius", 160.0, 0.0, 3.4028235e38, 0x80u, "The radius player is allow to throwback a grenade once the player has been in the inner radius");
-    player_MGUseRadius = Cvar_RegisterFloat( "player_MGUseRadius", 128.0, 0.0, 3.4028235e38, 0x80u, "The radius within which a player can mount a machine gun");
-    g_minGrenadeDamageSpeed = Cvar_RegisterFloat( "g_minGrenadeDamageSpeed", 400.0, 0.0, 3.4028235e38, 0x80u, "Minimum speed at which getting hit be a grenade will do damage (not the grenade explosion damage)");
-    g_compassShowEnemies = Cvar_RegisterBool( "g_compassShowEnemies", qfalse, 0x84u, "Whether enemies are visible on the compass at all times");
-    pickupPrints = Cvar_RegisterBool( "pickupPrints", qfalse, 0x80u, "Print a message to the game window when picking up ammo, etc.");
-    g_dumpAnims = Cvar_RegisterInt( "g_dumpAnims", -1, -1, 1023, 0x80u, "Animation debugging info for the given character number");
-    g_useholdtime = Cvar_RegisterInt( "g_useholdtime", 0, 0, 2147483647, 0, "Time to hold the 'use' button to activate use");
-    g_useholdspawndelay = Cvar_RegisterInt( "g_useholdspawndelay", 500, 0, 1000, 0x81u, "Time in milliseconds that the player is unable to 'use' after spawning");
-    g_redCrosshairs = Cvar_RegisterBool("g_redCrosshairs", qtrue, 0x21u, "Whether red crosshairs are enabled");
-    g_mantleBlockTimeBuffer = Cvar_RegisterInt("g_mantleBlockTimeBuffer", 500, 0, 60000, 0x80u, "Time that the client think is delayed after mantling");
-    Helicopter_RegisterCvars();
-    G_VehRegisterCvars();
-    G_RegisterMissileCvars();
-    G_RegisterMissileDebugCvars();
-    BG_RegisterCvars();
-    g_fogColorReadOnly = Cvar_RegisterColor( "g_fogColorReadOnly", 1.0, 0.0, 0.0, 1.0, 0x10C0u, "Fog color that was set in the most recent call to \"setexpfog\"");
-    g_fogStartDistReadOnly = Cvar_RegisterFloat( "g_fogStartDistReadOnly", 0.0, 0.0, 3.4028235e38, 0x10C0u, "Fog start distance that was set in the most recent call to \"setexpfog\"");
-    g_fogHalfDistReadOnly = Cvar_RegisterFloat( "g_fogHalfDistReadOnly", 0.1, 0.0, 3.4028235e38, 0x10C0u, "Fog start distance that was set in the most recent call to \"setexpfog\"");
-    Cvar_SetCheatState();
-}
-
-
 int G_GetClientSize()
 {
 	return sizeof(gclient_t);
@@ -506,8 +372,141 @@ float G_GetFogOpaqueDistSqrd()
 	return level.fFogOpaqueDistSqrd;
 }
 
-void __cdecl G_SafeServerDObjFree(int handle)
+extern "C"
 {
-  Com_SafeServerDObjFree(handle);
-}
+    void __cdecl G_SafeServerDObjFree(int handle)
+    {
+        Com_SafeServerDObjFree(handle);
+    }
 
+    void __cdecl G_RegisterCvars()
+    {
+        static const char *g_entinfoNames[] = { "off", "all_ents", nullptr };
+
+        g_speed = Cvar_RegisterInt("g_speed", 190, 1, 6000, 0, "Player's global movement speed is set here");
+        g_disabledefcmdprefix = Cvar_RegisterBool("g_disabledefcmdprefix", qtrue, 0, "Disable the interpretation of the !-sign as command");
+        g_allowConsoleSay = Cvar_RegisterBool("g_allowConsoleSay", qtrue, 0, "Flag whether to allow chat from ingame console");
+        g_cheats = Cvar_RegisterBool("sv_cheats", qfalse, 0, "Enable cheats");
+        Cvar_RegisterString("gamename", "Call of Duty 4", 0x44u, "The name of the game");
+        Cvar_RegisterString("gamedate", "Feb 12 2009", 0x40u, "The date compiled");
+        Cvar_RegisterString("sv_mapname", "", 0x44u, "The current map name");
+        g_gametype = Cvar_RegisterString("g_gametype", "war", 0x24u, "The current campaign");
+        g_maxclients = Cvar_RegisterInt("g_maxclients", SV_GameGetMaxClients(), 1, 64, CVAR_ROM, "Max clients allowed on server - use sv_maxclients to change");
+        g_synchronousClients = Cvar_RegisterBool("g_synchronousClients", qfalse, 8u, "Call 'client think' exactly once for each server frame to make smooth demos");
+        g_log = Cvar_RegisterString("g_log", "games_mp.log", 1u, "Log file name");
+        g_logTimeStampInSeconds = Cvar_RegisterBool("g_logTimeStampInSeconds", qfalse, 1u, "Enable logging with time stamps in seconds since UTC 1/1/1970");
+        g_logSync = Cvar_RegisterBool("g_logSync", qfalse, 1u, "Enable synchronous logging");
+        g_banIPs = Cvar_RegisterString("g_banIPs", "", 1u, "IP addresses to ban from playing");
+        g_gravity = Cvar_RegisterFloat("g_gravity", 800.0, 1.0, 3.4028235e38, 0, "Game gravity in inches per second per second");
+        g_knockback = Cvar_RegisterFloat("g_knockback", 1000.0, -3.4028235e38, 3.4028235e38, 0, "Maximum knockback");
+        g_maxDroppedWeapons = Cvar_RegisterInt("g_maxDroppedWeapons", 16, 2, 32, 0, "Maximum number of dropped weapons");
+        g_inactivity = Cvar_RegisterInt("g_inactivity", 0, 0, 2147483647, 0, "Time delay before player is kicked for inactivity");
+        g_debugDamage = Cvar_RegisterBool("g_debugDamage", qfalse, 0x80u, "Show debug information for damage");
+        g_debugBullets = Cvar_RegisterInt("g_debugBullets", 0, -3, 6, 0x80u, "Show debug information for bullets");
+        bullet_penetrationEnabled = Cvar_RegisterBool("bullet_penetrationEnabled", qtrue, 0x80u, "Enable/Disable bullet penetration.");
+        g_entinfo = Cvar_RegisterEnum("g_entinfo", g_entinfoNames, 0, 0x80u, "Display entity information");
+        g_motd = Cvar_RegisterString("g_motd", "", 0, "The message of the day");
+        g_playerCollisionEjectSpeed = Cvar_RegisterInt("g_playerCollisionEjectSpeed", 25, 0, 32000, 1u, "Speed at which to push intersecting players away from each other");
+        g_dropForwardSpeed = Cvar_RegisterFloat("g_dropForwardSpeed", 10.0, 0.0, 1000.0, 1u, "Forward speed of a dropped item");
+        g_dropUpSpeedBase = Cvar_RegisterFloat("g_dropUpSpeedBase", 10.0, 0.0, 1000.0, 1u, "Base component of the initial vertical speed of a dropped item");
+        g_dropUpSpeedRand = Cvar_RegisterFloat("g_dropUpSpeedRand", 5.0, 0.0, 1000.0, 1u, "Random component of the initial vertical speed of a dropped item");
+        g_dropHorzSpeedRand = Cvar_RegisterFloat("g_dropHorzSpeedRand", 100.0, 0.0, 1000.0, 1u, "Random component of the initial horizontal speed of a dropped item");
+        g_clonePlayerMaxVelocity = Cvar_RegisterFloat("g_clonePlayerMaxVelocity", 80.0, 0.0, 3.4028235e38, 1u, "Maximum velocity in each axis of a cloned player\n(for death animations)");
+        voice_global = Cvar_RegisterBool("voice_global", qfalse, 1u, "Send voice messages to everybody");
+        voice_localEcho = Cvar_RegisterBool("voice_localEcho", qfalse, 1u, "Echo voice chat back to the player");
+        voice_deadChat = Cvar_RegisterBool("voice_deadChat", qfalse, 1u, "Allow dead players to talk to living players");
+        g_allowVote = Cvar_RegisterBool("g_allowVote", qtrue, 0, "Enable voting on this server");
+        g_listEntity = Cvar_RegisterBool("g_listEntity", qfalse, 0, "List the entities");
+        g_deadChat = Cvar_RegisterBool("g_deadChat", qfalse, 1u, "Allow dead players to chat with living players");
+        g_voiceChatTalkingDuration = Cvar_RegisterInt("g_voiceChatTalkingDuration", 500, 0, 10000, 1u, "Time after the last talk packet was received that the player is considered by the\nserver to still be talking in milliseconds");
+        g_TeamIcon_Allies = Cvar_RegisterString("g_TeamIcon_Allies", "faction_128_usmc", 0x100u, "Shader name for the allied scores banner");
+        g_TeamIcon_Axis = Cvar_RegisterString( "g_TeamIcon_Axis", "faction_128_arab", 0x100u, "Shader name for the axis scores banner");
+        g_TeamIcon_Free = Cvar_RegisterString( "g_TeamIcon_Free", "", 0x100u, "Shader name for the scores of players with no team");
+        g_TeamIcon_Spectator = Cvar_RegisterString("g_TeamIcon_Spectator", "", 0x100u, "Shader name for the scores of players who are spectators");
+        g_ScoresColor_MyTeam = Cvar_RegisterColor("g_ScoresColor_MyTeam", 0.25, 0.72000003, 0.25, 1.0, 0x100u, "Player team color on scoreboard");
+        g_ScoresColor_EnemyTeam = Cvar_RegisterColor("g_ScoresColor_EnemyTeam", 0.69, 0.07, 0.050000001, 1.0, 0x100u, "Enemy team color on scoreboard");
+        g_ScoresColor_Spectator = Cvar_RegisterColor("g_ScoresColor_Spectator", 0.25, 0.25, 0.25, 1.0, 0x100u, "Spectator team color on scoreboard");
+        g_ScoresColor_Free = Cvar_RegisterColor("g_ScoresColor_Free", 0.75999999, 0.77999997, 0.1, 1.0, 0x100u, "Free Team color on scoreboard");
+        g_ScoresColor_Allies = Cvar_RegisterColor("g_ScoresColor_Allies", 0.090000004, 0.46000001, 0.07, 1.0, 0x100u, "Allies team color on scoreboard");
+        g_ScoresColor_Axis = Cvar_RegisterColor( "g_ScoresColor_Axis", 0.69, 0.07, 0.050000001, 1.0, 0x100u, "Axis team color on scoreboard");
+        g_TeamName_Allies = Cvar_RegisterString("g_TeamName_Allies", "GAME_ALLIES", 0x100u, "Allied team name");
+        g_TeamName_Axis = Cvar_RegisterString("g_TeamName_Axis", "GAME_AXIS", 0x100u, "Axis team name");
+        g_TeamColor_Allies = Cvar_RegisterColor( "g_TeamColor_Allies", 0.60000002, 0.63999999, 0.69, 1.0, 0x100u, "Allies team color");
+        g_TeamColor_Axis = Cvar_RegisterColor( "g_TeamColor_Axis", 0.64999998, 0.56999999, 0.41, 1.0, 0x100u, "Axis team color");
+        g_TeamColor_MyTeam = Cvar_RegisterColor( "g_TeamColor_MyTeam", 0.40000001, 0.60000002, 0.85000002, 1.0, 0x100u, "Player team color");
+        g_TeamColor_EnemyTeam = Cvar_RegisterColor("g_TeamColor_EnemyTeam", 0.75, 0.25, 0.25, 1.0, 0x100u, "Enemy team color");
+        g_TeamColor_Spectator = Cvar_RegisterColor( "g_TeamColor_Spectator", 0.25, 0.25, 0.25, 1.0, 0x100u, "Spectator team color");
+        g_TeamColor_Free = Cvar_RegisterColor("g_TeamColor_Free", 0.75, 0.25, 0.25, 1.0, 0x100u, "Free Team color");
+        g_smoothClients = Cvar_RegisterBool("g_smoothClients", qtrue, 0, "Enable extrapolation between client states");
+        g_antilag = Cvar_RegisterBool("g_antilag", qtrue, 0x0u, "Turn on antilag checks for weapon hits");
+        g_oldVoting = Cvar_RegisterBool("g_oldVoting", qtrue, 1u, "Use old voting method");
+        g_voteAbstainWeight = Cvar_RegisterFloat( "g_voteAbstainWeight", 0.5, 0.0, 1.0, 1u, "How much an abstained vote counts as a 'no' vote");
+        g_NoScriptSpam = Cvar_RegisterBool("g_no_script_spam", qfalse, 0, "Turn off script debugging info");
+        g_debugLocDamage = Cvar_RegisterBool( "g_debugLocDamage", qfalse, 0x80u, "Turn on debugging information for locational damage");
+        g_friendlyfireDist = Cvar_RegisterFloat( "g_friendlyfireDist", 256.0, 0.0, 15000.0, 0x80u, "Maximum range for disabling fire at a friendly");
+        g_friendlyNameDist = Cvar_RegisterFloat( "g_friendlyNameDist", 15000.0, 0.0, 15000.0, 0x80u, "Maximum range for seeing a friendly's name");
+        melee_debug = Cvar_RegisterBool("melee_debug", qfalse, 0x80u, "Turn on debug lines for melee traces");
+        radius_damage_debug = Cvar_RegisterBool( "radius_damage_debug", qfalse, 0x80u, "Turn on debug lines for radius damage traces");
+        player_throwbackInnerRadius = Cvar_RegisterFloat( "player_throwbackInnerRadius", 90.0, 0.0, 3.4028235e38, 0x80u, "The radius to a live grenade player must be within initially to do a throwback");
+        player_throwbackOuterRadius = Cvar_RegisterFloat( "player_throwbackOuterRadius", 160.0, 0.0, 3.4028235e38, 0x80u, "The radius player is allow to throwback a grenade once the player has been in the inner radius");
+        player_MGUseRadius = Cvar_RegisterFloat( "player_MGUseRadius", 128.0, 0.0, 3.4028235e38, 0x80u, "The radius within which a player can mount a machine gun");
+        g_minGrenadeDamageSpeed = Cvar_RegisterFloat( "g_minGrenadeDamageSpeed", 400.0, 0.0, 3.4028235e38, 0x80u, "Minimum speed at which getting hit be a grenade will do damage (not the grenade explosion damage)");
+        g_compassShowEnemies = Cvar_RegisterBool( "g_compassShowEnemies", qfalse, 0x84u, "Whether enemies are visible on the compass at all times");
+        pickupPrints = Cvar_RegisterBool( "pickupPrints", qfalse, 0x80u, "Print a message to the game window when picking up ammo, etc.");
+        g_dumpAnims = Cvar_RegisterInt( "g_dumpAnims", -1, -1, 1023, 0x80u, "Animation debugging info for the given character number");
+        g_useholdtime = Cvar_RegisterInt( "g_useholdtime", 0, 0, 2147483647, 0, "Time to hold the 'use' button to activate use");
+        g_useholdspawndelay = Cvar_RegisterInt( "g_useholdspawndelay", 500, 0, 1000, 0x81u, "Time in milliseconds that the player is unable to 'use' after spawning");
+        g_redCrosshairs = Cvar_RegisterBool("g_redCrosshairs", qtrue, 0x21u, "Whether red crosshairs are enabled");
+        g_mantleBlockTimeBuffer = Cvar_RegisterInt("g_mantleBlockTimeBuffer", 500, 0, 60000, 0x80u, "Time that the client think is delayed after mantling");
+        Helicopter_RegisterCvars();
+        G_VehRegisterCvars();
+        G_RegisterMissileCvars();
+        G_RegisterMissileDebugCvars();
+        BG_RegisterCvars();
+        g_fogColorReadOnly = Cvar_RegisterColor( "g_fogColorReadOnly", 1.0, 0.0, 0.0, 1.0, 0x10C0u, "Fog color that was set in the most recent call to \"setexpfog\"");
+        g_fogStartDistReadOnly = Cvar_RegisterFloat( "g_fogStartDistReadOnly", 0.0, 0.0, 3.4028235e38, 0x10C0u, "Fog start distance that was set in the most recent call to \"setexpfog\"");
+        g_fogHalfDistReadOnly = Cvar_RegisterFloat( "g_fogHalfDistReadOnly", 0.1, 0.0, 3.4028235e38, 0x10C0u, "Fog start distance that was set in the most recent call to \"setexpfog\"");
+        Cvar_SetCheatState();
+    }
+
+
+    void __cdecl ExitLevel()
+    {
+        mvabuf;
+
+        onExitLevelExecuted = qtrue;
+
+        PHandler_Event(PLUGINS_ONEXITLEVEL,NULL);
+
+        if(*g_votedMapName->string)
+        {
+            if(*g_votedGametype->string)
+                Cbuf_AddText( va("set g_gametype %s; map %s; set g_votedGametype \"\"; set g_votedMapName \"\"\n", g_votedGametype->string, g_votedMapName->string));
+            else
+                Cbuf_AddText( va("map %s; set g_votedMapName \"\"\n", g_votedMapName->string));
+        }
+        else if(*SV_GetNextMap())
+            Cbuf_AddText( "vstr nextmap\n" );
+        else
+            Cbuf_AddText( "map_rotate\n" );
+
+        // reset all the scores so we don't enter the intermission again
+        level.teamScores[TEAM_RED] = 0;
+        level.teamScores[TEAM_BLUE] = 0;
+        for (int i = 0 ; i < level.maxclients ; ++i)
+        {
+            gclient_t* gcl = &level.clients[i];
+            client_t* cl = &svs.clients[i];
+            if ( gcl->sess.connected != CON_CONNECTED )
+                continue;
+
+            gcl->sess.score = 0;
+            // change all client states to connecting, so the early players into the
+            // next level will know the others aren't done reconnecting
+            if(cl->netchan.remoteAddress.type != NA_BOT)
+                gcl->sess.connected = CON_CONNECTING;
+        }
+
+        G_LogPrintf( "ExitLevel: executed\n" );
+    }
+} // extern "C"

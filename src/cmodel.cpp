@@ -1,6 +1,7 @@
-#include "cmodel.hpp"
+﻿#include "cmodel.hpp"
 #include "qshared.hpp"
 #include "cm_local.hpp"
+#include "cm_load.hpp"
 
 /*
 ===================

@@ -138,21 +138,18 @@ void dError (int num, const char *msg, ...)
   }
 }
 
-void dMessage (int num, const char *msg, ...)
+extern "C" void dMessage (int num, const char *msg, ...)
 {
-  va_list ap;
-  char buf[2048];
+    va_list ap;
+    va_start (ap, msg);
+    char buf[2048];
+    Q_vsnprintf(buf, sizeof(buf), msg, ap);
+    va_end(ap);
 
-  va_start (ap, msg);
-  Q_vsnprintf(buf, sizeof(buf), msg, ap);
-  va_end(ap);
-
-  if(num)
-  {
-    Com_PrintError(CON_CHANNEL_PHYS,"\nODE Message %d: %s\n", num, buf);
-  }else{
-    Com_PrintError(CON_CHANNEL_PHYS,"\nODE Message: %s\n", buf);
-  }
+    if(num)
+        Com_PrintError(CON_CHANNEL_PHYS,"\nODE Message %d: %s\n", num, buf);
+    else
+        Com_PrintError(CON_CHANNEL_PHYS,"\nODE Message: %s\n", buf);
 }
 
 

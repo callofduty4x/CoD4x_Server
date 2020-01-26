@@ -1570,13 +1570,13 @@ void __cdecl Com_SetWeaponInfoMemory(int source)
   weaponInfoSource = source;
 }
 
-void __cdecl Com_FreeWeaponInfoMemory(int source)
+extern "C" void __cdecl Com_FreeWeaponInfoMemory(int source)
 {
-  if ( source == weaponInfoSource )
-  {
-    weaponInfoSource = 0;
-    BG_ShutdownWeaponDefFiles();
-  }
+    if ( source == weaponInfoSource )
+    {
+        weaponInfoSource = 0;
+        BG_ShutdownWeaponDefFiles();
+    }
 }
 
 const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, int type)

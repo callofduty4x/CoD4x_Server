@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -2561,61 +2561,64 @@ qboolean Cvar_IsDefined(const char* cvarname)
 	return qfalse;
 }
 
-bool __cdecl Cvar_IsValidName(const char *dvarName)
-{
-  char nameChar;
-  int index;
-
-  if ( dvarName )
-  {
-    for ( index = 0; dvarName[index]; ++index )
-    {
-      nameChar = dvarName[index];
-      if ( !isalnum(nameChar) && nameChar != '_' )
-      {
-        return false;
-      }
-    }
-    return true;
-  }
-  return false;
-}
-
-
-void __cdecl Cvar_SetFromStringByName(const char* name, const char* value)
-{
-    Cvar_Set(name, value);
-}
 
 const char* __cdecl Cvar_EnumToString(cvar_t* var)
 {
 	return Cvar_DisplayableValue(var);
 }
 
-
-int __cdecl Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize)
+extern "C"
 {
-  const char *string;
-  int ret;
-  int written;
-  unsigned int i;
-  cvar_t *dvar;
-
-  ret = 1;
-  for ( i = 0; i < numDvars; ++i )
-  {
-    dvar = Cvar_FindVar(dvarnames[i]);
-
-    assert(dvar);
-
-    string = Cvar_DisplayableValue(dvar);
-    written = Com_sprintf(buffer, bufsize, "%s \"%s\"\n", dvar->name, string);
-    if ( written < 0 )
+    int __cdecl Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize)
     {
-      return 0;
+        const char *string;
+        int ret;
+        int written;
+        unsigned int i;
+        cvar_t *dvar;
+
+        ret = 1;
+        for ( i = 0; i < numDvars; ++i )
+        {
+            dvar = Cvar_FindVar(dvarnames[i]);
+
+            assert(dvar);
+
+            string = Cvar_DisplayableValue(dvar);
+            written = Com_sprintf(buffer, bufsize, "%s \"%s\"\n", dvar->name, string);
+            if ( written < 0 )
+            {
+                return 0;
+            }
+            buffer += written;
+            bufsize -= written;
+        }
+        return ret;
     }
-    buffer += written;
-    bufsize -= written;
-  }
-  return ret;
-}
+
+    bool __cdecl Cvar_IsValidName(const char *dvarName)
+    {
+        char nameChar;
+        int index;
+
+        if ( dvarName )
+        {
+            for ( index = 0; dvarName[index]; ++index )
+            {
+                nameChar = dvarName[index];
+                if ( !isalnum(nameChar) && nameChar != '_' )
+                    return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    void __cdecl Cvar_SetFromStringByName(const char* name, const char* value)
+    {
+        Cvar_Set(name, value);
+    }
+} // extern "C"

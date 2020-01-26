@@ -1,6 +1,7 @@
-#include "cm_test.hpp"
+﻿#include "cm_test.hpp"
 #include "qshared.hpp"
 #include "cm_local.hpp"
+#include "cm_load.hpp"
 
 
 /*
@@ -83,47 +84,6 @@ void CM_StoreLeafs( leafList_t *ll, int nodenum ) {
 	}
 	ll->list[ ll->count++ ] = leafNum;
 }
-
-
-
-/*
-=============
-CM_BoxLeafnums
-
-Fills in a list of all the leafs touched
-=============
-*/
-void CM_BoxLeafnums_r( leafList_t *ll, int nodenum ) {
-	cplane_t    *plane;
-	cNode_t     *node;
-	int s;
-
-	
-	while ( nodenum >= 0 )
-	{
-		node = &cm.nodes[nodenum];
-		plane = node->plane;
-		s = BoxOnPlaneSide( ll->bounds[0], ll->bounds[1], plane );
-		if ( s == 1 )
-		{
-		  nodenum = node->children[0];
-		}
-		else
-		{
-			if ( s != 2 )
-			{
-				CM_BoxLeafnums_r(ll, node->children[0]);
-			}
-			nodenum = node->children[1];
-		}
-	}
-	
-	CM_StoreLeafs( ll, nodenum );
-
-}
-
-
-
 /*
 ==================
 CM_BoxLeafnums
@@ -273,4 +233,35 @@ qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle)
     return qfalse;
   }
   return qtrue;
+}
+
+extern "C"
+{
+    /*
+    =============
+    CM_BoxLeafnums
+
+    Fills in a list of all the leafs touched
+    =============
+    */
+    void CM_BoxLeafnums_r( leafList_t *ll, int nodenum )
+    {
+        while ( nodenum >= 0 )
+        {
+            cNode_t* node = &cm.nodes[nodenum];
+            cplane_t* plane = node->plane;
+            int s = BoxOnPlaneSide( ll->bounds[0], ll->bounds[1], plane );
+            if ( s == 1 )
+                nodenum = node->children[0];
+            else
+            {
+                if ( s != 2 )
+                    CM_BoxLeafnums_r(ll, node->children[0]);
+
+                nodenum = node->children[1];
+            }
+        }
+
+        CM_StoreLeafs( ll, nodenum );
+    }
 }

@@ -1,4 +1,4 @@
-#include "g_entity.hpp"
+﻿#include "g_entity.hpp"
 #include "qshared.hpp"
 #include "entity.hpp"
 #include "g_shared.hpp"
@@ -27,11 +27,9 @@ qboolean __cdecl G_SpawnString(SpawnVar *spawnVar, const char *key, const char *
     return qfalse;
 }
 
-qboolean __cdecl G_LevelSpawnString(const char *key, const char *defaultString, const char **out)
+extern "C" qboolean __cdecl G_LevelSpawnString(const char *key, const char *defaultString, const char **out)
 {
-
     return G_SpawnString(&level.spawnVars, key, defaultString, out);
-
 }
 
 

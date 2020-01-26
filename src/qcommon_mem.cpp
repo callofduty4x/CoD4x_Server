@@ -62,13 +62,6 @@ void __cdecl Sys_OutOfMemError(const char* filename, int line)
 	Com_Error(ERR_FATAL, "System is out of memory! Filename: %s, Line: %d\n", filename, line);
 }
 
-void __cdecl Sys_OutOfMemErrorInternal(const char* filename, int line)
-{
-	Sys_OutOfMemError(filename, line);
-}
-
-
-
 /*
 ==============================================================================
 
@@ -866,3 +859,12 @@ void Hunk_Test()
 }
 
 #endif
+
+
+extern "C"
+{
+    void __cdecl Sys_OutOfMemErrorInternal(const char* filename, int line)
+    {
+        Sys_OutOfMemError(filename, line);
+    }
+} // extern "C"

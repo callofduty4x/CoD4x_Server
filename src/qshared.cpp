@@ -216,49 +216,6 @@ int Q_stricmp (const char *s1, const char *s2) {
 }
 
 
-int __cdecl Q_stricmpwild(const char *wild, const char *s)
-{
-  char charWild;
-  int delta;
-  char charRef;
-
-  assert( wild );
-  assert( s );
-  do
-  {
-    charWild = *wild++;
-    if ( charWild == '*' )
-    {
-      if ( !*wild )
-      {
-        return 0;
-      }
-      if ( *s && !Q_stricmpwild(wild - 1, s + 1) )
-      {
-        return 0;
-      }
-    }
-    else
-    {
-      charRef = *s++;
-      if ( charWild != charRef && charWild != '?' )
-      {
-        delta = tolower(charWild) - tolower(charRef);
-        if ( delta != 0 )
-        {
-          return 1;
-        }
-      }
-    }
-  }
-  while ( charWild );
-  return 0;
-}
-
-
-
-
-
 char *Q_strlwr( char *s1 ) {
     char	*s;
 
@@ -497,33 +454,6 @@ int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...)
 		Com_Printf(CON_CHANNEL_SYSTEM,"Com_sprintf: Output length %d too short, require %d bytes.\n", size, len + 1);
 
 	return len;
-}
-
-int Com_sprintfPos(char *dest, const int destSize, int *destPos, const char *fmt, ...)
-{
-  char *destMod;
-  int destModSize;
-  int len;
-  va_list va;
-
-  va_start(va, fmt);
-  if ( *destPos < destSize - 1 )
-  {
-    destMod = &dest[*destPos];
-    destModSize = destSize - *destPos;
-    len = Q_vsnprintf(destMod, destSize - *destPos, fmt, va);
-    destMod[destModSize - 1] = 0;
-    if ( len != destModSize && len != -1 )
-    {
-      *destPos += len;
-    }
-    else
-    {
-      *destPos = destSize - 1;
-    }
-    return len;
-  }
-  return -1;
 }
 
 
@@ -1741,11 +1671,6 @@ char *va(const char *format, ...)
 
 #endif
 
-bool __cdecl Com_IsLegacyXModelName(const char *name)
-{
-  return !Q_stricmpn(name, "xmodel", 6) && (name[6] == '/' || name[6] == '\\');
-}
-
 /*
 int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKeyValue, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrcpy)(char *, const char *))
 {
@@ -1921,31 +1846,6 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
 }
 
 
-
-bool __cdecl ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrCpy)(char *, const char *))
-{
-  char *pszKeyValue;
-  char error;
-  cspField_t *pField;
-  int iField;
-
-  error = 0;
-  iField = 0;
-  pField = pFieldList;
-  while ( iField < iNumFields )
-  {
-    pszKeyValue = Info_ValueForKey(pszBuffer, pField->szName);
-    if ( *pszKeyValue )
-    {
-      error |= KeyValueToField(pStruct, pField, pszKeyValue, iMaxFieldTypes, parseSpecialFieldType, parseStrCpy) == 0;
-	}
-    ++iField;
-    ++pField;
-  }
-  return iField == iNumFields && !error;
-}
-
-
 const char *__cdecl Com_GetExtensionSubString(const char *filename)
 {
   const char *substr;
@@ -1970,37 +1870,6 @@ const char *__cdecl Com_GetExtensionSubString(const char *filename)
     substr = filename;
   }
   return substr;
-}
-
-
-void __cdecl Com_StripExtension(const char *in, char *out)
-{
-  const char *extension;
-
-  extension = Com_GetExtensionSubString(in);
-  while ( in != extension )
-  {
-    *out++ = *in++;
-  }
-  *out = 0;
-}
-
-
-double __cdecl GetLeanFraction(const float fFrac)
-{
-  float af;
-
-  af = fabs(fFrac);
-  return (2.0 - af) * fFrac;
-}
-
-char __cdecl Q_CleanChar(char character)
-{
-  if ( character == 0x92 )
-  {
-    return '\'';
-  }
-  return character;
 }
 
 
@@ -2132,11 +2001,133 @@ void Swap_Init( void ) {
 
 }
 
-double __cdecl UnGetLeanFraction(const float fFrac)
+
+extern "C"
 {
+    bool __cdecl Com_IsLegacyXModelName(const char *name)
+    {
+        return !Q_stricmpn(name, "xmodel", 6) && (name[6] == '/' || name[6] == '\\');
+    }
 
-  assert(fFrac >= 0);
-  assert(fFrac <= 1.f);
-  return 1.0 - sqrt(1.0 - fFrac);
-}
 
+    void __cdecl Com_StripExtension(const char *in, char *out)
+    {
+      const char *extension;
+
+      extension = Com_GetExtensionSubString(in);
+      while ( in != extension )
+      {
+        *out++ = *in++;
+      }
+      *out = 0;
+    }
+
+
+    double __cdecl GetLeanFraction(const float fFrac)
+    {
+      float af;
+
+      af = fabs(fFrac);
+      return (2.0 - af) * fFrac;
+    }
+
+
+    double __cdecl UnGetLeanFraction(const float fFrac)
+    {
+      assert(fFrac >= 0);
+      assert(fFrac <= 1.f);
+      return 1.0 - sqrt(1.0 - fFrac);
+    }
+
+
+    bool __cdecl ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrCpy)(char *, const char *))
+    {
+      char *pszKeyValue;
+      char error;
+      cspField_t *pField;
+      int iField;
+
+      error = 0;
+      iField = 0;
+      pField = pFieldList;
+      while ( iField < iNumFields )
+      {
+        pszKeyValue = Info_ValueForKey(pszBuffer, pField->szName);
+        if ( *pszKeyValue )
+        {
+          error |= KeyValueToField(pStruct, pField, pszKeyValue, iMaxFieldTypes, parseSpecialFieldType, parseStrCpy) == 0;
+        }
+        ++iField;
+        ++pField;
+      }
+      return iField == iNumFields && !error;
+    }
+
+
+    int __cdecl Q_stricmpwild(const char *wild, const char *s)
+    {
+        char charWild;
+        int delta;
+        char charRef;
+
+        assert( wild );
+        assert( s );
+        do
+        {
+            charWild = *wild++;
+            if ( charWild == '*' )
+            {
+                if ( !*wild )
+                    return 0;
+
+                if ( *s && !Q_stricmpwild(wild - 1, s + 1) )
+                    return 0;
+            }
+            else
+            {
+                charRef = *s++;
+                if ( charWild != charRef && charWild != '?' )
+                {
+                    delta = tolower(charWild) - tolower(charRef);
+                    if ( delta != 0 )
+                        return 1;
+                }
+            }
+        }
+        while ( charWild );
+
+        return 0;
+    }
+
+
+    char __cdecl Q_CleanChar(char character)
+    {
+        return character == 0x92 ? '\'' : character;
+    }
+
+
+    int Com_sprintfPos(char *dest, const int destSize, int *destPos, const char *fmt, ...)
+    {
+        char *destMod;
+        int destModSize;
+        int len;
+        va_list va;
+
+        va_start(va, fmt);
+        if ( *destPos < destSize - 1 )
+        {
+            destMod = &dest[*destPos];
+            destModSize = destSize - *destPos;
+            len = Q_vsnprintf(destMod, destSize - *destPos, fmt, va);
+            destMod[destModSize - 1] = 0;
+            if ( len != destModSize && len != -1 )
+                *destPos += len;
+            else
+                *destPos = destSize - 1;
+
+            return len;
+        }
+
+        return -1;
+    }
+} // extern "C"

@@ -35,32 +35,20 @@ void Init_CallVote(void);
 __cdecl void Cmd_CallVote_f( gentity_t *ent );
 void G_ChatRedirect(char* msg, int client, int mode);
 void G_AddChatRedirect(void (*rd_dest)( const char *, int, int));
-__cdecl void StopFollowingOnDeath( gentity_t *ent );
-__cdecl void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText );
-__cdecl void ExitLevel( void );
-void G_RegisterCvars( );
-void __cdecl StopFollowing( gentity_t* ent );
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
-void __cdecl GScr_LoadScripts(void);
 
 extern cvar_t* g_speed;
 
 void __cdecl SV_GameSendServerCommand(int clientnum, int svscmd_type, const char *text);
 
-#ifdef __cplusplus
-extern "C"{
+extern "C"
+{
     void G_ShowMotd(unsigned int clnum);
     qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);
-};
-
-extern "C"{
-#endif
     __cdecl void ClientUserinfoChanged( int clientNum );
     void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
-
-#ifdef __cplusplus
-};
-#endif
+    int __cdecl G_LocalizedStringIndex( const char* );
+}; //extern "C"
 
 
 
@@ -75,9 +63,6 @@ __cdecl __optimize3 void Jump_ClampVelocity(playerState_t* ps, vec3_t vec);
 __cdecl __optimize3 qboolean Jump_IsPlayerAboveMax(playerState_t* ps);
 __cdecl __optimize3 qboolean Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2);
 __cdecl __optimize3 float Jump_CalcHeight( playerState_t* ps );
-__cdecl __optimize3 void StuckInClient( gentity_t* gen );
-
-extern "C" int __cdecl G_LocalizedStringIndex( const char* );
 
 void __cdecl ClientCommand( int );
 

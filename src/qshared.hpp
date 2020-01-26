@@ -19,20 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
-
-
-// server.h
-
-//#include "../game/q_shared.h"
-//#include "../qcommon/qcommon.h"
-//#include "../game/g_public.h"
-//#include "../game/bg_public.h"
-
-//=============================================================================
-
-#ifndef __Q_SHARED_H__
-#define __Q_SHARED_H__
+#pragma once
 
 //#define _LAGDEBUG
 
@@ -43,10 +30,16 @@
 #include <string.h>
 #include <time.h>
 #include <math.h>
-#ifndef __cplusplus
 #include <stdbool.h>
-#endif
 
+using byte = unsigned char;
+enum qboolean
+{
+    qfalse = 0,
+    qtrue
+};
+
+#include "q_math.hpp"
 
 #define DEDICATEDONLY
 
@@ -121,9 +114,6 @@ typedef unsigned short WORD;
 #define HIWORD(a) ((WORD)(((DWORD)(a) >> 16) & 0xFFFF))
 #endif
 
-typedef unsigned char byte;
-typedef enum {qfalse, qtrue}	qboolean;
-
 #define _STRINGIFY(s) #s
 #define STRINGIFY(s) _STRINGIFY(s)
 
@@ -182,16 +172,27 @@ typedef enum {qfalse, qtrue}	qboolean;
 
 #define LIBRARY_ADDRESS_BY_HANDLE(dlhandle)((NULL == dlhandle) ? NULL :(void*)*(size_t const*)(dlhandle))
 
+struct cspField_t
+{
+  const char *szName;
+  int iOffset;
+  int iFieldType;
+};
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
+extern "C"
+{
+double __cdecl GetLeanFraction(const float fFrac);
+bool __cdecl Com_IsLegacyXModelName(const char *name);
+void COM_StripExtension( const char *in, char *out );
 void Com_Memset(void*, byte, int);
 //#define Com_Memset memset
 void Com_Memcpy(void*, const void*, int);
 //#define Com_Memcpy memcpy
-
+double __cdecl UnGetLeanFraction(const float fFrac);
+bool __cdecl ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrCpy)(char *, const char *));
+int __cdecl Q_stricmpwild(const char *wild, const char *s);
+char __cdecl Q_CleanChar(char character);
+int Com_sprintfPos(char *dest, const int destSize, int *destPos, const char *fmt, ...);
 
 #define NET_WANT_READ -0x7000
 #define NET_WANT_WRITE -0x7001
@@ -656,7 +657,6 @@ float Com_Clamp( float min, float max, float value );
 #ifndef BSPC
 
 char    *COM_SkipPath( char *pathname );
-void    COM_StripExtension( const char *in, char *out );
 void    COM_StripExtension2( const char *in, char *out, int destsize );
 void    COM_StripFilename( char *in, char *out );
 void    COM_DefaultExtension( char *path, int maxSize, const char *extension );
@@ -678,13 +678,6 @@ void COM_BitClear( int array[], int bitNum );
 
 
 #endif
-
-typedef struct
-{
-  const char *szName;
-  int iOffset;
-  int iFieldType;
-}cspField_t;
 
 #define MAX_TOKENLENGTH     1024
 
@@ -716,8 +709,6 @@ void    Swap_Init( void );
 
 
 #define random()    ( ( rand() & 0x7fff ) / ( (float)0x7fff ) )
-/*#define crandom()   ( 2.0 * ( random() - 0.5 ) )
-*/
 qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const char *function, const char *fmt, ...);
 
 
@@ -774,6 +765,4 @@ typedef unsigned int clipHandle_t;
 #include "q_platform.hpp"
 #include "qshared.hpp"
 #include "sys_cod4defs.hpp"
-
-#endif
 

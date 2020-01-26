@@ -1,4 +1,4 @@
-#ifndef __CM_LOCAL_H__
+﻿#ifndef __CM_LOCAL_H__
 #define __CM_LOCAL_H__
 
 #include "qshared.hpp"
@@ -368,9 +368,6 @@ private:
   char *priorityMap;
   int (__cdecl *collide_entity_func)(int, col_context_t *);
 };
-
-cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle );
-
 
 enum DynEntityDrawType
 {

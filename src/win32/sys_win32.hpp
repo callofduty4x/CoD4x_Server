@@ -66,7 +66,8 @@ extern "C"
     DWORD __cdecl _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
     DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend);
     DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend);
-}
+    int __cdecl __cxa_atexit(void (__cdecl *func) (void*), void *arg, void *dso_handle);
+} // extern "C"
 
 
 BOOL _ReadFileEx(HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPOVERLAPPED lpOverlapped, LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine);

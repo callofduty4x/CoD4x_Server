@@ -254,7 +254,6 @@ typedef struct
 }TraceThreadInfo;
 */
 
-cmodel_t    *CM_ClipHandleToModel( clipHandle_t handle );
 extern clipMap_t cm;
 //void __cdecl CM_LoadMapFromBsp(const char *name, char a2);
 extern "C" void __cdecl CM_LoadStaticModels();

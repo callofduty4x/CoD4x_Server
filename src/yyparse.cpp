@@ -5,61 +5,47 @@
 
 #include "qshared.hpp"
 
-typedef struct
+extern "C"
 {
-  FILE *yy_input_file;
-  byte* yy_ch_buf;
-  byte* yy_buf_pos;
-  int yy_buf_size;
-  int yy_n_chars;
-  int yy_is_our_buffer;
-  int yy_is_interactive;
-  int yy_at_bol;
-  int yy_fill_buffer;
-  int yy_buffer_status;
-}yy_buffer_state;
+    yy_buffer_state* __cdecl yy_create_buffer(FILE *file, int bufferSize)
+    {
+        yy_buffer_state *yybufState = (yy_buffer_state *)malloc(sizeof(yy_buffer_state));
+        if (!yybufState)
+        {
+            Com_Error(ERR_FATAL, "out of dynamic memory in yy_create_buffer()");
+            return nullptr;
+        }
 
-yy_buffer_state* __cdecl yy_create_buffer(FILE *file, int bufferSize)
-{
-  yy_buffer_state *yybufState;
+        yybufState->yy_buf_size = bufferSize;
+        yybufState->yy_ch_buf = reinterpret_cast<byte*>(malloc(bufferSize + 2));
+        if (!yybufState->yy_ch_buf)
+        {
+            Com_Error(ERR_FATAL, "out of dynamic memory in yy_create_buffer()");
+            return nullptr;
+        }
 
-  yybufState = (yy_buffer_state *)malloc(sizeof(yy_buffer_state));
-  if ( yybufState == NULL)
-  {
-    Com_Error(ERR_FATAL,"out of dynamic memory in yy_create_buffer()");
-    return NULL;
-  }
+        yybufState->yy_is_our_buffer = 1;
+        yybufState->yy_n_chars = 0;
+        yybufState->yy_ch_buf[0] = 0;
+        yybufState->yy_ch_buf[1] = 0;
+        yybufState->yy_buf_pos = yybufState->yy_ch_buf;
+        yybufState->yy_at_bol = 1;
+        yybufState->yy_buffer_status = 0;
+        yybufState->yy_input_file = file;
+        yybufState->yy_fill_buffer = 1;
+        yybufState->yy_is_interactive = 0;
+        return yybufState;
+    }
 
-  yybufState->yy_buf_size = bufferSize;
 
-  yybufState->yy_ch_buf = reinterpret_cast<byte*>(malloc(bufferSize + 2));
+    FILE* __cdecl yy_stdin()
+    {
+        return stdin;
+    }
 
-  if (yybufState->yy_ch_buf == NULL)
-  {
-    Com_Error(ERR_FATAL,"out of dynamic memory in yy_create_buffer()");
-    return NULL;
-  }
 
-  yybufState->yy_is_our_buffer = 1;
-  yybufState->yy_n_chars = 0;
-  yybufState->yy_ch_buf[0] = 0;
-  yybufState->yy_ch_buf[1] = 0;
-  yybufState->yy_buf_pos = yybufState->yy_ch_buf;
-  yybufState->yy_at_bol = 1;
-  yybufState->yy_buffer_status = 0;
-
-  yybufState->yy_input_file = file;
-  yybufState->yy_fill_buffer = 1;
-  yybufState->yy_is_interactive = 0;
-  return yybufState;
-}
-
-FILE* __cdecl yy_stdin()
-{
-    return stdin;
-}
-
-FILE* __cdecl yy_stdout()
-{
-    return stdout;
-}
+    FILE* __cdecl yy_stdout()
+    {
+        return stdout;
+    }
+} // extern "C"

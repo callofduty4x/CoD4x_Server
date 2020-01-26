@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -19,17 +19,13 @@
 ===========================================================================
 */
 
-
-
-#ifndef __MISC_H__
-#define __MISC_H__
-
+#pragma once
 #include "qshared.hpp"
 #include "player.hpp"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+
+extern "C"
+{
 void __cdecl Swap_Init(void);
 void __cdecl CSS_InitConstantConfigStrings(void);
 void __cdecl Con_InitChannels(void);
@@ -41,9 +37,5 @@ qboolean __cdecl SEH_StringEd_GetString( const char* input );
 void AddRedirectLocations(void);
 qboolean __cdecl Com_LoadDvarsFromBuffer(const char **inputbuf, unsigned int length, const char *data_p, const char *filename);
 
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+    void dMessage (int num, const char *msg, ...);
+} // extern "C"

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 1999-2005 Id Software, Inc.
 
@@ -19,12 +19,7 @@
 ===========================================================================
 */
 
-
-
-
-#ifndef __Q_MATH_H__
-#define __Q_MATH_H__
-
+#pragma once
 
 /*
 ==============================================================
@@ -44,6 +39,8 @@ typedef vec_t vec5_t[5];
 typedef int fixed4_t;
 typedef int fixed8_t;
 typedef int fixed16_t;
+
+#include "qshared.hpp"
 
 extern vec3_t vec3_origin;
 
@@ -155,12 +152,42 @@ extern vec4_t colorBlackBlank;
 //#include "util_heap.h"
 struct cplane_s;
 
-#ifdef __cplusplus
-extern "C"{
-#endif
+extern "C"
+{
+    void __cdecl YawVectors2D(const float yaw, vec2_t forward, vec2_t right);
+    double __cdecl AngleDelta(const float angle1, const float angle2);
+    double vectopitch(const float *vec);
+    void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanFrac, const float fViewRoll, const float fLeanDist);
+    int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd);
+    float vectoyaw( const vec3_t vec );
+    vec_t Vec2Normalize( vec3_t v );
+    double __cdecl PitchForYawOnNormal(const float fYaw, const vec3_t normal);
+    double __cdecl AngleNormalize360(const float angle);
+    void __cdecl Sys_SnapVector(vec3_t v);
+    void __cdecl ProjectPointOnPlane(const float *p, const float *normal, float *dst);
+    long double __cdecl randomf();
+    double __cdecl DiffTrack(float tgt, float cur, float rate, float deltaTime);
+    double __cdecl DiffTrackAngle(float tgt, float cur, float rate, float deltaTime);
+    double __cdecl Vec2NormalizeTo(const float *v, float *out);
+    void __cdecl ExpandBoundsToWidth(float *mins, float *maxs);
+    void AxisToAngles( vec3_t axis[3], vec3_t angles );
+    byte __cdecl DirToByte(const vec3_t dir);
+    void __cdecl PerpendicularVector(const vec3_t src, vec3_t dst);
+    long double crandom();
+    void __cdecl ms_srand(int seed);
+    void __cdecl Rand_Init(int seed);
+    void __cdecl YawVectors(const float yaw, vec3_t forward, vec3_t right);
+    float Q_acos( float c );
+    double vectosignedyaw(float *vec);
+    void __cdecl VectorAngleMultiply(float *vec, float angle);
+    double __cdecl Vec2Distance(const float *v0, const float *v1);
+    int __cdecl irand(int min, int max);
+    double __cdecl flrand(float min, float max);
+    void __cdecl ExtendBounds(vec3_t mins, vec3_t maxs, const vec3_t offset);
+    double __cdecl LinearTrackAngle(float tgt, float cur, float rate, float deltaTime);
+    void __cdecl MatrixInverseOrthogonal43(const float in[4][3], float out[4][3]);
+    void AxisClear( vec3_t axis[3] );
 
-void AddLeanToPosition(float *position, const float fViewYaw, const float fLeanFrac, const float fViewRoll, const float fLeanDist);
-int BoxDistSqrdExceeds(const float *absmin, const float *absmax, const float *org, const float fogOpaqueDistSqrd);
 
 #ifndef BSPC
 int BoxOnPlaneSide( vec3_t emins, vec3_t emaxs, struct cplane_s *p );
@@ -209,16 +236,34 @@ void RotatePoint( vec3_t point, const vec3_t matrix[3] );
 #include <xmmintrin.h>
 
 
-static inline int f2rint(float f)
-{
-    return __builtin_ia32_cvtss2si(__extension__ (__m128)(__v4sf){ f });
-}
+    void __cdecl AnglesToQuat(const float *angles, float *quat);
+    unsigned int __cdecl ms_rand();
+    void __cdecl AnglesSubtract(const vec3_t v1, const vec3_t v2, vec3_t v3);
+    double RotationToYaw(float *rot);
+    void __cdecl YawToAxis(float yaw, vec3_t axis[3]);
+    void __cdecl MatrixMultiply43(const float (*in1)[3], const float (*in2)[3], float (*out)[3]);
+    double __cdecl ColorNormalize(const float *in, float *out);
+    void __cdecl AxisToQuat(vec3_t mat[3], float *out);
+    void __cdecl QuatSlerp(const float *from, const float *to, float frac, float *result);
+    float Vec4Normalize( vec4_t v );
+    void __cdecl UnitQuatToForward(const float *quat, float *forward);
+    void __cdecl NearestPitchAndYawOnPlane(const float *angles, const float *normal, float *result);
+    void __cdecl AxisTransformVec3(const vec3_t axes[3], const vec3_t vec, vec3_t out);
+    void __cdecl QuatToAxis(const float *quat, vec3_t axis[3]);
+    void AxisCopy( vec3_t in[3], vec3_t out[3] );
+    void __cdecl QuatLerp(const float *qa, const float *qb, float frac, float *out);
+    void __cdecl ShrinkBoundsToHeight(vec3_t mins, vec3_t maxs);
+    void __cdecl MatrixIdentity33(float (*out)[3]);
+    qboolean __cdecl IntersectPlanes(const float **plane, float *xyz);
+    void __cdecl SnapPointToIntersectingPlanes(const float **planes, float *xyz, float snapGrid, float snapEpsilon);
+    qboolean __cdecl PlaneFromPoints(float *plane, const float *v0, const float *v1, const float *v2);
+    qboolean __cdecl VecNCompareCustomEpsilon(const float *v0, const float *v1, float epsilon, int coordCount);
+    void __cdecl MatrixTransposeTransformVector(const float *in1, const vec3_t in2[3], float *out);
+    void __cdecl ExpandBounds(const vec3_t addedmins, const vec3_t addedmaxs, vec3_t mins, vec3_t maxs);
+} // extern "C"
 
-
-
-#ifdef __cplusplus
-}
-#endif
+float AngleNormalize180 ( float angle );
+int f2rint(float f);
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))
@@ -230,6 +275,3 @@ static inline int f2rint(float f)
 #define ID_INLINE inline
 #endif
 #endif
-
-#endif
-

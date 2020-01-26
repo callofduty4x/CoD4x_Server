@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -20,10 +20,7 @@
 ===========================================================================
 */
 
-
-
-#ifndef __FILESYSTEM_H__
-#define __FILESYSTEM_H__
+#pragma once
 
 #include "qshared.hpp"
 #include "cvar.hpp"
@@ -143,10 +140,8 @@ extern cvar_t*	fs_gameDirVar;
 extern cvar_t*	loc_warnings;
 extern cvar_t*	loc_warningsAsErrors;
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
+extern "C"
+{
 void FS_CopyFile(char* FromOSPath,char* ToOSPath);
 int FS_Read(void* data, int length, fileHandle_t);
 long FS_FOpenFileRead(const char* filename, fileHandle_t* returnhandle);
@@ -259,18 +254,9 @@ void FS_WriteLogFlush(fileHandle_t f);
 int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h );
 void FS_AddGameDirectory_Single(const char *path, const char *dir_nolocal, qboolean localized, int index);
 
-#ifdef __cplusplus
-}
-#endif
-
-
-#endif
-
-
-
-
-
-
-
-
-
+    int __cdecl FS_OpenFileOverwrite(const char *qpath);
+    long FS_HashFileName( const char *fname, int hashSize );
+    void __cdecl FS_AddUserMapDirIWDs(const char *pszGameFolder);
+    int __cdecl FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize);
+    qboolean __cdecl FS_LanguageHasAssets(int iLanguage);
+} // extern "C"

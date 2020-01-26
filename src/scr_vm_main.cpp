@@ -763,35 +763,45 @@ void GScr_LoadGameTypeScript(void)
 }
 
 
-void __cdecl GScr_LoadScripts(void)
+extern "C"
 {
-    char mappath[MAX_QPATH];
-    cvar_t *mapname;
-    int i;
+    void __cdecl GScr_LoadScripts()
+    {
+        char mappath[MAX_QPATH];
+        cvar_t *mapname;
+        int i;
 
-    Scr_BeginLoadScripts();
-    Scr_InitFunctions();
+        Scr_BeginLoadScripts();
+        Scr_InitFunctions();
 
-    g_scr_data.del = GScr_LoadScriptAndLabel("codescripts/delete", "main", qtrue);
-    g_scr_data.initstructs = GScr_LoadScriptAndLabel("codescripts/struct", "initstructs", qtrue);
-    g_scr_data.createstruct = GScr_LoadScriptAndLabel("codescripts/struct", "createstruct", qtrue);
+        g_scr_data.del = GScr_LoadScriptAndLabel("codescripts/delete", "main", qtrue);
+        g_scr_data.initstructs = GScr_LoadScriptAndLabel("codescripts/struct", "initstructs", qtrue);
+        g_scr_data.createstruct = GScr_LoadScriptAndLabel("codescripts/struct", "createstruct", qtrue);
 
-    GScr_LoadGameTypeScript();
+        GScr_LoadGameTypeScript();
+        mapname = Cvar_RegisterString("mapname", "", CVAR_LATCH | CVAR_SYSTEMINFO, "The current map name");
+        Com_sprintf(mappath, sizeof(mappath), "maps/mp/%s", mapname->string);
+        g_scr_data.levelscript = GScr_LoadScriptAndLabel(mappath, "main", qfalse);
+        for (i = 0; i < 4; ++i)
+            Scr_SetClassMap(i);
 
-    mapname = Cvar_RegisterString("mapname", "", CVAR_LATCH | CVAR_SYSTEMINFO, "The current map name");
+        GScr_AddFieldsForEntity();
+        GScr_AddFieldsForHudElems();
+        GScr_AddFieldsForRadiant();
+        Scr_EndLoadScripts();
+    }
 
-    Com_sprintf(mappath, sizeof(mappath), "maps/mp/%s", mapname->string);
 
-    g_scr_data.levelscript = GScr_LoadScriptAndLabel(mappath, "main", qfalse);
+    void Scr_YYACError(const char* fmt, ...)
+    {
+        va_list argptr;
+        va_start(argptr, fmt);
+        char com_errorMessage[4096];
+        Q_vsnprintf(com_errorMessage, sizeof(com_errorMessage), fmt, argptr);
+        va_end(argptr);
 
-    for (i = 0; i < 4; ++i)
-        Scr_SetClassMap(i);
-
-    GScr_AddFieldsForEntity();
-//    GScr_AddFieldsForClient(); Already called by GScr_AddFieldsForEntity() and dup call makes assert fail
-    GScr_AddFieldsForHudElems();
-    GScr_AddFieldsForRadiant();
-    Scr_EndLoadScripts();
+        Com_Error(ERR_SCRIPT, "%s", com_errorMessage);
+    }
 }
 
 #define MAX_CALLSCRIPTSTACKDEPTH 200
@@ -1166,19 +1176,5 @@ gentity_t *VM_GetGEntityForEntRef(scr_entref_t num)
 gclient_t *VM_GetGClientForEntRef(scr_entref_t ref)
 {
     return VM_GetGClientForEntity(VM_GetGEntityForEntRef(ref));
-}
-
-
-
-void Scr_YYACError(const char* fmt, ...)
-{
-    va_list argptr;
-    char com_errorMessage[4096];
-
-    va_start(argptr, fmt);
-    Q_vsnprintf(com_errorMessage, sizeof(com_errorMessage), fmt, argptr);
-    va_end(argptr);
-
-    Com_Error(ERR_SCRIPT, "%s", com_errorMessage);
 }
 

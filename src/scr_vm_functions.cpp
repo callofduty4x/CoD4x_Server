@@ -44,6 +44,7 @@
 #include "g_scr_helicopter.hpp"
 #include "bg_misc.hpp"
 #include "g_hudelem.hpp"
+#include "sv_game.hpp"
 
 
 #include "sapi.hpp"
@@ -3106,8 +3107,6 @@ void GScr_Float()
     else
         Scr_ParamError(0, va("cannot cast %s to float", var_typename[varType]));
 }
-
-bool __cdecl SV_SetBrushModel(struct gentity_s *ent);
 
 void GScr_CloneBrushModelToScriptModel(scr_entref_t scriptModelEntNum)
 {

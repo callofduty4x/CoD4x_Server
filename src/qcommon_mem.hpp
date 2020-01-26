@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -60,10 +60,8 @@ struct HunkUser
 };
 
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
+extern "C"
+{
 void __cdecl Com_InitHunkMemory(void);
 void __cdecl Hunk_InitDebugMemory(void);
 void __cdecl Hunk_ClearTempMemory(void);
@@ -113,12 +111,7 @@ void *Z_Malloc( int size );			// returns 0 filled memory
 void *S_Malloc( int size );			// NOT 0 filled memory only for small allocations
 #endif
 
-#ifdef __cplusplus
-}
-#endif
-
-
+    void __cdecl Sys_OutOfMemErrorInternal(const char* filename, int line);
+} // extern "C"
 
 #endif
-
-

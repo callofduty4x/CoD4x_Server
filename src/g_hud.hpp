@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -19,10 +19,7 @@
 ===========================================================================
 */
 
-
-#ifndef __G_HUD_H__
-#define __G_HUD_H__
-
+#pragma once
 #include "qshared.hpp"
 #include "entity.hpp"
 
@@ -91,6 +88,9 @@ game_hudelem_t *__cdecl HudElem_Alloc(int clientNum, int teamNum);
 void HudElem_SetDefaults(game_hudelem_t *);
 void HudElem_ClearTypeSettings(game_hudelem_t *);
 
-#endif
-
-
+extern "C"
+{
+    void __cdecl HudElem_UpdateClient(gclient_t *client, int clientNum, hudelem_update_t which);
+    void __cdecl HudElem_ClientDisconnect(gentity_t *ent);
+    void __cdecl HudElem_DestroyAll();
+} // extern "C"

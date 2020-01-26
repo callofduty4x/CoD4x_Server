@@ -19,20 +19,19 @@
 ===========================================================================
 */
 
-
 #include "g_sv_movement.hpp"
-#include "qshared.hpp"
-#include "qshared.hpp"
-#include "g_shared.hpp"
 #include "entity.hpp"
-
-__cdecl __optimize3 void StuckInClient( gentity_t* gen )
-{
-
-}
+#include "g_shared.hpp"
 
 
 float Dirty_GetJumpHeight(unsigned int num)
 {
     return static_cast<int>(num) > level.maxclients ? 40 : level.clients[num].jumpHeight;
 }
+
+
+extern "C"
+{
+    void __cdecl __optimize3 StuckInClient( gentity_t* gen )
+    {}
+} // extern "C"

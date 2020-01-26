@@ -2749,7 +2749,7 @@ int SV_GetClientStat(int clientNum, signed int index)
 }
 
 
-void __cdecl SV_FreeClientScriptPers()
+extern "C" void __cdecl SV_FreeClientScriptPers()
 {
   client_t *cl;
   int i;

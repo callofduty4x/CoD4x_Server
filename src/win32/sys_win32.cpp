@@ -920,9 +920,9 @@ DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD 
 	return InterlockedCompareExchange((LONG volatile *)Destination, Exchange, Comparand);
 }
 
-int __cdecl __cxa_atexit(void (__cdecl *func) (void*), void *arg, void *dso_handle)
+extern "C" int __cdecl __cxa_atexit(void (__cdecl *func) (void*), void *arg, void *dso_handle)
 {
-	return atexit((void(__cdecl*)(void))func);
+    return atexit(reinterpret_cast<void(__cdecl*)()>(func));
 }
 
 void Sys_InitThreadContext()

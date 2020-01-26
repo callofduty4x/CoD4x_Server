@@ -37,45 +37,8 @@ If you have questions concerning this license or the applicable additional terms
 #include "g_main_mp.hpp"
 #include "g_main_mp.hpp"
 #include "g_utils_mp.hpp"
+#include "g_sv_cmds.hpp"
 
-/*
-==================
-CheatsOk
-==================
-*/
-int __cdecl CheatsOk(gentity_t *ent)
-{
-  const char *v1;
-  int result;
-  const char *v3;
-  bool bCreateFX;
-
-  if ( g_cheats->boolean )
-  {
-    bCreateFX = 0;
-    if ( Cvar_FindVar("createfx") )
-    {
-      bCreateFX = 1;
-    }
-    if ( ent->health > 0 || bCreateFX )
-    {
-      result = 1;
-    }
-    else
-    {
-      v3 = va("%c \"GAME_MUSTBEALIVECOMMAND\"", 101);
-      SV_GameSendServerCommand(ent - g_entities, 0, v3);
-      result = 0;
-    }
-  }
-  else
-  {
-    v1 = va("%c \"GAME_CHEATSNOTENABLED\"", 101);
-    SV_GameSendServerCommand(ent - g_entities, 0, v1);
-    result = 0;
-  }
-  return result;
-}
 
 #if 0
 void __cdecl Cmd_Take_f(gentity_t *ent)
@@ -688,180 +651,6 @@ void __cdecl Cmd_MenuResponse_f(gentity_t *pEnt)
   Scr_AddString(szMenuName);
   Scr_Notify(pEnt, scr_const.menuresponse, 2u);
 }
-
-void Cmd_Score_f(gentity_t* ent)
-{
-    SendScoreboard(ent);
-}
-
-
-int __cdecl Cmd_FollowCycle_f(gentity_t *ent, int dir)
-{
-  int i;
-  int health;
-  int clientNum;
-  int otherFlags;
-  struct clientState_s archcs;
-  struct playerState_s ps;
-
-  if ( dir != 1 && dir != -1 )
-  {
-    Com_Error(ERR_DROP, "Cmd_FollowCycle_f: bad dir %i", dir);
-  }
-
-  assert ( ent->client != NULL);
-
-  if ( ent->client->sess.sessionState != SESS_STATE_SPECTATOR )
-  {
-    return qfalse;
-  }
-  ent->client->lastFollowedClient = -1; //Clear this so we never jump back onto old player
-  if ( ent->client->sess.forceSpectatorClient < 0 )
-  {
-      clientNum = ent->client->spectatorClient;
-      if ( clientNum < 0 )
-      {
-        clientNum = 0;
-      }
-      i = clientNum;
-      do
-      {
-        clientNum += dir;
-        if ( clientNum >= level.maxclients )
-        {
-          clientNum = 0;
-        }
-        if ( clientNum < 0 )
-        {
-          clientNum = level.maxclients - 1;
-        }
-        if ( SV_GetArchivedClientInfo(clientNum, &ent->client->sess.archiveTime, &ps, &archcs, 0, &health, &otherFlags) )
-        {
-          assert(otherFlags & POF_PLAYER);
-
-          if ( G_ClientCanSpectateTeamOrLocalPlayer(ent->client, &archcs) )
-          {
-            ent->client->spectatorClient = clientNum;
-            ent->client->sess.sessionState = SESS_STATE_SPECTATOR;
-/*          Scr_AddEntity(&g_entities[clientNum], 0);
-            Scr_Notify(ent, scr_const.spectator_cycle, 1u);
-*/
-            return qtrue;
-          }
-        }
-      }
-      while ( clientNum != i );
-  }
-  return qfalse;
-}
-
-
-
-
-
-void __cdecl StopFollowing(gentity_t *ent)
-{
-  gclient_t *client;
-  vec3_t vAngles;
-//  col_context_t context;
-  vec3_t vEnd;
-  vec3_t vMins;
-  trace_t trace;
-  vec3_t vForward;
-  vec3_t vPos;
-  vec3_t vUp;
-  vec3_t vMaxs;
-
-/*
-  trace.normal.vec.v[0] = 0.0;
-  trace.normal.vec.v[1] = 0.0;
-  trace.normal.vec.v[2] = 0.0;
-  trace.normal.vec.v[3] = 0.0;
-  col_context_t::col_context_t(&context);
-*/
-  client = ent->client;
-
-  assert(client != NULL);
-
-  client->sess.forceSpectatorClient = -1;
-  client->sess.killCamEntity = -1;
-//  client->sess.killCamTargetEntity = ent->s.number;
-  client->spectatorClient = -1;
-  if ( client->ps.otherFlags & 2 )
-  {
-/*
-    client->ps.eFlags &= 0xFFFFBCFF;
-    client->ps.viewlocked = 0;
-    client->ps.viewlocked_entNum = 1023;
-*/
-    G_GetPlayerViewOrigin(&client->ps, vPos);
-    BG_GetPlayerViewDirection(&client->ps, vForward, 0, vUp);
-    vAngles[0] = client->ps.viewangles[0];
-    vAngles[1] = client->ps.viewangles[1];
-    vAngles[2] = client->ps.viewangles[2];
-    vAngles[0] = vAngles[0] + 15.0;
-    vEnd[0] = (float)(-40.0 * vForward[0]) + vPos[0];
-    vEnd[1] = (float)(-40.0 * vForward[1]) + vPos[1];
-    vEnd[2] = (float)(-40.0 * vForward[2]) + vPos[2];
-    vEnd[0] = (float)(10.0 * vUp[0]) + vEnd[0];
-    vEnd[1] = (float)(10.0 * vUp[1]) + vEnd[1];
-    vEnd[2] = (float)(10.0 * vUp[2]) + vEnd[2];
-    vMins[0] = -8.0;
-    vMins[1] = -8.0;
-    vMins[2] = -8.0;
-    vMaxs[0] = 8.0;
-    vMaxs[1] = 8.0;
-    vMaxs[2] = 8.0;
-    G_TraceCapsule(&trace, vPos, vMins, vMaxs, vEnd, 1023, 0x810011/*, &context*/);
-    Vec3Lerp(vPos, vEnd, trace.fraction, vPos);
-    client->ps.clientNum = ent - g_entities;
-
-//Not in Blackops
-    client->ps.eFlags &= 0xFFFFFCFF;
-    client->ps.viewlocked = PLAYERVIEWLOCK_NONE;
-    client->ps.viewlocked_entNum = 1023;
-///
-    client->ps.pm_flags &= 0xFFFEFFEF;
-    client->ps.weapFlags &= 0xFFFFFFBF;
-    client->ps.otherFlags &= 0xFFFFFFFD;
-    client->ps.fWeaponPosFrac = 0.0;
-    G_SetOrigin(ent, vPos);
-    client->ps.origin[0] = vPos[0];
-    client->ps.origin[1] = vPos[1];
-    client->ps.origin[2] = vPos[2];
-    SetClientViewAngle(ent, vAngles);
-    if ( !ent->tagInfo )
-    {
-      ent->r.currentAngles[0] = 0.0;
-    }
-    client->ps.shellshockIndex = 0;
-    client->ps.shellshockTime = 0;
-    client->ps.shellshockDuration = 0;
-/*
-    client->ps.predictableEventSequence = 0;
-    client->ps.predictableEventSequenceOld = 0;
-    client->ps.unpredictableEventSequence = 0;
-    client->ps.unpredictableEventSequenceOld = 0;
-    v2 = client->ps.predictableEvents;
-    *v2 = 0;
-    v2[1] = 0;
-    v2[2] = 0;
-    v2[3] = 0;
-    v3 = client->ps.unpredictableEvents;
-    *v3 = 0;
-    v3[1] = 0;
-    v3[2] = 0;
-    v3[3] = 0;
-*/
-  }
-}
-
-
-
-
-
-
-
 /*
 =================
 ClientCommand
@@ -917,3 +706,160 @@ void ClientCommand( int clientNum )
 
     SV_GameSendServerCommand( clientNum, 0, va( "%c \"GAME_UNKNOWNCLIENTCOMMAND\x15%s\"", 101, cmd ) );
 }
+
+extern "C"
+{
+    int __cdecl Cmd_FollowCycle_f(gentity_t *ent, int dir)
+    {
+        int i;
+        int health;
+        int clientNum;
+        int otherFlags;
+        struct clientState_s archcs;
+        struct playerState_s ps;
+
+        if ( dir != 1 && dir != -1 )
+            Com_Error(ERR_DROP, "Cmd_FollowCycle_f: bad dir %i", dir);
+
+        assert ( ent->client != NULL);
+        if ( ent->client->sess.sessionState != SESS_STATE_SPECTATOR )
+            return qfalse;
+
+        ent->client->lastFollowedClient = -1; //Clear this so we never jump back onto old player
+        if ( ent->client->sess.forceSpectatorClient < 0 )
+        {
+            clientNum = ent->client->spectatorClient;
+            if ( clientNum < 0 )
+                clientNum = 0;
+
+            i = clientNum;
+            do
+            {
+                clientNum += dir;
+                if ( clientNum >= level.maxclients )
+                    clientNum = 0;
+
+                if ( clientNum < 0 )
+                    clientNum = level.maxclients - 1;
+
+                if ( SV_GetArchivedClientInfo(clientNum, &ent->client->sess.archiveTime, &ps, &archcs, 0, &health, &otherFlags) )
+                {
+                    assert(otherFlags & POF_PLAYER);
+
+                    if ( G_ClientCanSpectateTeamOrLocalPlayer(ent->client, &archcs) )
+                    {
+                        ent->client->spectatorClient = clientNum;
+                        ent->client->sess.sessionState = SESS_STATE_SPECTATOR;
+                        return qtrue;
+                    }
+                }
+            }
+            while ( clientNum != i );
+        }
+
+        return qfalse;
+    }
+
+
+    void __cdecl StopFollowing(gentity_t *ent)
+    {
+        vec3_t vAngles;
+        //  col_context_t context;
+        vec3_t vEnd;
+        vec3_t vMins;
+        trace_t trace;
+        vec3_t vForward;
+        vec3_t vPos;
+        vec3_t vUp;
+        vec3_t vMaxs;
+
+        gclient_t* client = ent->client;
+        assert(client != NULL);
+        client->sess.forceSpectatorClient = -1;
+        client->sess.killCamEntity = -1;
+        client->spectatorClient = -1;
+        if ( client->ps.otherFlags & 2 )
+        {
+            G_GetPlayerViewOrigin(&client->ps, vPos);
+            BG_GetPlayerViewDirection(&client->ps, vForward, 0, vUp);
+            vAngles[0] = client->ps.viewangles[0];
+            vAngles[1] = client->ps.viewangles[1];
+            vAngles[2] = client->ps.viewangles[2];
+            vAngles[0] = vAngles[0] + 15.0;
+            vEnd[0] = (float)(-40.0 * vForward[0]) + vPos[0];
+            vEnd[1] = (float)(-40.0 * vForward[1]) + vPos[1];
+            vEnd[2] = (float)(-40.0 * vForward[2]) + vPos[2];
+            vEnd[0] = (float)(10.0 * vUp[0]) + vEnd[0];
+            vEnd[1] = (float)(10.0 * vUp[1]) + vEnd[1];
+            vEnd[2] = (float)(10.0 * vUp[2]) + vEnd[2];
+            vMins[0] = -8.0;
+            vMins[1] = -8.0;
+            vMins[2] = -8.0;
+            vMaxs[0] = 8.0;
+            vMaxs[1] = 8.0;
+            vMaxs[2] = 8.0;
+            G_TraceCapsule(&trace, vPos, vMins, vMaxs, vEnd, 1023, 0x810011/*, &context*/);
+            Vec3Lerp(vPos, vEnd, trace.fraction, vPos);
+            client->ps.clientNum = ent - g_entities;
+
+            //Not in Blackops
+            client->ps.eFlags &= 0xFFFFFCFF;
+            client->ps.viewlocked = PLAYERVIEWLOCK_NONE;
+            client->ps.viewlocked_entNum = 1023;
+            ///
+            client->ps.pm_flags &= 0xFFFEFFEF;
+            client->ps.weapFlags &= 0xFFFFFFBF;
+            client->ps.otherFlags &= 0xFFFFFFFD;
+            client->ps.fWeaponPosFrac = 0.0;
+            G_SetOrigin(ent, vPos);
+            client->ps.origin[0] = vPos[0];
+            client->ps.origin[1] = vPos[1];
+            client->ps.origin[2] = vPos[2];
+            SetClientViewAngle(ent, vAngles);
+            if ( !ent->tagInfo )
+            {
+                ent->r.currentAngles[0] = 0.0;
+            }
+            client->ps.shellshockIndex = 0;
+            client->ps.shellshockTime = 0;
+            client->ps.shellshockDuration = 0;
+        }
+    }
+
+
+    void Cmd_Score_f(gentity_t* ent)
+    {
+        SendScoreboard(ent);
+    }
+
+
+    int __cdecl CheatsOk(gentity_t *ent)
+    {
+        const char *v1;
+        int result;
+        const char *v3;
+        bool bCreateFX;
+
+        if ( g_cheats->boolean )
+        {
+            bCreateFX = 0;
+            if ( Cvar_FindVar("createfx") )
+                bCreateFX = 1;
+
+            if ( ent->health > 0 || bCreateFX )
+                result = 1;
+            else
+                v3 = va("%c \"GAME_MUSTBEALIVECOMMAND\"", 101);
+                SV_GameSendServerCommand(ent - g_entities, 0, v3);
+                result = 0;
+        }
+        else
+        {
+            v1 = va("%c \"GAME_CHEATSNOTENABLED\"", 101);
+            SV_GameSendServerCommand(ent - g_entities, 0, v1);
+            result = 0;
+        }
+
+        return result;
+    }
+} // extern "C"

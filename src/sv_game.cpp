@@ -172,130 +172,11 @@ char *__cdecl SV_AllocSkelMemory(unsigned int size)
 }
 
 
-
-extern "C" qboolean __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
-{
-  int size;
-  char *buf;
-
-  if ( DObjSkelExists(obj, sv.skelTimeStamp) )
-  {
-    return DObjSkelIsBoneUpToDate(obj, boneIndex) ? qtrue : qfalse;
-  }
-  size = DObjGetAllocSkelSize(obj);
-  buf = SV_AllocSkelMemory(size);
-  DObjCreateSkel(obj, buf, sv.skelTimeStamp);
-  return qfalse;
-}
-
-
-
 int __cdecl SV_DObjExists(struct gentity_s *ent)
 {
   return Com_GetServerDObj(ent->s.number) != 0;
 }
 
-int __cdecl SV_DObjGetBoneIndex(struct gentity_s *ent, unsigned int boneName)
-{
-  DObj *obj;
-  char index;
-
-  obj = Com_GetServerDObj(ent->s.number);
-  if ( obj )
-  {
-    index = -2;
-    if ( DObjGetBoneIndex(obj, boneName, &index, -1) )
-    {
-      return (uint8_t)index;
-    }
-  }
-  return -1;
-}
-
-struct DObjAnimMat *__cdecl SV_DObjGetMatrixArray(struct gentity_s *ent)
-{
-  DObj *obj;
-
-  obj = Com_GetServerDObj(ent->s.number);
-
-  assert(obj != NULL);
-
-  return DObjGetRotTransArray(obj);
-}
-
-void __cdecl SV_DObjUpdateServerTime(struct gentity_s *ent, float dtime, int bNotify)
-{
-  DObj *obj;
-
-  obj = Com_GetServerDObj(ent->s.number);
-  if ( obj )
-  {
-    DObjUpdateServerInfo(obj, dtime, bNotify);
-  }
-}
-
-void __cdecl SV_DObjInitServerTime(struct gentity_s *ent, float dtime)
-{
-  DObj *obj;
-
-  obj = Com_GetServerDObj(ent->s.number);
-  if ( obj )
-  {
-    DObjInitServerTime(obj, dtime);
-  }
-}
-
-int __cdecl SV_DObjCreateSkelForBones(DObj *obj, int *partBits)
-{
-    int len;
-    char *buf;
-
-    if ( DObjSkelExists(obj, sv.skelTimeStamp) )
-    {
-        return DObjSkelAreBonesUpToDate(obj, partBits);
-    }
-    len = DObjGetAllocSkelSize(obj);
-    buf = SV_AllocSkelMemory(len);
-    DObjCreateSkel(obj, buf, sv.skelTimeStamp);
-    return 0;
-}
-
-
-extern "C" struct XAnimTree_s *__cdecl SV_DObjGetTree(struct gentity_s *ent)
-{
-  DObj *obj;
-
-  obj = Com_GetServerDObj(ent->s.number);
-  if ( obj )
-  {
-    return DObjGetTree(obj);
-  }
-  return NULL;
-}
-
-
-void __cdecl SV_DObjDisplayAnim(struct gentity_s *ent, const char *header)
-{
-  DObj *obj;
-
-  obj = Com_GetServerDObj(ent->s.number);
-  if ( obj )
-  {
-    DObjDisplayAnim(obj, header);
-  }
-}
-
-
-void __cdecl SV_DObjGetBounds(struct gentity_s *ent, float *mins, float *maxs)
-{
-  DObj *obj;
-
-  obj = Com_GetServerDObj(ent->s.number);
-
-  assert(obj != NULL);
-
-  DObjGetBounds(obj, mins, maxs);
-}
 
 void __cdecl SV_DObjDumpInfo(struct gentity_s *ent)
 {
@@ -316,46 +197,6 @@ void __cdecl SV_DObjDumpInfo(struct gentity_s *ent)
 }
 
 
-bool __cdecl SV_SetBrushModel(struct gentity_s *ent)
-{
-  vec3_t mins;
-  vec3_t maxs;
-
-  assert(ent->r.inuse != 0);
-
-  if ( CM_ClipHandleIsValid(ent->s.index) )
-  {
-    CM_ModelBounds(ent->s.index, mins, maxs);
-
-    VectorCopy(mins, ent->r.mins);
-    VectorCopy(maxs, ent->r.maxs);
-
-    ent->r.bmodel = 1;
-    ent->r.contents = CM_ContentsOfModel(ent->s.index);
-/*
-//Backops
-    DObj *obj;
-    vec3_t mx, mn;
-
-
-    obj = Com_GetServerDObj(ent->s.number);
-    if ( obj )
-    {
-      if ( ent->r.svFlags & 4 )
-      {
-        DObjCalcBounds(obj, mn, mx);
-        Vec3Min(ent->r.mins, mn, ent->r.mins);
-        Vec3Max(ent->r.maxs, mx, ent->r.maxs);
-        ent->r.contents |= DObjGetContents(obj);
-      }
-    }*/
-
-    SV_LinkEntity(ent);
-    return true;
-  }
-  return false;
-}
-
 void *__cdecl SV_AllocXModelPrecache(int size)
 {
   return Hunk_Alloc(size, "SV_AllocXModelPrecache", 22);
@@ -366,59 +207,6 @@ void *__cdecl SV_AllocXModelPrecacheColl(int size)
   return Hunk_Alloc(size, "SV_AllocXModelPrecacheColl", 28);
 }
 
-XModel *__cdecl SV_XModelGet(const char *name)
-{
-  return XModelPrecache(name, SV_AllocXModelPrecache, SV_AllocXModelPrecacheColl);
-}
-
-
-
-int __cdecl SV_EntityContact(const float *mins, const float *maxs, struct gentity_s *gEnt)
-{
-  float dist;
-  unsigned int model;
-  trace_t trace;
-  vec2_t center;
-
-  trace.normal[0] = 0.0;
-  trace.normal[1] = 0.0;
-  trace.normal[2] = 0.0;
-
-  if ( gEnt->r.svFlags & (0x20 | SVF_DISK))
-  {
-    if ( gEnt->r.svFlags & 0x20 )
-    {
-      assert(gEnt->r.mins[2] == 0);
-
-      if ( gEnt->r.currentOrigin[2] < maxs[2] )
-      {
-        if ( mins[2] < (float)(gEnt->r.currentOrigin[2] + gEnt->r.maxs[2]) )
-        {
-          center[0] = mins[0] + maxs[0];
-          center[1] = mins[1] + maxs[1];
-          center[0] = 0.5 * center[0];
-          center[1] = 0.5 * center[1];
-          dist = maxs[0] - center[0] + gEnt->r.maxs[0];
-          return Square(dist) > Vec2DistanceSq(center, gEnt->r.currentOrigin);
-        }
-      }
-      return 0;
-    }
-    assert(gEnt->r.svFlags & SVF_DISK);
-
-    center[0] = mins[0] + maxs[0];
-    center[1] = mins[1] + maxs[1];
-    center[0] = 0.5 * center[0];
-    center[1] = 0.5 * center[1];
-
-    dist = maxs[0] - center[0] + gEnt->r.maxs[0] - 64.0;
-    return Vec2DistanceSq(center, gEnt->r.currentOrigin) >= Square(dist);
-  }
-  model = SV_ClipHandleForEntity(gEnt);
-  CM_TransformedBoxTraceExternal( &trace, vec3_origin, vec3_origin, mins, maxs,
-                                model, -1, gEnt->r.currentOrigin, gEnt->r.currentAngles);
-  return trace.startsolid;
-}
 
 int boxVerts[24][3] =
 {
@@ -449,7 +237,7 @@ int boxVerts[24][3] =
 };
 
 
-void __cdecl SV_XModelDebugBoxesInternal(struct gentity_s *ent, const float *color, int *partBits, int duration)
+void __cdecl SV_XModelDebugBoxesInternal(gentity_t *ent, const float *color, int *partBits, int duration)
 {
   struct DObjAnimMat *boneMatrix;
   unsigned int j;
@@ -539,12 +327,6 @@ void __cdecl SV_XModelDebugBoxesInternal(struct gentity_s *ent, const float *col
 }
 
 
-void SV_XModelDebugBoxes(struct gentity_s *ent)
-{
-    SV_XModelDebugBoxesInternal(ent, colorWhite, 0, 0);
-}
-
-
 const char* SV_GetGuid( unsigned int clnum, char* buffer, int len)
 {
 
@@ -567,163 +349,9 @@ uint64_t SV_GetPlayerXuid( unsigned int clnum)
 }
 
 
-qboolean __cdecl SV_MapExists(const char *name)
-{
-  char fullpath[MAX_OSPATH];
-  const char *basename;
-
-  basename = SV_GetMapBaseName(name);
-  Com_GetBspFilename(fullpath, sizeof(fullpath), basename);
-  return FS_ReadFile(fullpath, 0) >= 0 ? qtrue : qfalse;
-}
-
-
-void __cdecl SV_LocateGameData(struct gentity_s *gEnts, int numGEntities, int sizeofGEntity_t, struct playerState_s *clients, int sizeofGameClient)
-{
-  sv.gentities = gEnts;
-  sv.gentitySize = sizeofGEntity_t;
-  sv.num_entities = numGEntities;
-  sv.gameClients = clients;
-  sv.gameClientSize = sizeofGameClient;
-}
-
-
-void __cdecl SV_GameDropClient(int clientNum, const char *reason)
-{
-  assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
-
-  if ( clientNum >= 0 && clientNum < sv_maxclients->integer )
-  {
-    SV_DropClient(&svs.clients[clientNum], reason);
-  }
-}
-
-extern "C" void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd)
-{
-  assert(clientNum >= 0);
-  assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
-  assert(clientNum < sv_maxclients->integer);
-
-  memcpy(cmd, &svs.clients[clientNum].lastUsercmd, sizeof(struct usercmd_s));
-}
-
-int __cdecl SV_GetClientPing(int clientNum)
-{
-  assert(clientNum < sv_maxclients->integer && clientNum >= 0);
-
-  return svs.clients[clientNum].ping;
-}
-
 void SV_SetAssignedTeam()
 {
 
-}
-
-
-int __cdecl SV_inSnapshot(const float *origin, int iEntityNum)
-{
-  int clientcluster;
-  float fogOpaqueDistSqrd;
-  struct svEntity_s *svEnt;
-  int l;
-  int leafnum;
-  struct gentity_s *ent;
-  int i;
-  byte *bitvector;
-
-  ent = (struct gentity_s *)((char *)sv.gentities + iEntityNum * sv.gentitySize);
-  if ( !ent->r.linked )
-  {
-    return 0;
-  }
-  if ( ent->r.broadcastTime )
-  {
-    return 1;
-  }
-  if ( ent->r.svFlags & 1 )
-  {
-    return 0;
-  }
-  if ( ent->r.svFlags & 0x18 )
-  {
-    return 1;
-  }
-  svEnt = SV_SvEntityForGentity(ent);
-  leafnum = CM_PointLeafnum(origin);
-  if ( !svEnt->numClusters )
-  {
-    return 0;
-  }
-  clientcluster = CM_LeafCluster(leafnum);
-  bitvector = CM_ClusterPVS(clientcluster);
-  l = 0;
-  for ( i = 0; i < svEnt->numClusters; ++i )
-  {
-    l = svEnt->clusternums[i];
-    if ( (1 << (l & 7)) & (uint8_t)bitvector[l >> 3] )
-    {
-      break;
-    }
-  }
-  if ( i == svEnt->numClusters )
-  {
-    if ( !svEnt->lastCluster )
-    {
-      return 0;
-    }
-    while ( l <= svEnt->lastCluster && !((1 << (l & 7)) & (uint8_t)bitvector[l >> 3]) )
-    {
-      ++l;
-    }
-    if ( l == svEnt->lastCluster )
-    {
-      return 0;
-    }
-  }
-  fogOpaqueDistSqrd = G_GetFogOpaqueDistSqrd();
-  if ( fogOpaqueDistSqrd != 3.4028235e38 )
-  {
-    return BoxDistSqrdExceeds(ent->r.absmin, ent->r.absmax, origin, fogOpaqueDistSqrd) == 0;
-  }
-  return 1;
-}
-
-void __cdecl SV_SetGameEndTime(int gameEndTime)
-{
-  char lastGameEndTime[12];
-
-  SV_GetConfigstring(11, lastGameEndTime, 12);
-  if ( abs(atoi(lastGameEndTime) - gameEndTime) > 500 )
-  {
-    SV_SetConfigstring(11, va("%i", gameEndTime));
-  }
-}
-
-void __cdecl SV_SetMapCenter(float *mapCenter)
-{
-  assert(mapCenter);
-  VectorCopy(mapCenter, svs.mapCenter);
-  SV_SetConfigstring(12, va("%g %g %g", svs.mapCenter[0], svs.mapCenter[1], svs.mapCenter[2]));
-}
-
-int SV_GetAssignedTeam()
-{
-  return 0;
-}
-
-void __cdecl SV_MatchEnd()
-{
-/*
-//Only Blackops
-  if ( onlinegame )
-  {
-    if ( onlinegame->boolean )
-    {
-      Com_DPrintf(CON_CHANNEL_DONT_FILTER, "\n*******SERVER: SV_MatchEnd called, uploading leaderboards.\n");
-      SV_CommitClientLeaderboards();
-    }
-  }
-*/
 }
 
 
@@ -888,3 +516,302 @@ void SV_GetServerinfo(char *buffer, int bufferSize)
   infostring = Cvar_InfoString(CVAR_SERVERINFO);
   Q_strncpyz(buffer, infostring, bufferSize);
 }
+
+extern "C"
+{
+    qboolean __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
+    {
+        if ( DObjSkelExists(obj, sv.skelTimeStamp) )
+            return DObjSkelIsBoneUpToDate(obj, boneIndex) ? qtrue : qfalse;
+
+        int size = DObjGetAllocSkelSize(obj);
+        char* buf = SV_AllocSkelMemory(size);
+        DObjCreateSkel(obj, buf, sv.skelTimeStamp);
+        return qfalse;
+    }
+
+
+    void SV_XModelDebugBoxes(struct gentity_s *ent)
+    {
+        SV_XModelDebugBoxesInternal(ent, colorWhite, 0, 0);
+    }
+
+
+    struct XAnimTree_s *__cdecl SV_DObjGetTree(struct gentity_s *ent)
+    {
+        DObj *obj = Com_GetServerDObj(ent->s.number);
+        return obj ? DObjGetTree(obj) : nullptr;
+    }
+
+
+    void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd)
+    {
+      assert(clientNum >= 0);
+      assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
+      assert(clientNum < sv_maxclients->integer);
+
+      memcpy(cmd, &svs.clients[clientNum].lastUsercmd, sizeof(struct usercmd_s));
+    }
+
+
+    int __cdecl SV_EntityContact(const float *mins, const float *maxs, struct gentity_s *gEnt)
+    {
+        float dist;
+        unsigned int model;
+        trace_t trace;
+        vec2_t center;
+
+        trace.normal[0] = 0.0;
+        trace.normal[1] = 0.0;
+        trace.normal[2] = 0.0;
+
+        if ( gEnt->r.svFlags & (0x20 | SVF_DISK))
+        {
+            if ( gEnt->r.svFlags & 0x20 )
+            {
+                assert(gEnt->r.mins[2] == 0);
+
+                if ( gEnt->r.currentOrigin[2] < maxs[2] )
+                {
+                    if ( mins[2] < (float)(gEnt->r.currentOrigin[2] + gEnt->r.maxs[2]) )
+                    {
+                        center[0] = mins[0] + maxs[0];
+                        center[1] = mins[1] + maxs[1];
+                        center[0] = 0.5 * center[0];
+                        center[1] = 0.5 * center[1];
+                        dist = maxs[0] - center[0] + gEnt->r.maxs[0];
+                        return Square(dist) > Vec2DistanceSq(center, gEnt->r.currentOrigin);
+                    }
+                }
+                return 0;
+            }
+            assert(gEnt->r.svFlags & SVF_DISK);
+
+            center[0] = mins[0] + maxs[0];
+            center[1] = mins[1] + maxs[1];
+            center[0] = 0.5 * center[0];
+            center[1] = 0.5 * center[1];
+
+            dist = maxs[0] - center[0] + gEnt->r.maxs[0] - 64.0;
+            return Vec2DistanceSq(center, gEnt->r.currentOrigin) >= Square(dist);
+        }
+        model = SV_ClipHandleForEntity(gEnt);
+        CM_TransformedBoxTraceExternal( &trace, vec3_origin, vec3_origin, mins, maxs,
+                                        model, -1, gEnt->r.currentOrigin, gEnt->r.currentAngles);
+        return trace.startsolid;
+    }
+
+
+    void __cdecl SV_GameDropClient(int clientNum, const char *reason)
+    {
+        assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
+        if ( clientNum >= 0 && clientNum < sv_maxclients->integer )
+            SV_DropClient(&svs.clients[clientNum], reason);
+    }
+
+
+    int SV_GetAssignedTeam()
+    {
+        return 0;
+    }
+
+
+    int __cdecl SV_inSnapshot(const float *origin, int iEntityNum)
+    {
+        int clientcluster;
+        float fogOpaqueDistSqrd;
+        struct svEntity_s *svEnt;
+        int l;
+        int leafnum;
+        struct gentity_s *ent;
+        int i;
+        byte *bitvector;
+
+        ent = (struct gentity_s *)((char *)sv.gentities + iEntityNum * sv.gentitySize);
+        if ( !ent->r.linked )
+            return 0;
+
+        if ( ent->r.broadcastTime )
+            return 1;
+
+        if ( ent->r.svFlags & 1 )
+            return 0;
+
+        if ( ent->r.svFlags & 0x18 )
+            return 1;
+
+        svEnt = SV_SvEntityForGentity(ent);
+        leafnum = CM_PointLeafnum(origin);
+        if ( !svEnt->numClusters )
+            return 0;
+
+        clientcluster = CM_LeafCluster(leafnum);
+        bitvector = CM_ClusterPVS(clientcluster);
+        l = 0;
+        for ( i = 0; i < svEnt->numClusters; ++i )
+        {
+            l = svEnt->clusternums[i];
+            if ( (1 << (l & 7)) & (uint8_t)bitvector[l >> 3] )
+                break;
+        }
+
+        if ( i == svEnt->numClusters )
+        {
+            if ( !svEnt->lastCluster )
+                return 0;
+
+            while ( l <= svEnt->lastCluster && !((1 << (l & 7)) & (uint8_t)bitvector[l >> 3]) )
+                ++l;
+
+            if ( l == svEnt->lastCluster )
+                return 0;
+        }
+
+        fogOpaqueDistSqrd = G_GetFogOpaqueDistSqrd();
+        if ( fogOpaqueDistSqrd != 3.4028235e38 )
+            return BoxDistSqrdExceeds(ent->r.absmin, ent->r.absmax, origin, fogOpaqueDistSqrd) == 0;
+
+        return 1;
+    }
+
+
+    int __cdecl SV_GetClientPing(int clientNum)
+    {
+        assert(clientNum < sv_maxclients->integer && clientNum >= 0);
+        return svs.clients[clientNum].ping;
+    }
+
+
+    qboolean __cdecl SV_MapExists(const char *name)
+    {
+      char fullpath[MAX_OSPATH];
+      const char *basename;
+
+      basename = SV_GetMapBaseName(name);
+      Com_GetBspFilename(fullpath, sizeof(fullpath), basename);
+      return FS_ReadFile(fullpath, 0) >= 0 ? qtrue : qfalse;
+    }
+
+
+    XModel *__cdecl SV_XModelGet(const char *name)
+    {
+        return XModelPrecache(name, SV_AllocXModelPrecache, SV_AllocXModelPrecacheColl);
+    }
+
+
+    void __cdecl SV_LocateGameData(gentity_t* gEnts, int numGEntities, int sizeofGEntity_t, playerState_t* clients, int sizeofGameClient)
+    {
+        sv.gentities = gEnts;
+        sv.gentitySize = sizeofGEntity_t;
+        sv.num_entities = numGEntities;
+        sv.gameClients = clients;
+        sv.gameClientSize = sizeofGameClient;
+    }
+
+
+    void __cdecl SV_DObjInitServerTime(gentity_t* ent, float dtime)
+    {
+        DObj *obj = Com_GetServerDObj(ent->s.number);
+        if ( obj )
+            DObjInitServerTime(obj, dtime);
+    }
+
+
+    void __cdecl SV_DObjDisplayAnim(struct gentity_s *ent, const char *header)
+    {
+        DObj *obj = Com_GetServerDObj(ent->s.number);
+        if ( obj )
+            DObjDisplayAnim(obj, header);
+    }
+
+
+    bool __cdecl SV_SetBrushModel(gentity_t* ent)
+    {
+        assert(ent->r.inuse != 0);
+        if ( CM_ClipHandleIsValid(ent->s.index) )
+        {
+            vec3_t mins;
+            vec3_t maxs;
+            CM_ModelBounds(ent->s.index, mins, maxs);
+            VectorCopy(mins, ent->r.mins);
+            VectorCopy(maxs, ent->r.maxs);
+            ent->r.bmodel = 1;
+            ent->r.contents = CM_ContentsOfModel(ent->s.index);
+            SV_LinkEntity(ent);
+            return true;
+        }
+
+        return false;
+    }
+
+
+    int __cdecl SV_DObjGetBoneIndex(struct gentity_s *ent, unsigned int boneName)
+    {
+        DObj *obj = Com_GetServerDObj(ent->s.number);
+        if ( obj )
+        {
+            char index = -2;
+            if ( DObjGetBoneIndex(obj, boneName, &index, -1) )
+                return (uint8_t)index;
+        }
+
+        return -1;
+    }
+
+
+    void __cdecl SV_MatchEnd()
+    {}
+
+
+    void __cdecl SV_SetMapCenter(float *mapCenter)
+    {
+        assert(mapCenter);
+        VectorCopy(mapCenter, svs.mapCenter);
+        SV_SetConfigstring(12, va("%g %g %g", svs.mapCenter[0], svs.mapCenter[1], svs.mapCenter[2]));
+    }
+
+
+    void __cdecl SV_SetGameEndTime(int gameEndTime)
+    {
+        char lastGameEndTime[12] = {'\0'};
+        SV_GetConfigstring(11, lastGameEndTime, 12);
+        if ( abs(atoi(lastGameEndTime) - gameEndTime) > 500 )
+            SV_SetConfigstring(11, va("%i", gameEndTime));
+    }
+
+
+    void __cdecl SV_DObjGetBounds(gentity_t* ent, float *mins, float *maxs)
+    {
+        DObj *obj = Com_GetServerDObj(ent->s.number);
+        assert(obj != NULL);
+        DObjGetBounds(obj, mins, maxs);
+    };
+
+
+    int __cdecl SV_DObjCreateSkelForBones(DObj *obj, int *partBits)
+    {
+        if ( DObjSkelExists(obj, sv.skelTimeStamp) )
+            return DObjSkelAreBonesUpToDate(obj, partBits);
+
+        int len = DObjGetAllocSkelSize(obj);
+        char* buf = SV_AllocSkelMemory(len);
+        DObjCreateSkel(obj, buf, sv.skelTimeStamp);
+        return 0;
+    }
+
+
+    DObjAnimMat *__cdecl SV_DObjGetMatrixArray(gentity_t* ent)
+    {
+      DObj *obj = Com_GetServerDObj(ent->s.number);
+      assert(obj != NULL);
+      return DObjGetRotTransArray(obj);
+    }
+
+
+    void __cdecl SV_DObjUpdateServerTime(gentity_t* ent, float dtime, int bNotify)
+    {
+        DObj *obj = Com_GetServerDObj(ent->s.number);
+        if ( obj )
+            DObjUpdateServerInfo(obj, dtime, bNotify);
+    }
+} // extern "C"

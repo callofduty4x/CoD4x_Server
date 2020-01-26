@@ -2197,7 +2197,7 @@ int SV_GetCurrentClientInfo(int clientNum, playerState_t *ps, clientState_t *cs)
 
 
 
-int SV_GetArchivedClientInfo(int clientNum, int *pArchiveTime, playerState_t *ps, clientState_t *cs, float *origin, int *health, int *otherFlags)
+extern "C" int SV_GetArchivedClientInfo(int clientNum, int *pArchiveTime, playerState_t *ps, clientState_t *cs, float *origin, int *health, int *otherFlags)
 {
   cachedSnapshot_t *cachedSnapshot;
   unsigned int i;

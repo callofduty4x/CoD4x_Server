@@ -1096,39 +1096,6 @@ int FS_PathCmp( const char *s1, const char *s2 ) {
 
 	return 0;		// strings are equal
 }
-
-/*
-================
-return a hash value for the filename
-================
-*/
-long FS_HashFileName( const char *fname, int hashSize ) {
-	int i;
-	long hash;
-	char letter;
-
-	hash = 0;
-	i = 0;
-	while ( fname[i] != '\0' ) {
-		letter = tolower( fname[i] );
-		if ( letter == '.' ) {
-			break;                          // don't include extension
-		}
-		if ( letter == '\\' ) {
-			letter = '/';                   // damn path names
-		}
-		if ( letter == PATH_SEP ) {
-			letter = '/';                           // damn path names
-		}
-		hash += (long)( letter ) * ( i + 119 );
-		i++;
-	}
-	hash = ( hash ^ ( hash >> 10 ) ^ ( hash >> 20 ) );
-	hash &= ( hashSize - 1 );
-	return hash;
-}
-
-
 /*
 ===========
 FS_FOpenFileReadDir
@@ -3182,24 +3149,6 @@ unsigned Com_BlockChecksumKey32(void* buffer, int length, int key)
     }
     return ~q;
 }
-
-
-void __cdecl FS_AddUserMapDirIWDs(const char *pszGameFolder)
-{
-  struct searchpath_s *i;
-
-  for ( i = fs_searchpaths; i; i = i->next )
-  {
-    if ( i->pack && !Q_stricmp(i->pack->pakGamename, pszGameFolder) )
-    {
-      return;
-    }
-  }
-  FS_AddIwdFilesForGameDirectory(fs_homepath->string, pszGameFolder);
-}
-
-
-
 /*
 ================
 FS_Shutdown
@@ -4448,35 +4397,6 @@ int __cdecl FS_GetFileOsPath(const char *filename, char *ospath)
 }
 
 
-
-int __cdecl FS_OpenFileOverwrite(const char *qpath)
-{
-  DWORD v1;
-  char ospath[256];
-  unsigned int attributes;
-
-  if(!FS_Initialized())
-    Com_Error(ERR_FATAL, "Filesystem call made without initialization");
-
-  assert(qpath);
-
-  if ( FS_GetFileOsPath(qpath, ospath) < 0 )
-  {
-    Com_Error(ERR_DROP, "FS_FOpenFileOverWrite: Failed to open %s for writing.  It either does not exist or is in a iwd file.", qpath);
-  }
-  if ( fs_debug->integer )
-  {
-    Com_Printf(CON_CHANNEL_FILES, "FS_FOpenFileOverWrite: %s\n", ospath);
-  }
-  v1 = _GetFileAttributesA(ospath);
-  attributes = v1 & 0xFFFFFFFE;
-  if (attributes != v1 )
-  {
-    _SetFileAttributesA(ospath, attributes);
-  }
-  return FS_GetHandleAndOpenFile(qpath, ospath, 0);
-}
-
 int __cdecl FS_FOpenTextFileWrite(const char *filename)
 {
     if(!FS_Initialized())
@@ -4642,58 +4562,6 @@ int __cdecl FS_GetModList(char *listbuf, int bufsize)
   return nMods;
 }
 */
-
-int __cdecl FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize)
-{
-  int result;
-  const char **fileNames;
-  int nLen;
-  int nTotal;
-  int i;
-  int fileCount;
-
-  *listbuf = 0;
-  fileCount = 0;
-  nTotal = 0;
-  if ( Q_stricmp(path, "$modlist") )
-  {
-    fileNames = FS_ListFiles(path, extension, behavior, &fileCount);
-    for ( i = 0; i < fileCount; ++i )
-    {
-      nLen = strlen(fileNames[i]) + 1;
-      if ( nTotal + nLen + 1 >= bufsize )
-      {
-        fileCount = i;
-        break;
-      }
-      strcpy(listbuf, fileNames[i]);
-      listbuf += nLen;
-      nTotal += nLen;
-    }
-    FS_FreeFileList(fileNames);
-    result = fileCount;
-  }
-  else
-  {
-    result = FS_GetModList(listbuf, bufsize);
-  }
-  return result;
-}
-
-qboolean __cdecl FS_LanguageHasAssets(int iLanguage)
-{
-  searchpath_t *pSearch;
-
-  for ( pSearch = fs_searchpaths; pSearch; pSearch = pSearch->next )
-  {
-    if ( pSearch->localized && pSearch->langIndex == iLanguage )
-    {
-      return qtrue;
-    }
-  }
-  return qfalse;
-}
-
 
 char *__cdecl FS_GetMapBaseName(const char *mapname)
 {
@@ -4874,3 +4742,114 @@ void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the log
 }
 
 
+extern "C"
+{
+    int __cdecl FS_OpenFileOverwrite(const char *qpath)
+    {
+        if(!FS_Initialized())
+            Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+
+        assert(qpath);
+        char ospath[256];
+        if ( FS_GetFileOsPath(qpath, ospath) < 0 )
+            Com_Error(ERR_DROP, "FS_FOpenFileOverWrite: Failed to open %s for writing.  It either does not exist or is in a iwd file.", qpath);
+
+        if ( fs_debug->integer )
+            Com_Printf(CON_CHANNEL_FILES, "FS_FOpenFileOverWrite: %s\n", ospath);
+
+        DWORD v1 = _GetFileAttributesA(ospath);
+        unsigned int attributes = v1 & 0xFFFFFFFE;
+        if (attributes != v1 )
+            _SetFileAttributesA(ospath, attributes);
+
+        return FS_GetHandleAndOpenFile(qpath, ospath, 0);
+    }
+
+
+    /*
+    ================
+    return a hash value for the filename
+    ================
+    */
+    long FS_HashFileName( const char *fname, int hashSize )
+    {
+        long hash = 0;
+        int i = 0;
+        while ( fname[i] != '\0' )
+        {
+            char letter = tolower( fname[i] );
+            if ( letter == '.' )
+                break;                          // don't include extension
+
+            if ( letter == '\\' )
+                letter = '/';                   // damn path names
+
+            if ( letter == PATH_SEP )
+                letter = '/';                           // damn path names
+
+            hash += (long)( letter ) * ( i + 119 );
+            i++;
+        }
+
+        hash = ( hash ^ ( hash >> 10 ) ^ ( hash >> 20 ) );
+        hash &= ( hashSize - 1 );
+        return hash;
+    }
+
+
+    void __cdecl FS_AddUserMapDirIWDs(const char *pszGameFolder)
+    {
+        for (searchpath_s* i = fs_searchpaths; i; i = i->next )
+            if ( i->pack && !Q_stricmp(i->pack->pakGamename, pszGameFolder) )
+                return;
+
+        FS_AddIwdFilesForGameDirectory(fs_homepath->string, pszGameFolder);
+    }
+
+
+    int __cdecl FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize)
+    {
+        int result;
+        const char **fileNames;
+        int nLen;
+        int nTotal;
+        int i;
+        int fileCount;
+
+        *listbuf = 0;
+        fileCount = 0;
+        nTotal = 0;
+        if ( Q_stricmp(path, "$modlist") )
+        {
+            fileNames = FS_ListFiles(path, extension, behavior, &fileCount);
+            for ( i = 0; i < fileCount; ++i )
+            {
+                nLen = strlen(fileNames[i]) + 1;
+                if ( nTotal + nLen + 1 >= bufsize )
+                {
+                    fileCount = i;
+                    break;
+                }
+                strcpy(listbuf, fileNames[i]);
+                listbuf += nLen;
+                nTotal += nLen;
+            }
+            FS_FreeFileList(fileNames);
+            result = fileCount;
+        }
+        else
+            result = FS_GetModList(listbuf, bufsize);
+
+        return result;
+    }
+
+
+    qboolean __cdecl FS_LanguageHasAssets(int iLanguage)
+    {
+        for (searchpath_t* pSearch = fs_searchpaths; pSearch; pSearch = pSearch->next )
+            if ( pSearch->localized && pSearch->langIndex == iLanguage )
+                return qtrue;
+
+        return qfalse;
+    }
+} // extern "C"

@@ -38,6 +38,7 @@
 #include "g_main_mp.hpp"
 #include "g_team.hpp"
 #include "g_main_mp.hpp"
+#include "g_cmds.hpp"
 
 
 extern cvar_t *g_deadChat;
@@ -405,29 +406,7 @@ qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum)
     return qfalse;
 }
 
-/*
-=================
-StopFollowingOnDeath
 
-If the client being followed dies in game
-This function is required for refollowing facility on spawn
-=================
-*/
-
-__cdecl void StopFollowingOnDeath(gentity_t *ent)
-{
-
-    if (ent->client->spectatorClient != -1)
-        ent->client->lastFollowedClient = ent->client->spectatorClient; //saving the last followed player
-
-    StopFollowing(ent);
-}
-
-/*
-==================
-G_Say
-==================
-*/
 #define MAX_SAY_TEXT 150
 #define SAY_ALL 0
 #define SAY_TEAM 1
@@ -507,117 +486,6 @@ void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *
     SV_GameSendServerCommand(other->s.number, 0, va("%c \"\x15%s%c%c%s\"", 'i' - (mode != 1), v16, '^', color, message));
 }
 
-__cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText)
-{
-    int j;
-    gentity_t *other;
-    int color;
-    char name[64];
-    char buf[128];
-    // don't let text be too long for malicious reasons
-    char text[MAX_SAY_TEXT] = {'\0'};
-
-    if (mode == 1)
-    {
-        if (ent->client->sess.cs.team == TEAM_RED || ent->client->sess.cs.team == TEAM_BLUE)
-            mode = SAY_TEAM;
-        else
-            mode = SAY_ALL;
-    }
-    if (svs.clients[ent->s.number].clantag[0])
-    {
-        Com_sprintf(name, sizeof(name), "%s %s", svs.clients[ent->s.number].clantag, svs.clients[ent->s.number].name);
-    }
-    else
-    {
-        Q_strncpyz(name, svs.clients[ent->s.number].name, sizeof(name));
-    }
-    Q_CleanStr(name);
-
-    Q_strncpyz(text, chatText, sizeof(text));
-
-    char *textptr = text;
-
-    if (textptr[0] == 0x15)
-        textptr++;
-
-    if (textptr[0] == '/' || textptr[0] == '$' || (textptr[0] == '!' && !g_disabledefcmdprefix->boolean))
-    { //Check for Command-Prefix
-        textptr++;
-        SV_ExecuteRemoteCmd(ent->s.number, textptr);
-        //Scr_PlayerSay(ent, mode, textptr -1);
-        return;
-    }
-
-    if (Q_stricmpn(textptr, "changepassword", 14) == 0)
-    {
-        SV_ExecuteRemoteCmd(ent->s.number, textptr);
-        return;
-    }
-
-    if (sv_disableChat->boolean == qtrue)
-    {
-        SV_GameSendServerCommand(ent->s.number, 0, "\x67 \"Chat messages disabled on this server\"");
-        return;
-    }
-
-    const char* teamname = "";
-    switch (mode)
-    {
-    default:
-    case SAY_ALL:
-        G_LogPrintf("say;%s;%d;%s;%s\n", SV_GetGuid(ent->s.number, buf, sizeof(buf)), ent->s.number, name, text);
-        color = COLOR_WHITE;
-        break;
-    case SAY_TEAM:
-        G_LogPrintf("sayteam;%s;%d;%s;%s\n", SV_GetGuid(ent->s.number, buf, sizeof(buf)), ent->s.number, name, text);
-        teamname = ent->client->sess.cs.team == TEAM_RED ? g_TeamName_Axis->string : g_TeamName_Allies->string;
-        color = COLOR_CYAN;
-        break;
-    case SAY_TELL:
-        color = COLOR_YELLOW;
-        break;
-    }
-
-    G_ChatRedirect(text, ent->s.number, mode);
-
-    if (target)
-    {
-        G_SayTo(ent, target, mode, color, teamname, name, text);
-        return;
-    }
-
-    qboolean show = qtrue;
-    PHandler_Event(PLUGINS_ONMESSAGESENT, text, ent->s.number, &show, mode);
-
-    if (!show)
-        return;
-    if (svs.clients[ent->s.number].mutelevel >= 2)
-    {
-        SV_GameSendServerCommand(ent->s.number, 0, "h \"^1Error^7: You are no longer allowed to use the chat\"");
-        return;
-    }
-
-    /*
-	Removed. Create a plugin if you want to capature chat.
-	if(Scr_PlayerSay(ent, mode, textptr))
-	{
-		return;
-	}
-*/
-    if (text[0] != 0x15 && text[0] != 0x14 && !g_allowConsoleSay->boolean)
-        return;
-
-    // echo the text to the console
-    Com_Printf(CON_CHANNEL_SERVER,"Say %s: %s\n", name, text);
-
-    // send it to all the apropriate clients
-    for (j = 0; j < level.maxclients; j++)
-    {
-        other = &g_entities[j];
-        G_SayTo(ent, other, mode, color, teamname, name, text);
-    }
-}
 
 #define MAX_REDIRECTDESTINATIONS 4
 
@@ -705,4 +573,115 @@ qboolean __cdecl ConsoleCommand()
     }
 
     return qfalse;
+}
+
+
+extern "C"
+{
+    /*
+    =================
+    If the client being followed dies in game
+    This function is required for refollowing facility on spawn
+    =================
+    */
+    void __cdecl StopFollowingOnDeath(gentity_t *ent)
+    {
+
+        if (ent->client->spectatorClient != -1)
+            ent->client->lastFollowedClient = ent->client->spectatorClient; //saving the last followed player
+
+        StopFollowing(ent);
+    }
+
+
+    void __cdecl G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText)
+    {
+        int j;
+        gentity_t *other;
+        int color;
+        char name[64];
+        char buf[128];
+        // don't let text be too long for malicious reasons
+        char text[MAX_SAY_TEXT] = {'\0'};
+
+        if (mode == 1)
+        {
+            if (ent->client->sess.cs.team == TEAM_RED || ent->client->sess.cs.team == TEAM_BLUE)
+                mode = SAY_TEAM;
+            else
+                mode = SAY_ALL;
+        }
+
+        if (svs.clients[ent->s.number].clantag[0])
+            Com_sprintf(name, sizeof(name), "%s %s", svs.clients[ent->s.number].clantag, svs.clients[ent->s.number].name);
+        else
+            Q_strncpyz(name, svs.clients[ent->s.number].name, sizeof(name));
+
+        Q_CleanStr(name);
+        Q_strncpyz(text, chatText, sizeof(text));
+        char *textptr = text;
+        if (textptr[0] == 0x15)
+            textptr++;
+
+        if (textptr[0] == '/' || textptr[0] == '$' || (textptr[0] == '!' && !g_disabledefcmdprefix->boolean))
+        { //Check for Command-Prefix
+            textptr++;
+            SV_ExecuteRemoteCmd(ent->s.number, textptr);
+            return;
+        }
+
+        if (Q_stricmpn(textptr, "changepassword", 14) == 0)
+        {
+            SV_ExecuteRemoteCmd(ent->s.number, textptr);
+            return;
+        }
+
+        if (sv_disableChat->boolean == qtrue)
+            return SV_GameSendServerCommand(ent->s.number, 0, "\x67 \"Chat messages disabled on this server\"");
+
+        const char* teamname = "";
+        switch (mode)
+        {
+        default:
+        case SAY_ALL:
+            G_LogPrintf("say;%s;%d;%s;%s\n", SV_GetGuid(ent->s.number, buf, sizeof(buf)), ent->s.number, name, text);
+            color = COLOR_WHITE;
+            break;
+
+        case SAY_TEAM:
+            G_LogPrintf("sayteam;%s;%d;%s;%s\n", SV_GetGuid(ent->s.number, buf, sizeof(buf)), ent->s.number, name, text);
+            teamname = ent->client->sess.cs.team == TEAM_RED ? g_TeamName_Axis->string : g_TeamName_Allies->string;
+            color = COLOR_CYAN;
+            break;
+
+        case SAY_TELL:
+            color = COLOR_YELLOW;
+            break;
+        }
+
+        G_ChatRedirect(text, ent->s.number, mode);
+        if (target)
+            return G_SayTo(ent, target, mode, color, teamname, name, text);
+
+        qboolean show = qtrue;
+        PHandler_Event(PLUGINS_ONMESSAGESENT, text, ent->s.number, &show, mode);
+        if (!show)
+            return;
+
+        if (svs.clients[ent->s.number].mutelevel >= 2)
+            return SV_GameSendServerCommand(ent->s.number, 0, "h \"^1Error^7: You are no longer allowed to use the chat\"");
+
+        if (text[0] != 0x15 && text[0] != 0x14 && !g_allowConsoleSay->boolean)
+            return;
+
+        // echo the text to the console
+        Com_Printf(CON_CHANNEL_SERVER,"Say %s: %s\n", name, text);
+
+        // send it to all the apropriate clients
+        for (j = 0; j < level.maxclients; j++)
+        {
+            other = &g_entities[j];
+            G_SayTo(ent, other, mode, color, teamname, name, text);
+        }
+    }
 }
