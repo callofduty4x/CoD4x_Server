@@ -39,15 +39,16 @@
 #include "sapi.hpp"
 #include "xassets/extractor.hpp"
 #include "qvsnprintf.hpp"
+#include "q_platform.hpp"
+
+#include <csignal>
+#include <cstdarg>
+#include <cstdlib>
+#include <cstring>
+#include <chrono>
 
 
-#include <libgen.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/time.h>
+using namespace std::chrono;
 
 #define MAX_QUED_EVENTS 256
 
@@ -85,36 +86,22 @@ unsigned int sys_timeBase;
 
 unsigned int Sys_Milliseconds( void )
 {
-	struct timeval tp;
-
-	gettimeofday( &tp, NULL );
-
-	return ( tp.tv_sec - sys_timeBase ) * 1000 + tp.tv_usec / 1000;
+    auto ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+    return static_cast<unsigned int>(Sys_MillisecondsLong());
 }
 
 unsigned long long Sys_MillisecondsLong( void )
 {
-	unsigned long long time;
-
-	struct timeval tp;
-
-	gettimeofday( &tp, NULL );
-
-	time = (unsigned long long)tp.tv_sec - (unsigned long long)sys_timeBase;
-	time = time * 1000 + tp.tv_usec / 1000;
-	return time;
+    auto ms = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+    return ms.count();
 }
 
 
-void Sys_TimerInit( void ) {
-	struct timeval tp;
-
-	gettimeofday( &tp, NULL );
-
-	if ( !sys_timeBase )
-	{
-		sys_timeBase = tp.tv_sec;
-	}
+void Sys_TimerInit( void )
+{
+    auto s = duration_cast<seconds>(system_clock::now().time_since_epoch());
+    if (!sys_timeBase)
+        sys_timeBase = static_cast<unsigned int>(s.count());
 }
 
 
@@ -132,34 +119,17 @@ Sys_Microseconds
 	 0x7fffffff ms - ~24 days
    although timeval:tv_usec is an int, I'm not sure wether it is actually used as an unsigned int
 	 (which would affect the wrap period) */
-unsigned long long Sys_MicrosecondsLong( void ) {
-	struct timeval tp;
-	unsigned long long orgtime;
-	unsigned long long time;
-
-	gettimeofday( &tp, NULL );
-
-	orgtime = tp.tv_sec - sys_timeBase;
-
-	time = (orgtime << 19);
-	time = time + (orgtime << 18);
-	time = time + (orgtime << 17);
-	time = time + (orgtime << 16);
-	time = time + (orgtime << 14);
-	time = time + (orgtime << 9);
-	time = time + (orgtime << 6);
-	time = time + (unsigned long long)tp.tv_usec;
-
-	return time;
+unsigned long long Sys_MicrosecondsLong()
+{
+    auto mcs = duration_cast<microseconds>(system_clock::now().time_since_epoch());
+    return mcs.count();
 }
 
 
-int Sys_Seconds( void ) {
-	struct timeval tp;
-
-	gettimeofday( &tp, NULL );
-
-	return tp.tv_sec - sys_timeBase;
+int Sys_Seconds()
+{
+    auto s = duration_cast<seconds>(system_clock::now().time_since_epoch());
+    return static_cast<int>(s.count()) - sys_timeBase;
 }
 
 /*
@@ -169,7 +139,7 @@ Sys_Exit
 Single exit point (regular exit or in case of error)
 =================
 */
-static __attribute__ ((noreturn)) void Sys_Exit( int exitCode ) {
+static void Sys_Exit( int exitCode ) {
 
 	CON_Shutdown();
 	// we may be exiting to spawn another process

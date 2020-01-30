@@ -565,7 +565,7 @@ Sends a text message in an out-of-band datagram
 ================
 */
 /*
-void QDECL NET_PrintData( int sock, const char *format, ... ) {
+void __cdecl NET_PrintData( int sock, const char *format, ... ) {
 	va_list		argptr;
 	char		string[MAX_PACKETLEN];
 

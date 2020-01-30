@@ -381,8 +381,8 @@ typedef struct
 }scr_entref_t;
 #endif
 
-typedef void (*xfunction_t)();
-typedef void (*xmethod_t)(scr_entref_t EntRef_);
+using xfunction_t = void(*)();
+using xmethod_t = void(*)(scr_entref_t);
 
 typedef struct scr_function_s
 {
@@ -782,7 +782,7 @@ qboolean Scr_PlayerSay(gentity_t*, int mode, const char* text);
 qboolean Scr_ScriptCommand(int clientnum, const char* cmd, const char* args);
 
 void GScr_LoadGameTypeScript(void);
-unsigned int Scr_LoadScriptInternal(const char* scriptname, PrecacheEntry *precache, int precachecount);
+unsigned int __cdecl Scr_LoadScriptInternal(const char* scriptname, PrecacheEntry *precache, int precachecount);
 unsigned int Scr_LoadScript(const char* scriptname);
 qboolean Scr_ExecuteMasterResponse(char* s);
 void Scr_AddStockFunctions();

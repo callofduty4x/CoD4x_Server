@@ -806,7 +806,7 @@ extern "C"
 
 #define MAX_CALLSCRIPTSTACKDEPTH 200
 
-__cdecl unsigned int Scr_LoadScriptInternal(const char *scriptname, PrecacheEntry *precache, int entriesCount)
+unsigned int Scr_LoadScriptInternal(const char *scriptname, PrecacheEntry *precache, int entriesCount)
 {
 
     sval_u result;
@@ -915,7 +915,7 @@ __cdecl unsigned int Scr_LoadScriptInternal(const char *scriptname, PrecacheEntr
 
 void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath )
 {
-    char * p = strstr(reinterpret_cast<const char*>(scr_buffer_handle), "#if" );
+    char * p = strstr(reinterpret_cast<char*>(scr_buffer_handle), "#if" );
 	while( p != NULL )
 	{
 		if( *( p - 1 ) == '/' )
@@ -924,7 +924,7 @@ void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath )
 			continue;
 		}
 		
-		char * end = strchr( p, '\n' );
+		char * end = strchr(p, '\n');
 		if( end )
 			*end = '\0';
 

@@ -59,9 +59,9 @@
 #include "com_bsp_load_obj.hpp"
 
 
-#include <string.h>
-#include <stdarg.h>
-#include <unistd.h>
+#include <cstring>
+#include <cstdarg>
+
 
 cvar_t	*sv_protocol;
 cvar_t	*sv_privateClients;		// number of clients reserved for password
@@ -398,7 +398,7 @@ A NULL client will broadcast to all clients
 "c \" ==  print bold to players screen
 "e \" ==  print to players console
 */
-void QDECL SV_SendServerCommandString(client_t *cl, int type, char *message)
+void SV_SendServerCommandString(client_t *cl, int type, char *message)
 {
     client_t	*client;
     int		j;
@@ -422,7 +422,7 @@ void QDECL SV_SendServerCommandString(client_t *cl, int type, char *message)
     }
 }
 
-void QDECL SV_SendServerCommand_IW(client_t *cl, int cmdtype, const char *fmt, ...) {
+void SV_SendServerCommand_IW(client_t *cl, int cmdtype, const char *fmt, ...) {
 
     va_list		argptr;
     byte		message[MAX_MSGLEN];
@@ -435,7 +435,7 @@ void QDECL SV_SendServerCommand_IW(client_t *cl, int cmdtype, const char *fmt, .
 
 }
 
-void QDECL SV_SendServerCommand(client_t *cl, const char *fmt, ...) {
+void SV_SendServerCommand(client_t *cl, const char *fmt, ...) {
     va_list		argptr;
     byte		message[MAX_MSGLEN];
 
@@ -447,7 +447,7 @@ void QDECL SV_SendServerCommand(client_t *cl, const char *fmt, ...) {
 
 }
 
-void QDECL SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...) {
+void SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...) {
     va_list		argptr;
     byte		message[MAX_MSGLEN];
 

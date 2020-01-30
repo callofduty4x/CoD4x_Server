@@ -47,59 +47,6 @@ using qboolean = EQBoolean;
 
 #include "game/def.h"
 
-#ifndef WIN32
-
-#define __stdcall __attribute__((stdcall))
-#define __noreturn __attribute__((noreturn))
-#define __cdecl __attribute__((cdecl))
-#define __fastcall __attribute__((fastcall))
-#define __regparm1 __attribute__((regparm(1)))
-#define __regparm2 __attribute__((regparm(2)))
-#define __regparm3 __attribute__((regparm(3)))
-#define __optimize2 __attribute__ ((optimize("-O2")))
-#define __optimize3 __attribute__ ((optimize("-O3"))) __attribute__ ((noinline))
-
-#define DLL_PUBLIC __attribute__ ((visibility ("default")))
-#define DLL_LOCAL __attribute__ ((visibility ("hidden")))
-#define REGPARM(X)   __attribute__ ((regparm(X)))
-
-#define __align(X) __attribute__((aligned(X)))
-#define __packed __attribute__((__packed__))
-
-#else
-
-#define __noreturn [[ noreturn ]]
-#define __regparm1
-#define __regparm2
-#define __regparm3
-#define __optimize2
-#define __optimize3
-
-#define DLL_PUBLIC __declspec(dllexport);
-#define DLL_LOCAL
-#define REGPARM(X)
-
-#define __align(X) __declspec(align(X))
-#define __packed
-
-#endif
-
-
-#ifndef QDECL
-#define QDECL
-#endif
-
-typedef unsigned int long DWORD;
-typedef unsigned short WORD;
-
-#ifndef LOWORD
-#define LOWORD(a) ((WORD)(a))
-#endif
-
-#ifndef HIWORD
-#define HIWORD(a) ((WORD)(((DWORD)(a) >> 16) & 0xFFFF))
-#endif
-
 #define _STRINGIFY(s) #s
 #define STRINGIFY(s) _STRINGIFY(s)
 
@@ -217,7 +164,7 @@ int  Q_strichr( const char *s, char find);
 int Q_PrintStrlen( const char *string );
 char *Q_CleanStr( char *string );
 int Q_CountChar(const char *string, char tocount);
-int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...);
+int __cdecl Com_sprintf(char *dest, int size, const char *fmt, ...);
 void Q_strchrrepl(char *string, char torepl, char repl);
 char* Q_BitConv(int val);
 int Q_strLF2CRLF(const char* input, char* output, int outputlimit );
@@ -229,7 +176,7 @@ char* va( const char *format, ... );
 
 /*
 #ifndef __QSHARED_C__
-char* QDECL va_replacement(char *dest, int size, const char *fmt, ...);
+char* __cdecl va_replacement(char *dest, int size, const char *fmt, ...);
 #define mvabuf char va_buffer[MAX_STRING_CHARS]
 #define va(fmt,... ) va_replacement(va_buffer, sizeof(va_buffer), fmt, __VA_ARGS__)
 #endif
@@ -303,7 +250,7 @@ typedef struct{
 
 void XML_Init( xml_t *base, char *s, int size, char* encoding);
 void XML_Escape( char* buffer, size_t size, const char* string);
-qboolean QDECL XML_OpenTag( xml_t *base, char* root, int count,... );
+qboolean __cdecl XML_OpenTag( xml_t *base, char* root, int count,... );
 void XML_CloseTag(xml_t *base);
 void XML_AppendToBuffer( xml_t *base, const char* s );
 
@@ -416,7 +363,7 @@ typedef enum {
 	ERR_SCRIPT					// script error occured
 } errorParm_t;
 
-void QDECL Com_Error( int level, const char *error, ...);
+void __cdecl Com_Error( int level, const char *error, ...);
 
 
 #ifndef M_PI

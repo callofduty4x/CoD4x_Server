@@ -118,7 +118,8 @@ void Scr_ClearFunctions( )
 Scr_GetFunction
 ============
 */
-__cdecl xfunction_t Scr_GetFunction( const char** v_functionName, qboolean* v_developer ) {
+xfunction_t Scr_GetFunction( const char** v_functionName, qboolean* v_developer )
+{
 
 	scr_function_t  *cmd;
 
@@ -220,7 +221,7 @@ void Scr_ClearMethods(  )
 Scr_GetMethod
 ============
 */
-__cdecl xmethod_t Scr_GetMethod( const char** v_functionName, qboolean* v_developer ) {
+xmethod_t Scr_GetMethod( const char** v_functionName, qboolean* v_developer ) {
 
 	scr_method_t  *cmd;
 

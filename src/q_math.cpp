@@ -686,7 +686,7 @@ float AngleNormalize180 ( float angle )
 
 int f2rint(float f)
 {
-    return __builtin_ia32_cvtss2si(__extension__ (__m128)(__v4sf){ f });
+    return static_cast<int>(floor(f));
 }
 
 

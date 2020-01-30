@@ -42,8 +42,8 @@ qboolean Sec_BinaryToHex(char *in,unsigned long inSize,char *out, unsigned long 
     return qtrue;
 
 }
-qboolean Sec_HashMemory(int algo, void *in, size_t inSize, void *out, long unsigned int *outSize,qboolean binaryOutput){
-    //__asm__("int $3");
+qboolean Sec_HashMemory(int algo, void *in, size_t inSize, void *out, long unsigned int *outSize,qboolean binaryOutput)
+{
     if(in == NULL || out == NULL || *outSize < 1 || inSize < 1 || algo >= TAB_SIZE){
 	SecCryptErr = CRYPT_INVALID_ARG;
 	return qfalse;

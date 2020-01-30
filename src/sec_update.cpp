@@ -34,9 +34,6 @@
 #include "sys_cod4defs.hpp"
 #include "httpftp.hpp"
 #include "sys_thread.hpp"
-#include <unistd.h>
-#include <errno.h>
-
 
 
 static char upd_binpath[1024]; //On Windows it is filepath of executable file. On Linux it is current working directory
@@ -169,7 +166,6 @@ char *Sec_StrTok(char *str,char *tokens,int id){
 		    ptr2=mem[id];
 		    mem[id]=ptr+1;
 		    //printf("DEBUG!!!!!!!! %p:\"%s\", %p:\"%s\".\n\n",ptr,ptr,ptr2,ptr2);
-		    //__asm__("int $3");
 		    return ptr2;
 		}
 	    }

@@ -4149,10 +4149,6 @@ void __cdecl Load_MaterialHandle(bool atStreamStart)
     head.material = *varMaterialHandle;
     const char* name = DB_GetXAssetHeaderName(ASSET_TYPE_MATERIAL, &head);
     Com_Printf(CON_CHANNEL_SYSTEM, " name=%s\n", name);
-    if(strcmp("mc/mtl_opforce_body_sp", name) == 0)
-    {
-      __asm__("int $3");
-    }
 */
   }
   DB_PopStreamPos();

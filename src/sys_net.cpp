@@ -84,30 +84,30 @@
 		#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
 	#endif 
 
-	int inet_pton(int af, const char *src, void *dst)
-	{
-		struct sockaddr_storage sin;
-		int addrSize = sizeof(sin);
-		char address[256];
-		strncpy(address, src, sizeof(address));
+	//int inet_pton(int af, const char *src, void *dst)
+	//{
+	//	struct sockaddr_storage sin;
+	//	int addrSize = sizeof(sin);
+	//	char address[256];
+	//	strncpy(address, src, sizeof(address));
 
-		int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
-		if(rc != 0)
-		{
-			return -1;
-		}
-		if(af == AF_INET)
-		{
-			*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
-			return 1;
-		}
-		if(af == AF_INET6)
-		{
-			*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
-			return 1;
-		}
-		return 0;
-	}
+	//	int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
+	//	if(rc != 0)
+	//	{
+	//		return -1;
+	//	}
+	//	if(af == AF_INET)
+	//	{
+	//		*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
+	//		return 1;
+	//	}
+	//	if(af == AF_INET6)
+	//	{
+	//		*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
+	//		return 1;
+	//	}
+	//	return 0;
+	//}
 
 #else
 
@@ -1091,9 +1091,9 @@ const char	*NET_AdrToStringShort(netadr_t *a)
   return NET_AdrToStringShortInternal(a, s, sizeof(s));
 }
 
-__cdecl const char	*NET_AdrToStringShortMT(netadr_t *a, char* buf, int len)
+const char *NET_AdrToStringShortMT(netadr_t *a, char* buf, int len)
 {
-  return NET_AdrToStringShortInternal(a, buf, len);
+    return NET_AdrToStringShortInternal(a, buf, len);
 }
 
 const char	*NET_AdrToStringInternal(netadr_t *a, char* s, int len)
@@ -1137,9 +1137,9 @@ const char	*NET_AdrToString(netadr_t *a)
   return NET_AdrToStringInternal(a, s, sizeof(s));
 }
 
-__cdecl const char	*NET_AdrToStringMT(netadr_t *a, char* buf, int len)
+const char* NET_AdrToStringMT(netadr_t *a, char* buf, int len)
 {
-  return NET_AdrToStringInternal(a, buf, len);
+    return NET_AdrToStringInternal(a, buf, len);
 }
 
 
@@ -1175,9 +1175,9 @@ const char	*NET_AdrMaskToString(netadr_t *a)
   return NET_AdrMaskToStringInternal(a, s, sizeof(s));
 }
 
-__cdecl const char	*NET_AdrMaskToStringMT(netadr_t *a, char* buf, int len)
+const char* __cdecl NET_AdrMaskToStringMT(netadr_t* a, char* buf, int len)
 {
-  return NET_AdrMaskToStringInternal(a, buf, len);
+    return NET_AdrMaskToStringInternal(a, buf, len);
 }
 
 const char	*NET_AdrToConnectionStringCommon(netadr_t *a, const char* (NET_AdrToString_a)(netadr_t* ), const char* (NET_AdrToString_b)(netadr_t*))
@@ -3405,11 +3405,15 @@ int NET_TcpWaitForSocketIsReady(int socket, int timeoutsec)
 
 int NET_TcpIsSocketReady(int socket) //return: 1 ready, 0 not ready, -1 select error, -2 other error
 {
-	if(socket < 0 || socket >= 1024)
-	{
-		__asm__("int $3");
-	}
-	return NET_TcpWaitForSocketIsReady(socket, 0);
+    if (socket < 0 || socket >= 1024)
+    {
+#ifdef _MSC_VER
+        __asm int 3;
+#else
+        asm("int $3");
+#endif
+    }
+    return NET_TcpWaitForSocketIsReady(socket, 0);
 }
 
 

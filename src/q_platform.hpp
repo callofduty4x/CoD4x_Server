@@ -19,62 +19,12 @@
 ===========================================================================
 */
 
-
-#ifndef __Q_PLATFORM_H
-#define __Q_PLATFORM_H
+#pragma once
 
 // this is for determining if we have an asm version of a C function
 #define idx64 0
 
-#ifdef Q3_VM
-
-	#define id386 0
-	#define idppc 0
-	#define idppc_altivec 0
-	#define idsparc 0
-
-#else
-
-	#if (defined _M_IX86 || defined __i386__) && !defined(C_ONLY)
-	#define id386 1
-	#else
-	#define id386 0
-	#endif
-
-	#if (defined(powerc) || defined(powerpc) || defined(ppc) || \
-		defined(__ppc) || defined(__ppc__)) && !defined(C_ONLY)
-	#define idppc 1
-	#if defined(__VEC__)
-	#define idppc_altivec 1
-	#ifdef MACOS_X  // Apple's GCC does this differently than the FSF.
-	#define VECCONST_UINT8(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) \
-		(vector unsigned char) (a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p)
-	#else
-	#define VECCONST_UINT8(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) \
-		(vector unsigned char) {a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p}
-	#endif
-	#else
-	#define idppc_altivec 0
-	#endif
-	#else
-	#define idppc 0
-	#define idppc_altivec 0
-	#endif
-
-	#if defined(__sparc__) && !defined(C_ONLY)
-	#define idsparc 1
-	#else
-	#define idsparc 0
-	#endif
-
-#endif
-
 #define DLLEXPORT
-
-#ifndef __ASM_I386__ // don't include the C bits if included from qasm.h
-
-// for windows fastcall option
-#define QDECL
 
 //================================================================= WIN64/32 ===
 
@@ -83,16 +33,12 @@
 #undef idx64
 #define idx64 1
 
-#undef QDECL
-#define QDECL __cdecl
-
-#if defined( _MSC_VER )
+#ifdef _MSC_VER 
 #define OS_STRING "win_msvc64"
 #elif defined __MINGW64__
 #define OS_STRING "win_mingw64"
 #endif
 
-#define ID_INLINE __inline
 #define PATH_SEP '\\'
 
 #if defined( __WIN64__ ) 
@@ -107,19 +53,15 @@
 
 #elif defined(_WIN32) || defined(__WIN32__)
 
-#undef QDECL
-#define QDECL __cdecl
-
 #undef DLLEXPORT
 #define DLLEXPORT __declspec(dllexport)
 
-#if defined( _MSC_VER )
+#ifdef _MSC_VER
 #define OS_STRING "win_msvc"
 #elif defined __MINGW32__
 #define OS_STRING "win_mingw"
 #endif
 
-#define ID_INLINE __inline
 #define PATH_SEP '\\'
 
 #if defined( _M_IX86 ) || defined( __i386__ )
@@ -145,7 +87,6 @@
 #endif
 
 #define OS_STRING "macosx"
-#define ID_INLINE inline
 #define PATH_SEP '/'
 
 #ifdef __ppc__
@@ -177,7 +118,6 @@
 #define OS_STRING "kFreeBSD"
 #endif
 
-#define ID_INLINE inline
 #define PATH_SEP '/'
 
 #if defined __i386__
@@ -241,7 +181,6 @@
 #define OS_STRING "netbsd"
 #endif
 
-#define ID_INLINE inline
 #define PATH_SEP '/'
 
 #ifdef __i386__
@@ -272,7 +211,6 @@
 #include <sys/byteorder.h>
 
 #define OS_STRING "solaris"
-#define ID_INLINE inline
 #define PATH_SEP '/'
 
 #ifdef __i386__
@@ -296,7 +234,6 @@
 #ifdef __sgi
 
 #define OS_STRING "irix"
-#define ID_INLINE __inline
 #define PATH_SEP '/'
 
 #define ARCH_STRING "mips"
@@ -304,20 +241,6 @@
 #define Q3_BIG_ENDIAN // SGI's MIPS are always big endian
 
 #define DLL_EXT ".so"
-
-#endif
-
-//================================================================== Q3VM ===
-
-#ifdef Q3_VM
-
-#define OS_STRING "q3vm"
-#define ID_INLINE
-#define PATH_SEP '/'
-
-#define ARCH_STRING "bytecode"
-
-#define DLL_EXT ".qvm"
 
 #endif
 
@@ -330,10 +253,6 @@
 
 #if !defined( ARCH_STRING )
 #error "Architecture not supported"
-#endif
-
-#ifndef ID_INLINE
-#error "ID_INLINE not defined"
 #endif
 
 #ifndef PATH_SEP
@@ -371,14 +290,6 @@ float FloatSwap (const float f);
 #define BigShort(x) ShortSwap(x)
 #define BigFloat(x) FloatSwap(&x)
 
-#elif defined( Q3_VM )
-
-#define LittleShort
-#define LittleLong
-#define LittleFloat
-#define BigShort
-#define BigFloat
-
 #else
 #error "Endianness not defined"
 #endif
@@ -405,6 +316,55 @@ float FloatSwap (const float f);
 #endif
 
 
+#ifndef WIN32
 
-#endif
+#define __stdcall __attribute__((stdcall))
+#define __noreturn __attribute__((noreturn))
+#define __cdecl __attribute__((cdecl))
+#define __fastcall __attribute__((fastcall))
+#define __regparm1 __attribute__((regparm(1)))
+#define __regparm2 __attribute__((regparm(2)))
+#define __regparm3 __attribute__((regparm(3)))
+#define __optimize2 __attribute__ ((optimize("-O2")))
+#define __optimize3 __attribute__ ((optimize("-O3"))) __attribute__ ((noinline))
+
+#define DLL_PUBLIC __attribute__ ((visibility ("default")))
+#define DLL_LOCAL __attribute__ ((visibility ("hidden")))
+#define REGPARM(X)   __attribute__ ((regparm(X)))
+
+#define __align(X) __attribute__((aligned(X)))
+#define __packed __attribute__((__packed__))
+
+using DWORD = unsigned int long;
+using WORD = unsigned short;
+
+#define LOWORD(a) ((WORD)(a))
+#define HIWORD(a) ((WORD)(((DWORD)(a) >> 16) & 0xFFFF))
+
+#define __code_seg __attribute__((section(".text#")))
+#include <unistd.h>
+#include <errno.h>
+#include <libgen.h>
+#include <sys/time.h>
+
+#else
+
+#define __noreturn [[ noreturn ]]
+#define __regparm1
+#define __regparm2
+#define __regparm3
+#define __optimize2
+#define __optimize3
+
+#define DLL_PUBLIC __declspec(dllexport);
+#define DLL_LOCAL
+#define REGPARM(X)
+
+#define __align(X) __declspec(align(X))
+#define __packed
+
+#define __code_seg __declspec(allocate(".text"))
+
+#include <windows.h>
+
 #endif

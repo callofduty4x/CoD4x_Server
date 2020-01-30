@@ -272,7 +272,7 @@ void PHandler_FreeAll(int pID)
     Com_Printf(CON_CHANNEL_PLUGINS,"Plugins: Memory for plugin #%d has been freed.\n",pID);
 
 }
-P_P_F void PHandler_Error(int pID,int code,char *string)
+void PHandler_Error(int pID,int code,char *string)
 {
     if(pluginFunctions.plugins[pID].enabled==qfalse){
         Com_PrintWarning(CON_CHANNEL_PLUGINS,"An error of ID %d and string \"%s\" occured in a disabled plugin with ID %d!\n",code,string,pID);

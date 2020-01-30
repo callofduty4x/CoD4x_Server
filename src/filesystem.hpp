@@ -193,7 +193,7 @@ int FS_SV_HomeWriteFile( const char *qpath, const void *buffer, int size );
 int FS_SV_BaseWriteFile( const char *qpath, const void *buffer, int size );
 void FS_BuildOSPathForThread(const char *base, const char *game, const char *qpath, char *fs_path, int fs_thread);
 
-void QDECL FS_Printf( fileHandle_t h, const char *fmt, ... );
+void __cdecl FS_Printf( fileHandle_t h, const char *fmt, ... );
 int FS_Seek( fileHandle_t f, long offset, int origin );
 const char* __cdecl FS_GetBasepath();
 qboolean FS_VerifyPak( const char *pak );

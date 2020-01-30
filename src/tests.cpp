@@ -315,7 +315,6 @@ void DumpVehicleInfo_f()
 {
     int i;
     Com_Printf(CON_CHANNEL_SCRIPT, "vehicle: type\n");
-__asm__("int $3");
     for(i = 0; i < 32; ++i)
     {
 	Com_Printf(CON_CHANNEL_SCRIPT, "%s: %d\n", s_vehicleInfos[i].name, s_vehicleInfos[i].type);

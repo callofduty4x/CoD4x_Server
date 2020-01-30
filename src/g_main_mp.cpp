@@ -124,7 +124,7 @@ G_LogPrintf
 Print to the logfile with a time stamp if it is open
 =================
 */
-void QDECL __cdecl G_LogPrintf( const char *fmt, ... )
+void __cdecl __cdecl G_LogPrintf( const char *fmt, ... )
 {
 
 	va_list argptr;

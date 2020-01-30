@@ -49,7 +49,7 @@ void Com_Frame(void);
 void Com_Init(char* cmdline);
 void Com_UpdateRealtime();
 time_t Com_GetRealtime();
-int QDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...);
+int __cdecl Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...);
 int Com_FilterPath( char *filter, char *name, int casesensitive );
 
 void Com_RandomBytes( byte *string, int len );

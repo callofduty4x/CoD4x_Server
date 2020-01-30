@@ -196,7 +196,7 @@ Com_AddTimedEvent
 
 ================
 */
-int QDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...)
+int __cdecl Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...)
 {
     timedSysEvent_t  *ev;
     int index;
@@ -1308,7 +1308,7 @@ Both client and server can use this, and it will
 do the appropriate thing.
 =============
 */
-void QDECL Com_Error( int code, const char *fmt, ... ) {
+void __cdecl Com_Error( int code, const char *fmt, ... ) {
 	va_list		argptr;
 	static int	lastErrorTime;
 	static int	errorCount;
@@ -1325,7 +1325,7 @@ void QDECL Com_Error( int code, const char *fmt, ... ) {
 #endif
 
     if (com_developer && com_developer->integer > 1)
-#ifdef MSC_VER
+#ifdef _MSC_VER
         __asm int 3;
 #else
         asm("int $3"); // SIGILL on windows - crash. Have to do something?

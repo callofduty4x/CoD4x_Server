@@ -40,7 +40,13 @@
 
 
 pluginWrapper_t pluginFunctions;
-pluginScriptCallStubBase_t __attribute__((section(".text#"))) pluginScriptCallStubs;
+#ifdef _MSC_VER
+#pragma code_seg(push, s1, ".text")
+#endif
+pluginScriptCallStubBase_t __code_seg pluginScriptCallStubs;
+#ifdef _MSC_VER
+#pragma code_seg(pop, s1)
+#endif
 
 
 char PHandler_Events[PLUGINS_ITEMCOUNT][32]={

@@ -43,13 +43,13 @@
 extern "C"{
 #endif
 
-unsigned int Sys_Milliseconds( void );
-unsigned long long Sys_MillisecondsLong( void );
-unsigned long long Sys_MicrosecondsLong( void );
+unsigned int __cdecl Sys_Milliseconds();
+unsigned long long __cdecl Sys_MillisecondsLong();
+unsigned long long __cdecl Sys_MicrosecondsLong();
 
 void Sys_TimerInit( void );
 unsigned long long Sys_Microseconds( void );
-int Sys_Seconds( void );
+int Sys_Seconds();
 void Sys_Quit( void );
 void Sys_Print( const char *msg );
 void Sys_TermProcess(void);

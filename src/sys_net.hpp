@@ -94,7 +94,7 @@ qboolean	NET_CompareBaseAdrMask(netadr_t *a, netadr_t *b, int netmask);
 qboolean	NET_CompareBaseAdr (netadr_t *a, netadr_t *b);
 qboolean	NET_IsLocalAddress (netadr_t adr);
 const char	*NET_AdrToString (netadr_t *a);
-const char	*NET_AdrToStringMT (netadr_t *a, char*, int);
+const char* __cdecl NET_AdrToStringMT (netadr_t *a, char*, int);
 const char	*NET_AdrToStringShort (netadr_t *a);
 const char	*NET_AdrToStringwPort (netadr_t *a);
 netadr_t	*NET_SockToAdr(int socket);

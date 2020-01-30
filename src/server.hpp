@@ -664,9 +664,9 @@ void SV_PreGameUserVoice(client_t* cl, msg_t* msg);
 //void SV_BuildClientSnapshot(client_t* cl);
 void SV_ArchiveSnapshot(msg_t* msg);
 
-void QDECL SV_SendServerCommand_IW(client_t *cl, int type, const char *fmt, ...);
-void QDECL SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...);
-void QDECL SV_SendServerCommand(client_t *cl, const char *fmt, ...);
+void __cdecl SV_SendServerCommand_IW(client_t *cl, int type, const char *fmt, ...);
+void __cdecl SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...);
+void __cdecl SV_SendServerCommand(client_t *cl, const char *fmt, ...);
 
 __optimize3 __regparm2 void SV_PacketEvent( netadr_t *from, msg_t *msg );
 

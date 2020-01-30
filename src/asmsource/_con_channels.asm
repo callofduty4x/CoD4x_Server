@@ -25,7 +25,7 @@
 	global con_gameMsgWindowNFilter_BaseDesc
 	global con_gameMsgWindowNFilter_BaseName
 	global Con_ChannelList_f
-	global _Z21Con_FilterShowChannel16print_msg_dest_tPKcb
+	global Con_FilterShowChannel
 	global Con_FilterRemove_f
 	global Con_FilterAdd_f
 	global Con_InitChannelsForDestFromList
@@ -97,7 +97,7 @@ Con_ChannelList_f_30:
 
 
 ;Con_FilterShowChannel(print_msg_dest_t, char const*, unsigned char)
-_Z21Con_FilterShowChannel16print_msg_dest_tPKcb:
+Con_FilterShowChannel:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -228,7 +228,7 @@ Con_InitChannelsForDestFromList:
 	xor ecx, ecx
 	mov edx, _cstring_
 	mov eax, [ebp-0x124]
-	call _Z21Con_FilterShowChannel16print_msg_dest_tPKcb
+	call Con_FilterShowChannel
 	xor edx, edx
 	mov dword [ebp-0x11c], 0x0
 	xor ebx, ebx
@@ -253,7 +253,7 @@ Con_InitChannelsForDestFromList_60:
 	mov ecx, 0x1
 	lea edx, [ebp-0x118]
 	mov eax, [ebp-0x124]
-	call _Z21Con_FilterShowChannel16print_msg_dest_tPKcb
+	call Con_FilterShowChannel
 	xor edx, edx
 Con_InitChannelsForDestFromList_20:
 	add ebx, 0x1
@@ -499,19 +499,19 @@ Con_InitChannels_20:
 	mov edx, [eax+0xc]
 	mov ecx, 0x1
 	xor eax, eax
-	call _Z21Con_FilterShowChannel16print_msg_dest_tPKcb
+	call Con_FilterShowChannel
 	mov ecx, 0x1
 	mov edx, _cstring_std
 	mov eax, 0x1
-	call _Z21Con_FilterShowChannel16print_msg_dest_tPKcb
+	call Con_FilterShowChannel
 	mov ecx, 0x1
 	mov edx, _cstring_error
 	mov eax, 0x1
-	call _Z21Con_FilterShowChannel16print_msg_dest_tPKcb
+	call Con_FilterShowChannel
 	mov ecx, 0x1
 	mov edx, _cstring_error
 	mov eax, 0x2
-	call _Z21Con_FilterShowChannel16print_msg_dest_tPKcb
+	call Con_FilterShowChannel
 	xor ebx, ebx
 	mov dword [ebp-0x24], defaultGameWindowFilters
 	mov dword [ebp-0x20], con_gameMsgWindowNFilter

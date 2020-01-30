@@ -2167,7 +2167,7 @@ int FS_SV_HomeWriteFile( const char *qpath, const void *buffer, int size)
 }
 
 
-void QDECL FS_Printf( fileHandle_t h, const char *fmt, ... ) {
+void __cdecl FS_Printf( fileHandle_t h, const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 

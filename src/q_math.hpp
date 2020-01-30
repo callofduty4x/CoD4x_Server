@@ -264,11 +264,3 @@ int f2rint(float f);
 
 #define	ANGLE2SHORT(x)	((int)((x)*65536.0f/360.0f) & 65535)
 #define	SHORT2ANGLE(x)	((x)*(360.0/65536))
-
-#ifndef ID_INLINE
-#ifdef _WIN32
-#define ID_INLINE __inline
-#else
-#define ID_INLINE inline
-#endif
-#endif

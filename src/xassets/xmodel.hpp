@@ -4,6 +4,7 @@
 #include "../qshared.hpp"
 #include "../q_math.hpp"
 #include "../dobj.hpp"
+#include <windows.h>
 
 enum XModelLodRampType
 {

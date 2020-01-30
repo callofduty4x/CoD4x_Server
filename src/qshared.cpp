@@ -305,7 +305,7 @@ Q_strrepl
 */
 void Q_strnrepl( char *dest, size_t size, const char *src, const char* find, const char* replacement)
 {
-    char* _new;
+    const char* _new = nullptr;
     *dest = 0;
 
     int findlen = strlen(find);
@@ -441,7 +441,7 @@ int Q_CountChar(const char *string, char tocount)
 	return count;
 }
 
-int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...)
+int __cdecl Com_sprintf(char *dest, int size, const char *fmt, ...)
 {
 	int		len;
 	va_list		argptr;
@@ -471,7 +471,7 @@ varargs versions of all text functions.
  ***********/
 
 
-char* QDECL va_replacement(char *dest, int size, const char *fmt, ...)
+char* __cdecl va_replacement(char *dest, int size, const char *fmt, ...)
 {
 	int		len;
 	va_list	argptr;
@@ -1177,7 +1177,7 @@ void XML_Escape( char* buffer, size_t size, const char* string){
  Changes or adds a key/value pair
  ==================
  */
-qboolean QDECL XML_OpenTag( xml_t *base, char* root, int count,... ) {
+qboolean __cdecl XML_OpenTag( xml_t *base, char* root, int count,... ) {
 
 	char* key;
 	char* value;

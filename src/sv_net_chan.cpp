@@ -147,7 +147,8 @@ and the gamestate are fragmenting, and collide on send for instance)
 then buffer them and make sure they get sent in correct order
 ================
 */
-__cdecl qboolean SV_Netchan_TransmitNextFragment( client_t *client ) {   //int length, const byte *data ) {
+qboolean SV_Netchan_TransmitNextFragment( client_t *client ) 
+{
 	int i;
 
 	Netchan_TransmitNextFragment( &client->netchan );

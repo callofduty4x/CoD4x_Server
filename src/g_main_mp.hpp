@@ -84,6 +84,6 @@ void G_PrintAddRedirect(void (*rd_dest)( const char *, int));
 
 extern "C"
 {
-    void QDECL __cdecl G_LogPrintf( const char *fmt, ... );
+    void __cdecl G_LogPrintf( const char *fmt, ... );
     void __cdecl G_RunFrame( int time );
 }

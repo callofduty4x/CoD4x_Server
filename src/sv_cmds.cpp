@@ -52,9 +52,8 @@ These commands can only be entered from stdin or by a remote operator datagram
 #include "cscr_variable.hpp"
 #include "com_bsp_load_obj.hpp"
 
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include <cstring>
+#include <cstdlib>
 
 typedef enum {
     SAY_CHAT,

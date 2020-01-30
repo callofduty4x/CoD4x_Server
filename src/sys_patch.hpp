@@ -22,6 +22,7 @@
 
 
 #include "qshared.hpp"
+#include "q_platform.hpp"
 
 void Sys_PatchImageWithBlock(byte *block, int blocksize);
 DWORD SetCall(DWORD addr, void* destination);

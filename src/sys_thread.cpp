@@ -432,7 +432,7 @@ qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p))
   threadFunc[THREAD_CONTEXT_DATABASE] = db_proc;
 
   threadId[THREAD_CONTEXT_DATABASE] = 0;
-  threadHandle[THREAD_CONTEXT_DATABASE] = Sys_CreateThreadWithHandle(Sys_ThreadMain, &threadId[THREAD_CONTEXT_DATABASE], (void*)THREAD_CONTEXT_DATABASE);
+  threadHandle[THREAD_CONTEXT_DATABASE] = (threadid_t)Sys_CreateThreadWithHandle(Sys_ThreadMain, &threadId[THREAD_CONTEXT_DATABASE], (void*)THREAD_CONTEXT_DATABASE);
 
   if ( threadHandle[THREAD_CONTEXT_DATABASE] )
   {
