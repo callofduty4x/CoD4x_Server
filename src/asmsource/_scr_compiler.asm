@@ -62,7 +62,6 @@
 
 
 ;Exports of scr_compiler:
-;	global scrCompileGlob
 	global LinkThread
 	global SpecifyThreadPosition
 	global Scr_CalcLocalVarsVariableExpressionRef
@@ -94,7 +93,6 @@
 	global EmitThreadInternal
 	global ScriptCompile
 	global CompareCaseInfo
-;	global gScrCompilePub
 
 
 SECTION .text
@@ -11423,20 +11421,6 @@ CompareCaseInfo_10:
 	mov eax, 0xffffffff
 	pop ebp
 	ret
-
-
-;Initialized global or static variables of scr_compiler:
-SECTION .data
-
-
-;Initialized constant data of scr_compiler:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of scr_compiler:
-SECTION .bss
-;scrCompileGlob: resb 0x200
-;gScrCompilePub: resb 0x21064
 
 
 ;All cstrings:

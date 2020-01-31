@@ -1,5 +1,7 @@
 #include "cscr_compiler.hpp"
 
+#include "scr_vm.hpp"
+
 
 char scrCompileGlob[0x200];
-char gScrCompilePub[0x21100];
+scrCompilePub_t gScrCompilePub;

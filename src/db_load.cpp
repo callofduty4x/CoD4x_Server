@@ -19,6 +19,13 @@
 ===========================================================================
 */
 
+#include "db_load.hpp"
+
+#include <cctype>
+#include <cstring>
+#include <cstdlib>
+#include <cstdbool>
+
 #ifdef __WIN32
 #include <d3d9.h>
 #endif
@@ -54,11 +61,7 @@
 #include "physicalmemory.hpp"
 #include "cscr_stringlist.hpp"
 #include "r_public.hpp"
-#include <ctype.h>
-
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "db_assetnames.hpp"
 
 
 #define XBLOCK_COUNT_IW3 9
@@ -184,10 +187,254 @@ int16_t* varshort;
 byte* varbyte;
 XModel* varXModel;
 */
-extern char** varXString;
 extern void (__cdecl *DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void *, XAssetHeader);
 
 void *DB_XAssetPool[ASSET_TYPE_COUNT];
+
+// Safest way is to define size of variables according to ASM code...
+// Of course types can be safely (almost) changed according to cod4a code...
+XAsset* varXAsset;
+XAssetList* varXAssetList;
+char varBrushWrapper[0x10];
+void* varByteVec;
+char varCollisionAabbTree[0x8];
+void* varCollisionBorder;
+void* varCollisionPartition;
+void* varComPrimaryLight;
+void* varComWorld;
+void* varComWorldPtr;
+const char* varConstChar;
+void* varDObjAnimMat;
+char varDWORD[0x10];
+void* varDynEntityClient;
+void* varDynEntityColl;
+char varDynEntityDef[0xC];
+void* varDynEntityPose;
+void* varFont;
+void* varFontHandle;
+void* varFxEffectDef;
+
+void* varFxEffectDefRef;
+void* varFxElemDef;
+void* varFxElemMarkVisuals;
+void* varFxElemVisuals;
+void* varFxImpactEntry;
+void* varFxImpactTable;
+void* varFxImpactTablePtr;
+void* varFxTrailDef;
+void* varFxTrailVertex;
+void* varGameWorldMp;
+void* varGameWorldMpPtr;
+void* varGameWorldSp;
+void* varGameWorldSpPtr;
+void* varGfxAabbTree;
+void* varGfxCell;
+void* varGfxCullGroup;
+void* varGfxDrawSurf;
+void* varGfxImageLoadDef;
+void* varGfxImagePtr;
+void* varGfxLight;
+void* varGfxLightDefPtr;
+void* varGfxLightGrid;
+void* varGfxLightGridColors;
+void* varGfxLightImage;
+void* varGfxLightRegion;
+void* varGfxLightRegionAxis;
+void* varGfxLightRegionHull;
+void* varGfxLightmapArray;
+void* varGfxPixelShaderLoadDef;
+void* varGfxPortal;
+void* varGfxRawTexture;
+void* varGfxReflectionProbe;
+void* varGfxSceneDynBrush;
+void* varGfxShadowGeometry;
+void* varGfxStateBits;
+void* varGfxStaticModelDrawInst;
+void* varGfxStaticModelInst;
+void* varGfxVertexBuffer;
+void* varGfxWorld;
+void* varGfxWorldDpvsDynamic;
+void* varGfxWorldDpvsPlanes;
+void* varGfxWorldDpvsStatic;
+void* varGfxWorldPtr;
+void* varGfxWorldVertexData;
+void* varGfxWorldVertexLayerData;
+void* varGlyph;
+void* varItemKeyHandler;
+void* varItemKeyHandlerNext;
+void* varLeafBrush;
+void* varLoadedSound;
+void* varLoadedSoundPtr;
+void* varLocalizeEntry;
+void* varLocalizeEntryPtr;
+void* varMapEntsPtr;
+Material* varMaterial;
+void* varMaterialArgumentCodeConst;
+void* varMaterialArgumentDef;
+void* varMaterialConstantDef;
+Material** varMaterialHandle;
+void* varMaterialMemory;
+void* varMaterialPass;
+void* varMaterialPixelShader;
+void* varMaterialPixelShaderProgram;
+void* varMaterialPixelShaderPtr;
+void* varMaterialShaderArgument;
+void* varMaterialTechnique;
+void* varMaterialTechniquePtr;
+void* varMaterialTechniqueSetPtr;
+void* varMaterialTextureDef;
+void* varMaterialVertexShader;
+void* varMaterialVertexShaderProgram;
+void* varMaterialVertexShaderPtr;
+void* varMenuList;
+void* varMenuListPtr;
+void* varPathData;
+void* varPhysGeomInfo;
+void* varPhysGeomList;
+void* varPhysPreset;
+void* varPhysPresetPtr;
+void* varRawFile;
+void* varRawFilePtr;
+uint16_t* varScriptString;
+void* varSndCurve;
+void* varSndCurvePtr;
+void* varSoundFile;
+void* varSoundFileRef;
+void* varStreamFileInfo;
+void* varStreamFileName;
+void* varStreamedSound;
+void* varStringTable;
+void* varStringTablePtr;
+void* varUShortVec;
+void* varUnsignedShort;
+void* varWeaponDefPtr;
+void* varWindow;
+void* varXAnimDeltaPart;
+void* varXAnimDeltaPartQuat;
+void* varXAnimDeltaPartQuatData;
+void* varXAnimDeltaPartQuatDataFrames;
+void* varXAnimDynamicFrames;
+void* varXAnimDynamicIndicesDeltaQuat;
+void* varXAnimDynamicIndicesTrans;
+void* varXAnimIndices;
+void* varXAnimNotifyInfo;
+void* varXAnimPartTrans;
+void* varXAnimPartTransData;
+void* varXAnimPartTransFrames;
+void* varXAnimParts;
+void* varXAnimPartsPtr;
+XAssetHeader* varXAssetHeader;
+void* varXBlendInfo;
+void* varXBoneInfo;
+XModel* varXModel;
+void* varXModelCollSurf;
+void* varXModelPiece;
+void* varXModelPieces;
+void* varXModelPiecesPtr;
+XModel** varXModelPtr;
+void* varXRigidVertList;
+char** varXString;
+char*** varXStringPtr;
+void* varXSurface;
+void* varXSurfaceCollisionNode;
+void* varXSurfaceCollisionTree;
+void* varXSurfaceVertexInfo;
+void* varXZoneHandle;
+void* varcLeafBrushNodeLeaf_t;
+void* varcLeafBrushNode_t;
+void* varcLeaf_t;
+void* varcNode_t;
+void* varcStaticModel_t;
+void* varcbrushside_t;
+void* varclipMap_ptr;
+void* varclipMap_t;
+void* varcmodel_t;
+void* varcomplex_t;
+void* vardmaterial_t;
+void* vareditFieldDef_ptr;
+void* vareditFieldDef_t;
+void* varexpressionEntry_ptr;
+void* varitemDefData_t;
+void* varitemDef_ptr;
+void* varitemDef_t;
+void* varlistBoxDef_ptr;
+void* varmenuDef_ptr;
+void* varmenuDef_t;
+void* varmultiDef_ptr;
+void* varmultiDef_t;
+void* varoperandInternalDataUnion;
+void* varpathbasenode_t;
+void* varpathlink_t;
+void* varpathnode_t;
+void* varpathnode_tree_info_t;
+void* varpathnode_tree_nodes_t;
+void* varpathnode_tree_ptr;
+void* varpathnode_tree_t;
+void* varr_index16_t;
+void* varraw_byte;
+void* varraw_byte16;
+void* varraw_uint128;
+snd_alias_list_name* varsnd_alias_list_name;
+void* varsnd_alias_list_ptr;
+void* varsnd_alias_list_t;
+void* varsnd_alias_t;
+void* varstatement;
+void* varsunflare_t;
+void* varvec3_t;
+void* varwater_t;
+
+char varFxElemVisStateSample[0x8];
+char varGfxImage [0x8];
+char varGfxLightDef [0x8];
+char varGfxLightGridEntry [0x8];
+char varGfxSurface [0x8];
+char varMapEnts [0x8];
+char varMaterialTechniqueSet [0x8];
+char varMaterialTextureDefInfo [0x8];
+char varMaterialVertexDeclaration [0x8];
+char varOperand [0x8];
+char varXModelCollTri [0x8];
+char varXQuat2 [0x8];
+char varXSurfaceCollisionLeaf [0x8];
+char varcLeafBrushNodeData_t [0x8];
+char varcbrush_t [0x8];
+char varcbrushedge_t [0x8];
+char varchar [0x8];
+char varcplane_t [0x8];
+char varentryInternalData [0x8];
+char varexpressionEntry [0x8];
+char varlistBoxDef_t [0x8];
+char varpathnode_constant_t [0x8];
+char varr_index_t [0x8];
+char varvec2_t [0x8];
+
+char varFxElemVelStateSample [0xC];
+char varGfxPackedVertex0 [0xC];
+char varGfxSceneDynModel [0xC];
+char varGfxWorldVertex0 [0xC];
+char varStreamFileNameRaw [0xC];
+char varMssSound [0xC];
+char varfloat [0xC];
+char varraw_uint [0xC];
+char varuint [0xC];
+char varushort [0xC];
+char varwindowDef_t [0xC];
+
+char varGfxBrushModel[0x10];
+char varGfxTextureLoad [0x10];
+char varGfxVertexShaderLoadDef [0x10];
+char varSpeakerMap [0x10];
+char varStaticModelIndex [0x10];
+char varMaterialInfo [0x10];
+char varshort [0x10];
+
+FxEffectDef** varFxEffectDefHandle;
+char varFxElemDefVisuals [0x14];
+char varint [0x14];
+
+char varbyte[0x1c];
+
+WeaponDef* varWeaponDef;
 
 
 extern "C"{
@@ -578,7 +825,7 @@ void __cdecl DB_AllocXBlocks(unsigned int *blockSize, const char *filename, XBlo
     size = blockSize[blockIndex];
     if ( size )
     {
-      total_size = (double)size + total_size;
+      total_size = size + total_size;
       buf = DB_MemAlloc(size, g_block_mem_type[blockIndex], allocType, filename, flags);
       if ( !buf )
       {
@@ -1239,7 +1486,6 @@ byte *__cdecl AllocLoad_raw_byte()
 
 
 char** varTempString;
-extern const char* varConstChar;
 ScriptStringList* varScriptStringList;
 
 void Load_XAssetListCustom()
@@ -1354,8 +1600,6 @@ void __cdecl Load_ScriptStringArray(bool atStreamStart, int count)
     ++var;
   }
 }
-
-extern XModel* varXModel;
 
 void Load_XModelBoneNames()
 {
@@ -2052,8 +2296,6 @@ void DB_SyncXAssets()
     DB_PostLoadXZone();
 }
 
-extern const char *(__cdecl *DB_XAssetGetNameHandler[ASSET_TYPE_COUNT])(union XAssetHeader *);
-
 //char g_zoneNameList[2080];
 
 const char *__cdecl DB_GetXAssetHeaderName(int type, union XAssetHeader *header)
@@ -2106,7 +2348,6 @@ enum DBCloneMethod
 
 extern void (__cdecl *DB_RemoveXAssetHandler[])(void*);
 extern void (__cdecl *DB_DynamicCloneXAssetHandler[])(void*, void*, DBCloneMethod);
-extern void (__cdecl *DB_XAssetSetNameHandler[])(void *, const char *);
 extern const char* g_defaultAssetName[];
 
 unsigned int DB_HashForName(const char *name, enum XAssetType type)
@@ -2291,10 +2532,6 @@ void __cdecl Load_ScriptStringCustom(uint16_t *var)
   *var = (uint16_t)varXAssetList->stringList.strings[*var];
 }
 */
-
-extern struct WeaponDef* varWeaponDef;
-extern snd_alias_list_name* varsnd_alias_list_name;
-
 
 void __cdecl Load_WeaponDef(bool atStreamStart)
 {
@@ -4101,7 +4338,6 @@ XAssetEntryPoolEntry *__cdecl DB_LinkXAssetEntry(XAssetEntry *argNewEntry, int a
   return existingEntry;
 }
 
-extern Material* varMaterial;
 extern "C" void __cdecl Load_Material(bool atStreamStart);
 
 void __cdecl Load_MaterialAsset(Material **material)

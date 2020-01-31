@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+extern char*** varXStringPtr;
+
 void DB_InitThread();
 void DB_ReleaseXAssets();
 void DB_ShutdownXAssets();

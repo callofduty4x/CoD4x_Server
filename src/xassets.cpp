@@ -88,7 +88,6 @@ void R_Init(){
 }
 
 
-extern const char* g_assetNames[];
 extern int g_zoneCount;
 extern int g_poolSize[];
 

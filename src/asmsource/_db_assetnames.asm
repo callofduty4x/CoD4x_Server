@@ -1,8 +1,7 @@
 ;Imports of db_assetnames:
-	extern DB_MaterialSetName
+	extern DB_GetXAssetSizeHandler
 
 ;Exports of db_assetnames:
-	global DB_GetXAssetSizeHandler
 	global DB_SizeofXAsset_XModelPieces
 	global DB_SizeofXAsset_PhysPreset
 	global DB_SizeofXAsset_XAnimParts
@@ -29,7 +28,6 @@
 	global DB_SizeofXAsset_FxImpactTable
 	global DB_SizeofXAsset_RawFile
 	global DB_SizeofXAsset_StringTable
-	global DB_XAssetSetNameHandler
 	global DB_XModelPiecesSetName
 	global DB_PhysPresetSetName
 	global DB_XAnimPartsSetName
@@ -55,7 +53,6 @@
 	global DB_FxImpactTableSetName
 	global DB_RawFileSetName
 	global DB_StringTableSetName
-	global DB_XAssetGetNameHandler
 	global DB_XModelPiecesGetName
 	global DB_PhysPresetGetName
 	global DB_XAnimPartsGetName
@@ -83,7 +80,6 @@
 	global DB_RawFileGetName
 	global DB_StringTableGetName
 	global DB_GetXAssetTypeSize
-	global g_assetNames
 
 
 SECTION .text
@@ -942,62 +938,3 @@ DB_GetXAssetTypeSize:
 	mov ecx, [eax*4+DB_GetXAssetSizeHandler]
 	pop ebp
 	jmp ecx
-
-
-;Zero initialized global or static variables of db_assetnames:
-SECTION .bss
-
-
-;Initialized global or static variables of db_assetnames:
-SECTION .data
-DB_GetXAssetSizeHandler: dd DB_SizeofXAsset_XModelPieces, DB_SizeofXAsset_PhysPreset, DB_SizeofXAsset_XAnimParts, DB_SizeofXAsset_XModel, DB_SizeofXAsset_Material, DB_SizeofXAsset_MaterialTechniqueSet, DB_SizeofXAsset_GfxImage, DB_SizeofXAsset_snd_alias_list_t, DB_SizeofXAsset_SndCurve, DB_SizeofXAsset_LoadedSound, DB_SizeofXAsset_clipMap_t, DB_SizeofXAsset_clipMap_t, DB_SizeofXAsset_ComWorld, DB_SizeofXAsset_GameWorldSp, DB_SizeofXAsset_GameWorldMp, DB_SizeofXAsset_MapEnts, DB_SizeofXAsset_GfxWorld, DB_SizeofXAsset_GfxLightDef, 0x0, DB_SizeofXAsset_Font_s, DB_SizeofXAsset_MenuList, DB_SizeofXAsset_menuDef_t, DB_SizeofXAsset_LocalizeEntry, DB_SizeofXAsset_WeaponDef, 0x0, DB_SizeofXAsset_FxEffectDef, DB_SizeofXAsset_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_SizeofXAsset_RawFile, DB_SizeofXAsset_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_XAssetSetNameHandler: dd DB_XModelPiecesSetName, DB_PhysPresetSetName, DB_XAnimPartsSetName, DB_XModelSetName, DB_MaterialSetName, DB_MaterialTechniqueSetSetName, DB_ImageSetName, DB_SoundSetName, DB_SndCurveSetName, DB_LoadedSoundSetName, DB_ClipMapSetName, DB_ClipMapSetName, DB_ComWorldSetName, DB_GameWorldSpSetName, DB_GameWorldMpSetName, DB_MapEntsSetName, DB_GfxWorldSetName, DB_LightDefSetName, 0x0, DB_FontSetName, DB_MenuListSetName, DB_MenuSetName, DB_LocalizeEntrySetName, DB_WeaponDefSetName, 0x0, DB_EffectDefSetName, DB_FxImpactTableSetName, 0x0, 0x0, 0x0, 0x0, DB_RawFileSetName, DB_StringTableSetName, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_XAssetGetNameHandler: dd DB_XModelPiecesGetName, DB_PhysPresetGetName, DB_XAnimPartsGetName, DB_XModelGetName, DB_MaterialGetName, DB_MaterialTechniqueSetGetName, DB_ImageGetName, DB_SoundGetName, DB_SndCurveGetName, DB_LoadedSoundGetName, DB_ClipMapGetName, DB_ClipMapGetName, DB_ComWorldGetName, DB_GameWorldSpGetName, DB_GameWorldMpGetName, DB_MapEntsGetName, DB_GfxWorldGetName, DB_LightDefGetName, 0x0, DB_FontGetName, DB_MenuListGetName, DB_MenuGetName, DB_LocalizeEntryGetName, DB_WeaponDefGetName, 0x0, DB_EffectDefGetName, DB_FxImpactTableGetName, 0x0, 0x0, 0x0, 0x0, DB_RawFileGetName, DB_StringTableGetName, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-g_assetNames: dd _cstring_xmodelpieces, _cstring_physpreset, _cstring_xanim, _cstring_xmodel, _cstring_material, _cstring_techset, _cstring_image, _cstring_sound, _cstring_sndcurve, _cstring_loaded_sound, _cstring_col_map_sp, _cstring_col_map_mp, _cstring_com_map, _cstring_game_map_sp, _cstring_game_map_mp, _cstring_map_ents, _cstring_gfx_map, _cstring_lightdef, _cstring_ui_map, _cstring_font, _cstring_menufile, _cstring_menu, _cstring_localize, _cstring_weapon, _cstring_snddriverglobals, _cstring_fx, _cstring_impactfx, _cstring_aitype, _cstring_mptype, _cstring_character, _cstring_xmodelalias, _cstring_rawfile, _cstring_stringtable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of db_assetnames:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-_cstring_xmodelpieces:		db "xmodelpieces",0
-_cstring_physpreset:		db "physpreset",0
-_cstring_xanim:		db "xanim",0
-_cstring_xmodel:		db "xmodel",0
-_cstring_material:		db "material",0
-_cstring_techset:		db "techset",0
-_cstring_image:		db "image",0
-_cstring_sound:		db "sound",0
-_cstring_sndcurve:		db "sndcurve",0
-_cstring_loaded_sound:		db "loaded_sound",0
-_cstring_col_map_sp:		db "col_map_sp",0
-_cstring_col_map_mp:		db "col_map_mp",0
-_cstring_com_map:		db "com_map",0
-_cstring_game_map_sp:		db "game_map_sp",0
-_cstring_game_map_mp:		db "game_map_mp",0
-_cstring_map_ents:		db "map_ents",0
-_cstring_gfx_map:		db "gfx_map",0
-_cstring_lightdef:		db "lightdef",0
-_cstring_ui_map:		db "ui_map",0
-_cstring_font:		db "font",0
-_cstring_menufile:		db "menufile",0
-_cstring_menu:		db "menu",0
-_cstring_localize:		db "localize",0
-_cstring_weapon:		db "weapon",0
-_cstring_snddriverglobals:		db "snddriverglobals",0
-_cstring_fx:		db "fx",0
-_cstring_impactfx:		db "impactfx",0
-_cstring_aitype:		db "aitype",0
-_cstring_mptype:		db "mptype",0
-_cstring_character:		db "character",0
-_cstring_xmodelalias:		db "xmodelalias",0
-_cstring_rawfile:		db "rawfile",0
-_cstring_stringtable:		db "stringtable",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

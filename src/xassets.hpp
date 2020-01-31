@@ -118,12 +118,6 @@ struct XAsset
   union XAssetHeader header;
 };
 
-extern char*** varXStringPtr;
-extern struct XModel** varXModelPtr;
-extern struct Material **varMaterialHandle;
-extern uint16_t* varScriptString;
-extern struct FxEffectDef** varFxEffectDefHandle;
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -224,9 +218,7 @@ struct XAssetList
 
 extern struct XAssetList* varXAssetList;
 extern struct XAsset* varXAsset;
-extern union XAssetHeader *varXAssetHeader;
 extern int g_poolSize[ASSET_TYPE_COUNT];
-extern const char* g_assetNames[ASSET_TYPE_COUNT];
 
 /*
 ------------------------------------------------------------------------

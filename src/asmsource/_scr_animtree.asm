@@ -48,9 +48,10 @@
 	extern va
 	extern Scr_IsInOpcodeMemory
 	extern AnimTreeParseInternal
+	extern gScrAnimGlob
+	extern gScrAnimPub
 
 ;Exports of scr_animtree:
-	global gScrAnimGlob
 	global Hunk_AllocXAnimTreePrecache
 	global Scr_GetAnimTreeSize
 	global ConnectScriptToAnim
@@ -65,7 +66,6 @@
 	global Scr_EmitAnimation
 	global Scr_GetAnimsIndex
 	global Scr_LoadAnimTreeAtIndex
-	global gScrAnimPub
 
 
 SECTION .text
@@ -1043,20 +1043,6 @@ Scr_LoadAnimTreeAtIndex_40:
 	call CompileError
 	jmp Scr_LoadAnimTreeAtIndex_120
 	add [eax], al
-
-
-;Initialized global or static variables of scr_animtree:
-SECTION .data
-
-
-;Initialized constant data of scr_animtree:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of scr_animtree:
-SECTION .bss
-gScrAnimGlob: resb 0x280
-gScrAnimPub: resb 0x480
 
 
 ;All cstrings:

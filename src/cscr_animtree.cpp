@@ -21,9 +21,11 @@ struct scrAnimGlob_t
   const char *pos;
   uint16_t using_xanim_lookup[2][128];
   int bAnimCheck;
+  char padding[116]; // To size of 0x280 (asm).
 };
 
-extern struct scrAnimGlob_t gScrAnimGlob;
+scrAnimGlob_t gScrAnimGlob;
+scrAnimPub_t gScrAnimPub;
 
 extern "C"{
 

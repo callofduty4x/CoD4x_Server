@@ -628,6 +628,7 @@ struct scrCompilePub_t
   unsigned int programLen;
   int func_table_size;
   int func_table[1024];
+  char _padding[204];
 };
 #pragma pack(pop)
 
@@ -852,13 +853,13 @@ void Scr_Shutdown();
 
 
 
-extern struct scrVmGlob_t gScrVmGlob;
-
+extern scrVmGlob_t gScrVmGlob;
 extern scrVmPub_t gScrVmPub;
-extern struct scrCompilePub_t gScrCompilePub;
+extern scrCompilePub_t gScrCompilePub;
 extern int g_script_error_level;
 extern struct scrAnimPub_t scrAnimPub;
 extern struct scrParserPub_t gScrParserPub;
+extern char g_EndPos;
 
 extern "C"
 {

@@ -14,10 +14,11 @@ struct scrAnimPub_t
   unsigned int xanim_num[2];
   unsigned int animTreeIndex;
   bool animtree_loading;
+  char _padding[100]; // to size of 0x480 (asm)
 };
 
 
-extern struct scrAnimPub_t gScrAnimPub;
+extern scrAnimPub_t gScrAnimPub;
 
 #ifdef __cplusplus
 extern "C"{

@@ -141,14 +141,16 @@
 	extern Scr_IncNumScriptThreads
 	extern Scr_ScriptRuntimecheckInfiniteLoop
 	extern VM_CalcWaitTime
+	extern g_EndPos
+	extern gScrVmGlob
+	extern thread_count
+	extern gFs
+	extern caseCount;
+	extern opcode
+	extern gScrVmPub
 
 
 ;Exports of scr_vm:
-	global gScrVmGlob
-	global thread_count
-	global gFs
-	global caseCount
-	global opcode
 	global VM_CancelNotifyInternal
 	global VM_ArchiveStack
 	global VM_TerminateStack
@@ -191,8 +193,6 @@
 	global Scr_ExecEntThreadNum
 	global Scr_SetDynamicEntityField
 	global Scr_GetConstLowercaseString
-	global g_EndPos
-	global gScrVmPub
 
 SECTION .text
 
@@ -8417,23 +8417,9 @@ Scr_GetConstLowercaseString_100:
 	jmp Scr_GetConstLowercaseString_160
 
 
-;Initialized global or static variables of scr_vm:
-SECTION .data
-g_EndPos: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of scr_vm:
-SECTION .rdata
-
-
 ;Zero initialized global or static variables of scr_vm:
 SECTION .bss
-gScrVmGlob: resb 0x201c
-thread_count: resb 0x4
-gFs: resb 0x14
-caseCount: resb 0x4
-opcode: resb 0x8
-gScrVmPub: resb 0x4320
+
 
 
 ;All cstrings:
