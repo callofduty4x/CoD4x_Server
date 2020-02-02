@@ -1,4 +1,7 @@
 ﻿#include "cscr_vm.hpp"
+
+#include <csetjmp>
+
 #include "scr_vm.hpp"
 #include "cscr_variable.hpp"
 #include "cscr_animtree.hpp"
@@ -7,15 +10,9 @@
 #include "cmd.hpp"
 #include "g_shared.hpp"
 #include "qvsnprintf.hpp"
+#include "qcommon_io.hpp"
+#include "g_main_mp.hpp"
 
-#include <setjmp.h>
-
-int g_script_error_level;
-jmp_buf g_script_error[33];
-char error_message[1024];
-cvar_t* logScriptTimes;
-cvar_t* scrVmEnableScripts;
-int gScrExecuteTime;
 
 extern "C" VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)
 {
@@ -40,7 +37,15 @@ extern "C" VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, 
   return result;
 }
 
-extern "C"{
+extern "C"
+{
+    char error_message[1024];
+    cvar_s* logScriptTimes;
+    cvar_s* scrVmEnableScripts;
+    int gScrExecuteTime;
+    int g_script_error_level;
+    jmp_buf g_script_error[33];
+
 //Fix for weird GNU-GCC ABI
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For Linux

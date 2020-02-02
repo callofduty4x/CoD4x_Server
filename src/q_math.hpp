@@ -29,6 +29,7 @@ MATHLIB
 ==============================================================
 */
 
+using byte = unsigned char;
 
 typedef float vec_t;
 typedef vec_t vec2_t[2];
@@ -41,9 +42,6 @@ typedef int fixed8_t;
 typedef int fixed16_t;
 
 #include "qshared.hpp"
-
-extern vec3_t vec3_origin;
-
 
 extern vec4_t colorBlack;
 
@@ -60,7 +58,6 @@ extern vec4_t colorBlue;
 extern vec4_t colorLtBlue;
 extern vec4_t colorMdBlue;
 
-extern vec4_t colorYellow;
 extern vec4_t colorDkYellow;
 extern vec4_t colorMdYellow;
 extern vec4_t colorLtYellow;
@@ -81,9 +78,7 @@ extern vec4_t colorDkGrey;
 extern vec4_t colorOrange;
 extern vec4_t colorLtOrange;
 
-extern vec4_t colorWhiteFaded;
 extern vec4_t colorGreenFaded;
-extern vec4_t colorRedFaded;
 extern vec4_t colorBlackBlank;
 
 
@@ -151,6 +146,10 @@ struct cplane_s;
 
 extern "C"
 {
+    extern vec4_t colorYellow;
+    extern vec4_t colorWhiteFaded;
+    extern vec4_t colorRedFaded;
+
     void __cdecl YawVectors2D(const float yaw, vec2_t forward, vec2_t right);
     double __cdecl AngleDelta(const float angle1, const float angle2);
     double vectopitch(const float *vec);
@@ -257,6 +256,8 @@ void RotatePoint( vec3_t point, const vec3_t matrix[3] );
     qboolean __cdecl VecNCompareCustomEpsilon(const float *v0, const float *v1, float epsilon, int coordCount);
     void __cdecl MatrixTransposeTransformVector(const float *in1, const vec3_t in2[3], float *out);
     void __cdecl ExpandBounds(const vec3_t addedmins, const vec3_t addedmaxs, vec3_t mins, vec3_t maxs);
+
+    extern vec3_t vec3_origin;
 } // extern "C"
 
 float AngleNormalize180 ( float angle );

@@ -1,6 +1,6 @@
 ;Imports of aabbtree:
 	extern ClearBounds
-	extern ceilf
+	extern std_ceilf
 	extern qsort
 	extern floorf
 	extern ExpandBounds
@@ -99,7 +99,7 @@ SplitAabbTree_20:
 	divss xmm0, xmm1
 	movss [esp], xmm0
 	movss [ebp-0x108], xmm1
-	call ceilf
+	call std_ceilf
 	fstp dword [ebp-0xe0]
 	cvttss2si eax, [ebp-0xe0]
 	mov [ebp+ebx-0x34], eax

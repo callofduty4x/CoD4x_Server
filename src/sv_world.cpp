@@ -308,15 +308,14 @@ void __cdecl SV_SetupIgnoreEntParams(IgnoreEntParams *ignoreEntParams, int baseE
   }
 }
 
-void G_TraceCapsule(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentmask)
+
+void G_TraceCapsule(trace_t* results, const float* start, const float* mins, const float* maxs, const float* end, int passEntityNum, int contentmask)
 {
-  IgnoreEntParams ignoreEntParams;
+    IgnoreEntParams ignoreEntParams;
 
-  SV_SetupIgnoreEntParams(&ignoreEntParams, passEntityNum);
-  SV_Trace(results, start, mins, maxs, end, &ignoreEntParams, contentmask, 0, 0, 0);
+    SV_SetupIgnoreEntParams(&ignoreEntParams, passEntityNum);
+    SV_Trace(results, start, mins, maxs, end, &ignoreEntParams, contentmask, 0, 0, 0);
 }
-
-
 
 
 int CM_AreaEntities(const float *mins, const float *maxs, int *entityList, int maxcount, int contentmask)

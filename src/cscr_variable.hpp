@@ -39,7 +39,6 @@ typedef struct
   int totalVectorRefCount;
 }scrVarPub_t;
 
-extern scrVarPub_t gScrVarPub;
 
 struct __align(4) scrVarDebugPub_t
 {
@@ -50,12 +49,13 @@ struct __align(4) scrVarDebugPub_t
 };
 
 extern struct scrVarDebugPub_t *gScrVarDebugPub;
-extern const char *var_typename[];
 
 
-#ifdef __cplusplus
-extern "C"{
-#endif
+extern "C"
+{
+    extern scrVarPub_t gScrVarPub;
+    extern const char* var_typename[];
+
 void __cdecl Scr_AddClassField(unsigned int classnum, const char *name, unsigned int offset);
 void __cdecl Scr_AddArrayKeys(unsigned int parentId);
 void __cdecl Scr_RemoveClassMap(unsigned int classnum);
@@ -176,8 +176,6 @@ void __cdecl AddRefToObject(unsigned int id);
 void __cdecl RemoveRefToObject(unsigned int id);
 unsigned int __cdecl FindVariable(unsigned int parentId, unsigned int unsignedValue);
 
-#ifdef __cplusplus
 };
-#endif
 
 #endif

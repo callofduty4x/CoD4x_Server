@@ -115,7 +115,6 @@
 	extern DB_FileSize
 	extern cm
 	extern comWorld
-	extern gameWorldMp
 	extern s_world
 	extern g_zones
 	extern g_assetEntryPool
@@ -141,20 +140,28 @@
 	extern DB_CreateDefaultEntry
 	extern DB_FindXAssetHeaderReal
 	extern DB_AddXAssetInternal
+	extern db_hashCritSect
+	extern g_defaultAssetCount
+	extern g_freeAssetEntryHead
+	extern g_zoneAllocType
+	extern g_sync
+	extern g_zoneInited
+	extern g_copyInfo
+	extern g_copyInfoCount
+	extern g_debugZoneName
+	extern g_mainThreadBlocked
+	extern DB_DynamicCloneXAssetHandler
+	extern g_defaultAssetName
+	extern DB_RemoveXAssetHandler
+	extern DB_FreeXAssetHeaderHandler
+	extern DB_AllocXAssetHeaderHandler
 
 ;Exports of db_registry:
-	global DB_DynamicCloneXAssetHandler
 	global DB_DynamicCloneMenu
 	global DB_DynamicCloneWeaponDef
-	global db_hashCritSect
-	global g_defaultAssetCount
-	global g_defaultAssetName
-	global DB_RemoveXAssetHandler
 	global DB_RemoveTechniqueSet
 	global DB_RemoveImage
 	global DB_RemoveComWorld
-	global g_freeAssetEntryHead
-	global DB_FreeXAssetHeaderHandler
 	global DB_FreeXAssetHeader_XModelPieces
 	global DB_FreeXAssetHeader_PhysPreset
 	global DB_FreeXAssetHeader_XAnimParts
@@ -178,10 +185,6 @@
 	global DB_FreeXAssetHeader_RawFile
 	global DB_FreeXAssetHeader_StringTable
 	global g_fileBuf
-	global g_zoneAllocType
-	global g_sync
-	global g_zoneInited
-	global DB_InitPoolHeaderHandler
 	global DB_InitPool_XModelPieces
 	global DB_InitPool_PhysPreset
 	global DB_InitPool_XAnimParts
@@ -204,10 +207,6 @@
 	global DB_InitPool_FxImpactTable
 	global DB_InitPool_RawFile
 	global DB_InitPool_StringTable
-	global g_archiveBuf
-	global g_copyInfo
-	global g_copyInfoCount
-	global DB_AllocXAssetHeaderHandler
 	global DB_AllocXAsset_XModelPieces
 	global DB_AllocXAsset_PhysPreset
 	global DB_AllocXAsset_XAnimParts
@@ -230,7 +229,6 @@
 	global DB_AllocXAsset_FxImpactTable
 	global DB_AllocXAsset_RawFile
 	global DB_AllocXAsset_StringTable
-	global g_debugZoneName
 	global DB_PrintAssetName
 	global DB_SyncExternalAssets
 	global DB_AllocXAssetHeader
@@ -295,7 +293,6 @@
 	global Load_MaterialTechniqueSetAsset
 	global Mark_MaterialTechniqueSetAsset
 	global DB_Update
-	global g_mainThreadBlocked
 
 
 SECTION .text
@@ -4496,93 +4493,11 @@ Mark_MaterialTechniqueSetAsset_50:
 	nop
 
 
-
-;Zero initialized global or static variables of db_registry:
-SECTION .bss
-db_hashCritSect: resb 0x8
-g_defaultAssetCount: resb 0x14
-g_freeAssetEntryHead: resb 0x20
-g_zoneAllocType: resb 0x4
-g_sync: resb 0x4
-g_zoneInited: resb 0x1
-g_archiveBuf: resb 0xf
-g_copyInfo: resb 0x2000
-g_copyInfoCount: resb 0x20
-g_debugZoneName: resb 0x40
-g_mainThreadBlocked: resb 0x80
-
-
-;Initialized global or static variables of db_registry:
-SECTION .data
-DB_DynamicCloneXAssetHandler: dd 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, DB_DynamicCloneMenu, 0x0, DB_DynamicCloneWeaponDef, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-g_defaultAssetName: dd _cstring_null, _cstring_default, _cstring_void, _cstring_void, _cstring_default1, _cstring_default, _cstring_white, _cstring_null1, _cstring_default, _cstring_nullwav, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_light_dynamic, _cstring_null, _cstring_fontsconsolefont, _cstring_uidefaultmenu, _cstring_default_menu, _cstring_cgame_unknown, _cstring_defaultweapon_mp, _cstring_null, _cstring_miscmissing_fx, _cstring_default, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_null, _cstring_mpdefaultstringt, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_RemoveXAssetHandler: dd 0x0, 0x0, 0x0, 0x0, 0x0, DB_RemoveTechniqueSet, DB_RemoveImage, 0x0, 0x0, DB_RemoveLoadedSound, DB_RemoveClipMap, DB_RemoveClipMap, DB_RemoveComWorld, 0x0, 0x0, 0x0, DB_RemoveGfxWorld, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_FreeXAssetHeaderHandler: dd DB_FreeXAssetHeader_XModelPieces, DB_FreeXAssetHeader_PhysPreset, DB_FreeXAssetHeader_XAnimParts, DB_FreeXAssetHeader_XModel, DB_FreeMaterial, DB_FreeXAssetHeader_MaterialTechniqueSet, DB_FreeXAssetHeader_GfxImage, DB_FreeXAssetHeader_snd_alias_list_t, DB_FreeXAssetHeader_SndCurve, DB_FreeXAssetHeader_LoadedSound, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetSingleton, DB_FreeXAssetHeader_MapEnts, DB_FreeXAssetSingleton, DB_FreeXAssetHeader_GfxLightDef, 0x0, DB_FreeXAssetHeader_Font_s, DB_FreeXAssetHeader_MenuList, DB_FreeXAssetHeader_menuDef_t, DB_FreeXAssetHeader_LocalizeEntry, DB_FreeXAssetHeader_WeaponDef, 0x0, DB_FreeXAssetHeader_FxEffectDef, DB_FreeXAssetHeader_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_FreeXAssetHeader_RawFile, DB_FreeXAssetHeader_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_InitPoolHeaderHandler: dd DB_InitPool_XModelPieces, DB_InitPool_PhysPreset, DB_InitPool_XAnimParts, DB_InitPool_XModel, DB_InitPool_Material, DB_InitPool_MaterialTechniqueSet, DB_InitPool_GfxImage, DB_InitPool_snd_alias_list_t, DB_InitPool_SndCurve, DB_InitPool_LoadedSound, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitSingleton, DB_InitPool_MapEnts, DB_InitSingleton, DB_InitPool_GfxLightDef, 0x0, DB_InitPool_Font_s, DB_InitPool_MenuList, DB_InitPool_menuDef_t, DB_InitPool_LocalizeEntry, DB_InitPool_WeaponDef, 0x0, DB_InitPool_FxEffectDef, DB_InitPool_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_InitPool_RawFile, DB_InitPool_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-DB_AllocXAssetHeaderHandler: dd DB_AllocXAsset_XModelPieces, DB_AllocXAsset_PhysPreset, DB_AllocXAsset_XAnimParts, DB_AllocXAsset_XModel, DB_AllocMaterial, DB_AllocXAsset_MaterialTechniqueSet, DB_AllocXAsset_GfxImage, DB_AllocXAsset_snd_alias_list_t, DB_AllocXAsset_SndCurve, DB_AllocXAsset_LoadedSound, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAssetSingleton, DB_AllocXAsset_MapEnts, DB_AllocXAssetSingleton, DB_AllocXAsset_GfxLightDef, 0x0, DB_AllocXAsset_Font_s, DB_AllocXAsset_MenuList, DB_AllocXAsset_menuDef_t, DB_AllocXAsset_LocalizeEntry, DB_AllocXAsset_WeaponDef, 0x0, DB_AllocXAsset_FxEffectDef, DB_AllocXAsset_FxImpactTable, 0x0, 0x0, 0x0, 0x0, DB_AllocXAsset_RawFile, DB_AllocXAsset_StringTable, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of db_registry:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_s:		db "%s",0ah,0
-_cstring_szonessff:		db "%s/zone/%s/%s.ff",0
-_cstring_sssff:		db "%s/%s/%s.ff",0
-_cstring__load:		db "_load",0
 _cstring_usermaps:		db "usermaps",0
-_cstring_ssssff:		db "%s/%s/%s/%s.ff",0
-_cstring_warning_could_no:		db "WARNING: Could not find zone ",27h,"%s",27h,0ah,0
-_cstring_mp_patch:		db "mp_patch",0
-_cstring_updatemp_patchff:		db "update:",5ch,"mp_patch.ff",0
-_cstring_waiting_for_init:		db "Waiting for $init to finish.  There may be assets missing from code_post_gfx.",0ah,0
-_cstring_waited_d_ms_for_:		db "Waited %d ms for $init to finish.",0ah,0
 _cstring_mod:		db "mod",0
-_cstring_error_could_not_:		db "ERROR: Could not find zone ",27h,"%s",27h,0ah,0
-_cstring_loading_mp_patch:		db "Loading mp_patch.ff from disc, not from the update drive",0ah,0
 _cstring_exceeded_limit_o:		db "Exceeded limit of %d ",27h,"%s",27h," assets.",0ah,0
-_cstring_could_not_load_d:		db "Could not load default asset ",27h,"%s",27h," for asset type ",27h,"%s",27h,".",0ah,"Tried to load asset ",27h,"%s",27h,".",0
-_cstring_could_not_alloca:		db "Could not allocate asset - increase XASSET_ENTRY_POOL_SIZE",0
-_cstring_couldnt_find_the:		db "Couldn",27h,"t find the bsp for this map.  Please build the fast file associated with %s and try again.",0
-_cstring_attempting_to_ov:		db "Attempting to override asset ",27h,"%s",27h," from zone ",27h,"%s",27h," with zone ",27h,"%s",27h,0
-_cstring_g_copyinfo_excee:		db "g_copyInfo exceeded",0
 _cstring_could_not_load_d1:		db "Could not load default asset for asset type ",27h,"%s",27h,0
-_cstring_failed_to_create:		db "Failed to create database thread",0
-_cstring_unloaded_fastfil:		db "Unloaded fastfile %s",0ah,0
-_cstring_loading_fastfile:		db "Loading fastfile %s",0ah,0
-_cstring_max_zone_count_e:		db "Max zone count exceeded",0
 _cstring_ss:		db "%s/%s",0
-_cstring_waited_i_msec_fo:		db "Waited %i msec for asset ",27h,"%s",27h," of type ",27h,"%s",27h,".",0ah,0
-_cstring_could_not_load_s:		db "Could not load %s ",22h,"%s",22h,".",0ah,0
-_cstring_waited_i_msec_fo1:		db "Waited %i msec for missing asset ",22h,"%s",22h,".",0ah,0
-_cstring_ss1:		db "%s,%s",0ah,0
-_cstring_smps:		db "%s,mp/%s",0ah,0
-_cstring_cfg:		db ".cfg",0
-_cstring_gsx:		db ".gsx",0
-_cstring_localized_:		db "localized_",0
-_cstring_s_load:		db "%s_load",0
-_cstring_space:		db " ",0
-_cstring_:		db "/",0
-_cstring_null:		db 0
-_cstring_default:		db "default",0
-_cstring_void:		db "void",0
-_cstring_default1:		db "$default",0
-_cstring_white:		db "$white",0
-_cstring_null1:		db "null",0
-_cstring_nullwav:		db "null.wav",0
-_cstring_light_dynamic:		db "light_dynamic",0
-_cstring_fontsconsolefont:		db "fonts/consolefont",0
-_cstring_uidefaultmenu:		db "ui/default.menu",0
-_cstring_default_menu:		db "default_menu",0
-_cstring_cgame_unknown:		db "CGAME_UNKNOWN",0
-_cstring_defaultweapon_mp:		db "defaultweapon_mp",0
-_cstring_miscmissing_fx:		db "misc/missing_fx",0
-_cstring_mpdefaultstringt:		db "mp/defaultStringTable.csv",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

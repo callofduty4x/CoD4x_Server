@@ -136,12 +136,24 @@ FILE*		missingFiles = NULL;
 extern cvar_t*	fs_homepath;
 extern cvar_t*	fs_debug;
 extern cvar_t*	fs_basepath;
-extern cvar_t*	fs_gameDirVar;
 extern cvar_t*	loc_warnings;
 extern cvar_t*	loc_warningsAsErrors;
 
 extern "C"
 {
+    extern cvar_t* fs_gameDirVar;
+    extern cvar_t* fs_debug;
+    extern cvar_t* fs_copyfiles;
+    extern cvar_t* fs_cdpath;
+    extern cvar_t* fs_basepath;
+    extern cvar_t* fs_basegame;
+    extern cvar_t* fs_ignoreLocalized;
+    extern cvar_t* fs_homepath;
+    extern cvar_t* fs_restrict;
+    extern cvar_t* fs_usedevdir;
+    extern cvar_t* loc_warnings;
+    extern cvar_t* loc_warningsAsErrors;
+
 void FS_CopyFile(char* FromOSPath,char* ToOSPath);
 int FS_Read(void* data, int length, fileHandle_t);
 long FS_FOpenFileRead(const char* filename, fileHandle_t* returnhandle);

@@ -26,6 +26,9 @@
 #define HUDELEM_ADDR 0x8335620
 #define MAX_HUDELEMS 1024
 
+struct game_hudelem_t;
+struct gclient_s;
+
 typedef enum{
     HUDFONT_DEFAULT,
     HUDFONT_BIGFIXED,
@@ -65,17 +68,6 @@ enum hudelem_update_t
 };
 
 
-typedef struct game_hudelem_s
-{
-  struct hudelem_s elem;
-  int clientNum;
-  int team;
-  int archived;
-}game_hudelem_t;
-
-
-extern struct game_hudelem_s g_hudelems[1024];
-
 game_hudelem_t* G_GetNewHudElem(unsigned int clnum);
 void G_HudSetText(game_hudelem_t*, const char*);
 void G_HudSetPosition(game_hudelem_t*, float x, float y, hudscrnalign_t, hudscrnalign_t, hudalign_t alignx, hudalign_t aligny);
@@ -90,7 +82,7 @@ void HudElem_ClearTypeSettings(game_hudelem_t *);
 
 extern "C"
 {
-    void __cdecl HudElem_UpdateClient(gclient_t *client, int clientNum, hudelem_update_t which);
-    void __cdecl HudElem_ClientDisconnect(gentity_t *ent);
+    void __cdecl HudElem_UpdateClient(gclient_s *client, int clientNum, hudelem_update_t which);
+    void __cdecl HudElem_ClientDisconnect(gentity_s *ent);
     void __cdecl HudElem_DestroyAll();
 } // extern "C"

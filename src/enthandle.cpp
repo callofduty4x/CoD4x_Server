@@ -90,13 +90,13 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
 
 
 
-        bool __cdecl EntHandle::isDefined()
+        bool EntHandle::isDefined()
         {
             assertx((!number || g_entities[number - 1].r.inuse), "(number - 1) = %i", number - 1);
             return number != 0;
         }
 
-        gentity_s* __cdecl EntHandle::ent( )
+        gentity_s* EntHandle::ent( )
         {
             gentity_s* ent;
             assertx((unsigned int)number - 1 < ENTITYNUM_NONE,"%i not in [0, %i)", number -1, ENTITYNUM_NONE);
@@ -108,14 +108,14 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
             return ent;
         }
 
-        int __cdecl EntHandle::entnum( )
+        int EntHandle::entnum( )
         {
           assertx((unsigned int)number - 1 < ENTITYNUM_NONE, "number - 1 doesn't index ENTITYNUM_NONE - %i not in [0, %i)", number -1, ENTITYNUM_NONE);
           assertx(g_entities[number - 1].r.inuse, "(number - 1) = %i", number -1);
           return number - 1;
         }
 
-        void __cdecl EntHandle::setEnt(gentity_s *ent)
+        void EntHandle::setEnt(gentity_s *ent)
         {
             gentity_s *oldEnt;
 
@@ -141,7 +141,8 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
             infoIndex = AddEntHandleInfo(&g_entitiesHandleList[ent - g_entities], this);
             number = ent - g_entities + 1;
         }
-        void __cdecl EntHandle::Shutdown()
+
+        void EntHandle::Shutdown()
         {
             unsigned int usedEntHandle;
             unsigned int i;
@@ -166,7 +167,7 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
             }
         }
 
-        void __cdecl EntHandle::Init()
+        void EntHandle::Init()
         {
             unsigned int i;
 

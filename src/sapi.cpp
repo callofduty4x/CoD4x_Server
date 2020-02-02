@@ -1,11 +1,11 @@
 ﻿#define __STDC_FORMAT_MACROS
 #define __IN_EXTSAPIMODULE__
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <inttypes.h>
+#include <cstdlib>
+#include <cstring>
+#include <cstdint>
+#include <cinttypes>
+
 #include "qshared.hpp"
 #include "q_platform.hpp"
 #include "g_shared.hpp"

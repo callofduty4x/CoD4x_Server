@@ -50,6 +50,7 @@
 
 #include <stdarg.h>
 #include <ctype.h>
+#include "server.hpp"
 
 typedef struct
 {
@@ -413,30 +414,8 @@ void Scr_AddStockMethods()
 
 
     //HUD Functions
-
-    Scr_AddMethod("settext", HECmd_SetText, qfalse);
-    Scr_AddMethod("clearalltextafterhudelem", HECmd_ClearAllTextAfterHudElem, qfalse);
-    Scr_AddMethod("setshader", HECmd_SetMaterial, qfalse);
-    Scr_AddMethod("settimer", HECmd_SetTimer, qfalse);
-    Scr_AddMethod("settimerup", HECmd_SetTimerUp, qfalse);
-    Scr_AddMethod("settenthstimer", HECmd_SetTenthsTimer, qfalse);
-    Scr_AddMethod("settenthstimerup", HECmd_SetTenthsTimerUp, qfalse);
-    Scr_AddMethod("setclock", HECmd_SetClock, qfalse);
-    Scr_AddMethod("setclockup", HECmd_SetClockUp, qfalse);
-    Scr_AddMethod("setvalue", HECmd_SetValue, qfalse);
-    Scr_AddMethod("setwaypoint", HECmd_SetWaypoint, qfalse);
-    Scr_AddMethod("fadeovertime", HECmd_FadeOverTime, qfalse);
-    Scr_AddMethod("scaleovertime", HECmd_ScaleOverTime, qfalse);
-    Scr_AddMethod("moveovertime", HECmd_MoveOverTime, qfalse);
-    Scr_AddMethod("reset", HECmd_Reset, qfalse);
-//	Scr_AddMethod("destroy", HECmd_Destroy, qfalse);
-    Scr_AddMethod("setpulsefx", HECmd_SetPulseFX, qfalse);
-    Scr_AddMethod("setplayernamestring", HECmd_SetPlayerNameString, qfalse);
-    Scr_AddMethod("setmapnamestring", HECmd_SetMapNameString, qfalse);
-    Scr_AddMethod("setgametypestring", HECmd_SetGameTypeString, qfalse);
-    Scr_AddMethod("cleartargetent", HECmd_ClearTargetEnt, qfalse);
-    Scr_AddMethod("settargetent", HECmd_SetTargetEnt, qfalse);
-    Scr_AddMethod("destroy", Scr_Destroy_f, qfalse);
+    for (int i = 0; i < g_he_methodsCount; ++i)
+        Scr_AddMethod(g_he_methods[i].actionString, g_he_methods[i].actionFunc, qfalse);
 
 
     //Scr Cmd Functions
@@ -679,54 +658,6 @@ int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qbool
 
 /**************** Mandatory *************************/
 
-struct gameTypeScript_t
-{
-  char pszScript[64];
-  char pszName[64];
-  int bTeamBased;
-};
-
-struct scr_gametype_data_t
-{
-  int main;
-  int startupgametype;
-  int playerconnect;
-  int playerdisconnect;
-  int playerdamage;
-  int playerkilled;
-  int votecalled;
-  int playervote;
-  int playerlaststand;
-  int iNumGameTypes;
-  struct gameTypeScript_t list[32];
-};
-
-#pragma pack(push, 4)
-struct corpseInfo_t
-{
-  struct XAnimTree_s *tree;
-  int entnum;
-  int time;
-  struct clientInfo_t ci;
-  byte falling;
-  byte pad[3];
-};
-#pragma pack(pop)
-
-struct scr_data_t
-{
-  int levelscript;
-  int gametypescript;
-  struct scr_gametype_data_t gametype;
-  int del;
-  int initstructs;
-  int createstruct;
-  struct corpseInfo_t playerCorpseInfo[8];
-};
-
-extern struct scr_data_t g_scr_data;
-
-
 int script_CallBacks_new[8];
 
 void GScr_LoadGameTypeScript(void)
@@ -774,7 +705,7 @@ extern "C"
         Scr_BeginLoadScripts();
         Scr_InitFunctions();
 
-        g_scr_data.del = GScr_LoadScriptAndLabel("codescripts/delete", "main", qtrue);
+        g_scr_data.delete_ = GScr_LoadScriptAndLabel("codescripts/delete", "main", qtrue);
         g_scr_data.initstructs = GScr_LoadScriptAndLabel("codescripts/struct", "initstructs", qtrue);
         g_scr_data.createstruct = GScr_LoadScriptAndLabel("codescripts/struct", "createstruct", qtrue);
 

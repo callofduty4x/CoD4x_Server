@@ -177,29 +177,6 @@ typedef struct
     int framerate;
 } level_locals_t;
 
-extern level_locals_t level;
-
-struct turretInfo_s
-{
-  int inuse;
-  int flags;
-  int fireTime;
-  vec2_t arcmin;
-  vec2_t arcmax;
-  float dropPitch;
-  int stance;
-  int prevStance;
-  int fireSndDelay;
-  vec3_t userOrigin;
-  float playerSpread;
-  float pitchCap;
-  int triggerDown;
-  char fireSnd;
-  char fireSndPlayer;
-  char stopSnd;
-  char stopSndPlayer;
-};
-
 /* Max count = 32, started at 0x08583C10 */
 /*typedef struct gametype_t
 {
@@ -546,31 +523,6 @@ struct entityHandler_t
   int splashMethodOfDeath;
 };
 
-extern const struct entityHandler_t entityHandlers[ENT_HANDLER_COUNT];
-
-
-
-extern cvar_t *g_allowConsoleSay;
-extern cvar_t *g_disabledefcmdprefix;
-extern cvar_t *g_votedMapName;
-extern cvar_t *g_votedGametype;
-extern cvar_t *g_allowVote;
-extern cvar_t *g_TeamName_Axis;
-extern cvar_t *g_TeamName_Allies;
-extern cvar_t *g_gravity;
-extern cvar_t *jump_height;
-extern cvar_t *jump_stepSize;
-extern cvar_t *jump_slowdownEnable;
-extern cvar_t *g_antilag;
-extern cvar_t *g_cheats;
-extern cvar_t *g_oldVoting;
-extern cvar_t *g_inactivity;
-extern cvar_t *g_synchronousClients;
-extern cvar_t *g_log;
-extern cvar_t *g_logSync;
-extern cvar_t *g_logTimeStampInSeconds;
-extern cvar_t *g_smoothClients;
-
 extern qboolean onExitLevelExecuted;
 
 #ifdef __cplusplus
@@ -681,8 +633,5 @@ void __cdecl use_trigger_use(struct gentity_s *, struct gentity_s *, struct gent
 
 //This defines Cvars directly related to executable file
 
-extern cvar_t* g_maxclients;
-extern cvar_t* g_debugBullets;
-extern vec3_t playerMins, playerMaxs;
 extern uint16_t *modNames[16];
 #endif /*G_SHARED_H*/

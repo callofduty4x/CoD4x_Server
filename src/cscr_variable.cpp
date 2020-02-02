@@ -11,6 +11,7 @@
 #include "xassets.hpp"
 #include "xassets/rawfile.hpp"
 #include "cscr_variable.hpp"
+#include "qcommon.hpp"
 
 #define VAR_STAT_MASK 0x60
 #define VAR_MASK 0x1F
@@ -44,34 +45,6 @@
 #define FIRST_DEAD_OBJECT VAR_DEAD_THREAD
 
 
-const char *var_typename[] =
-{
-        "undefined",
-        "object",
-        "string",
-        "localized string",
-        "vector",
-        "float",
-        "int",
-        "codepos",
-        "precodepos",
-        "function",
-        "stack",
-        "animation",
-        "developer codepos",
-        "include codepos",
-        "thread",
-        "thread",
-        "thread",
-        "thread",
-        "struct",
-        "removed entity",
-        "entity",
-        "array",
-        "removed thread"
-};
-
-
 struct __align(64) scrVarGlob_t
 {
   VariableValueInternal* variableList;
@@ -84,7 +57,6 @@ struct scrVarDebugPub_t gScrVarDebugPubBuff;
 #endif
 
 struct scrVarGlob_t gScrVarGlob;
-scrVarPub_t gScrVarPub;
 
 
 struct scr_classStruct_t
@@ -178,7 +150,35 @@ double Scr_GetEntryUsage(VariableValueInternal *entryValue)
 }
 
 
-extern "C"{
+extern "C"
+{
+    scrVarPub_t gScrVarPub;
+    const char* var_typename[] =
+    {
+        "undefined",
+        "object",
+        "string",
+        "localized string",
+        "vector",
+        "float",
+        "int",
+        "codepos",
+        "precodepos",
+        "function",
+        "stack",
+        "animation",
+        "developer codepos",
+        "include codepos",
+        "thread",
+        "thread",
+        "thread",
+        "thread",
+        "struct",
+        "removed entity",
+        "entity",
+        "array",
+        "removed thread"
+    };
 
 VariableValue __cdecl Scr_GetArrayIndexValue(unsigned int name)
 {

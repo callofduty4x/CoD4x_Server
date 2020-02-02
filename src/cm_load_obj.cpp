@@ -3,6 +3,7 @@
 #include "qcommon_mem.hpp"
 #include "qcommon_io.hpp"
 #include "g_shared.hpp"
+#include "cm_load.hpp"
 
 
 void CMod_LoadBrushes()

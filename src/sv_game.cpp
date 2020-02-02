@@ -81,19 +81,6 @@ gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt ) {
 	return SV_GentityNum( num );
 }
 
-void SV_GameSendServerCommand(int clientNum, int cmdtype, const char *cmdstring)
-{
-  if ( clientNum == -1 )
-  {
-    SV_SendServerCommand_IW(NULL, cmdtype, "%s", cmdstring);
-  }
-  else if ( clientNum >= 0 && clientNum < sv_maxclients->integer )
-  {
-    SV_SendServerCommand_IW(&svs.clients[clientNum], cmdtype, "%s", cmdstring);
-  }
-}
-
-
 /*
 =================
 SV_inPVSIgnorePortals
@@ -813,5 +800,13 @@ extern "C"
         DObj *obj = Com_GetServerDObj(ent->s.number);
         if ( obj )
             DObjUpdateServerInfo(obj, dtime, bNotify);
+    }
+
+    void __cdecl SV_GameSendServerCommand(int clientNum, int cmdtype, const char* cmdstring)
+    {
+        if (clientNum == -1)
+            SV_SendServerCommand_IW(NULL, cmdtype, "%s", cmdstring);
+        else if (clientNum >= 0 && clientNum < sv_maxclients->integer)
+            SV_SendServerCommand_IW(&svs.clients[clientNum], cmdtype, "%s", cmdstring);
     }
 } // extern "C"

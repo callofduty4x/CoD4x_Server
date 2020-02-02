@@ -1,4 +1,5 @@
 #include "sv_bots.hpp"
+
 #include "scr_vm.hpp"
 #include "sys_main.hpp"
 #include "qshared.hpp"
@@ -7,6 +8,8 @@
 #include "server.hpp"
 #include "cscr_stringlist.hpp"
 #include "sv_bots_astar.hpp"
+#include "g_main_mp.hpp"
+#include "cscr_const.hpp"
 
 BotMovementInfo_t g_botai[MAX_CLIENTS];
 

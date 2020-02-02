@@ -28,9 +28,7 @@
 #include "dobj.hpp"
 #include "xassets/weapondef.hpp"
 #include "xassets/material.hpp"
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
+#include "world.hpp"
 
 
 typedef struct
@@ -95,7 +93,7 @@ union XAssetHeader
   struct clipMap_s *clipMap;
   struct ComWorld *comWorld;
   struct GameWorldSp *gameWorldSp;
-  struct GameWorldMp *gameWorldMp;
+  GameWorldMp *gameWorldMp;
   struct MapEnts *mapEnts;
   struct GfxWorld *gfxWorld;
   struct GfxLightDef *lightDef;

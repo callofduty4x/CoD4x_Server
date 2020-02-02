@@ -8,7 +8,7 @@
 	extern scr_const
 	extern Scr_Notify
 	extern entityHandlers
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern G_IsTurretUsable
 	extern BG_ThrowingBackGrenade
 	extern BG_GetWeaponDef
@@ -172,7 +172,7 @@ Player_UpdateActivate_140:
 	mov eax, [ebx+0x15c]
 	add eax, 0x30f8
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov ecx, [ebx+0x15c]
 	jmp Player_UpdateActivate_110
 Player_UpdateActivate_70:
@@ -180,7 +180,7 @@ Player_UpdateActivate_70:
 	mov eax, [ebx+0x15c]
 	add eax, 0x30f8
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	cmp byte [ebx+0x16c], 0x0
 	jnz Player_UpdateActivate_150
 	mov ecx, [ebx+0x15c]
@@ -209,7 +209,7 @@ Player_UpdateActivate_70:
 	mov [esp+0x4], eax
 	lea eax, [ecx+0x30f8]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov edx, [ebx+0x15c]
 	mov eax, level
 	mov eax, [eax+0x1ec]

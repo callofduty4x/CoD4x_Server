@@ -1,4 +1,5 @@
 ﻿#include "g_weapon.hpp"
+
 #include "qshared.hpp"
 #include "qshared.hpp"
 #include "g_shared.hpp"
@@ -6,10 +7,9 @@
 #include "server_public.hpp"
 #include "cscr_stringlist.hpp"
 #include "g_main_mp.hpp"
+#include "bg_weapons.hpp"
 
 using namespace std;
-
-extern unsigned int bg_lastParsedWeaponIndex;
 
 extern "C"
 {

@@ -1,4 +1,5 @@
 ﻿#include "g_client_mp.hpp"
+
 #include "g_public_mp.hpp"
 #include "qshared.hpp"
 #include "qcommon.hpp"
@@ -7,6 +8,8 @@
 #include "server_public.hpp"
 #include "plugin_handler.hpp"
 #include "g_main_mp.hpp"
+#include "bg_pmove.hpp"
+#include "cscr_const.hpp"
 
 void __cdecl ClientClearFields(gclient_s *client)
 {

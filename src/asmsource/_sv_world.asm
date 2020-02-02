@@ -12,7 +12,6 @@
 	extern DObjGetRadius
 	extern DObjTracelinePartBits
 	extern DObjTraceline
-	extern vec3_origin
 
 ;Exports of sv_world:
 	global SV_PointTraceToEntityIntern

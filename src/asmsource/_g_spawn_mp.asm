@@ -63,7 +63,6 @@
 	extern Scr_AddConstString
 	extern Scr_AddObject
 	extern Scr_GetType
-	extern _ZN9EntHandle6setEntEP9gentity_s
 	extern Scr_GetInt
 	extern Scr_GetVector
 	extern Scr_GetConstStringIncludeNull

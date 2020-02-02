@@ -19,12 +19,15 @@
 ===========================================================================
 */
 
+#include "xassets.hpp"
 
+#include <cstring>
+#include <cstdlib>
+#include <cctype>
 
 #include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "cvar.hpp"
-#include "xassets.hpp"
 #include "sys_patch.hpp"
 #include "qcommon_mem.hpp"
 #include "filesystem.hpp"
@@ -34,11 +37,6 @@
 #include "xassets/sounds.hpp"
 #include "sys_thread.hpp"
 #include "physicalmemory.hpp"
-
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <ctype.h>
 
 
 void R_Init(){

@@ -27,10 +27,8 @@
 
 #include "qshared.hpp"
 
-
-#include <setjmp.h>
-#include <inttypes.h>
-#include <stdbool.h>
+#include <csetjmp>
+#include <cinttypes>
 
 #ifdef _WIN32
 #include "win32/sys_win32.hpp"

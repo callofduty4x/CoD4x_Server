@@ -20,6 +20,13 @@
 ===========================================================================
 */
 
+
+#include <cstring>
+#include <cstdlib>
+#include <cstdint>
+#include <ctime>
+#include <cctype>
+
 #ifdef _WIN32
 	#include <winsock2.h>
 	#include <ws2tcpip.h>
@@ -47,12 +54,6 @@
 #include "net_game.hpp"
 #include "sys_thread.hpp"
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
-#include <ctype.h>
-#include <stddef.h>		/* for offsetof*/
 
 #ifdef _WIN32
 	typedef int socklen_t;

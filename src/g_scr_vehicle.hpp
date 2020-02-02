@@ -229,6 +229,7 @@ struct scr_vehicle_s
 };
 
 extern struct vehicle_info_t s_vehicleInfos[32];
+extern float vehicle_frametime;
 
 extern "C"
 {

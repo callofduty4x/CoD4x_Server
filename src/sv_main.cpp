@@ -21,6 +21,10 @@
 */
 
 #include "sv_main.hpp"
+
+#include <cstring>
+#include <cstdarg>
+
 #include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon_mem.hpp"
@@ -57,10 +61,7 @@
 #include "g_client_mp.hpp"
 #include "g_main_mp.hpp"
 #include "com_bsp_load_obj.hpp"
-
-
-#include <cstring>
-#include <cstdarg>
+#include "cscr_const.hpp"
 
 
 cvar_t	*sv_protocol;

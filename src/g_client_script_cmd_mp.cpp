@@ -1,6 +1,7 @@
 ﻿#include "g_client_script_cmd_mp.hpp"
 #include "g_client_mp.hpp"
 #include "g_main_mp.hpp"
+#include "server.hpp"
 
 
 extern "C"

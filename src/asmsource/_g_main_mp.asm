@@ -87,7 +87,7 @@ extern g_compassShowEnemies
 	extern BG_GetWeaponDef
 	extern Com_Printf
 	extern Swap_Init
-	extern _ZN9EntHandle4InitEv
+	extern EntHandle_Init
 	extern memset
 	extern ms_srand
 	extern Rand_Init
@@ -156,7 +156,7 @@ extern g_compassShowEnemies
 	extern SV_SightTrace
 	extern qsort
 	extern G_CloseLogFile
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern HudElem_DestroyAll
 	extern Scr_IsSystemActive
 	extern Scr_ShutdownSystem
@@ -175,7 +175,7 @@ extern g_compassShowEnemies
 	extern SV_Trace
 	extern Hunk_AllocLowInternal
 	extern SV_TracePassed
-	extern ceilf
+	extern std_ceilf
 	extern SV_GameSendServerCommand
 	extern Cbuf_AddText
 	
@@ -470,7 +470,7 @@ G_InitGame:
 	mov dword [esp], 0xf
 	call Com_Printf
 	call Swap_Init
-	call _ZN9EntHandle4InitEv
+	call EntHandle_Init
 	mov dword [esp+0x8], 0x2e6c
 	mov dword [esp+0x4], 0x0
 	mov dword [esp], level
@@ -1362,7 +1362,7 @@ G_ShutdownGame_120:
 G_ShutdownGame_60:
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	add esi, 0x1
 	add ebx, 0x4
 	cmp esi, 0x20
@@ -1679,7 +1679,7 @@ CheckVote_10:
 	mov eax, [g_voteAbstainWeight]
 	mulss xmm0, [eax+0xc]
 	movss [esp], xmm0
-	call ceilf
+	call std_ceilf
 	fstp dword [ebp-0xc]
 	cvttss2si eax, [ebp-0xc]
 	add ebx, eax

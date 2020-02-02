@@ -1,10 +1,10 @@
 ;Imports of com_bsp:
 	extern Sys_Error
+	extern comWorld
 
 ;Exports of com_bsp:
 	global Com_UnloadWorld
 	global Com_CanPrimaryLightAffectPoint
-	global comWorld
 
 
 SECTION .text
@@ -111,19 +111,6 @@ Com_CanPrimaryLightAffectPoint_30:
 	setae al
 	leave
 	ret
-
-
-;Zero initialized global or static variables of com_bsp:
-SECTION .bss
-comWorld: resb 0x80
-
-
-;Initialized global or static variables of com_bsp:
-SECTION .data
-
-
-;Initialized constant data of com_bsp:
-SECTION .rdata
 
 
 ;All cstrings:

@@ -5,6 +5,8 @@
 #include "server_public.hpp"
 #include "qcommon_io.hpp"
 #include "g_main_mp.hpp"
+#include "bg_animation.hpp"
+#include "g_sv_main.hpp"
 
 
 extern "C"{

@@ -22,6 +22,7 @@
 #include "g_sv_movement.hpp"
 #include "entity.hpp"
 #include "g_shared.hpp"
+#include "g_main_mp.hpp"
 
 
 float Dirty_GetJumpHeight(unsigned int num)

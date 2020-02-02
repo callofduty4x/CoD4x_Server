@@ -29,17 +29,12 @@
 #include "qshared.hpp"
 #include "entity.hpp"
 #include "cvar.hpp"
-#include "server.hpp"
 
 void Init_CallVote(void);
 void __cdecl Cmd_CallVote_f( gentity_t *ent );
 void G_ChatRedirect(char* msg, int client, int mode);
 void G_AddChatRedirect(void (*rd_dest)( const char *, int, int));
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
-
-extern cvar_t* g_speed;
-
-void __cdecl SV_GameSendServerCommand(int clientnum, int svscmd_type, const char *text);
 
 extern "C"
 {
@@ -50,9 +45,8 @@ extern "C"
     int __cdecl G_LocalizedStringIndex( const char* );
 }; //extern "C"
 
+struct client_t;
 
-
-void G_PrintRedirect(char* msg, int len);
 void Pmove_ExtendedResetState( void );
 void Pmove_ExtendedInitForClient(client_t *cl);
 void Pmove_ExtendedTurnOn( void );
@@ -66,9 +60,6 @@ __optimize3 float __cdecl Jump_CalcHeight( playerState_t* ps );
 
 void __cdecl ClientCommand( int );
 
-void G_PrintRuleForPlayer(client_t *cl);
-void G_PrintAdvertForPlayer(client_t *cl);
-void G_SetupHudMessagesForPlayer(client_t* cl);
 void G_DestroyAdsForPlayer(client_t *cl);
 void G_AddRule(const char* newtext);
 void G_AddAdvert(const char* newtext);

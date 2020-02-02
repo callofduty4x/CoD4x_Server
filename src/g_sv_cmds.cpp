@@ -39,13 +39,15 @@
 #include "g_team.hpp"
 #include "g_main_mp.hpp"
 #include "g_cmds.hpp"
+#include "sv_game.hpp"
+#include "g_sv_main.hpp"
 
 
 extern cvar_t *g_deadChat;
 static cvar_t *g_voteTime;
 static cvar_t *g_voteBanTime;
-cvar_t *g_votedMapName;
-cvar_t *g_votedGametype;
+cvar_s* g_votedMapName;
+cvar_s* g_votedGametype;
 static cvar_t *g_voteVoteGametypes;
 static cvar_t *g_voteKickMinPlayers;
 static cvar_t *g_voteMaxVotes;

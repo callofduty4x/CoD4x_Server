@@ -25,6 +25,7 @@
 #include "g_shared.hpp"
 #include "g_sv_shared.hpp"
 #include "scr_vm.hpp"
+#include "g_main_mp.hpp"
 
 
 #ifndef NDEBUG
@@ -145,7 +146,7 @@ void G_HudSetFont(game_hudelem_t* element ,float fontscale, fonttype_t fonttype)
     if(fontscale > 4.6 || fontscale < 1.399999)
     {
         Com_PrintWarning(CON_CHANNEL_SCRIPT,"Fontscale: %f is out of range. Range is 1.4 to 4.6\n", fontscale);
-        fontscale = 1.4;
+        fontscale = 1.4f;
     }
     element->elem.fontScale = fontscale;
     element->elem.font = fonttype;
@@ -219,11 +220,11 @@ void G_HudDestroy(game_hudelem_t* element)
 
 extern "C"
 {
-    void __cdecl HudElem_UpdateClient(gclient_t *client, int clientNum, hudelem_update_t which)
+    void __cdecl HudElem_UpdateClient(gclient_s *client, int clientNum, hudelem_update_t which)
     {
         int archivalCount;
         int currentCount;
-        struct game_hudelem_s *hud;
+        game_hudelem_t *hud;
         unsigned int i;
         struct hudelem_s *elem;
 
@@ -295,7 +296,7 @@ extern "C"
     }
 
 
-    void __cdecl HudElem_ClientDisconnect(gentity_t *ent)
+    void __cdecl HudElem_ClientDisconnect(gentity_s *ent)
     {
         for (int i = 0; i < 1024; ++i )
             if ( g_hudelems[i].elem.type )

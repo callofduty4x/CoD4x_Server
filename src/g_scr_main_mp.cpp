@@ -1,4 +1,7 @@
 ﻿#include "g_scr_main_mp.hpp"
+
+#include <cctype>
+
 #include "qshared.hpp"
 #include "scr_vm.hpp"
 #include "g_shared.hpp"
@@ -6,57 +9,10 @@
 #include "stringed_interface.hpp"
 #include "bg_public.hpp"
 #include "g_main_mp.hpp"
-
-#include <ctype.h>
-
-
-struct gameTypeScript_t
-{
-  char pszScript[64];
-  char pszName[64];
-  int bTeamBased;
-};
-
-struct scr_gametype_data_t
-{
-  int main;
-  int startupgametype;
-  int playerconnect;
-  int playerdisconnect;
-  int playerdamage;
-  int playerkilled;
-  int votecalled;
-  int playervote;
-  int playerlaststand;
-  int iNumGameTypes;
-  struct gameTypeScript_t list[32];
-};
-
-#pragma pack(push, 4)
-struct corpseInfo_t
-{
-  struct XAnimTree_s *tree;
-  int entnum;
-  int time;
-  struct clientInfo_t ci;
-  byte falling;
-  byte pad[3];
-};
-#pragma pack(pop)
-
-struct scr_data_t
-{
-  int levelscript;
-  int gametypescript;
-  struct scr_gametype_data_t gametype;
-  int delete_;
-  int initstructs;
-  int createstruct;
-  struct corpseInfo_t playerCorpseInfo[8];
-};
-
-extern struct scr_data_t g_scr_data;
-
+#include "bg_pmove.hpp"
+#include "sv_world.hpp"
+#include "server.hpp"
+#include "bg_weapons.hpp"
 
 
 void __cdecl Scr_LocalizationError(int iParm, const char *pszErrorMessage)
@@ -84,8 +40,9 @@ void __cdecl Scr_ValidateLocalizedStringRef(int parmIndex, const char *token, in
 }
 
 
-extern "C"{
-
+extern "C"
+{
+    scr_data_t g_scr_data;
 
 void __cdecl GScr_PlaceSpawnPoint(scr_entref_t entref)
 {

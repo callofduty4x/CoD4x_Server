@@ -1,9 +1,63 @@
 ﻿#pragma once
-#include "scr_vm.hpp"
+#include "player.hpp"
+#include "scr_entref_t.hpp"
 
+
+struct XAnimTree_s;
+
+struct gameTypeScript_t
+{
+    char pszScript[64];
+    char pszName[64];
+    int bTeamBased;
+};
+
+
+struct scr_gametype_data_t
+{
+    int main;
+    int startupgametype;
+    int playerconnect;
+    int playerdisconnect;
+    int playerdamage;
+    int playerkilled;
+    int votecalled;
+    int playervote;
+    int playerlaststand;
+    int iNumGameTypes;
+    gameTypeScript_t list[32];
+};
+
+
+#pragma pack(push, 4)
+struct corpseInfo_t
+{
+    XAnimTree_s* tree;
+    int entnum;
+    int time;
+    clientInfo_t ci;
+    byte falling;
+    byte pad[3];
+};
+#pragma pack(pop)
+
+
+struct scr_data_t
+{
+    int levelscript;
+    int gametypescript;
+    scr_gametype_data_t gametype;
+    int delete_;
+    int initstructs;
+    int createstruct;
+    corpseInfo_t playerCorpseInfo[8];
+    char _padding[100];
+};
 
 extern "C"
 {
+    extern scr_data_t g_scr_data;
+
     void GScr_CreatePrintChannel();
     void GScr_printChannelSet();
     void print();

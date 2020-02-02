@@ -18,7 +18,7 @@ typedef enum
 	FT_PROTO_FTP
 }ftprotocols_t;
 
-typedef struct
+struct ftRequest_t
 {
 	qboolean lock;
 	qboolean active;
@@ -60,7 +60,7 @@ typedef struct
 	#ifndef NO_TLS
 		struct tlsstate_s *tls;
 	#endif
-}ftRequest_t;
+};
 
 
 typedef enum
@@ -72,11 +72,11 @@ typedef enum
 
 
 #define MAX_POST_VALS 32
-typedef struct
+struct httpPostVals_t
 {
 	char name[MAX_STRING_CHARS];
 	char value[MAX_STRING_CHARS];
-}httpPostVals_t;
+};
 
 int HTTP_SendReceiveData(ftRequest_t* request);
 void FileDownloadFreeRequest(ftRequest_t* request);

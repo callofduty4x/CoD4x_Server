@@ -108,7 +108,6 @@
 	extern bg_viewKickRandom;
 	extern bg_viewKickScale;
 	extern bullet_penetrationMinFxDist;
-	extern friction;
 	extern inertiaAngle;
 	extern inertiaDebug;
 	extern inertiaMax;
@@ -127,13 +126,10 @@
 	extern player_dmgtimer_flinchTime;
 	extern player_dmgtimer_maxTime;
 	extern player_dmgtimer_minScale;
-	extern player_dmgtimer_stumbleTime;
 	extern player_dmgtimer_timePerPoint;
 	extern player_footstepsThreshhold;
-	extern player_meleeChargeFriction;
 	extern player_meleeHeight;
 	extern player_meleeWidth;
-	extern player_moveThreshhold;
 	extern player_scopeExitOnDamage;
 	extern player_spectateSpeedScale;
 	extern player_sprintCameraBob;
@@ -149,7 +145,6 @@
 	extern player_turnAnims;
 	extern player_view_pitch_down;
 	extern player_view_pitch_up;
-	extern stopspeed;
 
 ;Exports of bg_misc:
 	global bg_soundRoomTypes
@@ -2924,10 +2919,7 @@ _cstring_show_inertia_deb:		db "Show inertia debug information",0
 _cstring_inertiadebug:		db "inertiaDebug",0
 _cstring_the_cosine_of_th:		db "The cosine of the angle at which inertia occurs",0
 _cstring_inertiaangle:		db "inertiaAngle",0
-_cstring_player_friction:		db "Player friction",0
-_cstring_friction:		db "friction",0
 _cstring_the_player_decel:		db "The player deceleration",0
-_cstring_stopspeed:		db "stopspeed",0
 _cstring_the_rate_at_whic:		db "The rate at which the player",27h,"s legs swing around when strafing(multi-player only)",0
 _cstring_bg_swingspeed:		db "bg_swingSpeed",0
 _cstring_the_amount_the_p:		db "The amount the player",27h,"s leg yaw can differ from his torso before moving ta match",0
@@ -2973,7 +2965,6 @@ _cstring_player_debugheal:		db "player_debugHealth",0
 _cstring_firing_weapon_wi:		db "Firing weapon will not decrease clip ammo.",0
 _cstring_player_sustainam:		db "player_sustainAmmo",0
 _cstring_the_speed_at_whi:		db "The speed at which the player is considered to be moving for the purposes of ",0ah,"view model bob and multiplayer model movement",0
-_cstring_player_movethres:		db "player_moveThreshhold",0
 _cstring_the_minimum_spee:		db "The minimum speed at which the player makes loud footstep noises",0
 _cstring_player_footsteps:		db "player_footstepsThreshhold",0
 _cstring_the_scale_applie:		db "The scale applied to the player speed when strafing",0
@@ -3007,7 +2998,6 @@ _cstring_player_dmgtimer_1:		db "player_dmgtimer_maxTime",0
 _cstring_the_minimum_scal:		db "The minimum scale value to slow the player by when damaged",0
 _cstring_player_dmgtimer_2:		db "player_dmgtimer_minScale",0
 _cstring_maximum_time_to_:		db "Maximum time to play stumble animations",0
-_cstring_player_dmgtimer_3:		db "player_dmgtimer_stumbleTime",0
 _cstring_maximum_time_to_1:		db "Maximum time to play flinch animations",0
 _cstring_player_dmgtimer_4:		db "player_dmgtimer_flinchTime",0
 _cstring_shellshock_loop_:		db "Shellshock loop alias",0
@@ -3077,7 +3067,6 @@ _cstring_player_meleewidt:		db "player_meleeWidth",0
 _cstring_the_height_of_th:		db "The height of the player",27h,"s melee attack",0
 _cstring_player_meleeheig:		db "player_meleeHeight",0
 _cstring_friction_used_du:		db "Friction used during melee charge",0
-_cstring_player_meleechar:		db "player_meleeChargeFriction",0
 _cstring_seconds_after_a_:		db "Seconds after a burst fire before weapons can be fired again.",0
 _cstring_player_burstfire:		db "player_burstFireCooldown",0
 _cstring_min_distance_a_p:		db "Min distance a penetrated bullet must travel before it",27h,"ll trigger the effects",0

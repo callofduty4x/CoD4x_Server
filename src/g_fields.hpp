@@ -14,7 +14,8 @@ enum fieldtype_t
   F_MODEL = 0x9,
 };
 
-extern "C"{
-void __cdecl Scr_SetGenericField( void*, enum fieldtype_t, int );
-void __cdecl Scr_GetGenericField(const void*, enum fieldtype_t, int );
+extern "C"
+{
+    void __cdecl Scr_SetGenericField(void*, enum fieldtype_t, int);
+    void __cdecl Scr_GetGenericField(const void*, enum fieldtype_t, int);
 };

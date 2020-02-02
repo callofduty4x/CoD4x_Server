@@ -19,6 +19,11 @@
 ===========================================================================
 */
 
+#include "scr_vm_functions.hpp"
+
+#include <cstring>
+#include <ctime>
+
 #include "qshared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"
@@ -45,19 +50,11 @@
 #include "bg_misc.hpp"
 #include "g_hudelem.hpp"
 #include "sv_game.hpp"
-
-
+#include "cscr_variable.hpp"
 #include "sapi.hpp"
-#include <string.h>
-#include <time.h>
 #include "plugin_handler.hpp"
-#include "scr_vm_functions.hpp"
 #include "tomcrypt.h"
-
-extern char* var_typename[];
-
-
-extern char* var_typename[];
+#include "cscr_const.hpp"
 
 /*
 ============
@@ -2819,7 +2816,7 @@ void Scr_PrecacheString_f()
         g_isLocStringPrecached[G_LocalizedStringIndex(locStrName)] = qtrue;
 }
 
-void Scr_Destroy_f(scr_entref_t hud_elem_num)
+void HECmd_Destroy(scr_entref_t hud_elem_num)
 {
     if (hud_elem_num.classnum != 1)
     {

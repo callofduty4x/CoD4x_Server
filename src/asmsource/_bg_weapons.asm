@@ -26,7 +26,7 @@
 	extern sinf
 	extern sin
 	extern bg_bobAmplitudeSprinting
-	extern _ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable
+	extern moveAnimTable_unknownData
 	extern bg_bobAmplitudeDucked
 	extern memset
 	extern strcmp
@@ -59,17 +59,21 @@
 	extern player_breath_fire_delay
 	extern perk_weapRateMultiplier
 	extern player_burstFireCooldown
-;	extern Profile_Begin
-;	extern Profile_End
+	extern bg_lastParsedWeaponIndex
+	extern bg_weapAmmoTypes
+	extern bg_numAmmoTypes
+	extern bg_weaponDefs
+	extern bg_numSharedAmmoCaps
+	extern bg_sharedAmmoCaps
+	extern bg_numWeapClips
+	extern bg_weapClips
+	extern penetrationDepthTableLoaded
+	extern penetrationDepthTable
+	extern MY_RELOADSTART_INTERUPT_IGNORE_FRAC
+
+
 
 ;Exports of bg_weapons:
-	global bg_numAmmoTypes
-	global bg_weapAmmoTypes
-	global bg_numSharedAmmoCaps
-	global bg_sharedAmmoCaps
-	global bg_numWeapClips
-	global bg_weapClips
-	global penetrationDepthTableLoaded
 	global BG_StringCopy
 	global BG_ParsePenetrationDepthTable
 	global BG_LoadWeaponDef_FastFile
@@ -82,7 +86,6 @@
 	global PM_Weapon_ReloadDelayedAction
 	global PM_SetReloadingState
 	global PM_BeginWeaponReload
-	global _ZZ24PM_Weapon_CheckForReloadP7pmove_tE35MY_RELOADSTART_INTERUPT_IGNORE_FRAC
 	global PM_Weapon_CheckForReload
 	global PM_Weapon_CheckForOffHand
 	global BG_WeaponAmmo
@@ -134,9 +137,6 @@
 	global BG_CalculateWeaponPosition_Sway
 	global BG_PlayerWeaponCountPrimaryTypes
 	global PM_Weapon
-	global bg_lastParsedWeaponIndex
-	global bg_weaponDefs
-	global penetrationDepthTable
 
 
 SECTION .text
@@ -1436,7 +1436,7 @@ PM_Weapon_CheckForReload_80:
 	cvtsi2ss xmm0, eax
 	cvtsi2ss xmm1, dword [ebp-0x24]
 	divss xmm0, xmm1
-	ucomiss xmm0, [_ZZ24PM_Weapon_CheckForReloadP7pmove_tE35MY_RELOADSTART_INTERUPT_IGNORE_FRAC]
+	ucomiss xmm0, [MY_RELOADSTART_INTERUPT_IGNORE_FRAC]
 	jbe PM_Weapon_CheckForReload_50
 	mov cl, 0xa
 	mov dword [ebx+0xec], 0xa
@@ -2701,7 +2701,7 @@ BG_CalculateViewAngles_530:
 	fstp dword [ebp-0x5c]
 	movss xmm5, dword [ebp-0xb8]
 	mulss xmm5, [ebp-0x5c]
-	xorps xmm5, [_ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable+0x2a0]
+	xorps xmm5, [moveAnimTable_unknownData+0x240] ; was moveAnimTable+0x2a0
 	cvtss2sd xmm0, [ebp-0x30]
 	subsd xmm0, [_double_0_47123892]
 	cvtsd2ss xmm4, xmm0
@@ -8444,29 +8444,6 @@ PM_Weapon_jumptab_0:
 	dd PM_Weapon_1070
 	dd PM_Weapon_2420
 	dd PM_Weapon_2420
-
-
-;Initialized global or static variables of bg_weapons:
-SECTION .data
-_ZZ24PM_Weapon_CheckForReloadP7pmove_tE35MY_RELOADSTART_INTERUPT_IGNORE_FRAC: dd 0x3ecccccd, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-bg_lastParsedWeaponIndex: dd 0x0
-
-
-;Initialized constant data of bg_weapons:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of bg_weapons:
-SECTION .bss
-bg_numAmmoTypes: resb 0x20
-bg_weapAmmoTypes: resb 0x200
-bg_numSharedAmmoCaps: resb 0x20
-bg_sharedAmmoCaps: resb 0x200
-bg_numWeapClips: resb 0x20
-bg_weapClips: resb 0x200
-penetrationDepthTableLoaded: resb 0x20
-bg_weaponDefs: resb 0x204
-penetrationDepthTable: resb 0x1e0
 
 
 ;All cstrings:

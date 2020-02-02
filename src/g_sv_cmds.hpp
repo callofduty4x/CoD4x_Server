@@ -1,6 +1,10 @@
 ﻿#pragma once
 #include "entity.hpp"
 
+struct cvar_s;
+
+extern cvar_s* g_votedMapName;
+extern cvar_s* g_votedGametype;
 
 extern "C"
 {

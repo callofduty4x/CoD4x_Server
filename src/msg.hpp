@@ -20,21 +20,21 @@
 ===========================================================================
 */
 
-
-#ifndef __MSG_H__
-#define __MSG_H__
+#pragma once
+#include <cstdint>
 
 #include "qshared.hpp"
 #include "entity.hpp"
 #include "qshared.hpp"
 #include "player.hpp"
 
-#include <stdint.h>
+
+struct client_t;
 
 typedef struct snapshotInfo_s
 {
 	int clnum;
-	struct client_s* client;
+	client_t* client;
 	int snapshotDeltaTime;
 	byte fromBaseline;
 	byte archived;
@@ -46,7 +46,8 @@ typedef struct snapshotInfo_s
 //
 // msg.c
 //
-typedef struct {
+struct msg_t 
+{
 	qboolean	overflowed;		//0x00
 	qboolean	readonly;		//0x04
 	byte		*data;			//0x08
@@ -60,7 +61,7 @@ typedef struct {
 		int		lastRefEntity;		//0x24
 		int		lengthoffset;
 	};
-} msg_t; //Size: 0x28
+}; //Size: 0x28
 
 typedef struct netField_s{
 	char    *name;
@@ -81,10 +82,13 @@ enum DeltaFlags
   DELTA_FLAGS_FORCE = 0x0,
 };
 
-#ifdef __cplusplus
+extern netField_t archivedEntityFields[];
+extern netField_t playerStateFields[];
+extern netField_t clientStateFields[];
+
 extern "C"
 {
-#endif
+
 void MSG_Init( msg_t *buf, byte *data, int length );
 void MSG_InitReadOnly( msg_t *buf, byte *data, int length );
 void MSG_InitReadOnlySplit( msg_t *buf, byte *data, int length, byte*, int );
@@ -138,10 +142,4 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
 void MSG_RegisterCvars();
 int __cdecl MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fields, int numFields);
 
-#ifdef __cplusplus
 }
-#endif
-
-
-#endif
-

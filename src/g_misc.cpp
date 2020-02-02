@@ -1,12 +1,10 @@
 #include "g_misc.hpp"
 #include "qshared.hpp"
 #include "g_shared.hpp"
-
-#define MAX_TURRETS 32
-
+#include "g_main_mp.hpp"
 
 
-extern turretInfo_s turretInfo[MAX_TURRETS];
+turretInfo_s turretInfo[MAX_TURRETS];
 
 extern "C"{
 

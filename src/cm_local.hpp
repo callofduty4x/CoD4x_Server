@@ -254,7 +254,6 @@ typedef struct
 }TraceThreadInfo;
 */
 
-extern clipMap_t cm;
 //void __cdecl CM_LoadMapFromBsp(const char *name, char a2);
 extern "C" void __cdecl CM_LoadStaticModels();
 extern "C" void __cdecl DynEnt_LoadEntities();

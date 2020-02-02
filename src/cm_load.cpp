@@ -9,7 +9,6 @@
 
 cbrush_t g_box_brush[NUMTHREADS];
 cmodel_t g_box_model[NUMTHREADS];
-clipMap_t cm;
 
 #ifndef BSPC
 int CM_LeafCluster( int leafnum ) {
@@ -210,6 +209,8 @@ void __cdecl CM_Hunk_ClearTempMemoryHigh()
 
 extern "C"
 {
+    clipMap_t cm;
+
     /*
     ==================
     CM_ClipHandleToModel

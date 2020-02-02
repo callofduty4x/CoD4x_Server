@@ -60,7 +60,7 @@
 	extern G_Spawn
 	extern g_maxDroppedWeapons
 	extern Com_PrintWarning
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern g_dropForwardSpeed
 	extern g_dropUpSpeedBase
 	extern crandom
@@ -2304,14 +2304,14 @@ Drop_Item_190:
 	call G_FreeEntity
 	mov dword [esp+0x4], 0x0
 	mov [esp], esi
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov ecx, ebx
 Drop_Item_60:
 	mov [esp+0x4], edi
 	mov edx, [ebp-0x160]
 	lea eax, [ecx+edx*4+0x1544]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov dword [edi+0x4], 0x3
 	mov eax, [ebp-0x174]
 	mov [edi+0x88], eax

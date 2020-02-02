@@ -33,6 +33,7 @@ extern cvar_t* vehHelicopterYawOnLeftStick;
 extern cvar_t* vehHelicopterHeadSwayDontSwayTheTurret;
 extern cvar_t* vehHelicopterInvertUpDown;
 
+extern int helicopter_thinktime;
 
 extern "C"
 {

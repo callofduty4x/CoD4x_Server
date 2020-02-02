@@ -24,10 +24,9 @@ struct scrAnimGlob_t
   char padding[116]; // To size of 0x280 (asm).
 };
 
-scrAnimGlob_t gScrAnimGlob;
-scrAnimPub_t gScrAnimPub;
-
 extern "C"{
+    scrAnimGlob_t gScrAnimGlob;
+    scrAnimPub_t gScrAnimPub;
 
 bool __cdecl Scr_IsIdentifier(const char *token)
 {

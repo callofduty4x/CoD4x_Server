@@ -42,6 +42,7 @@
 #include "g_vehicles_mp.hpp"
 #include "bg_mantle.hpp"
 #include "g_main_mp.hpp"
+#include "g_sv_cmds.hpp"
 
 
 /* G_Cvars */
@@ -55,9 +56,6 @@ cvar_t*  g_smoothClients;
 /* BG Cvars */
 cvar_t*  bg_shock_screenType;
 cvar_t*  bg_shock_lookControl;
-
-
-/* BG Mantle Cvars */
 
 
 void G_CopyCvars();

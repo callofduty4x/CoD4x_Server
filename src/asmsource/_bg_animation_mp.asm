@@ -64,32 +64,33 @@
 	extern player_lean_rotate_crouch_left
 	extern player_lean_rotate_left
 	extern BG_GetViewmodelWeaponIndex
-
+	extern weaponStrings
+	extern animEventTypesStr
+	extern animMoveTypesStr
+	extern animStateStr
+	extern animWeaponClassStr
+	extern animConditionMountedStr
+	extern animWeaponPositionStr
+	extern animStrafeStateStr
+	extern animPerkStateStr
+	extern animConditionsStr
+	extern animParseModesStr
+	extern animBodyPartsStr
+	extern animConditionsTable
+	extern bgs
+	extern defineBits
+	extern parseEvent
+	extern parseMovetype
+	extern defineStringsOffset
+	extern numDefines
+	extern defineStrings
+	extern defineStr
+	extern g_piNumLoadAnims
+	extern g_pLoadAnims
+	extern globalScriptData
+	extern globalFilename
+	
 ;Exports of bg_animation_mp:
-	global animEventTypesStr
-	global animMoveTypesStr
-	global animStateStr
-	global defineBits
-	global animConditionsTable
-	global weaponStrings
-	global animWeaponClassStr
-	global animConditionMountedStr
-	global animWeaponPositionStr
-	global animStrafeStateStr
-	global animPerkStateStr
-	global animConditionsStr
-	global parseEvent
-	global parseMovetype
-	global animParseModesStr
-	global defineStringsOffset
-	global numDefines
-	global defineStrings
-	global defineStr
-	global g_piNumLoadAnims
-	global g_pLoadAnims
-	global globalScriptData
-	global globalFilename
-	global animBodyPartsStr
 	global BG_SwingAngles
 	global BG_RunLerpFrameRate
 	global BG_ParseConditionBits
@@ -117,7 +118,6 @@
 	global BG_Player_DoControllersSetup
 	global BG_AnimUpdatePlayerStateConditions
 	global BG_IsAds
-	global bgs
 
 
 SECTION .text
@@ -5976,44 +5976,6 @@ BG_IsAds_10:
 	ret
 	nop
 
-
-;Initialized global or static variables of bg_animation_mp:
-SECTION .data
-animEventTypesStr: dd _cstring_pain, 0xffffffff, _cstring_death, 0xffffffff, _cstring_fireweapon, 0xffffffff, _cstring_jump, 0xffffffff, _cstring_jumpbk, 0xffffffff, _cstring_land, 0xffffffff, _cstring_dropweapon, 0xffffffff, _cstring_raiseweapon, 0xffffffff, _cstring_climbmount, 0xffffffff, _cstring_climbdismount, 0xffffffff, _cstring_reload, 0xffffffff, _cstring_crouch_to_prone, 0xffffffff, _cstring_prone_to_crouch, 0xffffffff, _cstring_stand_to_crouch, 0xffffffff, _cstring_crouch_to_stand, 0xffffffff, _cstring_stand_to_prone, 0xffffffff, _cstring_prone_to_stand, 0xffffffff, _cstring_meleeattack, 0xffffffff, _cstring_knife_melee, 0xffffffff, _cstring_knife_melee_char, 0xffffffff, _cstring_shellshock, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0, 0x0, 0x0
-animMoveTypesStr: dd _cstring__unused_, 0xffffffff, _cstring_idle, 0xffffffff, _cstring_idlecr, 0xffffffff, _cstring_idleprone, 0xffffffff, _cstring_walk, 0xffffffff, _cstring_walkbk, 0xffffffff, _cstring_walkcr, 0xffffffff, _cstring_walkcrbk, 0xffffffff, _cstring_walkprone, 0xffffffff, _cstring_walkpronebk, 0xffffffff, _cstring_run, 0xffffffff, _cstring_runbk, 0xffffffff, _cstring_runcr, 0xffffffff, _cstring_runcrbk, 0xffffffff, _cstring_turnright, 0xffffffff, _cstring_turnleft, 0xffffffff, _cstring_turnrightcr, 0xffffffff, _cstring_turnleftcr, 0xffffffff, _cstring_climbup, 0xffffffff, _cstring_climbdown, 0xffffffff, _cstring_sprint, 0xffffffff, _cstring_mantle_root, 0xffffffff, _cstring_mantle_up_57, 0xffffffff, _cstring_mantle_up_51, 0xffffffff, _cstring_mantle_up_45, 0xffffffff, _cstring_mantle_up_39, 0xffffffff, _cstring_mantle_up_33, 0xffffffff, _cstring_mantle_up_27, 0xffffffff, _cstring_mantle_up_21, 0xffffffff, _cstring_mantle_over_high, 0xffffffff, _cstring_mantle_over_mid, 0xffffffff, _cstring_mantle_over_low, 0xffffffff, _cstring_flinch_forward, 0xffffffff, _cstring_flinch_backward, 0xffffffff, _cstring_flinch_left, 0xffffffff, _cstring_flinch_right, 0xffffffff, _cstring_stumble_forward, 0xffffffff, _cstring_stumble_backward, 0xffffffff, _cstring_stumble_walk_for, 0xffffffff, _cstring_stumble_walk_bac, 0xffffffff, _cstring_stumble_crouch_f, 0xffffffff, _cstring_stumble_crouch_b, 0xffffffff, _cstring_stumble_sprint_f, 0xffffffff, 0x0, 0xffffffff
-animStateStr: dd _cstring_combat, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0, 0x0, 0x0
-animConditionsTable: dd 0x0, weaponStrings, 0x0, animWeaponClassStr, 0x1, animConditionMountedStr, 0x0, animMoveTypesStr, 0x1, 0x0, 0x1, 0x0, 0x1, 0x0, 0x1, animWeaponPositionStr, 0x1, animStrafeStateStr, 0x1, animPerkStateStr, 0x0, 0x0, 0x0, 0x0
-animWeaponClassStr: dd _cstring_rifle, 0xffffffff, _cstring_mg, 0xffffffff, _cstring_smg, 0xffffffff, _cstring_spread, 0xffffffff, _cstring_pistol, 0xffffffff, _cstring_grenade, 0xffffffff, _cstring_rocketlauncher, 0xffffffff, _cstring_turret, 0xffffffff, _cstring_nonplayer, 0xffffffff, _cstring_item, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0
-animConditionMountedStr: dd _cstring__unused_, 0xffffffff, _cstring_mg42, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0, 0x0, 0x0
-animWeaponPositionStr: dd _cstring_hip, 0xffffffff, _cstring_ads, 0xffffffff, 0x0, 0xffffffff
-animStrafeStateStr: dd _cstring_not, 0xffffffff, _cstring_left, 0xffffffff, _cstring_right, 0xffffffff, 0x0, 0xffffffff
-animPerkStateStr: dd _cstring__unused_, 0xffffffff, _cstring_laststand, 0xffffffff, _cstring_grenadedeath, 0xffffffff, 0x0, 0xffffffff
-animConditionsStr: dd _cstring_playeranimtype, 0xffffffff, _cstring_weaponclass, 0xffffffff, _cstring_mounted, 0xffffffff, _cstring_movetype, 0xffffffff, _cstring_underhand, 0xffffffff, _cstring_crouching, 0xffffffff, _cstring_firing, 0xffffffff, _cstring_weapon_position, 0xffffffff, _cstring_strafing, 0xffffffff, _cstring_perk, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0
-animParseModesStr: dd _cstring_defines, 0xffffffff, _cstring_animations, 0xffffffff, _cstring_canned_animation, 0xffffffff, _cstring_statechanges, 0xffffffff, _cstring_events, 0xffffffff, 0x0, 0xffffffff
-globalFilename: dd _cstring_mpplayeranimscri, 0x0, 0x0, 0x0
-animBodyPartsStr: dd _cstring__unused_, 0xffffffff, _cstring_legs1, 0xffffffff, _cstring_torso1, 0xffffffff, _cstring_both, 0xffffffff, 0x0, 0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-bgs: dd 0x0, 0x0
-
-
-;Initialized constant data of bg_animation_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of bg_animation_mp:
-SECTION .bss
-defineBits: resb 0x500
-weaponStrings: resb 0x400
-parseEvent: resb 0x4
-parseMovetype: resb 0x4
-defineStringsOffset: resb 0x18
-numDefines: resb 0x40
-defineStrings: resb 0x2720
-defineStr: resb 0x500
-g_piNumLoadAnims: resb 0x4
-g_pLoadAnims: resb 0x4
-globalScriptData: resb 0x78
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_bg_getanimationf:		db 15h,"BG_GetAnimationForIndex: index out of bounds",0
@@ -6081,108 +6043,6 @@ _cstring_s_s_line_i:		db 15h,"%s: (%s, line %i)",0
 _cstring_s:		db 15h,"%s",0
 _cstring_bg_indexforstrin:		db "BG_IndexForString: unknown token ",27h,"%s",27h,0
 _cstring_bg_animationinde:		db "BG_AnimationIndexForString: unknown player animation ",27h,"%s",27h,0
-_cstring_pain:		db "PAIN",0
-_cstring_death:		db "DEATH",0
-_cstring_fireweapon:		db "FIREWEAPON",0
-_cstring_jump:		db "JUMP",0
-_cstring_jumpbk:		db "JUMPBK",0
-_cstring_land:		db "LAND",0
-_cstring_dropweapon:		db "DROPWEAPON",0
-_cstring_raiseweapon:		db "RAISEWEAPON",0
-_cstring_climbmount:		db "CLIMBMOUNT",0
-_cstring_climbdismount:		db "CLIMBDISMOUNT",0
-_cstring_reload:		db "RELOAD",0
-_cstring_crouch_to_prone:		db "CROUCH_TO_PRONE",0
-_cstring_prone_to_crouch:		db "PRONE_TO_CROUCH",0
-_cstring_stand_to_crouch:		db "STAND_TO_CROUCH",0
-_cstring_crouch_to_stand:		db "CROUCH_TO_STAND",0
-_cstring_stand_to_prone:		db "STAND_TO_PRONE",0
-_cstring_prone_to_stand:		db "PRONE_TO_STAND",0
-_cstring_meleeattack:		db "MELEEATTACK",0
-_cstring_knife_melee:		db "KNIFE_MELEE",0
-_cstring_knife_melee_char:		db "KNIFE_MELEE_CHARGE",0
-_cstring_shellshock:		db "SHELLSHOCK",0
-_cstring__unused_:		db "** UNUSED **",0
-_cstring_idle:		db "IDLE",0
-_cstring_idlecr:		db "IDLECR",0
-_cstring_idleprone:		db "IDLEPRONE",0
-_cstring_walk:		db "WALK",0
-_cstring_walkbk:		db "WALKBK",0
-_cstring_walkcr:		db "WALKCR",0
-_cstring_walkcrbk:		db "WALKCRBK",0
-_cstring_walkprone:		db "WALKPRONE",0
-_cstring_walkpronebk:		db "WALKPRONEBK",0
-_cstring_run:		db "RUN",0
-_cstring_runbk:		db "RUNBK",0
-_cstring_runcr:		db "RUNCR",0
-_cstring_runcrbk:		db "RUNCRBK",0
-_cstring_turnright:		db "TURNRIGHT",0
-_cstring_turnleft:		db "TURNLEFT",0
-_cstring_turnrightcr:		db "TURNRIGHTCR",0
-_cstring_turnleftcr:		db "TURNLEFTCR",0
-_cstring_climbup:		db "CLIMBUP",0
-_cstring_climbdown:		db "CLIMBDOWN",0
-_cstring_sprint:		db "SPRINT",0
-_cstring_mantle_root:		db "MANTLE_ROOT",0
-_cstring_mantle_up_57:		db "MANTLE_UP_57",0
-_cstring_mantle_up_51:		db "MANTLE_UP_51",0
-_cstring_mantle_up_45:		db "MANTLE_UP_45",0
-_cstring_mantle_up_39:		db "MANTLE_UP_39",0
-_cstring_mantle_up_33:		db "MANTLE_UP_33",0
-_cstring_mantle_up_27:		db "MANTLE_UP_27",0
-_cstring_mantle_up_21:		db "MANTLE_UP_21",0
-_cstring_mantle_over_high:		db "MANTLE_OVER_HIGH",0
-_cstring_mantle_over_mid:		db "MANTLE_OVER_MID",0
-_cstring_mantle_over_low:		db "MANTLE_OVER_LOW",0
-_cstring_flinch_forward:		db "FLINCH_FORWARD",0
-_cstring_flinch_backward:		db "FLINCH_BACKWARD",0
-_cstring_flinch_left:		db "FLINCH_LEFT",0
-_cstring_flinch_right:		db "FLINCH_RIGHT",0
-_cstring_stumble_forward:		db "STUMBLE_FORWARD",0
-_cstring_stumble_backward:		db "STUMBLE_BACKWARD",0
-_cstring_stumble_walk_for:		db "STUMBLE_WALK_FORWARD",0
-_cstring_stumble_walk_bac:		db "STUMBLE_WALK_BACKWARD",0
-_cstring_stumble_crouch_f:		db "STUMBLE_CROUCH_FORWARD",0
-_cstring_stumble_crouch_b:		db "STUMBLE_CROUCH_BACKWARD",0
-_cstring_stumble_sprint_f:		db "STUMBLE_SPRINT_FORWARD",0
-_cstring_combat:		db "COMBAT",0
-_cstring_rifle:		db "RIFLE",0
-_cstring_mg:		db "MG",0
-_cstring_smg:		db "SMG",0
-_cstring_spread:		db "SPREAD",0
-_cstring_pistol:		db "PISTOL",0
-_cstring_grenade:		db "GRENADE",0
-_cstring_rocketlauncher:		db "ROCKETLAUNCHER",0
-_cstring_turret:		db "TURRET",0
-_cstring_nonplayer:		db "NON-PLAYER",0
-_cstring_item:		db "ITEM",0
-_cstring_mg42:		db "MG42",0
-_cstring_hip:		db "HIP",0
-_cstring_ads:		db "ADS",0
-_cstring_left:		db "LEFT",0
-_cstring_right:		db "RIGHT",0
-_cstring_laststand:		db "LASTSTAND",0
-_cstring_grenadedeath:		db "GRENADEDEATH",0
-_cstring_playeranimtype:		db "PLAYERANIMTYPE",0
-_cstring_weaponclass:		db "WEAPONCLASS",0
-_cstring_mounted:		db "MOUNTED",0
-_cstring_movetype:		db "MOVETYPE",0
-_cstring_underhand:		db "UNDERHAND",0
-_cstring_crouching:		db "CROUCHING",0
-_cstring_firing:		db "FIRING",0
-_cstring_weapon_position:		db "WEAPON_POSITION",0
-_cstring_strafing:		db "STRAFING",0
-_cstring_perk:		db "PERK",0
-_cstring_defines:		db "defines",0
-_cstring_animations:		db "animations",0
-_cstring_canned_animation:		db "canned_animations",0
-_cstring_statechanges:		db "statechanges",0
-_cstring_events:		db "events",0
-_cstring_mpplayeranimscri:		db "mp/playeranim.script",0
-_cstring_legs1:		db "LEGS",0
-_cstring_torso1:		db "TORSO",0
-_cstring_both:		db "BOTH",0
-
 
 
 ;All constant floats and doubles:

@@ -11,7 +11,7 @@
 	extern playerMins
 	extern playerMaxs
 	extern memcpy
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern memset
 	extern SV_GetUsercmd
 	extern G_SetOrigin
@@ -68,7 +68,7 @@
 	global ClientBegin
 	global ClientConnect
 	global ClientDisconnect
-	global _Z16G_BroadcastVoiceP9gentity_sP13VoicePacket_t
+	global G_BroadcastVoice
 	global SetClientViewAngle
 	global G_GetNonPVSPlayerInfo
 	global G_GetPlayerViewOrigin
@@ -150,7 +150,7 @@ ClientConnect:
 	mov dword [esp+0x4], 0x0
 	lea eax, [ebx+0x30f8]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov dword [esp+0x8], 0x3184
 	mov dword [esp+0x4], 0x0
 	mov [esp], ebx
@@ -307,7 +307,7 @@ ClientDisconnect_50:
 	mov eax, edx
 	add eax, 0x30f8
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov ecx, [ebp-0x1c]
 	mov dword [ecx+0x2f8c], 0x0
 	mov eax, ecx
@@ -339,7 +339,7 @@ ClientDisconnect_10:
 
 
 ;G_BroadcastVoice(gentity_s*, VoicePacket_t*)
-_Z16G_BroadcastVoiceP9gentity_sP13VoicePacket_t:
+G_BroadcastVoice:
 	push ebp
 	mov ebp, esp
 	push edi

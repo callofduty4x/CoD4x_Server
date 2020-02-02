@@ -62,6 +62,8 @@
 #include "cscr_stringlist.hpp"
 #include "r_public.hpp"
 #include "db_assetnames.hpp"
+#include "db_registry.hpp"
+#include "cm_load.hpp"
 
 
 #define XBLOCK_COUNT_IW3 9
@@ -112,34 +114,13 @@ bool g_initializing;
 int g_zoneCount;
 bool g_isRecoveringLostDevice;
 bool g_mayRecoverLostAssets;
-extern bool g_archiveBuf;
-extern int g_sync;
-extern unsigned int g_copyInfoCount;
 int g_poolSize[ASSET_TYPE_COUNT];
 bool g_poolSizeModified[ASSET_TYPE_COUNT];
-extern int g_defaultAssetCount;
 
 cvar_t* db_xassetdebug;
 cvar_t* db_xassetdebugtype;
 
 
-struct XAssetEntry
-{
-  struct XAsset asset;
-  byte zoneIndex;
-  bool inuse;
-  uint16_t nextHash;
-  uint16_t nextOverride;
-  uint16_t usageFrame;
-};
-
-union XAssetEntryPoolEntry
-{
-  struct XAssetEntry entry;
-  union XAssetEntryPoolEntry *next;
-};
-
-extern union XAssetEntryPoolEntry *g_freeAssetEntryHead;
 extern union XAssetEntryPoolEntry g_assetEntryPool[32768];
 
 
@@ -176,9 +157,7 @@ XZone g_zones[33];
 uint8_t g_zoneHandles[ARRAY_COUNT(g_zones)];
 union XAssetEntryPoolEntry g_assetEntryPool[32768];
 uint16_t db_hashTable[32768];
-extern XAssetEntry *g_copyInfo[2048];
 
-extern void (__cdecl *DB_InitPoolHeaderHandler[ASSET_TYPE_COUNT])(void *, int);
 XAnimParts g_XAnimPartsPool[4096];
 
 /*
@@ -187,7 +166,6 @@ int16_t* varshort;
 byte* varbyte;
 XModel* varXModel;
 */
-extern void (__cdecl *DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void *, XAssetHeader);
 
 void *DB_XAssetPool[ASSET_TYPE_COUNT];
 
@@ -1897,7 +1875,7 @@ void DB_ArchiveAssets()
 {
   if ( !g_archiveBuf )
   {
-    g_archiveBuf = 1;
+    g_archiveBuf = true;
     R_SyncRenderThread();
     R_ClearAllStaticModelCacheRefs();
     DB_SaveSounds();
@@ -2019,7 +1997,7 @@ void DB_UnarchiveAssets()
   assert(g_archiveBuf);
   assert(Sys_IsMainThread() || Sys_IsRenderThread());
 
-  g_archiveBuf = 0;
+  g_archiveBuf = false;
   DB_LoadSounds();
   DB_LoadDObjs();
   Material_DirtyTechniqueSetOverrides();
@@ -2069,7 +2047,6 @@ void __cdecl DB_LoadXZone(XZoneInfo *zoneInfo, unsigned int zoneCount)
 
 void __cdecl DB_LoadXAssets(XZoneInfo *zoneInfo, unsigned int zoneCount, int sync)
 {
-  static bool g_zoneInited = false;
   bool unloadedZone;
   int zh;
   unsigned int j;
@@ -2337,19 +2314,6 @@ const char *__cdecl DB_GetXAssetTypeName(int type)
 }
 
 
-enum DBCloneMethod
-{
-  DB_CLONE_NORMAL = 0x0,
-  DB_CLONE_FROM_DEFAULT = 0x1,
-  DB_CLONE_SWAP = 0x2,
-};
-
-
-
-extern void (__cdecl *DB_RemoveXAssetHandler[])(void*);
-extern void (__cdecl *DB_DynamicCloneXAssetHandler[])(void*, void*, DBCloneMethod);
-extern const char* g_defaultAssetName[];
-
 unsigned int DB_HashForName(const char *name, enum XAssetType type)
 {
   const char *pos;
@@ -2383,7 +2347,7 @@ void __cdecl DB_RemoveXAsset(XAsset *asset)
 {
   if ( DB_RemoveXAssetHandler[asset->type] )
   {
-    DB_RemoveXAssetHandler[asset->type](asset->header.data);
+    DB_RemoveXAssetHandler[asset->type](asset->header);
   }
 }
 
@@ -2398,12 +2362,11 @@ void __cdecl DB_CloneXAssetInternal(XAsset *from, XAsset *to)
 
 bool __cdecl DB_DynamicCloneXAsset(XAssetHeader from, XAssetHeader to, XAssetType type, DBCloneMethod cloneMethod)
 {
-  if ( !DB_DynamicCloneXAssetHandler[type] )
-  {
-    return 0;
-  }
-  DB_DynamicCloneXAssetHandler[type](from.data, to.data, cloneMethod);
-  return 1;
+    if (!DB_DynamicCloneXAssetHandler[type])
+        return false;
+
+    DB_DynamicCloneXAssetHandler[type](from, to, cloneMethod);
+    return true;
 }
 
 void __cdecl DB_CloneXAsset(XAsset *from, XAsset *to, DBCloneMethod cloneMethod)
@@ -3323,8 +3286,6 @@ void __cdecl DB_PrintAssetName(XAssetHeader header, void *data)
   name = DB_GetXAssetHeaderName(*(DWORD *)data, &header);
   Com_Printf(CON_CHANNEL_DONT_FILTER, "%s\n", name);
 }
-//actually XAssetHeader
-extern void* (__cdecl *DB_AllocXAssetHeaderHandler[ ])(void *);
 
 XAssetHeader __cdecl DB_AllocXAssetHeader(XAssetType type)
 {

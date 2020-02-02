@@ -23,14 +23,16 @@
 // q_parse.c -- support for parsing text files
 //Requires Thread and Critical section stuff
 #include "q_parse.hpp"
+
+#include <cstdarg>
+#include <cstring>
+#include <cstdlib>
+
 #include "qshared.hpp"
 #include "qcommon.hpp"
 #include "sys_thread.hpp"
 
-#include <stdarg.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
+
 
 /*
 ============================================================================

@@ -19,7 +19,6 @@ vec4_t colorBlue = {0, 0, 1, 1};
 vec4_t colorLtBlue = {0.5, 0.5, 1.0, 1};
 vec4_t colorMdBlue = {0, 0, 0.5, 1};
 
-vec4_t colorYellow = {1, 1, 0, 1};
 vec4_t colorDkYellow = {0.25, 0.25, 0, 1};
 vec4_t colorMdYellow = {0.5, 0.5, 0, 1};
 vec4_t colorLtYellow = {0.75, 0.75, 0, 1};
@@ -40,9 +39,7 @@ vec4_t colorDkGrey = {0.25, 0.25, 0.25, 1};
 vec4_t colorOrange = {1.0, 0.7, 0.0, 1};
 vec4_t colorLtOrange = {0.75, 0.525, 0.0, 1};
 
-vec4_t colorWhiteFaded = {1.0, 1.0, 1.0, 0.75};
 vec4_t colorGreenFaded = {0, 1, 0, 0.75};
-vec4_t colorRedFaded = {0.75, 0.25, 0, 0.75};
 vec4_t colorBlackBlank = {0, 0, 0, 0};
 
 void Math_VectorToAngles(vec3_t vector, vec3_t angles)
@@ -310,8 +307,6 @@ float vec2_maxabs(vec2_t v)
 
     return v_abs[1];
 }
-
-vec3_t vec3_origin = {0,0,0};
 
 
 vec_t Vec3Normalize( vec3_t v ) {
@@ -991,6 +986,10 @@ void RotatePoint( vec3_t point, const vec3_t matrix[3] ) {
 
 extern "C"
 {
+    vec4_t colorYellow = { 1, 1, 0, 1 };
+    vec4_t colorWhiteFaded = { 1.0, 1.0, 1.0, 0.75 };
+    vec4_t colorRedFaded = { 0.75, 0.25, 0, 0.75 };
+
     void __cdecl AnglesToQuat(const float *angles, float *quat)
     {
       vec3_t axis[3];
@@ -1856,4 +1855,6 @@ extern "C"
         if ( addedmaxs[2] > maxs[2] )
             maxs[2] = addedmaxs[2];
     }
+
+    vec3_t vec3_origin = { 0.0f, 0.0f, 0.0f };
 } // extern "C"

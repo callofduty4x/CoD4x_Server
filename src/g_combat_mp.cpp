@@ -1,6 +1,8 @@
 #include "g_combat_mp.hpp"
+
 #include "scr_vm.hpp"
 #include "qcommon_io.hpp"
+#include "cscr_const.hpp"
 
 uint16_t* modNames[] =
 {

@@ -32,7 +32,6 @@
 #include <cmath>
 #include <cstdbool>
 
-using byte = unsigned char;
 enum EQBoolean
 {
     qfalse = 0,
@@ -541,7 +540,7 @@ typedef struct hudelem_s
   int fxDecayStartTime;
   int fxDecayDuration;
   int soundID;
-  int flags;
+  int flags; //0x9C
 }hudelem_t;
 
 typedef struct hudElemState_s

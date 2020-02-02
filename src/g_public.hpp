@@ -65,6 +65,4 @@ extern "C"
     const char *__cdecl CS_DisplayName(clientState_t *cs, int type);
 }
 
-void __cdecl G_BroadcastVoice(struct gentity_s *talker, struct VoicePacket_t *voicePacket);
-
 #endif

@@ -80,7 +80,7 @@
 	extern atanf
 	extern Scr_GetTypeName
 	extern floorf
-	extern ceilf
+	extern std_ceilf
 	extern Vec2Distance
 	extern vectoangles
 	extern AngleVectors
@@ -180,7 +180,7 @@
 	extern bgs
 	extern BG_AnimScriptEvent
 	extern G_ExplodeMissile
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern Com_PrintWarning
 	extern SV_GetClientStat
 	extern Scr_LoadedImpureScript
@@ -203,7 +203,6 @@
 	extern CanDamage
 	extern Player_GetMethod
 	extern ScriptEnt_GetMethod
-	extern HudElem_GetMethod
 	extern Helicopter_GetMethod
 	extern Scr_ExecThread
 	extern Scr_FreeThread
@@ -246,6 +245,8 @@
 	extern Scr_ResetTimeout
 	extern Scr_ConstructMessageString
 	extern GScr_LoadScriptAndLabel
+	extern g_scr_data
+
 
 ;Exports of g_scr_main_mp:
 	global GScr_CreatePrintChannel
@@ -542,7 +543,6 @@
 	global GScr_GetScriptMenuIndex
 	global GScr_EnableGrenadeTouchDamage
 	global GScr_DisableGrenadeTouchDamage
-	global g_scr_data
 
 
 SECTION .text
@@ -3098,7 +3098,7 @@ GScr_ceil:
 	mov dword [esp], 0x0
 	call Scr_GetFloat
 	fstp dword [esp]
-	call ceilf
+	call std_ceilf
 	fstp dword [esp]
 	call Scr_AddFloat
 	leave
@@ -11863,7 +11863,7 @@ GScr_Detonate_80:
 	mov [esp+0x4], esi
 	lea eax, [ebx+0x198]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov [ebp+0x8], ebx
 	add esp, 0x10
 	pop ebx
@@ -14740,7 +14740,7 @@ GScr_MissileSetTarget_30:
 	mov [esp+0x4], esi
 	lea eax, [ebx+0x214]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	call Scr_GetNumParam
 	cmp eax, 0x1
 	jbe GScr_MissileSetTarget_40
@@ -14961,15 +14961,6 @@ GScr_DisableGrenadeTouchDamage_10:
 	call Scr_ObjectError
 	xor ebx, ebx
 	jmp GScr_DisableGrenadeTouchDamage_30
-
-
-;Initialized constant data of g_scr_main_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_scr_main_mp:
-SECTION .bss
-g_scr_data: resb 0x3800
 
 
 ;All cstrings:

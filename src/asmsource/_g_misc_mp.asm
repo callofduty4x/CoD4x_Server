@@ -1,5 +1,5 @@
 ;Imports of g_misc_mp:
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern floorf
 	extern AngleNormalize360
 	extern g_entities
@@ -66,9 +66,9 @@
 	extern G_LevelSpawnString
 	extern DB_DiscardBspWeapons
 	extern G_TurretCalcFireTime
+	extern turretInfo
 
 ;Exports of g_misc_mp:
-	global turretInfo
 	global turret_use
 	global G_FreeTurret
 	global turret_think
@@ -105,7 +105,7 @@ turret_use:
 	mov eax, [ebp+0x8]
 	add eax, 0x154
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	or dword [ebx+0x180], 0x400000
 	mov dword [edi+0x598], 0x1
 	mov edx, [ebp+0x8]
@@ -2266,7 +2266,7 @@ G_ClientStopUsingTurret_10:
 	mov dword [esp+0x4], 0x0
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	and dword [esi+0x4], 0xfffff7ff
 	add esp, 0x2c
 	pop ebx
@@ -2490,19 +2490,6 @@ SP_turret_10:
 	leave
 	ret
 	nop
-
-
-;Initialized global or static variables of g_misc_mp:
-SECTION .data
-
-
-;Initialized constant data of g_misc_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_misc_mp:
-SECTION .bss
-turretInfo: resb 0x900
 
 
 ;All cstrings:

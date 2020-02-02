@@ -10,11 +10,6 @@
 //#include "g_scr_vehicle.hpp"
 #include "g_shared.hpp"
 
-extern byte* archivedEntityFields[];
-extern byte* playerStateFields[];
-extern byte* clientStateFields[];
-
-
 //#define ASSERT_ONMISMATCH
 
 

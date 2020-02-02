@@ -64,7 +64,7 @@
 	extern Scr_GetVector
 	extern AngleVectors
 	extern Scr_GetInt
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern Q_stricmp
 	extern s_flashTags
 	extern vehicle_frametime
@@ -4877,7 +4877,7 @@ CMD_VEH_SetLookAtEnt_50:
 	mov [esp+0x4], ebx
 	lea eax, [esi+0x280]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -4910,7 +4910,7 @@ CMD_VEH_SetLookAtEnt_30:
 	mov [esp+0x4], ebx
 	lea eax, [esi+0x280]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	add esp, 0x10
 	pop ebx
 	pop esi
@@ -4950,7 +4950,7 @@ CMD_VEH_ClearLookAtEnt:
 	mov eax, [eax+0x164]
 	add eax, 0x280
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	leave
 	ret
 

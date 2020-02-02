@@ -1,4 +1,5 @@
 ﻿#include "g_main_mp.hpp"
+
 #include "g_shared.hpp"
 #include "qcommon_io.hpp"
 #include "qcommon.hpp"
@@ -6,112 +7,126 @@
 #include "qvsnprintf.hpp"
 #include "server_public.hpp"
 #include "cscr_stringlist.hpp"
-
-
-level_locals_t level;
-
-cvar_t* g_compassShowEnemies;
-cvar_t* bullet_penetrationEnabled;
-cvar_t* g_debugLocDamage;
-cvar_t* g_dropForwardSpeed;
-cvar_t* g_dropHorzSpeedRand;
-cvar_t* g_dropUpSpeedBase;
-cvar_t* g_dropUpSpeedRand;
-cvar_t* g_maxDroppedWeapons;
-cvar_t* pickupPrints;
-cvar_t* g_minGrenadeDamageSpeed;
-cvar_t* g_banIPs;
-cvar_t* g_dedicated;
-cvar_t* g_antilag;
-cvar_t* melee_debug;
-cvar_t* g_useholdspawndelay;
-cvar_t* g_useholdtime;
-cvar_t* player_MGUseRadius;
-cvar_t* player_throwbackInnerRadius;
-cvar_t* player_throwbackOuterRadius;
-cvar_t* g_NoScriptSpam;
-cvar_t* g_fogColorReadOnly;
-cvar_t* g_fogHalfDistReadOnly;
-cvar_t* g_fogStartDistReadOnly;
-cvar_t* g_maxclients;
-cvar_t* g_debugDamage;
-cvar_t* radius_damage_debug;
-cvar_t* g_allowVote;
-cvar_t* g_cheats;
-cvar_t* g_deadChat;
-cvar_t* g_oldVoting;
-cvar_t* g_gravity;
-cvar_t* g_motd;
-cvar_t* g_clonePlayerMaxVelocity;
-cvar_t* g_knockback;
-cvar_t* g_voiceChatTalkingDuration;
-cvar_t* g_inactivity;
-cvar_t* g_mantleBlockTimeBuffer;
-cvar_t* g_playerCollisionEjectSpeed;
-cvar_t* g_speed;
-cvar_t* g_synchronousClients;
-cvar_t* g_ScoresColor_Allies;
-cvar_t* g_ScoresColor_Axis;
-cvar_t* g_ScoresColor_EnemyTeam;
-cvar_t* g_ScoresColor_Free;
-cvar_t* g_ScoresColor_MyTeam;
-cvar_t* g_ScoresColor_Spectator;
-cvar_t* g_TeamColor_Allies;
-cvar_t* g_TeamColor_Axis;
-cvar_t* g_TeamColor_EnemyTeam;
-cvar_t* g_TeamColor_Free;
-cvar_t* g_TeamColor_MyTeam;
-cvar_t* g_TeamColor_Spectator;
-cvar_t* g_TeamIcon_Allies;
-cvar_t* g_TeamIcon_Axis;
-cvar_t* g_TeamIcon_Free;
-cvar_t* g_TeamIcon_Spectator;
-cvar_t* g_TeamName_Allies;
-cvar_t* g_TeamName_Axis;
-cvar_t* g_dumpAnims;
-cvar_t* g_entinfo;
-cvar_t* g_friendlyNameDist;
-cvar_t* g_friendlyfireDist;
-cvar_t* g_listEntity;
-cvar_t* g_log;
-cvar_t* g_logSync;
-cvar_t* g_password;
-cvar_t* g_redCrosshairs;
-cvar_t* g_voteAbstainWeight;
-cvar_t* voice_deadChat;
-cvar_t* voice_global;
-cvar_t* voice_localEcho;
-cvar_t* g_gametype;
-byte g_clients[0xc6100];
-gentity_t g_entities[1024];
-bgs_s level_bgs;
+#include "g_scr_helicopter.hpp"
+#include "g_scr_vehicle.hpp"
+#include "g_misc.hpp"
+#include "g_sv_main.hpp"
 
 
 const char* g_dedicatedEnumNames[] = { "listen server", "dedicated LAN server", "dedicated internet server" };
 
-
 extern "C"
 {
+    gentity_t g_entities[1024];
+    bgs_s level_bgs;
+    level_locals_t level;
+
+    cvar_t* g_synchronousClients;
+    cvar_t* g_playerCollisionEjectSpeed;
+    cvar_t* g_gravity;
+    cvar_t* g_debugLocDamage;
+    cvar_t* g_speed;
+    cvar_t* g_mantleBlockTimeBuffer;
+    cvar_t* g_antilag;
+    cvar_t* g_inactivity;
+    cvar_t* g_compassShowEnemies;
+    cvar_t* bullet_penetrationEnabled;
+    cvar_t* g_dropForwardSpeed;
+    cvar_t* g_dropHorzSpeedRand;
+    cvar_t* g_dropUpSpeedBase;
+    cvar_t* g_dropUpSpeedRand;
+    cvar_t* g_maxDroppedWeapons;
+    cvar_t* pickupPrints;
+    cvar_t* g_minGrenadeDamageSpeed;
+    cvar_t* g_banIPs;
+    cvar_t* g_dedicated;
+    cvar_t* melee_debug;
+    cvar_t* g_useholdspawndelay;
+    cvar_t* g_useholdtime;
+    cvar_t* player_MGUseRadius;
+    cvar_t* player_throwbackInnerRadius;
+    cvar_t* player_throwbackOuterRadius;
+    cvar_t* g_NoScriptSpam;
+    cvar_t* g_fogColorReadOnly;
+    cvar_t* g_fogHalfDistReadOnly;
+    cvar_t* g_fogStartDistReadOnly;
+    cvar_t* g_maxclients;
+    cvar_t* g_debugDamage;
+    cvar_t* radius_damage_debug;
+    cvar_t* g_allowVote;
+    cvar_t* g_cheats;
+    cvar_t* g_deadChat;
+    cvar_t* g_oldVoting;
+    cvar_t* g_motd;
+    cvar_t* g_clonePlayerMaxVelocity;
+    cvar_t* g_knockback;
+    cvar_t* g_voiceChatTalkingDuration;
+    cvar_t* g_ScoresColor_Allies;
+    cvar_t* g_ScoresColor_Axis;
+    cvar_t* g_ScoresColor_EnemyTeam;
+    cvar_t* g_ScoresColor_Free;
+    cvar_t* g_ScoresColor_MyTeam;
+    cvar_t* g_ScoresColor_Spectator;
+    cvar_t* g_TeamColor_Allies;
+    cvar_t* g_TeamColor_Axis;
+    cvar_t* g_TeamColor_EnemyTeam;
+    cvar_t* g_TeamColor_Free;
+    cvar_t* g_TeamColor_MyTeam;
+    cvar_t* g_TeamColor_Spectator;
+    cvar_t* g_TeamIcon_Allies;
+    cvar_t* g_TeamIcon_Axis;
+    cvar_t* g_TeamIcon_Free;
+    cvar_t* g_TeamIcon_Spectator;
+    cvar_t* g_TeamName_Allies;
+    cvar_t* g_TeamName_Axis;
+    cvar_t* g_dumpAnims;
+    cvar_t* g_entinfo;
+    cvar_t* g_friendlyNameDist;
+    cvar_t* g_friendlyfireDist;
+    cvar_t* g_listEntity;
+    cvar_t* g_log;
+    cvar_t* g_logSync;
+    cvar_t* g_password;
+    cvar_t* g_redCrosshairs;
+    cvar_t* g_voteAbstainWeight;
+    cvar_t* voice_deadChat;
+    cvar_t* voice_global;
+    cvar_t* voice_localEcho;
+    cvar_t* g_gametype;
+    byte g_clients[0xc6100];
+
+    const entityHandler_t entityHandlers[ENT_HANDLER_COUNT] =
+    {
+      { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
+      { NULL, NULL, NULL, &Touch_Multi, NULL, NULL, NULL, NULL, 0, 0 },
+      { NULL, NULL, NULL, NULL, &hurt_use, NULL, NULL, NULL, 0, 0 },
+      { NULL, NULL, NULL, &hurt_touch, &hurt_use, NULL, NULL, NULL, 0, 0 },
+      { NULL, NULL, NULL, NULL, &Use_trigger_damage, &Pain_trigger_damage, &Die_trigger_damage, NULL, 0, 0},
+      { NULL, &Reached_ScriptMover, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
+      { NULL, &Reached_ScriptMover, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
+      { &G_ExplodeMissile, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 3, 4},
+      { &G_TimedObjectThink, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
+      { &G_ExplodeMissile, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 6 },
+      { NULL, NULL, NULL, NULL, NULL, NULL, &player_die, &G_PlayerController, 0, 0 },
+      { NULL, NULL, NULL, NULL, NULL, NULL, &player_die, NULL, 0, 0 },
+      { NULL, NULL, NULL, NULL, NULL, NULL, NULL, &G_PlayerController, 0, 0 },
+      { &BodyEnd, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
+      { &turret_think_init, NULL, NULL, NULL, &turret_use, NULL, NULL, &turret_controller, 0, 0},
+      { &turret_think, NULL, NULL, NULL, &turret_use, NULL, NULL, &turret_controller, 0, 0},
+      { &DroppedItemClearOwner, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 0, 0},
+      { &FinishSpawningItem, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 0, 0},
+      { NULL, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 0, 0 },
+      { NULL, NULL, NULL, NULL, &use_trigger_use, NULL, NULL, NULL, 0, 0 },
+      { NULL, &Reached_ScriptMover, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
+      { &G_FreeEntity, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
+      { &G_VehEntHandler_Think, NULL, NULL, &G_VehEntHandler_Touch, &G_VehEntHandler_Use, &G_VehEntHandler_Pain, &G_VehEntHandler_Die, &G_VehEntHandler_Controller, 0, 0},
+      { &Helicopter_Think, NULL, NULL, NULL, NULL, &Helicopter_Pain, &Helicopter_Die, &Helicopter_Controller, 0, 0}
+    };
 
 #define MAX_REDIRECTDESTINATIONS 4
 
 static void (*rd_destinations[MAX_REDIRECTDESTINATIONS])( const char *buffer, int len );
 
-void G_PrintRedirect(char* msg, int len)
-{
-
-    int i;
-
-    for(i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
-    {
-        if(rd_destinations[i] == NULL)
-            return;
-
-        rd_destinations[i](msg, len);
-
-    }
-
-}
 /*
     To Add:
     HL2Rcon_SourceRconSendGameLog(string, stringlen);
@@ -207,8 +222,6 @@ void G_CloseLogFile()
 
 
 float missile_frametime;
-extern int helicopter_thinktime;
-extern float vehicle_frametime;
 
 void G_InitSomeVariables(int framerate)
 {
@@ -391,35 +404,6 @@ void __cdecl G_FreeEntity(gentity_s *gEnt)
 };
 
 
-const entityHandler_t entityHandlers[] =
-{
-  { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
-  { NULL, NULL, NULL, &Touch_Multi, NULL, NULL, NULL, NULL, 0, 0 },
-  { NULL, NULL, NULL, NULL, &hurt_use, NULL, NULL, NULL, 0, 0 },
-  { NULL, NULL, NULL, &hurt_touch, &hurt_use, NULL, NULL, NULL, 0, 0 },
-  { NULL, NULL, NULL, NULL, &Use_trigger_damage, &Pain_trigger_damage, &Die_trigger_damage, NULL, 0, 0},
-  { NULL, &Reached_ScriptMover, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
-  { NULL, &Reached_ScriptMover, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
-  { &G_ExplodeMissile, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 3, 4},
-  { &G_TimedObjectThink, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
-  { &G_ExplodeMissile, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, 6 },
-  { NULL, NULL, NULL, NULL, NULL, NULL, &player_die, &G_PlayerController, 0, 0 },
-  { NULL, NULL, NULL, NULL, NULL, NULL, &player_die, NULL, 0, 0 },
-  { NULL, NULL, NULL, NULL, NULL, NULL, NULL, &G_PlayerController, 0, 0 },
-  { &BodyEnd, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
-  { &turret_think_init, NULL, NULL, NULL, &turret_use, NULL, NULL, &turret_controller, 0, 0},
-  { &turret_think, NULL, NULL, NULL, &turret_use, NULL, NULL, &turret_controller, 0, 0},
-  { &DroppedItemClearOwner, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 0, 0},
-  { &FinishSpawningItem, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 0, 0},
-  { NULL, NULL, NULL, &Touch_Item_Auto, NULL, NULL, NULL, NULL, 0, 0 },
-  { NULL, NULL, NULL, NULL, &use_trigger_use, NULL, NULL, NULL, 0, 0 },
-  { NULL, &Reached_ScriptMover, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
-  { &G_FreeEntity, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0 },
-  { &G_VehEntHandler_Think, NULL, NULL, &G_VehEntHandler_Touch, &G_VehEntHandler_Use, &G_VehEntHandler_Pain, &G_VehEntHandler_Die, &G_VehEntHandler_Controller, 0, 0},
-  { &Helicopter_Think, NULL, NULL, NULL, NULL, &Helicopter_Pain, &Helicopter_Die, &Helicopter_Controller, 0, 0}
-};
-
-
 void G_PrintAddRedirect(void (*rd_dest)( const char *, int))
 {
     for(int i = 0; i < MAX_REDIRECTDESTINATIONS; i++)
@@ -435,4 +419,15 @@ void G_PrintAddRedirect(void (*rd_dest)( const char *, int))
     }
 
     Com_Error(ERR_FATAL, "G_PrintAddRedirect: Out of redirect handles. Increase MAX_REDIRECTDESTINATIONS to add more redirect destinations");
+}
+
+void G_PrintRedirect(char* msg, int len)
+{
+    for (int i = 0; i < MAX_REDIRECTDESTINATIONS; ++i)
+    {
+        if (!rd_destinations[i])
+            return;
+
+        rd_destinations[i](msg, len);
+    }
 }

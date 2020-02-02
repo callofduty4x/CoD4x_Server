@@ -15,9 +15,9 @@
 	extern CM_ModelBounds
 	extern CM_ClipHandleToModel
 	extern CM_CalcTraceExtents
+	extern cm_world
 
 ;Exports of cm_world:
-	global cm_world
 	global CM_PointSightTraceToEntities_r
 	global CM_PointTraceStaticModelsComplete_r
 	global CM_ClipSightTraceToEntities_r
@@ -2507,23 +2507,6 @@ CM_PointTraceStaticModelsComplete:
 	pop ebx
 	pop ebp
 	ret
-
-
-;Zero initialized global or static variables of cm_world:
-SECTION .bss
-cm_world: resb 0x7080
-
-
-;Initialized global or static variables of cm_world:
-SECTION .data
-
-
-;Initialized constant data of cm_world:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
 
 
 ;All constant floats and doubles:

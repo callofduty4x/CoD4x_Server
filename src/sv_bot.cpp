@@ -36,6 +36,7 @@ If you have questions concerning this license or the applicable additional terms
 #include "game/botlib.h"
 #include "qvsnprintf.hpp"
 #include "g_client_mp.hpp"
+#include "sv_world.hpp"
 
 
 #define MAX_DEBUGPOLYS      128

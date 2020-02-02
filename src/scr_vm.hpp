@@ -24,8 +24,6 @@
 #ifndef __SCR_VM_H__
 #define __SCR_VM_H__
 
-
-
 #include "qshared.hpp"
 #include "qshared.hpp"
 #include "entity.hpp"
@@ -33,7 +31,10 @@
 #include "g_hud.hpp"
 #include "filesystem.hpp"
 #include "g_sv_shared.hpp"
+#include "g_hudelem.hpp"
+#include "scr_entref_t.hpp"
 
+struct game_hudelem_t;
 
 enum scr_opcode
 {
@@ -181,7 +182,8 @@ enum scr_opcode
 
 
 
-typedef struct{
+struct scr_const_t
+{
 	uint16_t emptystring;
 	uint16_t active;
 	uint16_t j_spine4;
@@ -368,18 +370,7 @@ typedef struct{
 	uint16_t back_left;
 	uint16_t back_right;
 	uint16_t tag_gunner_pov;
-}scr_const_t;
-
-extern scr_const_t scr_const;
-
-#ifndef SCR_ENTREF_DEFINED
-#define SCR_ENTREF_DEFINED
-typedef struct
-{
-  uint16_t entnum;
-  uint16_t classnum;
-}scr_entref_t;
-#endif
+};
 
 using xfunction_t = void(*)();
 using xmethod_t = void(*)(scr_entref_t);
@@ -774,8 +765,8 @@ unsigned int __cdecl SL_GetCanonicalString(const char *str);
 
 void __cdecl GScr_AddFieldsForHudElems( void );
 void __cdecl GScr_AddFieldsForRadiant( void );
-void __cdecl Scr_AddHudElem( game_hudelem_t* );
-void __cdecl Scr_FreeHudElem( game_hudelem_t* );
+void __cdecl Scr_AddHudElem(game_hudelem_t* );
+void __cdecl Scr_FreeHudElem(game_hudelem_t* );
 void __cdecl Scr_EndLoadScripts( void );
 void __cdecl Scr_ConstructMessageString( int, int, const char*, char*, unsigned int );
 

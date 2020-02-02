@@ -226,21 +226,6 @@ or configs will never get loaded from disk!
 
 #define BASEGAME "main"
 
-cvar_t* fs_debug;
-cvar_t* fs_copyfiles;
-cvar_t* fs_cdpath;
-cvar_t* fs_basepath;
-cvar_t* fs_basegame;
-cvar_t* fs_gameDirVar;
-cvar_t* fs_ignoreLocalized;
-cvar_t* fs_homepath;
-cvar_t* fs_restrict;
-cvar_t* fs_usedevdir;
-
-cvar_t* loc_warnings;
-cvar_t* loc_warningsAsErrors;
-
-
 int fs_packFiles;
 int fs_checksumFeed;
 static int fs_loadStack;
@@ -4746,6 +4731,19 @@ void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the log
 
 extern "C"
 {
+    cvar_t* fs_gameDirVar;
+    cvar_t* fs_debug;
+    cvar_t* fs_copyfiles;
+    cvar_t* fs_cdpath;
+    cvar_t* fs_basepath;
+    cvar_t* fs_basegame;
+    cvar_t* fs_ignoreLocalized;
+    cvar_t* fs_homepath;
+    cvar_t* fs_restrict;
+    cvar_t* fs_usedevdir;
+    cvar_t* loc_warnings;
+    cvar_t* loc_warningsAsErrors;
+
     int __cdecl FS_OpenFileOverwrite(const char *qpath)
     {
         if(!FS_Initialized())

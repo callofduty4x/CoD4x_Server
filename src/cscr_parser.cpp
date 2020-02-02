@@ -6,6 +6,7 @@
 #include "xassets/rawfile.hpp"
 #include "xassets.hpp"
 #include "qcommon_mem.hpp"
+#include "qcommon.hpp"
 
 struct SaveSourceBufferInfo
 {

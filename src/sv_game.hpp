@@ -24,6 +24,7 @@ extern "C"
     int __cdecl SV_DObjCreateSkelForBones(DObj *obj, int *partBits);
     DObjAnimMat *__cdecl SV_DObjGetMatrixArray(gentity_t* ent);
     void __cdecl SV_DObjUpdateServerTime(gentity_t* ent, float dtime, int bNotify);
+    void __cdecl SV_GameSendServerCommand(int clientNum, int cmdtype, const char* cmdstring);
 } // extern "C"
 
 void __cdecl SV_XModelDebugBoxesInternal(gentity_t *ent, const float *color, int *partBits, int duration);

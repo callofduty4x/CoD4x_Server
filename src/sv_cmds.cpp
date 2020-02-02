@@ -32,6 +32,10 @@ These commands can only be entered from stdin or by a remote operator datagram
 */
 
 #include "sv_cmds.hpp"
+
+#include <cstring>
+#include <cstdlib>
+
 #include "qshared.hpp"
 #include "q_platform.hpp"
 #include "qcommon_io.hpp"
@@ -51,9 +55,8 @@ These commands can only be entered from stdin or by a remote operator datagram
 #include "cscr_memorytree.hpp"
 #include "cscr_variable.hpp"
 #include "com_bsp_load_obj.hpp"
+#include "g_main_mp.hpp"
 
-#include <cstring>
-#include <cstdlib>
 
 typedef enum {
     SAY_CHAT,

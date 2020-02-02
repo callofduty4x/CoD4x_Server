@@ -3,7 +3,6 @@
 #ifndef __IN_EXTSAPIMODULE__
 #include "msg.hpp"
 #include "server.hpp"
-#include <stdbool.h>
 
 void SV_InitSApi();
 void SV_SApiShutdown();

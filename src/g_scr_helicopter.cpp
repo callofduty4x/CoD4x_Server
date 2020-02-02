@@ -1,6 +1,7 @@
 ﻿#include "g_scr_helicopter.hpp"
 #include "g_shared.hpp"
 #include "g_scr_vehicle.hpp"
+#include "g_main_mp.hpp"
 
 
 cvar_t* vehHelicopterDecelerationFwd;

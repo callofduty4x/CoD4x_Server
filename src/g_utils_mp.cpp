@@ -5,6 +5,7 @@
 #include "g_shared.hpp"
 #include "server_public.hpp"
 #include "sv_game.hpp"
+#include "g_main_mp.hpp"
 
 using namespace std;
 

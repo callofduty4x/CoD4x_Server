@@ -1,9 +1,11 @@
 #include "sv_voice_mp.hpp"
+
 #include "qshared.hpp"
 #include "server.hpp"
 #include "g_public.hpp"
+#include "g_client_mp.hpp"
 
-void SV_WriteClientVoiceData(msg_t *msg, client_s *client)
+void SV_WriteClientVoiceData(msg_t *msg, client_t *client)
 {
 	int i;
 
@@ -40,7 +42,7 @@ bool __cdecl SV_ClientHasClientMuted(int listener, int talker)
 
 void __cdecl SV_QueueVoicePacket(int talkerNum, int clientNum, VoicePacket_t *voicePacket)
 {
-  client_s *client;
+  client_t *client;
 
   assert(talkerNum >= 0 && talkerNum < sv_maxclients->integer);
   assert(clientNum >= 0 && clientNum < sv_maxclients->integer);
@@ -58,7 +60,7 @@ void __cdecl SV_QueueVoicePacket(int talkerNum, int clientNum, VoicePacket_t *vo
 
 
 
-void SV_SendClientVoiceData(client_s *client)
+void SV_SendClientVoiceData(client_t *client)
 {
     msg_t msg;
     byte buff[0x20000];

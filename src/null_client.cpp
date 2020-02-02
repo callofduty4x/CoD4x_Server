@@ -19,14 +19,14 @@
 #include "xassets/gfxworld.hpp"
 
 
-cvar_t* r_reflectionProbeGenerate;
-cvar_t* r_modelVertColor;
 struct GfxWorld s_world;
 byte cgMedia[0x27C0]; 
 
 
 extern "C"
 {
+    cvar_s* r_reflectionProbeGenerate;
+    cvar_s* r_modelVertColor;
 
 void R_RegisterDvars()
 {
@@ -280,10 +280,8 @@ void SND_ShutdownChannels()
 {
 }
 
-void __cdecl CG_TraceCapsule(struct trace_s *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentMask)
-{
-
-}
+void CG_TraceCapsule(trace_t* results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentMask)
+{}
 
 const char* SND_GetEntChannelName(int index)
 {

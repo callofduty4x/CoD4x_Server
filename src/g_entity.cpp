@@ -3,6 +3,7 @@
 #include "entity.hpp"
 #include "g_shared.hpp"
 #include "scr_vm.hpp"
+#include "g_main_mp.hpp"
 
 
 

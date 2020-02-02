@@ -67,7 +67,7 @@
 	extern G_ModelName
 	extern Vec2Normalize
 	extern Scr_SetString
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern G_SetOrigin
 	extern G_SetAngle
 	extern TeleportPlayer
@@ -4773,15 +4773,15 @@ G_VehFreeEntity:
 	mov dword [esp+0x4], 0x0
 	lea eax, [esi+0x280]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov dword [esp+0x4], 0x0
 	lea eax, [esi+0x2dc]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov dword [esp+0x4], 0x0
 	lea eax, [esi+0x2e0]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov dword [ebx+0x19c], 0x0
 	mov byte [ebx+0x16b], 0x0
 	mov byte [ebx+0x16c], 0x0
@@ -4936,7 +4936,7 @@ G_VehUnlinkPlayer_50:
 	mov dword [esp+0x4], 0x0
 	lea eax, [edi+0x154]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	and dword [esi+0xc], 0xffefffff
 	and dword [esi+0x10], 0xffffff7f
 	mov dword [esi+0x59c], 0x3ff
@@ -5240,7 +5240,7 @@ G_VehEntHandler_Use_160:
 	mov [esp+0x4], eax
 	mov edx, [ebp-0x88]
 	mov [esp], edx
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	or dword [edi+0xc], 0x100000
 	mov eax, scr_const
 	movzx eax, word [eax+0x14a]

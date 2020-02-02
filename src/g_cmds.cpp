@@ -27,6 +27,7 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 #include "g_cmds.hpp"
+
 #include "g_shared.hpp"
 #include "cmd.hpp"
 #include "cvar.hpp"
@@ -38,6 +39,10 @@ If you have questions concerning this license or the applicable additional terms
 #include "g_main_mp.hpp"
 #include "g_utils_mp.hpp"
 #include "g_sv_cmds.hpp"
+#include "sv_world.hpp"
+#include "sv_game.hpp"
+#include "server.hpp"
+#include "cscr_const.hpp"
 
 
 #if 0

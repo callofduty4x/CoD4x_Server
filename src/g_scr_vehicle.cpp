@@ -1,5 +1,7 @@
-#include "scr_vm.hpp"
 #include "g_scr_vehicle.hpp"
+
+#include "scr_vm.hpp"
+#include "cscr_const.hpp"
 
 uint16_t* s_flashTags[] = { 
     &scr_const.tag_flash,
@@ -9,7 +11,5 @@ uint16_t* s_flashTags[] = {
     &scr_const.tag_flash_3,
     NULL };
 
-
 struct vehicle_info_t s_vehicleInfos[32];
-
 float vehicle_frametime;

@@ -570,7 +570,6 @@ typedef struct weaponInfo_s
 
 
 
-extern struct WeaponDef *bg_weaponDefs[];
 extern weaponInfo_t cg_weaponsArray[];
 extern struct Material* weaponHudIcons[];
 
@@ -582,7 +581,7 @@ extern "C"{
 struct WeaponDef* BG_GetWeaponDef(int index);
 int BG_PlayerWeaponCountPrimaryTypes(playerState_t *ps);
 int BG_GetNumWeapons();
-void ChangeViewmodelDObj(int localClientNum, int weaponNum, char weaponModel, XModel *newHands, XModel *newGoggles, XModel *newRocket, XModel *newKnife, byte updateClientInfo);
+void ChangeViewmodelDObj(int localClientNum, int weaponNum, char weaponModel, XModel *newHands, XModel *newGoggles, XModel *newRocket, XModel *newKnife, ::byte updateClientInfo);
 void __cdecl Load_WeaponDef(bool atStreamStart);
 
 #ifdef __cplusplus

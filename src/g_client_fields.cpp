@@ -1,4 +1,7 @@
 ﻿#include "g_client_fields.hpp"
+
+#include <algorithm>
+
 #include "player.hpp"
 #include "scr_vm.hpp"
 #include "g_shared.hpp"
@@ -6,8 +9,8 @@
 #include "g_fields.hpp"
 #include "cscr_variable.hpp"
 #include "g_main_mp.hpp"
-
-#include <algorithm>
+#include "server.hpp"
+#include "cscr_const.hpp"
 
 #define ENTFIELD_MASK 0xc000
 

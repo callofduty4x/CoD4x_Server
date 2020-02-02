@@ -1,5 +1,7 @@
 ﻿#include "g_vehicles_mp.hpp"
+
 #include "scr_vm.hpp"
+#include "cscr_const.hpp"
 
 byte s_phys[0x40];
 byte s_backup[0x1c0];

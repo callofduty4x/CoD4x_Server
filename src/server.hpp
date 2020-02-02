@@ -44,8 +44,6 @@
 #include <time.h>
 
 
-extern struct cm_world_t cm_world;
-
 // MAX_CHALLENGES is made large to prevent a denial
 // of service attack that could cycle all of them
 // out before legitimate users connected
@@ -132,7 +130,7 @@ typedef enum {
     UN_OK
 }username_t;
 
-struct client_s
+struct client_t
 {
 	clientConnectState_t	state;
 	int					unksnapshotvar;		// must timeout a few frames in a row so debugging doesn't break
@@ -247,8 +245,6 @@ struct client_s
 	byte			hasValidPassword;
 	stats_t			stats;
 };//0x0a563c
-
-typedef struct client_s client_t;
 
 
 #define	MAX_STREAM_SERVERS	6
@@ -562,9 +558,10 @@ struct cm_world_t
   uint16_t freeHead;
   uint16_t gap;
   struct worldSector_s sectors[1024];
+  char _padding[100];
 };
 
-
+extern cm_world_t cm_world;
 
 
 typedef struct
@@ -634,9 +631,8 @@ extern cvar_t* sv_steamgroup;
 extern cvar_t* sv_voice;
 
 
-#ifdef __cplusplus
-extern "C"{
-#endif
+extern "C"
+{
 
 gentity_t *SV_GentityNum( int num );
 int SV_NumForGentity( gentity_t *ent );
@@ -737,13 +733,6 @@ qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl);
 
 void SV_WriteRconStatus( msg_t *msg );
 
-void G_PrintAdvertForPlayer(client_t*);
-void G_PrintRuleForPlayer(client_t*);
-void G_AddRule(const char* newtext);
-void G_AddAdvert(const char* newtext);
-void G_SetupHudMessagesForPlayer(client_t*);
-
-
 void SV_SayToPlayers(int clnum, int team, char* text);
 
 
@@ -803,7 +792,6 @@ void __cdecl SV_SendClientMessages(void);
 void __cdecl SV_SetServerStaticHeader(void);
 void __cdecl SV_ShutdownGameProgs(void);
 void __cdecl SV_FreeClients(void);
-void __cdecl SV_GameSendServerCommand(int clientnum, int svscmd_type, const char *text);
 void __cdecl SV_SetConfigstring(int index, const char *text);
 void __cdecl SV_FreeClient(client_t* drop);
 void __cdecl SV_FreeClientScriptId(client_t *cl);
@@ -846,7 +834,6 @@ void SV_Cmd_Init();
 void SV_SteamData(client_t* cl, msg_t* msg);
 void __cdecl SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels); //0817D9F8
 void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int entityNum, int contentmask, int capsule );
-void G_TraceCapsule(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum, int contentmask);
 int SV_PointContents( const vec3_t p, int passEntityNum, int contentmask );
 qboolean SV_inPVSIgnorePortals( const vec3_t p1, const vec3_t p2 );
 
@@ -890,9 +877,7 @@ void SV_WriteChecksumInfo(msg_t* msg, const char* filename);
 void __cdecl SV_DObjDumpInfo(gentity_t *ent);
 int __cdecl SV_DObjExists(gentity_t *ent);
 
-#ifdef __cplusplus
 }
-#endif
 
 
 #endif

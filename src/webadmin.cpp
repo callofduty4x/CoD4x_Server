@@ -6,6 +6,10 @@
  *
  */
 
+#include "webadmin.hpp"
+
+#include <cstring>
+
 #include "qshared.hpp"
 #include "httpftp.hpp"
 #include "qcommon_mem.hpp"
@@ -19,8 +23,7 @@
 #include "g_sv_shared.hpp"
 #include "g_shared.hpp"
 #include "sapi.hpp"
-
-#include <string.h>
+#include "g_main_mp.hpp"
 
 #define TOSTRING(X) #X
 #define XA(x) XML_AppendToBuffer(xmlobj, x)

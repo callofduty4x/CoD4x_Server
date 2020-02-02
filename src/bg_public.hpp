@@ -6,18 +6,13 @@
 #include "xassets/weapondef.hpp"
 
 extern "C" void __cdecl BG_ShutdownWeaponDefFiles();
-const char *__cdecl BG_WeaponName(int weapon);
 
-#ifdef __cplusplus
-extern "C"{
-#endif
+extern "C"
+{
 
 struct WeaponDef *__cdecl BG_GetWeaponDef(int weapon);
 
-#ifdef __cplusplus
 };
-#endif
-
 
 struct DObjModel_s;
 
@@ -34,7 +29,7 @@ struct pmove_t
   float xyspeed;
   int proneChange;
   float maxSprintTimeMultiplier;
-  byte mantleStarted;
+  ::byte mantleStarted;
   char pad1[3];
   vec3_t mantleEndPos;
   int mantleDuration;
@@ -121,8 +116,8 @@ struct __align(8) bgs_s
 
 struct __align(8) bgs_s // TODO: must be of size 0xADD08 (asm).
 {
-  byte animScriptData[0x9a9d0];
-  byte generic_human[0x10];
+  ::byte animScriptData[0x9a9d0];
+  ::byte generic_human[0x10];
   int time;
   int latestSnapshotTime;
   int frametime;
@@ -136,7 +131,6 @@ struct __align(8) bgs_s // TODO: must be of size 0xADD08 (asm).
   struct clientInfo_t clientinfo[64];
 };
 
-extern struct bgs_s *bgs;
 #endif
 
 

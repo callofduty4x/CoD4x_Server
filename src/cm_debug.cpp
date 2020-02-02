@@ -4,6 +4,7 @@
 #include "qcommon.hpp"
 #include "cmd.hpp"
 #include "filesystem.hpp"
+#include "cm_load.hpp"
 
 static fileHandle_t f;
 

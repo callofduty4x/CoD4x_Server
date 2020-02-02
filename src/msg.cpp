@@ -2477,8 +2477,7 @@ netField_t playerStateFields[] =
 	{ PSF( leanf ), 0, 0},
 	{ PSF( adsDelayTime ), 32, 1}
 };
-
-
+const int playerStateFieldsCount = sizeof(playerStateFields) / sizeof(playerStateFields[0]);
 
 
 void MSG_SetDefaultUserCmd(playerState_t *ps, usercmd_t *ucmd)
@@ -2698,7 +2697,7 @@ qboolean MSG_WithinAllowedPredictionError(float dist, playerState_t *to)
 void MSG_WriteDeltaPlayerstate(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, playerState_t *from, playerState_t *to)
 {
 	qboolean forceSend;
-	int statsbits, numFields;
+	int statsbits;
 	int i, j, lc;
 	playerState_t dummy;
 	qboolean sendOriginAndVel;
@@ -2744,11 +2743,9 @@ VectorCopy(predictedOrigin, to->origin);
 			MSG_WriteBit1(msg);
 		}
 	}
-
-	numFields = sizeof( playerStateFields ) / sizeof( playerStateFields[0] );
 	
 	lc = 0;
-	for ( i = 0, field = playerStateFields ; i < numFields ; i++, field++ ) {
+	for ( i = 0, field = playerStateFields ; i < playerStateFieldsCount; i++, field++ ) {
 
 		if ( MSG_ShouldSendPSField(snapInfo, sendOriginAndVel, to, from, field) )
 		{
@@ -2756,7 +2753,7 @@ VectorCopy(predictedOrigin, to->origin);
 		}
 	}
 
-	MSG_WriteBits(msg, lc, GetMinBitCount(numFields));   // # of changes
+	MSG_WriteBits(msg, lc, GetMinBitCount(playerStateFieldsCount));   // # of changes
 	
 	if ( lc > 0 )
 	{
@@ -2945,7 +2942,7 @@ netField_t clientStateFields[] =
 	{ CSF( attachModelIndex[4] ), 9, 0},
 	{ CSF( attachModelIndex[5] ), 9, 0}
 };
-
+static const int clientStateFieldsCount = sizeof(clientStateFields) / sizeof(clientStateFields[0]);
 
 void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force)
 {
@@ -2956,10 +2953,10 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
     from = &nullstate;
     memset(&nullstate, 0, sizeof(nullstate));
   }
-  int numFields = sizeof(clientStateFields) / sizeof(clientStateFields[0]);
+  
   if ( to )
   {
-    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields, qtrue);
+    MSG_WriteDeltaStruct(snapInfo, msg, time, (const byte *)from, (const byte *)to, force, clientStateFieldsCount, GetMinBitCount(MAX_CLIENTS -1), clientStateFields, qtrue);
   }
   else
   {
@@ -3621,6 +3618,8 @@ netField_t archivedEntityFields[] =
 	{ AEF( s.partBits[3] ), 32, 0}
 };
 
+static const int archivedEntityFieldsCount = sizeof(archivedEntityFields) / sizeof(archivedEntityFields[0]);
+
 
 bool __cdecl MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, enum DeltaFlags flags)
 {
@@ -3645,9 +3644,8 @@ bool __cdecl MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, 
 	return  qtrue;
   }
 */
-  int numFields = sizeof(archivedEntityFields) / sizeof(archivedEntityFields[0]);
-
-  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE ? qtrue : qfalse, numFields, 10, archivedEntityFields, qfalse) > 0)
+ 
+  if(MSG_WriteDeltaStruct(snapInfo, msg, time, (byte *)from, (byte *)to, flags == DELTA_FLAGS_FORCE ? qtrue : qfalse, archivedEntityFieldsCount, 10, archivedEntityFields, qfalse) > 0)
   {
 	return  qtrue;	
   }
@@ -3762,21 +3760,17 @@ int MSG_ReadDeltaClient(msg_t *msg, const int time, clientState_t *from, clientS
 {
   clientState_t dummy;
 
-  int numFields = sizeof( clientStateFields ) / sizeof( clientStateFields[0] );
-
   if ( !from )
   {
     memset(&dummy, 0, sizeof(dummy));
     from = &dummy;
   }
-  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, numFields, GetMinBitCount(MAX_CLIENTS -1), clientStateFields);
+  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte *)to, number, clientStateFieldsCount, GetMinBitCount(MAX_CLIENTS -1), clientStateFields);
 }
 
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number)
 {
-  int numFields = sizeof( archivedEntityFields ) / sizeof( archivedEntityFields[0] );
-
-  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte*)to, number, numFields, 10, archivedEntityFields);
+  return MSG_ReadDeltaStruct(msg, time, (byte*)from, (byte*)to, number, archivedEntityFieldsCount, 10, archivedEntityFields);
 }
 
 
@@ -3862,7 +3856,6 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
 void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, const int time, playerState_t *from, playerState_t *to, bool predictedFieldsIgnoreXor)
 {
 	signed int i, j;
-	unsigned int numFields;
 	signed int print;
 	int lc, bits;
 	playerState_t dst;
@@ -3889,10 +3882,8 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 		print = 0;
 	}
 
-	numFields = sizeof( playerStateFields ) / sizeof( playerStateFields[0] );
-
 	readOriginAndVel = MSG_ReadBit(msg) > 0;
-	lc = MSG_ReadLastChangedField(msg, numFields);
+	lc = MSG_ReadLastChangedField(msg, playerStateFieldsCount);
 	assert(lc >= 0);
 
 	stateFields = playerStateFields;
@@ -3903,7 +3894,7 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 		MSG_ReadDeltaField(msg, time, from, to, &stateFields[i], print, noXor);	
 	}
 
-	for ( i = lc; i < numFields; ++i )
+	for ( i = lc; i < playerStateFieldsCount; ++i )
 	{
 		int offset = stateFields[i].offset;
 		*(uint32_t *)&((byte*)to)[offset] = *(uint32_t *)&((byte*)from)[offset];

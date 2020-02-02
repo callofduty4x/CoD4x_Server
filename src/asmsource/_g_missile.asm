@@ -59,7 +59,7 @@
 	extern Vec2Normalize
 	extern G_Spawn
 	extern Scr_SetString
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern G_BroadcastEntity
 	extern sinf
 	extern bulletPriorityMap
@@ -2900,12 +2900,12 @@ G_FireRocket_180:
 	mov [esp+0x4], eax
 	lea eax, [esi+0x154]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov edx, [ebp+0x8]
 	mov [esp+0x4], edx
 	lea eax, [esi+0x198]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov dword [esi+0x190], 0x2806891
 	mov byte [esi+0x16e], 0x9
 	mov edx, level
@@ -2926,7 +2926,7 @@ G_FireRocket_50:
 	mov [esp+0x4], eax
 	lea eax, [esi+0x214]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov eax, [ebp+0x20]
 	test eax, eax
 	jz G_FireRocket_60
@@ -5351,18 +5351,18 @@ G_InitGrenadeEntity_10:
 	mov [esp+0x4], edi
 	lea eax, [ebx+0x154]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov [esp+0x4], edi
 	lea eax, [ebx+0x198]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 G_InitGrenadeEntity_60:
 	mov dword [ebx+0x190], 0x2806891
 	mov byte [ebx+0x16e], 0x7
 	mov dword [esp+0x4], 0x0
 	lea eax, [ebx+0x214]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov [esp], ebx
 	call G_BroadcastEntity
 	mov byte [ebx+0xf6], 0x4
@@ -5396,7 +5396,7 @@ G_InitGrenadeEntity_20:
 	add edx, esi
 	mov [esp+0x4], edx
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	cmp word [ebx+0x154], 0x0
 	jnz G_InitGrenadeEntity_50
 	xor eax, eax
@@ -5404,7 +5404,7 @@ G_InitGrenadeEntity_80:
 	mov [esp+0x4], eax
 	lea eax, [ebx+0x198]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	jmp G_InitGrenadeEntity_60
 G_InitGrenadeEntity_40:
 	mov dword [ebx+0x1cc], 0x0

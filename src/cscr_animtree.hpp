@@ -18,17 +18,11 @@ struct scrAnimPub_t
 };
 
 
-extern scrAnimPub_t gScrAnimPub;
-
-#ifdef __cplusplus
-extern "C"{
-#endif
+extern "C"
+{
+    extern scrAnimPub_t gScrAnimPub;
 
 struct XAnim_s *__cdecl Scr_GetAnims(unsigned int index);
 const char *__cdecl XAnimGetAnimDebugName(struct XAnim_s *anims, unsigned int animIndex); //Maybe wrong place
 
-#ifdef __cplusplus
 };
-#endif
-
-

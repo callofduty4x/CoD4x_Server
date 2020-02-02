@@ -66,7 +66,7 @@
 	extern MatrixMultiply
 	extern AxisToAngles
 	extern G_Spawn
-	extern _ZN9EntHandle6setEntEP9gentity_s
+	extern EntHandle_setEnt
 	extern g_mantleBlockTimeBuffer
 	extern Scr_AddVector
 	extern bg_viewKickScale
@@ -1763,11 +1763,11 @@ ClientThink_real_160:
 	mov [esp+0x4], ebx
 	lea eax, [eax+0x198]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov [esp+0x4], ebx
 	lea eax, [esi+0x154]
 	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
+	call EntHandle_setEnt
 	mov dword [esi+0x120], 0x10000
 	mov dword [esi+0x190], 0x10000
 	mov byte [esi+0xf6], 0x21
