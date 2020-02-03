@@ -132,13 +132,6 @@ FILE*		missingFiles = NULL;
 #define FileWrapper_GetFileSize FS_fplength
 
 
-
-extern cvar_t*	fs_homepath;
-extern cvar_t*	fs_debug;
-extern cvar_t*	fs_basepath;
-extern cvar_t*	loc_warnings;
-extern cvar_t*	loc_warningsAsErrors;
-
 extern "C"
 {
     extern cvar_t* fs_gameDirVar;

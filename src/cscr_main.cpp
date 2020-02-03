@@ -5,6 +5,7 @@
 #include "cscr_variable.hpp"
 #include "cscr_animtree.hpp"
 #include "qcommon_mem.hpp"
+#include "cscr_compiler.hpp"
 
 
 extern "C"{

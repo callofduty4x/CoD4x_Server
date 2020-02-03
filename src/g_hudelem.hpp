@@ -32,14 +32,15 @@ struct game_hudelem_field_t
 
 
 extern qboolean g_isLocStringPrecached[];
-extern game_hudelem_t g_hudelems[1024];
-extern BuiltinMethodDef g_he_methods[22];
-extern const int g_he_methodsCount;
 
 qboolean Scr_CanFreeLocalizedConfigString(unsigned int index);
 
 extern "C"
 {
+    extern game_hudelem_t g_hudelems[1024];
+    extern BuiltinMethodDef g_he_methods[22];
+    extern const int g_he_methodsCount;
+
     void __cdecl HECmd_SetText(scr_entref_t entref);
     void __cdecl HECmd_ClearAllTextAfterHudElem(scr_entref_t entref);
     void __cdecl HECmd_SetMaterial(scr_entref_t entref);

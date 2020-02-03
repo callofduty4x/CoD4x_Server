@@ -75,7 +75,7 @@
 	extern cos
 	extern sinf
 	extern cosf
-	extern asinf
+	extern std_asinf
 	extern acosf
 	extern atanf
 	extern Scr_GetTypeName
@@ -201,9 +201,6 @@
 	extern DB_FindXAssetHeaderReal
 	extern Q_strlwr
 	extern CanDamage
-	extern Player_GetMethod
-	extern ScriptEnt_GetMethod
-	extern Helicopter_GetMethod
 	extern Scr_ExecThread
 	extern Scr_FreeThread
 	extern G_SetAngle
@@ -228,7 +225,6 @@
 	extern Scr_AddAnim
 	extern G_SightTrace
 	extern g_gametype
-	extern __maskrune
 	extern loc_warnings
 	extern loc_warningsAsErrors
 	extern Scr_GetEnt
@@ -2883,7 +2879,7 @@ GScr_asin_20:
 GScr_asin_30:
 	movss xmm0, dword [ebp-0xc]
 	movss [esp], xmm0
-	call asinf
+	call std_asinf
 	fstp dword [ebp-0x10]
 	cvtss2sd xmm0, [ebp-0x10]
 	mulsd xmm0, [_double_57_29577951]

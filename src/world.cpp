@@ -1,4 +1,7 @@
 #include "world.hpp"
 
-ComWorld comWorld;
-GameWorldMp gameWorldMp;
+extern "C"
+{
+    ComWorld comWorld;
+    GameWorldMp gameWorldMp;
+}

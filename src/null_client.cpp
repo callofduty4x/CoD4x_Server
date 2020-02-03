@@ -322,25 +322,3 @@ void R_FreeStaticIndexBuffer(IDirect3DIndexBuffer9* indexbuf){}
 void Material_DirtyTechniqueSetOverrides(){}
 
 };
-
-class OpaqueContextRef
-{
-};
-
-class MacDisplay
-{
-    static OpaqueContextRef* GetSharedContext();
-    static void SetCurrentContext(OpaqueContextRef*);
-};
-
-
-OpaqueContextRef* MacDisplay::GetSharedContext()
-{
-    return NULL;
-}
-
-void MacDisplay::SetCurrentContext(OpaqueContextRef* ctx)
-{
-
-}
-

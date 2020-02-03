@@ -1,13 +1,14 @@
 #pragma once
 #include "xassets.hpp"
 
-extern const char* g_assetNames[ASSET_TYPE_COUNT];
-extern int(*DB_GetXAssetSizeHandler[ASSET_TYPE_COUNT])();
 extern void (*DB_XAssetSetNameHandler[ASSET_TYPE_COUNT])(XAssetHeader*, const char*);
 extern const char* (*DB_XAssetGetNameHandler[ASSET_TYPE_COUNT])(const XAssetHeader*);
 
 extern "C"
 {
+    extern const char* g_assetNames[ASSET_TYPE_COUNT];
+    extern int(*DB_GetXAssetSizeHandler[ASSET_TYPE_COUNT])();
+
     int __cdecl DB_SizeofXAsset_XModelPieces();
     int __cdecl DB_SizeofXAsset_PhysPreset();
     int __cdecl DB_SizeofXAsset_XAnimParts();

@@ -8,53 +8,6 @@
 #include "qcommon_mem.hpp"
 #include "qcommon.hpp"
 
-struct SaveSourceBufferInfo
-{
-  char *sourceBuf;
-  int len;
-};
-
-
-struct SourceLookup
-{
-  unsigned int sourcePos;
-  int type;
-};
-
-
-struct OpcodeLookup
-{
-  const char *codePos;
-  unsigned int sourcePosIndex;
-  unsigned int sourcePosCount;
-  int profileTime;
-  int profileBuiltInTime;
-  int profileUsage;
-};
-
-struct scrParserGlob_t
-{
-  struct OpcodeLookup *opcodeLookup;
-  unsigned int opcodeLookupMaxLen;
-  unsigned int opcodeLookupLen;
-  struct SourceLookup *sourcePosLookup;
-  unsigned int sourcePosLookupMaxLen;
-  unsigned int sourcePosLookupLen;
-  unsigned int sourceBufferLookupMaxLen;
-  const char *currentCodePos;
-  unsigned int currentSourcePosCount;
-  struct SaveSourceBufferInfo *saveSourceBufferLookup;
-  unsigned int saveSourceBufferLookupLen;
-  int delayedSourceIndex;
-  int threadStartSourceIndex;
-};
-
-scrParserGlob_t gScrParserGlob;
-scrParserPub_t gScrParserPub;
-
-
-extern "C" void __regparm3 Scr_AddSourceBufferInternal(const char *extFilename, const char *codePos, char *sourceBuf, int len, bool doEolFixup, bool archive);
-
 
 unsigned int Scr_GetFunctionLineNumInternal(const char *buf, unsigned int sourcePos, const char **startLine)
 {
@@ -433,8 +386,10 @@ Impure script locked mode here:
 }
 
 
-extern "C"{
-
+extern "C"
+{
+    scrParserGlob_t gScrParserGlob;
+    scrParserPub_t gScrParserPub;
 
 void Scr_PrintSourcePos(conChannel_t channel, const char *filename, const char *buf, unsigned int sourcePos)
 {

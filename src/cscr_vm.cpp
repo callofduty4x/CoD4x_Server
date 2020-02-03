@@ -12,6 +12,7 @@
 #include "qvsnprintf.hpp"
 #include "qcommon_io.hpp"
 #include "g_main_mp.hpp"
+#include "cscr_compiler.hpp"
 
 
 extern "C" VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset)

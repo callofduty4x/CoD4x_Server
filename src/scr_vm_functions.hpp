@@ -87,7 +87,6 @@ void GScr_RemoveBot();
 void GScr_KickClient();
 void GScr_BanClient();
 void GScr_NewHudElem();
-void GScr_NewClientHudElem();
 void GScr_Spawn();
 void GScr_SpawnVehicle();
 void GScr_SpawnHelicopter();
@@ -106,8 +105,8 @@ void GScr_ArrayTest();
 
 extern "C"
 {
-
-qboolean __cdecl GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
+    qboolean __cdecl GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
+    void GScr_NewClientHudElem();
 }
 
 void PrintModelBonesInfo(gentity_t *ent);
@@ -122,7 +121,6 @@ void GScr_GetDvarFloat();
 void GScr_SetDvar();
 void Scr_PrecacheString();
 void GScr_NewHudElem();
-void GScr_NewClientHudElem();
 void GScr_AddTestClient();
 void GScr_MakeDvarServerInfo();
 void GScr_OpenFile();

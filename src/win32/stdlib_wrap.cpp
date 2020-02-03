@@ -9,4 +9,10 @@ extern "C"
     {
         return std::ceil(x);
     }
+
+
+    float __cdecl std_asinf(float x)
+    {
+        return std::asinf(x);
+    }
 }

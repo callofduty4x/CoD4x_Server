@@ -120,10 +120,9 @@ typedef struct cvar_s {
 } cvar_t;
 
 
-extern int cvar_modifiedFlags;
-
 extern "C"
 {
+    extern int cvar_modifiedFlags;
 
 //Defines Cvarrelated functions inside executable file
 cvar_t* Cvar_RegisterString(const char *var_name, const char *var_value, unsigned short flags, const char *var_description);

@@ -844,16 +844,14 @@ void Scr_Shutdown();
 
 
 
-extern scrVmGlob_t gScrVmGlob;
 extern scrVmPub_t gScrVmPub;
-extern scrCompilePub_t gScrCompilePub;
-extern int g_script_error_level;
 extern struct scrAnimPub_t scrAnimPub;
-extern struct scrParserPub_t gScrParserPub;
-extern char g_EndPos;
 
 extern "C"
 {
+    extern char g_EndPos;
+    extern scrVmGlob_t gScrVmGlob;
+
     void Scr_ResetTimeout();
 }
 

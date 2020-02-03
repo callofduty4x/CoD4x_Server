@@ -43,7 +43,6 @@
 
 cvar_t		*cvar_vars;
 cvar_t		*cvar_cheats;
-int		cvar_modifiedFlags;
 qboolean	cvar_archivedset = qfalse;
 qboolean	cheating_enabled;
 
@@ -2569,6 +2568,8 @@ const char* __cdecl Cvar_EnumToString(cvar_t* var)
 
 extern "C"
 {
+    int cvar_modifiedFlags;
+
     int __cdecl Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize)
     {
         const char *string;

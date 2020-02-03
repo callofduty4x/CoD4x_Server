@@ -13,4 +13,8 @@ enum print_msg_dest_t
     CON_DEST_COUNT = 0x6,
 };
 
-extern "C" void __cdecl Con_FilterShowChannel(print_msg_dest_t, const char* channelName, bool show);
+extern "C"
+{
+    void __cdecl Con_FilterAdd(bool show);
+    void __cdecl Con_FilterShowChannel(print_msg_dest_t, const char* channelName, bool show);
+}

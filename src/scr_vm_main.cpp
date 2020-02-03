@@ -51,6 +51,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include "server.hpp"
+#include "cscr_compiler.hpp"
 
 typedef struct
 {
@@ -618,44 +619,6 @@ void Scr_InitFunctions()
     }
 }
 
-
-int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qboolean mandatory)
-{
-
-    int fh;
-    //PrecacheEntry load_buffer;
-
-    if (!Scr_LoadScript(scriptName))
-    {
-        if (mandatory)
-        {
-            Com_Error(ERR_DROP, "Could not find script '%s'", scriptName);
-        }
-        else
-        {
-            Com_DPrintf(CON_CHANNEL_SCRIPT,"Notice: Could not find script '%s' - this part will be disabled\n", scriptName);
-        }
-        return 0;
-    }
-
-    fh = Scr_GetFunctionHandle(scriptName, labelName);
-
-    if (!fh)
-    {
-        if (mandatory)
-        {
-            Com_Error(ERR_DROP, "Could not find label '%s' in script '%s'", labelName, scriptName);
-        }
-        else
-        {
-            Com_DPrintf(CON_CHANNEL_SCRIPT,"Notice: Could not find label '%s' in script '%s' - this part will be disabled\n", labelName, scriptName);
-        }
-        return 0;
-    }
-
-    return fh;
-}
-
 /**************** Mandatory *************************/
 
 int script_CallBacks_new[8];
@@ -732,6 +695,37 @@ extern "C"
         va_end(argptr);
 
         Com_Error(ERR_SCRIPT, "%s", com_errorMessage);
+    }
+
+
+    int GScr_LoadScriptAndLabel(const char* scriptName, const char* labelName, qboolean mandatory)
+    {
+        int fh;
+        //PrecacheEntry load_buffer;
+
+        if (!Scr_LoadScript(scriptName))
+        {
+            if (mandatory)
+                Com_Error(ERR_DROP, "Could not find script '%s'", scriptName);
+            else
+                Com_DPrintf(CON_CHANNEL_SCRIPT, "Notice: Could not find script '%s' - this part will be disabled\n", scriptName);
+
+            return 0;
+        }
+
+        fh = Scr_GetFunctionHandle(scriptName, labelName);
+
+        if (!fh)
+        {
+            if (mandatory)
+                Com_Error(ERR_DROP, "Could not find label '%s' in script '%s'", labelName, scriptName);
+            else
+                Com_DPrintf(CON_CHANNEL_SCRIPT, "Notice: Could not find label '%s' in script '%s' - this part will be disabled\n", labelName, scriptName);
+            
+            return 0;
+        }
+
+        return fh;
     }
 }
 

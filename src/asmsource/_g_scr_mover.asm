@@ -36,7 +36,6 @@
 	global ScriptEnt_MoveAxis
 	global Reached_ScriptMover
 	global ScriptEntCmd_MoveTo
-	global ScriptEnt_GetMethod
 	global SP_script_brushmodel
 	global ScriptEntCmd_Vibrate
 	global ScriptEnt_RotateAxis

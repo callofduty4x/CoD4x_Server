@@ -2083,23 +2083,6 @@ void GScr_NewHudElem()
     Scr_Error("GScr_NewHudElem: Exceeded limit of Hudelems");
 }
 
-void GScr_NewClientHudElem()
-{
-    gentity_t *ent = Scr_GetEntity(0);
-
-    if (ent->client == NULL)
-    {
-        Scr_ParamError(0, "GScr_NewClientHudElem: Entity is not a client");
-    }
-    game_hudelem_t *element = HudElem_Alloc(ent->s.number, 0);
-    if(element)
-    {
-        Scr_AddHudElem(element);
-        return;
-    }
-    Scr_Error("GScr_NewClientHudElem: Exceeded limit of Hudelems");
-}
-
 
 void GScr_MakeCvarServerInfo(void)
 {
@@ -3322,4 +3305,20 @@ void GScr_ToUpper()
 	buffer[ i ] = '\0';
 	
 	Scr_AddString( buffer );
+}
+
+extern "C"
+{
+    void GScr_NewClientHudElem()
+    {
+        gentity_t* ent = Scr_GetEntity(0);
+        if (ent->client == NULL)
+            Scr_ParamError(0, "GScr_NewClientHudElem: Entity is not a client");
+        
+        game_hudelem_t* element = HudElem_Alloc(ent->s.number, 0);
+        if (element)
+            return Scr_AddHudElem(element);
+        
+        Scr_Error("GScr_NewClientHudElem: Exceeded limit of Hudelems");
+    }
 }

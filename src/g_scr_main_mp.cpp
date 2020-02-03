@@ -13,6 +13,7 @@
 #include "sv_world.hpp"
 #include "server.hpp"
 #include "bg_weapons.hpp"
+#include "g_combat_mp.hpp"
 
 
 void __cdecl Scr_LocalizationError(int iParm, const char *pszErrorMessage)

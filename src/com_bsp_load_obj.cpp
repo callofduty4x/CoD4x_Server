@@ -6,36 +6,6 @@
 
 unsigned int lumpsForVersion[] = { 41u, 41u, 42u, 43u, 43u, 43u, 43u, 44u, 44u, 44u, 46u, 46u, 47u };
 
-struct BspChunk
-{
-  enum LumpType type;
-  unsigned int length;
-};
-
-
-
-typedef struct BspHeader
-{
-  unsigned int ident; // "IBSP"
-  unsigned int version;
-  unsigned int chunkCount;
-  struct BspChunk chunks[100];
-} BspHeader;
-
-
-typedef struct comBspGlob_t
-{
-  char name[64];
-  BspHeader *header;
-  unsigned int fileSize;
-  unsigned int checksum;
-  enum LumpType loadedLumpType;
-  const void *loadedLumpData;
-}comBspGlob_t;
-
-
-comBspGlob_t comBspGlob;
-
 bool __cdecl Com_IsBspLoaded()
 {
   return comBspGlob.header != 0;
@@ -192,3 +162,7 @@ bool __cdecl Com_BspHasLump(enum LumpType type)
   return count != 0;
 }
 
+extern "C"
+{
+    comBspGlob_t comBspGlob;
+}

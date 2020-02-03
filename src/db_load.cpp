@@ -153,49 +153,6 @@ typedef struct
   int ff_dir;
 }XZone;
 
-XZone g_zones[33];
-uint8_t g_zoneHandles[ARRAY_COUNT(g_zones)];
-union XAssetEntryPoolEntry g_assetEntryPool[32768];
-uint16_t db_hashTable[32768];
-
-XAnimParts g_XAnimPartsPool[4096];
-
-/*
-float* varfloat;
-int16_t* varshort;
-byte* varbyte;
-XModel* varXModel;
-*/
-
-void *DB_XAssetPool[ASSET_TYPE_COUNT];
-
-// Safest way is to define size of variables according to ASM code...
-// Of course types can be safely (almost) changed according to cod4a code...
-XAsset* varXAsset;
-XAssetList* varXAssetList;
-char varBrushWrapper[0x10];
-void* varByteVec;
-char varCollisionAabbTree[0x8];
-void* varCollisionBorder;
-void* varCollisionPartition;
-void* varComPrimaryLight;
-void* varComWorld;
-void* varComWorldPtr;
-const char* varConstChar;
-void* varDObjAnimMat;
-char varDWORD[0x10];
-void* varDynEntityClient;
-void* varDynEntityColl;
-char varDynEntityDef[0xC];
-void* varDynEntityPose;
-void* varFont;
-void* varFontHandle;
-void* varFxEffectDef;
-
-void* varFxEffectDefRef;
-void* varFxElemDef;
-void* varFxElemMarkVisuals;
-void* varFxElemVisuals;
 void* varFxImpactEntry;
 void* varFxImpactTable;
 void* varFxImpactTablePtr;
@@ -415,7 +372,50 @@ char varbyte[0x1c];
 WeaponDef* varWeaponDef;
 
 
-extern "C"{
+extern "C"
+{
+    XAnimParts g_XAnimPartsPool[4096];
+    XZone g_zones[33];
+    uint8_t g_zoneHandles[ARRAY_COUNT(g_zones)];
+    union XAssetEntryPoolEntry g_assetEntryPool[32768];
+    uint16_t db_hashTable[32768];
+
+    /*
+    float* varfloat;
+    int16_t* varshort;
+    byte* varbyte;
+    XModel* varXModel;
+    */
+
+    void* DB_XAssetPool[ASSET_TYPE_COUNT];
+
+    // Safest way is to define size of variables according to ASM code...
+    // Of course types can be safely (almost) changed according to cod4a code...
+    XAsset* varXAsset;
+    XAssetList* varXAssetList;
+    char varBrushWrapper[0x10];
+    void* varByteVec;
+    char varCollisionAabbTree[0x8];
+    void* varCollisionBorder;
+    void* varCollisionPartition;
+    void* varComPrimaryLight;
+    void* varComWorld;
+    void* varComWorldPtr;
+    const char* varConstChar;
+    void* varDObjAnimMat;
+    char varDWORD[0x10];
+    void* varDynEntityClient;
+    void* varDynEntityColl;
+    char varDynEntityDef[0xC];
+    void* varDynEntityPose;
+    void* varFont;
+    void* varFontHandle;
+    void* varFxEffectDef;
+    void* varFxEffectDefRef;
+    void* varFxElemDef;
+    void* varFxElemMarkVisuals;
+    void* varFxElemVisuals;
+
   void DB_SaveSounds();
   void DB_SaveDObjs();
   void DB_SyncExternalAssets();

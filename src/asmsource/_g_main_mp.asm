@@ -163,7 +163,7 @@ extern g_compassShowEnemies
 	extern Z_VirtualFreeInternal
 	extern G_FreeEntity
 	extern FS_FCloseFile
-	extern _ZN9EntHandle8ShutdownEv
+	extern EntHandle_Shutdown
 	extern Mantle_ShutdownAnims
 	extern GScr_FreeScripts
 	extern Scr_FreeScripts
@@ -1404,7 +1404,7 @@ G_ShutdownGame_100:
 	pop esi
 	pop edi
 	pop ebp
-	jmp _ZN9EntHandle8ShutdownEv
+	jmp EntHandle_Shutdown
 G_ShutdownGame_50:
 	mov dword [esp], g_entities+0x9cb18
 	call G_FreeEntity
@@ -1418,7 +1418,7 @@ G_ShutdownGame_110:
 	pop esi
 	pop edi
 	pop ebp
-	jmp _ZN9EntHandle8ShutdownEv
+	jmp EntHandle_Shutdown
 G_ShutdownGame_90:
 	call Mantle_ShutdownAnims
 	call GScr_FreeScripts

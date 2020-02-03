@@ -62,11 +62,11 @@ void __cdecl Win_ShutdownLocalization()
   localization.strings = 0;
 }
 
-char *__cdecl Win_GetLanguage()
-{
-  assert(localization.language);
-  return localization.language;
-}
+//char *__cdecl Win_GetLanguage()
+//{
+//  assert(localization.language);
+//  return localization.language;
+//}
 
 char *__cdecl Win_CopyLocalizationString(const char *string)
 {

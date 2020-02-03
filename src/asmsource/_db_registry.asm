@@ -7,7 +7,6 @@
 	extern Material_DirtySort
 	extern DB_GetXAssetHeaderName
 	extern Com_Printf
-	extern Win_GetLanguage
 	extern Sys_DefaultInstallPath
 	extern Com_sprintf
 	extern fs_gameDirVar
@@ -18,8 +17,6 @@
 	extern Com_ErrorAbort
 	extern Sys_DatabaseCompleted
 	extern Sys_WaitStartDatabase
-	extern _ZN10MacDisplay16GetSharedContextEv
-	extern _ZN10MacDisplay17SetCurrentContextEP16OpaqueContextRef
 	extern _CreateFileA
 	extern Com_PrintWarning
 	extern Q_stricmp
@@ -30,7 +27,6 @@
 	extern DB_LoadXFile
 	extern DB_LoadXFileInternal
 	extern PMem_EndAlloc
-	extern Sys_Sleep
 	extern Sys_Milliseconds
 	extern _CloseHandle
 	extern Com_Error

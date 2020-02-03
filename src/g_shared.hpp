@@ -633,5 +633,4 @@ void __cdecl use_trigger_use(struct gentity_s *, struct gentity_s *, struct gent
 
 //This defines Cvars directly related to executable file
 
-extern uint16_t *modNames[16];
 #endif /*G_SHARED_H*/

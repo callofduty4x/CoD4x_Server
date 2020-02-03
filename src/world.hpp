@@ -16,6 +16,8 @@ struct ComWorld
   char _padding[112];
 };
 
-
-extern ComWorld comWorld;
-extern GameWorldMp gameWorldMp;
+extern "C"
+{
+    extern ComWorld comWorld;
+    extern GameWorldMp gameWorldMp;
+}

@@ -12,7 +12,7 @@
 	extern sprintf
 	extern Cmd_AddCommand
 	extern FS_Printf
-	extern _Z13Con_FilterAddb
+	extern Con_FilterAdd
 
 
 
@@ -194,7 +194,7 @@ Con_FilterRemove_f:
 	mov ebp, esp
 	xor eax, eax
 	pop ebp
-	jmp _Z13Con_FilterAddb
+	jmp Con_FilterAdd
 	nop
 
 
@@ -204,7 +204,7 @@ Con_FilterAdd_f:
 	mov ebp, esp
 	mov eax, 0x1
 	pop ebp
-	jmp _Z13Con_FilterAddb
+	jmp Con_FilterAdd
 
 
 ;Con_InitChannelsForDestFromList(print_msg_dest_t, char const*)
