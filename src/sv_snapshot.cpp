@@ -38,6 +38,7 @@
 #include "cm_public.hpp"
 #include "g_shared.hpp"
 #include "bg_misc.hpp"
+#include "sv_main.hpp"
 
 using namespace std;
 

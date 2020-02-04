@@ -147,6 +147,8 @@ extern "C"
     extern cvar_t* loc_warnings;
     extern cvar_t* loc_warningsAsErrors;
 
+    int __cdecl FS_FOpenTextFileWrite(const char* filename);
+
 void FS_CopyFile(char* FromOSPath,char* ToOSPath);
 int FS_Read(void* data, int length, fileHandle_t);
 long FS_FOpenFileRead(const char* filename, fileHandle_t* returnhandle);

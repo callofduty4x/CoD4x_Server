@@ -86,7 +86,6 @@ void GScr_RemoveAllBots();
 void GScr_RemoveBot();
 void GScr_KickClient();
 void GScr_BanClient();
-void GScr_NewHudElem();
 void GScr_Spawn();
 void GScr_SpawnVehicle();
 void GScr_SpawnHelicopter();
@@ -106,7 +105,8 @@ void GScr_ArrayTest();
 extern "C"
 {
     qboolean __cdecl GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
-    void GScr_NewClientHudElem();
+    void __cdecl GScr_NewHudElem();
+    void __cdecl GScr_NewClientHudElem();
 }
 
 void PrintModelBonesInfo(gentity_t *ent);
@@ -120,7 +120,6 @@ void GScr_GetDvarInt();
 void GScr_GetDvarFloat();
 void GScr_SetDvar();
 void Scr_PrecacheString();
-void GScr_NewHudElem();
 void GScr_AddTestClient();
 void GScr_MakeDvarServerInfo();
 void GScr_OpenFile();
@@ -146,3 +145,4 @@ void GScr_CloneBrushModelToScriptModel(scr_entref_t brushModelEnt);
 void PlayerCmd_SetStance(scr_entref_t playerEntNum);
 void EntityCmd_GetHandlerType(scr_entref_t entref);
 void ScrCmd_LogString(scr_entref_t entref);
+

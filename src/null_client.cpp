@@ -20,13 +20,12 @@
 
 
 struct GfxWorld s_world;
-byte cgMedia[0x27C0]; 
-
 
 extern "C"
 {
     cvar_s* r_reflectionProbeGenerate;
     cvar_s* r_modelVertColor;
+    byte cgMedia[0x27C0];
 
 void R_RegisterDvars()
 {

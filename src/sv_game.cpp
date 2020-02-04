@@ -36,6 +36,7 @@
 #include "sys_main.hpp"
 #include "sys_thread.hpp"
 #include "cl_dedicated.hpp"
+#include "sv_main.hpp"
 
 botlib_export_t *botlib_export;
 

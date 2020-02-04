@@ -12,9 +12,7 @@
 	extern R_FreeStaticVertexBuffer
 	extern R_UnlockIndexBuffer
 	extern R_FreeStaticIndexBuffer
-	extern PMem_Alloc
 	extern R_AllocStaticIndexBuffer
-	extern PMem_GetOverAllocatedSize
 	extern Com_Error
 	extern R_AllocStaticVertexBuffer
 	extern R_FinishStaticVertexBuffer

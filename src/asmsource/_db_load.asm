@@ -70,7 +70,6 @@
 	extern Load_PicmipWater
 	extern Load_MaterialTechniqueSetAsset
 	extern Load_CreateMaterialVertexShader
-	extern Load_WeaponDefSounds
 	extern Load_WeaponDef
 	extern Load_XModelBoneNames
 	extern Load_MaterialHandle
@@ -243,7 +242,6 @@
 	extern varXQuat2
 	extern varXRigidVertList
 	extern varXString
-	extern varXStringPtr
 	extern varXSurface
 	extern varXSurfaceCollisionLeaf
 	extern varXSurfaceCollisionNode

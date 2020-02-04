@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
+
+cmake_policy(SET CMP0091 NEW) # Make use of CMAKE_MSVC_RUNTIME_LIBRARY
+
 project(cod4x_server)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -12,6 +15,8 @@ set(CMAKE_ASM_NASM_COMPILE_OBJECT "<CMAKE_ASM_NASM_COMPILER> <INCLUDES> \
 set(CMAKE_ASM_NASM_FLAGS "${CMAKE_ASM_NASM_FLAGS} --prefix _")
 
 set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 # Adding dependencies...
 # ... mbedtls

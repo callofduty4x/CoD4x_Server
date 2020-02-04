@@ -63,6 +63,7 @@
 #endif /* ifdef _WIN32 */
 
 #endif /* ifdef _LAGDEBUG */
+#include "sv_main.hpp"
 
 
 static void SV_CloseDownload( client_t *cl );

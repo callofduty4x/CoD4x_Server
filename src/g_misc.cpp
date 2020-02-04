@@ -4,9 +4,9 @@
 #include "g_main_mp.hpp"
 
 
-turretInfo_s turretInfo[MAX_TURRETS];
-
-extern "C"{
+extern "C"
+{
+    turretInfo_s turretInfo[MAX_TURRETS];
 
 void G_InitTurrets()
 {

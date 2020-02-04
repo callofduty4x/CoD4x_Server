@@ -2,6 +2,7 @@
 #include "qshared.hpp"
 #include "qcommon_mem.hpp"
 #include "server.hpp"
+#include "sv_main.hpp"
 
 extern "C"
 {

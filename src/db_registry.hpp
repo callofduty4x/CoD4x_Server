@@ -28,22 +28,23 @@ enum DBCloneMethod
 };
 
 extern bool g_archiveBuf;
-extern int g_defaultAssetCount;
-extern XAssetEntryPoolEntry* g_freeAssetEntryHead;
-extern unsigned int g_zoneAllocType;
-extern int g_sync;
-extern bool g_zoneInited;
-extern XAssetEntry* g_copyInfo[2048];
-extern unsigned int g_copyInfoCount;
-extern void(__cdecl* DB_DynamicCloneXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader, XAssetHeader, DBCloneMethod);
-extern const char* g_defaultAssetName[ASSET_TYPE_COUNT];
-extern void(__cdecl* DB_RemoveXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader Header_);
-extern void(__cdecl* DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*, XAssetHeader);
 extern void(__cdecl* DB_InitPoolHeaderHandler[ASSET_TYPE_COUNT])(void*, int);
-extern void* (__cdecl* DB_AllocXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*);
 
 extern "C"
 {
+    extern int g_defaultAssetCount;
+    extern XAssetEntryPoolEntry* g_freeAssetEntryHead;
+    extern unsigned int g_zoneAllocType;
+    extern int g_sync;
+    extern bool g_zoneInited;
+    extern XAssetEntry* g_copyInfo[2048];
+    extern unsigned int g_copyInfoCount;
+    extern void(__cdecl* DB_DynamicCloneXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader, XAssetHeader, DBCloneMethod);
+    extern const char* g_defaultAssetName[ASSET_TYPE_COUNT];
+    extern void(__cdecl* DB_RemoveXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader Header_);
+    extern void(__cdecl* DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*, XAssetHeader);
+    extern void* (__cdecl* DB_AllocXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*);
+
     void __cdecl DB_DynamicCloneMenu(XAssetHeader From_, XAssetHeader To_, DBCloneMethod CloneType_);
     void __cdecl DB_DynamicCloneWeaponDef(XAssetHeader From_, XAssetHeader To_, DBCloneMethod CloneType_);
 

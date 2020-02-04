@@ -1,10 +1,6 @@
 ﻿#include "bg_perks_mp.hpp"
 #include "qshared.hpp"
 
-cvar_t* perk_bulletPenetrationMultiplier;
-cvar_t* perk_grenadeDeath;
-cvar_t* perk_parabolicRadius;
-cvar_t* perk_parabolicAngle;
 cvar_t* perk_parabolicIcon;
 
 
@@ -38,6 +34,10 @@ extern "C"
     cvar_t* perk_extraBreath;
     cvar_t* perk_weapReloadMultiplier;
     cvar_t* perk_weapRateMultiplier;
+    cvar_t* perk_bulletPenetrationMultiplier;
+    cvar_t* perk_grenadeDeath;
+    cvar_t* perk_parabolicRadius;
+    cvar_t* perk_parabolicAngle;
 
     void Perks_RegisterDvars()
     {

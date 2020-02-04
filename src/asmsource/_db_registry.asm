@@ -92,7 +92,6 @@
 	extern loc_warningsAsErrors
 	extern Sys_EnterCriticalSection
 	extern FS_FOpenTextFileWrite
-	extern com_missingAssetOpenFailed
 	extern Sys_LeaveCriticalSection
 	extern FS_FOpenFileAppend
 	extern FS_Write
@@ -111,24 +110,15 @@
 	extern DB_FileSize
 	extern cm
 	extern comWorld
-	extern s_world
 	extern g_zones
 	extern g_assetEntryPool
 	extern g_zoneHandles
-	extern g_zoneNameList
 	extern db_hashTable
 	extern DB_RemoveLoadedSound
 	extern DB_BuildOSPath
 	extern DB_BuildZoneFilePath
 	extern Sys_SleepSec
-	extern g_loadingZone
-	extern g_zoneInfoCount
-	extern g_zoneInfo
 	extern g_zoneIndex
-	extern g_zoneCount
-	extern g_initializing
-	extern g_mayRecoverLostAssets
-	extern g_isRecoveringLostDevice
 	extern DB_XAssetPool
 	extern g_poolSize
 	extern DB_LoadXAssets

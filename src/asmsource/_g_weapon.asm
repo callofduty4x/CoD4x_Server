@@ -45,7 +45,6 @@
 	extern BG_GetFirstAvailableOffhand
 	extern G_FireGrenade
 	extern memset
-	extern SV_GetClientPositionAtTime
 	extern tan
 	extern G_random
 	extern cosf

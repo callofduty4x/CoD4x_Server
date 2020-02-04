@@ -15,4 +15,17 @@ extern "C"
     {
         return std::asinf(x);
     }
+
+
+    void* __cdecl std_new(unsigned int Size_)
+    {
+        return operator new(Size_);
+    }
+
+
+    void __cdecl std_delete(void* Address_)
+    {
+        operator delete(Address_);
+    }
 }
+

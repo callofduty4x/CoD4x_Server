@@ -2071,19 +2071,6 @@ void GScr_BanClient()
 }
 
 
-
-void GScr_NewHudElem()
-{
-    game_hudelem_t *element = HudElem_Alloc(1023, 0);
-    if(element)
-    {
-        Scr_AddHudElem(element);
-        return;
-    }
-    Scr_Error("GScr_NewHudElem: Exceeded limit of Hudelems");
-}
-
-
 void GScr_MakeCvarServerInfo(void)
 {
     const char *var_name;
@@ -3309,7 +3296,19 @@ void GScr_ToUpper()
 
 extern "C"
 {
-    void GScr_NewClientHudElem()
+    void __cdecl GScr_NewHudElem()
+    {
+        game_hudelem_t* element = HudElem_Alloc(1023, 0);
+        if (element)
+        {
+            Scr_AddHudElem(element);
+            return;
+        }
+        Scr_Error("GScr_NewHudElem: Exceeded limit of Hudelems");
+    }
+
+
+    void __cdecl GScr_NewClientHudElem()
     {
         gentity_t* ent = Scr_GetEntity(0);
         if (ent->client == NULL)

@@ -115,7 +115,6 @@ cvar_t	*sv_uptime;
 cvar_t* sv_g_gametype;
 cvar_t* sv_mapname;
 cvar_t* sv_maxclients;
-cvar_t* sv_clientSideBullets;
 cvar_t* sv_maxRate;
 cvar_t* sv_floodProtect;
 cvar_t* sv_showcommands;
@@ -142,10 +141,9 @@ cvar_t* sv_steamgroup;
 cvar_t* sv_authtoken;
 cvar_t* sv_disableChat;
 
-serverStatic_t		svs;
-server_t		sv;
-svsHeader_t		svsHeader;
-permServerStatic_t	psvs;	// persistant even if server does shutdown
+serverStatic_t svs;
+svsHeader_t svsHeader;
+permServerStatic_t psvs; // persistant even if server does shutdown
 
 qboolean svsHeaderValid;
 
@@ -5398,4 +5396,10 @@ void SV_HostMigrationReadPacket(netadr_t* from, msg_t* msg)
     }
 
     SV_HostMigrationParsePacket(&svs.migrationMsg);
+}
+
+extern "C"
+{
+    server_t sv;
+    cvar_s* sv_clientSideBullets;
 }

@@ -54,7 +54,6 @@
 	extern bg_prone_yawcap
 	extern AngleNormalize360
 	extern Info_Validate
-	extern SV_IsLocalClient
 	extern atoi
 	extern Q_strncpyz
 	extern g_compassShowEnemies

@@ -34,6 +34,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include "sv_main.hpp"
 
 #define FS_DEMOWRITEBUF_SIZE NETCHAN_UNSENTBUFFER_SIZE
 

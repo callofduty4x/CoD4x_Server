@@ -214,10 +214,6 @@ struct XAssetList
 };
 
 
-extern struct XAssetList* varXAssetList;
-extern struct XAsset* varXAsset;
-extern int g_poolSize[ASSET_TYPE_COUNT];
-
 /*
 ------------------------------------------------------------------------
 Just structures here I am too lazy to create headerfiles for now

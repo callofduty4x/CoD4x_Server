@@ -29,6 +29,7 @@
 #include "sv_world.hpp"
 #include "g_main_mp.hpp"
 #include "g_team.hpp"
+#include "sv_main.hpp"
 
 using namespace std;
 

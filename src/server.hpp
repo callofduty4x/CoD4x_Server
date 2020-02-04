@@ -496,7 +496,6 @@ typedef struct{//13F18F80
 }svsHeader_t;
 
 
-extern server_t sv;
 extern serverStatic_t svs;
 extern svsHeader_t svsHeader;
 
@@ -560,8 +559,6 @@ struct cm_world_t
   struct worldSector_s sectors[1024];
   char _padding[100];
 };
-
-extern cm_world_t cm_world;
 
 
 typedef struct
@@ -633,6 +630,7 @@ extern cvar_t* sv_voice;
 
 extern "C"
 {
+    extern cm_world_t cm_world;
 
 gentity_t *SV_GentityNum( int num );
 int SV_NumForGentity( gentity_t *ent );

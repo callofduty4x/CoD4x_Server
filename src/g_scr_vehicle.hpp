@@ -228,11 +228,11 @@ struct scr_vehicle_s
   float forcedMaterialSpeed;
 };
 
-extern struct vehicle_info_t s_vehicleInfos[32];
-extern float vehicle_frametime;
-
 extern "C"
 {
+    extern vehicle_info_t s_vehicleInfos[32];
+    extern float vehicle_frametime;
+
     void CMD_VEH_SetSpeed(scr_entref_t entref);
     void CMD_VEH_GetSpeed(scr_entref_t entref);
     void CMD_VEH_GetSpeedMPH(scr_entref_t entref);

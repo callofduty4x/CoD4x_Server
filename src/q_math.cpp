@@ -6,16 +6,12 @@
 
 vec4_t colorBlack = {0, 0, 0, 1};
 
-vec4_t colorRed = {1, 0, 0, 1};
 vec4_t colorMdRed = { 0.5, 0.0, 0.0, 1.0 };
 vec4_t colorDkRed = { 0.25, 0.0, 0.0, 1.0 };
 
-vec4_t colorGreen = {0, 1, 0, 1};
-vec4_t colorLtGreen = { 0, 0.75, 0, 1 };
 vec4_t colorMdGreen = { 0, 0.5, 0, 1 };
 vec4_t colorDkGreen = { 0, 0.25, 0, 1 };
 
-vec4_t colorBlue = {0, 0, 1, 1};
 vec4_t colorLtBlue = {0.5, 0.5, 1.0, 1};
 vec4_t colorMdBlue = {0, 0, 0.5, 1};
 
@@ -25,18 +21,13 @@ vec4_t colorLtYellow = {0.75, 0.75, 0, 1};
 
 vec4_t colorMagenta = {1, 0, 1, 1};
 
-vec4_t colorCyan = {0, 1, 1, 1};
 vec4_t colorLtCyan = {0, 0.75, 0.75, 1};
 vec4_t colorMdCyan = {0, 0.5, 0.5, 1};
 vec4_t colorDkCyan = {0, 0.25, 0.25, 1};
 
-vec4_t colorWhite = {1, 1, 1, 1};
-
-vec4_t colorLtGrey = {0.75, 0.75, 0.75, 1};
 vec4_t colorMdGrey = {0.5, 0.5, 0.5, 1};
 vec4_t colorDkGrey = {0.25, 0.25, 0.25, 1};
 
-vec4_t colorOrange = {1.0, 0.7, 0.0, 1};
 vec4_t colorLtOrange = {0.75, 0.525, 0.0, 1};
 
 vec4_t colorGreenFaded = {0, 1, 0, 0.75};
@@ -989,6 +980,14 @@ extern "C"
     vec4_t colorYellow = { 1, 1, 0, 1 };
     vec4_t colorWhiteFaded = { 1.0, 1.0, 1.0, 0.75 };
     vec4_t colorRedFaded = { 0.75, 0.25, 0, 0.75 };
+    vec4_t colorOrange = { 1.0, 0.7, 0.0, 1 };
+    vec4_t colorLtGrey = { 0.75, 0.75, 0.75, 1 };
+    vec4_t colorWhite = { 1, 1, 1, 1 };
+    vec4_t colorCyan = { 0, 1, 1, 1 };
+    vec4_t colorBlue = { 0, 0, 1, 1 };
+    vec4_t colorGreen = { 0, 1, 0, 1 };
+    vec4_t colorLtGreen = { 0, 0.75, 0, 1 };
+    vec4_t colorRed = { 1, 0, 0, 1 };
 
     void __cdecl AnglesToQuat(const float *angles, float *quat)
     {

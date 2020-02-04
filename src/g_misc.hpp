@@ -24,4 +24,8 @@ struct turretInfo_s
     char stopSndPlayer;
 };
 
-extern turretInfo_s turretInfo[MAX_TURRETS];
+
+extern "C"
+{
+    extern turretInfo_s turretInfo[MAX_TURRETS];
+}

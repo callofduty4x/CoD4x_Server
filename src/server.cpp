@@ -1,3 +1,6 @@
 #include "server.hpp"
 
-cm_world_t cm_world;
+extern "C"
+{
+    cm_world_t cm_world;
+}

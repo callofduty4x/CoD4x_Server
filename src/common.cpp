@@ -93,7 +93,6 @@ qboolean com_securemode;
 char com_errorMessage[MAXPRINTMSG];
 qboolean com_errorEntered;
 qboolean com_fullyInitialized = qfalse;
-qboolean com_missingAssetOpenFailed;
 
 static int watchdog_timer;
 void Com_WriteConfig_f( void );

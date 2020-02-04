@@ -85,12 +85,6 @@ void R_Init(){
 		
 }
 
-
-extern int g_zoneCount;
-extern int g_poolSize[];
-
-
-
 qboolean DB_FileExists(const char* filename, int FF_DIR)
 {
 	char ospath[MAX_OSPATH];

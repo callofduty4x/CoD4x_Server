@@ -21,7 +21,6 @@
 	extern Scr_PlayerDamage
 	extern BG_GetViewmodelWeaponIndex
 	extern CM_AreaEntities
-	extern CM_AreaEntities_ASM
 	extern LogAccuracyHit
 	extern AngleVectors
 	extern Com_PrintWarning

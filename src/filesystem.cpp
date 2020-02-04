@@ -4384,40 +4384,6 @@ int __cdecl FS_GetFileOsPath(const char *filename, char *ospath)
 }
 
 
-int __cdecl FS_FOpenTextFileWrite(const char *filename)
-{
-    if(!FS_Initialized())
-        Com_Error(ERR_FATAL, "Filesystem call made without initialization");
-
-    char ospath[MAX_OSPATH] = {'\0'};
-    FS_BuildOSPathForThread(fs_homepath->string, fs_gamedir, filename, ospath, 0);
-    if ( fs_debug->integer )
-        Com_Printf(CON_CHANNEL_FILES, "FS_FOpenTextFileWrite: %s\n", ospath);
-
-    if ( FS_CreatePath(ospath) )
-        return 0;
-
-    FILE* f = FS_FileOpenWriteText(ospath);
-    if ( f )
-    {
-        //h = FS_HandleForFileForCurrentThread();
-        fileHandle_t h = FS_HandleForFile();
-        fsh[h].zipFile = qfalse;
-        fsh[h].handleFiles.file.o = f;
-        Q_strncpyz(fsh[h].name, filename, sizeof(fsh[0].name));
-        fsh[h].handleSync = qfalse;
-        if ( !fsh[h].handleFiles.file.o )
-        {
-            FS_FCloseFile(h);
-            h = 0;
-        }
-
-        return h;
-    }
-
-    return 0;
-}
-
 FILE *__cdecl FS_FileOpenReadText(const char *filename)
 {
   FILE *file; // ST0C_4@1
@@ -4743,6 +4709,42 @@ extern "C"
     cvar_t* fs_usedevdir;
     cvar_t* loc_warnings;
     cvar_t* loc_warningsAsErrors;
+
+
+    int __cdecl FS_FOpenTextFileWrite(const char* filename)
+    {
+        if (!FS_Initialized())
+            Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+
+        char ospath[MAX_OSPATH] = { '\0' };
+        FS_BuildOSPathForThread(fs_homepath->string, fs_gamedir, filename, ospath, 0);
+        if (fs_debug->integer)
+            Com_Printf(CON_CHANNEL_FILES, "FS_FOpenTextFileWrite: %s\n", ospath);
+
+        if (FS_CreatePath(ospath))
+            return 0;
+
+        FILE* f = FS_FileOpenWriteText(ospath);
+        if (f)
+        {
+            //h = FS_HandleForFileForCurrentThread();
+            fileHandle_t h = FS_HandleForFile();
+            fsh[h].zipFile = qfalse;
+            fsh[h].handleFiles.file.o = f;
+            Q_strncpyz(fsh[h].name, filename, sizeof(fsh[0].name));
+            fsh[h].handleSync = qfalse;
+            if (!fsh[h].handleFiles.file.o)
+            {
+                FS_FCloseFile(h);
+                h = 0;
+            }
+
+            return h;
+        }
+
+        return 0;
+    }
+
 
     int __cdecl FS_OpenFileOverwrite(const char *qpath)
     {

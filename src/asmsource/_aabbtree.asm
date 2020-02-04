@@ -5,9 +5,9 @@
 	extern floorf
 	extern ExpandBounds
 	extern Com_Error
-	extern _Znaj
+	extern std_new
 	extern memcpy
-	extern _ZdaPv
+	extern std_delete
 
 ;Exports of aabbtree:
 	global aabbTreeCount
@@ -1269,7 +1269,7 @@ BuildAabbTree_20:
 	mov eax, [esi+0x4]
 	imul eax, [esi+0x8]
 	mov [esp], eax
-	call _Znaj
+	call std_new
 	mov [ebp-0x43c], eax
 	mov eax, [esi+0x4]
 	imul eax, [esi+0x8]
@@ -1288,7 +1288,7 @@ BuildAabbTree_180:
 	jz BuildAabbTree_50
 	mov eax, [ebp-0x43c]
 	mov [esp], eax
-	call _ZdaPv
+	call std_delete
 BuildAabbTree_50:
 	mov ebx, [esi+0xc]
 	test ebx, ebx
@@ -1302,25 +1302,25 @@ BuildAabbTree_160:
 	jz BuildAabbTree_80
 	mov edx, [ebp-0x420]
 	mov [esp], edx
-	call _ZdaPv
+	call std_delete
 BuildAabbTree_80:
 	mov eax, [sortedMins]
 	test eax, eax
 	jz BuildAabbTree_90
 	mov [esp], eax
-	call _ZdaPv
+	call std_delete
 BuildAabbTree_90:
 	mov eax, [sortedMaxs]
 	test eax, eax
 	jz BuildAabbTree_100
 	mov [esp], eax
-	call _ZdaPv
+	call std_delete
 BuildAabbTree_100:
 	mov eax, [sortedCoplanar]
 	test eax, eax
 	jz BuildAabbTree_70
 	mov [esp], eax
-	call _ZdaPv
+	call std_delete
 BuildAabbTree_70:
 	mov eax, [aabbTreeCount]
 	add esp, 0x44c
@@ -1332,22 +1332,22 @@ BuildAabbTree_70:
 BuildAabbTree_10:
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znaj
+	call std_new
 	mov [ebp-0x420], eax
 	mov eax, [esi+0x4]
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znaj
+	call std_new
 	mov [sortedMins], eax
 	mov eax, [esi+0x4]
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znaj
+	call std_new
 	mov [sortedMaxs], eax
 	mov eax, [esi+0x4]
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znaj
+	call std_new
 	mov [sortedCoplanar], eax
 	jmp BuildAabbTree_110
 BuildAabbTree_60:
@@ -1355,7 +1355,7 @@ BuildAabbTree_60:
 	lea eax, [eax+eax*2]
 	shl eax, 0x2
 	mov [esp], eax
-	call _Znaj
+	call std_new
 	mov [ebp-0x41c], eax
 	mov eax, [esi+0x4]
 	lea eax, [eax+eax*2]
@@ -1428,7 +1428,7 @@ BuildAabbTree_140:
 	jz BuildAabbTree_160
 	mov edi, [ebp-0x41c]
 	mov [esp], edi
-	call _ZdaPv
+	call std_delete
 	jmp BuildAabbTree_160
 BuildAabbTree_40:
 	xor ebx, ebx

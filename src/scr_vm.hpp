@@ -844,13 +844,13 @@ void Scr_Shutdown();
 
 
 
-extern scrVmPub_t gScrVmPub;
 extern struct scrAnimPub_t scrAnimPub;
 
 extern "C"
 {
     extern char g_EndPos;
     extern scrVmGlob_t gScrVmGlob;
+    extern scrVmPub_t gScrVmPub;
 
     void Scr_ResetTimeout();
 }
