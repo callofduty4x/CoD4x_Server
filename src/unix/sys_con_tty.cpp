@@ -19,12 +19,13 @@
 ===========================================================================
 */
 
+#include "sys_con_tty.hpp"
 
-#include "../sys_main.h"
-#include "../q_shared.h"
-#include "../cmd_completion.h"
-#include "../qcommon_io.h"
-#include "../cvar.h"
+#include "../sys_main.hpp"
+#include "../qshared.hpp"
+#include "../cmd_completion.hpp"
+#include "../qcommon_io.hpp"
+#include "../cvar.hpp"
 
 
 #include <unistd.h>
@@ -291,7 +292,6 @@ Initialize the console input (tty mode if possible)
 void CON_Init( void )
 {
 	struct termios tc;
-	qboolean stdinIsATTY;
 	const char* term = getenv( "TERM" );
 
 	// If the process is backgrounded (running non interactively)
@@ -305,7 +305,7 @@ void CON_Init( void )
 	// Make stdin reads non-blocking
 	fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL, 0) | O_NONBLOCK );
 
-	stdinIsATTY = _isatty( STDIN_FILENO ) && !( term && ( !strcmp( term, "raw" ) || !strcmp( term, "dumb" ) ) );
+    bool stdinIsATTY = _isatty( STDIN_FILENO ) && !( term && ( !strcmp( term, "raw" ) || !strcmp( term, "dumb" ) ) );
 
 	if (!stdinIsATTY)
 	{

@@ -1,2 +1,13 @@
-PATH <- XXX/mingw-w64/mingw32/bin
-PATH <- <NASM root>
+Windows:
+
+MinGW-w64, PATH <- XXX/mingw-w64/mingw32/bin
+NASM, PATH <- <NASM root>
+
+Ubuntu:
+
+NASM
+dpkg --add-architecture i386
+build_essential:i386, g++:i386, gcc:i386, make:i386
+gcc-multilib
+g++-multilib
+

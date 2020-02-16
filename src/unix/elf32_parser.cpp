@@ -19,49 +19,46 @@
 ===========================================================================
 */
 
-
+#include "elf32_parser.hpp"
 
 #include <string.h>
 #include <elf.h>
 #include <stdlib.h>
-#include "../qcommon_io.h" // Com_Printf
-#include "../q_shared.h"   // qboolean
-#include "../objfile_parser.h"
+#include "../qcommon_io.hpp" // Com_Printf
+#include "../qshared.hpp"   // qboolean
+#include "../objfile_parser.hpp"
 
 #define MAX_SYM_STRINGS 128 * 1024
 
 char** ELF32_GetStrTable(void *buff, int imagelen, sharedlib_data_t *text)
 {
-    Elf32_Ehdr *hdr;
     Elf32_Shdr *shdr;
     char *strtable;
-    char **strings;
     qboolean textfound = qfalse;
     qboolean dynstrfound = qfalse;
     int i, j;//, nstrings = 0;
-    char *strptr, *endstrptr;
 
-    hdr = buff;
+    Elf32_Ehdr* hdr = reinterpret_cast<Elf32_Ehdr*>(buff);
     if(hdr->e_ident[0] != ELFMAG0 || hdr->e_ident[1] != ELFMAG1 || hdr->e_ident[2] != ELFMAG2 || hdr->e_ident[3] != ELFMAG3){
         return NULL;
     }
     if(hdr->e_type != ET_DYN){
         return NULL;
     }
-    if((shdr = (Elf32_Shdr *)(buff + hdr->e_shoff)) >= (Elf32_Shdr *)(buff + imagelen - sizeof(Elf32_Shdr))){
+    if((shdr = (Elf32_Shdr *)(size_t(buff) + hdr->e_shoff)) >= (Elf32_Shdr *)(size_t(buff) + imagelen - sizeof(Elf32_Shdr))){
         return NULL;
     }
     if(hdr->e_shstrndx!=SHN_UNDEF){
         if(hdr->e_shstrndx!=SHN_XINDEX){     // Typical case, standard elf addressing
             if(hdr->e_shstrndx<=hdr->e_shnum)
-                strtable = buff + shdr[hdr->e_shstrndx].sh_offset;
+                strtable = reinterpret_cast<char*>(size_t(buff) + shdr[hdr->e_shstrndx].sh_offset);
             else{
                 Com_Printf(CON_CHANNEL_SYSTEM,"Error: the string table index is too big! String table index: %d, section headers: %d.\n",hdr->e_shstrndx,hdr->e_shnum);
 				return NULL;
             }
         }else{        // So called 'elf extended addressing'. Because 'simple' is too mainstream.
             if(shdr[0].sh_link<=hdr->e_shnum)
-                strtable = buff + shdr[shdr[0].sh_link].sh_offset;
+                strtable = reinterpret_cast<char*>(size_t(buff) + shdr[shdr[0].sh_link].sh_offset);
             else{
                 Com_Printf(CON_CHANNEL_SYSTEM,"Error: the string table index is too big! String table index: %d, section headers: %d.\n",shdr[0].sh_link,hdr->e_shnum);
 				return NULL;
@@ -73,7 +70,7 @@ char** ELF32_GetStrTable(void *buff, int imagelen, sharedlib_data_t *text)
         return NULL;
     }
 
-    strings = malloc(sizeof(char**) * MAX_SYM_STRINGS);
+    char** strings = reinterpret_cast<char**>(malloc(sizeof(char**) * MAX_SYM_STRINGS));
     //Com_Printf(CON_CHANNEL_SYSTEM,"Debug2\n");
     for(j=0;j<hdr->e_shnum;++j){
         if(strcmp(&strtable[shdr[j].sh_name],".text")==0){
@@ -84,11 +81,12 @@ char** ELF32_GetStrTable(void *buff, int imagelen, sharedlib_data_t *text)
             if(dynstrfound)
                 break;
         }
-        else if(strcmp(&strtable[shdr[j].sh_name],".dynstr")==0){
+        else if(strcmp(&strtable[shdr[j].sh_name],".dynstr")==0)
+        {
             dynstrfound = qtrue;
             //nstrings = shdr[j].sh_size;
-			strptr = shdr[j].sh_offset + buff;
-			endstrptr = shdr[j].sh_offset + shdr[j].sh_size + buff;
+            char* strptr = reinterpret_cast<char*>(shdr[j].sh_offset + size_t(buff));
+            char* endstrptr = reinterpret_cast<char*>(shdr[j].sh_offset + shdr[j].sh_size + size_t(buff));
 
 			for(i = 0; strptr < endstrptr && i < MAX_SYM_STRINGS; i++)
 			{

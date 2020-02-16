@@ -20,17 +20,18 @@
 ===========================================================================
 */
 
+#include "sys_unix.hpp"
 
-#include "../q_shared.h"
-#include "../q_platform.h"
-#include "../qcommon_mem.h"
-#include "../qcommon_io.h"
-#include "../qcommon.h"
-#include "../sys_main.h"
-#include "../cmd.h"
-#include "../sys_cod4defs.h"
-#include "../sys_thread.h"
-#include "sys_unix.h"
+#include "../qshared.hpp"
+#include "../q_platform.hpp"
+#include "../qcommon_mem.hpp"
+#include "../qcommon_io.hpp"
+#include "../qcommon.hpp"
+#include "../sys_main.hpp"
+#include "../cmd.hpp"
+#include "../sys_cod4defs.hpp"
+#include "../sys_thread.hpp"
+#include "sys_unix.hpp"
 
 #include <sys/resource.h>
 #include <libgen.h>
@@ -161,7 +162,7 @@ void Sys_InitCrashDumps(){
 qboolean Sys_MemoryProtectWrite(void* startoffset, int len)
 {
 
-	if(mprotect(startoffset - ((int)startoffset % getpagesize()), len + (len % getpagesize()), PROT_READ | PROT_WRITE) != 0)
+    if(mprotect(startoffset - ((unsigned int)startoffset % getpagesize()), len + (len % getpagesize()), PROT_READ | PROT_WRITE) != 0)
 	{
             perror("Sys_MemoryProtectWrite: mprotect change memory to writable error");
             return qfalse;

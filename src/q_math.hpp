@@ -133,6 +133,7 @@ extern vec4_t colorBlackBlank;
 #endif
 
 //#include "util_heap.h"
+#include "q_platform.hpp"
 struct cplane_s;
 
 extern "C"

@@ -1,0 +1,7 @@
+set(LIBRARY_NAME unix)
+
+file(GLOB_RECURSE CPP_SRC *.c *.cpp)
+file(GLOB_RECURSE CPP_INC *.h *.hpp)
+
+add_library(${LIBRARY_NAME} STATIC ${CPP_SRC} ${CPP_INC})
+target_link_libraries(${LIBRARY_NAME} tomcrypt)

@@ -1,16 +1,16 @@
 /*
 ===========================================================================
-    Copyright (C) 2010-2013  Ninja and TheKelm
+    Copyright (C) 2010-2013  Ninja and TheKelm of the IceOps-Team
     Copyright (C) 1999-2005 Id Software, Inc.
 
-    This file is part of CoD4X18-Server source code.
+    This file is part of CoD4X17a-Server source code.
 
-    CoD4X18-Server source code is free software: you can redistribute it and/or modify
+    CoD4X17a-Server source code is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
     License, or (at your option) any later version.
 
-    CoD4X18-Server source code is distributed in the hope that it will be useful,
+    CoD4X17a-Server source code is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Affero General Public License for more details.
@@ -20,11 +20,12 @@
 ===========================================================================
 */
 
+#include "sys_bsd.hpp"
 
-#include "../q_shared.h"
-#include "../q_platform.h"
+#include "../qshared.hpp"
+#include "../q_platform.hpp"
 
-#ifndef __BSD__
+#ifdef __BSD__
 
 #include "../qcommon_mem.h"
 #include "../qcommon_io.h"
@@ -33,8 +34,8 @@
 #include "../cmd.h"
 #include "../sys_cod4defs.h"
 #include "../sec_crypto.h"
-#include "../sec_update.h"
-#include "../objfile_parser.h"
+#include "../sec_common.h"
+#include "sys_unix.h"
 
 #include <sys/resource.h>
 #include <libgen.h>
@@ -49,11 +50,10 @@
 #include <sys/stat.h>
 #include <pwd.h>
 #include <execinfo.h>
-#include <wait.h>
-#include <sched.h>
+#include <sys/wait.h>
+#include <sys/sysctl.h>
 #include <pthread.h>
-
-char** ELF32_GetStrTable(void* buff, int len, sharedlib_data_t *text);
+#include <pthread_np.h>
 
 static char homePath[MAX_OSPATH];
 
@@ -98,58 +98,42 @@ const char *Sys_TempPath( void )
 }
 
 
-void Sys_PrintBacktraceGDB()
+
+void Sys_PrintBacktrace( )
 {
-	int numFrames;
-	int i;
 	void** traces;
 	char** symbols;
-
-	printf("---------- Crash Backtrace ----------\n");
+	int numFrames;
+	int i;
+	Com_Printf(CON_CHANNEL_SYSTEM, "---------- Backtrace ----------\n");
 	traces = malloc(65536*sizeof(void*));
 	numFrames = backtrace(traces, 65536);
 	symbols = backtrace_symbols(traces, numFrames);
 	for(i = 0; i < numFrames; i++)
-	{
-		printf("%5d: %s\n", numFrames - i -1, symbols[i]);
-	}
+		Com_Printf(CON_CHANNEL_SYSTEM, "%5d: %s\n", numFrames - i -1, symbols[i]);
 	free(traces);
 }
 
-void Sys_PrintBacktrace()
-{
-	int numFrames;
-	int i;
-	void** traces;
-	char** symbols;
 
-	Com_Printf(CON_CHANNEL_SYSTEM,"---------- Backtrace ----------\n");
-	traces = malloc(65536*sizeof(void*));
-	numFrames = backtrace(traces, 65536);
-	symbols = backtrace_symbols(traces, numFrames);
-	for(i = 0; i < numFrames; i++)
-	{
-		Com_Printf(CON_CHANNEL_SYSTEM,"%5d: %s\n", numFrames - i -1, symbols[i]);
-	}
-	free(traces);
-}
 
 void Sys_DumpCrash(int signal,struct sigcontext *ctx)
 {
 	char hash[65];
 	long unsigned size = sizeof(hash);
 	
-	Com_Printf(CON_CHANNEL_SYSTEM,"This program has crashed with signal: %s\n", strsignal(signal));
-	Com_Printf(CON_CHANNEL_SYSTEM,"The current Gameversion is: %s %s %s type '%c' build %i %s\n", GAME_STRING,Q3_VERSION,PLATFORM_STRING, SEC_TYPE,Sys_GetBuild(), __DATE__); 
+	Com_Printf(CON_CHANNEL_SYSTEM, "This program has crashed with signal: %s\n", strsignal(signal));
+	Com_Printf(CON_CHANNEL_SYSTEM, "The current Gameversion is: %s %s %s build %i %s\n", GAME_STRING,Q3_VERSION,PLATFORM_STRING, BUILD_NUMBER, __DATE__); 
 	Sec_HashFile(SEC_HASH_SHA256, Sys_ExeFile(), hash, &size, qfalse);
 	//Q_strncpyz(hash, "File Hashing has not been implemented yet", sizeof(hash));
 	hash[64] = '\0';
-	Com_Printf(CON_CHANNEL_SYSTEM,"File is %s Hash is: %s\n", Sys_ExeFile(), hash);
-	Sys_PrintBacktrace();
-	Com_Printf(CON_CHANNEL_SYSTEM,"\n-- Registers ---\n");
-	Com_Printf(CON_CHANNEL_SYSTEM,"edi 0x%lx\nesi 0x%lx\nebp 0x%lx\nesp 0x%lx\neax 0x%lx\nebx 0x%lx\necx 0x%lx\nedx 0x%lx\neip 0x%lx\n",ctx->edi,ctx->esi,ctx->ebp,ctx->esp,ctx->eax,ctx->ebx,ctx->ecx,ctx->edx,ctx->eip);
-	Com_Printf(CON_CHANNEL_SYSTEM,"-------- Backtrace Completed --------\n");
+	Com_Printf(CON_CHANNEL_SYSTEM, "File is %s Hash is: %s\n", Sys_ExeFile(), hash);
+	Sys_PrintBacktrace( );
+	Com_Printf(CON_CHANNEL_SYSTEM, "\n-- Registers ---\n");
+	Com_Printf(CON_CHANNEL_SYSTEM, "edi 0x%lx\nesi 0x%lx\nebp 0x%lx\nesp 0x%lx\neax 0x%lx\nebx 0x%lx\necx 0x%lx\nedx 0x%lu\neip 0x%lx\n",ctx->sc_edi,ctx->sc_esi,ctx->sc_ebp,ctx->sc_esp,ctx->sc_eax,ctx->sc_ebx,ctx->sc_ecx,ctx->sc_edx,ctx->sc_eip);
+	Com_Printf(CON_CHANNEL_SYSTEM, "-------- Backtrace Completed --------\n");
 }
+
+
 
 /*
 =================
@@ -195,47 +179,46 @@ void Sys_PlatformInit( void )
 
 }
 
+
 void Sys_TermProcess( )
 {
     while(waitpid(-1, 0, WNOHANG) > 0);
 }
 
-char** GetStrTable(void* buff, int len, sharedlib_data_t *text)
+
+char** GetStrTable(void* buff, int len, void *text)
 {
-		return ELF32_GetStrTable(buff, len, text);
+		return NULL;
 }
+
 
 unsigned int Sys_GetProcessAffinityMask()
 {
-    unsigned int AffinityMask = 0;
-    cpu_set_t set;
-    int i;
+  unsigned int processAffinityMask;
+  unsigned int cpucount = 0;
+  unsigned int size = sizeof(cpucount);
 
-    sched_getaffinity(0, sizeof(set), &set);
-
-    for(i = 0; i < 32; ++i)
-    {
-        if(CPU_ISSET(i, &set))
-        {
-            AffinityMask |= (1 << i);
-        }
-    }
-
-    return AffinityMask;
+  if ( sysctlbyname("hw.ncpu", &cpucount, &size, 0, 0) || cpucount <= 1 )
+  {
+    processAffinityMask = 1;
+  }
+  else
+  {
+    processAffinityMask = 3;
+  }
+  return processAffinityMask;
 }
-
-
 
 void Sys_SetThreadName(threadid_t tid, const char* name)
 {
     pthread_t ti;
-    if(tid == -1)
+    if((int)tid == -1)
     {
         ti = pthread_self();
     }else{
         ti = tid;
     }
-    pthread_setname_np(ti, name);
+    pthread_set_name_np(ti, name);
 }
 
 
