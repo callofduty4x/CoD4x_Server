@@ -1,4 +1,4 @@
-#include "stdlib_wrap.hpp"
+﻿#include "stdlib_wrap.hpp"
 
 #include <cmath>
 
@@ -13,7 +13,7 @@ extern "C"
 
     float __cdecl std_asinf(float x)
     {
-        return std::asinf(x);
+        return asinf(x);
     }
 
 

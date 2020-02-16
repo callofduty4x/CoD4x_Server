@@ -37,8 +37,8 @@ HANDLE databaseCompletedEvent2;
 HANDLE wakeDatabaseEvent;
 HANDLE resumedDatabaseEvent;
 enum ThreadOwner g_databaseThreadOwner;
-threadid_t threadId[NUMTHREADS];
-#ifdef __WIN32
+DWORD threadId[NUMTHREADS];
+#ifdef _WIN32
 HANDLE threadHandle[NUMTHREADS];
 #else
 threadid_t threadHandle[NUMTHREADS];
@@ -431,11 +431,11 @@ qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p))
   threadFunc[THREAD_CONTEXT_DATABASE] = db_proc;
 
   threadId[THREAD_CONTEXT_DATABASE] = 0;
-  threadHandle[THREAD_CONTEXT_DATABASE] = (threadid_t)Sys_CreateThreadWithHandle(Sys_ThreadMain, &threadId[THREAD_CONTEXT_DATABASE], (void*)THREAD_CONTEXT_DATABASE);
+  threadHandle[THREAD_CONTEXT_DATABASE] = Sys_CreateThreadWithHandle(Sys_ThreadMain, &threadId[THREAD_CONTEXT_DATABASE], (void*)THREAD_CONTEXT_DATABASE);
 
   if ( threadHandle[THREAD_CONTEXT_DATABASE] )
   {
-#ifdef __WIN32
+#ifdef _WIN32
     if ( s_cpuCount == 1 )
     {
       SetThreadIdealProcessor(threadHandle[THREAD_CONTEXT_DATABASE], 0);
@@ -542,17 +542,17 @@ void __cdecl Sys_InitThreadAffinity()
 void Sys_InitMainThread()
 {
     threadId[0] = Sys_GetCurrentThreadId();
-#ifdef __WIN32
+#ifdef _WIN32
     HANDLE process = GetCurrentProcess();
     HANDLE pseudoHandle = GetCurrentThread();
     DuplicateHandle(process, pseudoHandle, process, threadHandle, 0, 0, 2u);
 #else
-    threadHandle[THREAD_CONTEXT_MAIN] = threadId[THREAD_CONTEXT_MAIN];
+    threadHandle[THREAD_CONTEXT_MAIN] = (HANDLE)threadId[THREAD_CONTEXT_MAIN];
 #endif
 
     Sys_InitThreadAffinity();
 
-#ifdef __WIN32
+#ifdef _WIN32
     SetThreadIdealProcessor(threadHandle[THREAD_CONTEXT_MAIN], 0);
 #endif
 

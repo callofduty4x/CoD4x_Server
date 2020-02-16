@@ -18,6 +18,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
+// Do not include winsock part to windows.h
+#define _WINSOCKAPI_
+
 #include "../qshared.hpp"
 #include "../cmd.hpp"
 #include "../qcommon.hpp"
@@ -37,6 +40,8 @@
 #include <io.h>
 #include <Shlobj.h>
 #include <cfloat>
+#include <winsock2.h>
+#include <ws2ipdef.h>
 
 void Sys_ShowErrorDialog(const char* functionName);
 void Sys_InitThreadContext();
@@ -876,7 +881,7 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 }
 
 
-__noreturn void Sys_ExitForOS( int exitCode )
+void Sys_ExitForOS( int exitCode )
 {
     ExitProcess( exitCode );
 }
@@ -1036,4 +1041,29 @@ HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, v
     }
 
     return thid;
+}
+
+
+int Sys_InetPton(int af_, const char* src_, void* dst_)
+{
+    sockaddr_storage sin;
+    int addrSize = sizeof(sin);
+    char address[256];
+    strncpy(address, src_, sizeof(address));
+
+    int rc = WSAStringToAddressA( address, af_, NULL, (SOCKADDR*)&sin, &addrSize );
+    if(rc != 0)
+        return -1;
+    if(af_ == AF_INET)
+    {
+        *((in_addr*)dst_) = ((sockaddr_in*)&sin)->sin_addr;
+        return 1;
+    }
+    else if(af_ == AF_INET6)
+    {
+        *((in_addr6*)dst_) = ((sockaddr_in6*)&sin)->sin6_addr;
+        return 1;
+    }
+
+    return 0;
 }

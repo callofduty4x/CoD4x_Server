@@ -4,7 +4,6 @@
 #include "../qshared.hpp"
 #include "../q_math.hpp"
 #include "../dobj.hpp"
-#include <windows.h>
 
 enum XModelLodRampType
 {
@@ -203,7 +202,7 @@ typedef struct XModelLodInfo_s
 }XModelLodInfo_t;
  
  
- typedef WORD xScriptString_t;
+ typedef unsigned short int xScriptString_t;
  typedef void  xMaterial_t;
  typedef void  xPhysPreset_t;
  

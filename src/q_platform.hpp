@@ -319,7 +319,6 @@ float FloatSwap (const float f);
 #ifndef WIN32
 
 #define __stdcall __attribute__((stdcall))
-#define __noreturn __attribute__((noreturn))
 #define __cdecl __attribute__((cdecl))
 #define __fastcall __attribute__((fastcall))
 #define __optimize2 __attribute__ ((optimize("-O2")))
@@ -345,7 +344,6 @@ using WORD = unsigned short;
 
 #else
 
-#define __noreturn [[ noreturn ]]
 #define __optimize2
 #define __optimize3
 

@@ -77,3 +77,4 @@ DWORD _GetFileAttributesA(const char *lpFileName);
 BOOL _SetFileAttributesA(const char *lpFileName, DWORD dwFileAttributes);
 HANDLE Sys_CreateThreadWithHandle(void* (*ThreadMain)(void*), threadid_t *tid, void* arg);
 void _SetLastError(DWORD dwErrCode);
+int Sys_InetPton(int af_, const char* src_, void* dst_);

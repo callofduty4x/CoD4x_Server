@@ -26,7 +26,7 @@
 #include <cstdlib>
 #include <cstdbool>
 
-#ifdef __WIN32
+#ifdef _WIN32
 #include <d3d9.h>
 #endif
 
@@ -268,7 +268,6 @@ extern "C"
     XModel** varXModelPtr;
     void* varXRigidVertList;
     char** varXString;
-    char*** varXStringPtr;
     void* varXSurface;
     void* varXSurfaceCollisionNode;
     void* varXSurfaceCollisionTree;
@@ -381,6 +380,7 @@ extern "C"
   void __cdecl DB_ReleaseGeometryBuffers(XZoneMemory *zonemem);
 };
 
+char*** varXStringPtr;
 void XAssetUsage_f();
 void __cdecl DB_UnloadXZone(XZone *zone, bool createDefault);
 void __cdecl DB_UnloadXZoneInternal(unsigned int zone, bool createDefault);
@@ -1797,7 +1797,7 @@ void DB_TryLoadXFile()
 
 
 
-__noreturn void __cdecl DB_Thread(unsigned int threadContext)
+void __cdecl DB_Thread(unsigned int threadContext)
 {
   jmp_buf* savestate;
 
