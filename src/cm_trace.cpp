@@ -5,22 +5,6 @@
 #include "sys_thread.hpp"
 
 
-/*
-==================
-CM_BoxTrace
-==================
-*/
-/*
-void CM_BoxTrace( trace_t *results, const vec3_t start, const vec3_t end,
-				  const vec3_t mins, const vec3_t maxs,
-				  clipHandle_t model, int brushmask ) {
-    memset(results, 0, sizeof(trace_t));
-    results->fraction = 1.0;
-	CM_Trace( results, start, end, mins, maxs, model, brushmask );
-}
-
-
-*/
 qboolean CM_TraceBoxInternal(TraceExtents *extents, const float *testvec, float s, float *fraction)
 {
     for(int i = 0; i < 3; ++i)

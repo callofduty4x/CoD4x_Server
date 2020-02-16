@@ -125,7 +125,6 @@
 	extern Load_WeaponDefAsset
 	extern DB_CreateDefaultEntry
 	extern DB_FindXAssetHeaderReal
-	extern DB_AddXAssetInternal
 	extern db_hashCritSect
 	extern g_defaultAssetCount
 	extern g_freeAssetEntryHead
@@ -141,6 +140,7 @@
 	extern DB_RemoveXAssetHandler
 	extern DB_FreeXAssetHeaderHandler
 	extern DB_AllocXAssetHeaderHandler
+	extern DB_AddXAsset
 
 ;Exports of db_registry:
 	global DB_DynamicCloneMenu
@@ -4478,6 +4478,17 @@ Mark_MaterialTechniqueSetAsset_50:
 	ret
 	nop
 
+
+; void* DB_AddXAssetInternal<eax>(XAssetType xassetType<eax>, void* header<edx>)
+DB_AddXAssetInternal:
+	push ebp
+	mov ebp, esp
+	push edx            ; header
+	push eax            ; xassetType
+	call DB_AddXAsset   ; -> eax
+	add esp, 8
+	pop ebp
+	retn
 
 ;All cstrings:
 SECTION .rdata

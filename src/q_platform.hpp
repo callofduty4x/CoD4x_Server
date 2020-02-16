@@ -330,7 +330,6 @@ float FloatSwap (const float f);
 
 #define DLL_PUBLIC __attribute__ ((visibility ("default")))
 #define DLL_LOCAL __attribute__ ((visibility ("hidden")))
-#define REGPARM(X)   __attribute__ ((regparm(X)))
 
 #define __align(X) __attribute__((aligned(X)))
 #define __packed __attribute__((__packed__))
@@ -358,7 +357,6 @@ using WORD = unsigned short;
 
 #define DLL_PUBLIC __declspec(dllexport);
 #define DLL_LOCAL
-#define REGPARM(X)
 
 #define __align(X) __declspec(align(X))
 #define __packed

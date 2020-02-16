@@ -160,10 +160,10 @@ void __cdecl Load_XString(bool atStreamStart);
 void __cdecl Load_XAssetHeader(bool atStreamStart);
 const char* DB_GetXAssetName(struct XAsset*);
 void __cdecl Load_ScriptStringArray(bool atStreamStart, int count);
-union XAssetHeader __cdecl DB_AddXAsset(enum XAssetType type, union XAssetHeader header);
 void __cdecl DB_EnumXAssets_FastFile(enum XAssetType type, void (__cdecl *func)(void* header, void *), void *inData, bool includeOverride);
 void __cdecl DB_EnumXAssets(enum XAssetType type, void (__cdecl *func)(union XAssetHeader, void *), void *inData, bool includeOverride);
 union XAssetHeader __cdecl DB_FindXAssetHeader(enum XAssetType type, const char *name, bool errorIfMissing, int waitTime);
+XAssetHeader __cdecl DB_AddXAsset(enum XAssetType type, union XAssetHeader header);
 
 /*
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )

@@ -21,7 +21,6 @@
 	global CM_TraceSphereThroughSphere
 	global CM_SightTraceSphereThroughSphere
 	global CM_TraceThroughTree
-	global CM_Trace
 	global CM_BoxTrace
 	global CM_BoxSightTrace
 	global CM_ContentsOfModel
@@ -2134,7 +2133,7 @@ CM_TraceThroughTree_190:
 	nop
 
 
-;CM_Trace(trace_t*, float const*, float const*, float const*, float const*, unsigned int, int)
+;void CM_Trace<eax>(trace_t *results<eax>, const float *start<edx>, const float *end<ecx>, const float *mins<st0>, const float *maxs, unsigned int model, int brushmask);
 CM_Trace:
 	push ebp
 	mov ebp, esp

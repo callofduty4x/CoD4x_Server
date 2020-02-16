@@ -3281,8 +3281,35 @@ XAssetEntryPoolEntry *__cdecl DB_AllocXAssetEntry(XAssetType type, unsigned int 
   return freeHead;
 }
 
+static void DB_SyncLostDevice()
+{
+    if (g_isRecoveringLostDevice)
+    {
+        assert(!g_mayRecoverLostAssets);
+        g_mayRecoverLostAssets = 1;
+        do
+        {
+            Sys_SleepSec(0);
+        } while (g_isRecoveringLostDevice);
+        assert(!g_mayRecoverLostAssets);
+    }
+}
+
 extern "C"
 {
+    XAssetHeader __cdecl DB_AddXAsset(XAssetType type, XAssetHeader header)
+    {
+        XAssetEntryPoolEntry* existingEntry;
+        XAssetEntry newEntry;
+
+        newEntry.asset.type = type;
+        newEntry.asset.header = header;
+        Sys_EnterCriticalSection(CRITSECT_DBHASH);
+        existingEntry = DB_LinkXAssetEntry(&newEntry, 0);
+        Sys_LeaveCriticalSection(CRITSECT_DBHASH);
+        DB_SyncLostDevice();
+        return existingEntry->entry.asset.header;
+    }
 
 bool DB_DiscardBspWeapons()
 {
@@ -3723,60 +3750,6 @@ void* __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name)
   return r.data;
 }
 
-void DB_SyncLostDevice()
-{
-  if ( g_isRecoveringLostDevice )
-  {
-    assert(!g_mayRecoverLostAssets);
-    g_mayRecoverLostAssets = 1;
-    do
-    {
-      Sys_SleepSec(0);
-    }
-    while ( g_isRecoveringLostDevice );
-    assert(!g_mayRecoverLostAssets);
-  }
-}
-
-XAssetHeader __cdecl DB_AddXAsset(XAssetType type, XAssetHeader header)
-{
-  XAssetEntryPoolEntry *existingEntry;
-  XAssetEntry newEntry;
-
-  newEntry.asset.type = type;
-  newEntry.asset.header = header;
-  Sys_EnterCriticalSection(CRITSECT_DBHASH);
-
-
-  //Debug start...
-/*
-  const char* name = DB_GetXAssetName(&newEntry.asset);
-
-  XAssetEntryPoolEntry *pEntry = DB_FindXAssetEntry(newEntry.asset.type, name);
-  if(pEntry != NULL)
-  {
-    if(pEntry->entry.zoneIndex == g_zoneIndex)
-    {
-      Com_Printf(CON_CHANNEL_SYSTEM, "Duplicate asset %d %s\n", g_zoneIndex, name);
-    }
-  }
-*/
-  //End
-
-
-
-  existingEntry = DB_LinkXAssetEntry(&newEntry, 0);
-  Sys_LeaveCriticalSection(CRITSECT_DBHASH);
-  DB_SyncLostDevice();
-  return existingEntry->entry.asset.header;
-}
-
-void* REGPARM(2) DB_AddXAssetInternal(XAssetType xassetType, void* header)
-{
-  XAssetHeader h;
-  h.data = header;
-  return DB_AddXAsset(xassetType, h).data;
-}
 
 void DB_PostLoadXZone()
 {
