@@ -550,7 +550,7 @@ static void SVC_RateLimitInit( ){
 SVC_HashForAddress
 ================
 */
-__optimize3 __regparm1 static long SVC_HashForAddress( netadr_t *address ) {
+__optimize3 static long SVC_HashForAddress( netadr_t *address ) {
     byte 		*ip = NULL;
     size_t	size = 0;
     int			i;
@@ -733,7 +733,8 @@ the simple info query.
 ================
 */
 
-__optimize3 __regparm1 void SVC_Status( netadr_t *from ) {
+__optimize3 void SVC_Status( netadr_t *from )
+{
     char player[1024];
     char status[MAX_MSGLEN];
     int i;
@@ -810,7 +811,8 @@ Responds with a short info message that should be enough to determine
 if a user is interested in a server to do a full status
 ================
 */
-__optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
+__optimize3 static void SVC_Info( netadr_t *from )
+{
     int		i, count, humans;
     char		infostring[MAX_INFO_STRING];
     mvabuf;
@@ -4238,268 +4240,6 @@ unsigned int SV_FrameUsec()
     else
         return 1;
 }
-/*
-spawnerrortest_t e_spawns[64];
-#include <math.h>
-*/
-/*
-==================
-SV_Frame
-
-Player movement occurs as a result of packet events, which
-happen before SV_Frame is called
-==================
-*/
-__optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
-    unsigned int frameUsec;
-    char mapname[MAX_QPATH];
-    static qboolean underattack = qfalse;
-    mvabuf;
-
-    if ( !com_sv_running->boolean ) {
-        Sys_SleepUSec(20000);
-        return qtrue;
-    }
-
-
-    // allow pause if only the local client is connected
-/*	if ( SV_CheckPaused() ) {
-        SV_MasterHeartbeat( HEARTBEAT_GAME );//Still send heartbeats
-        CL_WritePacket( &svs.authserver );
-        CL_WritePacket( &svs.scrMaster );
-        return;
-    }
-*/
-    // if it isn't time for the next frame, do nothing
-    frameUsec = sv.frameusec * com_timescale->value;
-
-    // don't let it scale below 1ms
-    if(frameUsec < 1000)
-    {
-        frameUsec = 1000;
-    }
-    sv.timeResidual += usec;
-
-    if ( sv.timeResidual < frameUsec ) {
-        // NET_Sleep will give the OS time slices until either get a packet
-        // or time enough for a server frame has gone by
-        underattack = NET_Sleep( frameUsec - sv.timeResidual );
-        return qfalse;
-    }
-
-    if(underattack)
-        NET_Clear();
-
-    SV_PreFrame( );
-
-    // run the game simulation in chunks
-    while ( sv.timeResidual >= frameUsec ) {
-        sv.timeResidual -= frameUsec;
-        div_t svtimeinc = div(frameUsec + svs.timeResidual, 1000);
-
-        svs.time += svtimeinc.quot;
-        svs.timeResidual = svtimeinc.rem;
-        // let everything in the world think and move
-        G_RunFrame( svs.time );
-    }
-
-    SV_RunSApiFrame();
-
-    // send messages back to the clients
-    SV_SendClientMessages();
-
-    Scr_SetLoading(qfalse);
-
-    // update ping based on the all received frames
-    SV_CalcPings();
-
-    // check timeouts
-    SV_CheckTimeouts();
-
-    // send a heartbeat to the master if needed
-    SV_MasterHeartbeat( HEARTBEAT_GAME );
-
-
-/*
-    for(i = 0; i < sv_maxclients->integer; ++i)
-    {
-        if(svs.clients[i].state < CS_ACTIVE)
-        {
-            continue;
-        }
-        if(fabs(svs.clients[i].gentity->r.currentAngles[0] - e_spawns[i].direction1[0]) > 0.1||
-        fabs(svs.clients[i].gentity->r.currentAngles[1] - e_spawns[i].direction1[1]) > 0.1 ||
-        fabs(svs.clients[i].gentity->r.currentAngles[2] - e_spawns[i].direction1[2]) > 0.1)
-        {
-            Com_Printf(CON_CHANNEL_SERVER,"^1Debug Spawn angles changed: ^7ent->r.currentAngles changed new: %.2f, %.2f, %.2f\n",
-            svs.clients[i].gentity->r.currentAngles[0],
-            svs.clients[i].gentity->r.currentAngles[1],
-            svs.clients[i].gentity->r.currentAngles[2]);
-            Com_Printf(CON_CHANNEL_SERVER,"^1Old angles: ^7ent->r.currentAngles: %.2f, %.2f, %.2f\n",
-            e_spawns[i].direction1[0],
-            e_spawns[i].direction1[1],
-            e_spawns[i].direction1[2]);
-
-
-            e_spawns[i].direction1[0] = svs.clients[i].gentity->r.currentAngles[0];
-            e_spawns[i].direction1[1] = svs.clients[i].gentity->r.currentAngles[1];
-            e_spawns[i].direction1[2] = svs.clients[i].gentity->r.currentAngles[2];
-        }
-
-        if(fabs(svs.clients[i].gentity->client->ps.viewangles[0] != e_spawns[i].direction2[0]) > 0.1 ||
-        fabs(svs.clients[i].gentity->client->ps.viewangles[1] != e_spawns[i].direction2[1]) > 0.1 ||
-        fabs(svs.clients[i].gentity->client->ps.viewangles[2] != e_spawns[i].direction2[2]) > 0.1)
-        {
-            Com_Printf(CON_CHANNEL_SERVER,"^1Debug Spawn angles changed: ^7ent->client->ps.viewangles changed new: %.2f, %.2f, %.2f\n",
-            svs.clients[i].gentity->client->ps.viewangles[0],
-            svs.clients[i].gentity->client->ps.viewangles[1],
-            svs.clients[i].gentity->client->ps.viewangles[2]);
-            Com_Printf(CON_CHANNEL_SERVER,"^1Old angles: ^7ent->client->ps.viewangles: %.2f, %.2f, %.2f\n",
-            e_spawns[i].direction2[0],
-            e_spawns[i].direction2[1],
-            e_spawns[i].direction2[2]);
-
-            e_spawns[i].direction2[0] = svs.clients[i].gentity->client->ps.viewangles[0];
-            e_spawns[i].direction2[1] = svs.clients[i].gentity->client->ps.viewangles[1];
-            e_spawns[i].direction2[2] = svs.clients[i].gentity->client->ps.viewangles[2];
-
-        }
-
-    }
-
-*/
-
-
-
-#ifdef PUNKBUSTER
-    PbServerProcessEvents( 0 );
-#endif
-    // if time is about to hit the 32nd bit, kick all clients
-    // and clear sv.time, rather
-    // than checking for negative time wraparound everywhere.
-    // 2giga-milliseconds = 23 days, so it won't be too often
-    if ( svs.time > 0x70000000 ) {
-        Q_strncpyz( mapname, sv_mapname->string, sizeof(mapname) );
-        SV_Shutdown( "EXE_SERVERRESTARTTIMEWRAP" );
-        Com_Restart( );
-        // TTimo
-        // show_bug.cgi?id=388
-        // there won't be a map_restart if you have shut down the server
-        // since it doesn't restart a non-running server
-        // instead, re-run the current map
-        SV_Map( mapname );
-        return qtrue;
-    }
-
-    // this can happen considerably earlier when lots of clients play and the map doesn't change
-    if ( svs.nextSnapshotEntities >= 0x7FFFFFFE - svs.numSnapshotEntities ) {
-        Q_strncpyz( mapname, sv_mapname->string, MAX_QPATH );
-        SV_Shutdown( "EXE_SERVERRESTARTMISC\x15numSnapshotEntities wrapping" );
-        Com_Restart( );
-        // TTimo see above
-        SV_Map( mapname );
-        return qtrue;
-    }
-
-    if ( svs.nextSnapshotClients >= 0x7FFFFFFE - svs.numSnapshotClients ) {
-        Q_strncpyz( mapname, sv_mapname->string, MAX_QPATH );
-        SV_Shutdown( "EXE_SERVERRESTARTMISC\x15numSnapshotClients wrapping" );
-        Com_Restart( );
-        // TTimo see above
-        SV_Map( mapname );
-        return qtrue;
-    }
-
-    if ( svs.nextCachedSnapshotEntities >= 0x7FFFBFFD ) {
-        Q_strncpyz( mapname, sv_mapname->string, MAX_QPATH );
-        SV_Shutdown( "EXE_SERVERRESTARTMISC\x15nextCachedSnapshotEntities wrapping" );
-        Com_Restart( );
-        // TTimo see above
-        SV_Map( mapname );
-        return qtrue;
-    }
-
-    if ( svs.nextCachedSnapshotClients >= 0x7FFFEFFD ) {
-        Q_strncpyz( mapname, sv_mapname->string, MAX_QPATH );
-        SV_Shutdown( "EXE_SERVERRESTARTMISC\x15nextCachedSnapshotClients wrapping" );
-        Com_Restart( );
-        // TTimo see above
-        SV_Map( mapname );
-        return qtrue;
-    }
-
-
-    if ( svs.nextArchivedSnapshotFrames >= 0x7FFFFB4D ) {
-        Q_strncpyz( mapname, sv_mapname->string, MAX_QPATH );
-        SV_Shutdown( "EXE_SERVERRESTARTMISC\x15nextArchivedSnapshotFrames wrapping" );
-        Com_Restart( );
-        // TTimo see above
-        SV_Map( mapname );
-        return qtrue;
-    }
-
-    if ( svs.nextArchivedSnapshotBuffer >= 0x7DFFFFFD ) {
-        Q_strncpyz( mapname, sv_mapname->string, MAX_QPATH );
-        SV_Shutdown( "EXE_SERVERRESTARTMISC\x15nextArchivedSnapshotBuffer wrapping" );
-        Com_Restart( );
-        // TTimo see above
-        SV_Map( mapname );
-        return qtrue;
-    }
-
-    if ( svs.nextCachedSnapshotFrames >= 0x7FFFFDFD ) {
-        Q_strncpyz( mapname, sv_mapname->string, MAX_QPATH );
-        SV_Shutdown( "EXE_SERVERRESTARTMISC\x15svs.nextCachedSnapshotFrames wrapping" );
-        Com_Restart( );
-        // TTimo see above
-        SV_Map( mapname );
-        return qtrue;
-    }
-    SetAnimCheck(com_animCheck->boolean);
-
-    if( svs.time > svs.frameNextSecond){	//This runs each second
-            svs.frameNextSecond = svs.time+1000;
-
-            // the menu kills the server with this cvar
-            if ( sv_killserver->boolean ) {
-                SV_Shutdown( "Server was killed.\n" );
-                Cvar_SetBool( sv_killserver, qfalse );
-                return qtrue;
-            }
-
-            if(svs.time > svs.frameNextTenSeconds){	//This runs each 10 seconds
-            svs.frameNextTenSeconds = svs.time+10000;
-
-            int d, h, m;
-            int uptime;
-
-            uptime = Sys_Seconds();
-            d = uptime/(60*60*24);
-    //		uptime = uptime%(60*60*24);
-            h = uptime/(60*60);
-    //		uptime = uptime%(60*60);
-            m = uptime/60;
-
-            if(h < 4)
-                Cvar_SetString(sv_uptime, va("%i minutes", m));
-            else if(d < 3)
-                Cvar_SetString(sv_uptime, va("%i hours", h));
-            else
-                Cvar_SetString(sv_uptime, va("%i days", d));
-
-            serverStatus_Write();
-
-            PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
-    /*		if(svs.time > svs.nextsecret){
-                svs.nextsecret = svs.time+80000;
-                Com_RandomBytes((byte*)&svs.secret,sizeof(int));
-            }*/
-
-    }
-    }
-
-    return qtrue;
-}
 
 
 void SV_SayToPlayers(int clnum, int team, char* text)
@@ -5402,4 +5142,264 @@ extern "C"
 {
     server_t sv;
     cvar_s* sv_clientSideBullets;
+}
+
+/*
+==================
+SV_Frame
+
+Player movement occurs as a result of packet events, which
+happen before SV_Frame is called
+==================
+*/
+__optimize3 qboolean SV_Frame(unsigned int usec)
+{
+    unsigned int frameUsec;
+    char mapname[MAX_QPATH];
+    static qboolean underattack = qfalse;
+    mvabuf;
+
+    if (!com_sv_running->boolean) {
+        Sys_SleepUSec(20000);
+        return qtrue;
+    }
+
+
+    // allow pause if only the local client is connected
+/*	if ( SV_CheckPaused() ) {
+        SV_MasterHeartbeat( HEARTBEAT_GAME );//Still send heartbeats
+        CL_WritePacket( &svs.authserver );
+        CL_WritePacket( &svs.scrMaster );
+        return;
+    }
+*/
+// if it isn't time for the next frame, do nothing
+    frameUsec = sv.frameusec * com_timescale->value;
+
+    // don't let it scale below 1ms
+    if (frameUsec < 1000)
+    {
+        frameUsec = 1000;
+    }
+    sv.timeResidual += usec;
+
+    if (sv.timeResidual < frameUsec) {
+        // NET_Sleep will give the OS time slices until either get a packet
+        // or time enough for a server frame has gone by
+        underattack = NET_Sleep(frameUsec - sv.timeResidual);
+        return qfalse;
+    }
+
+    if (underattack)
+        NET_Clear();
+
+    SV_PreFrame();
+
+    // run the game simulation in chunks
+    while (sv.timeResidual >= frameUsec) {
+        sv.timeResidual -= frameUsec;
+        div_t svtimeinc = div(frameUsec + svs.timeResidual, 1000);
+
+        svs.time += svtimeinc.quot;
+        svs.timeResidual = svtimeinc.rem;
+        // let everything in the world think and move
+        G_RunFrame(svs.time);
+    }
+
+    SV_RunSApiFrame();
+
+    // send messages back to the clients
+    SV_SendClientMessages();
+
+    Scr_SetLoading(qfalse);
+
+    // update ping based on the all received frames
+    SV_CalcPings();
+
+    // check timeouts
+    SV_CheckTimeouts();
+
+    // send a heartbeat to the master if needed
+    SV_MasterHeartbeat(HEARTBEAT_GAME);
+
+
+    /*
+        for(i = 0; i < sv_maxclients->integer; ++i)
+        {
+            if(svs.clients[i].state < CS_ACTIVE)
+            {
+                continue;
+            }
+            if(fabs(svs.clients[i].gentity->r.currentAngles[0] - e_spawns[i].direction1[0]) > 0.1||
+            fabs(svs.clients[i].gentity->r.currentAngles[1] - e_spawns[i].direction1[1]) > 0.1 ||
+            fabs(svs.clients[i].gentity->r.currentAngles[2] - e_spawns[i].direction1[2]) > 0.1)
+            {
+                Com_Printf(CON_CHANNEL_SERVER,"^1Debug Spawn angles changed: ^7ent->r.currentAngles changed new: %.2f, %.2f, %.2f\n",
+                svs.clients[i].gentity->r.currentAngles[0],
+                svs.clients[i].gentity->r.currentAngles[1],
+                svs.clients[i].gentity->r.currentAngles[2]);
+                Com_Printf(CON_CHANNEL_SERVER,"^1Old angles: ^7ent->r.currentAngles: %.2f, %.2f, %.2f\n",
+                e_spawns[i].direction1[0],
+                e_spawns[i].direction1[1],
+                e_spawns[i].direction1[2]);
+
+
+                e_spawns[i].direction1[0] = svs.clients[i].gentity->r.currentAngles[0];
+                e_spawns[i].direction1[1] = svs.clients[i].gentity->r.currentAngles[1];
+                e_spawns[i].direction1[2] = svs.clients[i].gentity->r.currentAngles[2];
+            }
+
+            if(fabs(svs.clients[i].gentity->client->ps.viewangles[0] != e_spawns[i].direction2[0]) > 0.1 ||
+            fabs(svs.clients[i].gentity->client->ps.viewangles[1] != e_spawns[i].direction2[1]) > 0.1 ||
+            fabs(svs.clients[i].gentity->client->ps.viewangles[2] != e_spawns[i].direction2[2]) > 0.1)
+            {
+                Com_Printf(CON_CHANNEL_SERVER,"^1Debug Spawn angles changed: ^7ent->client->ps.viewangles changed new: %.2f, %.2f, %.2f\n",
+                svs.clients[i].gentity->client->ps.viewangles[0],
+                svs.clients[i].gentity->client->ps.viewangles[1],
+                svs.clients[i].gentity->client->ps.viewangles[2]);
+                Com_Printf(CON_CHANNEL_SERVER,"^1Old angles: ^7ent->client->ps.viewangles: %.2f, %.2f, %.2f\n",
+                e_spawns[i].direction2[0],
+                e_spawns[i].direction2[1],
+                e_spawns[i].direction2[2]);
+
+                e_spawns[i].direction2[0] = svs.clients[i].gentity->client->ps.viewangles[0];
+                e_spawns[i].direction2[1] = svs.clients[i].gentity->client->ps.viewangles[1];
+                e_spawns[i].direction2[2] = svs.clients[i].gentity->client->ps.viewangles[2];
+
+            }
+
+        }
+
+    */
+
+
+
+#ifdef PUNKBUSTER
+    PbServerProcessEvents(0);
+#endif
+    // if time is about to hit the 32nd bit, kick all clients
+    // and clear sv.time, rather
+    // than checking for negative time wraparound everywhere.
+    // 2giga-milliseconds = 23 days, so it won't be too often
+    if (svs.time > 0x70000000) {
+        Q_strncpyz(mapname, sv_mapname->string, sizeof(mapname));
+        SV_Shutdown("EXE_SERVERRESTARTTIMEWRAP");
+        Com_Restart();
+        // TTimo
+        // show_bug.cgi?id=388
+        // there won't be a map_restart if you have shut down the server
+        // since it doesn't restart a non-running server
+        // instead, re-run the current map
+        SV_Map(mapname);
+        return qtrue;
+    }
+
+    // this can happen considerably earlier when lots of clients play and the map doesn't change
+    if (svs.nextSnapshotEntities >= 0x7FFFFFFE - svs.numSnapshotEntities) {
+        Q_strncpyz(mapname, sv_mapname->string, MAX_QPATH);
+        SV_Shutdown("EXE_SERVERRESTARTMISC\x15numSnapshotEntities wrapping");
+        Com_Restart();
+        // TTimo see above
+        SV_Map(mapname);
+        return qtrue;
+    }
+
+    if (svs.nextSnapshotClients >= 0x7FFFFFFE - svs.numSnapshotClients) {
+        Q_strncpyz(mapname, sv_mapname->string, MAX_QPATH);
+        SV_Shutdown("EXE_SERVERRESTARTMISC\x15numSnapshotClients wrapping");
+        Com_Restart();
+        // TTimo see above
+        SV_Map(mapname);
+        return qtrue;
+    }
+
+    if (svs.nextCachedSnapshotEntities >= 0x7FFFBFFD) {
+        Q_strncpyz(mapname, sv_mapname->string, MAX_QPATH);
+        SV_Shutdown("EXE_SERVERRESTARTMISC\x15nextCachedSnapshotEntities wrapping");
+        Com_Restart();
+        // TTimo see above
+        SV_Map(mapname);
+        return qtrue;
+    }
+
+    if (svs.nextCachedSnapshotClients >= 0x7FFFEFFD) {
+        Q_strncpyz(mapname, sv_mapname->string, MAX_QPATH);
+        SV_Shutdown("EXE_SERVERRESTARTMISC\x15nextCachedSnapshotClients wrapping");
+        Com_Restart();
+        // TTimo see above
+        SV_Map(mapname);
+        return qtrue;
+    }
+
+
+    if (svs.nextArchivedSnapshotFrames >= 0x7FFFFB4D) {
+        Q_strncpyz(mapname, sv_mapname->string, MAX_QPATH);
+        SV_Shutdown("EXE_SERVERRESTARTMISC\x15nextArchivedSnapshotFrames wrapping");
+        Com_Restart();
+        // TTimo see above
+        SV_Map(mapname);
+        return qtrue;
+    }
+
+    if (svs.nextArchivedSnapshotBuffer >= 0x7DFFFFFD) {
+        Q_strncpyz(mapname, sv_mapname->string, MAX_QPATH);
+        SV_Shutdown("EXE_SERVERRESTARTMISC\x15nextArchivedSnapshotBuffer wrapping");
+        Com_Restart();
+        // TTimo see above
+        SV_Map(mapname);
+        return qtrue;
+    }
+
+    if (svs.nextCachedSnapshotFrames >= 0x7FFFFDFD) {
+        Q_strncpyz(mapname, sv_mapname->string, MAX_QPATH);
+        SV_Shutdown("EXE_SERVERRESTARTMISC\x15svs.nextCachedSnapshotFrames wrapping");
+        Com_Restart();
+        // TTimo see above
+        SV_Map(mapname);
+        return qtrue;
+    }
+    SetAnimCheck(com_animCheck->boolean);
+
+    if (svs.time > svs.frameNextSecond) {	//This runs each second
+        svs.frameNextSecond = svs.time + 1000;
+
+        // the menu kills the server with this cvar
+        if (sv_killserver->boolean) {
+            SV_Shutdown("Server was killed.\n");
+            Cvar_SetBool(sv_killserver, qfalse);
+            return qtrue;
+        }
+
+        if (svs.time > svs.frameNextTenSeconds) {	//This runs each 10 seconds
+            svs.frameNextTenSeconds = svs.time + 10000;
+
+            int d, h, m;
+            int uptime;
+
+            uptime = Sys_Seconds();
+            d = uptime / (60 * 60 * 24);
+            //		uptime = uptime%(60*60*24);
+            h = uptime / (60 * 60);
+            //		uptime = uptime%(60*60);
+            m = uptime / 60;
+
+            if (h < 4)
+                Cvar_SetString(sv_uptime, va("%i minutes", m));
+            else if (d < 3)
+                Cvar_SetString(sv_uptime, va("%i hours", h));
+            else
+                Cvar_SetString(sv_uptime, va("%i days", d));
+
+            serverStatus_Write();
+
+            PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
+    /*		if(svs.time > svs.nextsecret){
+                svs.nextsecret = svs.time+80000;
+                Com_RandomBytes((byte*)&svs.secret,sizeof(int));
+            }*/
+
+        }
+    }
+
+    return qtrue;
 }

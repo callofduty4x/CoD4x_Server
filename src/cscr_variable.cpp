@@ -121,7 +121,7 @@ static int ThreadInfoCompare(const void *ainfo1, const void *ainfo2)
 
 
 
-extern "C" double __regparm1 Scr_GetObjectUsage(unsigned int parentId);
+double Scr_GetObjectUsage(unsigned int parentId);
 
 
 double Scr_GetEntryUsage(unsigned int type, VariableUnion u)
@@ -2092,26 +2092,6 @@ unsigned int __cdecl FindLastSibling(unsigned int parentId)
   index = FindVariableIndexInternal(parentId, gScrVarGlob.variableList[id + VARIABLELIST_CHILD_BEGIN].w.classnum >> VAR_NAME_BITS);
   assert(index != 0);
   return index;
-}
-
-
-double __regparm1 Scr_GetObjectUsage(unsigned int parentId)
-{
-  VariableValueInternal *parentValue;
-  float usage;
-  unsigned int id;
-
-  parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
-
-  assert((parentValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
-  assert(IsObject( parentValue ));
-  
-  usage = 1.0;
-  for ( id = FindFirstSibling(parentId); id; id = FindNextSibling(id) )
-  {
-    usage = Scr_GetEntryUsage(&gScrVarGlob.variableList[id + VARIABLELIST_CHILD_BEGIN]) + usage;
-  }
-  return usage;
 }
 
 
@@ -4769,3 +4749,16 @@ void __cdecl Scr_EvalBinaryOperator(int op, VariableValue *value1, VariableValue
 };
 
 
+double Scr_GetObjectUsage(unsigned int parentId)
+{
+    VariableValueInternal* parentValue = &gScrVarGlob.variableList[parentId + VARIABLELIST_PARENT_BEGIN];
+
+    assert((parentValue->w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
+    assert(IsObject(parentValue));
+
+    double usage = 1.0;
+    for (unsigned int id = FindFirstSibling(parentId); id; id = FindNextSibling(id))
+        usage = Scr_GetEntryUsage(&gScrVarGlob.variableList[id + VARIABLELIST_CHILD_BEGIN]) + usage;
+    
+    return usage;
+}

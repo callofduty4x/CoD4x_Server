@@ -69,539 +69,6 @@
 static void SV_CloseDownload( client_t *cl );
 
 /*
-=================
-SV_GetChallenge
-
-A "getchallenge" OOB command has been received
-Returns a challenge number that can be used
-in a subsequent connectResponse command.
-We do this to prevent denial of service attacks that
-flood the server with invalid connection IPs.  With a
-challenge, they must give a valid IP address.
-
-If we are authorizing, a challenge request will cause a packet
-to be sent to the authorize server.
-
-When an authorizeip is returned, a challenge response will be
-sent to that ip.
-
-ioquake3: we added a possibility for clients to add a challenge
-to their packets, to make it more difficult for malicious servers
-to hi-jack client connections.
-Also, the auth stuff is completely disabled for com_standalone games
-as well as IPv6 connections, since there is no way to use the
-v4-only auth server for these new types of connections.
-=================
-*/
-
-__optimize3 __regparm1 void SV_GetChallenge(netadr_t *from)
-{
-	int	clientChallenge;
-	int	challenge;
-
-	if(from->type == NA_IP && svs.authorizeAddress.type != NA_DOWN)
-	{
-		/* This part is required to keep the server registered on the masterserver */
-		// look up the authorize server's IP
-		if(svs.authorizeAddress.type == NA_BAD)
-		{
-			Com_Printf(CON_CHANNEL_SERVER, "Resolving %s\n", AUTHORIZE_SERVER_NAME );
-			if (NET_StringToAdr(AUTHORIZE_SERVER_NAME, &svs.authorizeAddress, NA_IP))
-			{
-				svs.authorizeAddress.port = BigShort( PORT_AUTHORIZE );
-				Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", AUTHORIZE_SERVER_NAME, NET_AdrToString(&svs.authorizeAddress));
-			}else{
-				svs.authorizeAddress.type = NA_DOWN;
-			}
-		}
-		if(svs.authorizeAddress.type == NA_IP && from->type == NA_IP && NET_CompareBaseAdr(from, &svs.authorizeAddress))
-		{
-			from->port = BigShort(PORT_AUTHORIZE);
-			challenge = NET_CookieHash(from);
-			NET_OutOfBandPrint( NS_SERVER, from, "getIpAuthorize %i %s \"\" 0", challenge, NET_AdrToStringShort(from));
-			return;
-		}
-	}
-	challenge = NET_CookieHash(from);
-	clientChallenge = atoi(SV_Cmd_Argv(1));
-	NET_OutOfBandPrint(NS_SERVER, from, "challengeResponse %d %d 0 xproto", challenge, clientChallenge);
-
-}
-
-
-
-/*
-==================
-SV_DirectConnect
-
-A "connect" OOB command has been received
-==================
-*/
-
-__optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
-	char		userinfo[MAX_INFO_STRING];
-//	int			reconnectTime;
-
-	int			j;
-	int			i, n;
-	client_t		*cl, *newcl;
-	int			count;
-	char			nick[33];
-	char			ip_str[128];
-	int			clientNum;
-	int			version;
-	unsigned int		qport;
-	int			challenge;
-	char			*password;
-	char			denied[MAX_STRING_CHARS];
-	const char		*denied2;
-	qboolean		canreserved;
-	qboolean		validpassword;
-
-	Q_strncpyz( userinfo, SV_Cmd_Argv(1), sizeof(userinfo) );
-	challenge = atoi( Info_ValueForKey( userinfo, "challenge" ) );
-	qport = atoi( Info_ValueForKey( userinfo, "qport" ) );
-
-	if(challenge != NET_CookieHash(from))
-	{
-		NET_OutOfBandPrint( NS_SERVER, from, "error\nNo or bad challenge for address.\n" );
-		return;
-	}
-
-	version = atoi( Info_ValueForKey( userinfo, "protocol" ));
-
-#ifdef DEVRELEASE
-	char* xversion;
-
-	xversion = Info_ValueForKey( userinfo, "xver");
-	if(Q_stricmp(xversion, Sys_GetCommonVersionString()) && version > 7)
-	{
-		NET_OutOfBandPrint( NS_SERVER, from, "error\nBad subversion. Server expects subversion %s but client is %s\n", Sys_GetCommonVersionString(), xversion );
-		return;
-	}
-
-#endif
-
-	newcl = NULL;
-
-	// quick reject
-	for (n=0, cl=svs.clients; n < sv_maxclients->integer; n++, cl++) {
-
-		if ( NET_CompareBaseAdr( from, &cl->netchan.remoteAddress ) && (cl->netchan.qport == qport || from->port == cl->netchan.remoteAddress.port )){
-
-			/*
-			reconnectTime = (svs.time - cl->lastConnectTime);
-			if (reconnectTime < (sv_reconnectlimit->integer * 1000)) {
-				Com_Printf(CON_CHANNEL_SERVER,"%s -> reconnect rejected : too soon\n", NET_AdrToString (from));
-				NET_OutOfBandPrint( NS_SERVER, from, "print\nReconnect limit in effect... (%i)\n",
-							(sv_reconnectlimit->integer - (reconnectTime / 1000)));
-				return;
-
-			}else{
-				*/
-				SV_DropClient( cl, "silent" );
-				newcl = cl;
-				Com_Printf(CON_CHANNEL_SERVER,"reconnected: %s\n", NET_AdrToString(from));
-				cl->lastConnectTime = svs.time;
-				break;
-/*			}*/
-		}else if ( NET_CompareBaseAdr( from, &cl->netchan.remoteAddress ) && (cl->state == CS_CONNECTED || cl->state == CS_ZOMBIE)){
-			NET_OutOfBandPrint( NS_SERVER, from,
-				"error\nConnection refused:\nAn uncompleted connection from %s has been detected\nPlease try again later\n",
-				NET_AdrToString(&cl->netchan.remoteAddress));
-			Com_DPrintf(CON_CHANNEL_SERVER,"Rejected connection from %s. This is a Fake-Player-DoS protection\n", NET_AdrToString(&cl->netchan.remoteAddress));
-			return;
-		}
-	}
-
-	// force the IP key/value pair so the game can filter based on ip
-	Com_sprintf(ip_str, sizeof(ip_str), "%s", NET_AdrToConnectionString( from ));
-	Info_SetValueForKey( userinfo, "ip", ip_str );
-
-    ClientCleanName(Info_ValueForKey(userinfo, "name"), nick, 33, qfalse);
-
-	denied[0] = '\0';
-
-	SV_PlayerBannedByip(from, denied, sizeof(denied));
-	if(denied[0]){
-            NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", denied);
-		Com_Printf(CON_CHANNEL_SERVER,"Rejecting a connection from a banned network address: %s\n", NET_AdrToString(from));
-	    return;
-	}
-
-	if ( version != sv_protocol->integer ) {
-
-#ifdef COD4X18UPDATE
-		if(version <= 7)
-		{
-			Com_Printf(CON_CHANNEL_SERVER,"Have to fix up old client which reports version %d\n", version);
-		}else{
-#endif
-			if(version < 9)
-			{
-				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
-							    sv_protocol->integer);
-			}else{
-#ifdef BETA_RELEASE
-				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "This is a beta server. Sorry, but you can not connect to it with a release build of CoD4X.\n",
-							     sv_protocol->integer);
-#else
-				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please restart CoD4 and see on the main-menu if a new update is available\n"
-							    "{OOBErrorParser protocolmismatch CoD4X" Q3_VERSION " %d}", sv_protocol->integer, sv_protocol->integer);
-#endif
-			}
-			Com_Printf(CON_CHANNEL_SERVER,"rejected connect from version %i\n", version);
-			return;
-
-#ifdef COD4X18UPDATE
-		}
-#endif
-	}
-
-
-	// find a client slot:
-	// if "sv_privateClients" is set > 0, then that number
-	// of client slots will be reserved for connections that
-	// have "password" set to the value of "sv_privatePassword"
-	// Info requests will report the maxclients as if the private
-	// slots didn't exist, to prevent people from trying to connect
-	// to a full server.
-	// This is to allow us to reserve a couple slots here on our
-	// servers so we can play without having to kick people.
-
-	//Get new slot for client
-	// check for privateClient password
-	password = Info_ValueForKey( userinfo, "password" );
-	if(!newcl)
-	{
-		if ( !strcmp( password, sv_privatePassword->string ))
-		{
-			canreserved = qtrue;
-		}else{
-			canreserved = qfalse;
-		}
-
-		PHandler_Event(PLUGINS_ONPLAYERWANTRESERVEDSLOT, from, "", userinfo, 0, &canreserved);
-		if ( canreserved == qtrue)
-		{
-			for ( j = 0; j < sv_privateClients->integer ; j++) {
-				cl = &svs.clients[j];
-				if (cl->state == CS_FREE) {
-					newcl = cl;
-					break;
-				}
-			}
-		}
-	}
-
-	if(*sv_password->string && !Q_strncmp(sv_password->string, password, 32))
-	{
-		validpassword = qtrue;
-	}else{
-		validpassword = qfalse;
-	}
-
-	if(*sv_password->string && !validpassword )
-	{
-		if(!sv_steamgroup || !sv_steamgroup->string[0]) //If server is in a Steamgroup we have to let him in and see later if he is a member of steam group
-		{
-			NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server has set a join-password\n^1Invalid Password\n");
-			Com_Printf(CON_CHANNEL_SERVER,"Connection rejected from %s - Invalid Password\n", NET_AdrToString(from));
-			return;
-		}
-	}
-	//Process queue
-	for(i = 0 ; i < 10 ; i++){//Purge all older players from queue
-	    if(svs.connectqueue[i].lasttime+21 < Com_GetRealtime()){
-		svs.connectqueue[i].lasttime = 0;
-		svs.connectqueue[i].firsttime = 0;
-		svs.connectqueue[i].challengeslot = 0;
-		svs.connectqueue[i].attempts = 0;
-	    }
-	}
-	for(i = 0 ; i < 10 ; i++){//Move waiting players up in queue if there is a purged slot
-	    if(svs.connectqueue[i].lasttime != 0){
-		if(svs.connectqueue[i+1].challengeslot == svs.connectqueue[i].challengeslot){
-		    svs.connectqueue[i+1].lasttime = 0;
-		    svs.connectqueue[i+1].firsttime = 0;
-		    svs.connectqueue[i+1].challengeslot = 0;
-		    svs.connectqueue[i+1].attempts = 0;
-		}
-	    }else{
-		Com_Memcpy(&svs.connectqueue[i],&svs.connectqueue[i+1],(9-i)*sizeof(connectqueue_t));
-	    }
-	}
-	for(i = 0 ; i < 10 ; i++){//Find highest slot or the one which is already assigned to this player
-	    if(svs.connectqueue[i].firsttime == 0 || svs.connectqueue[i].challengeslot == challenge){
-			break;
-	    }
-	}
-
-	if(i == 0 && !newcl){
-		for ( j = sv_privateClients->integer; j < sv_maxclients->integer ; j++) {
-			cl = &svs.clients[j];
-			if (cl->state == CS_FREE) {
-				newcl = cl;
-				svs.connectqueue[0].lasttime = 0;
-				svs.connectqueue[0].firsttime = 0;
-				svs.connectqueue[0].challengeslot = 0;
-				svs.connectqueue[0].attempts = 0;
-				break;
-			}
-		}
-	}
-
-	if ( !newcl ) {
-		if(i == 10){
-		    NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is full. More than 10 players are in queue.\n" );
-		    return;
-		}else{
-		    NET_OutOfBandPrint( NS_SERVER, from, "print\nServer is full. %i players wait before you.\n",i);
-		}
-		if(svs.connectqueue[i].attempts > 30){
-		    NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is full. %i players wait before you.\n",i);
-		    svs.connectqueue[i].attempts = 0;
-		}else if(svs.connectqueue[i].attempts > 15 && i > 1){
-		    NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is full. %i players wait before you.\n",i);
-		    svs.connectqueue[i].attempts = 0;
-		}else if(svs.connectqueue[i].attempts > 5 && i > 3){
-		    NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is full. %i players wait before you.\n",i);
-		    svs.connectqueue[i].attempts = 0;
-		}
-		if(svs.connectqueue[i].firsttime == 0){
-		    svs.connectqueue[i].firsttime = Com_GetRealtime();
-		}
-		svs.connectqueue[i].attempts++;
-		svs.connectqueue[i].lasttime = Com_GetRealtime();
-		svs.connectqueue[i].challengeslot = challenge;
-
-		return;
-	}
-
-
-	int bckbegintime;
-
-	if(n < sv_maxclients->integer && newcl->lastPacketTime  + 10000 > svs.time)
-	{
-		bckbegintime = newcl->updateBeginTime;
-	}else{
-		bckbegintime = 0;
-	}
-
-
-#ifdef COD4X18UPDATE
-	if(version <= 7 && newcl->challenge == challenge && newcl->state && newcl->updateconnOK)
-	{
-		Com_Memset(newcl, 0x00, sizeof(client_t));
-		newcl->updateconnOK = qtrue;
-
-	}else{
-#endif
-		Com_Memset(newcl, 0x00, sizeof(client_t));
-
-#ifdef COD4X18UPDATE
-	}
-#endif
-
-	newcl->updateBeginTime = bckbegintime;
-
-	newcl->power = 0; //Sets the default power for the client
-        newcl->challenge = challenge; // save the challenge
-	// (build a new connection
-	// accept the new client
-	// this is the only place a client_t is ever initialized)
-
-  clientNum = newcl - svs.clients;
-
-  denied[0] = '\0';
-
-  // save the userinfo
-  Q_strncpyz(newcl->userinfo, userinfo, sizeof(newcl->userinfo) );
-
-  PHandler_Event(PLUGINS_ONPLAYERCONNECT, clientNum, from, "", userinfo, 0, denied, sizeof(denied));
-
-  if(denied[0]){
-    NET_OutOfBandPrint( NS_SERVER, from, "error\n%s", denied);
-		Com_Printf(CON_CHANNEL_SERVER,"Rejecting a connection from a ? player\n");
-
-    svs.connectqueue[i].lasttime = 0;
-    svs.connectqueue[i].firsttime = 0;
-    svs.connectqueue[i].challengeslot = 0;
-		svs.connectqueue[i].attempts = 0;
-		return;
-  }
-
-	newcl->voicePacketCount = 0;
-	newcl->sendVoice = 1;
-	newcl->gentity = SV_GentityNum(clientNum);
-	newcl->scriptId = Scr_AllocArray();
-	newcl->protocol = version;
-
-#ifdef COD4X18UPDATE
-	if(newcl->protocol != sv_protocol->integer)
-	{
-		newcl->needupdate = qtrue;
-	}else{
-		newcl->needupdate = qfalse;
-	}
-
-	if(!newcl->needupdate)
-	{
-#endif
-		// get the game a chance to reject this connection or modify the userinfo
-		denied2 = ClientConnect(clientNum, newcl->scriptId);
-
-		if ( denied2 ) {
-			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", denied2 );
-			Com_Printf(CON_CHANNEL_SERVER,"Game rejected a connection: %s\n", denied2);
-			SV_FreeClientScriptId(newcl);
-			return;
-		}
-
-
-#ifdef COD4X18UPDATE
-	}
-#endif
-
-	// save the address
-	// init the netchan queue
-	Netchan_Setup( NS_SERVER, &newcl->netchan, *from, qport,
-			 newcl->unsentBuffer, sizeof(newcl->unsentBuffer),
-			 newcl->fragmentBuffer, sizeof(newcl->fragmentBuffer));
-
-#ifdef COD4X18UPDATE
-
-	if(!newcl->needupdate)
-	{
-
-#endif
-
-
-		if(SV_SetupReliableMessageProtocol(newcl) == qfalse)
-		{
-			NET_OutOfBandPrint( NS_SERVER, from, "error\nServer is out of memory\n");
-			Com_Printf(CON_CHANNEL_SERVER,"Server is out of memory. Refused to accept client %s\n", nick);
-			SV_FreeClientScriptId(newcl);
-			return;
-		}
-
-		Com_Printf(CON_CHANNEL_SERVER, "Going from CS_FREE to CS_CONNECTED for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
-
-#ifdef COD4X18UPDATE
-	}
-#endif
-
-	newcl->state = CS_CONNECTED;
-	newcl->nextSnapshotTime = svs.time;
-	newcl->lastPacketTime = svs.time;
-	newcl->lastConnectTime = svs.time;
-
-	Q_strncpyz(newcl->xversion, Info_ValueForKey( userinfo, "xver"), sizeof(newcl->xversion));
-
-#ifdef COD4X18UPDATE
-	if(newcl->needupdate)
-	{
-		newcl->state = CS_ZOMBIE;
-		Com_Printf(CON_CHANNEL_SERVER, "Going from CS_FREE to CS_ZOMBIE for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
-		newcl->nextSnapshotTime = 0x7fffffff;
-
-	}else{
-		Q_strncpyz(newcl->name, nick, sizeof(newcl->name));
-		SV_UserinfoChanged(newcl);
-	}
-
-	if(!newcl->updateconnOK && newcl->needupdate)
-	{
-		if(newcl->updateBeginTime == 0)
-		{
-			newcl->updateBeginTime = svs.time;
-		}
-		if(svs.time - newcl->updateBeginTime > 18000)
-		{
-			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.me/clupdate");
-			Com_Printf(CON_CHANNEL_SERVER,"Rejected client %s because updatebackend is unavailable\n", nick);
-			SV_FreeClientScriptId(newcl);
-			Com_Memset(newcl, 0, sizeof(client_t));
-			return;
-		}
-		SV_ConnectWithUpdateProxy(newcl);
-		return;
-	}
-
-#else
-	Q_strncpyz(newcl->name, nick, sizeof(newcl->name));
-	SV_UserinfoChanged(newcl);
-
-#endif
-
-#ifdef COD4X18UPDATE
-
-	// send the connect packet to the client
-	if(sv_modStats->boolean && !newcl->needupdate){
-
-#else
-
-	if(sv_modStats->boolean){
-
-#endif
-
-	    NET_OutOfBandPrint( NS_SERVER, from, "connectResponse %s", fs_gameDirVar->string);
-	}else{
-	    NET_OutOfBandPrint( NS_SERVER, from, "connectResponse");
-	}
-	// when we receive the first packet from the client, we will
-	// notice that it is from a different serverid and that the
-	// gamestate message was not just sent, forcing a retransmit
-	newcl->gamestateMessageNum = -1; //newcl->gamestateMessageNum = -1;
-	newcl->hasValidPassword = validpassword;
-
-	// if this was the first client on the server, or the last client
-	// the server can hold, send a heartbeat to the master.
-	for (j=0, cl=svs.clients, count=0; j < sv_maxclients->integer; j++, cl++) {
-		if (cl->state >= CS_CONNECTED ) {
-			count++;
-		}
-	}
-	if ( count == 1 || count == sv_maxclients->integer ) {
-		SV_Heartbeat_f();
-	}
-}
-
-
-#ifdef COD4X18UPDATE
-
-
-__optimize3 __regparm2 void SV_ReceiveStats(netadr_t *from, msg_t* msg){
-
-	unsigned short qport;
-	client_t *cl;
-	byte var_02;
-
-	qport = MSG_ReadShort( msg );
-	// find which client the message is from
-	cl = SV_ReadPackets(from, qport);
-	if(cl == NULL)
-	{
-		Com_DPrintf(CON_CHANNEL_SERVER,"SV_ReceiveStats: Received statspacket from disconnected remote client: %s qport: %d\n", NET_AdrToString(from), qport);
-		return;
-	}
-
-	cl->receivedstats = 0x7F;
-	var_02 = cl->receivedstats;
-	var_02 = ~var_02;
-	var_02 = var_02 & 127;
-	cl->lastPacketTime = svs.time;
-
-	NET_OutOfBandPrint( NS_SERVER, from, "statResponse %i", var_02 );
-}
-
-#endif
-
-
-/*
 client->receivedstats reset by SV_SpawnServer
 */
 void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
@@ -2845,3 +2312,544 @@ int SV_GetPredictedOriginAndTimeForClientNum(int clientNum, float *origin)
     origin[2] = client->predictedOrigin[2];
     return client->predictedOriginServerTime;
 }
+
+/*
+=================
+SV_GetChallenge
+
+A "getchallenge" OOB command has been received
+Returns a challenge number that can be used
+in a subsequent connectResponse command.
+We do this to prevent denial of service attacks that
+flood the server with invalid connection IPs.  With a
+challenge, they must give a valid IP address.
+
+If we are authorizing, a challenge request will cause a packet
+to be sent to the authorize server.
+
+When an authorizeip is returned, a challenge response will be
+sent to that ip.
+
+ioquake3: we added a possibility for clients to add a challenge
+to their packets, to make it more difficult for malicious servers
+to hi-jack client connections.
+Also, the auth stuff is completely disabled for com_standalone games
+as well as IPv6 connections, since there is no way to use the
+v4-only auth server for these new types of connections.
+=================
+*/
+__optimize3 void SV_GetChallenge(netadr_t* from)
+{
+    int	clientChallenge;
+    int	challenge;
+
+    if (from->type == NA_IP && svs.authorizeAddress.type != NA_DOWN)
+    {
+        /* This part is required to keep the server registered on the masterserver */
+        // look up the authorize server's IP
+        if (svs.authorizeAddress.type == NA_BAD)
+        {
+            Com_Printf(CON_CHANNEL_SERVER, "Resolving %s\n", AUTHORIZE_SERVER_NAME);
+            if (NET_StringToAdr(AUTHORIZE_SERVER_NAME, &svs.authorizeAddress, NA_IP))
+            {
+                svs.authorizeAddress.port = BigShort(PORT_AUTHORIZE);
+                Com_Printf(CON_CHANNEL_SERVER, "%s resolved to %s\n", AUTHORIZE_SERVER_NAME, NET_AdrToString(&svs.authorizeAddress));
+            }
+            else {
+                svs.authorizeAddress.type = NA_DOWN;
+            }
+        }
+        if (svs.authorizeAddress.type == NA_IP && from->type == NA_IP && NET_CompareBaseAdr(from, &svs.authorizeAddress))
+        {
+            from->port = BigShort(PORT_AUTHORIZE);
+            challenge = NET_CookieHash(from);
+            NET_OutOfBandPrint(NS_SERVER, from, "getIpAuthorize %i %s \"\" 0", challenge, NET_AdrToStringShort(from));
+            return;
+        }
+    }
+    challenge = NET_CookieHash(from);
+    clientChallenge = atoi(SV_Cmd_Argv(1));
+    NET_OutOfBandPrint(NS_SERVER, from, "challengeResponse %d %d 0 xproto", challenge, clientChallenge);
+}
+
+/*
+==================
+SV_DirectConnect
+
+A "connect" OOB command has been received
+==================
+*/
+
+__optimize3 void SV_DirectConnect(netadr_t* from)
+{
+	char		userinfo[MAX_INFO_STRING];
+	//	int			reconnectTime;
+
+	int			j;
+	int			i, n;
+	client_t* cl, * newcl;
+	int			count;
+	char			nick[33];
+	char			ip_str[128];
+	int			clientNum;
+	int			version;
+	unsigned int		qport;
+	int			challenge;
+	char* password;
+	char			denied[MAX_STRING_CHARS];
+	const char* denied2;
+	qboolean		canreserved;
+	qboolean		validpassword;
+
+	Q_strncpyz(userinfo, SV_Cmd_Argv(1), sizeof(userinfo));
+	challenge = atoi(Info_ValueForKey(userinfo, "challenge"));
+	qport = atoi(Info_ValueForKey(userinfo, "qport"));
+
+	if (challenge != NET_CookieHash(from))
+	{
+		NET_OutOfBandPrint(NS_SERVER, from, "error\nNo or bad challenge for address.\n");
+		return;
+	}
+
+	version = atoi(Info_ValueForKey(userinfo, "protocol"));
+
+#ifdef DEVRELEASE
+	char* xversion;
+
+	xversion = Info_ValueForKey(userinfo, "xver");
+	if (Q_stricmp(xversion, Sys_GetCommonVersionString()) && version > 7)
+	{
+		NET_OutOfBandPrint(NS_SERVER, from, "error\nBad subversion. Server expects subversion %s but client is %s\n", Sys_GetCommonVersionString(), xversion);
+		return;
+	}
+
+#endif
+
+	newcl = NULL;
+
+	// quick reject
+	for (n = 0, cl = svs.clients; n < sv_maxclients->integer; n++, cl++) {
+
+		if (NET_CompareBaseAdr(from, &cl->netchan.remoteAddress) && (cl->netchan.qport == qport || from->port == cl->netchan.remoteAddress.port)) {
+
+			/*
+			reconnectTime = (svs.time - cl->lastConnectTime);
+			if (reconnectTime < (sv_reconnectlimit->integer * 1000)) {
+				Com_Printf(CON_CHANNEL_SERVER,"%s -> reconnect rejected : too soon\n", NET_AdrToString (from));
+				NET_OutOfBandPrint( NS_SERVER, from, "print\nReconnect limit in effect... (%i)\n",
+							(sv_reconnectlimit->integer - (reconnectTime / 1000)));
+				return;
+
+			}else{
+				*/
+			SV_DropClient(cl, "silent");
+			newcl = cl;
+			Com_Printf(CON_CHANNEL_SERVER, "reconnected: %s\n", NET_AdrToString(from));
+			cl->lastConnectTime = svs.time;
+			break;
+			/*			}*/
+		}
+		else if (NET_CompareBaseAdr(from, &cl->netchan.remoteAddress) && (cl->state == CS_CONNECTED || cl->state == CS_ZOMBIE)) {
+			NET_OutOfBandPrint(NS_SERVER, from,
+				"error\nConnection refused:\nAn uncompleted connection from %s has been detected\nPlease try again later\n",
+				NET_AdrToString(&cl->netchan.remoteAddress));
+			Com_DPrintf(CON_CHANNEL_SERVER, "Rejected connection from %s. This is a Fake-Player-DoS protection\n", NET_AdrToString(&cl->netchan.remoteAddress));
+			return;
+		}
+	}
+
+	// force the IP key/value pair so the game can filter based on ip
+	Com_sprintf(ip_str, sizeof(ip_str), "%s", NET_AdrToConnectionString(from));
+	Info_SetValueForKey(userinfo, "ip", ip_str);
+
+	ClientCleanName(Info_ValueForKey(userinfo, "name"), nick, 33, qfalse);
+
+	denied[0] = '\0';
+
+	SV_PlayerBannedByip(from, denied, sizeof(denied));
+	if (denied[0]) {
+		NET_OutOfBandPrint(NS_SERVER, from, "error\n%s\n", denied);
+		Com_Printf(CON_CHANNEL_SERVER, "Rejecting a connection from a banned network address: %s\n", NET_AdrToString(from));
+		return;
+	}
+
+	if (version != sv_protocol->integer) {
+
+#ifdef COD4X18UPDATE
+		if (version <= 7)
+		{
+			Com_Printf(CON_CHANNEL_SERVER, "Have to fix up old client which reports version %d\n", version);
+		}
+		else {
+#endif
+			if (version < 9)
+			{
+				NET_OutOfBandPrint(NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
+					"Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
+					sv_protocol->integer);
+			}
+			else {
+#ifdef BETA_RELEASE
+				NET_OutOfBandPrint(NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
+					"This is a beta server. Sorry, but you can not connect to it with a release build of CoD4X.\n",
+					sv_protocol->integer);
+#else
+				NET_OutOfBandPrint(NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
+					"Please restart CoD4 and see on the main-menu if a new update is available\n"
+					"{OOBErrorParser protocolmismatch CoD4X" Q3_VERSION " %d}", sv_protocol->integer, sv_protocol->integer);
+#endif
+			}
+			Com_Printf(CON_CHANNEL_SERVER, "rejected connect from version %i\n", version);
+			return;
+
+#ifdef COD4X18UPDATE
+		}
+#endif
+	}
+
+
+	// find a client slot:
+	// if "sv_privateClients" is set > 0, then that number
+	// of client slots will be reserved for connections that
+	// have "password" set to the value of "sv_privatePassword"
+	// Info requests will report the maxclients as if the private
+	// slots didn't exist, to prevent people from trying to connect
+	// to a full server.
+	// This is to allow us to reserve a couple slots here on our
+	// servers so we can play without having to kick people.
+
+	//Get new slot for client
+	// check for privateClient password
+	password = Info_ValueForKey(userinfo, "password");
+	if (!newcl)
+	{
+		if (!strcmp(password, sv_privatePassword->string))
+		{
+			canreserved = qtrue;
+		}
+		else {
+			canreserved = qfalse;
+		}
+
+		PHandler_Event(PLUGINS_ONPLAYERWANTRESERVEDSLOT, from, "", userinfo, 0, &canreserved);
+		if (canreserved == qtrue)
+		{
+			for (j = 0; j < sv_privateClients->integer; j++) {
+				cl = &svs.clients[j];
+				if (cl->state == CS_FREE) {
+					newcl = cl;
+					break;
+				}
+			}
+		}
+	}
+
+	if (*sv_password->string && !Q_strncmp(sv_password->string, password, 32))
+	{
+		validpassword = qtrue;
+	}
+	else {
+		validpassword = qfalse;
+	}
+
+	if (*sv_password->string && !validpassword)
+	{
+		if (!sv_steamgroup || !sv_steamgroup->string[0]) //If server is in a Steamgroup we have to let him in and see later if he is a member of steam group
+		{
+			NET_OutOfBandPrint(NS_SERVER, from, "error\nThis server has set a join-password\n^1Invalid Password\n");
+			Com_Printf(CON_CHANNEL_SERVER, "Connection rejected from %s - Invalid Password\n", NET_AdrToString(from));
+			return;
+		}
+	}
+	//Process queue
+	for (i = 0; i < 10; i++) {//Purge all older players from queue
+		if (svs.connectqueue[i].lasttime + 21 < Com_GetRealtime()) {
+			svs.connectqueue[i].lasttime = 0;
+			svs.connectqueue[i].firsttime = 0;
+			svs.connectqueue[i].challengeslot = 0;
+			svs.connectqueue[i].attempts = 0;
+		}
+	}
+	for (i = 0; i < 10; i++) {//Move waiting players up in queue if there is a purged slot
+		if (svs.connectqueue[i].lasttime != 0) {
+			if (svs.connectqueue[i + 1].challengeslot == svs.connectqueue[i].challengeslot) {
+				svs.connectqueue[i + 1].lasttime = 0;
+				svs.connectqueue[i + 1].firsttime = 0;
+				svs.connectqueue[i + 1].challengeslot = 0;
+				svs.connectqueue[i + 1].attempts = 0;
+			}
+		}
+		else {
+			Com_Memcpy(&svs.connectqueue[i], &svs.connectqueue[i + 1], (9 - i) * sizeof(connectqueue_t));
+		}
+	}
+	for (i = 0; i < 10; i++) {//Find highest slot or the one which is already assigned to this player
+		if (svs.connectqueue[i].firsttime == 0 || svs.connectqueue[i].challengeslot == challenge) {
+			break;
+		}
+	}
+
+	if (i == 0 && !newcl) {
+		for (j = sv_privateClients->integer; j < sv_maxclients->integer; j++) {
+			cl = &svs.clients[j];
+			if (cl->state == CS_FREE) {
+				newcl = cl;
+				svs.connectqueue[0].lasttime = 0;
+				svs.connectqueue[0].firsttime = 0;
+				svs.connectqueue[0].challengeslot = 0;
+				svs.connectqueue[0].attempts = 0;
+				break;
+			}
+		}
+	}
+
+	if (!newcl) {
+		if (i == 10) {
+			NET_OutOfBandPrint(NS_SERVER, from, "error\nServer is full. More than 10 players are in queue.\n");
+			return;
+		}
+		else {
+			NET_OutOfBandPrint(NS_SERVER, from, "print\nServer is full. %i players wait before you.\n", i);
+		}
+		if (svs.connectqueue[i].attempts > 30) {
+			NET_OutOfBandPrint(NS_SERVER, from, "error\nServer is full. %i players wait before you.\n", i);
+			svs.connectqueue[i].attempts = 0;
+		}
+		else if (svs.connectqueue[i].attempts > 15 && i > 1) {
+			NET_OutOfBandPrint(NS_SERVER, from, "error\nServer is full. %i players wait before you.\n", i);
+			svs.connectqueue[i].attempts = 0;
+		}
+		else if (svs.connectqueue[i].attempts > 5 && i > 3) {
+			NET_OutOfBandPrint(NS_SERVER, from, "error\nServer is full. %i players wait before you.\n", i);
+			svs.connectqueue[i].attempts = 0;
+		}
+		if (svs.connectqueue[i].firsttime == 0) {
+			svs.connectqueue[i].firsttime = Com_GetRealtime();
+		}
+		svs.connectqueue[i].attempts++;
+		svs.connectqueue[i].lasttime = Com_GetRealtime();
+		svs.connectqueue[i].challengeslot = challenge;
+
+		return;
+	}
+
+
+	int bckbegintime;
+
+	if (n < sv_maxclients->integer && newcl->lastPacketTime + 10000 > svs.time)
+	{
+		bckbegintime = newcl->updateBeginTime;
+	}
+	else {
+		bckbegintime = 0;
+	}
+
+
+#ifdef COD4X18UPDATE
+	if (version <= 7 && newcl->challenge == challenge && newcl->state && newcl->updateconnOK)
+	{
+		Com_Memset(newcl, 0x00, sizeof(client_t));
+		newcl->updateconnOK = qtrue;
+
+	}
+	else {
+#endif
+		Com_Memset(newcl, 0x00, sizeof(client_t));
+
+#ifdef COD4X18UPDATE
+	}
+#endif
+
+	newcl->updateBeginTime = bckbegintime;
+
+	newcl->power = 0; //Sets the default power for the client
+	newcl->challenge = challenge; // save the challenge
+// (build a new connection
+// accept the new client
+// this is the only place a client_t is ever initialized)
+
+	clientNum = newcl - svs.clients;
+
+	denied[0] = '\0';
+
+	// save the userinfo
+	Q_strncpyz(newcl->userinfo, userinfo, sizeof(newcl->userinfo));
+
+	PHandler_Event(PLUGINS_ONPLAYERCONNECT, clientNum, from, "", userinfo, 0, denied, sizeof(denied));
+
+	if (denied[0]) {
+		NET_OutOfBandPrint(NS_SERVER, from, "error\n%s", denied);
+		Com_Printf(CON_CHANNEL_SERVER, "Rejecting a connection from a ? player\n");
+
+		svs.connectqueue[i].lasttime = 0;
+		svs.connectqueue[i].firsttime = 0;
+		svs.connectqueue[i].challengeslot = 0;
+		svs.connectqueue[i].attempts = 0;
+		return;
+	}
+
+	newcl->voicePacketCount = 0;
+	newcl->sendVoice = 1;
+	newcl->gentity = SV_GentityNum(clientNum);
+	newcl->scriptId = Scr_AllocArray();
+	newcl->protocol = version;
+
+#ifdef COD4X18UPDATE
+	if (newcl->protocol != sv_protocol->integer)
+	{
+		newcl->needupdate = qtrue;
+	}
+	else {
+		newcl->needupdate = qfalse;
+	}
+
+	if (!newcl->needupdate)
+	{
+#endif
+		// get the game a chance to reject this connection or modify the userinfo
+		denied2 = ClientConnect(clientNum, newcl->scriptId);
+
+		if (denied2) {
+			NET_OutOfBandPrint(NS_SERVER, from, "error\n%s\n", denied2);
+			Com_Printf(CON_CHANNEL_SERVER, "Game rejected a connection: %s\n", denied2);
+			SV_FreeClientScriptId(newcl);
+			return;
+		}
+
+
+#ifdef COD4X18UPDATE
+	}
+#endif
+
+	// save the address
+	// init the netchan queue
+	Netchan_Setup(NS_SERVER, &newcl->netchan, *from, qport,
+		newcl->unsentBuffer, sizeof(newcl->unsentBuffer),
+		newcl->fragmentBuffer, sizeof(newcl->fragmentBuffer));
+
+#ifdef COD4X18UPDATE
+
+	if (!newcl->needupdate)
+	{
+
+#endif
+
+
+		if (SV_SetupReliableMessageProtocol(newcl) == qfalse)
+		{
+			NET_OutOfBandPrint(NS_SERVER, from, "error\nServer is out of memory\n");
+			Com_Printf(CON_CHANNEL_SERVER, "Server is out of memory. Refused to accept client %s\n", nick);
+			SV_FreeClientScriptId(newcl);
+			return;
+		}
+
+		Com_Printf(CON_CHANNEL_SERVER, "Going from CS_FREE to CS_CONNECTED for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
+
+#ifdef COD4X18UPDATE
+	}
+#endif
+
+	newcl->state = CS_CONNECTED;
+	newcl->nextSnapshotTime = svs.time;
+	newcl->lastPacketTime = svs.time;
+	newcl->lastConnectTime = svs.time;
+
+	Q_strncpyz(newcl->xversion, Info_ValueForKey(userinfo, "xver"), sizeof(newcl->xversion));
+
+#ifdef COD4X18UPDATE
+	if (newcl->needupdate)
+	{
+		newcl->state = CS_ZOMBIE;
+		Com_Printf(CON_CHANNEL_SERVER, "Going from CS_FREE to CS_ZOMBIE for %s num %i from: %s\n", nick, clientNum, NET_AdrToConnectionString(from));
+		newcl->nextSnapshotTime = 0x7fffffff;
+
+	}
+	else {
+		Q_strncpyz(newcl->name, nick, sizeof(newcl->name));
+		SV_UserinfoChanged(newcl);
+	}
+
+	if (!newcl->updateconnOK && newcl->needupdate)
+	{
+		if (newcl->updateBeginTime == 0)
+		{
+			newcl->updateBeginTime = svs.time;
+		}
+		if (svs.time - newcl->updateBeginTime > 18000)
+		{
+			NET_OutOfBandPrint(NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.me/clupdate");
+			Com_Printf(CON_CHANNEL_SERVER, "Rejected client %s because updatebackend is unavailable\n", nick);
+			SV_FreeClientScriptId(newcl);
+			Com_Memset(newcl, 0, sizeof(client_t));
+			return;
+		}
+		SV_ConnectWithUpdateProxy(newcl);
+		return;
+	}
+
+#else
+	Q_strncpyz(newcl->name, nick, sizeof(newcl->name));
+	SV_UserinfoChanged(newcl);
+
+#endif
+
+#ifdef COD4X18UPDATE
+
+	// send the connect packet to the client
+	if (sv_modStats->boolean && !newcl->needupdate) {
+
+#else
+
+	if (sv_modStats->boolean) {
+
+#endif
+
+		NET_OutOfBandPrint(NS_SERVER, from, "connectResponse %s", fs_gameDirVar->string);
+	}
+	else {
+		NET_OutOfBandPrint(NS_SERVER, from, "connectResponse");
+	}
+	// when we receive the first packet from the client, we will
+	// notice that it is from a different serverid and that the
+	// gamestate message was not just sent, forcing a retransmit
+	newcl->gamestateMessageNum = -1; //newcl->gamestateMessageNum = -1;
+	newcl->hasValidPassword = validpassword;
+
+	// if this was the first client on the server, or the last client
+	// the server can hold, send a heartbeat to the master.
+	for (j = 0, cl = svs.clients, count = 0; j < sv_maxclients->integer; j++, cl++) {
+		if (cl->state >= CS_CONNECTED) {
+			count++;
+		}
+	}
+	if (count == 1 || count == sv_maxclients->integer) {
+		SV_Heartbeat_f();
+	}
+}
+
+#ifdef COD4X18UPDATE
+__optimize3 void SV_ReceiveStats(netadr_t* from, msg_t* msg)
+{
+
+    unsigned short qport;
+    client_t* cl;
+    byte var_02;
+
+    qport = MSG_ReadShort(msg);
+    // find which client the message is from
+    cl = SV_ReadPackets(from, qport);
+    if (cl == NULL)
+    {
+        Com_DPrintf(CON_CHANNEL_SERVER, "SV_ReceiveStats: Received statspacket from disconnected remote client: %s qport: %d\n", NET_AdrToString(from), qport);
+        return;
+    }
+
+    cl->receivedstats = 0x7F;
+    var_02 = cl->receivedstats;
+    var_02 = ~var_02;
+    var_02 = var_02 & 127;
+    cl->lastPacketTime = svs.time;
+
+    NET_OutOfBandPrint(NS_SERVER, from, "statResponse %i", var_02);
+}
+#endif

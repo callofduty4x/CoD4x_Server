@@ -3264,7 +3264,7 @@ __optimize3 static qboolean NET_TcpServerConnectRequest(netadr_t* net_from, fd_s
 #define MAX_NETPACKETS 666
 
 
-__optimize3 __regparm1 qboolean NET_TcpServerConnectEvent(fd_set *fdr)
+__optimize3 static qboolean NET_TcpServerConnectEvent(fd_set *fdr)
 {
 	netadr_t from;
 	int i;
@@ -3577,7 +3577,7 @@ Called from NET_Sleep which uses select() to determine which sockets have seen a
 ====================
 */
 
-__optimize3 __regparm1 qboolean NET_Event(int socket)
+__optimize3 static qboolean NET_Event(int socket)
 {
 	byte bufData[MAX_MSGLEN];
 	netadr_t from;
@@ -3646,115 +3646,6 @@ void NET_Shutdown( void ) {
 	winsockInitialized = qfalse;
 #endif
 }
-
-
-/*
-====================
-NET_Sleep
-
-Sleeps usec or until something happens on the network
-====================
-*/
-__optimize3 __regparm1 qboolean NET_Sleep(unsigned int usec)
-{
-	struct timeval timeout;
-	fd_set fdr;
-	int highestfd = -1;
-	int retval;
-	qboolean netabort = qfalse; //This will be true if we had to process more than 666 packets on one single interface
-				  //Usually this marks an ongoing floodattack onto this CoD4 server
-
-	if( usec > 999999 )
-		usec = 0;
-
-	FD_ZERO(&fdr);
-
-	if((signed int)ip4_socket.sock != INVALID_SOCKET)
-	{
-		FD_SET(ip4_socket.sock, &fdr);
-
-		if((signed int)ip4_socket.sock > (signed int)highestfd)
-		{
-			highestfd = ip4_socket.sock;
-		}
-	}
-	if((signed int)ip6_socket.sock != INVALID_SOCKET)
-	{
-		FD_SET(ip6_socket.sock, &fdr);
-
-		if((signed int)ip6_socket.sock > (signed int)highestfd)
-		{
-			highestfd = ip6_socket.sock;
-		}
-	}
-	if((signed int)tcp_socket != INVALID_SOCKET)
-	{
-
-		FD_SET(tcp_socket, &fdr);
-
-		if((signed int)tcp_socket > (signed int)highestfd)
-		{
-			highestfd = tcp_socket;
-		}
-	}
-
-	if((signed int)tcp6_socket != INVALID_SOCKET)
-	{
-		FD_SET(tcp6_socket, &fdr);
-
-		if((signed int)tcp6_socket > (signed int)highestfd)
-			highestfd = tcp6_socket;
-	}
-
-	timeout.tv_sec = 0;
-	timeout.tv_usec = usec;
-
-#ifdef _WIN32
-	if((signed int)highestfd < 0)
-	{
-		// windows ain't happy when select is called without valid FDs
-		SleepEx(usec / 1000, 0);
-		return qfalse;
-	}
-#endif
-
-	retval = select(highestfd + 1, &fdr, NULL, NULL, &timeout);
-
-	if(retval < 0){
-		if(socketError == EINTR)
-		{
-			return qfalse;
-		}
-		Com_PrintWarningNoRedirect(CON_CHANNEL_NETWORK,"NET_Sleep: select() syscall failed: %s\n", NET_ErrorString());
-		return qfalse;
-	}
-	else if(retval > 0){
-		if((signed int)ip6_socket.sock != INVALID_SOCKET && FD_ISSET(ip6_socket.sock, &fdr))
-		{
-			if(NET_Event(ip6_socket.sock))
-			{
-				netabort = qtrue;
-			}
-		}
-		if((signed int)ip4_socket.sock != INVALID_SOCKET && FD_ISSET(ip4_socket.sock, &fdr))
-		{
-			if(NET_Event(ip4_socket.sock))
-			{
-				netabort = qtrue;
-			}
-		}
-
-		if(((signed int)tcp_socket != INVALID_SOCKET && FD_ISSET(tcp_socket, &fdr)) || ((signed int)tcp6_socket != INVALID_SOCKET && FD_ISSET(tcp6_socket, &fdr)))
-		{
-			if(NET_TcpServerConnectEvent(&fdr))
-			{
-				netabort = qtrue;
-			}
-		}
-	}
-	return netabort;
-}
-
 
 
 /*
@@ -3917,4 +3808,104 @@ netadr_t* NET_GetDefaultCommunicationSocket(netadrtype_t family){
 		return &ip6_socket;
 	}
 	return NULL;
+}
+
+/*
+====================
+NET_Sleep
+
+Sleeps usec or until something happens on the network
+====================
+*/
+__optimize3 qboolean NET_Sleep(unsigned int usec)
+{
+    struct timeval timeout;
+    fd_set fdr;
+    int highestfd = -1;
+    int retval;
+    qboolean netabort = qfalse; //This will be true if we had to process more than 666 packets on one single interface
+                  //Usually this marks an ongoing floodattack onto this CoD4 server
+
+    if (usec > 999999)
+        usec = 0;
+
+    FD_ZERO(&fdr);
+
+    if ((signed int)ip4_socket.sock != INVALID_SOCKET)
+    {
+        FD_SET(ip4_socket.sock, &fdr);
+
+        if ((signed int)ip4_socket.sock > (signed int)highestfd)
+        {
+            highestfd = ip4_socket.sock;
+        }
+    }
+    if ((signed int)ip6_socket.sock != INVALID_SOCKET)
+    {
+        FD_SET(ip6_socket.sock, &fdr);
+
+        if ((signed int)ip6_socket.sock > (signed int)highestfd)
+        {
+            highestfd = ip6_socket.sock;
+        }
+    }
+    if ((signed int)tcp_socket != INVALID_SOCKET)
+    {
+
+        FD_SET(tcp_socket, &fdr);
+
+        if ((signed int)tcp_socket > (signed int)highestfd)
+        {
+            highestfd = tcp_socket;
+        }
+    }
+
+    if ((signed int)tcp6_socket != INVALID_SOCKET)
+    {
+        FD_SET(tcp6_socket, &fdr);
+
+        if ((signed int)tcp6_socket > (signed int)highestfd)
+            highestfd = tcp6_socket;
+    }
+
+    timeout.tv_sec = 0;
+    timeout.tv_usec = usec;
+
+#ifdef _WIN32
+    if ((signed int)highestfd < 0)
+    {
+        // windows ain't happy when select is called without valid FDs
+        SleepEx(usec / 1000, 0);
+        return qfalse;
+    }
+#endif
+
+    retval = select(highestfd + 1, &fdr, NULL, NULL, &timeout);
+
+    if (retval < 0) {
+        if (socketError == EINTR)
+            return qfalse;
+        
+        Com_PrintWarningNoRedirect(CON_CHANNEL_NETWORK, "NET_Sleep: select() syscall failed: %s\n", NET_ErrorString());
+        return qfalse;
+    }
+    else if (retval > 0) {
+        if ((signed int)ip6_socket.sock != INVALID_SOCKET && FD_ISSET(ip6_socket.sock, &fdr))
+        {
+            if (NET_Event(ip6_socket.sock))
+                netabort = qtrue;
+        }
+        if ((signed int)ip4_socket.sock != INVALID_SOCKET && FD_ISSET(ip4_socket.sock, &fdr))
+        {
+            if (NET_Event(ip4_socket.sock))
+                netabort = qtrue;
+        }
+
+        if (((signed int)tcp_socket != INVALID_SOCKET && FD_ISSET(tcp_socket, &fdr)) || ((signed int)tcp6_socket != INVALID_SOCKET && FD_ISSET(tcp6_socket, &fdr)))
+        {
+            if (NET_TcpServerConnectEvent(&fdr))
+                netabort = qtrue;
+        }
+    }
+    return netabort;
 }

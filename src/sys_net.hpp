@@ -19,11 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
 ===========================================================================
 */
-
-
-
-#ifndef __SYS_NET_H__
-#define __SYS_NET_H__
+#pragma once
 
 #include "qshared.hpp"
 #include "cvar.hpp"
@@ -105,7 +101,6 @@ int		NET_StringToAdr ( const char *s, netadr_t *a, netadrtype_t family);
 //qboolean	NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, msg_t *net_message);
 void		NET_JoinMulticast6(void);
 void		NET_LeaveMulticast6(void);
-__optimize3 __regparm1 qboolean	NET_Sleep(unsigned int usec);
 void NET_Clear(void);
 const char*	NET_AdrMaskToString(netadr_t *adr);
 int NET_GetStaticIPv6Address(netadr_t* adr, unsigned int startindex);
@@ -147,5 +142,4 @@ typedef enum {
 }tcpclientstate_t;
 
 extern cvar_t* net_enabled;
-
-#endif
+__optimize3 qboolean NET_Sleep(unsigned int usec);

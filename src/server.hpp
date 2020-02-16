@@ -20,10 +20,7 @@
 ===========================================================================
 */
 
-
-
-#ifndef __SERVER_H__
-#define __SERVER_H__
+#pragma once
 
 #include "qshared.hpp"
 #include "qcommon.hpp"
@@ -691,8 +688,6 @@ void SV_InitCvarsOnce( void );
 
 void SV_Init( void );
 
-__optimize2 __regparm1 qboolean SV_Frame( unsigned int usec );
-
 unsigned int SV_FrameUsec( void );
 
 void SV_RemoveAllBots( void );
@@ -701,10 +696,6 @@ const char* SV_GetMapRotation( void );
 
 void SV_AddOperatorCommands(void);
 
-__optimize3 __regparm1 void SV_GetChallenge(netadr_t *from);
-__optimize3 __regparm1 void SV_AuthorizeIpPacket( netadr_t *from );
-__optimize3 __regparm1 void SV_DirectConnect( netadr_t *from );
-__optimize3 __regparm2 void SV_ReceiveStats(netadr_t *from, msg_t* msg);
 void SV_SetClientStat(int clientNum, signed int index, int value);
 int SV_GetClientStat(int clientNum, signed int index);
 void SV_UserinfoChanged( client_t *cl );
@@ -877,11 +868,10 @@ int __cdecl SV_DObjExists(gentity_t *ent);
 
 }
 
-
-#endif
-
-
-
+__optimize2 qboolean SV_Frame(unsigned int usec);
+__optimize3 void SV_GetChallenge(netadr_t* from);
+__optimize3 void SV_DirectConnect(netadr_t* from);
+__optimize3 void SV_ReceiveStats(netadr_t* from, msg_t* msg);
 
 /*
 
