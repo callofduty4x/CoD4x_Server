@@ -207,7 +207,7 @@ VariableValue __cdecl Scr_GetArrayIndexValue(unsigned int name)
   return value;
 }
 
-void __regparm2 MakeVariableExternal(unsigned int index, VariableValueInternal *parentValue)
+static void MakeVariableExternal(unsigned int index, VariableValueInternal *parentValue)
 {
   VariableValue var;
 //  VariableValueInternal tempEntry;
@@ -1125,7 +1125,7 @@ unsigned int __cdecl SGetObjectA(unsigned int id)
 }
 
 
-void __regparm2 CopyArray(unsigned int parentId, unsigned int newParentId)
+static void CopyArray(unsigned int parentId, unsigned int newParentId)
 {
   unsigned int nextSibling;
   VariableValueInternal *parentValue;
@@ -3998,7 +3998,7 @@ void Scr_UnmatchingTypesError(VariableValue *value1, VariableValue *value2)
 
 
 
-void __regparm2 Scr_CastWeakerPair(VariableValue *value1, VariableValue *value2)
+static void Scr_CastWeakerPair(VariableValue *value1, VariableValue *value2)
 {
   float *tempVector;
   int type1;

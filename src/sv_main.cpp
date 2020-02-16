@@ -1473,7 +1473,8 @@ Shift down the remaining args
 Redirect all printfs
 ===============
 */
-__optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg ) {
+__optimize3 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg )
+{
     // TTimo - scaled down to accumulate, but not overflow anything network wise, print wise etc.
     // (OOB messages are the bottleneck here)
     char		sv_outputbuf[SV_OUTPUTBUF_LENGTH];
@@ -1852,7 +1853,8 @@ Clients that are in the game can still send
 connectionless packets.
 ===========h======
 */
-__optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg ) {
+__optimize3 static void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg )
+{
     char	*s;
     char	stringlinebuf[MAX_STRING_CHARS];
 
@@ -1924,119 +1926,6 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
 
 
 //============================================================================
-
-/*
-=================
-SV_PacketEvent
-=================
-*/
-__optimize3 __regparm2 void SV_PacketEvent( netadr_t *from, msg_t *msg ) {
-
-    client_t    *cl;
-    unsigned short qport;
-    int seq, csack;
-
-    if(!com_sv_running->boolean)
-            return;
-
-    if ( msg->cursize < 4 )
-    {
-        return;
-    }
-    MSG_BeginReading( msg );
-    seq = MSG_ReadLong( msg );           // sequence number
-
-    // check for connectionless packet (0xffffffff) first
-    if ( seq == -1 )
-    {
-        SV_ConnectionlessPacket( from, msg );
-        return;
-    }
-    // SV_ResetSekeletonCache();
-
-    // read the qport out of the message so we can fix up
-    // stupid address translating routers
-
-#ifdef COD4X18UPDATE
-    if(seq == 0xfffffffe)
-    {
-        SV_ReceiveFromUpdateProxy( msg );
-        return;
-    }
-#endif
-    qport = MSG_ReadShort( msg );  // & 0xffff;
-
-    // find which client the message is from
-    cl = SV_ReadPackets( from, qport );
-
-    if(cl == NULL)
-    {
-        // if we received a sequenced packet from an address we don't recognize,
-        // send an out of band disconnect packet to it
-        NET_OutOfBandPrint( NS_SERVER, from, "disconnect" );
-        return;
-    }
-
-    if(seq == 0xfffffff0)
-    {
-        ReliableMessagesReceiveNextFragment( cl->reliablemsg.netstate , msg );
-        return;
-    }
-#ifdef COD4X18UPDATE
-    if(cl->needupdate && cl->updateconnOK)
-    {
-        cl->lastPacketTime = svs.time;
-        SV_PassToUpdateProxy(msg, cl);
-        return;
-    }
-#endif
-    // make sure it is a valid, in sequence packet
-    if ( !Netchan_Process( &cl->netchan, msg ) )
-    {
-        return;
-    }
-
-    // zombie clients still need to do the Netchan_Process
-    // to make sure they don't need to retransmit the final
-    // reliable message, but they don't do any other processing
-    cl->serverId = MSG_ReadLong( msg );
-    cl->messageAcknowledge = MSG_ReadLong( msg );
-
-    if(cl->messageAcknowledge < 0){
-        Com_Printf(CON_CHANNEL_SERVER,"Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
-        return;
-    }
-    cl->reliableAcknowledge = MSG_ReadLong( msg );
-
-    if((cl->reliableSequence - cl->reliableAcknowledge) > (MAX_RELIABLE_COMMANDS - 1)){
-        Com_Printf(CON_CHANNEL_SERVER,"Out of range reliableAcknowledge message from %s - reliableSequence is %i, reliableAcknowledge is %i\n",
-        cl->name, cl->reliableSequence, cl->reliableAcknowledge);
-        cl->reliableAcknowledge = cl->reliableSequence;
-        return;
-    }
-
-    //New info for configdata
-
-
-    csack = MSG_ReadLong( msg );
-    if(csack > cl->configDataAcknowledge)
-    { //csack can be lower than cl->configDataAcknowledge in case when server wrote gamestate the client has not yet parsed. Ignoring this data here.
-        cl->configDataAcknowledge = csack;
-    }
-
-    SV_Netchan_Decode(cl, &msg->data[msg->readcount], msg->cursize - msg->readcount);
-
-    if ( cl->state == CS_ZOMBIE )
-    {
-        return;
-    }
-
-    cl->lastPacketTime = svs.time;  // don't timeout
-
-    SV_ExecuteClientMessage( cl, msg );
-}
-
-
 /*
 ==============================================================================
 
@@ -5402,4 +5291,111 @@ __optimize3 qboolean SV_Frame(unsigned int usec)
     }
 
     return qtrue;
+}
+
+__optimize3 void SV_PacketEvent(netadr_t* from, msg_t* msg)
+{
+
+    client_t* cl;
+    unsigned short qport;
+    int seq, csack;
+
+    if (!com_sv_running->boolean)
+        return;
+
+    if (msg->cursize < 4)
+    {
+        return;
+    }
+    MSG_BeginReading(msg);
+    seq = MSG_ReadLong(msg);           // sequence number
+
+    // check for connectionless packet (0xffffffff) first
+    if (seq == -1)
+    {
+        SV_ConnectionlessPacket(from, msg);
+        return;
+    }
+    // SV_ResetSekeletonCache();
+
+    // read the qport out of the message so we can fix up
+    // stupid address translating routers
+
+#ifdef COD4X18UPDATE
+    if (seq == 0xfffffffe)
+    {
+        SV_ReceiveFromUpdateProxy(msg);
+        return;
+    }
+#endif
+    qport = MSG_ReadShort(msg);  // & 0xffff;
+
+    // find which client the message is from
+    cl = SV_ReadPackets(from, qport);
+
+    if (cl == NULL)
+    {
+        // if we received a sequenced packet from an address we don't recognize,
+        // send an out of band disconnect packet to it
+        NET_OutOfBandPrint(NS_SERVER, from, "disconnect");
+        return;
+    }
+
+    if (seq == 0xfffffff0)
+    {
+        ReliableMessagesReceiveNextFragment(cl->reliablemsg.netstate, msg);
+        return;
+    }
+#ifdef COD4X18UPDATE
+    if (cl->needupdate && cl->updateconnOK)
+    {
+        cl->lastPacketTime = svs.time;
+        SV_PassToUpdateProxy(msg, cl);
+        return;
+    }
+#endif
+    // make sure it is a valid, in sequence packet
+    if (!Netchan_Process(&cl->netchan, msg))
+    {
+        return;
+    }
+
+    // zombie clients still need to do the Netchan_Process
+    // to make sure they don't need to retransmit the final
+    // reliable message, but they don't do any other processing
+    cl->serverId = MSG_ReadLong(msg);
+    cl->messageAcknowledge = MSG_ReadLong(msg);
+
+    if (cl->messageAcknowledge < 0) {
+        Com_Printf(CON_CHANNEL_SERVER, "Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
+        return;
+    }
+    cl->reliableAcknowledge = MSG_ReadLong(msg);
+
+    if ((cl->reliableSequence - cl->reliableAcknowledge) > (MAX_RELIABLE_COMMANDS - 1)) {
+        Com_Printf(CON_CHANNEL_SERVER, "Out of range reliableAcknowledge message from %s - reliableSequence is %i, reliableAcknowledge is %i\n",
+            cl->name, cl->reliableSequence, cl->reliableAcknowledge);
+        cl->reliableAcknowledge = cl->reliableSequence;
+        return;
+    }
+
+    //New info for configdata
+
+
+    csack = MSG_ReadLong(msg);
+    if (csack > cl->configDataAcknowledge)
+    { //csack can be lower than cl->configDataAcknowledge in case when server wrote gamestate the client has not yet parsed. Ignoring this data here.
+        cl->configDataAcknowledge = csack;
+    }
+
+    SV_Netchan_Decode(cl, &msg->data[msg->readcount], msg->cursize - msg->readcount);
+
+    if (cl->state == CS_ZOMBIE)
+    {
+        return;
+    }
+
+    cl->lastPacketTime = svs.time;  // don't timeout
+
+    SV_ExecuteClientMessage(cl, msg);
 }

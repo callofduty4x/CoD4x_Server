@@ -373,7 +373,6 @@ extern "C"
   void DB_SaveSounds();
   void DB_SaveDObjs();
   void DB_SyncExternalAssets();
-  //void __regparm2 DB_UnloadXZone(unsigned int zoneIndex, bool createDefault);
   void DB_LoadSounds();
   void __cdecl Load_SndAliasCustom(snd_alias_list_t **var);
   void Mark_XAsset();

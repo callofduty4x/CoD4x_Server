@@ -1266,96 +1266,6 @@ USER CMD EXECUTION
 */
 
 /*
-===================
-SV_ExecuteClientMessage
-
-Parse a client packet
-===================
-*/
-
-__optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) {
-	int c, clnum;
-	int serverId;
-	static const char *clc_strings[256] = { "clc_move", "clc_moveNoDelta", "clc_clientCommand", "clc_EOF", "clc_nop", "clc_sApiData"};
-
-	msg_t decompressMsg;
-	byte buffer[NETCHAN_FRAGMENTBUFFER_SIZE +1];
-
-	MSG_Init(&decompressMsg, buffer, sizeof(buffer));
-
-	decompressMsg.cursize = MSG_ReadBitsCompress(msg->data + msg->readcount, msg->cursize - msg->readcount, decompressMsg.data, decompressMsg.maxsize);
-	if(decompressMsg.cursize == decompressMsg.maxsize)
-	{
-		SV_DropClient(cl, "SV_ExecuteClientMessage: Client sent oversize message");
-		return;
-	}
-
-	clnum = cl - svs.clients;
-
-	if ( sv_shownet->integer == clnum ) {
-		Com_Printf(CON_CHANNEL_SERVER, "------------------\n" );
-	}
-
-	serverId = cl->serverId;
-
-	if ( (serverId & 0xffffff00) != (sv.start_frameTime & 0xffffff00) && !cl->wwwDl_var01 && !cl->wwwDownloadStarted && !cl->wwwDlAck )
-	{
-		if(cl->gamestateSent)
-		{
-			return;
-		}
-		if ( cl->messageAcknowledge > cl->gamestateMessageNum )
-		{
-			SV_SendClientGameState( cl );
-		}
-		return;
-	}
-
-
-	while(qtrue)
-	{
-		c = MSG_ReadBits(&decompressMsg, 3);
-
-		if ( sv_shownet->integer == clnum )
-		{
-			if ( !clc_strings[c] ) {
-					Com_Printf(CON_CHANNEL_SERVER, "%3i:BAD CMD %i\n", decompressMsg.readcount - 1, c );
-			} else {
-				Com_Printf(CON_CHANNEL_SERVER, "%3i:%s\n",  decompressMsg.readcount - 1, clc_strings[c] );
-			}
-		}
-
-		switch(c)
-		{
-			case clc_EOF:   //3
-				return;
-
-			case clc_move:  //0
-				SV_UserMove( cl, &decompressMsg, qtrue );
-				return;
-
-			case clc_moveNoDelta:  //1
-				SV_UserMove( cl, &decompressMsg, qfalse );
-				return;
-
-			case clc_clientCommand: //2
-                if ( !SV_ClientCommand( cl, &decompressMsg, qfalse ) || cl->state == CS_ZOMBIE )
-				{
-					return; // we couldn't execute it because of the flood protection
-				}
-				break;
-
-			default:
-				Com_PrintWarning(CON_CHANNEL_SERVER, "bad command byte %d for client %i\n", c, cl - svs.clients );
-				return;
-		}
-
-	}
-
-}
-
-
-/*
 ==================
 SV_UpdateUserinfo_f
 ==================
@@ -2853,3 +2763,91 @@ __optimize3 void SV_ReceiveStats(netadr_t* from, msg_t* msg)
     NET_OutOfBandPrint(NS_SERVER, from, "statResponse %i", var_02);
 }
 #endif
+
+/*
+===================
+SV_ExecuteClientMessage
+
+Parse a client packet
+===================
+*/
+__optimize3 void SV_ExecuteClientMessage(client_t* cl, msg_t* msg)
+{
+    int c, clnum;
+    int serverId;
+    static const char* clc_strings[256] = { "clc_move", "clc_moveNoDelta", "clc_clientCommand", "clc_EOF", "clc_nop", "clc_sApiData" };
+
+    msg_t decompressMsg;
+    byte buffer[NETCHAN_FRAGMENTBUFFER_SIZE + 1];
+
+    MSG_Init(&decompressMsg, buffer, sizeof(buffer));
+
+    decompressMsg.cursize = MSG_ReadBitsCompress(msg->data + msg->readcount, msg->cursize - msg->readcount, decompressMsg.data, decompressMsg.maxsize);
+    if (decompressMsg.cursize == decompressMsg.maxsize)
+    {
+        SV_DropClient(cl, "SV_ExecuteClientMessage: Client sent oversize message");
+        return;
+    }
+
+    clnum = cl - svs.clients;
+
+    if (sv_shownet->integer == clnum) {
+        Com_Printf(CON_CHANNEL_SERVER, "------------------\n");
+    }
+
+    serverId = cl->serverId;
+
+    if ((serverId & 0xffffff00) != (sv.start_frameTime & 0xffffff00) && !cl->wwwDl_var01 && !cl->wwwDownloadStarted && !cl->wwwDlAck)
+    {
+        if (cl->gamestateSent)
+        {
+            return;
+        }
+        if (cl->messageAcknowledge > cl->gamestateMessageNum)
+        {
+            SV_SendClientGameState(cl);
+        }
+        return;
+    }
+
+
+    while (qtrue)
+    {
+        c = MSG_ReadBits(&decompressMsg, 3);
+
+        if (sv_shownet->integer == clnum)
+        {
+            if (!clc_strings[c]) {
+                Com_Printf(CON_CHANNEL_SERVER, "%3i:BAD CMD %i\n", decompressMsg.readcount - 1, c);
+            }
+            else {
+                Com_Printf(CON_CHANNEL_SERVER, "%3i:%s\n", decompressMsg.readcount - 1, clc_strings[c]);
+            }
+        }
+
+        switch (c)
+        {
+        case clc_EOF:   //3
+            return;
+
+        case clc_move:  //0
+            SV_UserMove(cl, &decompressMsg, qtrue);
+            return;
+
+        case clc_moveNoDelta:  //1
+            SV_UserMove(cl, &decompressMsg, qfalse);
+            return;
+
+        case clc_clientCommand: //2
+            if (!SV_ClientCommand(cl, &decompressMsg, qfalse) || cl->state == CS_ZOMBIE)
+            {
+                return; // we couldn't execute it because of the flood protection
+            }
+            break;
+
+        default:
+            Com_PrintWarning(CON_CHANNEL_SERVER, "bad command byte %d for client %i\n", c, cl - svs.clients);
+            return;
+        }
+    }
+}

@@ -659,8 +659,6 @@ void __cdecl SV_SendServerCommand_IW(client_t *cl, int type, const char *fmt, ..
 void __cdecl SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...);
 void __cdecl SV_SendServerCommand(client_t *cl, const char *fmt, ...);
 
-__optimize3 __regparm2 void SV_PacketEvent( netadr_t *from, msg_t *msg );
-
 void SV_AddServerCommand( client_t *cl, int type, const char *cmd );
 
 void Scr_SpawnBot(void);
@@ -721,12 +719,7 @@ const char* SV_GetNextMap(void);
 qboolean SV_ClientCommand( client_t *cl, msg_t *msg, qboolean inDl);
 
 void SV_WriteRconStatus( msg_t *msg );
-
 void SV_SayToPlayers(int clnum, int team, char* text);
-
-
-__optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg );
-
 void SV_GetUserinfo( int index, char *buffer, int bufferSize );
 
 qboolean SV_Map(const char* levelname);
@@ -872,6 +865,8 @@ __optimize2 qboolean SV_Frame(unsigned int usec);
 __optimize3 void SV_GetChallenge(netadr_t* from);
 __optimize3 void SV_DirectConnect(netadr_t* from);
 __optimize3 void SV_ReceiveStats(netadr_t* from, msg_t* msg);
+__optimize3 void SV_PacketEvent(netadr_t* from, msg_t* msg);
+__optimize3 void SV_ExecuteClientMessage(client_t* cl, msg_t* msg);
 
 /*
 
