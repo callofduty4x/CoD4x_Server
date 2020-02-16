@@ -1958,7 +1958,7 @@ void MSG_WriteOriginZFloat(const int clientNum, msg_t *msg, float value, float o
 
 
 
-__regparm3 void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
+void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend)
 {
 	int nullfield;
 	int32_t timetodata;

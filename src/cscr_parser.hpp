@@ -58,5 +58,5 @@ extern "C"
 
     unsigned int __cdecl Scr_GetSourceBuffer(const char *codePos);
     void __cdecl Scr_PrintPrevCodePos(conChannel_t channel, const char *codePos, unsigned int index);
-    void __regparm3 Scr_AddSourceBufferInternal(const char* extFilename, const char* codePos, char* sourceBuf, int len, bool doEolFixup, bool archive);
+    void __cdecl Scr_AddSourceBufferInternal(const char* extFilename, const char* codePos, char* sourceBuf, int len, bool doEolFixup, bool archive);
 };

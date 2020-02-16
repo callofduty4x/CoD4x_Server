@@ -978,22 +978,6 @@ void Scr_Sys_Error_Wrapper(const char *fmt, ...)
     Com_Error(ERR_SCRIPT, "%s", com_errorMessage);
 }
 
-/*
-int GetArraySize(int aHandle)
-{
-    int size = gScrVarGlob.variables[aHandle].value.typeSize.size;
-    return size;
-}*/
-
-/* only for debug */
-/*
-__regparm3 void VM_Notify_Hook(int entid, int constString, VariableValue *arguments)
-{
-    Com_Printf(CON_CHANNEL_SCRIPT,"^2Notify Entitynum: %d, EventString: %s\n", entid, SL_ConvertToString(constString));
-    VM_Notify(entid, constString, arguments);
-}*/
-
-
 
 void RuntimeError_Debug(char *msg, char *pos, int a4)
 {

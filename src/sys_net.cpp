@@ -411,7 +411,7 @@ static void NetadrToSockadr( netadr_t *a, struct sockaddr *s ) {
 }
 
 
-__optimize3 __regparm3 static void SockadrToNetadr( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
+__optimize3 static void SockadrToNetadr( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
 	if (s->sa_family == AF_INET) {
 		memcpy(a->ip, &((struct sockaddr_in *)s)->sin_addr.s_addr, sizeof(a->ip));
 		a->port = ((struct sockaddr_in *)s)->sin_port;
@@ -451,33 +451,6 @@ static void Sys_SockaddrToString(char *dest, int destlen, struct sockaddr *input
 		*dest = '\0';
 }
 
-
-/*
-__optimize3 __regparm3 static void SockadrToNetadr6( struct sockaddr *s, netadr_t *a, qboolean tcp, int socket) {
-
-	a->sock = socket;
-	if(!tcp)
-		a->type = NA_IP6;
-	else
-		a->type = NA_TCP6;
-
-	if (s->sa_family == AF_INET) {
-		memset(a->ip6, 0, 10);
-		a->ip6[10] = -1;
-		a->ip6[11] = -1;
-		memcpy(a->ip6 + 12, &((struct sockaddr_in *)s)->sin_addr.s_addr, 4);
-		a->port = ((struct sockaddr_in *)s)->sin_port;
-		a->scope_id = 0;
-	}
-	else if(s->sa_family == AF_INET6)
-	{
-		memcpy(a->ip6, &((struct sockaddr_in6 *)s)->sin6_addr, sizeof(a->ip6));
-		a->port = ((struct sockaddr_in6 *)s)->sin6_port;
-		a->scope_id = ((struct sockaddr_in6 *)s)->sin6_scope_id;
-	}
-
-}
-*/
 /*
 =============
 Sys_StringToSockaddr
@@ -1280,7 +1253,7 @@ Receive one packet
 int	recvfromCount;
 #endif
 
-__optimize3 __regparm3 int NET_GetPacket(netadr_t *net_from, void *net_message, int maxsize, int socket)
+__optimize3 int NET_GetPacket(netadr_t *net_from, void *net_message, int maxsize, int socket)
 {
 	int 	ret;
 	struct sockaddr_storage from;
@@ -3220,7 +3193,8 @@ Try to accept this request
 */
 
 
-__optimize3 __regparm3 qboolean NET_TcpServerConnectRequest(netadr_t* net_from, fd_set *fdr){
+__optimize3 static qboolean NET_TcpServerConnectRequest(netadr_t* net_from, fd_set *fdr)
+{
 
 	struct sockaddr_storage from;
 	socklen_t	fromlen;

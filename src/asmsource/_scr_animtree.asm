@@ -788,6 +788,24 @@ Scr_GetAnimsIndex_10:
 	ret
 	nop
 
+; bool AnimTreeParseInternal2<eax>(unsigned int parentNode<eax>, unsigned int names<edx>, bool bIncludeParent<ecx>, bool bLoop, bool bComplete);
+AnimTreeParseInternal2:
+	push ebp
+	mov ebp, esp
+	push edi
+	mov edi, eax
+	mov eax, [ebp + 12]
+	push eax              ; bComplete
+	mov eax, [ebp + 8]
+	push eax              ; bLoop
+	push ecx              ; bIncludeParent
+	push edx              ; names
+	push edi              ; parentNode
+	call AnimTreeParseInternal ; ->eax
+	add esp, 20
+	pop edi
+	pop ebp
+	retn
 
 ;Scr_LoadAnimTreeAtIndex(unsigned int, void* (*)(int), int)
 Scr_LoadAnimTreeAtIndex:
@@ -874,7 +892,7 @@ Scr_LoadAnimTreeAtIndex_20:
 	mov ecx, 0x1
 	mov edx, [ebp-0x6c]
 	mov eax, edi
-	call AnimTreeParseInternal
+	call AnimTreeParseInternal2
 	test al, al
 	jz Scr_LoadAnimTreeAtIndex_40
 Scr_LoadAnimTreeAtIndex_120:

@@ -47,9 +47,33 @@
 
 SECTION .text
 
-
-;Scr_AddSourceBufferInternal(char const*, char const*, char*, int, unsigned char, unsigned char)
+;void Scr_AddSourceBufferInternal(const char* extFilename, const char* codePos, char* sourceBuf, int len, bool doEolFixup, bool archive)
 Scr_AddSourceBufferInternal:
+	push ebp
+	mov ebp, esp
+	push eax
+	push edx
+	push ecx
+	mov eax, [ebp + 28]
+	push eax              ; archive
+	mov eax, [ebp + 24]
+	push eax              ; doEolFixup
+	mov eax, [ebp + 20]
+	push eax              ; len
+	mov ecx, [ebp + 16]   ; sourceBuf
+	mov edx, [ebp + 12]   ; codePos
+	mov eax, [ebp + 8]    ; extFilename
+	call Scr_AddSourceBufferInternal2
+	add esp, 12
+	pop ecx
+	pop edx
+	pop eax
+	pop ebp
+	retn
+
+;void Scr_AddSourceBufferInternal2<eax>(const char* extFilename<eax>, const char* codePos<edx>, char* sourceBuf<ecx>, int len, bool doEolFixup, bool archive)
+;in idb it was Scr_AddSourceBufferInternal
+Scr_AddSourceBufferInternal2:
 	push ebp
 	mov ebp, esp
 	push edi

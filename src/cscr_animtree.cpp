@@ -100,7 +100,7 @@ unsigned int GetAnimTreeParseProperties()
 }
 
 
-bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int names, bool bIncludeParent, bool bLoop, bool bComplete)
+bool AnimTreeParseInternal(unsigned int parentNode, unsigned int names, bool bIncludeParent, bool bLoop, bool bComplete)
 {
   unsigned int animName;
   bool bIgnore;
@@ -262,4 +262,4 @@ bool __regparm3 AnimTreeParseInternal(unsigned int parentNode, unsigned int name
   return r;
 }
 
-}
+} // extern "C"

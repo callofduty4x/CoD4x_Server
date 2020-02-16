@@ -627,9 +627,21 @@ Scr_CancelWaittill_10:
 	nop
 	add [eax], al
 
-
-;VM_Notify(unsigned int, unsigned int, VariableValue*)
+;void __cdecl VM_Notify2(unsigned int, unsigned int, VariableValue*)
 VM_Notify:
+	push ebp
+	mov ebp, esp
+
+	mov ecx, [ebp+16]
+	mov edx, [ebp+12]
+	mov eax, [ebp+8]
+	call VM_Notify2
+
+	pop ebp
+	retn
+
+;void VM_Notify2(unsigned int<eax>, unsigned int<edx>, VariableValue*<ecx>)
+VM_Notify2:
 	push ebp
 	mov ebp, esp
 	push edi
@@ -2979,7 +2991,7 @@ VM_ExecuteInternal_4040:
 	mov [eax], edx
 	mov edx, ebx
 	mov eax, esi
-	call VM_Notify
+	call VM_Notify2
 	mov eax, [gScrVmPub+0xc]
 	mov eax, [eax]
 	mov [gFs], eax

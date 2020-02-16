@@ -324,7 +324,6 @@ float FloatSwap (const float f);
 #define __fastcall __attribute__((fastcall))
 #define __regparm1 __attribute__((regparm(1)))
 #define __regparm2 __attribute__((regparm(2)))
-#define __regparm3 __attribute__((regparm(3)))
 #define __optimize2 __attribute__ ((optimize("-O2")))
 #define __optimize3 __attribute__ ((optimize("-O3"))) __attribute__ ((noinline))
 
@@ -351,7 +350,6 @@ using WORD = unsigned short;
 #define __noreturn [[ noreturn ]]
 #define __regparm1
 #define __regparm2
-#define __regparm3
 #define __optimize2
 #define __optimize3
 

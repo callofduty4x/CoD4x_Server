@@ -125,7 +125,6 @@ void MSG_WriteReliableCommandToBuffer(const char *source, char *destination, int
 
 int MSG_ReadDeltaClient(msg_t *msg, const int time, clientState_t *from, clientState_t *to, int number);
 void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force);
-//void MSG_WriteDeltaField(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, const byte *from, const byte *to, const struct netField_s* field, int fieldNum, byte forceSend);
 void __cdecl MSG_WriteDeltaPlayerstate(struct snapshotInfo_s* , msg_t* , int , struct playerState_s* , struct playerState_s*);
 void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, const int time, playerState_t *from, playerState_t *to, bool predictedFieldsIgnoreXor);
 void __cdecl MSG_WriteEntityIndex(struct snapshotInfo_s*, msg_t*, int, int);

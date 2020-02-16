@@ -711,7 +711,7 @@ void SV_UserinfoChanged( client_t *cl );
 void SV_DropClient( client_t *drop, const char *reason );
 void SV_DropClientNoNotify( client_t *drop, const char *reason );
 void SV_DelayDropClient(client_t *client, const char *dropmsg);
-__optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta );
+__optimize3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta );
 void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd );
 void SV_WriteDownloadToClient( client_t *cl );
 void SV_SendClientGameState( client_t *client );

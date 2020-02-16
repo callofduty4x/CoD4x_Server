@@ -989,7 +989,8 @@ On very fast clients, there may be multiple usercmd packed into
 each of the backup packets.
 ==================
 */
-__optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta ) {
+__optimize3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta )
+{
 	int i, key, clientNum;
 	unsigned int *ackTime;
 	unsigned int sysTime;

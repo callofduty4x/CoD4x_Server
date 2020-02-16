@@ -788,7 +788,6 @@ qboolean Scr_AddMethod( const char *cmd_name, xmethod_t function, qboolean devel
 qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
 xmethod_t __cdecl Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
-void __regparm3 VM_Notify(int, int, VariableValue* val);
 
 
 qboolean Scr_FS_CloseFile( scr_fileHandle_t* f );
@@ -853,6 +852,7 @@ extern "C"
     extern scrVmPub_t gScrVmPub;
 
     void Scr_ResetTimeout();
+    void __cdecl VM_Notify(int, int, VariableValue* val);
 }
 
 #endif

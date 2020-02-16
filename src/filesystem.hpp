@@ -230,8 +230,6 @@ void FS_RemoveOSPath(const char *);
 qboolean FS_FileExistsOSPath( const char *ospath );
 void FS_RenameOSPath( const char *from_ospath, const char *to_ospath );
 qboolean FS_SetPermissionsExec(const char* ospath);
-__regparm3 void DB_BuildOSPath(const char *filename, int ffdir, int len, char *buff);
-void DB_BuildQPath(const char *filename, int ffdir, int len, char *buff);
 bool DB_GetQPathForZone(const char* zoneName, int maxlen, char* opath);
 int     FS_FOpenFileByMode( const char *qpath, fileHandle_t *f, fsMode_t mode );
 void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen);
@@ -266,4 +264,7 @@ void FS_AddGameDirectory_Single(const char *path, const char *dir_nolocal, qbool
     void __cdecl FS_AddUserMapDirIWDs(const char *pszGameFolder);
     int __cdecl FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize);
     qboolean __cdecl FS_LanguageHasAssets(int iLanguage);
+    void DB_BuildOSPath(const char* filename, int ffdir, int len, char* buff);
 } // extern "C"
+
+void DB_BuildQPath(const char* filename, int ffdir, int len, char* buff);

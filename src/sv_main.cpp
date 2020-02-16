@@ -579,7 +579,7 @@ SVC_BucketForAddress
 Find or allocate a bucket for an address
 ================
 */
-__optimize3 __regparm3 static leakyBucket_t *SVC_BucketForAddress( netadr_t *address, int burst, int period ) {
+__optimize3 static leakyBucket_t *SVC_BucketForAddress( netadr_t *address, int burst, int period ) {
     leakyBucket_t		*bucket = NULL;
     int			i;
     long			hash = SVC_HashForAddress( address );
@@ -702,7 +702,7 @@ SVC_RateLimitAddress
 Rate limit for a particular address
 ================
 */
-__optimize3 __regparm3 static qboolean SVC_RateLimitAddress( netadr_t *from, int burst, int period ) {
+__optimize3 static qboolean SVC_RateLimitAddress( netadr_t *from, int burst, int period ) {
 
     if(Sys_IsLANAddress(from))
         return qfalse;

@@ -283,6 +283,22 @@
 
 SECTION .text
 
+; void DB_BuildOSPath(const char *filename<eax>, int ffdir<edx>, int len<ecx>, char *buff)
+DB_BuildOSPath2:
+	push ebp
+	mov ebp, esp
+	push edi
+	mov edi, eax
+	mov eax, [ebp + 8]
+	push eax              ; buff
+	push ecx              ; len
+	push edx              ; ffdir
+	push edi              ; filename
+	call DB_BuildOSPath ; ->eax
+	add esp, 16
+	pop edi
+	pop ebp
+	retn
 
 ;DB_DynamicCloneMenu(XAssetHeader, XAssetHeader, int)
 DB_DynamicCloneMenu:
@@ -2593,7 +2609,7 @@ DB_AddUserMapDir_10:
 	mov ecx, 0x100
 	mov edx, 0x2
 	mov eax, [ebp+0x8]
-	call DB_BuildOSPath
+	call DB_BuildOSPath2
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x60000000
 	mov dword [esp+0x10], 0x3
@@ -2642,7 +2658,7 @@ DB_ModFileExists_10:
 	mov ecx, 0x100
 	mov edx, 0x1
 	mov eax, _cstring_mod
-	call DB_BuildOSPath
+	call DB_BuildOSPath2
 	mov dword [esp+0x18], 0x0
 	mov dword [esp+0x14], 0x60000000
 	mov dword [esp+0x10], 0x3

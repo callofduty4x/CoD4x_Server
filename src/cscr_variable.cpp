@@ -701,7 +701,7 @@ void __cdecl AddRefToValue(int type, VariableUnion u)
   }
 }
 
-unsigned int __regparm3 GetNewVariableIndexInternal3(unsigned int parentId, unsigned int name, unsigned int index)
+unsigned int GetNewVariableIndexInternal3(unsigned int parentId, unsigned int name, unsigned int index)
 {
   VariableValueInternal *oldEntryValue;
   unsigned int id;
