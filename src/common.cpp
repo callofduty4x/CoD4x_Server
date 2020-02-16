@@ -674,7 +674,6 @@ void Com_Init(char* commandLine){
 
 
     Cbuf_Init();
-
     Cmd_Init();
 
     Com_InitEventQueue();

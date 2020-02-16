@@ -23,6 +23,7 @@
 
 
 #include <string.h>
+#include <string>
 
 #include "cmd.hpp"
 #include "cvar.hpp"
@@ -35,6 +36,8 @@
 #include "sys_thread.hpp"
 #include "sv_auth.hpp"
 
+using namespace std;
+
 /*
 =============================================================================
 
@@ -46,72 +49,17 @@
 #define	MAX_CMD_BUFFER	1024
 #define	MAX_CMD_LINE	8192
 
-typedef struct {
-	byte	*data;
-	int		maxsize;
-	int		cursize;
-} cmd_t;
-
-int		cmd_wait;
-cmd_t		cmd_text;
-byte		cmd_text_buf[MAX_CMD_BUFFER];
-
+int cmd_wait;
+static string cmd_text;
 
 /*
 ============
 Cbuf_Init
 ============
 */
-void Cbuf_Init (void)
+void Cbuf_Init()
 {
-	cmd_text.data = cmd_text_buf;
-	cmd_text.maxsize = MAX_CMD_BUFFER;
-	cmd_text.cursize = 0;
-
-
-}
-
-/*
-============
-Cbuf_AddText
-
-Adds command text at the end of the buffer, does NOT add a final \n
-============
-*/
-void Cbuf_AddText(const char *text)
-{
-    int len;
-    void* new_buf;
-    len = strlen (text) + 1;
-
-    Sys_EnterCriticalSection(CRITSECT_CBUF);
-
-    if ( len + cmd_text.cursize > cmd_text.maxsize )
-    {
-
-        if(cmd_text.data == cmd_text_buf)
-        {
-            new_buf = realloc(NULL, len + cmd_text.cursize);
-            if(new_buf)
-                Com_Memcpy(new_buf, cmd_text_buf, len + cmd_text.cursize);
-        }
-        else
-            new_buf = realloc(cmd_text.data, len + cmd_text.cursize);
-
-        if(!new_buf)
-        {
-            Com_PrintError(CON_CHANNEL_SYSTEM, "Cbuf_AddText overflowed ; realloc failed\n" );
-            Sys_LeaveCriticalSection(CRITSECT_CBUF);
-            return;
-        }
-        cmd_text.data = reinterpret_cast<byte*>(new_buf);
-        cmd_text.maxsize = len + cmd_text.cursize;
-    }
-
-    Com_Memcpy(&cmd_text.data[cmd_text.cursize], text, len -1);
-    cmd_text.cursize += len -1;
-
-    Sys_LeaveCriticalSection(CRITSECT_CBUF);
+    cmd_text.reserve(MAX_CMD_BUFFER);
 }
 
 /*
@@ -124,182 +72,126 @@ Adds a \n to the text
 */
 void Cbuf_InsertText(const char *text)
 {
-    void* new_buf;
-    int len = strlen( text ) + 1;
-
     Sys_EnterCriticalSection(CRITSECT_CBUF);
-
-    if ( len + cmd_text.cursize > cmd_text.maxsize )
-    {
-        if(cmd_text.data == cmd_text_buf)
-        {
-            new_buf = realloc(NULL, len + cmd_text.cursize);
-            if(new_buf)
-                Com_Memcpy(new_buf, cmd_text_buf, len + cmd_text.cursize);
-        }
-        else
-            new_buf = realloc(cmd_text.data, len + cmd_text.cursize);
-
-        if(!new_buf)
-        {
-            Com_PrintError(CON_CHANNEL_SYSTEM, "Cbuf_InsertText overflowed ; realloc failed\n" );
-            Sys_LeaveCriticalSection(CRITSECT_CBUF);
-            return;
-        }
-
-        cmd_text.data = reinterpret_cast<byte*>(new_buf);
-        cmd_text.maxsize = len + cmd_text.cursize;
-    }
-
-    // move the existing command text
-    for (int i = cmd_text.cursize - 1 ; i >= 0 ; i-- )
-        cmd_text.data[ i + len ] = cmd_text.data[ i ];
-
-    // copy the new text in
-    Com_Memcpy( cmd_text.data, text, len - 1 );
-
-    // add a \n
-    cmd_text.data[ len - 1 ] = '\n';
-
-    cmd_text.cursize += len;
-
+    cmd_text += text;
+    cmd_text += "\n";
     Sys_LeaveCriticalSection(CRITSECT_CBUF);
 }
+
 
 /*
 ============
 Cbuf_ExecuteText
 ============
 */
-void Cbuf_ExecuteText (int exec_when, const char *text)
+void Cbuf_ExecuteText(int exec_when, const char* text)
 {
-	switch (exec_when)
-	{
-	case EXEC_NOW:
+    switch (exec_when)
+    {
+    case EXEC_NOW:
+        Sys_EnterCriticalSection(CRITSECT_CBUF);
+        if (text && strlen(text) > 0)
+        {
+            Com_DPrintf(CON_CHANNEL_SYSTEM, S_COLOR_YELLOW "EXEC_NOW %s\n", text);
+            Cmd_ExecuteString(text);
+        }
+        else
+        {
+            Cbuf_Execute();
+            Com_DPrintf(CON_CHANNEL_SYSTEM, S_COLOR_YELLOW "EXEC_NOW %s\n", cmd_text.c_str());
+        }
 
-		Sys_EnterCriticalSection(CRITSECT_CBUF);
+        return Sys_LeaveCriticalSection(CRITSECT_CBUF);
 
-		if (text && strlen(text) > 0) {
-			Com_DPrintf(CON_CHANNEL_SYSTEM, S_COLOR_YELLOW "EXEC_NOW %s\n", text);
-			Cmd_ExecuteString (text);
-		} else {
-			Cbuf_Execute();
-			Com_DPrintf(CON_CHANNEL_SYSTEM, S_COLOR_YELLOW "EXEC_NOW %s\n", cmd_text.data);
-		}
+    case EXEC_INSERT:
+        return Cbuf_InsertText(text);
 
-		Sys_LeaveCriticalSection(CRITSECT_CBUF);
+    case EXEC_APPEND:
+        return Cbuf_AddText(text);
 
-		break;
-	case EXEC_INSERT:
-		Cbuf_InsertText (text);
-		break;
-	case EXEC_APPEND:
-		Cbuf_AddText (text);
-		break;
-	default:
-		Com_Error (ERR_FATAL, "Cbuf_ExecuteText: bad exec_when");
-	}
+    default: break;
+    }
+
+    Com_Error(ERR_FATAL, "Cbuf_ExecuteText: bad exec_when");
 }
 
 
-
-/*
-============
-Cbuf_Execute
-============
-*/
-void Cbuf_Execute (void)
+void Cbuf_Execute()
 {
-	int		i;
-	char	*text;
-	char	line[MAX_CMD_LINE];
-	int		quotes;
+    // This will keep // style comments all on one line by not breaking on
+    // a semicolon.  It will keep /* ... */ style comments all on one line by not
+    // breaking it for semicolon or newline.
+    bool in_star_comment = false;
+    bool in_slash_comment = false;
+    while (cmd_text.size())
+    {
+        if (cmd_wait > 0)
+        {
+            // skip out while text still remains in buffer, leaving it
+            // for next frame
+            cmd_wait--;
+            break;
+        }
 
-	// This will keep // style comments all on one line by not breaking on
-	// a semicolon.  It will keep /* ... */ style comments all on one line by not
-	// breaking it for semicolon or newline.
-	qboolean in_star_comment = qfalse;
-	qboolean in_slash_comment = qfalse;
-	while (cmd_text.cursize)
-	{
-		if ( cmd_wait > 0 ) {
-			// skip out while text still remains in buffer, leaving it
-			// for next frame
-			cmd_wait--;
-			break;
-		}
+        // find a \n or ; line break or comment: // or /* */
+        char* text = cmd_text.data();
+        int quotes = 0;
+        size_t pos = 0;
+        for (; pos < cmd_text.size(); ++pos)
+        {
+            if (text[pos] == '"')
+                quotes++;
 
-		// find a \n or ; line break or comment: // or /* */
-		text = (char *)cmd_text.data;
+            if (!(quotes & 1))
+            {
+                if (pos < cmd_text.size() - 1)
+                {
+                    if (!in_star_comment && text[pos] == '/' && text[pos + 1] == '/')
+                        in_slash_comment = true;
+                    else if (!in_slash_comment && text[pos] == '/' && text[pos + 1] == '*')
+                        in_star_comment = true;
+                    else if (in_star_comment && text[pos] == '*' && text[pos + 1] == '/')
+                    {
+                        in_star_comment = false;
+                        // If we are in a star comment, then the part after it is valid
+                        // Note: This will cause it to NUL out the terminating '/'
+                        // but ExecuteString doesn't require it anyway.
+                        ++pos;
+                        break;
+                    }
+                }
+                if (!in_slash_comment && !in_star_comment && text[pos] == ';')
+                    break;
+            }
+            if (!in_star_comment && (text[pos] == '\n' || text[pos] == '\r')) {
+                in_slash_comment = false;
+                break;
+            }
+        }
 
-		quotes = 0;
-		for (i=0 ; i< cmd_text.cursize ; i++)
-		{
-			if (text[i] == '"')
-				quotes++;
+        if (pos >= (MAX_CMD_LINE - 1))
+            pos = MAX_CMD_LINE - 1;
 
-			if ( !(quotes&1)) {
-				if (i < cmd_text.cursize - 1) {
-					if (! in_star_comment && text[i] == '/' && text[i+1] == '/')
-						in_slash_comment = qtrue;
-					else if (! in_slash_comment && text[i] == '/' && text[i+1] == '*')
-						in_star_comment = qtrue;
-					else if (in_star_comment && text[i] == '*' && text[i+1] == '/') {
-						in_star_comment = qfalse;
-						// If we are in a star comment, then the part after it is valid
-						// Note: This will cause it to NUL out the terminating '/'
-						// but ExecuteString doesn't require it anyway.
-						i++;
-						break;
-					}
-				}
-				if (! in_slash_comment && ! in_star_comment && text[i] == ';')
-					break;
-			}
-			if (! in_star_comment && (text[i] == '\n' || text[i] == '\r')) {
-				in_slash_comment = qfalse;
-				break;
-			}
-		}
+        string line = cmd_text.substr(0, pos);
+        // delete the text from the command buffer and move remaining commands down
+        // this is necessary because commands (exec) can insert data at the
+        // beginning of the text buffer
 
-		if( i >= (MAX_CMD_LINE - 1)) {
-			i = MAX_CMD_LINE - 1;
-		}
+        if (pos == cmd_text.size())
+            cmd_text.clear();
+        else
+        {
+            pos++;
+            cmd_text.erase(0, pos);
+        }
 
-		Com_Memcpy (line, text, i);
-		line[i] = 0;
+        // execute the command line
+        Cmd_ExecuteString(line.c_str());
+    }
 
-// delete the text from the command buffer and move remaining commands down
-// this is necessary because commands (exec) can insert data at the
-// beginning of the text buffer
-
-		if (i == cmd_text.cursize)
-			cmd_text.cursize = 0;
-		else
-		{
-			i++;
-			cmd_text.cursize -= i;
-			memmove (text, text+i, cmd_text.cursize);
-		}
-
-// execute the command line
-
-		Cmd_ExecuteString (line);
-	}
-
-	if( cmd_text.cursize == 0 && cmd_text.data != cmd_text_buf)
-	{
-		free(cmd_text.data);
-		cmd_text.data = cmd_text_buf;
-		cmd_text.maxsize = MAX_CMD_BUFFER;
-	}
+    cmd_text.clear();
 }
 
-
-void __cdecl Cbuf_Execute_WrapperIW(int arg1, int arg2)
-{
-	Cbuf_Execute();
-}
 /*
 ==============================================================================
 
@@ -764,7 +656,7 @@ static void Cmd_TokenizeStringInternal( const char *text_in, qboolean ignoreQuot
 
 		while ( 1 ) {
 			// skip whitespace
-			while ( *text != '\0' && (byte)*text <= ' ' ) {
+			while ( *text != '\0' && (::byte)*text <= ' ' ) {
 				text++;
 			}
 			if ( *text == '\0' ) {
@@ -820,7 +712,7 @@ static void Cmd_TokenizeStringInternal( const char *text_in, qboolean ignoreQuot
 
 
 		// skip until whitespace, quote, or command
-		while ( (byte)*text > ' ' && param->availableBuf > 1) {
+		while ( (::byte)*text > ' ' && param->availableBuf > 1) {
 			if ( !ignoreQuotes && text[0] == '"' ) {
 				break;
 			}
@@ -1136,7 +1028,7 @@ A complete command line has been parsed, so try to execute it
 void	Cmd_ExecuteString( const char *text )
 {
 	cmd_function_t	*cmd, **prev;
-	char arg0[MAX_TOKEN_CHARS];
+	char arg0[MAX_TOKEN_CHARS] = {'\0'};
 
 	// execute the command line
 	Cmd_TokenizeString( text );
@@ -1387,3 +1279,19 @@ void Cmd_Init( void ) {
 	//Cmd_AddCommand( "help", Cmd_Help_f ); Not ready yet
 }
 
+extern "C"
+{
+    /*
+    ============
+    Cbuf_AddText
+
+    Adds command text at the end of the buffer, does NOT add a final \n
+    ============
+    */
+    void __cdecl Cbuf_AddText(const char* text)
+    {
+        Sys_EnterCriticalSection(CRITSECT_CBUF);
+        cmd_text += text;
+        Sys_LeaveCriticalSection(CRITSECT_CBUF);
+    }
+} // extern "C"

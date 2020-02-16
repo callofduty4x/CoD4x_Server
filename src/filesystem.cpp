@@ -1107,6 +1107,7 @@ long FS_FOpenFileReadDir(const char *filename, searchpath_t *search, fileHandle_
     unz_file_info	file_info;
     mvabuf;
     const char *noReferenceExts[] = { "cod4_lnxded-bin", ".so", ".dll", ".hlsl", ".txt", ".cfg", ".levelshots", ".menu", ".arena", ".str", NULL };
+    // TODO: default_mp.cfg found incorrectly... Referenced to sound.iwd file with RIFF header.
 
     if(filename == NULL)
         Com_Error(ERR_FATAL, "FS_FOpenFileRead: NULL 'filename' parameter passed");

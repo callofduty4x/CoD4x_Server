@@ -3339,7 +3339,7 @@ NET_TcpIsSocketReady
 Test if socket is fully connected or not yet
 ====================
 */
-int NET_TcpWaitForSocketIsReady(int socket, int timeoutsec)
+static int NET_TcpWaitForSocketIsReady(int socket, int timeoutsec)
 {
 	int err = 0;
 	int retval;
@@ -3380,14 +3380,6 @@ int NET_TcpWaitForSocketIsReady(int socket, int timeoutsec)
 
 int NET_TcpIsSocketReady(int socket) //return: 1 ready, 0 not ready, -1 select error, -2 other error
 {
-    if (socket < 0 || socket >= 1024)
-    {
-#ifdef _MSC_VER
-        __asm int 3;
-#else
-        asm("int $3");
-#endif
-    }
     return NET_TcpWaitForSocketIsReady(socket, 0);
 }
 
