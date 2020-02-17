@@ -1,3 +1,5 @@
 ﻿#pragma once
 
-extern "C" void _cdecl Com_ShutdownDObj();
+#include "q_platform.hpp"
+
+extern "C" void __cdecl Com_ShutdownDObj();

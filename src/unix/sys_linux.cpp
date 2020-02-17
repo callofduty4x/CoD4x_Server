@@ -194,6 +194,18 @@ char** GetStrTable(void* buff, int len, sharedlib_data_t *text)
 		return ELF32_GetStrTable(buff, len, text);
 }
 
+void Sys_SetThreadName(threadid_t tid, const char* name)
+{
+    pthread_t ti;
+    if(tid == -1)
+    {
+        ti = pthread_self();
+    }else{
+        ti = tid;
+    }
+    pthread_setname_np(ti, name);
+}
+
 unsigned int Sys_GetProcessAffinityMask()
 {
     unsigned int AffinityMask = 0;
@@ -212,20 +224,5 @@ unsigned int Sys_GetProcessAffinityMask()
 
     return AffinityMask;
 }
-
-
-
-void Sys_SetThreadName(threadid_t tid, const char* name)
-{
-    pthread_t ti;
-    if(tid == -1)
-    {
-        ti = pthread_self();
-    }else{
-        ti = tid;
-    }
-    pthread_setname_np(ti, name);
-}
-
 
 #endif

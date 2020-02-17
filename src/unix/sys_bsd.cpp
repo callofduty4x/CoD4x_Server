@@ -191,6 +191,18 @@ char** GetStrTable(void* buff, int len, void *text)
 		return NULL;
 }
 
+void Sys_SetThreadName(threadid_t tid, const char* name)
+{
+    pthread_t ti;
+    if((int)tid == -1)
+    {
+        ti = pthread_self();
+    }else{
+        ti = tid;
+    }
+    pthread_set_name_np(ti, name);
+}
+
 
 unsigned int Sys_GetProcessAffinityMask()
 {
@@ -208,18 +220,5 @@ unsigned int Sys_GetProcessAffinityMask()
   }
   return processAffinityMask;
 }
-
-void Sys_SetThreadName(threadid_t tid, const char* name)
-{
-    pthread_t ti;
-    if((int)tid == -1)
-    {
-        ti = pthread_self();
-    }else{
-        ti = tid;
-    }
-    pthread_set_name_np(ti, name);
-}
-
 
 #endif

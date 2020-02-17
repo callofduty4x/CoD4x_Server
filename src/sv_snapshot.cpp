@@ -452,12 +452,12 @@ Called by SV_SendClientSnapshot and SV_SendClientGameState
 void __cdecl SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 	int rateMsec;
 
-	byte svCompressBuf[4*65536];
+    ::byte svCompressBuf[4*65536];
 
 #ifdef SV_SEND_HUFFMAN
 	int len;
 	*(int32_t*)svCompressBuf = *(int32_t*)msg->data;
-	len = MSG_WriteBitsCompress( msg->data + 4 ,(byte*)svCompressBuf + 4, msg->cursize - 4);
+    len = MSG_WriteBitsCompress( msg->data + 4 ,(::byte*)svCompressBuf + 4, msg->cursize - 4);
 //	SV_TrackHuffmanCompression(len, msg->cursize - 4);
 	len += 4;
 #endif
@@ -554,7 +554,7 @@ void SV_SendClientSnapshot(client_t *cl){
 
 void SV_BeginClientSnapshot(client_t *client, msg_t *msg)
 {
-	static byte tempSnapshotMsgBuf[NETCHAN_UNSENTBUFFER_SIZE];
+    static ::byte tempSnapshotMsgBuf[NETCHAN_UNSENTBUFFER_SIZE];
 
 
 	MSG_Init( msg, tempSnapshotMsgBuf, sizeof(tempSnapshotMsgBuf) );
@@ -639,8 +639,8 @@ static void SV_AddCachedEntitiesVisibleFromPoint(int from_num_entities, int from
 	int e, i, l;
 	int clientcluster;
 	int leafnum, boxleafnums;
-	byte    *clientpvs;
-	byte    *bitvector;
+    ::byte    *clientpvs;
+    ::byte    *bitvector;
 	float fogOpaqueDistSqrd;
 	uint16_t clusternums[128];
 	int lastLeaf;
@@ -726,8 +726,8 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 	int l;
 	int clientcluster;
 	int leafnum;
-	byte    *clientpvs;
-	byte    *bitvector;
+    ::byte    *clientpvs;
+    ::byte    *bitvector;
 	float fogOpaqueDistSqrd;
 
 
@@ -1079,9 +1079,9 @@ static void SV_BuildClientSnapshot( client_t *client ) {
 void SV_SendClientMessages( void ) {
 	int i, freeBytes, index;
 	msg_t msg;
-	byte buf[0x20000];
+    ::byte buf[0x20000];
 	client_t *c;
-	byte snapClients[MAX_CLIENTS];
+    ::byte snapClients[MAX_CLIENTS];
 	int numclients = 0; // NERVE - SMF - net debugging
 	/*
 	SV_SendClientMessagesA( );
@@ -1415,7 +1415,7 @@ clientState_t * G_GetClientStateLocal(int clientNum)
 {
   //assert(svsHeaderValid);
 
-  return (clientState_t *)((byte*)svsHeader.firstClientState + clientNum * svsHeader.clientSize);
+  return (clientState_t *)((::byte*)svsHeader.firstClientState + clientNum * svsHeader.clientSize);
 }
 
 int GetFollowPlayerStateLocal(int clientNum, playerState_t *ps)
@@ -1424,9 +1424,9 @@ int GetFollowPlayerStateLocal(int clientNum, playerState_t *ps)
 
   assert(svsHeaderValid);
 
-  if ( *(int *)((byte *)&svsHeader.firstPlayerState->otherFlags + clientNum * svsHeader.clientSize) & 4 )
+  if ( *(int *)((::byte *)&svsHeader.firstPlayerState->otherFlags + clientNum * svsHeader.clientSize) & 4 )
   {
-    memcpy(ps, (byte*)svsHeader.firstPlayerState + clientNum * svsHeader.clientSize, sizeof(*ps));
+    memcpy(ps, (::byte*)svsHeader.firstPlayerState + clientNum * svsHeader.clientSize, sizeof(*ps));
     for ( index = 0; index < 0x1F && ps->hud.current[index].type; ++index )
     {
       memset(&ps->hud.current[index], 0, sizeof(ps->hud.current[0]));

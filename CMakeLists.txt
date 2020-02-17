@@ -27,7 +27,8 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 if(UNIX)
     # Remove "-Wattributes" warning as we must be sure C/CPP functions are using specified calling conventions.
-    add_compile_options(-m32 -Wno-attributes)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -Wno-attributes")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -Wno-attributes")
 endif()
 
 # Adding dependencies...

@@ -349,7 +349,8 @@ char *NET_ErrorStringMT( char* buf, int size ) {
 #ifdef __BSD__
 	strerror_r(socketError, buf, size); //strerror_r() is broken with some versions of libc6
 #else
-	__xpg_strerror_r(socketError, buf, size);
+    //__xpg_strerror_r(socketError, buf, size); // This can not be found in some versions of libc6
+    strerror_r(socketError, buf, size); //strerror_r() is broken with some versions of libc6
 #endif
 
 #endif
@@ -2304,7 +2305,7 @@ qboolean NET_FlagStaticIP6Addresses()
 static void NET_GetLocalAddress(void)
 {
 	struct ifaddrs *ifap, *search;
-	qboolean has_ip6 = 0;
+    qboolean has_ip6 = qfalse;
 	numIP = 0;
 	int i;
 

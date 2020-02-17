@@ -32,6 +32,8 @@
 #include <cmath>
 #include <cstdbool>
 
+#include "q_platform.hpp"
+
 enum EQBoolean
 {
     qfalse = 0,

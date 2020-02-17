@@ -2,7 +2,6 @@
 #define __GFXWORLD_H__
 
 #include "../com_pack.hpp"
-#include <d3d9.h>
 
 typedef uint16_t r_index_t;
 typedef unsigned int raw_uint;

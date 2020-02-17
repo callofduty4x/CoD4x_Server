@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 
+#include "q_platform.hpp"
+
 
 struct gentity_s;
 

@@ -16,3 +16,9 @@ set(CPP_INC
 
 add_library(${PROJECT_NAME} STATIC ${CPP_SRC} ${CPP_INC})
 target_include_directories(${PROJECT_NAME} PUBLIC ${zlib_SOURCE_DIR}/contrib/minizip ${zlib_SOURCE_DIR} ${zlib_BINARY_DIR})
+
+# Fix up zlib cmake errors...
+target_include_directories(example PRIVATE ${zlib_SOURCE_DIR})
+target_include_directories(example64 PRIVATE ${zlib_SOURCE_DIR})
+target_include_directories(minigzip PRIVATE ${zlib_SOURCE_DIR})
+target_include_directories(minigzip64 PRIVATE ${zlib_SOURCE_DIR})

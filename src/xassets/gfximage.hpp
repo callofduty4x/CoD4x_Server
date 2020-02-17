@@ -1,6 +1,7 @@
 #ifndef __GFXIMAGE_H__
 #define __GFXIMAGE_H__
 
+#ifdef _WIN32
 /*
 d3d9.h must be included before this file if used at all
 */
@@ -12,9 +13,12 @@ typedef struct IDirect3DVolumeTexture9         D3DVolumeTexture;
 typedef struct IDirect3DCubeTexture9           D3DCubeTexture;
 typedef struct IDirect3DSurface9			   D3DSurface;
 
-//#ifndef DIRECT3D_VERSION
-//typedef unsigned int _D3DFORMAT;
-//#endif
+#else
+
+using _D3DFORMAT = void*;
+
+#endif
+
 
 typedef enum MapType_s
 {

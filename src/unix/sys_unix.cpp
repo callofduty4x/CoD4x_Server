@@ -47,8 +47,8 @@
 #include <pwd.h>
 #include <execinfo.h>
 #include <sys/time.h>
+#include <arpa/inet.h>
 #include <pthread.h>
-#include <stdatomic.h>
 
 void Sys_InitThreadContext();
 
@@ -65,7 +65,7 @@ qboolean Sys_RandomBytes( byte *string, int len )
 	if( !fp )
 		return qfalse;
 
-	if( !fread( string, sizeof( byte ), len, fp ) )
+    if( !fread( string, sizeof( byte ), len, fp ) )
 	{
 		fclose( fp );
 		return qfalse;
@@ -162,7 +162,12 @@ void Sys_InitCrashDumps(){
 qboolean Sys_MemoryProtectWrite(void* startoffset, int len)
 {
 
-    if(mprotect(startoffset - ((unsigned int)startoffset % getpagesize()), len + (len % getpagesize()), PROT_READ | PROT_WRITE) != 0)
+    if(mprotect(
+                startoffset -
+                ((unsigned int)startoffset % getpagesize()),
+                len + (len % getpagesize()),
+                PROT_READ | PROT_WRITE
+                ) != 0)
 	{
             perror("Sys_MemoryProtectWrite: mprotect change memory to writable error");
             return qfalse;
@@ -285,8 +290,7 @@ char **Sys_ListFiles( const char *directory, const char *extension, char *filter
 	qboolean      dironly = wantsubs;
 	char          search[MAX_OSPATH];
 	int           nfiles;
-	char          **listCopy;
-	char          *list[MAX_FOUND_FILES];
+    char          *list[MAX_FOUND_FILES];
 	int           i;
 	struct        stat_size_fix st;
 	int           extLen;
@@ -302,7 +306,7 @@ char **Sys_ListFiles( const char *directory, const char *extension, char *filter
 		if (!nfiles)
 			return NULL;
 
-		listCopy = Z_Malloc( ( nfiles + 1 ) * sizeof( *listCopy ) );
+        auto listCopy = reinterpret_cast<char**>(Z_Malloc( ( nfiles + 1 ) * sizeof(char*) ));
 		for ( i = 0 ; i < nfiles ; i++ ) {
 			listCopy[i] = list[i];
 		}
@@ -364,7 +368,7 @@ char **Sys_ListFiles( const char *directory, const char *extension, char *filter
 		return NULL;
 	}
 
-	listCopy = S_Malloc( ( nfiles + 1 ) * sizeof( *listCopy ) );
+    auto listCopy = reinterpret_cast<char**>(S_Malloc( ( nfiles + 1 ) * sizeof(char*) ));
 	for ( i = 0 ; i < nfiles ; i++ ) {
 		listCopy[i] = list[i];
 	}
@@ -457,7 +461,7 @@ int main(int argc, char* argv[])
     // Concatenate the command line for passing to Com_Init
     for( i = 1; i < argc; i++ )
     {
-        const qboolean containsSpaces = strchr(argv[i], ' ') != NULL;
+        bool containsSpaces = strchr(argv[i], ' ') != NULL;
         if (containsSpaces)
             Q_strncat( commandLine, sizeof( commandLine ), "\"" );
 
@@ -505,7 +509,7 @@ qboolean Sys_Mkdir( const char *path )
 	int result = mkdir( path, 0750 );
 
 	if( result != 0 )
-		return errno == EEXIST;
+        return errno == EEXIST ? qtrue : qfalse;
 
 	return qtrue;
 }
@@ -697,7 +701,7 @@ qboolean Sys_ThreadisSame(threadid_t threadid)
 {
 	threadid_t thread = pthread_self();
 
-	return pthread_equal(threadid, thread) != 0;
+    return pthread_equal(threadid, thread) != 0 ? qtrue : qfalse;
 
 }
 
@@ -715,7 +719,7 @@ void Sys_ExitThread(int code)
 
 }
 
-void  __noreturn Sys_ExitForOS( int exitCode )
+void Sys_ExitForOS( int exitCode )
 {
 	exit(exitCode);
 }
@@ -800,7 +804,7 @@ void *__cdecl _VirtualAlloc(void *address, int dwSize, int flAllocationType, int
   return address;
 }
 
-bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
+bool __cdecl _VirtualFree(void* lpAddress, int dwSize, DWORD dwFreeType)
 {
   if ( lpAddress && dwFreeType == 0x8000 )
   {
@@ -822,11 +826,11 @@ bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType)
 
 DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend)
 {
-	return atomic_fetch_sub(Addend, 1) -1;
+    return __sync_fetch_and_sub(Addend, 1) -1;
 }
 DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend)
 {
-	return atomic_fetch_add(Addend, 1) +1;
+    return __sync_fetch_and_add(Addend, 1) +1;
 }
 DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
 {
@@ -834,7 +838,7 @@ DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD 
 }
 DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
 {
-	return atomic_fetch_add(Addend, value);
+    return __sync_fetch_and_add(Addend, value);
 }
 
 
@@ -865,19 +869,19 @@ BOOL __cdecl _CloseHandle(HANDLE handle)
 
   hObject_t *hObject = (hObject_t *)handle;
   
-  if ( hObject->type == 'File' )
+  if ( hObject->type == 0x46696c65 ) // == 'File'
   {
     if ( hObject->fh )
     {
       fclose(hObject->fh);
       hObject->fh = 0;
     }
-    hObject->type = 'DEAD';
+    hObject->type = 0x44454144; // == 'DEAD'
 //    _ZdlPv_stub(hObject);
     free(hObject);
     return TRUE;
-  }else if(hObject->type == 'Evnt'){
-    hObject->type = 'DEAD';
+  }else if(hObject->type == 0x45766e74){ // == 'Evnt'
+    hObject->type = 0x44454144; // 'DEAD'
     pthread_mutex_destroy(&hObject->mutex);
     free(hObject);
     return TRUE;
@@ -955,13 +959,10 @@ FILE* NixFOpen(const char* filen, const char* mode)
 
 HANDLE __cdecl _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, void *lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
 {
-  FILE *fh;
-  hObject_t *ho;
-
-  fh = NixFOpen(lpFileName, "rb");
+  FILE *fh = NixFOpen(lpFileName, "rb");
   if ( fh )
   {
-    ho = malloc(sizeof(hObject_t));
+    auto ho = reinterpret_cast<hObject_t*>(malloc(sizeof(hObject_t)));
     if(ho == NULL)
     {
         fclose(fh);
@@ -1048,7 +1049,7 @@ signed int __cdecl Sys_ResetEvent(HANDLE handle)
 
     if ( h->signaled == 1 )
     {
-      h->signaled = 0;
+      h->signaled = qfalse;
       yi = 1;
     }
     else
@@ -1076,7 +1077,7 @@ signed int __cdecl Sys_SetEvent(HANDLE handle)
   {
     return 0;
   }
-  h->signaled = 1;
+  h->signaled = qtrue;
   pthread_cond_broadcast(&h->cond);
   pthread_mutex_unlock(&h->mutex);
   return 1;
@@ -1117,7 +1118,7 @@ signed int __cdecl Sys_WaitForObject(HANDLE handle)
       //Ty icekobrin pointing me in this direction
       if ( !h->manualreset )
       {
-          h->signaled = 0;
+          h->signaled = qfalse;
       }
       pthread_mutex_unlock(&h->mutex);
       if ( signaled )
@@ -1180,7 +1181,7 @@ pthread_key_t g_dwTlsKey;
 
 void** Sys_GetThreadLocalStorage()
 {
-    return pthread_getspecific(g_dwTlsKey);
+    return reinterpret_cast<void**>(pthread_getspecific(g_dwTlsKey));
 }
 
 void Sys_InitThreadContext()
@@ -1197,4 +1198,9 @@ void Sys_SetThreadLocalStorage(void** localvar)
 threadid_t Sys_GetThreadHandleFromID(threadid_t ti)
 {
     return ti;
+}
+
+int Sys_InetPton(int af_, const char *src_, void *dst_)
+{
+    return inet_pton(af_, src_, dst_);
 }

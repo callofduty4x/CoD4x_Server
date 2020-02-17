@@ -145,7 +145,6 @@ typedef struct TraceThreadInfo
 
 extern TraceThreadInfo g_traceThreadInfo[NUMTHREADS];
 
-unsigned int Sys_GetProcessAffinityMask();
 void** Sys_GetThreadLocalStorage();
 void Sys_SetThreadLocalStorage(void**);
 
@@ -165,6 +164,7 @@ struct CriticalSection_t
 #define THREAD_CONTEXT_DATABASE 1
 
 void Sys_SetThreadName(threadid_t tid, const char* name);
+unsigned int Sys_GetProcessAffinityMask();
 
 #endif
 

@@ -1,15 +1,15 @@
-#ifndef __SYS_UNIX_H__
-#define __SYS_UNIX_H__
+#pragma once
 
+#include <pthread.h>
+#include "../q_platform.hpp"
 
 typedef enum{FALSE, TRUE}BOOL;
 typedef unsigned int HANDLE;
 typedef pthread_t threadid_t;
+using DWORD = unsigned long int;
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
+extern "C"
+{
 
 BOOL __cdecl _CloseHandle(HANDLE handle);
 
@@ -40,18 +40,15 @@ DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD 
 DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value);
 
 void *__cdecl _VirtualAlloc(void *address, int dwSize, int flAllocationType, int flProtect);
-bool __cdecl _VirtualFree(void* lpAddress, int dwSize, uint32_t dwFreeType);
+bool __cdecl _VirtualFree(void* lpAddress, int dwSize, DWORD dwFreeType);
 
-typedef DWORD IDirect3DVertexBuffer9;
-typedef DWORD IDirect3DIndexBuffer9;
+//typedef DWORD IDirect3DVertexBuffer9;
+//typedef DWORD IDirect3DIndexBuffer9;
 #define InterlockedDecrement Sys_InterlockedDecrement
 #define InterlockedIncrement Sys_InterlockedIncrement
 #define InterlockedCompareExchange Sys_InterlockedCompareExchange
 #define InterlockedExchangeAdd Sys_InterlockedExchangeAdd
 
-#ifdef __cplusplus
 }
-#endif
 
-#endif
-
+int Sys_InetPton(int af_, const char* src_, void* dst_);

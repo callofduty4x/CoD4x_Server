@@ -1,5 +1,7 @@
 #pragma once
 
+#include "q_platform.hpp"
+
 extern "C"
 {
     float __cdecl std_ceilf(float x);

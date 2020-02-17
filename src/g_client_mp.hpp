@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "q_platform.hpp"
+
 struct gentity_s;
 struct VoicePacket_t;
 

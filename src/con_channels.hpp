@@ -1,5 +1,8 @@
 #pragma once
 
+#include "q_platform.hpp"
+
+
 enum print_msg_dest_t
 {
     CON_DEST_CONSOLE = 0x0,
