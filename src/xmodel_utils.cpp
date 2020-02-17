@@ -5,7 +5,7 @@
 
 extern "C"{
 
-int __cdecl XModelGetBoneIndex(XModel *model, unsigned int name, unsigned int offset, uint8_t *index)
+int CDECL XModelGetBoneIndex(XModel *model, unsigned int name, unsigned int offset, uint8_t *index)
 {
   unsigned int numBones;
   unsigned int localBoneIndex;

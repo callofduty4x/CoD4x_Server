@@ -4,9 +4,9 @@
 
 extern "C"
 {
-    void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd);
-    void __cdecl SV_UnlinkEntity(gentity_t*);
-    struct XAnimTree_s *__cdecl SV_DObjGetTree(struct gentity_s *ent);
+    void CDECL SV_GetUsercmd(int clientNum, struct usercmd_s *cmd);
+    void CDECL SV_UnlinkEntity(gentity_t*);
+    struct XAnimTree_s *CDECL SV_DObjGetTree(struct gentity_s *ent);
 };
 
 void SV_GameSetUndercoverState(unsigned int clientNum, bool state);

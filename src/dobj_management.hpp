@@ -2,4 +2,4 @@
 
 #include "q_platform.hpp"
 
-extern "C" void __cdecl Com_ShutdownDObj();
+extern "C" void CDECL Com_ShutdownDObj();

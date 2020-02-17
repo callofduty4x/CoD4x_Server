@@ -139,7 +139,7 @@ G_LogPrintf
 Print to the logfile with a time stamp if it is open
 =================
 */
-void __cdecl __cdecl G_LogPrintf( const char *fmt, ... )
+void CDECL CDECL G_LogPrintf( const char *fmt, ... )
 {
 
 	va_list argptr;
@@ -232,9 +232,9 @@ void G_InitSomeVariables(int framerate)
 }
 
 
-void __cdecl G_RunThink(struct gentity_s *ent)
+void CDECL G_RunThink(struct gentity_s *ent)
 {
-  void (__cdecl *think)(struct gentity_s *);
+  void (CDECL *think)(struct gentity_s *);
   int thinktime;
 
   thinktime = ent->nextthink;
@@ -339,7 +339,7 @@ void G_RunFrameForEntity(struct gentity_s *ent)
 }
 
 
-void __cdecl G_FreeEntity(gentity_s *gEnt)
+void CDECL G_FreeEntity(gentity_s *gEnt)
 {
   struct XAnimTree_s *tree;
 

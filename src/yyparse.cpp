@@ -7,7 +7,7 @@
 
 extern "C"
 {
-    yy_buffer_state* __cdecl yy_create_buffer(FILE *file, int bufferSize)
+    yy_buffer_state* CDECL yy_create_buffer(FILE *file, int bufferSize)
     {
         yy_buffer_state *yybufState = (yy_buffer_state *)malloc(sizeof(yy_buffer_state));
         if (!yybufState)
@@ -38,13 +38,13 @@ extern "C"
     }
 
 
-    FILE* __cdecl yy_stdin()
+    FILE* CDECL yy_stdin()
     {
         return stdin;
     }
 
 
-    FILE* __cdecl yy_stdout()
+    FILE* CDECL yy_stdout()
     {
         return stdout;
     }

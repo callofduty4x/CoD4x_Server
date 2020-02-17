@@ -21,7 +21,7 @@ if(MSVC)
 elseif(WIN32) # MinGW-w64
     target_compile_options(${PROJECT_NAME} PRIVATE -m32 -msse2 -mfpmath=sse -Wall -fno-omit-frame-pointer -fmax-errors=5)
     target_link_options(${PROJECT_NAME} PRIVATE -m32 -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static-libstdc++ -static)
-    target_link_libraries(${PROJECT_NAME} m stdc++)
+    target_link_libraries(${PROJECT_NAME} m stdc++ win32)
 elseif(UNIX)
     target_compile_options(${PROJECT_NAME} PRIVATE -m32 -msse2 -mfpmath=sse -Wall -fno-omit-frame-pointer -fmax-errors=5)
     target_link_options(${PROJECT_NAME} PRIVATE -m32 -static-libgcc -static-libstdc++ -static)

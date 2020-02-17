@@ -5,7 +5,7 @@
 	extern ODE_GeomDestruct
 	extern _ZN6dxGeomC2EP7dxSpaceiP6dxBody
 	extern dRSetIdentity
-	extern _Unwind_Resume
+	extern System_Unwind_Resume
 	extern dFree
 	extern ODE_AllocateGeom
 	extern dSpaceRemove
@@ -500,7 +500,7 @@ _ZN15dxGeomTransformC1EP7dxSpaceP6dxBody:
 	add edx, 0x8
 	mov [ebx], edx
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 
 
 ;dxGeomTransform::~dxGeomTransform()
@@ -545,7 +545,7 @@ _ZN15dxGeomTransformD0Ev_20:
 	add edx, 0x8
 	mov [ebx], edx
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	add [eax], al
 
 
@@ -585,7 +585,7 @@ _ZN15dxGeomTransformD1Ev_20:
 	add edx, 0x8
 	mov [ebx], edx
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 
@@ -617,7 +617,7 @@ dCreateGeomTransform_10:
 	pop ebp
 	ret
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	add [eax], al
 
 

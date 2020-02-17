@@ -17,7 +17,7 @@
 	extern dCollideSpherePlane
 	extern dCollideSphereBox
 	extern ODE_AllocateGeom
-	extern _Unwind_Resume
+	extern System_Unwind_Resume
 	extern dSpaceRemove
 	extern dGeomBoxGetLengths
 	extern circleCoords.131667
@@ -596,7 +596,7 @@ ODE_CreateGeom_10:
 	pop ebp
 	ret
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 
@@ -1313,7 +1313,7 @@ dInitUserGeom:
 	pop ebp
 	ret
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	add [eax], al
 
 

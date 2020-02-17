@@ -59,7 +59,7 @@ TraceThreadInfo g_traceThreadInfo[NUMTHREADS];
 
 void* sys_valuestoreage[NUMTHREADS][MAX_KEYS];
 
-void* __cdecl Sys_GetValue(int key)
+void* CDECL Sys_GetValue(int key)
 {
     void **s;
 
@@ -76,7 +76,7 @@ void* __cdecl Sys_GetValue(int key)
     return s[key -1];
 }
 
-void __cdecl Sys_SetValue(int key, void* value)
+void CDECL Sys_SetValue(int key, void* value)
 {
     void **s;
 
@@ -350,19 +350,19 @@ void Sys_WakeDatabase()
   Sys_ResetEvent(databaseCompletedEvent);
 }
 
-void __cdecl Sys_SuspendDatabaseThread(enum ThreadOwner owner)
+void CDECL Sys_SuspendDatabaseThread(enum ThreadOwner owner)
 {
   g_databaseThreadOwner = owner;
   Sys_ResetEvent(resumedDatabaseEvent);
 }
 
-void __cdecl Sys_DatabaseCompleted()
+void CDECL Sys_DatabaseCompleted()
 {
   Sys_SetEvent(databaseCompletedEvent);
 }
 
 
-void __cdecl Sys_ResumeDatabaseThread(enum ThreadOwner to)
+void CDECL Sys_ResumeDatabaseThread(enum ThreadOwner to)
 {
   g_databaseThreadOwner = THREAD_OWNER_NONE;
   Sys_SetEvent(resumedDatabaseEvent);
@@ -373,38 +373,38 @@ void Sys_WakeDatabase2()
   Sys_ResetEvent(databaseCompletedEvent2);
 }
 
-qboolean __cdecl Sys_IsDatabaseReady2()
+qboolean CDECL Sys_IsDatabaseReady2()
 {
   return Sys_IsObjectSignaled(databaseCompletedEvent2) == 1 ? qtrue : qfalse;
 }
 
-void __cdecl Sys_DatabaseCompleted2()
+void CDECL Sys_DatabaseCompleted2()
 {
   Sys_SetEvent(databaseCompletedEvent2);
 }
 
-void __cdecl Sys_SyncDatabase()
+void CDECL Sys_SyncDatabase()
 {
   Sys_WaitForObject(databaseCompletedEvent);
 }
 
-qboolean __cdecl Sys_HaveSuspendedDatabaseThread(enum ThreadOwner to)
+qboolean CDECL Sys_HaveSuspendedDatabaseThread(enum ThreadOwner to)
 {
   return g_databaseThreadOwner == to ? qtrue : qfalse;
 }
 
-void __cdecl Sys_NotifyDatabase()
+void CDECL Sys_NotifyDatabase()
 {
   Sys_SetEvent(wakeDatabaseEvent);
 }
 
-void __cdecl Sys_WaitDatabaseThread()
+void CDECL Sys_WaitDatabaseThread()
 {
   Sys_WaitForObject(resumedDatabaseEvent);
 }
 
 
-void* __cdecl Sys_ThreadMain(void *parameter)
+void* CDECL Sys_ThreadMain(void *parameter)
 {
   unsigned int p = (unsigned int)parameter;
   assert(p < 2);
@@ -422,7 +422,7 @@ unsigned int s_affinityMaskForCpu[8];
 
 
 
-qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p))
+qboolean CDECL Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p))
 {
   wakeDatabaseEvent = Sys_CreateEvent(qfalse, qfalse, "wakeDatabaseEvent");
   databaseCompletedEvent = Sys_CreateEvent(qtrue, qtrue, "databaseCompletedEvent");
@@ -457,7 +457,7 @@ qboolean __cdecl Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p))
 }
 
 
-void __cdecl Com_InitThreadData(int threadContext)
+void CDECL Com_InitThreadData(int threadContext)
 {
   Sys_SetThreadLocalStorage(sys_valuestoreage[threadContext]);
 
@@ -476,7 +476,7 @@ void __cdecl Com_InitThreadData(int threadContext)
 */
 }
 
-void __cdecl Sys_InitThreadAffinity()
+void CDECL Sys_InitThreadAffinity()
 {
   unsigned int cpuCount;
   unsigned int threadAffinityMask;

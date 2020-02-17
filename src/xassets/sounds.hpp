@@ -193,7 +193,7 @@ extern "C"{
 #endif
 
 
-struct snd_alias_t *__cdecl _Com_PickSoundAliasFromList(struct snd_alias_list_t *sndaliaslist);
+struct snd_alias_t *CDECL _Com_PickSoundAliasFromList(struct snd_alias_list_t *sndaliaslist);
 void SND_PlayAmbientAlias(struct snd_alias_t *alias, int localClientNum, int fadetime);
 
 
@@ -201,7 +201,7 @@ void SND_PlayAmbientAlias(struct snd_alias_t *alias, int localClientNum, int fad
 
 typedef struct snd_alias_list_t *snd_alias_list_name;
 
-void __cdecl Com_UnloadSoundAliases(snd_alias_system_t type);
+void CDECL Com_UnloadSoundAliases(snd_alias_system_t type);
 #ifdef __cplusplus
 }
 #endif

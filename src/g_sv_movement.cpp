@@ -33,6 +33,6 @@ float Dirty_GetJumpHeight(unsigned int num)
 
 extern "C"
 {
-    void __cdecl __optimize3 StuckInClient( gentity_t* gen )
+    void CDECL __optimize3 StuckInClient( gentity_t* gen )
     {}
 } // extern "C"

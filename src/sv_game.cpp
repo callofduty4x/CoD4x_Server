@@ -113,7 +113,7 @@ char g_sv_skel_memory[262144];
 char *g_sv_skel_memory_start;
 
 
-void __cdecl SV_ResetSkeletonCache()
+void CDECL SV_ResetSkeletonCache()
 {
   ++sv.skelTimeStamp;
   if ( !sv.skelTimeStamp )
@@ -124,7 +124,7 @@ void __cdecl SV_ResetSkeletonCache()
   sv.skelMemPos = 0;
 }
 
-char *__cdecl SV_AllocSkelMemory(unsigned int size)
+char *CDECL SV_AllocSkelMemory(unsigned int size)
 {
   static int warnCount_2;
   char *result;
@@ -160,13 +160,13 @@ char *__cdecl SV_AllocSkelMemory(unsigned int size)
 }
 
 
-int __cdecl SV_DObjExists(struct gentity_s *ent)
+int CDECL SV_DObjExists(struct gentity_s *ent)
 {
   return Com_GetServerDObj(ent->s.number) != 0;
 }
 
 
-void __cdecl SV_DObjDumpInfo(struct gentity_s *ent)
+void CDECL SV_DObjDumpInfo(struct gentity_s *ent)
 {
   DObj *obj;
 
@@ -185,12 +185,12 @@ void __cdecl SV_DObjDumpInfo(struct gentity_s *ent)
 }
 
 
-void *__cdecl SV_AllocXModelPrecache(int size)
+void *CDECL SV_AllocXModelPrecache(int size)
 {
   return Hunk_Alloc(size, "SV_AllocXModelPrecache", 22);
 }
 
-void *__cdecl SV_AllocXModelPrecacheColl(int size)
+void *CDECL SV_AllocXModelPrecacheColl(int size)
 {
   return Hunk_Alloc(size, "SV_AllocXModelPrecacheColl", 28);
 }
@@ -225,7 +225,7 @@ int boxVerts[24][3] =
 };
 
 
-void __cdecl SV_XModelDebugBoxesInternal(gentity_t *ent, const float *color, int *partBits, int duration)
+void CDECL SV_XModelDebugBoxesInternal(gentity_t *ent, const float *color, int *partBits, int duration)
 {
   struct DObjAnimMat *boneMatrix;
   unsigned int j;
@@ -343,7 +343,7 @@ void SV_SetAssignedTeam()
 }
 
 
-void __cdecl SV_SetGametype()
+void CDECL SV_SetGametype()
 {
   char gametype[64];
 
@@ -368,7 +368,7 @@ void __cdecl SV_SetGametype()
 }
 
 
-void __cdecl SV_InitGameVM(int restart, int registerDvars)
+void CDECL SV_InitGameVM(int restart, int registerDvars)
 {
   int i;
   unsigned int time;
@@ -407,7 +407,7 @@ void __cdecl SV_InitGameVM(int restart, int registerDvars)
 }
 
 
-void __cdecl SV_ShutdownGameVM(int clearScripts)
+void CDECL SV_ShutdownGameVM(int clearScripts)
 {
 
   assert(Sys_IsMainThread());
@@ -422,14 +422,14 @@ void __cdecl SV_ShutdownGameVM(int clearScripts)
 static qboolean gameInitialized;
 
 
-void __cdecl SV_InitGameProgs(int savepersist)
+void CDECL SV_InitGameProgs(int savepersist)
 {
   gameInitialized = qtrue;
   SV_InitGameVM(0, savepersist == 0);
 }
 
 
-void __cdecl SV_ShutdownGameProgs()
+void CDECL SV_ShutdownGameProgs()
 {
   Com_SyncThreads();
   sv.state = SS_DEAD;
@@ -441,7 +441,7 @@ void __cdecl SV_ShutdownGameProgs()
   }
 }
 
-void __cdecl SV_RestartGameProgs(int savepersist)
+void CDECL SV_RestartGameProgs(int savepersist)
 {
   Com_SyncThreads();
   SV_ShutdownGameVM(0);
@@ -449,7 +449,7 @@ void __cdecl SV_RestartGameProgs(int savepersist)
   SV_InitGameVM(1, savepersist == 0);
 }
 
-qboolean __cdecl SV_GameCommand()
+qboolean CDECL SV_GameCommand()
 {
 
   if ( sv.state == SS_GAME )
@@ -507,7 +507,7 @@ void SV_GetServerinfo(char *buffer, int bufferSize)
 
 extern "C"
 {
-    qboolean __cdecl SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
+    qboolean CDECL SV_DObjCreateSkelForBone(DObj *obj, int boneIndex)
     {
         if ( DObjSkelExists(obj, sv.skelTimeStamp) )
             return DObjSkelIsBoneUpToDate(obj, boneIndex) ? qtrue : qfalse;
@@ -525,14 +525,14 @@ extern "C"
     }
 
 
-    struct XAnimTree_s *__cdecl SV_DObjGetTree(struct gentity_s *ent)
+    struct XAnimTree_s *CDECL SV_DObjGetTree(struct gentity_s *ent)
     {
         DObj *obj = Com_GetServerDObj(ent->s.number);
         return obj ? DObjGetTree(obj) : nullptr;
     }
 
 
-    void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd)
+    void CDECL SV_GetUsercmd(int clientNum, struct usercmd_s *cmd)
     {
       assert(clientNum >= 0);
       assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
@@ -542,7 +542,7 @@ extern "C"
     }
 
 
-    int __cdecl SV_EntityContact(const float *mins, const float *maxs, struct gentity_s *gEnt)
+    int CDECL SV_EntityContact(const float *mins, const float *maxs, struct gentity_s *gEnt)
     {
         float dist;
         unsigned int model;
@@ -590,7 +590,7 @@ extern "C"
     }
 
 
-    void __cdecl SV_GameDropClient(int clientNum, const char *reason)
+    void CDECL SV_GameDropClient(int clientNum, const char *reason)
     {
         assert(sv_maxclients->integer >= 1 && sv_maxclients->integer <= MAX_CLIENTS);
         if ( clientNum >= 0 && clientNum < sv_maxclients->integer )
@@ -604,7 +604,7 @@ extern "C"
     }
 
 
-    int __cdecl SV_inSnapshot(const float *origin, int iEntityNum)
+    int CDECL SV_inSnapshot(const float *origin, int iEntityNum)
     {
         int clientcluster;
         float fogOpaqueDistSqrd;
@@ -663,14 +663,14 @@ extern "C"
     }
 
 
-    int __cdecl SV_GetClientPing(int clientNum)
+    int CDECL SV_GetClientPing(int clientNum)
     {
         assert(clientNum < sv_maxclients->integer && clientNum >= 0);
         return svs.clients[clientNum].ping;
     }
 
 
-    qboolean __cdecl SV_MapExists(const char *name)
+    qboolean CDECL SV_MapExists(const char *name)
     {
       char fullpath[MAX_OSPATH];
       const char *basename;
@@ -681,13 +681,13 @@ extern "C"
     }
 
 
-    XModel *__cdecl SV_XModelGet(const char *name)
+    XModel *CDECL SV_XModelGet(const char *name)
     {
         return XModelPrecache(name, SV_AllocXModelPrecache, SV_AllocXModelPrecacheColl);
     }
 
 
-    void __cdecl SV_LocateGameData(gentity_t* gEnts, int numGEntities, int sizeofGEntity_t, playerState_t* clients, int sizeofGameClient)
+    void CDECL SV_LocateGameData(gentity_t* gEnts, int numGEntities, int sizeofGEntity_t, playerState_t* clients, int sizeofGameClient)
     {
         sv.gentities = gEnts;
         sv.gentitySize = sizeofGEntity_t;
@@ -697,7 +697,7 @@ extern "C"
     }
 
 
-    void __cdecl SV_DObjInitServerTime(gentity_t* ent, float dtime)
+    void CDECL SV_DObjInitServerTime(gentity_t* ent, float dtime)
     {
         DObj *obj = Com_GetServerDObj(ent->s.number);
         if ( obj )
@@ -705,7 +705,7 @@ extern "C"
     }
 
 
-    void __cdecl SV_DObjDisplayAnim(struct gentity_s *ent, const char *header)
+    void CDECL SV_DObjDisplayAnim(struct gentity_s *ent, const char *header)
     {
         DObj *obj = Com_GetServerDObj(ent->s.number);
         if ( obj )
@@ -713,7 +713,7 @@ extern "C"
     }
 
 
-    bool __cdecl SV_SetBrushModel(gentity_t* ent)
+    bool CDECL SV_SetBrushModel(gentity_t* ent)
     {
         assert(ent->r.inuse != 0);
         if ( CM_ClipHandleIsValid(ent->s.index) )
@@ -733,7 +733,7 @@ extern "C"
     }
 
 
-    int __cdecl SV_DObjGetBoneIndex(struct gentity_s *ent, unsigned int boneName)
+    int CDECL SV_DObjGetBoneIndex(struct gentity_s *ent, unsigned int boneName)
     {
         DObj *obj = Com_GetServerDObj(ent->s.number);
         if ( obj )
@@ -747,11 +747,11 @@ extern "C"
     }
 
 
-    void __cdecl SV_MatchEnd()
+    void CDECL SV_MatchEnd()
     {}
 
 
-    void __cdecl SV_SetMapCenter(float *mapCenter)
+    void CDECL SV_SetMapCenter(float *mapCenter)
     {
         assert(mapCenter);
         VectorCopy(mapCenter, svs.mapCenter);
@@ -759,7 +759,7 @@ extern "C"
     }
 
 
-    void __cdecl SV_SetGameEndTime(int gameEndTime)
+    void CDECL SV_SetGameEndTime(int gameEndTime)
     {
         char lastGameEndTime[12] = {'\0'};
         SV_GetConfigstring(11, lastGameEndTime, 12);
@@ -768,7 +768,7 @@ extern "C"
     }
 
 
-    void __cdecl SV_DObjGetBounds(gentity_t* ent, float *mins, float *maxs)
+    void CDECL SV_DObjGetBounds(gentity_t* ent, float *mins, float *maxs)
     {
         DObj *obj = Com_GetServerDObj(ent->s.number);
         assert(obj != NULL);
@@ -776,7 +776,7 @@ extern "C"
     };
 
 
-    int __cdecl SV_DObjCreateSkelForBones(DObj *obj, int *partBits)
+    int CDECL SV_DObjCreateSkelForBones(DObj *obj, int *partBits)
     {
         if ( DObjSkelExists(obj, sv.skelTimeStamp) )
             return DObjSkelAreBonesUpToDate(obj, partBits);
@@ -788,7 +788,7 @@ extern "C"
     }
 
 
-    DObjAnimMat *__cdecl SV_DObjGetMatrixArray(gentity_t* ent)
+    DObjAnimMat *CDECL SV_DObjGetMatrixArray(gentity_t* ent)
     {
       DObj *obj = Com_GetServerDObj(ent->s.number);
       assert(obj != NULL);
@@ -796,14 +796,14 @@ extern "C"
     }
 
 
-    void __cdecl SV_DObjUpdateServerTime(gentity_t* ent, float dtime, int bNotify)
+    void CDECL SV_DObjUpdateServerTime(gentity_t* ent, float dtime, int bNotify)
     {
         DObj *obj = Com_GetServerDObj(ent->s.number);
         if ( obj )
             DObjUpdateServerInfo(obj, dtime, bNotify);
     }
 
-    void __cdecl SV_GameSendServerCommand(int clientNum, int cmdtype, const char* cmdstring)
+    void CDECL SV_GameSendServerCommand(int clientNum, int cmdtype, const char* cmdstring)
     {
         if (clientNum == -1)
             SV_SendServerCommand_IW(NULL, cmdtype, "%s", cmdstring);

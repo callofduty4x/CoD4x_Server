@@ -122,7 +122,7 @@ void CMod_LoadBrushes()
 }
 
 
-int __cdecl CMod_GetLeafTerrainContents(cLeaf_s *leaf)
+int CDECL CMod_GetLeafTerrainContents(cLeaf_s *leaf)
 {
   int contents;
   int k;
@@ -230,7 +230,7 @@ void CMod_LoadLeafBrushNodes_Version14()
   }
 }
 
-void __cdecl CMod_LoadLeafBrushes()
+void CDECL CMod_LoadLeafBrushes()
 {
   unsigned int brushIndex;
   uint16_t *out;
@@ -273,7 +273,7 @@ struct DiskCollAabbTree
 };
 
 
-void __cdecl CMod_LoadCollisionAabbTrees()
+void CDECL CMod_LoadCollisionAabbTrees()
 {
   CollisionAabbTree_s *out;
   DiskCollAabbTree *in;
@@ -305,7 +305,7 @@ void __cdecl CMod_LoadCollisionAabbTrees()
 
 
 
-void __cdecl CMod_LoadLeafs(bool usePvs)
+void CDECL CMod_LoadLeafs(bool usePvs)
 {
   int firstCollAabbIndex;
   cLeaf_s *out;
@@ -358,7 +358,7 @@ void __cdecl CMod_LoadLeafs(bool usePvs)
   }
 }
 
-void __cdecl CMod_LoadLeafs_Version14(bool usePvs)
+void CDECL CMod_LoadLeafs_Version14(bool usePvs)
 {
   int firstCollAabbIndex;
   cLeaf_s *out;
@@ -439,7 +439,7 @@ struct DiskBrushModel
 };
 
 
-void __cdecl CMod_LoadSubmodels()
+void CDECL CMod_LoadSubmodels()
 {
   int firstCollAabbIndex;
   int j;
@@ -500,7 +500,7 @@ void __cdecl CMod_LoadSubmodels()
 }
 
 
-void __cdecl CMod_LoadSubmodelBrushNodes()
+void CDECL CMod_LoadSubmodelBrushNodes()
 {
   int contents;
   cmodel_t *out;
@@ -543,7 +543,7 @@ void __cdecl CMod_LoadSubmodelBrushNodes()
 }
 
 
-cLeafBrushNode_s *__cdecl CMod_AllocLeafBrushNode()
+cLeafBrushNode_s *CDECL CMod_AllocLeafBrushNode()
 {
   cLeafBrushNode_s *result = (cLeafBrushNode_s *)TempMalloc(sizeof(cLeafBrushNode_s));
   memset(result, 0, sizeof(cLeafBrushNode_s));
@@ -582,7 +582,7 @@ void CM_InitBoxHull()
 }
 
 
-void __cdecl CMod_LoadBrushRelated(unsigned int version, bool usePvs)
+void CDECL CMod_LoadBrushRelated(unsigned int version, bool usePvs)
 {
   int leafbrushNodesCount; 
   cLeafBrushNode_s *leafbrushNodes;
@@ -656,7 +656,7 @@ struct dnode_t
 };
 
 
-void __cdecl CMod_LoadNodes()
+void CDECL CMod_LoadNodes()
 {
   int child;
   int j;
@@ -764,7 +764,7 @@ struct DiskCollBorder
   float length;
 };
 
-void __cdecl CMod_LoadCollisionBorders()
+void CDECL CMod_LoadCollisionBorders()
 {
   CollisionBorder *out;
   DiskCollBorder *in;
@@ -803,7 +803,7 @@ struct DiskCollPartition_VersionBlackOps
 };
 
 /*
-void __cdecl CMod_LoadCollisionPartitions_VersionBlackOps( )
+void CDECL CMod_LoadCollisionPartitions_VersionBlackOps( )
 {
   CollisionPartition *out;
   DiskCollPartition_VersionBlackOps *in;
@@ -843,7 +843,7 @@ struct DiskCollPartition
 };
 
 
-void __cdecl CMod_LoadCollisionPartitions( )
+void CDECL CMod_LoadCollisionPartitions( )
 {
   CollisionPartition *out;
   DiskCollPartition *in;
@@ -910,7 +910,7 @@ struct dplane_t
 
 
 
-void __cdecl CMod_LoadPlanes()
+void CDECL CMod_LoadPlanes()
 {
   cplane_s *out;
   unsigned int planeIter;
@@ -948,7 +948,7 @@ void __cdecl CMod_LoadPlanes()
   }
 }
 
-char *__cdecl Com_EntityString(int *numEntityChars)
+char *CDECL Com_EntityString(int *numEntityChars)
 {
   char *entityString;
   unsigned int count;
@@ -963,9 +963,9 @@ char *__cdecl Com_EntityString(int *numEntityChars)
   return entityString;
 }
 
-MapEnts *__cdecl MapEnts_GetFromString(const char *name, const char *entityString, int numEntityChars);
+MapEnts *CDECL MapEnts_GetFromString(const char *name, const char *entityString, int numEntityChars);
 
-MapEnts *__cdecl MapEnts_RealLoad(const char *name)
+MapEnts *CDECL MapEnts_RealLoad(const char *name)
 {
   int numEntityChars;
   const char *entityString;
@@ -974,7 +974,7 @@ MapEnts *__cdecl MapEnts_RealLoad(const char *name)
   return MapEnts_GetFromString(name, entityString, numEntityChars);
 }
 
-MapEnts *__cdecl MapEnts_VirtualLoad(const char *name)
+MapEnts *CDECL MapEnts_VirtualLoad(const char *name)
 {
   return MapEnts_RealLoad(name);
 }
@@ -995,7 +995,7 @@ const char *g_purgeableEnts[ ] =
   "func_group"
 };
 
-bool __cdecl MapEnts_CanPurgeEntity(const char *classname, void *userData, bool (__cdecl *HasKeyCallback)(void *, const char *))
+bool CDECL MapEnts_CanPurgeEntity(const char *classname, void *userData, bool (CDECL *HasKeyCallback)(void *, const char *))
 {
   unsigned int classnameIndex;
 
@@ -1013,7 +1013,7 @@ bool __cdecl MapEnts_CanPurgeEntity(const char *classname, void *userData, bool 
   return HasKeyCallback(userData, "pl#") == 0;
 }
 
-bool __cdecl CMod_HasSpawnString(void *userData, const char *key)
+bool CDECL CMod_HasSpawnString(void *userData, const char *key)
 {
   const char *value;
 
@@ -1021,7 +1021,7 @@ bool __cdecl CMod_HasSpawnString(void *userData, const char *key)
 }
 
 
-MapEnts *__cdecl MapEnts_GetFromString(const char *name, const char *entityString, int numEntityChars)
+MapEnts *CDECL MapEnts_GetFromString(const char *name, const char *entityString, int numEntityChars)
 {
   MapEnts *mapEnts;
   SpawnVar spawnVar;
@@ -1047,7 +1047,7 @@ MapEnts *__cdecl MapEnts_GetFromString(const char *name, const char *entityStrin
       break;
     }
     G_SpawnString(&spawnVar, "classname", "", &classname);
-    if ( !MapEnts_CanPurgeEntity(classname, &spawnVar, (bool (__cdecl *)(void *, const char *))CMod_HasSpawnString) )
+    if ( !MapEnts_CanPurgeEntity(classname, &spawnVar, (bool (CDECL *)(void *, const char *))CMod_HasSpawnString) )
     {
       end = G_GetEntityParsePoint();
       size = end - begin;
@@ -1098,7 +1098,7 @@ void CM_LoadMapFromBsp(const char *name, bool usePvs)
 
 
 
-double __cdecl CMod_GetPartitionScore(uint16_t *leafBrushes, int numLeafBrushes, int axis, const float *mins, const float *maxs, float *dist)
+double CDECL CMod_GetPartitionScore(uint16_t *leafBrushes, int numLeafBrushes, int axis, const float *mins, const float *maxs, float *dist)
 {
   signed int bc;
   float max;
@@ -1159,7 +1159,7 @@ double __cdecl CMod_GetPartitionScore(uint16_t *leafBrushes, int numLeafBrushes,
 
 
 
-cLeafBrushNode_s *__cdecl CMod_PartionLeafBrushes_r(uint16_t *leafBrushes, int numLeafBrushes, const float *mins, const float *maxs)
+cLeafBrushNode_s *CDECL CMod_PartionLeafBrushes_r(uint16_t *leafBrushes, int numLeafBrushes, const float *mins, const float *maxs)
 {
   int nodeOffset;
   cLeafBrushNode_s *node;
@@ -1321,7 +1321,7 @@ LABEL_36:
 }
 
 //This function generates a hull-box which spans over all given leaf brushes and calls then CMod_PartionLeafBrushes_r()
-void __cdecl CMod_PartionLeafBrushes(uint16_t *leafBrushes, int numLeafBrushes, cLeaf_s *leaf)
+void CDECL CMod_PartionLeafBrushes(uint16_t *leafBrushes, int numLeafBrushes, cLeaf_s *leaf)
 {
   int j;
   float mins[3];

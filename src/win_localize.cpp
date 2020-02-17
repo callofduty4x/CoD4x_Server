@@ -13,7 +13,7 @@ typedef struct
 
 loclanguage_t localization;
 
-void __cdecl Win_InitLocalization()
+void CDECL Win_InitLocalization()
 {
   int size;
   FILE *fp;
@@ -56,25 +56,25 @@ void __cdecl Win_InitLocalization()
   }
 }
 
-void __cdecl Win_ShutdownLocalization()
+void CDECL Win_ShutdownLocalization()
 {
   localization.language = 0;
   localization.strings = 0;
 }
 
-//char *__cdecl Win_GetLanguage()
+//char *CDECL Win_GetLanguage()
 //{
 //  assert(localization.language);
 //  return localization.language;
 //}
 
-char *__cdecl Win_CopyLocalizationString(const char *string)
+char *CDECL Win_CopyLocalizationString(const char *string)
 {
   
   return va("%s", string);
 }
 
-char *__cdecl Win_LocalizeRef(const char *ref)
+char *CDECL Win_LocalizeRef(const char *ref)
 {
   const char *strings;
   int useRef;

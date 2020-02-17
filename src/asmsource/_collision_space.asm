@@ -3,7 +3,7 @@
 	extern _ZN6dxGeomC2EP7dxSpaceiP6dxBody
 	extern dFree
 	extern ODE_GeomDestruct
-	extern _Unwind_Resume
+	extern System_Unwind_Resume
 	extern dSetZero
 	extern odeGlob
 	extern _ZN6dxGeom8AABBTestEPS_Pf
@@ -504,7 +504,7 @@ _ZN13dxSimpleSpaceD0Ev_40:
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 
@@ -581,7 +581,7 @@ _ZN13dxSimpleSpaceD1Ev_40:
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 
@@ -1042,7 +1042,7 @@ _ZN7dxSpaceD0Ev_40:
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 
@@ -1119,7 +1119,7 @@ _ZN7dxSpaceD1Ev_40:
 	add edx, 0x8
 	mov [esi], edx
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 
@@ -1215,7 +1215,7 @@ dGetSimpleSpace:
 	pop ebp
 	ret
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 

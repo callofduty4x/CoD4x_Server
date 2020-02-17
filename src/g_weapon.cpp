@@ -13,7 +13,7 @@ using namespace std;
 
 extern "C"
 {
-    void __cdecl G_SetupWeaponDef()
+    void CDECL G_SetupWeaponDef()
     {
         Com_DPrintf(CON_CHANNEL_PLAYERWEAP, "----------------------\n");
         Com_DPrintf(CON_CHANNEL_PLAYERWEAP, "Game: G_SetupWeaponDef\n");
@@ -29,7 +29,7 @@ extern "C"
     }
 
 
-    void __cdecl G_AntiLagRewindClientPos(int gameTime, AntilagClientStore *antilagStore)
+    void CDECL G_AntiLagRewindClientPos(int gameTime, AntilagClientStore *antilagStore)
     {
 
 
@@ -81,7 +81,7 @@ extern "C"
     }
 
 
-    void __cdecl G_AntiLag_RestoreClientPos(struct AntilagClientStore *antilagStore)
+    void CDECL G_AntiLag_RestoreClientPos(struct AntilagClientStore *antilagStore)
     {
         if ( g_antilag->boolean == qfalse)
             return;

@@ -222,7 +222,7 @@ int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_
 }
 
 // This one used among others but it should not be in file called "test"
-qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle)
+qboolean CDECL CM_ClipHandleIsValid(unsigned int handle)
 {
   if ( handle >= cm.numSubModels )
   {

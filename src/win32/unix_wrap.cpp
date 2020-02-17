@@ -1,7 +1,7 @@
-#include "unix_wrap.hpp"
+﻿#include "unix_wrap.hpp"
 
 extern "C"
 {
-    void __cdecl _Unwind_Resume(struct _Unwind_Exception* object)
+    void CDECL System_Unwind_Resume(struct _Unwind_Exception* object)
     {}
 }

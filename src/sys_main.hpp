@@ -41,9 +41,9 @@
 extern "C"{
 #endif
 
-unsigned int __cdecl Sys_Milliseconds();
-unsigned long long __cdecl Sys_MillisecondsLong();
-unsigned long long __cdecl Sys_MicrosecondsLong();
+unsigned int CDECL Sys_Milliseconds();
+unsigned long long CDECL Sys_MillisecondsLong();
+unsigned long long CDECL Sys_MicrosecondsLong();
 
 void Sys_TimerInit( void );
 unsigned long long Sys_Microseconds( void );
@@ -55,7 +55,7 @@ char *Sys_ConsoleInput(void);
 void Sys_AnsiColorPrint( const char *msg );
 void Sys_PrintBinVersion( const char* name );
 void Sys_ParseArgs( int argc, char* argv[] );
-void __cdecl Sys_Error( const char *fmt, ... );
+void CDECL Sys_Error( const char *fmt, ... );
 void Sys_SetBinaryPath(const char *path);
 const char *Sys_BinaryPath(void);
 const char *Sys_ExeFile(void);
@@ -71,7 +71,7 @@ char *Sys_Cwd( void );
 void Sys_InitCrashDumps();
 const char *Sys_DefaultHomePath(void);
 const char *Sys_TempPath( void );
-void __cdecl Sys_Init(void);
+void CDECL Sys_Init(void);
 char *Sys_DefaultCDPath( void );
 qboolean Sys_DirectoryHasContent( const char* dir );
 char **Sys_ListFiles( const char *directory, const char *extension, char *filter, int *numfiles, qboolean wantsubs );
@@ -115,8 +115,8 @@ void Sys_BeginLoadThreadPriorities();
 void Sys_EndLoadThreadPriorities();
 void Sys_BeginShutdownWatchdog();
 
-signed int __cdecl Sys_ResetEvent(HANDLE handle);
-signed int __cdecl Sys_SetEvent(HANDLE handle);
+signed int CDECL Sys_ResetEvent(HANDLE handle);
+signed int CDECL Sys_SetEvent(HANDLE handle);
 HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name);
 void Sys_PrintBacktrace();
 void Sys_SleepMSec(int msec);

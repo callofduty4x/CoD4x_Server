@@ -11,7 +11,7 @@
 
 extern "C"{
 
-int __cdecl G_ClientCanSpectateTeamOrLocalPlayer(gclient_t *client, clientState_t *cs)
+int CDECL G_ClientCanSpectateTeamOrLocalPlayer(gclient_t *client, clientState_t *cs)
 {
   return G_ClientCanSpectateTeam(client, cs->team);
 }
@@ -49,7 +49,7 @@ qboolean GetFollowPlayerState(int clientNum, playerState_t *ps)
 }
 
 
-void __cdecl ClientThink(int clientNum)
+void CDECL ClientThink(int clientNum)
 {
   struct gentity_s *ent;
 
@@ -76,7 +76,7 @@ void __cdecl ClientThink(int clientNum)
 }
 
 
-void __cdecl G_PlayerStateToEntityStateExtrapolate(playerState_s *ps, entityState_s *s, int time, int snap)
+void CDECL G_PlayerStateToEntityStateExtrapolate(playerState_s *ps, entityState_s *s, int time, int snap)
 {
   VectorCopy(ps->velocity, s->lerp.pos.trDelta);
 

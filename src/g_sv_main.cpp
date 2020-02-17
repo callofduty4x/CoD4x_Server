@@ -372,12 +372,12 @@ float G_GetFogOpaqueDistSqrd()
 
 extern "C"
 {
-    void __cdecl G_SafeServerDObjFree(int handle)
+    void CDECL G_SafeServerDObjFree(int handle)
     {
         Com_SafeServerDObjFree(handle);
     }
 
-    void __cdecl G_RegisterCvars()
+    void CDECL G_RegisterCvars()
     {
         static const char *g_entinfoNames[] = { "off", "all_ents", nullptr };
 
@@ -468,7 +468,7 @@ extern "C"
     }
 
 
-    void __cdecl ExitLevel()
+    void CDECL ExitLevel()
     {
         mvabuf;
 

@@ -312,7 +312,7 @@ void Scr_PrintPrevCodePosSpreadSheet(conChannel_t channel, const char *codePos, 
   }
 }
 
-char *__cdecl Scr_ReadFile_FastFile(const char *filename, const char *extFilename, const char *codePos, bool archive)
+char *CDECL Scr_ReadFile_FastFile(const char *filename, const char *extFilename, const char *codePos, bool archive)
 {
   RawFile *rawfile;
   int len;
@@ -334,7 +334,7 @@ char *__cdecl Scr_ReadFile_FastFile(const char *filename, const char *extFilenam
 }
 
 
-char *__cdecl Scr_ReadFile_LoadObj(const char *filename, const char *extFilename, const char *codePos, bool archive)
+char *CDECL Scr_ReadFile_LoadObj(const char *filename, const char *extFilename, const char *codePos, bool archive)
 {
   int len;
   int f;
@@ -362,7 +362,7 @@ char *__cdecl Scr_ReadFile_LoadObj(const char *filename, const char *extFilename
 
 
 
-char *__cdecl Scr_ReadFile(const char *filename, const char *extFilename, const char *codePos, bool archive)
+char *CDECL Scr_ReadFile(const char *filename, const char *extFilename, const char *codePos, bool archive)
 {
   int file;
 
@@ -418,7 +418,7 @@ void Scr_PrintSourcePos(conChannel_t channel, const char *filename, const char *
 }
 
 
-unsigned int __cdecl Scr_GetSourceBuffer(const char *codePos)
+unsigned int CDECL Scr_GetSourceBuffer(const char *codePos)
 {
   unsigned int bufferIndex;
   
@@ -431,7 +431,7 @@ unsigned int __cdecl Scr_GetSourceBuffer(const char *codePos)
   return bufferIndex;
 }
 
-void __cdecl Scr_PrintPrevCodePos(conChannel_t channel, const char *codePos, unsigned int index)
+void CDECL Scr_PrintPrevCodePos(conChannel_t channel, const char *codePos, unsigned int index)
 {
   unsigned int bufferIndex;
 
@@ -466,7 +466,7 @@ void __cdecl Scr_PrintPrevCodePos(conChannel_t channel, const char *codePos, uns
 }
 
 
-char *__cdecl Scr_AddSourceBuffer( const char *filename, const char *extFilename, const char *codePos, bool archive)
+char *CDECL Scr_AddSourceBuffer( const char *filename, const char *extFilename, const char *codePos, bool archive)
 {
   const char *source;
   char c;
@@ -520,7 +520,7 @@ char *__cdecl Scr_AddSourceBuffer( const char *filename, const char *extFilename
 
 };
 
-void __cdecl Scr_GetTextSourcePos(const char *buf, const char *codePos, char *line)
+void CDECL Scr_GetTextSourcePos(const char *buf, const char *codePos, char *line)
 {
   unsigned int bufferIndex;
   int col;

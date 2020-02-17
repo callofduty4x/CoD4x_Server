@@ -4,8 +4,8 @@
 
 extern "C"
 {
-    float __cdecl std_ceilf(float x);
-    float __cdecl std_asinf(float x);
-    void* __cdecl std_new(unsigned int Size_);
-    void __cdecl std_delete(void* Address_);
+    float CDECL std_ceilf(float x);
+    float CDECL std_asinf(float x);
+    void* CDECL std_new(unsigned int Size_);
+    void CDECL std_delete(void* Address_);
 }

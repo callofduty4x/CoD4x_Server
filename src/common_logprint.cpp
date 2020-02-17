@@ -55,7 +55,7 @@ fileHandle_t Com_OpenLogfile(const char* name, char mode);
 int Com_WriteLog(const char* data, int len, fileHandle_t f);
 
 
-void __cdecl SV_EnterLeaveLog( const char *fmt, ... ) {
+void CDECL SV_EnterLeaveLog( const char *fmt, ... ) {
 
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
@@ -112,7 +112,7 @@ void __cdecl SV_EnterLeaveLog( const char *fmt, ... ) {
 }
 
 
-void __cdecl Com_PrintAdministrativeLog( const char *msg ) {
+void CDECL Com_PrintAdministrativeLog( const char *msg ) {
 
 	Sys_EnterCriticalSection(CRITSECT_LOGFILE);
 
@@ -274,7 +274,7 @@ void Com_DPrintLogfile( const char *msg )
 }
 
 
-void __cdecl Com_DPrintfLogfile( const char *fmt, ... ) {
+void CDECL Com_DPrintfLogfile( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[0x10000];
 

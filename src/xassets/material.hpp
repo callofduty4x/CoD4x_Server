@@ -251,7 +251,7 @@ extern "C"{
 #endif
 typedef struct Material Material_t;
 qboolean Material_IsDefault(struct Material *);
-const char *__cdecl Material_GetName(struct Material *a1);
+const char *CDECL Material_GetName(struct Material *a1);
 void Material_ClearShaderUploadList();
 #ifdef __cplusplus
 }

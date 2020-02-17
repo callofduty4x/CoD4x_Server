@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -225,4 +225,11 @@ unsigned int Sys_GetProcessAffinityMask()
     return AffinityMask;
 }
 
+extern "C"
+{
+    void __cdecl System_Unwind_Resume(_Unwind_Exception* object)
+    {
+        _Unwind_Resume(object);
+    }
+}
 #endif

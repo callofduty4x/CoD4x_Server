@@ -31,7 +31,7 @@
 #include "cvar.hpp"
 
 void Init_CallVote(void);
-void __cdecl Cmd_CallVote_f( gentity_t *ent );
+void CDECL Cmd_CallVote_f( gentity_t *ent );
 void G_ChatRedirect(char* msg, int client, int mode);
 void G_AddChatRedirect(void (*rd_dest)( const char *, int, int));
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
@@ -42,7 +42,7 @@ extern "C"
     qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum);
     void __cdeclClientUserinfoChanged( int clientNum );
     void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
-    int __cdecl G_LocalizedStringIndex( const char* );
+    int CDECL G_LocalizedStringIndex( const char* );
 }; //extern "C"
 
 struct client_t;
@@ -50,15 +50,15 @@ struct client_t;
 void Pmove_ExtendedResetState( void );
 void Pmove_ExtendedInitForClient(client_t *cl);
 void Pmove_ExtendedTurnOn( void );
-__optimize3 int __cdecl Pmove_GetSpeed( playerState_t *ps );
-__optimize3 int __cdecl Pmove_GetGravity( playerState_t *ps );
-__optimize3 float __cdecl Jump_GetHeight( playerState_t *ps);
-__optimize3 void __cdecl Jump_ClampVelocity(playerState_t* ps, vec3_t vec);
-__optimize3 qboolean __cdecl Jump_IsPlayerAboveMax(playerState_t* ps);
-__optimize3 qboolean __cdecl Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2);
-__optimize3 float __cdecl Jump_CalcHeight( playerState_t* ps );
+__optimize3 int CDECL Pmove_GetSpeed( playerState_t *ps );
+__optimize3 int CDECL Pmove_GetGravity( playerState_t *ps );
+__optimize3 float CDECL Jump_GetHeight( playerState_t *ps);
+__optimize3 void CDECL Jump_ClampVelocity(playerState_t* ps, vec3_t vec);
+__optimize3 qboolean CDECL Jump_IsPlayerAboveMax(playerState_t* ps);
+__optimize3 qboolean CDECL Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2);
+__optimize3 float CDECL Jump_CalcHeight( playerState_t* ps );
 
-void __cdecl ClientCommand( int );
+void CDECL ClientCommand( int );
 
 void G_DestroyAdsForPlayer(client_t *cl);
 void G_AddRule(const char* newtext);

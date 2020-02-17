@@ -13,7 +13,7 @@
 	extern memcpy
 	extern dFree
 	extern _ZN6dxGeomC2EP7dxSpaceiP6dxBody
-	extern _Unwind_Resume
+	extern System_Unwind_Resume
 	extern _ZN6dxGeom8AABBTestEPS_Pf
 
 ;Exports of collision_std:
@@ -4864,7 +4864,7 @@ dCreateBox_10:
 	pop ebp
 	ret
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 
 
 ;dGeomBoxGetLengths

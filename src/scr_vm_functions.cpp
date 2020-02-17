@@ -2931,7 +2931,7 @@ void Scr_LogString()
 }
 
 
-void __cdecl PlayerCmd_GetXuid(scr_entref_t arg)
+void CDECL PlayerCmd_GetXuid(scr_entref_t arg)
 {
     gentity_t *pSelf;
     char svcmd[128];
@@ -3296,7 +3296,7 @@ void GScr_ToUpper()
 
 extern "C"
 {
-    void __cdecl GScr_NewHudElem()
+    void CDECL GScr_NewHudElem()
     {
         game_hudelem_t* element = HudElem_Alloc(1023, 0);
         if (element)
@@ -3308,7 +3308,7 @@ extern "C"
     }
 
 
-    void __cdecl GScr_NewClientHudElem()
+    void CDECL GScr_NewClientHudElem()
     {
         gentity_t* ent = Scr_GetEntity(0);
         if (ent->client == NULL)

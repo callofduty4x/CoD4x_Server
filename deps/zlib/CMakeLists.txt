@@ -19,6 +19,4 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${zlib_SOURCE_DIR}/contrib/min
 
 # Fix up zlib cmake errors...
 target_include_directories(example PRIVATE ${zlib_SOURCE_DIR})
-target_include_directories(example64 PRIVATE ${zlib_SOURCE_DIR})
 target_include_directories(minigzip PRIVATE ${zlib_SOURCE_DIR})
-target_include_directories(minigzip64 PRIVATE ${zlib_SOURCE_DIR})

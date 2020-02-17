@@ -655,9 +655,9 @@ void SV_PreGameUserVoice(client_t* cl, msg_t* msg);
 //void SV_BuildClientSnapshot(client_t* cl);
 void SV_ArchiveSnapshot(msg_t* msg);
 
-void __cdecl SV_SendServerCommand_IW(client_t *cl, int type, const char *fmt, ...);
-void __cdecl SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...);
-void __cdecl SV_SendServerCommand(client_t *cl, const char *fmt, ...);
+void CDECL SV_SendServerCommand_IW(client_t *cl, int type, const char *fmt, ...);
+void CDECL SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...);
+void CDECL SV_SendServerCommand(client_t *cl, const char *fmt, ...);
 
 void SV_AddServerCommand( client_t *cl, int type, const char *cmd );
 
@@ -725,7 +725,7 @@ void SV_GetUserinfo( int index, char *buffer, int bufferSize );
 qboolean SV_Map(const char* levelname);
 void SV_MapRestart( qboolean fastrestart );
 
-void __cdecl SV_SetConfigstring(int index, const char *text);
+void CDECL SV_SetConfigstring(int index, const char *text);
 //SV_SetConfigstring SV_SetConfigstring = (tSV_SetConfigstring)(0x8173fda);
 const char* SV_GetGuid(unsigned int clnum, char* buf, int size);
 qboolean SV_ExecuteRemoteCmd(int, const char*);
@@ -751,33 +751,33 @@ void SV_RemoteCmdSetAdmin(int uid, char* guid, int power);
 void SV_RemoteCmdUnsetAdmin(int uid, char* guid);
 void SV_RemoteCmdSetPermission(char* command, int power);
 void SV_RemoteCmdListAdmins( void );
-qboolean __cdecl SV_GameCommand(void);
+qboolean CDECL SV_GameCommand(void);
 
 void SV_GetConfigstring( int index, char *buffer, int bufferSize );
 int SV_GetConfigstringIndex(int num);
 int SV_GetModelConfigstringIndex(int num);
 extern cvar_t* sv_disableChat;
-void __cdecl SV_StringUsage_f(void);
-void __cdecl SV_ScriptUsage_f(void);
-void __cdecl SV_BeginClientSnapshot( client_t *cl, msg_t* msg);
-void __cdecl SV_EndClientSnapshot( client_t *cl, msg_t* msg);
-void __cdecl SV_ClientThink( client_t *cl, usercmd_t * );
+void CDECL SV_StringUsage_f(void);
+void CDECL SV_ScriptUsage_f(void);
+void CDECL SV_BeginClientSnapshot( client_t *cl, msg_t* msg);
+void CDECL SV_EndClientSnapshot( client_t *cl, msg_t* msg);
+void CDECL SV_ClientThink( client_t *cl, usercmd_t * );
 void SV_SpawnServer(const char* levelname);
-void __cdecl SV_SetGametype( void );
-void __cdecl SV_InitCvars( void );
-void __cdecl SV_RestartGameProgs( int savepersist );
+void CDECL SV_SetGametype( void );
+void CDECL SV_InitCvars( void );
+void CDECL SV_RestartGameProgs( int savepersist );
 void SV_BotInitBotLib( void );
 int SV_BotLibSetup( void );
 int SV_BotLoadMap(const char* levelname);
-void __cdecl SV_PreFrame(void);
-void __cdecl SV_SendClientMessages(void);
-void __cdecl SV_SetServerStaticHeader(void);
-void __cdecl SV_ShutdownGameProgs(void);
-void __cdecl SV_FreeClients(void);
-void __cdecl SV_SetConfigstring(int index, const char *text);
-void __cdecl SV_FreeClient(client_t* drop);
-void __cdecl SV_FreeClientScriptId(client_t *cl);
-void __cdecl SV_LinkEntity(gentity_t*);
+void CDECL SV_PreFrame(void);
+void CDECL SV_SendClientMessages(void);
+void CDECL SV_SetServerStaticHeader(void);
+void CDECL SV_ShutdownGameProgs(void);
+void CDECL SV_FreeClients(void);
+void CDECL SV_SetConfigstring(int index, const char *text);
+void CDECL SV_FreeClient(client_t* drop);
+void CDECL SV_FreeClientScriptId(client_t *cl);
+void CDECL SV_LinkEntity(gentity_t*);
 void SV_SpawnServerResetPlayers();
 void serverStatus_Write();
 
@@ -814,7 +814,7 @@ cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, boo
 void SV_ClipMoveToEntity(struct moveclip_s *clip, svEntity_t *entity, struct trace_s *trace);
 void SV_Cmd_Init();
 void SV_SteamData(client_t* cl, msg_t* msg);
-void __cdecl SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels); //0817D9F8
+void CDECL SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels); //0817D9F8
 void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int entityNum, int contentmask, int capsule );
 int SV_PointContents( const vec3_t p, int passEntityNum, int contentmask );
 qboolean SV_inPVSIgnorePortals( const vec3_t p1, const vec3_t p2 );
@@ -836,19 +836,19 @@ void SV_ClientCalcFramerate();
 void SV_SetMapCenterInSVSHeader(float* center);
 void SV_GetMapCenterFromSVSHeader(float* center);
 qboolean SV_Loaded();
-bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angles, bool *success);
+bool CDECL SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angles, bool *success);
 clipHandle_t SV_ClipHandleForEntity(gentity_t *touch);
 
-const char *__cdecl SV_GetMapBaseName(const char *mapname);
-void __cdecl SV_ResetSkeletonCache();
-void __cdecl SV_SetUserinfo(int clientIndex, const char *val);
+const char *CDECL SV_GetMapBaseName(const char *mapname);
+void CDECL SV_ResetSkeletonCache();
+void CDECL SV_SetUserinfo(int clientIndex, const char *val);
 
 bool MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, enum DeltaFlags flags);
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number);
-uint64_t __cdecl SV_GetPlayerXuid(unsigned int clientNum);
+uint64_t CDECL SV_GetPlayerXuid(unsigned int clientNum);
 
-void __cdecl CM_UnlinkEntity(svEntity_t *ent);
-void __cdecl CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
+void CDECL CM_UnlinkEntity(svEntity_t *ent);
+void CDECL CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
 
 int SV_GameGetMaxClients();
 qboolean SV_FileStillActive(const char* name);
@@ -856,12 +856,12 @@ qboolean SV_FileStillActive(const char* name);
 void SV_ConnectWithUpdateProxy(client_t *cl);
 #endif
 void SV_WriteChecksumInfo(msg_t* msg, const char* filename);
-void __cdecl SV_DObjDumpInfo(gentity_t *ent);
-int __cdecl SV_DObjExists(gentity_t *ent);
+void CDECL SV_DObjDumpInfo(gentity_t *ent);
+int CDECL SV_DObjExists(gentity_t *ent);
 
 }
 
-__optimize2 qboolean SV_Frame(unsigned int usec);
+qboolean SV_Frame(unsigned int usec);
 __optimize3 void SV_GetChallenge(netadr_t* from);
 __optimize3 void SV_DirectConnect(netadr_t* from);
 __optimize3 void SV_ReceiveStats(netadr_t* from, msg_t* msg);

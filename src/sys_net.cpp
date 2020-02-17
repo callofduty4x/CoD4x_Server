@@ -1125,7 +1125,7 @@ const char	*NET_AdrMaskToString(netadr_t *a)
   return NET_AdrMaskToStringInternal(a, s, sizeof(s));
 }
 
-const char* __cdecl NET_AdrMaskToStringMT(netadr_t* a, char* buf, int len)
+const char* CDECL NET_AdrMaskToStringMT(netadr_t* a, char* buf, int len)
 {
     return NET_AdrMaskToStringInternal(a, buf, len);
 }

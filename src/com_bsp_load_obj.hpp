@@ -31,5 +31,5 @@ struct comBspGlob_t
 extern "C"
 {
     extern comBspGlob_t comBspGlob;
-    void __cdecl Com_LoadBsp(const char *filename);
+    void CDECL Com_LoadBsp(const char *filename);
 }

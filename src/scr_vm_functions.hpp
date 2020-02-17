@@ -104,9 +104,9 @@ void GScr_ArrayTest();
 
 extern "C"
 {
-    qboolean __cdecl GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
-    void __cdecl GScr_NewHudElem();
-    void __cdecl GScr_NewClientHudElem();
+    qboolean CDECL GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
+    void CDECL GScr_NewHudElem();
+    void CDECL GScr_NewClientHudElem();
 }
 
 void PrintModelBonesInfo(gentity_t *ent);

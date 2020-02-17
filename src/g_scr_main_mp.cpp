@@ -16,12 +16,12 @@
 #include "g_combat_mp.hpp"
 
 
-void __cdecl Scr_LocalizationError(int iParm, const char *pszErrorMessage)
+void CDECL Scr_LocalizationError(int iParm, const char *pszErrorMessage)
 {
   Scr_ParamError(iParm, pszErrorMessage);
 }
 
-void __cdecl Scr_ValidateLocalizedStringRef(int parmIndex, const char *token, int tokenLen)
+void CDECL Scr_ValidateLocalizedStringRef(int parmIndex, const char *token, int tokenLen)
 {
   int charIter;
 
@@ -45,7 +45,7 @@ extern "C"
 {
     scr_data_t g_scr_data;
 
-void __cdecl GScr_PlaceSpawnPoint(scr_entref_t entref)
+void CDECL GScr_PlaceSpawnPoint(scr_entref_t entref)
 {
   gentity_s *pEnt;
   uint16_t groundEntNum;
@@ -101,7 +101,7 @@ void __cdecl GScr_PlaceSpawnPoint(scr_entref_t entref)
 }
 
 
-char *__cdecl Scr_GetGameTypeNameForScript(const char *pszGameTypeScript)
+char *CDECL Scr_GetGameTypeNameForScript(const char *pszGameTypeScript)
 {
   int i;
 //  Com_Printf(CON_CHANNEL_PARSERSCRIPT,"Gametypes:\n");
@@ -116,12 +116,12 @@ char *__cdecl Scr_GetGameTypeNameForScript(const char *pszGameTypeScript)
   return NULL;
 }
 
-qboolean __cdecl Scr_IsValidGameType(const char *pszGameType)
+qboolean CDECL Scr_IsValidGameType(const char *pszGameType)
 {
   return (qboolean)(Scr_GetGameTypeNameForScript(pszGameType) != NULL);
 }
 
-int __cdecl GScr_GetStatusIconIndex(const char *pszIcon)
+int CDECL GScr_GetStatusIconIndex(const char *pszIcon)
 {
   int iConfigNum;
   char szConfigString[1024];
@@ -143,7 +143,7 @@ int __cdecl GScr_GetStatusIconIndex(const char *pszIcon)
 }
 
 
-int __cdecl GScr_GetHeadIconIndex(const char *pszIcon)
+int CDECL GScr_GetHeadIconIndex(const char *pszIcon)
 {
   int iConfigNum;
   char szConfigString[1024];
@@ -165,7 +165,7 @@ int __cdecl GScr_GetHeadIconIndex(const char *pszIcon)
 }
 
 
-void __cdecl Scr_ConstructMessageString(int firstParmIndex, int lastParmIndex, const char *errorContext, char *string, unsigned int stringLimit)
+void CDECL Scr_ConstructMessageString(int firstParmIndex, int lastParmIndex, const char *errorContext, char *string, unsigned int stringLimit)
 {
   unsigned int charIndex;
   unsigned int tokenLen;
@@ -266,7 +266,7 @@ void __cdecl Scr_ConstructMessageString(int firstParmIndex, int lastParmIndex, c
 
 
 
-void __cdecl GScr_AddVector(const float *vVec)
+void CDECL GScr_AddVector(const float *vVec)
 {
     if ( vVec )
     {
@@ -278,7 +278,7 @@ void __cdecl GScr_AddVector(const float *vVec)
     }
 }
 
-void __cdecl GScr_AddEntity(gentity_s *pEnt)
+void CDECL GScr_AddEntity(gentity_s *pEnt)
 {
     if ( pEnt )
     {
@@ -292,7 +292,7 @@ void __cdecl GScr_AddEntity(gentity_s *pEnt)
 
 
 
-void __cdecl Scr_PlayerKilled(gentity_s *self, gentity_s *inflictor, gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, hitLocation_t hitLoc, int psTimeOffset, int deathAnimDuration)
+void CDECL Scr_PlayerKilled(gentity_s *self, gentity_s *inflictor, gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, hitLocation_t hitLoc, int psTimeOffset, int deathAnimDuration)
 {
   uint16_t hitloc;
   const char *weapname;
@@ -337,7 +337,7 @@ void __cdecl Scr_PlayerKilled(gentity_s *self, gentity_s *inflictor, gentity_s *
   Scr_FreeThread(callback);
 }
 
-void __cdecl Scr_PlayerLastStand(gentity_s *self, gentity_s *inflictor, gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, hitLocation_t hitLoc, int psTimeOffset)
+void CDECL Scr_PlayerLastStand(gentity_s *self, gentity_s *inflictor, gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, hitLocation_t hitLoc, int psTimeOffset)
 {
   uint16_t cstr;
   const char *weapname;
@@ -379,7 +379,7 @@ void __cdecl Scr_PlayerLastStand(gentity_s *self, gentity_s *inflictor, gentity_
 };
 
 
-unsigned int __cdecl GScr_AllocString(const char *s)
+unsigned int CDECL GScr_AllocString(const char *s)
 {
   unsigned int stringVal;
 

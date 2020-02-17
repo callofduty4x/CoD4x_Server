@@ -16,6 +16,6 @@ enum fieldtype_t
 
 extern "C"
 {
-    void __cdecl Scr_SetGenericField(void*, enum fieldtype_t, int);
-    void __cdecl Scr_GetGenericField(const void*, enum fieldtype_t, int);
+    void CDECL Scr_SetGenericField(void*, enum fieldtype_t, int);
+    void CDECL Scr_GetGenericField(const void*, enum fieldtype_t, int);
 };

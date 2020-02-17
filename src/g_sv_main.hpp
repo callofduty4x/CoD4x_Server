@@ -11,7 +11,7 @@ extern cvar_t* bg_shock_lookControl;
 
 extern "C"
 {
-    void __cdecl G_SafeServerDObjFree(int handle);
-    void __cdecl G_RegisterCvars();
-    void __cdecl ExitLevel();
+    void CDECL G_SafeServerDObjFree(int handle);
+    void CDECL G_RegisterCvars();
+    void CDECL ExitLevel();
 } // extern "C"

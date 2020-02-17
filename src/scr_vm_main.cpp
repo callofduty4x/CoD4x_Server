@@ -659,7 +659,7 @@ void GScr_LoadGameTypeScript(void)
 
 extern "C"
 {
-    void __cdecl GScr_LoadScripts()
+    void CDECL GScr_LoadScripts()
     {
         char mappath[MAX_QPATH];
         cvar_t *mapname;

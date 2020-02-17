@@ -441,7 +441,7 @@ int Q_CountChar(const char *string, char tocount)
 	return count;
 }
 
-int __cdecl Com_sprintf(char *dest, int size, const char *fmt, ...)
+int CDECL Com_sprintf(char *dest, int size, const char *fmt, ...)
 {
 	int		len;
 	va_list		argptr;
@@ -471,7 +471,7 @@ varargs versions of all text functions.
  ***********/
 
 
-char* __cdecl va_replacement(char *dest, int size, const char *fmt, ...)
+char* CDECL va_replacement(char *dest, int size, const char *fmt, ...)
 {
 	int		len;
 	va_list	argptr;
@@ -1177,7 +1177,7 @@ void XML_Escape( char* buffer, size_t size, const char* string){
  Changes or adds a key/value pair
  ==================
  */
-qboolean __cdecl XML_OpenTag( xml_t *base, char* root, int count,... ) {
+qboolean CDECL XML_OpenTag( xml_t *base, char* root, int count,... ) {
 
 	char* key;
 	char* value;
@@ -1672,7 +1672,7 @@ char *va(const char *format, ...)
 #endif
 
 /*
-int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKeyValue, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrcpy)(char *, const char *))
+int CDECL KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKeyValue, const int iMaxFieldTypes, int (CDECL *parseSpecialFieldType)(char *, const char *, const int, const int), void (CDECL *parseStrcpy)(char *, const char *))
 {
   char name;
   char dest;
@@ -1756,7 +1756,7 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
   return 0;
 }
 */
-int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKeyValue, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrcpy)(char *, const char *))
+int CDECL KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKeyValue, const int iMaxFieldTypes, int (CDECL *parseSpecialFieldType)(char *, const char *, const int, const int), void (CDECL *parseStrcpy)(char *, const char *))
 {
   char dest[0x2000];
 
@@ -1846,7 +1846,7 @@ int __cdecl KeyValueToField(char *pStruct, cspField_t *pField, const char *pszKe
 }
 
 
-const char *__cdecl Com_GetExtensionSubString(const char *filename)
+const char *CDECL Com_GetExtensionSubString(const char *filename)
 {
   const char *substr;
 
@@ -1873,7 +1873,7 @@ const char *__cdecl Com_GetExtensionSubString(const char *filename)
 }
 
 
-qboolean __cdecl I_iscsym(int c){
+qboolean CDECL I_iscsym(int c){
     if(c == '_' || Q_isalphanum( c ))
     {
         return qtrue;
@@ -2004,13 +2004,13 @@ void Swap_Init( void ) {
 
 extern "C"
 {
-    bool __cdecl Com_IsLegacyXModelName(const char *name)
+    bool CDECL Com_IsLegacyXModelName(const char *name)
     {
         return !Q_stricmpn(name, "xmodel", 6) && (name[6] == '/' || name[6] == '\\');
     }
 
 
-    void __cdecl Com_StripExtension(const char *in, char *out)
+    void CDECL Com_StripExtension(const char *in, char *out)
     {
       const char *extension;
 
@@ -2023,7 +2023,7 @@ extern "C"
     }
 
 
-    double __cdecl GetLeanFraction(const float fFrac)
+    double CDECL GetLeanFraction(const float fFrac)
     {
       float af;
 
@@ -2032,7 +2032,7 @@ extern "C"
     }
 
 
-    double __cdecl UnGetLeanFraction(const float fFrac)
+    double CDECL UnGetLeanFraction(const float fFrac)
     {
       assert(fFrac >= 0);
       assert(fFrac <= 1.f);
@@ -2040,7 +2040,7 @@ extern "C"
     }
 
 
-    bool __cdecl ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrCpy)(char *, const char *))
+    bool CDECL ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (CDECL *parseSpecialFieldType)(char *, const char *, const int, const int), void (CDECL *parseStrCpy)(char *, const char *))
     {
       char *pszKeyValue;
       char error;
@@ -2064,7 +2064,7 @@ extern "C"
     }
 
 
-    int __cdecl Q_stricmpwild(const char *wild, const char *s)
+    int CDECL Q_stricmpwild(const char *wild, const char *s)
     {
         char charWild;
         int delta;
@@ -2100,7 +2100,7 @@ extern "C"
     }
 
 
-    char __cdecl Q_CleanChar(char character)
+    char CDECL Q_CleanChar(char character)
     {
         return character == 0x92 ? '\'' : character;
     }

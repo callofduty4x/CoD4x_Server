@@ -312,7 +312,7 @@ void SV_CloseAllClientHandles(client_t *drop)
 }
 
 
-void __cdecl SV_DropClientInternal( client_t *drop, const char *reason, qboolean notifyOthers ) {
+void CDECL SV_DropClientInternal( client_t *drop, const char *reason, qboolean notifyOthers ) {
 	int i;
 	int clientnum;
 	char var_01[2];
@@ -424,14 +424,14 @@ void __cdecl SV_DropClientInternal( client_t *drop, const char *reason, qboolean
 	}
 }
 
-void __cdecl SV_DropClient( client_t *drop, const char *reason )
+void CDECL SV_DropClient( client_t *drop, const char *reason )
 {
 
     SV_DropClientInternal( drop, reason, qtrue );
 
 }
 
-void __cdecl SV_DropClientNoNotify( client_t *drop, const char *reason )
+void CDECL SV_DropClientNoNotify( client_t *drop, const char *reason )
 {
 
     SV_DropClientInternal( drop, reason, qfalse );
@@ -917,7 +917,7 @@ Fill up msg with data
 ==================
 */
 
-void __cdecl SV_WriteDownloadToClient( client_t *cl ) {
+void CDECL SV_WriteDownloadToClient( client_t *cl ) {
 	char errorMessage[1024];
 	byte downloadBlock[0xffff];
 	int blockSize, filepos, remaining;
@@ -2129,7 +2129,7 @@ int SV_GetClientStat(int clientNum, signed int index)
 }
 
 
-extern "C" void __cdecl SV_FreeClientScriptPers()
+extern "C" void CDECL SV_FreeClientScriptPers()
 {
   client_t *cl;
   int i;
@@ -2145,7 +2145,7 @@ extern "C" void __cdecl SV_FreeClientScriptPers()
   }
 }
 
-void __cdecl SV_FreeClient(client_t *cl)
+void CDECL SV_FreeClient(client_t *cl)
 {
   assert(cl->state >= CS_CONNECTED);
 
@@ -2159,7 +2159,7 @@ void __cdecl SV_FreeClient(client_t *cl)
   SV_FreeClientScriptId(cl);
 }
 
-void __cdecl SV_FreeClients()
+void CDECL SV_FreeClients()
 {
   client_t *client;
   int i;
@@ -2174,7 +2174,7 @@ void __cdecl SV_FreeClients()
 }
 
 
-void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
+void CDECL SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
 {
 
 //  PIXBeginNamedEvent(-1, va("SV_ClientThink '%s'", cl->name));

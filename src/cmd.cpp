@@ -1288,7 +1288,7 @@ extern "C"
     Adds command text at the end of the buffer, does NOT add a final \n
     ============
     */
-    void __cdecl Cbuf_AddText(const char* text)
+    void CDECL Cbuf_AddText(const char* text)
     {
         Sys_EnterCriticalSection(CRITSECT_CBUF);
         cmd_text += text;

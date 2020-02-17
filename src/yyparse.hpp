@@ -20,7 +20,7 @@ struct yy_buffer_state
 
 extern "C"
 {
-    FILE* __cdecl yy_stdin();
-    FILE* __cdecl yy_stdout();
-    yy_buffer_state* __cdecl yy_create_buffer(FILE *file, int bufferSize);
+    FILE* CDECL yy_stdin();
+    FILE* CDECL yy_stdout();
+    yy_buffer_state* CDECL yy_create_buffer(FILE *file, int bufferSize);
 }

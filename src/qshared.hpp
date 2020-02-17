@@ -115,17 +115,17 @@ struct cspField_t
 
 extern "C"
 {
-double __cdecl GetLeanFraction(const float fFrac);
-bool __cdecl Com_IsLegacyXModelName(const char *name);
+double CDECL GetLeanFraction(const float fFrac);
+bool CDECL Com_IsLegacyXModelName(const char *name);
 void COM_StripExtension( const char *in, char *out );
 void Com_Memset(void*, byte, int);
 //#define Com_Memset memset
 void Com_Memcpy(void*, const void*, int);
 //#define Com_Memcpy memcpy
-double __cdecl UnGetLeanFraction(const float fFrac);
-bool __cdecl ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (__cdecl *parseSpecialFieldType)(char *, const char *, const int, const int), void (__cdecl *parseStrCpy)(char *, const char *));
-int __cdecl Q_stricmpwild(const char *wild, const char *s);
-char __cdecl Q_CleanChar(char character);
+double CDECL UnGetLeanFraction(const float fFrac);
+bool CDECL ParseConfigStringToStruct(char *pStruct, cspField_t *pFieldList, const int iNumFields, const char *pszBuffer, const int iMaxFieldTypes, int (CDECL *parseSpecialFieldType)(char *, const char *, const int, const int), void (CDECL *parseStrCpy)(char *, const char *));
+int CDECL Q_stricmpwild(const char *wild, const char *s);
+char CDECL Q_CleanChar(char character);
 int Com_sprintfPos(char *dest, const int destSize, int *destPos, const char *fmt, ...);
 
 #define NET_WANT_READ -0x7000
@@ -165,7 +165,7 @@ int  Q_strichr( const char *s, char find);
 int Q_PrintStrlen( const char *string );
 char *Q_CleanStr( char *string );
 int Q_CountChar(const char *string, char tocount);
-int __cdecl Com_sprintf(char *dest, int size, const char *fmt, ...);
+int CDECL Com_sprintf(char *dest, int size, const char *fmt, ...);
 void Q_strchrrepl(char *string, char torepl, char repl);
 char* Q_BitConv(int val);
 int Q_strLF2CRLF(const char* input, char* output, int outputlimit );
@@ -177,7 +177,7 @@ char* va( const char *format, ... );
 
 /*
 #ifndef __QSHARED_C__
-char* __cdecl va_replacement(char *dest, int size, const char *fmt, ...);
+char* CDECL va_replacement(char *dest, int size, const char *fmt, ...);
 #define mvabuf char va_buffer[MAX_STRING_CHARS]
 #define va(fmt,... ) va_replacement(va_buffer, sizeof(va_buffer), fmt, __VA_ARGS__)
 #endif
@@ -194,7 +194,7 @@ void Info_SetEncodedValueForKey( char *s, const char *key, const char *value, in
 int Info_DecodedValueForKey( const char *s, const char *key, char *out, int outbuflen);
 
 
-qboolean __cdecl I_iscsym(int c);
+qboolean CDECL I_iscsym(int c);
 
 int SV_Cmd_Argc( void );
 int	Cmd_Argc( void );
@@ -251,7 +251,7 @@ typedef struct{
 
 void XML_Init( xml_t *base, char *s, int size, char* encoding);
 void XML_Escape( char* buffer, size_t size, const char* string);
-qboolean __cdecl XML_OpenTag( xml_t *base, char* root, int count,... );
+qboolean CDECL XML_OpenTag( xml_t *base, char* root, int count,... );
 void XML_CloseTag(xml_t *base);
 void XML_AppendToBuffer( xml_t *base, const char* s );
 
@@ -323,7 +323,7 @@ int Com_GetCurrentParseLine( void );
 struct parseInfo_t *Com_Parse( const char *( *data_p ) );
 struct parseInfo_t *Com_ParseOnLine( const char *( *data_p ) );
 const char *Com_ParseRestOfLine( const char *( *data_p ) );
-const char *__cdecl Com_GetLastTokenPos();
+const char *CDECL Com_GetLastTokenPos();
 void Com_UngetToken( void );
 /*
 #ifdef __cplusplus
@@ -364,7 +364,7 @@ typedef enum {
 	ERR_SCRIPT					// script error occured
 } errorParm_t;
 
-void __cdecl Com_Error( int level, const char *error, ...);
+void CDECL Com_Error( int level, const char *error, ...);
 
 
 #ifndef M_PI

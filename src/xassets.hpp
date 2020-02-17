@@ -122,12 +122,12 @@ extern "C"
 #endif
 
 void R_Init();
-void __cdecl DB_SetInitializing(bool);
-qboolean __cdecl DB_FileExists(const char* filename, int mode);
-qboolean __cdecl DB_ModFileExists(void);
-void __cdecl DB_LoadXAssets(XZoneInfo*, unsigned int assetscount, int);
-int __cdecl DB_GetXAssetTypeSize(int type);
-void __cdecl XAnimInit(void);
+void CDECL DB_SetInitializing(bool);
+qboolean CDECL DB_FileExists(const char* filename, int mode);
+qboolean CDECL DB_ModFileExists(void);
+void CDECL DB_LoadXAssets(XZoneInfo*, unsigned int assetscount, int);
+int CDECL DB_GetXAssetTypeSize(int type);
+void CDECL XAnimInit(void);
 void XAssets_PatchLimits(void);
 void Material_DirtyTechniqueSetOverrides();
 void BG_FillInAllWeaponItems();
@@ -139,36 +139,36 @@ void DB_PostLoadXZone();
 void DB_UpdateDebugZone();
 void DB_AddUserMapDir(const char *dir);
 void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsize);
-int __cdecl DB_GetAllXAssetOfType(enum XAssetType type, union XAssetHeader *assets, int maxCount);
-void __cdecl DB_ConvertOffsetToPointer(void *data);
-void __cdecl Load_Stream(bool atStreamStart, const void *ptr, int size);
-byte *__cdecl DB_AllocStreamPos(int alignment);
-void __cdecl DB_LoadXFileData(byte *pos, int count);
-void __cdecl DB_LoadDelayedImages();
+int CDECL DB_GetAllXAssetOfType(enum XAssetType type, union XAssetHeader *assets, int maxCount);
+void CDECL DB_ConvertOffsetToPointer(void *data);
+void CDECL Load_Stream(bool atStreamStart, const void *ptr, int size);
+byte *CDECL DB_AllocStreamPos(int alignment);
+void CDECL DB_LoadXFileData(byte *pos, int count);
+void CDECL DB_LoadDelayedImages();
 void Load_XAssetListCustom();
-void __cdecl Load_XAsset(bool atStreamStart);
-void __cdecl Load_XStringCustom(const char **str);
-void __cdecl Load_ScriptStringList(bool atStreamStart);
-void __cdecl DB_IncStreamPos(int size);
-void __cdecl DB_PushStreamPos(unsigned int index);
-void __cdecl DB_PopStreamPos();
-void __cdecl Load_MaterialHandle(bool atStreamStart);
-void __cdecl Load_FxEffectDefHandle(bool atStreamStart);
-void __cdecl Load_ScriptStringCustom(uint16_t *var);
-void __cdecl Load_XModelPtr(bool atStreamStart);
-void __cdecl Load_XString(bool atStreamStart);
-void __cdecl Load_XAssetHeader(bool atStreamStart);
+void CDECL Load_XAsset(bool atStreamStart);
+void CDECL Load_XStringCustom(const char **str);
+void CDECL Load_ScriptStringList(bool atStreamStart);
+void CDECL DB_IncStreamPos(int size);
+void CDECL DB_PushStreamPos(unsigned int index);
+void CDECL DB_PopStreamPos();
+void CDECL Load_MaterialHandle(bool atStreamStart);
+void CDECL Load_FxEffectDefHandle(bool atStreamStart);
+void CDECL Load_ScriptStringCustom(uint16_t *var);
+void CDECL Load_XModelPtr(bool atStreamStart);
+void CDECL Load_XString(bool atStreamStart);
+void CDECL Load_XAssetHeader(bool atStreamStart);
 const char* DB_GetXAssetName(struct XAsset*);
-void __cdecl Load_ScriptStringArray(bool atStreamStart, int count);
-void __cdecl DB_EnumXAssets_FastFile(enum XAssetType type, void (__cdecl *func)(void* header, void *), void *inData, bool includeOverride);
-void __cdecl DB_EnumXAssets(enum XAssetType type, void (__cdecl *func)(union XAssetHeader, void *), void *inData, bool includeOverride);
-union XAssetHeader __cdecl DB_FindXAssetHeader(enum XAssetType type, const char *name, bool errorIfMissing, int waitTime);
-XAssetHeader __cdecl DB_AddXAsset(enum XAssetType type, union XAssetHeader header);
+void CDECL Load_ScriptStringArray(bool atStreamStart, int count);
+void CDECL DB_EnumXAssets_FastFile(enum XAssetType type, void (CDECL *func)(void* header, void *), void *inData, bool includeOverride);
+void CDECL DB_EnumXAssets(enum XAssetType type, void (CDECL *func)(union XAssetHeader, void *), void *inData, bool includeOverride);
+union XAssetHeader CDECL DB_FindXAssetHeader(enum XAssetType type, const char *name, bool errorIfMissing, int waitTime);
+XAssetHeader CDECL DB_AddXAsset(enum XAssetType type, union XAssetHeader header);
 
 /*
 #if defined( __GNUC__ ) && !defined( __MINGW32__ )
 //For GCC
-void* __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);
+void* CDECL DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);
 static inline __attribute__((always_inline)) union XAssetHeader DB_FindXAssetHeader(enum XAssetType type, const char *name)
 {
     union XAssetHeader r;
@@ -180,14 +180,14 @@ static inline __attribute__((always_inline)) union XAssetHeader DB_FindXAssetHea
 #else
 
 //For MSVC & MinGW
-union XAssetHeader __cdecl DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);
+union XAssetHeader CDECL DB_FindXAssetHeaderReal(enum XAssetType type, const char *name);
 #define DB_FindXAssetHeader DB_FindXAssetHeaderReal
 
 #endif
 
 */
 
-void __cdecl Load_XStringPtr(bool atStreamstart);
+void CDECL Load_XStringPtr(bool atStreamstart);
 
 
 

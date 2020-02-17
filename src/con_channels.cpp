@@ -6,7 +6,7 @@
 
 extern "C"
 {
-    void __cdecl Con_FilterAdd(bool show)
+    void CDECL Con_FilterAdd(bool show)
     {
         int argc = Cmd_Argc();
         if (argc >= 2)

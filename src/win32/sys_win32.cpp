@@ -693,12 +693,12 @@ void Sys_InitializeCriticalSections( void )
 }
 
 
-void __cdecl Sys_EnterCriticalSectionInternal(int section)
+void CDECL Sys_EnterCriticalSectionInternal(int section)
 {
 	EnterCriticalSection(&crit_sections[section]);
 }
 
-void __cdecl Sys_LeaveCriticalSectionInternal(int section)
+void CDECL Sys_LeaveCriticalSectionInternal(int section)
 {
 	LeaveCriticalSection(&crit_sections[section]);
 }
@@ -728,7 +728,7 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 
 
 
-qboolean __cdecl Sys_IsMainThread( void )
+qboolean CDECL Sys_IsMainThread( void )
 {
 	return Sys_ThreadisSame(mainthread);
 }
@@ -747,7 +747,7 @@ void Sys_ExitThread(int code)
 
 }
 
-threadid_t __cdecl Sys_GetCurrentThreadId( void )
+threadid_t CDECL Sys_GetCurrentThreadId( void )
 {
 		return GetCurrentThreadId();
 }
@@ -907,27 +907,27 @@ unsigned int Sys_GetProcessAffinityMask()
   return processAffinityMask;
 }
 
-DWORD __cdecl Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
+DWORD CDECL Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
 {
 	return InterlockedExchangeAdd((LONG volatile *)Addend, value);
 }
 
-DWORD __cdecl Sys_InterlockedDecrement(DWORD volatile *Addend)
+DWORD CDECL Sys_InterlockedDecrement(DWORD volatile *Addend)
 {
 	return InterlockedDecrement((LONG volatile *)Addend);
 }
-DWORD __cdecl Sys_InterlockedIncrement(DWORD volatile *Addend)
+DWORD CDECL Sys_InterlockedIncrement(DWORD volatile *Addend)
 {
 	return InterlockedIncrement((LONG volatile *)Addend);
 }
-DWORD __cdecl Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
+DWORD CDECL Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
 {
 	return InterlockedCompareExchange((LONG volatile *)Destination, Exchange, Comparand);
 }
 
-extern "C" int __cdecl __cxa_atexit(void (__cdecl *func) (void*), void *arg, void *dso_handle)
+extern "C" int CDECL __cxa_atexit(void (CDECL *func) (void*), void *arg, void *dso_handle)
 {
-    return atexit(reinterpret_cast<void(__cdecl*)()>(func));
+    return atexit(reinterpret_cast<void(CDECL*)()>(func));
 }
 
 void Sys_InitThreadContext()
@@ -975,7 +975,7 @@ void Sys_SetThreadName(threadid_t tid, const char* szThreadName)
   //RaiseException(0x406D1388u, 0, 4u, &info.dwType);
 }
 
-HANDLE __cdecl Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)
+HANDLE CDECL Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)
 {
 	SECURITY_ATTRIBUTES sa;
 	sa.nLength = sizeof(sa);
@@ -985,22 +985,22 @@ HANDLE __cdecl Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, co
 	return CreateEventA(&sa, bManualReset, bInitialState, NULL); //Name must be NULL or it will interact with other processes
 }
 
-signed int __cdecl Sys_ResetEvent(HANDLE hEvent)
+signed int CDECL Sys_ResetEvent(HANDLE hEvent)
 {
 	return ResetEvent(hEvent);
 }
 
-signed int __cdecl Sys_SetEvent(HANDLE hEvent)
+signed int CDECL Sys_SetEvent(HANDLE hEvent)
 {
 	return SetEvent(hEvent);
 }
 
-signed int __cdecl Sys_WaitForObject(HANDLE hHandle)
+signed int CDECL Sys_WaitForObject(HANDLE hHandle)
 {
 	return WaitForSingleObject(hHandle, -1);
 }
 
-signed int __cdecl Sys_IsObjectSignaled(HANDLE hHandle)
+signed int CDECL Sys_IsObjectSignaled(HANDLE hHandle)
 {
 	if(WaitForSingleObject(hHandle, 0) == 0)
 	{

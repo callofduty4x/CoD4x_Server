@@ -233,11 +233,7 @@ uint32_t HStorage_GetHashFromString( const char* string )
 
 uint16_t HStorage_GetHeaderSize()
 {
-    uint16_t headerlen;
-    vsMemHeader_t* header;
-
-    headerlen = ((byte*)&(header->dataStart) - (byte*)&(header->type));
-    return headerlen;
+    return ((uint16_t) & (((vsMemHeader_t*)0)->dataStart)) - ((uint16_t) & (((vsMemHeader_t*)0)->type));
 }
 
 
@@ -480,7 +476,7 @@ int HStorage_GetTableDataIndex( vsMemObj_t* obj, char* name )
     hashtable = (int*)&HStorage_GetMemoryStart(obj)[ obj->store.hashtableOffset ];
     units = (vsMemUnit_t*)&HStorage_GetMemoryStart(obj)[ obj->store.memUnitsOffset ];
 
-    for(i = 0; i < obj->table.numFields; ++i)
+    for(i = 0; i < static_cast<unsigned int>(obj->table.numFields); ++i)
     {
 
         tableindex = (i + hashindex) & (obj->table.numFields -1);

@@ -5,12 +5,12 @@
 #include "cm_public.hpp"
 #include "xassets/weapondef.hpp"
 
-extern "C" void __cdecl BG_ShutdownWeaponDefFiles();
+extern "C" void CDECL BG_ShutdownWeaponDefFiles();
 
 extern "C"
 {
 
-struct WeaponDef *__cdecl BG_GetWeaponDef(int weapon);
+struct WeaponDef *CDECL BG_GetWeaponDef(int weapon);
 
 };
 
@@ -87,8 +87,8 @@ struct animScriptData_t
   unsigned __int16 torsoAnim;
   unsigned __int16 legsAnim;
   unsigned __int16 turningAnim;
-  snd_alias_list_t *(__cdecl *soundAlias)(const char *);
-  int (__cdecl *playSoundAlias)(int, snd_alias_list_t *);
+  snd_alias_list_t *(CDECL *soundAlias)(const char *);
+  int (CDECL *playSoundAlias)(int, snd_alias_list_t *);
 };
 #pragma pack(pop)
 
@@ -103,12 +103,12 @@ struct __align(8) bgs_s
   int latestSnapshotTime;
   int frametime;
   int anim_user;
-  XModel *(__cdecl *GetXModel)(const char *);
-  void (__cdecl *CreateDObj)(DObjModel_s *, unsigned int int16_t, XAnimTree_s *, int, int, clientInfo_t *);
-  uint16_t (__cdecl *AttachWeapon)(DObjModel_s *, uint16_t, clientInfo_t *);
-  DObj_s *(__cdecl *GetDObj)(int, int);
-  void (__cdecl *SafeDObjFree)(int, int);
-  void *(__cdecl *AllocXAnim)(int);
+  XModel *(CDECL *GetXModel)(const char *);
+  void (CDECL *CreateDObj)(DObjModel_s *, unsigned int int16_t, XAnimTree_s *, int, int, clientInfo_t *);
+  uint16_t (CDECL *AttachWeapon)(DObjModel_s *, uint16_t, clientInfo_t *);
+  DObj_s *(CDECL *GetDObj)(int, int);
+  void (CDECL *SafeDObjFree)(int, int);
+  void *(CDECL *AllocXAnim)(int);
   clientInfo_t clientinfo[64];
 };
 #pragma pack(pop)
@@ -122,12 +122,12 @@ struct __align(8) bgs_s // TODO: must be of size 0xADD08 (asm).
   int latestSnapshotTime;
   int frametime;
   int anim_user;
-  struct XModel *(__cdecl *GetXModel)(const char *);
-  void (__cdecl *CreateDObj)(struct DObjModel_s *, uint16_t, struct XAnimTree_s *, int, int, struct clientInfo_t *);
-  uint16_t (__cdecl *AttachWeapon)(struct DObjModel_s *, uint16_t, struct clientInfo_t *);
-  struct DObj_s *(__cdecl *GetDObj)(int, int);
-  void (__cdecl *SafeDObjFree)(int, int);
-  void *(__cdecl *AllocXAnim)(int);
+  struct XModel *(CDECL *GetXModel)(const char *);
+  void (CDECL *CreateDObj)(struct DObjModel_s *, uint16_t, struct XAnimTree_s *, int, int, struct clientInfo_t *);
+  uint16_t (CDECL *AttachWeapon)(struct DObjModel_s *, uint16_t, struct clientInfo_t *);
+  struct DObj_s *(CDECL *GetDObj)(int, int);
+  void (CDECL *SafeDObjFree)(int, int);
+  void *(CDECL *AllocXAnim)(int);
   struct clientInfo_t clientinfo[64];
 };
 

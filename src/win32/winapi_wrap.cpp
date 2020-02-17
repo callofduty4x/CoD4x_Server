@@ -26,32 +26,32 @@
 
 extern "C"
 {
-    LPVOID __cdecl _VirtualAlloc(LPVOID address, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect)
+    LPVOID CDECL _VirtualAlloc(LPVOID address, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect)
     {
         return VirtualAlloc(address, dwSize, flAllocationType, flProtect);
     }
 
 
-    BOOL __cdecl _VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType)
+    BOOL CDECL _VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType)
     {
         return VirtualFree(lpAddress, dwSize, dwFreeType);
     }
 
 
-    BOOL __cdecl _CloseHandle(HANDLE hObject)
+    BOOL CDECL _CloseHandle(HANDLE hObject)
     {
         return CloseHandle(hObject);
     }
 
 
 
-    HANDLE __cdecl _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+    HANDLE CDECL _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
     {
         return CreateFileA(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
     }
 
 
-    DWORD __cdecl _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh)
+    DWORD CDECL _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh)
     {
         return GetFileSize(hFile, lpFileSizeHigh);
     }

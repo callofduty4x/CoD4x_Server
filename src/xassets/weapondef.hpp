@@ -582,7 +582,7 @@ struct WeaponDef* BG_GetWeaponDef(int index);
 int BG_PlayerWeaponCountPrimaryTypes(playerState_t *ps);
 int BG_GetNumWeapons();
 void ChangeViewmodelDObj(int localClientNum, int weaponNum, char weaponModel, XModel *newHands, XModel *newGoggles, XModel *newRocket, XModel *newKnife, ::byte updateClientInfo);
-void __cdecl Load_WeaponDef(bool atStreamStart);
+void CDECL Load_WeaponDef(bool atStreamStart);
 
 #ifdef __cplusplus
 };

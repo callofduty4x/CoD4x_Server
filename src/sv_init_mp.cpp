@@ -7,7 +7,7 @@
 extern "C"
 {
 
-unsigned int __cdecl SV_GetConfigstringConst(int index)
+unsigned int CDECL SV_GetConfigstringConst(int index)
 {
     assertx((unsigned)index < MAX_CONFIGSTRINGS, "ConfigString=%d", index);
     assert(sv.configstrings[index]);
@@ -16,7 +16,7 @@ unsigned int __cdecl SV_GetConfigstringConst(int index)
 }
 
 
-qboolean __cdecl SV_Loaded()
+qboolean CDECL SV_Loaded()
 {
   if(sv.state == SS_GAME)
   {
@@ -26,7 +26,7 @@ qboolean __cdecl SV_Loaded()
 }
 
 
-void __cdecl SV_SetUserinfo(int clientIndex, const char *val)
+void CDECL SV_SetUserinfo(int clientIndex, const char *val)
 {
   const char *name;
 
@@ -44,7 +44,7 @@ void __cdecl SV_SetUserinfo(int clientIndex, const char *val)
 }
 
 
-void __cdecl SV_GetUserinfo(int index, char *buffer, int bufferSize)
+void CDECL SV_GetUserinfo(int index, char *buffer, int bufferSize)
 {
   if ( bufferSize < 1 )
   {
@@ -57,7 +57,7 @@ void __cdecl SV_GetUserinfo(int index, char *buffer, int bufferSize)
   Q_strncpyz(buffer, svs.clients[index].userinfo, bufferSize);
 }
 
-void __cdecl SV_SetExpectedHunkUsage(const char *mapname)
+void CDECL SV_SetExpectedHunkUsage(const char *mapname)
 {
   int handle;
   char *buf;

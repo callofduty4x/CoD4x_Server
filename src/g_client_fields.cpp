@@ -21,11 +21,11 @@ struct client_fields_s
   const char *name;
   int ofs;
   fieldtype_t type;
-  void (__cdecl *setter)(gclient_s *, struct client_fields_s *);
-  void (__cdecl *getter)(gclient_s *, struct client_fields_s *);
+  void (CDECL *setter)(gclient_s *, struct client_fields_s *);
+  void (CDECL *getter)(gclient_s *, struct client_fields_s *);
 };
 
-void __cdecl ClientScr_ReadOnly(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_ReadOnly(gclient_s *pSelf, client_fields_s *pField)
 {
   assert( pSelf );
   assert( pField );
@@ -34,7 +34,7 @@ void __cdecl ClientScr_ReadOnly(gclient_s *pSelf, client_fields_s *pField)
 }
 
 
-void __cdecl ClientScr_GetSessionTeam(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetSessionTeam(gclient_s *pSelf, client_fields_s *pField)
 {
   assert( pSelf );
 
@@ -57,7 +57,7 @@ void __cdecl ClientScr_GetSessionTeam(gclient_s *pSelf, client_fields_s *pField)
   }
 }
 
-void __cdecl ClientScr_SetSessionTeam(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetSessionTeam(gclient_s *pSelf, client_fields_s *pField)
 {
   uint16_t newTeam;
 
@@ -95,19 +95,19 @@ void __cdecl ClientScr_SetSessionTeam(gclient_s *pSelf, client_fields_s *pField)
   CalculateRanks();
 }
 
-void __cdecl ClientScr_SetArchiveTime(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetArchiveTime(gclient_s *pSelf, client_fields_s *pField)
 {
     assert( pSelf );
 
     pSelf->sess.archiveTime = (signed int)(Scr_GetFloat(0) * 1000.0);
 }
 
-void __cdecl ClientScr_GetArchiveTime(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetArchiveTime(gclient_s *pSelf, client_fields_s *pField)
 {
   Scr_AddFloat((float)pSelf->sess.archiveTime * 0.001);
 }
 
-void __cdecl ClientScr_SetMaxHealth(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetMaxHealth(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf);
   assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
@@ -125,7 +125,7 @@ void __cdecl ClientScr_SetMaxHealth(gclient_s *pSelf, client_fields_s *pField)
   pSelf->ps.stats[2] = pSelf->sess.maxHealth;
 }
 
-void __cdecl ClientScr_SetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField)
 {
   gentity_s *pEnt;
   uint16_t sTeam;
@@ -157,7 +157,7 @@ void __cdecl ClientScr_SetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField
   }
 }
 
-void __cdecl ClientScr_GetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf != NULL);
   assert( (unsigned int)(pSelf - level.clients) < (unsigned int)level.maxclients);
@@ -180,7 +180,7 @@ void __cdecl ClientScr_GetHeadIconTeam(gclient_s *pSelf, client_fields_s *pField
 }
 
 
-void __cdecl ClientScr_SetScore(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetScore(gclient_s *pSelf, client_fields_s *pField)
 {
   int score;
 
@@ -195,7 +195,7 @@ void __cdecl ClientScr_SetScore(gclient_s *pSelf, client_fields_s *pField)
   CalculateRanks();
 }
 
-void __cdecl ClientScr_SetKillCamEntity(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetKillCamEntity(gclient_s *pSelf, client_fields_s *pField)
 {
   int iNewKillCamEntity;
   assert(pSelf != NULL);
@@ -208,7 +208,7 @@ void __cdecl ClientScr_SetKillCamEntity(gclient_s *pSelf, client_fields_s *pFiel
   pSelf->sess.killCamEntity = iNewKillCamEntity;
 }
 
-void __cdecl ClientScr_SetSessionState(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetSessionState(gclient_s *pSelf, client_fields_s *pField)
 {
   uint16_t newState;
   assert(pSelf != NULL);
@@ -238,7 +238,7 @@ void __cdecl ClientScr_SetSessionState(gclient_s *pSelf, client_fields_s *pField
   }
 }
 
-void __cdecl ClientScr_GetSessionState(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetSessionState(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf != NULL);
   assert(pSelf->sess.connected != CON_DISCONNECTED);
@@ -263,7 +263,7 @@ void __cdecl ClientScr_GetSessionState(gclient_s *pSelf, client_fields_s *pField
 }
 
 
-void __cdecl ClientScr_GetStatusIcon(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetStatusIcon(gclient_s *pSelf, client_fields_s *pField)
 {
   char szConfigString[1024];
 
@@ -281,14 +281,14 @@ void __cdecl ClientScr_GetStatusIcon(gclient_s *pSelf, client_fields_s *pField)
   }
 }
 
-void __cdecl ClientScr_SetStatusIcon(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetStatusIcon(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf != NULL);
 
   pSelf->sess.status_icon = GScr_GetStatusIconIndex(Scr_GetString(0));
 }
 
-void __cdecl ClientScr_SetSpectatorClient(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetSpectatorClient(gclient_s *pSelf, client_fields_s *pField)
 {
   int iNewSpectatorClient;
 
@@ -302,7 +302,7 @@ void __cdecl ClientScr_SetSpectatorClient(gclient_s *pSelf, client_fields_s *pFi
   pSelf->sess.forceSpectatorClient = iNewSpectatorClient;
 }
 
-void __cdecl ClientScr_GetSpectatorClient(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetSpectatorClient(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf != NULL);
 
@@ -316,19 +316,19 @@ void __cdecl ClientScr_GetSpectatorClient(gclient_s *pSelf, client_fields_s *pFi
 }
 
 
-void __cdecl ClientScr_SetPSOffsetTime(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetPSOffsetTime(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf != NULL);
 
   pSelf->sess.psOffsetTime = Scr_GetInt(0);
 }
 
-void __cdecl ClientScr_GetPSOffsetTime(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetPSOffsetTime(gclient_s *pSelf, client_fields_s *pField)
 {
   Scr_AddInt(pSelf->sess.archiveTime);
 }
 
-void __cdecl ClientScr_SetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
 {
   gentity_s *pEnt;
   const char *pszIcon; 
@@ -341,7 +341,7 @@ void __cdecl ClientScr_SetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
   pEnt->s.iHeadIcon = GScr_GetHeadIconIndex(pszIcon);
 }
 
-void __cdecl ClientScr_GetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
 {
   char szConfigString[1024];
   gentity_s *pEnt;
@@ -365,7 +365,7 @@ void __cdecl ClientScr_GetHeadIcon(gclient_s *pSelf, client_fields_s *pField)
 }
 
 
-void __cdecl ClientScr_GetEntityFromIndex(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetEntityFromIndex(gclient_s *pSelf, client_fields_s *pField)
 {
   int entNum;
   gentity_t* ent;
@@ -386,14 +386,14 @@ void __cdecl ClientScr_GetEntityFromIndex(gclient_s *pSelf, client_fields_s *pFi
   }
 }
 
-void __cdecl ClientScr_GetName(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetName(gclient_s *pSelf, client_fields_s *pField)
 {
   assert(pSelf != NULL);
 
   Scr_AddString(CS_DisplayName(&pSelf->sess.cs, 3));
 }
 
-void __cdecl ClientScr_GetBotStatus(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_GetBotStatus(gclient_s *pSelf, client_fields_s *pField)
 {
 	assert(pSelf != NULL);
 	
@@ -402,7 +402,7 @@ void __cdecl ClientScr_GetBotStatus(gclient_s *pSelf, client_fields_s *pField)
 	Scr_AddBool(cl->netchan.remoteAddress.type == NA_BOT);
 }
 
-void __cdecl ClientScr_SetBotStatus(gclient_s *pSelf, client_fields_s *pField)
+void CDECL ClientScr_SetBotStatus(gclient_s *pSelf, client_fields_s *pField)
 {
 }
 
@@ -434,7 +434,7 @@ static client_fields_s fields[] =
 extern "C"
 {
 
-void __cdecl GScr_AddFieldsForClient()
+void CDECL GScr_AddFieldsForClient()
 {
   client_fields_s *f;
 
@@ -447,7 +447,7 @@ void __cdecl GScr_AddFieldsForClient()
   }
 }
 
-void __cdecl Scr_GetClientField(gclient_s *client, int offset)
+void CDECL Scr_GetClientField(gclient_s *client, int offset)
 {
   client_fields_s *f;
 
@@ -467,7 +467,7 @@ void __cdecl Scr_GetClientField(gclient_s *client, int offset)
   }
 }
 
-void __cdecl Scr_SetClientField(gclient_s *client, int offset)
+void CDECL Scr_SetClientField(gclient_s *client, int offset)
 {
   client_fields_s *f;
 

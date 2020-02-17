@@ -140,31 +140,31 @@ int CM_NumInlineModels( void );
 int CM_PointContents(const float *p, unsigned int model);
 void SetPlaneSignbits( cplane_t *out );
 int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_t origin, const vec3_t angles );
-int __cdecl CM_TransformedBoxSightTrace(int hitNum, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
+int CDECL CM_TransformedBoxSightTrace(int hitNum, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
 void CM_DebugInit();
-int __cdecl CM_BoxSightTrace(int oldHitNum, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask);
-int __cdecl CM_PointSightTraceToEntities(struct sightpointtrace_t *spt);
-int __cdecl CM_ClipSightTraceToEntities(struct sightclip_t *clip);
-int __cdecl CM_PointTraceStaticModelsComplete(const float *start, const float *end, int contentmask);
+int CDECL CM_BoxSightTrace(int oldHitNum, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask);
+int CDECL CM_PointSightTraceToEntities(struct sightpointtrace_t *spt);
+int CDECL CM_ClipSightTraceToEntities(struct sightclip_t *clip);
+int CDECL CM_PointTraceStaticModelsComplete(const float *start, const float *end, int contentmask);
 
 
 qboolean CM_TraceBox(TraceExtents *extents, const float *mins, const float *maxs, float fraction);
 
-clipHandle_t __cdecl CM_TempBoxModel(const float* mins, const float* maxs, int capsule);
-void __cdecl CM_TransformedBoxTrace(trace_t* trace, const float* start, const float* end, const float* mins, const float* maxs,
+clipHandle_t CDECL CM_TempBoxModel(const float* mins, const float* maxs, int capsule);
+void CDECL CM_TransformedBoxTrace(trace_t* trace, const float* start, const float* end, const float* mins, const float* maxs,
 			clipHandle_t cliphandle, int contentmask, const float* origin, const float* angle);
 void CM_BoxTrace( trace_t *results, const vec3_t start, const vec3_t end,
 				  const vec3_t mins, const vec3_t maxs,
 				  clipHandle_t model, int brushmask );
 
-void __cdecl CM_CalcTraceExtents(TraceExtents *extents);
-void __cdecl CM_ClipMoveToEntities(moveclip_t *clip, trace_t *trace);
-void __cdecl CM_PointTraceStaticModels(trace_t *results, const float *start, const float *end, int contentmask);
-void __cdecl CM_PointTraceToEntities(struct pointtrace_t *clip, trace_t *trace);
-qboolean __cdecl CM_ClipHandleIsValid(unsigned int handle);
-int __cdecl CM_ContentsOfModel(unsigned int handle);
-void __cdecl CM_TransformedBoxTraceExternal(trace_t *results, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
-int16_t __cdecl Trace_GetEntityHitId(trace_t *trace);
+void CDECL CM_CalcTraceExtents(TraceExtents *extents);
+void CDECL CM_ClipMoveToEntities(moveclip_t *clip, trace_t *trace);
+void CDECL CM_PointTraceStaticModels(trace_t *results, const float *start, const float *end, int contentmask);
+void CDECL CM_PointTraceToEntities(struct pointtrace_t *clip, trace_t *trace);
+qboolean CDECL CM_ClipHandleIsValid(unsigned int handle);
+int CDECL CM_ContentsOfModel(unsigned int handle);
+void CDECL CM_TransformedBoxTraceExternal(trace_t *results, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
+int16_t CDECL Trace_GetEntityHitId(trace_t *trace);
 void CM_LoadMap(const char *name, int *checksum);
 void CM_Unload();
 #ifdef __cplusplus

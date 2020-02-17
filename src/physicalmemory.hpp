@@ -16,10 +16,10 @@ int PMem_GetOverAllocatedSize();
 extern "C"{
 #endif
 
-void __cdecl PMem_Init();
-void __cdecl PMem_BeginAlloc(const char *name, unsigned int allocType, enum EMemTrack memTrack);
-void __cdecl PMem_EndAlloc(const char *name, unsigned int allocType);
-void __cdecl PMem_Free(const char *name);
+void CDECL PMem_Init();
+void CDECL PMem_BeginAlloc(const char *name, unsigned int allocType, enum EMemTrack memTrack);
+void CDECL PMem_EndAlloc(const char *name, unsigned int allocType);
+void CDECL PMem_Free(const char *name);
 
 #ifdef __cplusplus
 }

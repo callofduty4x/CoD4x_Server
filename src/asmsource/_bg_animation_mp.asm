@@ -39,7 +39,7 @@
 	extern XAnimGetLength
 	extern _ZN10LargeLocalD1Ev
 	extern XAnimGetRelDelta
-	extern _Unwind_Resume
+	extern System_Unwind_Resume
 	extern atoi
 	extern strstr
 	extern vsnprintf
@@ -2420,7 +2420,7 @@ BG_LoadAnim_10:
 	mov [esp], eax
 	call _ZN10LargeLocalD1Ev
 	mov [esp], ebx
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	add [eax], al
 
 

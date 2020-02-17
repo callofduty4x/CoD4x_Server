@@ -4,7 +4,7 @@
 	extern _ZN6dxGeomC2EP7dxSpaceiP6dxBody
 	extern _ZTV10dxUserGeom
 	extern __cxa_atexit
-	extern _Unwind_Resume
+	extern System_Unwind_Resume
 	extern Pool_Init
 	extern Sys_EnterCriticalSection
 	extern Pool_Alloc
@@ -179,7 +179,7 @@ __static_initialization_and_destruction_0_70:
 __static_initialization_and_destruction_0_50:
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 
@@ -442,7 +442,7 @@ dBodyCreate_30:
 	or dword [esi+0x18], 0x10
 	jmp dBodyCreate_40
 	mov [esp], eax
-	call _Unwind_Resume
+	call System_Unwind_Resume
 	nop
 
 

@@ -22,7 +22,7 @@ extern "C"
 {
     extern scrAnimPub_t gScrAnimPub;
 
-struct XAnim_s *__cdecl Scr_GetAnims(unsigned int index);
-const char *__cdecl XAnimGetAnimDebugName(struct XAnim_s *anims, unsigned int animIndex); //Maybe wrong place
+struct XAnim_s *CDECL Scr_GetAnims(unsigned int index);
+const char *CDECL XAnimGetAnimDebugName(struct XAnim_s *anims, unsigned int animIndex); //Maybe wrong place
 
 };

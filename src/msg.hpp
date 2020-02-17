@@ -125,11 +125,11 @@ void MSG_WriteReliableCommandToBuffer(const char *source, char *destination, int
 
 int MSG_ReadDeltaClient(msg_t *msg, const int time, clientState_t *from, clientState_t *to, int number);
 void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force);
-void __cdecl MSG_WriteDeltaPlayerstate(struct snapshotInfo_s* , msg_t* , int , struct playerState_s* , struct playerState_s*);
-void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, const int time, playerState_t *from, playerState_t *to, bool predictedFieldsIgnoreXor);
-void __cdecl MSG_WriteEntityIndex(struct snapshotInfo_s*, msg_t*, int, int);
-void __cdecl MSG_ReadDeltaUsercmdKey( msg_t *msg, int key, struct usercmd_s *from, struct usercmd_s *to );
-void __cdecl MSG_SetDefaultUserCmd( struct playerState_s *ps, struct usercmd_s *ucmd );
+void CDECL MSG_WriteDeltaPlayerstate(struct snapshotInfo_s* , msg_t* , int , struct playerState_s* , struct playerState_s*);
+void CDECL MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, const int time, playerState_t *from, playerState_t *to, bool predictedFieldsIgnoreXor);
+void CDECL MSG_WriteEntityIndex(struct snapshotInfo_s*, msg_t*, int, int);
+void CDECL MSG_ReadDeltaUsercmdKey( msg_t *msg, int key, struct usercmd_s *from, struct usercmd_s *to );
+void CDECL MSG_SetDefaultUserCmd( struct playerState_s *ps, struct usercmd_s *ucmd );
 void MSG_WriteBase64(msg_t* msg, byte* inbuf, int len);
 void MSG_ReadBase64(msg_t* msg, byte* outbuf, int len);
 void MSG_BeginWriteMessageLength(msg_t* msg);
@@ -139,6 +139,6 @@ int MSG_ReadBit(msg_t *msg);
 int MSG_ReadEntityIndex(msg_t *msg, int numBits);
 void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int time, clientState_t *from, clientState_t *to, qboolean force);
 void MSG_RegisterCvars();
-int __cdecl MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fields, int numFields);
+int CDECL MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fields, int numFields);
 
 }

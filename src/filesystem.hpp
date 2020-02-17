@@ -147,7 +147,7 @@ extern "C"
     extern cvar_t* loc_warnings;
     extern cvar_t* loc_warningsAsErrors;
 
-    int __cdecl FS_FOpenTextFileWrite(const char* filename);
+    int CDECL FS_FOpenTextFileWrite(const char* filename);
 
 void FS_CopyFile(char* FromOSPath,char* ToOSPath);
 int FS_Read(void* data, int length, fileHandle_t);
@@ -200,25 +200,25 @@ int FS_SV_HomeWriteFile( const char *qpath, const void *buffer, int size );
 int FS_SV_BaseWriteFile( const char *qpath, const void *buffer, int size );
 void FS_BuildOSPathForThread(const char *base, const char *game, const char *qpath, char *fs_path, int fs_thread);
 
-void __cdecl FS_Printf( fileHandle_t h, const char *fmt, ... );
+void CDECL FS_Printf( fileHandle_t h, const char *fmt, ... );
 int FS_Seek( fileHandle_t f, long offset, int origin );
-const char* __cdecl FS_GetBasepath();
+const char* CDECL FS_GetBasepath();
 qboolean FS_VerifyPak( const char *pak );
 void	FS_ForceFlush( fileHandle_t f );
-void __cdecl FS_InitFilesystem(void);
-void __cdecl FS_Shutdown(qboolean);
-void __cdecl FS_ShutdownIwdPureCheckReferences(void);
-void __cdecl FS_ShutdownServerIwdNames(void);
-void __cdecl FS_ShutdownServerReferencedIwds(void);
-void __cdecl FS_ShutdownServerReferencedFFs(void);
-const char* __cdecl FS_LoadedIwdPureChecksums(void);
+void CDECL FS_InitFilesystem(void);
+void CDECL FS_Shutdown(qboolean);
+void CDECL FS_ShutdownIwdPureCheckReferences(void);
+void CDECL FS_ShutdownServerIwdNames(void);
+void CDECL FS_ShutdownServerReferencedIwds(void);
+void CDECL FS_ShutdownServerReferencedFFs(void);
+const char* CDECL FS_LoadedIwdPureChecksums(void);
 void FS_LoadedPaks(char* outsums, char* outnames, int maxlen);
-char* __cdecl FS_GetMapBaseName( const char* mapname );
+char* CDECL FS_GetMapBaseName( const char* mapname );
 qboolean FS_CreatePath (char *OSPath);
 void FS_SV_HomeCopyFile(char* from, char* to);
 void FS_Restart(int checksumfeed);
 
-void __cdecl FS_Startup(const char* game);
+void CDECL FS_Startup(const char* game);
 void FS_InitCvars();
 unsigned Com_BlockChecksumKey32( void *buffer, int length, int key );
 void FS_PatchFileHandleData();
@@ -242,14 +242,14 @@ int FS_WriteChecksumInfo(const char* filename, byte* data, size_t maxsize);
 int FS_WriteFileOSPath( char *ospath, const void *buffer, int size );
 void FS_ClearPakReferences( int flags );
 int FS_filelengthForOSPath( const char* ospath );
-FILE *__cdecl FS_FileOpenReadText(const char *filename);
-int __cdecl FS_FileGetFileSize(FILE *file);
-unsigned int __cdecl FS_FileRead(void *ptr, unsigned int len, FILE *stream);
+FILE *CDECL FS_FileOpenReadText(const char *filename);
+int CDECL FS_FileGetFileSize(FILE *file);
+unsigned int CDECL FS_FileRead(void *ptr, unsigned int len, FILE *stream);
 
-void __cdecl FS_FreeFileList(const char **list);
-const char **__cdecl FS_ListFiles(const char *path, const char *extension, int behavior, int *numfiles);
-int __cdecl FS_GetModList(char *listbuf, int bufsize);
-void __cdecl FS_FileClose(FILE *stream);
+void CDECL FS_FreeFileList(const char **list);
+const char **CDECL FS_ListFiles(const char *path, const char *extension, int behavior, int *numfiles);
+int CDECL FS_GetModList(char *listbuf, int bufsize);
+void CDECL FS_FileClose(FILE *stream);
 qboolean SEH_GetLanguageIndexForName(const char* language, int *langindex);
 const char* SEH_GetLanguageName(unsigned int langindex);
 int SEH_GetCurrentLanguage( );
@@ -259,11 +259,11 @@ void FS_WriteLogFlush(fileHandle_t f);
 int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h );
 void FS_AddGameDirectory_Single(const char *path, const char *dir_nolocal, qboolean localized, int index);
 
-    int __cdecl FS_OpenFileOverwrite(const char *qpath);
+    int CDECL FS_OpenFileOverwrite(const char *qpath);
     long FS_HashFileName( const char *fname, int hashSize );
-    void __cdecl FS_AddUserMapDirIWDs(const char *pszGameFolder);
-    int __cdecl FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize);
-    qboolean __cdecl FS_LanguageHasAssets(int iLanguage);
+    void CDECL FS_AddUserMapDirIWDs(const char *pszGameFolder);
+    int CDECL FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize);
+    qboolean CDECL FS_LanguageHasAssets(int iLanguage);
     void DB_BuildOSPath(const char* filename, int ffdir, int len, char* buff);
 } // extern "C"
 

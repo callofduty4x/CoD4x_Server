@@ -6,19 +6,19 @@
 
 unsigned int lumpsForVersion[] = { 41u, 41u, 42u, 43u, 43u, 43u, 43u, 44u, 44u, 44u, 46u, 46u, 47u };
 
-bool __cdecl Com_IsBspLoaded()
+bool CDECL Com_IsBspLoaded()
 {
   return comBspGlob.header != 0;
 }
 
-unsigned int __cdecl Com_GetBspLumpCountForVersion(const int version)
+unsigned int CDECL Com_GetBspLumpCountForVersion(const int version)
 {
   assert(version >= 6 && version <= 18);
 
   return lumpsForVersion[version -6];
 }
 
-bool __cdecl Com_CheckVersionLumpCountError(int version)
+bool CDECL Com_CheckVersionLumpCountError(int version)
 {
   assert(version >= 6 && version <= 45);
 
@@ -38,7 +38,7 @@ bool __cdecl Com_CheckVersionLumpCountError(int version)
 
 #pragma GCC diagnostic ignored "-Wmultichar"
 
-bool __cdecl Com_BspError()
+bool CDECL Com_BspError()
 {
     if ( comBspGlob.header->ident == 0x50534249 && comBspGlob.header->version >= 6 && comBspGlob.header->version <= 45 )
         if(Com_CheckVersionLumpCountError(comBspGlob.header->version) == 0)
@@ -46,7 +46,7 @@ bool __cdecl Com_BspError()
     return true;
 }
 
-extern "C" void __cdecl Com_LoadBsp(const char *filename)
+extern "C" void CDECL Com_LoadBsp(const char *filename)
 {
   unsigned int bytesRead;
   unsigned int len;
@@ -91,7 +91,7 @@ extern "C" void __cdecl Com_LoadBsp(const char *filename)
 }
 
 
-byte* __cdecl Com_ValidateBspLumpData(enum LumpType type, unsigned int offset, unsigned int length, unsigned int elemSize, unsigned int *count)
+byte* CDECL Com_ValidateBspLumpData(enum LumpType type, unsigned int offset, unsigned int length, unsigned int elemSize, unsigned int *count)
 {
   assert( count );
 
@@ -117,7 +117,7 @@ byte* __cdecl Com_ValidateBspLumpData(enum LumpType type, unsigned int offset, u
 
 
 
-byte *__cdecl Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned int *count)
+byte *CDECL Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned int *count)
 {
   unsigned int chunkIter;
   unsigned int offset;
@@ -148,14 +148,14 @@ byte *__cdecl Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned
 }
 
 
-unsigned int __cdecl Com_GetBspVersion()
+unsigned int CDECL Com_GetBspVersion()
 {
   assert(Com_IsBspLoaded());
 
   return comBspGlob.header->version;
 }
 
-bool __cdecl Com_BspHasLump(enum LumpType type)
+bool CDECL Com_BspHasLump(enum LumpType type)
 {
   unsigned int count;
   Com_GetBspLump(type, 1u, &count);

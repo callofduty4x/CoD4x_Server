@@ -20,12 +20,12 @@ public:
     uint16_t infoIndex;
 };
 
-void __cdecl EntHandleDissociate(gentity_s* ent);
-unsigned int __cdecl GScr_AllocString(const char *s);
+void CDECL EntHandleDissociate(gentity_s* ent);
+unsigned int CDECL GScr_AllocString(const char *s);
 
 extern "C"
 {
-    void __cdecl EntHandle_setEnt(EntHandle* self, gentity_s* Ent_);
-    void __cdecl EntHandle_Init();
-    void __cdecl EntHandle_Shutdown();
+    void CDECL EntHandle_setEnt(EntHandle* self, gentity_s* Ent_);
+    void CDECL EntHandle_Init();
+    void CDECL EntHandle_Shutdown();
 }

@@ -245,6 +245,6 @@ extern "C"
     extern cvar_t* player_view_pitch_down;
     extern cvar_t* player_view_pitch_up;
 
-    void __cdecl BG_AddPredictableEventToPlayerstate(EBGEvent newEvent, unsigned int eventParm, playerState_s *ps);
-    void __cdecl BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
+    void CDECL BG_AddPredictableEventToPlayerstate(EBGEvent newEvent, unsigned int eventParm, playerState_s *ps);
+    void CDECL BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
 }

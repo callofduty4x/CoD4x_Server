@@ -38,18 +38,18 @@ extern "C"{
 
 void Com_QueueEvent( int time, sysEventType_t type, int value, int value2, int ptrLength, void *ptr );
 
-void __cdecl Com_InitParse( void );
-void __cdecl Com_Restart(void);
-void __cdecl Com_WriteConfig_f(void);
-void __cdecl Com_WriteDefaults_f(void);
-void __cdecl Com_Close(void);
-int __cdecl Com_Filter(const char* filter, char *name, int casesensitive);
+void CDECL Com_InitParse( void );
+void CDECL Com_Restart(void);
+void CDECL Com_WriteConfig_f(void);
+void CDECL Com_WriteDefaults_f(void);
+void CDECL Com_Close(void);
+int CDECL Com_Filter(const char* filter, char *name, int casesensitive);
 
 void Com_Frame(void);
 void Com_Init(char* cmdline);
 void Com_UpdateRealtime();
 time_t Com_GetRealtime();
-int __cdecl Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...);
+int CDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...);
 int Com_FilterPath( char *filter, char *name, int casesensitive );
 
 void Com_RandomBytes( byte *string, int len );
@@ -80,7 +80,7 @@ extern unsigned int com_expectedHunkUsage;
 extern qboolean com_fixedConsolePosition;
 qboolean Com_IsDeveloper();
 qboolean Com_LoadBinaryImage();
-void __cdecl Com_ErrorAbort();
+void CDECL Com_ErrorAbort();
 void Com_SyncThreads();
 void R_ReleaseDXDeviceOwnership();
 
@@ -129,8 +129,8 @@ void Com_UnloadBsp();
 int Com_LoadSoundAliases(const char *a1, const char *a2, signed int a3);
 
 void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname);
-void __cdecl Com_SafeServerDObjFree(int handle);
-const char *__cdecl Com_DisplayName(const char *name, const char *clanAbbrev, int type);
+void CDECL Com_SafeServerDObjFree(int handle);
+const char *CDECL Com_DisplayName(const char *name, const char *clanAbbrev, int type);
 
 #ifdef __cplusplus
 }

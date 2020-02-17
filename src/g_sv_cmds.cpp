@@ -534,7 +534,7 @@ void G_AddChatRedirect(void (*rd_dest)(const char *, int, int))
 
 
 
-void __cdecl Svcmd_EntityList_f()
+void CDECL Svcmd_EntityList_f()
 {
   signed int e;
   gentity_t *check;
@@ -558,7 +558,7 @@ void __cdecl Svcmd_EntityList_f()
   }
 }
 
-qboolean __cdecl ConsoleCommand()
+qboolean CDECL ConsoleCommand()
 {
     const char* cmd = Cmd_Argv(0);
     if ( !Q_stricmp(cmd, "entitylist") )
@@ -586,7 +586,7 @@ extern "C"
     This function is required for refollowing facility on spawn
     =================
     */
-    void __cdecl StopFollowingOnDeath(gentity_t *ent)
+    void CDECL StopFollowingOnDeath(gentity_t *ent)
     {
 
         if (ent->client->spectatorClient != -1)
@@ -596,7 +596,7 @@ extern "C"
     }
 
 
-    void __cdecl G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText)
+    void CDECL G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText)
     {
         int j;
         gentity_t *other;

@@ -503,7 +503,7 @@ Sends a text message in an out-of-band datagram
 ================
 */
 
-void __cdecl NET_OutOfBandPrint( netsrc_t sock, netadr_t *adr, const char *format, ... ) {
+void CDECL NET_OutOfBandPrint( netsrc_t sock, netadr_t *adr, const char *format, ... ) {
 	va_list		argptr;
 	char		string[MAX_MSGLEN];
 
@@ -565,7 +565,7 @@ Sends a text message in an out-of-band datagram
 ================
 */
 /*
-void __cdecl NET_PrintData( int sock, const char *format, ... ) {
+void CDECL NET_PrintData( int sock, const char *format, ... ) {
 	va_list		argptr;
 	char		string[MAX_PACKETLEN];
 

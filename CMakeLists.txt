@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+﻿cmake_minimum_required(VERSION 3.0)
 
 if(MSVC)
     cmake_policy(SET CMP0091 NEW) # Make use of CMAKE_MSVC_RUNTIME_LIBRARY
@@ -11,9 +11,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 enable_language(ASM_NASM)
-if (MSVC)
+if (WIN32)
     set(CMAKE_ASM_NASM_OBJECT_FORMAT win)
-    set(CMAKE_ASM_NASM_FLAGS "{CMAKE_ASM_NASM_FLAGS} --prefix _")
+    set(CMAKE_ASM_NASM_FLAGS "${CMAKE_ASM_NASM_FLAGS} --prefix _")
 else()
     set(CMAKE_ASM_NASM_OBJECT_FORMAT elf)
 endif()
@@ -51,7 +51,7 @@ add_subdirectory(src/asmsource)
 add_subdirectory(src/version)
 add_subdirectory(src/xassets)
 
-if(MSVC)
+if(WIN32)
     add_subdirectory(src/win32)
 else()
     add_subdirectory(src/unix)

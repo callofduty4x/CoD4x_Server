@@ -666,7 +666,7 @@ static class MemoryTree mt;
 
 extern "C"{
 
-void __cdecl MT_DumpTree( )
+void CDECL MT_DumpTree( )
 {
     mt.MT_DumpTree();
 }
@@ -681,12 +681,12 @@ bool MT_Realloc(int oldNumBytes, int newNumbytes)
     return mt.MT_Realloc(oldNumBytes, newNumbytes);
 }
 
-byte *__cdecl MT_Alloc(int numBytes, int type)
+byte *CDECL MT_Alloc(int numBytes, int type)
 {
   return mt.MT_Alloc(numBytes, type);
 }
 
-void __cdecl MT_Free(void *p, int numBytes)
+void CDECL MT_Free(void *p, int numBytes)
 {
   mt.MT_Free(p, numBytes);
 }
@@ -705,12 +705,12 @@ int MT_GetIndexByRef(byte* p)
     return mt.MT_GetIndexByRef(p);
 }
 
-void __cdecl MT_FreeIndex(unsigned int nodeNum, int numBytes)
+void CDECL MT_FreeIndex(unsigned int nodeNum, int numBytes)
 {
   mt.MT_FreeIndex(nodeNum, numBytes);
 }
 
-unsigned int __cdecl MT_AllocIndex(int numBytes, int type)
+unsigned int CDECL MT_AllocIndex(int numBytes, int type)
 {
 	return mt.MT_AllocIndex(numBytes, type);
 }

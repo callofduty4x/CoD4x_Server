@@ -24,8 +24,8 @@
 #include "qshared.hpp"
 
 
-void __cdecl SV_EnterLeaveLog( const char *fmt, ... );
-void __cdecl Com_PrintAdministrativeLog( const char *msg );
+void CDECL SV_EnterLeaveLog( const char *fmt, ... );
+void CDECL Com_PrintAdministrativeLog( const char *msg );
 void Com_PrintLogfile( const char *msg );
 void Com_CloseLogFiles();
 fileHandle_t Com_OpenGameLogfile(const char* name, char mode, qboolean sync);

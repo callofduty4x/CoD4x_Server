@@ -57,7 +57,7 @@ void FreeString(char* tofree)
     }
 }
 
-void __cdecl Sys_OutOfMemError(const char* filename, int line)
+void CDECL Sys_OutOfMemError(const char* filename, int line)
 {
 	Com_Error(ERR_FATAL, "System is out of memory! Filename: %s, Line: %d\n", filename, line);
 }
@@ -610,7 +610,7 @@ char *CopyString( const char *in )
 }
 
 
-char *__cdecl Z_TryMallocGarbage(int size, const char *name, int type)
+char *CDECL Z_TryMallocGarbage(int size, const char *name, int type)
 {
   char *buf = reinterpret_cast<char*>(Z_Malloc(size + 164));
   if ( buf )
@@ -619,13 +619,13 @@ char *__cdecl Z_TryMallocGarbage(int size, const char *name, int type)
   return buf;
 }
 
-void __cdecl Z_MallocFailed(int size)
+void CDECL Z_MallocFailed(int size)
 {
     Com_PrintError(CON_CHANNEL_DONT_FILTER, "Failed to Z_Malloc %i bytes\n", size);
     Sys_OutOfMemErrorInternal("C:\\projects_pc\\cod\\codsrc\\src\\universal\\com_memory.cpp", 436);
 }
 
-char *__cdecl Z_MallocGarbage(int size, const char *name, int type)
+char *CDECL Z_MallocGarbage(int size, const char *name, int type)
 {
   char *buf;
 
@@ -863,7 +863,7 @@ void Hunk_Test()
 
 extern "C"
 {
-    void __cdecl Sys_OutOfMemErrorInternal(const char* filename, int line)
+    void CDECL Sys_OutOfMemErrorInternal(const char* filename, int line)
     {
         Sys_OutOfMemError(filename, line);
     }

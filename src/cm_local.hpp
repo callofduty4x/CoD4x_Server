@@ -254,9 +254,9 @@ typedef struct
 }TraceThreadInfo;
 */
 
-//void __cdecl CM_LoadMapFromBsp(const char *name, char a2);
-extern "C" void __cdecl CM_LoadStaticModels();
-extern "C" void __cdecl DynEnt_LoadEntities();
+//void CDECL CM_LoadMapFromBsp(const char *name, char a2);
+extern "C" void CDECL CM_LoadStaticModels();
+extern "C" void CDECL DynEnt_LoadEntities();
 
 
 
@@ -362,7 +362,7 @@ enum LumpType
   LUMP_HERO_ONLY_LIGHTS = 0x4D,
 };
 
-void __cdecl CM_LoadMapData_LoadObj(const char *name);
+void CDECL CM_LoadMapData_LoadObj(const char *name);
 
 #endif
 
@@ -373,16 +373,16 @@ extern "C"{
 #endif
 
 #ifndef BSPC
-byte *__cdecl Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned int *count);
-bool __cdecl Com_BspHasLump(enum LumpType type);
+byte *CDECL Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned int *count);
+bool CDECL Com_BspHasLump(enum LumpType type);
 #endif
 
-void *__cdecl CM_Hunk_Alloc(int numBytes, const char *what);
-unsigned int __cdecl Com_GetBspVersion();
-void __cdecl CM_Hunk_ClearTempMemoryHigh();
+void *CDECL CM_Hunk_Alloc(int numBytes, const char *what);
+unsigned int CDECL Com_GetBspVersion();
+void CDECL CM_Hunk_ClearTempMemoryHigh();
 void CM_Hunk_CheckTempMemoryHighClear();
-char *__cdecl CM_Hunk_AllocateTempMemoryHigh(int size);
-bool __cdecl Com_IsBspLoaded();
+char *CDECL CM_Hunk_AllocateTempMemoryHigh(int size);
+bool CDECL Com_IsBspLoaded();
 
 #ifdef __cplusplus
 };

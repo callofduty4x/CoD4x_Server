@@ -2,17 +2,17 @@
 
 extern "C"
 {
-    void __cdecl EntHandle_setEnt(EntHandle* self, gentity_s* Ent_)
+    void CDECL EntHandle_setEnt(EntHandle* self, gentity_s* Ent_)
     {
         self->setEnt(Ent_);
     }
     
-    void __cdecl EntHandle_Init()
+    void CDECL EntHandle_Init()
     {
         EntHandle::Init();
     }
 
-    void __cdecl EntHandle_Shutdown()
+    void CDECL EntHandle_Shutdown()
     {
         EntHandle::Shutdown();
     }

@@ -39,9 +39,9 @@ enum StanceState
 extern "C"{
 #endif
 
-unsigned int __cdecl PM_GroundSurfaceType(pml_t *pml);
-int __cdecl BG_AnimScriptEvent(struct playerState_s* ps, enum scriptAnimEventTypes_t event, int isContinue, int force);
-enum StanceState __cdecl PM_GetEffectiveStance(struct playerState_s *ps);
+unsigned int CDECL PM_GroundSurfaceType(pml_t *pml);
+int CDECL BG_AnimScriptEvent(struct playerState_s* ps, enum scriptAnimEventTypes_t event, int isContinue, int force);
+enum StanceState CDECL PM_GetEffectiveStance(struct playerState_s *ps);
 
 
 #ifdef __cplusplus

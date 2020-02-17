@@ -3,6 +3,6 @@
 
 #include "qshared.hpp"
 
-void __cdecl Win_InitLocalization();
+void CDECL Win_InitLocalization();
 
 #endif

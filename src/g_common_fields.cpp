@@ -7,7 +7,7 @@
 #include "g_main_mp.hpp"
 
 
-void __cdecl Scr_GetGenericField2(const void *data, fieldtype_t type, int ofs)
+void CDECL Scr_GetGenericField2(const void *data, fieldtype_t type, int ofs)
 {
   uint16_t str;
   vec3_t vec;
@@ -47,7 +47,7 @@ void __cdecl Scr_GetGenericField2(const void *data, fieldtype_t type, int ofs)
 
 extern "C"{
 
-void __cdecl Scr_GetGenericField(const void *data, fieldtype_t type, int ofs)
+void CDECL Scr_GetGenericField(const void *data, fieldtype_t type, int ofs)
 {
   unsigned int id; 
   EntHandle *entHandle;
@@ -88,7 +88,7 @@ void __cdecl Scr_GetGenericField(const void *data, fieldtype_t type, int ofs)
 }
 
 
-void __cdecl Scr_SetGenericField(void *data, fieldtype_t type, int ofs)
+void CDECL Scr_SetGenericField(void *data, fieldtype_t type, int ofs)
 {
   char* b = (char*)data;
   unsigned int cs;
