@@ -36,7 +36,7 @@ const char *entityTypeNames[] =
 
 extern "C"{
 
-const char *CDECL G_GetEntityTypeName(gentity_t *ent)
+const char *CCDECL G_GetEntityTypeName(gentity_t *ent)
 {
     assert((unsigned)ent->s.eType < sizeof(entityTypeNames)/sizeof(entityTypeNames[0])); //0x15
 
@@ -44,9 +44,9 @@ const char *CDECL G_GetEntityTypeName(gentity_t *ent)
 }
 
 
-void CDECL G_DObjCalcBone(gentity_s *ent, int boneIndex)
+void CCDECL G_DObjCalcBone(gentity_s *ent, int boneIndex)
 {
-  void (CDECL *controller)(gentity_s *, int *);
+  void (CCDECL *controller)(gentity_s *, int *);
   DObj_s *obj;
   int partBits[10];
 
@@ -66,7 +66,7 @@ void CDECL G_DObjCalcBone(gentity_s *ent, int boneIndex)
   }
 }
 
-signed int CDECL G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int tagName, float (*tagMat)[3])
+signed int CCDECL G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int tagName, float (*tagMat)[3])
 {
   float ent_axis[4][3];
   DObjAnimMat *mat;
@@ -88,7 +88,7 @@ signed int CDECL G_DObjGetWorldTagMatrix(struct gentity_s *ent, unsigned int tag
   return 1;
 }
 
-void CDECL G_SetAngle(gentity_s *ent, const float *angle)
+void CCDECL G_SetAngle(gentity_s *ent, const float *angle)
 {
     assert(!isnan(angle[0]) && !isnan(angle[1]) && !isnan(angle[2]));
 

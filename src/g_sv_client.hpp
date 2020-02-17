@@ -2,4 +2,4 @@
 
 #include "q_platform.hpp"
 
-extern "C" void CDECL ClientUserinfoChanged( int clientNum );
+extern "C" void CCDECL ClientUserinfoChanged( int clientNum );

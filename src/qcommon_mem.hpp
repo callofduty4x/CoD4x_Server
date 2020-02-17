@@ -62,22 +62,22 @@ struct HunkUser
 
 extern "C"
 {
-void CDECL Com_InitHunkMemory(void);
-void CDECL Hunk_InitDebugMemory(void);
-void CDECL Hunk_ClearTempMemory(void);
-void CDECL Hunk_ClearTempMemoryHigh(void);
-void CDECL Hunk_Clear();
-struct HunkUser *CDECL Hunk_UserCreate(int dwSize, const char *name, byte a3, byte a4, int type);
-void CDECL TempMemoryReset(struct HunkUser *hu);
-void* CDECL Hunk_AllocateTempMemory(int size);
-void* CDECL Hunk_AllocateTempMemoryHigh(int size);
-void CDECL Hunk_ResetDebugMem();
-void CDECL TempMemorySetPos(char *pos);
-void CDECL Hunk_FreeTempMemory(void *buffer);
-void* CDECL TempMalloc( int );
+void CCDECL Com_InitHunkMemory(void);
+void CCDECL Hunk_InitDebugMemory(void);
+void CCDECL Hunk_ClearTempMemory(void);
+void CCDECL Hunk_ClearTempMemoryHigh(void);
+void CCDECL Hunk_Clear();
+struct HunkUser *CCDECL Hunk_UserCreate(int dwSize, const char *name, byte a3, byte a4, int type);
+void CCDECL TempMemoryReset(struct HunkUser *hu);
+void* CCDECL Hunk_AllocateTempMemory(int size);
+void* CCDECL Hunk_AllocateTempMemoryHigh(int size);
+void CCDECL Hunk_ResetDebugMem();
+void CCDECL TempMemorySetPos(char *pos);
+void CCDECL Hunk_FreeTempMemory(void *buffer);
+void* CCDECL TempMalloc( int );
 char *CopyString( const char *in );
 void FreeString( char *free );
-void CDECL Sys_OutOfMemError(const char* filename, int line);
+void CCDECL Sys_OutOfMemError(const char* filename, int line);
 void Z_Free( void *ptr );
 void Z_FreeTags( int tag );
 void Com_InitSmallZoneMemory( void );
@@ -86,16 +86,16 @@ char* Z_MallocGarbage(int, const char*, int);
 
 #ifndef BSPC
 void* Hunk_Alloc(int size, const char* name, int type);
-void CDECL Hunk_Clear();
+void CCDECL Hunk_Clear();
 #endif
 
-void CDECL Hunk_UserDestroy(struct HunkUser *user);
-void *CDECL Hunk_AllocInternal(int size);
+void CCDECL Hunk_UserDestroy(struct HunkUser *user);
+void *CCDECL Hunk_AllocInternal(int size);
 #define L_Malloc malloc
 #define L_Free free
 
-void CDECL Hunk_FreeDebugMem(void *mem);
-void CDECL Hunk_ShutdownDebugMemory();
+void CCDECL Hunk_FreeDebugMem(void *mem);
+void CCDECL Hunk_ShutdownDebugMemory();
 
 
 #ifdef ZONE_DEBUG
@@ -111,7 +111,7 @@ void *Z_Malloc( int size );			// returns 0 filled memory
 void *S_Malloc( int size );			// NOT 0 filled memory only for small allocations
 #endif
 
-    void CDECL Sys_OutOfMemErrorInternal(const char* filename, int line);
+    void CCDECL Sys_OutOfMemErrorInternal(const char* filename, int line);
 } // extern "C"
 
 #endif

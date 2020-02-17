@@ -19,20 +19,18 @@ cvar_t* jump_spreadAdd;
 
 
 
-__optimize3 float CDECL Jump_GetHeight( playerState_t *ps) {
-
+float Jump_GetHeight( playerState_t *ps)
+{
     float jumph = Dirty_GetJumpHeight(ps->clientNum);
-	if(jumph > 0)
-    {
+    if(jumph > 0)
         return jumph;
-    }
+    
     return jump_height->value;
-
 }
 
 
 
-__optimize3 float CDECL Jump_CalcHeight( playerState_t* ps ) {
+__optimize3 float CCDECL Jump_CalcHeight( playerState_t* ps ) {
 	
 	float val;
 	float newdiv;
@@ -62,7 +60,7 @@ __optimize3 float CDECL Jump_CalcHeight( playerState_t* ps ) {
 	return val;
 }
 
-double CDECL Jump_GetLandFactor(playerState_s *ps)
+double CCDECL Jump_GetLandFactor(playerState_s *ps)
 {
 
   assert(ps->pm_flags & PMF_JUMPING);
@@ -81,7 +79,7 @@ double CDECL Jump_GetLandFactor(playerState_s *ps)
 
 
 
-void CDECL Jump_AddSurfaceEvent(playerState_s *ps, pml_t *pml)
+void CCDECL Jump_AddSurfaceEvent(playerState_s *ps, pml_t *pml)
 {
   int surfType;
 
@@ -99,7 +97,7 @@ void CDECL Jump_AddSurfaceEvent(playerState_s *ps, pml_t *pml)
   }
 }
 
-void CDECL Jump_PushOffLadder(playerState_s *ps, pml_t *pml)
+void CCDECL Jump_PushOffLadder(playerState_s *ps, pml_t *pml)
 {
   vec3_t flatForward;
   vec3_t pushOffDir;
@@ -128,7 +126,7 @@ void CDECL Jump_PushOffLadder(playerState_s *ps, pml_t *pml)
   ps->pm_flags &= 0xFFFFFFF7;
 }
 
-void CDECL Jump_Start(pmove_t *pm, pml_t *pml, float height)
+void CCDECL Jump_Start(pmove_t *pm, pml_t *pml, float height)
 {
   float factor;
   float velocitySqrd;
@@ -172,13 +170,13 @@ extern "C"
 {
     
 
-void CDECL Jump_ClearState(playerState_s *ps)
+void CCDECL Jump_ClearState(playerState_s *ps)
 {
   ps->pm_flags &= ~PMF_JUMPING;
   ps->jumpOriginZ = 0.0;
 }
 
-double CDECL Jump_ReduceFriction(playerState_s *ps)
+double CCDECL Jump_ReduceFriction(playerState_s *ps)
 {
   float control;
 
@@ -196,7 +194,7 @@ double CDECL Jump_ReduceFriction(playerState_s *ps)
   return control;
 }
 
-__optimize3 void CDECL Jump_ClampVelocity(playerState_t* ps, vec3_t vec){
+void CCDECL Jump_ClampVelocity(playerState_t* ps, vec3_t vec){
 
 	float comp;
 	float newZVelocity;
@@ -224,7 +222,7 @@ __optimize3 void CDECL Jump_ClampVelocity(playerState_t* ps, vec3_t vec){
 }
 
 
-__optimize3 qboolean CDECL Jump_IsPlayerAboveMax(playerState_t* ps){
+qboolean CCDECL Jump_IsPlayerAboveMax(playerState_t* ps){
 
 	float jumpHeight = Jump_GetHeight(ps);
 
@@ -236,7 +234,7 @@ __optimize3 qboolean CDECL Jump_IsPlayerAboveMax(playerState_t* ps){
 }
 
 
-__optimize3 qboolean CDECL Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2){
+__optimize3 qboolean CCDECL Jump_GetStepHeight(playerState_t* ps, const vec3_t vec1, float* val2){
 
 	float jumpHeight = Jump_GetHeight(ps);
 
@@ -257,7 +255,7 @@ __optimize3 qboolean CDECL Jump_GetStepHeight(playerState_t* ps, const vec3_t ve
 
 
 
-qboolean CDECL Jump_Check(pmove_t *pm, pml_t *pml)
+qboolean CCDECL Jump_Check(pmove_t *pm, pml_t *pml)
 {
   playerState_s *ps;
 
@@ -321,7 +319,7 @@ qboolean CDECL Jump_Check(pmove_t *pm, pml_t *pml)
   return qtrue;
 }
 
-void CDECL Jump_ApplySlowdown(playerState_s *ps)
+void CCDECL Jump_ApplySlowdown(playerState_s *ps)
 {
   float scale;
 
@@ -354,7 +352,7 @@ void CDECL Jump_ApplySlowdown(playerState_s *ps)
   }
 }
 
-void CDECL Jump_RegisterDvars()
+void CCDECL Jump_RegisterDvars()
 {
   jump_height = Cvar_RegisterFloat("jump_height", 39.0, 0.0, 1000.0, 0x180u, "The maximum height of a player's jump");
   jump_stepSize = Cvar_RegisterFloat("jump_stepSize", 18.0, 0.0, 64.0, 0x180u, "The maximum step up to the top of a jump arc");
@@ -363,7 +361,7 @@ void CDECL Jump_RegisterDvars()
   jump_spreadAdd = Cvar_RegisterFloat("jump_spreadAdd", 64.0, 0.0, 512.0, 0x180u, "The amount of spread scale to add as a side effect of jumping");
 }
 
-void CDECL Jump_ActivateSlowdown(playerState_s *ps)
+void CCDECL Jump_ActivateSlowdown(playerState_s *ps)
 {
   if ( !ps->pm_time )
   {

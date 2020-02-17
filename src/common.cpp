@@ -195,7 +195,7 @@ Com_AddTimedEvent
 
 ================
 */
-int CDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...)
+int CCDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...)
 {
     timedSysEvent_t  *ev;
     int index;
@@ -1306,7 +1306,7 @@ Both client and server can use this, and it will
 do the appropriate thing.
 =============
 */
-void CDECL Com_Error( int code, const char *fmt, ... ) {
+void CCDECL Com_Error( int code, const char *fmt, ... ) {
 	va_list		argptr;
 	static int	lastErrorTime;
 	static int	errorCount;
@@ -1504,13 +1504,13 @@ void Com_GetBspFilename(char *bspfilename, size_t len, const char *levelname)
   Com_sprintf(bspfilename, len, "maps/mp/%s.d3dbsp", levelname);
 }
 
-void CDECL Com_ErrorAbort()
+void CCDECL Com_ErrorAbort()
 {
   Sys_Error("%s", &com_errorMessage);
 }
 
 
-void CDECL Com_SetScriptSettings()
+void CCDECL Com_SetScriptSettings()
 {
   int abort_on_error;
   int deven;
@@ -1521,7 +1521,7 @@ void CDECL Com_SetScriptSettings()
 //  Scr_Settings(deven, com_developer_script->current.enabled, abort_on_error, SCRIPTINSTANCE_CLIENT);
 }
 
-void CDECL Com_Restart()
+void CCDECL Com_Restart()
 {
 //  XZoneInfo zoneInfo[1];
 
@@ -1567,12 +1567,12 @@ void Com_Close()
 
 int weaponInfoSource;
 
-void CDECL Com_SetWeaponInfoMemory(int source)
+void CCDECL Com_SetWeaponInfoMemory(int source)
 {
   weaponInfoSource = source;
 }
 
-extern "C" void CDECL Com_FreeWeaponInfoMemory(int source)
+extern "C" void CCDECL Com_FreeWeaponInfoMemory(int source)
 {
     if ( source == weaponInfoSource )
     {
@@ -1581,7 +1581,7 @@ extern "C" void CDECL Com_FreeWeaponInfoMemory(int source)
     }
 }
 
-const char *CDECL Com_DisplayName(const char *name, const char *clanAbbrev, int type)
+const char *CCDECL Com_DisplayName(const char *name, const char *clanAbbrev, int type)
 {
   const char *result;
 

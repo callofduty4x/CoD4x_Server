@@ -1893,12 +1893,12 @@ static void SV_SetPerk_f( void ){
 
 
 
-void CDECL SV_StringUsage_f()
+void CCDECL SV_StringUsage_f()
 {
 	MT_DumpTree( );
 }
 
-void CDECL SV_ScriptUsage_f()
+void CCDECL SV_ScriptUsage_f()
 {
   Scr_DumpScriptThreads( );
 }

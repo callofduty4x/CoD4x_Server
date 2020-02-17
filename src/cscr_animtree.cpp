@@ -28,7 +28,7 @@ extern "C"{
     scrAnimGlob_t gScrAnimGlob;
     scrAnimPub_t gScrAnimPub;
 
-bool CDECL Scr_IsIdentifier(const char *token)
+bool CCDECL Scr_IsIdentifier(const char *token)
 {
   while ( *token )
   {

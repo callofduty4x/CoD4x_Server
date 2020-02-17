@@ -264,9 +264,9 @@ struct XModelPieces
 extern "C"{
 #endif
 
-XModel *CDECL XModelPrecache(const char *name, void *(CDECL *Alloc)(int), void *(CDECL *AllocColl)(int));
-int CDECL XModelNumBones(struct XModel *model);
-int CDECL XModelGetStaticBounds(XModel *model, float (*axis)[3], float *mins, float *maxs);
+XModel *CCDECL XModelPrecache(const char *name, void *(CCDECL *Alloc)(int), void *(CCDECL *AllocColl)(int));
+int CCDECL XModelNumBones(struct XModel *model);
+int CCDECL XModelGetStaticBounds(XModel *model, float (*axis)[3], float *mins, float *maxs);
 
 #ifdef __cplusplus
 }

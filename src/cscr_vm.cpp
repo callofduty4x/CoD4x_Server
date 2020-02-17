@@ -76,7 +76,7 @@ __asm__(/* GetEntityFieldValueEx ABI Wrapper */
 
 #else
 //For MSVC & MinGW
-VariableValue CDECL GetEntityFieldValueEx(unsigned int classnum, int entnum, int offset)
+VariableValue CCDECL GetEntityFieldValueEx(unsigned int classnum, int entnum, int offset)
 {
   VariableValue result;
 
@@ -87,7 +87,7 @@ VariableValue CDECL GetEntityFieldValueEx(unsigned int classnum, int entnum, int
 #endif
 
 
-void CDECL Scr_ClearErrorMessage( )
+void CCDECL Scr_ClearErrorMessage( )
 {
   gScrVarPub.error_message = 0;
   gScrVmGlob.dialog_error_message = 0;
@@ -95,7 +95,7 @@ void CDECL Scr_ClearErrorMessage( )
 }
 
 
-void CDECL Scr_VM_Init( )
+void CCDECL Scr_VM_Init( )
 {
   gScrVarPub.varUsagePos = "<script init variable>";
   gScrVmPub.maxstack = &gScrVmPub.stack[2047];
@@ -140,7 +140,7 @@ void CDECL Scr_VM_Init( )
 //  Cmd_AddCommandInternal("scrProfileInfo", BG_EvalVehicleName, &VM_DumpScriptProfileInfo_VAR);
 }
 
-void CDECL Scr_Init( )
+void CCDECL Scr_Init( )
 {
   assert(!gScrVarPub.bInited);
 
@@ -178,7 +178,7 @@ jmp_buf* VM_GetJmpBuf()
 }
 
 
-void CDECL Scr_ErrorInternal( )
+void CCDECL Scr_ErrorInternal( )
 {   
   assert(gScrVarPub.error_message != NULL);
 
@@ -197,7 +197,7 @@ void CDECL Scr_ErrorInternal( )
   }
 }
 
-void CDECL Scr_SetErrorMessage(const char *error)
+void CCDECL Scr_SetErrorMessage(const char *error)
 {
   if ( !gScrVarPub.error_message )
   {
@@ -206,7 +206,7 @@ void CDECL Scr_SetErrorMessage(const char *error)
   }
 }
 
-void CDECL Scr_Error(const char *error)
+void CCDECL Scr_Error(const char *error)
 {
   Scr_SetErrorMessage(error);
   gScrVmPub.terminal_error = false;
@@ -214,7 +214,7 @@ void CDECL Scr_Error(const char *error)
 }
 
 
-void CDECL Scr_Errorf(const char *fmt, ...)
+void CCDECL Scr_Errorf(const char *fmt, ...)
 {
   char buf[MAX_STRING_CHARS];
 
@@ -226,7 +226,7 @@ void CDECL Scr_Errorf(const char *fmt, ...)
   Scr_Error(buf);
 }
 
-void CDECL Scr_TerminalError(const char *error)
+void CCDECL Scr_TerminalError(const char *error)
 {
 
   Scr_DumpScriptThreads( );
@@ -238,7 +238,7 @@ void CDECL Scr_TerminalError(const char *error)
 }
 
 
-void CDECL Scr_ClearOutParams()
+void CCDECL Scr_ClearOutParams()
 {
   while ( gScrVmPub.outparamcount )
   {
@@ -248,7 +248,7 @@ void CDECL Scr_ClearOutParams()
   }
 }
 
-void CDECL IncInParam()
+void CCDECL IncInParam()
 {
 
   assert(((gScrVmPub.top >= gScrVmGlob.eval_stack - 1) && (gScrVmPub.top <= gScrVmGlob.eval_stack)) || ((gScrVmPub.top >= gScrVmPub.stack) && (gScrVmPub.top <= gScrVmPub.maxstack)));
@@ -266,7 +266,7 @@ void CDECL IncInParam()
 }
 
 
-void CDECL Scr_AddString(const char *value)
+void CCDECL Scr_AddString(const char *value)
 {
   assert(value != NULL);
 
@@ -275,41 +275,41 @@ void CDECL Scr_AddString(const char *value)
   gScrVmPub.top->u.stringValue = SL_GetString(value, 0);
 }
 
-void CDECL Scr_AddInt(int value)
+void CCDECL Scr_AddInt(int value)
 {
   IncInParam( );
   gScrVmPub.top->type = VAR_INTEGER;
   gScrVmPub.top->u.intValue = value;
 }
 
-void CDECL Scr_AddBool(bool value)
+void CCDECL Scr_AddBool(bool value)
 {
   IncInParam( );
   gScrVmPub.top->type = VAR_INTEGER;
   gScrVmPub.top->u.intValue = value;
 }
 
-void CDECL Scr_AddFloat(float value)
+void CCDECL Scr_AddFloat(float value)
 {
   IncInParam();
   gScrVmPub.top->type = VAR_FLOAT;
   gScrVmPub.top->u.floatValue = value;
 }
 
-void CDECL Scr_AddAnim(struct scr_anim_s value)
+void CCDECL Scr_AddAnim(struct scr_anim_s value)
 {
   IncInParam();
   gScrVmPub.top->type = VAR_ANIMATION;
   gScrVmPub.top->u.codePosValue = value.linkPointer;
 }
 
-void CDECL Scr_AddUndefined( )
+void CCDECL Scr_AddUndefined( )
 {
   IncInParam();
   gScrVmPub.top->type = VAR_UNDEFINED;
 }
 
-void CDECL Scr_AddObject(unsigned int id)
+void CCDECL Scr_AddObject(unsigned int id)
 {
   assert(id != 0);
   assert(Scr_GetObjectType( id ) != VAR_THREAD);
@@ -324,7 +324,7 @@ void CDECL Scr_AddObject(unsigned int id)
   AddRefToObject(id);
 }
 
-void CDECL Scr_AddEntityNum(int entnum, unsigned int classnum)
+void CCDECL Scr_AddEntityNum(int entnum, unsigned int classnum)
 {
   unsigned int entId;
   const char *varUsagePos;
@@ -339,7 +339,7 @@ void CDECL Scr_AddEntityNum(int entnum, unsigned int classnum)
   gScrVarPub.varUsagePos = varUsagePos;
 }
 
-void CDECL Scr_AddStruct( )
+void CCDECL Scr_AddStruct( )
 {
   unsigned int id;
 
@@ -348,7 +348,7 @@ void CDECL Scr_AddStruct( )
   RemoveRefToObject(id);
 }
 
-void CDECL Scr_AddIString(const char *value)
+void CCDECL Scr_AddIString(const char *value)
 {
   assert(value != NULL);
 
@@ -357,7 +357,7 @@ void CDECL Scr_AddIString(const char *value)
   gScrVmPub.top->u.stringValue = SL_GetString(value, 0);
 }
 
-void CDECL Scr_AddConstString(unsigned int value)
+void CCDECL Scr_AddConstString(unsigned int value)
 {
   assert(value != 0);
 
@@ -367,21 +367,21 @@ void CDECL Scr_AddConstString(unsigned int value)
   SL_AddRefToString(value);
 }
 
-void CDECL Scr_AddVector(const float *value)
+void CCDECL Scr_AddVector(const float *value)
 {
   IncInParam();
   gScrVmPub.top->type = VAR_VECTOR;
   gScrVmPub.top->u.vectorValue = Scr_AllocVector(value);
 }
 
-void CDECL Scr_MakeArray( )
+void CCDECL Scr_MakeArray( )
 {
   IncInParam( );
   gScrVmPub.top->type = VAR_POINTER;
   gScrVmPub.top->u.intValue = Scr_AllocArray( );
 }
 
-void CDECL Scr_AddArray( )
+void CCDECL Scr_AddArray( )
 {
   unsigned int arraySize;
   unsigned int id;
@@ -406,7 +406,7 @@ void CDECL Scr_AddArray( )
   gScrVarPub.varUsagePos = varUsagePos;
 }
 
-void CDECL Scr_AddArrayStringIndexed(unsigned int stringValue)
+void CCDECL Scr_AddArrayStringIndexed(unsigned int stringValue)
 {
   unsigned int id;
 
@@ -421,7 +421,7 @@ void CDECL Scr_AddArrayStringIndexed(unsigned int stringValue)
 }
 
 
-unsigned int CDECL Scr_GetConstStringIncludeNull(unsigned int index)
+unsigned int CCDECL Scr_GetConstStringIncludeNull(unsigned int index)
 {
   if ( index >= gScrVmPub.outparamcount || gScrVmPub.top[-index].type )
   {
@@ -604,7 +604,7 @@ int VM_CalcWaitTime(VariableValue *waitval)
 }
 
 
-void CDECL VM_SetTime( )
+void CCDECL VM_SetTime( )
 {
   unsigned int id;
 
@@ -628,7 +628,7 @@ void CDECL VM_SetTime( )
   }
 }
 
-void CDECL Scr_RunCurrentThreads( )
+void CCDECL Scr_RunCurrentThreads( )
 {
   int pre_time;
 
@@ -648,7 +648,7 @@ void CDECL Scr_RunCurrentThreads( )
 }
 
 
-void CDECL Scr_IncTime( )
+void CCDECL Scr_IncTime( )
 {
   Scr_RunCurrentThreads();
   Scr_FreeEntityList();
@@ -661,7 +661,7 @@ void CDECL Scr_IncTime( )
 
 }
 
-void CDECL Scr_DecTime()
+void CCDECL Scr_DecTime()
 {
 
   assert(!(gScrVarPub.time & ~VAR_NAME_LOW_MASK));

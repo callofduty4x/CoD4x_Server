@@ -80,20 +80,20 @@ extern "C"{
 #endif
 
 threadid_t Sys_GetCurrentThreadId( );
-void CDECL Sys_EnterCriticalSection(int section);
-void CDECL Sys_LeaveCriticalSection(int section);
-void CDECL Sys_EnterCriticalSectionInternal(int section);
-void CDECL Sys_LeaveCriticalSectionInternal(int section);
-void CDECL Sys_InitializeCriticalSections( void );
-void CDECL Sys_InitMainThread( void );
-qboolean CDECL Sys_IsMainThread( void );
-qboolean CDECL Sys_IsDatabaseThread( void );
-qboolean CDECL Sys_IsServerThread( void );
-qboolean CDECL Sys_IsRenderThread( void );
+void CCDECL Sys_EnterCriticalSection(int section);
+void CCDECL Sys_LeaveCriticalSection(int section);
+void CCDECL Sys_EnterCriticalSectionInternal(int section);
+void CCDECL Sys_LeaveCriticalSectionInternal(int section);
+void CCDECL Sys_InitializeCriticalSections( void );
+void CCDECL Sys_InitMainThread( void );
+qboolean CCDECL Sys_IsMainThread( void );
+qboolean CCDECL Sys_IsDatabaseThread( void );
+qboolean CCDECL Sys_IsServerThread( void );
+qboolean CCDECL Sys_IsRenderThread( void );
 void Sys_SyncDatabase();
 void Com_InitThreadData(int threadcontext);
-void* CDECL Sys_GetValue(int key);
-void CDECL Sys_SetValue(int key, void* value);
+void* CCDECL Sys_GetValue(int key);
+void CCDECL Sys_SetValue(int key, void* value);
 qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t*, void*);
 qboolean Sys_ThreadisSame(threadid_t threadid);
 qboolean Sys_SetupThreadCallback(void* callbackMain,...);
@@ -102,22 +102,22 @@ void Sys_RunThreadCallbacks();
 void Sys_ExitThread(int code);
 void Sys_RunDelegatedEvents();
 void Sys_SleepUSec(int usec);
-void CDECL Sys_WaitStartDatabase();
-qboolean CDECL Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p));
-void CDECL Sys_DatabaseCompleted();
+void CCDECL Sys_WaitStartDatabase();
+qboolean CCDECL Sys_SpawnDatabaseThread(void (*db_proc)(unsigned int p));
+void CCDECL Sys_DatabaseCompleted();
 void Sys_WakeDatabase();
 void Sys_WakeDatabase2();
 void Sys_NotifyDatabase();
 qboolean Sys_IsDatabaseReady();
-qboolean CDECL Sys_IsDatabaseReady2();
-void CDECL Sys_SuspendDatabaseThread(enum ThreadOwner owner);
-qboolean CDECL Sys_HaveSuspendedDatabaseThread(enum ThreadOwner to);
-void CDECL Sys_ResumeDatabaseThread(enum ThreadOwner to);
-void CDECL Sys_DatabaseCompleted2();
+qboolean CCDECL Sys_IsDatabaseReady2();
+void CCDECL Sys_SuspendDatabaseThread(enum ThreadOwner owner);
+qboolean CCDECL Sys_HaveSuspendedDatabaseThread(enum ThreadOwner to);
+void CCDECL Sys_ResumeDatabaseThread(enum ThreadOwner to);
+void CCDECL Sys_DatabaseCompleted2();
 
 
-signed int CDECL Sys_WaitForObject(HANDLE handle);
-signed int CDECL Sys_IsObjectSignaled(HANDLE handle);
+signed int CCDECL Sys_WaitForObject(HANDLE handle);
+signed int CCDECL Sys_IsObjectSignaled(HANDLE handle);
 void Sys_WaitDatabaseThread();
 #define MAX_VASTRINGS 2
 

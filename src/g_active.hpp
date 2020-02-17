@@ -4,5 +4,5 @@
 
 extern "C"
 {
-    void CDECL G_PlayerEvent(int clientNum, int event);
+    void CCDECL G_PlayerEvent(int clientNum, int event);
 }

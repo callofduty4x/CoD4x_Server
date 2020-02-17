@@ -5,7 +5,7 @@
 extern "C"
 {
 
-void CDECL Vec3UnpackUnitVec(union PackedUnitVec in, float *out)
+void CCDECL Vec3UnpackUnitVec(union PackedUnitVec in, float *out)
 {
   float decodeScale;
 
@@ -15,7 +15,7 @@ void CDECL Vec3UnpackUnitVec(union PackedUnitVec in, float *out)
   out[2] = (in.array[2] - 127.0) * decodeScale;
 }
 
-PackedUnitVec CDECL Vec3PackUnitVec(const float *unitVec)
+PackedUnitVec CCDECL Vec3PackUnitVec(const float *unitVec)
 {
   float encodeScale;
   float decodeScale;
@@ -77,7 +77,7 @@ union floatdwordpack_t
 };
 
 
-void CDECL Vec2UnpackTexCoords(PackedTexCoords in, float *out)
+void CCDECL Vec2UnpackTexCoords(PackedTexCoords in, float *out)
 {
   floatdwordpack_t v2;
   floatdwordpack_t v3;
@@ -102,7 +102,7 @@ void CDECL Vec2UnpackTexCoords(PackedTexCoords in, float *out)
   out[1] = v2.f;
 }
 
-PackedTexCoords CDECL Vec2PackTexCoords(const float *in)
+PackedTexCoords CCDECL Vec2PackTexCoords(const float *in)
 {
   int16_t v2;
   int16_t v3;

@@ -11,7 +11,7 @@
 #include "bg_pmove.hpp"
 #include "cscr_const.hpp"
 
-void CDECL ClientClearFields(gclient_s *client)
+void CCDECL ClientClearFields(gclient_s *client)
 {
     client->useHoldEntity.setEnt(0);
 }
@@ -28,7 +28,7 @@ void ClearAllSpectators(struct gentity_s* ent)
 	}
 }
 
-extern "C" void CDECL ClientSpawn(gentity_t *ent, const float *spawn_origin, const float *spawn_angles)
+extern "C" void CCDECL ClientSpawn(gentity_t *ent, const float *spawn_origin, const float *spawn_angles)
 {
   gclient_s *client;
   vec3_t clean_spawn_angles;
@@ -172,7 +172,7 @@ extern "C" void CDECL ClientSpawn(gentity_t *ent, const float *spawn_origin, con
 
 }
 
-const char *CDECL CS_DisplayName(clientState_t *cs, int type)
+const char *CCDECL CS_DisplayName(clientState_t *cs, int type)
 {
   const char* clan = SV_GetPlayerClan(cs->clientIndex);
   const char* name = SV_GetPlayerName(cs->clientIndex);
@@ -184,7 +184,7 @@ const char *CDECL CS_DisplayName(clientState_t *cs, int type)
   return "";
 }
 
-extern "C" const char* CDECL G_GetPlayerId(struct gentity_s* ent)
+extern "C" const char* CCDECL G_GetPlayerId(struct gentity_s* ent)
 {
     char id[33];
 

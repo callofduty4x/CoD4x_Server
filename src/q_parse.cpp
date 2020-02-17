@@ -74,7 +74,7 @@ struct com_parse_mark_t
 
 ParseThreadInfo g_parse[4];
 
-ParseThreadInfo *CDECL Com_GetParseThreadInfo()
+ParseThreadInfo *CCDECL Com_GetParseThreadInfo()
 {
   if ( Sys_IsMainThread() )
   {
@@ -98,7 +98,7 @@ ParseThreadInfo *CDECL Com_GetParseThreadInfo()
 
 extern "C"{
 
-void CDECL Com_InitParseInfo(parseInfo_t *pi)
+void CCDECL Com_InitParseInfo(parseInfo_t *pi)
 {
   pi->lines = 1;
   pi->ungetToken = 0;
@@ -112,7 +112,7 @@ void CDECL Com_InitParseInfo(parseInfo_t *pi)
   pi->backup_text = 0;
 }
 
-void CDECL Com_InitParse()
+void CCDECL Com_InitParse()
 {
   unsigned int i, j;
 
@@ -171,12 +171,12 @@ void Com_EndParseSession( void ) {
 	parse->parseInfoNum--;
 }
 
-void CDECL Com_ResetParseSessions()
+void CCDECL Com_ResetParseSessions()
 {
   Com_GetParseThreadInfo()->parseInfoNum = 0;
 }
 
-void CDECL Com_SetSpaceDelimited(int spaceDelimited)
+void CCDECL Com_SetSpaceDelimited(int spaceDelimited)
 {
   ParseThreadInfo *parse;
 
@@ -184,7 +184,7 @@ void CDECL Com_SetSpaceDelimited(int spaceDelimited)
   parse->parseInfo[parse->parseInfoNum].spaceDelimited = spaceDelimited != 0;
 }
 
-void CDECL Com_SetKeepStringQuotes(int keepStringQuotes)
+void CCDECL Com_SetKeepStringQuotes(int keepStringQuotes)
 {
   ParseThreadInfo *parse;
 
@@ -192,7 +192,7 @@ void CDECL Com_SetKeepStringQuotes(int keepStringQuotes)
   parse->parseInfo[parse->parseInfoNum].keepStringQuotes = keepStringQuotes != 0;
 }
 
-void CDECL Com_SetCSV(int csv)
+void CCDECL Com_SetCSV(int csv)
 {
   ParseThreadInfo *parse;
 
@@ -201,7 +201,7 @@ void CDECL Com_SetCSV(int csv)
 }
 
 
-void CDECL Com_SetParseNegativeNumbers(int negativeNumbers)
+void CCDECL Com_SetParseNegativeNumbers(int negativeNumbers)
 {
   ParseThreadInfo *parse;
 
@@ -227,7 +227,7 @@ int Com_GetCurrentParseLine( void ) {
 }
 
 
-void CDECL Com_SetScriptErrorPrefix(const char *prefix)
+void CCDECL Com_SetScriptErrorPrefix(const char *prefix)
 {
   parseInfo_t *pi;
   ParseThreadInfo *parse;
@@ -241,7 +241,7 @@ void CDECL Com_SetScriptErrorPrefix(const char *prefix)
   pi->errorPrefix = prefix;
 }
 
-const char *CDECL Com_GetScriptErrorPrefix()
+const char *CCDECL Com_GetScriptErrorPrefix()
 {
   parseInfo_t *pi;
   ParseThreadInfo *parse;
@@ -255,7 +255,7 @@ const char *CDECL Com_GetScriptErrorPrefix()
 }
 
 
-void CDECL Com_SetScriptWarningPrefix(const char *prefix)
+void CCDECL Com_SetScriptWarningPrefix(const char *prefix)
 {
   parseInfo_t *pi;
   ParseThreadInfo *parse;
@@ -269,7 +269,7 @@ void CDECL Com_SetScriptWarningPrefix(const char *prefix)
   pi->warningPrefix = prefix;
 }
 
-const char *CDECL Com_GetScriptWarningPrefix()
+const char *CCDECL Com_GetScriptWarningPrefix()
 {
   parseInfo_t *pi;
   ParseThreadInfo *parse;
@@ -382,7 +382,7 @@ void Com_UngetToken( void ) {
 	parse->tokenPos = parse->prevTokenPos;
 }
 
-void CDECL Com_ParseSetMark(const char *(*text), com_parse_mark_t *mark)
+void CCDECL Com_ParseSetMark(const char *(*text), com_parse_mark_t *mark)
 {
   ParseThreadInfo *parse;
   parseInfo_t *pi;
@@ -400,7 +400,7 @@ void CDECL Com_ParseSetMark(const char *(*text), com_parse_mark_t *mark)
   mark->backup_text = pi->backup_text;
 }
 
-void CDECL Com_ParseReturnToMark(const char *(*text), com_parse_mark_t *mark)
+void CCDECL Com_ParseReturnToMark(const char *(*text), com_parse_mark_t *mark)
 {
   ParseThreadInfo *parse;
   parseInfo_t *pi;
@@ -458,7 +458,7 @@ int Com_Compress( char *data_p ) {
 	return size;
 }
 
-const char *CDECL Com_GetLastTokenPos()
+const char *CCDECL Com_GetLastTokenPos()
 {
   return Com_GetParseThreadInfo()->tokenPos;
 }
@@ -485,7 +485,7 @@ static const char *SkipWhitespace( const char(*data), int *newLines ) {
 
 
 
-parseInfo_t *CDECL Com_ParseCSV(const char **data_p, int allowLineBreaks)
+parseInfo_t *CCDECL Com_ParseCSV(const char **data_p, int allowLineBreaks)
 {
   const char *data;
   unsigned int len;
@@ -888,7 +888,7 @@ parseInfo_t *Com_ParseOnLine( const char *( *data_p ) ) {
 
 }
 
-ParseTokenType CDECL Com_GetTokenType()
+ParseTokenType CCDECL Com_GetTokenType()
 {
   ParseThreadInfo *parse;
 
@@ -1005,7 +1005,7 @@ const char *Com_ParseRestOfLine( const char *( *data_p ) ) {
 
 
 
-int CDECL Com_GetArgCountOnLine(const char *(*data_p))
+int CCDECL Com_GetArgCountOnLine(const char *(*data_p))
 {
   com_parse_mark_t mark;
   parseInfo_t *token;

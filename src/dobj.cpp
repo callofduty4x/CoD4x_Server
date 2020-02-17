@@ -4,7 +4,7 @@
 
 using namespace std;
 /*
-duplicate of void CDECL DObjDumpInfo(DObj *obj)
+duplicate of void CCDECL DObjDumpInfo(DObj *obj)
 
 void PrintDObjInfo(DObj_t* dobj)
 {
@@ -56,7 +56,7 @@ void PrintDObjInfo(DObj_t* dobj)
 }
 */
 
-void CDECL ConvertQuatToMat(DObjAnimMat *mat, vec3_t axis[3])
+void CCDECL ConvertQuatToMat(DObjAnimMat *mat, vec3_t axis[3])
 {
   vec3_t scaledQuat;
   float xx;

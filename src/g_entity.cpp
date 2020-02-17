@@ -7,7 +7,7 @@
 
 
 
-qboolean CDECL G_SpawnString(SpawnVar *spawnVar, const char *key, const char *defaultString, const char **out)
+qboolean CCDECL G_SpawnString(SpawnVar *spawnVar, const char *key, const char *defaultString, const char **out)
 {
     if ( spawnVar->numSpawnVars <= 0 )
     {
@@ -28,13 +28,13 @@ qboolean CDECL G_SpawnString(SpawnVar *spawnVar, const char *key, const char *de
     return qfalse;
 }
 
-extern "C" qboolean CDECL G_LevelSpawnString(const char *key, const char *defaultString, const char **out)
+extern "C" qboolean CCDECL G_LevelSpawnString(const char *key, const char *defaultString, const char **out)
 {
     return G_SpawnString(&level.spawnVars, key, defaultString, out);
 }
 
 
-void CDECL G_VehSpawner(gentity_t *ent)
+void CCDECL G_VehSpawner(gentity_t *ent)
 {
     const char* value;
     char vehTypeStr[MAX_QPATH];
@@ -66,7 +66,7 @@ void CDECL G_VehSpawner(gentity_t *ent)
     SpawnVehicle( ent, value );
 }
 
-void CDECL G_VehCollmapSpawner(gentity_t *ent)
+void CCDECL G_VehCollmapSpawner(gentity_t *ent)
 {
     ent->r.contents = 0;
     ent->s.eType = ET_VEHICLE_COLLMAP;

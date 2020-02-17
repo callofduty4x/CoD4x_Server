@@ -2561,7 +2561,7 @@ qboolean Cvar_IsDefined(const char* cvarname)
 }
 
 
-const char* CDECL Cvar_EnumToString(cvar_t* var)
+const char* CCDECL Cvar_EnumToString(cvar_t* var)
 {
 	return Cvar_DisplayableValue(var);
 }
@@ -2570,7 +2570,7 @@ extern "C"
 {
     int cvar_modifiedFlags;
 
-    int CDECL Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize)
+    int CCDECL Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize)
     {
         const char *string;
         int ret;
@@ -2597,7 +2597,7 @@ extern "C"
         return ret;
     }
 
-    bool CDECL Cvar_IsValidName(const char *dvarName)
+    bool CCDECL Cvar_IsValidName(const char *dvarName)
     {
         char nameChar;
         int index;
@@ -2618,7 +2618,7 @@ extern "C"
     }
 
 
-    void CDECL Cvar_SetFromStringByName(const char* name, const char* value)
+    void CCDECL Cvar_SetFromStringByName(const char* name, const char* value)
     {
         Cvar_Set(name, value);
     }

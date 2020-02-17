@@ -319,7 +319,7 @@ float FloatSwap (const float f);
 #ifndef WIN32
 
 #define STDCALL __attribute__((stdcall))
-#define CDECL __attribute__((cdecl))
+#define CCDECL __attribute__((cdecl))
 #define __optimize3 __attribute__ ((optimize("-O3"))) __attribute__ ((noinline))
 
 #define DLL_PUBLIC __attribute__ ((visibility ("default")))
@@ -352,10 +352,10 @@ using WORD = unsigned short;
 
 #define __code_seg __declspec(allocate(".text"))
 
-// Having CDECL on MSVC is a time-bomb for Linux.
+// Having CCDECL on MSVC is a time-bomb for Linux.
 // Source must be compiled on Linux system to know if this header included.
 #define STDCALL __stdcall
-#define CDECL __cdecl
+#define CCDECL __cdecl
 
 #include <windows.h>
 

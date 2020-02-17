@@ -627,7 +627,7 @@ Scr_CancelWaittill_10:
 	nop
 	add [eax], al
 
-;void CDECL VM_Notify2(unsigned int, unsigned int, VariableValue*)
+;void CCDECL VM_Notify2(unsigned int, unsigned int, VariableValue*)
 VM_Notify:
 	push ebp
 	mov ebp, esp

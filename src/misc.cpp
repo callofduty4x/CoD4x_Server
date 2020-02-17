@@ -54,7 +54,7 @@ void AddRedirectLocations()
 
 }
 
-qboolean CDECL Com_LoadDvarsFromBuffer(const char **inputbuf, unsigned int length, const char *data_p, const char *filename)
+qboolean CCDECL Com_LoadDvarsFromBuffer(const char **inputbuf, unsigned int length, const char *data_p, const char *filename)
 {
     struct parseInfo_t *cvar_name, *line;
     int i, count;

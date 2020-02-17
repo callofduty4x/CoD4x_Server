@@ -2,4 +2,4 @@
 #include "qshared.hpp"
 
 
-extern "C" qboolean CDECL G_LevelSpawnString(const char *key, const char *defaultString, const char **out);
+extern "C" qboolean CCDECL G_LevelSpawnString(const char *key, const char *defaultString, const char **out);

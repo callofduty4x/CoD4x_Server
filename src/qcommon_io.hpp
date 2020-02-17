@@ -90,20 +90,20 @@ void Com_BeginRedirect (char *buffer, int buffersize, void (*flush)( char *, qbo
 void Com_EndRedirect (void);
 void Com_StopRedirect (void);
 
-void CDECL Com_Printf(conChannel_t channel, const char *fmt, ... );
-void CDECL Com_PrintNoRedirect(conChannel_t channel, const char *fmt, ... );
-void CDECL Com_PrintError(conChannel_t channel, const char *fmt, ... );
-void CDECL Com_PrintWarning(conChannel_t channel, const char *fmt, ... );
-void CDECL Com_PrintWarningNoRedirect(conChannel_t channel, const char *fmt, ... );
-void CDECL Com_DPrintf( conChannel_t channel, const char *fmt, ... );
-void CDECL Com_DPrintfWrapper( int drop, const char *fmt, ...);
-void CDECL Com_DPrintNoRedirect( conChannel_t channel, const char *fmt, ... );
-void CDECL Com_PrintRedirect(char *msg, int msglen);
+void CCDECL Com_Printf(conChannel_t channel, const char *fmt, ... );
+void CCDECL Com_PrintNoRedirect(conChannel_t channel, const char *fmt, ... );
+void CCDECL Com_PrintError(conChannel_t channel, const char *fmt, ... );
+void CCDECL Com_PrintWarning(conChannel_t channel, const char *fmt, ... );
+void CCDECL Com_PrintWarningNoRedirect(conChannel_t channel, const char *fmt, ... );
+void CCDECL Com_DPrintf( conChannel_t channel, const char *fmt, ... );
+void CCDECL Com_DPrintfWrapper( int drop, const char *fmt, ...);
+void CCDECL Com_DPrintNoRedirect( conChannel_t channel, const char *fmt, ... );
+void CCDECL Com_PrintRedirect(char *msg, int msglen);
 void Com_AddRedirect(void (*rd_dest)( const char *, int));
-void CDECL Com_ErrorCleanup(void);
-void CDECL Com_PrintScriptRuntimeWarning( const char *fmt, ... );
-void CDECL Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type);
-void CDECL Com_DPrintfLogfile( const char *fmt, ... );
+void CCDECL Com_ErrorCleanup(void);
+void CCDECL Com_PrintScriptRuntimeWarning( const char *fmt, ... );
+void CCDECL Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type);
+void CCDECL Com_DPrintfLogfile( const char *fmt, ... );
 
 #ifdef __cplusplus
 }

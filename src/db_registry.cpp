@@ -2,7 +2,7 @@
 
 bool g_archiveBuf;
 
-void(CDECL* DB_InitPoolHeaderHandler[ASSET_TYPE_COUNT])(void*, int) =
+void(CCDECL* DB_InitPoolHeaderHandler[ASSET_TYPE_COUNT])(void*, int) =
 {
     DB_InitPool_XModelPieces, 
     DB_InitPool_PhysPreset, 
@@ -54,7 +54,7 @@ extern "C"
     char g_mainThreadBlocked[0x80];
 
 
-    void(CDECL* DB_DynamicCloneXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader, XAssetHeader, DBCloneMethod) =
+    void(CCDECL* DB_DynamicCloneXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader, XAssetHeader, DBCloneMethod) =
     {
         nullptr,
         nullptr,
@@ -128,7 +128,7 @@ extern "C"
         "mp/defaultStringTable.csv",
     };
 
-    void(CDECL* DB_RemoveXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader Header_) =
+    void(CCDECL* DB_RemoveXAssetHandler[ASSET_TYPE_COUNT])(XAssetHeader Header_) =
     {
         nullptr,
         nullptr,
@@ -165,7 +165,7 @@ extern "C"
         nullptr
     };
 
-    void(CDECL* DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*, XAssetHeader) =
+    void(CCDECL* DB_FreeXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*, XAssetHeader) =
     {
         DB_FreeXAssetHeader_XModelPieces,
         DB_FreeXAssetHeader_PhysPreset,
@@ -203,7 +203,7 @@ extern "C"
     };
 
 
-    void* (CDECL* DB_AllocXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*) =
+    void* (CCDECL* DB_AllocXAssetHeaderHandler[ASSET_TYPE_COUNT])(void*) =
     {
         DB_AllocXAsset_XModelPieces,
         DB_AllocXAsset_PhysPreset,

@@ -53,16 +53,16 @@ struct CEntPlayerInfo
 
 extern "C"
 {
-    float CDECL G_GetFogOpaqueDistSqrd();
-    void CDECL ClientDisconnect(int clientNum);
-    void CDECL G_SetLastServerTime(int clientNum, int lastServerTime);
-    void CDECL ClientThink(int clientNum);
-    int CDECL G_GetSavePersist();
-    void CDECL G_ResetEntityParsePoint();
-    void CDECL G_InitGame(int levelTime, int randomSeed, int restart, int savepersist, int framerate);
-    void CDECL G_ShutdownGame(int freeScripts);
-    qboolean CDECL ConsoleCommand();
-    const char *CDECL CS_DisplayName(clientState_t *cs, int type);
+    float CCDECL G_GetFogOpaqueDistSqrd();
+    void CCDECL ClientDisconnect(int clientNum);
+    void CCDECL G_SetLastServerTime(int clientNum, int lastServerTime);
+    void CCDECL ClientThink(int clientNum);
+    int CCDECL G_GetSavePersist();
+    void CCDECL G_ResetEntityParsePoint();
+    void CCDECL G_InitGame(int levelTime, int randomSeed, int restart, int savepersist, int framerate);
+    void CCDECL G_ShutdownGame(int freeScripts);
+    qboolean CCDECL ConsoleCommand();
+    const char *CCDECL CS_DisplayName(clientState_t *cs, int type);
 }
 
 #endif

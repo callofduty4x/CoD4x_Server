@@ -11,7 +11,7 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
 
     if(fmt != NULL)
     {
-        strcpy(buf, "\nAssert Message: ");
+        Q_strncpyz(buf, "\nAssert Message: ", sizeof(buf));
         int l = strlen(message);
         va_list argptr;
         va_start (argptr,fmt);

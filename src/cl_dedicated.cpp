@@ -32,14 +32,14 @@ vec4_t MYNULLTEXTCOLOR = { 0, 0, 0, 0 };
 extern "C"
 {
 
-void CDECL CL_AddDebugLine(const float *start, const float *end, const float *color, int depthTest, int duration)
+void CCDECL CL_AddDebugLine(const float *start, const float *end, const float *color, int depthTest, int duration)
 {
     duration *= 10;
     SV_SendServerCommand(NULL, "M l %f %f %f;%f %f %f;%f %f %f %f;%d;%d", start[0], start[1], start[2], end[0], end[1], end[2],
                           color[0], color[1], color[2], color[3], depthTest, duration);
 }
 
-void CDECL CL_AddDebugStarWithText(const float *point, const float *starColor, const float *textColor, const char *string, float fontsize, int duration)
+void CCDECL CL_AddDebugStarWithText(const float *point, const float *starColor, const float *textColor, const char *string, float fontsize, int duration)
 {
     duration *= 10;
     if(string == NULL){
@@ -50,19 +50,19 @@ void CDECL CL_AddDebugStarWithText(const float *point, const float *starColor, c
                           textColor[0], textColor[1], textColor[2], textColor[3], fontsize, duration, string);
 }
 
-void CDECL CL_AddDebugStar(const float *point, const float *color, int duration)
+void CCDECL CL_AddDebugStar(const float *point, const float *color, int duration)
 {
     CL_AddDebugStarWithText(point, color, MYNULLTEXTCOLOR, NULL, 1.0, duration);
 }
 
-void CDECL CL_AddDebugString(const float *xyz, const float *color, float scale, const char *text, int duration)
+void CCDECL CL_AddDebugString(const float *xyz, const float *color, float scale, const char *text, int duration)
 {
     duration *= 10;
     SV_SendServerCommand(NULL, "M t %f %f %f;%f %f %f %f;%f;%d;%s", xyz[0], xyz[1], xyz[2],
                           color[0], color[1], color[2], color[3], scale, duration, text);
 }
 
-void CDECL SV_AddDebugStarWithText(unsigned int clnum, const float *point, const float *starColor, const float *textColor, const char *string, float fontsize, int duration)
+void CCDECL SV_AddDebugStarWithText(unsigned int clnum, const float *point, const float *starColor, const float *textColor, const char *string, float fontsize, int duration)
 {
     if(clnum >= (unsigned)sv_maxclients->integer)
     {
@@ -79,12 +79,12 @@ void CDECL SV_AddDebugStarWithText(unsigned int clnum, const float *point, const
                           textColor[0], textColor[1], textColor[2], textColor[3], fontsize, duration, string);
 }
 
-void CDECL SV_AddDebugStar(unsigned int clnum, const float *point, const float *color, int duration)
+void CCDECL SV_AddDebugStar(unsigned int clnum, const float *point, const float *color, int duration)
 {
     SV_AddDebugStarWithText(clnum, point, color, MYNULLTEXTCOLOR, NULL, 1.0, duration);
 }
 
-void CDECL SV_AddDebugLine(unsigned int clnum, const float *start, const float *end, const float *color, int depthTest, int duration)
+void CCDECL SV_AddDebugLine(unsigned int clnum, const float *start, const float *end, const float *color, int depthTest, int duration)
 {
     if(clnum >= (unsigned)sv_maxclients->integer)
     {

@@ -18,6 +18,6 @@ enum print_msg_dest_t
 
 extern "C"
 {
-    void CDECL Con_FilterAdd(bool show);
-    void CDECL Con_FilterShowChannel(print_msg_dest_t, const char* channelName, bool show);
+    void CCDECL Con_FilterAdd(bool show);
+    void CCDECL Con_FilterShowChannel(print_msg_dest_t, const char* channelName, bool show);
 }

@@ -4,7 +4,7 @@
 #include "xassets/xmodel.hpp"
 
 using namespace std;
-void CDECL CM_InitStaticModel(cStaticModel_s *staticModel, float *origin, float *angles, float scale)
+void CCDECL CM_InitStaticModel(cStaticModel_s *staticModel, float *origin, float *angles, float scale)
 {
   vec3_t axis[3];
   assert(!isnan((origin)[0]) && !isnan((origin)[1]) && !isnan((origin)[2]));

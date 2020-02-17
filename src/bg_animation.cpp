@@ -235,7 +235,7 @@ extern "C"
     char g_pLoadAnims[0x4];
     char globalScriptData[0x78];
 
-    void CDECL BG_Player_DoControllers(CEntPlayerInfo* player, DObj* obj, int* partBits)
+    void CCDECL BG_Player_DoControllers(CEntPlayerInfo* player, DObj* obj, int* partBits)
     {
         int i;
 

@@ -257,7 +257,7 @@ Sys_Error
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void CDECL Sys_Error( const char *fmt, ... ) {
+void CCDECL Sys_Error( const char *fmt, ... ) {
 
 	FILE * fdout;
 	char* fileout = "sys_error.txt";
@@ -324,9 +324,9 @@ Sys_ConsoleInput
 Handle new console input
 =================
 */
-char *Sys_ConsoleInput(void)
+char* Sys_ConsoleInput()
 {
-	return CON_Input( );
+    return CON_Input();
 }
 
 

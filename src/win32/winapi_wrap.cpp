@@ -24,34 +24,36 @@
 
 #include <windows.h>
 
+#include "../q_platform.hpp"
+
 extern "C"
 {
-    LPVOID CDECL _VirtualAlloc(LPVOID address, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect)
+    LPVOID CCDECL _VirtualAlloc(LPVOID address, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect)
     {
         return VirtualAlloc(address, dwSize, flAllocationType, flProtect);
     }
 
 
-    BOOL CDECL _VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType)
+    BOOL CCDECL _VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType)
     {
         return VirtualFree(lpAddress, dwSize, dwFreeType);
     }
 
 
-    BOOL CDECL _CloseHandle(HANDLE hObject)
+    BOOL CCDECL _CloseHandle(HANDLE hObject)
     {
         return CloseHandle(hObject);
     }
 
 
 
-    HANDLE CDECL _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
+    HANDLE CCDECL _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile)
     {
         return CreateFileA(lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
     }
 
 
-    DWORD CDECL _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh)
+    DWORD CCDECL _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh)
     {
         return GetFileSize(hFile, lpFileSizeHigh);
     }

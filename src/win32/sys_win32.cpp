@@ -74,9 +74,14 @@ Set FPU control word to default value
 	#define FPUCWMASK (FPUCWMASK1 | _MCW_PC)
 #endif
 
-void Sys_SetFloatEnv(void)
+void Sys_SetFloatEnv()
 {
-	_controlfp(FPUCW, FPUCWMASK);
+#ifdef _MSC_VER
+    unsigned int oldState = 0;
+    _controlfp_s(&oldState, FPUCW, FPUCWMASK);
+#else
+    _controlfp(FPUCW, FPUCWMASK);
+#endif
 }
 
 /*
@@ -469,37 +474,36 @@ void Sys_FreeFileList( char **list )
 }
 
 
-qboolean Sys_DirectoryHasContent(const char *dir)
+bool Sys_DirectoryHasContent(const char* dir)
 {
     WIN32_FIND_DATA fdFile;
     HANDLE hFind = NULL;
 
     char searchpath[MAX_OSPATH];
 
-	if(strlen(dir) > MAX_OSPATH - 6 || dir[0] == '\0')
-		return qfalse;
+    if (strlen(dir) > MAX_OSPATH - 6 || dir[0] == '\0')
+        return qfalse;
 
     Q_strncpyz(searchpath, dir, sizeof(searchpath));
-	if( searchpath[strlen(searchpath) -1] ==  '\\' )
-	{
-		searchpath[strlen(searchpath) -1] = '\0';
-	}
-	Q_strncat(searchpath, sizeof(searchpath), "\\*");
+    if (searchpath[strlen(searchpath) - 1] == '\\')
+    {
+        searchpath[strlen(searchpath) - 1] = '\0';
+    }
+    Q_strncat(searchpath, sizeof(searchpath), "\\*");
 
-    if((hFind = FindFirstFile(searchpath, &fdFile)) == INVALID_HANDLE_VALUE)
+    if ((hFind = FindFirstFile(searchpath, &fdFile)) == INVALID_HANDLE_VALUE)
     {
         return qfalse;
     }
 
     do
     {
-        if(stricmp(fdFile.cFileName, ".") != 0 && strcmp(fdFile.cFileName, "..") != 0)
+        if (Q_stricmp(fdFile.cFileName, ".") != 0 && strcmp(fdFile.cFileName, "..") != 0)
         {
-			FindClose(hFind);
-			return qtrue;
+            FindClose(hFind);
+            return qtrue;
         }
-    }
-    while(FindNextFile(hFind, &fdFile));
+    } while (FindNextFile(hFind, &fdFile));
 
     FindClose(hFind);
 
@@ -561,7 +565,7 @@ const char *Sys_Dirname(const char *path)
     char *max = 0;
 	mvabuf;
 
-    strcpy(dir, path);
+    Q_strncpyz(dir, path, sizeof(dir));
     slash1 = strrchr(dir, '/');
     slash2 = strrchr(dir, '\\');
 
@@ -618,7 +622,7 @@ void Sys_PlatformInit( void )
 		exit(1);
 	}
 #endif
-	Sys_SetFloatEnv( );
+	Sys_SetFloatEnv();
 }
 
 HMODULE currentLibHandle = NULL;
@@ -693,12 +697,12 @@ void Sys_InitializeCriticalSections( void )
 }
 
 
-void CDECL Sys_EnterCriticalSectionInternal(int section)
+void CCDECL Sys_EnterCriticalSectionInternal(int section)
 {
 	EnterCriticalSection(&crit_sections[section]);
 }
 
-void CDECL Sys_LeaveCriticalSectionInternal(int section)
+void CCDECL Sys_LeaveCriticalSectionInternal(int section)
 {
 	LeaveCriticalSection(&crit_sections[section]);
 }
@@ -728,7 +732,7 @@ qboolean Sys_CreateNewThread(void* (*ThreadMain)(void*), threadid_t *tid, void* 
 
 
 
-qboolean CDECL Sys_IsMainThread( void )
+qboolean CCDECL Sys_IsMainThread( void )
 {
 	return Sys_ThreadisSame(mainthread);
 }
@@ -747,7 +751,7 @@ void Sys_ExitThread(int code)
 
 }
 
-threadid_t CDECL Sys_GetCurrentThreadId( void )
+threadid_t CCDECL Sys_GetCurrentThreadId( void )
 {
 		return GetCurrentThreadId();
 }
@@ -907,27 +911,27 @@ unsigned int Sys_GetProcessAffinityMask()
   return processAffinityMask;
 }
 
-DWORD CDECL Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
+DWORD CCDECL Sys_InterlockedExchangeAdd(DWORD volatile *Addend, DWORD value)
 {
 	return InterlockedExchangeAdd((LONG volatile *)Addend, value);
 }
 
-DWORD CDECL Sys_InterlockedDecrement(DWORD volatile *Addend)
+DWORD CCDECL Sys_InterlockedDecrement(DWORD volatile *Addend)
 {
 	return InterlockedDecrement((LONG volatile *)Addend);
 }
-DWORD CDECL Sys_InterlockedIncrement(DWORD volatile *Addend)
+DWORD CCDECL Sys_InterlockedIncrement(DWORD volatile *Addend)
 {
 	return InterlockedIncrement((LONG volatile *)Addend);
 }
-DWORD CDECL Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
+DWORD CCDECL Sys_InterlockedCompareExchange(DWORD volatile *Destination, DWORD Exchange, DWORD Comparand)
 {
 	return InterlockedCompareExchange((LONG volatile *)Destination, Exchange, Comparand);
 }
 
-extern "C" int CDECL __cxa_atexit(void (CDECL *func) (void*), void *arg, void *dso_handle)
+extern "C" int CCDECL __cxa_atexit(void (CCDECL *func) (void*), void *arg, void *dso_handle)
 {
-    return atexit(reinterpret_cast<void(CDECL*)()>(func));
+    return atexit(reinterpret_cast<void(CCDECL*)()>(func));
 }
 
 void Sys_InitThreadContext()
@@ -975,7 +979,7 @@ void Sys_SetThreadName(threadid_t tid, const char* szThreadName)
   //RaiseException(0x406D1388u, 0, 4u, &info.dwType);
 }
 
-HANDLE CDECL Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)
+HANDLE CCDECL Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name)
 {
 	SECURITY_ATTRIBUTES sa;
 	sa.nLength = sizeof(sa);
@@ -985,22 +989,22 @@ HANDLE CDECL Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, cons
 	return CreateEventA(&sa, bManualReset, bInitialState, NULL); //Name must be NULL or it will interact with other processes
 }
 
-signed int CDECL Sys_ResetEvent(HANDLE hEvent)
+signed int CCDECL Sys_ResetEvent(HANDLE hEvent)
 {
 	return ResetEvent(hEvent);
 }
 
-signed int CDECL Sys_SetEvent(HANDLE hEvent)
+signed int CCDECL Sys_SetEvent(HANDLE hEvent)
 {
 	return SetEvent(hEvent);
 }
 
-signed int CDECL Sys_WaitForObject(HANDLE hHandle)
+signed int CCDECL Sys_WaitForObject(HANDLE hHandle)
 {
 	return WaitForSingleObject(hHandle, -1);
 }
 
-signed int CDECL Sys_IsObjectSignaled(HANDLE hHandle)
+signed int CCDECL Sys_IsObjectSignaled(HANDLE hHandle)
 {
 	if(WaitForSingleObject(hHandle, 0) == 0)
 	{
@@ -1049,7 +1053,7 @@ int Sys_InetPton(int af_, const char* src_, void* dst_)
     sockaddr_storage sin;
     int addrSize = sizeof(sin);
     char address[256];
-    strncpy(address, src_, sizeof(address));
+    Q_strncpyz(address, src_, sizeof(address));
 
     int rc = WSAStringToAddressA( address, af_, NULL, (SOCKADDR*)&sin, &addrSize );
     if(rc != 0)

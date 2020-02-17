@@ -41,7 +41,7 @@ extern "C"
     void Cmd_EndTokenizedString();
     void Cmd_ExecuteSingleCommand(int unk, int unk2, const char *cmd );
     void Cmd_ExecuteString(const char *cmd );
-    void CDECL Cbuf_AddText(const char* text);
+    void CCDECL Cbuf_AddText(const char* text);
 
     qboolean Cmd_AddCommand( const char *cmd_name, xcommand_t function );
     qboolean Cmd_AddPCommand( const char *cmd_name, xcommand_t function, int power );

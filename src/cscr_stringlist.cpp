@@ -340,7 +340,7 @@ void CreateCanonicalFilename(char *newFilename, const char *filename, int count)
 }
 
 
-unsigned int CDECL SL_GetStringForFloat(float f)
+unsigned int CCDECL SL_GetStringForFloat(float f)
 {
   char tempString[128];
 
@@ -348,7 +348,7 @@ unsigned int CDECL SL_GetStringForFloat(float f)
   return SL_GetString_(tempString, 0, 15);
 }
 
-unsigned int CDECL SL_GetStringForInt(int i)
+unsigned int CCDECL SL_GetStringForInt(int i)
 {
   char tempString[128];
 
@@ -356,7 +356,7 @@ unsigned int CDECL SL_GetStringForInt(int i)
   return SL_GetString_(tempString, 0, 15);
 }
 
-unsigned int CDECL SL_GetStringForVector(const float *v)
+unsigned int CCDECL SL_GetStringForVector(const float *v)
 {
   char tempString[256];
 
@@ -375,7 +375,7 @@ bool SL_IsDebugging() //Not sure about a good name
 
 extern "C"{
 
-void CDECL SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int len)
+void CCDECL SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int len)
 {
   RefString *refStr;
 
@@ -442,7 +442,7 @@ void CDECL SL_RemoveRefToStringOfSize(unsigned int stringValue, unsigned int len
 
 
 
-void CDECL SL_AddRefToString(unsigned int stringValue)
+void CCDECL SL_AddRefToString(unsigned int stringValue)
 {
   RefString *refStr;
   volatile int refC;
@@ -473,7 +473,7 @@ void CDECL SL_AddRefToString(unsigned int stringValue)
   }
 }
 
-void CDECL SL_RemoveRefToString(unsigned int stringValue)
+void CCDECL SL_RemoveRefToString(unsigned int stringValue)
 {
   RefString *refStr;
   int len;
@@ -500,7 +500,7 @@ const char* SL_ConvertToString(unsigned int stringValue)
   return NULL;
 }
 
-unsigned int CDECL SL_GetString_(const char *str, unsigned int user, int type)
+unsigned int CCDECL SL_GetString_(const char *str, unsigned int user, int type)
 {
   return SL_GetStringOfSize(str, user, strlen(str) + 1, type);
 }
@@ -531,7 +531,7 @@ unsigned int SL_GetLowercaseStringOfSize(const char *upperstring, int user, unsi
 
 
 
-unsigned int CDECL SL_FindStringOfSize(const char *str, unsigned int len)
+unsigned int CCDECL SL_FindStringOfSize(const char *str, unsigned int len)
 {
   unsigned int stringValue;
   HashEntry *entry;
@@ -592,12 +592,12 @@ unsigned int CDECL SL_FindStringOfSize(const char *str, unsigned int len)
 }
 
 
-unsigned int CDECL SL_GetLowercaseString_(const char *str, unsigned int user, int type)
+unsigned int CCDECL SL_GetLowercaseString_(const char *str, unsigned int user, int type)
 {
   return SL_GetLowercaseStringOfSize(str, user, strlen(str) + 1, type);
 }
 
-unsigned int CDECL SL_GetLowercaseString(const char *str, unsigned int user)
+unsigned int CCDECL SL_GetLowercaseString(const char *str, unsigned int user)
 {
   return SL_GetLowercaseString_(str, user, 6);
 }
@@ -627,12 +627,12 @@ int SL_FindString(const char *string)
   return SL_FindStringOfSize(string, strlen(string) + 1);
 }
 
-int CDECL SL_ConvertFromRefString(RefString *refString)
+int CCDECL SL_ConvertFromRefString(RefString *refString)
 {
   return MT_GetIndexByRef((byte*)refString);
 }
 
-void CDECL SL_AddUserInternal(RefString *refStr, unsigned int user)
+void CCDECL SL_AddUserInternal(RefString *refStr, unsigned int user)
 {
   int str;
 
@@ -663,7 +663,7 @@ void CDECL SL_AddUserInternal(RefString *refStr, unsigned int user)
 }
 
 
-unsigned int CDECL SL_GetStringOfSize(const char *str, unsigned int user, unsigned int len, int type)
+unsigned int CCDECL SL_GetStringOfSize(const char *str, unsigned int user, unsigned int len, int type)
 {
   int newNext;
   unsigned int stringValue;
@@ -802,7 +802,7 @@ unsigned int CDECL SL_GetStringOfSize(const char *str, unsigned int user, unsign
   return stringValue;
 }
 
-int CDECL SL_GetStringLen(unsigned int stringValue)
+int CCDECL SL_GetStringLen(unsigned int stringValue)
 {
   RefString *refString;
 
@@ -812,7 +812,7 @@ int CDECL SL_GetStringLen(unsigned int stringValue)
   return SL_GetRefStringLen(refString);
 }
 
-unsigned int CDECL SL_ConvertToLowercase(unsigned int stringValue, unsigned int user, int type)
+unsigned int CCDECL SL_ConvertToLowercase(unsigned int stringValue, unsigned int user, int type)
 {
   const char *cstr;
   char str[8192];
@@ -835,7 +835,7 @@ unsigned int CDECL SL_ConvertToLowercase(unsigned int stringValue, unsigned int 
   return ns;
 }
 
-void CDECL SL_TransferRefToUser(unsigned int stringValue, unsigned int user)
+void CCDECL SL_TransferRefToUser(unsigned int stringValue, unsigned int user)
 {
   RefString *refStr;
 
@@ -869,7 +869,7 @@ void CDECL SL_TransferRefToUser(unsigned int stringValue, unsigned int user)
 }
 
 
-void CDECL SL_Init()
+void CCDECL SL_Init()
 {
   HashEntry *entry;
   unsigned int hash;
@@ -902,7 +902,7 @@ void CDECL SL_Init()
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
 }
 
-void CDECL SL_ShutdownSystem(unsigned int user)
+void CCDECL SL_ShutdownSystem(unsigned int user)
 {
   unsigned int hash;
   HashEntry *entry;
@@ -934,7 +934,7 @@ void CDECL SL_ShutdownSystem(unsigned int user)
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
 }
 
-void CDECL Scr_SetString(uint16_t *to, unsigned int from)
+void CCDECL Scr_SetString(uint16_t *to, unsigned int from)
 {
   if ( from )
   {
@@ -947,7 +947,7 @@ void CDECL Scr_SetString(uint16_t *to, unsigned int from)
   *to = from;
 }
 
-void CDECL SL_AddUser(unsigned int stringValue, unsigned int user)
+void CCDECL SL_AddUser(unsigned int stringValue, unsigned int user)
 {
   RefString *ref;
 
@@ -955,12 +955,12 @@ void CDECL SL_AddUser(unsigned int stringValue, unsigned int user)
   SL_AddUserInternal(ref, user);
 }
 
-unsigned int CDECL Scr_AllocString(const char *s)
+unsigned int CCDECL Scr_AllocString(const char *s)
 {
   return SL_GetString(s, 1u);
 }
 
-unsigned int CDECL SL_ConvertFromString(const char *str)
+unsigned int CCDECL SL_ConvertFromString(const char *str)
 {
   RefString *ref;
   assert(str != NULL);
@@ -969,7 +969,7 @@ unsigned int CDECL SL_ConvertFromString(const char *str)
   return SL_ConvertFromRefString(ref);
 }
 
-void CDECL SL_TransferSystem(unsigned int from, unsigned int to)
+void CCDECL SL_TransferSystem(unsigned int from, unsigned int to)
 {
   unsigned int hash;
   HashEntry *entry;
@@ -995,7 +995,7 @@ void CDECL SL_TransferSystem(unsigned int from, unsigned int to)
   Sys_LeaveCriticalSection(CRITSECT_SCRIPT_STRING);
 }
 
-unsigned int CDECL Scr_CreateCanonicalFilename(const char *filename)
+unsigned int CCDECL Scr_CreateCanonicalFilename(const char *filename)
 {
   char newFilename[1024];
 
@@ -1003,7 +1003,7 @@ unsigned int CDECL Scr_CreateCanonicalFilename(const char *filename)
   return SL_GetString_(newFilename, 0, 7);
 }
 
-void CDECL SL_Shutdown( )
+void CCDECL SL_Shutdown( )
 {
   if ( gScrStringGlob.inited )
   {
@@ -1029,7 +1029,7 @@ struct RefVector
     vec3_t vec;
 };
 
-float *CDECL Scr_AllocVectorInternal()
+float *CCDECL Scr_AllocVectorInternal()
 {
   RefVector *refVec;
 
@@ -1044,7 +1044,7 @@ float *CDECL Scr_AllocVectorInternal()
   return refVec->vec;
 }
 
-void CDECL RemoveRefToVector(const float *vectorValue)
+void CCDECL RemoveRefToVector(const float *vectorValue)
 {
   RefVector *refVec;
 
@@ -1070,7 +1070,7 @@ void CDECL RemoveRefToVector(const float *vectorValue)
   }
 }
 
-void CDECL AddRefToVector(const float *vectorValue)
+void CCDECL AddRefToVector(const float *vectorValue)
 {
   RefVector *refVec;
 
@@ -1090,7 +1090,7 @@ void CDECL AddRefToVector(const float *vectorValue)
   }
 }
 
-float *CDECL Scr_AllocVector(const float* vec)
+float *CCDECL Scr_AllocVector(const float* vec)
 {
   float* avec = Scr_AllocVectorInternal();
   VectorCopy(vec, avec);

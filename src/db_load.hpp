@@ -99,5 +99,5 @@ extern "C"
     extern void* varFxElemMarkVisuals;
     extern void* varFxElemVisuals;
 
-    bool CDECL DB_DiscardBspWeapons();
+    bool CCDECL DB_DiscardBspWeapons();
 }

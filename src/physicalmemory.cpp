@@ -54,7 +54,7 @@ void PMem_InitPhysicalMemory(PhysicalMemory *pmem, const char *name, void *memor
 
 
 
-byte* CDECL _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType, const char *name, EMemTrack memTrack)
+byte* CCDECL _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType, const char *name, EMemTrack memTrack)
 {
   //int alignedSize;
   unsigned int highPos;
@@ -112,7 +112,7 @@ byte* CDECL _PMem_AllocNamed(unsigned int size, unsigned int alignment, unsigned
 }
 
 
-byte *CDECL _PMem_Alloc(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType, EMemTrack memTrack, const char *file, int lineNum)
+byte *CCDECL _PMem_Alloc(unsigned int size, unsigned int alignment, unsigned int type, unsigned int allocType, EMemTrack memTrack, const char *file, int lineNum)
 {
   char allocIdBuf[256];
 
@@ -120,7 +120,7 @@ byte *CDECL _PMem_Alloc(unsigned int size, unsigned int alignment, unsigned int 
   return _PMem_AllocNamed(size, alignment, type, allocType, allocIdBuf, memTrack);
 }
 
-int CDECL PMem_GetOverAllocatedSize()
+int CCDECL PMem_GetOverAllocatedSize()
 {
   return g_overAllocatedSize;
 }
@@ -208,7 +208,7 @@ void PMem_FreeInPrim(PhysicalMemoryPrim *prim, const char *name, int location)
 
 extern "C"{
 
-void CDECL PMem_Free(const char *name)
+void CCDECL PMem_Free(const char *name)
 {
   int i;
   for ( i = 0; i < 2; ++i )
@@ -228,7 +228,7 @@ void CDECL PMem_Free(const char *name)
   }
 }
 
-void CDECL PMem_EndAlloc(const char *name, unsigned int allocType)
+void CCDECL PMem_EndAlloc(const char *name, unsigned int allocType)
 {
   assert ( allocType < PHYS_ALLOC_COUNT);
 
@@ -238,7 +238,7 @@ void CDECL PMem_EndAlloc(const char *name, unsigned int allocType)
 
 }
 
-void CDECL PMem_BeginAlloc(const char *name, unsigned int allocType, EMemTrack memTrack)
+void CCDECL PMem_BeginAlloc(const char *name, unsigned int allocType, EMemTrack memTrack)
 {
   assert ( allocType < PHYS_ALLOC_COUNT);
 
@@ -248,7 +248,7 @@ void CDECL PMem_BeginAlloc(const char *name, unsigned int allocType, EMemTrack m
 
 }
 
-void CDECL PMem_Init()
+void CCDECL PMem_Init()
 {
   void* memory;
 

@@ -4,8 +4,8 @@
 
 extern "C"
 {
-    int CDECL Cmd_FollowCycle_f(gentity_t *ent, int dir);
-    void CDECL StopFollowing(gentity_t* ent );
+    int CCDECL Cmd_FollowCycle_f(gentity_t *ent, int dir);
+    void CCDECL StopFollowing(gentity_t* ent );
     void Cmd_Score_f(gentity_t* ent);
-    int CDECL CheatsOk(gentity_t *ent);
+    int CCDECL CheatsOk(gentity_t *ent);
 } // extern "C"

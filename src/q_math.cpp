@@ -97,7 +97,7 @@ void vectoangles( const vec3_t value1, vec3_t angles ) {
 }
 
 
-vec_t CDECL vectosignedpitch(const vec3_t vec)
+vec_t CCDECL vectosignedpitch(const vec3_t vec)
 {
   float t;
 
@@ -444,7 +444,7 @@ AnglesToAxis
 =================
 */
 
-void CDECL AnglesToAxis(const vec3_t angles, vec3_t axis[3])
+void CCDECL AnglesToAxis(const vec3_t angles, vec3_t axis[3])
 {
   float cy;
   float angle;
@@ -521,7 +521,7 @@ void MatrixMultiply( float in1[3][3], float in2[3][3], float out[3][3] ) {
 }
 
 
-void CDECL MatrixTranspose(const float (*in)[3], float (*out)[3])
+void CCDECL MatrixTranspose(const float (*in)[3], float (*out)[3])
 {
   assert( (void*)in != (void*)out);
 
@@ -536,7 +536,7 @@ void CDECL MatrixTranspose(const float (*in)[3], float (*out)[3])
   (*out)[8] = (*in)[8];
 }
 
-void CDECL MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out)
+void CCDECL MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out)
 {
   assert( in1 != out);
   out[0] = in1[0] * in2[0][0] + in1[1] * in2[1][0] + in1[2] * in2[2][0] + in2[3][0];
@@ -545,7 +545,7 @@ void CDECL MatrixTransformVector43(const vec3_t in1, const float in2[4][3], vec3
 }
 
 
-void CDECL MatrixTransposeTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out)
+void CCDECL MatrixTransposeTransformVector43(const vec3_t in1, const float in2[4][3], vec3_t out)
 {
   vec3_t temp;
 
@@ -573,14 +573,14 @@ float identityMatrix33[] =
 };
 
 
-void CDECL MatrixIdentity44(float (*out)[4])
+void CCDECL MatrixIdentity44(float (*out)[4])
 {
   assert(out != NULL);
   memcpy(out, identityMatrix44, sizeof(identityMatrix44));
 }
 
 
-void CDECL Vec4Lerp(const float *from, const float *to, float frac, float *result)
+void CCDECL Vec4Lerp(const float *from, const float *to, float frac, float *result)
 {
   result[0] = (to[0] - from[0]) * frac + from[0];
   result[1] = (to[1] - from[1]) * frac + from[1];
@@ -588,7 +588,7 @@ void CDECL Vec4Lerp(const float *from, const float *to, float frac, float *resul
   result[3] = (to[3] - from[3]) * frac + from[3];
 }
 
-void CDECL Vec3Lerp(const float *from, const float *to, float frac, float *result)
+void CCDECL Vec3Lerp(const float *from, const float *to, float frac, float *result)
 {
   result[0] = (to[0] - from[0]) * frac + from[0];
   result[1] = (to[1] - from[1]) * frac + from[1];
@@ -599,7 +599,7 @@ static int sRandSeed;
 static unsigned int holdrand;
 
 
-void CDECL Vec3Cross(const vec3_t v0, const vec3_t v1, vec3_t cross)
+void CCDECL Vec3Cross(const vec3_t v0, const vec3_t v1, vec3_t cross)
 {
     assert(v0 != cross);
     assert(v1 != cross);
@@ -614,7 +614,7 @@ vec_t Q_rint( vec_t in ) {
 }
 
 
-void CDECL ClearBounds(vec3_t mins, vec3_t maxs)
+void CCDECL ClearBounds(vec3_t mins, vec3_t maxs)
 {
   mins[0] = 131072.0;
   mins[1] = 131072.0;
@@ -625,7 +625,7 @@ void CDECL ClearBounds(vec3_t mins, vec3_t maxs)
 }
 
 
-void CDECL AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs)
+void CCDECL AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs)
 {
   if ( mins[0] > v[0] )
   {
@@ -681,7 +681,7 @@ float Abs(const vec3_t v)
     return VectorLength(v);
 }
 
-bool CDECL Vec3IsNormalized(const float *v)
+bool CCDECL Vec3IsNormalized(const float *v)
 {
   if(fabs(VectorLengthSquared(v) - 1.0) < 0.0020000001)
   {
@@ -691,7 +691,7 @@ bool CDECL Vec3IsNormalized(const float *v)
 }
 
 
-bool CDECL Vec4IsNormalized(const float *v)
+bool CCDECL Vec4IsNormalized(const float *v)
 {
   if(fabs(Vec4LengthSq(v) - 1.0) < 0.0020000001)
   {
@@ -701,7 +701,7 @@ bool CDECL Vec4IsNormalized(const float *v)
 }
 
 
-void CDECL MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out)
+void CCDECL MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t out)
 {
   assert( in1 != out);
 
@@ -711,7 +711,7 @@ void CDECL MatrixTransformVector(const vec3_t in1, const float in2[3][3], vec3_t
 }
 
 
-double CDECL LinearTrack(float tgt, float cur, float rate, float deltaTime)
+double CCDECL LinearTrack(float tgt, float cur, float rate, float deltaTime)
 {
   float err;
   float step;
@@ -906,7 +906,7 @@ vec3_t bytedirs[162] =
 };
 
 
-void CDECL ByteToDir(const int b, vec3_t dir)
+void CCDECL ByteToDir(const int b, vec3_t dir)
 {
   if ( b >= 0 && b < sizeof(bytedirs)/sizeof(bytedirs[0]) )
   {
@@ -918,13 +918,13 @@ void CDECL ByteToDir(const int b, vec3_t dir)
   }
 }
 
-double CDECL Vec2DistanceSq(const float *v0, const float *v1)
+double CCDECL Vec2DistanceSq(const float *v0, const float *v1)
 {
   return Square(v1[0] - v0[0]) + Square(v1[1] - v0[1]);
 }
 
 
-void CDECL SnapAngles(float *vAngles)
+void CCDECL SnapAngles(float *vAngles)
 {
   float delta;
   int rounded;
@@ -942,7 +942,7 @@ void CDECL SnapAngles(float *vAngles)
 }
 
 
-double CDECL Vec3DistanceSq(const float *p1, const float *p2)
+double CCDECL Vec3DistanceSq(const float *p1, const float *p2)
 {
   vec3_t d;
 
@@ -989,7 +989,7 @@ extern "C"
     vec4_t colorLtGreen = { 0, 0.75, 0, 1 };
     vec4_t colorRed = { 1, 0, 0, 1 };
 
-    void CDECL AnglesToQuat(const float *angles, float *quat)
+    void CCDECL AnglesToQuat(const float *angles, float *quat)
     {
       vec3_t axis[3];
 
@@ -1004,7 +1004,7 @@ extern "C"
     returns angle normalized to the range [0 <= angle < 360]
     =================
     */
-    double CDECL AngleNormalize360(const float angle)
+    double CCDECL AngleNormalize360(const float angle)
     {
         float sa = angle * 0.0027777778;
         float result = (sa - floor(sa)) * 360.0;
@@ -1016,14 +1016,14 @@ extern "C"
     }
 
 
-    unsigned int CDECL ms_rand()
+    unsigned int CCDECL ms_rand()
     {
       sRandSeed = 214013 * sRandSeed + 2531011;
       return ((unsigned int)sRandSeed >> 16) & 0x7FFF;
     }
 
 
-    void CDECL AnglesSubtract(const vec3_t v1, const vec3_t v2, vec3_t v3)
+    void CCDECL AnglesSubtract(const vec3_t v1, const vec3_t v2, vec3_t v3)
     {
       v3[0] = AngleNormalize180(v1[0] - v2[0]);
       v3[1] = AngleNormalize180(v1[1] - v2[1]);
@@ -1050,13 +1050,13 @@ extern "C"
     }
 
 
-    double CDECL AngleDelta(const float angle1, const float angle2)
+    double CCDECL AngleDelta(const float angle1, const float angle2)
     {
       return AngleNormalize180(angle1 - angle2);
     }
 
 
-    void CDECL YawVectors2D(const float yaw, vec2_t forward, vec2_t right)
+    void CCDECL YawVectors2D(const float yaw, vec2_t forward, vec2_t right)
     {
         float angle = yaw * 0.017453292;
         float cy = cos(angle);
@@ -1101,7 +1101,7 @@ extern "C"
     }
 
 
-    double CDECL PitchForYawOnNormal(const float fYaw, const vec3_t normal)
+    double CCDECL PitchForYawOnNormal(const float fYaw, const vec3_t normal)
     {
         assert(!isnan(fYaw));
         assert(!isnan(normal[0]) && !isnan(normal[1]) && !isnan(normal[2]));
@@ -1119,7 +1119,7 @@ extern "C"
     }
 
 
-    void CDECL Sys_SnapVector(vec3_t v)
+    void CCDECL Sys_SnapVector(vec3_t v)
     {
         v[0] = f2rint(v[0]);
         v[1] = f2rint(v[1]);
@@ -1127,7 +1127,7 @@ extern "C"
     }
 
 
-    void CDECL ProjectPointOnPlane(const float *p, const float *normal, float *dst)
+    void CCDECL ProjectPointOnPlane(const float *p, const float *normal, float *dst)
     {
       float d;
 
@@ -1140,13 +1140,13 @@ extern "C"
     }
 
 
-    long double CDECL randomf()
+    long double CCDECL randomf()
     {
         return ((float)(signed int)ms_rand() * 0.000030517578f);
     }
 
 
-    double CDECL DiffTrack(float tgt, float cur, float rate, float deltaTime)
+    double CCDECL DiffTrack(float tgt, float cur, float rate, float deltaTime)
     {
       float d = tgt - cur;
       float step = rate * d * deltaTime;
@@ -1158,7 +1158,7 @@ extern "C"
     }
 
 
-    double CDECL DiffTrackAngle(float tgt, float cur, float rate, float deltaTime)
+    double CCDECL DiffTrackAngle(float tgt, float cur, float rate, float deltaTime)
     {
       while ( (tgt - cur) > 180.0 )
         tgt = tgt - 360.0;
@@ -1171,7 +1171,7 @@ extern "C"
     }
 
 
-    double CDECL Vec2NormalizeTo(const float *v, float *out)
+    double CCDECL Vec2NormalizeTo(const float *v, float *out)
     {
         float length = Vec2Length(v);
         if ( length == 0.0 )
@@ -1182,7 +1182,7 @@ extern "C"
     }
 
 
-    void CDECL ExpandBoundsToWidth(float *mins, float *maxs)
+    void CCDECL ExpandBoundsToWidth(float *mins, float *maxs)
     {
         assert(maxs[0] >= mins[0]);
         assert(maxs[1] >= mins[1]);
@@ -1248,7 +1248,7 @@ extern "C"
     }
 
 
-    byte CDECL DirToByte(const vec3_t dir)
+    byte CCDECL DirToByte(const vec3_t dir)
     {
         byte best;
         unsigned int i;
@@ -1271,7 +1271,7 @@ extern "C"
     }
 
 
-    void CDECL PerpendicularVector(const vec3_t src, vec3_t dst)
+    void CCDECL PerpendicularVector(const vec3_t src, vec3_t dst)
     {
         assert(Vec3IsNormalized( src ));
         vec3_t srcSq;
@@ -1297,19 +1297,19 @@ extern "C"
     }
 
 
-    void CDECL ms_srand(int seed)
+    void CCDECL ms_srand(int seed)
     {
         sRandSeed = seed;
     }
 
 
-    void CDECL Rand_Init(int seed)
+    void CCDECL Rand_Init(int seed)
     {
         holdrand = seed;
     }
 
 
-    void CDECL YawVectors(const float yaw, vec3_t forward, vec3_t right)
+    void CCDECL YawVectors(const float yaw, vec3_t forward, vec3_t right)
     {
         float angle = yaw * 0.017453292;
         float cy = cos(angle);
@@ -1366,7 +1366,7 @@ extern "C"
     }
 
 
-    void CDECL VectorAngleMultiply(float *vec, float angle)
+    void CCDECL VectorAngleMultiply(float *vec, float angle)
     {
         double a = (angle * 0.017453292);
         float x = cos(a);
@@ -1389,7 +1389,7 @@ extern "C"
     }
 
 
-    void CDECL YawToAxis(float yaw, vec3_t axis[3])
+    void CCDECL YawToAxis(float yaw, vec3_t axis[3])
     {
         vec3_t right;
         YawVectors(yaw, axis[0], right);
@@ -1403,7 +1403,7 @@ extern "C"
     }
 
 
-    void CDECL MatrixMultiply43(const float (*in1)[3], const float (*in2)[3], float (*out)[3])
+    void CCDECL MatrixMultiply43(const float (*in1)[3], const float (*in2)[3], float (*out)[3])
     {
         assert((void*)in1 != (void*)out);
         assert((void*)in2 != (void*)out);
@@ -1423,7 +1423,7 @@ extern "C"
     }
 
 
-    double CDECL ColorNormalize(const float *in, float *out)
+    double CCDECL ColorNormalize(const float *in, float *out)
     {
         float max = fmaxf(in[0], in[1]);
         max = fmaxf(max, in[2]);
@@ -1441,7 +1441,7 @@ extern "C"
     }
 
 
-    void CDECL AxisToQuat(vec3_t mat[3], float *out)
+    void CCDECL AxisToQuat(vec3_t mat[3], float *out)
     {
         float test[4][4];
         int best = 0;
@@ -1489,7 +1489,7 @@ extern "C"
     }
 
 
-    void CDECL QuatSlerp(const float *from, const float *to, float frac, float *result)
+    void CCDECL QuatSlerp(const float *from, const float *to, float frac, float *result)
     {
         float dot = from[0] * to[0] + from[1] * to[1] + from[2] * to[2] + from[3] * to[3];
         float scaleFrom;
@@ -1531,7 +1531,7 @@ extern "C"
     }
 
 
-    void CDECL UnitQuatToForward(const float *quat, float *forward)
+    void CCDECL UnitQuatToForward(const float *quat, float *forward)
     {
         assert(Vec4IsNormalized( quat ));
         forward[0] = 1.0 - (quat[1] * quat[1] + quat[2] * quat[2]) * 2.0;
@@ -1540,7 +1540,7 @@ extern "C"
     }
 
 
-    void CDECL NearestPitchAndYawOnPlane(const float *angles, const float *normal, float *result)
+    void CCDECL NearestPitchAndYawOnPlane(const float *angles, const float *normal, float *result)
     {
         assert(normal[0] != 0.0 || normal[1] != 0.0 || normal[2] != 0.0);
 
@@ -1552,20 +1552,20 @@ extern "C"
     }
 
 
-    double CDECL Vec2Distance(const float *v0, const float *v1)
+    double CCDECL Vec2Distance(const float *v0, const float *v1)
     {
         return sqrt(Square(v1[0] - v0[0]) + Square(v1[1] - v0[1]));
     }
 
 
-    int CDECL irand(int min, int max)
+    int CCDECL irand(int min, int max)
     {
         holdrand = 214013 * holdrand + 2531011;
         return ((holdrand >> 17) * (max - min) >> 15) + min;
     }
 
 
-    double CDECL flrand(float min, float max)
+    double CCDECL flrand(float min, float max)
     {
         holdrand = 214013 * holdrand + 2531011;
         float result = (holdrand >> 17);
@@ -1573,7 +1573,7 @@ extern "C"
     }
 
 
-    void CDECL ExtendBounds(vec3_t mins, vec3_t maxs, const vec3_t offset)
+    void CCDECL ExtendBounds(vec3_t mins, vec3_t maxs, const vec3_t offset)
     {
         if ( offset[0] <= 0.0 )
             mins[0] = mins[0] + offset[0];
@@ -1592,7 +1592,7 @@ extern "C"
     }
 
 
-    double CDECL LinearTrackAngle(float tgt, float cur, float rate, float deltaTime)
+    double CCDECL LinearTrackAngle(float tgt, float cur, float rate, float deltaTime)
     {
         while ( (tgt - cur) > 180.0 )
             tgt = tgt - 360.0;
@@ -1605,7 +1605,7 @@ extern "C"
     }
 
 
-    void CDECL MatrixInverseOrthogonal43(const float in[4][3], float out[4][3])
+    void CCDECL MatrixInverseOrthogonal43(const float in[4][3], float out[4][3])
     {
 
 
@@ -1632,7 +1632,7 @@ extern "C"
     }
 
 
-    void CDECL AxisTransformVec3(const vec3_t axes[3], const vec3_t vec, vec3_t out)
+    void CCDECL AxisTransformVec3(const vec3_t axes[3], const vec3_t vec, vec3_t out)
     {
         out[0] = vec[0] * axes[0][0] + vec[1] * axes[1][0] + vec[2] * axes[2][0];
         out[1] = vec[0] * axes[0][1] + vec[1] * axes[1][1] + vec[2] * axes[2][1];
@@ -1640,7 +1640,7 @@ extern "C"
     }
 
 
-    void CDECL QuatToAxis(const float *quat, vec3_t axis[3])
+    void CCDECL QuatToAxis(const float *quat, vec3_t axis[3])
     {
         float xx = quat[0] * quat[0];
         float yy = quat[1] * quat[1];
@@ -1680,7 +1680,7 @@ extern "C"
     }
 
 
-    void CDECL QuatLerp(const float *qa, const float *qb, float frac, float *out)
+    void CCDECL QuatLerp(const float *qa, const float *qb, float frac, float *out)
     {
         if ( DotProduct4(qa, qb) < 0.0 )
         {
@@ -1692,7 +1692,7 @@ extern "C"
     }
 
 
-    void CDECL ShrinkBoundsToHeight(vec3_t mins, vec3_t maxs)
+    void CCDECL ShrinkBoundsToHeight(vec3_t mins, vec3_t maxs)
     {
         vec3_t d;
         VectorSubtract(maxs, mins, d);
@@ -1710,14 +1710,14 @@ extern "C"
     }
 
 
-    void CDECL MatrixIdentity33(float (*out)[3])
+    void CCDECL MatrixIdentity33(float (*out)[3])
     {
         assert(out != NULL);
         memcpy(out, identityMatrix33, sizeof(identityMatrix33));
     }
 
 
-    qboolean CDECL IntersectPlanes(const float **plane, float *xyz)
+    qboolean CCDECL IntersectPlanes(const float **plane, float *xyz)
     {
         double determinant = ((plane[1][1] * plane[2][2] - plane[2][1] * plane[1][2]) * plane[0][0])
                 + ((plane[2][1] * plane[0][2] - plane[0][1] * plane[2][2]) * plane[1][0])
@@ -1746,7 +1746,7 @@ extern "C"
     }
 
 
-    void CDECL SnapPointToIntersectingPlanes(const float **planes, float *xyz, float snapGrid, float snapEpsilon)
+    void CCDECL SnapPointToIntersectingPlanes(const float **planes, float *xyz, float snapGrid, float snapEpsilon)
     {
         vec3_t snapped;
         float baseError;
@@ -1786,7 +1786,7 @@ extern "C"
     }
 
 
-    qboolean CDECL PlaneFromPoints(float *plane, const float *v0, const float *v1, const float *v2)
+    qboolean CCDECL PlaneFromPoints(float *plane, const float *v0, const float *v1, const float *v2)
     {
         vec3_t v2_v0;
         vec3_t v1_v0;
@@ -1815,7 +1815,7 @@ extern "C"
     }
 
 
-    qboolean CDECL VecNCompareCustomEpsilon(const float *v0, const float *v1, float epsilon, int coordCount)
+    qboolean CCDECL VecNCompareCustomEpsilon(const float *v0, const float *v1, float epsilon, int coordCount)
     {
         for (int i = 0; i < coordCount; ++i )
             if ( (v0[i] - v1[i]) * (v0[i] - v1[i]) > epsilon * epsilon )
@@ -1825,7 +1825,7 @@ extern "C"
     }
 
 
-    void CDECL MatrixTransposeTransformVector(const float *in1, const vec3_t in2[3], float *out)
+    void CCDECL MatrixTransposeTransformVector(const float *in1, const vec3_t in2[3], float *out)
     {
         assert( in1 != out);
         out[0] = in1[0] * in2[0][0] + in1[1] * in2[0][1] + in1[2] * in2[0][2];
@@ -1834,7 +1834,7 @@ extern "C"
     }
 
 
-    void CDECL ExpandBounds(const vec3_t addedmins, const vec3_t addedmaxs, vec3_t mins, vec3_t maxs)
+    void CCDECL ExpandBounds(const vec3_t addedmins, const vec3_t addedmaxs, vec3_t mins, vec3_t maxs)
     {
         if ( mins[0] > addedmins[0] )
             mins[0] = addedmins[0];

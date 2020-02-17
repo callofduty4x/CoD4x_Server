@@ -59,7 +59,7 @@ static cvar_t *g_voteAllowRestart;
 
 static int g_voteFlags;
 
-void Init_CallVote(void)
+void Init_CallVote()
 {
 
     g_votedMapName = Cvar_RegisterString("g_votedMapName", "", 0, "Contains the voted mapname");
@@ -90,7 +90,7 @@ void Init_CallVote(void)
 Cmd_CallVote_f
 ==================
 */
-void Cmd_CallVote_f(gentity_t *ent)
+void Cmd_CallVote_f(gentity_s*ent)
 {
     int i, activePlayers;
     char arg1[MAX_STRING_TOKENS];
@@ -368,7 +368,7 @@ qboolean ClientCanSpectateTeam(gclient_t *ent, team_t team)
     return (1 & ((ent->sess.noSpectate >> team) ^ 1)) ? qtrue : qfalse;
 }
 
-qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum)
+qboolean Cmd_FollowClient_f(gentity_s *ent, int clientnum)
 {
     // first set them to spectator
     if ((ent->client->sess.sessionState != SESS_STATE_SPECTATOR))
@@ -414,7 +414,7 @@ qboolean Cmd_FollowClient_f(gentity_t *ent, int clientnum)
 #define SAY_TEAM 1
 #define SAY_TELL 2
 
-void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message)
+void G_SayTo(gentity_s* ent, gentity_s* other, int mode, int color, const char *teamname, const char *name, const char *message)
 {
     char buf[64];
     char v16[128];
@@ -534,7 +534,7 @@ void G_AddChatRedirect(void (*rd_dest)(const char *, int, int))
 
 
 
-void CDECL Svcmd_EntityList_f()
+void CCDECL Svcmd_EntityList_f()
 {
   signed int e;
   gentity_t *check;
@@ -558,7 +558,7 @@ void CDECL Svcmd_EntityList_f()
   }
 }
 
-qboolean CDECL ConsoleCommand()
+qboolean CCDECL ConsoleCommand()
 {
     const char* cmd = Cmd_Argv(0);
     if ( !Q_stricmp(cmd, "entitylist") )
@@ -586,7 +586,7 @@ extern "C"
     This function is required for refollowing facility on spawn
     =================
     */
-    void CDECL StopFollowingOnDeath(gentity_t *ent)
+    void CCDECL StopFollowingOnDeath(gentity_t *ent)
     {
 
         if (ent->client->spectatorClient != -1)
@@ -596,7 +596,7 @@ extern "C"
     }
 
 
-    void CDECL G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText)
+    void CCDECL G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText)
     {
         int j;
         gentity_t *other;

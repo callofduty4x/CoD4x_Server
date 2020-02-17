@@ -1870,7 +1870,7 @@ qboolean MSG_ValuesAreEqual(int bits, const int *fromF, const int *toF)
 
 
 
-int CDECL MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fields, int numFields)
+int CCDECL MSG_WriteDelta_LastChangedField(byte *from, byte *to, netField_t* fields, int numFields)
 {
 	int j;
 	int lc;
@@ -3004,12 +3004,12 @@ unsigned int kbitmask[33] =
 
 
 
-unsigned int CDECL MSG_ReadKey(msg_t *msg, int key, int bits)
+unsigned int CCDECL MSG_ReadKey(msg_t *msg, int key, int bits)
 {
   return kbitmask[bits] & (key ^ MSG_ReadBits(msg, bits));
 }
 
-int CDECL MSG_ReadDeltaKeyShort(msg_t *msg, int key, int oldV)
+int CCDECL MSG_ReadDeltaKeyShort(msg_t *msg, int key, int oldV)
 {
   if ( MSG_ReadBit(msg) )
   {
@@ -3018,7 +3018,7 @@ int CDECL MSG_ReadDeltaKeyShort(msg_t *msg, int key, int oldV)
   return oldV;
 }
 
-int CDECL MSG_ReadDeltaKeyByte(msg_t *msg, int key, int oldV)
+int CCDECL MSG_ReadDeltaKeyByte(msg_t *msg, int key, int oldV)
 {
   if ( MSG_ReadBit(msg) )
   {
@@ -3027,7 +3027,7 @@ int CDECL MSG_ReadDeltaKeyByte(msg_t *msg, int key, int oldV)
   return oldV;
 }
 
-int CDECL MSG_ReadDeltaKey(msg_t *msg, int key, int oldV, int bits)
+int CCDECL MSG_ReadDeltaKey(msg_t *msg, int key, int oldV, int bits)
 {
   if ( MSG_ReadBit(msg) )
   {
@@ -3080,7 +3080,7 @@ void MSG_ReadForwardRightMove(msg_t* msg, usercmd_t* from, usercmd_t* to, int ke
 }
 
 
-void CDECL MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to)
+void CCDECL MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd_t *to)
 {
 	memcpy(to, from, sizeof(usercmd_t));
 	if ( MSG_ReadBit(msg) )
@@ -3153,7 +3153,7 @@ void CDECL MSG_ReadDeltaUsercmdKey(msg_t *msg, int key, usercmd_t *from, usercmd
 
 
 
-void CDECL MSG_GetMapCenter(float *center)
+void CCDECL MSG_GetMapCenter(float *center)
 {
 //  return SV_GetMapCenter();
 	SV_GetMapCenterFromSVSHeader(center);
@@ -3621,7 +3621,7 @@ netField_t archivedEntityFields[] =
 static const int archivedEntityFieldsCount = sizeof(archivedEntityFields) / sizeof(archivedEntityFields[0]);
 
 
-bool CDECL MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, enum DeltaFlags flags)
+bool CCDECL MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, enum DeltaFlags flags)
 {
 //  enum PacketEntityType packEntType;
 
@@ -3731,7 +3731,7 @@ void MSG_ReadDeltaFields(msg_t *msg, const int time, const byte *from, byte *to,
 
 
 
-int CDECL MSG_ReadDeltaStruct(msg_t *msg, const int time, const void *from, void *to, unsigned int number, int numFields, int indexBits, netField_t *stateFields)
+int CCDECL MSG_ReadDeltaStruct(msg_t *msg, const int time, const void *from, void *to, unsigned int number, int numFields, int indexBits, netField_t *stateFields)
 {
   assert(number < (1u << indexBits));
 
@@ -3853,7 +3853,7 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
   }
 }
 
-void CDECL MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, const int time, playerState_t *from, playerState_t *to, bool predictedFieldsIgnoreXor)
+void CCDECL MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, const int time, playerState_t *from, playerState_t *to, bool predictedFieldsIgnoreXor)
 {
 	signed int i, j;
 	signed int print;

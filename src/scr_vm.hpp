@@ -686,95 +686,95 @@ extern "C"{
 
 qboolean Scr_IsSyscallDefined( const char *name );
 void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath );
-void CDECL Scr_InitVariables(void);			//VM
-void CDECL Scr_Init(void);			//VM_Init
-void CDECL Scr_Settings(int, int, int);
-void CDECL Scr_AddEntity(gentity_t* ent);
-void CDECL Scr_Cleanup(void);
-void CDECL GScr_Shutdown(void);
-unsigned int CDECL Scr_AllocArray();
-unsigned int CDECL AllocObject();
-int CDECL Scr_GetNumParam( void );
-int CDECL Scr_GetInt( unsigned int );
-float CDECL Scr_GetFloat( unsigned int );
-char* CDECL Scr_GetString( unsigned int );
-gentity_t* CDECL Scr_GetEntity( unsigned int );
-short CDECL Scr_GetConstString( unsigned int );
-unsigned int CDECL Scr_GetType( unsigned int );
-unsigned int CDECL Scr_GetPointerType( unsigned int );
-void CDECL Scr_GetVector( unsigned int, float* );
-unsigned int CDECL Scr_GetObject( unsigned int );
-void CDECL Scr_GetObjectField(unsigned int classnum, int entnum, int offset);
-const char *CDECL Scr_GetIString(unsigned int index);
+void CCDECL Scr_InitVariables(void);			//VM
+void CCDECL Scr_Init(void);			//VM_Init
+void CCDECL Scr_Settings(int, int, int);
+void CCDECL Scr_AddEntity(gentity_t* ent);
+void CCDECL Scr_Cleanup(void);
+void CCDECL GScr_Shutdown(void);
+unsigned int CCDECL Scr_AllocArray();
+unsigned int CCDECL AllocObject();
+int CCDECL Scr_GetNumParam( void );
+int CCDECL Scr_GetInt( unsigned int );
+float CCDECL Scr_GetFloat( unsigned int );
+char* CCDECL Scr_GetString( unsigned int );
+gentity_t* CCDECL Scr_GetEntity( unsigned int );
+short CCDECL Scr_GetConstString( unsigned int );
+unsigned int CCDECL Scr_GetType( unsigned int );
+unsigned int CCDECL Scr_GetPointerType( unsigned int );
+void CCDECL Scr_GetVector( unsigned int, float* );
+unsigned int CCDECL Scr_GetObject( unsigned int );
+void CCDECL Scr_GetObjectField(unsigned int classnum, int entnum, int offset);
+const char *CCDECL Scr_GetIString(unsigned int index);
 void VM_Resume(unsigned int id);
 
 int Scr_GetFunc(unsigned int paramnum);
-extern char* (CDECL *Scr_GetLocalizedString)(unsigned int arg);
+extern char* (CCDECL *Scr_GetLocalizedString)(unsigned int arg);
 
 /* Scr_Error
  *
  * Throws script runtime error with 'string' description.
  * Asterisk points to function name.
  */
-void CDECL Scr_Error( const char *string);
-void CDECL Scr_SetLoading( qboolean );
+void CCDECL Scr_Error( const char *string);
+void CCDECL Scr_SetLoading( qboolean );
 
 /* Scr_ParamError
  *
  * Throws script runtime error with 'string' description.
  * Asterisk points to 'paramNum' function parameter.
  */
-void CDECL Scr_ParamError( int paramNum, const char *string);
+void CCDECL Scr_ParamError( int paramNum, const char *string);
 
 /* Scr_ObjectError
  *
  * Throws script runtime error with 'string' description.
  * Asterisk points to function caller.
  */
-void CDECL Scr_ObjectError( const char *string);
+void CCDECL Scr_ObjectError( const char *string);
 
-void CDECL Scr_AddInt(int value);
-void CDECL Scr_AddFloat(float);
-void CDECL Scr_AddBool(bool);
-void CDECL Scr_AddString(const char *string);
-void CDECL Scr_AddConstString(unsigned int strindex);
-void CDECL Scr_AddUndefined(void);
-void CDECL Scr_AddVector( const float* vec );
-void CDECL Scr_AddArray( void );
-void CDECL Scr_MakeArray( void );
-void CDECL Scr_AddArrayKeys( unsigned int strIdx );
-void CDECL Scr_Notify( gentity_t*, unsigned short, unsigned int);
-void CDECL Scr_NotifyNum( int, unsigned int, unsigned int, unsigned int);
+void CCDECL Scr_AddInt(int value);
+void CCDECL Scr_AddFloat(float);
+void CCDECL Scr_AddBool(bool);
+void CCDECL Scr_AddString(const char *string);
+void CCDECL Scr_AddConstString(unsigned int strindex);
+void CCDECL Scr_AddUndefined(void);
+void CCDECL Scr_AddVector( const float* vec );
+void CCDECL Scr_AddArray( void );
+void CCDECL Scr_MakeArray( void );
+void CCDECL Scr_AddArrayKeys( unsigned int strIdx );
+void CCDECL Scr_Notify( gentity_t*, unsigned short, unsigned int);
+void CCDECL Scr_NotifyNum( int, unsigned int, unsigned int, unsigned int);
 
-int CDECL Scr_GetFunctionHandle( const char* scriptName, const char* labelName);
-short CDECL Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int numArgs);
-short CDECL Scr_ExecThread( int callbackHook, unsigned int numArgs);
-void CDECL Scr_FreeThread( short threadId);
-unsigned int CDECL Scr_CreateCanonicalFilename( const char* name );
-void * CDECL TempMalloc( int );
-void CDECL ScriptParse( sval_u* , byte);
-void CDECL ScriptCompile( sval_u, unsigned int, unsigned int, PrecacheEntry*, int);
-char* CDECL Scr_AddSourceBuffer( const char*, const char*, const char*, bool );
-void CDECL Scr_InitAllocNode( void );
-void CDECL Scr_BeginLoadScripts( void );
-void CDECL Scr_SetString(unsigned short *strindexptr, unsigned const stringindex);
-unsigned int CDECL Scr_AllocString(const char* string);
+int CCDECL Scr_GetFunctionHandle( const char* scriptName, const char* labelName);
+short CCDECL Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int numArgs);
+short CCDECL Scr_ExecThread( int callbackHook, unsigned int numArgs);
+void CCDECL Scr_FreeThread( short threadId);
+unsigned int CCDECL Scr_CreateCanonicalFilename( const char* name );
+void * CCDECL TempMalloc( int );
+void CCDECL ScriptParse( sval_u* , byte);
+void CCDECL ScriptCompile( sval_u, unsigned int, unsigned int, PrecacheEntry*, int);
+char* CCDECL Scr_AddSourceBuffer( const char*, const char*, const char*, bool );
+void CCDECL Scr_InitAllocNode( void );
+void CCDECL Scr_BeginLoadScripts( void );
+void CCDECL Scr_SetString(unsigned short *strindexptr, unsigned const stringindex);
+unsigned int CCDECL Scr_AllocString(const char* string);
 void Scr_InitSystem();
-unsigned int CDECL SL_GetCanonicalString(const char *str);
+unsigned int CCDECL SL_GetCanonicalString(const char *str);
 
 
-void CDECL GScr_AddFieldsForHudElems( void );
-void CDECL GScr_AddFieldsForRadiant( void );
-void CDECL Scr_AddHudElem(game_hudelem_t* );
-void CDECL Scr_FreeHudElem(game_hudelem_t* );
-void CDECL Scr_EndLoadScripts( void );
-void CDECL Scr_ConstructMessageString( int, int, const char*, char*, unsigned int );
+void CCDECL GScr_AddFieldsForHudElems( void );
+void CCDECL GScr_AddFieldsForRadiant( void );
+void CCDECL Scr_AddHudElem(game_hudelem_t* );
+void CCDECL Scr_FreeHudElem(game_hudelem_t* );
+void CCDECL Scr_EndLoadScripts( void );
+void CCDECL Scr_ConstructMessageString( int, int, const char*, char*, unsigned int );
 
 qboolean Scr_PlayerSay(gentity_t*, int mode, const char* text);
 qboolean Scr_ScriptCommand(int clientnum, const char* cmd, const char* args);
 
 void GScr_LoadGameTypeScript(void);
-unsigned int CDECL Scr_LoadScriptInternal(const char* scriptname, PrecacheEntry *precache, int precachecount);
+unsigned int CCDECL Scr_LoadScriptInternal(const char* scriptname, PrecacheEntry *precache, int precachecount);
 unsigned int Scr_LoadScript(const char* scriptname);
 qboolean Scr_ExecuteMasterResponse(char* s);
 void Scr_AddStockFunctions();
@@ -783,11 +783,11 @@ void Scr_AddStockMethods();
 qboolean Scr_AddFunction( const char *cmd_name, xfunction_t function, qboolean developer);
 qboolean Scr_RemoveFunction( const char *cmd_name );
 void Scr_ClearFunctions( void );
-xfunction_t CDECL Scr_GetFunction( const char** v_functionName, qboolean* v_developer );
+xfunction_t CCDECL Scr_GetFunction( const char** v_functionName, qboolean* v_developer );
 qboolean Scr_AddMethod( const char *cmd_name, xmethod_t function, qboolean developer);
 qboolean Scr_RemoveMethod( const char *cmd_name );
 void Scr_ClearMethods( void );
-xmethod_t CDECL Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
+xmethod_t CCDECL Scr_GetMethod( const char** v_functionName, qboolean* v_developer );
 
 
 qboolean Scr_FS_CloseFile( scr_fileHandle_t* f );
@@ -809,7 +809,7 @@ void GScr_GetCvar();
 void GScr_AddScriptCommand();
 void RuntimeError(char *a3, int arg4, char *message, char *a4);
 const char* Scr_GetPlayername(gentity_t* gent);
-qboolean CDECL Scr_IsValidGameType(const char *pszGameType);
+qboolean CCDECL Scr_IsValidGameType(const char *pszGameType);
 
 // Safe function to get gentity for num passed by script call "ent function()"
 gentity_t* VM_GetGEntityForNum(scr_entref_t num);
@@ -822,17 +822,17 @@ gentity_t *VM_GetGEntityForEntRef(scr_entref_t num);
 
 
 void CompileError(unsigned int sourcePos, const char *msg, ...);
-void CDECL CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
+void CCDECL CScr_GetObjectField(unsigned int classnum, int entnum, int clientNum, int offset);
 // Returns pointer to new 'fields_1' array. To be used in patching purposes.
-void CDECL Scr_ParseGameTypeList();
-void CDECL Scr_TerminalError(const char *error);
+void CCDECL Scr_ParseGameTypeList();
+void CCDECL Scr_TerminalError(const char *error);
 void Scr_UpdateDebugger();
-bool CDECL SetEntityFieldValue(unsigned int classnum, int entnum, int offset, VariableValue *value);
-void CDECL Scr_CancelNotifyList(unsigned int notifyListOwnerId);
-void CDECL VM_CancelNotify(unsigned int notifyListOwnerId, unsigned int startLocalId);
-void CDECL Scr_AddObject(unsigned int id);
-unsigned int CDECL Scr_GetConstStringIncludeNull(unsigned int index);
-scr_entref_t CDECL Scr_GetEntityRef(unsigned int index);
+bool CCDECL SetEntityFieldValue(unsigned int classnum, int entnum, int offset, VariableValue *value);
+void CCDECL Scr_CancelNotifyList(unsigned int notifyListOwnerId);
+void CCDECL VM_CancelNotify(unsigned int notifyListOwnerId, unsigned int startLocalId);
+void CCDECL Scr_AddObject(unsigned int id);
+unsigned int CCDECL Scr_GetConstStringIncludeNull(unsigned int index);
+scr_entref_t CCDECL Scr_GetEntityRef(unsigned int index);
 void Scr_ShutdownOpcodeLookup( );
 VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset);
 void Scr_Shutdown();
@@ -852,7 +852,7 @@ extern "C"
     extern scrVmPub_t gScrVmPub;
 
     void Scr_ResetTimeout();
-    void CDECL VM_Notify(int, int, VariableValue* val);
+    void CCDECL VM_Notify(int, int, VariableValue* val);
 }
 
 #endif

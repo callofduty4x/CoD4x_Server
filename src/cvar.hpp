@@ -195,9 +195,9 @@ void Cvar_ClearFlagsForEach(unsigned short flags);
 void Cvar_ClearModified(cvar_t* cvar);
 qboolean Cvar_IsDefined(const char* varname);
 
-    int CDECL Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize);
-    bool CDECL Cvar_IsValidName(const char *dvarName);
-    void CDECL Cvar_SetFromStringByName(const char* name, const char* value);
+    int CCDECL Com_SaveDvarsToBuffer(const char **dvarnames, unsigned int numDvars, char *buffer, unsigned int bufsize);
+    bool CCDECL Cvar_IsValidName(const char *dvarName);
+    void CCDECL Cvar_SetFromStringByName(const char* name, const char* value);
 } // extern "C"
 
 #define Cvar_GetInt Cvar_VariableIntegerValue

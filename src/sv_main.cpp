@@ -316,7 +316,7 @@ int sub_530FC0(client_t *client, const char *command)
 
 
 
-void CDECL SV_AddServerCommand(client_t *client, int type, const char *cmd)
+void CCDECL SV_AddServerCommand(client_t *client, int type, const char *cmd)
 {
   int v4;
   int i;
@@ -2677,7 +2677,7 @@ before Sys_Quit or Sys_Error
 ================
 */
 
-void CDECL SV_Shutdown( const char *finalmsg ) {
+void CCDECL SV_Shutdown( const char *finalmsg ) {
 
     if ( !com_sv_running || !com_sv_running->integer ) {
         return;
@@ -3603,7 +3603,7 @@ void SV_PostFastRestart(){
 }
 
 
-void CDECL SV_ReconnectClients(int savepersist)
+void CCDECL SV_ReconnectClients(int savepersist)
 {
     int i;
     client_t* client;
@@ -4697,7 +4697,7 @@ void SV_GetMapCenterFromSVSHeader(float* center)
 }
 
 
-const char *CDECL SV_GetMapBaseName(const char *mapname)
+const char *CCDECL SV_GetMapBaseName(const char *mapname)
 {
   return FS_GetMapBaseName(mapname);
 }
@@ -4731,7 +4731,7 @@ void SV_VoicePacket(netadr_t *from, msg_t *msg)
 }
 
 
-void CDECL SV_FreeClientScriptId(client_t *cl)
+void CCDECL SV_FreeClientScriptId(client_t *cl)
 {
   Com_Printf(CON_CHANNEL_SERVER, "SV_FreeClientScriptId: %d, %d -> 0\n", cl - svs.clients, cl->scriptId);
 

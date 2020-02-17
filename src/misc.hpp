@@ -26,16 +26,16 @@
 
 extern "C"
 {
-void CDECL Swap_Init(void);
-void CDECL CSS_InitConstantConfigStrings(void);
-void CDECL Con_InitChannels(void);
-void CDECL SEH_UpdateLanguageInfo(void);
-void CDECL SetAnimCheck(int);
-qboolean CDECL BG_IsWeaponValid( playerState_t *ps, unsigned int index);
-qboolean CDECL SEH_StringEd_GetString( const char* input );
+void CCDECL Swap_Init(void);
+void CCDECL CSS_InitConstantConfigStrings(void);
+void CCDECL Con_InitChannels(void);
+void CCDECL SEH_UpdateLanguageInfo(void);
+void CCDECL SetAnimCheck(int);
+qboolean CCDECL BG_IsWeaponValid( playerState_t *ps, unsigned int index);
+qboolean CCDECL SEH_StringEd_GetString( const char* input );
 
 void AddRedirectLocations(void);
-qboolean CDECL Com_LoadDvarsFromBuffer(const char **inputbuf, unsigned int length, const char *data_p, const char *filename);
+qboolean CCDECL Com_LoadDvarsFromBuffer(const char **inputbuf, unsigned int length, const char *data_p, const char *filename);
 
     void dMessage (int num, const char *msg, ...);
 } // extern "C"

@@ -21,7 +21,7 @@ void SV_WriteClientVoiceData(msg_t *msg, client_t *client)
 	}
 }
 
-bool CDECL SV_VoiceEnabled()
+bool CCDECL SV_VoiceEnabled()
 {
   return sv_voice->boolean;
 }
@@ -32,7 +32,7 @@ bool CDECL SV_VoiceEnabled()
 extern "C"
 {
 
-bool CDECL SV_ClientHasClientMuted(int listener, int talker)
+bool CCDECL SV_ClientHasClientMuted(int listener, int talker)
 {
     assert(listener < sv_maxclients->integer);
     assert(talker < sv_maxclients->integer);
@@ -40,7 +40,7 @@ bool CDECL SV_ClientHasClientMuted(int listener, int talker)
 }
 
 
-void CDECL SV_QueueVoicePacket(int talkerNum, int clientNum, VoicePacket_t *voicePacket)
+void CCDECL SV_QueueVoicePacket(int talkerNum, int clientNum, VoicePacket_t *voicePacket)
 {
   client_t *client;
 
@@ -82,7 +82,7 @@ void SV_SendClientVoiceData(client_t *client)
 }
 
 
-bool CDECL SV_ClientWantsVoiceData(int clientNum)
+bool CCDECL SV_ClientWantsVoiceData(int clientNum)
 {
   assert(clientNum >= 0 && clientNum < sv_maxclients->integer);
 
@@ -90,7 +90,7 @@ bool CDECL SV_ClientWantsVoiceData(int clientNum)
 }
 
 
-void CDECL SV_UserVoice(client_t *cl, msg_t *msg)
+void CCDECL SV_UserVoice(client_t *cl, msg_t *msg)
 {
   int packet;
   VoicePacket_t voicePacket;
@@ -120,7 +120,7 @@ void CDECL SV_UserVoice(client_t *cl, msg_t *msg)
 }
 
 
-void CDECL SV_PreGameUserVoice(client_t *cl, msg_t *msg)
+void CCDECL SV_PreGameUserVoice(client_t *cl, msg_t *msg)
 {
   int packet;
   VoicePacket_t voicePacket;

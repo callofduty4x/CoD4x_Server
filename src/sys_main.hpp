@@ -41,9 +41,9 @@
 extern "C"{
 #endif
 
-unsigned int CDECL Sys_Milliseconds();
-unsigned long long CDECL Sys_MillisecondsLong();
-unsigned long long CDECL Sys_MicrosecondsLong();
+unsigned int CCDECL Sys_Milliseconds();
+unsigned long long CCDECL Sys_MillisecondsLong();
+unsigned long long CCDECL Sys_MicrosecondsLong();
 
 void Sys_TimerInit( void );
 unsigned long long Sys_Microseconds( void );
@@ -51,11 +51,11 @@ int Sys_Seconds();
 void Sys_Quit( void );
 void Sys_Print( const char *msg );
 void Sys_TermProcess(void);
-char *Sys_ConsoleInput(void);
+char* Sys_ConsoleInput();
 void Sys_AnsiColorPrint( const char *msg );
 void Sys_PrintBinVersion( const char* name );
 void Sys_ParseArgs( int argc, char* argv[] );
-void CDECL Sys_Error( const char *fmt, ... );
+void CCDECL Sys_Error( const char *fmt, ... );
 void Sys_SetBinaryPath(const char *path);
 const char *Sys_BinaryPath(void);
 const char *Sys_ExeFile(void);
@@ -71,9 +71,9 @@ char *Sys_Cwd( void );
 void Sys_InitCrashDumps();
 const char *Sys_DefaultHomePath(void);
 const char *Sys_TempPath( void );
-void CDECL Sys_Init(void);
+void CCDECL Sys_Init(void);
 char *Sys_DefaultCDPath( void );
-qboolean Sys_DirectoryHasContent( const char* dir );
+bool Sys_DirectoryHasContent( const char* dir );
 char **Sys_ListFiles( const char *directory, const char *extension, char *filter, int *numfiles, qboolean wantsubs );
 void Sys_FreeFileList( char **list );
 const char* Sys_GetUsername();
@@ -104,7 +104,7 @@ void* Sys_GetProcedure(const char* procname);
 /* Includes for system console */
 void CON_Shutdown( void );
 void CON_Init(void);
-char *CON_Input( void );
+char* CON_Input();
 void CON_Print( const char *msg );
 void CON_DisableDraw();
 void CON_EnableDraw();
@@ -115,8 +115,8 @@ void Sys_BeginLoadThreadPriorities();
 void Sys_EndLoadThreadPriorities();
 void Sys_BeginShutdownWatchdog();
 
-signed int CDECL Sys_ResetEvent(HANDLE handle);
-signed int CDECL Sys_SetEvent(HANDLE handle);
+signed int CCDECL Sys_ResetEvent(HANDLE handle);
+signed int CCDECL Sys_SetEvent(HANDLE handle);
 HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name);
 void Sys_PrintBacktrace();
 void Sys_SleepMSec(int msec);

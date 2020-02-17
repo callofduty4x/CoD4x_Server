@@ -90,7 +90,7 @@ qboolean	NET_CompareBaseAdrMask(netadr_t *a, netadr_t *b, int netmask);
 qboolean	NET_CompareBaseAdr (netadr_t *a, netadr_t *b);
 qboolean	NET_IsLocalAddress (netadr_t adr);
 const char	*NET_AdrToString (netadr_t *a);
-const char* CDECL NET_AdrToStringMT (netadr_t *a, char*, int);
+const char* CCDECL NET_AdrToStringMT (netadr_t *a, char*, int);
 const char	*NET_AdrToStringShort (netadr_t *a);
 const char	*NET_AdrToStringwPort (netadr_t *a);
 netadr_t	*NET_SockToAdr(int socket);
@@ -104,7 +104,7 @@ void		NET_LeaveMulticast6(void);
 void NET_Clear(void);
 const char*	NET_AdrMaskToString(netadr_t *adr);
 int NET_GetStaticIPv6Address(netadr_t* adr, unsigned int startindex);
-const char* CDECL NET_AdrToStringShortMT(netadr_t *a, char* buf, int len);
+const char* CCDECL NET_AdrToStringShortMT(netadr_t *a, char* buf, int len);
 
 qboolean	Sys_SendPacket( int length, const void *data, netadr_t *to );
 qboolean	Sys_StringToAdr( const char *s, netadr_t *a, netadrtype_t family );

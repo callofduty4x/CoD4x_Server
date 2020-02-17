@@ -72,7 +72,7 @@ SV_UpdateServerCommandsToClient
 (re)send all server commands the client hasn't acknowledged yet
 ==================
 */
-void CDECL SV_UpdateServerCommandsToClient( client_t *client, msg_t *msg ) {
+void CCDECL SV_UpdateServerCommandsToClient( client_t *client, msg_t *msg ) {
 	int i;
 //	extclient_t* extcl = &svs.extclients[ client - svs.clients ];
 
@@ -111,7 +111,7 @@ void SV_UpdateServerCommandsToClientRecover( client_t *client, msg_t *msg )
 }
 
 
-void CDECL SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
+void CCDECL SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 
     snapshotInfo_t snapInfo;
     int lastframe;
@@ -449,7 +449,7 @@ SV_SendMessageToClient
 Called by SV_SendClientSnapshot and SV_SendClientGameState
 =======================
 */
-void CDECL SV_SendMessageToClient( msg_t *msg, client_t *client ) {
+void CCDECL SV_SendMessageToClient( msg_t *msg, client_t *client ) {
 	int rateMsec;
 
     ::byte svCompressBuf[4*65536];
@@ -1240,7 +1240,7 @@ void SV_SendClientMessages( void ) {
 }
 
 
-void CDECL SV_GetClientPositionsFromCachedSnap(cachedSnapshot_t *cachedFrame, vec3_t *pos, vec3_t *angles, bool *success)
+void CCDECL SV_GetClientPositionsFromCachedSnap(cachedSnapshot_t *cachedFrame, vec3_t *pos, vec3_t *angles, bool *success)
 {
   struct archivedEntity_s *cachedEnt;
   unsigned int i;
@@ -1265,7 +1265,7 @@ void CDECL SV_GetClientPositionsFromCachedSnap(cachedSnapshot_t *cachedFrame, ve
 }
 
 
-bool CDECL SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angles, bool *success)
+bool CCDECL SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angles, bool *success)
 {
   vec3_t endPos[MAX_CLIENTS];
   int startOffset;
@@ -1445,7 +1445,7 @@ int GetFollowPlayerStateLocal(int clientNum, playerState_t *ps)
   return 0;
 }
 
-gentity_t *CDECL SV_GentityNumLocal(int num)
+gentity_t *CCDECL SV_GentityNumLocal(int num)
 {
     assert(svsHeaderValid);
     return (gentity_t *)((char *)svsHeader.gentities + num * svsHeader.gentitySize);

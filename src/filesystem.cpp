@@ -2153,7 +2153,7 @@ int FS_SV_HomeWriteFile( const char *qpath, const void *buffer, int size)
 }
 
 
-void CDECL FS_Printf( fileHandle_t h, const char *fmt, ... ) {
+void CCDECL FS_Printf( fileHandle_t h, const char *fmt, ... ) {
     va_list		argptr;
     char		msg[MAXPRINTMSG];
 
@@ -2249,7 +2249,7 @@ int FS_Seek( fileHandle_t f, long offset, int origin ) {
 }
 
 
-const char* CDECL FS_GetBasepath()
+const char* CCDECL FS_GetBasepath()
 {
     if(fs_basepath && *fs_basepath->string)
         return fs_basepath->string;
@@ -3419,7 +3419,7 @@ FS_FOpenFileAppend
 
 ===========
 */
-fileHandle_t CDECL FS_FOpenFileAppend( const char *filename ) {
+fileHandle_t CCDECL FS_FOpenFileAppend( const char *filename ) {
     char            ospath[MAX_OSPATH];
     fileHandle_t f;
     mvabuf;
@@ -3619,7 +3619,7 @@ typedef struct fsPureSums_s
 static fsPureSums_t *fs_iwdPureChecks;
 
 
-void CDECL FS_AddIwdPureCheckReference(searchpath_t *search)
+void CCDECL FS_AddIwdPureCheckReference(searchpath_t *search)
 {
 
     fsPureSums_t *checks;
@@ -3658,7 +3658,7 @@ void CDECL FS_AddIwdPureCheckReference(searchpath_t *search)
 }
 
 
-void CDECL FS_ShutdownIwdPureCheckReferences()
+void CCDECL FS_ShutdownIwdPureCheckReferences()
 {
   fsPureSums_t *cur;
   fsPureSums_t *next;
@@ -3730,7 +3730,7 @@ void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen)
 
 }
 
-void CDECL FS_ShutdownReferencedFiles(int *numFiles, char **names)
+void CCDECL FS_ShutdownReferencedFiles(int *numFiles, char **names)
 {
   int i;
 
@@ -3751,12 +3751,12 @@ void FS_ShutdownServerIwdNames()
 int fs_numServerReferencedFFs, fs_numServerReferencedIwds;
 char* fs_serverReferencedFFNames, *fs_serverReferencedIwdNames;
 
-void CDECL FS_ShutdownServerReferencedIwds()
+void CCDECL FS_ShutdownServerReferencedIwds()
 {
   FS_ShutdownReferencedFiles(&fs_numServerReferencedIwds, &fs_serverReferencedIwdNames);
 }
 
-void CDECL FS_ShutdownServerReferencedFFs()
+void CCDECL FS_ShutdownServerReferencedFFs()
 {
   FS_ShutdownReferencedFiles(&fs_numServerReferencedFFs, &fs_serverReferencedFFNames);
 }
@@ -4154,7 +4154,7 @@ void FS_FreeFileOSPath( void *buffer ) {
 
 
 
-bool CDECL FS_IsBackupSubStr(const char *filenameSubStr)
+bool CCDECL FS_IsBackupSubStr(const char *filenameSubStr)
 {
   bool result;
 
@@ -4177,7 +4177,7 @@ bool CDECL FS_IsBackupSubStr(const char *filenameSubStr)
 }
 
 
-char CDECL FS_SanitizeFilename(const char *filename, char *sanitizedName, int sanitizedNameSize)
+char CCDECL FS_SanitizeFilename(const char *filename, char *sanitizedName, int sanitizedNameSize)
 {
   int srcIndex;
   int dstIndex;
@@ -4234,7 +4234,7 @@ char CDECL FS_SanitizeFilename(const char *filename, char *sanitizedName, int sa
   return 1;
 }
 
-qboolean CDECL FS_UseSearchPath(searchpath_t *pSearch)
+qboolean CCDECL FS_UseSearchPath(searchpath_t *pSearch)
 {
     if ( pSearch->localized && fs_ignoreLocalized->boolean )
         return qfalse;
@@ -4242,7 +4242,7 @@ qboolean CDECL FS_UseSearchPath(searchpath_t *pSearch)
     return (!pSearch->localized || pSearch->langIndex == SEH_GetCurrentLanguage()) ? qtrue : qfalse;
 }
 
-FILE *CDECL FileWrapper_Open(const char *ospath, const char *mode)
+FILE *CCDECL FileWrapper_Open(const char *ospath, const char *mode)
 {
   FILE *file;
 
@@ -4251,7 +4251,7 @@ FILE *CDECL FileWrapper_Open(const char *ospath, const char *mode)
   return file;
 }
 
-FILE *CDECL FS_FileOpenWriteBinary(const char *filename)
+FILE *CCDECL FS_FileOpenWriteBinary(const char *filename)
 {
   FILE *file;
 
@@ -4262,7 +4262,7 @@ FILE *CDECL FS_FileOpenWriteBinary(const char *filename)
 }
 
 
-FILE* CDECL FS_FileOpenReadBinary(const char *filename)
+FILE* CCDECL FS_FileOpenReadBinary(const char *filename)
 {
   FILE *file;
 
@@ -4272,7 +4272,7 @@ FILE* CDECL FS_FileOpenReadBinary(const char *filename)
   return file;
 }
 
-FILE* CDECL FS_FileOpenWriteText(const char *filename)
+FILE* CCDECL FS_FileOpenWriteText(const char *filename)
 {
   FILE *file;
 
@@ -4283,13 +4283,13 @@ FILE* CDECL FS_FileOpenWriteText(const char *filename)
 }
 
 
-void CDECL FS_FileClose(FILE *stream)
+void CCDECL FS_FileClose(FILE *stream)
 {
   fclose(stream);
 }
 
 
-fileHandle_t CDECL FS_GetHandleAndOpenFile(const char *filename, const char *ospath, int thread)
+fileHandle_t CCDECL FS_GetHandleAndOpenFile(const char *filename, const char *ospath, int thread)
 {
     FILE *fp = FS_FileOpenWriteBinary(ospath);
     if ( fp )
@@ -4307,7 +4307,7 @@ fileHandle_t CDECL FS_GetHandleAndOpenFile(const char *filename, const char *osp
 }
 
 
-int CDECL FS_GetFileOsPath(const char *filename, char *ospath)
+int CCDECL FS_GetFileOsPath(const char *filename, char *ospath)
 {
   char sanitizedName[256];
   directory_t *dir;
@@ -4342,7 +4342,7 @@ int CDECL FS_GetFileOsPath(const char *filename, char *ospath)
 }
 
 
-FILE *CDECL FS_FileOpenReadText(const char *filename)
+FILE *CCDECL FS_FileOpenReadText(const char *filename)
 {
   FILE *file; // ST0C_4@1
 
@@ -4352,12 +4352,12 @@ FILE *CDECL FS_FileOpenReadText(const char *filename)
   return file;
 }
 
-int CDECL FS_FileGetFileSize(FILE *file)
+int CCDECL FS_FileGetFileSize(FILE *file)
 {
   return FileWrapper_GetFileSize(file);
 }
 
-unsigned int CDECL FS_FileRead(void *ptr, unsigned int len, FILE *stream)
+unsigned int CCDECL FS_FileRead(void *ptr, unsigned int len, FILE *stream)
 {
   unsigned int read_size;
 
@@ -4368,7 +4368,7 @@ unsigned int CDECL FS_FileRead(void *ptr, unsigned int len, FILE *stream)
 }
 
 
-const char **CDECL FS_ListFiles(const char *path, const char *extension, int behavior, int *numfiles)
+const char **CCDECL FS_ListFiles(const char *path, const char *extension, int behavior, int *numfiles)
 {
     return (const char**)Sys_ListFiles(path, extension, 0, numfiles, qfalse);
 }
@@ -4379,7 +4379,7 @@ void FS_FreeFileList(const char** list)
 }
 
 /*
-int CDECL FS_GetModList(char *listbuf, int bufsize)
+int CCDECL FS_GetModList(char *listbuf, int bufsize)
 {
   char v2; // ST47_1@4
   _iobuf *file; // ST64_4@7
@@ -4474,7 +4474,7 @@ int CDECL FS_GetModList(char *listbuf, int bufsize)
 }
 */
 
-char *CDECL FS_GetMapBaseName(const char *mapname)
+char *CCDECL FS_GetMapBaseName(const char *mapname)
 {
     static char basename[MAX_QPATH] = {'\0'};
 
@@ -4669,7 +4669,7 @@ extern "C"
     cvar_t* loc_warningsAsErrors;
 
 
-    int CDECL FS_FOpenTextFileWrite(const char* filename)
+    int CCDECL FS_FOpenTextFileWrite(const char* filename)
     {
         if (!FS_Initialized())
             Com_Error(ERR_FATAL, "Filesystem call made without initialization");
@@ -4704,7 +4704,7 @@ extern "C"
     }
 
 
-    int CDECL FS_OpenFileOverwrite(const char *qpath)
+    int CCDECL FS_OpenFileOverwrite(const char *qpath)
     {
         if(!FS_Initialized())
             Com_Error(ERR_FATAL, "Filesystem call made without initialization");
@@ -4757,7 +4757,7 @@ extern "C"
     }
 
 
-    void CDECL FS_AddUserMapDirIWDs(const char *pszGameFolder)
+    void CCDECL FS_AddUserMapDirIWDs(const char *pszGameFolder)
     {
         for (searchpath_s* i = fs_searchpaths; i; i = i->next )
             if ( i->pack && !Q_stricmp(i->pack->pakGamename, pszGameFolder) )
@@ -4767,7 +4767,7 @@ extern "C"
     }
 
 
-    int CDECL FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize)
+    int CCDECL FS_GetFileList(const char *path, const char *extension, int behavior, char *listbuf, int bufsize)
     {
         int result;
         const char **fileNames;
@@ -4804,7 +4804,7 @@ extern "C"
     }
 
 
-    qboolean CDECL FS_LanguageHasAssets(int iLanguage)
+    qboolean CCDECL FS_LanguageHasAssets(int iLanguage)
     {
         for (searchpath_t* pSearch = fs_searchpaths; pSearch; pSearch = pSearch->next )
             if ( pSearch->localized && pSearch->langIndex == iLanguage )

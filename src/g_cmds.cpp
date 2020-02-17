@@ -46,7 +46,7 @@ If you have questions concerning this license or the applicable additional terms
 
 
 #if 0
-void CDECL Cmd_Take_f(gentity_t *ent)
+void CCDECL Cmd_Take_f(gentity_t *ent)
 {
   char *amt; // ST3C_4@2
   int v2; // ST08_4@28
@@ -182,7 +182,7 @@ Cmd_Give_f
 Give items to a client
 ==================
 */
-void CDECL Cmd_Give_f(gentity_t *ent)
+void CCDECL Cmd_Give_f(gentity_t *ent)
 {
   char *amt; // ST70_4@2
   char v2; // al@23
@@ -330,7 +330,7 @@ LABEL_52:
 
 #endif
 
-void CDECL Cmd_DemiGod_f(gentity_t *ent)
+void CCDECL Cmd_DemiGod_f(gentity_t *ent)
 {
   const char *msg;
 
@@ -358,7 +358,7 @@ Sets client to godmode
 argv(0) god
 ==================
 */
-void CDECL Cmd_God_f(gentity_t *ent)
+void CCDECL Cmd_God_f(gentity_t *ent)
 {
   const char *msg;
 
@@ -386,7 +386,7 @@ Sets client to notarget
 argv(0) notarget
 ==================
 */
-void CDECL Cmd_Notarget_f(gentity_t *ent)
+void CCDECL Cmd_Notarget_f(gentity_t *ent)
 {
   const char *msg;
 
@@ -405,7 +405,7 @@ void CDECL Cmd_Notarget_f(gentity_t *ent)
   }
 }
 
-void CDECL Cmd_UFO_f(gentity_t *ent)
+void CCDECL Cmd_UFO_f(gentity_t *ent)
 {
   const char *v1; // eax@3
 
@@ -433,7 +433,7 @@ argv(0) noclip
 ==================
 */
 
-void CDECL Cmd_Noclip_f(gentity_t *ent)
+void CCDECL Cmd_Noclip_f(gentity_t *ent)
 {
   const char *v1;
 
@@ -526,7 +526,7 @@ static void Scr_PlayerVote(gentity_t *self, const char* option)
 }
 
 
-void CDECL Cmd_Vote_f(gentity_t *ent)
+void CCDECL Cmd_Vote_f(gentity_t *ent)
 {
     if ( g_oldVoting->boolean )
     {
@@ -605,7 +605,7 @@ void Cmd_PrintEntities_f()
   G_PrintEntities();
 }
 
-void CDECL Cmd_Say_f(gentity_t *ent, int mode, int arg0)
+void CCDECL Cmd_Say_f(gentity_t *ent, int mode, int arg0)
 {
   char *p;
   char b[1024];
@@ -624,7 +624,7 @@ void CDECL Cmd_Say_f(gentity_t *ent, int mode, int arg0)
   }
 }
 
-void CDECL Cmd_MenuResponse_f(gentity_t *pEnt)
+void CCDECL Cmd_MenuResponse_f(gentity_t *pEnt)
 {
   char szServerId[1024];
   char szMenuName[1024];
@@ -714,7 +714,7 @@ void ClientCommand( int clientNum )
 
 extern "C"
 {
-    int CDECL Cmd_FollowCycle_f(gentity_t *ent, int dir)
+    int CCDECL Cmd_FollowCycle_f(gentity_t *ent, int dir)
     {
         int i;
         int health;
@@ -766,7 +766,7 @@ extern "C"
     }
 
 
-    void CDECL StopFollowing(gentity_t *ent)
+    void CCDECL StopFollowing(gentity_t *ent)
     {
         vec3_t vAngles;
         //  col_context_t context;
@@ -838,7 +838,7 @@ extern "C"
     }
 
 
-    int CDECL CheatsOk(gentity_t *ent)
+    int CCDECL CheatsOk(gentity_t *ent)
     {
         const char *v1;
         int result;

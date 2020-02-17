@@ -9,7 +9,7 @@ extern "C"
 {
     scr_const_t scr_const;
 
-    void CDECL GScr_LoadConsts()
+    void CCDECL GScr_LoadConsts()
     {
         scr_const.emptystring = GScr_AllocString("");
         scr_const.active = GScr_AllocString("active");

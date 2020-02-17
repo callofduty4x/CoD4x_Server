@@ -33,7 +33,7 @@ static struct hudelem_s g_dummyHudCurrent;
 #endif
 
 
-void CDECL HudElem_ClearTypeSettings(game_hudelem_t *hud)
+void CCDECL HudElem_ClearTypeSettings(game_hudelem_t *hud)
 {
   hud->elem.width = 0;
   hud->elem.height = 0;
@@ -53,7 +53,7 @@ void CDECL HudElem_ClearTypeSettings(game_hudelem_t *hud)
 }
 
 
-void CDECL HudElem_SetDefaults(game_hudelem_t *hud)
+void CCDECL HudElem_SetDefaults(game_hudelem_t *hud)
 {
   assert(hud);
 
@@ -115,7 +115,7 @@ game_hudelem_t* G_GetNewHudElem(unsigned int clientnum)
   return hud;
 }
 
-static void CDECL HudElem_Free(game_hudelem_t *hud)
+static void CCDECL HudElem_Free(game_hudelem_t *hud)
 {
     assert(hud != NULL);
     assert(hud - g_hudelems < 1024);
@@ -220,7 +220,7 @@ void G_HudDestroy(game_hudelem_t* element)
 
 extern "C"
 {
-    void CDECL HudElem_UpdateClient(gclient_s *client, int clientNum, hudelem_update_t which)
+    void CCDECL HudElem_UpdateClient(gclient_s *client, int clientNum, hudelem_update_t which)
     {
         int archivalCount;
         int currentCount;
@@ -296,7 +296,7 @@ extern "C"
     }
 
 
-    void CDECL HudElem_ClientDisconnect(gentity_s *ent)
+    void CCDECL HudElem_ClientDisconnect(gentity_s *ent)
     {
         for (int i = 0; i < 1024; ++i )
             if ( g_hudelems[i].elem.type )
@@ -305,7 +305,7 @@ extern "C"
     }
 
 
-    void CDECL HudElem_DestroyAll()
+    void CCDECL HudElem_DestroyAll()
     {
         for (int i = 0; i < 1024; ++i )
             if ( g_hudelems[i].elem.type )

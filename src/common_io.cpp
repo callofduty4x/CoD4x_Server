@@ -80,7 +80,7 @@ void Com_StopRedirect (void)
 	rd_flush = NULL;
 }
 
-void CDECL Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type)
+void CCDECL Com_PrintMessage( conChannel_t channel, char *msg, msgtype_t type)
 {
     //secures calls to Com_PrintMessage from recursion while redirect printing
     static qboolean lock = qfalse;
@@ -144,7 +144,7 @@ to the apropriate place.
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void CDECL Com_Printf( conChannel_t channel, const char *fmt, ... ) {
+void CCDECL Com_Printf( conChannel_t channel, const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
@@ -165,7 +165,7 @@ This will not print to rcon
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void CDECL Com_PrintNoRedirect( conChannel_t channel, const char *fmt, ... ) {
+void CCDECL Com_PrintNoRedirect( conChannel_t channel, const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
@@ -187,7 +187,7 @@ to the apropriate place.
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void CDECL Com_PrintWarning( conChannel_t channel, const char *fmt, ... )
+void CCDECL Com_PrintWarning( conChannel_t channel, const char *fmt, ... )
 {
     va_list		argptr;
     char msg[MAXPRINTMSG] = {'\0'};
@@ -212,7 +212,7 @@ to the apropriate place.
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void CDECL Com_PrintWarningNoRedirect( conChannel_t channel, const char *fmt, ... )
+void CCDECL Com_PrintWarningNoRedirect( conChannel_t channel, const char *fmt, ... )
 {
     va_list argptr;
     char msg[MAXPRINTMSG] = {'\0'};
@@ -237,7 +237,7 @@ to the apropriate place.
 A raw string should NEVER be passed as fmt, because of "%f" type crashers.
 =============
 */
-void CDECL Com_PrintError( conChannel_t channel, const char *fmt, ... )
+void CCDECL Com_PrintError( conChannel_t channel, const char *fmt, ... )
 {
     va_list argptr;
     char msg[MAXPRINTMSG] = {'\0'};
@@ -258,7 +258,7 @@ Com_DPrintf
 A Com_Printf that only shows up if the "developer" cvar is set
 ================
 */
-void CDECL Com_DPrintf( conChannel_t channel, const char *fmt, ...) {
+void CCDECL Com_DPrintf( conChannel_t channel, const char *fmt, ...) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 		
@@ -286,7 +286,7 @@ A Com_Printf that only shows up if the "developer" cvar is set
 This will not print to rcon
 ================
 */
-void CDECL Com_DPrintNoRedirect( conChannel_t channel, const char *fmt, ... ) {
+void CCDECL Com_DPrintNoRedirect( conChannel_t channel, const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
@@ -304,7 +304,7 @@ void CDECL Com_DPrintNoRedirect( conChannel_t channel, const char *fmt, ... ) {
         Com_PrintMessage( channel, msg, MSG_NORDPRINT);
 }
 
-void CDECL Com_PrintScriptRuntimeWarning(const char *fmt, ...)
+void CCDECL Com_PrintScriptRuntimeWarning(const char *fmt, ...)
 {
 
 	va_list		argptr;

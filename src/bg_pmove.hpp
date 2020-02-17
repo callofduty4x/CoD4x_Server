@@ -11,8 +11,8 @@ struct viewLerpWaypoint_s
 
 struct pmoveHandler_t
 {
-    void(CDECL* trace)(trace_t*, const float*, const float*, const float*, const float*, int, int);
-    void(CDECL* playerEvent)(int, int);
+    void(CCDECL* trace)(trace_t*, const float*, const float*, const float*, const float*, int, int);
+    void(CCDECL* playerEvent)(int, int);
 };
 
 enum scriptAnimMoveTypes_t

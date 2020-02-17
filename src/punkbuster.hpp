@@ -21,16 +21,16 @@
 
 #ifdef PUNKBUSTER
 
-CDECL int PbSvSendToAddrPort(char* netdest, unsigned short port, int msgsize, char* message);
-CDECL int PbSvSendToClient(int msgsize, char* message, int clientnum);
-CDECL char* PbSvGameQuery(int para_01, char* string);
+CCDECL int PbSvSendToAddrPort(char* netdest, unsigned short port, int msgsize, char* message);
+CCDECL int PbSvSendToClient(int msgsize, char* message, int clientnum);
+CCDECL char* PbSvGameQuery(int para_01, char* string);
 qboolean PbServerInitialize(void);
-void CDECL PbServerProcessEvents( int type );
-const char* CDECL PbAuthClient( const char* NETAdrString, qboolean cl_punkbuster, const char* pbguid);
-void CDECL PbPassConnectString( const char* NETAdrString, const char* connectstring);
-void CDECL PbSvAddEvent( int event_type, int clientnum, int sizeofstring, char* string);
-void CDECL PbCaptureConsoleOutput(const char *msg, int size);
-void CDECL PbServerForceProcess( );
+void CCDECL PbServerProcessEvents( int type );
+const char* CCDECL PbAuthClient( const char* NETAdrString, qboolean cl_punkbuster, const char* pbguid);
+void CCDECL PbPassConnectString( const char* NETAdrString, const char* connectstring);
+void CCDECL PbSvAddEvent( int event_type, int clientnum, int sizeofstring, char* string);
+void CCDECL PbCaptureConsoleOutput(const char *msg, int size);
+void CCDECL PbServerForceProcess( );
 void PbCaptureConsoleOutput_wrapper(const char *msg, int msglen);
 void PbServerCompleteCommand(char *string, int len);
 void DisablePbSv( );

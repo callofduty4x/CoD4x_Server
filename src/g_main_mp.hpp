@@ -88,6 +88,6 @@ extern "C"
     extern cvar_t* g_gametype;
     extern ::byte g_clients[0xc6100];
 
-    void CDECL G_LogPrintf( const char *fmt, ... );
-    void CDECL G_RunFrame( int time );
+    void CCDECL G_LogPrintf( const char *fmt, ... );
+    void CCDECL G_RunFrame( int time );
 }

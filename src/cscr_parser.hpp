@@ -56,7 +56,7 @@ extern "C"
     extern scrParserGlob_t gScrParserGlob;
     extern scrParserPub_t gScrParserPub;
 
-    unsigned int CDECL Scr_GetSourceBuffer(const char *codePos);
-    void CDECL Scr_PrintPrevCodePos(conChannel_t channel, const char *codePos, unsigned int index);
-    void CDECL Scr_AddSourceBufferInternal(const char* extFilename, const char* codePos, char* sourceBuf, int len, bool doEolFixup, bool archive);
+    unsigned int CCDECL Scr_GetSourceBuffer(const char *codePos);
+    void CCDECL Scr_PrintPrevCodePos(conChannel_t channel, const char *codePos, unsigned int index);
+    void CCDECL Scr_AddSourceBufferInternal(const char* extFilename, const char* codePos, char* sourceBuf, int len, bool doEolFixup, bool archive);
 };

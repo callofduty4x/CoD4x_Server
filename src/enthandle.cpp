@@ -184,7 +184,7 @@ static unsigned int AddEntHandleInfo(EntHandleList *entHandleList, void *handle)
 
 
 
-void CDECL EntHandleDissociateInternal(EntHandleList *entHandleList)
+void CCDECL EntHandleDissociateInternal(EntHandleList *entHandleList)
 {
   EntHandleInfo *info;
   unsigned int infoIndexHead;
@@ -219,7 +219,7 @@ void CDECL EntHandleDissociateInternal(EntHandleList *entHandleList)
   }
 }
 
-void CDECL EntHandleDissociate(gentity_s *ent)
+void CCDECL EntHandleDissociate(gentity_s *ent)
 {
   EntHandleDissociateInternal(&g_entitiesHandleList[ent - g_entities]);
 }

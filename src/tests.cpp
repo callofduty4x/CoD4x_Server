@@ -255,7 +255,7 @@ void Test_MSG_WriteReadLong()
 }
 
 
-int CDECL SV_DObjGetBoneIndex_Debug(struct gentity_s *ent, unsigned int boneName)
+int CCDECL SV_DObjGetBoneIndex_Debug(struct gentity_s *ent, unsigned int boneName)
 {
   DObj *obj;
   char index;

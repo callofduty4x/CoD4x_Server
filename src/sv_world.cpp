@@ -37,7 +37,7 @@ vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
 vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
 
 
-DObj_t *CDECL SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gentity_t *touch)
+DObj_t *CCDECL SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gentity_t *touch)
 {
   if ( clip->locational )
   {
@@ -53,7 +53,7 @@ DObj_t *CDECL SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gentit
 }
 
 
-DObj_t *CDECL SV_LocationalTraceDObj(struct pointtrace_t *clip, gentity_t *touch)
+DObj_t *CCDECL SV_LocationalTraceDObj(struct pointtrace_t *clip, gentity_t *touch)
 {
   if ( clip->bLocational )
   {
@@ -218,7 +218,7 @@ void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, con
 
 
 
-void CDECL SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *trace){
+void CCDECL SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *trace){
 
 	gentity_t	*touch;
 	int		touchNum;
@@ -281,7 +281,7 @@ void CDECL SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *tr
 
 }
 
-void CDECL SV_SetupIgnoreEntParams(IgnoreEntParams *ignoreEntParams, int baseEntity)
+void CCDECL SV_SetupIgnoreEntParams(IgnoreEntParams *ignoreEntParams, int baseEntity)
 {
   gentity_t *ent = NULL;
 
@@ -374,7 +374,7 @@ int SV_PointContents( const vec3_t p, int passEntityNum, int contentmask )
 }
 
 
-signed int CDECL SV_SightTraceToEntity(const float *start, const float *mins, const float *maxs, const float *end, int entityNum, int contentmask)
+signed int CCDECL SV_SightTraceToEntity(const float *start, const float *mins, const float *maxs, const float *end, int entityNum, int contentmask)
 {
   struct gentity_s *touch;
   signed int i;
@@ -422,7 +422,7 @@ signed int CDECL SV_SightTraceToEntity(const float *start, const float *mins, co
 
 
 
-void CDECL SV_SightTrace(int *hitNum, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum0, int passEntityNum1, int contentmask)
+void CCDECL SV_SightTrace(int *hitNum, const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum0, int passEntityNum1, int contentmask)
 {
   vec3_t temp;
   struct sightpointtrace_t spt;
@@ -469,7 +469,7 @@ void CDECL SV_SightTrace(int *hitNum, const float *start, const float *mins, con
 }
 
 
-int CDECL SV_TracePassed(const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum0, int passEntityNum1, int contentmask, int locational, char *priorityMap, int staticmodels)
+int CCDECL SV_TracePassed(const float *start, const float *mins, const float *maxs, const float *end, int passEntityNum0, int passEntityNum1, int contentmask, int locational, char *priorityMap, int staticmodels)
 {
     vec3_t temp;
     struct sightpointtrace_t spt;
@@ -707,7 +707,7 @@ BLACKOPS
 }
 
 
-void CDECL SV_UnlinkEntity(struct gentity_s *gEnt)
+void CCDECL SV_UnlinkEntity(struct gentity_s *gEnt)
 {
   svEntity_t *ent;
 
@@ -718,7 +718,7 @@ void CDECL SV_UnlinkEntity(struct gentity_s *gEnt)
 
 
 #if 0
-void CDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
 {
   gentity_t *touch;
   vec3_t entAxis[4];
@@ -938,7 +938,7 @@ void CDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, t
 #endif
 
 #if 0
-void CDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
 {
   gentity_t *touch;
   vec3_t entAxis[4];
@@ -1101,7 +1101,7 @@ void CDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, t
 #endif
 
 #if 1
-void CDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
 {
   int entnum;
   struct gentity_s *touch;
@@ -1246,7 +1246,7 @@ void CDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, t
 }
 #endif
 
-void CDECL SV_PointTraceToEntity_Stub(struct pointtrace_t *clip, trace_t *trace, struct gentity_s *touch, DObj *obj, struct DObjTrace_s *objTrace, const float (*entAxis)[3])
+void CCDECL SV_PointTraceToEntity_Stub(struct pointtrace_t *clip, trace_t *trace, struct gentity_s *touch, DObj *obj, struct DObjTrace_s *objTrace, const float (*entAxis)[3])
 {
 /*
   int partBits[5];
@@ -1292,7 +1292,7 @@ void CDECL SV_PointTraceToEntity_Stub(struct pointtrace_t *clip, trace_t *trace,
 }
 
 
-int CDECL SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t *check)
+int CCDECL SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t *check)
 {
   gentity_t *touch;
   vec3_t entAxis[4];
@@ -1402,7 +1402,7 @@ int CDECL SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t 
 }
 
 
-int CDECL SV_ClipSightToEntity(struct sightclip_t *clip, svEntity_t *check)
+int CCDECL SV_ClipSightToEntity(struct sightclip_t *clip, svEntity_t *check)
 {
 
   unsigned int clipHandle;
@@ -1443,7 +1443,7 @@ int CDECL SV_ClipSightToEntity(struct sightclip_t *clip, svEntity_t *check)
 
 
 
-void CDECL SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels)
+void CCDECL SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels)
 {
   vec3_t temp;
   struct pointtrace_t pt;

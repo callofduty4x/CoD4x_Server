@@ -76,13 +76,13 @@ void G_HudSetMovingOverTime(game_hudelem_t*, int, float newx, float newy);
 void G_HudSetFont(game_hudelem_t*, float fontscale, fonttype_t ft);
 void G_HudSetFadingOverTime(game_hudelem_t* element ,int time, ucolor_t newcolor);
 void G_HudDestroy(game_hudelem_t* element);
-game_hudelem_t *CDECL HudElem_Alloc(int clientNum, int teamNum);
+game_hudelem_t *CCDECL HudElem_Alloc(int clientNum, int teamNum);
 void HudElem_SetDefaults(game_hudelem_t *);
 void HudElem_ClearTypeSettings(game_hudelem_t *);
 
 extern "C"
 {
-    void CDECL HudElem_UpdateClient(gclient_s *client, int clientNum, hudelem_update_t which);
-    void CDECL HudElem_ClientDisconnect(gentity_s *ent);
-    void CDECL HudElem_DestroyAll();
+    void CCDECL HudElem_UpdateClient(gclient_s *client, int clientNum, hudelem_update_t which);
+    void CCDECL HudElem_ClientDisconnect(gentity_s *ent);
+    void CCDECL HudElem_DestroyAll();
 } // extern "C"

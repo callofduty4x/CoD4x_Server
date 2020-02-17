@@ -83,7 +83,7 @@ void SetPlaneSignbits( cplane_t *out ) {
 	out->signbits = bits;
 }
 
-void CDECL CM_LoadMapData_FastFile(const char *name)
+void CCDECL CM_LoadMapData_FastFile(const char *name)
 {
   DB_FindXAssetHeader(ASSET_TYPE_CLIPMAP_PVS, name, true, 100);
 //  assert(clipMap == &cm);
@@ -91,7 +91,7 @@ void CDECL CM_LoadMapData_FastFile(const char *name)
 
 #ifndef BSPC
 
-void CDECL CM_LoadMapData_LoadObj(const char *name)
+void CCDECL CM_LoadMapData_LoadObj(const char *name)
 {
     if (cm.isInUse == qfalse || Q_stricmp(cm.name, name))
     {
@@ -101,7 +101,7 @@ void CDECL CM_LoadMapData_LoadObj(const char *name)
     }
 }
 
-void CDECL CM_LoadMapData(const char *name)
+void CCDECL CM_LoadMapData(const char *name)
 {
   if ( useFastFile->boolean )
   {
@@ -113,7 +113,7 @@ void CDECL CM_LoadMapData(const char *name)
 }
 
 #else
-void CDECL CM_LoadMapData(const char *name)
+void CCDECL CM_LoadMapData(const char *name)
 {
     CM_LoadMapData_FastFile(name);
 }
@@ -121,7 +121,7 @@ void CDECL CM_LoadMapData(const char *name)
 
 
 
-void CDECL CM_InitThreadData(int threadContext)
+void CCDECL CM_InitThreadData(int threadContext)
 {
   TraceThreadInfo *traceThreadInfo;
   assert(threadContext >= 0 && threadContext < NUMTHREADS);
@@ -152,7 +152,7 @@ void CM_InitAllThreadData()
 }
 
 
-void CDECL CM_LoadMap(const char *name, int *checksum)
+void CCDECL CM_LoadMap(const char *name, int *checksum)
 {
   if ( !name || !*name )
   {
@@ -165,7 +165,7 @@ void CDECL CM_LoadMap(const char *name, int *checksum)
   *checksum = cm.checksum;
 }
 
-void CDECL CM_Shutdown()
+void CCDECL CM_Shutdown()
 {
   const char *savedName;
 
@@ -185,22 +185,22 @@ void CM_Unload()
 
 #ifndef BSPC
 
-void *CDECL CM_Hunk_Alloc(int size, const char* what)
+void *CCDECL CM_Hunk_Alloc(int size, const char* what)
 {
   return Hunk_Alloc(size, what, 0);
 }
 
-char* CDECL CM_Hunk_AllocateTempMemoryHigh(int size)
+char* CCDECL CM_Hunk_AllocateTempMemoryHigh(int size)
 {
     return reinterpret_cast<char*>(Hunk_AllocateTempMemoryHigh(size));
 }
 
-void CDECL CM_Hunk_CheckTempMemoryHighClear()
+void CCDECL CM_Hunk_CheckTempMemoryHighClear()
 {
 
 }
 
-void CDECL CM_Hunk_ClearTempMemoryHigh()
+void CCDECL CM_Hunk_ClearTempMemoryHigh()
 {
   Hunk_ClearTempMemoryHigh();
 }

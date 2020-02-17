@@ -10,9 +10,9 @@
 
 extern "C"{
 
-void CDECL Scr_EndLoadAnimTrees( );
+void CCDECL Scr_EndLoadAnimTrees( );
 
-qboolean CDECL Scr_IsInOpcodeMemory(const char *pos)
+qboolean CCDECL Scr_IsInOpcodeMemory(const char *pos)
 {
     assert(gScrVarPub.programBuffer);
     assert(pos);
@@ -24,7 +24,7 @@ qboolean CDECL Scr_IsInOpcodeMemory(const char *pos)
   return qfalse;
 }
 
-int CDECL Scr_GetFunctionHandle(const char *filename, const char *name)
+int CCDECL Scr_GetFunctionHandle(const char *filename, const char *name)
 {
   unsigned int name2;
   VariableValue pos;
@@ -80,7 +80,7 @@ int CDECL Scr_GetFunctionHandle(const char *filename, const char *name)
 }
 
 
-void CDECL Scr_EndLoadScripts( )
+void CCDECL Scr_EndLoadScripts( )
 {
 /*
   if ( scrShowVarUseage->current.enabled )
@@ -160,7 +160,7 @@ void CDECL Scr_EndLoadScripts( )
 }
 
 
-void CDECL Scr_FreeScripts( )
+void CCDECL Scr_FreeScripts( )
 {
 //  Hunk_CheckTempMemoryClear();
   if ( gScrCompilePub.script_loading )

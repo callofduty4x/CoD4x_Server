@@ -59,14 +59,14 @@ extern byte cod4_plt[8192];
 
 extern "C"
 {
-    LPVOID CDECL _VirtualAlloc(LPVOID address, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect);
-    BOOL CDECL _VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType);
-    BOOL CDECL _CloseHandle(HANDLE hObject);
-    HANDLE CDECL _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
-    DWORD CDECL _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
-    DWORD CDECL Sys_InterlockedDecrement(DWORD volatile *Addend);
-    DWORD CDECL Sys_InterlockedIncrement(DWORD volatile *Addend);
-    int CDECL __cxa_atexit(void (CDECL *func) (void*), void *arg, void *dso_handle);
+    LPVOID CCDECL _VirtualAlloc(LPVOID address, SIZE_T dwSize, DWORD flAllocationType, DWORD flProtect);
+    BOOL CCDECL _VirtualFree(LPVOID lpAddress, SIZE_T dwSize, DWORD dwFreeType);
+    BOOL CCDECL _CloseHandle(HANDLE hObject);
+    HANDLE CCDECL _CreateFileA(char *lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile);
+    DWORD CCDECL _GetFileSize(HANDLE hFile, LPDWORD lpFileSizeHigh);
+    DWORD CCDECL Sys_InterlockedDecrement(DWORD volatile *Addend);
+    DWORD CCDECL Sys_InterlockedIncrement(DWORD volatile *Addend);
+    int CCDECL __cxa_atexit(void (CCDECL *func) (void*), void *arg, void *dso_handle);
 } // extern "C"
 
 

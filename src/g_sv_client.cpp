@@ -47,7 +47,7 @@ The game can override any of the settings and call trap_SetUserinfo
 if desired.
 ============
 */
-void CDECL ClientUserinfoChanged( int clientNum ) {
+void CCDECL ClientUserinfoChanged( int clientNum ) {
 
 	gentity_t *ent;
 	char    *s;
@@ -120,93 +120,6 @@ void CDECL ClientUserinfoChanged( int clientNum ) {
 ClientCheckName
 ============
 */
-void ClientCleanName( const char *in, char *out, int outSize, qboolean allowColor ) {
-	int len, colorlessLen;
-	char ch;
-	char    *p;
-	int spaces;
-
-	//save room for trailing null byte
-	outSize--;
-
-	len = 0;
-	colorlessLen = 0;
-	p = out;
-	*p = 0;
-	spaces = 0;
-
-	while ( 1 ) {
-		ch = *in++;
-		if ( !ch ) {
-			break;
-		}
-
-		// don't allow leading spaces
-		if ( !*p && ch == ' ' ) {
-			continue;
-		}
-
-		// check colors
-		if ( ch == Q_COLOR_ESCAPE ) {
-			// solo trailing carat is not a color prefix
-			if ( !*in ) {
-				break;
-			}
-
-
-			if(allowColor)
-			{
-				// don't allow black in a name, period
-				if ( ColorIndex( *in ) == 0 )
-				{
-					in++;
-					continue;
-				}
-			}else{
-				if ( ColorIndex( *in ) >= 0 && ColorIndex( *in ) <= 9)
-				{
-					in++;
-					continue;
-				}
-			}
-			// make sure room in dest for both chars
-			if ( len > outSize - 2 ) {
-				break;
-			}
-
-			*out++ = ch;
-			*out++ = *in++;
-			len += 2;
-			continue;
-		}
-
-		// don't allow too many consecutive spaces
-		if ( ch == ' ' ) {
-			spaces++;
-			if ( spaces > 3 ) {
-				continue;
-			}
-		} else {
-			spaces = 0;
-		}
-
-		if ( len > outSize - 1 ) {
-			break;
-		}
-
-		*out++ = ch;
-		colorlessLen++;
-		len++;
-	}
-	*out = 0;
-
-	// don't allow empty names
-	if ( *p == 0 || colorlessLen == 0 ) {
-		Q_strncpyz( p, "UnnamedPlayer", outSize );
-	}
-}
-
-
 void G_ClientStopUsingTurret_hook(gentity_t* ent)
 {
 	gentity_t *playerent = ent->r.ownerNum.ent();
@@ -216,4 +129,92 @@ void G_ClientStopUsingTurret_hook(gentity_t* ent)
 	}
 }
 
-};
+}; // extern "C"
+
+void ClientCleanName(const char* in, char* out, int outSize, qboolean allowColor)
+{
+    int len, colorlessLen;
+    char ch;
+    char* p;
+    int spaces;
+
+    //save room for trailing null byte
+    outSize--;
+
+    len = 0;
+    colorlessLen = 0;
+    p = out;
+    *p = 0;
+    spaces = 0;
+
+    while (1) {
+        ch = *in++;
+        if (!ch) {
+            break;
+        }
+
+        // don't allow leading spaces
+        if (!*p && ch == ' ') {
+            continue;
+        }
+
+        // check colors
+        if (ch == Q_COLOR_ESCAPE) {
+            // solo trailing carat is not a color prefix
+            if (!*in) {
+                break;
+            }
+
+
+            if (allowColor)
+            {
+                // don't allow black in a name, period
+                if (ColorIndex(*in) == 0)
+                {
+                    in++;
+                    continue;
+                }
+            }
+            else {
+                if (ColorIndex(*in) >= 0 && ColorIndex(*in) <= 9)
+                {
+                    in++;
+                    continue;
+                }
+            }
+            // make sure room in dest for both chars
+            if (len > outSize - 2) {
+                break;
+            }
+
+            *out++ = ch;
+            *out++ = *in++;
+            len += 2;
+            continue;
+        }
+
+        // don't allow too many consecutive spaces
+        if (ch == ' ') {
+            spaces++;
+            if (spaces > 3) {
+                continue;
+            }
+        }
+        else {
+            spaces = 0;
+        }
+
+        if (len > outSize - 1) {
+            break;
+        }
+
+        *out++ = ch;
+        colorlessLen++;
+        len++;
+    }
+    *out = 0;
+
+    // don't allow empty names
+    if (*p == 0 || colorlessLen == 0)
+        Q_strncpyz(p, "UnnamedPlayer", outSize);
+}

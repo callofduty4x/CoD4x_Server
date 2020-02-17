@@ -11,7 +11,7 @@ struct AntilagClientStore
 
 extern "C"
 {
-    void CDECL G_SetupWeaponDef();
-    void CDECL G_AntiLagRewindClientPos(int gameTime, AntilagClientStore *antilagStore);
-    void CDECL G_AntiLag_RestoreClientPos(struct AntilagClientStore *antilagStore);
+    void CCDECL G_SetupWeaponDef();
+    void CCDECL G_AntiLagRewindClientPos(int gameTime, AntilagClientStore *antilagStore);
+    void CCDECL G_AntiLag_RestoreClientPos(struct AntilagClientStore *antilagStore);
 } // extern "C"

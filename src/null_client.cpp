@@ -43,7 +43,7 @@ void XAnimFreeList(){};
 void XAnimFree(){};
 */
 //void XModelPartsFree(){};
-void *CDECL R_AllocStaticVertexBuffer(IDirect3DVertexBuffer9 **a1, int a2)
+void *CCDECL R_AllocStaticVertexBuffer(IDirect3DVertexBuffer9 **a1, int a2)
 {
 	return NULL;
 }
@@ -53,109 +53,109 @@ void R_ShowDirtyDiscError()
 	Com_PrintError(CON_CHANNEL_FILES,"Error reading fastfile?\n");
 }
 
-void *CDECL R_AllocStaticIndexBuffer(IDirect3DIndexBuffer9 **ib, int sizeInBytes)
+void *CCDECL R_AllocStaticIndexBuffer(IDirect3DIndexBuffer9 **ib, int sizeInBytes)
 {
 	return NULL;
 }
 
-void CDECL R_SyncRenderThread()
+void CCDECL R_SyncRenderThread()
 {
 
 }
 
 
-void CDECL R_FinishStaticVertexBuffer(IDirect3DVertexBuffer9 *vb)
+void CCDECL R_FinishStaticVertexBuffer(IDirect3DVertexBuffer9 *vb)
 {
 }
 
-void CDECL R_FinishStaticIndexBuffer(IDirect3DIndexBuffer9 *ib)
+void CCDECL R_FinishStaticIndexBuffer(IDirect3DIndexBuffer9 *ib)
 {
 }
 
-void CDECL R_EnumImages(void (CDECL *func)(union XAssetHeader, void *), void *data)
+void CCDECL R_EnumImages(void (CCDECL *func)(union XAssetHeader, void *), void *data)
 {
 }
 
-void CDECL R_EnumMaterials(void (CDECL *func)(union XAssetHeader, void *), void *data)
+void CCDECL R_EnumMaterials(void (CCDECL *func)(union XAssetHeader, void *), void *data)
 {
 }
 
-void CDECL R_EnumTechniqueSets(void (CDECL *func)(union XAssetHeader, void *), void *data)
+void CCDECL R_EnumTechniqueSets(void (CCDECL *func)(union XAssetHeader, void *), void *data)
 {
 }
 
-void CDECL R_ShutdownStreams()
+void CCDECL R_ShutdownStreams()
 {
 }
 
-void CDECL RB_UnbindAllImages()
+void CCDECL RB_UnbindAllImages()
 {
 }
 
-void CDECL R_DelayLoadImage(union XAssetHeader header)
+void CCDECL R_DelayLoadImage(union XAssetHeader header)
 {
 }
 
-void CDECL R_ClearAllStaticModelCacheRefs()
+void CCDECL R_ClearAllStaticModelCacheRefs()
 {
 }
 
-void CDECL R_UnloadWorld()
+void CCDECL R_UnloadWorld()
 {
 }
 
-void CDECL RB_ClearPixelShader()
+void CCDECL RB_ClearPixelShader()
 {
 }
 
-void CDECL RB_ClearVertexShader()
+void CCDECL RB_ClearVertexShader()
 {
 }
 
-void CDECL RB_ClearVertexDecl()
+void CCDECL RB_ClearVertexDecl()
 {
 }
 
-void CDECL DB_LoadSounds()
+void CCDECL DB_LoadSounds()
 {
 }
 
-void CDECL DB_SaveSounds()
+void CCDECL DB_SaveSounds()
 {
 }
 
-Material* CDECL Material_RegisterHandle(const char *name, int imageTrack)
+Material* CCDECL Material_RegisterHandle(const char *name, int imageTrack)
 {
 	return NULL;
 }
 
-void CDECL Material_DirtySort()
+void CCDECL Material_DirtySort()
 {
 }
 
-void CDECL Load_Texture(struct GfxImageLoadDef **remoteLoadDef, struct GfxImage *image)
+void CCDECL Load_Texture(struct GfxImageLoadDef **remoteLoadDef, struct GfxImage *image)
 {
     //image->texture.basemap = 0;
 }
 
-void CDECL Load_VertexBuffer(IDirect3DVertexBuffer9 **vb, void *bufferData, int sizeInBytes)
+void CCDECL Load_VertexBuffer(IDirect3DVertexBuffer9 **vb, void *bufferData, int sizeInBytes)
 {
     *vb = 0;
 }
 
-void CDECL Load_BuildVertexDecl(struct MaterialVertexDeclaration **mtlVertDecl)
+void CCDECL Load_BuildVertexDecl(struct MaterialVertexDeclaration **mtlVertDecl)
 {
 }
 
-void CDECL Load_CreateMaterialVertexShader(struct GfxVertexShaderLoadDef *loadDef, struct MaterialVertexShader *mtlShader)
+void CCDECL Load_CreateMaterialVertexShader(struct GfxVertexShaderLoadDef *loadDef, struct MaterialVertexShader *mtlShader)
 {
 }
 
-void CDECL Load_CreateMaterialPixelShader(struct GfxPixelShaderLoadDef *loadDef, struct MaterialPixelShader *mtlShader)
+void CCDECL Load_CreateMaterialPixelShader(struct GfxPixelShaderLoadDef *loadDef, struct MaterialPixelShader *mtlShader)
 {
 }
 
-void CDECL Load_SndAliasCustom(snd_alias_list_t **name)
+void CCDECL Load_SndAliasCustom(snd_alias_list_t **name)
 {
   if ( *name )
   {
@@ -166,20 +166,20 @@ void CDECL Load_SndAliasCustom(snd_alias_list_t **name)
   }
 }
 
-void CDECL Load_SetSoundData(byte **data, MssSound *sound)
+void CCDECL Load_SetSoundData(byte **data, MssSound *sound)
 {
     sound->data = NULL;
 }
 
-void CDECL Material_UploadShaders(struct MaterialTechniqueSet *techset)
+void CCDECL Material_UploadShaders(struct MaterialTechniqueSet *techset)
 {
 }
 
-void CDECL Image_Release(struct GfxImage *image)
+void CCDECL Image_Release(struct GfxImage *image)
 {
 }
 
-void CDECL Material_ReleaseTechniqueSetResources(struct MaterialTechniqueSet *techniqueSet)
+void CCDECL Material_ReleaseTechniqueSetResources(struct MaterialTechniqueSet *techniqueSet)
 {
 }
 
@@ -191,64 +191,64 @@ void Material_ClearShaderUploadList(void)
 {
 }
 
-void CDECL Material_OriginalRemapTechniqueSet(MaterialTechniqueSet *mt)
+void CCDECL Material_OriginalRemapTechniqueSet(MaterialTechniqueSet *mt)
 {
 }
 
-void CDECL Sys_FastFileBlockedCallback()
+void CCDECL Sys_FastFileBlockedCallback()
 {
 }
 
-void CDECL Load_PicmipWater(struct water_t **water)
+void CCDECL Load_PicmipWater(struct water_t **water)
 {
 }
 
-void* CDECL Hunk_AllocXModelPrecache(int size)
+void* CCDECL Hunk_AllocXModelPrecache(int size)
 {
   return Hunk_Alloc(size, "Hunk_AllocXModelPrecache", 22);
 }
 
-void* CDECL Hunk_AllocXModelPrecacheColl(int size)
+void* CCDECL Hunk_AllocXModelPrecacheColl(int size)
 {
   return Hunk_Alloc(size, "Hunk_AllocXModelPrecacheColl", 28);
 }
 
-XModel *CDECL R_RegisterModel(const char *name)
+XModel *CCDECL R_RegisterModel(const char *name)
 {
   return XModelPrecache(name, Hunk_AllocXModelPrecache, Hunk_AllocXModelPrecacheColl);
 }
 
 
-double CDECL R_GetBaseLodDist(const float *origin)
+double CCDECL R_GetBaseLodDist(const float *origin)
 {
     return 0;
 }
 
-double CDECL R_GetAdjustedLodDist(float dist, enum XModelLodRampType lodRampType)
+double CCDECL R_GetAdjustedLodDist(float dist, enum XModelLodRampType lodRampType)
 {
     return 0;
 }
 
-FxEffectDef *CDECL FX_Register(const char *name)
+FxEffectDef *CCDECL FX_Register(const char *name)
 {
     return NULL;
 }
 
-snd_alias_list_t* CDECL Com_FindSoundAlias(const char *name)
+snd_alias_list_t* CCDECL Com_FindSoundAlias(const char *name)
 {
     return NULL;
 }
 
-void CDECL CG_DebugLine(const float *start, const float *end, const float *color, int depthTest, int duration)
+void CCDECL CG_DebugLine(const float *start, const float *end, const float *color, int depthTest, int duration)
 {
     CL_AddDebugLine(start, end, color, depthTest, duration);
 }
 
-void CDECL CG_DebugBox(const float *origin, const float *mins, const float *maxs, float yaw, const float *color, int depthTest, int duration)
+void CCDECL CG_DebugBox(const float *origin, const float *mins, const float *maxs, float yaw, const float *color, int depthTest, int duration)
 {
 }
 
-void CDECL CG_DrawStringExt(struct ScreenPlacement *scrPlace, float x, float y, const char *string, const float *setColor, int forceColor, int shadow, float charHeight)
+void CCDECL CG_DrawStringExt(struct ScreenPlacement *scrPlace, float x, float y, const char *string, const float *setColor, int forceColor, int shadow, float charHeight)
 {
 }
 
@@ -256,7 +256,7 @@ void PIXBeginNamedEvent(int Color, const char *Name, ...)
 {
 }
 
-void CDECL CG_VisionSetMyChanges()
+void CCDECL CG_VisionSetMyChanges()
 {
 }
 
@@ -266,7 +266,7 @@ int SND_GetEntChannelCount(void)
     return 0;
 }
 
-int CDECL FS_GetModList(char *listbuf, int bufsize)
+int CCDECL FS_GetModList(char *listbuf, int bufsize)
 {
     return 0;
 }
@@ -287,7 +287,7 @@ const char* SND_GetEntChannelName(int index)
     return "server";
 }
 
-void CDECL Com_UnloadSoundAliases(snd_alias_system_t type)
+void CCDECL Com_UnloadSoundAliases(snd_alias_system_t type)
 {
 
 }
@@ -308,7 +308,7 @@ void SND_AddPhysicsSound(snd_alias_list_t *a1, float *a2)
 }
 
 
-void CDECL R_ReleaseDXDeviceOwnership()
+void CCDECL R_ReleaseDXDeviceOwnership()
 {
 
 }

@@ -108,7 +108,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	static qboolean s_timePolarity;
 	int cx, cy;
 	float sx; /*, sy*/
-	float x, y, w, h;
+	int x, y, w, h;
 
 	switch ( uMsg )
 	{
@@ -136,7 +136,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		SetWindowPos( s_wcd.hwndInputLine, NULL, x, y, w, h, 0 );
 
 		y = y + h + 4;
-		w = 72 * sx;
+		w = static_cast<int>(72 * sx);
 		h = 24;
 		SetWindowPos( s_wcd.hwndButtonCopy, NULL, x, y, w, h, 0 );
 
@@ -288,8 +288,8 @@ LONG WINAPI InputLineWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 	case WM_CHAR:
 		if ( wParam == 13 ) {
 			GetWindowText( s_wcd.hwndInputLine, inputBuffer, sizeof( inputBuffer ) );
-			strncat( s_wcd.consoleText, inputBuffer, sizeof( s_wcd.consoleText ) - strlen( s_wcd.consoleText ) - 5 );
-			strcat( s_wcd.consoleText, "\n" );
+			Q_strncat( s_wcd.consoleText, sizeof( s_wcd.consoleText ) - strlen( s_wcd.consoleText ) - 5, inputBuffer);
+			Q_strncat( s_wcd.consoleText, sizeof(s_wcd.consoleText) - strlen(s_wcd.consoleText) - 5, "\n");
 			SetWindowText( s_wcd.hwndInputLine, "" );
 
 			//CON_Print( va( "]%s\n", inputBuffer ) );
@@ -487,16 +487,12 @@ void CON_Show( int visLevel, qboolean quitOnClose ) {
 	}
 }
 
-/*
-** Sys_ConsoleInput
-*/
-char *CON_Input( void ) {
-
-	if ( s_wcd.consoleText[0] == 0 ) {
+char *CON_Input()
+{
+	if ( s_wcd.consoleText[0] == 0 )
 		return NULL;
-	}
 
-	strcpy( s_wcd.returnedText, s_wcd.consoleText );
+	Q_strncpyz( s_wcd.returnedText, s_wcd.consoleText, sizeof(s_wcd.returnedText));
 	s_wcd.consoleText[0] = 0;
 
 	return s_wcd.returnedText;

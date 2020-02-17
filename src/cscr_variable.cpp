@@ -180,7 +180,7 @@ extern "C"
         "removed thread"
     };
 
-VariableValue CDECL Scr_GetArrayIndexValue(unsigned int name)
+VariableValue CCDECL Scr_GetArrayIndexValue(unsigned int name)
 {
   VariableValue value;
 
@@ -303,7 +303,7 @@ static void MakeVariableExternal(unsigned int index, VariableValueInternal *pare
 }
 
 
-unsigned int CDECL FindVariableIndexInternal2(unsigned int name, unsigned int index)
+unsigned int CCDECL FindVariableIndexInternal2(unsigned int name, unsigned int index)
 {
   Variable *entry;
   unsigned int newIndex;
@@ -351,7 +351,7 @@ unsigned int CDECL FindVariableIndexInternal2(unsigned int name, unsigned int in
 }
 
 
-unsigned int CDECL FindVariableIndexInternal(unsigned int parentId, unsigned int name)
+unsigned int CCDECL FindVariableIndexInternal(unsigned int parentId, unsigned int name)
 {
   VariableValueInternal *parentValue;
 
@@ -365,7 +365,7 @@ unsigned int CDECL FindVariableIndexInternal(unsigned int parentId, unsigned int
   return FindVariableIndexInternal2(name, (parentId + 101 * name) % (VARIABLELIST_CHILD_SIZE -1) + 1);
 }
 
-void CDECL FreeChildValue(unsigned int parentId, unsigned int id)
+void CCDECL FreeChildValue(unsigned int parentId, unsigned int id)
 {
   Variable *entry;
   unsigned int nextSiblingIndex;
@@ -478,7 +478,7 @@ void ClearObjectInternal(unsigned int parentId)
   }
 }
 
-void CDECL AddRefToObject(unsigned int id)
+void CCDECL AddRefToObject(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -502,7 +502,7 @@ void CDECL AddRefToObject(unsigned int id)
   assert(entryValue->u.o.refCount > 0);
 }
 
-void CDECL FreeVariable(unsigned int id)
+void CCDECL FreeVariable(unsigned int id)
 {
   Variable *entry;
   VariableValueInternal *entryValue;
@@ -544,7 +544,7 @@ void CDECL FreeVariable(unsigned int id)
 }
 
 
-void CDECL RemoveRefToEmptyObject(unsigned int id)
+void CCDECL RemoveRefToEmptyObject(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -572,7 +572,7 @@ void CDECL RemoveRefToEmptyObject(unsigned int id)
   }
 }
 
-void CDECL ClearObject(unsigned int parentId)
+void CCDECL ClearObject(unsigned int parentId)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + parentId].w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   AddRefToObject(parentId);
@@ -582,7 +582,7 @@ void CDECL ClearObject(unsigned int parentId)
 
 
 
-unsigned int CDECL AllocVariable()
+unsigned int CCDECL AllocVariable()
 {
   VariableValueInternal *entry;
   unsigned int newIndex;
@@ -636,7 +636,7 @@ unsigned int CDECL AllocVariable()
   return entry->hash.id;
 }
 
-unsigned int CDECL AllocObject()
+unsigned int CCDECL AllocObject()
 {
   VariableValueInternal *entryValue;
   unsigned int id;
@@ -673,12 +673,12 @@ unsigned int AllocEntity(unsigned int classnum, uint16_t entnum)
 }
 
 
-bool CDECL IsValidArrayIndex(unsigned int unsignedValue)
+bool CCDECL IsValidArrayIndex(unsigned int unsignedValue)
 {
   return unsignedValue < MAX_ARRAYINDEX;
 }
 
-void CDECL AddRefToValue(int type, VariableUnion u)
+void CCDECL AddRefToValue(int type, VariableUnion u)
 {
   unsigned int value;
 
@@ -892,7 +892,7 @@ unsigned int GetNewVariableIndexInternal3(unsigned int parentId, unsigned int na
 }
 
 
-unsigned int CDECL GetNewVariableIndexInternal2(unsigned int parentId, unsigned int name, unsigned int index)
+unsigned int CCDECL GetNewVariableIndexInternal2(unsigned int parentId, unsigned int name, unsigned int index)
 {
   unsigned int siblingId;
   VariableValueInternal *parentValue;
@@ -934,7 +934,7 @@ unsigned int CDECL GetNewVariableIndexInternal2(unsigned int parentId, unsigned 
 }
 
 
-unsigned int CDECL GetVariableIndexInternal(unsigned int parentId, unsigned int name)
+unsigned int CCDECL GetVariableIndexInternal(unsigned int parentId, unsigned int name)
 {
   VariableValueInternal *parentValue; 
   unsigned int newIndex;
@@ -958,18 +958,18 @@ unsigned int CDECL GetVariableIndexInternal(unsigned int parentId, unsigned int 
 }
 
 
-unsigned int CDECL GetArrayVariableIndex(unsigned int parentId, unsigned int unsignedValue)
+unsigned int CCDECL GetArrayVariableIndex(unsigned int parentId, unsigned int unsignedValue)
 {
   assert(IsValidArrayIndex( unsignedValue ));
   return GetVariableIndexInternal(parentId, (unsignedValue + MAX_ARRAYINDEX) & VAR_NAME_LOW_MASK);
 }
 
-unsigned int CDECL GetArrayVariable(unsigned int parentId, unsigned int unsignedValue)
+unsigned int CCDECL GetArrayVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   return gScrVarGlob.variableList[GetArrayVariableIndex(parentId, unsignedValue) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-unsigned int CDECL Scr_GetEntityId(int entnum, unsigned int classnum)
+unsigned int CCDECL Scr_GetEntityId(int entnum, unsigned int classnum)
 {
   unsigned int entArrayId;
   uint16_t actualEntNum;
@@ -1005,7 +1005,7 @@ unsigned int CDECL Scr_GetEntityId(int entnum, unsigned int classnum)
   return entId;
 }
 
-unsigned int CDECL Scr_AllocArray( )
+unsigned int CCDECL Scr_AllocArray( )
 {
   const char *varUsagePos;
   VariableValueInternal *entryValue;
@@ -1028,7 +1028,7 @@ unsigned int CDECL Scr_AllocArray( )
   return id;
 }
 
-unsigned int CDECL AllocThread(unsigned int self)
+unsigned int CCDECL AllocThread(unsigned int self)
 {
   VariableValueInternal *entryValue;
   unsigned int id;
@@ -1046,7 +1046,7 @@ unsigned int CDECL AllocThread(unsigned int self)
 }
 
 
-unsigned int CDECL AllocChildThread(unsigned int self, unsigned int parentLocalId)
+unsigned int CCDECL AllocChildThread(unsigned int self, unsigned int parentLocalId)
 {
   VariableValueInternal *entryValue;
   unsigned int id;
@@ -1104,7 +1104,7 @@ unsigned int GetArray(unsigned int id)
 
 
 
-unsigned int CDECL SGetObjectA(unsigned int id)
+unsigned int CCDECL SGetObjectA(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -1187,19 +1187,19 @@ static void CopyArray(unsigned int parentId, unsigned int newParentId)
   }
 }
 
-unsigned int CDECL FindArrayVariableIndex(unsigned int parentId, unsigned int unsignedValue)
+unsigned int CCDECL FindArrayVariableIndex(unsigned int parentId, unsigned int unsignedValue)
 {
   assert(IsValidArrayIndex( unsignedValue ));
 
   return FindVariableIndexInternal(parentId, (unsignedValue + VAR_ARRAYINDEXSTART) & VAR_NAME_LOW_MASK);
 }
 
-unsigned int CDECL FindArrayVariable(unsigned int parentId, int intValue)
+unsigned int CCDECL FindArrayVariable(unsigned int parentId, int intValue)
 {
   return gScrVarGlob.variableList[FindArrayVariableIndex(parentId, intValue) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-VariableValue CDECL Scr_EvalVariableEntityField(unsigned int entId, unsigned int fieldName)
+VariableValue CCDECL Scr_EvalVariableEntityField(unsigned int entId, unsigned int fieldName)
 {
   VariableValueInternal *entValue;
   unsigned int fieldId; 
@@ -1270,7 +1270,7 @@ __asm__(/* Scr_EvalVariable ABI Wrapper */
 "ret\n");
 
 #else
-VariableValue CDECL Scr_EvalVariableExtern(unsigned int id)
+VariableValue CCDECL Scr_EvalVariableExtern(unsigned int id)
 {
   return Scr_EvalVariable(id);
 }
@@ -1315,7 +1315,7 @@ __asm__(/* Scr_EvalVariableField ABI Wrapper */
 "ret\n");
 
 #else
-VariableValue CDECL Scr_EvalVariableFieldExtern(unsigned int id)
+VariableValue CCDECL Scr_EvalVariableFieldExtern(unsigned int id)
 {
   return Scr_EvalVariableField(id);
 }
@@ -1377,12 +1377,12 @@ __asm__(/* Scr_FindVariableField ABI Wrapper */
 "ret\n");
 
 #else
-VariableValue CDECL Scr_FindVariableFieldExtern(unsigned int parentId, unsigned int name)
+VariableValue CCDECL Scr_FindVariableFieldExtern(unsigned int parentId, unsigned int name)
 {
   return Scr_FindVariableField(parentId, name);
 }
 #endif
-unsigned int CDECL AllocValue( )
+unsigned int CCDECL AllocValue( )
 {
   VariableValueInternal *entry;
   unsigned int newIndex;
@@ -1437,7 +1437,7 @@ unsigned int CDECL AllocValue( )
   return entry->hash.id;
 }
 
-void CDECL Scr_AllocGameVariable()
+void CCDECL Scr_AllocGameVariable()
 {
   if ( !gScrVarPub.gameId )
   {
@@ -1451,7 +1451,7 @@ void CDECL Scr_AllocGameVariable()
   }
 }
 
-unsigned int CDECL Scr_EvalArrayRef(unsigned int parentId)
+unsigned int CCDECL Scr_EvalArrayRef(unsigned int parentId)
 {
   unsigned int result;
   VariableUnion id;
@@ -1564,7 +1564,7 @@ add_array:
 
 
 
-void CDECL SafeRemoveVariable(unsigned int parentId, unsigned int unsignedValue)
+void CCDECL SafeRemoveVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   VariableValueInternal *entryValue;
   unsigned int index;
@@ -1585,14 +1585,14 @@ void CDECL SafeRemoveVariable(unsigned int parentId, unsigned int unsignedValue)
 }
 
 
-void CDECL SafeRemoveArrayVariable(unsigned int parentId, unsigned int unsignedValue)
+void CCDECL SafeRemoveArrayVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   assert(IsValidArrayIndex( unsignedValue ));
   SafeRemoveVariable(parentId, (unsignedValue + VAR_ARRAYINDEXSTART) & VAR_NAME_LOW_MASK);
 }
 
 
-void CDECL ClearArray(unsigned int parentId, VariableValue *value)
+void CCDECL ClearArray(unsigned int parentId, VariableValue *value)
 {
   unsigned int id;
   VariableValueInternal *parentValue;
@@ -1690,7 +1690,7 @@ void CDECL ClearArray(unsigned int parentId, VariableValue *value)
 }
 
 
-void CDECL RemoveVariable(unsigned int parentId, unsigned int unsignedValue)
+void CCDECL RemoveVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   unsigned int id;
   unsigned int index;
@@ -1703,7 +1703,7 @@ void CDECL RemoveVariable(unsigned int parentId, unsigned int unsignedValue)
   FreeChildValue(parentId, id);
 }
 
-void CDECL RemoveNextVariable(unsigned int parentId)
+void CCDECL RemoveNextVariable(unsigned int parentId)
 {
   unsigned int index;
   unsigned int id;
@@ -1721,7 +1721,7 @@ void CDECL RemoveNextVariable(unsigned int parentId)
   FreeChildValue(parentId, id);
 }
 
-void CDECL RemoveVariableValue(unsigned int parentId, unsigned int index)
+void CCDECL RemoveVariableValue(unsigned int parentId, unsigned int index)
 {
   unsigned int id;
 
@@ -1734,14 +1734,14 @@ void CDECL RemoveVariableValue(unsigned int parentId, unsigned int index)
   FreeChildValue(parentId, id);
 }
 
-void CDECL RemoveArrayVariable(unsigned int parentId, unsigned int unsignedValue)
+void CCDECL RemoveArrayVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   assert(IsValidArrayIndex( unsignedValue ));
   RemoveVariable(parentId, (unsignedValue + VAR_ARRAYINDEXSTART) & VAR_NAME_LOW_MASK);
 }
 
 
-void CDECL RemoveRefToObject(unsigned int id)
+void CCDECL RemoveRefToObject(unsigned int id)
 {
   int unsignedValue;
   unsigned int classnum;
@@ -1798,7 +1798,7 @@ void CDECL RemoveRefToObject(unsigned int id)
 
 
 
-unsigned int CDECL FindObject(unsigned int id)
+unsigned int CCDECL FindObject(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -1812,7 +1812,7 @@ unsigned int CDECL FindObject(unsigned int id)
 }
 
 
-void CDECL FreeValue(unsigned int id)
+void CCDECL FreeValue(unsigned int id)
 {
   VariableValueInternal *entry;
   VariableValueInternal *entryValue;
@@ -1859,13 +1859,13 @@ void CDECL FreeValue(unsigned int id)
   gScrVarGlob.variableList[VARIABLELIST_CHILD_BEGIN].u.next = index;
 }
 
-unsigned int CDECL FindObjectVariable(unsigned int parentId, unsigned int id)
+unsigned int CCDECL FindObjectVariable(unsigned int parentId, unsigned int id)
 {
   return gScrVarGlob.variableList[FindVariableIndexInternal(parentId, id + SL_MAX_STRING_INDEX) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
 
-void CDECL ClearVariableValue(unsigned int id)
+void CCDECL ClearVariableValue(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -1884,7 +1884,7 @@ void CDECL ClearVariableValue(unsigned int id)
 }
 
 
-void CDECL ClearVariableField(unsigned int parentId, unsigned int name, VariableValue *value)
+void CCDECL ClearVariableField(unsigned int parentId, unsigned int name, VariableValue *value)
 {
   VariableValueInternal *entryValue;
   unsigned int classnum;
@@ -1920,12 +1920,12 @@ void CDECL ClearVariableField(unsigned int parentId, unsigned int name, Variable
   }
 }
 
-unsigned int CDECL FindVariable(unsigned int parentId, unsigned int unsignedValue)
+unsigned int CCDECL FindVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   return gScrVarGlob.variableList[FindVariableIndexInternal(parentId, unsignedValue) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-unsigned int CDECL GetArraySize(unsigned int id)
+unsigned int CCDECL GetArraySize(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -1936,14 +1936,14 @@ unsigned int CDECL GetArraySize(unsigned int id)
   return entryValue->u.o.u.size;
 }
 
-unsigned int CDECL GetValueType(unsigned int id)
+unsigned int CCDECL GetValueType(unsigned int id)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_CHILD_BEGIN+ id].w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
 
   return gScrVarGlob.variableList[id + VARIABLELIST_CHILD_BEGIN].w.type & VAR_MASK;
 }
 
-bool CDECL IsObjectFree(unsigned int id)
+bool CCDECL IsObjectFree(unsigned int id)
 {
   return (gScrVarGlob.variableList[id + VARIABLELIST_PARENT_BEGIN].w.status & VAR_STAT_MASK) == 0;
 }
@@ -1974,13 +1974,13 @@ unsigned int FindEntityId(int entnum, unsigned int classnum)
   return entryValue->u.u.pointerValue;
 }
 
-unsigned int CDECL GetVariable(unsigned int parentId, unsigned int unsignedValue)
+unsigned int CCDECL GetVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   return gScrVarGlob.variableList[GetVariableIndexInternal( parentId, unsignedValue) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
 
-unsigned int CDECL GetVariableName(unsigned int id)
+unsigned int CCDECL GetVariableName(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -1991,7 +1991,7 @@ unsigned int CDECL GetVariableName(unsigned int id)
   return entryValue->w.name >> VAR_NAME_BITS;
 }
 
-unsigned int CDECL GetStartLocalId(unsigned int threadId)
+unsigned int CCDECL GetStartLocalId(unsigned int threadId)
 {
 
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + threadId].w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
@@ -2006,7 +2006,7 @@ unsigned int CDECL GetStartLocalId(unsigned int threadId)
   return threadId;
 }
 
-unsigned int CDECL FindFirstSibling(unsigned int id)
+unsigned int CCDECL FindFirstSibling(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -2021,7 +2021,7 @@ unsigned int CDECL FindFirstSibling(unsigned int id)
 }
 
 
-unsigned int CDECL FindNextSibling(unsigned int id)
+unsigned int CCDECL FindNextSibling(unsigned int id)
 {
   unsigned int nextSibling;
   VariableValueInternal *list;
@@ -2054,7 +2054,7 @@ unsigned int CDECL FindNextSibling(unsigned int id)
 }
 
 
-unsigned int CDECL FindPrevSibling(unsigned int id)
+unsigned int CCDECL FindPrevSibling(unsigned int id)
 {
   VariableValueInternal *list;
   VariableValueInternal *entryValue;
@@ -2070,7 +2070,7 @@ unsigned int CDECL FindPrevSibling(unsigned int id)
   return entryValue->hash.u.prev;
 }
 
-unsigned int CDECL FindLastSibling(unsigned int parentId)
+unsigned int CCDECL FindLastSibling(unsigned int parentId)
 {
   VariableValueInternal *parentValue;
   unsigned int index;
@@ -2102,19 +2102,19 @@ unsigned int Scr_GetObjectType(unsigned int id)
   return VAR_TYPE((&gScrVarGlob.variableList[id + VARIABLELIST_PARENT_BEGIN]));
 }
 
-unsigned int CDECL Scr_GetSelf(unsigned int threadId)
+unsigned int CCDECL Scr_GetSelf(unsigned int threadId)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + threadId].w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + threadId].w.type & VAR_MASK) >= VAR_THREAD) && ((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + threadId].w.type & VAR_MASK) <= VAR_CHILD_THREAD));
   return gScrVarGlob.variableList[threadId + VARIABLELIST_PARENT_BEGIN].u.o.u.self;
 }
 
-unsigned int CDECL Scr_GetVarId(unsigned int index)
+unsigned int CCDECL Scr_GetVarId(unsigned int index)
 {
   return gScrVarGlob.variableList[index + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-qboolean CDECL IsFieldObject(unsigned int id)
+qboolean CCDECL IsFieldObject(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -2129,7 +2129,7 @@ qboolean CDECL IsFieldObject(unsigned int id)
   return qfalse;
 }
 
-unsigned int CDECL GetNewVariableIndexInternal(unsigned int parentId, unsigned int name)
+unsigned int CCDECL GetNewVariableIndexInternal(unsigned int parentId, unsigned int name)
 {
   assert(!FindVariableIndexInternal( parentId, name ));
   unsigned int index = (parentId + 101 * name) % (VARIABLELIST_CHILD_SIZE -1) + 1;
@@ -2137,12 +2137,12 @@ unsigned int CDECL GetNewVariableIndexInternal(unsigned int parentId, unsigned i
 }
 
 
-unsigned int CDECL GetNewVariable(unsigned int parentId, unsigned int unsignedValue)
+unsigned int CCDECL GetNewVariable(unsigned int parentId, unsigned int unsignedValue)
 {
   return gScrVarGlob.variableList[GetNewVariableIndexInternal(parentId, unsignedValue) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-void CDECL RemoveRefToValue(int type, VariableUnion u)
+void CCDECL RemoveRefToValue(int type, VariableUnion u)
 {
   unsigned int value;
 
@@ -2165,7 +2165,7 @@ void CDECL RemoveRefToValue(int type, VariableUnion u)
   }
 }
 
-unsigned int CDECL GetParentLocalId(unsigned int threadId)
+unsigned int CCDECL GetParentLocalId(unsigned int threadId)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + threadId].w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
   assert(VAR_TYPE((&gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + threadId])) == VAR_CHILD_THREAD);
@@ -2191,7 +2191,7 @@ void Scr_FreeObjects( )
   }
 }
 
-void CDECL Scr_AddArrayKeys(unsigned int parentId)
+void CCDECL Scr_AddArrayKeys(unsigned int parentId)
 {
   VariableValue value;
   VariableValueInternal *entryValue;
@@ -2225,14 +2225,14 @@ void CDECL Scr_AddArrayKeys(unsigned int parentId)
   }
 }
 
-void CDECL Scr_FreeValue(unsigned int id)
+void CCDECL Scr_FreeValue(unsigned int id)
 {
   assert(id != 0);
 
   RemoveRefToObject(id);
 }
 
-int CDECL Scr_GetOffset(unsigned int classnum, const char *name)
+int CCDECL Scr_GetOffset(unsigned int classnum, const char *name)
 {
   unsigned int classId;
   unsigned int cstr;
@@ -2248,7 +2248,7 @@ int CDECL Scr_GetOffset(unsigned int classnum, const char *name)
   return -1;
 }
 
-void CDECL SetVariableValue(unsigned int id, VariableValue *value)
+void CCDECL SetVariableValue(unsigned int id, VariableValue *value)
 {
   VariableValueInternal *entryValue;
 
@@ -2268,14 +2268,14 @@ void CDECL SetVariableValue(unsigned int id, VariableValue *value)
   entryValue->u.u = value->u;
 }
 
-unsigned int CDECL GetObjectVariable(unsigned int parentId, unsigned int id)
+unsigned int CCDECL GetObjectVariable(unsigned int parentId, unsigned int id)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN+ parentId].w.type & VAR_MASK) == VAR_ARRAY);
 
   return gScrVarGlob.variableList[GetVariableIndexInternal(parentId, id + SL_MAX_STRING_INDEX) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-unsigned int CDECL Scr_FindField(const char *name, int *type)
+unsigned int CCDECL Scr_FindField(const char *name, int *type)
 {
   unsigned int index;
   const char *pos;
@@ -2296,13 +2296,13 @@ unsigned int CDECL Scr_FindField(const char *name, int *type)
   return 0;
 }
 
-void CDECL RemoveObjectVariable(unsigned int parentId, unsigned int id)
+void CCDECL RemoveObjectVariable(unsigned int parentId, unsigned int id)
 {
   assert(VAR_TYPE((&gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + parentId])) == VAR_ARRAY);
   RemoveVariable(parentId, id + SL_MAX_STRING_INDEX);
 }
 
-VariableUnion *CDECL GetVariableValueAddress(unsigned int id)
+VariableUnion *CCDECL GetVariableValueAddress(unsigned int id)
 {
   VariableValueInternal *entryValue;
 
@@ -2338,7 +2338,7 @@ void Scr_ClearThread(unsigned int parentId)
   RemoveRefToObject(parentValue->u.o.u.self);
 }
 
-void CDECL Scr_KillEndonThread(unsigned int threadId)
+void CCDECL Scr_KillEndonThread(unsigned int threadId)
 {
   VariableValueInternal *parentValue;
 
@@ -2356,7 +2356,7 @@ void CDECL Scr_KillEndonThread(unsigned int threadId)
   parentValue->w.type |= VAR_DEAD_THREAD;
 }
 
-void CDECL Scr_KillThread(unsigned int parentId)
+void CCDECL Scr_KillThread(unsigned int parentId)
 {
   VariableUnion *threadvar;
   VariableValueInternal *parentValue;
@@ -2399,7 +2399,7 @@ void CDECL Scr_KillThread(unsigned int parentId)
   parentValue->w.type |= VAR_DEAD_THREAD;
 }
 
-void CDECL Scr_StopThread(unsigned int threadId)
+void CCDECL Scr_StopThread(unsigned int threadId)
 {
   assert(threadId != 0);
 
@@ -2408,14 +2408,14 @@ void CDECL Scr_StopThread(unsigned int threadId)
   AddRefToObject(gScrVarPub.levelId);
 }
 
-unsigned int CDECL GetNewObjectVariable(unsigned int parentId, unsigned int id)
+unsigned int CCDECL GetNewObjectVariable(unsigned int parentId, unsigned int id)
 {
   assert(VAR_TYPE((&gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + parentId])) == VAR_ARRAY);
   return gScrVarGlob.variableList[GetNewVariableIndexInternal(parentId, id + SL_MAX_STRING_INDEX) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
 
-void CDECL SetNewVariableValue(unsigned int id, VariableValue *value)
+void CCDECL SetNewVariableValue(unsigned int id, VariableValue *value)
 {
   VariableValueInternal *entryValue;
 
@@ -2435,7 +2435,7 @@ void CDECL SetNewVariableValue(unsigned int id, VariableValue *value)
 }
 
 
-unsigned int CDECL GetSafeParentLocalId(unsigned int threadId)
+unsigned int CCDECL GetSafeParentLocalId(unsigned int threadId)
 {
   unsigned int r;
 
@@ -2457,7 +2457,7 @@ unsigned int CDECL GetSafeParentLocalId(unsigned int threadId)
   return r;
 }
 
-void CDECL Scr_ClearWaitTime(unsigned int startLocalId)
+void CCDECL Scr_ClearWaitTime(unsigned int startLocalId)
 {
   VariableValueInternal *entryValue;
 
@@ -2469,7 +2469,7 @@ void CDECL Scr_ClearWaitTime(unsigned int startLocalId)
   entryValue->w.status |= VAR_THREAD;
 }
 
-void CDECL Scr_FreeEntityList( )
+void CCDECL Scr_FreeEntityList( )
 {
   VariableValueInternal *entryValue;
   unsigned int entId;
@@ -2494,7 +2494,7 @@ void CDECL Scr_FreeEntityList( )
 }
 
 
-void CDECL Scr_FreeEntityNum(int entnum, unsigned int classnum)
+void CCDECL Scr_FreeEntityNum(int entnum, unsigned int classnum)
 {
   unsigned int entArrayId;
   unsigned int entnumId;
@@ -2546,7 +2546,7 @@ unsigned int GetNewArrayVariable(unsigned int parentId, unsigned int unsignedVal
   return gScrVarGlob.variableList[GetNewArrayVariableIndex(parentId, unsignedValue) + VARIABLELIST_CHILD_BEGIN].hash.id;
 }
 
-unsigned int CDECL GetVariableKeyObject(unsigned int id)
+unsigned int CCDECL GetVariableKeyObject(unsigned int id)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_CHILD_BEGIN + id].w.status & VAR_STAT_MASK) != VAR_STAT_FREE);
   assert(!IsObject(( &gScrVarGlob.variableList[VARIABLELIST_CHILD_BEGIN + id]) ));
@@ -2557,7 +2557,7 @@ unsigned int CDECL GetVariableKeyObject(unsigned int id)
 
 #define UNKNOWN_TYPE 0
 
-static int CDECL Scr_MakeValuePrimitive(unsigned int parentId)
+static int CCDECL Scr_MakeValuePrimitive(unsigned int parentId)
 {
   VariableValueInternal *parentValue;
   unsigned int name;
@@ -2623,7 +2623,7 @@ static int CDECL Scr_MakeValuePrimitive(unsigned int parentId)
   return 1;
 }
 
-void CDECL Scr_FreeGameVariable(int bComplete)
+void CCDECL Scr_FreeGameVariable(int bComplete)
 {
   VariableValueInternal *entryValue;
 
@@ -2648,14 +2648,14 @@ unsigned int Scr_GetNumScriptVars( )
   return gScrVarPub.numScriptObjects + gScrVarPub.numScriptValues;
 }
 
-unsigned int CDECL Scr_GetThreadWaitTime(unsigned int startLocalId)
+unsigned int CCDECL Scr_GetThreadWaitTime(unsigned int startLocalId)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + startLocalId].w.status & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + startLocalId].w.type & VAR_MASK) == VAR_TIME_THREAD);
   return gScrVarGlob.variableList[startLocalId + VARIABLELIST_PARENT_BEGIN].w.waitTime >> VAR_NAME_BITS;
 }
 
-unsigned int CDECL Scr_GetThreadNotifyName(unsigned int startLocalId)
+unsigned int CCDECL Scr_GetThreadNotifyName(unsigned int startLocalId)
 {
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + startLocalId].w.type & VAR_STAT_MASK) == VAR_STAT_EXTERNAL);
   assert((gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + startLocalId].w.type & VAR_MASK) == VAR_NOTIFY_THREAD);
@@ -2664,7 +2664,7 @@ unsigned int CDECL Scr_GetThreadNotifyName(unsigned int startLocalId)
 }
 
 
-void CDECL Scr_SetThreadWaitTime(unsigned int startLocalId, unsigned int waitTime)
+void CCDECL Scr_SetThreadWaitTime(unsigned int startLocalId, unsigned int waitTime)
 {
   VariableValueInternal *entryValue;
 
@@ -2680,7 +2680,7 @@ void CDECL Scr_SetThreadWaitTime(unsigned int startLocalId, unsigned int waitTim
 }
 
 
-void CDECL Scr_SetThreadNotifyName(unsigned int startLocalId, unsigned int stringValue)
+void CCDECL Scr_SetThreadNotifyName(unsigned int startLocalId, unsigned int stringValue)
 {
   VariableValueInternal *entryValue;
 
@@ -2694,7 +2694,7 @@ void CDECL Scr_SetThreadNotifyName(unsigned int startLocalId, unsigned int strin
   entryValue->w.name |= stringValue << VAR_NAME_BITS;
 }
 
-void CDECL Scr_RemoveThreadNotifyName(unsigned int startLocalId)
+void CCDECL Scr_RemoveThreadNotifyName(unsigned int startLocalId)
 {
   uint16_t stringValue;
   VariableValueInternal *entryValue;
@@ -2713,13 +2713,13 @@ void CDECL Scr_RemoveThreadNotifyName(unsigned int startLocalId)
 }
 
 
-unsigned int CDECL GetInternalVariableIndex(unsigned int unsignedValue)
+unsigned int CCDECL GetInternalVariableIndex(unsigned int unsignedValue)
 {
   assert(IsValidArrayIndex( unsignedValue ));
   return (unsignedValue + MAX_ARRAYINDEX) & VAR_NAME_LOW_MASK;
 }
 
-int CDECL Scr_GetClassnumForCharId(char charId)
+int CCDECL Scr_GetClassnumForCharId(char charId)
 {
   unsigned int i;
 
@@ -2787,7 +2787,7 @@ static unsigned int GetNewVariableIndexReverseInternal(unsigned int parentId, un
 }
 
 
-unsigned int CDECL GetNewObjectVariableReverse(unsigned int parentId, unsigned int id)
+unsigned int CCDECL GetNewObjectVariableReverse(unsigned int parentId, unsigned int id)
 {
   assert(VAR_TYPE((&gScrVarGlob.variableList[VARIABLELIST_PARENT_BEGIN + parentId])) == VAR_ARRAY);
 
@@ -2823,7 +2823,7 @@ static void SetVariableEntityFieldValue(unsigned int entId, unsigned int fieldNa
 }
 
 
-void CDECL SetVariableFieldValue(unsigned int id, VariableValue *value)
+void CCDECL SetVariableFieldValue(unsigned int id, VariableValue *value)
 {
   if ( id )
   {
@@ -2835,7 +2835,7 @@ void CDECL SetVariableFieldValue(unsigned int id, VariableValue *value)
   }
 }
 
-unsigned int CDECL Scr_GetVariableFieldIndex(unsigned int parentId, unsigned int name)
+unsigned int CCDECL Scr_GetVariableFieldIndex(unsigned int parentId, unsigned int name)
 {
   VariableValueInternal *entryValue;
   unsigned int index;
@@ -2871,7 +2871,7 @@ unsigned int CDECL Scr_GetVariableFieldIndex(unsigned int parentId, unsigned int
 }
 
 
-void CDECL Scr_AddClassField(unsigned int classnum, const char *name, unsigned int offset)
+void CCDECL Scr_AddClassField(unsigned int classnum, const char *name, unsigned int offset)
 {
   VariableValueInternal *entryValue;
   unsigned int fieldId;
@@ -2906,7 +2906,7 @@ void CDECL Scr_AddClassField(unsigned int classnum, const char *name, unsigned i
   entryValue->u.u.intValue = (uint16_t)offset;
 }
 
-scr_entref_t CDECL Scr_GetEntityIdRef(unsigned int entId)
+scr_entref_t CCDECL Scr_GetEntityIdRef(unsigned int entId)
 {
   VariableValueInternal *entValue;
   scr_entref_t ref;
@@ -2920,7 +2920,7 @@ scr_entref_t CDECL Scr_GetEntityIdRef(unsigned int entId)
   return ref;
 }
 
-uint32_t CDECL Scr_GetEntityIdRefExtern(unsigned int entId)
+uint32_t CCDECL Scr_GetEntityIdRefExtern(unsigned int entId)
 {
   scr_entref_t ref;
   ref = Scr_GetEntityIdRef(entId);
@@ -2929,7 +2929,7 @@ uint32_t CDECL Scr_GetEntityIdRefExtern(unsigned int entId)
 }
 
 
-void CDECL Scr_InitClassMap( )
+void CCDECL Scr_InitClassMap( )
 {
   unsigned int classnum;
 
@@ -2940,7 +2940,7 @@ void CDECL Scr_InitClassMap( )
   }
 }
 
-void CDECL Scr_RemoveClassMap(unsigned int classnum)
+void CCDECL Scr_RemoveClassMap(unsigned int classnum)
 {
   if ( gScrVarPub.bInited )
   {
@@ -3399,30 +3399,30 @@ void Scr_DumpScriptVariables(bool spreadsheet, bool summary, bool total, bool fu
   }
 }
 
-void CDECL Scr_IncNumScriptThreads()
+void CCDECL Scr_IncNumScriptThreads()
 {
   ++gScrVarPub.numScriptThreads;
 }
 
-void CDECL Scr_DecNumScriptThreads()
+void CCDECL Scr_DecNumScriptThreads()
 {
   ++gScrVarPub.numScriptThreads;
 }
 
 
-void CDECL Scr_DumpScriptVariablesDefault( )
+void CCDECL Scr_DumpScriptVariablesDefault( )
 {
   Scr_DumpScriptVariables(0, 0, 0, 0, 0, 0, 0, 0);
 }
 
-static void CDECL Scr_ResetScrVarDebugPub( )
+static void CCDECL Scr_ResetScrVarDebugPub( )
 {
 #ifndef NDEBUG
   gScrVarDebugPub = &gScrVarDebugPubBuff;
 #endif
 }
 
-static void CDECL Scr_InitVariableRange(unsigned int begin, unsigned int end)
+static void CCDECL Scr_InitVariableRange(unsigned int begin, unsigned int end)
 {
   unsigned int index;
   VariableValueInternal *value;
@@ -3454,7 +3454,7 @@ static void CDECL Scr_InitVariableRange(unsigned int begin, unsigned int end)
   gScrVarGlob.variableList[end - 1].u.next = 0;
 }
 
-void CDECL Scr_InitVariables( )
+void CCDECL Scr_InitVariables( )
 {
   int variableCount = (VARIABLELIST_CHILD_SIZE + VARIABLELIST_PARENT_SIZE +3);
   gScrVarGlob.variableList = (VariableValueInternal*)_PMem_AllocNamed(sizeof(VariableValueInternal) * variableCount, 0x80u, 4u, 1u, "ScriptVars", TRACK_SCRIPT);
@@ -3489,12 +3489,12 @@ void CDECL Scr_InitVariables( )
 
 #define _LEAKED_ 0
 
-void CDECL Scr_ClearScrVarDebugPub( )
+void CCDECL Scr_ClearScrVarDebugPub( )
 {
   gScrVarDebugPub = NULL;
 }
 
-static void CDECL Scr_CheckLeakRange(unsigned int begin, unsigned int end)
+static void CCDECL Scr_CheckLeakRange(unsigned int begin, unsigned int end)
 {
   VariableValueInternal *entry;
   int index;
@@ -3526,7 +3526,7 @@ static void CDECL Scr_CheckLeakRange(unsigned int begin, unsigned int end)
 
 
 
-static void CDECL Scr_CheckLeaks()
+static void CCDECL Scr_CheckLeaks()
 {
   bool bLeak;
   unsigned int id;
@@ -3572,7 +3572,7 @@ static void CDECL Scr_CheckLeaks()
 }
 
 
-void CDECL Scr_ShutdownVariables( )
+void CCDECL Scr_ShutdownVariables( )
 {
   if ( gScrVarPub.gameId )
   {
@@ -3746,7 +3746,7 @@ void Scr_AddFields_LoadObj(const char *path, const char *extension)
   }
 }
 
-void CDECL Scr_AddFields(const char *path, const char *extension)
+void CCDECL Scr_AddFields(const char *path, const char *extension)
 {
   if ( useFastFile->boolean )
   {
@@ -3758,7 +3758,7 @@ void CDECL Scr_AddFields(const char *path, const char *extension)
   }
 }
 
-static unsigned int CDECL Scr_FindArrayIndex(unsigned int parentId, VariableValue *index)
+static unsigned int CCDECL Scr_FindArrayIndex(unsigned int parentId, VariableValue *index)
 {
   unsigned int id;
 
@@ -3784,7 +3784,7 @@ static unsigned int CDECL Scr_FindArrayIndex(unsigned int parentId, VariableValu
 }
 
 
-void CDECL Scr_EvalArray(VariableValue *value, VariableValue *index)
+void CCDECL Scr_EvalArray(VariableValue *value, VariableValue *index)
 {
   unsigned int arridx;
   char c[2];
@@ -3862,7 +3862,7 @@ void CDECL Scr_EvalArray(VariableValue *value, VariableValue *index)
 }
 
 
-bool CDECL Scr_CastString(VariableValue *value)
+bool CCDECL Scr_CastString(VariableValue *value)
 {
   const float *constTempVector;
 
@@ -3904,7 +3904,7 @@ static void Scr_ClearVector(VariableValue *value)
   value->type = VAR_UNDEFINED;
 }
 
-void CDECL Scr_CastVector(VariableValue *value)
+void CCDECL Scr_CastVector(VariableValue *value)
 {
   int type;
   int i;
@@ -4075,7 +4075,7 @@ static void Scr_CastWeakerPair(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalSizeValue(VariableValue *value)
+void CCDECL Scr_EvalSizeValue(VariableValue *value)
 {
   unsigned int stringValue;
   char *error_message;
@@ -4115,7 +4115,7 @@ void CDECL Scr_EvalSizeValue(VariableValue *value)
   }
 }
 
-void CDECL Scr_CastBool(VariableValue *value)
+void CCDECL Scr_CastBool(VariableValue *value)
 {
   int type;
 
@@ -4138,7 +4138,7 @@ void CDECL Scr_CastBool(VariableValue *value)
 }
 
 
-void CDECL Scr_CastWeakerStringPair(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_CastWeakerStringPair(VariableValue *value1, VariableValue *value2)
 {
   const float *constTempVector;
   int type1;
@@ -4222,7 +4222,7 @@ void CDECL Scr_CastWeakerStringPair(VariableValue *value1, VariableValue *value2
 
 
 
-unsigned int CDECL Scr_EvalFieldObject(unsigned int tempVariable, VariableValue *value)
+unsigned int CCDECL Scr_EvalFieldObject(unsigned int tempVariable, VariableValue *value)
 {
   int type;
   VariableValue tempValue;
@@ -4247,7 +4247,7 @@ unsigned int CDECL Scr_EvalFieldObject(unsigned int tempVariable, VariableValue 
 }
 
 
-unsigned int CDECL Scr_EvalVariableObject(unsigned int id)
+unsigned int CCDECL Scr_EvalVariableObject(unsigned int id)
 {
   VariableValueInternal *entryValue;
   int type;
@@ -4272,7 +4272,7 @@ unsigned int CDECL Scr_EvalVariableObject(unsigned int id)
 }
 
 
-void CDECL Scr_EvalOr(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalOr(VariableValue *value1, VariableValue *value2)
 {
   if ( value1->type != VAR_INTEGER || value2->type != VAR_INTEGER )
   {
@@ -4284,7 +4284,7 @@ void CDECL Scr_EvalOr(VariableValue *value1, VariableValue *value2)
   }
 }
 
-void CDECL Scr_EvalAnd(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalAnd(VariableValue *value1, VariableValue *value2)
 {
   if ( value1->type != VAR_INTEGER || value2->type != VAR_INTEGER )
   {
@@ -4297,7 +4297,7 @@ void CDECL Scr_EvalAnd(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalExOr(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalExOr(VariableValue *value1, VariableValue *value2)
 {
   if ( value1->type != VAR_INTEGER || value2->type != VAR_INTEGER )
   {
@@ -4310,7 +4310,7 @@ void CDECL Scr_EvalExOr(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalPlus(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalPlus(VariableValue *value1, VariableValue *value2)
 {
   unsigned int s;
   float *vec;
@@ -4367,7 +4367,7 @@ void CDECL Scr_EvalPlus(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalMinus(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalMinus(VariableValue *value1, VariableValue *value2)
 {
   float *tempVector;
 
@@ -4396,7 +4396,7 @@ void CDECL Scr_EvalMinus(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalMultiply(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalMultiply(VariableValue *value1, VariableValue *value2)
 {
   float *tempVector;
 
@@ -4427,7 +4427,7 @@ void CDECL Scr_EvalMultiply(VariableValue *value1, VariableValue *value2)
   }
 }
 
-void CDECL Scr_EvalDivide(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalDivide(VariableValue *value1, VariableValue *value2)
 {
   float *tempVector;
 
@@ -4488,7 +4488,7 @@ void CDECL Scr_EvalDivide(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalMod(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalMod(VariableValue *value1, VariableValue *value2)
 {
   if ( value1->type != VAR_INTEGER || value2->type != VAR_INTEGER )
   {
@@ -4506,7 +4506,7 @@ void CDECL Scr_EvalMod(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalLess(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalLess(VariableValue *value1, VariableValue *value2)
 {
   Scr_CastWeakerPair(value1, value2);
   assert(value1->type == value2->type);
@@ -4527,7 +4527,7 @@ void CDECL Scr_EvalLess(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalGreater(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalGreater(VariableValue *value1, VariableValue *value2)
 {
 
   Scr_CastWeakerPair(value1, value2);
@@ -4548,7 +4548,7 @@ void CDECL Scr_EvalGreater(VariableValue *value1, VariableValue *value2)
   }
 }
 
-void CDECL Scr_EvalGreaterEqual(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalGreaterEqual(VariableValue *value1, VariableValue *value2)
 {
   Scr_EvalLess(value1, value2);
   assert((value1->type == VAR_INTEGER) || (value1->type == VAR_UNDEFINED));
@@ -4557,7 +4557,7 @@ void CDECL Scr_EvalGreaterEqual(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalLessEqual(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalLessEqual(VariableValue *value1, VariableValue *value2)
 {
   Scr_EvalGreater(value1, value2);
   assert((value1->type == VAR_INTEGER) || (value1->type == VAR_UNDEFINED));
@@ -4565,7 +4565,7 @@ void CDECL Scr_EvalLessEqual(VariableValue *value1, VariableValue *value2)
   value1->u.intValue = value1->u.intValue == 0;
 }
 
-void CDECL Scr_EvalEquality(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalEquality(VariableValue *value1, VariableValue *value2)
 {
   int tempInt;
   int equal;
@@ -4628,7 +4628,7 @@ void CDECL Scr_EvalEquality(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalInequality(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalInequality(VariableValue *value1, VariableValue *value2)
 {
   Scr_EvalEquality(value1, value2);
   assert((value1->type == VAR_INTEGER) || (value1->type == VAR_UNDEFINED));
@@ -4636,7 +4636,7 @@ void CDECL Scr_EvalInequality(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalBoolNot(VariableValue *value)
+void CCDECL Scr_EvalBoolNot(VariableValue *value)
 {
   Scr_CastBool(value);
   if ( value->type == VAR_INTEGER )
@@ -4645,7 +4645,7 @@ void CDECL Scr_EvalBoolNot(VariableValue *value)
   }
 }
 
-void CDECL Scr_EvalBoolComplement(VariableValue *value)
+void CCDECL Scr_EvalBoolComplement(VariableValue *value)
 {
   int type;
 
@@ -4663,7 +4663,7 @@ void CDECL Scr_EvalBoolComplement(VariableValue *value)
 }
 
 
-void CDECL Scr_EvalShiftLeft(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalShiftLeft(VariableValue *value1, VariableValue *value2)
 {
   if ( value1->type != VAR_INTEGER || value2->type != VAR_INTEGER )
   {
@@ -4675,7 +4675,7 @@ void CDECL Scr_EvalShiftLeft(VariableValue *value1, VariableValue *value2)
   }
 }
 
-void CDECL Scr_EvalShiftRight(VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalShiftRight(VariableValue *value1, VariableValue *value2)
 {
   if ( value1->type != VAR_INTEGER || value2->type != VAR_INTEGER )
   {
@@ -4688,7 +4688,7 @@ void CDECL Scr_EvalShiftRight(VariableValue *value1, VariableValue *value2)
 }
 
 
-void CDECL Scr_EvalBinaryOperator(int op, VariableValue *value1, VariableValue *value2)
+void CCDECL Scr_EvalBinaryOperator(int op, VariableValue *value1, VariableValue *value2)
 {
   switch ( op )
   {

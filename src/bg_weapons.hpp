@@ -8,4 +8,4 @@ extern "C"
     extern unsigned int bg_lastParsedWeaponIndex;
 }
 
-const char* CDECL BG_WeaponName(int weapon);
+const char* CCDECL BG_WeaponName(int weapon);
