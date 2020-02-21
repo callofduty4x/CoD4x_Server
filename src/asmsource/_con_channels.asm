@@ -13,15 +13,19 @@
 	extern Cmd_AddCommand
 	extern FS_Printf
 	extern Con_FilterAdd
-
-
-
-
+	extern pcGlob
+	extern con_default_console_filter
+	extern Con_FilterList_f_VAR
+	extern Con_FilterRemove_f_VAR
+	extern Con_FilterAdd_f_VAR
+	extern Con_ChannelList_f_VAR
+	extern con_gameMsgWindowNFilter
+	extern con_gameMsgWindowNFilter_Descs
+	extern con_gameMsgWindowNFilter_Names
+	extern defaultGameWindowFilters
+	extern builtinChannels
 
 ;Exports of con_channels:
-	global pcGlob
-	global con_default_console_filter
-	global builtinChannels
 	global con_gameMsgWindowNFilter_BaseDesc
 	global con_gameMsgWindowNFilter_BaseName
 	global Con_ChannelList_f
@@ -30,10 +34,6 @@
 	global Con_FilterAdd_f
 	global Con_InitChannelsForDestFromList
 	global Con_FilterList_f
-	global _ZZ16Con_InitChannelsvE20Con_FilterList_f_VAR
-	global _ZZ16Con_InitChannelsvE22Con_FilterRemove_f_VAR
-	global _ZZ16Con_InitChannelsvE19Con_FilterAdd_f_VAR
-	global _ZZ16Con_InitChannelsvE21Con_ChannelList_f_VAR
 	global Con_GetChannel
 	global Con_OpenChannel
 	global Con_InitChannels
@@ -43,10 +43,6 @@
 	global Con_InitGameMsgChannels
 	global Con_ScriptHasPermission
 	global Con_WriteFilterConfigString
-	global con_gameMsgWindowNFilter
-	global con_gameMsgWindowNFilter_Descs
-	global con_gameMsgWindowNFilter_Names
-	global defaultGameWindowFilters
 
 
 SECTION .text
@@ -554,19 +550,19 @@ Con_InitChannels_60:
 	add ebx, 0x1
 	cmp ebx, 0x7
 	jnz Con_InitChannels_60
-	mov dword [esp+0x8], _ZZ16Con_InitChannelsvE21Con_ChannelList_f_VAR
+	mov dword [esp+0x8], Con_ChannelList_f_VAR
 	mov dword [esp+0x4], Con_ChannelList_f
 	mov dword [esp], _cstring_con_channellist
 	call Cmd_AddCommand
-	mov dword [esp+0x8], _ZZ16Con_InitChannelsvE19Con_FilterAdd_f_VAR
+	mov dword [esp+0x8], Con_FilterAdd_f_VAR
 	mov dword [esp+0x4], Con_FilterAdd_f
 	mov dword [esp], _cstring_con_showchannel
 	call Cmd_AddCommand
-	mov dword [esp+0x8], _ZZ16Con_InitChannelsvE22Con_FilterRemove_f_VAR
+	mov dword [esp+0x8], Con_FilterRemove_f_VAR
 	mov dword [esp+0x4], Con_FilterRemove_f
 	mov dword [esp], _cstring_con_hidechannel
 	call Cmd_AddCommand
-	mov dword [esp+0x8], _ZZ16Con_InitChannelsvE20Con_FilterList_f_VAR
+	mov dword [esp+0x8], Con_FilterList_f_VAR
 	mov dword [esp+0x4], Con_FilterList_f
 	mov dword [esp], _cstring_con_visiblechann
 	call Cmd_AddCommand
@@ -835,38 +831,12 @@ Con_WriteFilterConfigString_10:
 	pop ebp
 	ret
 
-
-;Initialized global or static variables of con_channels:
-SECTION .data
-builtinChannels: dd _cstring_dontfilter, _cstring_error, _cstring_gamenotify, _cstring_boldgame, _cstring_subtitle, _cstring_obituary, _cstring_logfile_only, _cstring_console_only, _cstring_gfx, _cstring_sound, _cstring_files, _cstring_devgui, _cstring_profile, _cstring_ui, _cstring_client, _cstring_server, _cstring_system, _cstring_playerweap, _cstring_ai, _cstring_anim, _cstring_physics, _cstring_fx, _cstring_leaderboards, _cstring_parserscript, _cstring_script, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-defaultGameWindowFilters: dd _cstring_gamenotify_obitu, _cstring_boldgame, _cstring_subtitle, _cstring_null, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of con_channels:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of con_channels:
-SECTION .bss
-pcGlob: resb 0x21e0
-con_default_console_filter: resb 0x4
-_ZZ16Con_InitChannelsvE20Con_FilterList_f_VAR: resb 0x14
-_ZZ16Con_InitChannelsvE22Con_FilterRemove_f_VAR: resb 0x14
-_ZZ16Con_InitChannelsvE19Con_FilterAdd_f_VAR: resb 0x14
-_ZZ16Con_InitChannelsvE21Con_ChannelList_f_VAR: resb 0x60
-con_gameMsgWindowNFilter: resb 0x1c
-con_gameMsgWindowNFilter_Descs: resb 0x180
-con_gameMsgWindowNFilter_Names: resb 0x64
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_s:		db "%s",0ah,0
 _cstring_adding_channel_s:		db "Adding channel: %s",0ah,0
 _cstring_no_channels_adde:		db "No channels added or hidden",0ah,0
 _cstring_hiding_channel_s:		db "Hiding channel: %s",0ah,0
-_cstring_null:		db 0
-_cstring_usage_s_channelc:		db "USAGE: %s <channel>",0ah,"<channel> may include wildcards */",3fh,0ah,0
 _cstring_:		db "*",0
 _cstring_channel_name_too:		db "Channel name too long in specified list: ",22h,"%s",22h,0ah,0
 _cstring_default_channel_:		db "Default channel filter for the console destination.",0
@@ -882,34 +852,3 @@ _cstring_con_visiblechann:		db "con_visiblechannellist",0
 _cstring_con_hidechannel_:		db "con_hidechannel *; con_showchannel",0
 _cstring__s:		db " %s",0
 _cstring_1:		db 0ah,0
-_cstring_dontfilter:		db "dontfilter",0
-_cstring_gamenotify:		db "gamenotify",0
-_cstring_boldgame:		db "boldgame",0
-_cstring_subtitle:		db "subtitle",0
-_cstring_obituary:		db "obituary",0
-_cstring_logfile_only:		db "logfile_only",0
-_cstring_console_only:		db "console_only",0
-_cstring_gfx:		db "gfx",0
-_cstring_sound:		db "sound",0
-_cstring_files:		db "files",0
-_cstring_devgui:		db "devgui",0
-_cstring_profile:		db "profile",0
-_cstring_ui:		db "ui",0
-_cstring_client:		db "client",0
-_cstring_server:		db "server",0
-_cstring_system:		db "system",0
-_cstring_playerweap:		db "playerweap",0
-_cstring_ai:		db "ai",0
-_cstring_anim:		db "anim",0
-_cstring_physics:		db "physics",0
-_cstring_fx:		db "fx",0
-_cstring_leaderboards:		db "leaderboards",0
-_cstring_parserscript:		db "parserscript",0
-_cstring_script:		db "script",0
-_cstring_gamenotify_obitu:		db "gamenotify obituary",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

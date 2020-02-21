@@ -167,28 +167,9 @@ StringTable_GetColumnValueForRow_20:
 	ret
 	nop
 
-
-;Initialized global or static variables of com_stringtable:
-SECTION .data
-
-
-;Initialized constant data of com_stringtable:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of com_stringtable:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_null:		db 0
 _cstring_unable_to_compar:		db "Unable to compare against column number %i - there are only %i columns",0
 _cstring_unable_to_find_t:		db "Unable to find the lookup table in the fastfile, aborting lookup",0ah,0
 _cstring_trying_to_use_a_:		db "Trying to use a string table with fast file loading disabled.",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

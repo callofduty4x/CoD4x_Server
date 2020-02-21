@@ -1,5 +1,4 @@
 #pragma once
-
 #include "q_platform.hpp"
 
 
@@ -18,6 +17,19 @@ enum print_msg_dest_t
 
 extern "C"
 {
+    extern char pcGlob[0x21e0];
+    extern int con_default_console_filter;
+    extern char Con_FilterList_f_VAR[0x14];
+    extern char Con_FilterRemove_f_VAR[0x14];
+    extern char Con_FilterAdd_f_VAR[0x14];
+    extern char Con_ChannelList_f_VAR[0x60];
+    extern char con_gameMsgWindowNFilter[0x1c];
+    extern char con_gameMsgWindowNFilter_Descs[0x180];
+    extern char con_gameMsgWindowNFilter_Names[0x64];
+
+    extern const char* defaultGameWindowFilters[4];
+    extern const char* builtinChannels[25];
+
     void CCDECL Con_FilterAdd(bool show);
     void CCDECL Con_FilterShowChannel(print_msg_dest_t, const char* channelName, bool show);
 }
