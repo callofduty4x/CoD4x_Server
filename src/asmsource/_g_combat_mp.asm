@@ -54,10 +54,11 @@
 	extern colorWhite
 	extern DObjPhysicsGetBounds
 	extern modNames
-
+	extern g_HitLocConstNames
+	extern g_fHitLocDamageMult
+	extern g_HitLocNames
+	
 ;Exports of g_combat_mp:
-	global g_HitLocConstNames
-	global g_HitLocNames
 	global G_HitLocStrcpy
 	global player_die
 	global G_DamageClient
@@ -70,9 +71,6 @@
 	global G_GetHitLocationIndexFromString
 	global G_Damage
 	global CanDamage
-	global bulletPriorityMap
-	global riflePriorityMap
-	global g_fHitLocDamageMult
 
 
 SECTION .text
@@ -2330,25 +2328,6 @@ CanDamage_140:
 	jmp CanDamage_440
 	nop
 
-
-;Initialized global or static variables of g_combat_mp:
-SECTION .data
-g_HitLocNames: dd _cstring_none, _cstring_helmet, _cstring_head, _cstring_neck, _cstring_torso_upper, _cstring_torso_lower, _cstring_right_arm_upper, _cstring_left_arm_upper, _cstring_right_arm_lower, _cstring_left_arm_lower, _cstring_right_hand, _cstring_left_hand, _cstring_right_leg_upper, _cstring_left_leg_upper, _cstring_right_leg_lower, _cstring_left_leg_lower, _cstring_right_foot, _cstring_left_foot, _cstring_gun, 0x0, 0x0, 0x0, 0x0, 0x0
-bulletPriorityMap: dd 0x3030301, 0x3030303, 0x3030303, 0x3030303, 0x303, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-		db 0x0
-riflePriorityMap: dd 0x9090901, 0x6060708, 0x5050606, 0x4040404
-		db 0x3, 0x3, 0x0
-
-;Initialized constant data of g_combat_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_combat_mp:
-SECTION .bss
-g_HitLocConstNames: resb 0x80
-g_fHitLocDamageMult: resb 0x80
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_addscrteamname_u:		db "AddScrTeamName(): Unhandled team name %i.",0ah,0
@@ -2359,26 +2338,6 @@ _cstring_error_parsing_hi:		db 15h,"Error parsing hitloc damage table %s",0ah,0
 _cstring_unknown_means_of:		db "Unknown means of death ",22h,"%s",22h,0ah,0
 _cstring_null:		db 0
 _cstring_targeti_healthi_:		db "target:%i health:%i damage:%i",0ah,0
-_cstring_none:		db "none",0
-_cstring_helmet:		db "helmet",0
-_cstring_head:		db "head",0
-_cstring_neck:		db "neck",0
-_cstring_torso_upper:		db "torso_upper",0
-_cstring_torso_lower:		db "torso_lower",0
-_cstring_right_arm_upper:		db "right_arm_upper",0
-_cstring_left_arm_upper:		db "left_arm_upper",0
-_cstring_right_arm_lower:		db "right_arm_lower",0
-_cstring_left_arm_lower:		db "left_arm_lower",0
-_cstring_right_hand:		db "right_hand",0
-_cstring_left_hand:		db "left_hand",0
-_cstring_right_leg_upper:		db "right_leg_upper",0
-_cstring_left_leg_upper:		db "left_leg_upper",0
-_cstring_right_leg_lower:		db "right_leg_lower",0
-_cstring_left_leg_lower:		db "left_leg_lower",0
-_cstring_right_foot:		db "right_foot",0
-_cstring_left_foot:		db "left_foot",0
-_cstring_gun:		db "gun",0
-
 
 
 ;All constant floats and doubles:

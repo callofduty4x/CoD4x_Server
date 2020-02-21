@@ -34,6 +34,7 @@
 	extern CheatsOk
 	extern Cvar_VariableIntegerValue
 	extern g_gametype
+	extern ConcatArgs_line
 
 ;Exports of g_cmds_mp:
 	global Cmd_Give_f
@@ -64,11 +65,11 @@ Cmd_Give_f:
 	call atoi
 	mov [ebp-0x424], eax
 	mov dword [esp+8], 1024
-	mov dword [esp+4], _ZZ10ConcatArgsiE4line
+	mov dword [esp+4], ConcatArgs_line
 	mov dword [esp], 1
 	call SV_Cmd_ArgvBuffer
 	mov dword [esp+0x4], _cstring_all
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmp
 	test eax, eax
 	jnz Cmd_Give_f_40
@@ -116,7 +117,7 @@ Cmd_Give_f_330:
 Cmd_Give_f_370:
 	mov dword [esp+0x8], 0x7
 	mov dword [esp+0x4], _cstring_allammo
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmpn
 	test eax, eax
 	jnz Cmd_Give_f_110
@@ -157,7 +158,7 @@ Cmd_Give_f_50:
 Cmd_Give_f_40:
 	mov dword [esp+0x8], 0x6
 	mov dword [esp+0x4], _cstring_health
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmpn
 	test eax, eax
 	jnz Cmd_Give_f_240
@@ -167,7 +168,7 @@ Cmd_Give_f_130:
 	mov ebx, level
 	mov dword [ebx+0x1c], 0x1
 	mov dword [esp+0x4], 0x0
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call G_FindItem
 	mov esi, eax
 	test eax, eax
@@ -254,7 +255,7 @@ Cmd_Give_f_100:
 	jmp Cmd_Give_f_330
 Cmd_Give_f_240:
 	mov dword [esp+0x4], _cstring_weapons
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmp
 	test eax, eax
 	jnz Cmd_Give_f_340
@@ -266,7 +267,7 @@ Cmd_Give_f_260:
 Cmd_Give_f_340:
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], _cstring_ammo
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmpn
 	test eax, eax
 	jz Cmd_Give_f_360
@@ -327,11 +328,11 @@ Cmd_Take_f:
 	call atoi
 	mov [ebp-0x430], eax
 	mov dword [esp+8], 1024
-	mov dword [esp+4], _ZZ10ConcatArgsiE4line
+	mov dword [esp+4], ConcatArgs_line
 	mov dword [esp], 1
 	call SV_Cmd_ArgvBuffer
 	mov dword [esp+0x4], _cstring_all
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmp
 	test eax, eax
 	jnz Cmd_Take_f_40
@@ -391,7 +392,7 @@ Cmd_Take_f_300:
 Cmd_Take_f_340:
 	mov dword [esp+0x8], 0x7
 	mov dword [esp+0x4], _cstring_allammo
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmpn
 	test eax, eax
 	jnz Cmd_Take_f_10
@@ -412,7 +413,7 @@ Cmd_Take_f_50:
 Cmd_Take_f_40:
 	mov dword [esp+0x8], 0x6
 	mov dword [esp+0x4], _cstring_health
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmpn
 	test eax, eax
 	jnz Cmd_Take_f_220
@@ -561,7 +562,7 @@ Cmd_Take_f_260:
 	jmp Cmd_Take_f_310
 Cmd_Take_f_220:
 	mov dword [esp+0x4], _cstring_weapons
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmp
 	test eax, eax
 	jnz Cmd_Take_f_320
@@ -570,7 +571,7 @@ Cmd_Take_f_220:
 Cmd_Take_f_320:
 	mov dword [esp+0x8], 0x4
 	mov dword [esp+0x4], _cstring_ammo
-	mov dword [esp], _ZZ10ConcatArgsiE4line
+	mov dword [esp], ConcatArgs_line
 	call Q_stricmpn
 	test eax, eax
 	jnz Cmd_Take_f_340
@@ -833,19 +834,6 @@ G_setfog_10:
 	pop esi
 	pop ebp
 	ret
-
-
-;Initialized global or static variables of g_cmds_mp:
-SECTION .data
-
-
-;Initialized constant data of g_cmds_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_cmds_mp:
-SECTION .bss
-_ZZ10ConcatArgsiE4line: resb 0x400
 
 
 ;All cstrings:

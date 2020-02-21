@@ -45,7 +45,7 @@
 	extern voice_localEcho
 	extern OnSameTeam
 	extern AngleVectors
-	extern _ZZ15G_TouchTriggersP9gentity_sE5range
+	extern G_TouchTriggers_range
 	extern perk_parabolicAngle
 	extern cos
 	extern perk_parabolicRadius
@@ -491,7 +491,7 @@ G_BroadcastVoice_20:
 	addss xmm0, xmm1
 	sqrtss xmm0, xmm0
 	movss [ebp-0x2c], xmm0
-	xorps xmm0, [_ZZ15G_TouchTriggersP9gentity_sE5range+0x100]
+	xorps xmm0, [G_TouchTriggers_range+0x100]
 	ucomiss xmm0, [_float_0_00000000]
 	jb G_BroadcastVoice_130
 	movss xmm0, dword [_float_1_00000000]
@@ -627,7 +627,7 @@ SetClientViewAngle_20:
 	ucomiss xmm2, xmm1
 	ja SetClientViewAngle_50
 	movaps xmm0, xmm1
-	xorps xmm0, [_ZZ15G_TouchTriggersP9gentity_sE5range+0x110]
+	xorps xmm0, [G_TouchTriggers_range+0x110]
 	ucomiss xmm0, xmm2
 	ja SetClientViewAngle_60
 SetClientViewAngle_110:
@@ -1044,30 +1044,10 @@ G_GetPlayerViewOrigin_20:
 	jmp Com_Error
 
 
-;Initialized global or static variables of g_client_mp:
-SECTION .data
-
-
-;Initialized constant data of g_client_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_client_mp:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
-_cstring_password:		db "password",0
-_cstring_none:		db "none",0
-_cstring_game_invalidpass:		db "GAME_INVALIDPASSWORD",0
-_cstring_clients_cant_con:		db "Clients can",27h,"t connect if the server is in developer mode",0ah,0
-_cstring_game_invalidserv:		db "GAME_INVALIDSERVER",0
 _cstring_disconnect:		db "disconnect",0
 _cstring_1:		db "-1",0
-_cstring_cg_predictitems:		db "cg_predictItems",0
-_cstring_name:		db "name",0
-_cstring_unnamedplayer:		db "UnnamedPlayer",0
 _cstring_g_getplayerviewo:		db 15h,"G_GetPlayerViewOrigin: Couldn",27h,"t find [tag_player] on turret",0ah,0
 
 

@@ -25,6 +25,10 @@ extern "C"
     extern cvar_t* missileJavTurnRateTop;
     extern cvar_t* missileWaterMaxDepth;
 
+    extern const float MY_STRAIGHTUPNORMAL[3];
+    extern float MYJAVELINOFFSET;
+    extern float MYJAVELINOFFSET_RIGHT;
+
     void Scr_MissileCreateAttractorEnt();
     void Scr_MissileCreateAttractorOrigin();
     void Scr_MissileCreateRepulsorEnt();

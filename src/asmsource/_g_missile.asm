@@ -109,6 +109,9 @@
 	extern missileJavTurnRateDirect
 	extern missileJavTurnRateTop
 	extern missileWaterMaxDepth
+	extern MY_STRAIGHTUPNORMAL
+	extern MYJAVELINOFFSET
+	extern MYJAVELINOFFSET_RIGHT
 
 
 ;Exports of g_missile:
@@ -1317,7 +1320,7 @@ MissileImpact_510:
 	test eax, eax
 	jz MissileImpact_180
 MissileImpact_520:
-	mov eax, _ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL
+	mov eax, MY_STRAIGHTUPNORMAL
 MissileImpact_400:
 	cmp byte [ebp-0x92], 0x0
 	jz MissileImpact_190
@@ -3150,7 +3153,7 @@ G_FireRocket_30:
 	jmp G_FireRocket_180
 G_FireRocket_20:
 	movaps xmm2, xmm0
-	addss xmm2, [_ZZ12G_FireRocketP9gentity_sjPfS1_PKfS0_S3_E15MYJAVELINOFFSET]
+	addss xmm2, [MYJAVELINOFFSET]
 	movss [eax], xmm2
 	mov ecx, [ebp+0x14]
 	movss xmm3, dword [ecx]
@@ -3185,7 +3188,7 @@ G_FireRocket_210:
 	add eax, 0x3c
 	mov [esp], eax
 	call AngleVectors
-	movss xmm1, dword [_ZZ12G_FireRocketP9gentity_sjPfS1_PKfS0_S3_E21MYJAVELINOFFSET_RIGHT]
+	movss xmm1, dword [MYJAVELINOFFSET_RIGHT]
 	movaps xmm0, xmm1
 	mulss xmm0, [ebp-0x24]
 	mov eax, [ebp+0x10]
@@ -5199,7 +5202,7 @@ G_ExplodeMissile_320:
 	mov eax, [edi+0x590]
 	test eax, eax
 	jz G_ExplodeMissile_240
-	mov edx, _ZZ16G_ExplodeMissileP9gentity_sE19MY_STRAIGHTUPNORMAL
+	mov edx, MY_STRAIGHTUPNORMAL
 G_ExplodeMissile_300:
 	mov eax, [ebp-0x70]
 	and eax, 0x1f00000
@@ -6139,18 +6142,6 @@ Scr_MissileCreateAttractorOrigin_40:
 	pop ebp
 	ret
 	nop
-
-
-;Initialized global or static variables of g_missile:
-SECTION .data
-_ZZ12G_FireRocketP9gentity_sjPfS1_PKfS0_S3_E21MYJAVELINOFFSET_RIGHT: dd 0x41200000
-_ZZ12G_FireRocketP9gentity_sjPfS1_PKfS0_S3_E15MYJAVELINOFFSET: dd 0x3e99999a, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of g_missile:
-SECTION .rdata
-_ZZ16G_ExplodeMissileP9gentity_sE19MY_STRAIGHTUPNORMAL: dd 0x0, 0x0, 0x3f800000, 0x0, 0x80000000, 0x0, 0x0, 0x0
-_ZZ13MissileImpactP9gentity_sP7trace_tPfS3_E19MY_STRAIGHTUPNORMAL: dd 0x0, 0x0, 0x3f800000, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
 
 
 ;All cstrings:

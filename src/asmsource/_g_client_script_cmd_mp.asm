@@ -6770,17 +6770,6 @@ BodyEnd:
 	ret
 
 
-;Initialized global or static variables of g_client_script_cmd_mp:
-SECTION .data
-
-
-;Initialized constant data of g_client_script_cmd_mp:
-SECTION .rdata
-
-;Zero initialized global or static variables of g_client_script_cmd_mp:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_not_an_entity:		db "not an entity",0

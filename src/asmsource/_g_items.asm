@@ -70,6 +70,8 @@
 	extern BG_EvaluateTrajectory
 	extern SV_PointContents
 	extern CS_DisplayName
+	extern itemRegistered
+
 
 ;Exports of g_items:
 	global TransferRandomAmmoToWeaponEntity
@@ -90,7 +92,6 @@
 	global Drop_Item
 	global Fill_Clip
 	global G_RunItem
-	global itemRegistered
 
 
 SECTION .text
@@ -2913,20 +2914,6 @@ G_RunItem_140:
 	sub eax, 0x1
 	jmp G_RunItem_170
 	nop
-
-
-;Initialized global or static variables of g_items:
-SECTION .data
-
-
-;Initialized constant data of g_items:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_items:
-SECTION .bss
-itemRegistered: resb 0x2064
-
 
 ;All cstrings:
 SECTION .rdata

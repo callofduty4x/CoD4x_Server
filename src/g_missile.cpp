@@ -23,4 +23,8 @@ extern "C"
     cvar_t* missileJavTurnRateDirect;
     cvar_t* missileJavTurnRateTop;
     cvar_t* missileWaterMaxDepth;
+
+    const float MY_STRAIGHTUPNORMAL[3] = { 0.0f, 0.0f, 1.0f };
+    float MYJAVELINOFFSET = 0.3f;
+    float MYJAVELINOFFSET_RIGHT = 10.0f;
 }

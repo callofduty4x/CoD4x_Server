@@ -25,4 +25,33 @@ extern "C"
       &scr_const.MOD_EXPLOSIVE,
       &scr_const.MOD_IMPACT
     };
+
+    char g_HitLocConstNames[0x80];
+    char g_fHitLocDamageMult[0x80];
+
+    unsigned char riflePriorityMap[19] = { 1, 9, 9, 9, 8, 7, 6, 6, 6, 6, 5, 5, 4, 4, 4, 4, 3, 3, 0 };
+    unsigned char bulletPriorityMap[19] = { 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0 };
+    const char* g_HitLocNames[19] =
+    {
+        "none",
+        "helmet",
+        "head",
+        "neck",
+        "torso_upper",
+        "torso_lower",
+        "right_arm_upper",
+        "left_arm_upper",
+        "right_arm_lower",
+        "left_arm_lower",
+        "right_hand",
+        "left_hand",
+        "right_leg_upper",
+        "left_leg_upper",
+        "right_leg_lower",
+        "left_leg_lower",
+        "right_foot",
+        "left_foot",
+        "gun",
+    };
+
 }

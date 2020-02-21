@@ -7,12 +7,13 @@
 	extern memcpy
 	extern CM_EntityString
 	extern Com_sprintf
+	extern vtos_str
+	extern vtos_index
+	extern g_entityEndParsePoint
+	extern g_entityBeginParsePoint
+
 
 ;Exports of g_load_utils:
-	global g_entityEndParsePoint
-	global g_entityBeginParsePoint
-	global _ZZ4vtosPKfE3str
-	global _ZZ4vtosPKfE5index
 	global G_NewString
 	global G_ParseSpawnVars
 	global G_GetEntityParsePoint
@@ -313,13 +314,13 @@ vtos:
 	push ebx
 	sub esp, 0x24
 	mov edx, [ebp+0x8]
-	mov eax, [_ZZ4vtosPKfE5index]
+	mov eax, [vtos_index]
 	mov ecx, eax
 	shl ecx, 0x5
-	lea ebx, [ecx+_ZZ4vtosPKfE3str]
+	lea ebx, [ecx+vtos_str]
 	add eax, 0x1
 	and eax, 0x7
-	mov [_ZZ4vtosPKfE5index], eax
+	mov [vtos_index], eax
 	cvttss2si eax, [edx+0x8]
 	mov [esp+0x14], eax
 	cvttss2si eax, [edx+0x4]
@@ -337,23 +338,6 @@ vtos:
 	ret
 	nop
 
-
-;Initialized global or static variables of g_load_utils:
-SECTION .data
-
-
-;Initialized constant data of g_load_utils:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_load_utils:
-SECTION .bss
-g_entityEndParsePoint: resb 0x4
-g_entityBeginParsePoint: resb 0x1c
-_ZZ4vtosPKfE3str: resb 0x100
-_ZZ4vtosPKfE5index: resb 0x60
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_g_newstring_len_:		db 15h,"G_NewString: len = %i > %i",0ah,0
@@ -363,9 +347,3 @@ _cstring_g_parsespawnvars1:		db 15h,"G_ParseSpawnVars: EOF without closing brace
 _cstring_g_parsespawnvars2:		db 15h,"G_ParseSpawnVars: closing brace without data",0
 _cstring_g_parsespawnvars3:		db 15h,"G_ParseSpawnVars: MAX_SPAWN_VARS",0
 _cstring_i_i_i:		db "(%i %i %i)",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

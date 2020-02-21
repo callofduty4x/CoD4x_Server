@@ -7,9 +7,9 @@
 	extern Vec3NormalizeTo
 	extern PerpendicularVector
 	extern CL_AddDebugStarWithText
+	extern G_DebugBox_iEdgePairs
 
 ;Exports of g_debug:
-	global _ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs
 	global G_DebugBox
 	global G_DebugLine
 	global G_DebugStar
@@ -90,8 +90,8 @@ G_DebugBox_50:
 	mov [ebp-0x90], eax
 	cmp esi, 0x8
 	jnz G_DebugBox_30
-	mov ebx, _ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs+0x4
-	mov esi, _ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs+0x64
+	mov ebx, G_DebugBox_iEdgePairs+0x4
+	mov esi, G_DebugBox_iEdgePairs+0x64
 G_DebugBox_40:
 	mov dword [esp+0x14], 0x1
 	mov eax, [ebp+0x20]
@@ -393,24 +393,6 @@ G_DebugLineWithDuration:
 	leave
 	ret
 	nop
-
-
-;Initialized global or static variables of g_debug:
-SECTION .data
-
-
-;Initialized constant data of g_debug:
-SECTION .rdata
-_ZZ10G_DebugBoxPKfS0_S0_fS0_iiE10iEdgePairs: dd 0x0, 0x1, 0x0, 0x2, 0x0, 0x4, 0x1, 0x3, 0x1, 0x5, 0x2, 0x3, 0x2, 0x6, 0x3, 0x7, 0x4, 0x5, 0x4, 0x6, 0x5, 0x7, 0x6, 0x7, 0x45300000, 0x43300000, 0x0, 0x0, 0x0, 0x45300000, 0x0, 0x43300000, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x7fffffff, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0
-
-
-;Zero initialized global or static variables of g_debug:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
 
 
 ;All constant floats and doubles:
