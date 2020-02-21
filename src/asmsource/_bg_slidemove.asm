@@ -1207,23 +1207,6 @@ PM_StepSlideMove_210:
 	jmp PM_StepSlideMove_390
 
 
-;Initialized global or static variables of bg_slidemove:
-SECTION .data
-
-
-;Initialized constant data of bg_slidemove:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of bg_slidemove:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_50000000:		dd 0x3f000000	; 0.5

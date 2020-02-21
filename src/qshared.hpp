@@ -106,12 +106,7 @@ using qboolean = EQBoolean;
 
 #define LIBRARY_ADDRESS_BY_HANDLE(dlhandle)((NULL == dlhandle) ? NULL :(void*)*(size_t const*)(dlhandle))
 
-struct cspField_t
-{
-  const char *szName;
-  int iOffset;
-  int iFieldType;
-};
+struct cspField_t;
 
 extern "C"
 {

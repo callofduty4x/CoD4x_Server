@@ -35,25 +35,3 @@ BG_VehiclesGetSlotTagName_20:
 	pop ebp
 	ret
 	add [eax], al
-
-
-;Initialized global or static variables of bg_vehicles_mp:
-SECTION .data
-
-
-;Initialized constant data of bg_vehicles_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of bg_vehicles_mp:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

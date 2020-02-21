@@ -32,6 +32,7 @@
 #include "misc.hpp"
 #include "null_client.hpp"
 #include "qvsnprintf.hpp"
+#include "csp_field.hpp"
 
 
 int Q_isprint( int c )
