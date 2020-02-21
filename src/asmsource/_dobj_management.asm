@@ -6,15 +6,15 @@
 	extern Com_Error
 	extern DObjFree
 	extern DObjSkelClear
+	extern g_bDObjInited
+	extern com_lastDObjIndex
+	extern serverObjMap
+	extern clientObjMap
+	extern objFreeCount
+	extern objAlloced
+	extern objBuf
 
 ;Exports of dobj_management:
-	global g_bDObjInited
-	global com_lastDObjIndex
-	global serverObjMap
-	global clientObjMap
-	global objFreeCount
-	global objAlloced
-	global objBuf
 	global Com_InitDObj
 	global DB_LoadDObjs
 	global DB_SaveDObjs
@@ -462,31 +462,6 @@ Com_ClientDObjClearAllSkel_20:
 	nop
 
 
-;Zero initialized global or static variables of dobj_management:
-SECTION .bss
-g_bDObjInited: resb 0x4
-com_lastDObjIndex: resb 0x1c
-serverObjMap: resb 0x800
-clientObjMap: resb 0x900
-objFreeCount: resb 0x20
-objAlloced: resb 0x800
-objBuf: resb 0x32040
-
-
-;Initialized global or static variables of dobj_management:
-SECTION .data
-
-
-;Initialized constant data of dobj_management:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_no_free_dobjs:		db 15h,"No free DObjs",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

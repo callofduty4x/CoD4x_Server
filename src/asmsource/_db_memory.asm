@@ -385,23 +385,9 @@ DB_ReleaseGeometryBuffers_30:
 	ret
 
 
-;Zero initialized global or static variables of db_memory:
-SECTION .bss
-
-
-;Initialized global or static variables of db_memory:
-SECTION .data
-
-;Initialized constant data of db_memory:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_db_allocxzonemem:		db "DB_AllocXZoneMemory",0
-_cstring_could_not_alloca:		db "Could not allocate %.2f MB of type ",27h,"%s",27h," for zone ",27h,"%s",27h," needed an additional %.2f MB",0
-
-
 
 ;All constant floats and doubles:
 SECTION .rdata

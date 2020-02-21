@@ -93,3 +93,7 @@ void CCDECL ConvertQuatToMat(DObjAnimMat *mat, vec3_t axis[3])
   axis[2][2] = 1.0 - xx + yy;
 }
 
+extern "C"
+{
+    char g_empty[0x80];
+} // extern "C"

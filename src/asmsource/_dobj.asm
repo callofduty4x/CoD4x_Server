@@ -28,9 +28,9 @@
 	extern XModelTraceLineAnimatedPartBits
 	extern Phys_ObjSetCollisionFromXModel
 	extern XModelBad
+	extern g_empty
 
 ;Exports of dobj:
-	global g_empty
 	global LocalInvMatrixTransformVectorQuatTrans
 	global DObjCreate
 	global DObjArchive
@@ -2972,20 +2972,6 @@ DObjInit:
 	leave
 	ret
 	nop
-
-
-;Zero initialized global or static variables of dobj:
-SECTION .bss
-g_empty: resb 0x80
-
-
-;Initialized global or static variables of dobj:
-SECTION .data
-
-
-;Initialized constant data of dobj:
-SECTION .rdata
-
 
 ;All cstrings:
 SECTION .rdata

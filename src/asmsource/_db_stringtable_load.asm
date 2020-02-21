@@ -27,25 +27,3 @@ Mark_ScriptStringCustom_10:
 	call SL_AddUser
 	leave
 	ret
-
-
-;Zero initialized global or static variables of db_stringtable_load:
-SECTION .bss
-
-
-;Initialized global or static variables of db_stringtable_load:
-SECTION .data
-
-
-;Initialized constant data of db_stringtable_load:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-
