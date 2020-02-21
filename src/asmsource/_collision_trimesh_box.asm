@@ -2679,23 +2679,6 @@ dCollideBoxTriangleList_810:
 	jmp dCollideBoxTriangleList_820
 
 
-;Initialized global or static variables of collision_trimesh_box:
-SECTION .data
-
-
-;Initialized constant data of collision_trimesh_box:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of collision_trimesh_box:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_01000000:		dd 0x3c23d70a	; 0.01

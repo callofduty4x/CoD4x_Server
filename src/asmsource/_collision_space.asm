@@ -1422,27 +1422,9 @@ dSpaceRemove:
 	jmp ecx
 
 
-;Initialized global or static variables of collision_space:
-SECTION .data
-
-
 ;Initialized constant data of collision_space:
 SECTION .rdata
 ;VTable for dxSimpleSpace:
 _ZTV13dxSimpleSpace: dd 0x0, 0x3b4e40, _ZN13dxSimpleSpaceD1Ev, _ZN13dxSimpleSpaceD0Ev, _ZN7dxSpace11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, _ZN7dxSpace7getGeomEi, _ZN7dxSpace3addEP6dxGeom, _ZN7dxSpace6removeEP6dxGeom, _ZN7dxSpace5dirtyEP6dxGeom, _ZN13dxSimpleSpace10cleanGeomsEv, _ZN13dxSimpleSpace7collideEPvPFvS0_P6dxGeomS2_E, _ZN13dxSimpleSpace8collide2EPvP6dxGeomPFvS0_S2_S2_E, 0x0
 ;VTable for dxSpace:
 _ZTV7dxSpace: dd 0x0, 0x3b4e20, _ZN7dxSpaceD1Ev, _ZN7dxSpaceD0Ev, _ZN7dxSpace11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, _ZN7dxSpace7getGeomEi, _ZN7dxSpace3addEP6dxGeom, _ZN7dxSpace6removeEP6dxGeom, _ZN7dxSpace5dirtyEP6dxGeom, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Zero initialized global or static variables of collision_space:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

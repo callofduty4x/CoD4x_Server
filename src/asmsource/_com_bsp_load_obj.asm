@@ -23,7 +23,6 @@
 
 
 ;Exports of com_bsp_load_obj:
-	global _ZZ29Com_GetBspLumpCountForVersioniE15lumpsForVersion
 	global Com_LoadWorld_FastFile
 	global Com_LoadWorld_LoadObj
 	global Com_SaveLump
@@ -733,29 +732,10 @@ Com_ShutdownWorld:
 	nop
 
 
-;Zero initialized global or static variables of com_bsp_load_obj:
-SECTION .bss
-;comBspGlob: resb 0x80
-
-
-;Initialized global or static variables of com_bsp_load_obj:
-SECTION .data
-_ZZ29Com_GetBspLumpCountForVersioniE15lumpsForVersion: dd 0x29, 0x29, 0x2a, 0x2b, 0x2b, 0x2b, 0x2b, 0x2c, 0x2c, 0x2c, 0x2e, 0x2e, 0x2f, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of com_bsp_load_obj:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_no_primary_light:		db "no primary lights in bsp",0ah,0
-_cstring_exe_err_couldnt_:		db "EXE_ERR_COULDNT_LOAD",15h,"%s",0
-_cstring_exe_err_wrong_ma:		db "EXE_ERR_WRONG_MAP_VERSION_NUM",15h,"%s",0
 _cstring_failed_to_open_f:		db "Failed to open file %s for writing",0
-_cstring_loadmap_lump_i_h:		db 15h,"LoadMap: lump %i has funny size",0
-_cstring_loadmap_lump_i_e:		db 15h,"LoadMap: lump %i extends past end of file",0
-
 
 
 ;All constant floats and doubles:

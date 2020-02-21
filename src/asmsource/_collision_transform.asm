@@ -666,26 +666,7 @@ dGeomTransformSetGeom_20:
 	pop ebp
 	ret
 
-
-;Initialized global or static variables of collision_transform:
-SECTION .data
-
-
 ;Initialized constant data of collision_transform:
 SECTION .rdata
 ;VTable for dxGeomTransform:
 _ZTV15dxGeomTransform: dd 0x0, 0x3b4e80, _ZN15dxGeomTransformD1Ev, _ZN15dxGeomTransformD0Ev, _ZN15dxGeomTransform11computeAABBEv, _ZN6dxGeom8AABBTestEPS_Pf, 0x0, 0x0
-
-
-;Zero initialized global or static variables of collision_transform:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-
