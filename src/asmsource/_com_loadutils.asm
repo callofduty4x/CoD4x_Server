@@ -258,18 +258,6 @@ Com_UnloadRawTextFile_10:
 	jmp FS_FreeFile
 
 
-;Initialized global or static variables of com_loadutils:
-SECTION .data
-
-
-;Initialized constant data of com_loadutils:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of com_loadutils:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_file_s_is_not_a_:		db 015h,"File [%s] is not a valid %s",0ah,0
@@ -278,9 +266,3 @@ _cstring_file_s_is_not_a_1:		db 015h,"File [%s] is not a %s file",0ah,0
 _cstring_file_s_is_not_a_2:		db 015h,"File [%s] is not a %s",0ah,0
 _cstring_could_not_load_s:		db 015h,"Could not load %s [%s]",0ah,0
 _cstring_could_not_load_s1:		db 015h,"Could not load %s file [%s]",0ah,0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

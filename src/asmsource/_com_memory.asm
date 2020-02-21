@@ -25,22 +25,22 @@
 	extern free
 	extern strcpy
 	extern memset
+	extern g_debugUser
+	extern g_largeLocalPos
+	extern g_largeLocalBuf
+	extern hunk_high
+	extern hunk_low
+	extern s_hunkData
+	extern s_hunkTotal
+	extern com_hunkData
+	extern com_fileDataHashTable
+	extern s_origHunkData
+	extern Com_Meminfo_f_VAR
 
 ;Exports of com_memory:
-	global g_debugUser
-	global g_largeLocalPos
-	global g_largeLocalBuf
-	global hunk_high
-	global hunk_low
-	global s_hunkData
-	global s_hunkTotal
-	global com_hunkData
-	global com_fileDataHashTable
-	global s_origHunkData
 	global Hunk_AddAsset
 	global Com_Meminfo_f
 	global Hunk_ClearData
-	global _ZZ18Com_InitHunkMemoryE17Com_Meminfo_f_VAR
 	global Com_InitHunkMemory
 	global Com_TouchMemory
 	global CopyStringInternal
@@ -326,7 +326,7 @@ Com_InitHunkMemory_40:
 	mov eax, [s_hunkData]
 	mov [esp], eax
 	call _VirtualFree
-	mov dword [esp+0x8], _ZZ18Com_InitHunkMemoryE17Com_Meminfo_f_VAR
+	mov dword [esp+0x8], Com_Meminfo_f_VAR
 	mov dword [esp+0x4], Com_Meminfo_f
 	mov dword [esp], _cstring_meminfo
 	call Cmd_AddCommand
@@ -2032,30 +2032,6 @@ _ZN10LargeLocalD1Ev:
 	nop
 	add [eax], al
 
-
-;Zero initialized global or static variables of com_memory:
-SECTION .bss
-g_debugUser: resb 0x4
-g_largeLocalPos: resb 0x1c
-g_largeLocalBuf: resb 0x80000
-hunk_high: resb 0x8
-hunk_low: resb 0x8
-s_hunkData: resb 0x4
-s_hunkTotal: resb 0x4
-com_hunkData: resb 0x8
-com_fileDataHashTable: resb 0x1000
-s_origHunkData: resb 0x4
-_ZZ18Com_InitHunkMemoryE17Com_Meminfo_f_VAR: resb 0x3c
-
-
-;Initialized global or static variables of com_memory:
-SECTION .data
-
-
-;Initialized constant data of com_memory:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_8i_bytes_total_h:		db "%8i bytes total hunk",0ah,0
@@ -2076,9 +2052,3 @@ _cstring_hunk_useralloc_o:		db "Hunk_UserAlloc: out of memory",0
 _cstring_hunk_initdebugme:		db "Hunk_InitDebugMemory",0
 _cstring_hunk_allocalign_:		db 15h,"Hunk_AllocAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
 _cstring_hunk_alloclowali:		db 15h,"Hunk_AllocLowAlign failed on %i bytes (total %i MB, low %i MB, high %i MB)",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-
