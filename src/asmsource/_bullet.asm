@@ -1351,19 +1351,6 @@ Bullet_Endpos_130:
 	jmp Bullet_Endpos_170
 	nop
 
-
-;Initialized global or static variables of bullet:
-SECTION .data
-
-
-;Initialized constant data of bullet:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of bullet:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_scr_friendlyfire:		db "scr_friendlyfire",0

@@ -2210,19 +2210,6 @@ BuildBrushdAdjacencyWindingForSide_1560:
 	xor edx, edx
 	jmp BuildBrushdAdjacencyWindingForSide_1640
 
-
-;Initialized global or static variables of brush_edges:
-SECTION .data
-
-
-;Initialized constant data of brush_edges:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of brush_edges:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_brush_face_has_t:		db "Brush face has too many edges",0

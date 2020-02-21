@@ -132,23 +132,6 @@ CM_CalcTraceExtents_10:
 	nop
 
 
-;Zero initialized global or static variables of cm_tracebox:
-SECTION .bss
-
-
-;Initialized global or static variables of cm_tracebox:
-SECTION .data
-
-
-;Initialized constant data of cm_tracebox:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float__1_00000000:		dd 0xbf800000	; -1

@@ -277,23 +277,6 @@ CM_TraceStaticModelComplete:
 	ret
 
 
-;Zero initialized global or static variables of cm_staticmodel:
-SECTION .bss
-
-
-;Initialized global or static variables of cm_staticmodel:
-SECTION .data
-
-
-;Initialized constant data of cm_staticmodel:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_00000000:		dd 0x0	; 0

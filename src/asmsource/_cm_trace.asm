@@ -4157,23 +4157,6 @@ CM_TransformedBoxTraceExternal:
 	nop
 
 
-;Zero initialized global or static variables of cm_trace:
-SECTION .bss
-
-
-;Initialized global or static variables of cm_trace:
-SECTION .data
-
-
-;Initialized constant data of cm_trace:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1

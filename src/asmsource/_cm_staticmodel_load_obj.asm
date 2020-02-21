@@ -394,18 +394,6 @@ CM_LoadStaticModels_110:
 	jmp CM_LoadStaticModels_200
 
 
-;Zero initialized global or static variables of cm_staticmodel_load_obj:
-SECTION .bss
-
-
-;Initialized global or static variables of cm_staticmodel_load_obj:
-SECTION .data
-
-
-;Initialized constant data of cm_staticmodel_load_obj:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_classname:		db "classname",0

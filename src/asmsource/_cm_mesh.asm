@@ -2946,23 +2946,6 @@ CM_SightTraceThroughAabbTree_10:
 	ret
 
 
-;Zero initialized global or static variables of cm_mesh:
-SECTION .bss
-
-
-;Initialized global or static variables of cm_mesh:
-SECTION .data
-
-
-;Initialized constant data of cm_mesh:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _double__2_00000000:		dq 0xc000000000000000	; -2
