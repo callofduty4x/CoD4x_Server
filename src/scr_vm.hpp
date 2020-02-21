@@ -746,7 +746,7 @@ void CCDECL Scr_AddArrayKeys( unsigned int strIdx );
 void CCDECL Scr_Notify( gentity_t*, unsigned short, unsigned int);
 void CCDECL Scr_NotifyNum( int, unsigned int, unsigned int, unsigned int);
 
-int CCDECL Scr_GetFunctionHandle( const char* scriptName, const char* labelName);
+int Scr_GetFunctionHandle( const char* scriptName, const char* labelName);
 short CCDECL Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int numArgs);
 short CCDECL Scr_ExecThread( int callbackHook, unsigned int numArgs);
 void CCDECL Scr_FreeThread( short threadId);

@@ -189,7 +189,6 @@
 	extern bg_itemlist
 	extern G_ExitAfterConnectPaths
 	extern Scr_LoadScript
-	extern Scr_GetFunctionHandle
 	extern G_RadiusDamage
 	extern G_DObjGetWorldTagMatrix
 	extern memset
@@ -15173,7 +15172,6 @@ _cstring_entity_is_not_an:		db "Entity is not an item.",0
 _cstring_item_entity_is_n:		db "Item entity is not a weapon.",0
 _cstring_value_out_of_ran:		db "Value out of range.  Allowed values: 0 to %i",0
 _cstring_ammo_count_must_:		db "Ammo count must not be negative",0
-_cstring_could_not_find_l:		db 15h,"Could not find label ",27h,"%s",27h," in script ",27h,"%s",27h,0
 _cstring_could_not_find_s:		db 15h,"Could not find script ",27h,"%s",27h,0
 _cstring_illegal_characte:		db "Illegal character ",27h,"%c",27h,"(ascii %i) in objective icon name: %s",0ah,0
 _cstring_objective_icon_n:		db "Objective icon name is too long (> %i): %s",0ah,0

@@ -145,11 +145,20 @@
 	extern player_turnAnims;
 	extern player_view_pitch_down;
 	extern player_view_pitch_up;
+	extern bg_shock_screenType;
+	extern bg_shock_lookControl;
+	extern bg_shock_volume;
+	extern bg_shellshockParms
+	extern bgShockChannelNames
+	extern BG_SaveShellShockDvars_filebuf
+	extern serverOnlyEvents
+	extern singleClientEvents
+	extern eventnames
+	extern bgShockDvarNames
+	extern bg_ShockScreenTypeNames
+	extern entityTypeNames
 
 ;Exports of bg_misc:
-	global bg_soundRoomTypes
-	global bg_ShockScreenTypeNames
-	global _ZZ22BG_SaveShellShockDvarsPKcE7filebuf
 	global WeaponEntCanBeGrabbed
 	global G_FindItem
 	global BG_CheckProne
@@ -174,8 +183,6 @@
 	global BG_SetShellShockParmsFromDvars
 	global BG_PlayerHasRoomForEntAllAmmoTypes
 	global BG_AddPredictableEventToPlayerstate
-	global bgShockChannelNames
-	global bgShockDvarNames
 
 
 SECTION .text
@@ -1848,7 +1855,7 @@ BG_SaveShellShockDvars_20:
 	jl BG_SaveShellShockDvars_30
 	call SND_GetEntChannelCount
 	mov dword [esp+0xc], 0x10000
-	mov dword [esp+0x8], _ZZ22BG_SaveShellShockDvarsPKcE7filebuf
+	mov dword [esp+0x8], BG_SaveShellShockDvars_filebuf
 	add eax, 0x1b
 	mov [esp+0x4], eax
 	lea eax, [ebp-0x188]
@@ -1878,7 +1885,7 @@ BG_SaveShellShockDvars_40:
 	js BG_SaveShellShockDvars_50
 	mov eax, [ebp-0x1c]
 	mov [esp+0x8], eax
-	mov edi, _ZZ22BG_SaveShellShockDvarsPKcE7filebuf
+	mov edi, BG_SaveShellShockDvars_filebuf
 	cld
 	mov ecx, 0xffffffff
 	xor eax, eax
@@ -1886,7 +1893,7 @@ BG_SaveShellShockDvars_40:
 	not ecx
 	sub ecx, 0x1
 	mov [esp+0x4], ecx
-	mov dword [esp], _ZZ22BG_SaveShellShockDvarsPKcE7filebuf
+	mov dword [esp], BG_SaveShellShockDvars_filebuf
 	call FS_Write
 	mov eax, [ebp-0x1c]
 	mov [esp], eax
@@ -2840,237 +2847,10 @@ BG_AddPredictableEventToPlayerstate_10:
 	ret
 
 
-;Initialized global or static variables of bg_misc:
-SECTION .data
-entityTypeNames: dd _cstring_general, _cstring_player, _cstring_corpse, _cstring_item, _cstring_missle, _cstring_invisible_entity, _cstring_scriptmover, _cstring_sound_blend, _cstring_fx, _cstring_loop_fx, _cstring_primary_light, _cstring_mg42, _cstring_helicopter, _cstring_plane, _cstring_vehicle, _cstring_vehicle_collmap, _cstring_vehicle_corpse, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-bg_soundRoomTypes: dd _cstring_generic, _cstring_paddedcell, _cstring_room, _cstring_bathroom, _cstring_livingroom, _cstring_stoneroom, _cstring_auditorium, _cstring_concerthall, _cstring_cave, _cstring_arena, _cstring_hangar, _cstring_carpetedhallway, _cstring_hallway, _cstring_stonecorridor, _cstring_alley, _cstring_forest, _cstring_city, _cstring_mountains, _cstring_quarry, _cstring_plain, _cstring_parkinglot, _cstring_sewerpipe, _cstring_underwater, _cstring_drugged, _cstring_dizzy, _cstring_psychotic, 0x0
-bg_ShockScreenTypeNames: dd _cstring_blurred, _cstring_flashed, _cstring_none, 0x0, 0x0
-bgShockDvarNames: dd _cstring_bg_shock_screent, _cstring_bg_shock_screenb, _cstring_bg_shock_screenb1, _cstring_bg_shock_screenf, _cstring_bg_shock_screenf1, _cstring_bg_shock_viewkic, _cstring_bg_shock_viewkic1, _cstring_bg_shock_viewkic2, _cstring_bg_shock_soundlo, _cstring_bg_shock_soundlo1, _cstring_bg_shock_sounden, _cstring_bg_shock_sounden1, _cstring_bg_shock_sound, _cstring_bg_shock_soundfa, _cstring_bg_shock_soundfa1, _cstring_bg_shock_soundlo2, _cstring_bg_shock_soundlo3, _cstring_bg_shock_soundro, _cstring_bg_shock_sounddr, _cstring_bg_shock_soundwe, _cstring_bg_shock_soundmo, _cstring_bg_shock_lookcon, _cstring_bg_shock_lookcon1, _cstring_bg_shock_lookcon2, _cstring_bg_shock_lookcon3, _cstring_bg_shock_lookcon4, _cstring_bg_shock_movemen, 0x0, 0x0, 0x0, 0x0, 0x0
-eventnames: dd _cstring_ev_none, _cstring_ev_foliage_sound, _cstring_ev_stop_weapon_s, _cstring_ev_sound_alias, _cstring_ev_sound_alias_a, _cstring_ev_stopsounds, _cstring_ev_stance_force_, _cstring_ev_stance_force_1, _cstring_ev_stance_force_2, _cstring_ev_item_pickup, _cstring_ev_ammo_pickup, _cstring_ev_noammo, _cstring_ev_emptyclip, _cstring_ev_empty_offhand, _cstring_ev_reset_ads, _cstring_ev_reload, _cstring_ev_reload_from_e, _cstring_ev_reload_start, _cstring_ev_reload_end, _cstring_ev_reload_start_, _cstring_ev_reload_addamm, _cstring_ev_raise_weapon, _cstring_ev_first_raise_w, _cstring_ev_putaway_weapo, _cstring_ev_weapon_alt, _cstring_ev_pullback_weap, _cstring_ev_fire_weapon, _cstring_ev_fire_weapon_l, _cstring_ev_rechamber_wea, _cstring_ev_eject_brass, _cstring_ev_melee_swipe, _cstring_ev_fire_melee, _cstring_ev_prep_offhand, _cstring_ev_use_offhand, _cstring_ev_switch_offhan, _cstring_ev_melee_hit, _cstring_ev_melee_miss, _cstring_ev_melee_blood, _cstring_ev_fire_weapon_m, _cstring_ev_fire_quadbarr, _cstring_ev_fire_quadbarr1, _cstring_ev_bullet_hit, _cstring_ev_bullet_hit_cl, _cstring_ev_bullet_hit_cl1, _cstring_ev_grenade_bounc, _cstring_ev_grenade_explo, _cstring_ev_rocket_explod, _cstring_ev_rocket_explod1, _cstring_ev_flashbang_exp, _cstring_ev_custom_explod, _cstring_ev_custom_explod1, _cstring_ev_change_to_dud, _cstring_ev_dud_explode, _cstring_ev_dud_impact, _cstring_ev_bullet, _cstring_ev_play_fx, _cstring_ev_play_fx_on_ta, _cstring_ev_phys_explosio, _cstring_ev_phys_explosio1, _cstring_ev_phys_explosio2, _cstring_ev_phys_jitter, _cstring_ev_earthquake, _cstring_ev_grenade_suici, _cstring_ev_detonate, _cstring_ev_nightvision_w, _cstring_ev_nightvision_r, _cstring_ev_obituary, _cstring_ev_no_frag_grena, _cstring_ev_no_special_gr, _cstring_ev_target_too_cl, _cstring_ev_target_not_en, _cstring_ev_lockon_requir, _cstring_ev_footstep_spri, _cstring_ev_footstep_run, _cstring_ev_footstep_walk, _cstring_ev_footstep_pron, _cstring_ev_jump, _cstring_ev_landing_defau, _cstring_ev_landing_bark, _cstring_ev_landing_brick, _cstring_ev_landing_carpe, _cstring_ev_landing_cloth, _cstring_ev_landing_concr, _cstring_ev_landing_dirt, _cstring_ev_landing_flesh, _cstring_ev_landing_folia, _cstring_ev_landing_glass, _cstring_ev_landing_grass, _cstring_ev_landing_grave, _cstring_ev_landing_ice, _cstring_ev_landing_metal, _cstring_ev_landing_mud, _cstring_ev_landing_paper, _cstring_ev_landing_plast, _cstring_ev_landing_rock, _cstring_ev_landing_sand, _cstring_ev_landing_snow, _cstring_ev_landing_water, _cstring_ev_landing_wood, _cstring_ev_landing_aspha, _cstring_ev_landing_ceram, _cstring_ev_landing_plast1, _cstring_ev_landing_rubbe, _cstring_ev_landing_cushi, _cstring_ev_landing_fruit, _cstring_ev_landing_paint, _cstring_ev_landing_pain_, _cstring_ev_landing_pain_1, _cstring_ev_landing_pain_2, _cstring_ev_landing_pain_3, _cstring_ev_landing_pain_4, _cstring_ev_landing_pain_5, _cstring_ev_landing_pain_6, _cstring_ev_landing_pain_7, _cstring_ev_landing_pain_8, _cstring_ev_landing_pain_9, _cstring_ev_landing_pain_10, _cstring_ev_landing_pain_11, _cstring_ev_landing_pain_12, _cstring_ev_landing_pain_13, _cstring_ev_landing_pain_14, _cstring_ev_landing_pain_15, _cstring_ev_landing_pain_16, _cstring_ev_landing_pain_17, _cstring_ev_landing_pain_18, _cstring_ev_landing_pain_19, _cstring_ev_landing_pain_20, _cstring_ev_landing_pain_21, _cstring_ev_landing_pain_22, _cstring_ev_landing_pain_23, _cstring_ev_landing_pain_24, _cstring_ev_landing_pain_25, _cstring_ev_landing_pain_26, _cstring_ev_landing_pain_27, _cstring_ev_landing_pain_28, 0x0
-
-
-;Initialized constant data of bg_misc:
-SECTION .rdata
-serverOnlyEvents: dd 0x1f, 0x14, 0x13, 0xffffffff, 0x0, 0x0, 0x0, 0x0
-singleClientEvents: dd 0x6, 0x7, 0x8, 0x22, 0xd, 0xe, 0x20, 0x21, 0x22, 0x25, 0x2a, 0x2b, 0xffffffff, 0x2cff1, 0x2cff1, 0x2d00c, 0x2d002, 0x2d078, 0x2d047, 0x2d027, 0x2cfe1, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0, 0x2e5bc, 0x2e5bc, 0x2e631, 0x2e559, 0x2e7f1, 0x2e5d2, 0x2e730, 0x2e64e, 0x2e5bc, 0x2e631, 0x2e5d2, 0x2e5bc, 0x80000000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Zero initialized global or static variables of bg_misc:
-SECTION .bss
-_ZZ22BG_SaveShellShockDvarsPKcE7filebuf: resb 0x10000
-bgShockChannelNames: resb 0x1400
-bg_shellshockParms: resb 0x2680
-bg_shock_lookControl: resb 0x1c
-bg_shock_screenType: resb 0x70
-bg_shock_volume: resb 0x100
-
-
 ;All cstrings:
 SECTION .rdata
-_cstring_the_scale_to_app:		db "The scale to apply to the damage done to caluclate damage view kick",0
-_cstring_bg_viewkickscale:		db "bg_viewKickScale",0
-_cstring_the_maximum_view:		db "The maximum view kick",0
-_cstring_bg_viewkickmax:		db "bg_viewKickMax",0
-_cstring_the_minimum_view:		db "The minimum view kick",0
-_cstring_bg_viewkickmin:		db "bg_viewKickMin",0
-_cstring_the_random_direc:		db "The random direction scale view kick",0
-_cstring_bg_viewkickrando:		db "bg_viewKickRandom",0
-_cstring_maximum_angle_th:		db "Maximum angle that the player can look up",0
-_cstring_player_view_pitc:		db "player_view_pitch_up",0
-_cstring_maximum_angle_th1:		db "Maximum angle that the player can look down",0
-_cstring_player_view_pitc1:		db "player_view_pitch_down",0
-_cstring_amount_to_shift_:		db "Amount to shift the player 3rd person model when leaning left",0
-_cstring_player_lean_shif:		db "player_lean_shift_left",0
-_cstring_amount_to_shift_1:		db "Amount to shift the player 3rd person model when leaning right",0
-_cstring_player_lean_shif1:		db "player_lean_shift_right",0
-_cstring_amount_to_shift_2:		db "Amount to shift the player 3rd person model when crouch leaning left",0
-_cstring_player_lean_shif2:		db "player_lean_shift_crouch_left",0
-_cstring_amount_to_shift_3:		db "Amount to shift the player 3rd person model when crouch leaning right",0
-_cstring_player_lean_shif3:		db "player_lean_shift_crouch_right",0
-_cstring_amount_to_rotate:		db "Amount to rotate the player 3rd person model when leaning left",0
-_cstring_player_lean_rota:		db "player_lean_rotate_left",0
-_cstring_amount_to_rotate1:		db "Amount to rotate the player 3rd person model when leaning right",0
-_cstring_player_lean_rota1:		db "player_lean_rotate_right",0
-_cstring_amount_to_rotate2:		db "Amount to rotate the player 3rd person model when crouch leaning left",0
-_cstring_player_lean_rota2:		db "player_lean_rotate_crouch_left",0
-_cstring_amount_to_rotate3:		db "Amount to rotate the player 3rd person model when crouch leaning right",0
-_cstring_player_lean_rota3:		db "player_lean_rotate_crouch_right",0
-_cstring_the_maximum_angl:		db "The maximum angle that a player can look around while on a ladder",0
-_cstring_bg_ladder_yawcap:		db "bg_ladder_yawcap",0
-_cstring_the_maximum_angl1:		db "The maximum angle that a player can look around quickly while prone",0
-_cstring_bg_prone_yawcap:		db "bg_prone_yawcap",0
-_cstring_the_speed_that_a:		db "The speed that a player must be going to make minimum noise while moving through foliage",0
-_cstring_bg_foliagesnd_mi:		db "bg_foliagesnd_minspeed",0
-_cstring_the_speed_that_a1:		db "The speed that a player must be going to make maximum noise while moving through foliage",0
-_cstring_bg_foliagesnd_ma:		db "bg_foliagesnd_maxspeed",0
-_cstring_the_time_between:		db "The time between each foliage sound when moving slowly",0
-_cstring_bg_foliagesnd_sl:		db "bg_foliagesnd_slowinterval",0
-_cstring_the_time_between1:		db "The time between each foliage sound when moving quickly",0
-_cstring_bg_foliagesnd_fa:		db "bg_foliagesnd_fastinterval",0
-_cstring_the_time_interva:		db "The time interval before foliage sounds are reset after the player has stopped moving",0
-_cstring_bg_foliagesnd_re:		db "bg_foliagesnd_resetinterval",0
-_cstring_the_height_that_:		db "The height that a player will start to take minimum damage if they fall",0
-_cstring_bg_falldamagemin:		db "bg_fallDamageMinHeight",0
-_cstring_the_height_that_1:		db "The height that a player will take maximum damage when falling",0
-_cstring_bg_falldamagemax:		db "bg_fallDamageMaxHeight",0
-_cstring_maximum_player_i:		db "Maximum player inertia",0
-_cstring_inertiamax:		db "inertiaMax",0
-_cstring_show_inertia_deb:		db "Show inertia debug information",0
-_cstring_inertiadebug:		db "inertiaDebug",0
-_cstring_the_cosine_of_th:		db "The cosine of the angle at which inertia occurs",0
-_cstring_inertiaangle:		db "inertiaAngle",0
-_cstring_the_player_decel:		db "The player deceleration",0
-_cstring_the_rate_at_whic:		db "The rate at which the player",27h,"s legs swing around when strafing(multi-player only)",0
-_cstring_bg_swingspeed:		db "bg_swingSpeed",0
-_cstring_the_amount_the_p:		db "The amount the player",27h,"s leg yaw can differ from his torso before moving ta match",0
-_cstring_bg_legyawtoleran:		db "bg_legYawTolerance",0
-_cstring_the_multiplier_t:		db "The multiplier to apply to the player",27h,"s speed to get the bob amplitude while sprinting",0
-_cstring_bg_bobamplitudes:		db "bg_bobAmplitudeSprinting",0
-_cstring_the_multiplier_t1:		db "The multiplier to apply to the player",27h,"s speed to get the bob amplitude while standing",0
-_cstring_bg_bobamplitudes1:		db "bg_bobAmplitudeStanding",0
-_cstring_the_multiplier_t2:		db "The multiplier to apply to the player",27h,"s speed to get the bob amplitude while ducking",0
-_cstring_bg_bobamplituded:		db "bg_bobAmplitudeDucked",0
-_cstring_the_multiplier_t3:		db "The multiplier to apply to the player",27h,"s speed to get the bob amplitude while prone",0
-_cstring_bg_bobamplitudep:		db "bg_bobAmplitudeProne",0
-_cstring_the_maximum_allo:		db "The maximum allowed bob amplitude",0
-_cstring_bg_bobmax:		db "bg_bobMax",0
-_cstring_when_player_is_m:		db "When player is moving faster than this speed, the aim spread will increase",0
-_cstring_bg_aimspreadmove:		db "bg_aimSpreadMoveSpeedThreshold",0
-_cstring_maximum_speed_of:		db "Maximum speed of grenade that will show up in indicator and can be thrown back.",0
-_cstring_bg_maxgrenadeind:		db "bg_maxGrenadeIndicatorSpeed",0
-_cstring_the_maximum_time:		db "The maximum time a player can hold his breath",0
-_cstring_player_breath_ho:		db "player_breath_hold_time",0
-_cstring_the_amount_of_ti:		db "The amount of time a player will gasp once they can breath again",0
-_cstring_player_breath_ga:		db "player_breath_gasp_time",0
-_cstring_the_amount_of_ti1:		db "The amount of time subtracted from the player remaining breath time when a weapon is fired",0
-_cstring_player_breath_fi:		db "player_breath_fire_delay",0
-_cstring_scale_value_to_a:		db "Scale value to apply to the target waver during a gasp",0
-_cstring_player_breath_ga1:		db "player_breath_gasp_scale",0
-_cstring_the_interpolatio:		db "The interpolation rate for the target waver amplitude when holding breath",0
-_cstring_player_breath_ho1:		db "player_breath_hold_lerp",0
-_cstring_the_interpolatio1:		db "The interpolation rate for the target waver amplitude when gasping",0
-_cstring_player_breath_ga2:		db "player_breath_gasp_lerp",0
-_cstring_the_interpolatio2:		db "The interpolation rate for the player hold breath sound",0
-_cstring_player_breath_sn:		db "player_breath_snd_lerp",0
-_cstring_the_delay_before:		db "The delay before playing the breathe in sound",0
-_cstring_player_breath_sn1:		db "player_breath_snd_delay",0
-_cstring_exit_the_scope_i:		db "Exit the scope if the player takes damage",0
-_cstring_player_scopeexit:		db "player_scopeExitOnDamage",0
-_cstring_delay_before_exi:		db "Delay before exiting aim down sight",0
-_cstring_player_adsexitde:		db "player_adsExitDelay",0
-_cstring_the_contribution:		db "The contribution movement direction has on player torso direction(multi-player only)",0
-_cstring_player_move_fact:		db "player_move_factor_on_torso",0
-_cstring_turn_on_debuggin:		db "Turn on debugging info for player health",0
-_cstring_player_debugheal:		db "player_debugHealth",0
-_cstring_firing_weapon_wi:		db "Firing weapon will not decrease clip ammo.",0
-_cstring_player_sustainam:		db "player_sustainAmmo",0
-_cstring_the_speed_at_whi:		db "The speed at which the player is considered to be moving for the purposes of ",0ah,"view model bob and multiplayer model movement",0
-_cstring_the_minimum_spee:		db "The minimum speed at which the player makes loud footstep noises",0
-_cstring_player_footsteps:		db "player_footstepsThreshhold",0
-_cstring_the_scale_applie:		db "The scale applied to the player speed when strafing",0
-_cstring_player_strafespe:		db "player_strafeSpeedScale",0
-_cstring_the_scale_applie1:		db "The scale applied to the player speed when moving backwards",0
-_cstring_player_backspeed:		db "player_backSpeedScale",0
-_cstring_cosine_of_the_an:		db "Cosine of the angle which player starts using strafe animations",0
-_cstring_player_strafeani:		db "player_strafeAnimCosAngle",0
-_cstring_the_scale_applie2:		db "The scale applied to the player speed when spectating",0
-_cstring_player_spectates:		db "player_spectateSpeedScale",0
-_cstring_the_minimum_forw:		db "The minimum forward deflection required to maintain a sprint",0
-_cstring_player_sprintfor:		db "player_sprintForwardMinimum",0
-_cstring_the_scale_applie3:		db "The scale applied to the player speed when sprinting",0
-_cstring_player_sprintspe:		db "player_sprintSpeedScale",0
-_cstring_the_base_length_:		db "The base length of time a player can sprint",0
-_cstring_player_sprinttim:		db "player_sprintTime",0
-_cstring_the_minimum_spri:		db "The minimum sprint time needed in order to start sprinting",0
-_cstring_player_sprintmin:		db "player_sprintMinTime",0
-_cstring_the_length_of_ti:		db "The length of time the meter will pause before starting to recharge after a player sprints",0
-_cstring_player_sprintrec:		db "player_sprintRechargePause",0
-_cstring_the_speed_at_whi1:		db "The speed at which you can strafe while sprinting",0
-_cstring_player_sprintstr:		db "player_sprintStrafeSpeedScale",0
-_cstring_the_speed_the_ca:		db "The speed the camera bobs while you sprint",0
-_cstring_player_sprintcam:		db "player_sprintCameraBob",0
-_cstring_use_animations_t:		db "Use animations to turn a player",27h,"s model in multiplayer",0
-_cstring_player_turnanims:		db "player_turnAnims",0
-_cstring_the_time_in_mill:		db "The time in milliseconds that the player is slowed down per point of damage",0
-_cstring_player_dmgtimer_:		db "player_dmgtimer_timePerPoint",0
-_cstring_the_maximum_time1:		db "The maximum time that the player is slowed due to damage",0
-_cstring_player_dmgtimer_1:		db "player_dmgtimer_maxTime",0
-_cstring_the_minimum_scal:		db "The minimum scale value to slow the player by when damaged",0
-_cstring_player_dmgtimer_2:		db "player_dmgtimer_minScale",0
-_cstring_maximum_time_to_:		db "Maximum time to play stumble animations",0
-_cstring_maximum_time_to_1:		db "Maximum time to play flinch animations",0
-_cstring_player_dmgtimer_4:		db "player_dmgtimer_flinchTime",0
-_cstring_shellshock_loop_:		db "Shellshock loop alias",0
-_cstring_shellshock_loop:		db "shellshock_loop",0
-_cstring_bg_shock_soundlo:		db "bg_shock_soundLoop",0
-_cstring_the_sound_that_g:		db "The sound that gets blended with the shellshock loop alias",0
-_cstring_shellshock_loop_1:		db "shellshock_loop_silent",0
-_cstring_bg_shock_soundlo1:		db "bg_shock_soundLoopSilent",0
-_cstring_shellshock_end_s:		db "Shellshock end sound alias",0
-_cstring_shellshock_end:		db "shellshock_end",0
-_cstring_bg_shock_sounden:		db "bg_shock_soundEnd",0
-_cstring_shellshock_abort:		db "Shellshock aborted end sound alias",0
-_cstring_shellshock_end_a:		db "shellshock_end_abort",0
-_cstring_bg_shock_sounden1:		db "bg_shock_soundEndAbort",0
-_cstring_shell_shock_scre:		db "Shell shock screen effect type",0
-_cstring_bg_shock_screent:		db "bg_shock_screenType",0
-_cstring_the_amount_of_ti2:		db "The amount of time in seconds for the shellshock effect to blend",0
-_cstring_bg_shock_screenb:		db "bg_shock_screenBlurBlendTime",0
-_cstring_the_amount_of_ti3:		db "The amount of time in seconds for the shellshock effect to fade",0
-_cstring_bg_shock_screenb1:		db "bg_shock_screenBlurBlendFadeTime",0
-_cstring_in_seconds_how_s:		db "In seconds, how soon from the end of the effect to start blending out the whiteout layer.",0
-_cstring_bg_shock_screenf:		db "bg_shock_screenFlashWhiteFadeTime",0
-_cstring_in_seconds_how_s1:		db "In seconds, how soon from the end of the effect to start blending out the screengrab layer.",0
-_cstring_bg_shock_screenf1:		db "bg_shock_screenFlashShotFadeTime",0
-_cstring_the_period_of_th:		db "The period of the shellshock view kick effect",0
-_cstring_bg_shock_viewkic:		db "bg_shock_viewKickPeriod",0
-_cstring_shell_shock_kick:		db "Shell shock kick radius",0
-_cstring_bg_shock_viewkic1:		db "bg_shock_viewKickRadius",0
-_cstring_the_time_for_the:		db "The time for the shellshock kick effect to fade",0
-_cstring_bg_shock_viewkic2:		db "bg_shock_viewKickFadeTime",0
-_cstring_play_shell_shock:		db "Play shell shock sound",0
-_cstring_bg_shock_sound:		db "bg_shock_sound",0
-_cstring_shell_shock_soun:		db "Shell shock sound fade in time in seconds",0
-_cstring_bg_shock_soundfa:		db "bg_shock_soundFadeInTime",0
-_cstring_shell_shock_soun1:		db "Shell shock sound fade out time in seconds",0
-_cstring_bg_shock_soundfa1:		db "bg_shock_soundFadeOutTime",0
-_cstring_shell_shock_soun2:		db "Shell shock sound loop fade time in seconds",0
-_cstring_bg_shock_soundlo2:		db "bg_shock_soundLoopFadeTime",0
-_cstring_sound_loop_end_o:		db "Sound loop end offset time from the end of the shellshock in seconds",0
-_cstring_bg_shock_soundlo3:		db "bg_shock_soundLoopEndDelay",0
-_cstring_shell_shock_soun3:		db "Shell shock sound room type",0
-_cstring_bg_shock_soundro:		db "bg_shock_soundRoomType",0
-_cstring_shell_shock_soun4:		db "Shell shock sound dry level",0
-_cstring_bg_shock_sounddr:		db "bg_shock_soundDryLevel",0
-_cstring_shell_shock_soun5:		db "Shell shock sound wet level",0
-_cstring_bg_shock_soundwe:		db "bg_shock_soundWetLevel",0
-_cstring_the_delay_from_t:		db "The delay from the end of the shell shock to the end of the sound modification",0
-_cstring_bg_shock_soundmo:		db "bg_shock_soundModEndDelay",0
 _cstring_bg_shock_volume_:		db "bg_shock_volume_%s",0
 _cstring_null:		db 0
-_cstring_alter_player_con:		db "Alter player control during shellshock",0
-_cstring_bg_shock_lookcon:		db "bg_shock_lookControl",0
-_cstring_maximum_pitch_mo:		db "Maximum pitch movement rate while shellshocked in degrees per second",0
-_cstring_bg_shock_lookcon1:		db "bg_shock_lookControl_maxpitchspeed",0
-_cstring_maximum_yaw_move:		db "Maximum yaw movement rate while shell shocked in degrees per second",0
-_cstring_bg_shock_lookcon2:		db "bg_shock_lookControl_maxyawspeed",0
-_cstring_sensitivity_scal:		db "Sensitivity scale to apply to a shellshocked player",0
-_cstring_bg_shock_lookcon3:		db "bg_shock_lookControl_mousesensitivityscale",0
-_cstring_the_time_for_the1:		db "The time for the shellshock player control to fade in seconds",0
-_cstring_bg_shock_lookcon4:		db "bg_shock_lookControl_fadeTime",0
-_cstring_affect_players_m:		db "Affect player",27h,"s movement speed duringi shellshock",0
-_cstring_bg_shock_movemen:		db "bg_shock_movement",0
-_cstring_the_maximum_rang:		db "The maximum range of the player",27h,"s mellee attack",0
-_cstring_player_meleerang:		db "player_meleeRange",0
-_cstring_the_width_of_the:		db "The width of the player",27h,"s melee attack",0
-_cstring_player_meleewidt:		db "player_meleeWidth",0
-_cstring_the_height_of_th:		db "The height of the player",27h,"s melee attack",0
-_cstring_player_meleeheig:		db "player_meleeHeight",0
-_cstring_friction_used_du:		db "Friction used during melee charge",0
-_cstring_seconds_after_a_:		db "Seconds after a burst fire before weapons can be fired again.",0
-_cstring_player_burstfire:		db "player_burstFireCooldown",0
-_cstring_min_distance_a_p:		db "Min distance a penetrated bullet must travel before it",27h,"ll trigger the effects",0
-_cstring_bullet_penetrati:		db "bullet_penetrationMinFxDist",0
 _cstring_bg_canitembegrab:		db 15h,"BG_CanItemBeGrabbed: index out of range (index is %i, eType is %i)",0
 _cstring_event_s_i:		db "Event %s (%i)",0
 _cstring_bg_evaluatetraje:		db 15h,"BG_EvaluateTrajectory: unknown trType: %i",0
@@ -3080,187 +2860,6 @@ _cstring_shockdefaultshoc:		db "shock/default.shock",0
 _cstring_couldnt_open_sho:		db "couldn",27h,"t open ",27h,"shock/default.shock",27h,". This is a default shock file that you should have.",0ah,0
 _cstring_bg_evaluatetraje1:		db 15h,"BG_EvaluateTrajectoryDelta: unknown trType: %i",0
 _cstring_bg_playerhasroom:		db 15h,"BG_PlayerHasRoomForAllAmmoTypesOfEnt: index out of range (index is %i, eType is %i)",0
-_cstring_general:		db "General",0
-_cstring_player:		db "Player",0
-_cstring_corpse:		db "Corpse",0
-_cstring_item:		db "Item",0
-_cstring_missle:		db "Missle",0
-_cstring_invisible_entity:		db "Invisible entity",0
-_cstring_scriptmover:		db "Scriptmover",0
-_cstring_sound_blend:		db "Sound blend",0
-_cstring_fx:		db "FX",0
-_cstring_loop_fx:		db "Loop FX",0
-_cstring_primary_light:		db "Primary Light",0
-_cstring_mg42:		db "MG42",0
-_cstring_helicopter:		db "Helicopter",0
-_cstring_plane:		db "Plane",0
-_cstring_vehicle:		db "Vehicle",0
-_cstring_vehicle_collmap:		db "Vehicle collmap",0
-_cstring_vehicle_corpse:		db "Vehicle corpse",0
-_cstring_generic:		db "generic",0
-_cstring_paddedcell:		db "paddedcell",0
-_cstring_room:		db "room",0
-_cstring_bathroom:		db "bathroom",0
-_cstring_livingroom:		db "livingroom",0
-_cstring_stoneroom:		db "stoneroom",0
-_cstring_auditorium:		db "auditorium",0
-_cstring_concerthall:		db "concerthall",0
-_cstring_cave:		db "cave",0
-_cstring_arena:		db "arena",0
-_cstring_hangar:		db "hangar",0
-_cstring_carpetedhallway:		db "carpetedhallway",0
-_cstring_hallway:		db "hallway",0
-_cstring_stonecorridor:		db "stonecorridor",0
-_cstring_alley:		db "alley",0
-_cstring_forest:		db "forest",0
-_cstring_city:		db "city",0
-_cstring_mountains:		db "mountains",0
-_cstring_quarry:		db "quarry",0
-_cstring_plain:		db "plain",0
-_cstring_parkinglot:		db "parkinglot",0
-_cstring_sewerpipe:		db "sewerpipe",0
-_cstring_underwater:		db "underwater",0
-_cstring_drugged:		db "drugged",0
-_cstring_dizzy:		db "dizzy",0
-_cstring_psychotic:		db "psychotic",0
-_cstring_blurred:		db "blurred",0
-_cstring_flashed:		db "flashed",0
-_cstring_none:		db "none",0
-_cstring_ev_none:		db "EV_NONE",0
-_cstring_ev_foliage_sound:		db "EV_FOLIAGE_SOUND",0
-_cstring_ev_stop_weapon_s:		db "EV_STOP_WEAPON_SOUND",0
-_cstring_ev_sound_alias:		db "EV_SOUND_ALIAS",0
-_cstring_ev_sound_alias_a:		db "EV_SOUND_ALIAS_AS_MASTER",0
-_cstring_ev_stopsounds:		db "EV_STOPSOUNDS",0
-_cstring_ev_stance_force_:		db "EV_STANCE_FORCE_STAND",0
-_cstring_ev_stance_force_1:		db "EV_STANCE_FORCE_CROUCH",0
-_cstring_ev_stance_force_2:		db "EV_STANCE_FORCE_PRONE",0
-_cstring_ev_item_pickup:		db "EV_ITEM_PICKUP",0
-_cstring_ev_ammo_pickup:		db "EV_AMMO_PICKUP",0
-_cstring_ev_noammo:		db "EV_NOAMMO",0
-_cstring_ev_emptyclip:		db "EV_EMPTYCLIP",0
-_cstring_ev_empty_offhand:		db "EV_EMPTY_OFFHAND",0
-_cstring_ev_reset_ads:		db "EV_RESET_ADS",0
-_cstring_ev_reload:		db "EV_RELOAD",0
-_cstring_ev_reload_from_e:		db "EV_RELOAD_FROM_EMPTY",0
-_cstring_ev_reload_start:		db "EV_RELOAD_START",0
-_cstring_ev_reload_end:		db "EV_RELOAD_END",0
-_cstring_ev_reload_start_:		db "EV_RELOAD_START_NOTIFY",0
-_cstring_ev_reload_addamm:		db "EV_RELOAD_ADDAMMO",0
-_cstring_ev_raise_weapon:		db "EV_RAISE_WEAPON",0
-_cstring_ev_first_raise_w:		db "EV_FIRST_RAISE_WEAPON",0
-_cstring_ev_putaway_weapo:		db "EV_PUTAWAY_WEAPON",0
-_cstring_ev_weapon_alt:		db "EV_WEAPON_ALT",0
-_cstring_ev_pullback_weap:		db "EV_PULLBACK_WEAPON",0
-_cstring_ev_fire_weapon:		db "EV_FIRE_WEAPON",0
-_cstring_ev_fire_weapon_l:		db "EV_FIRE_WEAPON_LASTSHOT",0
-_cstring_ev_rechamber_wea:		db "EV_RECHAMBER_WEAPON",0
-_cstring_ev_eject_brass:		db "EV_EJECT_BRASS",0
-_cstring_ev_melee_swipe:		db "EV_MELEE_SWIPE",0
-_cstring_ev_fire_melee:		db "EV_FIRE_MELEE",0
-_cstring_ev_prep_offhand:		db "EV_PREP_OFFHAND",0
-_cstring_ev_use_offhand:		db "EV_USE_OFFHAND",0
-_cstring_ev_switch_offhan:		db "EV_SWITCH_OFFHAND",0
-_cstring_ev_melee_hit:		db "EV_MELEE_HIT",0
-_cstring_ev_melee_miss:		db "EV_MELEE_MISS",0
-_cstring_ev_melee_blood:		db "EV_MELEE_BLOOD",0
-_cstring_ev_fire_weapon_m:		db "EV_FIRE_WEAPON_MG42",0
-_cstring_ev_fire_quadbarr:		db "EV_FIRE_QUADBARREL_1",0
-_cstring_ev_fire_quadbarr1:		db "EV_FIRE_QUADBARREL_2",0
-_cstring_ev_bullet_hit:		db "EV_BULLET_HIT",0
-_cstring_ev_bullet_hit_cl:		db "EV_BULLET_HIT_CLIENT_SMALL",0
-_cstring_ev_bullet_hit_cl1:		db "EV_BULLET_HIT_CLIENT_LARGE",0
-_cstring_ev_grenade_bounc:		db "EV_GRENADE_BOUNCE",0
-_cstring_ev_grenade_explo:		db "EV_GRENADE_EXPLODE",0
-_cstring_ev_rocket_explod:		db "EV_ROCKET_EXPLODE",0
-_cstring_ev_rocket_explod1:		db "EV_ROCKET_EXPLODE_NOMARKS",0
-_cstring_ev_flashbang_exp:		db "EV_FLASHBANG_EXPLODE",0
-_cstring_ev_custom_explod:		db "EV_CUSTOM_EXPLODE",0
-_cstring_ev_custom_explod1:		db "EV_CUSTOM_EXPLODE_NOMARKS",0
-_cstring_ev_change_to_dud:		db "EV_CHANGE_TO_DUD",0
-_cstring_ev_dud_explode:		db "EV_DUD_EXPLODE",0
-_cstring_ev_dud_impact:		db "EV_DUD_IMPACT",0
-_cstring_ev_bullet:		db "EV_BULLET",0
-_cstring_ev_play_fx:		db "EV_PLAY_FX",0
-_cstring_ev_play_fx_on_ta:		db "EV_PLAY_FX_ON_TAG",0
-_cstring_ev_phys_explosio:		db "EV_PHYS_EXPLOSION_SPHERE",0
-_cstring_ev_phys_explosio1:		db "EV_PHYS_EXPLOSION_CYLINDER",0
-_cstring_ev_phys_explosio2:		db "EV_PHYS_EXPLOSION_JOLT",0
-_cstring_ev_phys_jitter:		db "EV_PHYS_JITTER",0
-_cstring_ev_earthquake:		db "EV_EARTHQUAKE",0
-_cstring_ev_grenade_suici:		db "EV_GRENADE_SUICIDE",0
-_cstring_ev_detonate:		db "EV_DETONATE",0
-_cstring_ev_nightvision_w:		db "EV_NIGHTVISION_WEAR",0
-_cstring_ev_nightvision_r:		db "EV_NIGHTVISION_REMOVE",0
-_cstring_ev_obituary:		db "EV_OBITUARY",0
-_cstring_ev_no_frag_grena:		db "EV_NO_FRAG_GRENADE_HINT",0
-_cstring_ev_no_special_gr:		db "EV_NO_SPECIAL_GRENADE_HINT",0
-_cstring_ev_target_too_cl:		db "EV_TARGET_TOO_CLOSE_HINT",0
-_cstring_ev_target_not_en:		db "EV_TARGET_NOT_ENOUGH_CLEARANCE",0
-_cstring_ev_lockon_requir:		db "EV_LOCKON_REQUIRED_HINT",0
-_cstring_ev_footstep_spri:		db "EV_FOOTSTEP_SPRINT",0
-_cstring_ev_footstep_run:		db "EV_FOOTSTEP_RUN",0
-_cstring_ev_footstep_walk:		db "EV_FOOTSTEP_WALK",0
-_cstring_ev_footstep_pron:		db "EV_FOOTSTEP_PRONE",0
-_cstring_ev_jump:		db "EV_JUMP",0
-_cstring_ev_landing_defau:		db "EV_LANDING_DEFAULT",0
-_cstring_ev_landing_bark:		db "EV_LANDING_BARK",0
-_cstring_ev_landing_brick:		db "EV_LANDING_BRICK",0
-_cstring_ev_landing_carpe:		db "EV_LANDING_CARPET",0
-_cstring_ev_landing_cloth:		db "EV_LANDING_CLOTH",0
-_cstring_ev_landing_concr:		db "EV_LANDING_CONCRETE",0
-_cstring_ev_landing_dirt:		db "EV_LANDING_DIRT",0
-_cstring_ev_landing_flesh:		db "EV_LANDING_FLESH",0
-_cstring_ev_landing_folia:		db "EV_LANDING_FOLIAGE",0
-_cstring_ev_landing_glass:		db "EV_LANDING_GLASS",0
-_cstring_ev_landing_grass:		db "EV_LANDING_GRASS",0
-_cstring_ev_landing_grave:		db "EV_LANDING_GRAVEL",0
-_cstring_ev_landing_ice:		db "EV_LANDING_ICE",0
-_cstring_ev_landing_metal:		db "EV_LANDING_METAL",0
-_cstring_ev_landing_mud:		db "EV_LANDING_MUD",0
-_cstring_ev_landing_paper:		db "EV_LANDING_PAPER",0
-_cstring_ev_landing_plast:		db "EV_LANDING_PLASTER",0
-_cstring_ev_landing_rock:		db "EV_LANDING_ROCK",0
-_cstring_ev_landing_sand:		db "EV_LANDING_SAND",0
-_cstring_ev_landing_snow:		db "EV_LANDING_SNOW",0
-_cstring_ev_landing_water:		db "EV_LANDING_WATER",0
-_cstring_ev_landing_wood:		db "EV_LANDING_WOOD",0
-_cstring_ev_landing_aspha:		db "EV_LANDING_ASPHALT",0
-_cstring_ev_landing_ceram:		db "EV_LANDING_CERAMIC",0
-_cstring_ev_landing_plast1:		db "EV_LANDING_PLASTIC",0
-_cstring_ev_landing_rubbe:		db "EV_LANDING_RUBBER",0
-_cstring_ev_landing_cushi:		db "EV_LANDING_CUSHION",0
-_cstring_ev_landing_fruit:		db "EV_LANDING_FRUIT",0
-_cstring_ev_landing_paint:		db "EV_LANDING_PAINTEDMETAL",0
-_cstring_ev_landing_pain_:		db "EV_LANDING_PAIN_DEFAULT",0
-_cstring_ev_landing_pain_1:		db "EV_LANDING_PAIN_BARK",0
-_cstring_ev_landing_pain_2:		db "EV_LANDING_PAIN_BRICK",0
-_cstring_ev_landing_pain_3:		db "EV_LANDING_PAIN_CARPET",0
-_cstring_ev_landing_pain_4:		db "EV_LANDING_PAIN_CLOTH",0
-_cstring_ev_landing_pain_5:		db "EV_LANDING_PAIN_CONCRETE",0
-_cstring_ev_landing_pain_6:		db "EV_LANDING_PAIN_DIRT",0
-_cstring_ev_landing_pain_7:		db "EV_LANDING_PAIN_FLESH",0
-_cstring_ev_landing_pain_8:		db "EV_LANDING_PAIN_FOLIAGE",0
-_cstring_ev_landing_pain_9:		db "EV_LANDING_PAIN_GLASS",0
-_cstring_ev_landing_pain_10:		db "EV_LANDING_PAIN_GRASS",0
-_cstring_ev_landing_pain_11:		db "EV_LANDING_PAIN_GRAVEL",0
-_cstring_ev_landing_pain_12:		db "EV_LANDING_PAIN_ICE",0
-_cstring_ev_landing_pain_13:		db "EV_LANDING_PAIN_METAL",0
-_cstring_ev_landing_pain_14:		db "EV_LANDING_PAIN_MUD",0
-_cstring_ev_landing_pain_15:		db "EV_LANDING_PAIN_PAPER",0
-_cstring_ev_landing_pain_16:		db "EV_LANDING_PAIN_PLASTER",0
-_cstring_ev_landing_pain_17:		db "EV_LANDING_PAIN_ROCK",0
-_cstring_ev_landing_pain_18:		db "EV_LANDING_PAIN_SAND",0
-_cstring_ev_landing_pain_19:		db "EV_LANDING_PAIN_SNOW",0
-_cstring_ev_landing_pain_20:		db "EV_LANDING_PAIN_WATER",0
-_cstring_ev_landing_pain_21:		db "EV_LANDING_PAIN_WOOD",0
-_cstring_ev_landing_pain_22:		db "EV_LANDING_PAIN_ASPHALT",0
-_cstring_ev_landing_pain_23:		db "EV_LANDING_PAIN_CERAMIC",0
-_cstring_ev_landing_pain_24:		db "EV_LANDING_PAIN_PLASTIC",0
-_cstring_ev_landing_pain_25:		db "EV_LANDING_PAIN_RUBBER",0
-_cstring_ev_landing_pain_26:		db "EV_LANDING_PAIN_CUSHION",0
-_cstring_ev_landing_pain_27:		db "EV_LANDING_PAIN_FRUIT",0
-_cstring_ev_landing_pain_28:		db "EV_LANDING_PAIN_PAINTEDMETAL",0
 
 
 

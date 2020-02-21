@@ -244,7 +244,20 @@ extern "C"
     extern cvar_t* player_turnAnims;
     extern cvar_t* player_view_pitch_down;
     extern cvar_t* player_view_pitch_up;
-
+    extern cvar_t* bg_shock_screenType;
+    extern cvar_t* bg_shock_lookControl;
+    extern cvar_t* bg_shock_volume;
+    extern char bg_shellshockParms[0x2680];
+    extern char bgShockChannelNames[0x1400];
+    extern char BG_SaveShellShockDvars_filebuf[0x10000];
+    extern int serverOnlyEvents[8];
+    extern int singleClientEvents[13];
+    extern const char* eventnames[];
+    extern const char* bgShockDvarNames[];
+    extern const char* bg_ShockScreenTypeNames[];
+    extern const char* bg_soundRoomTypes[];
+    extern const char* entityTypeNames[];
+    
     void CCDECL BG_AddPredictableEventToPlayerstate(EBGEvent newEvent, unsigned int eventParm, playerState_s *ps);
     void CCDECL BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);
 }

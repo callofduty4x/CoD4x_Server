@@ -24,7 +24,7 @@ qboolean CCDECL Scr_IsInOpcodeMemory(const char *pos)
   return qfalse;
 }
 
-int CCDECL Scr_GetFunctionHandle(const char *filename, const char *name)
+int Scr_GetFunctionHandle(const char *filename, const char *name)
 {
   unsigned int name2;
   VariableValue pos;

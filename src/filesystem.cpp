@@ -953,11 +953,11 @@ qboolean FS_FilenameCompare( const char *s1, const char *s2 )
             c2 = '/';
 
         if (c1 != c2)
-            return qfalse;		// strings not equal
+            return qtrue;		// strings not equal
 
     } while (c1);
 
-    return qtrue;		// strings are equal
+    return qfalse;		// strings are equal
 }
 
 /*

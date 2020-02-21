@@ -53,11 +53,6 @@ cvar_t*  g_debugBullets;
 cvar_t*  g_smoothClients;
 
 
-/* BG Cvars */
-cvar_t*  bg_shock_screenType;
-cvar_t*  bg_shock_lookControl;
-
-
 void G_CopyCvars();
 void G_ResetAllCvars();
 
@@ -220,13 +215,6 @@ void G_RegisterMissileDebugCvars()
 
 void BG_RegisterCvars()
 {
-    static const char *bg_ShockScreenTypeNames[] = { "blurred", "flashed", "none", nullptr };
-    static const char *bg_soundRoomTypes[] = { "generic","paddedcell","room", "bathroom", "livingroom", "stoneroom",
-                                               "auditorium", "concerthall", "cave", "arena", "hangar", "carpetedhallway",
-                                               "hallway", "stonecorridor", "alley", "forest", "city", "mountains",
-                                               "quarry", "plain", "parkinglot", "sewerpipe", "underwater", "drugged",
-                                               "dizzy", "psychotic", nullptr };
-
     bg_viewKickScale = Cvar_RegisterFloat( "bg_viewKickScale", 0.2, 0.0, 10.0, 0x80u, "The scale to apply to the damage done to caluclate damage view kick");
     bg_viewKickMax = Cvar_RegisterFloat("bg_viewKickMax", 90.0, 0.0, 90.0, 0x80u, "The maximum view kick");
     bg_viewKickMin = Cvar_RegisterFloat("bg_viewKickMin", 5.0, 0.0, 90.0, 0x80u, "The minimum view kick");
