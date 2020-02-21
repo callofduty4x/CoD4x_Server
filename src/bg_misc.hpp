@@ -254,9 +254,9 @@ extern "C"
     extern int singleClientEvents[13];
     extern const char* eventnames[];
     extern const char* bgShockDvarNames[];
-    extern const char* bg_ShockScreenTypeNames[];
+    extern const char* bg_ShockScreenTypeNames[4];
     extern const char* bg_soundRoomTypes[];
-    extern const char* entityTypeNames[];
+    extern const char* entityTypeNames[21];
     
     void CCDECL BG_AddPredictableEventToPlayerstate(EBGEvent newEvent, unsigned int eventParm, playerState_s *ps);
     void CCDECL BG_EvaluateTrajectory(trajectory_t *tr, int atTime, float *result);

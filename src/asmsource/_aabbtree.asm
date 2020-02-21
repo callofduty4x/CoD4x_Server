@@ -8,12 +8,12 @@
 	extern std_new
 	extern memcpy
 	extern std_delete
+	extern aabbTreeCount;
+	extern sortedCoplanar;
+	extern sortedMaxs;
+	extern sortedMins;
 
 ;Exports of aabbtree:
-	global aabbTreeCount
-	global sortedCoplanar
-	global sortedMaxs
-	global sortedMins
 	global compare_floats
 	global SplitAabbTree
 	global CreateAabbSubTrees
@@ -1450,23 +1450,6 @@ BuildAabbTree_170:
 	cmp ebx, [esi+0x4]
 	jl BuildAabbTree_170
 	jmp BuildAabbTree_180
-
-
-;Initialized global or static variables of aabbtree:
-SECTION .data
-
-
-;Initialized constant data of aabbtree:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of aabbtree:
-SECTION .bss
-aabbTreeCount: resb 0x4
-sortedCoplanar: resb 0x4
-sortedMaxs: resb 0x4
-sortedMins: resb 0x74
-
 
 ;All cstrings:
 SECTION .rdata

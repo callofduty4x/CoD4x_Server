@@ -108,7 +108,7 @@ extern "C"
     cvar_t* bg_shock_volume;
 
     char bg_shellshockParms[0x2680];
-    extern char bgShockChannelNames[0x1400];
+    char bgShockChannelNames[0x1400];
     char BG_SaveShellShockDvars_filebuf[0x10000];
     int serverOnlyEvents[8] = 
     {
@@ -277,7 +277,7 @@ extern "C"
         "EV_LANDING_PAIN_FRUIT",
         "EV_LANDING_PAIN_PAINTEDMETAL",
         nullptr
-    }
+    };
 
     const char* bgShockDvarNames[] =
     {
@@ -311,7 +311,7 @@ extern "C"
         nullptr
     };
 
-    static const char* bg_ShockScreenTypeNames[] = 
+    const char* bg_ShockScreenTypeNames[4] =
     { 
         "blurred", 
         "flashed", 
@@ -350,7 +350,7 @@ extern "C"
         nullptr 
     };
 
-    const char* entityTypeNames[] =
+    const char* entityTypeNames[21] =
     {
       "ET_GENERAL",
       "ET_PLAYER",

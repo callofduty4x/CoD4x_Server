@@ -6,6 +6,7 @@
 #include "server_public.hpp"
 #include "sv_game.hpp"
 #include "g_main_mp.hpp"
+#include "bg_misc.hpp"
 
 using namespace std;
 

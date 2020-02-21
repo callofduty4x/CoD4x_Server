@@ -155,7 +155,6 @@
 	extern singleClientEvents
 	extern eventnames
 	extern bgShockDvarNames
-	extern bg_ShockScreenTypeNames
 	extern entityTypeNames
 
 ;Exports of bg_misc:
