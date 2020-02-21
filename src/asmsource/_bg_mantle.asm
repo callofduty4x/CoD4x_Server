@@ -27,6 +27,8 @@
 	extern mantle_check_range
 	extern mantle_check_radius
 	extern s_mantleAnims
+	extern s_mantleAnimNames
+	extern s_mantleTrans
 
 
 ;Exports of bg_mantle:
@@ -1484,13 +1486,6 @@ Mantle_IsWeaponInactive_10:
 	nop
 
 
-;Initialized global or static variables of bg_mantle:
-SECTION .data
-s_mantleTrans: dd 0x1, 0x8, 0x42640000, 0x2, 0x8, 0x424c0000, 0x3, 0x9, 0x42340000, 0x4, 0x9, 0x421c0000, 0x5, 0x9, 0x42040000, 0x6, 0xa, 0x41d80000, 0x7, 0xa, 0x41a80000, 0x0, 0x0, 0x0
-s_mantleAnimNames: dd _cstring_mp_mantle_root, _cstring_mp_mantle_up_57, _cstring_mp_mantle_up_51, _cstring_mp_mantle_up_45, _cstring_mp_mantle_up_39, _cstring_mp_mantle_up_33, _cstring_mp_mantle_up_27, _cstring_mp_mantle_up_21, _cstring_mp_mantle_over_h, _cstring_mp_mantle_over_m, _cstring_player_mantle_ov, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_checking_for_led:		db "Checking for ledge at %f units",0
@@ -1526,18 +1521,6 @@ _cstring_the_minimum_angl:		db "The minimum angle from the player to a mantle su
 _cstring_mantle_check_ang:		db "mantle_check_angle",0
 _cstring_the_angle_at_whi:		db "The angle at which to restrict a sideways turn while mantling",0
 _cstring_mantle_view_yawc:		db "mantle_view_yawcap",0
-_cstring_mp_mantle_root:		db "mp_mantle_root",0
-_cstring_mp_mantle_up_57:		db "mp_mantle_up_57",0
-_cstring_mp_mantle_up_51:		db "mp_mantle_up_51",0
-_cstring_mp_mantle_up_45:		db "mp_mantle_up_45",0
-_cstring_mp_mantle_up_39:		db "mp_mantle_up_39",0
-_cstring_mp_mantle_up_33:		db "mp_mantle_up_33",0
-_cstring_mp_mantle_up_27:		db "mp_mantle_up_27",0
-_cstring_mp_mantle_up_21:		db "mp_mantle_up_21",0
-_cstring_mp_mantle_over_h:		db "mp_mantle_over_high",0
-_cstring_mp_mantle_over_m:		db "mp_mantle_over_mid",0
-_cstring_player_mantle_ov:		db "player_mantle_over_low",0
-
 
 
 ;All constant floats and doubles:

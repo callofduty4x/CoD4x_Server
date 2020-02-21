@@ -113,14 +113,14 @@ void Jump_RegisterCvars()
 	 jump_spreadAdd = Cvar_RegisterFloat( "jump_spreadAdd", 64.0, 0.0, 512.0, 0x180u, "The amount of spread scale to add as a side effect of jumping");
 }
 
-void Mantle_RegisterCvars(void)
+static void Mantle_RegisterCvars()
 {
-	 mantle_enable = Cvar_RegisterBool("mantle_enable", qtrue, 0x180u, "Enable player mantling");
-     mantle_debug = Cvar_RegisterBool("mantle_debug", qfalse, 0x180u, "Show debug information for mantling");
-	 mantle_check_range = Cvar_RegisterFloat( "mantle_check_range", 20.0, 0.0, 128.0, 0x180u, "The minimum distance from a player to a mantle surface to allow a mantle");
-	 mantle_check_radius = Cvar_RegisterFloat( "mantle_check_radius", 0.1, 0.0, 15.0, 0x180u, "The player radius to test against while mantling");
-	 mantle_check_angle = Cvar_RegisterFloat( "mantle_check_angle", 60.0, 0.0, 180.0, 0x180u, "The minimum angle from the player to a mantle surface to allow a mantle");
-	 mantle_view_yawcap = Cvar_RegisterFloat( "mantle_view_yawcap", 60.0, 0.0, 180.0, 0x180u, "The angle at which to restrict a sideways turn while mantling");
+    mantle_enable = Cvar_RegisterBool("mantle_enable", qtrue, 0x180u, "Enable player mantling");
+    mantle_debug = Cvar_RegisterBool("mantle_debug", qfalse, 0x180u, "Show debug information for mantling");
+    mantle_check_range = Cvar_RegisterFloat("mantle_check_range", 20.0f, 0.0, 128.0f, 0x180u, "The minimum distance from a player to a mantle surface to allow a mantle");
+    mantle_check_radius = Cvar_RegisterFloat("mantle_check_radius", 0.1f, 0.0, 15.0f, 0x180u, "The player radius to test against while mantling");
+    mantle_check_angle = Cvar_RegisterFloat("mantle_check_angle", 60.0f, 0.0, 180.0f, 0x180u, "The minimum angle from the player to a mantle surface to allow a mantle");
+    mantle_view_yawcap = Cvar_RegisterFloat("mantle_view_yawcap", 60.0f, 0.0, 180.0f, 0x180u, "The angle at which to restrict a sideways turn while mantling");
 }
 
 void Perks_RegisterCvars(void)

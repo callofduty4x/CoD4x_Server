@@ -2,6 +2,14 @@
 
 struct cvar_s;
 
+struct MantleAnimTransition
+{
+    int upAnimIndex;
+    int overAnimIndex;
+    float height;
+};
+
+
 extern "C"
 {
     extern cvar_s* mantle_enable;
@@ -12,4 +20,6 @@ extern "C"
     extern cvar_s* mantle_check_radius;
 
     extern void* s_mantleAnims;
+    extern const char* s_mantleAnimNames[16];
+    extern MantleAnimTransition s_mantleTrans[7];
 }
