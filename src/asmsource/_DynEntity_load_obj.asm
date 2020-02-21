@@ -20,10 +20,10 @@
 	extern XModelPiecesPrecache
 	extern PhysPresetPrecache
 	extern Com_PrintError
+	extern dynEntProps
+	extern dynEntClassNames
 
 ;Exports of DynEntity_load_obj:
-	global dynEntProps
-	global dynEntClassNames
 	global DynEnt_AllocXModel
 	global DynEnt_AllocXModelColl
 	global DynEnt_AllocPhysPreset
@@ -943,21 +943,6 @@ DynEnt_GetClientModelPoseList:
 	pop ebp
 	ret
 
-
-;Zero initialized global or static variables of DynEntity_load_obj:
-SECTION .bss
-
-
-;Initialized global or static variables of DynEntity_load_obj:
-SECTION .data
-dynEntClassNames: dd _cstring_dyn_brushmodel, _cstring_dyn_model, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of DynEntity_load_obj:
-SECTION .rdata
-dynEntProps: dd _cstring_invalid, 0x0, _cstring_clutter, 0x10001, _cstring_destruct, 0x1010001, 0x0, 0x0
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_classname:		db "classname",0
@@ -983,14 +968,3 @@ _cstring_error_no_physics:		db "ERROR: no physics preset specified for the DynEn
 _cstring_momofinertia:		db "momofinertia",0
 _cstring_error_no_physics1:		db "ERROR: no physics preset specified for the DynEntity at [%.1f,%.1f,%.1f]",0ah,0
 _cstring_prodofinertia:		db "prodofinertia",0
-_cstring_dyn_brushmodel:		db "dyn_brushmodel",0
-_cstring_dyn_model:		db "dyn_model",0
-_cstring_invalid:		db "invalid",0
-_cstring_clutter:		db "clutter",0
-_cstring_destruct:		db "destruct",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

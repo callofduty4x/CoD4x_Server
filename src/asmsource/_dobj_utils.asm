@@ -1028,23 +1028,6 @@ DObjCompleteHierarchyBits_120:
 	jmp DObjCompleteHierarchyBits_130
 
 
-;Zero initialized global or static variables of dobj_utils:
-SECTION .bss
-
-
-;Initialized global or static variables of dobj_utils:
-SECTION .data
-
-
-;Initialized constant data of dobj_utils:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _double_0_00872665:		dq 0x3f81df46a2529d39	; 0.00872665

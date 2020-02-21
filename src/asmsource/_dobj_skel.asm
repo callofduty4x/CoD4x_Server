@@ -1658,23 +1658,6 @@ DObjCalcBaseSkel_140:
 	nop
 
 
-;Zero initialized global or static variables of dobj_skel:
-SECTION .bss
-
-
-;Initialized global or static variables of dobj_skel:
-SECTION .data
-
-
-;Initialized constant data of dobj_skel:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_2_00000000:		dd 0x40000000	; 2
