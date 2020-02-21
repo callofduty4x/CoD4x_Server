@@ -374,4 +374,6 @@ extern "C"
       "ET_ACTOR_CORPSE",
       "ET_STREAMER_HINT"
     };
+
+    int bg_itemlist[2048];
 };
