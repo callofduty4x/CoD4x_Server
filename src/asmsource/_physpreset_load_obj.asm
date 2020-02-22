@@ -9,10 +9,10 @@
 	extern Com_PrintError
 	extern Hunk_FindDataForFile
 	extern Hunk_SetDataForFile
+	extern physAlloc
+	extern physPresetFields
 
 ;Exports of physpreset_load_obj:
-	global physPresetFields
-	global physAlloc
 	global PhysPreset_Strcpy
 	global PhysPresetLoadFile
 	global PhysPresetPrecache
@@ -287,21 +287,6 @@ PhysPresetPrecache_20:
 	jmp PhysPresetPrecache_30
 	nop
 
-
-;Zero initialized global or static variables of physpreset_load_obj:
-SECTION .bss
-physAlloc: resb 0x80
-
-
-;Initialized global or static variables of physpreset_load_obj:
-SECTION .data
-physPresetFields: dd _cstring_mass, 0x0, 0x6, _cstring_bounce, 0x4, 0x6, _cstring_friction, 0x8, 0x6, _cstring_isfrictioninfini, 0xc, 0x5, _cstring_bulletforcescale, 0x10, 0x6, _cstring_explosiveforcesc, 0x14, 0x6, _cstring_sndaliasprefix, 0x18, 0x0, _cstring_piecesspreadfrac, 0x1c, 0x6, _cstring_piecesupwardvelo, 0x20, 0x6, _cstring_tempdefaulttocyl, 0x24, 0x5, 0x0, 0x0
-
-
-;Initialized constant data of physpreset_load_obj:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_null:		db 0
@@ -313,19 +298,3 @@ _cstring_error_file_s_is_:		db "ERROR: file [%s] is not a physics preset file",0
 _cstring_error_filename_s:		db "ERROR: filename ",27h,"%s",27h," too long",0ah,0
 _cstring_error_physics_pr2:		db "ERROR: physics preset ",27h,"%s",27h," not found",0ah,0
 _cstring_error_cannot_fin:		db "ERROR: Cannot find physics preset ",27h,"%s",27h,".",0ah,0
-_cstring_mass:		db "mass",0
-_cstring_bounce:		db "bounce",0
-_cstring_friction:		db "friction",0
-_cstring_isfrictioninfini:		db "isFrictionInfinity",0
-_cstring_bulletforcescale:		db "bulletForceScale",0
-_cstring_explosiveforcesc:		db "explosiveForceScale",0
-_cstring_sndaliasprefix:		db "sndAliasPrefix",0
-_cstring_piecesspreadfrac:		db "piecesSpreadFraction",0
-_cstring_piecesupwardvelo:		db "piecesUpwardVelocity",0
-_cstring_tempdefaulttocyl:		db "tempDefaultToCylinder",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

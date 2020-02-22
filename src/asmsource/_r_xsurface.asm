@@ -444,24 +444,6 @@ XSurfaceGetNumVerts:
 	pop ebp
 	ret
 
-
-;Zero initialized global or static variables of r_xsurface:
-SECTION .bss
-
-
-;Initialized global or static variables of r_xsurface:
-SECTION .data
-
-
-;Initialized constant data of r_xsurface:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1

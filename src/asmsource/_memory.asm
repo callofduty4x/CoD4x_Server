@@ -1,8 +1,8 @@
 ;Imports of memory:
 	extern free
+	extern freefn
 
 ;Exports of memory:
-	global freefn
 	global dFree
 
 
@@ -28,26 +28,3 @@ dFree_20:
 dFree_10:
 	pop ebp
 	ret
-
-
-;Initialized global or static variables of memory:
-SECTION .data
-
-
-;Initialized constant data of memory:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of memory:
-SECTION .bss
-freefn: resb 0x80
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

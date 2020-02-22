@@ -1384,24 +1384,6 @@ XModelReadSurface_BuildCollisionTree_130:
 	xor edx, edx
 	jmp XModelReadSurface_BuildCollisionTree_270
 
-
-;Initialized global or static variables of r_xsurface_load_obj:
-SECTION .data
-
-
-;Initialized constant data of r_xsurface_load_obj:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of r_xsurface_load_obj:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_65535_00000000:		dd 0x477fff00	; 65535

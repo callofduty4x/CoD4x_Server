@@ -1,6 +1,6 @@
 ;Imports of collision_kernel:
 	extern dSpaceCollide2
-	extern _ZZ9Phys_InitvE15Phys_Stop_f_VAR
+	extern Phys_Stop_f_VAR
 	extern memset
 	extern dCollideTransform
 	extern dCollideSphereSphere
@@ -162,7 +162,7 @@ dCollideUserGeomWithGeom:
 	mov ebx, [eax+0x4]
 	lea eax, [edi+edi*4]
 	mov [esp], ebx
-	call dword [eax*4+_ZZ9Phys_InitvE15Phys_Stop_f_VAR+0x30]
+	call dword [eax*4+Phys_Stop_f_VAR+0x30]
 	mov esi, eax
 	test eax, eax
 	jz dCollideUserGeomWithGeom_10
@@ -210,7 +210,7 @@ dCollideUserGeomWithGeom_20:
 dCollideUserGeomWithGeom_30:
 	lea eax, [ebx+ebx*4]
 	mov [esp], edi
-	call dword [eax*4+_ZZ9Phys_InitvE15Phys_Stop_f_VAR+0x30]
+	call dword [eax*4+Phys_Stop_f_VAR+0x30]
 	mov esi, eax
 	mov dword [ebp-0x1c], 0x1
 	jmp dCollideUserGeomWithGeom_50
@@ -725,7 +725,7 @@ _ZN10dxUserGeom11computeAABBEv:
 	lea ecx, [eax+0x2c]
 	mov [esp+0x4], ecx
 	mov [esp], eax
-	call dword [edx*4+_ZZ9Phys_InitvE15Phys_Stop_f_VAR+0x34]
+	call dword [edx*4+Phys_Stop_f_VAR+0x34]
 	leave
 	ret
 
@@ -739,7 +739,7 @@ _ZN10dxUserGeom8AABBTestEP6dxGeomPf:
 	mov ebx, [ebp+0x8]
 	mov eax, [ebx+0x4]
 	lea eax, [eax+eax*4]
-	mov ecx, [eax*4+_ZZ9Phys_InitvE15Phys_Stop_f_VAR+0x38]
+	mov ecx, [eax*4+Phys_Stop_f_VAR+0x38]
 	test ecx, ecx
 	jz _ZN10dxUserGeom8AABBTestEP6dxGeomPf_10
 	pop ebx
@@ -1159,7 +1159,7 @@ dGeomFree_30:
 	cmp eax, 0xa
 	jle dGeomFree_20
 	lea eax, [eax+eax*4]
-	cmp byte [eax*4+_ZZ9Phys_InitvE15Phys_Stop_f_VAR+0x3c], 0x0
+	cmp byte [eax*4+Phys_Stop_f_VAR+0x3c], 0x0
 	jnz dGeomFree_20
 dGeomFree_10:
 	add esp, 0x14

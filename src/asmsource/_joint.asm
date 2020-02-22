@@ -5809,19 +5809,6 @@ dJointSetUniversalParam_jumptab_1:
 	dd dJointSetUniversalParam_200
 	dd dJointSetUniversalParam_210
 
-
-;Initialized global or static variables of joint:
-SECTION .data
-
-
-;Initialized constant data of joint:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of joint:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_0xp_info1_m_d__n:		db "0x%p info1: m %d  nub %d",0ah,0

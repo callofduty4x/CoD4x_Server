@@ -1861,18 +1861,6 @@ Phys_CreateJointForEachContact_170:
 	ret
 
 
-;Initialized global or static variables of phys_contacts:
-SECTION .data
-
-
-;Initialized constant data of phys_contacts:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of phys_contacts:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_group_i_merged_i:		db "Group %i merged into %i.",0ah,0

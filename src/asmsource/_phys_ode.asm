@@ -71,6 +71,45 @@
 	extern dWorldDestroy
 	extern dCloseODE
 	extern QuatToAxis
+	extern phys_drawDebugInfo
+	extern phys_gravityChangeWakeupRadius
+	extern phys_drawCollisionObj
+	extern phys_drawCollisionWorld
+	extern physGlob
+	extern phys_contact_cfm
+	extern phys_contact_erp
+	extern phys_drawcontacts
+	extern phys_jitterMaxMass
+	extern phys_noIslands
+	extern phys_autoDisableAngular
+	extern phys_autoDisableLinear
+	extern phys_autoDisableTime
+	extern phys_bulletSpinScale
+	extern phys_bulletUpBias
+	extern phys_cfm
+	extern phys_collUseEntities
+	extern phys_contact_cfm_ragdoll
+	extern phys_contact_erp_ragdoll
+	extern phys_csl
+	extern phys_dragAngular
+	extern phys_dragLinear
+	extern phys_drawAwake
+	extern phys_drawAwakeTooLong
+	extern phys_dumpcontacts
+	extern phys_erp
+	extern phys_frictionScale
+	extern phys_gravity
+	extern phys_interBodyCollision
+	extern phys_joint_cfm
+	extern phys_joint_stop_cfm
+	extern phys_joint_stop_erp
+	extern phys_mcv
+	extern phys_mcv_ragdoll
+	extern phys_minImpactMomentum
+	extern phys_narrowObjMaxLength
+	extern phys_qsi
+	extern phys_reorderConst
+	extern phys_visibleTris
 	extern PIXBeginNamedEvent
 	extern dWorldSetGravity
 	extern ODE_CollideSimpleSpaceWithGeomNoAABBTest
@@ -125,11 +164,14 @@
 	extern Phys_InitCylinderGeomClass
 	extern Phys_InitCapsuleGeomClass
 	extern Phys_InitWorldCollision
+	extern g_phys_maxMsecStep
+	extern g_phys_minMsecStep
+	extern g_phys_msecStep
+	extern Phys_Go_f_VAR
+	extern Phys_Stop_f_VAR
+	extern physInited
 
 ;Exports of phys_ode:
-	global physInited
-	global g_phys_maxMsecStep
-	global g_phys_minMsecStep
 	global Phys_EnableGeom
 	global Phys_DisableBodyAndGeom
 	global Phys_ObjCountIfActive
@@ -138,8 +180,6 @@
 	global Phys_Stop_f
 	global Phys_Go_f
 	global Phys_DrawDebugTextForWorld
-	global _ZZ9Phys_InitvE13Phys_Go_f_VAR
-	global _ZZ9Phys_InitvE15Phys_Stop_f_VAR
 	global Phys_DoBodyOncePerRun
 	global Phys_BodyGrabSnapshot
 	global Phys_BodyAddGeomAndSetMass
@@ -186,46 +226,6 @@
 	global Phys_ObjSetCollisionFromXModel
 	global Phys_ObjAddGeomCylinderDirection
 	global Phys_Init
-	global phys_drawDebugInfo
-	global phys_gravityChangeWakeupRadius
-	global phys_drawCollisionObj
-	global phys_drawCollisionWorld
-	global g_phys_msecStep
-	global physGlob
-	global phys_contact_cfm
-	global phys_contact_erp
-	global phys_drawcontacts
-	global phys_jitterMaxMass
-	global phys_noIslands
-	global phys_autoDisableAngular
-	global phys_autoDisableLinear
-	global phys_autoDisableTime
-	global phys_bulletSpinScale
-	global phys_bulletUpBias
-	global phys_cfm
-	global phys_collUseEntities
-	global phys_contact_cfm_ragdoll
-	global phys_contact_erp_ragdoll
-	global phys_csl
-	global phys_dragAngular
-	global phys_dragLinear
-	global phys_drawAwake
-	global phys_drawAwakeTooLong
-	global phys_dumpcontacts
-	global phys_erp
-	global phys_frictionScale
-	global phys_gravity
-	global phys_interBodyCollision
-	global phys_joint_cfm
-	global phys_joint_stop_cfm
-	global phys_joint_stop_erp
-	global phys_mcv
-	global phys_mcv_ragdoll
-	global phys_minImpactMomentum
-	global phys_narrowObjMaxLength
-	global phys_qsi
-	global phys_reorderConst
-	global phys_visibleTris
 
 
 SECTION .text
@@ -5209,11 +5209,11 @@ Phys_Init_20:
 	mov dword [esp], _cstring_phys_narrowobjma
 	call Cvar_RegisterFloat
 	mov [phys_narrowObjMaxLength], eax
-	mov dword [esp+0x8], _ZZ9Phys_InitvE15Phys_Stop_f_VAR
+	mov dword [esp+0x8], Phys_Stop_f_VAR
 	mov dword [esp+0x4], Phys_Stop_f
 	mov dword [esp], _cstring_phys_stop
 	call Cmd_AddCommand
-	mov dword [esp+0x8], _ZZ9Phys_InitvE13Phys_Go_f_VAR
+	mov dword [esp+0x8], Phys_Go_f_VAR
 	mov dword [esp+0x4], Phys_Go_f
 	mov dword [esp], _cstring_phys_go
 	call Cmd_AddCommand
@@ -5234,64 +5234,6 @@ Phys_Init_20:
 	pop ebp
 	ret
 	nop
-
-
-;Zero initialized global or static variables of phys_ode:
-SECTION .bss
-physInited: resb 0x4
-_ZZ9Phys_InitvE13Phys_Go_f_VAR: resb 0x14
-_ZZ9Phys_InitvE15Phys_Stop_f_VAR: resb 0x68
-phys_drawDebugInfo: resb 0x4
-phys_gravityChangeWakeupRadius: resb 0x4
-phys_drawCollisionObj: resb 0x4
-phys_drawCollisionWorld: resb 0x4
-physGlob: resb 0x23cd0
-phys_contact_cfm: resb 0x4
-phys_contact_erp: resb 0x4
-phys_drawcontacts: resb 0x4
-phys_jitterMaxMass: resb 0x4
-phys_noIslands: resb 0x4
-phys_autoDisableAngular: resb 0x4
-phys_autoDisableLinear: resb 0x4
-phys_autoDisableTime: resb 0x4
-phys_bulletSpinScale: resb 0x4
-phys_bulletUpBias: resb 0x4
-phys_cfm: resb 0x1c
-phys_collUseEntities: resb 0x4
-phys_contact_cfm_ragdoll: resb 0x4
-phys_contact_erp_ragdoll: resb 0x4
-phys_csl: resb 0x4
-phys_dragAngular: resb 0x4
-phys_dragLinear: resb 0x4
-phys_drawAwake: resb 0x4
-phys_drawAwakeTooLong: resb 0x4
-phys_dumpcontacts: resb 0x4
-phys_erp: resb 0x4
-phys_frictionScale: resb 0x4
-phys_gravity: resb 0x4
-phys_interBodyCollision: resb 0x4
-phys_joint_cfm: resb 0x4
-phys_joint_stop_cfm: resb 0x4
-phys_joint_stop_erp: resb 0x4
-phys_mcv: resb 0x4
-phys_mcv_ragdoll: resb 0x4
-phys_minImpactMomentum: resb 0x4
-phys_narrowObjMaxLength: resb 0x4
-phys_qsi: resb 0x4
-phys_reorderConst: resb 0x4
-phys_visibleTris: resb 0x4
-
-
-;Initialized global or static variables of phys_ode:
-SECTION .data
-g_phys_maxMsecStep: dd 0x43, 0x43, 0x22
-g_phys_minMsecStep: dd 0x11, 0x11, 0x11, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-g_phys_msecStep: dd 0x11, 0x11, 0x11
-
-
-;Initialized constant data of phys_ode:
-SECTION .rdata
-
 
 ;All cstrings:
 SECTION .rdata

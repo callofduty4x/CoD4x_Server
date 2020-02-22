@@ -996,19 +996,6 @@ Player_UpdateCursorHints_jumptab_0:
 	dd Player_UpdateCursorHints_80
 	dd Player_UpdateCursorHints_550
 
-
-;Initialized global or static variables of player_use_mp:
-SECTION .data
-
-
-;Initialized constant data of player_use_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of player_use_mp:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_mp_usevehicle:		db "MP_USEVEHICLE",0

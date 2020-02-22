@@ -7,10 +7,10 @@
 	extern colorCyan
 	extern Phys_DrawPoly
 	extern Phys_GetPlaneForTriangle2
+	extern localContacts
+	extern numLocalContacts
 
 ;Exports of phys_coll_capsulebrush:
-	global numLocalContacts
-	global localContacts
 	global Phys_CapsuleClipEdgeToPlane
 	global Phys_DistanceOfCapsuleFromPlane
 	global Phys_TestCapsulePlane
@@ -5656,26 +5656,6 @@ Phys_CollideCapsuleWithTriangleList_170:
 	call Phys_CapsuleBuildContactsForTri
 	jmp Phys_CollideCapsuleWithTriangleList_190
 	nop
-
-
-;Initialized global or static variables of phys_coll_capsulebrush:
-SECTION .data
-
-
-;Initialized constant data of phys_coll_capsulebrush:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of phys_coll_capsulebrush:
-SECTION .bss
-numLocalContacts: resb 0x20
-localContacts: resb 0x4e0
-
-
-;All cstrings:
-SECTION .rdata
-
-
 
 ;All constant floats and doubles:
 SECTION .rdata

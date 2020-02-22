@@ -640,19 +640,6 @@ dRfromQ:
 	ret
 	nop
 
-
-;Initialized global or static variables of rotation:
-SECTION .data
-
-
-;Initialized constant data of rotation:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of rotation:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_drfrom2axes:		db "dRFrom2Axes",0

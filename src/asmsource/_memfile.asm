@@ -10,18 +10,18 @@
 	extern deflateInit_
 	extern inflateInit_
 	extern inflateEnd
+	extern g_zeroCount
+	extern g_nonZeroCount
+	extern stream
+	extern g_saveBuffer
+	extern g_cacheBuffer
+	extern g_cacheBufferLen
+	extern g_cacheSize
+	extern streamModeThread
+	extern streamMode
+	extern g_compress
 
 ;Exports of memfile:
-	global g_zeroCount
-	global g_nonZeroCount
-	global stream
-	global g_saveBuffer
-	global g_cacheBuffer
-	global g_cacheBufferLen
-	global g_cacheSize
-	global streamModeThread
-	global streamMode
-	global g_compress
 	global MemFile_WriteDataForArchive
 	global MemFile_ReadByteInternal
 	global MemFile_WriteError
@@ -1033,29 +1033,6 @@ MemFile_InitForWriting:
 	jmp MemFile_StartSegment
 	nop
 
-
-;Initialized global or static variables of memfile:
-SECTION .data
-
-
-;Initialized constant data of memfile:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of memfile:
-SECTION .bss
-g_zeroCount: resb 0x4
-g_nonZeroCount: resb 0x1c
-stream: resb 0x40
-g_saveBuffer: resb 0x2000
-g_cacheBuffer: resb 0x44
-g_cacheBufferLen: resb 0x4
-g_cacheSize: resb 0x4
-streamModeThread: resb 0x4
-streamMode: resb 0x4
-g_compress: resb 0x4c
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_trying_to_read_c:		db "Trying to read corrupted file",0
@@ -1064,9 +1041,3 @@ _cstring_null:		db 0
 _cstring_memfile_startseg:		db "MemFile_StartSegment: Out of memory",0ah,0
 _cstring_memfile_startseg1:		db "MemFile_StartSegment: Out of memory",0
 _cstring_114:		db "1.1.4",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

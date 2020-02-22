@@ -1808,24 +1808,6 @@ CM_ForEachBrushInLeafBrushNode_r_130:
 	jmp CM_ForEachBrushInLeafBrushNode_r_20
 	nop
 
-
-;Initialized global or static variables of phys_world_collision:
-SECTION .data
-
-
-;Initialized constant data of phys_world_collision:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of phys_world_collision:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_50000000:		dd 0x3f000000	; 0.5

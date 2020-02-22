@@ -24,6 +24,8 @@
 	extern dRfromQ
 	extern jointInit
 	extern dxProcessIslands
+	extern odeGlob
+
 
 ;Exports of ode:
 	global _GLOBAL__I_odeGlob
@@ -74,7 +76,6 @@
 	global dWorldSetERP
 	global dWorldSetGravity
 	global dWorldSetQuickStepNumIterations
-	global odeGlob
 
 
 SECTION .text
@@ -1800,26 +1801,11 @@ dWorldSetQuickStepNumIterations:
 	ret
 	add [eax], al
 
-
-;Initialized global or static variables of ode:
-SECTION .data
-
-
-;Initialized constant data of ode:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of ode:
-SECTION .bss
-odeGlob: resb 0x2c6500
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_dbodysetmass:		db "dBodySetMass",0
 _cstring_inertia_must_be_:		db "inertia must be positive definite in %s()",0
 _cstring_warning_destroyi:		db "warning: destroying world containing grouped joints",0
-
 
 
 ;All constant floats and doubles:

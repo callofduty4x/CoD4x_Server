@@ -841,24 +841,6 @@ dMassTranslate_10:
 	ret
 	nop
 
-
-;Initialized global or static variables of mass:
-SECTION .data
-
-
-;Initialized constant data of mass:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of mass:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_0_03125000:		dd 0x3d000000	; 0.03125

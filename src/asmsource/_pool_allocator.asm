@@ -87,25 +87,3 @@ Pool_Init_20:
 	pop edi
 	pop ebp
 	ret
-
-
-;Initialized global or static variables of pool_allocator:
-SECTION .data
-
-
-;Initialized constant data of pool_allocator:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of pool_allocator:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

@@ -268,19 +268,6 @@ dPlaneSpace_10:
 	leave
 	ret
 
-
-;Initialized global or static variables of odemath:
-SECTION .data
-
-
-;Initialized constant data of odemath:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of odemath:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_dnormalize4:		db "dNormalize4",0

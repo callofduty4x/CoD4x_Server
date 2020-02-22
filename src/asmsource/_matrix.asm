@@ -266,23 +266,6 @@ dSetZero_10:
 	nop
 
 
-;Initialized global or static variables of matrix:
-SECTION .data
-
-
-;Initialized constant data of matrix:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of matrix:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
 ;All constant floats and doubles:
 SECTION .rdata
 _float_1_00000000:		dd 0x3f800000	; 1
