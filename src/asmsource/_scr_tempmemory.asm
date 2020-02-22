@@ -3,9 +3,9 @@
 	extern Hunk_UserAllocAlign
 	extern Hunk_UserSetPos
 	extern Hunk_UserAllocAlignStrict
+	extern g_user
 
 ;Exports of scr_tempmemory:
-	global g_user
 	global TempMalloc
 	global TempMallocAlign
 	global TempMemoryReset
@@ -83,26 +83,3 @@ TempMallocAlignStrict:
 	call Hunk_UserAllocAlignStrict
 	leave
 	ret
-
-
-;Initialized global or static variables of scr_tempmemory:
-SECTION .data
-
-
-;Initialized constant data of scr_tempmemory:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of scr_tempmemory:
-SECTION .bss
-g_user: resb 0x80
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

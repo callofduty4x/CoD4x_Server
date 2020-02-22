@@ -281,25 +281,3 @@ XModelGetStaticModelCacheVertCount:
 	shl eax, cl
 	pop ebp
 	ret
-
-
-;Zero initialized global or static variables of xmodel_utils:
-SECTION .bss
-
-
-;Initialized global or static variables of xmodel_utils:
-SECTION .data
-
-
-;Initialized constant data of xmodel_utils:
-SECTION .rdata
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

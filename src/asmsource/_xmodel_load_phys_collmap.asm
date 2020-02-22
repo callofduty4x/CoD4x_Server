@@ -2343,19 +2343,6 @@ SkipEpair_90:
 	jmp SkipEpair_50
 	nop
 
-
-;Initialized global or static variables of xmodel_load_phys_collmap:
-SECTION .data
-
-
-;Initialized constant data of xmodel_load_phys_collmap:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of xmodel_load_phys_collmap:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_missing_token_fo:		db "missing token for ",27h,"%s",27h,0

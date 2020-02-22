@@ -9,4 +9,7 @@ extern "C"
     int caseCount;
     char opcode[0x8];
     scrVmPub_t gScrVmPub;
+    char g_loadedImpureScript[0x80];
+    char g_allocNodeUser[0x80];
+    int g_user;
 }

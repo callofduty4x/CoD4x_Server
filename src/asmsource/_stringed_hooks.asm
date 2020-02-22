@@ -30,6 +30,7 @@
 	extern loc_language
 	extern loc_forceEnglish
 	extern loc_translate
+	extern g_languages
 
 ;Exports of stringed_hooks:
 	global SE_GetString_FastFile
@@ -1613,7 +1614,6 @@ SEH_VerifyLanguageSelection_20:
 
 ;Initialized global or static variables of stringed_hooks:
 SECTION .data
-g_languages: dd _cstring_english, 0x0, _cstring_french, 0x0, _cstring_german, 0x0, _cstring_italian, 0x0, _cstring_spanish, 0x0, _cstring_british, 0x0, _cstring_russian, 0x0, _cstring_polish, 0x0, _cstring_korean, 0x0, _cstring_taiwanese, 0x0, _cstring_japanese, 0x0, _cstring_chinese, 0x0, _cstring_thai, 0x0, _cstring_leet, 0x0, _cstring_czech, 0x0
 _ZZ21SE_GetString_FastFilePKcE1s_17: dd _cstring_press_return_or_, _cstring_appuyez_sur_reto, _cstring_zum_ndern_der_an, _cstring_premi_invio_o__f
 _ZZ21SE_GetString_FastFilePKcE1s_16: dd _cstring_waiting_for_new_, _cstring_attente_nouvelle, _cstring_neuer_key_erford, _cstring_in_attesa_di_nuo
 _ZZ21SE_GetString_FastFilePKcE1s_15: dd _cstring_clear, _cstring_verr_num, _cstring_lschen, _cstring_elimina
@@ -1768,9 +1768,3 @@ _cstring_return:		db "Return",0
 _cstring_retour:		db "Retour",0
 _cstring_eingabe:		db "Eingabe",0
 _cstring_invio:		db "Invio",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

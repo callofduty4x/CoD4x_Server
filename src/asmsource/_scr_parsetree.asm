@@ -2,9 +2,9 @@
 	extern Hunk_UserAlloc
 	extern Hunk_UserCreate
 	extern Hunk_UserDestroy
+	extern g_allocNodeUser
 
 ;Exports of scr_parsetree:
-	global g_allocNodeUser
 	global append_node
 	global prepend_node
 	global linked_list_end
@@ -391,25 +391,6 @@ node_pos:
 	ret
 
 
-;Initialized global or static variables of scr_parsetree:
-SECTION .data
-
-
-;Initialized constant data of scr_parsetree:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of scr_parsetree:
-SECTION .bss
-g_allocNodeUser: resb 0x80
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_scr_initallocnod:		db "Scr_InitAllocNode",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

@@ -2598,14 +2598,6 @@ void FS_AddGameDirectory(const char *path, const char *dir)
     FS_AddGameDirectory_Single(path, dir, qfalse, 0);
 }
 
-static const char* g_languages[] =
-{
-    "english", "french", "german", "italian",
-    "spanish", "british", "russian", "polish",
-    "korean", "taiwanese", "japanese", "chinese",
-    "thai", "leet", "czech"
-};
-
 int SEH_GetCurrentLanguage(void)
 {
     return loc_language->integer;
@@ -2614,9 +2606,9 @@ int SEH_GetCurrentLanguage(void)
 const char* SEH_GetLanguageName(unsigned int langindex)
 {
     if(langindex > 14)
-        return g_languages[0];
+        return g_languages[0].pszName;
 
-    return g_languages[langindex];
+    return g_languages[langindex].pszName;
 }
 
 qboolean SEH_GetLanguageIndexForName(const char* language, int *langindex)
@@ -2625,7 +2617,7 @@ qboolean SEH_GetLanguageIndexForName(const char* language, int *langindex)
 
     for(i = 0; i < 15; i++)
     {
-        if(!Q_stricmp(language, g_languages[i]))
+        if(!Q_stricmp(language, g_languages[i].pszName))
         {
             *langindex = i;
             return qtrue;

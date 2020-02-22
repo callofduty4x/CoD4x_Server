@@ -29,10 +29,10 @@
 	extern gScrParserPub
 	extern Scr_PrintSourcePos
 	extern Scr_PrintPrevCodePos
+	extern g_loadedImpureScript
 
 
 ;Exports of scr_parser:
-	global g_loadedImpureScript
 	global Scr_AddSourceBufferInternal
 	global CompileError
 	global AddOpcodePos
@@ -936,19 +936,6 @@ Scr_SetLoadedImpureScript:
 	nop
 
 
-;Initialized global or static variables of scr_parser:
-SECTION .data
-
-
-;Initialized constant data of scr_parser:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of scr_parser:
-SECTION .bss
-g_loadedImpureScript: resb 0x80
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_scr_addsourcebuf:		db "Scr_AddSourceBuffer3",0
@@ -975,9 +962,3 @@ _cstring_s2:		db "%s",0ah,0ah,0
 _cstring__d:		db "@ %d",0ah,0
 _cstring_frozen_thread:		db "<frozen thread>",0ah,0
 _cstring_removed_thread:		db "<removed thread>",0ah,0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

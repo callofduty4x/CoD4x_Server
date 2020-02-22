@@ -12,6 +12,8 @@
 	extern DObjGetRadius
 	extern DObjTracelinePartBits
 	extern DObjTraceline
+	extern actorLocationalMaxs
+	extern actorLocationalMins
 
 ;Exports of sv_world:
 	global SV_PointTraceToEntityIntern
@@ -479,27 +481,6 @@ SV_PointTraceToEntity_trail_130:
 	movss [ebp-0x2c], xmm0
 	movss [ebp-0x28], xmm2
 	jmp SV_PointTraceToEntity_trail_200
-
-
-
-
-;Initialized global or static variables of sv_world:
-SECTION .data
-actorLocationalMaxs: dd 0x42800000, 0x42800000, 0x42900000
-actorLocationalMins: dd 0xc2800000, 0xc2800000, 0xc2000000, 0x0, 0x0
-
-
-;Initialized constant data of sv_world:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of sv_world:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
 
 
 ;All constant floats and doubles:

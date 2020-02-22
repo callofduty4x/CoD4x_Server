@@ -4490,9 +4490,3 @@ _cstring_bad_token_s:		db "bad token ",27h,"%s",27h,0
 _cstring_max_string_lengt:		db "max string length exceeded: ",22h,"%s",22h,0
 _cstring_fatal_flex_scann1:		db "fatal flex scanner internal error--end of buffer missed",0
 _cstring_fatal_error__sca:		db "fatal error - scanner input buffer overflow",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

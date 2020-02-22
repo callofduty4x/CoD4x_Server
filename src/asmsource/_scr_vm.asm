@@ -8428,12 +8428,6 @@ Scr_GetConstLowercaseString_100:
 	mov [gScrVmPub+0x16], al
 	jmp Scr_GetConstLowercaseString_160
 
-
-;Zero initialized global or static variables of scr_vm:
-SECTION .bss
-
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_s:		db "%s",0

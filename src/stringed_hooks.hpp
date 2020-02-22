@@ -1,6 +1,12 @@
 ﻿#pragma once
 #include "cvar.hpp"
 
+struct languageInfo_t
+{
+    const char* pszName;
+    int bPresent;
+};
+
 
 extern "C"
 {
@@ -11,4 +17,7 @@ extern "C"
     extern cvar_t* loc_language;
     extern cvar_t* loc_forceEnglish;
     extern cvar_t* loc_translate;
-}
+
+    extern languageInfo_t g_languages[15];
+} // extern "C"
+

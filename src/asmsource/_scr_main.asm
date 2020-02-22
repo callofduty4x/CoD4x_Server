@@ -398,27 +398,8 @@ SL_TransferToCanonicalString_10:
 	pop ebp
 	ret
 
-
-;Initialized global or static variables of scr_main:
-SECTION .data
-
-
-;Initialized constant data of scr_main:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of scr_main:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_scr_beginloadscr:		db "Scr_BeginLoadScripts",0
 _cstring_sgsc:		db "%s.gsc",0
 _cstring_:		db "+",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

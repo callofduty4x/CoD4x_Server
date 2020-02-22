@@ -1952,15 +1952,6 @@ SECTION .bss
 g_materials: resb 0x80
 g_default: resb 0x60
 
-
-;Initialized global or static variables of xmodel:
-SECTION .data
-
-
-;Initialized constant data of xmodel:
-SECTION .rdata
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_error_cannot_fin:		db "ERROR: Cannot find xmodel ",27h,"%s",27h,".",0ah,0

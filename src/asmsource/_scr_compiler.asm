@@ -11467,9 +11467,3 @@ _cstring_cannot_put_using:		db "cannot put #using_animtree inside /# ... #/ comm
 _cstring__has_no_matching:		db "#/ has no matching /#",0
 _cstring__has_no_matching1:		db "/# has no matching #/",0
 _cstring_could_not_find_s:		db "Could not find script ",27h,"%s",27h,0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

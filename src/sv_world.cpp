@@ -33,10 +33,6 @@
 
 using namespace std;
 
-vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
-vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
-
-
 DObj_t *CCDECL SV_LocationalSightTraceDObj(struct sightpointtrace_t *clip, gentity_t *touch)
 {
   if ( clip->locational )
@@ -126,6 +122,8 @@ void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
 
 extern "C"
 {
+    vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
+    vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
 
 clipHandle_t SV_ClipHandleForEntity(gentity_t *touch)
 {

@@ -850,6 +850,9 @@ extern "C"
     extern char g_EndPos;
     extern scrVmGlob_t gScrVmGlob;
     extern scrVmPub_t gScrVmPub;
+    extern char g_loadedImpureScript[0x80];
+    extern char g_allocNodeUser[0x80];
+    extern int g_user;
 
     void Scr_ResetTimeout();
     void CCDECL VM_Notify(int, int, VariableValue* val);
