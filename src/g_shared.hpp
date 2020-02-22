@@ -518,7 +518,6 @@ playerState_t *G_GetPlayerState(int num);
 clientState_t *G_GetClientState(int num);
 gclient_t *G_GetGClient(int num);
 void SpawnVehicle(gentity_t *ent, const char *vehtype);
-void CCDECL G_SetModel(gentity_t *ent, const char *modelname);
 /* void ClientSetUsername(int clientNum, const char *username); */
 void CCDECL G_DObjCalcPose(gentity_t *ent, int *partBits);
 void CCDECL player_die(struct gentity_s *self, struct gentity_s *inflictor, struct gentity_s *attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, enum hitLocation_t hitLoc, int psTimeOffset);

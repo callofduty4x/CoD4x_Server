@@ -2005,9 +2005,9 @@ void Swap_Init( void ) {
 
 extern "C"
 {
-    bool CCDECL Com_IsLegacyXModelName(const char *name)
+    int CCDECL Com_IsLegacyXModelName(const char *name)
     {
-        return !Q_stricmpn(name, "xmodel", 6) && (name[6] == '/' || name[6] == '\\');
+        return !Q_stricmpn(name, "xmodel", 6) && (name[6] == '/' || name[6] == '\\') ? 1 : 0;
     }
 
 

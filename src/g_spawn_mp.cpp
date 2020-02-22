@@ -2,6 +2,7 @@
 
 #include "g_entity.hpp"
 #include "g_main_mp.hpp"
+#include "g_utils_mp.hpp"
 
 
 extern "C"
@@ -49,4 +50,11 @@ extern "C"
         {"script_vehicle_mp", G_VehSpawner}
     };
 
+    void CCDECL G_SetModel(gentity_t* ent, const char* modelname)
+    {
+        if (*modelname)
+            ent->model = G_ModelIndex(modelname);
+        else
+            ent->model = 0;
+    }
 } // extern "C"

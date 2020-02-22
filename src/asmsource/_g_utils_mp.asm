@@ -72,12 +72,12 @@
 	extern G_FreeEntity
 	extern origErrorString
 	extern cached_models
+	extern G_SetModel
 
 
 ;Exports of g_utils_mp:
 	global G_EntLinkToInternal
 	global G_AddEvent
-	global G_SetModel
 	global G_TagIndex
 	global G_EntAttach
 	global G_EntDetach
@@ -293,32 +293,6 @@ G_AddEvent_10:
 	pop ebp
 	ret
 	nop
-
-
-;G_SetModel(gentity_s*, char const*)
-G_SetModel:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ebx, [ebp+0x8]
-	mov eax, [ebp+0xc]
-	cmp byte [eax], 0x0
-	jnz G_SetModel_10
-	mov word [ebx+0x168], 0x0
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-G_SetModel_10:
-	mov [esp], eax
-	call G_ModelIndex
-	mov [ebx+0x168], ax
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-	add [eax], al
 
 
 ;G_TagIndex(char const*)

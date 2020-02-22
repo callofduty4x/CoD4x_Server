@@ -111,7 +111,7 @@ struct cspField_t;
 extern "C"
 {
 double CCDECL GetLeanFraction(const float fFrac);
-bool CCDECL Com_IsLegacyXModelName(const char *name);
+int CCDECL Com_IsLegacyXModelName(const char *name);
 void COM_StripExtension( const char *in, char *out );
 void Com_Memset(void*, byte, int);
 //#define Com_Memset memset

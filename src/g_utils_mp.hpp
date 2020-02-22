@@ -9,4 +9,5 @@ extern "C"
     extern const char* origErrorString;
 
     gentity_s* CCDECL G_Spawn();
+    unsigned short int CCDECL G_ModelIndex(const char* modelname);
 }

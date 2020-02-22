@@ -49,4 +49,6 @@ extern "C"
     void CCDECL SP_light(gentity_s* ent);
     void CCDECL SP_turret(gentity_s* ent);
     void CCDECL SP_script_brushmodel(gentity_s* ent);
+
+    void CCDECL G_SetModel(gentity_t* ent, const char* modelname);
 }
