@@ -90,4 +90,5 @@ extern "C"
 
     void CCDECL G_LogPrintf( const char *fmt, ... );
     void CCDECL G_RunFrame( int time );
+    void CCDECL G_FreeEntity(gentity_s* gEnt);
 }

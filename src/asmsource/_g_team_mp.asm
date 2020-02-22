@@ -47,25 +47,3 @@ CheckTeamStatus_10:
 	pop ebx
 	pop ebp
 	ret
-
-
-;Initialized global or static variables of g_team_mp:
-SECTION .data
-
-
-;Initialized constant data of g_team_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_team_mp:
-SECTION .bss
-
-
-;All cstrings:
-SECTION .rdata
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

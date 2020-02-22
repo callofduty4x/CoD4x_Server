@@ -23,10 +23,11 @@
 	extern AngleVectors
 	extern G_TraceCapsule
 	extern Trace_GetEntityHitId
+	extern pushed
+	extern pushed_p
+	extern hintStrings
 
 ;Exports of g_mover:
-	global pushed
-	global pushed_p
 	global trigger_use_shared
 	global G_RunMover
 	global G_MoverTeam
@@ -35,7 +36,6 @@
 	global trigger_use_touch
 	global G_TryPushingEntity
 	global G_TestEntityPosition
-	global hintStrings
 
 
 SECTION .text
@@ -1368,19 +1368,13 @@ G_TestEntityPosition_50:
 	add [eax], al
 
 
-;Initialized global or static variables of g_mover:
-SECTION .data
-hintStrings: dd _cstring_null, _cstring_hint_noicon, _cstring_hint_activate, _cstring_hint_health, _cstring_hint_friendly, 0x0, 0x0, 0x0
-
-
 ;Initialized constant data of g_mover:
 SECTION .rdata
 
 
 ;Zero initialized global or static variables of g_mover:
 SECTION .bss
-pushed: resb 0xb000
-pushed_p: resb 0x80
+
 
 
 ;All cstrings:
@@ -1391,10 +1385,6 @@ _cstring_cursorhint:		db "cursorhint",0
 _cstring_hintstring:		db "hintstring",0
 _cstring_hint_inherit:		db "HINT_INHERIT",0
 _cstring_too_many_differe:		db 15h,"Too many different hintstring key values on trigger_use entities. Max allowed is %i different strings",0
-_cstring_hint_noicon:		db "HINT_NOICON",0
-_cstring_hint_activate:		db "HINT_ACTIVATE",0
-_cstring_hint_health:		db "HINT_HEALTH",0
-_cstring_hint_friendly:		db "HINT_FRIENDLY",0
 
 
 

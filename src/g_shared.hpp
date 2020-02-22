@@ -518,8 +518,6 @@ playerState_t *G_GetPlayerState(int num);
 clientState_t *G_GetClientState(int num);
 gclient_t *G_GetGClient(int num);
 void SpawnVehicle(gentity_t *ent, const char *vehtype);
-void CCDECL G_VehSpawner(gentity_t *ent);
-void CCDECL G_VehCollmapSpawner(gentity_t *ent);
 void CCDECL G_SetModel(gentity_t *ent, const char *modelname);
 /* void ClientSetUsername(int clientNum, const char *username); */
 void CCDECL G_DObjCalcPose(gentity_t *ent, int *partBits);
@@ -556,7 +554,6 @@ void G_ClientStopUsingTurret(gentity_t* ent);
 void G_EarlyInit();
 void Scr_Vehicle_Think(struct gentity_s* ent);
 uint16_t CCDECL G_GetHitLocationString(enum hitLocation_t hitLoc);
-void CCDECL G_FreeEntity(struct gentity_s *gEnt);
 void CCDECL G_RunMissile(gentity_t *gEnt);
 void CCDECL G_GeneralLink(struct gentity_s *gEnt);
 void CCDECL G_RunItem(gentity_t *gEnt);

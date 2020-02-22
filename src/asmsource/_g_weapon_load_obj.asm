@@ -13,9 +13,9 @@
 	extern Com_PrintError
 	extern Hunk_AllocLowAlignInternal
 	extern memcpy
+	extern accuracyDirName
 
 ;Exports of g_weapon_load_obj:
-	global accuracyDirName
 	global G_ParseWeaponAccurayGraphs
 
 
@@ -245,19 +245,6 @@ G_ParseWeaponAccurayGraphs_140:
 	jmp G_ParseWeaponAccurayGraphs_30
 
 
-;Initialized global or static variables of g_weapon_load_obj:
-SECTION .data
-accuracyDirName: dd _cstring_aivsai, _cstring_aivsplayer, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of g_weapon_load_obj:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_weapon_load_obj:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_accuracyss:		db "accuracy/%s/%s",0
@@ -268,8 +255,6 @@ _cstring_warning_s_has_to:		db "WARNING: ",22h,"%s",22h," has too many graph kno
 _cstring_warning_could_no:		db "WARNING: Could not load ai weapon accuracy file ",27h,"%s",27h,0ah,0
 _cstring_error_s_error_in:		db "ERROR: ",22h,"%s",22h," Error in parsing an ai weapon accuracy file",0ah,0
 _cstring_error_s_range_mu:		db "ERROR: ",22h,"%s",22h," Range must be 0.0 to 1.0",0ah,0
-_cstring_aivsai:		db "aivsai",0
-_cstring_aivsplayer:		db "aivsplayer",0
 
 
 

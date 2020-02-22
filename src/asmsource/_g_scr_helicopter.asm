@@ -703,9 +703,3 @@ _cstring_if_set_the_turre:		db "If set, the turret will not fire through the cro
 _cstring_vehhelicopterhea:		db "vehHelicopterHeadSwayDontSwayTheTurret",0
 _cstring_the_amount_of_ro1:		db "The amount of rotational momentum the helicopter has with regards to tilting.",0
 _cstring_vehhelicoptertil7:		db "vehHelicopterTiltMomentum",0
-
-
-
-;All constant floats and doubles:
-SECTION .rdata
-

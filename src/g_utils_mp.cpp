@@ -10,7 +10,10 @@
 
 using namespace std;
 
-extern "C"{
+extern "C"
+{
+    char cached_models[0x800];
+    const char* origErrorString = "localized string";
 
 const char *CCDECL G_GetEntityTypeName(gentity_t *ent)
 {
@@ -79,4 +82,4 @@ void CCDECL G_SetAngle(gentity_s *ent, const float *angle)
 
 }
 
-}
+} // extern "C"

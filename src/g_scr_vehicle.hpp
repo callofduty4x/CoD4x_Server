@@ -232,6 +232,7 @@ extern "C"
 {
     extern vehicle_info_t s_vehicleInfos[32];
     extern float vehicle_frametime;
+    extern const float s_correctSolidDeltas[26][3];
 
     void CMD_VEH_SetSpeed(scr_entref_t entref);
     void CMD_VEH_GetSpeed(scr_entref_t entref);

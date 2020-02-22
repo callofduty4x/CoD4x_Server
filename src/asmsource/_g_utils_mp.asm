@@ -70,11 +70,11 @@
 	extern SV_LocateGameData
 	extern G_DObjCalcBone
 	extern G_FreeEntity
+	extern origErrorString
+	extern cached_models
 
 
 ;Exports of g_utils_mp:
-	global cached_models
-	global _ZZ22G_LocalizedStringIndexPKcE12origErrorMsg
 	global G_EntLinkToInternal
 	global G_AddEvent
 	global G_SetModel
@@ -2249,7 +2249,7 @@ G_LocalizedStringIndex:
 	jz G_LocalizedStringIndex_10
 	mov eax, level
 	mov esi, [eax+0x1c]
-	mov edx, [_ZZ22G_LocalizedStringIndexPKcE12origErrorMsg]
+	mov edx, [origErrorString]
 	test esi, esi
 	jz G_LocalizedStringIndex_20
 G_LocalizedStringIndex_60:
@@ -2296,7 +2296,7 @@ G_LocalizedStringIndex_50:
 	mov si, 0x1
 	jmp G_LocalizedStringIndex_60
 G_LocalizedStringIndex_40:
-	mov eax, [_ZZ22G_LocalizedStringIndexPKcE12origErrorMsg]
+	mov eax, [origErrorString]
 	mov [esp+0x10], eax
 	mov dword [esp+0xc], 0x1
 	mov dword [esp+0x8], 0x200
@@ -2307,7 +2307,7 @@ G_LocalizedStringIndex_40:
 	test eax, eax
 	jz G_LocalizedStringIndex_30
 	mov [esp+0xc], edi
-	mov eax, [_ZZ22G_LocalizedStringIndexPKcE12origErrorMsg]
+	mov eax, [origErrorString]
 	mov [esp+0x8], eax
 	mov dword [esp+0x4], _cstring_warning_s_s_not_
 	mov dword [esp], 0x18
@@ -3004,21 +3004,6 @@ G_crandom:
 	ret
 	nop
 
-
-;Initialized global or static variables of g_utils_mp:
-SECTION .data
-_ZZ22G_LocalizedStringIndexPKcE12origErrorMsg: dd _cstring_localized_string, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
-;Initialized constant data of g_utils_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_utils_mp:
-SECTION .bss
-cached_models: resb 0x800
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_model_s_not_prec:		db "model ",27h,"%s",27h," not precached",0
@@ -3035,7 +3020,6 @@ _cstring_dumping_these_i_:		db "Dumping these %i Config Strings:",0ah,0
 _cstring_g_findconfigstri1:		db 15h,"G_FindConfigstringIndex: overflow (%d): ",27h,"%s",27h,0
 _cstring_i_s:		db "%i: %s",0ah,0
 _cstring_g_spawn_no_free_:		db 15h,"G_Spawn: no free entities",0
-_cstring_localized_string:		db "localized string",0
 
 
 ;All constant floats and doubles:

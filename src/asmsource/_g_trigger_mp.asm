@@ -1331,18 +1331,6 @@ hurt_use:
 	add [eax], al
 
 
-;Initialized global or static variables of g_trigger_mp:
-SECTION .data
-
-
-;Initialized constant data of g_trigger_mp:
-SECTION .rdata
-
-
-;Zero initialized global or static variables of g_trigger_mp:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_null:		db 0

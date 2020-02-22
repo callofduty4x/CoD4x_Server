@@ -96,6 +96,8 @@
 	extern vehTestMaxMPH
 	extern vehTestWeight
 	extern vehTextureScrollScale
+	extern s_vehicleTypeNames
+	extern s_vehicleFields
 
 
 ;Exports of g_vehicles_mp:
@@ -6442,13 +6444,6 @@ G_VehiclesSetupSpawnedEnts_80:
 	jmp G_VehiclesSetupSpawnedEnts_10
 	nop
 
-
-;Initialized global or static variables of g_vehicles_mp:
-SECTION .data
-s_vehicleFields: dd _cstring_type, 0x40, 0xc, _cstring_steerwheels, 0x44, 0x5, _cstring_texurescroll, 0x48, 0x5, _cstring_quadbarrel, 0x4c, 0x5, _cstring_bulletdamage, 0x50, 0x5, _cstring_armorpiercingdam, 0x54, 0x5, _cstring_grenadedamage, 0x58, 0x5, _cstring_projectiledamage, 0x5c, 0x5, _cstring_projectilesplash, 0x60, 0x5, _cstring_heavyexplosiveda, 0x64, 0x5, _cstring_texurescrollscal, 0x68, 0x6, _cstring_maxspeed, 0x6c, 0x6, _cstring_accel, 0x70, 0x6, _cstring_rotrate, 0x74, 0x6, _cstring_rotaccel, 0x78, 0x6, _cstring_collisiondamage, 0x84, 0x6, _cstring_collisionspeed, 0x88, 0x6, _cstring_suspensiontravel, 0x8c, 0x6, _cstring_maxbodypitch, 0x7c, 0x6, _cstring_maxbodyroll, 0x80, 0x6, _cstring_turretweapon, 0x90, 0x0, _cstring_turrethorizspanl, 0xd0, 0x6, _cstring_turrethorizspanr, 0xd4, 0x6, _cstring_turretvertspanup, 0xd8, 0x6, _cstring_turretvertspando, 0xdc, 0x6, _cstring_turretrotrate, 0xe0, 0x6, _cstring_lowidlesnd, 0xe4, 0x0, _cstring_highidlesnd, 0x124, 0x0, _cstring_lowenginesnd, 0x164, 0x0, _cstring_highenginesnd, 0x1a4, 0x0, _cstring_turretspinsnd, 0x1e4, 0x0, _cstring_turretstopsnd, 0x224, 0x0, _cstring_enginesndspeed, 0x26c, 0x6
-s_vehicleTypeNames: dd _cstring_4_wheel, _cstring_tank, _cstring_plane, _cstring_boat, _cstring_artillery, _cstring_helicopter, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_bad_vehicle_fiel:		db 15h,"Bad vehicle field type %i",0ah,0
@@ -6489,46 +6484,6 @@ _cstring_couldnt_find_tag:		db 15h,"Couldn",27h,"t find tag ",22h,"%s",22h," on 
 _cstring_fireturret_weapd:		db 15h,"FireTurret(): WeapDef is not a bullet type.",0ah,0
 _cstring_warning_cannot_f:		db "WARNING: Cannot find vehicle collmap for [%s]",0ah,0
 _cstring_warning_cannot_u:		db "WARNING: Cannot use empty vehicle collmap for [%s]",0ah,0
-_cstring_type:		db "type",0
-_cstring_steerwheels:		db "steerWheels",0
-_cstring_texurescroll:		db "texureScroll",0
-_cstring_quadbarrel:		db "quadBarrel",0
-_cstring_bulletdamage:		db "bulletDamage",0
-_cstring_armorpiercingdam:		db "armorPiercingDamage",0
-_cstring_grenadedamage:		db "grenadeDamage",0
-_cstring_projectiledamage:		db "projectileDamage",0
-_cstring_projectilesplash:		db "projectileSplashDamage",0
-_cstring_heavyexplosiveda:		db "heavyExplosiveDamage",0
-_cstring_texurescrollscal:		db "texureScrollScale",0
-_cstring_maxspeed:		db "maxSpeed",0
-_cstring_accel:		db "accel",0
-_cstring_rotrate:		db "rotRate",0
-_cstring_rotaccel:		db "rotAccel",0
-_cstring_collisiondamage:		db "collisionDamage",0
-_cstring_collisionspeed:		db "collisionSpeed",0
-_cstring_suspensiontravel:		db "suspensionTravel",0
-_cstring_maxbodypitch:		db "maxBodyPitch",0
-_cstring_maxbodyroll:		db "maxBodyRoll",0
-_cstring_turretweapon:		db "turretWeapon",0
-_cstring_turrethorizspanl:		db "turretHorizSpanLeft",0
-_cstring_turrethorizspanr:		db "turretHorizSpanRight",0
-_cstring_turretvertspanup:		db "turretVertSpanUp",0
-_cstring_turretvertspando:		db "turretVertSpanDown",0
-_cstring_turretrotrate:		db "turretRotRate",0
-_cstring_lowidlesnd:		db "lowIdleSnd",0
-_cstring_highidlesnd:		db "highIdleSnd",0
-_cstring_lowenginesnd:		db "lowEngineSnd",0
-_cstring_highenginesnd:		db "highEngineSnd",0
-_cstring_turretspinsnd:		db "turretSpinSnd",0
-_cstring_turretstopsnd:		db "turretStopSnd",0
-_cstring_enginesndspeed:		db "engineSndSpeed",0
-_cstring_4_wheel:		db "4 wheel",0
-_cstring_tank:		db "tank",0
-_cstring_plane:		db "plane",0
-_cstring_boat:		db "boat",0
-_cstring_artillery:		db "artillery",0
-_cstring_helicopter:		db "helicopter",0
-
 
 ;All constant floats and doubles:
 SECTION .rdata

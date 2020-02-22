@@ -28,46 +28,50 @@ qboolean CCDECL G_SpawnString(SpawnVar *spawnVar, const char *key, const char *d
     return qfalse;
 }
 
-extern "C" qboolean CCDECL G_LevelSpawnString(const char *key, const char *defaultString, const char **out)
+extern "C"
 {
-    return G_SpawnString(&level.spawnVars, key, defaultString, out);
-}
-
-
-void CCDECL G_VehSpawner(gentity_t *ent)
-{
-    const char* value;
-    char vehTypeStr[MAX_QPATH];
-
-    if(level.spawnVars.spawnVarsValid)
+    qboolean CCDECL G_LevelSpawnString(const char* key, const char* defaultString, const char** out)
     {
-        G_LevelSpawnString("vehicletype", 0, &value);
-
-    }else{
-
-        if(Scr_GetNumParam() == 3)
-        {
-            //Scr_Error("Usage: spawn(\"script_vehicle\", <origin>, <spawnflags>, <vehicletype>)");
-            Q_strncpyz(vehTypeStr, "defaultvehicle_mp", sizeof(vehTypeStr));
-
-        }else{
-
-            Q_strncpyz(vehTypeStr, Scr_GetString(3), sizeof(vehTypeStr));
-
-            if(Scr_GetNumParam() == 5)
-            {
-                G_SetModel(ent, Scr_GetString(4));
-            }
-
-        }
-        value = vehTypeStr;
+        return G_SpawnString(&level.spawnVars, key, defaultString, out);
     }
 
-    SpawnVehicle( ent, value );
-}
+    void CCDECL G_VehSpawner(gentity_s* ent)
+    {
+        const char* value;
+        char vehTypeStr[MAX_QPATH];
 
-void CCDECL G_VehCollmapSpawner(gentity_t *ent)
-{
-    ent->r.contents = 0;
-    ent->s.eType = ET_VEHICLE_COLLMAP;
-}
+        if (level.spawnVars.spawnVarsValid)
+        {
+            G_LevelSpawnString("vehicletype", 0, &value);
+
+        }
+        else {
+
+            if (Scr_GetNumParam() == 3)
+            {
+                //Scr_Error("Usage: spawn(\"script_vehicle\", <origin>, <spawnflags>, <vehicletype>)");
+                Q_strncpyz(vehTypeStr, "defaultvehicle_mp", sizeof(vehTypeStr));
+
+            }
+            else {
+
+                Q_strncpyz(vehTypeStr, Scr_GetString(3), sizeof(vehTypeStr));
+
+                if (Scr_GetNumParam() == 5)
+                {
+                    G_SetModel(ent, Scr_GetString(4));
+                }
+
+            }
+            value = vehTypeStr;
+        }
+
+        SpawnVehicle(ent, value);
+    }
+
+    void CCDECL G_VehCollmapSpawner(gentity_s* ent)
+    {
+        ent->r.contents = 0;
+        ent->s.eType = ET_VEHICLE_COLLMAP;
+    }
+} // extern "C"

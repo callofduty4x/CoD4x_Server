@@ -11,6 +11,9 @@ struct AntilagClientStore
 
 extern "C"
 {
+    extern const float traceOffsets[5][2];
+    extern const char* accuracyDirName[2];
+
     void CCDECL G_SetupWeaponDef();
     void CCDECL G_AntiLagRewindClientPos(int gameTime, AntilagClientStore *antilagStore);
     void CCDECL G_AntiLag_RestoreClientPos(struct AntilagClientStore *antilagStore);

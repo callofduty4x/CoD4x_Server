@@ -2370,17 +2370,6 @@ ScriptEntCmd_RotateVelocity_80:
 	jmp ScriptEntCmd_RotateVelocity_110
 
 
-;Initialized global or static variables of g_scr_mover:
-SECTION .data
-
-
-;Initialized constant data of g_scr_mover:
-SECTION .rdata
-
-;Zero initialized global or static variables of g_scr_mover:
-SECTION .bss
-
-
 ;All cstrings:
 SECTION .rdata
 _cstring_entity_i_is_not_:		db "entity %i is not a script_brushmodel, script_model, script_origin, or light",0

@@ -13,6 +13,23 @@ using namespace std;
 
 extern "C"
 {
+    const float traceOffsets[5][2] =
+    {
+        { 0.0f, 0.0f },
+        { 1.0f, 1.0f },
+        { -1.0f, 1.0f },
+        { 1.0f, -1.0f },
+        { -1.0f, -1.0f }
+    };
+
+
+    const char* accuracyDirName[2] =
+    {
+        "aivsai",
+        "aivsplayer"
+    };
+
+
     void CCDECL G_SetupWeaponDef()
     {
         Com_DPrintf(CON_CHANNEL_PLAYERWEAP, "----------------------\n");

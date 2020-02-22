@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "cvar.hpp"
 
+#include "csp_field.hpp"
+
 
 extern "C"
 {
@@ -13,4 +15,7 @@ extern "C"
     extern cvar_t* vehTestMaxMPH;
     extern cvar_t* vehTestWeight;
     extern cvar_t* vehTextureScrollScale;
+
+    extern const char* s_vehicleTypeNames[6];
+    extern cspField_t s_vehicleFields[33];
 }
