@@ -18,6 +18,8 @@ if(MSVC)
     # _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING - some required headers are deprecated but still used.
     # NOMINMAX - remove windows.h min and max macro definitions because we have so nice std::min and std::max
     target_compile_definitions(${PROJECT_NAME} PRIVATE _SILENCE_CXX17_C_HEADER_DEPRECATION_WARNING NOMINMAX)
+    # C4834: discarding return value of function with 'nodiscard' attribute
+    target_compile_options(${PROJECT_NAME} PRIVATE /wd4834)
 elseif(WIN32) # MinGW-w64
     target_compile_options(${PROJECT_NAME} PRIVATE -m32 -msse2 -mfpmath=sse -Wall -fno-omit-frame-pointer -fmax-errors=5)
     target_link_options(${PROJECT_NAME} PRIVATE -m32 -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static-libstdc++ -static)

@@ -64,7 +64,8 @@ typedef enum {
 
 #define NET_ADDRSTRMAXLEN 48	// maximum length of an IPv6 address string including trailing '\0'
 
-typedef struct {
+struct netadr_t
+{
 	netadrtype_t	type;
 	int				scope_id;
 	unsigned short port;
@@ -75,7 +76,7 @@ typedef struct {
 	    byte	ipx[10];
 	    byte	ip6[16];
 	};
-}netadr_t;
+};
 
 void		NET_Init( void );
 void		NET_Shutdown( void );

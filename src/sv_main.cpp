@@ -62,6 +62,7 @@
 #include "g_main_mp.hpp"
 #include "com_bsp_load_obj.hpp"
 #include "cscr_const.hpp"
+#include "query_limit.hpp"
 
 
 cvar_t	*sv_protocol;
@@ -72,7 +73,7 @@ cvar_t	*sv_punkbuster;
 #endif
 cvar_t	*sv_minPing;
 cvar_t	*sv_maxPing;
-cvar_t	*sv_queryIgnoreMegs;
+cvar_s* sv_queryIgnoreMegs;
 cvar_t	*sv_queryIgnoreTime;
 cvar_t	*sv_privatePassword;		// password for the privateClient slots
 cvar_t	*sv_allowDownload;
@@ -467,262 +468,6 @@ CONNECTIONLESS COMMANDS
 ==============================================================================
 */
 
-typedef struct leakyBucket_s leakyBucket_t;
-struct leakyBucket_s {
-
-    byte	type;
-
-    union {
-        byte	_4[4];
-        byte	_6[16];
-    } ipv;
-
-    unsigned long long	lastTime;
-    signed char	burst;
-
-    long		hash;
-
-    leakyBucket_t *prev, *next;
-};
-
-
-typedef struct{
-
-    int max_buckets;
-    int max_hashes;
-    leakyBucket_t *buckets;
-    leakyBucket_t **bucketHashes;
-    int queryLimitsEnabled;
-    leakyBucket_t infoBucket;
-    leakyBucket_t statusBucket;
-    leakyBucket_t rconBucket;
-}queryLimit_t;
-
-
-    static queryLimit_t querylimit;
-
-
-
-// This is deliberately quite large to make it more of an effort to DoS
-
-/*
-================
-SVC_RateLimitInit
-
-Init the rate limit system
-================
-*/
-static void SVC_RateLimitInit( ){
-
-    int bytes;
-
-    if(!sv_queryIgnoreMegs->integer)
-    {
-        Com_Printf(CON_CHANNEL_SERVER,"QUERY LIMIT: Querylimiting is disabled\n");
-        querylimit.queryLimitsEnabled = 0;
-        return;
-    }
-
-    bytes = sv_queryIgnoreMegs->integer * 1024*1024;
-
-    querylimit.max_buckets = bytes / sizeof(leakyBucket_t);
-    querylimit.max_hashes = 4096; //static
-
-    int totalsize = querylimit.max_buckets * sizeof(leakyBucket_t) + querylimit.max_hashes * sizeof(leakyBucket_t*);
-
-    querylimit.buckets = reinterpret_cast<leakyBucket_t*>(L_Malloc(totalsize));
-
-    if(!querylimit.buckets)
-    {
-        Com_PrintError(CON_CHANNEL_SERVER,"QUERY LIMIT: System is out of memory. All queries are disabled\n");
-        querylimit.queryLimitsEnabled = -1;
-    }
-
-    querylimit.bucketHashes = (leakyBucket_t**)&querylimit.buckets[querylimit.max_buckets];
-    Com_Printf(CON_CHANNEL_SERVER,"QUERY LIMIT: Querylimiting is enabled\n");
-    querylimit.queryLimitsEnabled = 1;
-}
-
-
-
-/*
-================
-SVC_HashForAddress
-================
-*/
-__optimize3 static long SVC_HashForAddress( netadr_t *address ) {
-    byte 		*ip = NULL;
-    size_t	size = 0;
-    int			i;
-    long		hash = 0;
-
-    switch ( address->type ) {
-        case NA_IP:  ip = address->ip;  size = 4; break;
-        case NA_IP6: ip = address->ip6; size = 16; break;
-        default: break;
-    }
-
-    for ( i = 0; i < size; i++ ) {
-        hash += (long)( ip[ i ] ) * ( i + 119 );
-    }
-
-    hash = ( hash ^ ( hash >> 10 ) ^ ( hash >> 20 ) ^ psvs.randint);
-    hash &= ( querylimit.max_hashes - 1 );
-
-    return hash;
-}
-
-/*
-================
-SVC_BucketForAddress
-
-Find or allocate a bucket for an address
-================
-*/
-__optimize3 static leakyBucket_t *SVC_BucketForAddress( netadr_t *address, int burst, int period ) {
-    leakyBucket_t		*bucket = NULL;
-    int			i;
-    long			hash = SVC_HashForAddress( address );
-    unsigned long long	now = com_uFrameTime;
-
-    for ( bucket = querylimit.bucketHashes[ hash ]; bucket; bucket = bucket->next ) {
-
-        switch ( bucket->type ) {
-            case NA_IP:
-                if ( memcmp( bucket->ipv._4, address->ip, 4 ) == 0 ) {
-                    return bucket;
-                }
-                break;
-
-            case NA_IP6:
-                if ( memcmp( bucket->ipv._6, address->ip6, 16 ) == 0 ) {
-                    return bucket;
-                }
-                break;
-
-            default:
-                break;
-        }
-
-    }
-
-    for ( i = 0; i < querylimit.max_buckets; i++ ) {
-        int interval;
-
-        bucket = &querylimit.buckets[ i ];
-        interval = now - bucket->lastTime;
-
-        // Reclaim expired buckets
-        if ( bucket->lastTime > 0 && ( interval > ( burst * period ) || interval < 0 ) )
-        {
-            if ( bucket->prev != NULL ) {
-                bucket->prev->next = bucket->next;
-            } else {
-                querylimit.bucketHashes[ bucket->hash ] = bucket->next;
-            }
-
-            if ( bucket->next != NULL ) {
-                bucket->next->prev = bucket->prev;
-            }
-
-            Com_Memset( bucket, 0, sizeof( leakyBucket_t ) );
-        }
-
-        if ( bucket->type == NA_BAD ) {
-            bucket->type = address->type;
-            switch ( address->type ) {
-                case NA_IP:	bucket->ipv._4[0] = address->ip[0];
-                        bucket->ipv._4[1] = address->ip[1];
-                        bucket->ipv._4[2] = address->ip[2];
-                        bucket->ipv._4[3] = address->ip[3];
-                        break;
-
-                case NA_IP6: Com_Memcpy( bucket->ipv._6, address->ip6, 16 ); break;
-
-                default: return NULL;
-            }
-
-            bucket->lastTime = now;
-            bucket->burst = 0;
-            bucket->hash = hash;
-
-            // Add to the head of the relevant hash chain
-            bucket->next = querylimit.bucketHashes[ hash ];
-            if ( querylimit.bucketHashes[ hash ] != NULL ) {
-                querylimit.bucketHashes[ hash ]->prev = bucket;
-            }
-
-            bucket->prev = NULL;
-            querylimit.bucketHashes[ hash ] = bucket;
-
-            return bucket;
-        }
-    }
-
-    // Couldn't allocate a bucket for this address
-    return NULL;
-}
-
-
-/*
-================
-SVC_RateLimit
-================
-*/
-/*__optimize3 __attribute__((always_inline)) */
-static qboolean SVC_RateLimit( leakyBucket_t *bucket, int burst, int period ) {
-    if ( bucket != NULL ) {
-        unsigned long long now = com_uFrameTime;
-        int interval = now - bucket->lastTime;
-        int expired = interval / period;
-        int expiredRemainder = interval % period;
-
-        if ( expired > bucket->burst ) {
-            bucket->burst = 0;
-            bucket->lastTime = now;
-        } else {
-            bucket->burst -= expired;
-            bucket->lastTime = now - expiredRemainder;
-        }
-
-        if ( bucket->burst < burst ) {
-            bucket->burst++;
-
-            return qfalse;
-        }
-    }
-
-    return qtrue;
-}
-
-/*
-================
-SVC_RateLimitAddress
-
-Rate limit for a particular address
-================
-*/
-__optimize3 static qboolean SVC_RateLimitAddress( netadr_t *from, int burst, int period ) {
-
-    if(Sys_IsLANAddress(from))
-        return qfalse;
-
-
-    if(querylimit.queryLimitsEnabled == 1)
-    {
-        leakyBucket_t *bucket = SVC_BucketForAddress( from, burst, period );
-        return SVC_RateLimit( bucket, burst, period );
-
-    }else if(querylimit.queryLimitsEnabled == 0){
-        return qfalse;
-
-    }else{//Init error, to be save we deny everything
-        return qtrue;
-    }
-
-}
-
-
 /*
 ================
 SVC_Status
@@ -746,20 +491,13 @@ __optimize3 void SVC_Status( netadr_t *from )
     mvabuf;
 
     // Prevent using getstatus as an amplifier
-    if ( SVC_RateLimitAddress( from, 2, sv_queryIgnoreTime->integer*1000 ) ) {
-    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Status: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
+    if (CQueryLimit::Instance().RateLimit(from, 2, sv_queryIgnoreTime->integer * 1000))
         return;
-    }
-
 
     // Allow getstatus to be DoSed relatively easily, but prevent
     // excess outbound bandwidth usage when being flooded inbound
-    if ( SVC_RateLimit( &querylimit.statusBucket, 20, 20000 ) ) {
-    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Status: overall rate limit exceeded, dropping request\n" );
+    if (CQueryLimit::Instance().GetStatusBucket().RateLimit(20, 20000))
         return;
-    }
-
-
 
     if(strlen(SV_Cmd_Argv(1)) > 128)
         return;
@@ -822,18 +560,13 @@ __optimize3 static void SVC_Info( netadr_t *from )
 
 
     // Prevent using getstatus as an amplifier
-    if ( SVC_RateLimitAddress( from, 4, sv_queryIgnoreTime->integer*1000 )) {
-    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
+    if (CQueryLimit::Instance().RateLimit(from, 4, sv_queryIgnoreTime->integer*1000))
         return;
-    }
 
-
-    // Allow getstatus to be DoSed relatively easily, but prevent
+    // Allow getinfo to be DoSed relatively easily, but prevent
     // excess outbound bandwidth usage when being flooded inbound
-    if ( SVC_RateLimit( &querylimit.infoBucket, 100, 100000 ) ) {
-    //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: overall rate limit exceeded, dropping request\n" );
+    if (CQueryLimit::Instance().GetInfoBucket().RateLimit(100, 100000))
         return;
-    }
 
     infostring[0] = 0;
 
@@ -1237,22 +970,17 @@ void SVC_SourceEngineQuery_WriteInfo( msg_t* msg, const char* challengeStr, qboo
 
 void SVC_SourceEngineQuery_Info( netadr_t* from, const char* challengeStr)
 {
-
     msg_t msg;
     byte buf[MAX_INFO_STRING];
 
     // Prevent using getstatus as an amplifier
-    if ( SVC_RateLimitAddress( from, 4, sv_queryIgnoreTime->integer*1000 )) {
-        //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: rate limit from %s exceeded, dropping request\n", NET_AdrToString( *from ) );
+    if (CQueryLimit::Instance().RateLimit(from, 4, sv_queryIgnoreTime->integer * 1000))
         return;
-    }
 
-    // Allow getstatus to be DoSed relatively easily, but prevent
+    // Allow getinfo to be DoSed relatively easily, but prevent
     // excess outbound bandwidth usage when being flooded inbound
-    if ( SVC_RateLimit( &querylimit.infoBucket, 100, 100000 ) ) {
-        //	Com_Printf(CON_CHANNEL_SERVER, "SVC_Info: overall rate limit exceeded, dropping request\n" );
+    if (CQueryLimit::Instance().GetInfoBucket().RateLimit(100, 100000))
         return;
-    }
 
     MSG_Init(&msg, buf, sizeof(buf));
 
@@ -1485,10 +1213,8 @@ __optimize3 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg )
 
     if ( strcmp (SV_Cmd_Argv(1), sv_rconPassword->string )) {
         //Send only one deny answer out in 100 ms
-        if ( SVC_RateLimit( &querylimit.rconBucket, 1, 100 ) ) {
-        //	Com_Printf(CON_CHANNEL_SERVER, "SVC_RemoteCommand: rate limit exceeded for bad rcon\n" );
+        if (CQueryLimit::Instance().GetRconBucket().RateLimit(1, 100))
             return;
-        }
 
         Com_Printf (CON_CHANNEL_SERVER,"Bad rcon from %s\n", NET_AdrToString (from) );
         Com_BeginRedirect (sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
@@ -3082,7 +2808,7 @@ void SV_InitCvarsOnce(void){
 void SV_Init(){
     SV_AddOperatorCommands();
     SV_InitCvarsOnce();
-    SVC_RateLimitInit( );
+    CQueryLimit::Instance().Init();
     SV_InitBanlist();
     Init_CallVote();
     SV_InitServerId();

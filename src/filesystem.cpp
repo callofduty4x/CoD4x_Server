@@ -198,6 +198,7 @@ or configs will never get loaded from disk!
 #include <cstdarg>
 #include <cctype>
 #include <algorithm>
+#include <string>
 
 #include "filesystem.hpp"
 #include "qcommon.hpp"
@@ -3914,7 +3915,6 @@ int FS_CalculateChecksumForFile(const char* filename, int *crc32)
 {
     int blockSize, len, i;
     fileHandle_t fh;
-    byte block[SERVERFILECHKSUMBLOCKSIZE];
     fs_crcsum_t* chksums;
 
     *crc32 = 0;
@@ -3931,11 +3931,13 @@ int FS_CalculateChecksumForFile(const char* filename, int *crc32)
     if(chksums->length != len)
     {
         i = 0;
+        std::string block;
+        block.reserve(SERVERFILECHKSUMBLOCKSIZE);
         do
         {
-            blockSize = FS_Read( block, sizeof(block), fh );
-            *crc32 = crc32_16bytes(  block, blockSize, *crc32 );
-            chksums->sums[i] = crc32_16bytes( block, blockSize, 0 );
+            blockSize = FS_Read(block.data(), static_cast<int>(block.capacity()), fh );
+            *crc32 = crc32_16bytes(block.data(), blockSize, *crc32 );
+            chksums->sums[i] = crc32_16bytes(block.data(), blockSize, 0 );
             ++i;
         }while(blockSize > 0 && i < SERVERFILECHKSUMPERFILE);
         chksums->length = len;
@@ -4782,7 +4784,7 @@ extern "C"
                     fileCount = i;
                     break;
                 }
-                strcpy(listbuf, fileNames[i]);
+                Q_strncpyz(listbuf, fileNames[i], static_cast<size_t>(bufsize));
                 listbuf += nLen;
                 nTotal += nLen;
             }
