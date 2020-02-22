@@ -13,11 +13,11 @@ if ("${BUILD_NUMBER}" STREQUAL "")
 endif()
 
 if ("${BUILD_BRANCH}" STREQUAL "")
-    set(BUILD_BRANCH "no-branch")
+    set(BUILD_BRANCH no-branch)
 endif()
 
 if ("${BUILD_REVISION}" STREQUAL "")
-    set(BUILD_REVISION "no-revision")
+    set(BUILD_REVISION no-revision)
 endif()
 
 message(STATUS "Detected build number: ${BUILD_NUMBER}")
@@ -26,6 +26,6 @@ message(STATUS "Detected build revision: ${BUILD_REVISION}")
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_BRANCH=${BUILD_BRANCH} -DBUILD_REVISION=${BUILD_REVISION}")
 #message("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
-add_definitions(-DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_BRANCH="${BUILD_BRANCH}" -DBUILD_REVISION="${BUILD_REVISION}")
+add_definitions(-DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_BRANCH=${BUILD_BRANCH} -DBUILD_REVISION=${BUILD_REVISION})
 
 add_library(${LIBRARY_NAME} STATIC ${CPP_SRC} ${CPP_INC})
