@@ -1545,7 +1545,57 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 		return;
 	}
 
-	cl->downloadBlockSize = 900;
+	int i, numdl;
+
+	for(i = 0, numdl = 0; i < sv_maxclients->integer; ++i){
+		if(svs.clients[i].state >= CS_CONNECTED && svs.clients[i].downloadXmitBlock > 0)
+		{
+			++numdl;
+		}
+	}
+
+	if(numdl < 1)
+	{
+		numdl = 1;
+	}
+
+	int maxblockrate = (sv_maxDownloadRate->integer * 1024) / numdl / sv_fps->integer;
+
+	int rate = ReliableMessageGetDataSendWindowSize(cl->reliablemsg.netstate);
+	if(rate < 10000)
+	{
+		rate = 10000;
+	}
+	
+	int outbuffersize = ReliableMessageGetSendBufferSize(cl->reliablemsg.netstate);
+	
+	if(outbuffersize > 2* rate)
+	{
+		return;
+	}
+
+	int buffersize = 2*rate / sv_fps->integer;
+
+	Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : Max blockrate \"%d\" Buffersize: %d\n", cl - svs.clients, maxblockrate, buffersize);
+
+	if(buffersize > maxblockrate)
+	{
+		buffersize = maxblockrate;
+		if(buffersize < 600)
+		{
+			buffersize = 600;
+		}
+	}else if(buffersize < 300){
+		return;
+	}
+
+	cl->downloadBlockSize = buffersize;
+	if(cl->downloadBlockSize < 1200)
+	{
+		cl->downloadBlockSize = 1200;
+	}
+
+
 	if(cl->downloadBlockSize > sizeof(downloadBlock))
 	{
 		cl->downloadBlockSize = sizeof(downloadBlock);
@@ -1782,6 +1832,7 @@ static void SV_CloseDownload( client_t *cl ) {
 	}
 	cl->download = 0;
 	*cl->downloadName = 0;
+	cl->downloadXmitBlock = 0; //reset so we can still count clients downloading from server
 }
 
 

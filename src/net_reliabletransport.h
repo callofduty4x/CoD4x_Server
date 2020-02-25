@@ -9,6 +9,7 @@ typedef struct
 	int ack;
 	int packetnum;
 	int senttime;
+	int firstsenttime;
 }fragment_t;
 
 typedef struct
@@ -30,6 +31,8 @@ typedef struct
 	int sequence;    //Highest numbered packet in queue
 	int bufferlen;   //Length of the whole buffer
 	int acknowledge; //Lowest numbered packet in queue
+	int lastacktime; //writing time of last acknowledge packet - only valid for txmode
+	int lastsenttime; //writing time of last time a packet got sent - only valid for txmode
 	int selackoffset; //Used to send not always the same selective acknowledges
 	int frame;		 //Current numbered packet which is going to be sent next. Any value in range of acknowledge and sequence
 	int windowsize;  //Current size of our window
@@ -50,7 +53,9 @@ typedef struct
 	int time;
 	int nextacktime;
 	int qport;
-	int ping;
+	int nextwindowsizeadjustmenttime; //Either update on current time + 500ms or nextacknowledge
+	int windowadjustack; //last ack used to adjust window
+	int highestoutseq;
 }netreliablemsg_t;
 
 void ReliableMessagesFrame(netreliablemsg_t *chan, int msec);
@@ -61,3 +66,8 @@ int ReliableMessageSend(netreliablemsg_t *chan, byte* indata, int len);
 netreliablemsg_t* ReliableMessageSetup(int netsrc, int qport, netadr_t* remote);
 void Net_TestingFunction(netreliablemsg_t *chan);
 void ReliableMessageDisconnect(netreliablemsg_t *chan);
+int ReliableMessageGetDataSendRate(netreliablemsg_t *chan);
+int ReliableMessageGetDataSendWindowSize(netreliablemsg_t *chan);
+int ReliableMessageGetDataReceiveRate(netreliablemsg_t *chan);
+int ReliableMessageGetSendBufferSize(netreliablemsg_t *chan);
+int ReliableMessageGetAvailableSendBufferSize(netreliablemsg_t *chan);

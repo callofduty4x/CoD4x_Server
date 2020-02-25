@@ -308,7 +308,7 @@ typedef struct
   int firstPing;
   qboolean connected;
   char guid[36];
-}challenge2_t;
+}challenge_t;
 
 typedef struct{
 	int time;
@@ -360,7 +360,7 @@ typedef struct {//0x8c51780
 
 	int nextStatusResponseTime;
 
-	challenge2_t challenges[MAX_CHALLENGES];
+	challenge_t challenges[MAX_CHALLENGES];
 
 	vec3_t mapCenter;
 
@@ -634,7 +634,7 @@ extern cvar_t* sv_shownet;
 extern cvar_t* sv_legacymode;
 extern cvar_t* sv_steamgroup;
 extern cvar_t* sv_voice;
-
+extern cvar_t* sv_maxDownloadRate;
 
 #ifdef __cplusplus
 extern "C"{

@@ -136,6 +136,7 @@ cvar_t* sv_legacymode;
 cvar_t* sv_steamgroup;
 cvar_t* sv_authtoken;
 cvar_t* sv_disableChat;
+cvar_t* sv_maxDownloadRate;
 
 serverStatic_t		svs;
 server_t		sv;
@@ -3110,6 +3111,7 @@ void SV_InitCvarsOnce(void){
     sv_rconPassword = Cvar_RegisterString("rcon_password", "", 0, "Password for the server remote control console");
 
     sv_allowDownload = Cvar_RegisterBool("sv_allowDownload", qtrue, 1, "Allow clients to download gamefiles from server");
+    sv_maxDownloadRate = Cvar_RegisterInt("sv_maxDownloadRate", 1024, 128, 8192, 0, "Rate in kilobytes all clients can together receive when downloading from server");
     sv_wwwDownload = Cvar_RegisterBool("sv_wwwDownload", qfalse, 1, "Enable http download");
     sv_wwwBaseURL = Cvar_RegisterString("sv_wwwBaseURL", "", 1, "The base url to files for downloading from the HTTP-Server");
     sv_wwwDlDisconnected = Cvar_RegisterBool("sv_wwwDlDisconnected", qfalse, 1, "Should clients stay connected while downloading from a HTTP-Server?");
@@ -3184,8 +3186,7 @@ void SV_InitCvarsOnce(void){
     sv_disableChat = Cvar_RegisterBool("sv_disablechat", qfalse, CVAR_ARCHIVE, "Disable chat messages from clients");
 }
 
-
-
+void SV_TryLoadXAC();
 
 void SV_Init(){
     SV_AddOperatorCommands();
@@ -3198,6 +3199,7 @@ void SV_Init(){
     SV_MasterHeartbeatInit();
     Com_RandomBytes((byte*)&psvs.randint, sizeof(psvs.randint));
     SV_InitSApi();
+    SV_TryLoadXAC();
 }
 
 
@@ -4804,6 +4806,7 @@ void SV_ChangeMaxClients()
 }
 
 
+void SV_InitXAC();
 /* Fragmented testing: 0x8174A74 jmp to 08174E98 (SV_RunFrame(...)) */
 
 
@@ -5042,6 +5045,7 @@ void SV_SpawnServer(const char *mapname)
   Cvar_SetString(sv_referencedFFCheckSums, outChkSums);
   Cvar_SetString(sv_referencedFFNames, outPathNames);
 
+  SV_InitXAC();
 
   SV_SaveSystemInfo();
 

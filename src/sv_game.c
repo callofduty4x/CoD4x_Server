@@ -889,3 +889,18 @@ const char* SV_GetPlayerClan(unsigned int clientNum)
   }
   return svs.clients[clientNum].clantag;
 }
+
+
+svEntity_t  *SV_SvEntityForNum( int num ) {
+	if ( num < 0 || num >= MAX_GENTITIES ) {
+		Com_Error( ERR_DROP, "SV_SvEntityForNum: bad number" );
+	}
+	return &sv.svEntities[ num ];
+}
+
+int SV_NumForSvEntity( svEntity_t *svEnt ) {
+	int num;
+
+	num = svEnt - sv.svEntities;
+	return num;
+}

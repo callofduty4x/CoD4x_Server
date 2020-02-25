@@ -44,7 +44,7 @@ void ReliableMessageTrackRate(netreliablemsg_t *chan)
 		chan->txwindow.rateInfo.lastBytesSnapTotal = chan->txwindow.rateInfo.bytesTotal;
 		chan->txwindow.rateInfo.nextRateCntTime = chan->time + 1000;
 #ifdef RELIABLE_RATEDBG
-		Com_Printf(CON_CHANNEL_NETWORK,"Ping: %d, TX-Rate %d, TX-RateTotal: %d RX-Rate %d, RX-RateTotal: %d\n", chan->ping,
+		Com_Printf(CON_CHANNEL_NETWORK,"TX-Rate %d, TX-RateTotal: %d RX-Rate %d, RX-RateTotal: %d\n",
 			chan->txwindow.rateInfo.bytesPerSec, chan->txwindow.rateInfo.bytesPerSecTotal,
 			chan->rxwindow.rateInfo.bytesPerSec, chan->rxwindow.rateInfo.bytesPerSecTotal);
 #endif
@@ -122,6 +122,7 @@ int ReliableMessageChangeSendBufferSize(netreliablemsg_t *chan, int newfragmentc
 		newfrags[dindex].ack = oldfrags[sindex].ack;
 		newfrags[dindex].packetnum = oldfrags[sindex].packetnum;
 		newfrags[dindex].senttime = oldfrags[sindex].senttime;
+		newfrags[dindex].firstsenttime = oldfrags[sindex].firstsenttime;
 	}
 	
 	free(oldfrags);
@@ -154,7 +155,7 @@ void ReliableMessageWriteSelectiveAcklist(framedata_t *frame, msg_t* msg)
 	int i;
 	int inrange = 0;
 	int count = 0;
-	int lengthcnt;
+	int lengthcnt = 0;
 	int numbytepos;
 	//Function can write up to 9 bytes (count >= 2)
 	numbytepos = msg->cursize;
@@ -229,6 +230,7 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 			MSG_WriteShort(&buf, chan->qport);
 			MSG_WriteLong(&buf, -1);
 			MSG_WriteLong(&buf, chan->rxwindow.sequence);
+			MSG_WriteByte(&buf, 0); //flags
 			ReliableMessageWriteSelectiveAcklist(&chan->rxwindow, &buf);
 			MSG_WriteShort(&buf, chan->txwindow.windowsize);
 			MSG_WriteShort(&buf, 0);
@@ -256,23 +258,43 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 	if(chan->txwindow.frame < chan->txwindow.acknowledge)
 	{
 		chan->txwindow.frame = chan->txwindow.acknowledge;
+
 	}
 	
 	sequence = chan->txwindow.frame;
-
 	if(chan->txwindow.frame < chan->txwindow.sequence)
 	{
-	    if(chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].ack == sequence)
+//		Com_Printf(CON_CHANNEL_NETWORK,"Send Fragment, seq: %d\n", chan->txwindow.sequence);
+
+	    while(chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].ack == sequence)
 	    {
 		//Already received by the remote end
 #ifdef RELIABLE_DEBUG
-			Com_Printf(CON_CHANNEL_NETWORK,"Send: Skip over %d\n", sequence);
+		Com_Printf(CON_CHANNEL_NETWORK,"Send: Skip over %d\n", sequence);
 #endif
-	    }else{
+		++sequence;
+		if(sequence >= chan->txwindow.acknowledge + chan->txwindow.windowsize)
+		{
+			chan->txwindow.frame = chan->txwindow.acknowledge;
+			return;
+		}
+
+            }
+	    chan->txwindow.frame = sequence;
+
+            {
+			byte flags = 0;
+
+			if(sequence +1 >= chan->txwindow.sequence || sequence % 2 == 0)
+			{
+				flags |= (1 << 0); //Forceack
+			}
+
 			MSG_WriteLong(&buf, 0xfffffff0);
 			MSG_WriteShort(&buf, chan->qport);
 			MSG_WriteLong(&buf, sequence);
 			MSG_WriteLong(&buf, chan->rxwindow.sequence); //Acknowledge for the other end
+			MSG_WriteByte(&buf, flags); //flags
 			ReliableMessageWriteSelectiveAcklist(&chan->rxwindow, &buf);
 			MSG_WriteShort(&buf, chan->txwindow.windowsize);
 			MSG_WriteShort(&buf, chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len); //Fragment size
@@ -280,11 +302,19 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 								chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len);
 								
 			NET_SendPacket( chan->sock, buf.cursize, buf.data, &chan->remoteAddress );
-			if(chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].senttime == 0)
+			if(chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].firstsenttime == 0)
 			{
-				chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].senttime = chan->time;
+				chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].firstsenttime = chan->time;
 			}
-#ifdef _LAGDEBUG			
+			chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].senttime = chan->time;
+			chan->txwindow.lastsenttime = chan->time;
+			
+			if(chan->highestoutseq < sequence)
+			{
+				chan->highestoutseq = sequence;
+			}
+			
+#ifdef _LAGDEBUG	
 			dbghitcounter_t *dbgc = &phitcounter[(unsigned short)chan->qport];
 			unsigned int time = Sys_Milliseconds();
 			if(dbgc->lastcleared + 1000 < time)
@@ -306,15 +336,83 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 #endif
 			chan->txwindow.rateInfo.bytesTotal += buf.cursize; //Track the rate
 	    }
+	}else{
+//		Com_Printf(CON_CHANNEL_NETWORK,"No fragment, seq: %d\n", chan->txwindow.sequence);
 	}
-
 	++chan->txwindow.frame;
+
+
 	if(chan->txwindow.frame >= chan->txwindow.acknowledge + chan->txwindow.windowsize)
 	{
+//		Com_Printf(CON_CHANNEL_NETWORK,"Window resetted: sendseq: %d ACK: %d\n", chan->txwindow.frame, chan->txwindow.acknowledge);
 		chan->txwindow.frame = chan->txwindow.acknowledge;
 	}
 	
 }
+
+
+
+void ReliableMessagesAdjustWindowOnAck(netreliablemsg_t *chan, int oldack)
+{
+        int newws;
+
+        if(chan->nextwindowsizeadjustmenttime > chan->time)
+        {
+            return;
+        }
+
+        if(chan->txwindow.acknowledge == oldack && chan->highestoutseq > oldack)
+        {//Also fall off with rate when nothing gets transmit
+
+            chan->txwindow.frame = chan->txwindow.acknowledge;
+            if(chan->txwindow.windowsize > 4)
+            {
+                newws = chan->txwindow.windowsize * 900 / 1000;
+                if(newws == chan->txwindow.windowsize)
+                {
+                    newws--;
+                }
+                chan->txwindow.windowsize = newws;
+                chan->nextwindowsizeadjustmenttime = chan->time + 200;
+            }
+            Com_Printf(CON_CHANNEL_NETWORK, "Rate adjustment low - Windowsize: %d\n", chan->txwindow.windowsize);
+        }else{
+            if(chan->txwindow.windowsize < 400 && chan->txwindow.windowsize < chan->txwindow.bufferlen / 2)
+            {
+                newws = chan->txwindow.windowsize;
+                if(newws < 64)
+                {
+                    newws += 4;
+                }
+
+                if(newws == chan->txwindow.windowsize)
+                {
+                    newws++;
+                }
+                chan->txwindow.windowsize = newws;
+                chan->nextwindowsizeadjustmenttime = 0;
+            }
+//            Com_Printf(CON_CHANNEL_NETWORK, "Rate adjustment high - Windowsize: %d Loss: %.2g\n", chan->txwindow.windowsize, chan->lossquote);
+        }
+}
+
+
+qboolean ReliableMessageHaveLostPackets(netreliablemsg_t *chan)
+{
+    if(chan == NULL)
+    {
+        return qfalse;
+    }
+
+    if(chan->txwindow.acknowledge == chan->txwindow.sequence)
+    {
+        return qfalse;
+    }
+
+    return qfalse;
+
+}
+
 
 //Assuming you have already read the port
 void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
@@ -329,9 +427,16 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 	{
 		return;
 	}
-	
+
 	sequence = MSG_ReadLong(buf);
 	acknowledge = MSG_ReadLong(buf);
+	byte flags = MSG_ReadByte(buf);
+	
+	qboolean forceack = flags & 1;
+	if(forceack == qtrue)
+	{
+		chan->nextacktime = 0;
+	}
 
 	chan->rxwindow.packets++;
 	chan->rxwindow.rateInfo.bytesTotal += buf->cursize; //Track the rate
@@ -340,7 +445,7 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 	{
 		return;
 	}
-	if(acknowledge > chan->txwindow.acknowledge + chan->txwindow.windowsize)
+	if(acknowledge > chan->txwindow.acknowledge + 1000)//chan->txwindow.windowsize)
 	{
 		Com_PrintError(CON_CHANNEL_NETWORK,"Illegible reliable acknowledge - got: %d current: %d\n", acknowledge, chan->txwindow.acknowledge);
 		return;
@@ -358,16 +463,16 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 	numselectiveack = MSG_ReadByte(buf);
 	if(numselectiveack > 3 )
 	{
-		Com_PrintError(CON_CHANNEL_NETWORK,"Bad selective acknowledge count: %d\n", numselectiveack);	
+		Com_PrintError(CON_CHANNEL_NETWORK,"Bad selective acknowledge count: %d\n", numselectiveack);
 		return;
 	}
 	for(i = 0; i < numselectiveack; ++i)
 	{
 		startack = MSG_ReadShort(buf) + acknowledge;
 		length = MSG_ReadShort(buf);
-		if(startack + length > acknowledge + chan->txwindow.windowsize){
-			Com_PrintError(CON_CHANNEL_NETWORK,"Selective acknowledge %d is out of windowsize acknowledge %d\n", startack + length, acknowledge);
-			return;
+		if(startack + length >= sequence){
+			Com_PrintError(CON_CHANNEL_NETWORK,"Selective acknowledge %d is out of range acknowledge %d\n", startack + length, acknowledge);
+			continue;
 		}
 #ifdef RELIABLE_DEBUG
 		Com_Printf(CON_CHANNEL_NETWORK,"SACK: %d %d\n", startack, length);
@@ -387,14 +492,25 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 		Com_PrintError(CON_CHANNEL_NETWORK,"Invalid fragmentsize (%d)\n", fragmentsize);
 		return;
 	}
-	
-	if(chan->txwindow.acknowledge < acknowledge){
+
+	{
 		//Acknowledge all received data
+		int oldack = chan->txwindow.acknowledge;
 		chan->txwindow.acknowledge = acknowledge;
-		chan->ping = chan->time - chan->txwindow.fragments[(acknowledge -1) % chan->txwindow.bufferlen].senttime;
+		chan->txwindow.lastacktime = chan->time;
+		
+		if(oldack + chan->txwindow.windowsize < chan->highestoutseq)
+		{
+			chan->highestoutseq = oldack + chan->txwindow.windowsize;//correct this down when windowsize got smaller
+		}
+
 #ifdef RELIABLE_DEBUG
 		Com_Printf(CON_CHANNEL_NETWORK,"^5Acknowledge is now %d Top is now: %d Remaining fragments are %d\n", chan->txwindow.acknowledge, chan->txwindow.sequence, chan->txwindow.sequence - chan->txwindow.acknowledge);
 #endif
+
+
+		ReliableMessagesAdjustWindowOnAck(chan, oldack);
+
 		/* Purpos: reducing the dynamic send buffer size when it is used only partially */
 		usedfragmentcnt = chan->txwindow.sequence - chan->txwindow.acknowledge;
 
@@ -562,6 +678,7 @@ int ReliableMessageSend(netreliablemsg_t *chan, byte* indata, int len)
 		chan->txwindow.fragments[index].len = slen;
 		chan->txwindow.fragments[index].ack = -1;
 		chan->txwindow.fragments[index].senttime = 0;
+		chan->txwindow.fragments[index].firstsenttime = 0;
 		chan->txwindow.fragments[index].packetnum = 0;
 		len -= slen;
 		sentlen += slen;
@@ -573,7 +690,25 @@ int ReliableMessageSend(netreliablemsg_t *chan, byte* indata, int len)
 }
 
 
+int ReliableMessageGetDataSendRate(netreliablemsg_t *chan)
+{
+    return chan->txwindow.rateInfo.bytesPerSec;
+}
 
+int ReliableMessageGetDataSendWindowSize(netreliablemsg_t *chan)
+{
+    return chan->txwindow.windowsize * MAX_FRAGMENT_SIZE;
+}
+
+int ReliableMessageGetDataReceiveRate(netreliablemsg_t *chan)
+{
+    return chan->rxwindow.rateInfo.bytesPerSec;
+}
+
+int ReliableMessageGetSendBufferSize(netreliablemsg_t *chan)
+{
+    return (chan->txwindow.sequence - chan->txwindow.acknowledge) * MAX_FRAGMENT_SIZE;
+}
 
 int ReliableMessageGetAvailableSendBufferSize(netreliablemsg_t *chan)
 {
@@ -586,7 +721,7 @@ int ReliableMessageGetAvailableSendBufferSize(netreliablemsg_t *chan)
 
 	usedfragmentcnt = chan->txwindow.sequence - chan->txwindow.acknowledge;
 	freefragmentcnt = chan->txwindow.bufferlen - usedfragmentcnt;
-	return freefragmentcnt;
+	return freefragmentcnt * MAX_FRAGMENT_SIZE;
 }
 
 netreliablemsg_t* ReliableMessageSetup( int qport, int netsrc, netadr_t* remote)
@@ -725,13 +860,35 @@ void ReliableMessageGetTestData(netreliablemsg_t *chan)
 	
 }
 
+
+void ReliableMessagesAdjustWindow(netreliablemsg_t *chan)
+{
+        int newws;
+
+        if(chan->txwindow.windowsize > chan->txwindow.bufferlen /2)
+        {
+            chan->txwindow.windowsize = chan->txwindow.bufferlen /2;
+            if(chan->txwindow.windowsize < 4)
+            {
+                chan->txwindow.windowsize = 4;
+            }
+        }
+
+        if(chan->txwindow.lastacktime + 1000 < chan->time && chan->highestoutseq > chan->txwindow.acknowledge)
+        {
+            Com_Printf(CON_CHANNEL_NETWORK, "Rate adjustment clamp down - Windowsize: %d\n", chan->txwindow.windowsize);
+
+            chan->txwindow.windowsize = 16;
+        }
+}
+
 void ReliableMessagesFrame(netreliablemsg_t *chan, int now)
 {
 	int lastTime;
 	int elapsed;
 	int millipackets;
 	int i, packets;
-
+	
 	if(chan == NULL)
 	{
 		return;
@@ -754,14 +911,21 @@ void ReliableMessagesFrame(netreliablemsg_t *chan, int now)
         return;
     }
 
-	//HOW MANY frames we have to send compared to last time?
-	//Condition: windowsize -> sending all packets in 1000msec window
-	//Counting the amount of packets so we can stay with the rate in line
+    ReliableMessagesAdjustWindow(chan);
+
+    if(chan->nextacktime < chan->time) //Always send packet, no matter of rate when we are forced to send ack
+    {
+	ReliableMessagesTransmitNextFragment(chan);
+    }
+
+    //HOW MANY frames we have to send compared to last time?
+    //Condition: windowsize -> sending all packets in 1000msec window
+    //Counting the amount of packets so we can stay with the rate in line
     millipackets = elapsed * chan->txwindow.windowsize + chan->txwindow.unsentmillipackets;
     packets = millipackets / 1000;
     chan->txwindow.unsentmillipackets = millipackets % 1000;
     //Sending all packets
-	//Com_Printf(CON_CHANNEL_NETWORK,"Packet count: %d\n", packets);
+    //Com_Printf(CON_CHANNEL_NETWORK,"Packet count: %d\n", packets);
 #ifdef _LAGDEBUG
 
 	if(packets > 5)
@@ -769,7 +933,9 @@ void ReliableMessagesFrame(netreliablemsg_t *chan, int now)
 #endif
     for(i = 0; i < packets; ++i)
     {
+
         ReliableMessagesTransmitNextFragment(chan);
+
     }
     ReliableMessageTrackRate(chan);
 }

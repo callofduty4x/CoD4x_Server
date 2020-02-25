@@ -123,6 +123,21 @@ void CM_AreaEntities_r(unsigned int nodeIndex, areaParms_t *ap)
 extern "C"
 {
 
+void __cdecl CM_AddEntityToNode(svEntity_s *ent, uint16_t childNodeIndex)
+{
+    uint16_t *prevEnt;
+    unsigned int entnum;
+
+    entnum = (ent - sv.svEntities);
+    for ( prevEnt = &cm_world.sectors[childNodeIndex].contents.entities;
+        (unsigned int)*prevEnt - 1 <= entnum; prevEnt = &sv.svEntities[*prevEnt - 1].nextEntityInWorldSector);
+
+    ent->worldSector = childNodeIndex;
+    ent->nextEntityInWorldSector = *prevEnt;
+    *prevEnt = entnum + 1;
+}
+
+
 clipHandle_t SV_ClipHandleForEntity(gentity_t *touch)
 {
 	if(!touch->r.bmodel)
