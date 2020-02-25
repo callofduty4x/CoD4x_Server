@@ -2222,9 +2222,9 @@ void HECmd_SetText(scr_entref_t entnum)
 
     game_hudelem_t *element = &g_hudelems[entnum.entnum];
 
-    HudElem_ClearTypeSettings(element);
-
     int cs_index = element->elem.text;
+	
+    HudElem_ClearTypeSettings(element);
 
     /* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
     element->elem.text = 0;
