@@ -47,8 +47,8 @@
 #include "version/version.h"
 
 #define MAX_CLIENTS 64
-#define MAX_CONFIGSTRINGS 2*2442-1
-
+//#define MAX_CONFIGSTRINGS 2*2442
+#define MAX_CONFIGSTRINGS 4883
 // Configstrings limits.
 #define MAX_LOCATIONSELECTORS  3
 #define MAX_STATUSICONS        8

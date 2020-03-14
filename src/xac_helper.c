@@ -247,7 +247,8 @@ void SV_TryLoadXAC()
 {
 	char errormsg[1024];
 	void* hmodule;
-	imports_t exports;
+	static imports_t exports;
+	
 	exports.Com_Printf = XACHLP_Printf;
 	exports.Com_DPrintf = XACHLP_DPrintf;
 	exports.Com_PrintError = XACHLP_PrintError;
