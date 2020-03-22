@@ -67,6 +67,28 @@
 	#ifndef WSAEPIPE
 		#define WSAEPIPE       -12345
 	#endif
+	#ifdef EAGAIN
+		#undef EAGAIN
+	#endif
+	#ifdef EADDRNOTAVAIL
+		#undef EADDRNOTAVAIL
+	#endif
+	#ifdef EAFNOSUPPORT
+		#undef EAFNOSUPPORT
+	#endif
+	#ifdef ECONNRESET
+		#undef ECONNRESET
+	#endif
+	#ifdef EINPROGRESS
+		#undef EINPROGRESS
+	#endif
+	#ifdef EINTR
+		#undef EINTR
+	#endif
+	#ifdef EPIPE
+		#undef EPIPE
+	#endif
+
 	#	define EAGAIN			WSAEWOULDBLOCK
 	#	define EADDRNOTAVAIL		WSAEADDRNOTAVAIL
 	#	define EAFNOSUPPORT		WSAEAFNOSUPPORT
@@ -1579,12 +1601,13 @@ int NET_IP4Socket( char *net_interface, int port, int *err, qboolean tcp) {
 		Com_Printf(CON_CHANNEL_NETWORK, "WARNING: NET_IP4Socket: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		return newsocket;
 	}
+#ifndef _WIN32
 	if( newsocket < 0 || newsocket >= MAX_SOCKETLIMIT ) {
 		Com_Printf(CON_CHANNEL_NETWORK, "WARNING: NET_IP4Socket: socket is out of range 0 to 1023. Are there too many open connections or files?\n");
 		closesocket(newsocket);
 		return INVALID_SOCKET;
 	}
-
+#endif
 	// make it non-blocking
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IP4Socket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
@@ -1726,12 +1749,13 @@ int NET_IP6Socket( char *net_interface, int port, struct sockaddr_in6 *bindto, i
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IP6Socket: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		return newsocket;
 	}
+#ifndef _WIN32
 	if( newsocket < 0 || newsocket >= MAX_SOCKETLIMIT ) {
 		Com_Printf(CON_CHANNEL_NETWORK, "WARNING: NET_IP6Socket: socket is out of range 0 to 1023. Are there too many open connections or files?\n");
 		closesocket(newsocket);
 		return INVALID_SOCKET;
 	}
-
+#endif
 	// make it non-blocking
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IP6Socket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
@@ -1900,12 +1924,13 @@ int NET_IPSocket( char *net_interface, int port, int *err, qboolean tcp) {
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IPSocket: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		return newsocket;
 	}
+#ifndef _WIN32
 	if( newsocket < 0 || newsocket >= MAX_SOCKETLIMIT ) {
 		Com_Printf(CON_CHANNEL_NETWORK, "WARNING: NET_IPSocket: socket is out of range 0 to 1023. Are there too many open connections or files?\n");
 		closesocket(newsocket);
 		return INVALID_SOCKET;
 	}
-
+#endif
 	// make it non-blocking
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {
 		Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_IPSocket: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
@@ -3260,13 +3285,13 @@ __optimize3 __regparm3 qboolean NET_TcpServerConnectRequest(netadr_t* net_from, 
 
 			return qfalse;
 		}
-		
+#ifndef _WIN32
 		if( socket < 0 || socket >= MAX_SOCKETLIMIT ) {
 			Com_Printf(CON_CHANNEL_NETWORK, "WARNING: NET_TcpServerConnectRequest: socket is out of range 0 to 1023. Are there too many open connections or files?\n");
 			closesocket(socket);
 			return qfalse;
 		}
-
+#endif
 		
 		if( ioctlsocket( socket, FIONBIO, &_true ) == SOCKET_ERROR ) {
 			Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TcpServerConnectRequest: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
@@ -3293,13 +3318,13 @@ __optimize3 __regparm3 qboolean NET_TcpServerConnectRequest(netadr_t* net_from, 
 
 			return qfalse;
 		}
-
+#ifndef _WIN32
 		if( socket < 0 || socket >= MAX_SOCKETLIMIT ) {
 			Com_Printf(CON_CHANNEL_NETWORK, "WARNING: NET_TcpServerConnectRequest: socket is out of range 0 to 1023. Are there too many open connections or files?\n");
 			closesocket(socket);
 			return qfalse;
 		}
-
+#endif
 
 		if( ioctlsocket( socket, FIONBIO, &_true ) == SOCKET_ERROR ) {
 			Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TcpServerConnectRequest: ioctl FIONBIO: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
@@ -3433,10 +3458,6 @@ int NET_TcpWaitForSocketIsReady(int socket, int timeoutsec)
 
 int NET_TcpIsSocketReady(int socket) //return: 1 ready, 0 not ready, -1 select error, -2 other error
 {
-	if(socket < 0 || socket >= 1024)
-	{
-		__asm__("int $3");
-	}
 	return NET_TcpWaitForSocketIsReady(socket, 0);
 }
 
@@ -3517,13 +3538,13 @@ int NET_TcpClientConnectInternal( const char *remoteAdr, netadr_t *adr, netadr_t
 		if(!silent) Com_PrintWarning(CON_CHANNEL_NETWORK, "NET_TCPConnect: socket: %s\n", NET_ErrorStringMT(errstr, sizeof(errstr)) );
 		return INVALID_SOCKET;
 	}
-
+#ifndef _WIN32
 	if( newsocket < 0 || newsocket >= MAX_SOCKETLIMIT ) {
 		Com_Printf(CON_CHANNEL_NETWORK, "WARNING: NET_TCPConnect: socket is out of range 0 to 1023. Are there too many open connections or files?\n");
 		closesocket(newsocket);
 		return INVALID_SOCKET;
 	}
-
+#endif
 	// make it non-blocking
 	ioctlarg_t	_true = 1;
 	if( ioctlsocket( newsocket, FIONBIO, &_true ) == SOCKET_ERROR ) {

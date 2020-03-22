@@ -274,7 +274,6 @@ void SV_TryLoadXAC()
 	exports.GetGameClientData = XACHLP_GetGameClientData;
 	exports.SetConfigstring = SV_SetConfigstring;
 
-
 	memset(&xac_imp, 0, sizeof(xac_imp));
 
 	hmodule = Sys_LoadLibrary("xac_server" DLL_EXT);
