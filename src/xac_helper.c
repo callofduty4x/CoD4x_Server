@@ -56,7 +56,7 @@ void QDECL XACHLP_PrintWarning( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	memcpy(msg,"^3Warning: ", sizeof(msg));
+	memcpy(msg,"^3Warning: ", sizeof(msg) -12);
 
 	va_start (argptr,fmt);
 	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
@@ -80,7 +80,7 @@ void QDECL XACHLP_PrintError( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	memcpy(msg,"^1Error: ", sizeof(msg));
+	memcpy(msg,"^1Error: ", sizeof(msg) -10);
 
 	va_start (argptr,fmt);
 	Q_vsnprintf (&msg[9], (sizeof(msg)-10), fmt, argptr);
@@ -297,4 +297,29 @@ void SV_InitXAC()
 {
     if(xac_imp.InitXAC)
         xac_imp.InitXAC();
+}
+
+
+void SV_PassNETMessageXAC(client_t* client, msg_t* msg)
+{
+    if(xac_imp.PassClientMessage)
+        xac_imp.PassClientMessage(client - svs.clients, msg);
+}
+
+void SV_ConnectXAC(client_t* client)
+{
+    if(xac_imp.Connect)
+        xac_imp.Connect(client - svs.clients);
+}
+
+void SV_DisconnectXAC(client_t* client)
+{
+    if(xac_imp.Disconnect)
+        xac_imp.Disconnect(client - svs.clients);	
+}
+
+void SV_RunFrameXAC()
+{
+	if(xac_imp.RunFrame)
+		xac_imp.RunFrame();
 }

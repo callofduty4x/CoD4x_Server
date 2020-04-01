@@ -68,7 +68,8 @@ enum svc_ops_e {
 	svc_steamcommands,
 	svc_statscommands,
 	svc_configdata,
-	svc_configclient
+	svc_configclient,
+	svc_acdata
 };
 
 
@@ -86,7 +87,10 @@ enum clc_ops_e {
 	clc_empty1,
 	clc_empty2,
 	clc_steamcommands,
-	clc_statscommands
+	clc_statscommands,
+	clc_empty3,
+	clc_empty4,
+	clc_acdata
 };
 
 #endif

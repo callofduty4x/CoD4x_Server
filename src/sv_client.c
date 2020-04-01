@@ -44,7 +44,7 @@
 #include "g_public.h"
 
 #include "sapi.h"
-
+#include "xac_helper.h"
 
 #include <stdint.h>
 #include <stdarg.h>
@@ -834,6 +834,7 @@ void SV_CloseAllClientHandles(client_t *drop)
 	}
 
 	SV_NotifySApiDisconnect(drop);
+	SV_DisconnectXAC(drop);
 	SV_CloseDownload(drop);
 	SV_FreeClient(drop);
 	SV_DisconnectReliableMessageProtocol(drop);
@@ -1744,6 +1745,8 @@ void SV_SendClientGameState( client_t *client ) {
 		return;
 	}
 
+	SV_ConnectXAC(client);
+
 	SV_SetServerStaticHeader();
 
 	if(client->state < CS_PRIMED)
@@ -2610,6 +2613,9 @@ void SV_ExecuteReliableMessage(client_t* client)
 			break;
 		case 0x35448:
 			SV_SApiProcessModules(client, msg);
+			break;
+		case clc_acdata:
+			SV_PassNETMessageXAC(client, msg);
 			break;
 		default:
 			Com_PrintWarning(CON_CHANNEL_SERVER,"Unknown clientcommand: %d\n", command);

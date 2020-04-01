@@ -4,6 +4,11 @@
 #include "server.h"
 #include <stdbool.h>
 
+void SV_PassNETMessageXAC(client_t* client, msg_t* msg);
+void SV_ConnectXAC(client_t* client);
+void SV_DisconnectXAC(client_t* client);
+void SV_RunFrameXAC();
+
 #endif
 
 #if defined(__IN_EXTXACHLPMODULE__) || defined(__IN_XACMODULE__)
@@ -59,7 +64,7 @@ typedef struct{
 	void (*XACHLP_SendReliableServerCommand)(unsigned int client, msg_t *msg);
 	void (*XACHLP_AddBanForClient)(unsigned int cl, int bantime, const char* banreason);
 	void (*XACHLP_ScreenshotArrived)(unsigned int cl, const char* filename);
-        void (*XACHLP_ModuleArrived)(unsigned int cl, const char* filename, long checksum);
+    void (*XACHLP_ModuleArrived)(unsigned int cl, const char* filename, long checksum);
 
 	int (*FS_SV_HomeWriteFile)( const char *qpath, const void *buffer, int size);
 	unsigned int (*Sys_Milliseconds)();
@@ -79,10 +84,11 @@ typedef struct{
 	void (*ReadSS)( unsigned int num, msg_t* msg );
 	void (*Shutdown)();
 	void (*Data)(unsigned int num, msg_t* msg);
-	int (*Connect)(unsigned int num);
-	void (*NotifyDisconnect)(unsigned int num);
+	void (*Connect)(unsigned int num);
+	void (*Disconnect)(unsigned int num);
 	void (*RunFrame)();
 	void (*InitXAC)();
+	void (*PassClientMessage)(unsigned int clientnum, msg_t* msg);
 }exports_t;
 
 

@@ -67,9 +67,7 @@ static int serverport;
 
 static void ClearCachedBan(baninfo_t* baninfo);
 static void ListCachedBans_f();
-
-
-
+void SendServerChat(int client, const char* message);
 
 char* JSONEscape(const char* s, char* outbuf, int maxlen)
 {
@@ -285,6 +283,8 @@ PCL void OnMessageSent(char* message, int slot, qboolean* show, int mode)
 {
     const char* rawmsg;
     int numat = 1;
+
+    SendServerChat(slot, message);
 
     if(message[0] != '@' && (message[0] != 0x15 || message[1] != '@') )
     {
@@ -858,6 +858,40 @@ PCL void OnScreenshotArrived(client_t* client, const char* path)
 // ################################################ SCREENSHOTS END ########################################################### //
 
 // ################################################ JSON Formated players list + server status ########################################################### //
+
+
+//Untested, I guess NeHo will test it :P
+void SendServerChat(int client, const char* message)
+{
+    char outputbuffer[1024*8];
+    char tmp[1024];
+    time_t aclock;
+
+	  time(&aclock);
+
+    class StringWriter* sw = CreateJSONObject(outputbuffer, sizeof(outputbuffer));
+
+    sw->Printf("\t\"command\":\"userchat\",\n");
+    sw->Printf("\t\"client\":\"%d\",\n", client);
+    sw->Printf("\t\"message\":\"%s\",\n", JSONEscape(message, tmp, sizeof(tmp)));
+    sw->Printf("\t\"time\":\"%d\",\n", aclock);
+
+    FinishJSONObject(sw);
+
+    const char* jsonstring = strdup(sw->GetBuffer());
+    delete sw;
+
+    if(jsonstring == NULL)
+    {
+        return;
+    }
+
+    if(Plugin_CreateNewThread(SendServerdataThread, NULL, (void*)jsonstring) == qfalse)
+    {
+        free((void*)jsonstring);
+    }
+}
+
 
 
 //query: guid;
