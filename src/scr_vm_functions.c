@@ -45,7 +45,7 @@
 #include "scr_vm_functions.h"
 #include "tomcrypt/tomcrypt_misc.h"
 
-static qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
+static byte g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
 extern char* var_typename[];
 
 
@@ -2176,7 +2176,7 @@ void GScr_NewClientHudElem()
     Scr_Error("GScr_NewClientHudElem: Exceeded limit of Hudelems");
 }
 
-static qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
+qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
 {
     int i = 0;
     mvabuf;
@@ -2186,15 +2186,14 @@ static qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
         return qfalse;
 
     /* Overflow protection */
-    if (index >= MAX_CONFIGSTRINGS)
+    if (index > MAX_LOCALIZEDSTRINGS)
     {
-        Scr_Error(va("localized configstring index must be between 0 and %d",
-                     MAX_CONFIGSTRINGS - 1));
+        Scr_Error(va("localized configstring index must be between 1 and %d", MAX_LOCALIZEDSTRINGS));
         return qfalse;
     }
 
     /* Better not to free precached strings... + fast return */
-    if (g_isLocStringPrecached[index] == qtrue)
+    if (g_isLocStringPrecached[index -1] == qtrue)
         return qfalse;
 
     /* Check all script hud elements if index in use SLOOOOW :C */
@@ -2950,10 +2949,14 @@ void Scr_PrecacheString_f()
 
     locStrName = Scr_GetIString(0);
     if (locStrName[0])
-        g_isLocStringPrecached[G_LocalizedStringIndex(locStrName)] = qtrue;
+    {
+        unsigned int locStrIndex = G_LocalizedStringIndex(locStrName);
+        assert(locStrIndex != 0 && locStrIndex <= MAX_LOCALIZEDSTRINGS);
+        g_isLocStringPrecached[locStrIndex -1] = qtrue;
+    }
 }
 
-void Scr_Destroy_f(scr_entref_t hud_elem_num)
+void HECmd_Destroy(scr_entref_t hud_elem_num)
 {
     if (hud_elem_num.classnum != 1)
     {

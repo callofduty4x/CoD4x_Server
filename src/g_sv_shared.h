@@ -58,7 +58,7 @@ extern "C"{
 #endif
     __cdecl void ClientUserinfoChanged( int clientNum );
     void ClientCleanName(const char *in, char *out, int outSize, qboolean allowcolor);
-
+    int __cdecl G_LocalizedStringIndex( const char* );
 #ifdef __cplusplus
 };
 #endif

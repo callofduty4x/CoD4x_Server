@@ -845,6 +845,7 @@ scr_entref_t __cdecl Scr_GetEntityRef(unsigned int index);
 void Scr_ShutdownOpcodeLookup( );
 VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset);
 void Scr_Shutdown();
+qboolean Scr_CanFreeLocalizedConfigString(unsigned int index);
 
 #ifdef __cplusplus
 }

@@ -25,6 +25,7 @@
 
 #include "q_shared.h"
 #include "entity.h"
+#include "g_fields.h"
 
 #define HUDELEM_ADDR 0x8335620
 #define MAX_HUDELEMS 1024
@@ -77,7 +78,19 @@ typedef struct game_hudelem_s
 }game_hudelem_t;
 
 
+struct game_hudelem_field_t
+{
+  const char *name;
+  int ofs;
+  enum fieldtype_t type;
+  int mask;
+  int shift;
+  void (__cdecl *setter)(struct game_hudelem_s *, int);
+  void (__cdecl *getter)(struct game_hudelem_s *, int);
+};
+
 extern struct game_hudelem_s g_hudelems[1024];
+extern struct game_hudelem_field_t hudelem_fields[19];
 
 game_hudelem_t* G_GetNewHudElem(unsigned int clnum);
 void G_HudSetText(game_hudelem_t*, const char*);
