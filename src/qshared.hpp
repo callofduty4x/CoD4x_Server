@@ -30,7 +30,7 @@
 #include <cstring>
 #include <ctime>
 #include <cmath>
-#include <cstdbool>
+//#include <cstdbool> Removed in order to get rid of deprecation warning.
 
 #include "q_platform.hpp"
 

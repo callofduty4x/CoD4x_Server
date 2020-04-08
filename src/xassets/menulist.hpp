@@ -1,6 +1,7 @@
 #pragma once
 
 typedef unsigned int uint;
+struct MenuDef_t;
 
 /* This asset holds all the menus used in game. */
 /* mod.csv string examples are next: */
@@ -14,5 +15,5 @@ struct MenuList
 {
   const char *name;
   int menuCount;
-  struct menuDef_t **menus;
+  MenuDef_t** menus;
 };

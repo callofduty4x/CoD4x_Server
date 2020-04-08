@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "db_registry.hpp"
+#include "zlib.h"
 
 #define XBLOCK_COUNT_IW3 9
 #define XBLOCK_COUNT_T5 7
@@ -46,7 +47,30 @@ struct XZone
     int ff_dir;
 };
 
+struct DB_LoadData
+{
+    HANDLE f;
+    const char* filename;
+    struct XBlock* blocks;
+    int outstandingReads;
+    struct _OVERLAPPED overlapped;
+    z_stream stream;
+    char* compressBufferStart;
+    char* compressBufferEnd;
+    void (CCDECL* interrupt)();
+    int allocType;
+    int deflateBufferPos;
+    int deflateRemainingFileSize;
+    int flags;
+    int startTime;
+    bool abort;
+    bool ateof;
+    byte deflateBuffer[DEFLATE_BUFFER_SIZE];
+};
+
 extern char*** varXStringPtr;
+extern DB_LoadData g_load;
+extern XAssetList g_varXAssetList;
 
 void DB_InitThread();
 void DB_ReleaseXAssets();

@@ -64,6 +64,7 @@
 #include "db_assetnames.hpp"
 #include "db_registry.hpp"
 #include "cm_load.hpp"
+#include "xassets/extractor.hpp"
 
 
 extern "C" void PrintScriptStrings();
@@ -683,27 +684,6 @@ struct StreamDelayInfo
   int size;
 };
 
-struct DB_LoadData
-{
-  HANDLE f;
-  const char *filename;
-  struct XBlock *blocks;
-  int outstandingReads;
-  struct _OVERLAPPED overlapped;
-  struct z_stream_s stream;
-  char *compressBufferStart;
-  char *compressBufferEnd;
-  void (CCDECL *interrupt)();
-  int allocType;
-  int deflateBufferPos;
-  int deflateRemainingFileSize;
-  int flags;
-  int startTime;
-  bool abort;
-  bool ateof;
-  byte deflateBuffer[DEFLATE_BUFFER_SIZE];
-};
-
 struct StreamPosInfo
 {
   byte *pos;
@@ -726,7 +706,7 @@ const char *g_block_mem_name[9] =
 int g_block_mem_type[] = { 0, 1, 1, 2, 1, 1, 2, 2, 2 };
 
 struct StreamDelayInfo g_streamDelayArray[4096];
-struct DB_LoadData g_load;
+DB_LoadData g_load;
 struct StreamPosInfo g_streamPosStack[64];
 
 byte* DB_MemAlloc(unsigned int size, unsigned int type, unsigned int allocType, const char *filename, int flags)
@@ -1367,6 +1347,7 @@ void CCDECL DB_LoadXFileInternal()
   }
 
   DB_PopStreamPos();
+  store_fastfile_contents_information();
   Load_DelayStream();
 
   --g_loadingAssets;
@@ -1418,11 +1399,9 @@ byte *CCDECL AllocLoad_raw_byte()
 
 char** varTempString;
 ScriptStringList* varScriptStringList;
-
+XAssetList g_varXAssetList;
 void Load_XAssetListCustom()
 {
-  static struct XAssetList g_varXAssetList;
-
   varXAssetList = &g_varXAssetList;
   DB_LoadXFileData((byte *)&g_varXAssetList, 16);
   DB_PushStreamPos(4u);
