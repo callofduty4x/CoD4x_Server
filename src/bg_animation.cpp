@@ -237,9 +237,10 @@ extern "C"
 
     void CCDECL BG_Player_DoControllers(CEntPlayerInfo* player, DObj* obj, int* partBits)
     {
-        int i;
+        if (!player)
+            return;
 
-        for (int i = 0; i < 6; ++i)
+        for (int i = 0; i < sizeof(player->tag)/sizeof(player->tag[0]); ++i)
             DObjSetControlTagAngles(obj, partBits, player->tag[i], player->control->angles[i]);
         
         DObjSetLocalTag(obj, partBits, 0, player->control->tag_origin_offset, player->control->tag_origin_angles);

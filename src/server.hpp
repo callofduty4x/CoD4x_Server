@@ -105,17 +105,18 @@ typedef struct archivedEntity_s
 }archivedEntity_t;
 
 
-typedef struct svEntity_s {
-	uint16_t worldSector;
-	uint16_t nextEntityInWorldSector;
-	archivedEntity_t		baseline;		// 0x04  for delta compression of initial sighting
-	int			numClusters;		// if -1, use headnode instead
-	int			clusternums[MAX_ENT_CLUSTERS];
-	int			lastCluster;		// if all the clusters don't fit in clusternums
-	int			linkcontents;
-	float		linkmin[2];
-	float		linkmax[2];
-}svEntity_t; //size: 0x178
+struct svEntity_s
+{
+    uint16_t worldSector;
+    uint16_t nextEntityInWorldSector;
+    archivedEntity_t baseline;		// 0x04  for delta compression of initial sighting
+    int numClusters;		// if -1, use headnode instead
+    int clusternums[MAX_ENT_CLUSTERS];
+    int lastCluster;		// if all the clusters don't fit in clusternums
+    int linkcontents;
+    float linkmin[2];
+    float linkmax[2];
+}; //size: 0x178
 
 #include "cm_public.hpp"
 
@@ -299,7 +300,7 @@ typedef struct
   int firstPing;
   qboolean connected;
   char guid[36];
-}challenge2_t;
+}challenge_t;
 
 typedef struct{
 	int time;
@@ -351,7 +352,7 @@ typedef struct {//0x8c51780
 
 	int nextStatusResponseTime;
 
-	challenge2_t challenges[MAX_CHALLENGES];
+	challenge_t challenges[MAX_CHALLENGES];
 
 	vec3_t mapCenter;
 
@@ -423,7 +424,7 @@ typedef struct {//0x13e78d00
 	uint16_t			configstrings[MAX_CONFIGSTRINGS]; //(0x13e7951a)
 
 	short			unk3; //0x13e7a82e
-	svEntity_t		svEntities[MAX_GENTITIES]; //0x1b30 (0x13e7a830) size: 0x5e000
+	svEntity_s		svEntities[MAX_GENTITIES]; //0x1b30 (0x13e7a830) size: 0x5e000
 
 	// the game virtual machine will update these on init and changes
 	gentity_t		*gentities;	//0x5fb30  (0x13ed8830)
@@ -466,7 +467,7 @@ typedef struct{//13F18F80
     int			nextSnapshotClients;
     entityState_t	*snapshotEntities;
     clientState_t	*snapshotClients;
-    svEntity_t		*svEntities;	
+    svEntity_s* svEntities;
 
     vec3_t mapCenter;
     archivedEntity_t *cachedSnapshotEntities;
@@ -623,7 +624,7 @@ extern cvar_t* sv_shownet;
 extern cvar_t* sv_legacymode;
 extern cvar_t* sv_steamgroup;
 extern cvar_t* sv_voice;
-
+extern cvar_t* sv_maxDownloadRate;
 
 extern "C"
 {
@@ -632,8 +633,8 @@ extern "C"
 gentity_t *SV_GentityNum( int num );
 int SV_NumForGentity( gentity_t *ent );
 playerState_t *SV_GameClientNum( int num );
-svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt );
-gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt );
+svEntity_s* SV_SvEntityForGentity( gentity_t *gEnt );
+gentity_t *SV_GEntityForSvEntity(svEntity_s* svEnt );
 //
 // sv_client.c
 //
@@ -811,7 +812,7 @@ void SV_SendMessageToClient( msg_t *msg, client_t *client );
 void SV_WriteSnapshotToClient(client_t* client, msg_t* msg);
 cachedSnapshot_t* SV_GetCachedSnapshotInternal(int archivedFrame, int depth, bool expectedToSucceed);
 
-void SV_ClipMoveToEntity(struct moveclip_s *clip, svEntity_t *entity, struct trace_s *trace);
+void SV_ClipMoveToEntity(struct moveclip_s *clip, svEntity_s* entity, struct trace_s *trace);
 void SV_Cmd_Init();
 void SV_SteamData(client_t* cl, msg_t* msg);
 void CCDECL SV_Trace(trace_t *results, const float *start, const float *mins, const float *maxs, const float *end, IgnoreEntParams *ignoreEntParams, int contentmask, int locational, char *priorityMap, int staticmodels); //0817D9F8
@@ -847,8 +848,8 @@ bool MSG_WriteDeltaArchivedEntity(snapshotInfo_t *snapInfo, msg_t *msg, const in
 int MSG_ReadDeltaArchivedEntity(msg_t *msg, const int time, archivedEntity_t *from, archivedEntity_t *to, int number);
 uint64_t CCDECL SV_GetPlayerXuid(unsigned int clientNum);
 
-void CCDECL CM_UnlinkEntity(svEntity_t *ent);
-void CCDECL CM_LinkEntity(svEntity_t *ent, float *absmin, float *absmax, unsigned int clipHandle);
+void CCDECL CM_UnlinkEntity(svEntity_s* ent);
+void CCDECL CM_LinkEntity(svEntity_s* ent, float *absmin, float *absmax, unsigned int clipHandle);
 
 int SV_GameGetMaxClients();
 qboolean SV_FileStillActive(const char* name);
@@ -861,7 +862,7 @@ int CCDECL SV_DObjExists(gentity_t *ent);
 
 }
 
-qboolean SV_Frame(unsigned int usec);
+bool SV_Frame(unsigned int usec);
 __optimize3 void SV_GetChallenge(netadr_t* from);
 __optimize3 void SV_DirectConnect(netadr_t* from);
 __optimize3 void SV_ReceiveStats(netadr_t* from, msg_t* msg);

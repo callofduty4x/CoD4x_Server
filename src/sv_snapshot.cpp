@@ -722,7 +722,7 @@ static void SV_AddEntitiesVisibleFromPoint( float *origin, int clientNum, snapsh
 {
 	int e, i;
 	gentity_t *ent;
-	svEntity_t  *svEnt;
+    svEntity_s* svEnt;
 	int l;
 	int clientcluster;
 	int leafnum;

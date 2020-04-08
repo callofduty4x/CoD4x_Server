@@ -1,7 +1,5 @@
 ;Imports of g_hudelem:
 	extern Scr_ObjectError
-	extern Scr_ConstructMessageString
-	extern G_LocalizedStringIndex
 	extern Scr_Error
 	extern SV_SetConfigstring
 	extern Scr_GetNumParam
@@ -41,10 +39,8 @@
 	extern memcpy
 	extern Scr_AddClassField
 	extern Scr_SetString
-	extern HECmd_SetText
 	extern g_hudelems
 	extern g_he_fields
-	extern g_he_methods
 	extern g_he_vertalign
 	extern g_he_horzalign
 	extern g_he_aligny
@@ -88,7 +84,6 @@
 	global HudElem_GetColor
 	global HudElem_SetAlpha
 	global HudElem_GetAlpha
-	global HudElem_SetLocalizedString
 	global HudElem_SetFlagForeground
 	global HudElem_GetFlagForeground
 	global HudElem_SetFlagHideWhenDead
@@ -103,13 +98,11 @@
 	global HudElem_SetEnumString
 	global HECmd_SetTimer_Internal
 	global HECmd_SetClock_Internal
-	global HudElem_GetMethod
 	global GScr_NewTeamHudElem
 	global Scr_GetHudElemField
 	global Scr_SetHudElemField
 	global GScr_AddFieldsForHudElems
 	global Scr_FreeHudElemConstStrings
-
 
 SECTION .text
 
@@ -1664,32 +1657,6 @@ HudElem_GetAlpha:
 	nop
 
 
-;HudElem_SetLocalizedString(game_hudelem_s*, int)
-HudElem_SetLocalizedString:
-	push ebp
-	mov ebp, esp
-	push esi
-	push ebx
-	sub esp, 0x10
-	mov esi, [ebp+0x8]
-	mov ebx, [ebp+0xc]
-	mov dword [esp], 0x0
-	call Scr_GetIString
-	lea edx, [ebx*4]
-	shl ebx, 0x5
-	sub ebx, edx
-	add esi, [ebx+g_he_fields+0x4]
-	mov [esp], eax
-	call G_LocalizedStringIndex
-	mov [esi], eax
-	add esp, 0x10
-	pop ebx
-	pop esi
-	pop ebp
-	ret
-	nop
-
-
 ;HudElem_SetFlagForeground(game_hudelem_s*, int)
 HudElem_SetFlagForeground:
 	push ebp
@@ -2388,56 +2355,6 @@ HECmd_SetClock_Internal_60:
 	jmp HECmd_SetClock_Internal_120
 
 
-;HudElem_GetMethod(char const**)
-HudElem_GetMethod:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov eax, [ebp+0x8]
-	mov eax, [eax]
-	mov [ebp-0x1c], eax
-	xor esi, esi
-	mov ebx, g_he_methods
-	xor edi, edi
-	mov edx, eax
-	jmp HudElem_GetMethod_10
-HudElem_GetMethod_30:
-	add esi, 0x1
-	add edi, 0xc
-	add ebx, 0xc
-	cmp esi, 0x16
-	jz HudElem_GetMethod_20
-	mov edx, [ebp-0x1c]
-HudElem_GetMethod_10:
-	mov eax, [ebx]
-	mov [esp+0x4], eax
-	mov [esp], edx
-	call strcmp
-	test eax, eax
-	jnz HudElem_GetMethod_30
-	mov eax, [edi+g_he_methods]
-	mov edx, [ebp+0x8]
-	mov [edx], eax
-	mov eax, [edi+g_he_methods+0x4]
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-HudElem_GetMethod_20:
-	xor eax, eax
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-
-
 ;GScr_NewTeamHudElem()
 GScr_NewTeamHudElem:
 	push ebp
@@ -2758,28 +2675,6 @@ _cstring_usage_hudelem_st1:		db "USAGE: <hudelem> %s(time_in_seconds, total_cloc
 _cstring_duration_g_shoul:		db "duration %g should be > 0",0
 _cstring_out_of_hudelems:		db "out of hudelems",0
 _cstring_team_s_should_be:		db "team ",22h,"%s",22h," should be ",22h,"allies",22h,", ",22h,"axis",22h,", or ",22h,"spectator",22h,0
-_cstring_not_a_client:		db "not a client",0
-
-_cstring_x:		db "x",0
-_cstring_y:		db "y",0
-_cstring_z:		db "z",0
-_cstring_fontscale:		db "fontscale",0
-_cstring_font:		db "font",0
-_cstring_alignx:		db "alignx",0
-_cstring_aligny:		db "aligny",0
-_cstring_horzalign:		db "horzalign",0
-_cstring_vertalign:		db "vertalign",0
-_cstring_color:		db "color",0
-_cstring_alpha:		db "alpha",0
-_cstring_label:		db "label",0
-_cstring_sort:		db "sort",0
-_cstring_foreground:		db "foreground",0
-_cstring_hidewhendead:		db "hidewhendead",0
-_cstring_hidewheninmenu:		db "hidewheninmenu",0
-_cstring_glowcolor:		db "glowcolor",0
-_cstring_glowalpha:		db "glowalpha",0
-_cstring_archived:		db "archived",0
-
 
 
 ;All constant floats and doubles:

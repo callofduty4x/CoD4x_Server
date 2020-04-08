@@ -68,14 +68,14 @@ playerState_t *SV_GameClientNum( int num ) {
 	return ps;
 }
 
-svEntity_t  *SV_SvEntityForGentity( gentity_t *gEnt ) {
+svEntity_s* SV_SvEntityForGentity( gentity_t *gEnt ) {
 	if ( !gEnt || gEnt->s.number < 0 || gEnt->s.number >= MAX_GENTITIES ) {
 		Com_Error( ERR_DROP, "SV_SvEntityForGentity: bad gEnt" );
 	}
 	return &sv.svEntities[ gEnt->s.number ];
 }
 
-gentity_t *SV_GEntityForSvEntity( svEntity_t *svEnt ) {
+gentity_t *SV_GEntityForSvEntity(svEntity_s* svEnt ) {
 	int num;
 
 	num = svEnt - sv.svEntities;
@@ -810,4 +810,21 @@ extern "C"
         else if (clientNum >= 0 && clientNum < sv_maxclients->integer)
             SV_SendServerCommand_IW(&svs.clients[clientNum], cmdtype, "%s", cmdstring);
     }
+
+    svEntity_s* CCDECL SV_SvEntityForNum(int num)
+    {
+        if (num < 0 || num >= MAX_GENTITIES)
+        {
+            Com_Error(ERR_DROP, "SV_SvEntityForNum: bad number");
+            return nullptr;
+        }
+
+        return &sv.svEntities[num];
+    }
+
+
+    //int CCDECL SV_NumForSvEntity(svEntity_s* svEnt)
+    //{
+    //    return svEnt ? svEnt - sv.svEntities : -1;
+    //}
 } // extern "C"

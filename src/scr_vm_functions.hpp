@@ -105,8 +105,6 @@ void GScr_ArrayTest();
 extern "C"
 {
     qboolean CCDECL GScr_UpdateTagInternal2(gentity_t *ent, unsigned int tagName, cached_tag_mat_t *cachedTag, qboolean showScriptError);
-    void CCDECL GScr_NewHudElem();
-    void CCDECL GScr_NewClientHudElem();
 }
 
 void PrintModelBonesInfo(gentity_t *ent);
@@ -140,9 +138,11 @@ void GScr_IsInt();
 void GScr_Pow();
 void GScr_StrCtrlStrip();
 void GScr_ToUpper();
+void GScr_NewHudElem();
+void GScr_NewClientHudElem();
 
 void GScr_CloneBrushModelToScriptModel(scr_entref_t brushModelEnt);
 void PlayerCmd_SetStance(scr_entref_t playerEntNum);
 void EntityCmd_GetHandlerType(scr_entref_t entref);
 void ScrCmd_LogString(scr_entref_t entref);
-
+bool Scr_CanFreeLocalizedConfigString(unsigned int index);

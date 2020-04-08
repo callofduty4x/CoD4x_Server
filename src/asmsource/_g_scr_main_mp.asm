@@ -226,20 +226,7 @@
 	extern g_gametype
 	extern loc_warnings
 	extern loc_warningsAsErrors
-	extern Scr_GetEnt
-	extern Scr_GetEntArray
-	extern Scr_AddStruct
-	extern Scr_MissileCreateAttractorEnt
-	extern Scr_MissileCreateAttractorOrigin
-	extern Scr_MissileCreateRepulsorEnt
-	extern Scr_MissileCreateRepulsorOrigin
-	extern Scr_MissileDeleteAttractor
-	extern GScr_NewHudElem
-	extern GScr_NewClientHudElem
-	extern GScr_NewTeamHudElem
-	extern Scr_ResetTimeout
 	extern Scr_ConstructMessageString
-	extern GScr_LoadScriptAndLabel
 	extern g_scr_data
 
 

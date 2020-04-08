@@ -125,6 +125,21 @@ extern "C"
     vec3_t actorLocationalMins = { -64.0, -64.0, -32.0 };
     vec3_t actorLocationalMaxs = { 64.0, 64.0, 72.0 };
 
+void __cdecl CM_AddEntityToNode(svEntity_s *ent, uint16_t childNodeIndex)
+{
+    uint16_t *prevEnt;
+    unsigned int entnum;
+
+    entnum = (ent - sv.svEntities);
+    for ( prevEnt = &cm_world.sectors[childNodeIndex].contents.entities;
+        (unsigned int)*prevEnt - 1 <= entnum; prevEnt = &sv.svEntities[*prevEnt - 1].nextEntityInWorldSector);
+
+    ent->worldSector = childNodeIndex;
+    ent->nextEntityInWorldSector = *prevEnt;
+    *prevEnt = entnum + 1;
+}
+
+
 clipHandle_t SV_ClipHandleForEntity(gentity_t *touch)
 {
 	if(!touch->r.bmodel)
@@ -216,7 +231,7 @@ void SV_ClipToEntity( trace_t *trace, const vec3_t start, const vec3_t mins, con
 
 
 
-void CCDECL SV_ClipMoveToEntity(moveclip_t *clip, svEntity_t *entity, trace_t *trace){
+void CCDECL SV_ClipMoveToEntity(moveclip_t *clip, svEntity_s* entity, trace_t *trace){
 
 	gentity_t	*touch;
 	int		touchNum;
@@ -705,18 +720,16 @@ BLACKOPS
 }
 
 
-void CCDECL SV_UnlinkEntity(struct gentity_s *gEnt)
+void CCDECL SV_UnlinkEntity(struct gentity_s* gEnt)
 {
-  svEntity_t *ent;
-
-  ent = SV_SvEntityForGentity(gEnt);
-  gEnt->r.linked = 0;
-  CM_UnlinkEntity(ent);
+    svEntity_s* ent = SV_SvEntityForGentity(gEnt);
+    gEnt->r.linked = 0;
+    CM_UnlinkEntity(ent);
 }
 
 
 #if 0
-void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_s* check, trace_t *trace)
 {
   gentity_t *touch;
   vec3_t entAxis[4];
@@ -936,7 +949,7 @@ void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, 
 #endif
 
 #if 0
-void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_s* check, trace_t *trace)
 {
   gentity_t *touch;
   vec3_t entAxis[4];
@@ -1099,7 +1112,7 @@ void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, 
 #endif
 
 #if 1
-void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_t *check, trace_t *trace)
+void CCDECL SV_PointTraceToEntity(struct pointtrace_t *clip, svEntity_s* check, trace_t *trace)
 {
   int entnum;
   struct gentity_s *touch;
@@ -1290,7 +1303,7 @@ void CCDECL SV_PointTraceToEntity_Stub(struct pointtrace_t *clip, trace_t *trace
 }
 
 
-int CCDECL SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t *check)
+int CCDECL SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_s* check)
 {
   gentity_t *touch;
   vec3_t entAxis[4];
@@ -1400,7 +1413,7 @@ int CCDECL SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t
 }
 
 
-int CCDECL SV_ClipSightToEntity(struct sightclip_t *clip, svEntity_t *check)
+int CCDECL SV_ClipSightToEntity(struct sightclip_t *clip, svEntity_s* check)
 {
 
   unsigned int clipHandle;

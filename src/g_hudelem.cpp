@@ -1,41 +1,30 @@
-﻿#include "g_hudelem.hpp"
+#include "g_hudelem.hpp"
 #include "scr_vm_functions.hpp"
 #include "g_hud.hpp"
 #include "server.hpp"
 
 
-qboolean g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {qfalse};
+bool g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS] = {false};
 
-qboolean Scr_CanFreeLocalizedConfigString(unsigned int index)
+void HECmd_SetText(scr_entref_t entnum)
 {
-    mvabuf;
+    char buffer[1024];
 
-    /* Index not set + fast return from function */
-    if (!index)
-        return qfalse;
+    if (entnum.classnum != 1)
+        return Scr_ObjectError("G_HudSetText: Not a hud element");
 
-    /* Overflow protection */
-    if (index >= MAX_CONFIGSTRINGS)
-    {
-        Scr_Error(va("localized configstring index must be between 0 and %d",
-                     MAX_CONFIGSTRINGS - 1));
-        return qfalse;
-    }
+    game_hudelem_t* element = &g_hudelems[entnum.entnum];
+    int cs_index = element->elem.text;
+    HudElem_ClearTypeSettings(element);
+    /* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
+    element->elem.text = 0;
+    /* Attempt to avoid CS overflow using "SetText()" */
+    if (Scr_CanFreeLocalizedConfigString(cs_index))
+        SV_SetConfigstring(cs_index + CS_LOCALIZEDSTRINGS, "");
 
-    /* Better not to free precached strings... + fast return */
-    if (g_isLocStringPrecached[index] == qtrue)
-        return qfalse;
-
-    /* Check all script hud elements if index in use SLOOOOW :C */
-    for (int i = 0; i < 1024; ++i)
-    {
-        game_hudelem_t *elem = &g_hudelems[i];
-        if (elem->elem.text &&
-            elem->elem.text == index)
-            return qfalse;
-    }
-
-    return qtrue;
+    Scr_ConstructMessageString(0, Scr_GetNumParam() - 1, "Hud Elem String", buffer, sizeof(buffer));
+    element->elem.type = HE_TYPE_TEXT;
+    element->elem.text = G_LocalizedStringIndex(buffer);
 }
 
 
@@ -144,25 +133,21 @@ extern "C"
         { "archived", HUDELEM_OFS(archived), F_INT, -1, 0, HudElem_SetBoolean, nullptr },
         { nullptr, 0, F_INT, 0, 0, nullptr, nullptr }
     };
+}
 
-    void HECmd_SetText(scr_entref_t entnum)
-    {
-        char buffer[1024];
+void HudElem_SetLocalizedString(game_hudelem_t* hud, int offset)
+{
+    void* refval = (byte*)hud + g_he_fields[offset].ofs;
+    const char* s = Scr_GetIString(0);
 
-        if (entnum.classnum != 1)
-            return Scr_ObjectError("G_HudSetText: Not a hud element");
+    int oldlocid = *(int*)refval;
 
-        game_hudelem_t *element = &g_hudelems[entnum.entnum];
-        int cs_index = element->elem.text;
-        HudElem_ClearTypeSettings(element);
-        /* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
-        element->elem.text = 0;
-        /* Attempt to avoid CS overflow using "SetText()" */
-        if (Scr_CanFreeLocalizedConfigString(cs_index))
-            SV_SetConfigstring(cs_index + CS_LOCALIZEDSTRINGS, "");
+    /* Must be set to 0 before calling Scr_CanFreeLocalizedConfigString() */
+    *(int*)refval = 0;
 
-        Scr_ConstructMessageString(0, Scr_GetNumParam() -1, "Hud Elem String", buffer, sizeof(buffer));
-        element->elem.type = HE_TYPE_TEXT;
-        element->elem.text = G_LocalizedStringIndex(buffer);
-    }
+    /* Attempt to avoid CS overflow using "SetText()" */
+    if (Scr_CanFreeLocalizedConfigString(oldlocid))
+        SV_SetConfigstring(oldlocid + CS_LOCALIZEDSTRINGS, "");
+
+    *(int*)refval = G_LocalizedStringIndex(s);
 }

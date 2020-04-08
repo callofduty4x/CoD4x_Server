@@ -54,7 +54,7 @@ extern struct scrVarDebugPub_t *gScrVarDebugPub;
 extern "C"
 {
     extern scrVarPub_t gScrVarPub;
-    extern const char* var_typename[];
+    extern const char* var_typename[23];
 
 void CCDECL Scr_AddClassField(unsigned int classnum, const char *name, unsigned int offset);
 void CCDECL Scr_AddArrayKeys(unsigned int parentId);

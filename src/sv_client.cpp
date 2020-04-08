@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -46,6 +46,7 @@
 #include "qcommon_logprint.hpp"
 #include "g_client_mp.hpp"
 #include "g_sv_client.hpp"
+#include "xac_helper.hpp"
 
 
 #include <stdint.h>
@@ -304,6 +305,7 @@ void SV_CloseAllClientHandles(client_t *drop)
 	}
 
 	SV_NotifySApiDisconnect(drop);
+	SV_DisconnectXAC(drop);
 	SV_CloseDownload(drop);
 	SV_FreeClient(drop);
 	SV_DisconnectReliableMessageProtocol(drop);
@@ -1016,7 +1018,57 @@ void CCDECL SV_WriteDownloadToClient( client_t *cl ) {
 		return;
 	}
 
-	cl->downloadBlockSize = 900;
+	int i, numdl;
+
+	for(i = 0, numdl = 0; i < sv_maxclients->integer; ++i){
+		if(svs.clients[i].state >= CS_CONNECTED && svs.clients[i].downloadXmitBlock > 0)
+		{
+			++numdl;
+		}
+	}
+
+	if(numdl < 1)
+	{
+		numdl = 1;
+	}
+
+	int maxblockrate = (sv_maxDownloadRate->integer * 1024) / numdl / sv_fps->integer;
+
+	int rate = ReliableMessageGetDataSendWindowSize(cl->reliablemsg.netstate);
+	if(rate < 10000)
+	{
+		rate = 10000;
+	}
+	
+	int outbuffersize = ReliableMessageGetSendBufferSize(cl->reliablemsg.netstate);
+	
+	if(outbuffersize > 2* rate)
+	{
+		return;
+	}
+
+	int buffersize = 2*rate / sv_fps->integer;
+
+	Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : Max blockrate \"%d\" Buffersize: %d\n", cl - svs.clients, maxblockrate, buffersize);
+
+	if(buffersize > maxblockrate)
+	{
+		buffersize = maxblockrate;
+		if(buffersize < 600)
+		{
+			buffersize = 600;
+		}
+	}else if(buffersize < 300){
+		return;
+	}
+
+	cl->downloadBlockSize = buffersize;
+	if(cl->downloadBlockSize < 1200)
+	{
+		cl->downloadBlockSize = 1200;
+	}
+
+
 	if(cl->downloadBlockSize > sizeof(downloadBlock))
 	{
 		cl->downloadBlockSize = sizeof(downloadBlock);
@@ -1165,6 +1217,8 @@ void SV_SendClientGameState( client_t *client ) {
 		return;
 	}
 
+	SV_ConnectXAC(client);
+
 	SV_SetServerStaticHeader();
 
 	if(client->state < CS_PRIMED)
@@ -1253,6 +1307,7 @@ static void SV_CloseDownload( client_t *cl ) {
 	}
 	cl->download = 0;
 	*cl->downloadName = 0;
+	cl->downloadXmitBlock = 0; //reset so we can still count clients downloading from server
 }
 
 
@@ -1938,6 +1993,9 @@ void SV_ExecuteReliableMessage(client_t* client)
 			break;
 		case 0x35448:
 			SV_SApiProcessModules(client, msg);
+			break;
+		case clc_acdata:
+			SV_PassNETMessageXAC(client, msg);
 			break;
 		default:
 			Com_PrintWarning(CON_CHANNEL_SERVER,"Unknown clientcommand: %d\n", command);

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "dobj.hpp"
 
+struct svEntity_s;
 extern "C"
 {
     qboolean CCDECL SV_DObjCreateSkelForBone(struct DObj_s *obj, int boneIndex);
@@ -25,6 +26,7 @@ extern "C"
     DObjAnimMat *CCDECL SV_DObjGetMatrixArray(gentity_t* ent);
     void CCDECL SV_DObjUpdateServerTime(gentity_t* ent, float dtime, int bNotify);
     void CCDECL SV_GameSendServerCommand(int clientNum, int cmdtype, const char* cmdstring);
+    svEntity_s* CCDECL SV_SvEntityForNum(int num);
 } // extern "C"
 
 void CCDECL SV_XModelDebugBoxesInternal(gentity_t *ent, const float *color, int *partBits, int duration);

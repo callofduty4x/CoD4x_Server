@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -63,6 +63,7 @@
 #include "com_bsp_load_obj.hpp"
 #include "cscr_const.hpp"
 #include "query_limit.hpp"
+#include "xac_helper.hpp"
 
 
 cvar_t	*sv_protocol;
@@ -141,6 +142,7 @@ cvar_t* sv_legacymode;
 cvar_t* sv_steamgroup;
 cvar_t* sv_authtoken;
 cvar_t* sv_disableChat;
+cvar_t* sv_maxDownloadRate;
 
 serverStatic_t svs;
 svsHeader_t svsHeader;
@@ -2020,34 +2022,35 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, masterserver_t*
 
     if(masrv->needticket){
 
-	Q_strncpyz(opts->token, sv_authtoken->string, sizeof(opts->token));
+        Q_strncpyz(opts->token, sv_authtoken->string, sizeof(opts->token));
 
 
-	if(opts->token[0] == 0)
-	{
-		Com_Printf(CON_CHANNEL_SERVER, "Can not register server on the masterserver. Server needs to provide a valid token in cvar sv_authtoken.\n");
-		opts->locked = qfalse;
-		masrv->threadlock = qfalse;
-		return;
-	}
+        if(opts->token[0] == 0)
+        {
+            Com_Printf(CON_CHANNEL_SERVER, "Can not register server on the masterserver. Server needs to provide a valid token in cvar sv_authtoken.\n");
+            opts->locked = qfalse;
+            masrv->needticket = qfalse; //Try again next time without ticket in case this was only temporarily
+            masrv->threadlock = qfalse;
+            return;
+        }
 
-        MSG_BeginWriteMessageLength(&msg); //Messagelength
-        MSG_WriteLong(&msg, 2); //Command encryptedappidticket
+            MSG_BeginWriteMessageLength(&msg); //Messagelength
+            MSG_WriteLong(&msg, 2); //Command encryptedappidticket
 
-	//First 8 bytes of token
-	for(i = 0; i < 8; ++i)
-	{
-		MSG_WriteByte(&msg, opts->token[i]);
-	}
+        //First 8 bytes of token
+        for(i = 0; i < 8; ++i)
+        {
+            MSG_WriteByte(&msg, opts->token[i]);
+        }
 
-	opts->msgtokenstart = msg.data + msg.cursize;
+        opts->msgtokenstart = msg.data + msg.cursize;
 
-	//Sourceip depended. Write empty message first
-	for(i = 0; i < 64; ++i)
-	{
-		MSG_WriteByte(&msg, 0xff);
-	}
-	MSG_WriteByte(&msg, 0x0);
+        //Sourceip depended. Write empty message first
+        for(i = 0; i < 64; ++i)
+        {
+            MSG_WriteByte(&msg, 0xff);
+        }
+        MSG_WriteByte(&msg, 0x0);
         MSG_EndWriteMessageLength(&msg);
     }
 
@@ -2728,6 +2731,7 @@ void SV_InitCvarsOnce(void){
     sv_rconPassword = Cvar_RegisterString("rcon_password", "", 0, "Password for the server remote control console");
 
     sv_allowDownload = Cvar_RegisterBool("sv_allowDownload", qtrue, 1, "Allow clients to download gamefiles from server");
+    sv_maxDownloadRate = Cvar_RegisterInt("sv_maxDownloadRate", 1024, 128, 8192, 0, "Rate in kilobytes all clients can together receive when downloading from server");
     sv_wwwDownload = Cvar_RegisterBool("sv_wwwDownload", qfalse, 1, "Enable http download");
     sv_wwwBaseURL = Cvar_RegisterString("sv_wwwBaseURL", "", 1, "The base url to files for downloading from the HTTP-Server");
     sv_wwwDlDisconnected = Cvar_RegisterBool("sv_wwwDlDisconnected", qfalse, 1, "Should clients stay connected while downloading from a HTTP-Server?");
@@ -2802,8 +2806,7 @@ void SV_InitCvarsOnce(void){
     sv_disableChat = Cvar_RegisterBool("sv_disablechat", qfalse, CVAR_ARCHIVE, "Disable chat messages from clients");
 }
 
-
-
+void SV_TryLoadXAC();
 
 void SV_Init(){
     SV_AddOperatorCommands();
@@ -2816,6 +2819,7 @@ void SV_Init(){
     SV_MasterHeartbeatInit();
     Com_RandomBytes((byte*)&psvs.randint, sizeof(psvs.randint));
     SV_InitSApi();
+    SV_TryLoadXAC();
 }
 
 
@@ -4152,6 +4156,7 @@ void SV_ChangeMaxClients()
 }
 
 
+void SV_InitXAC();
 /* Fragmented testing: 0x8174A74 jmp to 08174E98 (SV_RunFrame(...)) */
 
 
@@ -4390,6 +4395,7 @@ void SV_SpawnServer(const char *mapname)
   Cvar_SetString(sv_referencedFFCheckSums, outChkSums);
   Cvar_SetString(sv_referencedFFNames, outPathNames);
 
+  SV_InitXAC();
 
   SV_SaveSystemInfo();
 
@@ -4767,7 +4773,7 @@ Player movement occurs as a result of packet events, which
 happen before SV_Frame is called
 ==================
 */
-__optimize3 qboolean SV_Frame(unsigned int usec)
+bool SV_Frame(unsigned int usec)
 {
     unsigned int frameUsec;
     char mapname[MAX_QPATH];
@@ -4822,6 +4828,7 @@ __optimize3 qboolean SV_Frame(unsigned int usec)
     }
 
     SV_RunSApiFrame();
+    SV_RunFrameXAC();
 
     // send messages back to the clients
     SV_SendClientMessages();

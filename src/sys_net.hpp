@@ -43,6 +43,8 @@ NET
 	//#define SOCKET_DEBUG
 #endif
 
+#define MAX_SOCKETLIMIT FD_SETSIZE
+
 typedef enum {
 	NA_BAD = 0,					// an address lookup failed
 	NA_BOT = 0,

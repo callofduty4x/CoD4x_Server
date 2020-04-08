@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -55,6 +55,7 @@
 #include "plugin_handler.hpp"
 #include "tomcrypt.h"
 #include "cscr_const.hpp"
+
 
 /*
 ============
@@ -2071,6 +2072,46 @@ void GScr_BanClient()
 }
 
 
+void GScr_NewHudElem()
+{
+    game_hudelem_t* element = HudElem_Alloc(1023, 0);
+    if (!element)
+        return Scr_Error("GScr_NewHudElem: Exceeded limit of Hudelems");
+
+    Scr_AddHudElem(element);
+}
+
+
+bool Scr_CanFreeLocalizedConfigString(unsigned int index)
+{
+    /* Index not set + fast return from function */
+    if (!index)
+        return false;
+
+    /* Overflow protection */
+    if (index > MAX_LOCALIZEDSTRINGS)
+    {
+        Scr_Error(va("localized configstring index must be between 1 and %d", MAX_LOCALIZEDSTRINGS));
+        return false;
+    }
+
+    /* Better not to free precached strings... + fast return */
+    if (g_isLocStringPrecached[index - 1])
+        return false;
+
+    /* Check all script hud elements if index in use SLOOOOW :C */
+    for (int i = 0; i < sizeof(g_hudelems) / sizeof(g_hudelems[0]); ++i)
+    {
+        game_hudelem_t* elem = &g_hudelems[i];
+        if (elem->elem.text && elem->elem.text == index)
+            return false;
+
+    }
+
+    return true;
+}
+
+
 void GScr_MakeCvarServerInfo(void)
 {
     const char *var_name;
@@ -2783,7 +2824,11 @@ void Scr_PrecacheString_f()
 
     locStrName = Scr_GetIString(0);
     if (locStrName[0])
-        g_isLocStringPrecached[G_LocalizedStringIndex(locStrName)] = qtrue;
+    {
+        unsigned int locStrIndex = G_LocalizedStringIndex(locStrName);
+        assert(locStrIndex != 0 && locStrIndex <= MAX_LOCALIZEDSTRINGS);
+        g_isLocStringPrecached[locStrIndex -1] = true;
+    }
 }
 
 void HECmd_Destroy(scr_entref_t hud_elem_num)
@@ -3294,30 +3339,17 @@ void GScr_ToUpper()
 	Scr_AddString( buffer );
 }
 
-extern "C"
+
+void GScr_NewClientHudElem()
 {
-    void CCDECL GScr_NewHudElem()
-    {
-        game_hudelem_t* element = HudElem_Alloc(1023, 0);
-        if (element)
-        {
-            Scr_AddHudElem(element);
-            return;
-        }
-        Scr_Error("GScr_NewHudElem: Exceeded limit of Hudelems");
-    }
+    gentity_t* ent = Scr_GetEntity(0);
 
+    if (!ent || !ent->client)
+        return Scr_ParamError(0, "GScr_NewClientHudElem: Entity is not a client");
 
-    void CCDECL GScr_NewClientHudElem()
-    {
-        gentity_t* ent = Scr_GetEntity(0);
-        if (ent->client == NULL)
-            Scr_ParamError(0, "GScr_NewClientHudElem: Entity is not a client");
-        
-        game_hudelem_t* element = HudElem_Alloc(ent->s.number, 0);
-        if (element)
-            return Scr_AddHudElem(element);
-        
-        Scr_Error("GScr_NewClientHudElem: Exceeded limit of Hudelems");
-    }
+    game_hudelem_t* element = HudElem_Alloc(ent->s.number, 0);
+    if (!element)
+        return Scr_Error("GScr_NewClientHudElem: Exceeded limit of Hudelems");
+
+    Scr_AddHudElem(element);
 }

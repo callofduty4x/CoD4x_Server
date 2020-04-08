@@ -31,9 +31,10 @@ struct game_hudelem_field_t
 
 
 
-extern qboolean g_isLocStringPrecached[];
+extern bool g_isLocStringPrecached[MAX_LOCALIZEDSTRINGS];
 
-qboolean Scr_CanFreeLocalizedConfigString(unsigned int index);
+void HudElem_SetLocalizedString(game_hudelem_t* HudElem, int Offset_);
+void HECmd_SetText(scr_entref_t entref);
 
 extern "C"
 {
@@ -41,7 +42,7 @@ extern "C"
     extern BuiltinMethodDef g_he_methods[22];
     extern const int g_he_methodsCount;
 
-    void CCDECL HECmd_SetText(scr_entref_t entref);
+
     void CCDECL HECmd_ClearAllTextAfterHudElem(scr_entref_t entref);
     void CCDECL HECmd_SetMaterial(scr_entref_t entref);
     void CCDECL HECmd_SetTimer(scr_entref_t entref);
@@ -71,7 +72,6 @@ extern "C"
     void CCDECL HudElem_SetVertAlign(game_hudelem_t* HudElem, int Offset_);
     void CCDECL HudElem_SetColor(game_hudelem_t* HudElem, int Offset_);
     void CCDECL HudElem_SetAlpha(game_hudelem_t* HudElem, int Offset_);
-    void CCDECL HudElem_SetLocalizedString(game_hudelem_t* HudElem, int Offset_);
     void CCDECL HudElem_SetFlagForeground(game_hudelem_t* HudElem, int Offset_);
     void CCDECL HudElem_SetFlagHideWhenDead(game_hudelem_t* HudElem, int Offset_);
     void CCDECL HudElem_SetFlagHideWhenInMenu(game_hudelem_t* HudElem, int Offset_);

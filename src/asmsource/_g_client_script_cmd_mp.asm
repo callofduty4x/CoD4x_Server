@@ -101,8 +101,6 @@
 	extern Scr_MakeArray
 	extern Scr_AddArray
 	extern G_SetEquippedOffHand
-	extern PlayerCmd_spawn
-	extern PlayerCmd_GetGuid
 
 ;Exports of g_client_script_cmd_mp:
 	global PlayerCmd_setOrigin

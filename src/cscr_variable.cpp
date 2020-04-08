@@ -153,7 +153,7 @@ double Scr_GetEntryUsage(VariableValueInternal *entryValue)
 extern "C"
 {
     scrVarPub_t gScrVarPub;
-    const char* var_typename[] =
+    const char* var_typename[23] =
     {
         "undefined",
         "object",
