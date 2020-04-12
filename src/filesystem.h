@@ -209,7 +209,7 @@ void __cdecl FS_ShutdownIwdPureCheckReferences(void);
 void __cdecl FS_ShutdownServerIwdNames(void);
 void __cdecl FS_ShutdownServerReferencedIwds(void);
 void __cdecl FS_ShutdownServerReferencedFFs(void);
-const char* __cdecl FS_LoadedIwdPureChecksums(void);
+const char* __cdecl FS_LoadedIwdPureChecksums(char* wbuf, int len);
 void FS_LoadedPaks(char* outsums, char* outnames, int maxlen);
 char* __cdecl FS_GetMapBaseName( const char* mapname );
 qboolean FS_CreatePath (char *OSPath);

@@ -2362,7 +2362,7 @@ void GScr_GetCvar()
                 ptr_names++;
                 ptr_sums++;
 
-                if (!Q_stricmpn(ptr_names, "xbase_", 6))
+                if (!Q_stricmpn(ptr_names, "xbase_", 6) || !Q_stricmpn(ptr_names, "jcod4x_", 7))
                 {
                     len = Q_strichr(ptr_names, ' ');
                     if (len == -1)

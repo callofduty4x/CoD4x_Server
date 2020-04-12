@@ -1978,76 +1978,119 @@ This routine would be a bit simpler with a goto but i abstained
 
 =================
 */
-static void SV_VerifyPaks_f( client_t *cl ) {
-/*	int nChkSum1, nClientPaks, nServerPaks, i, j, nCurArg;
-	int nClientChkSum[1024];
-	int nServerChkSum[1024];
-*/
-	// if we are pure, we "expect" the client to load certain things from
-	// certain pk3 files, namely we want the client to have loaded the
-	// ui and cgame that we think should be loaded based on the pure setting
-	if ( sv_pure->boolean != 0 ) {
 
-/*		nCurArg = 0;
-		nClientPaks = SV_Cmd_Argc() - 3;
 
-		if(nClientPaks < 0 || nClientPaks > 1024 || *SV_Cmd_Argv( 1 ) != '@')
-		{
-			cl->pureAuthentic = 2;
-			return;
-		}
+void __cdecl SV_VerifyPaks_f(client_t *cl)
+{
+  char *pArg;
+  char *pPaks;
+  int j;
+  int k;
+  int nClientPaks;
+  signed int bGood;
+  int nChkSum1;
+  int nClientChkSum[1024];
+  int nServerPaks;
+  int i;
+  int nServerChkSum[1025];
+  int nCurArg;
+  char chkbuf[0x4000];
 
-		if(nClientPaks != 0)
-		{
-			for(i = 0; i <= nClientPaks; i++)
-			{
-				nClientChkSum[i] = atoi(SV_Cmd_Argv( i+2 ));
-			}
-			//Find duplicates
-			for(i = 0; i < nClientPaks; i++)
-			{
-			    for(j = i+1; j < nClientPaks; j++)
-			    {
-				if(nClientChkSum[i] == nClientChkSum[j])
-				{
-					cl->pureAuthentic = 2;
-					return;
-				}
-			    }
-			}
-		}else{
-			cl->pureAuthentic = 0;
-			return;
-		}
+  bGood = 1;
+  nClientPaks = SV_Cmd_Argc();
+  nCurArg = 1;
+  if ( nClientPaks >= 2 )
+  {
+    pArg = SV_Cmd_Argv(nCurArg++);
+#ifdef BLACKOPS
+    if ( *pArg == '#' )
+#else
+    if ( *pArg == '@' )
+#endif
+    {
+      i = 0;
+      while ( nCurArg < nClientPaks )
+      {
+        nClientChkSum[i] = atoi(SV_Cmd_Argv(nCurArg));
+        ++nCurArg;
+        ++i;
+      }
+      nClientPaks = i - 1;
+      for ( i = 0; i < nClientPaks; ++i )
+      {
+        for ( j = 0; j < nClientPaks; ++j )
+        {
+          if ( i != j && nClientChkSum[i] == nClientChkSum[j] )
+          {
+            bGood = 0;
+            break;
+          }
+        }
+        if ( !bGood )
+        {
+          break;
+        }
+      }
+      if ( bGood )
+      {
+        pPaks = (char *)FS_LoadedIwdPureChecksums(chkbuf, sizeof(chkbuf));
 
-		Cmd_TokenizeString(FS_LoadedIwdPureChecksums());
-
-		nServerPaks = Cmd_Argc();
-		nCurArg = -1;
-
-		if(nServerPaks > 1024)
-			nServerPaks = 1024;
-
-		for(i = 0; i < nServerPaks; i++)
-		{
-			nServerChkSum[i] = atoi(Cmd_Argv( i ));
-		}
-
-		Cmd_EndTokenizedString();
-
-		// check if the number of checksums was correct
-		nChkSum1 = sv.checksumFeed;
-		for ( i = 0; i < nClientPaks; i++ ) {
-			nChkSum1 ^= nClientChkSum[i];
-		}
-		nChkSum1 ^= nClientPaks;
-		if ( nChkSum1 == nClientChkSum[nClientPaks] ) {*/
-			cl->pureAuthentic = 1;
-/*		}else{
-			cl->pureAuthentic = 2;
-		}*/
-	}
+        SV_Cmd_TokenizeString(pPaks);
+        nServerPaks = SV_Cmd_Argc();
+        if ( nServerPaks > 1024 )
+        {
+          nServerPaks = 1024;
+        }
+        for ( i = 0; i < nServerPaks; ++i )
+        {
+          nServerChkSum[i] = atoi(SV_Cmd_Argv(i));
+        }
+        SV_Cmd_EndTokenizedString();
+        for ( i = 0; i < nClientPaks; ++i )
+        {
+          for ( k = 0; k < nServerPaks && nClientChkSum[i] != nServerChkSum[k]; ++k )
+          {
+            ;
+          }
+          if ( k >= nServerPaks )
+          {
+            bGood = 0;
+            break;
+          }
+        }
+        if ( bGood )
+        {
+          nChkSum1 = sv.checksumFeed;
+          for ( i = 0; i < nClientPaks; ++i )
+          {
+            nChkSum1 ^= nClientChkSum[i];
+          }
+          if ( (nClientPaks ^ nChkSum1) != nClientChkSum[nClientPaks] )
+          {
+            bGood = 0;
+          }
+        }
+      }
+    }
+    else
+    {
+      bGood = 0;
+    }
+  }
+  else
+  {
+    bGood = 0;
+  }
+  if ( bGood )
+  {
+    cl->pureAuthentic = 1;
+  }
+  else
+  {
+    cl->pureAuthentic = 2;
+  }
 }
+
 
 /*
 =================
