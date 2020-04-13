@@ -1984,6 +1984,11 @@ void __cdecl DB_ShutdownXAssets()
 {
   int i, zh;
 
+  if(db_xassetdebug == NULL) //Got never initialized
+  {
+    return;
+  }
+
   DB_SyncXAssets();
   DB_SyncExternalAssets();
   Sys_EnterCriticalSection(CRITSECT_DBHASH);

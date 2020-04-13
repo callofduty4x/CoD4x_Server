@@ -1,11 +1,13 @@
 ############################################
 # A test makefile for incremental building.#
 ############################################
-####################################################
-# By default, building OFFICIAL, non-DEBUG version.#
-# If you want to get a debug version, use          #
-# `make DEBUG=true`                                #
-####################################################
+############################################################################
+# By default, building non-OFFICIAL, non-DEBUG version.                    #
+# If you want to get a debug version, use                                  #
+# `make DEBUG=true`                                                        #
+# If you want to get a official version, which does always autoupdate, use #
+# `make OFFICIAL=true`                                                     #
+############################################################################
 
 ##############################
 # A name of server executable.
@@ -34,10 +36,10 @@ endif
 
 ############################################
 # Configure type of build.
-ifeq ($(DEBUG), true)
-BUILD_TYPE=
-else
+ifeq ($(OFFICIAL), true)
 BUILD_TYPE=OFFICIAL
+else
+BUILD_TYPE=
 endif
 
 ###################
