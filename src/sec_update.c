@@ -625,7 +625,7 @@ FILE* Sec_AutoaupdateLock()
 }
 
 
-void Sec_AutoaupdateUnlock(FILE* h)
+void Sec_AutoupdateUnlock(FILE* h)
 {
 
 	if(h != NULL)
@@ -737,7 +737,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt data from update server. Update aborted.\n");
 		FileDownloadFreeRequest(filetransferobj);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 	Q_strncpyz(version, ptr +9, sizeof(version));
@@ -749,7 +749,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt version strings. Update aborted.\n");
 		FileDownloadFreeRequest(filetransferobj);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 
@@ -761,7 +761,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Sec_Update: Corrupt data from update server. Update aborted.\n");
 		FileDownloadFreeRequest(filetransferobj);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 	Q_strncpyz(baseurl, ptr +9, sizeof(baseurl));
@@ -776,7 +776,7 @@ void Sec_Update( qboolean getbasefiles ){
 		{
 			Sec_FreeFileStruct(files.next);
 			FileDownloadFreeRequest(filetransferobj);
-			Sec_AutoaupdateUnlock(lockfile);
+			Sec_AutoupdateUnlock(lockfile);
 			Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed with: Parser error\n");
 			return;
 		}
@@ -789,7 +789,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_Printf(CON_CHANNEL_SYSTEM,"Update rejected because it is not required.\n");
 		Sec_FreeFileStruct(files.next);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 #endif
@@ -799,7 +799,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_Printf(CON_CHANNEL_SYSTEM,"Update rejected because updateserver reports older version.\n");
 		Sec_FreeFileStruct(files.next);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 
@@ -807,7 +807,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 		Sec_FreeFileStruct(files.next);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 
@@ -815,7 +815,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_Printf(CON_CHANNEL_SYSTEM,"Update not needed. All files are equal.\n");
 		Sec_FreeFileStruct(files.next);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 
@@ -838,7 +838,7 @@ void Sec_Update( qboolean getbasefiles ){
 			default:
 				FileDownloadFreeRequest(filetransferobj);
 				Sec_FreeFileStruct(files.next);
-				Sec_AutoaupdateUnlock(lockfile);
+				Sec_AutoupdateUnlock(lockfile);
 				Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 				return;
 		}
@@ -847,7 +847,7 @@ void Sec_Update( qboolean getbasefiles ){
 			if(Sec_MakeExecutable(f) == qfalse)
 			{
 				Sec_FreeFileStruct(files.next);
-				Sec_AutoaupdateUnlock(lockfile);
+				Sec_AutoupdateUnlock(lockfile);
 				Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 				return;
 			}
@@ -863,7 +863,7 @@ void Sec_Update( qboolean getbasefiles ){
 	{
 		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed\n");
 		Sec_FreeFileStruct(files.next);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 	if(Sec_Backupfiles(files.next) == qfalse)
@@ -871,7 +871,7 @@ void Sec_Update( qboolean getbasefiles ){
 		Com_PrintError(CON_CHANNEL_SYSTEM,"Update has failed. Trying to recover...\n");
 		Sec_UndoBackup(files.next);
 		Sec_FreeFileStruct(files.next);
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		return;
 	}
 	if(Sec_InstallNewFiles(files.next) == qfalse)
@@ -881,7 +881,7 @@ void Sec_Update( qboolean getbasefiles ){
 
 //		MessageBoxA(NULL, "Couldn't install update", "Couldn't install update", MB_OK);
 		
-		Sec_AutoaupdateUnlock(lockfile);
+		Sec_AutoupdateUnlock(lockfile);
 		Com_Quit_f();
 		return;
 	}
@@ -890,10 +890,11 @@ void Sec_Update( qboolean getbasefiles ){
     FS_SetPermissionsExec(Sys_ExeFile());
 
     Sec_FreeFileStruct(files.next);
-	Sec_AutoaupdateUnlock(lockfile);
+	Sec_AutoupdateUnlock(lockfile);
 	
     Com_Printf(CON_CHANNEL_SYSTEM,"Finalizing update...\n");
 
     Sys_Restart("System has been updated and will restart now.");
 
 }
+
