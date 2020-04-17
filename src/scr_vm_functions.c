@@ -3516,6 +3516,7 @@ void GScr_StrReplace()
         }
         assemblybuf[assemblypos] = mainstring[srcpos];
         srcpos++;
+        assemblypos++;
     }
     assemblybuf[assemblypos] = 0;
     Scr_AddString(assemblybuf);
