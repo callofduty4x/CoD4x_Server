@@ -1602,6 +1602,7 @@ typedef struct
 dbghitcounter_t hitcounter[64]; //ALL Clients
 
 #endif
+
 /*
 ================
 SV_SendClientGameState

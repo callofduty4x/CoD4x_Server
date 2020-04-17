@@ -297,6 +297,8 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("pow", GScr_Pow, 0);
 	Scr_AddFunction("strctrlstrip", GScr_StrCtrlStrip, 0 );
 	Scr_AddFunction("toupper", GScr_ToUpper, 0 );
+	Scr_AddFunction("strreplace", GScr_StrReplace, 0 );
+	
 }
 
 void Scr_AddStockMethods()
