@@ -1,6 +1,6 @@
 CC=gcc
 CPP=g++
-TARGET_NAME=sourecbansplugin
+TARGET_NAME=sourcebansplugin
 
 ifeq ($(OS),Windows_NT)
 EXT=dll

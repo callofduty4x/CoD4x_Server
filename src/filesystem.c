@@ -2796,8 +2796,6 @@ void FS_ShutdownSearchpath(searchpath_t *clear)
 	}
 }
 
-
-
 void FS_DisplayPath( void ) {
 	searchpath_t    *s;
 	int i;
