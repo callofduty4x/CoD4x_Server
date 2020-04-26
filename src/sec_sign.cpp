@@ -1,4 +1,4 @@
-﻿#include "qcommon.hpp"
+#include "qcommon.hpp"
 #include "sec_sign.hpp"
 #include "sec_crypto.hpp"
 #include "tomcrypt.h"
@@ -110,7 +110,7 @@ qboolean Sec_ReadCertificateFromFile(sec_certificate_t *cert, char *filename){
 
 int Sec_Pem2Der(char* pemcert, int pemlen, unsigned char* dercert, unsigned int *derlen){
 	char* pos;
-	unsigned char assemblybuf[32768];
+	char assemblybuf[32768];
 	int i;
 
 	pos = strstr(pemcert, "--\n");
@@ -160,7 +160,7 @@ qboolean Sec_VerifyMemory(const char* expectedb64hash, void* memory, int lenmem)
 	ciphertextlen = sizeof(ciphertext);
 
 
-	if(base64_decode((byte*)expectedb64hash, strlen((char*)expectedb64hash), ciphertext, (long unsigned int*)&ciphertextlen) != CRYPT_OK)
+	if(base64_decode(expectedb64hash, strlen(expectedb64hash), ciphertext, (long unsigned int*)&ciphertextlen) != CRYPT_OK)
 	{
 		Com_DPrintf(CON_CHANNEL_SYSTEM,"Not a valid base64 text\n");
 		return qfalse;

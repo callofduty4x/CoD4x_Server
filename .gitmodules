@@ -1,0 +1,3 @@
+[submodule "public_sdk"]
+	path = public_sdk
+	url = git@github.com:callofduty4x/public_sdk.git

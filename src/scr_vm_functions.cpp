@@ -3006,6 +3006,7 @@ void CCDECL PlayerCmd_GetXuid(scr_entref_t arg)
         Scr_AddString("0");
     }
 }
+
 void GScr_Base64Encode()
 {
     char encoded[1024] = {'\0'};
@@ -3017,7 +3018,7 @@ void GScr_Base64Encode()
 
     char* toEncode = Scr_GetString(0);
     unsigned long encodedLen = sizeof(encoded);
-    base64_encode((byte*)toEncode, strlen(toEncode), (byte*)encoded, &encodedLen);
+    base64_encode((byte*)toEncode, strlen(toEncode), (char*)encoded, &encodedLen);
     encoded[sizeof(encoded) - 1] = '\0';
     Scr_AddString(encoded);
 }
@@ -3033,7 +3034,7 @@ void GScr_Base64Decode()
 
     char* toDecode = Scr_GetString(0);
     unsigned long decodedLen = sizeof(decoded);
-    base64_decode((byte*)toDecode, strlen(toDecode), (byte*)decoded, &decodedLen);
+    base64_decode((char*)toDecode, strlen(toDecode), (byte*)decoded, &decodedLen);
     decoded[sizeof(decoded) - 1] = '\0';
     Scr_AddString(decoded);
 }

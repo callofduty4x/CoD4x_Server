@@ -10,7 +10,7 @@ endif()
 
 add_executable(${PROJECT_NAME} ${EXECUTABLE_FLAG} ${ASM_SRC} ${CPP_INC} ${CPP_SRC})
 target_link_libraries(${PROJECT_NAME} mbedtls mbedcrypto mbedx509 tomcrypt asmsource version xassets
-    zlibstatic zlib_minizip
+    zlibstatic minizip
 )
 
 if(MSVC)

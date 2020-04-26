@@ -32,19 +32,7 @@ if(UNIX)
 endif()
 
 # Adding dependencies...
-# ... mbedtls
-option(INSTALL_MBEDTLS_HEADERS OFF)
-option(ENABLE_TESTING OFF)
-option(ENABLE_PROGRAMS OFF)
-add_subdirectory(deps/mbedtls)
-set(mbedtls_SOURCE_DIR ${CMAKE_SOURCE_DIR}/deps/mbedtls CACHE PATH "Path to a root of mbedtls dependency")
-
-# ... libtomcrypt
-add_subdirectory(deps/tomcrypt)
-
-# .. zlib
-add_subdirectory(deps/zlib)
-
+add_subdirectory(public_sdk)
 # Adding sources...
 add_subdirectory(src)
 add_subdirectory(src/asmsource)
