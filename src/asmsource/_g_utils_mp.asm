@@ -2474,11 +2474,11 @@ G_FindConfigstringIndex_140:
 	jnz G_FindConfigstringIndex_140
 	jmp G_FindConfigstringIndex_150
 G_FindConfigstringIndex_100:
-	mov eax, [ebp+0x8]
-	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_warning_abandoni
-	mov dword [esp], 0xe
-	call Com_PrintWarning
+;	mov eax, [ebp+0x8]
+;	mov [esp+0x8], eax
+;	mov dword [esp+0x4], _cstring_warning_abandoni
+;	mov dword [esp], 0xe
+;	call Com_PrintWarning
 	cmp edi, 0x1
 	jg G_FindConfigstringIndex_160
 	mov ebx, 0x1

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -863,9 +863,9 @@ int CCDECL SV_DObjExists(gentity_t *ent);
 }
 
 bool SV_Frame(unsigned int usec);
-__optimize3 void SV_GetChallenge(netadr_t* from);
-__optimize3 void SV_DirectConnect(netadr_t* from);
-__optimize3 void SV_ReceiveStats(netadr_t* from, msg_t* msg);
+void SV_GetChallenge(netadr_t* from);
+void SV_DirectConnect(netadr_t* from);
+void SV_ReceiveStats(netadr_t* from, msg_t* msg);
 __optimize3 void SV_PacketEvent(netadr_t* from, msg_t* msg);
 __optimize3 void SV_ExecuteClientMessage(client_t* cl, msg_t* msg);
 

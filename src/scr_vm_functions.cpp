@@ -2237,7 +2237,7 @@ void GScr_GetCvar()
                 ptr_names++;
                 ptr_sums++;
 
-                if (!Q_stricmpn(ptr_names, "xbase_", 6))
+                if (!Q_stricmpn(ptr_names, "xbase_", 6) || !Q_stricmpn(ptr_names, "jcod4x_", 7))
                 {
                     len = Q_strichr(ptr_names, ' ');
                     if (len == -1)
@@ -3354,3 +3354,63 @@ void GScr_NewClientHudElem()
 
     Scr_AddHudElem(element);
 }
+
+int GScr_FetchAndReplaceInternal(const char* argnum, char* output, int maxoutlen)
+{
+    if(!isInteger(argnum, 1))
+    {
+        Scr_ParamError(0, "strreplace expects an integer after && or expects escaping by useing \\& instead.");
+    }
+    int arg = atoi(argnum);
+    if(arg == 0)
+    {
+        Scr_ParamError(0, "strreplace expects an integer after && which is in range between 1 and 9.");
+    }
+    if( Scr_GetNumParam() < arg +1 )
+	{
+        Scr_ParamError(0, "strreplace expects as many additional arguments as your integer after && says so.");
+    }
+    const char* s = Scr_GetString(arg);
+    Q_strncpyz(output, s, maxoutlen);
+    return strlen(s);
+}
+
+void GScr_StrReplace()
+{
+    char assemblybuf[1024];
+    int assemblypos = 0;
+    int srcpos = 0;
+    char argnum[2] = { 0 };
+
+	if( Scr_GetNumParam() < 1 )
+	{
+		Scr_Error( "Usage: string =  strreplace( <string>, <string>,...)" );
+	}
+
+    char *mainstring = Scr_GetString( 0 );
+    while(mainstring[srcpos] != 0)
+    {
+        if(mainstring[srcpos] == '&' && mainstring[srcpos+1] == '&' && mainstring[srcpos+2] != 0)
+        {
+            argnum[0] = mainstring[srcpos+2];
+            assemblypos += GScr_FetchAndReplaceInternal(argnum, assemblybuf + assemblypos, sizeof(assemblybuf) - (assemblypos +1));
+            srcpos += 3;
+            continue;
+        }
+        //Escaping
+        if(mainstring[srcpos] == '\\' && mainstring[srcpos+1] == '&')
+        {
+            srcpos++;
+        }
+        if(sizeof(assemblybuf) <= assemblypos +1)
+        {
+            break;
+        }
+        assemblybuf[assemblypos] = mainstring[srcpos];
+        srcpos++;
+        assemblypos++;
+    }
+    assemblybuf[assemblypos] = 0;
+    Scr_AddString(assemblybuf);
+}
+

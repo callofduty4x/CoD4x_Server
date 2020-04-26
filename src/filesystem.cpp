@@ -2494,6 +2494,20 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename )
     return pack;
 }
 
+const char *__cdecl FS_LoadedIwdPureChecksums(char* info4, int len)
+{
+  struct searchpath_s *search;
+
+  info4[0] = 0;
+  for ( search = fs_searchpaths; search; search = search->next )
+  {
+    if ( search->pack && !search->localized)
+    {
+        Q_strncat(info4, len, va("%i ", search->pack->pure_checksum));
+    }
+  }
+  return info4;
+}
 
 void SEH_InitLanguage()
 {
@@ -2664,8 +2678,6 @@ void FS_ShutdownSearchpath(searchpath_t *clear)
         back = &p->next;
     }
 }
-
-
 
 void FS_DisplayPath( void ) {
     searchpath_t    *s;
@@ -3059,7 +3071,7 @@ void FS_AddIwdFilesForGameDirectory(const char *path, const char *dir)
             }
             islocalized = qtrue;
         }else{
-            if ( !Q_stricmp(dir, BASEGAME) && !Q_stricmp(path, fs_basepath->string) && Q_stricmpn(sorted[i], "iw_", 3) && Q_stricmpn(sorted[i], "xbase_", 6))
+            if ( !Q_stricmp(dir, BASEGAME) && !Q_stricmp(path, fs_basepath->string) && Q_stricmpn(sorted[i], "iw_", 3) && Q_stricmpn(sorted[i], "jcod4x_", 7) && Q_stricmpn(sorted[i], "xbase_", 6))
             {
                 Com_PrintWarning(CON_CHANNEL_FILES,"WARNING: Invalid IWD %s in \\main.\n", sorted[i]);
                 continue;

@@ -388,7 +388,7 @@ extern "C"
         g_maxDroppedWeapons = Cvar_RegisterInt("g_maxDroppedWeapons", 16, 2, 32, 0, "Maximum number of dropped weapons");
         g_inactivity = Cvar_RegisterInt("g_inactivity", 0, 0, 2147483647, 0, "Time delay before player is kicked for inactivity");
         g_debugDamage = Cvar_RegisterBool("g_debugDamage", qfalse, 0x80u, "Show debug information for damage");
-        g_debugBullets = Cvar_RegisterInt("g_debugBullets", 0, -3, 6, 0x80u, "Show debug information for bullets");
+        g_debugBullets = Cvar_RegisterInt("g_debugBullets", 0, -3, 6, 0, "Show debug information for bullets");
         bullet_penetrationEnabled = Cvar_RegisterBool("bullet_penetrationEnabled", qtrue, 0x80u, "Enable/Disable bullet penetration.");
         g_entinfo = Cvar_RegisterEnum("g_entinfo", g_entinfoNames, 0, 0x80u, "Display entity information");
         g_motd = Cvar_RegisterString("g_motd", "", 0, "The message of the day");

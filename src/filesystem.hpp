@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
     Copyright (C) 1999-2005 Id Software, Inc.
@@ -211,7 +211,7 @@ void CCDECL FS_ShutdownIwdPureCheckReferences(void);
 void CCDECL FS_ShutdownServerIwdNames(void);
 void CCDECL FS_ShutdownServerReferencedIwds(void);
 void CCDECL FS_ShutdownServerReferencedFFs(void);
-const char* CCDECL FS_LoadedIwdPureChecksums(void);
+const char* CCDECL FS_LoadedIwdPureChecksums(char* wbuf, int len);
 void FS_LoadedPaks(char* outsums, char* outnames, int maxlen);
 char* CCDECL FS_GetMapBaseName( const char* mapname );
 qboolean FS_CreatePath (char *OSPath);

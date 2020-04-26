@@ -1840,6 +1840,8 @@ Hunk_ShutdownDebugMemory:
 	push ebx
 	sub esp, 0x10
 	mov esi, [g_debugUser]
+	test esi, esi
+	jz Hunk_ShutdownDebugMemory_Exit
 	mov eax, [esi+0x4]
 	test eax, eax
 	jnz Hunk_ShutdownDebugMemory_10
@@ -1860,6 +1862,7 @@ Hunk_ShutdownDebugMemory_20:
 	mov [esp], esi
 	call _VirtualFree
 	mov dword [g_debugUser], 0x0
+Hunk_ShutdownDebugMemory_Exit:
 	add esp, 0x10
 	pop ebx
 	pop esi

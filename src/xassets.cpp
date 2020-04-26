@@ -79,6 +79,11 @@ void R_Init(){
             XZoneInfoStack[i].allocFlags = 16;
             XZoneInfoStack[i].freeFlags = 0;
             ++i;
+        } else {
+            XZoneInfoStack[i].name = "cod4x_patch";
+            XZoneInfoStack[i].allocFlags = 16;
+            XZoneInfoStack[i].freeFlags = 0;
+            ++i;
         }
         DB_LoadXAssets(&XZoneInfoStack[0], i, 0);
 		

@@ -280,8 +280,8 @@ void SV_TryLoadXAC()
 	hmodule = Sys_LoadLibrary("xac_server" DLL_EXT);
 	if(hmodule == NULL)
 	{
-		Sys_LoadLibraryError(errormsg, sizeof(errormsg));
-		XACHLP_PrintError("xac_server" DLL_EXT " not found or it was not possible to load. Error is: %s.\n", errormsg);
+//		Sys_LoadLibraryError(errormsg, sizeof(errormsg));
+//		XACHLP_PrintError("xac_server" DLL_EXT " not found or it was not possible to load. Error is: %s.\n", errormsg);
 		return;
 	}
 	Init = reinterpret_cast<int(*)(imports_t*, exports_t*)>(Sys_GetProcedure("XAC_Main"));

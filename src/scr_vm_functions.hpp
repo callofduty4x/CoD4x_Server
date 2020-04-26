@@ -140,6 +140,7 @@ void GScr_StrCtrlStrip();
 void GScr_ToUpper();
 void GScr_NewHudElem();
 void GScr_NewClientHudElem();
+void GScr_StrReplace();
 
 void GScr_CloneBrushModelToScriptModel(scr_entref_t brushModelEnt);
 void PlayerCmd_SetStance(scr_entref_t playerEntNum);

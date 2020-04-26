@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -309,6 +309,8 @@ void Scr_AddStockFunctions()
     Scr_AddFunction("pow", GScr_Pow, qfalse);
     Scr_AddFunction("strctrlstrip", GScr_StrCtrlStrip, qfalse);
     Scr_AddFunction("toupper", GScr_ToUpper, qfalse);
+    Scr_AddFunction("strreplace", GScr_StrReplace, qfalse);
+    
 }
 
 void Scr_AddStockMethods()

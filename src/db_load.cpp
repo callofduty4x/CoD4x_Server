@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
     Copyright (C) 2010-2013  Ninja and TheKelm
 
@@ -4279,6 +4279,9 @@ void DB_ReleaseXAssets()
 
 void DB_ShutdownXAssets()
 {
+    if (db_xassetdebug == NULL) //Got never initialized
+        return;
+
     DB_SyncXAssets();
     DB_SyncExternalAssets();
     Sys_EnterCriticalSection(CRITSECT_DBHASH);
