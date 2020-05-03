@@ -872,10 +872,20 @@ void SendServerChat(int client, const char* message)
 
     class StringWriter* sw = CreateJSONObject(outputbuffer, sizeof(outputbuffer));
 
+    client_t* cl = Plugin_GetClientForClientNum(client);
+
     sw->Printf("\t\"command\":\"userchat\",\n");
     sw->Printf("\t\"client\":\"%d\",\n", client);
     sw->Printf("\t\"message\":\"%s\",\n", JSONEscape(message, tmp, sizeof(tmp)));
     sw->Printf("\t\"time\":\"%d\",\n", aclock);
+    
+    #ifdef _WIN32
+    sw->Printf("\t\"pid\":\"%I64u\",\n", cl->playerid );
+    sw->Printf("\t\"sid\":\"%I64u\"\n", cl->steamid );
+    #else
+    sw->Printf("\t\"pid\":\"%llu\",\n", cl->playerid );
+    sw->Printf("\t\"sid\":\"%llu\"\n", cl->steamid );
+    #endif
 
     FinishJSONObject(sw);
 
@@ -886,6 +896,8 @@ void SendServerChat(int client, const char* message)
     {
         return;
     }
+
+    //Plugin_Printf("Post=%s\n", jsonstring);
 
     if(Plugin_CreateNewThread(SendServerdataThread, NULL, (void*)jsonstring) == qfalse)
     {
@@ -898,8 +910,8 @@ void SendServerChat(int client, const char* message)
 //query: guid;
 static void* SendServerdataThread(void* q)
 {
-  char querystring[4096];
-  char outdata[4096];
+  char querystring[8192];
+  char outdata[8192];
   int attempts;
   int code;
   int len = sizeof(outdata);
