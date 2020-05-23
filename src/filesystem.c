@@ -937,10 +937,32 @@ void FS_SV_HomeRename( const char *from, const char *to ) {
 	}
 }
 
+qboolean __cdecl FS_FilesAreLoadedGlobally(const char *filename)
+{
+  const char *extensions[10];
+  int filenameLen;
+  int extensionNum;
 
-
-
-
+  extensions[0] = ".hlsl";
+  extensions[1] = ".txt";
+  extensions[2] = ".cfg";
+  extensions[3] = ".levelshots";
+  extensions[4] = ".menu";
+  extensions[5] = ".arena";
+  extensions[6] = ".str";
+  extensions[7] = ".so";
+  extensions[8] = ".dll";
+  extensions[9] = "";
+  filenameLen = strlen(filename);
+  for ( extensionNum = 0; *extensions[extensionNum]; ++extensionNum )
+  {
+    if ( !Q_stricmp(&filename[filenameLen - strlen(extensions[extensionNum])], extensions[extensionNum]) )
+    {
+      return qtrue;
+    }
+  }
+  return qfalse;
+}
 
 /*
 ===========
@@ -1292,21 +1314,10 @@ long FS_FOpenFileReadDir(const char *filename, searchpath_t *search, fileHandle_
 					// from every pk3 file..
 					len = strlen(filename);
 
-
-					if (!(pak->referenced & FS_GENERAL_REF))
+					if (!(pak->referenced & FS_GENERAL_REF) && !FS_FilesAreLoadedGlobally(filename))
 					{
-						for(testExt = noReferenceExts; *testExt; ++testExt)
-						{
-							if(FS_IsExt(filename, *testExt, len))
-							{
-								break;
-							}
-						}
-						if(*testExt == NULL)
-						{
 							pak->referenced |= FS_GENERAL_REF;
 							FS_AddIwdPureCheckReference(search);
-						}
 					}
 
 					if(uniqueFILE)
@@ -2559,7 +2570,7 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename ) {
 
 	pack->handle = uf;
 	pack->numfiles = gi.number_entry;
-	pack->unk1 = 0;
+	pack->hasOpenFile = 0;
 	unzGoToFirstFile( uf );
 
 	for ( i = 0; i < gi.number_entry; i++ )

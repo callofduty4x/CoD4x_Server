@@ -72,7 +72,7 @@ typedef struct {	//Verified
 	unzFile			handle;						// handle to zip file +0x300
 	int			checksum;					// regular checksum
 	int			pure_checksum;				// checksum for pure
-	int			unk1;
+	int			hasOpenFile;
 	int			numfiles;					// number of files in pk3
 	int			referenced;					// referenced file flags
 	int			hashSize;					// hash table size (power of 2)		+0x318

@@ -1801,6 +1801,7 @@ void SV_SendClientGameState( client_t *client ) {
 
 	// write the checksum feed
 	MSG_WriteLong( &msg, sv.checksumFeed );
+	MSG_WriteLong( &msg, 0);
 
 	// NERVE - SMF - debug info
 	Com_DPrintf(CON_CHANNEL_SERVER, "Sending %i bytes in gamestate to client: %i\n", msg.cursize, client - svs.clients );
@@ -1998,6 +1999,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   char chkbuf[0x4000];
 
   bGood = 1;
+#ifdef 0
   nClientPaks = SV_Cmd_Argc();
   nCurArg = 1;
   if ( nClientPaks >= 2 )
@@ -2082,6 +2084,8 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   {
     bGood = 0;
   }
+
+#endif //later
   if ( bGood )
   {
     cl->pureAuthentic = 1;
