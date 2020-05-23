@@ -1999,7 +1999,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   char chkbuf[0x4000];
 
   bGood = 1;
-#ifdef 0
+#if 0
   nClientPaks = SV_Cmd_Argc();
   nCurArg = 1;
   if ( nClientPaks >= 2 )
