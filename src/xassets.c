@@ -83,7 +83,7 @@ void R_Init(){
             XZoneInfoStack[i].freeFlags = 0;
             ++i;
         } else {
-            XZoneInfoStack[i].name = "cod4x_patch";
+            XZoneInfoStack[i].name = "cod4x_patchv2";
             XZoneInfoStack[i].allocFlags = 16;
             XZoneInfoStack[i].freeFlags = 0;
             ++i;
