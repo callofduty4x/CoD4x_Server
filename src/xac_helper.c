@@ -56,7 +56,7 @@ void QDECL XACHLP_PrintWarning( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	memcpy(msg,"^3Warning: ", sizeof(msg) -12);
+	memcpy(msg,"^3Warning: ", 12);
 
 	va_start (argptr,fmt);
 	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
@@ -80,7 +80,7 @@ void QDECL XACHLP_PrintError( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	memcpy(msg,"^1Error: ", sizeof(msg) -10);
+	memcpy(msg,"^1Error: ", 10);
 
 	va_start (argptr,fmt);
 	Q_vsnprintf (&msg[9], (sizeof(msg)-10), fmt, argptr);
@@ -245,7 +245,7 @@ void SV_GetSS_f();
 
 void SV_TryLoadXAC()
 {
-	char errormsg[1024];
+//	char errormsg[1024];
 	void* hmodule;
 	static imports_t exports;
 	

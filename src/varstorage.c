@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#if 0
+
 typedef enum
 {
     VSVAR_BAD,
@@ -1133,3 +1135,4 @@ const char* HStorage_GetLastError(varStorage_t* obj)
 {
     return HStorage_GetLastErrorInternal( obj->memObj );
 }
+#endif

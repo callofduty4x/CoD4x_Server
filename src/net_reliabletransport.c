@@ -375,7 +375,7 @@ void ReliableMessagesAdjustWindowOnAck(netreliablemsg_t *chan, int oldack)
                 chan->txwindow.windowsize = newws;
                 chan->nextwindowsizeadjustmenttime = chan->time + 200;
             }
-            Com_Printf(CON_CHANNEL_NETWORK, "Rate adjustment low - Windowsize: %d\n", chan->txwindow.windowsize);
+//            Com_Printf(CON_CHANNEL_NETWORK, "Rate adjustment low - Windowsize: %d\n", chan->txwindow.windowsize);
         }else{
             if(chan->txwindow.windowsize < 400 && chan->txwindow.windowsize < chan->txwindow.bufferlen / 2)
             {
@@ -863,8 +863,6 @@ void ReliableMessageGetTestData(netreliablemsg_t *chan)
 
 void ReliableMessagesAdjustWindow(netreliablemsg_t *chan)
 {
-        int newws;
-
         if(chan->txwindow.windowsize > chan->txwindow.bufferlen /2)
         {
             chan->txwindow.windowsize = chan->txwindow.bufferlen /2;
@@ -876,7 +874,7 @@ void ReliableMessagesAdjustWindow(netreliablemsg_t *chan)
 
         if(chan->txwindow.lastacktime + 1000 < chan->time && chan->highestoutseq > chan->txwindow.acknowledge)
         {
-            Com_Printf(CON_CHANNEL_NETWORK, "Rate adjustment clamp down - Windowsize: %d\n", chan->txwindow.windowsize);
+//            Com_Printf(CON_CHANNEL_NETWORK, "Rate adjustment clamp down - Windowsize: %d\n", chan->txwindow.windowsize);
 
             chan->txwindow.windowsize = 16;
         }

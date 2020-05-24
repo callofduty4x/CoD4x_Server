@@ -928,23 +928,23 @@ void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath )
 			{
 				if( Scr_IsSyscallDefined( arg ) )
 				{
-					strncpy( p, "//#", 3 );
+					memcpy( p, "//#", 3 );
 					result = qtrue;
 				}
 				else
 				{
-					strncpy( p, "/*#", 3 );
+					memcpy( p, "/*#", 3 );
 				}
 			}
 			else
 			{
 				if( Scr_IsSyscallDefined( arg ) )
 				{
-					strncpy( p, "/*#", 3 );
+					memcpy( p, "/*#", 3 );
 				}
 				else
 				{
-					strncpy( p, "//#", 3 );
+					memcpy( p, "//#", 3 );
 					result = qtrue;
 				}
 			}
@@ -977,11 +977,11 @@ void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath )
 			{
 				if( result )
 				{
-					strncpy( el, "/*#el", 5 );
+					memcpy( el, "/*#el", 5 );
 				}
 				else
 				{
-					strncpy( el, "#el*/", 5 );
+					memcpy( el, "#el*/", 5 );
 				}
 			}
 		}
@@ -990,22 +990,22 @@ void Scr_ScriptPreCompile( void *scr_buffer_handle, char *filepath )
 		{
 			if( result )
 			{
-				strncpy( p, "//#eif", 6 );
+				memcpy( p, "//#eif", 6 );
 			}
 			else
 			{
-				strncpy( p, "#eif*/", 6 );
+				memcpy( p, "#eif*/", 6 );
 			}
 		}
 		else
 		{
 			if( result )
 			{
-				strncpy( p, "#eif*/", 6 );
+				memcpy( p, "#eif*/", 6 );
 			}
 			else
 			{
-				strncpy( p, "//#eif", 6 );
+				memcpy( p, "//#eif", 6 );
 			}
 		}
 

@@ -1183,9 +1183,6 @@ long FS_FOpenFileReadDir(const char *filename, searchpath_t *search, fileHandle_
 	int		err;
 	unz_file_info	file_info;
 	mvabuf;
-	char *noReferenceExts[] = { "cod4_lnxded-bin", ".so", ".dll", ".hlsl", ".txt", ".cfg", ".levelshots", ".menu", ".arena", ".str", NULL };
-	char **testExt;
-
 
 	if(filename == NULL)
 		Com_Error(ERR_FATAL, "FS_FOpenFileRead: NULL 'filename' parameter passed");

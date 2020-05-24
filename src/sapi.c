@@ -533,7 +533,7 @@ void QDECL SApi_PrintWarning( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	memcpy(msg,"^3Warning: ", sizeof(msg));
+	memcpy(msg,"^3Warning: ", 12);
 
 	va_start (argptr,fmt);
 	Q_vsnprintf (&msg[11], (sizeof(msg)-12), fmt, argptr);
@@ -557,7 +557,7 @@ void QDECL SApi_PrintError( const char *fmt, ... ) {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	memcpy(msg,"^1Error: ", sizeof(msg));
+	memcpy(msg,"^1Error: ", 10);
 
 	va_start (argptr,fmt);
 	Q_vsnprintf (&msg[9], (sizeof(msg)-10), fmt, argptr);

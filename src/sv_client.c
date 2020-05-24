@@ -1984,12 +1984,14 @@ This routine would be a bit simpler with a goto but i abstained
 
 void __cdecl SV_VerifyPaks_f(client_t *cl)
 {
+  signed int bGood = 1;
+#if 0
   char *pArg;
   char *pPaks;
   int j;
   int k;
   int nClientPaks;
-  signed int bGood;
+
   int nChkSum1;
   int nClientChkSum[1024];
   int nServerPaks;
@@ -1998,8 +2000,8 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   int nCurArg;
   char chkbuf[0x4000];
 
-  bGood = 1;
-#if 0
+
+
   nClientPaks = SV_Cmd_Argc();
   nCurArg = 1;
   if ( nClientPaks >= 2 )
