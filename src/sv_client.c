@@ -1577,7 +1577,7 @@ __cdecl void SV_WriteDownloadToClient( client_t *cl ) {
 
 	int buffersize = 2*rate / sv_fps->integer;
 
-	Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : Max blockrate \"%d\" Buffersize: %d\n", cl - svs.clients, maxblockrate, buffersize);
+//	Com_Printf(CON_CHANNEL_SERVER, "clientDownload: %d : Max blockrate \"%d\" Buffersize: %d\n", cl - svs.clients, maxblockrate, buffersize);
 
 	if(buffersize > maxblockrate)
 	{
