@@ -61,6 +61,7 @@ sourceRcon_t sourceRcon;
 void HL2Rcon_SourceRconStreaming_enable( int type, uint64_t steamid ){
 
 	rconUser_t* user;
+	int power;
 	char* c;
 	char* cg;
 	char* ch;
@@ -73,7 +74,15 @@ void HL2Rcon_SourceRconStreaming_enable( int type, uint64_t steamid ){
 
 	user = &sourceRcon.activeRconUsers[sourceRcon.redirectUser -1];
 
-	if(Auth_GetClPowerBySteamID(steamid) > 98 || !(type & 1))
+
+	if(steamid != 0)
+	{
+		power = Auth_GetClPowerBySteamID(steamid);
+	}else{
+		power = 100;
+	}
+	
+	if(power > 98 || !(type & 1))
 	{
 		user->streamlog = type & 1;
 

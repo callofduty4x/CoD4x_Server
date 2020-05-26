@@ -2407,6 +2407,7 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, masterserver_t*
 	{
 		Com_Printf(CON_CHANNEL_SERVER, "Can not register server on the masterserver. Server needs to provide a valid token in cvar sv_authtoken.\n");
 		opts->locked = qfalse;
+		masrv->needticket = qfalse; //Try again next time without ticket in case this was only temporarily
 		masrv->threadlock = qfalse;
 		return;
 	}

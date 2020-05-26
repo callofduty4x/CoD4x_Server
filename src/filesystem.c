@@ -747,6 +747,23 @@ qboolean FS_SV_FileExists( const char *file )
 	return qfalse;
 }
 
+/*
+===========
+FS_FileExistsOSPath
+
+===========
+*/
+qboolean FS_FileExistsOSPath( const char *ospath ) {
+
+	FILE* f;
+
+	f = fopen( ospath, "rb" );
+	if (f) {
+		fclose( f );
+		return qtrue;
+	}
+	return qfalse;
+}
 
 
 char* FS_SV_GetFilepath( const char *file, char* testpath, int lenpath )
@@ -759,18 +776,16 @@ char* FS_SV_GetFilepath( const char *file, char* testpath, int lenpath )
 	FS_BuildOSPathForThread(fs_homepath->string, file, "", testpath, 0 );
 	FS_StripTrailingSeperator( testpath );
 
-	f = fopen( testpath, "rb" );
-	if (f) {
-		fclose( f );
+	if(FS_FileExistsOSPath(testpath))
+	{
 		return testpath;
 	}
 
 	FS_BuildOSPathForThread( fs_basepath->string, file, "", testpath, 0 );
 	FS_StripTrailingSeperator( testpath );
 
-	f = fopen( testpath, "rb" );
-	if (f) {
-		fclose( f );
+	if(FS_FileExistsOSPath(testpath))
+	{
 		return testpath;
 	}
 
@@ -828,23 +843,6 @@ void FS_RenameOSPath( const char *from_ospath, const char *to_ospath ) {
 	}
 }
 
-/*
-===========
-FS_FileExistsOSPath
-
-===========
-*/
-qboolean FS_FileExistsOSPath( const char *ospath ) {
-
-	FILE* f;
-
-	f = fopen( ospath, "rb" );
-	if (f) {
-		fclose( f );
-		return qtrue;
-	}
-	return qfalse;
-}
 
 
 
@@ -2436,6 +2434,27 @@ qboolean FS_VerifyPak( const char *pak ) {
 	if ( !Q_stricmp( teststring, pak ) ){
 		return qtrue;
 	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/common_mp.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/localized_common_mp.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/code_post_gfx_mp.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
+	Com_sprintf(teststring, sizeof( teststring ), "%s/localized_code_post_gfx_mp.ff", fs_gameDirVar->string);
+	if ( !Q_stricmp( teststring, pak ) ){
+		return qtrue;
+	}
+
 
 	if ( !Q_stricmpn( "usermaps/", pak, 9) ){
 

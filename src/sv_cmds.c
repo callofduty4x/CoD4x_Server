@@ -2339,7 +2339,7 @@ void SV_AddOperatorCommands()
 	Cmd_AddPCommand ("gametype", SV_ChangeGametype_f, 80);
 
 
-	Cmd_AddCommand ("loadmap", SV_LoadMapFromBsp);
+//	Cmd_AddCommand ("loadmap", SV_LoadMapFromBsp);
 
 
 	//Other commands
