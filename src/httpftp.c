@@ -1126,9 +1126,9 @@ static int HTTPS_SetupCAs()
     if( ret > 0 )
     {
         Com_Printf(CON_CHANNEL_FILEDL, "HTTPSRequest failed: mbedtls_x509_crt_parse failed to parse %d certificates\n", ret);
-        FS_FreeFile(ca_cert);
-        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
-        return 0;
+//        FS_FreeFile(ca_cert);
+//        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
+//        return 0;
     }
     FS_FreeFile(ca_cert);
   }
