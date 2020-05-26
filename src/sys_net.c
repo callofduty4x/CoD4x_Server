@@ -54,6 +54,8 @@
 #include <ctype.h>
 #include <stddef.h>		/* for offsetof*/
 
+#define MAX_SOCKETLIMIT 1024
+
 #ifdef _WIN32
 
 	typedef int socklen_t;
