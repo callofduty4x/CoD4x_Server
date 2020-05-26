@@ -27,22 +27,18 @@
 
 #if defined(MBEDTLS_SSL_TICKET_C)
 
-#include "mbedtls/ssl_ticket.h"
-
 #if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
 #else
 #include <stdlib.h>
 #define mbedtls_calloc    calloc
-#define mbedtls_free       free
+#define mbedtls_free      free
 #endif
 
-#include <string.h>
+#include "mbedtls/ssl_ticket.h"
+#include "mbedtls/platform_util.h"
 
-/* Implementation that should never be optimized out by the compiler */
-static void mbedtls_zeroize( void *v, size_t n ) {
-    volatile unsigned char *p = v; while( n-- ) *p++ = 0;
-}
+#include <string.h>
 
 /*
  * Initialze context
@@ -69,7 +65,7 @@ static int ssl_ticket_gen_key( mbedtls_ssl_ticket_context *ctx,
     mbedtls_ssl_ticket_key *key = ctx->keys + index;
 
 #if defined(MBEDTLS_HAVE_TIME)
-    key->generation_time = (uint32_t) time( NULL );
+    key->generation_time = (uint32_t) mbedtls_time( NULL );
 #endif
 
     if( ( ret = ctx->f_rng( ctx->p_rng, key->name, sizeof( key->name ) ) ) != 0 )
@@ -83,7 +79,7 @@ static int ssl_ticket_gen_key( mbedtls_ssl_ticket_context *ctx,
                                  mbedtls_cipher_get_key_bitlen( &key->ctx ),
                                  MBEDTLS_ENCRYPT );
 
-    mbedtls_zeroize( buf, sizeof( buf ) );
+    mbedtls_platform_zeroize( buf, sizeof( buf ) );
 
     return( ret );
 }
@@ -98,10 +94,10 @@ static int ssl_ticket_update_keys( mbedtls_ssl_ticket_context *ctx )
 #else
     if( ctx->ticket_lifetime != 0 )
     {
-        uint32_t current_time = (uint32_t) time( NULL );
+        uint32_t current_time = (uint32_t) mbedtls_time( NULL );
         uint32_t key_time = ctx->keys[ctx->active].generation_time;
 
-        if( current_time > key_time &&
+        if( current_time >= key_time &&
             current_time - key_time < ctx->ticket_lifetime )
         {
             return( 0 );
@@ -192,9 +188,9 @@ static int ssl_save_session( const mbedtls_ssl_session *session,
     if( left < 3 + cert_len )
         return( MBEDTLS_ERR_SSL_BUFFER_TOO_SMALL );
 
-    *p++ = (unsigned char)( cert_len >> 16 & 0xFF );
-    *p++ = (unsigned char)( cert_len >>  8 & 0xFF );
-    *p++ = (unsigned char)( cert_len       & 0xFF );
+    *p++ = (unsigned char)( ( cert_len >> 16 ) & 0xFF );
+    *p++ = (unsigned char)( ( cert_len >>  8 ) & 0xFF );
+    *p++ = (unsigned char)( ( cert_len       ) & 0xFF );
 
     if( session->peer_cert != NULL )
         memcpy( p, session->peer_cert->raw.p, cert_len );
@@ -219,14 +215,14 @@ static int ssl_load_session( mbedtls_ssl_session *session,
     size_t cert_len;
 #endif /* MBEDTLS_X509_CRT_PARSE_C */
 
-    if( p + sizeof( mbedtls_ssl_session ) > end )
+    if( sizeof( mbedtls_ssl_session ) > (size_t)( end - p ) )
         return( MBEDTLS_ERR_SSL_BAD_INPUT_DATA );
 
     memcpy( session, p, sizeof( mbedtls_ssl_session ) );
     p += sizeof( mbedtls_ssl_session );
 
 #if defined(MBEDTLS_X509_CRT_PARSE_C)
-    if( p + 3 > end )
+    if( 3 > (size_t)( end - p ) )
         return( MBEDTLS_ERR_SSL_BAD_INPUT_DATA );
 
     cert_len = ( p[0] << 16 ) | ( p[1] << 8 ) | p[2];
@@ -240,7 +236,7 @@ static int ssl_load_session( mbedtls_ssl_session *session,
     {
         int ret;
 
-        if( p + cert_len > end )
+        if( cert_len > (size_t)( end - p ) )
             return( MBEDTLS_ERR_SSL_BAD_INPUT_DATA );
 
         session->peer_cert = mbedtls_calloc( 1, sizeof( mbedtls_x509_crt ) );
@@ -251,7 +247,7 @@ static int ssl_load_session( mbedtls_ssl_session *session,
         mbedtls_x509_crt_init( session->peer_cert );
 
         if( ( ret = mbedtls_x509_crt_parse_der( session->peer_cert,
-                                        p, cert_len ) ) != 0 )
+                                                p, cert_len ) ) != 0 )
         {
             mbedtls_x509_crt_free( session->peer_cert );
             mbedtls_free( session->peer_cert );
@@ -451,7 +447,7 @@ int mbedtls_ssl_ticket_parse( void *p_ticket,
 #if defined(MBEDTLS_HAVE_TIME)
     {
         /* Check for expiration */
-        time_t current_time = time( NULL );
+        mbedtls_time_t current_time = mbedtls_time( NULL );
 
         if( current_time < session->start ||
             (uint32_t)( current_time - session->start ) > ctx->ticket_lifetime )
@@ -483,7 +479,7 @@ void mbedtls_ssl_ticket_free( mbedtls_ssl_ticket_context *ctx )
     mbedtls_mutex_free( &ctx->mutex );
 #endif
 
-    mbedtls_zeroize( ctx, sizeof( mbedtls_ssl_ticket_context ) );
+    mbedtls_platform_zeroize( ctx, sizeof( mbedtls_ssl_ticket_context ) );
 }
 
 #endif /* MBEDTLS_SSL_TICKET_C */

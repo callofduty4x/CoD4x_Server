@@ -61,14 +61,16 @@ OBJS_CRYPTO=	aes.o		aesni.o		arc4.o		\
 		pkparse.o	pkwrite.o	platform.o	\
 		ripemd160.o	rsa.o		sha1.o		\
 		sha256.o	sha512.o	threading.o	\
-		timing.o	version.o			\
-		version_features.o		xtea.o
+		timing.o	version.o	platform_util.o	\
+		version_features.o		xtea.o		\
+		chacha20.o	chachapoly.o	poly1305.o	\
+		rsa_internal.o	
 
 OBJS_X509=	certs.o		pkcs11.o	x509.o		\
 		x509_create.o	x509_crl.o	x509_crt.o	\
 		x509_csr.o	x509write_crt.o	x509write_csr.o pkparse.o pkcs5.o pk.o pkcs12.o
 
-OBJS_TLS=	debug.o		net.o		ssl_cache.o	\
+OBJS_TLS=	debug.o				ssl_cache.o	\
 		ssl_ciphersuites.o		ssl_cli.o	\
 		ssl_cookie.o	ssl_srv.o	ssl_ticket.o	\
 		ssl_tls.o pkparse.o pkcs5.o
