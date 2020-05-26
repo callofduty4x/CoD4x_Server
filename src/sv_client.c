@@ -121,7 +121,7 @@ __optimize3 __regparm1 void SV_GetChallenge(netadr_t *from)
 	}
 	challenge = NET_CookieHash(from);
 	clientChallenge = atoi(SV_Cmd_Argv(1));
-	NET_OutOfBandPrint(NS_SERVER, from, "challengeResponse %d %d 0 xproto", challenge, clientChallenge);
+	NET_OutOfBandPrint(NS_SERVER, from, "challengeResponse %d %d 0 xproto 18", challenge, clientChallenge);
 
 }
 

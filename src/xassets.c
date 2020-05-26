@@ -76,9 +76,15 @@ void R_Init(){
         ++i;
 #endif
 
+
         if(DB_ModFileExists()){
 
             XZoneInfoStack[i].name = "mod";
+            XZoneInfoStack[i].allocFlags = 16;
+            XZoneInfoStack[i].freeFlags = 0;
+            ++i;
+        } else {
+            XZoneInfoStack[i].name = "cod4x_patchv2";
             XZoneInfoStack[i].allocFlags = 16;
             XZoneInfoStack[i].freeFlags = 0;
             ++i;

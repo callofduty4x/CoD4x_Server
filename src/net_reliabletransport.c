@@ -229,6 +229,9 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 			MSG_WriteShort(&buf, chan->qport);
 			MSG_WriteLong(&buf, -1);
 			MSG_WriteLong(&buf, chan->rxwindow.sequence);
+
+			MSG_WriteByte(&buf, 0); //flags
+
 			ReliableMessageWriteSelectiveAcklist(&chan->rxwindow, &buf);
 			MSG_WriteShort(&buf, chan->txwindow.windowsize);
 			MSG_WriteShort(&buf, 0);
@@ -273,6 +276,9 @@ void ReliableMessagesTransmitNextFragment(netreliablemsg_t *chan)
 			MSG_WriteShort(&buf, chan->qport);
 			MSG_WriteLong(&buf, sequence);
 			MSG_WriteLong(&buf, chan->rxwindow.sequence); //Acknowledge for the other end
+
+			MSG_WriteByte(&buf, 0); //flags
+
 			ReliableMessageWriteSelectiveAcklist(&chan->rxwindow, &buf);
 			MSG_WriteShort(&buf, chan->txwindow.windowsize);
 			MSG_WriteShort(&buf, chan->txwindow.fragments[sequence % chan->txwindow.bufferlen].len); //Fragment size
@@ -332,6 +338,8 @@ void ReliableMessagesReceiveNextFragment(netreliablemsg_t *chan, msg_t* buf)
 	
 	sequence = MSG_ReadLong(buf);
 	acknowledge = MSG_ReadLong(buf);
+
+	MSG_ReadByte(buf); //flags is ignored for now
 
 	chan->rxwindow.packets++;
 	chan->rxwindow.rateInfo.bytesTotal += buf->cursize; //Track the rate

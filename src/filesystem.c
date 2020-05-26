@@ -3157,7 +3157,7 @@ void FS_AddIwdFilesForGameDirectory(const char *path, const char *dir)
 			}
 			islocalized = qtrue;
 		}else{
-		    if ( !Q_stricmp(dir, BASEGAME) && !Q_stricmp(path, fs_basepath->string) && Q_stricmpn(sorted[i], "iw_", 3) && Q_stricmpn(sorted[i], "xbase_", 6))
+		    if ( !Q_stricmp(dir, BASEGAME) && !Q_stricmp(path, fs_basepath->string) && Q_stricmpn(sorted[i], "iw_", 3) && Q_stricmpn(sorted[i], "xbase_", 6) && Q_stricmpn(sorted[i], "jcod4x_", 7))
 			{
 				Com_PrintWarning(CON_CHANNEL_FILES,"WARNING: Invalid IWD %s in \\main.\n", sorted[i]);
 				continue;
@@ -3612,9 +3612,13 @@ __regparm3 void DB_BuildOSPath(const char *filename, int ffdir, int len, char *b
             {
                 languagestr = "english";
             }
-
-            Com_sprintf(ospath, sizeof(ospath), "zone/%s/%s.ff", languagestr, filename);
-            FS_SV_GetFilepath( ospath, buff, len );
+            //Shitty workaround due to updatesystem
+            Com_sprintf(ospath, sizeof(ospath), "zone/%s.ff", filename);
+            if(FS_SV_GetFilepath( ospath, buff, len ) == NULL)
+            {
+                Com_sprintf(ospath, sizeof(ospath), "zone/%s/%s.ff", languagestr, filename);
+                FS_SV_GetFilepath( ospath, buff, len );
+            }
             return;
 
         case 1:
@@ -3643,6 +3647,8 @@ void DB_BuildQPath(const char *filename, int ffdir, int len, char *buff)
     const char *languagestr;
     char *mapstrend;
     char mapname[MAX_QPATH];
+    char tmppath[MAX_OSPATH];
+    char tmppath2[MAX_OSPATH];
 
     switch(ffdir)
     {
@@ -3653,7 +3659,13 @@ void DB_BuildQPath(const char *filename, int ffdir, int len, char *buff)
                 languagestr = "english";
             }
 
-            Com_sprintf(buff, len, "zone/%s/%s.ff", languagestr, filename);
+            Com_sprintf(tmppath, sizeof(tmppath), "zone/%s.ff", filename);
+            if(FS_SV_GetFilepath( tmppath, tmppath2, sizeof(tmppath) ) == NULL)
+            {
+                Com_sprintf(buff, len, "zone/%s/%s.ff", languagestr, filename);
+            }else{
+                Com_sprintf(buff, len, "zone/%s.ff", filename);
+            }
             return;
 
         case 1:
