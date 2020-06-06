@@ -1,5 +1,3 @@
-#ifndef __G_FIELDS_H__
-#define __G_FIELDS_H__
 enum fieldtype_t
 {
   F_INT = 0x0,
@@ -14,14 +12,7 @@ enum fieldtype_t
   F_MODEL = 0x9,
 };
 
-#ifdef __cplusplus
-
-extern "C" {
-#endif
-    void __cdecl Scr_SetGenericField( void*, enum fieldtype_t, int );
-    void __cdecl Scr_GetGenericField(const void*, enum fieldtype_t, int );
-#ifdef __cplusplus
+extern "C"{
+void __cdecl Scr_SetGenericField( void*, enum fieldtype_t, int );
+void __cdecl Scr_GetGenericField(const void*, enum fieldtype_t, int );
 };
-#endif
-
-#endif

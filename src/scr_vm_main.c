@@ -421,13 +421,14 @@ void Scr_AddStockMethods()
 	Scr_AddMethod("scaleovertime", HECmd_ScaleOverTime, 0 );
 	Scr_AddMethod("moveovertime", HECmd_MoveOverTime, 0 );
 	Scr_AddMethod("reset", HECmd_Reset, 0 );
-	Scr_AddMethod("destroy", HECmd_Destroy, 0 );
+//	Scr_AddMethod("destroy", HECmd_Destroy, 0 );
 	Scr_AddMethod("setpulsefx", HECmd_SetPulseFX, 0 );
 	Scr_AddMethod("setplayernamestring", HECmd_SetPlayerNameString, 0 );
 	Scr_AddMethod("setmapnamestring", HECmd_SetMapNameString, 0 );
 	Scr_AddMethod("setgametypestring", HECmd_SetGameTypeString, 0 );
 	Scr_AddMethod("cleartargetent", HECmd_ClearTargetEnt, 0);
 	Scr_AddMethod("settargetent", HECmd_SetTargetEnt, 0 );
+    Scr_AddMethod("destroy", Scr_Destroy_f, 0);
 
 
     //Scr Cmd Functions
