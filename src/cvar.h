@@ -234,7 +234,9 @@ cvar_t* __regparm1 Cvar_FindMalleableVar(const char* name);
 void Cvar_Init(void);
 */
 
+
 //defines Cvarflags
+#define CVAR_TEMP		0
 #define	CVAR_ARCHIVE		1	// set to cause it to be saved to vars.rc
 								// used for system variables, not for player
 								// specific configurations
@@ -250,7 +252,7 @@ void Cvar_Init(void);
 								// changed yet
 #define	CVAR_ROM		64	// display only, cannot be set by user at all
 #define CVAR_CHEAT		128	// can not be changed if cheats are disabled
-#define	CVAR_TEMP		256	// can be set even when cheats are disabled, but is not archived
+#define	CVAR_CONFIG		256	// setting this will create a configstring which sets the client cvar too
 #define CVAR_NORESTART		1024	// do not clear when a cvar_restart is issued
 #define	CVAR_USER_CREATED	16384	// created by a set command
 
