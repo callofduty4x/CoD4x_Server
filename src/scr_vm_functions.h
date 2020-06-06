@@ -150,7 +150,6 @@ void GScr_IsAlive();
 void GScr_GetDvar();
 void GScr_GetDvarInt();
 void GScr_GetDvarFloat();
-void GScr_SetDvar();
 void GScr_GetTime();
 void Scr_GetEntByNum();
 void Scr_GetWeaponModel();

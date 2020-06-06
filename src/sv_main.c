@@ -3306,8 +3306,6 @@ typedef struct{
     int unk2;
 }constConfigstring_t;
 
-#define constantConfigstrings (constConfigstring_t*)UNKGAMESTATESTR_ADDR
-#define UNKGAMESTATESTR_ADDR (0x826f260)
 /*
 ===============
 
@@ -3951,11 +3949,11 @@ void SV_SetConfigValueForKey(int start, int max, const char *key, const char *va
   signed int ccsi;
   int i;
 
-
-  if ( start < 821 )
+  if ( start < 821 ){
     v4 = SL_FindString(key);
-  else
+  }else{
     v4 = SL_FindLowercaseString(key);
+  }
   ccsi = CCS_GetConstConfigStringIndex(value);
 
   if ( ccsi < 0 )
