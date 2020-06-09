@@ -356,12 +356,14 @@ void __cdecl SV_AddServerCommand(client_t *client, int type, const char *cmd)
     if ( client->reliableSequence - client->reliableAcknowledge == (MAX_RELIABLE_COMMANDS + 1) )
     {
         Com_PrintNoRedirect(CON_CHANNEL_SERVER,"Client: %i lost reliable commands\n", client - svs.clients);
+#if 0
         Com_PrintNoRedirect(CON_CHANNEL_SERVER,"===== pending server commands =====\n");
         for ( j = client->reliableAcknowledge + 1; j <= client->reliableSequence; ++j )
     {
         Com_PrintNoRedirect(CON_CHANNEL_SERVER,"cmd %5d: %8d: %s\n", j, client->reliableCommands[j & (MAX_RELIABLE_COMMANDS - 1)].cmdTime, &client->reliableCommands[j & (MAX_RELIABLE_COMMANDS - 1)].command);
     }
     Com_PrintNoRedirect(CON_CHANNEL_SERVER,"cmd %5d: %8d: %s\n", j, svs.time, cmd);
+#endif
 
     NET_OutOfBandPrint( NS_SERVER, &client->netchan.remoteAddress, "disconnect" );
     SV_DelayDropClient(client, "EXE_SERVERCOMMANDOVERFLOW");
@@ -1915,7 +1917,7 @@ __optimize3 __regparm2 void SV_ConnectionlessPacket( netadr_t *from, msg_t *msg 
         char errbuf[256];
         Com_Printf(CON_CHANNEL_SERVER,"Error: %s\n", MSG_ReadString(msg, errbuf, sizeof(errbuf)));
     } else {
-        Com_Printf(CON_CHANNEL_SERVER,"bad connectionless packet from %s\n", NET_AdrToString (from));
+        Com_DPrintf(CON_CHANNEL_SERVER,"bad connectionless packet from %s\n", NET_AdrToString (from));
     }
     SV_Cmd_EndTokenizedString();
     return;
@@ -5116,7 +5118,7 @@ void SV_VoicePacket(netadr_t *from, msg_t *msg)
 
 void __cdecl SV_FreeClientScriptId(client_t *cl)
 {
-  Com_Printf(CON_CHANNEL_SERVER, "SV_FreeClientScriptId: %d, %d -> 0\n", cl - svs.clients, cl->scriptId);
+  Com_DPrintf(CON_CHANNEL_SERVER, "SV_FreeClientScriptId: %d, %d -> 0\n", cl - svs.clients, cl->scriptId);
 
   assert(cl->scriptId);
 

@@ -287,9 +287,9 @@ HECmd_SetTargetEnt_30:
 	mov [ebx+0x10], edx
 	test byte [eax+0xf6], 0x10
 	jnz HECmd_SetTargetEnt_20
-	mov dword [esp+0x4], _cstring_settargetent_cal
-	mov dword [esp], 0xf
-	call Com_PrintWarning
+;	mov dword [esp+0x4], _cstring_settargetent_cal
+;	mov dword [esp], 0xf
+;	call Com_PrintWarning
 HECmd_SetTargetEnt_20:
 	add esp, 0x14
 	pop ebx
