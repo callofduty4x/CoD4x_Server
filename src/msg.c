@@ -546,6 +546,31 @@ int64_t MSG_GetInt64(msg_t *msg, int where)
   return c;
 }
 
+float MSG_GetFloat( msg_t *msg, int where )
+{
+	if( where + sizeof(float) <= msg->cursize )
+	{
+		return *(float*)&msg->data[where];
+	}
+
+	assert(msg->splitData);
+
+	if(where >= msg->cursize)
+	{
+		return *(float*)&msg->splitData[where - msg->cursize];
+	}
+
+	int32_t c;
+	int i;
+
+	for(i = 0; i < 4; ++i)
+	{
+		((byte*)&c)[i] = MSG_GetByte(msg, where +i);
+	}
+	
+	return *(float*)&c;
+}
+
 
 int MSG_ReadByte( msg_t *msg ) {
 	byte	c;
@@ -666,17 +691,17 @@ char *MSG_ReadStringLine( msg_t *msg, char* bigstring, int len ) {
 }
 
 float MSG_ReadFloat( msg_t *msg ) {
+
+	float	c;
 	
-	float	*c;
-	
-	if ( msg->readcount+sizeof(int32_t) > msg->cursize ) {
-		//msg->readcount += sizeof(int32_t); /* Hmm what a bad bug is this ? O_o*/
+	if ( msg->readcount+sizeof(float) > msg->cursize + msg->splitSize) {
+		msg->overflowed = 1;
 		return -1;
 	}	
-	c = (float*)&msg->data[msg->readcount];
+	c = MSG_GetFloat( msg, msg->readcount );
 	
 	msg->readcount += sizeof(float);
-	return *c;
+	return c;
 }
 
 void MSG_ReadData( msg_t *msg, void *data, int len ) {

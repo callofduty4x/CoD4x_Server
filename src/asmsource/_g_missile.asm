@@ -5107,9 +5107,9 @@ G_ExplodeMissile_290:
 	movsd [esp+0xc], xmm0
 	mov eax, [ecx+0x1ec]
 	mov [esp+0x8], eax
-	mov dword [esp+0x4], _cstring_sending_smoke_gr
-	mov dword [esp], 0xf
-	call Com_Printf
+;	mov dword [esp+0x4], _cstring_sending_smoke_gr
+;	mov dword [esp], 0xf
+;	call Com_Printf
 	jmp G_ExplodeMissile_190
 G_ExplodeMissile_20:
 	mov eax, [esi+0x13c]
