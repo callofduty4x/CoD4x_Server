@@ -2371,7 +2371,7 @@ void GScr_GetCvar()
                         Scr_AddString(stringval);
                         return;
                     }
-                    Q_bstrcpy(ptr_names, &ptr_names[len + 1]);
+                    Q_bstrcpy(ptr_names, &ptr_names[len + 0]);
 
                     len = Q_strichr(ptr_sums, ' ');
                     if (len == -1)
@@ -2379,7 +2379,7 @@ void GScr_GetCvar()
                         Scr_AddString(stringval);
                         return;
                     }
-                    Q_bstrcpy(ptr_sums, &ptr_sums[len + 1]);
+                    Q_bstrcpy(ptr_sums, &ptr_sums[len + 0]);
                 }
             }
             if (*ptr_names != ' ')
