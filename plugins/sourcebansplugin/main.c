@@ -1007,7 +1007,7 @@ PCL void OnFrame()
             while((token = strtok_rc(state, ";", &state)))
             {
               Plugin_AddCommandForClientToWhitelist(i, token);
-              Plugin_Printf("adding %s\n", token);
+              Plugin_DPrintf("adding %s\n", token);
             }
         }
     }

@@ -2646,7 +2646,7 @@ void SV_ExecuteReliableMessage(client_t* client)
 	msg_t* msg = &client->reliablemsg.recvbuffer;
 
 	command = MSG_ReadLong(msg);
-	Com_Printf(CON_CHANNEL_SERVER,"SV_ExecuteReliableMessage() cmd: %d\n", command);
+	Com_DPrintf(CON_CHANNEL_SERVER,"SV_ExecuteReliableMessage() cmd: %d\n", command);
 	switch(command)
 	{
 		case clc_steamcommands:
@@ -2730,7 +2730,7 @@ void SV_ReceiveReliableMessages(client_t* client)
 		    //Client got dropped in meantime
 		    return;
 		}
-		Com_Printf(CON_CHANNEL_SERVER,"^2Processed %d bytes for client %s\n", msg->cursize -4, client->name);
+		Com_DPrintf(CON_CHANNEL_SERVER,"^2Processed %d bytes for client %s\n", msg->cursize -4, client->name);
 		MSG_Clear(msg);
 	}
 
@@ -2881,7 +2881,7 @@ void __cdecl SV_FreeClientScriptPers()
     {
       SV_FreeClientScriptId(cl);
       cl->scriptId = Scr_AllocArray( );
-      Com_Printf(CON_CHANNEL_SERVER, "SV_FreeClientScriptPers: %d, 0 -> %d\n", cl - svs.clients, cl->scriptId);
+      Com_DPrintf(CON_CHANNEL_SERVER, "SV_FreeClientScriptPers: %d, 0 -> %d\n", cl - svs.clients, cl->scriptId);
     }
   }
 }
