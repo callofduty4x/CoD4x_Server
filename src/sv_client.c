@@ -2013,6 +2013,9 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     if ( *pArg == '@' )
 #endif
     {
+		pArg = SV_Cmd_Argv(nCurArg++);
+		pArg++; // Skip L
+		cl->localization = atoi( pArg );
       i = 0;
       while ( nCurArg < nClientPaks )
       {
@@ -2086,7 +2089,12 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   {
     bGood = 0;
   }
-
+ 
+#else
+	char *pArg;
+	pArg = SV_Cmd_Argv( 2 );
+	pArg++; // Skip L
+	cl->localization = atoi( pArg );
 #endif //later
   if ( bGood )
   {

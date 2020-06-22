@@ -257,6 +257,7 @@
     __cdecl void Plugin_Scr_AddArray( void );
     __cdecl void Plugin_Scr_MakeArray( void );
     __cdecl void Plugin_Scr_AddArrayKeys( int strIdx );
+    __cdecl void Plugin_Scr_AddArrayStringIndexed( int strIdx );
     __cdecl short Plugin_Scr_ExecEntThread( gentity_t* ent, int callbackHook, unsigned int numArgs);
     __cdecl short Plugin_Scr_ExecThread( int callbackHook, unsigned int numArgs);
     __cdecl void Plugin_Scr_FreeThread( short threadId);
