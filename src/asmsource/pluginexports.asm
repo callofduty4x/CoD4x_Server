@@ -148,6 +148,7 @@ pexport Scr_AddVector
 pexport Scr_AddArray
 pexport Scr_MakeArray
 pexport Scr_AddArrayKeys
+pexport Scr_AddArrayStringIndexed
 pexport Scr_ExecEntThread
 pexport Scr_ExecThread
 pexport Scr_FreeThread
