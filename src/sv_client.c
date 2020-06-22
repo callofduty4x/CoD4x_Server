@@ -2658,7 +2658,7 @@ void SV_ExecuteReliableMessage(client_t* client)
 		case clc_download:
 			SV_ExecuteDownloadCmd(client, msg);
 			break;
-		case 0x753:
+		case 0x866:
 			SV_SApiReadSS(client, msg);
 			break;
 		case 0x35448:
