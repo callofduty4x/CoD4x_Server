@@ -902,6 +902,10 @@ int __cdecl SV_DObjExists(gentity_t *ent);
 #endif
 
 
+#define CS_IWDHEADERS 4861 //temporarly until we collected all language file headers
+#define CS_IWDCHECKSUMHEADERS 4862 //same
+void SV_ParseIWDHeader(client_t* cl, msg_t* msg);
+
 #endif
 
 

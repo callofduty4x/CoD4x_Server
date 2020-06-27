@@ -255,7 +255,7 @@ static char lastValidGame[MAX_OSPATH];
 static int fs_numServerIwds;
 static int fs_serverIwds[1024];
 static char *fs_serverIwdNames[1024];
-
+static int fs_localizedPureChecksums[MAX_LOCALIZATIONS];
 
 /*
 ==============
@@ -2609,9 +2609,30 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename ) {
 	return pack;
 }
 
+
+void FS_InitLocalizedIwdPureChecksums()
+{
+    int i;
+    fs_localizedPureChecksums[0] = Com_BlockChecksumKey32( header_localized_english_iw00, sizeof(header_localized_english_iw00), LittleLong( fs_checksumFeed ) );
+    fs_localizedPureChecksums[1] = Com_BlockChecksumKey32( header_localized_french_iw00, sizeof(header_localized_french_iw00), LittleLong( fs_checksumFeed ) );
+    fs_localizedPureChecksums[2] = Com_BlockChecksumKey32( header_localized_german_iw00, sizeof(header_localized_german_iw00), LittleLong( fs_checksumFeed ) );
+    fs_localizedPureChecksums[3] = Com_BlockChecksumKey32( header_localized_italian_iw00, sizeof(header_localized_italian_iw00), LittleLong( fs_checksumFeed ) );
+    fs_localizedPureChecksums[4] = Com_BlockChecksumKey32( header_localized_spanish_iw00, sizeof(header_localized_spanish_iw00), LittleLong( fs_checksumFeed ) );
+    fs_localizedPureChecksums[5] = Com_BlockChecksumKey32( header_localized_polish_iw00, sizeof(header_localized_polish_iw00), LittleLong( fs_checksumFeed ) );
+    fs_localizedPureChecksums[6] = Com_BlockChecksumKey32( header_localized_russian_iw00, sizeof(header_localized_russian_iw00), LittleLong( fs_checksumFeed ) );
+
+    for( i = 0; i < MAX_LOCALIZATIONS; ++i )
+    {
+        fs_localizedPureChecksums[i] = LittleLong( fs_localizedPureChecksums[i] );
+    }
+
+}
+
+
 const char *__cdecl FS_LoadedIwdPureChecksums(char* info4, int len)
 {
   struct searchpath_s *search;
+  int i;
 
   info4[0] = 0;
   for ( search = fs_searchpaths; search; search = search->next )
@@ -2620,6 +2641,10 @@ const char *__cdecl FS_LoadedIwdPureChecksums(char* info4, int len)
     {
         Q_strncat(info4, len, va("%i ", search->pack->pure_checksum));
     }
+  }
+  for ( i = 0; i < MAX_LOCALIZATIONS; ++i )
+  {
+    Q_strncat(info4, len, va("%i ", fs_localizedPureChecksums[i]));
   }
   return info4;
 }
@@ -2892,7 +2917,7 @@ void FS_Startup(const char *gameName)
 
     fs_packFiles = 0;
 
-	FS_InitCvars();
+    FS_InitCvars();
 
     levelname = Cvar_FindVar("mapname");
 
@@ -2974,7 +2999,7 @@ void FS_Startup(const char *gameName)
         if (fs_homepath->string[0] && Q_stricmp(fs_homepath->string, fs_basepath->string))
             FS_AddGameDirectory(fs_homepath->string, fs_gameDirVar->string);
     }
-
+    FS_InitLocalizedIwdPureChecksums();
     /*  Com_ReadCDKey(); */
     Cmd_AddCommand("path", FS_Path_f);
     Cmd_AddCommand("which", FS_Which_f);
@@ -3411,7 +3436,7 @@ void FS_Restart( int checksumFeed ) {
 	FS_Shutdown( qfalse );
 
 	// set the checksum feed
-	fs_checksumFeed = checksumFeed;
+	fs_checksumFeed = 0;//checksumFeed;
 
 	// clear pak references
 	FS_ClearPakReferences( 0 );

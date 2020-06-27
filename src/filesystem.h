@@ -29,7 +29,7 @@
 #include "cvar.h"
 #include "zlib/unzip.h"
 /* #define fs_searchpaths (searchpath_t*)*((int*)(0x13f9da28)) */
-
+#define MAX_LOCALIZATIONS 14
 #define	DEMOGAME			"demota"
 
 // every time a new demo pk3 file is built, this checksum must be updated.
@@ -261,6 +261,13 @@ int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h );
 }
 #endif
 
+extern int header_localized_english_iw00[2895];
+extern int header_localized_french_iw00[2895];
+extern int header_localized_german_iw00[2895];
+extern int header_localized_italian_iw00[2895];
+extern int header_localized_spanish_iw00[2895];
+extern int header_localized_polish_iw00[2896];
+extern int header_localized_russian_iw00[2896];
 
 #endif
 

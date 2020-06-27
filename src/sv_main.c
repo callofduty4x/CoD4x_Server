@@ -3655,6 +3655,9 @@ void SV_LoadLevel(const char* levelname)
     SV_SpawnServer(mapname);
 
     SV_BuildXAssetCSString();
+    //Temporarily
+    SV_SetConfigstring(CS_IWDHEADERS, "localized_british_iw00 localized_russian_iw00 localized_polish_iw00 localized_korean_iw00 localized_taiwanese_iw00 localized_japanese_iw00 localized_chinese_iw00 localized_thai_iw00 localized_leet_iw00 localized_czech_iw00");
+    SV_SetConfigstring(CS_IWDCHECKSUMHEADERS, "");
 
     SV_CalculateChecksums();
     SV_PostLevelLoad();

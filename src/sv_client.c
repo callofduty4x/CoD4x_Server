@@ -1966,6 +1966,174 @@ static void SV_Disconnect_f( client_t *cl ) {
 }
 
 
+void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
+{
+	char pakName[1024];
+	char bigbuf[65536];
+	char filename[64];
+	unsigned long *dataptr;
+	
+	MSG_ReadString(msg, pakName, sizeof(pakName));
+
+	int datalen = MSG_ReadLong(msg);
+	if(datalen >= sizeof(bigbuf))
+	{
+		return;
+	}
+	MSG_ReadData(msg, bigbuf, datalen);
+	Com_Printf(CON_CHANNEL_SERVER, "Pak: %s Len: %d\n", pakName, datalen);
+
+	if(datalen % 4 != 0)
+	{
+		return;//junk
+	}
+	datalen /= 4;
+	unsigned int random;
+	Com_RandomBytes((unsigned char*)&random, sizeof(random));
+	Com_sprintf(filename, sizeof(filename), "headers/%s-%u.dat", pakName, random);
+	
+	fileHandle_t f = FS_SV_FOpenFileWrite(filename);
+	if(f < 1)
+	{
+		return;
+	}
+	dataptr = (unsigned long *)bigbuf;
+	
+
+	FS_Printf(f, "file: %s len %d id: %lld\n", pakName, datalen, cl->playerid);
+
+	int i;
+	for(i = 0; i < datalen; ++i)
+	{
+		FS_Printf(f, "%d, ", dataptr[i]);
+		if(i % 8 == 7)
+		{
+			FS_Printf(f, "\n");
+		}
+	}
+	FS_FCloseFile(f);
+}
+
+
+qboolean SV_VerifyFastFiles(client_t *cl)
+{
+	return qtrue;
+}
+
+bool SV_IsKnownIwdLocalization(int localization)
+{
+    if(localization < 5)
+    {
+        return true;
+    }
+    return false;
+}
+
+
+uint64_t knownClients[0x10000];
+
+qboolean SV_ClientChecksumAlreadyReferenced(client_t* cl)
+{
+    int i;
+    if(cl->playerid == 0)
+    {
+        return qtrue;
+    }
+    for(i = 0; i < 0x10000; ++i)
+    {
+        if(knownClients[i] == cl->playerid)
+        {
+            return qtrue;
+        }
+        if(knownClients[i] == 0)
+        {
+            knownClients[i] = cl->playerid;
+            return qfalse;
+        }
+
+    }
+    return qtrue;
+}
+
+
+struct checksumtracker_t
+{
+    int refcounter;
+    long checksum;
+};
+
+struct checksumtracker_t checksumcounts[16*128];
+
+void SV_AddChecksumRef(long checksum)
+{
+    int i;
+    for(i = 0; i < 16*128; ++i)
+    {
+        if(checksumcounts[i].checksum == checksum)
+        {
+            checksumcounts[i].refcounter++;
+            break;
+        }
+    }
+    if(i == 16*128)
+    {
+        for(i = 0; i < 16*128; ++i)
+        {
+            if(checksumcounts[i].checksum == 0)
+            {
+                checksumcounts[i].checksum = checksum;
+                checksumcounts[i].refcounter = 1;
+                break;
+            }
+        }
+    }
+}
+
+void SV_UpdateChecksumsToDisk(long *checksums)
+{
+    fileHandle_t f;
+    int i = 0;
+    char line[2048];
+    FS_SV_FOpenFileRead("checksums.dat", &f);
+    if(f < 1)
+    {
+        return;
+    }
+
+    int read;
+    while((read = FS_ReadLine(line, sizeof(line), f)) > 0 && i < 16*128)
+    {
+        Cmd_TokenizeString(line);
+        checksumcounts[i].checksum = atoi(Cmd_Argv(0));
+        checksumcounts[i].refcounter = atoi(Cmd_Argv(1));
+        Cmd_EndTokenizedString();
+        ++i;
+    }
+    FS_FCloseFile(f);
+
+
+    for(i = 0; checksums[i]; ++i)
+    {
+        SV_AddChecksumRef(checksums[i]);
+    }
+
+
+    i = 0;
+    f = FS_SV_FOpenFileWrite("checksums.dat");
+    if(f < 1)
+    {
+        return;
+    }
+    while(i < 16*128 && checksumcounts[i].checksum != 0)
+    {
+        FS_Printf(f, "%d %d\n", checksumcounts[i].checksum,checksumcounts[i].refcounter);
+        ++i;
+    }
+    FS_FCloseFile(f);
+
+}
+
+
 /*
 =================
 SV_VerifyPaks_f
@@ -1985,7 +2153,6 @@ This routine would be a bit simpler with a goto but i abstained
 void __cdecl SV_VerifyPaks_f(client_t *cl)
 {
   signed int bGood = 1;
-#if 0
   char *pArg;
   char *pPaks;
   int j;
@@ -1999,12 +2166,14 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   int nServerChkSum[1025];
   int nCurArg;
   char chkbuf[0x4000];
+  long unknownchecksums[32];
+  long unknowncnt = 0;
 
-
+  int bPrint = 0;
 
   nClientPaks = SV_Cmd_Argc();
   nCurArg = 1;
-  if ( nClientPaks >= 2 )
+  if ( nClientPaks >= 4 )
   {
     pArg = SV_Cmd_Argv(nCurArg++);
 #ifdef BLACKOPS
@@ -2013,16 +2182,19 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     if ( *pArg == '@' )
 #endif
     {
-		pArg = SV_Cmd_Argv(nCurArg++);
-		pArg++; // Skip L
-		cl->localization = atoi( pArg );
+      pArg = SV_Cmd_Argv(nCurArg++);
+      pArg++; // Skip L
+      cl->localization = atoi( pArg );
+
+      //Parsing the PAK checksums
       i = 0;
-      while ( nCurArg < nClientPaks )
+      while ( nCurArg < nClientPaks && SV_Cmd_Argv(nCurArg)[0] != '#')
       {
         nClientChkSum[i] = atoi(SV_Cmd_Argv(nCurArg));
         ++nCurArg;
         ++i;
       }
+      //Duplicated checksum test
       nClientPaks = i - 1;
       for ( i = 0; i < nClientPaks; ++i )
       {
@@ -2039,10 +2211,10 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           break;
         }
       }
+
       if ( bGood )
       {
         pPaks = (char *)FS_LoadedIwdPureChecksums(chkbuf, sizeof(chkbuf));
-
         SV_Cmd_TokenizeString(pPaks);
         nServerPaks = SV_Cmd_Argc();
         if ( nServerPaks > 1024 )
@@ -2062,8 +2234,19 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( k >= nServerPaks )
           {
-            bGood = 0;
-            break;
+//            Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d\n", nClientChkSum[i]);
+//            if(SV_IsKnownIwdLocalization(cl->localization))
+            {
+                if(unknowncnt < 31)
+                {
+                    unknownchecksums[unknowncnt] = nClientChkSum[i];
+                    unknowncnt++;
+                }
+                Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
+//                bGood = 0; //Ignore this yet - logging only
+                bPrint = 1;
+            }
+        //    break;
           }
         }
         if ( bGood )
@@ -2075,10 +2258,20 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( (nClientPaks ^ nChkSum1) != nClientChkSum[nClientPaks] )
           {
-            bGood = 0;
+            if(SV_IsKnownIwdLocalization(cl->localization))
+            {
+//                bGood = 0;//Ignore since it is impossible to validate this yet without localized iwd info
+            }
           }
         }
+        if( bGood )
+        {
+            bGood = SV_VerifyFastFiles(cl);
+            Com_Printf(CON_CHANNEL_SERVER, "Localization: %d connected\n", cl->localization);
+
+        }
       }
+
     }
     else
     {
@@ -2089,13 +2282,19 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   {
     bGood = 0;
   }
- 
-#else
-	char *pArg;
-	pArg = SV_Cmd_Argv( 2 );
-	pArg++; // Skip L
-	cl->localization = atoi( pArg );
-#endif //later
+
+  if( bPrint )
+  {
+      char buffer[1024];
+      Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
+      unknownchecksums[unknowncnt] = 0;
+      if(!SV_ClientChecksumAlreadyReferenced(cl))
+      {
+          SV_UpdateChecksumsToDisk(unknownchecksums);
+      }
+  }
+
+
   if ( bGood )
   {
     cl->pureAuthentic = 1;
@@ -2672,6 +2871,8 @@ void SV_ExecuteReliableMessage(client_t* client)
 		case 0x35448:
 			SV_SApiProcessModules(client, msg);
 			break;
+		case 11337:
+			SV_ParseIWDHeader(client, msg);
 		case clc_acdata:
 			SV_PassNETMessageXAC(client, msg);
 			break;
