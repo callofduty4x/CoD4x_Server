@@ -64,7 +64,7 @@ typedef struct{
 	void (*XACHLP_SendReliableServerCommand)(unsigned int client, msg_t *msg);
 	void (*XACHLP_AddBanForClient)(unsigned int cl, int bantime, const char* banreason);
 	void (*XACHLP_ScreenshotArrived)(unsigned int cl, const char* filename);
-    void (*XACHLP_ModuleArrived)(unsigned int cl, const char* filename, long checksum);
+	void (*XACHLP_ModuleArrived)(unsigned int cl, const char* filename, long checksum);
 
 	int (*FS_SV_HomeWriteFile)( const char *qpath, const void *buffer, int size);
 	unsigned int (*Sys_Milliseconds)();
@@ -76,6 +76,8 @@ typedef struct{
 	void (*GetClientData)(unsigned int clnum, struct clientEmu_t *emu);
 	void (*GetGameClientData)(unsigned int clnum, struct gclientEmu_t *emu);
 	void (*SetConfigstring)(int index, const char* val);
+	void (*EnterWorldLock)(unsigned int client, qboolean status);
+	void (*SendClientGameState)(unsigned int client);
 }imports_t;
 
 

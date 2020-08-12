@@ -114,6 +114,14 @@ void QDECL XACHLP_DPrintf( const char *fmt, ...) {
         Com_PrintMessage( CON_CHANNEL_STEAM, msg, MSG_DEFAULT);
 }
 
+void XACHLP_EnterWorldLock(unsigned int client, qboolean status)
+{
+	if(client >= sv_maxclients->integer)
+	{
+		return;
+	}
+	svs.clients[client].lockedout = status;
+}
 
 void XACHLP_DropClientNoNotify(unsigned int drop, const char *reason)
 {
@@ -130,7 +138,7 @@ void XACHLP_DropClient(unsigned int drop, const char *reason)
 	{
 		return;
 	}
-	SV_DropClient(&svs.clients[drop], reason);
+	SV_DelayDropClient(&svs.clients[drop], reason);
 }
 
 void XACHLP_SendReliableServerCommand(unsigned int client, msg_t *msg)
@@ -196,7 +204,6 @@ void XACHLP_GetEmuClientData(unsigned int clnum, struct clientEmu_t *emu)
 	emu->maxclantaglen = sizeof(cl->clantag);
 	emu->legacy_pbguid = cl->legacy_pbguid;
 	emu->maxguidlen = sizeof(cl->legacy_pbguid);
-
 }
 
 void XACHLP_SetEmuClientData(unsigned int clnum, struct clientEmu_t *emu)
@@ -237,6 +244,20 @@ void XACHLP_GetGameClientData(unsigned int clnum, struct gclientEmu_t *emu)
 	VectorCopy(ent->client->ps.viewangles, emu->viewangles);
 }
 
+void XACHLP_SendClientGameState(unsigned int clnum)
+{
+	if(clnum >= sv_maxclients->integer)
+	{
+		return;
+	}
+	client_t* cl = &svs.clients[clnum];
+	if(cl->state < CS_PRIMED)
+	{
+		return;
+	}
+	SV_SendClientGameState(cl);
+
+}
 
 exports_t xac_imp;
 
@@ -273,6 +294,8 @@ void SV_TryLoadXAC()
 	exports.GetClientData = XACHLP_GetEmuClientData;
 	exports.GetGameClientData = XACHLP_GetGameClientData;
 	exports.SetConfigstring = SV_SetConfigstring;
+	exports.EnterWorldLock = XACHLP_EnterWorldLock;
+	exports.SendClientGameState = XACHLP_SendClientGameState;
 
 	memset(&xac_imp, 0, sizeof(xac_imp));
 
