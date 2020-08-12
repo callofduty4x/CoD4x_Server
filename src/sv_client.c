@@ -1118,19 +1118,6 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 			SV_WriteDemoArchive(cl);
 	}
 
-/*
-Needed to debug prediction errors. Otherwise useless
-	static vec3_t oldorigin;
-        if(VectorCompare(oldorigin, cl->predictedOrigin) != 1)
-        {
-                VectorCopy(cl->predictedOrigin, oldorigin);
-                float dist = Vec3DistanceSq(level.clients[clientNum].ps.origin, cl->predictedOrigin);
-                dist = sqrt(dist);
-                Com_Printf(CON_CHANNEL_SERVER, "Error: (%.3f)\n", dist);
-                VectorCopy(cl->predictedOrigin, level.clients[clientNum].ps.origin);
-	}
-*/
-
 }
 
 void SV_ClientCalcFramerate()
@@ -1173,6 +1160,11 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	char ssti[128];
 	char psti[128];
 
+	if(client->lockedout)
+	{
+		return;
+	}
+
 /*
 	if(client->netchan.remoteAddress.type != NA_BOT && ((sv_pure->integer != 0 && client->pureAuthentic == 0) || !psvs.serverAuth))
 		return;
@@ -1210,7 +1202,7 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 
 	if(sv_autodemorecord->boolean && !client->demorecording && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6))
 	{
-			SV_RecordClient(client, va("demo_%s_", psti));
+		SV_RecordClient(client, va("demo_%s_", psti));
 	}
 
 	if(client->connectedTime == 0 && (client->netchan.remoteAddress.type == NA_IP || client->netchan.remoteAddress.type == NA_IP6)){
@@ -1972,7 +1964,9 @@ void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 	char bigbuf[65536];
 	char filename[64];
 	unsigned long *dataptr;
-	
+
+	int sum = MSG_ReadLong(msg);
+
 	MSG_ReadString(msg, pakName, sizeof(pakName));
 
 	int datalen = MSG_ReadLong(msg);
@@ -1980,6 +1974,7 @@ void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 	{
 		return;
 	}
+
 	MSG_ReadData(msg, bigbuf, datalen);
 	Com_Printf(CON_CHANNEL_SERVER, "Pak: %s Len: %d\n", pakName, datalen);
 
@@ -1987,19 +1982,20 @@ void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 	{
 		return;//junk
 	}
-	datalen /= 4;
 	unsigned int random;
 	Com_RandomBytes((unsigned char*)&random, sizeof(random));
-	Com_sprintf(filename, sizeof(filename), "headers/%s-%u.dat", pakName, random);
+	Com_sprintf(filename, sizeof(filename), "headers/%s-%llu.dat", pakName, cl->playerid);
 	
 	fileHandle_t f = FS_SV_FOpenFileWrite(filename);
 	if(f < 1)
 	{
 		return;
 	}
-	dataptr = (unsigned long *)bigbuf;
+//	dataptr = (unsigned long *)bigbuf;
 	
 
+	FS_Write( bigbuf, datalen, f);
+/*
 	FS_Printf(f, "file: %s len %d id: %lld\n", pakName, datalen, cl->playerid);
 
 	int i;
@@ -2011,6 +2007,7 @@ void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 			FS_Printf(f, "\n");
 		}
 	}
+*/
 	FS_FCloseFile(f);
 }
 
@@ -2062,12 +2059,21 @@ struct checksumtracker_t
     long checksum;
 };
 
-struct checksumtracker_t checksumcounts[16*128];
+struct checksumtracker_t checksumcounts[4096];
+
+
+int sorttrackercmp(const void* a, const void* b)
+{
+    const struct checksumtracker_t* _a = a;
+    const struct checksumtracker_t* _b = b;
+
+    return _b->refcounter - _a->refcounter;
+}
 
 void SV_AddChecksumRef(long checksum)
 {
     int i;
-    for(i = 0; i < 16*128; ++i)
+    for(i = 0; i < 4096; ++i)
     {
         if(checksumcounts[i].checksum == checksum)
         {
@@ -2075,9 +2081,9 @@ void SV_AddChecksumRef(long checksum)
             break;
         }
     }
-    if(i == 16*128)
+    if(i == 4096)
     {
-        for(i = 0; i < 16*128; ++i)
+        for(i = 0; i < 4096; ++i)
         {
             if(checksumcounts[i].checksum == 0)
             {
@@ -2100,8 +2106,10 @@ void SV_UpdateChecksumsToDisk(long *checksums)
         return;
     }
 
+    memset(checksumcounts, 0, sizeof(checksumcounts));
+
     int read;
-    while((read = FS_ReadLine(line, sizeof(line), f)) > 0 && i < 16*128)
+    while((read = FS_ReadLine(line, sizeof(line), f)) > 0 && i < 4096)
     {
         Cmd_TokenizeString(line);
         checksumcounts[i].checksum = atoi(Cmd_Argv(0));
@@ -2117,6 +2125,8 @@ void SV_UpdateChecksumsToDisk(long *checksums)
         SV_AddChecksumRef(checksums[i]);
     }
 
+    qsort(checksumcounts, 4096, sizeof(struct checksumtracker_t), sorttrackercmp);
+
 
     i = 0;
     f = FS_SV_FOpenFileWrite("checksums.dat");
@@ -2124,7 +2134,7 @@ void SV_UpdateChecksumsToDisk(long *checksums)
     {
         return;
     }
-    while(i < 16*128 && checksumcounts[i].checksum != 0)
+    while(i < 4096 && checksumcounts[i].checksum != 0)
     {
         FS_Printf(f, "%d %d\n", checksumcounts[i].checksum,checksumcounts[i].refcounter);
         ++i;
@@ -2182,6 +2192,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     if ( *pArg == '@' )
 #endif
     {
+    Com_Printf(CON_CHANNEL_SYSTEM, "^5Fix me - need to detect old versions of cp command\n");
       pArg = SV_Cmd_Argv(nCurArg++);
       pArg++; // Skip L
       cl->localization = atoi( pArg );
@@ -2283,7 +2294,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     bGood = 0;
   }
 
-  if( bPrint )
+//  if( bPrint )
   {
       char buffer[1024];
       Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));

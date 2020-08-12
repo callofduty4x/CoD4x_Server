@@ -180,7 +180,7 @@ typedef enum {qfalse, qtrue}	qboolean;
 
 #define TRUNCATE_LENGTH	64
 
-#define LIBRARY_ADDRESS_BY_HANDLE(dlhandle)((NULL == dlhandle) ? NULL :(void*)*(size_t const*)(dlhandle))
+#define LIBRARY_ADDRESS_BY_HANDLE(dlhandle)((NULL == dlhandle) ? 0 :((struct link_map *)dlhandle)->l_addr)
 
 
 #ifdef __cplusplus

@@ -78,6 +78,7 @@ typedef struct{
 	void (*SetConfigstring)(int index, const char* val);
 	void (*EnterWorldLock)(unsigned int client, qboolean status);
 	void (*SendClientGameState)(unsigned int client);
+
 }imports_t;
 
 

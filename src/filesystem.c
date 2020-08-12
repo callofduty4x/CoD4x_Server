@@ -255,7 +255,8 @@ static char lastValidGame[MAX_OSPATH];
 static int fs_numServerIwds;
 static int fs_serverIwds[1024];
 static char *fs_serverIwdNames[1024];
-static int fs_localizedPureChecksums[MAX_LOCALIZATIONS];
+static int *fs_additionalPureChecksums;
+static int fs_additionalPureChecksumCount;
 
 /*
 ==============
@@ -952,6 +953,7 @@ qboolean __cdecl FS_FilesAreLoadedGlobally(const char *filename)
   extensions[6] = ".str";
   extensions[7] = ".so";
   extensions[8] = ".dll";
+  extensions[8] = ".sum";
   extensions[9] = "";
   filenameLen = strlen(filename);
   for ( extensionNum = 0; *extensions[extensionNum]; ++extensionNum )
@@ -2613,19 +2615,55 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename ) {
 void FS_InitLocalizedIwdPureChecksums()
 {
     int i;
-    fs_localizedPureChecksums[0] = Com_BlockChecksumKey32( header_localized_english_iw00, sizeof(header_localized_english_iw00), LittleLong( fs_checksumFeed ) );
-    fs_localizedPureChecksums[1] = Com_BlockChecksumKey32( header_localized_french_iw00, sizeof(header_localized_french_iw00), LittleLong( fs_checksumFeed ) );
-    fs_localizedPureChecksums[2] = Com_BlockChecksumKey32( header_localized_german_iw00, sizeof(header_localized_german_iw00), LittleLong( fs_checksumFeed ) );
-    fs_localizedPureChecksums[3] = Com_BlockChecksumKey32( header_localized_italian_iw00, sizeof(header_localized_italian_iw00), LittleLong( fs_checksumFeed ) );
-    fs_localizedPureChecksums[4] = Com_BlockChecksumKey32( header_localized_spanish_iw00, sizeof(header_localized_spanish_iw00), LittleLong( fs_checksumFeed ) );
-    fs_localizedPureChecksums[5] = Com_BlockChecksumKey32( header_localized_polish_iw00, sizeof(header_localized_polish_iw00), LittleLong( fs_checksumFeed ) );
-    fs_localizedPureChecksums[6] = Com_BlockChecksumKey32( header_localized_russian_iw00, sizeof(header_localized_russian_iw00), LittleLong( fs_checksumFeed ) );
+    fileHandle_t fh;
+    int len;
+    char filebuffer[0x4000];
 
-    for( i = 0; i < MAX_LOCALIZATIONS; ++i )
+    const char** checksumheaderfiles = FS_ListFilesInPackDirectory("addiwdheaders");
+    if(checksumheaderfiles == NULL)
     {
-        fs_localizedPureChecksums[i] = LittleLong( fs_localizedPureChecksums[i] );
+        Cvar_Set2("sv_pure", "0", qfalse);
+        return;
     }
 
+    for(i = 0; checksumheaderfiles[i] != NULL; ++i);
+
+    if(i == 0)
+    {
+        Z_Free(checksumheaderfiles);
+        Cvar_Set2("sv_pure", "0", qfalse);
+        return;
+    }
+
+    fs_additionalPureChecksums = Z_Malloc(sizeof(int) * i);
+    if(fs_additionalPureChecksums == NULL)
+    {
+        Z_Free(checksumheaderfiles);
+        Cvar_Set2("sv_pure", "0", qfalse);
+        return;
+    }
+
+    fs_additionalPureChecksumCount = i;
+    for(i = 0; i < fs_additionalPureChecksumCount; ++i)
+    {
+        len = FS_FOpenFileRead(checksumheaderfiles[i], &fh);
+        if(len > 0 && len < sizeof(filebuffer))
+        {
+            int readlen;
+            if((readlen = FS_Read(filebuffer, len, fh)) > 0 && readlen % 4 == 0)
+            {
+                int sum = Com_BlockChecksumKey32( filebuffer, readlen, LittleLong( fs_checksumFeed ) );
+                fs_additionalPureChecksums[i] = LittleLong( sum );
+                Com_Printf(CON_CHANNEL_FILES, "^6Adding checksum for %s\n", checksumheaderfiles[i]);
+            }
+        }
+        if(len >= 0)
+        {
+            FS_FCloseFile(fh);
+        }
+    }
+
+    Z_Free(checksumheaderfiles);
 }
 
 
@@ -2642,9 +2680,9 @@ const char *__cdecl FS_LoadedIwdPureChecksums(char* info4, int len)
         Q_strncat(info4, len, va("%i ", search->pack->pure_checksum));
     }
   }
-  for ( i = 0; i < MAX_LOCALIZATIONS; ++i )
+  for ( i = 0; i < fs_additionalPureChecksumCount; ++i )
   {
-    Q_strncat(info4, len, va("%i ", fs_localizedPureChecksums[i]));
+    Q_strncat(info4, len, va("%i ", fs_additionalPureChecksums[i]));
   }
   return info4;
 }
@@ -2673,6 +2711,9 @@ void FS_InitFilesystem()
   Q_strncpyz(lastValidBase, fs_basepath->string, sizeof(lastValidBase));
   Q_strncpyz(lastValidGame, fs_gameDirVar->string, sizeof(lastValidGame));
 
+  char info[8192];
+
+  Com_Printf(CON_CHANNEL_FILES, "Valid IWD checksums: %s\n", FS_LoadedIwdPureChecksums(info, 8192));
 }
 
 
@@ -3354,6 +3395,11 @@ void FS_Shutdown( qboolean closemfp ) {
 	Cmd_RemoveCommand( "which" );
 	Cmd_RemoveCommand( "fdir" );
 
+        if(fs_additionalPureChecksums)
+        {
+            Z_Free(fs_additionalPureChecksums);
+        }
+        fs_additionalPureChecksums = NULL;
 
 #ifdef FS_MISSING
 	if ( closemfp ) {
@@ -3436,7 +3482,7 @@ void FS_Restart( int checksumFeed ) {
 	FS_Shutdown( qfalse );
 
 	// set the checksum feed
-	fs_checksumFeed = 0;//checksumFeed;
+	fs_checksumFeed = checksumFeed;
 
 	// clear pak references
 	FS_ClearPakReferences( 0 );
@@ -5051,4 +5097,98 @@ void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the log
 
 }
 
+//Parse all zip files for files inside a directory, path must be with forward slash only
+//must Z_Free return value, result will go invalid on FS_Restart
+//On fail return value is NULL
+const char** FS_ListFilesInPackDirectory(const char* directory)
+{
+    int i, h, y;
+    pack_t		*pak;
+    fileInPack_t	*pakFile;
+    int hashtablesize = 2*fs_packFiles;
+    struct searchpath_s* search;
+    unsigned int directorylen = 0;
 
+    if(directory != NULL)
+    {
+        directorylen = strlen(directory);
+    }
+    const char** hashtable = Z_Malloc(hashtablesize * sizeof(const char*));
+    if(hashtable == NULL)
+    {
+        return NULL;
+    }
+
+    if(!FS_Initialized())
+    {
+        Com_Error(ERR_FATAL, "Filesystem call made without initialization");
+    }
+    Sys_EnterCriticalSection(CRITSECT_FILESYSTEM);
+    for(search = fs_searchpaths; search; search = search->next)
+    {
+	if(!search->pack)
+	{
+	    continue;
+	}
+        pak = search->pack;
+        for(i = 0; i < pak->numfiles; ++i)
+        {
+            pakFile = &pak->buildBuffer[i];
+
+            if(directorylen == 0 || !Q_stricmpn(pakFile->name, directory, directorylen))
+            {
+                unsigned int paknamelen = strlen(pakFile->name);
+                if(paknamelen > 0 && pakFile->name[paknamelen -1] != '/') //is directory, not file
+                {
+                    //Add file to hashtable
+                    long hash = FS_HashFileName( pakFile->name, 0x80000000);
+                    for(h = 0; h < 2*fs_packFiles; ++h)
+                    {
+                        const char** entry = &hashtable[(hash +h) % hashtablesize];
+
+                        if(*entry == NULL)
+                        {
+                            *entry = pakFile->name;
+                        }
+
+                        if(strcmp(*entry, pakFile->name) == 0)
+                        {
+                            break; //already in there
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+    Sys_LeaveCriticalSection(CRITSECT_FILESYSTEM);
+
+    unsigned int numentries;
+
+    for(i = 0, numentries = 0; i < hashtablesize; ++i)
+    {
+        if(hashtable[i])
+        {
+            numentries++;
+        }
+    }
+
+    const char** buf = Z_Malloc((numentries +1)* sizeof(const char*));
+    if(!buf)
+    {
+        Z_Free(hashtable);
+        return NULL;
+    }
+
+    for(i = 0, y = 0; i < hashtablesize; ++i)
+    {
+        if(hashtable[i])
+        {
+            buf[y] = hashtable[i];
+            ++y;
+        }
+    }
+    buf[y] = NULL;
+    Z_Free(hashtable);
+    return buf;
+}

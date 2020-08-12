@@ -177,6 +177,7 @@ float Cvar_VariableValue( const char *var_name );
 int Cvar_VariableIntegerValue( const char *var_name );
 qboolean Cvar_VariableBooleanValue( const char *var_name );
 void Cvar_Set( const char *var_name, const char *value);
+void Cvar_Set2( const char *var_name, const char *value, qboolean force);
 void Cvar_SetAllowCheatOnly( const char *var_name, const char *value);
 void Cvar_Reset( const char *var_name );
 void Cvar_SetCheatState( void );

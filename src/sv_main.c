@@ -3656,8 +3656,11 @@ void SV_LoadLevel(const char* levelname)
 
     SV_BuildXAssetCSString();
     //Temporarily
-    SV_SetConfigstring(CS_IWDHEADERS, "localized_british_iw00 localized_russian_iw00 localized_polish_iw00 localized_korean_iw00 localized_taiwanese_iw00 localized_japanese_iw00 localized_chinese_iw00 localized_thai_iw00 localized_leet_iw00 localized_czech_iw00");
-    SV_SetConfigstring(CS_IWDCHECKSUMHEADERS, "");
+    cvar_t* sv_wantediwdheaders = Cvar_RegisterString("sv_wantediwdheaders", "", 0, "developmental only");
+    cvar_t* sv_wantediwdchecksums = Cvar_RegisterString("sv_wantediwdchecksums", "", 0, "developmental only");
+    SV_SetConfigstring(CS_IWDHEADERS, sv_wantediwdheaders->string);
+    //"localized_british_iw00 localized_korean_iw00 localized_taiwanese_iw00 localized_japanese_iw00 localized_chinese_iw00 localized_thai_iw00 localized_leet_iw00 localized_czech_iw00 localized_english_iw0 localized_french_iw0 localized_german_iw0 localized_italian_iw0 localized_spanish_iw0 localized_polish_iw0 localized_russian_iw0 localized_chinese_iw0");
+    SV_SetConfigstring(CS_IWDCHECKSUMHEADERS, sv_wantediwdchecksums->string);
 
     SV_CalculateChecksums();
     SV_PostLevelLoad();
