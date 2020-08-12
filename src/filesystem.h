@@ -257,6 +257,9 @@ void FS_CloseLogFile(fileHandle_t f);
 fileHandle_t FS_OpenLogfile(const char* name, char mode);
 void FS_WriteLogFlush(fileHandle_t f);
 int FS_WriteLog( const void *buffer, int ilen, fileHandle_t h );
+
+const char** FS_ListFilesInPackDirectory(const char* path);
+
 #ifdef __cplusplus
 }
 #endif

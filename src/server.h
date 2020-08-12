@@ -249,6 +249,7 @@ struct client_s
 	byte			hasValidPassword;
 	stats_t			stats;
 	int 			localization; // loc_language
+	qboolean		lockedout;
 };//0x0a563c
 
 typedef struct client_s client_t;

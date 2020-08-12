@@ -59,7 +59,6 @@ static	cvar_t*		hashTable[FILE_HASH_SIZE];
 
 static int Cvar_SetVariant( cvar_t *var, CvarValue value ,qboolean force );
 void Cvar_ValueToStr(cvar_t const *cvar, char* bufvalue, int sizevalue, char* bufreset, int sizereset, char* buflatch, int sizelatch);
-void Cvar_Set2( const char *var_name, const char *value, qboolean force);
 
 /*
 ================
