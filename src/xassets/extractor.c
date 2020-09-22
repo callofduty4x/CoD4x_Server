@@ -1,9 +1,3 @@
-
-
-#if 0
-
-T-Max has to fix it. Or better make it a standalone program
-
 /* Stdlib includes: */
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,20 +35,6 @@ typedef unsigned char byte_t;
 typedef unsigned int uint;
 typedef void(*extract_routine_t)(const char*);
 
-typedef struct AssetHandler_t
-{
-    int type;
-    void *header;
-} AssetHandler_t;
-
-typedef struct FastFileContents_t
-{
-    int str_list_count;
-    char *str_list_data;
-    int asset_list_count;
-    AssetHandler_t *asset_list_data;
-} FastFileContents_t;
-
 typedef struct ZoneDataBlock_t
 {
     byte_t *data;
@@ -82,11 +62,7 @@ typedef struct ExtractorAssetHandler_t
     extract_routine_t handler;
 } ExtractorAssetHandler_t;
 
-/*
-#define g_pFFContents (*(FastFileContents_t **)0x1411F540)
-*/
 extern FastFileZlibHandler_t g_load;
-
 
 static void extract_rawfile(const void *header);
 static void extract_menufile(const void *header);
@@ -96,7 +72,7 @@ static void extract_localized_string(const void *header);
 typedef struct FastFileAssetsTableInfo_t
 {
     char name[64];
-    FastFileContents_t content;
+    struct XAssetList content;
 } FastFileAssetsTableInfo_t;
 
 static FastFileAssetsTableInfo_t g_FastFileAssetsTableInfo[MAX_STORE_FASTFILES];
@@ -171,7 +147,7 @@ void store_fastfile_contents_information()
     /* 'info' points to old fastfile or to place for new one. */
     Com_Memset(info, 0, sizeof(FastFileAssetsTableInfo_t));
     strcpy(info->name, g_load.name);
-    Com_Memcpy(&info->content, g_pFFContents, sizeof(FastFileContents_t));
+    Com_Memcpy(&info->content, varXAssetList, sizeof(struct XAssetList));
 }
 
 /* Adds a line to zone_source file which can be used by linker_pc. */
@@ -287,19 +263,19 @@ static void extract_localized_string(const void *header)
 {
     char output_path[MAX_OSPATH];
     char prefix[64] = {'\0'};
-    LocalizedString_t *asset = (LocalizedString_t *)header;
+    struct LocalizeEntry *asset = (struct LocalizeEntry *)header;
     char *prefix_end;
     fileHandle_t f;
     char value_buf[1024] = {'\0'};
 
     /* Will be always because prefix is a file name. */
-    prefix_end = strchr(asset->key, '_');
-    if (prefix_end - asset->key + 1 > sizeof(prefix))
+    prefix_end = strchr(asset->name, '_');
+    if (prefix_end - asset->name + 1 > sizeof(prefix))
     {
-        Com_Printf(CON_CHANNEL_FILES,"Too long prefix for localized string '%s'. Increase prefix size (now %d).\n", asset->key, sizeof(prefix));
+        Com_Printf(CON_CHANNEL_FILES,"Too long prefix for localized string '%s'. Increase prefix size (now %d).\n", asset->name, sizeof(prefix));
         return;
     }
-    strncpy(prefix, asset->key, prefix_end - asset->key);
+    strncpy(prefix, asset->name, prefix_end - asset->name);
     /* Build output file path. */
     snprintf(output_path, MAX_OSPATH, "%s%s/raw/english/localizedstrings/%s.str", g_savePath, g_zone_name, prefix);
     /* Check if file already exist. */
@@ -325,7 +301,7 @@ static void extract_localized_string(const void *header)
         f = FS_SV_FOpenFileAppend(output_path);
     }
 
-    FS_Printf(f, "REFERENCE           %s\n", asset->key);
+    FS_Printf(f, "REFERENCE           %s\n", asset->name);
     replace_escape_characters(asset->value, value_buf, sizeof(value_buf));
     FS_Printf(f, "LANG_ENGLISH        \"%s\"\n\n", value_buf);
     FS_FCloseFile(f);
@@ -334,7 +310,7 @@ static void extract_localized_string(const void *header)
 /* Extract string table. */
 static void extract_stringtable(const void *header)
 {
-    StringTable_t *asset = (StringTable_t *)header;
+    struct StringTable *asset = (struct StringTable *)header;
     char output_path[MAX_OSPATH];
     fileHandle_t f;
     uint i;
@@ -348,15 +324,15 @@ static void extract_stringtable(const void *header)
         return;
     }
     /* Write out string table. */
-    for (i = 0; i < asset->rows; ++i)
+    for (i = 0; i < asset->rowCount; ++i)
     {
-        for (j = 0; j < asset->columns; ++j)
+        for (j = 0; j < asset->columnCount; ++j)
         {
             /* Differ last column. */
-            if (j != asset->columns - 1)
-                FS_Printf(f, "%s,", asset->data[i * asset->columns + j]);
+            if (j != asset->columnCount - 1)
+                FS_Printf(f, "%s,", asset->values[i * asset->columnCount + j]);
             else
-                FS_Printf(f, "%s\n", asset->data[i * asset->columns + j]);
+                FS_Printf(f, "%s\n", asset->values[i * asset->columnCount + j]);
         }
     }
     FS_FCloseFile(f);
@@ -985,7 +961,7 @@ static void extract_menu(fileHandle_t f, MenuDef_t *asset)
 /* Extract menufile. */
 static void extract_menufile(const void *header)
 {
-    Menufile_t *asset = (Menufile_t *)header;
+    struct MenuList *asset = (struct MenuList *)header;
     char subpath[128] = {'\0'};
     fileHandle_t text_menufile;
     fileHandle_t f;
@@ -1009,7 +985,7 @@ static void extract_menufile(const void *header)
         WRITE_EXTRACTOR_HEADER(f);
         FS_Write("#include \"ui/menudefinition.h\";\n{\n", 34, f);
         /* Extract .menu content. */
-        for (i = 0; i < asset->count; ++i)
+        for (i = 0; i < asset->menuCount; ++i)
             extract_menu(f, asset->menus[i]);
 
         /* Write .menu file footer. */
@@ -1031,7 +1007,7 @@ static void extract_menufile(const void *header)
         
         FS_Write("{\n", 2, text_menufile);
         /* Write each menu and add it to .txt menufile. */
-        for (i = 0; i < asset->count; ++i)
+        for (i = 0; i < asset->menuCount; ++i)
         {
             
             snprintf(output_path, MAX_OSPATH, "%s%s/raw/%s/%s.menu", g_savePath, g_zone_name, subpath, asset->menus[i]->window.name);
@@ -1063,18 +1039,18 @@ static void extract_menufile(const void *header)
 static void extract_from_fastfile(const FastFileAssetsTableInfo_t *ff_info, const unsigned int type, extract_routine_t handler)
 {
     int i;
-    for (i = 0; i < ff_info->content.asset_list_count; ++i)
+    for (i = 0; i < ff_info->content.assetCount; ++i)
     {
-        if (ff_info->content.asset_list_data[i].type == type)
+        if (ff_info->content.assets[i].type == type)
         {
-            Com_Printf(CON_CHANNEL_FILES,"Extracting '%s'...", DB_XAssetGetName(&ff_info->content.asset_list_data[i]));
-            handler(ff_info->content.asset_list_data[i].header);
+            Com_Printf(CON_CHANNEL_FILES,"Extracting '%s'...", DB_GetXAssetName(&ff_info->content.assets[i]));
+            handler(ff_info->content.assets[i].header.data);
             Com_Printf(CON_CHANNEL_FILES,"done.\n");
         }
     }
     /* Post-extraction actions. */
     /* For localized strings add 'ENDMARKER' keyword to the end of files. */
-    if (type == XASSET_TYPE_LOCALIZEDSTRING)
+    if (type == ASSET_TYPE_LOCALIZE_ENTRY)
         add_endmarkers();
 }
 
@@ -1164,12 +1140,10 @@ void Cmd_ExtractAsset()
     g_zone_name = 0;
 }
 
-#define g_AssetNames ((char**)0x08274940)
-
 void Cmd_ListAssets()
 {
     char *ff;
-    FastFileContents_t *ff_contents = 0;
+    struct XAssetList *ff_contents = 0;
     int assets[33] = {0};
     int i;
 
@@ -1194,14 +1168,28 @@ void Cmd_ListAssets()
         return;
     }
 
-    for (i = 0; i < ff_contents->asset_list_count; ++i)
-        ++assets[ff_contents->asset_list_data[i].type];
+    for (i = 0; i < ff_contents->assetCount; ++i)
+        ++assets[ff_contents->assets[i].type];
 
     Com_Printf(CON_CHANNEL_FILES,"Contents of fastfile '%s':\n", ff);
     for (i = 0; i < 33; ++i)
     {
         if (assets[i])
-            Com_Printf(CON_CHANNEL_FILES,"Assets count for type '%s': %d\n", g_AssetNames[i], assets[i]);
+            Com_Printf(CON_CHANNEL_FILES,"Assets count for type '%s': %d\n", g_assetNames[i], assets[i]);
+    }
+}
+
+void Cmd_ListFastFiles()
+{
+    char *ff;
+    int i;
+
+    Com_Printf(CON_CHANNEL_FILES, "Stored fastfiles:\n");
+    for (i = 0; i < MAX_STORE_FASTFILES; ++i)
+    {
+        ff = g_FastFileAssetsTableInfo[i].name;
+        if (ff[0])
+            Com_Printf(CON_CHANNEL_FILES, "%d. %s\n", i, ff);
     }
 }
 
@@ -1209,10 +1197,10 @@ void add_extractor_console_commands()
 {
     Cmd_AddCommand("extract", Cmd_ExtractAsset);
     Cmd_AddCommand("assets", Cmd_ListAssets);
+    Cmd_AddCommand("listff", Cmd_ListFastFiles);
 }
 
 /* Definitions cleanup. */
-#undef g_AssetNames
 #undef MENUDEF_INDENT
 #undef ITEMDEF_INDENT
 #undef MENU_KEY_INDENT
@@ -1239,11 +1227,3 @@ void add_extractor_console_commands()
 #undef WRITE_ITEMDEF_FIELD_FLOAT
 #undef WRITE_ITEMDEF_FIELD_INT
 #undef WRITE_EXTRACTOR_HEADER
-
-#else
-
-void extractor_init(){}
-void add_extractor_console_commands(){}
-
-
-#endif

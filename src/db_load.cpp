@@ -71,6 +71,7 @@
 #define XASSET_ENTRY_POOL_SIZE 32768
 
 extern "C" void PrintScriptStrings();
+extern "C" void store_fastfile_contents_information();
 
 struct XBlock
 {
@@ -1206,6 +1207,7 @@ void __cdecl DB_LoadXFileInternal()
   }
 
   DB_PopStreamPos();
+  store_fastfile_contents_information();
   Load_DelayStream();
 
   --g_loadingAssets;

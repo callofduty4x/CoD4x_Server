@@ -101,7 +101,7 @@ union XAssetHeader
   struct GfxLightDef *lightDef;
   struct Font_s *font;
   struct MenuList *menuList;
-  struct menuDef_t *menu;
+  struct MenuDef_t *menu;
   struct LocalizeEntry *localize;
   struct WeaponDef *weapon;
   struct SndDriverGlobals *sndDriverGlobals;

@@ -14,5 +14,5 @@ struct MenuList
 {
   const char *name;
   int menuCount;
-  struct menuDef_t **menus;
+  struct MenuDef_t **menus;
 };
