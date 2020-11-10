@@ -176,8 +176,45 @@ static void scr_botstop(scr_entref_t ent_num)
     g_botai[ent_num.entnum].buttons = 0;
     g_botai[ent_num.entnum].doMove = 0;
     g_botai[ent_num.entnum].rotIterCount = 0;
+    g_botai[ent_num.entnum].weapon = 1; // weapon index 0 is "none"
     /*g_botai[ent_num.entnum].rotFrac[0] = 0;
     g_botai[ent_num.entnum].rotFrac[1] = 0;*/
+}
+/*
+==================
+scr_botweapon
+==================
+*/
+/* bot botWeapon(<str action>); */
+static void scr_botweapon(scr_entref_t ent_num)
+{
+    int argc;
+    gentity_t *bot;
+    char* weapon;
+    byte weapInt;
+    mvabuf;
+
+    bot = VM_GetGEntityForEntRef(ent_num);
+    if (!bot)
+        Scr_Error("Not an entity.");
+
+    if (!bot->client)
+        Scr_Error("Not a client.");
+
+    argc = Scr_GetNumParam();
+    if (argc != 1)
+        Scr_Error("Usage: <bot> botWeapon(<weapon>);");
+
+    weapon = Scr_GetString(0);
+
+    if (!Q_stricmp(weapon, ""))
+    {
+        g_botai[ent_num.entnum].weapon = 1;
+        return;
+    }
+
+    weapInt = (byte)G_GetWeaponIndexForName(weapon);
+    g_botai[ent_num.entnum].weapon = weapInt;
 }
 /*
 ==================
@@ -314,6 +351,7 @@ void Scr_AddBotsMovement()
     Scr_AddMethod("botstop",         scr_botstop,         qfalse);
     Scr_AddMethod("botaction",       scr_botaction,       qfalse);
     Scr_AddMethod("botlookatplayer", scr_botlookatplayer, qfalse);
+    Scr_AddMethod("botweapon",       scr_botweapon,       qfalse);
 }
 
 /*

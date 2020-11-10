@@ -23,6 +23,8 @@ typedef struct __attribute__ ((aligned (4))) BotMovementInfo_t
     short int rotFrac[2];
     qboolean lastAliveState;
     byte useSpamDelay;
+    /* Weapon */
+    byte weapon;
 } BotMovementInfo_t;
 
 extern BotMovementInfo_t g_botai[MAX_CLIENTS];
