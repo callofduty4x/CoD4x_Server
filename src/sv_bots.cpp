@@ -218,6 +218,29 @@ static void scr_botweapon(scr_entref_t ent_num)
 }
 /*
 ==================
+scr_isbot
+==================
+*/
+/* bot isbot(); */
+static void scr_isbot(scr_entref_t ent_num)
+{
+    gentity_t *bot;
+    client_t *c;
+    mvabuf;
+
+    bot = VM_GetGEntityForEntRef(ent_num);
+    if (!bot)
+        Scr_Error("Not an entity.");
+
+    if (!bot->client)
+        Scr_Error("Not a client.");
+
+    c = VM_GetClientForEntRef(ent_num);
+
+    Scr_AddBool(c->netchan.remoteAddress.type == NA_BOT);
+}
+/*
+==================
 scr_botaction
 ==================
 */
@@ -352,6 +375,7 @@ void Scr_AddBotsMovement()
     Scr_AddMethod("botaction",       scr_botaction,       qfalse);
     Scr_AddMethod("botlookatplayer", scr_botlookatplayer, qfalse);
     Scr_AddMethod("botweapon",       scr_botweapon,       qfalse);
+    Scr_AddMethod("isbot",           scr_isbot,           qfalse);
 }
 
 /*
