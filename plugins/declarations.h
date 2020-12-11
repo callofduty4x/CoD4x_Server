@@ -1408,6 +1408,8 @@ struct httpPostValsInternal_s {
     char value[MAX_STRING_CHARS];
 };
 
+#pragma pack(pop)
+
 typedef struct httpPostValsInternal_s httpPostVals_t[MAX_POST_VALS];
 
 #ifdef _WIN32
@@ -1421,3 +1423,5 @@ typedef pthread_t threadid_t;
 #include "plugin_declarations.h"
 #include "function_declarations.h" // Function descriptions are available in this file
 #include "callback_declarations.h"
+
+#pragma pack()
