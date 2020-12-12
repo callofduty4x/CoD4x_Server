@@ -2654,7 +2654,7 @@ void FS_InitLocalizedIwdPureChecksums()
             {
                 int sum = Com_BlockChecksumKey32( filebuffer, readlen, LittleLong( fs_checksumFeed ) );
                 fs_additionalPureChecksums[i] = LittleLong( sum );
-                Com_Printf(CON_CHANNEL_FILES, "^6Adding checksum for %s\n", checksumheaderfiles[i]);
+//                Com_Printf(CON_CHANNEL_FILES, "^6Adding checksum for %s\n", checksumheaderfiles[i]);
             }
         }
         if(len >= 0)
@@ -2798,7 +2798,7 @@ void FS_AddGameDirectory(const char *path, const char *dir)
 
   FS_AddGameDirectory_Single(path, dir, 0, 0);
 }
-
+//Existing languages english, french, german, italian, spanish, russian, polish, chinese
 static char* g_languages[] = {"english", "french", "german", "italian",
                               "spanish", "british", "russian", "polish",
                               "korean", "taiwanese", "japanese", "chinese",

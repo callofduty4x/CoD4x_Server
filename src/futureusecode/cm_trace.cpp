@@ -1793,7 +1793,7 @@ void CM_CalcTraceExtents(TraceExtents *extents)
 {
   int i;
   float diff;
-  
+
   for ( i = 0; i < 3; ++i )
   {
 	diff = extents->start[i] - extents->end[i];

@@ -532,6 +532,7 @@ static void SVC_RateLimitInit( ){
     int totalsize = querylimit.max_buckets * sizeof(leakyBucket_t) + querylimit.max_hashes * sizeof(leakyBucket_t*);
 
     querylimit.buckets = L_Malloc(totalsize);
+    memset(querylimit.buckets, 0, totalsize);
 
     if(!querylimit.buckets)
     {
@@ -2959,6 +2960,7 @@ void	serverStatus_Write(){
                             *assists = 0;
                             *ping = 0;
                             *rank = 0;
+                            *power = 0;
                             if(cl->state == CS_CONNECTED){
                                 Q_strncpyz(teamname, "Connecting...", 32);
                             }else{

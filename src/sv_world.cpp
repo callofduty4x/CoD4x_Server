@@ -1303,7 +1303,6 @@ void __cdecl SV_PointTraceToEntity_Stub(struct pointtrace_t *clip, trace_t *trac
 
 }
 
-
 int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_t *check)
 {
   gentity_t *touch;
@@ -1350,7 +1349,7 @@ int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_
         return 0;
       }
       radius = DObjGetRadius(obj);
-//      VectorCopy(touch->r.currentOrigin, axis[3]);
+
       absmin[0] = touch->r.currentOrigin[0] - radius;
       absmin[1] = touch->r.currentOrigin[1] - radius;
       absmin[2] = touch->r.currentOrigin[2] - radius;
@@ -1363,11 +1362,10 @@ int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_
     {
       assert(clip->priorityMap);
 
-//      VectorCopy(touch->r.currentOrigin, axis[3]);
       VectorAdd(touch->r.currentOrigin, actorLocationalMins, absmin);
       VectorAdd(touch->r.currentOrigin, actorLocationalMaxs, absmax);
     }
-
+    VectorCopy(touch->r.currentOrigin, entAxis[3]);
     VectorCopy(clip->start, extents.start);
     VectorCopy(clip->end, extents.end);
     CM_CalcTraceExtents(&extents);
@@ -1375,6 +1373,7 @@ int __cdecl SV_PointSightTraceToEntity(struct sightpointtrace_t *clip, svEntity_
     if ( !CM_TraceBox(&extents, absmin, absmax, 1.0) )
     {
       AnglesToAxis(touch->r.currentAngles, entAxis);
+
       MatrixTransposeTransformVector43(extents.start, entAxis, localStart);
       MatrixTransposeTransformVector43(extents.end, entAxis, localEnd);
       objTrace.fraction = 1.0;

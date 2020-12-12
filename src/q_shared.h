@@ -98,6 +98,11 @@
 #define __fastcall __attribute__((fastcall))
 #endif
 
+#ifndef __thiscall
+#define __thiscall __attribute__((thiscall))
+#endif
+
+
 #ifndef __regparm1
 #define __regparm1 __attribute__((regparm(1)))
 #endif

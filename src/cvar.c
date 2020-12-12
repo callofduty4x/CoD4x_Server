@@ -2526,7 +2526,7 @@ void Cvar_ChangeResetValue(cvar_t* var, CvarValue value)
 				Com_Printf(CON_CHANNEL_CVAR,"\'%d\' is not a valid value for cvar '%s'\n", value.integer, var->name);
 				Com_Printf(CON_CHANNEL_CVAR,"  Domain is one of the following:\n");
 				for(i = 0; var->limits.enumStr[i] != NULL; i++ )
-					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n", var->limits.enumStr[i]);
+					Com_Printf(CON_CHANNEL_CVAR,"   %d: %s\n", i, var->limits.enumStr[i]);
 
 				Sys_LeaveCriticalSection(CRITSECT_CVAR);
 				return;

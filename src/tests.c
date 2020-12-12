@@ -20,6 +20,7 @@ extern byte* clientStateFields[];
 
 void MSG_TestDeltaAE(snapshotInfo_t* snapInfo, int time, archivedEntity_t* baseline, archivedEntity_t *to, int refent)
 {
+/*
 	msg_t msg;
 	byte databuf[0x20000];
 	archivedEntity_t rto;
@@ -57,10 +58,12 @@ void MSG_TestDeltaAE(snapshotInfo_t* snapInfo, int time, archivedEntity_t* basel
 		FS_WriteFile("ae_to.bin", to, sizeof(archivedEntity_t));
 	}
 #endif
+*/
 }
 
 void MSG_TestDeltaPS(snapshotInfo_t* snapInfo, int time, playerState_t *baseline, playerState_t *to)
 {
+/*
 	msg_t msg;
 	byte databuf[0x20000];
 	playerState_t rto;
@@ -95,10 +98,12 @@ void MSG_TestDeltaPS(snapshotInfo_t* snapInfo, int time, playerState_t *baseline
 		FS_WriteFile("ps_to.bin", to, sizeof(playerState_t));
 	}
 #endif
+*/
 }
 
 void MSG_TestDeltaCS(snapshotInfo_t* snapInfo, int time, clientState_t* baseline, clientState_t *to)
 {
+/*
 	msg_t msg;
 	byte databuf[0x20000];
 	clientState_t rto;
@@ -143,6 +148,7 @@ void MSG_TestDeltaCS(snapshotInfo_t* snapInfo, int time, clientState_t* baseline
 		FS_WriteFile("cs_to.bin", to, sizeof(clientState_t));
 	}
 #endif
+*/
 }
 
 
@@ -211,6 +217,7 @@ void MSG_TestReadEntity()
 
 void MSG_TestPSCode()
 {
+/*
 	playerState_t *to, *from;
 	snapshotInfo_t snapInfo;
 
@@ -235,6 +242,7 @@ void MSG_TestPSCode()
 
 	FS_FreeFile(from);
 	FS_FreeFile(to);
+*/
 }
 
 /*

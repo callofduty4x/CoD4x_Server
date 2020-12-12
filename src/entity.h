@@ -253,7 +253,7 @@ typedef struct {
 	byte		svFlags;
 	byte		pad1;
 
-	int			clientMask[2];
+	int		clientMask[2];
 	byte		inuse;
 	byte		pad2[3];
 	int			broadcastTime;

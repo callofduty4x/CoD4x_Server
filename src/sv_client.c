@@ -328,7 +328,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		    svs.connectqueue[i+1].attempts = 0;
 		}
 	    }else{
-		Com_Memcpy(&svs.connectqueue[i],&svs.connectqueue[i+1],(9-i)*sizeof(connectqueue_t));
+		memmove(&svs.connectqueue[i],&svs.connectqueue[i+1],(9-i)*sizeof(connectqueue_t));
 	    }
 	}
 	for(i = 0 ; i < 10 ; i++){//Find highest slot or the one which is already assigned to this player
@@ -1957,6 +1957,7 @@ static void SV_Disconnect_f( client_t *cl ) {
 	SV_DropClient( cl, "EXE_DISCONNECTED" );
 }
 
+extern int fs_checksumFeed;
 
 void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 {
@@ -1964,6 +1965,8 @@ void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 	char bigbuf[65536];
 	char filename[64];
 	unsigned long *dataptr;
+
+	Com_Printf(CON_CHANNEL_SERVER, "SV_ParseIWDHeader\n");
 
 	int sum = MSG_ReadLong(msg);
 
@@ -1976,14 +1979,27 @@ void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 	}
 
 	MSG_ReadData(msg, bigbuf, datalen);
-	Com_Printf(CON_CHANNEL_SERVER, "Pak: %s Len: %d\n", pakName, datalen);
 
 	if(datalen % 4 != 0)
 	{
 		return;//junk
 	}
-	unsigned int random;
-	Com_RandomBytes((unsigned char*)&random, sizeof(random));
+
+	sum = Com_BlockChecksumKey32(bigbuf, datalen, LittleLong(fs_checksumFeed));
+
+	char checksumsstr[8192];
+	char checksumstr[64];
+
+	FS_LoadedIwdPureChecksums(checksumsstr, sizeof(checksumsstr));
+
+	Com_sprintf(checksumstr, sizeof(checksumstr), "%d", LittleLong(sum));
+	if(strstr(checksumsstr, checksumstr) != NULL)
+	{
+		Com_Printf(CON_CHANNEL_SERVER, "Pak already defined %s\n", pakName);
+		return;
+	}
+
+	Com_Printf(CON_CHANNEL_SERVER, "Pak: %s Len: %d\n", pakName, datalen);
 	Com_sprintf(filename, sizeof(filename), "headers/%s-%llu.dat", pakName, cl->playerid);
 	
 	fileHandle_t f = FS_SV_FOpenFileWrite(filename);
@@ -2027,121 +2043,6 @@ bool SV_IsKnownIwdLocalization(int localization)
 }
 
 
-uint64_t knownClients[0x10000];
-
-qboolean SV_ClientChecksumAlreadyReferenced(client_t* cl)
-{
-    int i;
-    if(cl->playerid == 0)
-    {
-        return qtrue;
-    }
-    for(i = 0; i < 0x10000; ++i)
-    {
-        if(knownClients[i] == cl->playerid)
-        {
-            return qtrue;
-        }
-        if(knownClients[i] == 0)
-        {
-            knownClients[i] = cl->playerid;
-            return qfalse;
-        }
-
-    }
-    return qtrue;
-}
-
-
-struct checksumtracker_t
-{
-    int refcounter;
-    long checksum;
-};
-
-struct checksumtracker_t checksumcounts[4096];
-
-
-int sorttrackercmp(const void* a, const void* b)
-{
-    const struct checksumtracker_t* _a = a;
-    const struct checksumtracker_t* _b = b;
-
-    return _b->refcounter - _a->refcounter;
-}
-
-void SV_AddChecksumRef(long checksum)
-{
-    int i;
-    for(i = 0; i < 4096; ++i)
-    {
-        if(checksumcounts[i].checksum == checksum)
-        {
-            checksumcounts[i].refcounter++;
-            break;
-        }
-    }
-    if(i == 4096)
-    {
-        for(i = 0; i < 4096; ++i)
-        {
-            if(checksumcounts[i].checksum == 0)
-            {
-                checksumcounts[i].checksum = checksum;
-                checksumcounts[i].refcounter = 1;
-                break;
-            }
-        }
-    }
-}
-
-void SV_UpdateChecksumsToDisk(long *checksums)
-{
-    fileHandle_t f;
-    int i = 0;
-    char line[2048];
-    FS_SV_FOpenFileRead("checksums.dat", &f);
-    if(f < 1)
-    {
-        return;
-    }
-
-    memset(checksumcounts, 0, sizeof(checksumcounts));
-
-    int read;
-    while((read = FS_ReadLine(line, sizeof(line), f)) > 0 && i < 4096)
-    {
-        Cmd_TokenizeString(line);
-        checksumcounts[i].checksum = atoi(Cmd_Argv(0));
-        checksumcounts[i].refcounter = atoi(Cmd_Argv(1));
-        Cmd_EndTokenizedString();
-        ++i;
-    }
-    FS_FCloseFile(f);
-
-
-    for(i = 0; checksums[i]; ++i)
-    {
-        SV_AddChecksumRef(checksums[i]);
-    }
-
-    qsort(checksumcounts, 4096, sizeof(struct checksumtracker_t), sorttrackercmp);
-
-
-    i = 0;
-    f = FS_SV_FOpenFileWrite("checksums.dat");
-    if(f < 1)
-    {
-        return;
-    }
-    while(i < 4096 && checksumcounts[i].checksum != 0)
-    {
-        FS_Printf(f, "%d %d\n", checksumcounts[i].checksum,checksumcounts[i].refcounter);
-        ++i;
-    }
-    FS_FCloseFile(f);
-
-}
 
 
 /*
@@ -2176,8 +2077,6 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   int nServerChkSum[1025];
   int nCurArg;
   char chkbuf[0x4000];
-  long unknownchecksums[32];
-  long unknowncnt = 0;
 
   int bPrint = 0;
 
@@ -2248,11 +2147,6 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
 //            Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d\n", nClientChkSum[i]);
 //            if(SV_IsKnownIwdLocalization(cl->localization))
             {
-                if(unknowncnt < 31)
-                {
-                    unknownchecksums[unknowncnt] = nClientChkSum[i];
-                    unknowncnt++;
-                }
                 Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
 //                bGood = 0; //Ignore this yet - logging only
                 bPrint = 1;
@@ -2298,11 +2192,6 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   {
       char buffer[1024];
       Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
-      unknownchecksums[unknowncnt] = 0;
-      if(!SV_ClientChecksumAlreadyReferenced(cl))
-      {
-          SV_UpdateChecksumsToDisk(unknownchecksums);
-      }
   }
 
 
@@ -2884,6 +2773,7 @@ void SV_ExecuteReliableMessage(client_t* client)
 			break;
 		case 11337:
 			SV_ParseIWDHeader(client, msg);
+			break;
 		case clc_acdata:
 			SV_PassNETMessageXAC(client, msg);
 			break;

@@ -131,6 +131,7 @@ yyparse:
 	push ebx
 	sub esp, 0x28ac
 	mov dword [yynerrs], 0x0
+	mov dword [yyin], 0x0
 	mov dword [yychar], 0xfffffffe
 	lea eax, [ebp-0x1aa]
 	mov [ebp-0x284c], eax

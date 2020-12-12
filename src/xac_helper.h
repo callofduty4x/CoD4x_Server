@@ -1,3 +1,5 @@
+#ifndef __XAC_HELPER__H__
+#define __XAC_HELPER__H__
 #ifndef __IN_EXTXACHLPMODULE__
 
 #include "msg.h"
@@ -96,4 +98,4 @@ typedef struct{
 
 
 #endif
-
+#endif

@@ -1,9 +1,7 @@
 ;Imports of cm_tracebox:
 
 ;Exports of cm_tracebox:
-	global CM_TraceBox
 	global CM_TraceSphere
-	global CM_CalcTraceExtents
 
 
 SECTION .text
@@ -101,35 +99,6 @@ CM_TraceSphere_10:
 	jmp CM_TraceSphere_20
 	add [eax], al
 
-
-;CM_CalcTraceExtents(TraceExtents*)
-CM_CalcTraceExtents:
-	push ebp
-	mov ebp, esp
-	mov eax, [ebp+0x8]
-	mov edx, 0x3
-	pxor xmm1, xmm1
-	movss xmm2, dword [_float_1_00000000]
-CM_CalcTraceExtents_20:
-	movss xmm0, dword [eax]
-	subss xmm0, [eax+0xc]
-	ucomiss xmm0, xmm1
-	jnz CM_CalcTraceExtents_10
-	jp CM_CalcTraceExtents_10
-	movaps xmm0, xmm1
-CM_CalcTraceExtents_30:
-	movss [eax+0x18], xmm0
-	add eax, 0x4
-	sub edx, 0x1
-	jnz CM_CalcTraceExtents_20
-	pop ebp
-	ret
-CM_CalcTraceExtents_10:
-	movaps xmm3, xmm2
-	divss xmm3, xmm0
-	movaps xmm0, xmm3
-	jmp CM_CalcTraceExtents_30
-	nop
 
 
 ;Zero initialized global or static variables of cm_tracebox:

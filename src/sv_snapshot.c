@@ -1644,6 +1644,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
                 to.r.svFlags |= 8u;
               }
 	      to.r.clientMask[0] = gent->r.clientMask[0];
+	      to.r.clientMask[1] = gent->r.clientMask[1];
 	      VectorCopy(gent->r.absmin, to.r.absmin);
 	      VectorCopy(gent->r.absmax, to.r.absmax);
 
@@ -1778,6 +1779,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
           archEnt->r.svFlags |= 8u;
         }
         archEnt->r.clientMask[0] = gent->r.clientMask[0];
+        archEnt->r.clientMask[1] = gent->r.clientMask[1];
 
 	VectorCopy(gent->r.absmax, archEnt->r.absmax);
 	VectorCopy(gent->r.absmin, archEnt->r.absmin);
