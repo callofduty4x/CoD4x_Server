@@ -266,6 +266,7 @@ void SV_GetSS_f();
 
 void SV_TryLoadXAC()
 {
+	return;
 //	char errormsg[1024];
 	void* hmodule;
 	static imports_t exports;
