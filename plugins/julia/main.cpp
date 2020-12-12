@@ -68,6 +68,7 @@ static int serverport;
 static void ClearCachedBan(baninfo_t* baninfo);
 static void ListCachedBans_f();
 void SendServerChat(int client, const char* message);
+static void* SendServerdataThread(void* q);
 
 char* JSONEscape(const char* s, char* outbuf, int maxlen)
 {

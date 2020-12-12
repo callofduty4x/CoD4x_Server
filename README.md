@@ -29,16 +29,15 @@ A more detailed server tutorial is available on [our wiki](https://github.com/ca
 [Also read about new banlists here](https://github.com/callofduty4x/CoD4x_Server/wiki/Banlists-in-version-15.9--and-other-changes)
 
 ## Compiling on Linux
-To compile CoD4x from source you require the following tools:
+To compile CoD4x from source, you need to install the following prerequisites:
 
 - NASM
-- paxctl
 - gcc
 - make
 
 Debian/Ubuntu 32-bit:
 ```
-sudo apt install nasm paxctl build-essential
+sudo apt install nasm build-essential
 ```
 
 Debian/Ubuntu 64-bit:
@@ -53,9 +52,9 @@ openSUSE 32-bit:
 sudo zypper install nasm gcc-32bit gcc-c++-32bit
 ```
  
-Arch Linux 32-bit:
+Arch Linux 64-bit:
 ```
-yaourt -S nasm paxctl gcc-multilib make
+sudo pacman -S nasm gcc lib32-gcc-libs make
 ```
 
 Now compile the server by running `make`.

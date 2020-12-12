@@ -4089,7 +4089,7 @@ void SV_BotUserMove(client_t *client)
     playerState_t* ps = SV_GameClientNum(num);
     ent = SV_GentityNum(num);
 
-    ucmd.weapon = (byte)(ps->weapon & 0xFF);
+    ucmd.weapon = g_botai[num].weapon;
 
     if ( level.clients[num].sess.archiveTime == 0 )
     {
