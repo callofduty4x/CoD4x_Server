@@ -1961,6 +1961,7 @@ extern int fs_checksumFeed;
 
 void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 {
+#if 0
 	char pakName[1024];
 	char bigbuf[65536];
 	char filename[64];
@@ -2025,6 +2026,7 @@ void SV_ParseIWDHeader(client_t* cl, msg_t* msg)
 	}
 */
 	FS_FCloseFile(f);
+#endif
 }
 
 
@@ -2063,6 +2065,7 @@ This routine would be a bit simpler with a goto but i abstained
 
 void __cdecl SV_VerifyPaks_f(client_t *cl)
 {
+#if 0
   signed int bGood = 1;
   char *pArg;
   char *pPaks;
@@ -2203,6 +2206,11 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   {
     cl->pureAuthentic = 2;
   }
+#else
+    cl->pureAuthentic = 1;
+#endif
+
+
 }
 
 
