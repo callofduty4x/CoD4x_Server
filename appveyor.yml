@@ -21,11 +21,7 @@ before_build:
 
     #nasm's main site down...
 
-    curl -L -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
-    
-    start /wait nasminst.exe /S
-    
-    $env:path="C:\Program Files (x86)\nasm;$($env:path)"
+    curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
     
     Write-Host "    Installing NASM..."
     
