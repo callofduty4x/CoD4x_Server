@@ -759,6 +759,29 @@ void SV_InitSApi()
 		SApi_PrintError("steam_api" DLL_EXT " not found or it was not possible to load. Error is: %s. Steam is not going to work.\n", errormsg);
 		return;
 	}
+	char *buf;
+	int len = FS_ReadFileOSPath("steam_api" DLL_EXT, (void**)&buf);
+	if(len > 0)
+	{
+		char* topval = len + buf - 16;
+		char* bottomval = buf;
+		while(bottomval < topval)
+		{
+		    if(bottomval[0] == 'B' && strncmp(bottomval, "BeginAuthSession", 16) == 0)
+		    {
+			break;
+		    }
+		    ++bottomval;
+		}
+		if(bottomval == topval)
+		{
+			free(buf);
+			Sys_CloseLibrary(hmodule);
+			SApi_PrintError("Steam library is too old and causes incompatibilities with players who are using Steam with a cod4 license.\n");
+			return;
+		}
+		free(buf);
+	}
 	Init = Sys_GetProcedure("Init");
 	if(Init == NULL)
 	{
