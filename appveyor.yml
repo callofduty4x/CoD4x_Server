@@ -17,7 +17,15 @@ before_build:
     
     Write-Host "    Downloading NASM..."
     
-    curl -o nasminst.exe https://www.nasm.us/pub/nasm/releasebuilds/2.14rc15/win32/nasm-2.14rc15-installer-x86.exe
+    #curl -o nasminst.exe https://www.nasm.us/pub/nasm/releasebuilds/2.14rc15/win32/nasm-2.14rc15-installer-x86.exe
+
+    #nasm's main site down...
+
+    curl -L -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
+    
+    start /wait nasminst.exe /S
+    
+    $env:path="C:\Program Files (x86)\nasm;$($env:path)"
     
     Write-Host "    Installing NASM..."
     
