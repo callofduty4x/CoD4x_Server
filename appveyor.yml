@@ -21,7 +21,7 @@ before_build:
 
     #nasm's main site down...
 
-    curl -o nasminst.exe http://libgd.blob.core.windows.net/nasm/nasm-2.07-installer.exe
+    curl -o nasminst.exe https://github.com/callofduty4x/CoD4x_Server/blob/master/tools/nasm-2.14rc0-installer-x86.exe?raw=true
     
     Write-Host "    Installing NASM..."
     
