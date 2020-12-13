@@ -27,6 +27,8 @@ before_build:
     
     .\nasminst.exe /S
 
+    $env:path="C:\Program Files (x86)\nasm;$($env:path)"
+
     nasm -v
     
     Write-Host "Setting up environment variables."
