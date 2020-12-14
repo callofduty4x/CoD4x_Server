@@ -267,7 +267,7 @@ docker: $(TARGET)
 
 plugins: 
 	@$(MAKE) -C $(PLUGIN_DIR)/screenshotsender
-	@$(MAKE) -C $(PLUGIN_DIR)/antispam
+	#@$(MAKE) -C $(PLUGIN_DIR)/antispam
 	@$(MAKE) -C $(PLUGIN_DIR)/censor
 	@$(MAKE) -C $(PLUGIN_DIR)/cod4x_b3hide
 	@$(MAKE) -C $(PLUGIN_DIR)/simplebanlist
@@ -275,7 +275,7 @@ plugins:
 	@$(MAKE) -C $(PLUGIN_DIR)/pchat
 	@$(MAKE) -C $(PLUGIN_DIR)/sourcebansplugin
 	@$(MAKE) -C $(PLUGIN_DIR)/warn
-	@$(MAKE) -C $(PLUGIN_DIR)/julia
+	#@$(MAKE) -C $(PLUGIN_DIR)/julia
 	@$(MAKE) -C $(PLUGIN_DIR)/legacybanlist
 
 
