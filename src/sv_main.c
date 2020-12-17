@@ -773,11 +773,6 @@ __optimize3 __regparm1 void SVC_Status( netadr_t *from ) {
     if(*sv_password->string)
         Info_SetValueForKey( infostring, "pswrd", "1");
 
-    if(sv_authorizemode->integer == 1)		//Backward compatibility
-        Info_SetValueForKey( infostring, "type", "1");
-    else
-        Info_SetValueForKey( infostring, "type", va("%i", sv_authorizemode->integer));
-
     // add "demo" to the sv_keywords if restricted
     if(NET_CompareBaseAdr(&atvimaster, from))
     {
@@ -869,11 +864,6 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
     Info_SetValueForKey(infostring, "protocol", "6");
     Info_SetValueForKey( infostring, "hostname", sv_hostname->string );
 
-    if(sv_authorizemode->integer == 1)		//Backward compatibility
-        Info_SetValueForKey( infostring, "type", "1");
-    else
-        Info_SetValueForKey( infostring, "type", va("%i", sv_authorizemode->integer));
-
     Info_SetValueForKey( infostring, "mapname", sv_mapname->string );
     Info_SetValueForKey( infostring, "clients", va("%i", count) );
     Info_SetValueForKey( infostring, "g_humanplayers", va("%i", humans));
@@ -883,7 +873,7 @@ __optimize3 __regparm1 void SVC_Info( netadr_t *from ) {
     Info_SetValueForKey( infostring, "build", va("%i", Sys_GetBuild()));
     Info_SetValueForKey( infostring, "shortversion", va("x%d", PROTOCOL_VERSION) );
 
-        if(*sv_password->string)
+    if(*sv_password->string)
     {
         Info_SetValueForKey( infostring, "pswrd", "1");
     }else{
@@ -4192,7 +4182,7 @@ void SV_PreFrame()
   SV_UpdateBots();
   if ( cvar_modifiedFlags & 0x404 )
   {
-    SV_SetConfigstring(0, Cvar_InfoString(4));
+    SV_SetConfigstring(0, Cvar_InfoString(CVAR_SERVERINFO));
     cvar_modifiedFlags &= ~0x404;
   }
 

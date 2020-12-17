@@ -268,6 +268,7 @@ void Com_TruncateLongString( char *buffer, const char *s );
 qboolean Info_Validate( const char *s );
 char *Info_ValueForKey( const char *s, const char *key );
 void Info_SetValueForKey( char *s, const char *key, const char *value );
+void BigInfo_SetValueForKey( char *s, const char *key, const char *value );
 void Info_Print( const char *s );
 void Info_SetEncodedValueForKey( char *s, const char *key, const char *value, int len );
 int Info_DecodedValueForKey( const char *s, const char *key, char *out, int outbuflen);

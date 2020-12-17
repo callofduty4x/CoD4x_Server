@@ -334,6 +334,20 @@ __asm__("int $3");
 
 */
 
+#include "cscr_variable.h"
+#include "cscr_stringlist.h"
+
+void DumpVariable_f(){
+/*
+    unsigned int scrstring = SL_GetString("script", 0);
+    unsigned int id = FindVariableIndexInternal(gScrVarPub.levelId, scrstring);
+    unsigned int newstring = GetVariableName(id);
+    Com_Printf(0, "^1Script string is: %s\n", SL_ConvertToString(newstring));
+*/
+
+}
+
+
 
 void Tests_Init()
 {
@@ -342,5 +356,8 @@ void Tests_Init()
 	Cmd_AddCommand("printdobj", FindAndPrintDObj_f);
 	Cmd_AddCommand("dumpvehicles", DumpVehicleInfo_f);
 */
+//	Cmd_AddCommand("dumpvariable", DumpVariable_f);
 }
+
+
 

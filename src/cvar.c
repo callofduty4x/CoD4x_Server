@@ -2109,11 +2109,6 @@ char	*Cvar_InfoString( int bit ) {
 	return info;
 }
 
-char	*Cvar_InfoString_IW_Wrapper( int dummy, int bit )
-{
-    return Cvar_InfoString( bit );
-}
-
 
 /*
 =====================
@@ -2139,7 +2134,8 @@ char	*Cvar_InfoString_Big( int bit, char* buf, int len )
 				Cvar_ValueToStr(var, value, sizeof(value), NULL, 0, NULL, 0);
 			else
 				Com_sprintf(value, sizeof(value), "%d", var->boolean);
-			Info_SetValueForKey (info, var->name, value);		}
+			BigInfo_SetValueForKey (info, var->name, value);
+		}
 	}
 
 	Q_strncpyz(buf, info, len);

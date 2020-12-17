@@ -735,6 +735,73 @@ Changes or adds a key/value pair
 ==================
 */
 void Info_SetValueForKey( char *s, const char *key, const char *value ) {
+	char	newi[MAX_INFO_STRING];
+
+	if ( strlen( s ) >= MAX_INFO_STRING ) {
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Unexpected error - Info_SetValueForKey: oversize infostring\n" );
+	}
+
+	if (strchr (key, '\\'))
+	{
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use keys with a \\\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad key: %s value: %s\n", key, value);
+		return;
+	}
+
+	if (strchr (value, '\\'))
+	{
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use values with a \\\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad value: %s key: %s\n", value, key);
+		return;
+	}
+
+	if (strchr (key, ';'))
+	{
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use keys with a semicolon\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad key: %s value: %s\n", key, value);
+		return;
+	}
+
+	if (strchr (value, ';'))
+	{
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use values with a semicolon\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad value: %s key: %s\n", value, key);
+		return;
+	}
+
+	if (strchr (key, '\"'))
+	{
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use keys with a \"\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad key: %s value: %s\n", key, value);
+		return;
+	}
+	if (strchr (value, '\"'))
+	{
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Can't use values with a \"\n");
+		Com_DPrintf(CON_CHANNEL_SYSTEM,"Bad value: %s key: %s\n", value, key);
+		return;
+	}
+
+
+	Info_RemoveKey (s, key);
+	if (!value || !strlen(value))
+		return;
+
+	Com_sprintf (newi, sizeof(newi), "\\%s\\%s", key, value);
+
+	if (strlen(newi) + strlen(s) > MAX_INFO_STRING)
+	{
+		Com_PrintWarning(CON_CHANNEL_SYSTEM,"Info string length exceeded\n");
+		return;
+	}
+
+	strcat (newi, s);
+	strcpy (s, newi);
+}
+
+
+
+void BigInfo_SetValueForKey( char *s, const char *key, const char *value ) {
 	char	newi[BIG_INFO_STRING];
 
 	if ( strlen( s ) >= BIG_INFO_STRING ) {
@@ -928,7 +995,7 @@ void Info_SetEncodedValueForKey( char *s, const char *key, const char *value, in
 
     Info_Encode(value, len, codedvalue, sizeof(codedvalue));
 
-    Info_SetValueForKey( s, key, codedvalue );
+    BigInfo_SetValueForKey( s, key, codedvalue );
 }
 
 int Info_DecodedValueForKey( const char *s, const char *key, char *out, int outbuflen)

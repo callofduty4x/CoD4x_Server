@@ -1631,7 +1631,7 @@ Examine or change the serverinfo string
 */
 static void SV_Systeminfo_f( void ) {
 	Com_Printf(CON_CHANNEL_DONT_FILTER, "System info settings:\n" );
-	Info_Print( Cvar_InfoString( CVAR_SYSTEMINFO ) );
+	Info_Print( Cvar_InfoString( CVAR_SYSTEMINFO ));
 }
 
 //===========================================================
