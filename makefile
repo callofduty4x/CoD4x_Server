@@ -21,6 +21,9 @@ TARGETNAME=cod4x18_dedrun
 BUILD_NUMBER=$(shell git rev-list --count HEAD)
 BUILD_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 BUILD_REVISION=$(shell git rev-parse HEAD)
+VERSION=$(shell grep '\#define SYS_COMMONVERSION' src/version/version.c | cut -d' ' -f3)
+
+$(info You build CoD4 version: $(VERSION))
 
 ifeq ($(BUILD_NUMBER), )
 BUILD_NUMBER:=0
@@ -32,14 +35,6 @@ endif
 
 ifeq ($(BUILD_REVISION), )
 BUILD_REVISION:=no-revision
-endif
-
-############################################
-# Configure type of build.
-ifeq ($(OFFICIAL), true)
-BUILD_TYPE=OFFICIAL
-else
-BUILD_TYPE=
 endif
 
 ###################
@@ -61,7 +56,7 @@ WIN_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 ws2_32 wsock32 iphlpapi gdi32 win
 LINUX_LFLAGS=-m32 -g -static-libgcc -rdynamic -Wl,-rpath=./
 LINUX_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 dl pthread m stdc++
 BSD_LLIBS=tomcrypt mbedtls mbedcrypto mbedx509 pthread m execinfo stdc++
-COD4X_DEFINES=COD4X18UPDATE $(BUILD_TYPE) BUILD_NUMBER=$(BUILD_NUMBER) BUILD_BRANCH=$(BUILD_BRANCH) BUILD_REVISION=$(BUILD_REVISION)
+COD4X_DEFINES=COD4X18UPDATE BUILD_NUMBER=$(BUILD_NUMBER) BUILD_BRANCH=$(BUILD_BRANCH) BUILD_REVISION=$(BUILD_REVISION)
 
 ########################
 # Setup directory names.
@@ -97,7 +92,7 @@ RESOURCE_FILE=src/win32/win_cod4.res
 DEF_FILE=$(BIN_DIR)/$(TARGETNAME).def
 INTERFACE_LIB=$(PLUGINS_DIR)/libcom_plugin.a
 ADDITIONAL_OBJ=$(INTERFACE_LIB)
-CLEAN=del $(subst /,\\,$(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB))
+CLEAN=-del $(subst /,\\,$(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB))
 else
 #################
 # LINUX variables.
@@ -117,7 +112,8 @@ endif
 
 RESOURCE_FILE=
 ADDITIONAL_OBJ=
-CLEAN=rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
+CLEAN=-rm $(OBJ_DIR)/*.o $(DEF_FILE) $(INTERFACE_LIB)
+
 endif
 
 #####################
@@ -143,6 +139,7 @@ ASSETS_OBJ=$(patsubst $(ASSETS_DIR)/%.c,$(OBJ_DIR)/%.o,$(ASSETS_SOURCES))
 #############################################################
 #############################################################
 
+
 ###############################
 # Default rule: rebuild server.
 all: notify $(EXTERNAL) $(TARGET) $(ADDITIONAL_OBJ)
@@ -150,6 +147,22 @@ all: notify $(EXTERNAL) $(TARGET) $(ADDITIONAL_OBJ)
 
 notify:
 	@echo Server start
+
+# defines this new target for tagging and releasing
+.PHONY: release
+release: C_DEFINES+=$(addprefix -D,OFFICIAL)
+release: releaseprolog clean all plugins gittagging
+
+# defines warning message and buildtype official
+.PHONY: releaseprolog
+releaseprolog:
+	@echo ""
+	@echo "Are you sure you want to create a GitHub Release? [y/N] " && read ans && [ $${ans:-N} = y ]
+
+.PHONY: gittagging
+gittagging:
+	git tag -a v$(VERSION)
+	git push origin --tags
 
 #################################
 # A rule to make mbedtls library.
