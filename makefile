@@ -21,9 +21,11 @@ TARGETNAME=cod4x18_dedrun
 BUILD_NUMBER=$(shell git rev-list --count HEAD)
 BUILD_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 BUILD_REVISION=$(shell git rev-parse HEAD)
-VERSION=$(shell grep '\#define SYS_COMMONVERSION' src/version/version.c | cut -d' ' -f3)
 
+ifneq ($(OS),Windows_NT)
+VERSION=$(shell grep '\#define SYS_COMMONVERSION' src/version/version.c | cut -d' ' -f3)
 $(info You build CoD4 version: $(VERSION))
+endif
 
 ifeq ($(BUILD_NUMBER), )
 BUILD_NUMBER:=0
@@ -163,6 +165,7 @@ releaseprolog:
 gittagging:
 	git tag -a v$(VERSION)
 	git push origin --tags
+	
 
 #################################
 # A rule to make mbedtls library.
