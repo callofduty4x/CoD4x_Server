@@ -28,7 +28,7 @@ class EntHandle
 
 };
 void __cdecl EntHandleDissociate(struct gentity_s *ent);
-
+extern "C" void __cdecl turret_think_client(gentity_s* ent);
 #endif
 
 #include "entity.h"

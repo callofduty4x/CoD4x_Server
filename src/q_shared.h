@@ -743,16 +743,20 @@ qboolean Assert_MyHandler(const char* exp, const char *filename, int line, const
 
 #define assert ASSERT
 #define assertx XASSERT
+#define release_assert RELEASE_ASSERT
+#define release_assertx RELEASE_XASSERT
 #define ASSERT_HANDLER(x, f, l, fu, ...) (Assert_MyHandler(x, f, l, fu, __VA_ARGS__))
 
 #ifdef NDEBUG
 #define XASSERT(x, ...)
 #define ASSERT(x)
-
+#define RELEASE_XASSERT(x, ...) (!(x) && ASSERT_HANDLER(#x, __FILE__, __LINE__, __func__, __VA_ARGS__) && (ASSERT_HALT(), 1))
+#define RELEASE_ASSERT(x) RELEASE_XASSERT(x, NULL)
 #else
 #define XASSERT(x, ...) (!(x) && ASSERT_HANDLER(#x, __FILE__, __LINE__, __func__, __VA_ARGS__) && (ASSERT_HALT(), 1))
 #define ASSERT(x) XASSERT(x, NULL)
-
+#define RELEASE_XASSERT XASSERT
+#define RELEASE_ASSERT ASSERT
 #endif
 
 
