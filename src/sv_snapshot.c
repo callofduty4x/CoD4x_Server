@@ -343,6 +343,7 @@ void SV_WriteClientConfigInfo( msg_t* msg, client_t* cl, int messageNum )
 	if(messageNum != -1) //Only in gamestate this will be -1
 	{
 		MSG_WriteLong(msg, messageNum);
+		MSG_WriteLong(msg, sv.start_frameTime);
 	}
 	MSG_WriteByte( msg, cl - svs.clients );
 	MSG_WriteString( msg, cl->name );
@@ -354,6 +355,11 @@ void SV_UpdateConfigData(client_t* cl, msg_t* msg)
 {
 	int i;
 	unsigned int index;
+
+	if(cl->gamestateSent < 2)
+	{
+		return; //reset sent, need to wait till client has gamestate acknowledged
+	}
 
 	//cl: client to whom we write updates
 	if(svs.configDataSequence - MAX_CONFIGDATACACHE >= cl->configDataAcknowledge)
@@ -367,7 +373,6 @@ void SV_UpdateConfigData(client_t* cl, msg_t* msg)
 		cl->delayDropMsg = "svs.configDataSequence < cl->configDataAcknowledge";
 		return;
 	}
-
 	for(i = cl->configDataAcknowledge +1; i <= svs.configDataSequence; ++i)
 	{
 	//	Com_Printf(CON_CHANNEL_SERVER,"Write Data: %d, Sequence %d\n", i, svs.configDataSequence);

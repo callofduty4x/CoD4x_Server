@@ -26,6 +26,7 @@
 #include "sys_thread.h"
 #include "httpftp.h"
 #include "sapi.h"
+#include "g_shared.h"
 /*=========================================*
  *                                         *
  *        Plugin Handler's exports         *
@@ -1100,4 +1101,10 @@ P_P_F void Plugin_DPrintf( const char *fmt, ...) {
 	va_end (argptr);
 
         Com_PrintMessage( CON_CHANNEL_PLUGINS, msg, MSG_DEFAULT);
+}
+
+
+P_P_F level_locals_t* Plugin_GetLevelBase( )
+{
+    return &level;
 }

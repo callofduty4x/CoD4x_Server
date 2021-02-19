@@ -2711,9 +2711,10 @@ void FS_InitFilesystem()
   Q_strncpyz(lastValidBase, fs_basepath->string, sizeof(lastValidBase));
   Q_strncpyz(lastValidGame, fs_gameDirVar->string, sizeof(lastValidGame));
 
+/*
   char info[8192];
-
   Com_Printf(CON_CHANNEL_FILES, "Valid IWD checksums: %s\n", FS_LoadedIwdPureChecksums(info, 8192));
+*/
 }
 
 

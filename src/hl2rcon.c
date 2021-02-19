@@ -192,7 +192,7 @@ qboolean HL2Rcon_SourceRconAuth(netadr_t *from, msg_t *msg, rconUser_t* user){
 	//int i;
 	char buf[MAX_STRING_CHARS];
 	char stringlinebuf[MAX_STRING_CHARS];
-	int steamid;
+	uint64_t steamid;
 
 	//packetlen =
 	MSG_ReadLong(msg);
@@ -504,7 +504,7 @@ void HL2Rcon_ExecuteConsoleCommand(const char* command, uint64_t steamid)
 		powercmd = Cmd_GetPower(cmd);
 		if(powercmd > power)
 		{
-			Com_Printf(CON_CHANNEL_DONT_FILTER,"Insufficient permissions!\n");
+			Com_Printf(CON_CHANNEL_DONT_FILTER,"Insufficient permissions! Power: %d Needed: %d\n", power, powercmd);
 		}else{
 			Cmd_ExecuteSingleCommand(0,0, buffer);
 		}

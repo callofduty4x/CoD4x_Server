@@ -3295,7 +3295,6 @@ void SV_UpdateClientConfigInfo(client_t* cl)
 {
     ++svs.configDataSequence;
     svs.changedConfigData[svs.configDataSequence % MAX_CONFIGDATACACHE] = cl - svs.clients;
-
 }
 
 typedef struct{
@@ -4226,6 +4225,8 @@ unsigned int SV_FrameUsec()
     else
         return 1;
 }
+
+
 /*
 spawnerrortest_t e_spawns[64];
 #include <math.h>
@@ -4357,8 +4358,6 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
     }
 
 */
-
-
 
 #ifdef PUNKBUSTER
     PbServerProcessEvents( 0 );

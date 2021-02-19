@@ -2321,7 +2321,6 @@ void SV_LoadMapFromBsp()
 
 }
 
-
 void SV_DoHostMigration_f();
 
 void SV_AddOperatorCommands()
@@ -2383,7 +2382,6 @@ void SV_AddOperatorCommands()
 
 	}
 //	Cmd_AddCommand ("hostmigration", SV_DoHostMigration_f);
-
 }
 
 

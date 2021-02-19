@@ -1165,10 +1165,10 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 		return;
 	}
 
-/*
-	if(client->netchan.remoteAddress.type != NA_BOT && ((sv_pure->integer != 0 && client->pureAuthentic == 0) || !psvs.serverAuth))
+
+	if(client->netchan.remoteAddress.type != NA_BOT && ((sv_pure->integer != 0 && client->pureAuthentic == 0)))
 		return;
-*/
+
 	Com_DPrintf(CON_CHANNEL_SERVER, "Going from CS_PRIMED to CS_ACTIVE for %s\n", client->name );
 	client->state = CS_ACTIVE;
 
@@ -1220,8 +1220,6 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	{
 		client->connectedTime = svs.time;
 	}
-
-	client->pureAuthentic = 1;
 
 	HL2Rcon_EventClientEnterWorld( clientNum );
 	PHandler_Event(PLUGINS_ONCLIENTENTERWORLD, client);
@@ -1807,7 +1805,7 @@ void SV_SendClientGameState( client_t *client ) {
 	//Gamestate contains all the config updates. So we acknowledge here all old messages
 	client->configDataAcknowledge = svs.configDataSequence;
 
-	Com_DPrintf(CON_CHANNEL_SERVER,"configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svs.configDataSequence);
+//	Com_DPrintf(CON_CHANNEL_SERVER,"configDataAcknowledge is now %d and configDataSequence is now %d\n", client->configDataAcknowledge, svs.configDataSequence);
 
 	client->gamestateSent = 1;
 }
@@ -1887,7 +1885,7 @@ __optimize3 __regparm2 void SV_ExecuteClientMessage( client_t *cl, msg_t *msg ) 
 		}
 		return;
 	}
-
+	cl->gamestateSent = 2; //need this to know when player received the gamestate
 
 	while(qtrue)
 	{
@@ -2035,14 +2033,6 @@ qboolean SV_VerifyFastFiles(client_t *cl)
 	return qtrue;
 }
 
-bool SV_IsKnownIwdLocalization(int localization)
-{
-    if(localization < 5)
-    {
-        return true;
-    }
-    return false;
-}
 
 
 
@@ -2065,7 +2055,6 @@ This routine would be a bit simpler with a goto but i abstained
 
 void __cdecl SV_VerifyPaks_f(client_t *cl)
 {
-#if 0
   signed int bGood = 1;
   char *pArg;
   char *pPaks;
@@ -2094,7 +2083,6 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     if ( *pArg == '@' )
 #endif
     {
-    Com_Printf(CON_CHANNEL_SYSTEM, "^5Fix me - need to detect old versions of cp command\n");
       pArg = SV_Cmd_Argv(nCurArg++);
       pArg++; // Skip L
       cl->localization = atoi( pArg );
@@ -2147,14 +2135,10 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( k >= nServerPaks )
           {
-//            Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d\n", nClientChkSum[i]);
-//            if(SV_IsKnownIwdLocalization(cl->localization))
-            {
-                Com_Printf(CON_CHANNEL_SERVER, "Unknown checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
-//                bGood = 0; //Ignore this yet - logging only
-                bPrint = 1;
-            }
-        //    break;
+            Com_Printf(CON_CHANNEL_SERVER, "Bad checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
+            bGood = 0; //Ignore this yet - logging only
+            bPrint = 1;
+            break;
           }
         }
         if ( bGood )
@@ -2166,17 +2150,12 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( (nClientPaks ^ nChkSum1) != nClientChkSum[nClientPaks] )
           {
-            if(SV_IsKnownIwdLocalization(cl->localization))
-            {
-//                bGood = 0;//Ignore since it is impossible to validate this yet without localized iwd info
-            }
+            bGood = 0;//Ignore since it is impossible to validate this yet without localized iwd info
           }
         }
         if( bGood )
         {
             bGood = SV_VerifyFastFiles(cl);
-            Com_Printf(CON_CHANNEL_SERVER, "Localization: %d connected\n", cl->localization);
-
         }
       }
 
@@ -2191,7 +2170,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
     bGood = 0;
   }
 
-//  if( bPrint )
+  if( bPrint )
   {
       char buffer[1024];
       Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
@@ -2206,11 +2185,6 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   {
     cl->pureAuthentic = 2;
   }
-#else
-    cl->pureAuthentic = 1;
-#endif
-
-
 }
 
 
@@ -3062,7 +3036,7 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
   }
   else
   {
-    Com_PrintError(CON_CHANNEL_SERVER, "Invalid command time %i from client %s, current server time is %i", cmd->serverTime, cl->name, svs.time);
+    Com_PrintError(CON_CHANNEL_SERVER, "Invalid command time %i from client %s, current server time is %i\n", cmd->serverTime, cl->name, svs.time);
 /*
     if ( GetCurrentThreadId() == (_DWORD)g_DXDeviceThread && 0 == dword_A8402BC )
     {
