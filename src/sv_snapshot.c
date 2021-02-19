@@ -343,7 +343,6 @@ void SV_WriteClientConfigInfo( msg_t* msg, client_t* cl, int messageNum )
 	if(messageNum != -1) //Only in gamestate this will be -1
 	{
 		MSG_WriteLong(msg, messageNum);
-		MSG_WriteLong(msg, sv.start_frameTime);
 	}
 	MSG_WriteByte( msg, cl - svs.clients );
 	MSG_WriteString( msg, cl->name );
