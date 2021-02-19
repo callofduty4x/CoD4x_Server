@@ -19,7 +19,6 @@
 	extern ClientEndFrame
 	extern ClientThink_real
 	extern BG_PlayerStateToEntityState
-	extern G_ClientStopUsingTurret
 	extern level_bgs
 	extern SV_GetAssignedTeam
 	extern G_InitGentity
