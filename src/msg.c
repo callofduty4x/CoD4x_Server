@@ -2990,7 +2990,7 @@ void MSG_WriteDeltaClient(struct snapshotInfo_s *snapInfo, msg_t *msg, const int
 }
 
 
-int kbitmask[33] =
+unsigned int kbitmask[33] =
 {
   0,
   1,

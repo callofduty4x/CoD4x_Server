@@ -6,7 +6,7 @@
 # If you want to get a debug version, use                                  #
 # `make DEBUG=true`                                                        #
 # If you want to get a official version, which does always autoupdate, use #
-# `make OFFICIAL=true`                                                     #
+# `make release`                                                     #
 ############################################################################
 
 ##############################

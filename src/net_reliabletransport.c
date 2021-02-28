@@ -154,7 +154,7 @@ void ReliableMessageWriteSelectiveAcklist(framedata_t *frame, msg_t* msg)
 	int i;
 	int inrange = 0;
 	int count = 0;
-	int lengthcnt;
+	int lengthcnt = 0;
 	int numbytepos;
 	//Function can write up to 9 bytes (count >= 2)
 	numbytepos = msg->cursize;

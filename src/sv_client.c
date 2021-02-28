@@ -1186,14 +1186,14 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	if(cmd)
 		client->lastUsercmd = *cmd;
 
-	// call the game begin function
-	ClientBegin( clientNum );
-
 	// a bad cp command was sent, drop the client
 	if ( client->netchan.remoteAddress.type != NA_BOT && sv_pure->integer != 0 && client->pureAuthentic == 2) {
 		SV_DropClient( client, "EXE_UNPURECLIENTDETECTED" );
 		return;
 	}
+
+	// call the game begin function
+	ClientBegin( clientNum );
 
 	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
 
