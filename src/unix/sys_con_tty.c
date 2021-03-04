@@ -56,6 +56,7 @@ static int ttycon_hide = 0;
 
 // some key codes that the terminal may be using, initialised on start up
 static int TTY_erase;
+static int TTY_werase;
 static int TTY_eof;
 
 static struct termios TTY_tc;
@@ -114,6 +115,16 @@ static void CON_Back( void )
 	write(STDOUT_FILENO, &key, 1);
 }
 
+static void CON_MoveBack( void )
+{
+	write(STDOUT_FILENO, "\033[D", 3);
+}
+
+static void CON_MoveForward( void )
+{
+	write(STDOUT_FILENO, "\033[C", 3);
+}
+
 /*
 ==================
 CON_Hide
@@ -132,12 +143,13 @@ static void CON_Hide( void )
 			ttycon_hide++;
 			return;
 		}
-		if (TTY_con.cursor>0)
+		for (i = TTY_con.cursor; i < TTY_con.len;++i)
 		{
-			for (i=0; i<TTY_con.cursor; i++)
-			{
-				CON_Back();
-			}
+			CON_MoveForward();
+		}
+		for (i=0; i<TTY_con.len; i++)
+		{
+			CON_Back();
 		}
 		CON_Back(); // Delete "]"
 		ttycon_hide++;
@@ -163,12 +175,13 @@ static void CON_Show( void )
 		if (ttycon_hide == 0)
 		{
 			write(STDOUT_FILENO, "]", 1);
-			if (TTY_con.cursor)
+			for (i=0; i<TTY_con.len; i++)
 			{
-				for (i=0; i<TTY_con.cursor; i++)
-				{
-					write(STDOUT_FILENO, TTY_con.buffer+i, 1);
-				}
+				write(STDOUT_FILENO, TTY_con.buffer+i, 1);
+			}
+			for (i = 0; i < TTY_con.len - TTY_con.cursor; ++i)
+			{
+				CON_MoveBack();
 			}
 		}
 	}
@@ -205,7 +218,7 @@ void Hist_Add(field_t *field)
 	assert(hist_count >= 0);
 	assert(hist_current >= -1);
 	assert(hist_current <= hist_count);
-	if (hist_count > 0 && strcmp(field->buffer, ttyEditLines[0].buffer) == 0)
+	if ((hist_count > 0 && strcmp(field->buffer, ttyEditLines[0].buffer) == 0) || field->len == 0)
 	{
 		// Don't add duplicate entries to history (same as HISTCONTROL=ignoredups in bash)
 		hist_current = -1; // re-init
@@ -325,6 +338,7 @@ void CON_Init( void )
 	Field_Clear(&TTY_con);
 	tcgetattr (STDIN_FILENO, &TTY_tc);
 	TTY_erase = TTY_tc.c_cc[VERASE];
+	TTY_werase = TTY_tc.c_cc[VWERASE];
 	TTY_eof = TTY_tc.c_cc[VEOF];
 	tc = TTY_tc;
 
@@ -377,12 +391,38 @@ char *CON_Input( void )
 			// NOTE TTimo testing a lot of values .. seems it's the only way to get it to work everywhere
 			if ((key == TTY_erase) || (key == 127) || (key == 8))
 			{
-				if (TTY_con.cursor > 0)
+				if (TTY_con.len > 0 && TTY_con.cursor > 0)
 				{
+					CON_Hide();
+					memmove(TTY_con.buffer + TTY_con.cursor - 1, TTY_con.buffer + TTY_con.cursor, TTY_con.len - TTY_con.cursor + 2);
+					TTY_con.len--;
 					TTY_con.cursor--;
-					TTY_con.buffer[TTY_con.cursor] = '\0';
-					CON_Back();
+					CON_Show();
 				}
+				return NULL;
+			}
+			if (key == TTY_werase || key == 23) // delete word
+			{
+				CON_Hide();
+				bool trailing_spaces = TTY_con.cursor > 0 && TTY_con.buffer[TTY_con.cursor - 1] == ' ';
+				while (TTY_con.len > 0 && TTY_con.cursor > 0)
+				{
+					if (TTY_con.buffer[TTY_con.cursor - 1] == ' ')
+					{
+						if (!trailing_spaces)
+						{
+							break;
+						}
+					}
+					else
+					{
+						trailing_spaces = false;
+					}
+					memmove(TTY_con.buffer + TTY_con.cursor - 1, TTY_con.buffer + TTY_con.cursor, TTY_con.len - TTY_con.cursor + 2);
+					TTY_con.len--;
+					TTY_con.cursor--;
+				}
+				CON_Show();
 				return NULL;
 			}
 			// check if this is a control char
@@ -390,6 +430,7 @@ char *CON_Input( void )
 			{
 				if (key == '\n')
 				{
+					TTY_con.cursor = TTY_con.len;
 					// push it in history
 					Hist_Add(&TTY_con);
 					Q_strncpyz(text, TTY_con.buffer, sizeof(text));
@@ -443,8 +484,16 @@ char *CON_Input( void )
 									return NULL;
 									break;
 								case 'C':
+									if (TTY_con.cursor < TTY_con.len) {
+										TTY_con.cursor++;
+										CON_MoveForward();
+									}
 									return NULL;
 								case 'D':
+									if (TTY_con.cursor > 0) {
+										TTY_con.cursor--;
+										CON_MoveBack();
+									}
 									return NULL;
 							}
 						}
@@ -454,13 +503,15 @@ char *CON_Input( void )
 				CON_FlushIn();
 				return NULL;
 			}
-			if (TTY_con.cursor >= sizeof(text) - 1)
+			if (TTY_con.len >= sizeof(text) - 1)
 				return NULL;
 			// push regular character
+			CON_Hide();
+			memmove(TTY_con.buffer + TTY_con.cursor + 1, TTY_con.buffer + TTY_con.cursor, TTY_con.len - TTY_con.cursor + 1);
 			TTY_con.buffer[TTY_con.cursor] = key;
+			TTY_con.len++;
 			TTY_con.cursor++;
-			// print the current line (this is differential)
-			write(STDOUT_FILENO, &key, 1);
+			CON_Show();
 		}
 
 		return NULL;
