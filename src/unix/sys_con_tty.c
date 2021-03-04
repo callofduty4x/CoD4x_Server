@@ -69,6 +69,7 @@ static field_t ttyEditLines[ CON_HISTORY ];
 static int hist_current = -1, hist_count = 0;
 
 void Field_AutoComplete( field_t *field );
+field_t *Hist_Prev( void );
 
 
 #ifndef MAXPRINTMSG
@@ -204,6 +205,12 @@ void Hist_Add(field_t *field)
 	assert(hist_count >= 0);
 	assert(hist_current >= -1);
 	assert(hist_current <= hist_count);
+	if (hist_count > 0 && strcmp(field->buffer, ttyEditLines[0].buffer) == 0)
+	{
+		// Don't add duplicate entries to history (same as HISTCONTROL=ignoredups in bash)
+		hist_current = -1; // re-init
+		return;
+	}
 	// make some room
 	for (i=CON_HISTORY-1; i>0; i--)
 	{
