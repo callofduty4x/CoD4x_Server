@@ -43,6 +43,7 @@ Field_Clear
 */
 void Field_Clear( field_t *edit ) {
 	memset(edit->buffer, 0, MAX_EDIT_LINE);
+	edit->len = 0;
 	edit->cursor = 0;
 	edit->scroll = 0;
 }
@@ -150,11 +151,13 @@ static qboolean Field_Complete( void )
 	Q_strncpyz( &completionField->buffer[ completionOffset ], shortestMatch,
 		sizeof( completionField->buffer ) - completionOffset );
 
-	completionField->cursor = strlen( completionField->buffer );
+	completionField->len = strlen( completionField->buffer );
+	completionField->cursor = completionField->len;
 
 	if( matchCount == 1 )
 	{
 		Q_strncat( completionField->buffer, sizeof( completionField->buffer ), " " );
+		completionField->len++;
 		completionField->cursor++;
 		return qtrue;
 	}
