@@ -40,7 +40,7 @@ Edit fields and command line history/completion
 typedef struct {
 	int		cursor;
 	int		scroll;
-	int		widthInChars;
+	int		len;
 	char	buffer[MAX_EDIT_LINE];
 } field_t;
 

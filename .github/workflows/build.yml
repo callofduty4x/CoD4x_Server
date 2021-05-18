@@ -1,0 +1,148 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    
+jobs:
+  linux:
+    name: Linux
+    runs-on: ubuntu-18.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+      
+    - name: Set up needed libs
+      run: | 
+        sudo apt-get install g++-multilib gcc-multilib 
+        sudo dpkg --add-architecture i386 
+        sudo apt-get install nasm:i386 paxctl:i386 libtommath-dev:i386
+        
+    - name: Build server
+      run: make
+      
+    - name: Check version difference
+      if: ${{ !github.head_ref }}
+      run: |       
+        ver=$(grep '\#define SYS_COMMONVERSION' src/version/version.c | cut -d' ' -f3)
+        git checkout HEAD~1 src/version/version.c
+        ver_last=$(grep '\#define SYS_COMMONVERSION' src/version/version.c | cut -d' ' -f3)
+        if [[ $ver != $ver_last ]]; then
+            echo "publish_tag=${ver}" >> $GITHUB_ENV
+        fi
+        
+    - name: Build plugins
+      if: ${{ env.publish_tag }}
+      run: make plugins
+      
+    - name: Pack plugins
+      if: ${{ env.publish_tag }}
+      run: | 
+        cd plugins
+        mkdir plugins
+        cp screenshotsender/nehoscreenshotuploader.so plugins/
+        cp censor/censor.so plugins/
+        cp cod4x_b3hide/b3hide.so plugins/
+        cp simplebanlist/simplebanlist.so plugins/
+        cp pchat/pchat.so plugins/
+        cp sourcebansplugin/sourcebansplugin.so plugins/
+        cp warn/warn.so plugins/
+        cp legacybanlist/legacybanlist.so plugins/
+        7z a plugins_linux.zip plugins/*
+        cd ../
+
+    - name: Publish release
+      if: ${{ env.publish_tag }}
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        tag: ${{ env.publish_tag }}
+        artifacts: "bin/cod4x18_dedrun,plugins/plugins_linux.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
+      
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    
+    steps:
+    - name: Get MinGW (i686-8.1.0-release-posix-dwarf)
+      run: |
+        $Uri = "https://downloads.sourceforge.net/mingw-w64/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z"
+        $filename = "mingw32.7z"
+        cd C:/
+        Start-BitsTransfer -Source $Uri -Destination $filename
+        7z x $filename
+        
+    - name: Get NASM
+      uses: ilammy/setup-nasm@v1  
+      
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+      
+    - name: Get pexports
+      run: |
+        Invoke-WebRequest "https://github.com/callofduty4x/CoD4x_Server/raw/master/tools/pexports-0.47-mingw32-bin.tar.xz" -OutFile "pexports.tar.xz" 
+        7z x pexports.tar.xz 
+        7z x pexports.tar
+        
+    - name: Build
+      run: | 
+        $path = $env:Path
+        $env:Path = "C:\mingw32\bin;"
+        $env:Path += $path
+        mingw32-make
+        
+    - name: Check version difference
+      if: ${{ !github.head_ref }}
+      run: |
+        $line = Get-Content src/version/version.c | Select-String -Pattern "#define SYS_COMMONVERSION"
+        $ver = $line.Line.Split( ' ' )[ 2 ]
+        git checkout HEAD~1 src/version/version.c
+        $line = Get-Content src/version/version.c | Select-String -Pattern "#define SYS_COMMONVERSION"
+        $ver_last = $line.Line.Split( ' ' )[ 2 ]            
+        if( $ver -ne $ver_last )
+        {             
+           echo "publish_tag=$ver" >> $env:GITHUB_ENV
+        }
+        
+    - name: Build plugins
+      if: ${{ env.publish_tag }}
+      run: |
+        $path = $env:Path
+        $env:Path = "C:\mingw32\bin;"
+        $env:Path += $path
+        mingw32-make plugins
+      
+    - name: Pack plugins
+      if: ${{ env.publish_tag }}
+      run: | 
+        cd plugins
+        mkdir plugins
+        Copy-Item -Path screenshotsender/nehoscreenshotuploader.dll -Destination plugins/
+        Copy-Item -Path censor/censor.dll -Destination plugins/
+        Copy-Item -Path cod4x_b3hide/b3hide.dll -Destination plugins/
+        Copy-Item -Path simplebanlist/simplebanlist.dll -Destination plugins/
+        Copy-Item -Path pchat/pchat.dll -Destination plugins/
+        Copy-Item -Path sourcebansplugin/sourcebansplugin.dll -Destination plugins/
+        Copy-Item -Path warn/warn.dll -Destination plugins/
+        Copy-Item -Path legacybanlist/legacybanlist.dll -Destination plugins/
+        7z a plugins_windows.zip plugins/*
+        cd ../
+        
+    - name: Publish release
+      if: ${{ env.publish_tag }}
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        tag: ${{ env.publish_tag }}
+        artifacts: "bin/cod4x18_dedrun.exe,plugins/plugins_windows.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
