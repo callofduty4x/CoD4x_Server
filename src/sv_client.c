@@ -3046,3 +3046,18 @@ void __cdecl SV_ClientThink(client_t *cl, struct usercmd_s *cmd)
   }
 }
 
+
+void SV_UpdatePlayername(client_t* client, const char* name)
+{
+	Q_strncpyz(client->name, name, sizeof(client->name));
+	SV_UpdateClientConfigInfo(client);
+}
+//Can be used to change the name of any player connected to the server
+void SV_UpdatePlayernameById(unsigned int clientnum, const char* name)
+{
+	if(clientnum > sv_maxclients->integer)
+	{
+		return;
+	}
+	SV_UpdatePlayername(&svs.clients[clientnum], name);
+}

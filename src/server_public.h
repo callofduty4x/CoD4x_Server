@@ -11,6 +11,7 @@ void __cdecl SV_GetUsercmd(int clientNum, struct usercmd_s *cmd);
 void SV_GameSetUndercoverState(unsigned int clientNum, bool state);
 const char* SV_GetPlayerClan(unsigned int clientNum);
 const char* SV_GetPlayerName(unsigned int clientNum);
+void SV_UpdatePlayernameById(unsigned int clientnum, const char* name);
 int SV_GetPredictedOriginAndTimeForClientNum(int clientNum, float *origin);
 void __cdecl SV_GetServerinfo(char *buffer, int bufferSize);
 void __cdecl SV_UnlinkEntity(gentity_t*);

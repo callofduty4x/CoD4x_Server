@@ -368,4 +368,4 @@
 
     __cdecl const char* Plugin_GetCommonVersionString(); //return cod4x version
     __cdecl level_locals_t* Plugin_GetLevelBase( );
-    
+    __cdecl void Plugin_UpdatePlayername(unsigned int clientnumber, const char* newname);

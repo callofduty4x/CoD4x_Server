@@ -390,6 +390,17 @@ void __cdecl ClientScr_GetName(gclient_s *pSelf, client_fields_s *pField)
   Scr_AddString(CS_DisplayName(&pSelf->sess.cs, 3));
 }
 
+void __cdecl ClientScr_SetName(gclient_s *pSelf, client_fields_s *pField)
+{
+  assert(pSelf != NULL);
+
+  const char* playername = Scr_GetString(0);
+  if(playername && playername[0])
+  {
+    CS_SetPlayerName(&pSelf->sess.cs, playername);
+  }
+}
+
 void __cdecl ClientScr_GetBotStatus(gclient_s *pSelf, client_fields_s *pField)
 {
 	assert(pSelf != NULL);
@@ -411,7 +422,7 @@ void __cdecl ClientScr_GetLocalization(gclient_s *pSelf, client_fields_s *pField
 static client_fields_s fields[] =
 {
   { "sessionteam", 0, F_STRING, &ClientScr_SetSessionTeam, &ClientScr_GetSessionTeam },
-  { "name", 0, F_LSTRING, &ClientScr_ReadOnly, &ClientScr_GetName },
+  { "name", 0, F_LSTRING, &ClientScr_SetName, &ClientScr_GetName },
   { "maxhealth", CSF(sess.maxHealth), F_INT, &ClientScr_SetMaxHealth, NULL },
   { "headiconteam", 0, F_STRING, &ClientScr_SetHeadIconTeam, &ClientScr_GetHeadIconTeam },
   { "kills", CSF(sess.kills), F_INT, NULL, NULL },

@@ -199,6 +199,10 @@ extern "C" __cdecl const char* G_GetPlayerId(struct gentity_s* ent)
 
 }
 
+void CS_SetPlayerName(clientState_t *cs, const char* name)
+{
+  SV_UpdatePlayernameById(cs->clientIndex ,name);
+}
 
 extern "C" __cdecl void ClientEndFrame_TurretThink_Stub(gentity_s* ent)
 {

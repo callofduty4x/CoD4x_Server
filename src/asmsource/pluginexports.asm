@@ -174,3 +174,5 @@ pexport SL_ConvertToString
 pexport HTTP_CreateString_x_www_form_urlencoded
 pexport HTTP_ParseFormDataBody
 pexport HTTP_GetFormDataItem
+
+ralias Plugin_UpdatePlayername, SV_UpdatePlayernameById

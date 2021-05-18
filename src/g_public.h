@@ -63,7 +63,9 @@ void __cdecl G_InitGame(int levelTime, int randomSeed, int restart, int savepers
 void __cdecl G_ShutdownGame(int freeScripts);
 qboolean __cdecl ConsoleCommand();
 const char *__cdecl CS_DisplayName(clientState_t *cs, int type);
+void CS_SetPlayerName(clientState_t *cs, const char* name);
 qboolean OnSameTeam( gentity_t *ent1, gentity_t *ent2 );
+
 
 #ifdef __cplusplus
 }
