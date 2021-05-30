@@ -220,7 +220,6 @@
 	global g_voiceChatTalkingDuration
 	global g_inactivity
 	global g_mantleBlockTimeBuffer
-	global g_playerCollisionEjectSpeed
 	global g_speed
 	global g_synchronousClients
 	global g_ScoresColor_Allies
@@ -1844,7 +1843,6 @@ g_knockback: resb 0x4
 g_voiceChatTalkingDuration: resb 0x4
 g_inactivity: resb 0x4
 g_mantleBlockTimeBuffer: resb 0x4
-g_playerCollisionEjectSpeed: resb 0x4
 g_speed: resb 0x4
 g_synchronousClients: resb 0x4
 g_ScoresColor_Allies: resb 0x4
@@ -1931,8 +1929,6 @@ _cstring_display_entity_i:		db "Display entity information",0
 _cstring_g_entinfo:		db "g_entinfo",0
 _cstring_the_message_of_t:		db "The message of the day",0
 _cstring_g_motd:		db "g_motd",0
-_cstring_speed_at_which_t:		db "Speed at which to push intersecting players away from each other",0
-_cstring_g_playercollisio:		db "g_playerCollisionEjectSpeed",0
 _cstring_forward_speed_of:		db "Forward speed of a dropped item",0
 _cstring_g_dropforwardspe:		db "g_dropForwardSpeed",0
 _cstring_base_component_o:		db "Base component of the initial vertical speed of a dropped item",0

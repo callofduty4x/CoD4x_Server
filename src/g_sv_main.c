@@ -57,7 +57,6 @@ cvar_t*  g_debugBullets;
 cvar_t*  bullet_penetrationEnabled;
 cvar_t*  g_entinfo;
 cvar_t*  g_motd;
-cvar_t*  g_playerCollisionEjectSpeed;
 cvar_t*  g_dropForwardSpeed;
 cvar_t*  g_dropUpSpeedBase;
 cvar_t*  g_dropUpSpeedRand;
@@ -696,7 +695,6 @@ void __cdecl G_RegisterCvars()
 	 bullet_penetrationEnabled = Cvar_RegisterBool("bullet_penetrationEnabled", qtrue, 0x80u, "Enable/Disable bullet penetration.");
 	 g_entinfo = Cvar_RegisterEnum("g_entinfo", g_entinfoNames, 0, 0x80u, "Display entity information");
 	 g_motd = Cvar_RegisterString("g_motd", "", 0, "The message of the day");
-	 g_playerCollisionEjectSpeed = Cvar_RegisterInt("g_playerCollisionEjectSpeed", 25, 0, 32000, 1u, "Speed at which to push intersecting players away from each other");
 	 g_dropForwardSpeed = Cvar_RegisterFloat("g_dropForwardSpeed", 10.0, 0.0, 1000.0, 1u, "Forward speed of a dropped item");
 	 g_dropUpSpeedBase = Cvar_RegisterFloat("g_dropUpSpeedBase", 10.0, 0.0, 1000.0, 1u, "Base component of the initial vertical speed of a dropped item");
 	 g_dropUpSpeedRand = Cvar_RegisterFloat("g_dropUpSpeedRand", 5.0, 0.0, 1000.0, 1u, "Random component of the initial vertical speed of a dropped item");

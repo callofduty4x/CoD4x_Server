@@ -17,7 +17,6 @@
 	extern BG_WeaponFireRecoil
 	extern crandom
 	extern Vec2Normalize
-	extern g_playerCollisionEjectSpeed
 	extern g_gravity
 	extern G_ModelName
 	extern SL_ConvertToString

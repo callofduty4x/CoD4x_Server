@@ -159,13 +159,16 @@ release: releaseprolog clean all plugins gittagging
 .PHONY: releaseprolog
 releaseprolog:
 	@echo ""
+ifneq ($(OS),Windows_NT)
 	@echo "Are you sure you want to create a GitHub Release? [y/N] " && read ans && [ $${ans:-N} = y ]
+endif
 
 .PHONY: gittagging
 gittagging:
+ifneq ($(OS),Windows_NT)
 	git tag -a v$(VERSION)
 	git push origin --tags
-	
+endif	
 
 #################################
 # A rule to make mbedtls library.
