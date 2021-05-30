@@ -4202,7 +4202,7 @@ fs_crcsum_t* FS_FindChecksumForFile(const char* filename, int len)
         {
             if(fscrcsums.sums[i].length != len)
             {
-                Com_Memset(&fscrcsums.sums[i], 0, sizeof(fs_crcsums_t));
+                Com_Memset(&fscrcsums.sums[i], 0, sizeof(fs_crcsum_t));
             }
             return &fscrcsums.sums[i];
         }

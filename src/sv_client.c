@@ -2070,7 +2070,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   int nCurArg;
   char chkbuf[0x4000];
 
-  int bPrint = 0;
+  int bPrint = 1;
 
   nClientPaks = SV_Cmd_Argc();
   nCurArg = 1;
@@ -2086,7 +2086,14 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
       pArg = SV_Cmd_Argv(nCurArg++);
       pArg++; // Skip L
       cl->localization = atoi( pArg );
-
+#if((10*SYS_COMMONVERSION) >= 200)
+      pArg = SV_Cmd_Argv(nCurArg++);
+      int clserverid = atoi(pArg);
+      if((clserverid & 0xffffff00) != (sv.start_frameTime & 0xffffff00))
+      {
+          return;
+      }
+#endif
       //Parsing the PAK checksums
       i = 0;
       while ( nCurArg < nClientPaks && SV_Cmd_Argv(nCurArg)[0] != '#')
@@ -2175,7 +2182,6 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
       char buffer[1024];
       Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
   }
-
 
   if ( bGood )
   {

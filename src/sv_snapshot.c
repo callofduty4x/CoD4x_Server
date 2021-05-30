@@ -1302,7 +1302,7 @@ bool __cdecl SV_GetClientPositionsAtTime(int gametime, vec3_t *pos, vec3_t *angl
     }
     if ( frameEnd && snapOffset != 1 )
     {
-      Com_Printf(CON_CHANNEL_SERVER, "Adjusted frameEnd by %i snaps\n", 1 - snapOffset);
+      Com_Printf(CON_CHANNEL_SERVER, "Adjusted frameEnd by %i snaps - Requested time=%d Got time=%d\n", 1 - snapOffset, gametime, frameEnd->time);
     }
     snapOffset = 2;
     while ( frameStart && frameStart->time > gametime )
