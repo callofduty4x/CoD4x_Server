@@ -46,15 +46,6 @@
 
 extern struct cm_world_t cm_world;
 
-// MAX_CHALLENGES is made large to prevent a denial
-// of service attack that could cycle all of them
-// out before legitimate users connected
-#define	MAX_CHALLENGES	1024
-// Allow a certain amount of challenges to have the same IP address
-// to make it a bit harder to DOS one single IP address from connecting
-// while not allowing a single ip to grab all challenge resources
-#define MAX_CHALLENGES_MULTI (MAX_CHALLENGES / 2)
-
 #define MAX_VOICEPACKETS 40
 
 #define ARCHIVEDSSBUF_SIZE 0x1000000
@@ -298,20 +289,6 @@ typedef struct cachedClient_s
   playerState_t ps;
 }cachedClient_t;
 
-
-
-typedef struct
-{
-  int adr[5];
-  int challenge;
-  int time;
-  int pingTime;
-  int firstTime;
-  int firstPing;
-  qboolean connected;
-  char guid[36];
-}challenge_t;
-
 typedef struct{
 	int time;
 	char guid[32];
@@ -361,8 +338,6 @@ typedef struct {//0x8c51780
 	int nextArchivedSnapshotErrorTime; //stop error message flooding which can stall the whole server
 
 	int nextStatusResponseTime;
-
-	challenge_t challenges[MAX_CHALLENGES];
 
 	vec3_t mapCenter;
 
