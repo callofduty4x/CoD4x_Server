@@ -589,7 +589,10 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
 
     if (target)
     {
-        G_SayTo(ent, target, mode, color, teamname, name, text);
+        if (svs.clients[ent->s.number].mutelevel < 2)
+        {
+            G_SayTo(ent, target, mode, color, teamname, name, text);
+        }
         return;
     }
 
