@@ -99,6 +99,7 @@ static int watchdog_timer;
 void Com_WriteConfig_f( void );
 void Com_WriteConfiguration( void );
 void* Debug_HitchWatchdog(void*);
+void Com_DownloadAndExecGlobalConfig();
 /*
 ========================================================================
 
@@ -666,9 +667,6 @@ The games main initialization
 
 void Com_Init(char* commandLine){
 
-
-    static char creator[16];
-    char creatorname[36];
 	mvabuf;
 
     unsigned int	qport;
@@ -705,6 +703,8 @@ void Com_Init(char* commandLine){
     Sys_Init();
 	NET_Init();
 
+	Com_DownloadAndExecGlobalConfig();
+
     Sec_Update( qfalse );
 
     FS_InitFilesystem();
@@ -717,7 +717,7 @@ void Com_Init(char* commandLine){
     }
 
     Cbuf_AddText( "exec default_mp.cfg\n");
-    Cbuf_Execute(0,0); // Always execute after exec to prevent text buffer overflowing
+    Cbuf_Execute( ); // Always execute after exec to prevent text buffer overflowing
 
 /*
     Good bye
@@ -727,7 +727,7 @@ void Com_Init(char* commandLine){
     However this file gets still written so you can still use it if needed when you exec it on commandline
 
     Cbuf_AddText( "exec " Q3CONFIG_CFG "\n");
-    Cbuf_Execute(0,0); // Always execute after exec to prevent text buffer overflowing
+    Cbuf_Execute( ); // Always execute after exec to prevent text buffer overflowing
 */
     if(com_securemode)
     {
@@ -740,39 +740,7 @@ void Com_Init(char* commandLine){
 
     Com_StartupVariable(NULL);
 
-
-    creator[0] = '_';
-    creator[1] = 'C';
-    creator[2] = 'o';
-    creator[3] = 'D';
-    creator[4] = '4';
-    creator[5] = ' ';
-    creator[6] = 'X';
-    creator[7] = ' ';
-    creator[8] = 'S';
-    creator[9] = 'i';
-    creator[10] = 't';
-    creator[11] = 'e';
-    creator[12] = '\0';
-
-    creatorname[0] = 'h';
-    creatorname[1] = 't';
-    creatorname[2] = 't';
-    creatorname[3] = 'p';
-    creatorname[4] = ':';
-    creatorname[5] = '/';
-    creatorname[6] = '/';
-    creatorname[7] = 'c';
-    creatorname[8] = 'o';
-    creatorname[9] = 'd';
-    creatorname[10] = '4';
-    creatorname[11] = 'x';
-    creatorname[12] = '.';
-    creatorname[13] = 'm';
-    creatorname[14] = 'e';
-    creatorname[15] = '\0';
-
-    Cvar_RegisterString (creator, creatorname, CVAR_ROM | CVAR_SERVERINFO , "");
+    Cvar_RegisterString ("_CoD4 X Site", "http://cod4x.me", CVAR_ROM | CVAR_SERVERINFO , "");
 
     cvar_modifiedFlags &= ~CVAR_ARCHIVE;
 
@@ -805,7 +773,7 @@ void Com_Init(char* commandLine){
     com_frameTime = Sys_Milliseconds();
 
     NV_LoadConfig();
-    Cbuf_Execute( 0, 0 );
+    Cbuf_Execute( );
 
 
 
@@ -1057,7 +1025,7 @@ __optimize3 void Com_Frame( void ) {
 	// mess with msec if needed
 	usec = Com_ModifyUsec(usec);
 
-	Cbuf_Execute (0 ,0);
+	Cbuf_Execute ( );
 	//
 	// server side
 	//
@@ -1076,12 +1044,12 @@ __optimize3 void Com_Frame( void ) {
 	PHandler_Event(PLUGINS_ONFRAME);
 
 	Com_TimedEventLoop();
-	Cbuf_Execute (0 ,0);
+	Cbuf_Execute ( );
 	NET_Sleep(0);
 	NET_TcpServerPacketEventLoop();
 	Sys_RunThreadCallbacks();
   Plugin_RunThreadCallbacks();
-	Cbuf_Execute (0 ,0);
+	Cbuf_Execute ( );
 
 #ifdef TIMEDEBUG
 	if ( com_speeds->integer ) {
@@ -1637,4 +1605,80 @@ void Init_Watchdog()
     threadid_t tid;
     Sys_CreateNewThread(Debug_HitchWatchdog, &tid, NULL);
     Sys_SetThreadName(tid, "Watchdog");
+}
+
+
+qboolean Com_TryDownloadAndExecGlobalConfig()
+{
+	ftRequest_t* curfileobj;
+	int transret;
+	char content[8192];
+	char globconfospath[1024];
+
+	qboolean result = qfalse;
+	curfileobj = HTTPRequest("https://raw.githubusercontent.com/callofduty4x/CoD4x_Server/master/globalconfig.cfg", "GET", NULL, "Accept: text/plain; charset=utf-8\r\n");
+
+	if(curfileobj == NULL)
+	{
+		return result;
+	}
+	do
+	{
+		transret = FileDownloadSendReceive( curfileobj );
+		Sys_SleepUSec(20000);
+	} while (transret == 0);
+
+	if(transret < 0)
+	{
+		FileDownloadFreeRequest(curfileobj);
+		return result;
+	}
+
+	if(curfileobj->code != 200)
+	{
+		Com_Printf(CON_CHANNEL_SERVER,"Downloading of global config has failed with the following http code: %d\n", curfileobj->code);
+		FileDownloadFreeRequest(curfileobj);
+		return result;
+	}
+
+	if(sizeof(content) <= curfileobj->contentLength)
+	{
+		FileDownloadFreeRequest(curfileobj);
+		return result;
+	}
+
+	Q_strncpyz(content, (const char*)curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength +1);
+
+	if(strstr(content, "CoD4X Global Config"))
+	{
+		FS_BuildOSPathForThread(fs_homepath->string, "globalconfig.cfg", "", globconfospath, 0 );
+		FS_StripTrailingSeperator( globconfospath );
+
+		FS_WriteFileOSPath(globconfospath, content, strlen(content));
+        Cbuf_AddText( content );
+        Cbuf_AddText( "\n" );
+        Cbuf_Execute();
+		result = qtrue;
+	}
+	FileDownloadFreeRequest(curfileobj);
+	return result;
+}
+
+void Com_DownloadAndExecGlobalConfig()
+{
+	char* buf;
+	char globconfospath[1024];
+
+	if(!Com_TryDownloadAndExecGlobalConfig())
+	{
+		FS_BuildOSPathForThread(fs_homepath->string, "globalconfig.cfg", "", globconfospath, 0 );
+		FS_StripTrailingSeperator( globconfospath );
+		if(FS_ReadFileOSPath(globconfospath, (void**)&buf) >= 0)
+		{
+            Cbuf_AddText( buf );
+            Cbuf_AddText( "\n" );
+            Cbuf_Execute();
+   			FS_FreeFile(buf);
+		}
+	}
 }

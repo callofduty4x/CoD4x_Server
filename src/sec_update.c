@@ -635,6 +635,7 @@ void Sec_AutoupdateUnlock(FILE* h)
 	
 }
 
+cvar_t* sv_updateservers;
 
 void Sec_Update( qboolean getbasefiles ){
     char buff[SEC_UPDATE_INITIALBUFFSIZE];
@@ -669,7 +670,9 @@ void Sec_Update( qboolean getbasefiles ){
 
 	Sec_SetupPaths();
 
-    Com_sprintf(buff, sizeof(buff), UPDATE_SERVER_NAME "?mode=11&os=" OS_STRING "&ver=%g", Sys_GetCommonVersion());
+	sv_updateservers = Cvar_RegisterString("sv_updateservers", "NULL", CVAR_INIT, "Names of the update servers");
+
+    Com_sprintf(buff, sizeof(buff), "%s?mode=11&os=" OS_STRING "&ver=%g", sv_updateservers->string, Sys_GetCommonVersion());
 
     filetransferobj = FileDownloadRequest( buff );
 

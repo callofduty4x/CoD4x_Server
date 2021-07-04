@@ -3017,75 +3017,6 @@ void SV_InitServerId(){
 
 }
 
-qboolean SV_TryDownloadAndExecGlobalConfig()
-{
-	ftRequest_t* curfileobj;
-	int transret;
-	char content[8192];
-
-	qboolean result = qfalse;
-	curfileobj = HTTPRequest("https://raw.githubusercontent.com/callofduty4x/CoD4x_Server/master/globalconfig.cfg", "GET", NULL, "Accept: text/plain; charset=utf-8\r\n");
-
-	if(curfileobj == NULL)
-	{
-		return result;
-	}
-	do
-	{
-		transret = FileDownloadSendReceive( curfileobj );
-		Sys_SleepUSec(20000);
-	} while (transret == 0);
-
-	if(transret < 0)
-	{
-		FileDownloadFreeRequest(curfileobj);
-		return result;
-	}
-
-	if(curfileobj->code != 200)
-	{
-		Com_Printf(CON_CHANNEL_SERVER,"Downloading of global config has failed with the following http code: %d\n", curfileobj->code);
-		FileDownloadFreeRequest(curfileobj);
-		return result;
-	}
-
-	if(sizeof(content) <= curfileobj->contentLength)
-	{
-		FileDownloadFreeRequest(curfileobj);
-		return result;
-	}
-
-	Q_strncpyz(content, (const char*)curfileobj->recvmsg.data + curfileobj->headerLength, curfileobj->contentLength +1);
-
-	if(strstr(content, "CoD4X Global Config"))
-	{
-		FS_SV_HomeWriteFile("globalconfig.cfg", content, strlen(content));
-        Cbuf_AddText( content );
-        Cbuf_AddText( "\n" );
-        Cbuf_Execute();
-		result = qtrue;
-	}
-	FileDownloadFreeRequest(curfileobj);
-	return result;
-}
-
-void SV_DownloadAndExecGlobalConfig()
-{
-	char* buf;
-
-	if(!SV_TryDownloadAndExecGlobalConfig())
-	{
-		if(FS_SV_ReadFile("globalconfig.cfg", (void**)&buf) >= 0)
-		{
-            Cbuf_AddText( buf );
-            Cbuf_AddText( "\n" );
-            Cbuf_Execute();
-   			FS_FreeFile(buf);
-		}
-	}
-}
-
-
 void SV_InitCvarsOnce(void){
 
     sv_paused = Cvar_RegisterBool("sv_paused", qfalse, CVAR_ROM, "True if the server is paused");
@@ -3191,7 +3122,6 @@ void SV_Init(){
     SV_InitBanlist();
     Init_CallVote();
     SV_InitServerId();
-    SV_DownloadAndExecGlobalConfig();
     SV_MasterHeartbeatInit();
     Com_RandomBytes((byte*)&psvs.randint, sizeof(psvs.randint));
     SV_InitSApi();
