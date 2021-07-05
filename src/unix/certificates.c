@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include "../q_shared.h"
-#include "../qcommon_io.h"
-#include "../filesystem.h"
-
+#include <stdlib.h>
 #define X509_CERT_FILE_EVP       "SSL_CERT_FILE"
 
 char * System_CAStorage[] = {
@@ -15,15 +12,15 @@ char * System_CAStorage[] = {
 "/etc/ssl/certs/ca-bundle.crt"}; 
 
 
-int Sys_TryReadCertFile(const char* filename, struct FILE** h)
+int Sys_TryReadCertFile(const char* filename, FILE** h)
 {
     int end = 0;
-    h* = fopen(System_CAStorage[i], "rb");
-    if(h != NULL)
+    *h = fopen(filename, "rb");
+    if(*h != NULL)
     {
-        fseek (h, 0, SEEK_END);
-        end = ftell (h);
-        fseek (h, 0, SEEK_SET);
+        fseek (*h, 0, SEEK_END);
+        end = ftell (*h);
+        fseek (*h, 0, SEEK_SET);
     }
     return end;
 }
@@ -36,7 +33,7 @@ int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const 
 {
     int i;
     int end = 0;
-    struct FILE *h = NULL;
+    FILE *h = NULL;
 
     const char* fileenv = getenv(X509_CERT_FILE_EVP);
 
@@ -57,17 +54,20 @@ int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const 
     }
     if(h == NULL)
     {
-        return;
+        return 0;
     }
 
-    const char* certbuf = malloc(end);
+    unsigned char* certbuf = malloc(end);
     fread(certbuf, 1, end, h);
     fclose(h);
-	if(store_callback(cacert, certbuf, end) >= 0)
+
+//    printf("Certs: %s Len %d\n", System_CAStorage[i], end);
+	int result = store_callback(cacert, certbuf, end);
+	free(certbuf);
+	if(result == 0)
 	{
-        free(certbuf);
 		return 1;
 	}
-    free(certbuf);
 	return 0;
 }
+

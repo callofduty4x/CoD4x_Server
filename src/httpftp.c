@@ -1095,6 +1095,13 @@ static void HTTPS_Free( ftRequest_t* request )
 int LoadSingleCertificateCallback(void* cacert, const unsigned char* certbuf, int certsize)
 {
     int ret = mbedtls_x509_crt_parse( (mbedtls_x509_crt*)cacert, certbuf, certsize);
+
+  char errormsg[1024];
+
+    mbedtls_strerror(ret, errormsg, sizeof(errormsg));
+    Com_Printf(CON_CHANNEL_FILEDL, "HTTPSRequest failed: mbedtls_x509_crt_parse couldn't parse any returned %s\n", errormsg);
+
+    Com_Printf(0, "Cert count: %d\n", ret);
     if(ret == 0)
     {
         return 1;

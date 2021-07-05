@@ -1678,7 +1678,7 @@ void Com_DownloadAndExecGlobalConfig()
             Cbuf_AddText( buf );
             Cbuf_AddText( "\n" );
             Cbuf_Execute();
-   			FS_FreeFile(buf);
+   			FS_FreeFileOSPath(buf);
 		}
 	}
 }
