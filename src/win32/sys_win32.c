@@ -1033,5 +1033,36 @@ signed int __cdecl Sys_IsObjectSignaled(HANDLE hHandle)
 	return 0;
 }
 
+//Returns number of successful parsed certs
+int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const unsigned char* pemderbuf, int lenofpemder))
+{
+//From: http://stackoverflow.com/questions/9507184/can-openssl-on-windows-use-the-system-certificate-store
+    HCERTSTORE hStore;
+    PCCERT_CONTEXT pContext = NULL;
+
+    hStore = CertOpenSystemStoreA(0, "ROOT");
+
+    if (!hStore)
+	{
+        return 0;
+	}
+	int i = 0;
+	while ((pContext = CertEnumCertificatesInStore(hStore, pContext)))
+	{
+		if(pContext->dwCertEncodingType != X509_ASN_ENCODING)
+		{
+			continue;
+		}
+		if(store_callback(cacert, pContext->pbCertEncoded, pContext->cbCertEncoded) >= 0)
+		{
+			++i;
+		}
+	}
+	CertFreeCertificateContext(pContext);
+	CertCloseStore(hStore, 0);
+	return i;
+}
+
+
 void Sys_PrintBacktrace()
 {}

@@ -1092,12 +1092,19 @@ static void HTTPS_Free( ftRequest_t* request )
 	request->tls = NULL;
 }
 
+int LoadSingleCertificateCallback(void* cacert, const unsigned char* certbuf, int certsize)
+{
+    int ret = mbedtls_x509_crt_parse( (mbedtls_x509_crt*)cacert, certbuf, certsize);
+    if(ret == 0)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+
 static int HTTPS_SetupCAs()
 {
-  int ret, ca_cert_size;
-  byte *ca_cert;
-  char errormsg[1024];
-
   Sys_EnterCriticalSection(CRITSECT_HTTPS);
 
   if(ca_loaded)
@@ -1108,11 +1115,17 @@ static int HTTPS_SetupCAs()
 
   mbedtls_x509_crt_init( &cacert );
 
+#ifdef CALOADFILE
+  char errormsg[1024];
+  int ret, ca_cert_size;
+  byte *ca_cert;
+
+
   ca_cert_size = FS_ReadFile("ca/ca-bundle.crt", (void**)&ca_cert);
 
   if(ca_cert_size <= 0)
   {
-    Com_Printf(CON_CHANNEL_FILEDL,"Couldn't open file %s\n", "ca/ca-bundle.crt");
+    Com_Printf(CON_CHANNEL_FILEDL, "Couldn't open file %s\n", "ca/ca-bundle.crt");
   }else{
     ret = mbedtls_x509_crt_parse( &cacert, ca_cert, ca_cert_size +1);
     if( ret < 0 )
@@ -1126,12 +1139,21 @@ static int HTTPS_SetupCAs()
     if( ret > 0 )
     {
         Com_Printf(CON_CHANNEL_FILEDL, "HTTPSRequest failed: mbedtls_x509_crt_parse failed to parse %d certificates\n", ret);
-//        FS_FreeFile(ca_cert);
-//        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
-//        return 0;
+        FS_FreeFile(ca_cert);
+        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
+        return 0;
     }
     FS_FreeFile(ca_cert);
   }
+#else
+  if(Sys_ReadCertificate((void*)&cacert, LoadSingleCertificateCallback) < 1)
+  {
+    Com_Printf(CON_CHANNEL_FILEDL, "InitCA failed: mbedtls_x509_crt_parse couldn't parse any certificate\n");
+	Sys_LeaveCriticalSection(CRITSECT_HTTPS);
+	return 0;
+  }
+#endif
+
   ca_loaded = 1;
   Sys_LeaveCriticalSection(CRITSECT_HTTPS);
   return 1;
@@ -1181,7 +1203,7 @@ static int HTTPS_Prepare( ftRequest_t* request, const char* commonname )
 	{
 			Com_Printf(CON_CHANNEL_FILEDL, "HTTPSRequest failed: mbedtls_ssl_setup failed\n");
       goto failure;
-  }
+  	}
 
 	if( ( ret = mbedtls_ssl_set_hostname( &request->tls->ssl, commonname ) ) != 0 )
 	{

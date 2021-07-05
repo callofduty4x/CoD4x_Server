@@ -122,7 +122,7 @@ signed int __cdecl Sys_SetEvent(HANDLE handle);
 HANDLE Sys_CreateEvent(qboolean bManualReset, qboolean bInitialState, const char *name);
 void Sys_PrintBacktrace();
 void Sys_SleepMSec(int msec);
-
+int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const unsigned char* pemderbuf, int lenofpemder));
 #ifdef __cplusplus
 }
 #endif
