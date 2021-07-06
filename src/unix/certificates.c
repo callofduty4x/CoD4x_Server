@@ -28,7 +28,7 @@ int Sys_TryReadCertFile(const char* filename, FILE** h)
 
 
 
-//Returns number of successful parsed certs
+//Returns 1 if some certs parsed successfully
 int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const unsigned char* pemderbuf, int lenofpemder))
 {
     int i;
@@ -57,14 +57,15 @@ int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const 
         return 0;
     }
 
-    unsigned char* certbuf = malloc(end);
+    unsigned char* certbuf = malloc(end +1);
     fread(certbuf, 1, end, h);
+    certbuf[end] = 0;
     fclose(h);
+//  printf("Certs: %s Len %d\n", System_CAStorage[i], end);
 
-//    printf("Certs: %s Len %d\n", System_CAStorage[i], end);
-	int result = store_callback(cacert, certbuf, end);
+	int result = store_callback(cacert, certbuf, end +1);
 	free(certbuf);
-	if(result == 0)
+	if(result >= 0)
 	{
 		return 1;
 	}

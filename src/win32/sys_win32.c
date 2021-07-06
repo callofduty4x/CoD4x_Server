@@ -1053,7 +1053,7 @@ int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const 
 		{
 			continue;
 		}
-		if(store_callback(cacert, pContext->pbCertEncoded, pContext->cbCertEncoded) >= 0)
+		if(store_callback(cacert, pContext->pbCertEncoded, pContext->cbCertEncoded) == 0)
 		{
 			++i;
 		}

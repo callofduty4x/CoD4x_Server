@@ -1095,19 +1095,68 @@ static void HTTPS_Free( ftRequest_t* request )
 int LoadSingleCertificateCallback(void* cacert, const unsigned char* certbuf, int certsize)
 {
     int ret = mbedtls_x509_crt_parse( (mbedtls_x509_crt*)cacert, certbuf, certsize);
-
-  char errormsg[1024];
-
-    mbedtls_strerror(ret, errormsg, sizeof(errormsg));
-    Com_Printf(CON_CHANNEL_FILEDL, "HTTPSRequest failed: mbedtls_x509_crt_parse couldn't parse any returned %s\n", errormsg);
-
-    Com_Printf(0, "Cert count: %d\n", ret);
-    if(ret == 0)
-    {
-        return 1;
-    }
-    return 0;
+    return ret;
 }
+
+static int HTTPS_ReadCertificatesFromZipFile(void* cacert, int (*store_callback)(void* ca_ctx, const unsigned char* pemderbuf, int lenofpemder))
+{
+	unzFile uzf;
+	char zipfile[1024];
+	FS_BuildOSPathForThread(fs_homepath->string, "main", "xbase_00.iwd", zipfile, 0);
+
+	int r = 0;
+
+	uzf = unzOpen(zipfile);
+	if(uzf == NULL)
+	{
+		return -1;
+	}
+
+	if(unzGoToFirstFile(uzf) != UNZ_OK)
+	{
+		return -2;			
+	}
+	
+	if(unzLocateFile(uzf, "ca/ca-bundle.crt", 0) != UNZ_OK)
+	{
+		return -3;
+	}
+	unz_file_info file_info;
+	char filename[256];
+	unsigned char* filedata;
+
+	unzGetCurrentFileInfo (uzf, &file_info, filename, sizeof(filename), NULL, 0, NULL, 0);
+
+	if(unzOpenCurrentFile(uzf) != UNZ_OK)
+	{
+		unzClose(uzf);
+		return -4;
+	}
+
+	if(file_info.uncompressed_size < 1024*1024*5 && file_info.uncompressed_size > 0)
+	{
+		filedata = malloc(file_info.uncompressed_size +1);
+		if(filedata)
+		{
+			if(unzReadCurrentFile(uzf, filedata, file_info.uncompressed_size) == file_info.uncompressed_size)
+			{
+				filedata[file_info.uncompressed_size] = 0;
+				int status = store_callback(cacert, filedata, file_info.uncompressed_size +1);
+				if(status <= 1 && status >= 0)
+				{
+					r = 1;
+				}
+			}
+		}
+		free(filedata);
+	}
+	unzCloseCurrentFile (uzf);
+	unzClose(uzf);
+	return r;
+
+
+}
+
 
 
 static int HTTPS_SetupCAs()
@@ -1122,44 +1171,17 @@ static int HTTPS_SetupCAs()
 
   mbedtls_x509_crt_init( &cacert );
 
-#ifdef CALOADFILE
-  char errormsg[1024];
-  int ret, ca_cert_size;
-  byte *ca_cert;
-
-
-  ca_cert_size = FS_ReadFile("ca/ca-bundle.crt", (void**)&ca_cert);
-
-  if(ca_cert_size <= 0)
+  if(Sys_ReadCertificate((void*)&cacert, LoadSingleCertificateCallback) < 1) //Reading system root certificates
   {
-    Com_Printf(CON_CHANNEL_FILEDL, "Couldn't open file %s\n", "ca/ca-bundle.crt");
-  }else{
-    ret = mbedtls_x509_crt_parse( &cacert, ca_cert, ca_cert_size +1);
-    if( ret < 0 )
-    {
-        mbedtls_strerror(ret, errormsg, sizeof(errormsg));
-        Com_Printf(CON_CHANNEL_FILEDL, "HTTPSRequest failed: mbedtls_x509_crt_parse couldn't parse any returned %s\n", errormsg);
-        FS_FreeFile(ca_cert);
-        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
-        return 0;
-    }
-    if( ret > 0 )
-    {
-        Com_Printf(CON_CHANNEL_FILEDL, "HTTPSRequest failed: mbedtls_x509_crt_parse failed to parse %d certificates\n", ret);
-        FS_FreeFile(ca_cert);
-        Sys_LeaveCriticalSection(CRITSECT_HTTPS);
-        return 0;
-    }
-    FS_FreeFile(ca_cert);
+        Com_Printf(CON_CHANNEL_FILEDL, "InitCA: to parse system root certificates. On Linux you can set environment variable SSL_CERT_FILE to the file path pointing on your root certificates\n");
+        Com_Printf(CON_CHANNEL_FILEDL, "InitCA Attempting to read certificates from file main/xbase_00.iwd\n");
+	if(HTTPS_ReadCertificatesFromZipFile((void*)&cacert, LoadSingleCertificateCallback) != 1) //Reading root certificates from iwd file
+	{
+		Com_Printf(CON_CHANNEL_FILEDL, "InitCA fatal error: Did not read any certificates. Some functions using HTTPS are not going to work.\n");
+		Sys_LeaveCriticalSection(CRITSECT_HTTPS);
+		return 0;
+	}
   }
-#else
-  if(Sys_ReadCertificate((void*)&cacert, LoadSingleCertificateCallback) < 1)
-  {
-    Com_Printf(CON_CHANNEL_FILEDL, "InitCA failed: mbedtls_x509_crt_parse couldn't parse any certificate\n");
-	Sys_LeaveCriticalSection(CRITSECT_HTTPS);
-	return 0;
-  }
-#endif
 
   ca_loaded = 1;
   Sys_LeaveCriticalSection(CRITSECT_HTTPS);
