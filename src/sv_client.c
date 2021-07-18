@@ -196,6 +196,12 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 
 			}else{
 				*/
+				if(cl->state == CS_CONNECTED)
+				{
+					Com_DPrintf(CON_CHANNEL_SERVER,"Rejected connection from %s. DoS attack detected by emulating client 1.8\n", NET_AdrToString(&cl->netchan.remoteAddress));
+					return;
+				}
+				
 				SV_DropClient( cl, "silent" );
 				newcl = cl;
 				Com_Printf(CON_CHANNEL_SERVER,"reconnected: %s\n", NET_AdrToString(from));
