@@ -2086,14 +2086,14 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
       pArg = SV_Cmd_Argv(nCurArg++);
       pArg++; // Skip L
       cl->localization = atoi( pArg );
-#if(10*(SYS_COMMONVERSION) >= 200)
+//#if(10*(SYS_COMMONVERSION) >= 200)
       pArg = SV_Cmd_Argv(nCurArg++);
       int clserverid = atoi(pArg);
       if((clserverid & 0xffffff00) != (sv.start_frameTime & 0xffffff00))
       {
           return;
       }
-#endif
+//#endif
       //Parsing the PAK checksums
       i = 0;
       while ( nCurArg < nClientPaks && SV_Cmd_Argv(nCurArg)[0] != '#')

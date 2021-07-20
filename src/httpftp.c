@@ -1114,11 +1114,13 @@ static int HTTPS_ReadCertificatesFromZipFile(void* cacert, int (*store_callback)
 
 	if(unzGoToFirstFile(uzf) != UNZ_OK)
 	{
-		return -2;			
+		unzClose(uzf);
+		return -2;
 	}
 	
 	if(unzLocateFile(uzf, "ca/ca-bundle.crt", 0) != UNZ_OK)
 	{
+		unzClose(uzf);
 		return -3;
 	}
 	unz_file_info file_info;
