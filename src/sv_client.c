@@ -2702,7 +2702,7 @@ client_t* SV_ReadPackets(netadr_t *from, unsigned short qport)
 		// some address translating routers periodically change UDP
 		// port assignments
 		if ( cl->netchan.remoteAddress.port != from->port ) {
-			Com_Printf(CON_CHANNEL_SERVER, "SV_ReceiveStats: fixing up a translated port\n" );
+//			Com_Printf(CON_CHANNEL_SERVER, "SV_ReceiveStats: fixing up a translated port\n" ); //Some ISPs became terrible with their CGNAT - we don't wanna see this anymore
 			cl->netchan.remoteAddress.port = from->port;
 		}
 		return cl;
