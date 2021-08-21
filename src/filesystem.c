@@ -3969,12 +3969,17 @@ void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen)
   char chkSumString[8192];
   char pathString[8192];
   char chksum[1024];
+  char singlepath[1024];
 
   chkSumString[0] = 0;
   pathString[0] = 0;
 
   for ( puresum = fs_iwdPureChecks; puresum; puresum = puresum->next )
   {
+	if(fs_gameDirVar->string[0] && !Q_stricmp(puresum->gameName, fs_gameDirVar->string))
+	{
+		continue;
+	}
 	Com_sprintf(chksum, sizeof(chksum), "%i ", puresum->checksum);
 	Q_strncat(chkSumString, sizeof(chkSumString), chksum);
 	if ( pathString[0] )
@@ -3988,26 +3993,27 @@ void FS_ReferencedPaks(char *outChkSums, char *outPathNames, int maxlen)
 
   if ( fs_gameDirVar->string[0] )
   {
-	  for ( search = fs_searchpaths; search; search = search->next )
-	  {
-			if ( search->pack && !search->localized )
+	for ( search = fs_searchpaths; search; search = search->next )
+	{
+		if ( search->pack && !search->localized )
+		{
+		//!(search->pack->referenced & FS_GENERAL_REF) &&
+			if ( strstr( search->pack->pakBasename, "_svr_") == NULL &&
+			(!Q_stricmp(search->pack->pakGamename, fs_gameDirVar->string) || !Q_stricmpn(search->pack->pakGamename, "usermaps", 8)))
 			{
-			if ( !(search->pack->referenced & FS_GENERAL_REF) &&
-			(!Q_stricmp(search->pack->pakGamename, fs_gameDirVar->string) || !Q_stricmpn(search->pack->pakGamename, "usermaps", 8))
-			)
-			{
-			Com_sprintf(chksum, sizeof(chksum), "%i ", search->pack->checksum);
-			Q_strncat(chkSumString, sizeof(chkSumString), chksum);
-			if ( pathString[0] )
-			{
-				Q_strncat(pathString, sizeof(pathString), " ");
+				Com_sprintf(chksum, sizeof(chksum), "%i ", search->pack->checksum);
+				Q_strfrontcat(chkSumString, sizeof(chkSumString), chksum);
+				singlepath[0] = 0;
+
+				Q_strncat(singlepath, sizeof(singlepath), search->pack->pakGamename);
+				Q_strncat(singlepath, sizeof(singlepath), "/");
+				Q_strncat(singlepath, sizeof(singlepath), search->pack->pakBasename);
+				Q_strncat(singlepath, sizeof(singlepath), " ");
+
+				Q_strfrontcat(pathString, sizeof(pathString), singlepath);
 			}
-			Q_strncat(pathString, sizeof(pathString), search->pack->pakGamename);
-			Q_strncat(pathString, sizeof(pathString), "/");
-			Q_strncat(pathString, sizeof(pathString), search->pack->pakBasename);
-			}
-			}
-	  }
+		}
+	}
   }
 
   Q_strncpyz(outChkSums, chkSumString, maxlen);

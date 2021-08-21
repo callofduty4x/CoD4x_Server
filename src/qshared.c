@@ -305,6 +305,20 @@ void Q_strncat( char *dest, int size, const char *src ) {
 	Q_strncpyz( dest + l1, src, size - l1 );
 }
 
+// never goes past bounds or leaves without a terminating 0, inserts string at front position
+void Q_strfrontcat( char *dest, int size, const char *src ) {
+	int		ld;
+	int		ls;
+
+	ld = strlen( dest );
+	ls = strlen( src );
+
+	if ( ld + ls >= size ) {
+		Com_Error( ERR_FATAL, "Q_strpushfront: overflowed" );
+	}
+	memmove(dest + ls, dest, ld +1);
+	memcpy(dest, src, ls);
+}
 
 /*
 =============
