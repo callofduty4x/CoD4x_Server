@@ -3925,12 +3925,14 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 		MSG_ReadDeltaField(msg, time, from, to, &stateFields[i], print, noXor);	
 	}
 
+	/*
 	for ( i = lc; i < numFields; ++i )
 	{
 		int offset = stateFields[i].offset;
 		*(uint32_t *)&((byte*)to)[offset] = *(uint32_t *)&((byte*)from)[offset];
 	}
-
+	*/
+	
 	if ( !readOriginAndVel )
 	{
 #ifndef DEDICATEDONLY
