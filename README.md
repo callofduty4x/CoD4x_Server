@@ -17,7 +17,7 @@ The CoD4x server can run on Windows and Linux.
 The CoD4x client update is only available for windows.
 
 ## Setting up a Call of Duty 4 server with Cod4x 1.8
-Download binaries: [Linux](https://cod4x.me/downloads/cod4x_server-linux.zip) [Windows](https://cod4x.me/downloads/cod4x_server-windows.zip)
+Download binaries: [Linux](https://cod4x.me/downloads/cod4x_server-linux.zip) [Windows](https://cod4x.me/downloads/cod4x_server-windows_20.1.zip)
 
 You also require the base game to run a server. Copy every .iwd file in `cod4directory/main/` to `serverdirectory/main/`.
 Also copy everything inside `cod4directory/zone` to `serverdirectory/zone`.
