@@ -1998,7 +1998,15 @@ __optimize3 __regparm2 void SV_PacketEvent( netadr_t *from, msg_t *msg ) {
         Com_Printf(CON_CHANNEL_SERVER,"Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
         return;
     }
+
     cl->reliableAcknowledge = MSG_ReadLong( msg );
+
+    if (cl->reliableAcknowledge < 0)
+    {
+        Com_Printf(CON_CHANNEL_SERVER,"Negative reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
+        cl->reliableAcknowledge = cl->reliableSequence;
+        return;
+    }
 
     if((cl->reliableSequence - cl->reliableAcknowledge) > (MAX_RELIABLE_COMMANDS - 1)){
         Com_Printf(CON_CHANNEL_SERVER,"Out of range reliableAcknowledge message from %s - reliableSequence is %i, reliableAcknowledge is %i\n",
