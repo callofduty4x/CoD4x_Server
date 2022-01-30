@@ -2103,7 +2103,6 @@ void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsi
 		Q_strncat(g_zoneNameList, maxsize, " usermaps/");
 		Q_strncat(g_zoneNameList, maxsize, zone->zoneinfo.name);
 		Q_strncat(g_zoneNameList, maxsize, "_load");
-
 	}
 }
 

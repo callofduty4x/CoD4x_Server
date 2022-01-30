@@ -135,7 +135,7 @@ static void TranslateFunctionName(char* fn)
   }
   if(strcmp(fn, "I_strnicmp") == 0)
   {
-    strcpy(fn, "Q_stricmpn");
+    fn[0] = 'Q';
     return;
   }
   if(strcmp(fn, "I_strcmp") == 0)
@@ -206,6 +206,8 @@ static void TranslateFunctionName(char* fn)
 
 static const char* FunctionnameFromMangled(const char* mangledname)
 {
+  return mangledname;
+  /*
   static char demangledname[256];
   char classname[128];
   char funcname[128];
@@ -272,7 +274,7 @@ static const char* FunctionnameFromMangled(const char* mangledname)
     strcat(demangledname, classname);
   }
   TranslateFunctionName(demangledname);
-  return demangledname;
+  return demangledname;*/
 }
 
 

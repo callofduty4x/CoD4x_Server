@@ -3851,12 +3851,14 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
 		MSG_ReadDeltaField(msg, time, &from[i], &to[i], &hudElemFields[y], 0, 0);
 	}
 
-    for ( ; y < numFields; ++y )
-    {
+	/*
+    	for ( ; y < numFields; ++y )
+    	{
 		int offset = hudElemFields[y].offset;
 		((byte*)&to[i])[offset] = ((byte*)&from[i])[offset];
 	}
-
+	*/
+	  
 	assertx((!(from[i].alignOrg & ~15)), "(from[i].alignOrg) = %i", from[i].alignOrg);
 	assertx((!(to[i].alignOrg & ~15)), "(to[i].alignOrg) = %i", to[i].alignOrg);
 
@@ -3925,12 +3927,14 @@ void __cdecl MSG_ReadDeltaPlayerstate(const int localClientNum, msg_t *msg, cons
 		MSG_ReadDeltaField(msg, time, from, to, &stateFields[i], print, noXor);	
 	}
 
+	/*
 	for ( i = lc; i < numFields; ++i )
 	{
 		int offset = stateFields[i].offset;
 		*(uint32_t *)&((byte*)to)[offset] = *(uint32_t *)&((byte*)from)[offset];
 	}
-
+	*/
+	
 	if ( !readOriginAndVel )
 	{
 #ifndef DEDICATEDONLY

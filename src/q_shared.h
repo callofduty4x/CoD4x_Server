@@ -248,6 +248,7 @@ int QDECL Com_sprintf(char *dest, int size, const char *fmt, ...);
 void Q_strchrrepl(char *string, char torepl, char repl);
 char* Q_BitConv(int val);
 int Q_strLF2CRLF(const char* input, char* output, int outputlimit );
+void Q_strfrontcat(char *dest, int size, const char* src);
 
 #ifndef BSPC
 char* va( const char *format, ... );
