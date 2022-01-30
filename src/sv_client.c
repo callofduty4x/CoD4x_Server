@@ -677,7 +677,7 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 		}
 		rijndael_done(&skey);
 	}
-	Com_Printf(CON_CHANNEL_SERVER,"Received packet %i of stats data\n", 0);
+	Com_DPrintf(CON_CHANNEL_SERVER,"Received packet %i of stats data\n", 0);
 	cl->receivedstats = 1;
 }
 
@@ -2156,7 +2156,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( k >= nServerPaks )
           {
-            Com_Printf(CON_CHANNEL_SERVER, "Bad checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
+            Com_DPrintf(CON_CHANNEL_SERVER, "Bad checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
             bGood = 0; //Ignore this yet - logging only
             bPrint = 1;
             break;
@@ -2194,7 +2194,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   if( bPrint )
   {
       char buffer[1024];
-      Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
+      Com_DPrintf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
   }
 
   if ( bGood )
