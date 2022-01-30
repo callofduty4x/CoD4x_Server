@@ -950,7 +950,8 @@ void ClientCommand( int clientNum ) {
 	} else if ( Q_stricmp( cmd, "entitycount" ) == 0 )  {
 		Cmd_EntityCount_f( ent );
 	} else if ( Q_stricmp( cmd, "printentities" ) == 0 )  {
-		Cmd_PrintEntities_f( ent );
+    // prevent clients sending this command, effectively dos'ing the server.
+		// Cmd_PrintEntities_f( ent );
 	} else {
 		SV_GameSendServerCommand( clientNum, 0, va( "%c \"GAME_UNKNOWNCLIENTCOMMAND\x15%s\"", 101, cmd ) );
 	}
