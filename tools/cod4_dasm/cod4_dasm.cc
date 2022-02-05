@@ -701,7 +701,6 @@ class FileMap {
     if(sym1->address < sym2->address) return -1;
     if(sym1->address > sym2->address) return 1;
 
-
     printf("Error: Duplicate address detected\n");
     exit(1);
 
