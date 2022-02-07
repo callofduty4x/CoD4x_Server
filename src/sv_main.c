@@ -3505,11 +3505,6 @@ qboolean SV_FFAPlayerCanBlock(){
 
 //Few custom added things which should happen if we load a new level or restart a level
 void SV_PreLevelLoad(){
-
-    client_t* client;
-    int i;
-    char buf[MAX_STRING_CHARS];
-
     Com_UpdateRealtime();
     time_t realtime = Com_GetRealtime();
     char *timestr = ctime(&realtime);
@@ -3527,29 +3522,9 @@ void SV_PreLevelLoad(){
 
     FS_ShutdownIwdPureCheckReferences();
 
-    SV_ReloadBanlist();
-
     NV_LoadConfig();
 
-    for ( client = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, client++ ) {
-
-        // send the new gamestate to all connected clients
-        if ( client->state < CS_ACTIVE ) {
-            continue;
-        }
-
-        if ( client->netchan.remoteAddress.type == NA_BOT ) {
-            continue;
-        }
-
-        if(SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, client->name, buf, sizeof(buf))){
-            SV_DropClient(client, "Prior kick/ban");
-            continue;
-        }
-    }
-
     HL2Rcon_EventLevelStart();
-
 }
 
 void SV_PostLevelLoad(){
