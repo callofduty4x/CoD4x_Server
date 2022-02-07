@@ -977,7 +977,7 @@ typedef struct {
     int longdata[1547];
 } statData_t;
 
-enum hitLocation_t {
+typedef enum hitLocation_t {
   HITLOC_NONE = 0x0,
   HITLOC_HELMET = 0x1,
   HITLOC_HEAD = 0x2,
@@ -998,7 +998,7 @@ enum hitLocation_t {
   HITLOC_L_FOOT = 0x11,
   HITLOC_GUN = 0x12,
   HITLOC_NUM = 0x13,
-};
+}hitLocation_t;
 
 #define MAX_ZPATH 256
 
