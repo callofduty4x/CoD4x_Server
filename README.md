@@ -75,7 +75,7 @@ If compilation was successful the binary will be placed in the `/bin/` folder.
 ## Contributing
 CoD4x is licensed under the AGPL3 license. We welcome anybody to fork this project and submit a pull request.
 
-Plugins can be written in C/C++ and we also provide language bindings for D. The `/plugins` directory contains some example plugins. You can contribute to the project by developing plugins and create a pull request for them and/or uploading and promoting them on the [forums](https://cod4x.me/index.php?/forums/forum/5-server-plugins-and-management-tools/).
+Plugins can be written in C/C++ and we also provide language bindings for D. The `/plugins` directory contains some example plugins. You can contribute to the project by developing plugins and create a pull request for them and/or uploading and promoting them on the [forums](https://cod4x.ovh/index.php?/forums/forum/5-server-plugins-and-management-tools/).
 
 If you want to contribute to the core project check the issue tracker for todos. We will try our best to keep the issue tracker filled with new bits.
 If you would like to work on a completely new feature, we would appreciate if you contact us first on the forums or on Github to discuss the idea.
