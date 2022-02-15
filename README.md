@@ -2,7 +2,7 @@
 CoD4x is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke installation of the proprietary CoD4x client to players joining the server using the CoD4x servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
 A compatible client modification can be found here: [CoD4x_Client_pub](https://github.com/callofduty4x/CoD4x_Client_pub)
 
-[Website](http://cod4x.me/) - [Forums](https://cod4x.me/index.php?/forums/) - [Documentation](http://docs.cod4x.me/) - [Masterserver](http://cod4master.cod4x.me/)
+[Website](http://cod4x.ovh/) - [Forums](https://cod4x.ovh/index.php?/forums/) - [Documentation](http://docs.cod4x.ovh/) - [Masterserver](http://cod4master.cod4x.ovh/)
 
 ## The most prominent features are:
 * Administration commands
@@ -11,13 +11,13 @@ A compatible client modification can be found here: [CoD4x_Client_pub](https://g
 * Pbss like screenshot feature
 * Automated client update, no manual installation needed
 * Backwards compatibility to 1.7 and 1.7a servers
-* A new [masterserver](http://cod4master.cod4x.me/), for when the official masterserver is down
+* A new [masterserver](http://cod4master.cod4x.ovh/), for when the official masterserver is down
 
 The CoD4x server can run on Windows and Linux. 
 The CoD4x client update is only available for windows.
 
 ## Setting up a Call of Duty 4 server with Cod4x 1.8
-Download binaries: [Linux](https://cod4x.me/downloads/cod4x_server-linux.zip) [Windows](https://cod4x.me/downloads/cod4x_server-windows_20.1.zip)
+Download binaries: [Linux](https://cod4x.ovh/downloads/cod4x_server-linux.zip) [Windows](https://cod4x.ovh/downloads/cod4x_server-windows_20.1.zip)
 
 You also require the base game to run a server. Copy every .iwd file in `cod4directory/main/` to `serverdirectory/main/`.
 Also copy everything inside `cod4directory/zone` to `serverdirectory/zone`.
@@ -75,7 +75,7 @@ If compilation was successful the binary will be placed in the `/bin/` folder.
 ## Contributing
 CoD4x is licensed under the AGPL3 license. We welcome anybody to fork this project and submit a pull request.
 
-Plugins can be written in C/C++ and we also provide language bindings for D. The `/plugins` directory contains some example plugins. You can contribute to the project by developing plugins and create a pull request for them and/or uploading and promoting them on the [forums](https://cod4x.me/forum/forum-17.html).
+Plugins can be written in C/C++ and we also provide language bindings for D. The `/plugins` directory contains some example plugins. You can contribute to the project by developing plugins and create a pull request for them and/or uploading and promoting them on the [forums](https://cod4x.ovh/forum/forum-17.html).
 
 If you want to contribute to the core project check the issue tracker for todos. We will try our best to keep the issue tracker filled with new bits.
 If you would like to work on a completely new feature, we would appreciate if you contact us first on the forums or on Github to discuss the idea.
@@ -90,7 +90,7 @@ Aside from agreeing to the license, by making any use of CoD4x18 server you agre
 2. The developers reserve the right to reuse your content as long as it is not used commercially. You have a right for your name/clan/website getting mentioned if this is going to happen.
 They can also use it on their own servers.
 
-3. Maps you have installed on a server have to be either available on the internet already, or be made available to the community at the [CoD4x forums](https://cod4x.me/index.php?/forums/), with all required assets, like scripts, within 20 weeks of installation. You have to annouce your map on the [forums](https://cod4x.me/index.php?/forums/) on the same day you have installed it to gain the 20 weeks grace period. Not announced maps will have to be made available within 1 week.
+3. Maps you have installed on a server have to be either available on the internet already, or be made available to the community at the [CoD4x forums](https://cod4x.ovh/index.php?/forums/), with all required assets, like scripts, within 20 weeks of installation. You have to annouce your map on the [forums](https://cod4x.ovh/index.php?/forums/) on the same day you have installed it to gain the 20 weeks grace period. Not announced maps will have to be made available within 1 week.
 
 4. Plugins have to be made available as sourcecode so the user can interact with it
 
@@ -99,4 +99,4 @@ Server's IPs violating these conditions can get permanently disabled.
 These conditions have been established to keep user created content open to everyone, and also to value the work on CoD4x.
 
 ## Everything else
-Please check out the [forums](https://cod4x.me) and [our wiki](https://github.com/D4edalus/CoD4x_Server/wiki).
+Please check out the [forums](https://cod4x.ovh) and [our wiki](https://github.com/D4edalus/CoD4x_Server/wiki).
