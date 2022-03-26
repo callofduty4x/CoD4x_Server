@@ -3111,7 +3111,7 @@ G_FireRocket_120:
 	or [esi+0x180], eax
 	mov [esp], esi
 	call SV_LinkEntity
-	; Emit rocket_fired script event
+	; Emit missile_fire script event
 	push dword [edi]			; weapon name 
 	call Scr_AddString
 	add esp, 0x4
@@ -3120,7 +3120,7 @@ G_FireRocket_120:
 	add esp, 0x4
 	push 2
 	mov eax, scr_const
-	movzx eax, word [eax + 0x174]	; scr_const.rocket_fired
+	movzx eax, word [eax + 0x174]	; scr_const.missile_fire
 	push eax
 	push dword [ebp + 0x8]
 	call Scr_Notify
