@@ -368,6 +368,7 @@ typedef struct{
 	uint16_t back_left;
 	uint16_t back_right;
 	uint16_t tag_gunner_pov;
+  uint16_t rocket_fired;
 }scr_const_t;
 
 extern scr_const_t scr_const;
