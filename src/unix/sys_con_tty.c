@@ -47,7 +47,7 @@ called before and after a stdout or stderr output
 =============================================================
 */
 
-static cvar_t* com_ansiColor;
+extern cvar_t* com_ansiColor;
 
 static qboolean stdin_active;
 // general flag to tell about tty console mode
