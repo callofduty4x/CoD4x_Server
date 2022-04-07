@@ -1390,7 +1390,7 @@ static ftRequest_t* FTP_DLRequest(const char* url)
 	if(user[0] == '\0' && passwd[0] == '\0')
 	{
 		Q_strncpyz(request->username, "anonymous", sizeof(request->username));
-		Q_strncpyz(request->password, "cod4x@cod4x.me", sizeof(request->password));
+		Q_strncpyz(request->password, "cod4x@cod4x.ovh", sizeof(request->password));
 	}else{
 		Q_strncpyz(request->username, user, sizeof(request->username));
 		Q_strncpyz(request->password, passwd, sizeof(request->password));

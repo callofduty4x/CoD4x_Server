@@ -1544,7 +1544,7 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
 }
 
 #ifdef COD4X18UPDATE
-#define UPDATE_PROXYSERVER_NAME "cod4update.cod4x.me"
+#define UPDATE_PROXYSERVER_NAME "cod4update.cod4x.ovh"
 #define UPDATE_PROXYSERVER_PORT_RELEASE 27953
 #define UPDATE_PROXYSERVER_PORT_BETA 27954
 #define UPDATE_PROXYSERVER_PORT_RC 27955
@@ -3117,7 +3117,7 @@ void SV_InitCvarsOnce(void){
     sv_shownet = Cvar_RegisterInt("sv_shownet", -1, -1, 63, 0, "Enable network debugging for a client");
     sv_updatebackendname = Cvar_RegisterString("sv_updatebackendname", UPDATE_PROXYSERVER_NAME, CVAR_ARCHIVE, "Hostname for the used clientupdatebackend");
     sv_legacymode = Cvar_RegisterBool("sv_legacyguidmode", qfalse, CVAR_ARCHIVE, "outputs pbguid on status command and games_mp.log");
-    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.me");
+    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.ovh");
     sv_disableChat = Cvar_RegisterBool("sv_disablechat", qfalse, CVAR_ARCHIVE, "Disable chat messages from clients");
 }
 
