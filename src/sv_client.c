@@ -62,6 +62,15 @@
 
 #endif /* ifdef _LAGDEBUG */
 
+bool VERSION_20EXCEPTION(int version)
+{
+	if(version == 20)
+	{
+		return true;
+	}
+	return false;
+
+}
 
 static void SV_CloseDownload( client_t *cl );
 
@@ -226,7 +235,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	    return;
 	}
 
-	if ( version != sv_protocol->integer ) {
+	if ( version != sv_protocol->integer && !VERSION_20EXCEPTION(version)) {
 
 #ifdef COD4X18UPDATE
 		if(version <= 7)
@@ -237,7 +246,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			if(version < 9)
 			{
 				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
+							    "Please install the unofficial CoD4X-update you can find at http://cod4x.ovh\n",
 							    sv_protocol->integer);
 			}else{
 #ifdef BETA_RELEASE
@@ -438,7 +447,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	newcl->protocol = version;
 
 #ifdef COD4X18UPDATE
-	if(newcl->protocol != sv_protocol->integer)
+	if(newcl->protocol != sv_protocol->integer && !VERSION_20EXCEPTION(newcl->protocol))
 	{
 		newcl->needupdate = qtrue;
 	}else{
@@ -518,7 +527,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		}
 		if(svs.time - newcl->updateBeginTime > 18000)
 		{
-			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.me/clupdate");
+			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.ovh/clupdate");
 			Com_Printf(CON_CHANNEL_SERVER,"Rejected client %s because updatebackend is unavailable\n", nick);
 			SV_FreeClientScriptId(newcl);
 			Com_Memset(newcl, 0, sizeof(client_t));

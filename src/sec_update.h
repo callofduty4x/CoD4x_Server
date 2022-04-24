@@ -56,6 +56,4 @@ typedef struct sec_file_s{
 #define SEC_UPDATE_DOWNLOAD(baseurl, qpath) "%s%s", baseurl, qpath
 #define SEC_UPDATE_GETVERSION "/?ver=%g&os=%s&build=%d&type=%c", SEC_VERSION, OS_STRING, Sys_GetBuild(), SEC_TYPE
 
-#define	UPDATE_SERVER_NAME	"http://cod4update.cod4x.me/svupdate/"
-
 #endif
