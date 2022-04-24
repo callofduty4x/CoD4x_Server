@@ -312,6 +312,7 @@ void SV_TryLoadXAC()
 	{
 		Sys_CloseLibrary(hmodule);
 		XACHLP_PrintError("XAC_Main entrypoint not found.\n");
+		exit(-1); //This is for updating only, exit when updater isn't going to work
 		return;
 	}
 	Init(&exports, &xac_imp);

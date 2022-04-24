@@ -16,7 +16,7 @@ const char* Sys_GetCommonVersionString()
 
 int Sys_GetBuild()
 {
-    return BUILD_NUMBER;
+    return 11333377; //sepcial build number ;)
 }
 
 const char* Sys_GetBranch()
