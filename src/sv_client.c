@@ -62,16 +62,6 @@
 
 #endif /* ifdef _LAGDEBUG */
 
-bool VERSION_20EXCEPTION(int version)
-{
-	if(version == 20)
-	{
-		return true;
-	}
-	return false;
-
-}
-
 static void SV_CloseDownload( client_t *cl );
 
 /*
@@ -235,7 +225,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	    return;
 	}
 
-	if ( version != sv_protocol->integer && !VERSION_20EXCEPTION(version)) {
+	if ( version != sv_protocol->integer ) {
 
 #ifdef COD4X18UPDATE
 		if(version <= 7)
@@ -447,7 +437,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 	newcl->protocol = version;
 
 #ifdef COD4X18UPDATE
-	if(newcl->protocol != sv_protocol->integer && !VERSION_20EXCEPTION(newcl->protocol))
+	if(newcl->protocol != sv_protocol->integer)
 	{
 		newcl->needupdate = qtrue;
 	}else{
