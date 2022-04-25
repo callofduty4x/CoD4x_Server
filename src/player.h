@@ -51,7 +51,8 @@
 #define KEY_MASK_SMOKE          32768
 #define KEY_MASK_NIGHTVISION    262144
 #define KEY_MASK_ADS            524288
-#define KEY_MASK_USE            0x28 /* Combination */
+#define KEY_MASK_USE            8 
+#define KEY_MASK_USERELOAD      0x20
 #define BUTTON_ATTACK			KEY_MASK_FIRE
 
 typedef struct{
