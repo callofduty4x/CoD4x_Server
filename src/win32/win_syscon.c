@@ -39,7 +39,6 @@
 #define SYSCON_DEFAULT_HEIGHT   450
 
 #define COPY_ID         1
-#define QUIT_ID         2
 #define CLEAR_ID        3
 
 #define ERRORBOX_ID     10
@@ -155,12 +154,10 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		break;
 
 	case WM_CLOSE:
-			Cbuf_AddText("quit\n");
-
 		return 0;
 	case WM_CTLCOLORSTATIC:
 		if ( ( HWND ) lParam == s_wcd.hwndBuffer ) {
-			SetBkColor( ( HDC ) wParam, RGB( 0x33, 0x33, 0x33 ) );
+			SetBkColor( ( HDC ) wParam, RGB( 0, 0, 0 ) );
 			SetTextColor( ( HDC ) wParam, RGB( 0xff, 0xff, 0xff ) );
 
 #if 0   // this draws a background in the edit box, but there are issues with this
@@ -174,16 +171,6 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			}
 #endif
 			return ( long ) s_wcd.hbrEditBackground;
-		} else if ( ( HWND ) lParam == s_wcd.hwndErrorBox )   {
-			if ( s_timePolarity & 1 ) {
-				SetBkColor( ( HDC ) wParam, RGB( 0x80, 0x80, 0x80 ) );
-				SetTextColor( ( HDC ) wParam, RGB( 0xff, 0x0, 0x00 ) );
-			} else
-			{
-				SetBkColor( ( HDC ) wParam, RGB( 0x80, 0x80, 0x80 ) );
-				SetTextColor( ( HDC ) wParam, RGB( 0x00, 0x0, 0x00 ) );
-			}
-			return ( long ) s_wcd.hbrErrorBackground;
 		}
 		break;
 

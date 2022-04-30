@@ -47,7 +47,9 @@ void	SE_CheckForLanguageUpdates(void);
 int	SE_GetNumLanguages	( void );
 LPCSTR	SE_GetLanguageName	( int iLangIndex );	// eg "german"
 LPCSTR	SE_GetLanguageDir	( int iLangIndex );	// eg "strings/german"
-LPCSTR	SE_LoadLanguage		( LPCSTR psLanguage, SE_BOOL bLoadDebug = SE_TRUE );
+//LPCSTR	SE_LoadLanguage		( LPCSTR psLanguage, SE_BOOL bLoadDebug = SE_TRUE );
+LPCSTR	SE_LoadLanguage		( SE_BOOL forceEnglish );
+
 void	SE_NewLanguage		( void );
 
 }
