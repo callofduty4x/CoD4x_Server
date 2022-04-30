@@ -4061,7 +4061,7 @@ void SV_BotUserMove(client_t *client)
     }
 
     if (shouldSpamUseButton(ent))
-        ucmd.buttons |= KEY_MASK_USE;
+        ucmd.buttons |= KEY_MASK_USE | KEY_MASK_USERELOAD;
 
     client->deltaMessage = client->netchan.outgoingSequence - 1;
     SV_ClientThink(client, &ucmd);
