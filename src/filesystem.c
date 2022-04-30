@@ -2593,7 +2593,19 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename ) {
 		unzGoToNextFile( uf );
 	}
 
+/*//Code for dumping iwd pure sums
+	char headername[1024];
+	sprintf(headername, "%s.sum", zipfile);
+	FILE* df = fopen(headername, "wb");
+	if(df)
+	{
+		fwrite(fs_headerLongs, 4, fs_numHeaderLongs, df);
+		fclose(df);
+	}
 	pack->checksum = Com_BlockChecksumKey32( fs_headerLongs, 4 * fs_numHeaderLongs, LittleLong( 0 ) );
+	Com_Printf(CON_CHANNEL_DONT_FILTER, "%s: %d\n", zipfile, pack->checksum);
+*/
+
 	if(fs_checksumFeed)
 		pack->pure_checksum = Com_BlockChecksumKey32( fs_headerLongs, 4 * fs_numHeaderLongs, LittleLong( fs_checksumFeed ) );
 	else
