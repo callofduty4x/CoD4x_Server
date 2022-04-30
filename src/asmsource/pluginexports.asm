@@ -136,6 +136,7 @@ pexport Scr_GetEntity
 pexport Scr_GetConstString
 pexport Scr_GetType
 pexport Scr_GetVector
+pexport Scr_GetFunc
 pexport Scr_Error
 pexport Scr_ParamError
 pexport Scr_ObjectError

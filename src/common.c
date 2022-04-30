@@ -753,7 +753,7 @@ void Com_Init(char* commandLine){
 
     Com_StartupVariable(NULL);
 
-    Cvar_RegisterString ("_CoD4 X Site", "http://cod4x.me", CVAR_ROM | CVAR_SERVERINFO , "");
+    Cvar_RegisterString ("_CoD4 X Site", "http://cod4x.ovh", CVAR_ROM | CVAR_SERVERINFO , "");
 
     cvar_modifiedFlags &= ~CVAR_ARCHIVE;
 

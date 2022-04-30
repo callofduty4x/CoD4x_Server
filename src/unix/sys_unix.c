@@ -570,7 +570,7 @@ void Sys_LoadLibraryError(char* errormessage, int maxlen)
 
 void* Sys_LoadLibrary(const char* dlfile)
 {
-	void* handle = dlopen(dlfile, RTLD_LAZY);
+	void* handle = dlopen(dlfile, RTLD_NOW);
 	currentLibHandle = handle;
 	if(handle == NULL)
 	{
