@@ -39,6 +39,7 @@
 #define SYSCON_DEFAULT_HEIGHT   450
 
 #define COPY_ID         1
+#define QUIT_ID         2
 #define CLEAR_ID        3
 
 #define ERRORBOX_ID     10
@@ -80,7 +81,6 @@ typedef struct
 	HBITMAP hbmClearBitmap;
 
 	HBRUSH hbrEditBackground;
-	HBRUSH hbrErrorBackground;
 
 	HFONT hfBufferFont;
 	HFONT hfButtonFont;
@@ -195,8 +195,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	case WM_CREATE:
 //		s_wcd.hbmLogo = LoadBitmap( g_wv.hInstance, MAKEINTRESOURCE( IDB_BITMAP1 ) );
 //		s_wcd.hbmClearBitmap = LoadBitmap( g_wv.hInstance, MAKEINTRESOURCE( IDB_BITMAP2 ) );
-		s_wcd.hbrEditBackground = CreateSolidBrush( RGB( 0x33, 0x33, 0x33 ) );
-		s_wcd.hbrErrorBackground = CreateSolidBrush( RGB( 0x80, 0x80, 0x80 ) );
+		s_wcd.hbrEditBackground = CreateSolidBrush( RGB( 0, 0, 0 ) );
 		SetTimer( hWnd, 1, 1000, NULL );
 		break;
 	case WM_ERASEBKGND:
