@@ -1,0 +1,196 @@
+__TEXT: fileoff=0, vmaddr=0x1000
+mmap(file) cod4_steam.bin __TEXT: 0x40001000-0x403c5000 offset=0
+mapped at 0x40001000
+__DATA: fileoff=0x3c4000, vmaddr=0x3c5000
+mmap(file) cod4_steam.bin __DATA: 0x403c5000-0x403de000 offset=3948544
+mapped at 0x403c5000
+__OBJC: fileoff=0x3dd000, vmaddr=0xd5e7000
+mmap(file) cod4_steam.bin __OBJC: 0x4d5e7000-0x4d5e8000 offset=4050944
+mapped at 0x4d5e7000
+__IMPORT: fileoff=0x3de000, vmaddr=0xd5e8000
+mmap(file) cod4_steam.bin __IMPORT: 0x4d5e8000-0x4d5ea000 offset=4055040
+mapped at 0x4d5e8000
+__LINKEDIT: fileoff=0x3e0000, vmaddr=0xd5ea000
+mmap(file) cod4_steam.bin __LINKEDIT: 0x4d5ea000-0x4d783000 offset=4063232
+mapped at 0x4d5ea000
+__TEXT: fileoff=0, vmaddr=0x1000
+mmap(file) cod4_mac.bin __TEXT: 0x1000-0x3a4000 offset=0
+mapped at 0x1000
+__DATA: fileoff=0x3a3000, vmaddr=0x3a4000
+mmap(file) cod4_mac.bin __DATA: 0x3a4000-0x3be000 offset=3813376
+mapped at 0x3a4000
+__IMPORT: fileoff=0x3bd000, vmaddr=0xd5cc000
+mmap(file) cod4_mac.bin __IMPORT: 0xd5cc000-0xd5ce000 offset=3919872
+mapped at 0xd5cc000
+__OBJC: fileoff=0x3bf000, vmaddr=0xd5ce000
+mmap(file) cod4_mac.bin __OBJC: 0xd5ce000-0xd5cf000 offset=3928064
+mapped at 0xd5ce000
+__LINKEDIT: fileoff=0x3c0000, vmaddr=0xd5cf000
+mmap(file) cod4_mac.bin __LINKEDIT: 0xd5cf000-0xd7b4000 offset=3932160
+mapped at 0xd5cf000
+Out of range symbol: fixed_bl address 0x3b4044
+Out of range symbol: fixed_bl address 0x3b4064
+Out of range symbol: fixed_bl address 0x3b40d4
+Out of range symbol: fixed_bl address 0x3b4054
+Out of range symbol: fixed_bl address 0x3b4054
+Out of range symbol: fixed_bl address 0x3b4054
+Out of range symbol: fixed_bl address 0x3b4054
+Out of range symbol: fixed_bl address 0x3b4074
+Out of range symbol: fixed_bl address 0x3b4084
+Out of range symbol: fixed_bl address 0x3b4094
+Out of range symbol: fixed_bl address 0x3b4054
+Out of range symbol: fixed_bl address 0x3b40a4
+Out of range symbol: fixed_bl address 0x3b40b4
+Out of range symbol: fixed_bl address 0x3b40c4
+Out of range symbol: fixed_bl address 0x3b40e4
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b4164
+Out of range symbol: fixed_bl address 0x3b4164
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4104
+Out of range symbol: fixed_bl address 0x3b4104
+Out of range symbol: fixed_bl address 0x3b41c4
+Out of range symbol: fixed_bl address 0x3b41c4
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b4194
+Out of range symbol: fixed_bl address 0x3b4194
+Out of range symbol: fixed_bl address 0x3b4184
+Out of range symbol: fixed_bl address 0x3b4184
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b41d4
+Out of range symbol: fixed_bl address 0x3b41d4
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b41a4
+Out of range symbol: fixed_bl address 0x3b41a4
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4124
+Out of range symbol: fixed_bl address 0x3b4124
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b4114
+Out of range symbol: fixed_bl address 0x3b40f4
+Out of range symbol: fixed_bl address 0x3b4134
+Out of range symbol: fixed_bl address 0x3b4134
+Out of range symbol: fixed_bl address 0x3b46c0
+Out of range symbol: fixed_bl address 0x3b4820
+Out of range symbol: fixed_bl address 0x3b47c0
+Out of range symbol: fixed_bl address 0x3b4760
+Out of range symbol: fixed_bl address 0x3b46c0
+Out of range symbol: fixed_bl address 0x3b4820
+Out of range symbol: fixed_bl address 0x3b48e0
+Out of range symbol: fixed_bl address 0x3b46c0
+Out of range symbol: fixed_bl address 0x3b4820
+Out of range symbol: fixed_bl address 0x3b47c0
+Out of range symbol: fixed_bl address 0x3b4a40
+Out of range symbol: fixed_bl address 0x3b46c0
+Out of range symbol: fixed_bl address 0x3b4820
+Out of range symbol: fixed_bl address 0x3b4ae0
+Out of range symbol: fixed_bl address 0x3b46c0
+Out of range symbol: fixed_bl address 0x3b4ba0
+Out of range symbol: fixed_bl address 0x3b4234
+Out of range symbol: fixed_bl address 0x3b4244
+Out of range symbol: fixed_bl address 0x3b4264
+Out of range symbol: fixed_bl address 0x3b4254
+Out of range symbol: fixed_bl address 0x3b4214
+Out of range symbol: fixed_bl address 0x3b4224
+Out of range symbol: fixed_bl address 0x3b46c0
+Out of range symbol: fixed_bl address 0x3b4820
+Out of range symbol: fixed_bl address 0x3b47c0
+Out of range symbol: fixed_bl address 0x3b4d00
+Out of range symbol: fixed_bl address 0x3b4274
+Out of range symbol: fixed_bl address 0x3b4284
+Out of range symbol: _ZZ14PM_GetMoveAnimP13playerState_s17PmStanceFrontBackiiE13moveAnimTable address 0x3833e0
+address 0x3833e0@0x40178 not in symbolmap (const)
+Out of range symbol: g_fltMin__uint4 address 0x384490
+address 0x384490@0x60957 not in symbolmap (const)
+Out of range symbol: g_zero address 0x384830
+address 0x384830@0x6da37 not in symbolmap (const)
+Out of range symbol: g_zero address 0x384820
+address 0x384820@0x6cdd7 not in symbolmap (const)
+Out of range symbol: fixed_bl address 0x3b4294
+Out of range symbol: fixed_bl address 0x3b4294
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: fixed_bl address 0x3b4e00
+Out of range symbol: circleCoords.131667 address 0x391fb0
+address 0x391fb0@0x224127 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x391fb0
+address 0x391fb0@0x224130 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x226f93 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x227344 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x227358 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x22736d not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x2273b5 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x22781a not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x227845 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x227af2 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x227d9b not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x228039 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x2281fb not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x22820f not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x228223 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x228327 not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x22833a not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x22834e not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x22837b not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x22839f not in symbolmap (const)
+Out of range symbol: circleCoords.131667 address 0x392250
+address 0x392250@0x2283bc n

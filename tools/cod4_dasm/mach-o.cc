@@ -151,7 +151,16 @@ class MachOImpl : public MachO {
                        uint32_t* symtab,
                        const char* symstrtab) {
     uint32_t indirect_offset = sec.reserved1;
-    int count = sec.size / ptrsize_;
+    int count;
+    int entrysize;
+    if(sec.reserved2 > 0)
+    {
+        entrysize = sec.reserved2;
+
+    }else{
+        entrysize = ptrsize_;
+    }
+    count = sec.size / entrysize;
     for (int i = 0; i < count; i++) {
       uint32_t dysym = dysyms[indirect_offset + i];
       uint32_t index = dysym & 0x3fffffff;
@@ -159,7 +168,7 @@ class MachOImpl : public MachO {
 
       MachO::Bind* bind = new MachO::Bind();
       bind->name = symstrtab + sym->n_strx;
-      bind->vmaddr = sec.addr + i * ptrsize_;
+      bind->vmaddr = sec.addr + i * entrysize;
       bind->value = sym->n_value;
       bind->type = BIND_TYPE_POINTER;
       bind->ordinal = 1;
@@ -173,8 +182,8 @@ class MachOImpl : public MachO {
 #endif
       binds_.push_back(bind);
     }
-
-    for (int i = 0; i < 689; i++) {
+/*
+    for (int i = 0; i < 400; i++) {
       uint32_t dysym = dysyms[indirect_offset + i + count];
       uint32_t index = dysym & 0x3fffffff;
       nlist* sym = (nlist*)(symtab + index * (is64_ ? 4 : 3));
@@ -187,7 +196,7 @@ class MachOImpl : public MachO {
       bind->ordinal = 1;
       bind->is_weak = ((sym->n_desc & N_WEAK_DEF) != 0);
       bind->is_classic = true;
-#if 0
+#if 1
       printf("add classic bind! %s(%d) type=%d sect=%d desc=%d value=%lld "
            "vmaddr=%p is_weak=%d\n",
            bind->name, index, sym->n_type, sym->n_sect, sym->n_desc, (ll)sym->n_value,
@@ -195,7 +204,7 @@ class MachOImpl : public MachO {
 #endif
       binds_.push_back(bind);
     }
-
+*/
 
   }
 
@@ -258,7 +267,9 @@ void MachOImpl::readSegment(char* cmds_ptr,
       break;
     }
     case S_NON_LAZY_SYMBOL_POINTERS:
+    case S_SYMBOL_STUBS:
     case S_LAZY_SYMBOL_POINTERS: {
+
       bind_sections->push_back(sections + j);
       break;
     }
@@ -267,7 +278,6 @@ void MachOImpl::readSegment(char* cmds_ptr,
     case S_4BYTE_LITERALS:
     case S_8BYTE_LITERALS:
     case S_LITERAL_POINTERS:
-    case S_SYMBOL_STUBS:
     case S_MOD_TERM_FUNC_POINTERS:
       // TODO(hamaji): Support term_funcs.
     case S_COALESCED:
