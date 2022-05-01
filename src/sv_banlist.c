@@ -202,13 +202,6 @@ char* SV_PlayerIsBanned(uint64_t playerid, uint64_t steamid, netadr_t *addr, con
   return NULL;
 }
 
-
-void SV_ReloadBanlist()
-{
-
-}
-
-
 void SV_InitBanlist()
 {
     ipbantime = Cvar_RegisterInt("banlist_maxipbantime", MAX_DEFAULT_IPBAN_MINUTES, 0, 20160, 0, "Limit of minutes to keep a ban against an ip-address up");

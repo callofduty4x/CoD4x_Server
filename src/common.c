@@ -169,6 +169,19 @@ void Com_ShutdownWorld();
 void CM_Shutdown();
 void Init_Watchdog();
 
+struct hunkUsed_t
+{
+  int permanent;
+  int temp;
+};
+extern struct hunkUsed_t hunk_high;
+extern struct hunkUsed_t hunk_low;
+extern int s_hunkTotal;
+
+void HunkAvailMemDebug()
+{
+    Com_Printf(CON_CHANNEL_CLIENT, "Hunk available: %d, Hunk total: %d\n", (s_hunkTotal - hunk_high.temp + hunk_low.temp) / (1024*1024), s_hunkTotal / (1024*1024));
+}
 
 /*
 ================
@@ -740,7 +753,7 @@ void Com_Init(char* commandLine){
 
     Com_StartupVariable(NULL);
 
-    Cvar_RegisterString ("_CoD4 X Site", "http://cod4x.me", CVAR_ROM | CVAR_SERVERINFO , "");
+    Cvar_RegisterString ("_CoD4 X Site", "http://cod4x.ovh", CVAR_ROM | CVAR_SERVERINFO , "");
 
     cvar_modifiedFlags &= ~CVAR_ARCHIVE;
 
@@ -850,7 +863,7 @@ void Com_Init(char* commandLine){
     Com_Printf(CON_CHANNEL_SYSTEM,"--- Common Initialization Complete ---\n");
 
 
-
+ HunkAvailMemDebug();
     com_fullyInitialized = qtrue;
 
     Com_AddStartupCommands( );

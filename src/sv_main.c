@@ -1544,7 +1544,7 @@ __optimize3 __regparm2 static void SVC_RemoteCommand( netadr_t *from, msg_t *msg
 }
 
 #ifdef COD4X18UPDATE
-#define UPDATE_PROXYSERVER_NAME "cod4update.cod4x.me"
+#define UPDATE_PROXYSERVER_NAME "cod4update.cod4x.ovh"
 #define UPDATE_PROXYSERVER_PORT_RELEASE 27953
 #define UPDATE_PROXYSERVER_PORT_BETA 27954
 #define UPDATE_PROXYSERVER_PORT_RC 27955
@@ -1998,7 +1998,15 @@ __optimize3 __regparm2 void SV_PacketEvent( netadr_t *from, msg_t *msg ) {
         Com_Printf(CON_CHANNEL_SERVER,"Invalid reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
         return;
     }
+
     cl->reliableAcknowledge = MSG_ReadLong( msg );
+
+    if (cl->reliableAcknowledge < 0)
+    {
+        Com_Printf(CON_CHANNEL_SERVER,"Negative reliableAcknowledge message from %s - reliableAcknowledge is %i\n", cl->name, cl->reliableAcknowledge);
+        cl->reliableAcknowledge = cl->reliableSequence;
+        return;
+    }
 
     if((cl->reliableSequence - cl->reliableAcknowledge) > (MAX_RELIABLE_COMMANDS - 1)){
         Com_Printf(CON_CHANNEL_SERVER,"Out of range reliableAcknowledge message from %s - reliableSequence is %i, reliableAcknowledge is %i\n",
@@ -3109,7 +3117,7 @@ void SV_InitCvarsOnce(void){
     sv_shownet = Cvar_RegisterInt("sv_shownet", -1, -1, 63, 0, "Enable network debugging for a client");
     sv_updatebackendname = Cvar_RegisterString("sv_updatebackendname", UPDATE_PROXYSERVER_NAME, CVAR_ARCHIVE, "Hostname for the used clientupdatebackend");
     sv_legacymode = Cvar_RegisterBool("sv_legacyguidmode", qfalse, CVAR_ARCHIVE, "outputs pbguid on status command and games_mp.log");
-    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.me");
+    sv_authtoken = Cvar_RegisterString("sv_authtoken", "", 0, "Token to register on masterserver. You can get it from http://cod4master.cod4x.ovh");
     sv_disableChat = Cvar_RegisterBool("sv_disablechat", qfalse, CVAR_ARCHIVE, "Disable chat messages from clients");
 }
 
@@ -3497,11 +3505,6 @@ qboolean SV_FFAPlayerCanBlock(){
 
 //Few custom added things which should happen if we load a new level or restart a level
 void SV_PreLevelLoad(){
-
-    client_t* client;
-    int i;
-    char buf[MAX_STRING_CHARS];
-
     Com_UpdateRealtime();
     time_t realtime = Com_GetRealtime();
     char *timestr = ctime(&realtime);
@@ -3519,29 +3522,9 @@ void SV_PreLevelLoad(){
 
     FS_ShutdownIwdPureCheckReferences();
 
-    SV_ReloadBanlist();
-
     NV_LoadConfig();
 
-    for ( client = svs.clients, i = 0 ; i < sv_maxclients->integer ; i++, client++ ) {
-
-        // send the new gamestate to all connected clients
-        if ( client->state < CS_ACTIVE ) {
-            continue;
-        }
-
-        if ( client->netchan.remoteAddress.type == NA_BOT ) {
-            continue;
-        }
-
-        if(SV_PlayerIsBanned(client->playerid, client->steamid, &client->netchan.remoteAddress, client->name, buf, sizeof(buf))){
-            SV_DropClient(client, "Prior kick/ban");
-            continue;
-        }
-    }
-
     HL2Rcon_EventLevelStart();
-
 }
 
 void SV_PostLevelLoad(){
@@ -4078,7 +4061,7 @@ void SV_BotUserMove(client_t *client)
     }
 
     if (shouldSpamUseButton(ent))
-        ucmd.buttons |= KEY_MASK_USE;
+        ucmd.buttons |= KEY_MASK_USE | KEY_MASK_USERELOAD;
 
     client->deltaMessage = client->netchan.outgoingSequence - 1;
     SV_ClientThink(client, &ucmd);

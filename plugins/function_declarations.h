@@ -245,6 +245,7 @@
     __cdecl short Plugin_Scr_GetConstString( unsigned int );
     __cdecl unsigned int Plugin_Scr_GetType( unsigned int );
     __cdecl void Plugin_Scr_GetVector( unsigned int, vec3_t* );
+    __cdecl int Plugin_Scr_GetFunc( unsigned int paramnum );
     __cdecl void Plugin_Scr_Error( const char *string);
     __cdecl void Plugin_Scr_ParamError( int, const char *string);
     __cdecl void Plugin_Scr_ObjectError( const char *string);

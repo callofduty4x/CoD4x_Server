@@ -72,4 +72,4 @@ TODO. Almost the same except 'start' command and .bat script extension.
 
 ## Launching servers
 
-That's it. Now you can launch your servers using scripts inside `CoD4X`. You can always check your servers' visibility on http://cod4master.cod4x.me.
+That's it. Now you can launch your servers using scripts inside `CoD4X`. You can always check your servers' visibility on http://cod4master.cod4x.ovh.

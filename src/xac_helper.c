@@ -347,3 +347,4 @@ void SV_RunFrameXAC()
 	if(xac_imp.RunFrame)
 		xac_imp.RunFrame();
 }
+

@@ -81,7 +81,6 @@ typedef struct
 	HBITMAP hbmClearBitmap;
 
 	HBRUSH hbrEditBackground;
-	HBRUSH hbrErrorBackground;
 
 	HFONT hfBufferFont;
 	HFONT hfButtonFont;
@@ -155,12 +154,10 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 		break;
 
 	case WM_CLOSE:
-			Cbuf_AddText("quit\n");
-
 		return 0;
 	case WM_CTLCOLORSTATIC:
 		if ( ( HWND ) lParam == s_wcd.hwndBuffer ) {
-			SetBkColor( ( HDC ) wParam, RGB( 0x33, 0x33, 0x33 ) );
+			SetBkColor( ( HDC ) wParam, RGB( 0, 0, 0 ) );
 			SetTextColor( ( HDC ) wParam, RGB( 0xff, 0xff, 0xff ) );
 
 #if 0   // this draws a background in the edit box, but there are issues with this
@@ -174,16 +171,6 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			}
 #endif
 			return ( long ) s_wcd.hbrEditBackground;
-		} else if ( ( HWND ) lParam == s_wcd.hwndErrorBox )   {
-			if ( s_timePolarity & 1 ) {
-				SetBkColor( ( HDC ) wParam, RGB( 0x80, 0x80, 0x80 ) );
-				SetTextColor( ( HDC ) wParam, RGB( 0xff, 0x0, 0x00 ) );
-			} else
-			{
-				SetBkColor( ( HDC ) wParam, RGB( 0x80, 0x80, 0x80 ) );
-				SetTextColor( ( HDC ) wParam, RGB( 0x00, 0x0, 0x00 ) );
-			}
-			return ( long ) s_wcd.hbrErrorBackground;
 		}
 		break;
 
@@ -208,8 +195,7 @@ static LONG WINAPI ConWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 	case WM_CREATE:
 //		s_wcd.hbmLogo = LoadBitmap( g_wv.hInstance, MAKEINTRESOURCE( IDB_BITMAP1 ) );
 //		s_wcd.hbmClearBitmap = LoadBitmap( g_wv.hInstance, MAKEINTRESOURCE( IDB_BITMAP2 ) );
-		s_wcd.hbrEditBackground = CreateSolidBrush( RGB( 0x33, 0x33, 0x33 ) );
-		s_wcd.hbrErrorBackground = CreateSolidBrush( RGB( 0x80, 0x80, 0x80 ) );
+		s_wcd.hbrEditBackground = CreateSolidBrush( RGB( 0, 0, 0 ) );
 		SetTimer( hWnd, 1, 1000, NULL );
 		break;
 	case WM_ERASEBKGND:

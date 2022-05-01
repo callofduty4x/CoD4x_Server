@@ -29,8 +29,9 @@ const BotAction_t BotActions[] =
     { "sprint",     KEY_MASK_SPRINT     },
     { "leanleft",   KEY_MASK_LEANLEFT   },
     { "leanright",  KEY_MASK_LEANRIGHT  },
-    { "ads",        KEY_MASK_ADS_MODE   },
-    { "holdbreath", KEY_MASK_HOLDBREATH }
+    { "ads",        KEY_MASK_ADS_MODE | KEY_MASK_ADS },
+    { "holdbreath", KEY_MASK_HOLDBREATH },
+    { "activate",   KEY_MASK_USE }
 };
 /*
 ==================

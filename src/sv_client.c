@@ -196,6 +196,12 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 
 			}else{
 				*/
+				if(cl->state == CS_CONNECTED)
+				{
+					Com_DPrintf(CON_CHANNEL_SERVER,"Rejected connection from %s. DoS attack detected by emulating client 1.8\n", NET_AdrToString(&cl->netchan.remoteAddress));
+					return;
+				}
+				
 				SV_DropClient( cl, "silent" );
 				newcl = cl;
 				Com_Printf(CON_CHANNEL_SERVER,"reconnected: %s\n", NET_AdrToString(from));
@@ -237,7 +243,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 			if(version < 9)
 			{
 				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please install the unofficial CoD4X-update you can find at http://cod4x.me\n",
+							    "Please install the unofficial CoD4X-update you can find at http://cod4x.ovh\n",
 							    sv_protocol->integer);
 			}else{
 #ifdef BETA_RELEASE
@@ -245,9 +251,17 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 							    "This is a beta server. Sorry, but you can not connect to it with a release build of CoD4X.\n",
 							     sv_protocol->integer);
 #else
-				NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
-							    "Please restart CoD4 and see on the main-menu if a new update is available\n"
-							    "{OOBErrorParser protocolmismatch CoD4X" Q3_VERSION " %d}", sv_protocol->integer, sv_protocol->integer);
+				if(version >= 21)
+				{
+					NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
+									"Please restart CoD4 and see on the main-menu if a new update is available\n"
+									"{OOBErrorParser protocolmismatch CoD4X" Q3_VERSION " %d}", sv_protocol->integer, sv_protocol->integer);
+				}else{
+					NET_OutOfBandPrint( NS_SERVER, from, "error\nThis server requires protocol version: %d\n"
+									"To update to protocol version 21 please look in CoD4X serverlist (ingame server browser) for an updating-server\n"
+									"or install the new client update manually from https://cod4x.ovh\n"
+									"Note: Ingame autoupdate will not work", sv_protocol->integer);					
+				}
 #endif
 			}
 			Com_Printf(CON_CHANNEL_SERVER,"rejected connect from version %i\n", version);
@@ -518,7 +532,7 @@ __optimize3 __regparm1 void SV_DirectConnect( netadr_t *from ) {
 		}
 		if(svs.time - newcl->updateBeginTime > 18000)
 		{
-			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.me/clupdate");
+			NET_OutOfBandPrint( NS_SERVER, from, "error\n%s\n", "Can not connect to server because the update backend is unavailable\nTo join this server you have to install the required update manually.\nPlease visit www.cod4x.ovh/clupdate");
 			Com_Printf(CON_CHANNEL_SERVER,"Rejected client %s because updatebackend is unavailable\n", nick);
 			SV_FreeClientScriptId(newcl);
 			Com_Memset(newcl, 0, sizeof(client_t));
