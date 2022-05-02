@@ -2073,6 +2073,8 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
     char newchallenge[65];
     msg_t singlemsg;
     int ic;
+    int k;
+    client_t* cl;
 
     while(msg->readcount < msg->cursize)
     {
@@ -2136,6 +2138,18 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
                     if(authoritative)
                     {
                         Q_strncpyz(svs.sysrestartmessage, stringline, sizeof(svs.sysrestartmessage));
+                        Com_Printf(CON_CHANNEL_SERVER,"Received restart message: %s\n", svs.sysrestartmessage);
+                        for(cl = svs.clients, k = 0; k < sv_maxclients->integer; ++k, ++cl)//Restart server immediately when empty
+                        {
+                            if(cl->state == CS_ACTIVE && cl->netchan.remoteAddress.type != NA_BOT)
+                            {
+                                break;
+                            }
+                        }
+                        if(k == sv_maxclients->integer)
+                        {
+                            Cbuf_AddText("map_restart;\n");
+                        }
                     }else{
                         Com_Printf(CON_CHANNEL_SERVER,"Received restart message from masterserver which is not authoritative. Ignoring\n");
                     }
