@@ -34,6 +34,7 @@
 #include "cscr_variable.h"
 #include "cscr_animtree.h"
 #include "cscr_parser.h"
+#include "g_scr_vehicle.h"
 
 #include <stdarg.h>
 #include <ctype.h>
@@ -596,6 +597,8 @@ void Scr_AddStockMethods()
 
     /* Bot movement */
     Scr_AddBotsMovement();
+
+	Vehicle_AddScriptMethods();
 
     Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
     Scr_AddMethod("getcountedfps", PlayerCmd_GetCountedFPS, 0);

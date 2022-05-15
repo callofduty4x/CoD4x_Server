@@ -67,7 +67,7 @@ struct vehicle_pathpos_t
   vec3_t origin;
   vec3_t angles;
   vec3_t lookPos;
-  vehicle_node_t switchNode[2];
+  struct vehicle_node_t switchNode[2];
 };
 
 struct vehicle_physic_t
@@ -122,7 +122,7 @@ struct VehicleTurret
   int fireBarrel;
   float barrelOffset;
   int barrelBlocked;
-  VehicleTurretState turretState;
+  enum VehicleTurretState turretState;
 };
 
 
@@ -156,7 +156,7 @@ struct VehicleRideSlot_t
 
 struct VehicleTags
 {
-  VehicleRideSlot_t riderSlots[3];
+  struct VehicleRideSlot_t riderSlots[3];
   int detach;
   int popout;
   int body;
@@ -169,20 +169,20 @@ struct VehicleTags
 
 struct scr_vehicle_s
 {
-  vehicle_pathpos_t pathPos;
-  vehicle_physic_t phys;
+  struct vehicle_pathpos_t pathPos;
+  struct vehicle_physic_t phys;
   int entNum;
   int16_t infoIdx;
   uint16_t pad;
   int flags;
   int team;
-  VehicleMoveState moveState;
+  enum VehicleMoveState moveState;
   int16_t waitNode;
   uint16_t pad2;
   float waitSpeed;
-  VehicleTurret turret;
-  VehicleJitter jitter;
-  VehicleHover hover;
+  struct VehicleTurret turret;
+  struct VehicleJitter jitter;
+  struct VehicleHover hover;
   int drawOnCompass;
   uint16_t lookAtText0;
   uint16_t lookAtText1;
@@ -220,9 +220,14 @@ struct scr_vehicle_s
   int engineSndEnt;
   float idleSndLerp;
   float engineSndLerp;
-  VehicleTags boneIndex;
+  struct VehicleTags boneIndex;
   int turretHitNum;
   float forcedMaterialSpeed;
 };
 
 extern struct vehicle_info_t s_vehicleInfos[32];
+
+#ifndef __cplusplus
+void Vehicle_AddScriptMethods();
+
+#endif
