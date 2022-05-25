@@ -87,6 +87,7 @@
 	extern SV_SetBrushModel
 	extern s_wheelTags
 	extern s_vehicleInfos
+	extern _Z18VEH_PlayerRotationP9gentity_sP16vehicle_physic_t
 
 
 ;Exports of g_vehicles_mp:
@@ -96,7 +97,6 @@
 	global VEH_ParseSpecificField
 	global G_LoadVehicle
 	global VEH_GetVehicleInfoFromName
-	global VEH_PlayerRotation
 	global VEH_GetWheelOrigin
 	global VEH_PushEntity
 	global VEH_TouchEntities
@@ -390,72 +390,6 @@ VEH_GetVehicleInfoFromName_70:
 	jmp VEH_GetVehicleInfoFromName_80
 	add [eax], al
 
-
-;VEH_PlayerRotation(gentity_s*, vehicle_physic_t*)
-VEH_PlayerRotation:
-	push ebp
-	mov ebp, esp
-	sub esp, 0x48
-	mov eax, [ebp+0x8]
-	mov eax, [eax+0x15c]
-	cvtsi2ss xmm0, dword [eax+0x2f9c]
-	mulss xmm0, [_float_0_00549316]
-	addss xmm0, [_float_180_00000000]
-	movss [esp], xmm0
-	call AngleNormalize360
-	fstp dword [ebp-0x2c]
-	movss xmm1, dword [ebp-0x2c]
-	movss xmm0, dword [_float_90_00000000]
-	mov eax, [ebp+0xc]
-	addss xmm0, [eax+0x1c]
-	movss [esp], xmm0
-	movss [ebp-0x28], xmm1
-	call AngleNormalize360
-	fstp dword [ebp-0xc]
-	movss xmm1, dword [ebp-0x28]
-	subss xmm1, [ebp-0xc]
-	mulss xmm1, [_float_0_00277778]
-	movaps xmm0, xmm1
-	addss xmm0, [_float_0_50000000]
-	movss [esp], xmm0
-	movss [ebp-0x28], xmm1
-	call floorf
-	fstp dword [ebp-0x10]
-	movss xmm1, dword [ebp-0x28]
-	subss xmm1, [ebp-0x10]
-	mulss xmm1, [_float_360_00000000]
-	pxor xmm0, xmm0
-	ucomiss xmm0, xmm1
-	seta cl
-	lea eax, [ecx+ecx-0x1]
-	mov ecx, eax
-	andps xmm1, [_data16_7fffffff]
-	ucomiss xmm1, [_float_20_00000000]
-	jb VEH_PlayerRotation_10
-	movsx edx, al
-	mov eax, edx
-	shl eax, 0x7
-	sub eax, edx
-	movsx eax, al
-	leave
-	ret
-VEH_PlayerRotation_10:
-	ucomiss xmm1, [_float_0_01000000]
-	jb VEH_PlayerRotation_20
-VEH_PlayerRotation_30:
-	divss xmm1, dword [_float_20_00000000]
-	mulss xmm1, [_float_127_00000000]
-	cvttss2si eax, xmm1
-	mul cl
-	movsx eax, al
-	leave
-	ret
-VEH_PlayerRotation_20:
-	jp VEH_PlayerRotation_30
-	xor eax, eax
-	leave
-	ret
-	nop
 
 
 ;VEH_GetWheelOrigin(gentity_s*, int, float*)
@@ -5794,7 +5728,7 @@ G_VehEntHandler_Think_80:
 	mov [ebx+0x44], al
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call VEH_PlayerRotation
+	call _Z18VEH_PlayerRotationP9gentity_sP16vehicle_physic_t
 	mov [ebx+0x45], al
 	mov eax, [edi+0x15c]
 	movsx eax, byte [eax+0x2fa6]
@@ -5803,7 +5737,7 @@ G_VehEntHandler_Think_80:
 	movss [ebx+0x48], xmm0
 	mov [esp+0x4], ebx
 	mov [esp], edi
-	call VEH_PlayerRotation
+	call _Z18VEH_PlayerRotationP9gentity_sP16vehicle_physic_t
 	movsx eax, al
 	cvtsi2ss xmm0, eax
 	divss xmm0, dword [_float_127_00000000]
