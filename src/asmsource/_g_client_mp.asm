@@ -17,7 +17,6 @@
 	extern G_SetOrigin
 	extern g_inactivity
 	extern ClientEndFrame
-	extern ClientThink_real
 	extern BG_PlayerStateToEntityState
 	extern level_bgs
 	extern SV_GetAssignedTeam

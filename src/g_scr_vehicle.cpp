@@ -38,7 +38,7 @@ gentity_s * GScr_GetVehicle(scr_entref_t entref)
     {
         return VEH_GetVehicle(entref.entnum);
     }
-    Scr_ObjectError("not an entity", 0);
+    Scr_ObjectError("not an entity");
     return 0;
 }
 
@@ -137,24 +137,7 @@ void VehicleCmd_GetPlayerInSeat(scr_entref_t arg)
     int seat;
     mvabuf;
  
-    if (arg.classnum)
-    {
- 
-        Scr_ObjectError("Not an entity");
-        return;
-    }
-    else
-    {
- 
-        entityNum = arg.entnum;
-        gentity = &g_entities[entityNum];
- 
-        if (!gentity->scr_vehicle)
-        {
-            Scr_ObjectError(va("Entity: %i is not a script_vehicle", entityNum));
-            return;
-        }
-    }
+    gentity = GScr_GetVehicle(arg);
  
     if (Scr_GetNumParam() != 1)
     {
@@ -190,27 +173,12 @@ void VehicleCmd_IsFull(scr_entref_t arg)
 {
     gentity_t* gentity;
     scr_vehicle_s* vehicle;
-    int entityNum = 0;
     unsigned int i;
     mvabuf;
  
-    if (arg.classnum)
-    {
-        Scr_ObjectError("Not an entity");
-        return;
-    }
-    else
-    {
-        entityNum = arg.entnum;
-        gentity = &g_entities[entityNum];
- 
-        if (!gentity->scr_vehicle)
-        {
-            Scr_ObjectError(va("Entity: %i is not a script_vehicle", entityNum));
-            return;
-        }
-    }
- 
+    gentity = GScr_GetVehicle(arg);
+
+
     vehicle = gentity->scr_vehicle;
  
     for (i = 0; i < ARRAY_COUNT(vehicle->boneIndex.riderSlots); i++)
@@ -235,27 +203,12 @@ Usage: isDriverSeatEmpty = VEH_IsSeatEmpty( 0 );
 void VehicleCmd_IsSeatEmpty(scr_entref_t arg)
 {
     gentity_t* gentity;
-    int entityNum = 0;
     int seat;
     mvabuf;
+
  
-    if (arg.classnum)
-    {
-        Scr_ObjectError("Not an entity");
-        return;
-    }
-    else
-    {
-        entityNum = arg.entnum;
-        gentity = &g_entities[entityNum];
- 
-        if (!gentity->scr_vehicle)
-        {
-            Scr_ObjectError(va("Entity: %i is not a script_vehicle", entityNum));
-            return;
-        }
-    }
- 
+    gentity = GScr_GetVehicle(arg);
+
     if (Scr_GetNumParam() != 1)
     {
          Scr_Error("Usage: isSeatFree = vehicle VEH_IsSeatEmpty( <integer> )\n");
@@ -284,30 +237,11 @@ void VehicleCmd_VehicleInfo(scr_entref_t arg)
 {
  
     gentity_t* gentity;
- 
-    int entityNum = 0;
     mvabuf;
- 
     scr_vehicle_s* vehicle;
  
-    if (arg.classnum)
-    {
- 
-        Scr_ObjectError("Not an entity");
-        return;
-    }
-    else
-    {
- 
-        entityNum = arg.entnum;
-        gentity = &g_entities[entityNum];
- 
-        if (!gentity->scr_vehicle)
-        {
-            Scr_ObjectError(va("Entity: %i is not a script_vehicle", entityNum));
-            return;
-        }
-    }
+    gentity = GScr_GetVehicle(arg);
+
  
     //gentity_t* gentity2 = &g_entities[0];
  

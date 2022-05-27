@@ -1693,7 +1693,7 @@ _cstring_light:		db "light",0
 _cstring_misc_mg42:		db "misc_mg42",0
 _cstring_misc_turret:		db "misc_turret",0
 _cstring_script_brushmode:		db "script_brushmodel",0
-_cstring_script_vehicle_m:		db "script_vehicle_mp",0
+_cstring_script_vehicle_m:		db "script_vehicle",0
 _cstring_info_notnull:		db "info_notnull",0
 _cstring_info_notnull_big:		db "info_notnull_big",0
 _cstring_trigger_radius:		db "trigger_radius",0

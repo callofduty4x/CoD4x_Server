@@ -65,7 +65,7 @@ void __cdecl ClientThink(int clientNum)
   {
     ClientThink_real(ent, &ent->client->sess.cmd);
   }
-
+  Com_Printf(CON_CHANNEL_CLIENT, "rightmove %d\n", ent->client->sess.cmd.rightmove);
   assert(bgs == &level_bgs);
 
   bgs = NULL;
