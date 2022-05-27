@@ -486,7 +486,7 @@ struct gclient_s {
     bool previouslyFiring;
 	bool previouslyUsingNightVision;
 	bool previouslySprinting;
-	bool pad;
+	char veh_oldforwardmove; //non original member, used to determine steering direction after player lifted pedal
 	qboolean hasRadar;
 	int lastStand;
 	int lastStandTime;

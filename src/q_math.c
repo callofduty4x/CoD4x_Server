@@ -1192,20 +1192,12 @@ returns angle normalized to the range [0 <= angle < 360]
 =================
 */
 
-double __cdecl AngleNormalize360(const float angle)
+double AngleNormalize360(float angle)
 {
-  float sa;
-  float result;
-
-  sa = angle * 0.0027777778;
-  result = (sa - floor(sa)) * 360.0;
-
-  if ( (result - 360.0) < 0.0 )
-  {
-    return result;
-  }
-
-  return result - 360.0;
+	if ( ( angle >= 360.0f ) || ( angle < 0.0f ) ) {
+		angle -= floorf( angle * ( 1.0f / 360.0f ) ) * 360.0f;
+	}
+	return angle;
 }
 
 
@@ -1219,12 +1211,12 @@ returns angle normalized to the range [-180 < angle <= 180]
 float AngleNormalize180 ( float angle ) {
     angle = AngleNormalize360( angle );
     if ( angle > 180.0 ) {
-	angle -= 360.0;
+	    angle -= 360.0;
     }
     return angle;
 }
 
-double __cdecl AngleDelta(const float angle1, const float angle2)
+double AngleDelta(const float angle1, const float angle2)
 {
   return AngleNormalize180(angle1 - angle2);
 }

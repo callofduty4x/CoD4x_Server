@@ -295,9 +295,9 @@ void VehicleCmd_VehicleInfo(scr_entref_t arg)
 void VehicleCmd_GetPmFlags(scr_entref_t arg)
 {
     gentity_t* gentity;
-    scr_vehicle_s* vehicle;
+    //scr_vehicle_s* vehicle;
     int entityNum = 0;
-    unsigned int i;
+    //unsigned int i;
     mvabuf;
  
     if (arg.classnum)
@@ -323,9 +323,9 @@ void VehicleCmd_GetPmFlags(scr_entref_t arg)
 void VehicleCmd_SetPmFlags(scr_entref_t arg)
 {
     gentity_t* gentity;
-    scr_vehicle_s* vehicle;
+    //scr_vehicle_s* vehicle;
     int entityNum = 0;
-    unsigned int i;
+    //unsigned int i;
     mvabuf;
  
     if (arg.classnum)
