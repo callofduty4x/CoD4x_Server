@@ -1958,6 +1958,13 @@ double __cdecl Vec3DistanceSq(const float *p1, const float *p2)
   return VectorLengthSquared( d );
 }
 
+float __cdecl Vec3Distance(const float *p1, const float *p2)
+{
+  vec3_t dist;
+  VectorSubtract(p2, p1, dist);
+  return VectorLength(dist);
+}
+
 /*
 ================
 CreateRotationMatrix

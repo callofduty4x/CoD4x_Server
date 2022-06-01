@@ -673,7 +673,8 @@ void __cdecl turret_think_init(struct gentity_s *);
 void __cdecl DroppedItemClearOwner(struct gentity_s *);
 void __cdecl FinishSpawningItem(struct gentity_s *);
 void __cdecl use_trigger_use(struct gentity_s *, struct gentity_s *, struct gentity_s *);
-
+void __cdecl G_Damage(struct gentity_s*, struct gentity_s*, struct gentity_s*, float const*, float const*, int, int, int, int, enum hitLocation_t, unsigned int, unsigned int, int);
+qboolean __cdecl G_EntLinkToWithOffset(struct gentity_s *ent, struct gentity_s * parent, int tagName, const float* originOffset, const float* anglesOffset);
 
 #ifdef __cplusplus
 }

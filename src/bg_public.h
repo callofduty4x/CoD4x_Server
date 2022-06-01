@@ -19,6 +19,15 @@ struct WeaponDef *__cdecl BG_GetWeaponDef(int weapon);
 };
 #endif
 
+// pm_flags
+#define PMF_PRONE               1
+#define PMF_DUCKED              2
+#define PMF_MANTLE              4
+#define PMF_LADDER              8
+#define PMF_BACKWARDS_RUN       32
+#define PMF_JUMPING             16384
+#define PMF_SPRINTING           32768
+#define PMF_VEHICLE_ATTACHED    1048576
 
 struct DObjModel_s;
 
