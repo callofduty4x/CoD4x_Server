@@ -1,4 +1,31 @@
 
+enum VehicleTypes
+{
+	VEH_WHEELS_4 = 0x0,
+	VEH_TANK = 0x1,
+	VEH_PLANE = 0x2,
+	VEH_BOAT = 0x3,
+	VEH_ARTILLERY = 0x4,
+	VEH_HELICOPTER = 0x5,
+	NUM_VEHICLE_TYPES = 0x6,
+};
+
+enum $7B2BF5886094A29560631C7D45349132
+{
+	FL_WHEEL = 0x0,
+	FR_WHEEL = 0x1,
+	BL_WHEEL = 0x2,
+	BR_WHEEL = 0x3,
+};
+
+enum vehicleRideSlots_t
+{
+	VEHICLE_RIDESLOT_DRIVER = 0x0,
+	VEHICLE_RIDESLOT_PASSENGER = 0x1,
+	VEHICLE_RIDESLOT_GUNNER = 0x2,
+	VEHICLE_RIDESLOTS_COUNT = 0x3,
+};
+
 struct vehicle_info_t
 {
   char name[64];
@@ -223,6 +250,12 @@ struct scr_vehicle_s
   struct VehicleTags boneIndex;
   int turretHitNum;
   float forcedMaterialSpeed;
+};
+
+struct VehiclePhysicsBackup
+{
+	struct vehicle_pathpos_t pathPos;
+	struct vehicle_physic_t phys;
 };
 
 extern struct vehicle_info_t s_vehicleInfos[32];

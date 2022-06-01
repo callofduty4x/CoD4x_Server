@@ -122,6 +122,10 @@ void Com_InitDObj();
 void __cdecl DObjGetHierarchyBits(DObj *obj, int boneIndex, int *partBits);
 void __cdecl DObjCalcSkel(DObj *obj, int *partBits);
 struct DObjAnimMat *__cdecl G_DObjGetLocalTagMatrix(struct gentity_s *ent, unsigned int tagName);
+void __cdecl DObjSetLocalBoneIndex(DObj*, int*, int, float const*, float const*);
+void __cdecl G_DObjGetWorldBoneIndexPos(gentity_t * ent, int boneIndex, float*pos);
+void __cdecl G_DObjGetWorldBoneIndexMatrix(gentity_t * ent, int boneIndex, float(*mtx)[3]);
+
 
 #ifdef __cplusplus
 }
