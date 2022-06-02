@@ -484,24 +484,7 @@ void VEH_UpdateClientDriver(gentity_t* ent)
 		phys->inputTurning = VEH_PlayerRotation(driver, phys);
 		phys->driverPedal = (float)driver->client->sess.cmd.forwardmove / 126.0f;
 		phys->driverSteer = (float)VEH_PlayerRotation(driver, phys) / 127.0f;
-
-		// char inputAcceleration = phys->inputAccelerationOLD;
-		// inputAcceleration = inputAcceleration * (2 * (inputAcceleration >= 0) - 1);
-		// if (inputAcceleration >= 10)
-		// {
-		// 	if (inputAcceleration > 115)
-		// 	{
-		// 		inputAcceleration = 115;
-		// 	}
-		// }
-		// else
-		// {
-		// 	inputAcceleration = 0;
-		// }
-		// phys->inputAccelerationOLD = inputAcceleration;
-
 		phys->inputAccelerationOLD = ClampInt(phys->inputAccelerationOLD, -115, 115);
-
 		phys->driverPedal = ClampFloat(phys->driverPedal, -1.0f, 1.0f);
 		phys->driverSteer = ClampFloat(phys->driverSteer, -1.0f, 1.0f);
 	}
@@ -573,7 +556,7 @@ void VEH_UpdateWeapon(gentity_t *ent)
 
 		if(!veh->turret.fireTime || !(veh->turret.fireTime - level.frameTime))
 		{
-			if((ent->client->buttons & BUTTON_ATTACK))
+			if((gunnerEnt->client->buttons & BUTTON_ATTACK))
 			{
 				FireTurret(ent, gunnerEnt);
 			}
