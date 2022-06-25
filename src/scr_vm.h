@@ -408,7 +408,12 @@ typedef unsigned int sval_u;
 
 typedef enum{
     SCR_CB_SAY,
-    SCR_CB_SCRIPTCOMMAND
+    SCR_CB_SCRIPTCOMMAND,
+	/**************** DRIVABLE VEHICLES *************************/
+	SCR_CB_VEHICLE_USE,
+	SCR_CB_VEHICLE_TOUCH,
+	SCR_CB_VEHICLE_DAMAGE,
+	SCR_CB_VEHICLE_KILLED
 }script_CallBacks_new_t;
 
 extern int script_CallBacks_new[8];
@@ -847,6 +852,7 @@ void Scr_ShutdownOpcodeLookup( );
 VariableValue GetEntityFieldValue(unsigned int classnum, int entnum, int offset);
 void Scr_Shutdown();
 
+int GScr_LoadScriptAndLabel(const char *scriptName, const char *labelName, qboolean mandatory);
 #ifdef __cplusplus
 }
 #endif

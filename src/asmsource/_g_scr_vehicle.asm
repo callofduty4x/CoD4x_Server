@@ -83,7 +83,7 @@
 	global VEH_InitEntity
 	global GScr_GetVehicle
 	global VEH_ClearGround
-	global VEH_InitVehicle
+;	global VEH_InitVehicle
 	global CMD_VEH_GetSpeed
 	global CMD_VEH_SetSpeed
 	global CMD_VEH_SetWeapon
@@ -2773,166 +2773,166 @@ VEH_ClearGround:
 
 
 ;VEH_InitVehicle(gentity_s*, scr_vehicle_s*, int)
-VEH_InitVehicle:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x2c
-	mov edi, [ebp+0x8]
-	mov esi, [ebp+0xc]
-	mov eax, [ebp+0x10]
-	mov [ebp-0x24], eax
-	mov edx, [edi+0x164]
-	lea ebx, [edx+0xc0]
-	lea eax, [edi+0x13c]
-	mov [ebp-0x20], eax
-	mov eax, [edi+0x13c]
-	mov [edx+0xc0], eax
-	mov eax, [edi+0x140]
-	mov [ebx+0x4], eax
-	mov eax, [edi+0x144]
-	mov [ebx+0x8], eax
-	lea ecx, [edx+0xcc]
-	mov eax, [edi+0x13c]
-	mov [edx+0xcc], eax
-	mov eax, [edi+0x140]
-	mov [ecx+0x4], eax
-	mov eax, [edi+0x144]
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0xd8]
-	lea eax, [edi+0x148]
-	mov [ebp-0x1c], eax
-	mov eax, [edi+0x148]
-	mov [edx+0xd8], eax
-	mov eax, [edi+0x14c]
-	mov [ecx+0x4], eax
-	mov eax, [edi+0x150]
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0xe4]
-	mov eax, [edi+0x148]
-	mov [edx+0xe4], eax
-	mov eax, [edi+0x14c]
-	mov [ecx+0x4], eax
-	mov eax, [edi+0x150]
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0x120]
-	xor eax, eax
-	mov [edx+0x120], eax
-	mov [ecx+0x4], eax
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0x12c]
-	mov [edx+0x12c], eax
-	mov [ecx+0x4], eax
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0x138]
-	mov [edx+0x138], eax
-	mov [ecx+0x4], eax
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0x144]
-	mov [edx+0x144], eax
-	mov [ecx+0x4], eax
-	mov [ecx+0x8], eax
-	lea ecx, [edx+0x150]
-	mov [edx+0x150], eax
-	mov [ecx+0x4], eax
-	mov [ecx+0x8], eax
-	mov eax, ebx
-	mov edx, 0x4
-VEH_InitVehicle_10:
-	mov dword [eax+0xb0], 0x0
-	mov dword [eax+0xc0], 0x0
-	mov dword [eax+0xd0], 0x0
-	add eax, 0x4
-	sub edx, 0x1
-	jnz VEH_InitVehicle_10
-	mov edx, 0x41c80000
-	mov [ebx+0xa8], edx
-	mov [ebx+0xac], edx
-	mov dword [ebx+0x34], 0x42b40000
-	mov eax, 0x42340000
-	mov [ebx+0x30], eax
-	mov [ebx+0x38], eax
-	mov [ebx+0x3c], edx
-	mov dword [ebx+0x40], 0x41700000
-	lea eax, [ebx+0xe0]
-	mov dword [ebx+0xe0], 0x0
-	mov dword [eax+0x4], 0x0
-	mov dword [eax+0x8], 0x0
-	lea eax, [ebx+0xec]
-	mov dword [ebx+0xec], 0x0
-	mov dword [eax+0x4], 0x0
-	mov dword [eax+0x8], 0x0
-	mov eax, [edi]
-	mov [esi+0x1b8], eax
-	movzx eax, word [ebp-0x24]
-	mov [esi+0x1bc], ax
-	mov dword [esi+0x1c8], 0x0
-	mov word [esi+0x1cc], 0xffff
-	mov ebx, 0xbf800000
-	mov [esi+0x1d0], ebx
-	mov dword [esi+0x1d4], 0x0
-	mov dword [esi+0x1d8], 0x0
-	mov dword [esi+0x1e4], 0x0
-	mov dword [esi+0x1dc], 0x0
-	mov dword [esi+0x1e0], 0x0
-	mov dword [esp+0x8], 0x3c
-	mov dword [esp+0x4], 0x0
-	lea eax, [esi+0x1e8]
-	mov [esp], eax
-	call Com_Memset
-	mov dword [esi+0x240], 0x0
-	mov word [esi+0x244], 0x0
-	mov word [esi+0x246], 0x0
-	mov dword [esi+0x248], 0x0
-	mov dword [esi+0x24c], 0x0
-	mov dword [esi+0x250], 0x0
-	mov dword [esi+0x254], 0x0
-	mov dword [esi+0x258], 0x0
-	mov dword [esi+0x25c], 0x0
-	mov dword [esi+0x260], 0x44840000
-	mov dword [esi+0x264], 0x3f000000
-	mov dword [esi+0x268], 0x0
-	mov dword [esi+0x27c], 0x3ff
-	lea eax, [esi+0x284]
-	mov dword [esi+0x284], 0x0
-	mov dword [eax+0x4], 0x0
-	mov dword [eax+0x8], 0x0
-	lea eax, [esi+0x290]
-	mov dword [esi+0x290], 0x0
-	mov dword [eax+0x4], 0x0
-	mov dword [eax+0x8], 0x0
-	mov dword [esi+0x2c0], 0x0
-	mov dword [esi+0x2c4], 0x0
-	mov dword [esi+0x2c8], 0x0
-	mov dword [esi+0x2cc], 0x0
-	mov dword [esi+0x2d0], 0x0
-	mov dword [esi+0x2d4], 0x0
-	mov dword [esi+0x2d8], 0x1
-	mov dword [esi+0x2e4], 0x0
-	mov dword [esi+0x2e8], 0x0
-	mov dword [esi+0x34c], 0x0
-	mov dword [esi+0x224], 0x41f00000
-	mov dword [esi+0x228], 0x416147af
-	mov dword [esi+0x22c], 0x410ccccd
-	mov dword [esi+0x23c], 0x0
-	mov dword [esi+0x2b8], 0x0
-	mov dword [esi+0x2b4], 0x3dcccccd
-	mov [esi+0x2b0], ebx
-	mov dword [esi+0x2bc], 0x0
-	mov ecx, vec3_origin
-	mov eax, [ebp-0x1c]
-	mov [ebp+0x8], eax
-	mov edx, [ebp-0x20]
-	mov eax, edi
-	add esp, 0x2c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	jmp _Z15VEH_SetPositionP9gentity_sPKfS2_S2_
-	nop
+;VEH_InitVehicle:
+;	push ebp
+;	mov ebp, esp
+;	push edi
+;	push esi
+;	push ebx
+;	sub esp, 0x2c
+;	mov edi, [ebp+0x8]
+;	mov esi, [ebp+0xc]
+;	mov eax, [ebp+0x10]
+;	mov [ebp-0x24], eax
+;	mov edx, [edi+0x164]
+;	lea ebx, [edx+0xc0]
+;	lea eax, [edi+0x13c]
+;	mov [ebp-0x20], eax
+;	mov eax, [edi+0x13c]
+;	mov [edx+0xc0], eax
+;	mov eax, [edi+0x140]
+;	mov [ebx+0x4], eax
+;	mov eax, [edi+0x144]
+;	mov [ebx+0x8], eax
+;	lea ecx, [edx+0xcc]
+;	mov eax, [edi+0x13c]
+;	mov [edx+0xcc], eax
+;	mov eax, [edi+0x140]
+;	mov [ecx+0x4], eax
+;	mov eax, [edi+0x144]
+;	mov [ecx+0x8], eax
+;	lea ecx, [edx+0xd8]
+;	lea eax, [edi+0x148]
+;	mov [ebp-0x1c], eax
+;	mov eax, [edi+0x148]
+;	mov [edx+0xd8], eax
+;	mov eax, [edi+0x14c]
+;	mov [ecx+0x4], eax
+;	mov eax, [edi+0x150]
+;	mov [ecx+0x8], eax
+;	lea ecx, [edx+0xe4]
+;	mov eax, [edi+0x148]
+;	mov [edx+0xe4], eax
+;	mov eax, [edi+0x14c]
+;	mov [ecx+0x4], eax
+;	mov eax, [edi+0x150]
+;	mov [ecx+0x8], eax
+;	lea ecx, [edx+0x120]
+;	xor eax, eax
+;	mov [edx+0x120], eax
+;	mov [ecx+0x4], eax
+;	mov [ecx+0x8], eax
+;	lea ecx, [edx+0x12c]
+;	mov [edx+0x12c], eax
+;	mov [ecx+0x4], eax
+;	mov [ecx+0x8], eax
+;	lea ecx, [edx+0x138]
+;	mov [edx+0x138], eax
+;	mov [ecx+0x4], eax
+;	mov [ecx+0x8], eax
+;	lea ecx, [edx+0x144]
+;	mov [edx+0x144], eax
+;	mov [ecx+0x4], eax
+;	mov [ecx+0x8], eax
+;	lea ecx, [edx+0x150]
+;	mov [edx+0x150], eax
+;	mov [ecx+0x4], eax
+;	mov [ecx+0x8], eax
+;	mov eax, ebx
+;	mov edx, 0x4
+;VEH_InitVehicle_10:
+;	mov dword [eax+0xb0], 0x0
+;	mov dword [eax+0xc0], 0x0
+;	mov dword [eax+0xd0], 0x0
+;	add eax, 0x4
+;	sub edx, 0x1
+;	jnz VEH_InitVehicle_10
+;	mov edx, 0x41c80000
+;	mov [ebx+0xa8], edx
+;	mov [ebx+0xac], edx
+;	mov dword [ebx+0x34], 0x42b40000
+;	mov eax, 0x42340000
+;	mov [ebx+0x30], eax
+;	mov [ebx+0x38], eax
+;	mov [ebx+0x3c], edx
+;	mov dword [ebx+0x40], 0x41700000
+;	lea eax, [ebx+0xe0]
+;	mov dword [ebx+0xe0], 0x0
+;	mov dword [eax+0x4], 0x0
+;	mov dword [eax+0x8], 0x0
+;	lea eax, [ebx+0xec]
+;	mov dword [ebx+0xec], 0x0
+;	mov dword [eax+0x4], 0x0
+;	mov dword [eax+0x8], 0x0
+;	mov eax, [edi]
+;	mov [esi+0x1b8], eax
+;	movzx eax, word [ebp-0x24]
+;	mov [esi+0x1bc], ax
+;	mov dword [esi+0x1c8], 0x0
+;	mov word [esi+0x1cc], 0xffff
+;	mov ebx, 0xbf800000
+;	mov [esi+0x1d0], ebx
+;	mov dword [esi+0x1d4], 0x0
+;	mov dword [esi+0x1d8], 0x0
+;	mov dword [esi+0x1e4], 0x0
+;	mov dword [esi+0x1dc], 0x0
+;	mov dword [esi+0x1e0], 0x0
+;	mov dword [esp+0x8], 0x3c
+;	mov dword [esp+0x4], 0x0
+;	lea eax, [esi+0x1e8]
+;	mov [esp], eax
+;	call Com_Memset
+;	mov dword [esi+0x240], 0x0
+;	mov word [esi+0x244], 0x0
+;	mov word [esi+0x246], 0x0
+;	mov dword [esi+0x248], 0x0
+;	mov dword [esi+0x24c], 0x0
+;	mov dword [esi+0x250], 0x0
+;	mov dword [esi+0x254], 0x0
+;	mov dword [esi+0x258], 0x0
+;	mov dword [esi+0x25c], 0x0
+;	mov dword [esi+0x260], 0x44840000
+;	mov dword [esi+0x264], 0x3f000000
+;	mov dword [esi+0x268], 0x0
+;	mov dword [esi+0x27c], 0x3ff
+;	lea eax, [esi+0x284]
+;	mov dword [esi+0x284], 0x0
+;	mov dword [eax+0x4], 0x0
+;	mov dword [eax+0x8], 0x0
+;	lea eax, [esi+0x290]
+;	mov dword [esi+0x290], 0x0
+;	mov dword [eax+0x4], 0x0
+;	mov dword [eax+0x8], 0x0
+;	mov dword [esi+0x2c0], 0x0
+;	mov dword [esi+0x2c4], 0x0
+;	mov dword [esi+0x2c8], 0x0
+;	mov dword [esi+0x2cc], 0x0
+;	mov dword [esi+0x2d0], 0x0
+;	mov dword [esi+0x2d4], 0x0
+;	mov dword [esi+0x2d8], 0x1
+;	mov dword [esi+0x2e4], 0x0
+;	mov dword [esi+0x2e8], 0x0
+;	mov dword [esi+0x34c], 0x0
+;	mov dword [esi+0x224], 0x41f00000
+;	mov dword [esi+0x228], 0x416147af
+;	mov dword [esi+0x22c], 0x410ccccd
+;	mov dword [esi+0x23c], 0x0
+;	mov dword [esi+0x2b8], 0x0
+;	mov dword [esi+0x2b4], 0x3dcccccd
+;	mov [esi+0x2b0], ebx
+;	mov dword [esi+0x2bc], 0x0
+;	mov ecx, vec3_origin
+;	mov eax, [ebp-0x1c]
+;	mov [ebp+0x8], eax
+;	mov edx, [ebp-0x20]
+;	mov eax, edi
+;	add esp, 0x2c
+;	pop ebx
+;	pop esi
+;	pop edi
+;	pop ebp
+;	jmp _Z15VEH_SetPositionP9gentity_sPKfS2_S2_
+;	nop
 
 
 ;CMD_VEH_GetSpeed(scr_entref_t)

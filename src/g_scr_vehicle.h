@@ -262,5 +262,6 @@ extern struct vehicle_info_t s_vehicleInfos[32];
 
 #ifndef __cplusplus
 void Vehicle_AddScriptMethods();
+void Vehicle_AddScriptCallbacks();
 
 #endif

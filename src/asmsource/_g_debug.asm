@@ -130,7 +130,7 @@ G_DebugLine:
 	mov ebp, esp
 	sub esp, 0x28
 	mov dword [esp+0x14], 0x1
-	mov dword [esp+0x10], 0x0
+	mov dword [esp+0x10], 0x1
 	mov eax, [ebp+0x14]
 	mov [esp+0xc], eax
 	mov eax, [ebp+0x10]

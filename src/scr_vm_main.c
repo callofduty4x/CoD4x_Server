@@ -304,10 +304,7 @@ void Scr_AddStockFunctions()
 
 void Scr_AddStockMethods()
 {
-
-
     //PlayerCmd
-
 	Scr_AddMethod("giveweapon", PlayerCmd_giveWeapon, 0 );
 	Scr_AddMethod("takeweapon", PlayerCmd_takeWeapon, 0 );
 	Scr_AddMethod("takeallweapons", PlayerCmd_takeAllWeapons, 0 );
@@ -404,9 +401,7 @@ void Scr_AddStockMethods()
     Scr_AddMethod("getuserinfo", PlayerCmd_GetUserinfo, 0);
     Scr_AddMethod("getping", PlayerCmd_GetPing, 0);
 
-
     //HUD Functions
-
 	Scr_AddMethod("settext", HECmd_SetText, 0 );
 	Scr_AddMethod("clearalltextafterhudelem", HECmd_ClearAllTextAfterHudElem, 0 );
 	Scr_AddMethod("setshader", HECmd_SetMaterial, 0 );
@@ -598,8 +593,6 @@ void Scr_AddStockMethods()
     /* Bot movement */
     Scr_AddBotsMovement();
 
-	Vehicle_AddScriptMethods();
-
     Scr_AddMethod("getgeolocation", PlayerCmd_GetGeoLocation, 0);
     Scr_AddMethod("getcountedfps", PlayerCmd_GetCountedFPS, 0);
     Scr_AddMethod("getspectatorclient", PlayerCmd_GetSpectatorClient, 0);
@@ -613,23 +606,13 @@ void Scr_AddStockMethods()
 
 void Scr_InitFunctions()
 {
-
     static qboolean initialized = qfalse;
-
-    /*
-    No longer
-
-    //Reset everything 1st
-
-    Scr_ClearFunctions();
-    Scr_ClearMethods();
-*/
-    //Then add everything again
 
     if (!initialized)
     {
         Scr_AddStockFunctions();
         Scr_AddStockMethods();
+		Vehicle_AddScriptMethods();
         initialized = qtrue;
     }
 }
@@ -755,6 +738,9 @@ void GScr_LoadGameTypeScript(void)
 
     /**************** Additional *************************/
     script_CallBacks_new[SCR_CB_SCRIPTCOMMAND] = GScr_LoadScriptAndLabel("maps/mp/gametypes/_callbacksetup", "CodeCallback_ScriptCommand", 0);
+	
+	
+	Vehicle_AddScriptCallbacks();
 }
 
 
