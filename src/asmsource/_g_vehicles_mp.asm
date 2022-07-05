@@ -110,16 +110,16 @@
 	global _Z13VEH_SlideMoveP9gentity_sif
 	global VEH_StepSlideMove
 	global IntegratePosAndRot
-	global G_VehUsable
+;	global G_VehUsable
 	global SpawnVehicle
 	global VEH_JoltBody_copy
 	global G_VehiclesInit
 	global G_VehFreeEntity
 	global _Z15VEH_SetPositionP9gentity_sPKfS2_
-	global G_VehUnlinkPlayer
+;	global G_VehUnlinkPlayer
 	global G_VehRegisterDvars
 	global VEH_GetVehicleInfo
-	global G_VehImmuneToDamage
+;	global G_VehImmuneToDamage
 	global G_VehPlayerRideSlot
 	global G_VehiclesSetupSpawnedEnts
 	global s_numVehicleInfos
@@ -4046,49 +4046,49 @@ IntegratePosAndRot_450:
 
 
 ;G_VehUsable(gentity_s*, gentity_s*)
-G_VehUsable:
-	push ebp
-	mov ebp, esp
-	mov edx, [ebp+0xc]
-	mov eax, [edx+0x15c]
-	test eax, eax
-	jz G_VehUsable_10
-	test byte [eax+0xe], 0x10
-	jnz G_VehUsable_10
-	cmp word [edx+0x154], 0x0
-	jnz G_VehUsable_10
-	mov eax, [ebp+0x8]
-	mov ecx, [eax+0x164]
-	xor edx, edx
-	lea eax, [ecx+0x2ec]
-G_VehUsable_40:
-	cmp dword [eax+0x4], 0xffffffff
-	jz G_VehUsable_20
-	cmp dword [eax+0x8], 0x3ff
-	jz G_VehUsable_30
-G_VehUsable_20:
-	add edx, 0x1
-	add eax, 0xc
-	cmp edx, 0x3
-	jnz G_VehUsable_40
-G_VehUsable_10:
-	xor eax, eax
-	pop ebp
-	ret
-G_VehUsable_30:
-	movss xmm0, dword [ecx+0x25c]
-	ucomiss xmm0, [_float_1_00000000]
-	ja G_VehUsable_10
-	mov eax, [ebp+0x8]
-	mov ecx, [eax+0x1a0]
-	test ecx, ecx
-	jle G_VehUsable_10
-	test byte [eax+0x122], 0x20
-	jz G_VehUsable_10
-	mov eax, 0x1
-	pop ebp
-	ret
-	nop
+;G_VehUsable:
+;	push ebp
+;	mov ebp, esp
+;	mov edx, [ebp+0xc]
+;	mov eax, [edx+0x15c]
+;	test eax, eax
+;	jz G_VehUsable_10
+;	test byte [eax+0xe], 0x10
+;	jnz G_VehUsable_10
+;	cmp word [edx+0x154], 0x0
+;	jnz G_VehUsable_10
+;	mov eax, [ebp+0x8]
+;	mov ecx, [eax+0x164]
+;	xor edx, edx
+;	lea eax, [ecx+0x2ec]
+;G_VehUsable_40:
+;	cmp dword [eax+0x4], 0xffffffff
+;	jz G_VehUsable_20
+;	cmp dword [eax+0x8], 0x3ff
+;	jz G_VehUsable_30
+;G_VehUsable_20:
+;	add edx, 0x1
+;	add eax, 0xc
+;	cmp edx, 0x3
+;	jnz G_VehUsable_40
+;G_VehUsable_10:
+;	xor eax, eax
+;	pop ebp
+;	ret
+;G_VehUsable_30:
+;	movss xmm0, dword [ecx+0x25c]
+;	ucomiss xmm0, [_float_1_00000000]
+;	ja G_VehUsable_10
+;	mov eax, [ebp+0x8]
+;	mov ecx, [eax+0x1a0]
+;	test ecx, ecx
+;	jle G_VehUsable_10
+;	test byte [eax+0x122], 0x20
+;	jz G_VehUsable_10
+;	mov eax, 0x1
+;	pop ebp
+;	ret
+;	nop
 
 
 
@@ -4811,84 +4811,84 @@ VEH_SetPosition_10:
 
 
 ;G_VehUnlinkPlayer(gentity_s*, gentity_s*)
-G_VehUnlinkPlayer:
-	push ebp
-	mov ebp, esp
-	push edi
-	push esi
-	push ebx
-	sub esp, 0x3c
-	mov edi, [ebp+0xc]
-	mov esi, [edi+0x15c]
-	test byte [esi+0xe], 0x10
-	jz G_VehUnlinkPlayer_10
-G_VehUnlinkPlayer_40:
-	mov eax, [ebp+0x8]
-	mov ecx, [eax+0x164]
-	and dword [ecx+0x1c0], 0xfffffffe
-	mov eax, [esi+0x108]
-	mov [ebp-0x30], eax
-	mov eax, [esi+0x10c]
-	mov [ebp-0x2c], eax
-	xor ebx, ebx
-	mov [ebp-0x28], ebx
-	lea edx, [edi+0x13c]
-	mov eax, [edi+0x13c]
-	mov [ebp-0x24], eax
-	mov eax, [edx+0x4]
-	mov [ebp-0x20], eax
-	mov eax, [edx+0x8]
-	mov [ebp-0x1c], eax
-	mov eax, [ebp+0x8]
-	movss xmm0, dword [eax+0x144]
-	addss xmm0, [ecx+0x134]
-	movss [ebp-0x1c], xmm0
-	mov [ebp-0x30], ebx
-	lea eax, [ebp-0x30]
-	mov [esp+0x8], eax
-	lea eax, [ebp-0x24]
-	mov [esp+0x4], eax
-	mov [esp], edi
-	call TeleportPlayer
-	mov ecx, [edi]
-	xor edx, edx
-	mov ebx, [ebp+0x8]
-	mov eax, [ebx+0x164]
-	add eax, 0x2ec
-G_VehUnlinkPlayer_30:
-	cmp ecx, [eax+0x8]
-	jz G_VehUnlinkPlayer_20
-	add edx, 0x1
-	add eax, 0xc
-	cmp edx, 0x3
-	jnz G_VehUnlinkPlayer_30
-	mov [esp+0x8], ecx
-	mov dword [esp+0x4], _cstring_vehicleclearride
-	mov dword [esp], 0x2
-	call Com_Error
-G_VehUnlinkPlayer_50:
-	mov dword [esp+0x4], 0x0
-	lea eax, [edi+0x154]
-	mov [esp], eax
-	call _ZN9EntHandle6setEntEP9gentity_s
-	and dword [esi+0xc], 0xffefffff
-	and dword [esi+0x10], 0xffffff7f
-	mov dword [esi+0x59c], 0x3ff
-	add esp, 0x3c
-	pop ebx
-	pop esi
-	pop edi
-	pop ebp
-	ret
-G_VehUnlinkPlayer_10:
-	mov dword [esp+0x4], _cstring_g_vehunlinkplaye
-	mov dword [esp], 0x2
-	call Com_Error
-	jmp G_VehUnlinkPlayer_40
-G_VehUnlinkPlayer_20:
-	mov dword [eax+0x8], 0x3ff
-	jmp G_VehUnlinkPlayer_50
-	nop
+;G_VehUnlinkPlayer:
+;	push ebp
+;	mov ebp, esp
+;	push edi
+;	push esi
+;	push ebx
+;	sub esp, 0x3c
+;	mov edi, [ebp+0xc]
+;	mov esi, [edi+0x15c]
+;	test byte [esi+0xe], 0x10
+;	jz G_VehUnlinkPlayer_10
+;G_VehUnlinkPlayer_40:
+;	mov eax, [ebp+0x8]
+;	mov ecx, [eax+0x164]
+;	and dword [ecx+0x1c0], 0xfffffffe
+;	mov eax, [esi+0x108]
+;	mov [ebp-0x30], eax
+;	mov eax, [esi+0x10c]
+;	mov [ebp-0x2c], eax
+;	xor ebx, ebx
+;	mov [ebp-0x28], ebx
+;	lea edx, [edi+0x13c]
+;	mov eax, [edi+0x13c]
+;	mov [ebp-0x24], eax
+;	mov eax, [edx+0x4]
+;	mov [ebp-0x20], eax
+;	mov eax, [edx+0x8]
+;	mov [ebp-0x1c], eax
+;	mov eax, [ebp+0x8]
+;	movss xmm0, dword [eax+0x144]
+;	addss xmm0, [ecx+0x134]
+;	movss [ebp-0x1c], xmm0
+;	mov [ebp-0x30], ebx
+;	lea eax, [ebp-0x30]
+;	mov [esp+0x8], eax
+;	lea eax, [ebp-0x24]
+;	mov [esp+0x4], eax
+;	mov [esp], edi
+;	call TeleportPlayer
+;	mov ecx, [edi]
+;	xor edx, edx
+;	mov ebx, [ebp+0x8]
+;	mov eax, [ebx+0x164]
+;	add eax, 0x2ec
+;G_VehUnlinkPlayer_30:
+;	cmp ecx, [eax+0x8]
+;	jz G_VehUnlinkPlayer_20
+;	add edx, 0x1
+;	add eax, 0xc
+;	cmp edx, 0x3
+;	jnz G_VehUnlinkPlayer_30
+;	mov [esp+0x8], ecx
+;	mov dword [esp+0x4], _cstring_vehicleclearride
+;	mov dword [esp], 0x2
+;	call Com_Error
+;G_VehUnlinkPlayer_50:
+;	mov dword [esp+0x4], 0x0
+;	lea eax, [edi+0x154]
+;	mov [esp], eax
+;	call _ZN9EntHandle6setEntEP9gentity_s
+;	and dword [esi+0xc], 0xffefffff
+;	and dword [esi+0x10], 0xffffff7f
+;	mov dword [esi+0x59c], 0x3ff
+;	add esp, 0x3c
+;	pop ebx
+;	pop esi
+;	pop edi
+;	pop ebp
+;	ret
+;G_VehUnlinkPlayer_10:
+;	mov dword [esp+0x4], _cstring_g_vehunlinkplaye
+;	mov dword [esp], 0x2
+;	call Com_Error
+;	jmp G_VehUnlinkPlayer_40
+;G_VehUnlinkPlayer_20:
+;	mov dword [eax+0x8], 0x3ff
+;	jmp G_VehUnlinkPlayer_50
+;	nop
 
 
 ;G_VehRegisterDvars()
@@ -4962,90 +4962,90 @@ VEH_GetVehicleInfo:
 
 
 ;G_VehImmuneToDamage(gentity_s*, int, int, int)
-G_VehImmuneToDamage:
-	push ebp
-	mov ebp, esp
-	push ebx
-	sub esp, 0x14
-	mov ecx, [ebp+0xc]
-	mov eax, [ebp+0x8]
-	mov eax, [eax+0x164]
-	movsx edx, word [eax+0x1bc]
-	lea eax, [edx+edx*4]
-	shl eax, 0x3
-	sub eax, edx
-	shl eax, 0x4
-	lea ebx, [eax+s_vehicleInfos]
-	cmp ecx, 0xe
-	ja G_VehImmuneToDamage_10
-	jmp dword [ecx*4+G_VehImmuneToDamage_jumptab_0]
-G_VehImmuneToDamage_60:
-	mov eax, [ebp+0x14]
-	mov [esp], eax
-	call BG_GetWeaponDef
-	cmp dword [eax+0x588], 0x6
-	jz G_VehImmuneToDamage_20
-	mov eax, [ebx+0x58]
-	test eax, eax
-	jnz G_VehImmuneToDamage_30
-G_VehImmuneToDamage_10:
-	mov eax, 0x1
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-G_VehImmuneToDamage_50:
-	mov eax, [ebx+0x50]
-	test eax, eax
-	jnz G_VehImmuneToDamage_30
-	test byte [ebp+0x10], 0x2
-	jz G_VehImmuneToDamage_10
-	mov eax, [ebx+0x54]
-	test eax, eax
-	jz G_VehImmuneToDamage_10
-G_VehImmuneToDamage_30:
-	xor eax, eax
-G_VehImmuneToDamage_40:
-	add esp, 0x14
-	pop ebx
-	pop ebp
-	ret
-G_VehImmuneToDamage_80:
-	mov ebx, [ebx+0x60]
-	test ebx, ebx
-	jz G_VehImmuneToDamage_10
-	xor eax, eax
-	jmp G_VehImmuneToDamage_40
-G_VehImmuneToDamage_70:
-	mov eax, [ebx+0x5c]
-	test eax, eax
-	jz G_VehImmuneToDamage_10
-	xor eax, eax
-	jmp G_VehImmuneToDamage_40
-G_VehImmuneToDamage_20:
-	mov eax, [ebx+0x64]
-	test eax, eax
-	jz G_VehImmuneToDamage_10
-	xor eax, eax
-	jmp G_VehImmuneToDamage_40
-	
-	
-G_VehImmuneToDamage_jumptab_0:
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_50
-	dd G_VehImmuneToDamage_50
-	dd G_VehImmuneToDamage_60
-	dd G_VehImmuneToDamage_60
-	dd G_VehImmuneToDamage_70
-	dd G_VehImmuneToDamage_80
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_10
-	dd G_VehImmuneToDamage_30
+;G_VehImmuneToDamage:
+;	push ebp
+;	mov ebp, esp
+;	push ebx
+;	sub esp, 0x14
+;	mov ecx, [ebp+0xc]
+;	mov eax, [ebp+0x8]
+;	mov eax, [eax+0x164]
+;	movsx edx, word [eax+0x1bc]
+;	lea eax, [edx+edx*4]
+;	shl eax, 0x3
+;	sub eax, edx
+;	shl eax, 0x4
+;	lea ebx, [eax+s_vehicleInfos]
+;	cmp ecx, 0xe
+;	ja G_VehImmuneToDamage_10
+;	jmp dword [ecx*4+G_VehImmuneToDamage_jumptab_0]
+;G_VehImmuneToDamage_60:
+;	mov eax, [ebp+0x14]
+;	mov [esp], eax
+;	call BG_GetWeaponDef
+;	cmp dword [eax+0x588], 0x6
+;	jz G_VehImmuneToDamage_20
+;	mov eax, [ebx+0x58]
+;	test eax, eax
+;	jnz G_VehImmuneToDamage_30
+;G_VehImmuneToDamage_10:
+;	mov eax, 0x1
+;	add esp, 0x14
+;	pop ebx
+;	pop ebp
+;	ret
+;G_VehImmuneToDamage_50:
+;	mov eax, [ebx+0x50]
+;	test eax, eax
+;	jnz G_VehImmuneToDamage_30
+;	test byte [ebp+0x10], 0x2
+;	jz G_VehImmuneToDamage_10
+;	mov eax, [ebx+0x54]
+;	test eax, eax
+;	jz G_VehImmuneToDamage_10
+;G_VehImmuneToDamage_30:
+;	xor eax, eax
+;G_VehImmuneToDamage_40:
+;	add esp, 0x14
+;	pop ebx
+;	pop ebp
+;	ret
+;G_VehImmuneToDamage_80:
+;	mov ebx, [ebx+0x60]
+;	test ebx, ebx
+;	jz G_VehImmuneToDamage_10
+;	xor eax, eax
+;	jmp G_VehImmuneToDamage_40
+;G_VehImmuneToDamage_70:
+;	mov eax, [ebx+0x5c]
+;	test eax, eax
+;	jz G_VehImmuneToDamage_10
+;	xor eax, eax
+;	jmp G_VehImmuneToDamage_40
+;G_VehImmuneToDamage_20:
+;	mov eax, [ebx+0x64]
+;	test eax, eax
+;	jz G_VehImmuneToDamage_10
+;	xor eax, eax
+;	jmp G_VehImmuneToDamage_40
+;	
+;	
+;G_VehImmuneToDamage_jumptab_0:
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_50
+;	dd G_VehImmuneToDamage_50
+;	dd G_VehImmuneToDamage_60
+;	dd G_VehImmuneToDamage_60
+;	dd G_VehImmuneToDamage_70
+;	dd G_VehImmuneToDamage_80
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_10
+;	dd G_VehImmuneToDamage_30
 
 
 ;G_VehPlayerRideSlot(gentity_s*, int)
