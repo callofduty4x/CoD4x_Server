@@ -2238,6 +2238,52 @@ void HECmd_SetText(scr_entref_t entnum)
     element->elem.text = G_LocalizedStringIndex(buffer);
 }
 
+void HECmd_ScaleOverTime(scr_entref_t hud_elem_num)
+{
+    game_hudelem_t *hudelem_t = NULL;
+    if (hud_elem_num.classnum == 1)
+    {
+        hudelem_t = &g_hudelems[hud_elem_num.entnum];
+    }
+    else
+    {
+        Scr_ObjectError("not a hud element");
+        hudelem_t = 0;
+    }
+
+    if (Scr_GetNumParam() != 3)
+    {
+        Scr_Error("hudelem scaleOverTime(time_in_seconds, new_width, new_height)");
+    }
+
+    float time = Scr_GetFloat(0);
+    if (time <= 0.0)
+    {
+        Scr_ParamError(0, va("scale time %g <= 0", time));
+    }
+    else if (time > 60.0)
+    {
+        Scr_ParamError(0, va("scale time %g > 60", time));
+    }
+
+    int newWidth = Scr_GetInt(1u);
+    int newHeight = Scr_GetInt(2u);
+
+    extern level_locals_t level;
+    hudelem_t->elem.scaleStartTime = level.time;
+    int roundedTimeMs = floorf((float)(time * 1000.0) + 0.5);
+    hudelem_t->elem.scaleTime = roundedTimeMs;
+    hudelem_t->elem.fromWidth = hudelem_t->elem.width;
+    hudelem_t->elem.fromHeight = hudelem_t->elem.height;
+    hudelem_t->elem.width = newWidth;
+    hudelem_t->elem.height = newHeight;
+
+    // Bug fix: it doesn't contain the correct value of the hudelem so needs to be overwritten
+    // otherwise.. you get a 'jumpy' scaleovertime
+    hudelem_t->elem.fromAlignOrg = hudelem_t->elem.alignOrg;
+    hudelem_t->elem.fromAlignScreen = hudelem_t->elem.alignScreen;
+}
+
 void GScr_MakeCvarServerInfo(void)
 {
     const char *var_name;
