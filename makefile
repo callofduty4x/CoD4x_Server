@@ -50,7 +50,7 @@ CFLAGS=-m32 -msse2 -mfpmath=sse -Wall -fno-omit-frame-pointer -fmax-errors=15
 ifeq ($(DEBUG), true)
 DCFLAGS=-fno-pie -O0 -g
 else
-DCFLAGS=-fno-pie -O1 -DNDEBUG
+DCFLAGS=-fno-pie -O1 -DNDEBUG -Werror
 endif
 
 WIN_LFLAGS=-m32 -g -Wl,--nxcompat,--stack,0x800000 -mwindows -static-libgcc -static -lm

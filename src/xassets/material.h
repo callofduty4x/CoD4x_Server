@@ -219,7 +219,7 @@ typedef struct __attribute__((aligned (8)))
     int surfaceTypeBits;
 }MaterialInfo;
  
-typedef struct Material
+typedef struct __attribute__((aligned (8))) Material
 {
     MaterialInfo info;
     char stateBitsEntry[TECHNIQUE_COUNT];	// see MaterialTechniqueType

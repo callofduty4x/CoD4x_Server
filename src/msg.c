@@ -3828,7 +3828,9 @@ void MSG_ReadDeltaObjectiveFields(msg_t *msg, int time, objective_t *from, objec
 void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_t *to, int count)
 {
   int alignY;
+  (void)alignY; // Only used in debug asserts
   int alignX;
+  (void)alignX; // Only used in debug asserts
   int numFields;
   unsigned int lc;
   int i, y;

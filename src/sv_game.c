@@ -477,6 +477,7 @@ void __cdecl SV_XModelDebugBoxesInternal(struct gentity_s *ent, const float *col
   assert(obj != NULL);
 
   numBones = DObjNumBones(obj);
+  (void)numBones; // Only used in debug assert below
 
   assert(numBones <= DOBJ_MAX_PARTS);
 

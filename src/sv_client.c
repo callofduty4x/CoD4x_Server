@@ -1070,9 +1070,14 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		oldcmd = cmd;
 	}
 
+	// Compiler warning that was originally here was technically valid, but since CoD4 client uses this same method when writing..
+	// ..the values properly arrive. So, because of this, we need to suppress the warning instead
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstrict-aliasing"
 	*((uint32_t*)&cl->predictedOrigin[0]) = MSG_ReadLong(msg);
 	*((uint32_t*)&cl->predictedOrigin[1]) = MSG_ReadLong(msg);
 	*((uint32_t*)&cl->predictedOrigin[2]) = MSG_ReadLong(msg);
+#pragma GCC diagnostic pop
 	cl->predictedOriginServerTime = MSG_ReadLong(msg);
 
 

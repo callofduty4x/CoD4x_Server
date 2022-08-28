@@ -2316,6 +2316,7 @@ void SV_LoadMapFromBsp()
 		return;
     }
     Com_LoadBsp(Cmd_Argv(1));
+	extern void CM_LoadMapData_LoadObj(const char *name);
     CM_LoadMapData_LoadObj(Cmd_Argv(1));
 
 

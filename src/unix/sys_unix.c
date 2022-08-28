@@ -446,7 +446,11 @@ int main(int argc, char* argv[])
         Com_Printf(CON_CHANNEL_SYSTEM, "********************************************************\n\n" );
     }
     // go back to real user for config loads
-    seteuid( uid );
+    if (seteuid( uid ) != 0)
+    {
+      Com_Error(ERR_FATAL, "Failed to set effective user ID of calling process");
+      return 1;
+    }
 
 
     char commandLine[MAX_STRING_CHARS];
@@ -732,7 +736,10 @@ void* Sys_RunNewProcess(void* arg)
 
 	Q_strncpyz(cmdline, (const char*)arg, sizeof(cmdline));
 	free(arg);
-	system(cmdline);
+	if (system(cmdline) == -1)
+  {
+    Com_Printf(CON_CHANNEL_SERVER, "%s failed to execute command %s\n", __func__, cmdline);
+  }
 	return NULL;
 }
 

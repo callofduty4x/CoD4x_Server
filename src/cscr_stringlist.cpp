@@ -469,6 +469,7 @@ void __cdecl SL_AddRefToString(unsigned int stringValue)
     {
       refC = 0;
     }
+    (void)refC; // Only used in debug assert below
     assertx(refStr->refCount, "string: '%s', refCount: %d", SL_DebugConvertToString(stringValue), refC);
   }
 }

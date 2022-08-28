@@ -58,7 +58,11 @@ int Sys_ReadCertificate(void* cacert, int (*store_callback)(void* ca_ctx, const 
     }
 
     unsigned char* certbuf = malloc(end +1);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
     fread(certbuf, 1, end, h);
+#pragma GCC diagnostic pop
+
     certbuf[end] = 0;
     fclose(h);
 //  printf("Certs: %s Len %d\n", System_CAStorage[i], end);

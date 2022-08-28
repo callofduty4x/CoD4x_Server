@@ -1652,6 +1652,7 @@ void SV_ArchiveSnapshot(msg_t *msg)
 	      VectorCopy(gent->r.absmin, to.r.absmin);
 	      VectorCopy(gent->r.absmax, to.r.absmax);
 
+        (void)lastEntityNum; // Only used in debug assert below
 	      assertx(lastEntityNum != gent->s.number, "lastEntityNum is %i, cur entnum is %i", lastEntityNum, gent->s.number);
 
               snapInfo.fromBaseline = 1;
