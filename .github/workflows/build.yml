@@ -74,11 +74,9 @@ jobs:
     steps:
     - name: Get MinGW (i686-8.1.0-release-posix-dwarf)
       run: |
-        $Uri = "https://downloads.sourceforge.net/mingw-w64/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z"
-        $filename = "mingw32.7z"
         cd C:/
-        Start-BitsTransfer -Source $Uri -Destination $filename
-        7z x $filename
+        Start-BitsTransfer -Source https://downloads.sourceforge.net/mingw-w64/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z -Destination mingw32.7z
+        7z x mingw32.7z
         
     - name: Get NASM
       uses: ilammy/setup-nasm@v1  
