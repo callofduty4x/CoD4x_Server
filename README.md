@@ -1,4 +1,8 @@
 # CoD4x Server [![build](https://github.com/callofduty4x/CoD4x_Server/actions/workflows/build.yml/badge.svg)](https://github.com/callofduty4x/CoD4x_Server/actions/workflows/build.yml)
+<p align="center">
+  <img src="assets/github/banner.png?raw=true" />
+</p>
+
 CoD4x is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke installation of the proprietary CoD4x client to players joining the server using the CoD4x servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.
 A compatible client modification can be found here: [CoD4x_Client_pub](https://github.com/callofduty4x/CoD4x_Client_pub)
 
@@ -38,14 +42,14 @@ To compile CoD4x from source, you need to install the following prerequisites:
 
 Debian/Ubuntu 32-bit:
 ```
-sudo apt install nasm build-essential
+sudo apt install nasm make git
 ```
 
 Debian/Ubuntu 64-bit:
 ```
 sudo dpkg --add-architecture i386
 sudo apt-get update
-sudo apt-get install nasm:i386 build-essential gcc-multilib g++-multilib
+sudo apt-get install nasm:i386 make gcc-multilib g++-multilib git
 ```
 
 openSUSE 32-bit: 
