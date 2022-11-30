@@ -61,6 +61,13 @@ static void Huff_offsetReceive( node_t *node, int *ch, byte *fin, int readsize, 
 			node = node->left;
 
 		}
+		
+		if ( bloc >= readsize ) {
+			//Com_PrintError("OOB buffer access\n");
+			*ch = 7; // EOF
+			*offset = bloc;
+			return;
+		}
 	}
 	if ( !node ) {
 		*ch = 0;
