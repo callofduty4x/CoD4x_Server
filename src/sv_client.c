@@ -1209,7 +1209,7 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd ) {
 	// call the game begin function
 	ClientBegin( clientNum );
 
-	SV_SApiSteamIDToString(client->steamid, psti, sizeof(psti));
+	SV_SApiSteamIDToString(client->playerid, psti, sizeof(psti));
 
 	//It was never intended to make a new demo for each fast_restart.
 	//SV_SpawnServer() stops the demo and cleans the name which did not happen here which resulted in strange naming bug
