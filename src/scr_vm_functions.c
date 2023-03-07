@@ -2238,6 +2238,50 @@ void HECmd_SetText(scr_entref_t entnum)
     element->elem.text = G_LocalizedStringIndex(buffer);
 }
 
+void HECmd_SetPulseFX(scr_entref_t hud_elem_num)
+{
+	game_hudelem_t *hudelem_t = NULL;
+	int speed;
+	int decayStart;
+	int decayDuration;
+
+	if (Scr_GetNumParam() != 3)
+		Scr_Error("USAGE: <hudelem> SetPulseFX( <speed>, <decayStart>, <decayDuration> );");
+
+	if (hud_elem_num.classnum != 1)
+	{
+		Scr_ObjectError("not a hud element");
+		return;
+	}
+	hudelem_t = &g_hudelems[hud_elem_num.entnum];
+
+	speed = Scr_GetInt(0);
+	if (speed < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", speed));
+		return;
+	}
+
+	decayStart = Scr_GetInt(1);
+	if (decayStart < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", decayStart));
+		return;
+	}
+
+	decayDuration = Scr_GetInt(2);
+	if (decayDuration < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", decayDuration));
+		return;
+	}
+
+	hudelem_t->elem.fxBirthTime = level.time;
+	hudelem_t->elem.fxLetterTime = speed;
+	hudelem_t->elem.fxDecayStartTime = decayStart;
+	hudelem_t->elem.fxDecayDuration = decayDuration;
+}
+
 void HECmd_ScaleOverTime(scr_entref_t hud_elem_num)
 {
     game_hudelem_t *hudelem_t = NULL;
