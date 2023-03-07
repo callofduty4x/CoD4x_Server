@@ -42,6 +42,34 @@
 	extern CMD_VEH_SetTurretTargetEnt
 	extern CMD_VEH_ClearTurretTargetEnt
 	extern CMD_VEH_SetVehicleTeam
+	extern vehHelicopterDecelerationFwd
+	extern vehHelicopterDecelerationSide
+	extern vehHelicopterHoverSpeedThreshold
+	extern vehHelicopterJitterJerkyness
+	extern vehHelicopterLookaheadTime
+	extern vehHelicopterMaxAccel
+	extern vehHelicopterMaxAccelVertical
+	extern vehHelicopterMaxPitch
+	extern vehHelicopterMaxRoll
+	extern vehHelicopterMaxSpeed
+	extern vehHelicopterMaxSpeedVertical
+	extern vehHelicopterMaxYawAccel
+	extern vehHelicopterMaxYawRate
+	extern vehHelicopterRightStickDeadzone
+	extern vehHelicopterScaleMovement
+	extern vehHelicopterSoftCollisions
+	extern vehHelicopterStrafeDeadzone
+	extern vehHelicopterTiltFromAcceleration
+	extern vehHelicopterTiltFromControllerAxes
+	extern vehHelicopterTiltFromDeceleration
+	extern vehHelicopterTiltFromFwdAndYaw
+	extern vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt
+	extern vehHelicopterTiltFromVelocity
+	extern vehHelicopterTiltMomentum
+	extern vehHelicopterTiltSpeed
+	extern vehHelicopterYawOnLeftStick
+	extern vehHelicopterHeadSwayDontSwayTheTurret
+	extern vehHelicopterInvertUpDown
 
 ;Exports of g_scr_helicopter:
 	global s_methods
@@ -54,34 +82,6 @@
 	global Helicopter_GetMethod
 	global Helicopter_Controller
 	global Helicopter_RegisterDvars
-	global vehHelicopterDecelerationFwd
-	global vehHelicopterDecelerationSide
-	global vehHelicopterHoverSpeedThreshold
-	global vehHelicopterJitterJerkyness
-	global vehHelicopterLookaheadTime
-	global vehHelicopterMaxAccel
-	global vehHelicopterMaxAccelVertical
-	global vehHelicopterMaxPitch
-	global vehHelicopterMaxRoll
-	global vehHelicopterMaxSpeed
-	global vehHelicopterMaxSpeedVertical
-	global vehHelicopterMaxYawAccel
-	global vehHelicopterMaxYawRate
-	global vehHelicopterRightStickDeadzone
-	global vehHelicopterScaleMovement
-	global vehHelicopterSoftCollisions
-	global vehHelicopterStrafeDeadzone
-	global vehHelicopterTiltFromAcceleration
-	global vehHelicopterTiltFromControllerAxes
-	global vehHelicopterTiltFromDeceleration
-	global vehHelicopterTiltFromFwdAndYaw
-	global vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt
-	global vehHelicopterTiltFromVelocity
-	global vehHelicopterTiltMomentum
-	global vehHelicopterTiltSpeed
-	global vehHelicopterYawOnLeftStick
-	global vehHelicopterHeadSwayDontSwayTheTurret
-	global vehHelicopterInvertUpDown
 
 
 SECTION .text
@@ -653,38 +653,6 @@ SECTION .data
 
 ;Initialized constant data of g_scr_helicopter:
 SECTION .rdata
-
-
-;Zero initialized global or static variables of g_scr_helicopter:
-SECTION .bss
-vehHelicopterDecelerationFwd: resb 0x4
-vehHelicopterDecelerationSide: resb 0x4
-vehHelicopterHoverSpeedThreshold: resb 0x4
-vehHelicopterJitterJerkyness: resb 0x4
-vehHelicopterLookaheadTime: resb 0x4
-vehHelicopterMaxAccel: resb 0x4
-vehHelicopterMaxAccelVertical: resb 0x4
-vehHelicopterMaxPitch: resb 0x4
-vehHelicopterMaxRoll: resb 0x4
-vehHelicopterMaxSpeed: resb 0x10
-vehHelicopterMaxSpeedVertical: resb 0x4
-vehHelicopterMaxYawAccel: resb 0x4
-vehHelicopterMaxYawRate: resb 0x4
-vehHelicopterRightStickDeadzone: resb 0x4
-vehHelicopterScaleMovement: resb 0x4
-vehHelicopterSoftCollisions: resb 0x8
-vehHelicopterStrafeDeadzone: resb 0x4
-vehHelicopterTiltFromAcceleration: resb 0x4
-vehHelicopterTiltFromControllerAxes: resb 0x4
-vehHelicopterTiltFromDeceleration: resb 0x4
-vehHelicopterTiltFromFwdAndYaw: resb 0x4
-vehHelicopterTiltFromFwdAndYaw_VelAtMaxTilt: resb 0x4
-vehHelicopterTiltFromVelocity: resb 0x4
-vehHelicopterTiltMomentum: resb 0x4
-vehHelicopterTiltSpeed: resb 0x4
-vehHelicopterYawOnLeftStick: resb 0x4
-vehHelicopterHeadSwayDontSwayTheTurret: resb 0x4
-vehHelicopterInvertUpDown: resb 0x4
 
 
 ;All cstrings:

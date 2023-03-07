@@ -106,32 +106,32 @@
 
 	#ifndef IPV6_V6ONLY
 		#define IPV6_V6ONLY           27 // Treat wildcard bind as AF_INET6-only.
-	#endif 
+	#endif
 
-	int inet_pton(int af, const char *src, void *dst)
-	{
-		struct sockaddr_storage sin;
-		int addrSize = sizeof(sin);
-		char address[256];
-		strncpy(address, src, sizeof(address));
+	// int inet_pton(int af, const char *src, void *dst)
+	// {
+	// 	struct sockaddr_storage sin;
+	// 	int addrSize = sizeof(sin);
+	// 	char address[256];
+	// 	strncpy(address, src, sizeof(address));
 
-		int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize ); 
-		if(rc != 0)
-		{
-			return -1;
-		}
-		if(af == AF_INET)
-		{
-			*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
-			return 1;
-		}
-		if(af == AF_INET6)
-		{
-			*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
-			return 1;
-		}
-		return 0;
-	}
+	// 	int rc = WSAStringToAddressA( address, af, NULL, (SOCKADDR*)&sin, &addrSize );
+	// 	if(rc != 0)
+	// 	{
+	// 		return -1;
+	// 	}
+	// 	if(af == AF_INET)
+	// 	{
+	// 		*((struct in_addr *)dst) = ((struct sockaddr_in*)&sin)->sin_addr;
+	// 		return 1;
+	// 	}
+	// 	if(af == AF_INET6)
+	// 	{
+	// 		*((struct in_addr6 *)dst) = ((struct sockaddr_in6*)&sin)->sin6_addr;
+	// 		return 1;
+	// 	}
+	// 	return 0;
+	// }
 
 #else
 

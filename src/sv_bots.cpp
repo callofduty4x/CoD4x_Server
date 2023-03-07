@@ -192,7 +192,7 @@ static void scr_botweapon(scr_entref_t ent_num)
     int argc;
     gentity_t *bot;
     char* weapon;
-    byte weapInt;
+    unsigned char weapInt;
     mvabuf;
 
     bot = VM_GetGEntityForEntRef(ent_num);
@@ -214,7 +214,7 @@ static void scr_botweapon(scr_entref_t ent_num)
         return;
     }
 
-    weapInt = (byte)G_GetWeaponIndexForName(weapon);
+    weapInt = (unsigned char)G_GetWeaponIndexForName(weapon);
     g_botai[ent_num.entnum].weapon = weapInt;
 }
 /*
