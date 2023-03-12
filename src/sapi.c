@@ -721,6 +721,12 @@ void SV_GetSS_f();
 
 void SV_InitSApi()
 {
+    cvar_t *sv_noauth = Cvar_RegisterBool("sv_noauth", qfalse, CVAR_INIT, "Start the server without client authentication. Unofficial clients will be able to join.");
+    if (sv_noauth->boolean) {
+        Com_PrintMessage(CON_CHANNEL_SERVER, "^1Warning: Running without client authentication. Unofficial clients will be able to join.\n", MSG_WARNING);
+        return;
+    }
+
 	char errormsg[1024];
 	void* hmodule;
 	imports_t exports;
