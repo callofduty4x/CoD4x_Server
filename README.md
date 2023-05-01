@@ -1,6 +1,6 @@
 # CoD4x Server [![build](https://github.com/callofduty4x/CoD4x_Server/actions/workflows/build.yml/badge.svg)](https://github.com/callofduty4x/CoD4x_Server/actions/workflows/build.yml)
 <p align="center">
-  <img src="assets/github/banner.png?raw=true" />
+  <img src="assets/banner.png?raw=true" />
 </p>
 
 CoD4x is a modification of the Call of Duty 4 - Modern Warfare server. It fixes several bugs in the original binaries and allows developers to extend server functionality with additional variables and plugins. When using the CoD4x server, the clients invoke installation of the proprietary CoD4x client to players joining the server using the CoD4x servers, which fixes several known base game bugs in the client, and in combination with the server allows for extra features.

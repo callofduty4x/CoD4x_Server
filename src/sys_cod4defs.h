@@ -40,6 +40,8 @@
 
 #define PRODUCT_VERSION "1.0"
 
+#define Q3X_VERSION "1.8"
+
 #define Q3_VERSION "-"
 
 #define GAME_STRING "CoD4 X"

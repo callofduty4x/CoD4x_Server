@@ -649,7 +649,7 @@ static void Com_InitCvars( void ){
     s = va("%s %s %s build %i %s", GAME_STRING,Q3_VERSION,PLATFORM_STRING, Sys_GetBuild(), __DATE__);
 
     com_version = Cvar_RegisterString ("version", s, CVAR_ROM | CVAR_SERVERINFO , "Game version");
-    com_shortversion = Cvar_RegisterString ("shortversion", Q3_VERSION, CVAR_ROM | CVAR_SERVERINFO , "Short game version");
+    com_shortversion = Cvar_RegisterString ("shortversion", Q3X_VERSION, CVAR_ROM | CVAR_SERVERINFO , "Short game version");
 
     Cvar_RegisterInt ("build", Sys_GetBuild(), Sys_GetBuild(), Sys_GetBuild(), CVAR_ROM | CVAR_SERVERINFO, "Count of SCM commits since project has been started");
     Cvar_RegisterString("branch", Sys_GetBranch(), CVAR_ROM | CVAR_SERVERINFO, "Name of SCM branch");

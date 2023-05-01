@@ -21,9 +21,8 @@ jobs:
       
     - name: Set up needed libs
       run: | 
-        sudo apt-get install g++-multilib gcc-multilib 
         sudo dpkg --add-architecture i386 
-        sudo apt-get install nasm:i386 libtommath-dev:i386 libtommath1:i386 libc6:i386 libgcc-s1:i386
+        sudo apt-get install nasm make gcc-multilib g++-multilib
         
     - name: Build server
       run: make
