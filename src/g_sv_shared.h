@@ -44,7 +44,7 @@ void __cdecl StopFollowing( gentity_t* ent );
 void G_SayTo(gentity_t *ent, gentity_t *other, int mode, int color, const char *teamname, const char *name, const char *message);
 void __cdecl GScr_LoadScripts(void);
 
-extern cvar_t* g_speed;
+// extern cvar_t* g_speed;
 
 void __cdecl SV_GameSendServerCommand(int clientnum, int svscmd_type, const char *text);
 

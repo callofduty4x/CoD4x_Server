@@ -33,7 +33,7 @@ typedef enum {
 	// bk001129 - make sure SE_NONE is zero
 	SE_NONE = 0,    // evTime is still valid
 	SE_CONSOLE, // evPtr is a char*
-	SE_PACKET   // evPtr is a netadr_t followed by data bytes to evPtrLength
+	SE_PACKET   // evPtr is a netadr_t followed by data cod4x_bytes to evPtrLength
 } sysEventType_t;
 
 #ifdef __cplusplus
@@ -56,7 +56,7 @@ time_t Com_GetRealtime();
 int QDECL Com_AddTimedEvent( int delay, void *function, unsigned int argcount, ...);
 int Com_FilterPath( char *filter, char *name, int casesensitive );
 
-void Com_RandomBytes( byte *string, int len );
+void Com_RandomBytes( cod4x_byte *string, int len );
 int Com_RandomInt();
 int Com_HashKey( char *string, int maxlen );
 void Com_Quit_f( void );
@@ -91,7 +91,7 @@ void R_ReleaseDXDeviceOwnership();
 #define MAXPRINTMSG 4096
 #define	MAX_RELIABLE_COMMANDS	128	// max string commands buffered for restransmit
 #define MAX_DOWNLOAD_WINDOW	8	// max of eight download frames
-#define MAX_DOWNLOAD_BLKSIZE	2048	// 2048 byte block chunks
+#define MAX_DOWNLOAD_BLKSIZE	2048	// 2048 cod4x_byte block chunks
 #define MAX_PACKET_USERCMDS	32
 
 #define	PACKET_BACKUP		32
@@ -116,7 +116,7 @@ KwIDAQAB\n\
 
 typedef struct
 {
-  byte bytedata[2000];
+  cod4x_byte bytedata[2000];
   int longdata[1547];
 }statData_t;
 

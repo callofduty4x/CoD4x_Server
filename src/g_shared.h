@@ -65,8 +65,8 @@ typedef struct
 
 typedef struct
 {
-    byte spawnVarsValid;
-    byte pad[3];
+    cod4x_byte spawnVarsValid;
+    cod4x_byte pad[3];
     int numSpawnVars;
     keyValueStr_t spawnVars[64];
     int numSpawnVarChars;
@@ -133,7 +133,7 @@ typedef struct
     int lastTeammateHealthTime;     // last time of client team location update
 
     qboolean bUpdateScoresForIntermission; //???? Not known 0x210
-    byte teamHasRadar[TEAM_NUM_TEAMS];
+    cod4x_byte teamHasRadar[TEAM_NUM_TEAMS];
     int manualNameChange;           //0x218 Manual Change mode
     int numConnectedClients;        // connected, non-spectators
     int sortedClients[MAX_CLIENTS]; //sorted by rank or score ? 0x220
@@ -554,20 +554,20 @@ extern cvar_t *g_allowConsoleSay;
 extern cvar_t *g_disabledefcmdprefix;
 extern cvar_t *g_votedMapName;
 extern cvar_t *g_votedGametype;
-extern cvar_t *g_allowVote;
+// extern cvar_t *g_allowVote;
 extern cvar_t *g_TeamName_Axis;
 extern cvar_t *g_TeamName_Allies;
-extern cvar_t *g_gravity;
+// extern cvar_t *g_gravity;
 extern cvar_t *jump_height;
 extern cvar_t *jump_stepSize;
 extern cvar_t *jump_slowdownEnable;
-extern cvar_t *g_antilag;
-extern cvar_t *g_cheats;
-extern cvar_t *g_oldVoting;
-extern cvar_t *g_inactivity;
-extern cvar_t *g_synchronousClients;
-extern cvar_t *g_log;
-extern cvar_t *g_logSync;
+// extern cvar_t *g_antilag;
+// extern cvar_t *g_cheats;
+// extern cvar_t *g_oldVoting;
+// extern cvar_t *g_inactivity;
+// extern cvar_t *g_synchronousClients;
+// extern cvar_t *g_log;
+// extern cvar_t *g_logSync;
 extern cvar_t *g_logTimeStampInSeconds;
 extern cvar_t *g_smoothClients;
 

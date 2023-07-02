@@ -66,7 +66,7 @@ void Sys_SetDefaultInstallPath(const char *path);
 char *Sys_DefaultInstallPath(void);
 const char *Sys_DefaultAppPath(void);
 //sys_unix.c
-qboolean Sys_RandomBytes( byte *string, int len );
+qboolean Sys_RandomBytes( cod4x_byte *string, int len );
 void Sys_DoStartProcess( char *cmdline );
 const char *Sys_Dirname(const char *path);
 char *Sys_Cwd( void );

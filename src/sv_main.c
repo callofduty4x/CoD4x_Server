@@ -79,7 +79,7 @@ cvar_t	*sv_voiceQuality;
 cvar_t	*sv_cheats;
 cvar_t	*sv_rconPassword;		// password for remote server commands
 cvar_t	*sv_reconnectlimit;		// minimum seconds between connect messages
-cvar_t	*sv_padPackets;			// add nop bytes to messages
+cvar_t	*sv_padPackets;			// add nop cod4x_bytes to messages
 cvar_t	*sv_mapRotation;
 cvar_t	*sv_mapRotationCurrent;
 cvar_t  *sv_randomMapRotation;
@@ -92,7 +92,7 @@ cvar_t	*sv_zombieTime;			// seconds to sink messages after disconnect
 cvar_t	*sv_consayname;
 cvar_t	*sv_contellname;
 cvar_t	*sv_password;
-cvar_t	*g_motd;
+static cvar_t	*g_motd;
 cvar_t	*sv_modStats;
 cvar_t	*sv_authorizemode;
 cvar_t	*sv_showasranked;
@@ -425,7 +425,7 @@ void QDECL SV_SendServerCommandString(client_t *cl, int type, char *message)
 void QDECL SV_SendServerCommand_IW(client_t *cl, int cmdtype, const char *fmt, ...) {
 
     va_list		argptr;
-    byte		message[MAX_MSGLEN];
+    cod4x_byte		message[MAX_MSGLEN];
 
 
     va_start (argptr,fmt);
@@ -437,7 +437,7 @@ void QDECL SV_SendServerCommand_IW(client_t *cl, int cmdtype, const char *fmt, .
 
 void QDECL SV_SendServerCommand(client_t *cl, const char *fmt, ...) {
     va_list		argptr;
-    byte		message[MAX_MSGLEN];
+    cod4x_byte		message[MAX_MSGLEN];
 
     va_start (argptr,fmt);
     Q_vsnprintf ((char *)message, sizeof(message), fmt,argptr);
@@ -449,7 +449,7 @@ void QDECL SV_SendServerCommand(client_t *cl, const char *fmt, ...) {
 
 void QDECL SV_SendServerCommandNoLoss(client_t *cl, const char *fmt, ...) {
     va_list		argptr;
-    byte		message[MAX_MSGLEN];
+    cod4x_byte		message[MAX_MSGLEN];
 
     va_start (argptr,fmt);
     Q_vsnprintf ((char *)message, sizeof(message), fmt,argptr);
@@ -471,11 +471,11 @@ CONNECTIONLESS COMMANDS
 typedef struct leakyBucket_s leakyBucket_t;
 struct leakyBucket_s {
 
-    byte	type;
+    cod4x_byte	type;
 
     union {
-        byte	_4[4];
-        byte	_6[16];
+        cod4x_byte	_4[4];
+        cod4x_byte	_6[16];
     } ipv;
 
     unsigned long long	lastTime;
@@ -515,7 +515,7 @@ Init the rate limit system
 */
 static void SVC_RateLimitInit( ){
 
-    int bytes;
+    int cod4x_bytes;
 
     if(!sv_queryIgnoreMegs->integer)
     {
@@ -524,9 +524,9 @@ static void SVC_RateLimitInit( ){
         return;
     }
 
-    bytes = sv_queryIgnoreMegs->integer * 1024*1024;
+    cod4x_bytes = sv_queryIgnoreMegs->integer * 1024*1024;
 
-    querylimit.max_buckets = bytes / sizeof(leakyBucket_t);
+    querylimit.max_buckets = cod4x_bytes / sizeof(leakyBucket_t);
     querylimit.max_hashes = 4096; //static
 
     int totalsize = querylimit.max_buckets * sizeof(leakyBucket_t) + querylimit.max_hashes * sizeof(leakyBucket_t*);
@@ -553,7 +553,7 @@ SVC_HashForAddress
 ================
 */
 __optimize3 __regparm1 static long SVC_HashForAddress( netadr_t *address ) {
-    byte 		*ip = NULL;
+    cod4x_byte 		*ip = NULL;
     size_t	size = 0;
     int			i;
     long		hash = 0;
@@ -1230,7 +1230,7 @@ void SVC_SourceEngineQuery_Info( netadr_t* from, const char* challengeStr)
 {
 
     msg_t msg;
-    byte buf[MAX_INFO_STRING];
+    cod4x_byte buf[MAX_INFO_STRING];
 
     // Prevent using getstatus as an amplifier
     if ( SVC_RateLimitAddress( from, 4, sv_queryIgnoreTime->integer*1000 )) {
@@ -1257,7 +1257,7 @@ void SVC_SourceEngineQuery_Info( netadr_t* from, const char* challengeStr)
 void SVC_SourceEngineQuery_Challenge( netadr_t* from )
 {
     msg_t msg;
-    byte buf[MAX_INFO_STRING];
+    cod4x_byte buf[MAX_INFO_STRING];
 
     MSG_Init(&msg, buf, sizeof(buf));
 
@@ -1276,7 +1276,7 @@ void SVC_SourceEngineQuery_SendSplitMessage( netadr_t* from, msg_t* longmsg )
 {
     msg_t msg;
     static int seq;
-    byte buf[SPLIT_SIZE + 100];
+    cod4x_byte buf[SPLIT_SIZE + 100];
     int i, numpackets;
 
     seq++;
@@ -1326,7 +1326,7 @@ void SVC_SourceEngineQuery_Player( netadr_t* from, msg_t* recvmsg )
 {
 
     msg_t playermsg;
-    byte pbuf[MAX_MSGLEN];
+    cod4x_byte pbuf[MAX_MSGLEN];
 
     int i, numClients, challenge;
     client_t    *cl;
@@ -1405,7 +1405,7 @@ void	SVC_SourceEngineQuery_WriteCvars(cvar_t const* cvar, void *var ){
 void SVC_SourceEngineQuery_Rules( netadr_t* from, msg_t* recvmsg )
 {
     msg_t msg;
-    byte buf[MAX_MSGLEN];
+    cod4x_byte buf[MAX_MSGLEN];
     struct sourceEngineCvars_s data;
     int numvars, challenge;
 
@@ -1727,7 +1727,7 @@ void SV_ReceiveFromUpdateProxy( msg_t *msg )
 
 void SV_PassToUpdateProxy(msg_t *msg, client_t *cl)
 {
-    byte outbuf[MAX_MSGLEN];
+    cod4x_byte outbuf[MAX_MSGLEN];
 
     msg_t outmsg;
 
@@ -1758,7 +1758,7 @@ void SV_ConnectWithUpdateProxy(client_t *cl)
 
             if(update_connection.mychallenge == 0)
             {
-                Com_RandomBytes((byte*)&update_connection.mychallenge, sizeof(update_connection.mychallenge));
+                Com_RandomBytes((cod4x_byte*)&update_connection.mychallenge, sizeof(update_connection.mychallenge));
             }
 
             if(update_connection.updateserveradr.type == NA_BAD || sv_updatebackendname->modified)
@@ -2044,7 +2044,7 @@ typedef struct
 {
     netadr_t adr4;
     netadr_t adr6;
-    byte message[2000];
+    cod4x_byte message[2000];
     int messagelen;
     qboolean locked;
     qboolean authoritative;
@@ -2054,14 +2054,14 @@ typedef struct
     qboolean* threadlock;
     char* challengei4;
     char* challengei6;
-    byte* msgtokenstart;
+    cod4x_byte* msgtokenstart;
     char token[48];
 }masterHeartbeatThreadOptions_t;
 
 
 void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needticket, char* challenge)
 {
-    byte databuf[8192];
+    cod4x_byte databuf[8192];
     char stringline[1024];
     char newchallenge[65];
     msg_t singlemsg;
@@ -2169,10 +2169,10 @@ void SV_HeartBeatMessageLoop(msg_t* msg, qboolean authoritative, qboolean *needt
 }
 
 
-void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, byte* message, int qlen, qboolean authoritative, qboolean* needticket, char* challenge)
+void SV_SendReceiveHeartbeatTCP(netadr_t* adr, netadr_t* sourceadr, cod4x_byte* message, int qlen, qboolean authoritative, qboolean* needticket, char* challenge)
 {
     int l = 0;
-    byte response[16384];
+    cod4x_byte response[16384];
     char line[256];
     msg_t msg;
     int socket;
@@ -2427,7 +2427,7 @@ void SV_CreateAndSendMasterheartbeatMessage(const char* message, masterserver_t*
             MSG_BeginWriteMessageLength(&msg); //Messagelength
             MSG_WriteLong(&msg, 2); //Command encryptedappidticket
 
-        //First 8 bytes of token
+        //First 8 cod4x_bytes of token
         for(i = 0; i < 8; ++i)
         {
             MSG_WriteByte(&msg, opts->token[i]);
@@ -2990,7 +2990,7 @@ void	serverStatus_Write(){
 
 void SV_InitServerId(){
     int i;
-    byte masterServerSecretBin[(MASTERSERVERSECRETLENGTH -1) / 2];
+    cod4x_byte masterServerSecretBin[(MASTERSERVERSECRETLENGTH -1) / 2];
 /*    int read;
     char buf[256];
     *buf = 0;
@@ -3019,11 +3019,11 @@ void SV_InitServerId(){
     FS_FCloseFile(file);
 */
 
-    Com_RandomBytes((byte*)&psvs.masterServer_id, sizeof(psvs.masterServer_id));
+    Com_RandomBytes((cod4x_byte*)&psvs.masterServer_id, sizeof(psvs.masterServer_id));
     psvs.masterServer_challengepassword[0] = '-';
     psvs.masterServer_challengepassword[1] = '1';
     psvs.masterServer_challengepassword[2] = '\0';
-    Com_RandomBytes((byte*)masterServerSecretBin, sizeof(masterServerSecretBin));
+    Com_RandomBytes((cod4x_byte*)masterServerSecretBin, sizeof(masterServerSecretBin));
     for (i=0; i < sizeof(masterServerSecretBin); ++i)
     {
         sprintf(&masterServerSecret[2*i], "%02x", masterServerSecretBin[i]);
@@ -3045,7 +3045,7 @@ void SV_InitCvarsOnce(void){
 
     sv_minPing = Cvar_RegisterInt("sv_minPing", 0, 0, 1000, 5, "Minimum allowed ping on the server");
     sv_maxPing = Cvar_RegisterInt("sv_maxPing", 0, 0, 1000, 5, "Maximum allowed ping on the server");
-    sv_queryIgnoreMegs = Cvar_RegisterInt("sv_queryIgnoreMegs", 1, 0, 32, 0x11, "Number of megabytes of RAM to allocate for the querylimit IP-blacklist. 0 disables this feature");
+    sv_queryIgnoreMegs = Cvar_RegisterInt("sv_queryIgnoreMegs", 1, 0, 32, 0x11, "Number of megacod4x_bytes of RAM to allocate for the querylimit IP-blacklist. 0 disables this feature");
     sv_queryIgnoreTime = Cvar_RegisterInt("sv_queryIgnoreTime", 2000, 100, 100000, 1, "How much milliseconds have to pass until another two queries are allowed");
     Cvar_RegisterBool("sv_disableClientConsole", qfalse, 4, "Disallow remote clients from accessing the client console");
 
@@ -3053,7 +3053,7 @@ void SV_InitCvarsOnce(void){
     sv_rconPassword = Cvar_RegisterString("rcon_password", "", 0, "Password for the server remote control console");
 
     sv_allowDownload = Cvar_RegisterBool("sv_allowDownload", qtrue, 1, "Allow clients to download gamefiles from server");
-    sv_maxDownloadRate = Cvar_RegisterInt("sv_maxDownloadRate", 1024, 128, 8192, 0, "Rate in kilobytes all clients can together receive when downloading from server");
+    sv_maxDownloadRate = Cvar_RegisterInt("sv_maxDownloadRate", 1024, 128, 8192, 0, "Rate in kilocod4x_bytes all clients can together receive when downloading from server");
     sv_wwwDownload = Cvar_RegisterBool("sv_wwwDownload", qfalse, 1, "Enable http download");
     sv_wwwBaseURL = Cvar_RegisterString("sv_wwwBaseURL", "", 1, "The base url to files for downloading from the HTTP-Server");
     sv_wwwDlDisconnected = Cvar_RegisterBool("sv_wwwDlDisconnected", qfalse, 1, "Should clients stay connected while downloading from a HTTP-Server?");
@@ -3063,7 +3063,7 @@ void SV_InitCvarsOnce(void){
 
     sv_cheats = Cvar_RegisterBool("sv_cheats", qfalse, 0x18, "Enable cheats on the server");
     sv_reconnectlimit = Cvar_RegisterInt("sv_reconnectlimit", 5, 0, 1800, 1, "Seconds to disallow a prior connected client to reconnect to the server");
-    sv_padPackets = Cvar_RegisterInt("sv_padPackets", 0, 0, 0x7fffffff, 0, "How many nop-bytes to add to insert into each snapshot");
+    sv_padPackets = Cvar_RegisterInt("sv_padPackets", 0, 0, 0x7fffffff, 0, "How many nop-cod4x_bytes to add to insert into each snapshot");
 
     sv_mapRotation = Cvar_RegisterString("sv_mapRotation", "", 0, "List of all maps server will play");
     sv_mapRotationCurrent = Cvar_RegisterString("sv_mapRotationCurrent", "", 0, "List of remaining maps server has to play");
@@ -3116,7 +3116,7 @@ void SV_InitCvarsOnce(void){
     sv_serverid = Cvar_RegisterInt("sv_serverid", 0, 0x80000000, 0x7fffffff, 0x48, "The current id of server to let client and server distinguish between gamestates");
     sv_pure = Cvar_RegisterBool("sv_pure", qtrue, 0xc, "Cannot use modified IWD files");
     sv_fps = Cvar_RegisterInt("sv_fps", 20, 1, 250, 0, "Server frames per second");
-    sv_showAverageBPS = Cvar_RegisterBool("sv_showAverageBPS", qfalse, 0, "Show average bytes per second for net debugging");
+    sv_showAverageBPS = Cvar_RegisterBool("sv_showAverageBPS", qfalse, 0, "Show average cod4x_bytes per second for net debugging");
     sv_botsPressAttackBtn = Cvar_RegisterBool("sv_botsPressAttackBtn", qtrue, 0, "Allow testclients to press attack button");
     sv_debugRate = Cvar_RegisterBool("sv_debugRate", qfalse, 0, "Enable snapshot rate debugging info");
     sv_debugReliableCmds = Cvar_RegisterBool("sv_debugReliableCmds", qfalse, 0, "Enable debugging information for reliable commands");
@@ -3138,7 +3138,7 @@ void SV_Init(){
     Init_CallVote();
     SV_InitServerId();
     SV_MasterHeartbeatInit();
-    Com_RandomBytes((byte*)&psvs.randint, sizeof(psvs.randint));
+    Com_RandomBytes((cod4x_byte*)&psvs.randint, sizeof(psvs.randint));
     SV_InitSApi();
     SV_TryLoadXAC();
 }
@@ -3330,7 +3330,7 @@ Used by rcon to retrive all serverdata as detailed as possible
 */
 void SV_WriteRconStatus( msg_t* msg ) {
 
-    //Reserve 19000 free bytes for msg_t struct
+    //Reserve 19000 free cod4x_bytes for msg_t struct
 
     int i;
     client_t    *cl;
@@ -3368,10 +3368,10 @@ void SV_WriteRconStatus( msg_t* msg ) {
 
         Info_SetValueForKey( infostring, "svtime", va("%i", svs.time));
 
-    //Writing general server info to msg (Reserve 1024 bytes)
+    //Writing general server info to msg (Reserve 1024 cod4x_bytes)
     MSG_WriteString(msg, infostring);
 
-    //Reserve 64 * 280 bytes = 18000
+    //Reserve 64 * 280 cod4x_bytes = 18000
     //Writing clientinfo to msg
     for ( i = 0, gclient = level.clients ; i < sv_maxclients->integer ; i++, gclient++ ) {
 
@@ -4401,7 +4401,7 @@ __optimize3 __regparm1 qboolean SV_Frame( unsigned int usec ) {
             PHandler_Event(PLUGINS_ONTENSECONDS, NULL);	// Plugin event
     /*		if(svs.time > svs.nextsecret){
                 svs.nextsecret = svs.time+80000;
-                Com_RandomBytes((byte*)&svs.secret,sizeof(int));
+                Com_RandomBytes((cod4x_byte*)&svs.secret,sizeof(int));
             }*/
 
     }
@@ -5084,7 +5084,7 @@ qboolean SV_FileStillActive(const char* name)
 void SV_StartHostMigration(netadr_t* to)
 {
     msg_t msg;
-    byte buf[MAX_INFO_STRING];
+    cod4x_byte buf[MAX_INFO_STRING];
 
     if(strlen(sv_authtoken->string) != 32)
     {
@@ -5102,7 +5102,7 @@ void SV_StartHostMigration(netadr_t* to)
 void SV_ReadHostMigrationStart(netadr_t* from, msg_t* msg)
 {
     msg_t outmsg;
-    byte buf[MAX_INFO_STRING];
+    cod4x_byte buf[MAX_INFO_STRING];
 
     MSG_Init(&outmsg, buf, sizeof(buf));
     MSG_WriteString(&msg, "AcceptHostMigration");
@@ -5117,7 +5117,7 @@ void SV_ReadHostMigrationStart(netadr_t* from, msg_t* msg)
     }    
 
     MSG_WriteLong(1);
-    Com_RandomBytes((byte*)&svs.migrationChallenge, sizeof(svs.migrationChallenge));
+    Com_RandomBytes((cod4x_byte*)&svs.migrationChallenge, sizeof(svs.migrationChallenge));
 
     MSG_WriteLong(svs.migrationChallenge);    //This will be used to encode the token
 
@@ -5158,7 +5158,7 @@ void SV_HostMigrationPackSingleClientData(client_t *cl, msg_t* msg)
 void SV_HostMigrationSendData(msg_t* inmsg, netadr_t* dest)
 {
     msg_t msg;
-    byte buffer[1200];
+    cod4x_byte buffer[1200];
 
     int offset, datalen;
     
@@ -5204,7 +5204,7 @@ void SV_HostMigrationSendData(msg_t* inmsg, netadr_t* dest)
 void SV_HostMigrationWriteData(netadr_t* dest)
 {
     msg_t msg;
-    byte buffer[0x40000];
+    cod4x_byte buffer[0x40000];
 
     int i, count;
     for(i = 0, count = 0; i < sv_maxclients->integer; ++i)

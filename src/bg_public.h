@@ -35,7 +35,7 @@ struct pmove_t
   float xyspeed;
   int proneChange;
   float maxSprintTimeMultiplier;
-  byte mantleStarted;
+  cod4x_byte mantleStarted;
   char pad1[3];
   vec3_t mantleEndPos;
   int mantleDuration;
@@ -122,8 +122,8 @@ struct __align(8) bgs_s
 
 struct __align(8) bgs_s
 {
-  byte animScriptData[0x9a9d0];
-  byte generic_human[0x10];
+  cod4x_byte animScriptData[0x9a9d0];
+  cod4x_byte generic_human[0x10];
   int time;
   int latestSnapshotTime;
   int frametime;

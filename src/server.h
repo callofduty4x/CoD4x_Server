@@ -196,8 +196,8 @@ struct client_s
 	// downloading
 	char			downloadName[MAX_QPATH]; // if not empty string, we are downloading
 	fileHandle_t		download;		// file being downloaded
- 	int			downloadSize;		// total bytes (can't use EOF because of paks)
- 	int			downloadCount;		// bytes sent
+ 	int			downloadSize;		// total cod4x_bytes (can't use EOF because of paks)
+ 	int			downloadCount;		// cod4x_bytes sent
 	int			downloadClientBlock;	// Current block we send to client
 	int			downloadCurrentBlock;	// current block number
 	int			downloadXmitBlock;	// last block we xmited
@@ -220,24 +220,24 @@ struct client_s
 	int			timeoutCount;
 	clientSnapshot_t	frames[PACKET_BACKUP];	//updates can be delta'd from here
 	int			ping;		
-	int			rate;		// bytes / second
+	int			rate;		// cod4x_bytes / second
 	int			snapshotMsec;	// requests a snapshot every snapshotMsec unless rate choked
 	int			unknown6;
 	int			pureAuthentic;
-	byte			unsentBuffer[NETCHAN_UNSENTBUFFER_SIZE];
-	byte			fragmentBuffer[NETCHAN_FRAGMENTBUFFER_SIZE];
+	cod4x_byte			unsentBuffer[NETCHAN_UNSENTBUFFER_SIZE];
+	cod4x_byte			fragmentBuffer[NETCHAN_FRAGMENTBUFFER_SIZE];
 	char			legacy_pbguid[33];
-	byte			pad;
+	cod4x_byte			pad;
 	short			scriptId;
 	int			canNotReliable;
 	int			serverId;
 	struct VoicePacket_t	voicePackets[MAX_VOICEPACKETS];
 	int			voicePacketCount;
-	byte			muteList[MAX_CLIENTS];
-	byte			sendVoice;
-	byte			receivedstats;
-	byte			gamestateSent;
-	byte			hasValidPassword;
+	cod4x_byte			muteList[MAX_CLIENTS];
+	cod4x_byte			sendVoice;
+	cod4x_byte			receivedstats;
+	cod4x_byte			gamestateSent;
+	cod4x_byte			hasValidPassword;
 	stats_t			stats;
 	int 			localization; // loc_language
 	qboolean		lockedout;
@@ -325,7 +325,7 @@ typedef struct {//0x8c51780
 	int nextArchivedSnapshotFrames; //0xee95e9c
 
 	archivedSnapshot_t archivedSnapshotFrames[NUM_ARCHIVED_FRAMES];
-	byte archivedSnapshotBuffer[ARCHIVEDSSBUF_SIZE];
+	cod4x_byte archivedSnapshotBuffer[ARCHIVEDSSBUF_SIZE];
 	int nextArchivedSnapshotBuffer;
 	int nextCachedSnapshotEntities; //0x10e98420
 	int nextCachedSnapshotClients;
@@ -359,7 +359,7 @@ typedef struct {//0x8c51780
 	char			migrationAddr[32];
 	msg_t			migrationMsg;
 	int			migrationMsgCrc;
-	byte			migrationPacketReceivedBits[32];
+	cod4x_byte			migrationPacketReceivedBits[32];
 }serverStatic_t; //Size: 0xb227580
 
 
@@ -392,7 +392,7 @@ typedef enum {
 typedef struct {//0x13e78d00
 	serverState_t		state;
 	int			timeResidual;		// <= 1000 / sv_frame->value
-	int			frameusec;		// Frameusec set every Level-startup to the desired value from sv_fps    Replaces: byte inFrame; byte smp; byte allowNetPackets;
+	int			frameusec;		// Frameusec set every Level-startup to the desired value from sv_fps    Replaces: cod4x_byte inFrame; cod4x_byte smp; cod4x_byte allowNetPackets;
 	qboolean		restarting;		// if true, send configstring changes during SS_LOADING
 	int			start_frameTime;		//restartedServerId;	serverId before a map_restart
 	int			checksumFeed;		// 0x14 the feed key that we use to compute the pure checksum strings
@@ -403,7 +403,7 @@ typedef struct {//0x13e78d00
 
 	int			nextFrameTime;		// when time > nextFrameTime, process world
 	struct cmodel_s		*models[MAX_MODELS];*/
-	byte			unk[0x800];
+	cod4x_byte			unk[0x800];
 
 	uint16_t			emptyConfigString;		//0x13e79518
 	uint16_t			configstrings[MAX_CONFIGSTRINGS]; //(0x13e7951a)
@@ -434,8 +434,8 @@ typedef struct {//0x13e78d00
 	float		ucompAve;
 	int			ucompNum;
 	char		gametype[MAX_QPATH]; //(0x13ed8908)
-	byte		killserver;
-	byte		pad3[3];
+	cod4x_byte		killserver;
+	cod4x_byte		pad3[3];
 	const char* killreason;
 } server_t;//Size: 0x5fc50
 
@@ -457,7 +457,7 @@ typedef struct{//13F18F80
     vec3_t mapCenter;
     archivedEntity_t *cachedSnapshotEntities;
     cachedClient_t *cachedSnapshotClients;
-    byte *archivedSnapshotBuffer;
+    cod4x_byte *archivedSnapshotBuffer;
     cachedSnapshot_t *cachedSnapshotFrames;
     int nextCachedSnapshotFrames;
     int nextArchivedSnapshotFrames;
@@ -664,7 +664,7 @@ void SV_GetServerStaticHeader(void);
 void SV_ShowClientUnAckCommands( client_t *client );
 
 
-void SV_WriteDemoMessageForClient( byte *msg, int dataLen, client_t *client );
+void SV_WriteDemoMessageForClient( cod4x_byte *msg, int dataLen, client_t *client );
 void SV_StopRecord( client_t *cl );
 void SV_RecordClient( client_t* cl, char* basename );
 void SV_DemoSystemShutdown( void );
@@ -701,9 +701,9 @@ void SV_ClientEnterWorld( client_t *client, usercmd_t *cmd );
 void SV_WriteDownloadToClient( client_t *cl );
 void SV_SendClientGameState( client_t *client );
 
-void SV_Netchan_Decode( client_t *client, byte *data, int remaining );
-void SV_Netchan_Encode( client_t *client, byte *data, int cursize );
-qboolean SV_Netchan_Transmit( client_t *client, byte *data, int cursize);
+void SV_Netchan_Decode( client_t *client, cod4x_byte *data, int remaining );
+void SV_Netchan_Encode( client_t *client, cod4x_byte *data, int cursize );
+qboolean SV_Netchan_Transmit( client_t *client, cod4x_byte *data, int cursize);
 qboolean SV_Netchan_TransmitNextFragment( client_t *client );
 void SV_SysAuthorize(char* s);
 int SV_ClientAuthMode(void);

@@ -401,7 +401,7 @@ typedef struct scr_method_s
     qboolean developer;
 } scr_method_t;
 
-typedef byte PrecacheEntry[8192];
+typedef cod4x_byte PrecacheEntry[8192];
 typedef unsigned int sval_u;
 
 /**************** Additional *************************/
@@ -589,10 +589,10 @@ typedef struct
   int function_count;
   struct function_frame_t *function_frame;
   VariableValue *top;
-  byte debugCode;
-  byte abort_on_error;
-  byte terminal_error;
-  byte pad;
+  cod4x_byte debugCode;
+  cod4x_byte abort_on_error;
+  cod4x_byte terminal_error;
+  cod4x_byte pad;
   unsigned int inparamcount;
   unsigned int outparamcount;
   struct function_frame_t function_frame_start[32];
@@ -621,8 +621,8 @@ struct scrCompilePub_t
   uint16_t canonicalStrings[65536];
   const char *in_ptr;
   const char *parseBuf;
-  byte script_loading;
-  byte allowedBreakpoint;
+  cod4x_byte script_loading;
+  cod4x_byte allowedBreakpoint;
   int16_t pad;
   int developer_statement;
   char *opcodePos;
@@ -652,7 +652,7 @@ struct SourceBufferInfo
   int len;
   int sortedIndex;
   bool archive;
-  byte pad[3];
+  cod4x_byte pad[3];
 };
 
 
@@ -761,7 +761,7 @@ short __cdecl Scr_ExecThread( int callbackHook, unsigned int numArgs);
 void __cdecl Scr_FreeThread( short threadId);
 unsigned int __cdecl Scr_CreateCanonicalFilename( const char* name );
 void * __cdecl TempMalloc( int );
-void __cdecl ScriptParse( sval_u* , byte);
+void __cdecl ScriptParse( sval_u* , cod4x_byte);
 void __cdecl ScriptCompile( sval_u, unsigned int, unsigned int, PrecacheEntry*, int);
 char* __cdecl Scr_AddSourceBuffer( const char*, const char*, const char*, bool );
 void __cdecl Scr_InitAllocNode( void );

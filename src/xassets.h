@@ -150,8 +150,8 @@ void DB_ReferencedFastFiles(char* g_zoneSumList, char* g_zoneNameList, int maxsi
 int __cdecl DB_GetAllXAssetOfType(enum XAssetType type, union XAssetHeader *assets, int maxCount);
 void __cdecl DB_ConvertOffsetToPointer(void *data);
 void __cdecl Load_Stream(bool atStreamStart, const void *ptr, int size);
-byte *__cdecl DB_AllocStreamPos(int alignment);
-void __cdecl DB_LoadXFileData(byte *pos, int count);
+cod4x_byte *__cdecl DB_AllocStreamPos(int alignment);
+void __cdecl DB_LoadXFileData(cod4x_byte *pos, int count);
 void __cdecl DB_LoadDelayedImages();
 void Load_XAssetListCustom();
 void __cdecl Load_XAsset(bool atStreamStart);
@@ -237,7 +237,7 @@ Just structures here I am too lazy to create headerfiles for now
 typedef struct
 {
   AILSOUNDINFO ailInfo;
-  byte *data;
+  cod4x_byte *data;
 }MssSound;
 
 

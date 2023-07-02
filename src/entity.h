@@ -98,7 +98,7 @@ struct LerpEntityStateBulletHit
 
 struct LerpEntityStatePrimaryLight
 {
-  byte colorAndExp[4];
+  cod4x_byte colorAndExp[4];
   float intensity;
   float radius;
   float cosHalfFovOuter;
@@ -246,16 +246,16 @@ typedef struct entityState_s {//Confirmed names and offsets but not types
 
 
 typedef struct {
-	byte		linked;				//0xf4 qfalse if not in any good cluster
+	cod4x_byte		linked;				//0xf4 qfalse if not in any good cluster
 
-	byte		bmodel;				//0xf5 if false, assume an explicit mins / maxs bounding box
+	cod4x_byte		bmodel;				//0xf5 if false, assume an explicit mins / maxs bounding box
 							// only set by trap_SetBrushModel
-	byte		svFlags;
-	byte		pad1;
+	cod4x_byte		svFlags;
+	cod4x_byte		pad1;
 
 	int		clientMask[2];
-	byte		inuse;
-	byte		pad2[3];
+	cod4x_byte		inuse;
+	cod4x_byte		pad2[3];
 	int			broadcastTime;
 
 	vec3_t		mins, maxs;		//0x108  //0x114  from SharedEntity_t
@@ -288,7 +288,7 @@ struct trigger_ent_t
   int accumulate;
   int timestamp;
   int singleUserEntIndex;
-  byte requireLookAt;
+  cod4x_byte requireLookAt;
 };
 
 struct item_ent_t
@@ -365,12 +365,12 @@ struct gentity_s {
 	struct scr_vehicle_s *scr_vehicle;
 
 	uint16_t model;
-	byte physicsObject;
-	byte takedamage;
-	byte active;
-	byte nopickup;
-	byte handler;
-	byte team;
+	cod4x_byte physicsObject;
+	cod4x_byte takedamage;
+	cod4x_byte active;
+	cod4x_byte nopickup;
+	cod4x_byte handler;
+	cod4x_byte team;
 
 	uint16_t classname;
 	uint16_t target;

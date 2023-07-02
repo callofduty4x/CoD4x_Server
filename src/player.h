@@ -303,14 +303,14 @@ typedef struct usercmd_s
     int serverTime;
     int buttons;
     int angles[3];
-    byte weapon;
-    byte offHandIndex;
-    char forwardmove; /* Must be char, not byte */
-    char rightmove;   /* Must be char, not byte */
+    cod4x_byte weapon;
+    cod4x_byte offHandIndex;
+    char forwardmove; /* Must be char, not cod4x_byte */
+    char rightmove;   /* Must be char, not cod4x_byte */
     float meleeChargeYaw;
-    byte meleeChargeDist;
-    byte selectedLocation[2];
-    byte pad;
+    cod4x_byte meleeChargeDist;
+    cod4x_byte selectedLocation[2];
+    cod4x_byte pad;
 } usercmd_t;
 
 typedef enum
@@ -336,8 +336,8 @@ typedef struct {
     int	assists; //0x2f84
 	
 	uint16_t scriptPersId;          //0x2f88 the first spawn should be at a cool location
-	byte pad2;
-	byte pad;
+	cod4x_byte pad2;
+	cod4x_byte pad;
 	clientConnected_t connected;	//0x2f8c 
 	usercmd_t cmd;                  //0x2f90 we would lose angles if not persistant
 	usercmd_t oldcmd;               //0x2fb0 previous command processed by pmove()
@@ -539,8 +539,8 @@ struct clientInfo_t
   char pad2[3];
   int attachedVehEntNum;
   int attachedVehSlotIndex;
-  byte hideWeapon;
-  byte usingKnife;
+  cod4x_byte hideWeapon;
+  cod4x_byte usingKnife;
   char pad3[2];
 };
 

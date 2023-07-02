@@ -107,7 +107,7 @@ typedef struct XSurface_s
   /*
   bool deformed;
   */
-  byte deformed;
+  cod4x_byte deformed;
   unsigned short vertCount;
   unsigned short triCount;
   r_index16_t *triIndices;	// loaded last

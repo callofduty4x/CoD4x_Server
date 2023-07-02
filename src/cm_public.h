@@ -52,20 +52,20 @@ typedef struct trace_s
   uint16_t modelIndex;
   uint16_t partName;
   uint16_t partGroup;
-  byte allsolid;
-  byte startsolid;
-  byte walkable;
-  byte padding;
+  cod4x_byte allsolid;
+  cod4x_byte startsolid;
+  cod4x_byte walkable;
+  cod4x_byte padding;
 }trace_t;
 
 typedef struct
 {
   int baseEntity;
   int parentEntity;
-  byte ignoreSelf;
-  byte ignoreParent;
-  byte ignoreSiblings;
-  byte ignoreChildren;
+  cod4x_byte ignoreSelf;
+  cod4x_byte ignoreParent;
+  cod4x_byte ignoreSiblings;
+  cod4x_byte ignoreChildren;
 }IgnoreEntParams;
 
 typedef struct 
@@ -131,7 +131,7 @@ extern "C"{
 #endif
 
 int CM_BoxLeafnums( const vec3_t mins, const vec3_t maxs, uint16_t *list, int listsize, int *lastLeaf );
-byte *CM_ClusterPVS( int cluster );
+cod4x_byte *CM_ClusterPVS( int cluster );
 int CM_PointLeafnum( const vec3_t p );
 int CM_LeafCluster( int leafnum );
 char *CM_EntityString( void );

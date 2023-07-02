@@ -78,23 +78,23 @@ typedef struct{
 
 struct __attribute__((__packed__)) dyncallstub_s
 {
-		byte mov_eax_esp4[4];
-		byte push_eax;
-		byte move_eax_ptr;
+		cod4x_byte mov_eax_esp4[4];
+		cod4x_byte push_eax;
+		cod4x_byte move_eax_ptr;
 		int32_t *hasControlAdr;
-		byte move_edx_ptr;
+		cod4x_byte move_edx_ptr;
 		uint32_t pluginId;
-		byte move_eax_edx[2];
-		byte move_ecx_ptr;
+		cod4x_byte move_eax_edx[2];
+		cod4x_byte move_ecx_ptr;
 		xfunction_t xfunction;
-		byte call_ecx[2];
-		byte add_esp4[3];
-		byte move_eax2_ptr;
+		cod4x_byte call_ecx[2];
+		cod4x_byte add_esp4[3];
+		cod4x_byte move_eax2_ptr;
 		int32_t *hasControlAdr2;
-		byte move_edx2_ptr;
+		cod4x_byte move_edx2_ptr;
 		uint32_t nullpluginId;
-		byte move_eax_edx2[2];
-		byte ret;
+		cod4x_byte move_eax_edx2[2];
+		cod4x_byte ret;
 };
 
 typedef struct{
@@ -180,7 +180,7 @@ typedef struct{
 
 typedef union
 {
-	byte pad[MAX_SCRIPTFUNCTIONS * MAX_PLUGINS * 64];
+	cod4x_byte pad[MAX_SCRIPTFUNCTIONS * MAX_PLUGINS * 64];
 	pluginScriptCmd_t s[MAX_SCRIPTFUNCTIONS * MAX_PLUGINS];
 }__attribute__((aligned (4096))) pluginScriptCallStubBase_t;
 
@@ -226,10 +226,10 @@ memaddr: &pluginFunctions.hasControl
 pluginID: PHandler_CallerID();
 pluginFunction
 
-mov eax, &pluginFunctions.hasControl	7bytes
-mov edx, PHandler_CallerID()					7bytes
-mov [eax], edx												2bytes
-jmp pluginFunction										5bytes
+mov eax, &pluginFunctions.hasControl	7cod4x_bytes
+mov edx, PHandler_CallerID()					7cod4x_bytes
+mov [eax], edx												2cod4x_bytes
+jmp pluginFunction										5cod4x_bytes
 
 */
 #ifdef __cplusplus

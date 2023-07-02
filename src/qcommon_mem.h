@@ -69,7 +69,7 @@ void __cdecl Hunk_InitDebugMemory(void);
 void __cdecl Hunk_ClearTempMemory(void);
 void __cdecl Hunk_ClearTempMemoryHigh(void);
 void __cdecl Hunk_Clear();
-struct HunkUser *__cdecl Hunk_UserCreate(int dwSize, const char *name, byte a3, byte a4, int type);
+struct HunkUser *__cdecl Hunk_UserCreate(int dwSize, const char *name, cod4x_byte a3, cod4x_byte a4, int type);
 void __cdecl TempMemoryReset(struct HunkUser *hu);
 void* __cdecl Hunk_AllocateTempMemory(int size);
 void* __cdecl Hunk_AllocateTempMemoryHigh(int size);

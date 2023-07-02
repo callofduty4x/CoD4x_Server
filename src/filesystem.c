@@ -232,12 +232,12 @@ cvar_t* fs_homepath;
 cvar_t* fs_restrict;
 cvar_t* fs_usedevdir;
 
-cvar_t* loc_language;
-cvar_t* loc_forceEnglish;
-cvar_t* loc_translate;
+static cvar_t* loc_language;
+static cvar_t* loc_forceEnglish;
+static cvar_t* loc_translate;
 cvar_t* loc_warnings;
 cvar_t* loc_warningsAsErrors;
-qboolean g_currentAsian;
+static qboolean g_currentAsian;
 
 
 
@@ -755,7 +755,7 @@ char* FS_SV_GetFilepath( const char *file, char* testpath, int lenpath )
 	FILE *f;
 
 	if(lenpath < MAX_OSPATH)
-		Com_Error(ERR_FATAL, "FS_SV_GetFilepath: Given buffer has less than %d bytes length\n", MAX_OSPATH );
+		Com_Error(ERR_FATAL, "FS_SV_GetFilepath: Given buffer has less than %d cod4x_bytes length\n", MAX_OSPATH );
 
 	FS_BuildOSPathForThread(fs_homepath->string, file, "", testpath, 0 );
 	FS_StripTrailingSeperator( testpath );
@@ -1823,7 +1823,7 @@ Properly handles partial reads
 int FS_Read( void *buffer, int len, fileHandle_t f ) {
 	int		block, remaining;
 	int		read;
-	byte	*buf;
+	cod4x_byte	*buf;
 	int		tries;
 
 	if ( !FS_Initialized() ) {
@@ -1834,7 +1834,7 @@ int FS_Read( void *buffer, int len, fileHandle_t f ) {
 		return 0;
 	}
 
-	buf = (byte *)buffer;
+	buf = (cod4x_byte *)buffer;
 
 	if (fsh[f].zipFile == qfalse) {
 		remaining = len;
@@ -1849,12 +1849,12 @@ int FS_Read( void *buffer, int len, fileHandle_t f ) {
 				if (!tries) {
 					tries = 1;
 				} else {
-					return len-remaining;	//Com_Error (ERR_FATAL, "FS_Read: 0 bytes read");
+					return len-remaining;	//Com_Error (ERR_FATAL, "FS_Read: 0 cod4x_bytes read");
 				}
 			}
 
 			if (read == -1) {
-				Com_Error (ERR_FATAL, "FS_Read: -1 bytes read");
+				Com_Error (ERR_FATAL, "FS_Read: -1 cod4x_bytes read");
 			}
 
 			remaining -= read;
@@ -1899,7 +1899,7 @@ Properly handles partial writes
 int FS_Write( const void *buffer, int len, fileHandle_t h ) {
 	int		block, remaining;
 	int		written;
-	byte	*buf;
+	cod4x_byte	*buf;
 	int		tries;
 	FILE	*f;
 
@@ -1912,7 +1912,7 @@ int FS_Write( const void *buffer, int len, fileHandle_t h ) {
 	}
 
 	f = FS_FileForHandle(h);
-	buf = (byte *)buffer;
+	buf = (cod4x_byte *)buffer;
 
 	remaining = len;
 	tries = 0;
@@ -1923,13 +1923,13 @@ int FS_Write( const void *buffer, int len, fileHandle_t h ) {
 			if (!tries) {
 				tries = 1;
 			} else {
-				Com_Printf(CON_CHANNEL_FILES, "FS_Write: 0 bytes written\n" );
+				Com_Printf(CON_CHANNEL_FILES, "FS_Write: 0 cod4x_bytes written\n" );
 				return 0;
 			}
 		}
 
 		if (written == -1) {
-			Com_Printf(CON_CHANNEL_FILES, "FS_Write: -1 bytes written\n" );
+			Com_Printf(CON_CHANNEL_FILES, "FS_Write: -1 cod4x_bytes written\n" );
 			return 0;
 		}
 
@@ -1956,7 +1956,7 @@ a null buffer will just return the file length without loading
 */
 int FS_ReadFile( const char *qpath, void **buffer ) {
 	fileHandle_t	h;
-	byte*			buf;
+	cod4x_byte*			buf;
 	int			len;
 
 
@@ -2005,7 +2005,7 @@ a null buffer will just return the file length without loading
 */
 int FS_SV_ReadFile( const char *qpath, void **buffer ) {
 	fileHandle_t	h;
-	byte*			buf;
+	cod4x_byte*			buf;
 	int			len;
 
 	if ( !qpath || !qpath[0] ) {
@@ -2090,7 +2090,7 @@ int FS_WriteFileOSPath(char *ospath, const void *buffer, int size ) {
 	FILE *fh;
 	int		block, remaining;
 	int		written;
-	byte	*buf;
+	cod4x_byte	*buf;
 	int		tries;
 	mvabuf;
 
@@ -2116,7 +2116,7 @@ int FS_WriteFileOSPath(char *ospath, const void *buffer, int size ) {
 		return -1;
 	}
 
-	buf = (byte *)buffer;
+	buf = (cod4x_byte *)buffer;
 
 	remaining = size;
 	tries = 0;
@@ -2128,13 +2128,13 @@ int FS_WriteFileOSPath(char *ospath, const void *buffer, int size ) {
 			if (!tries) {
 				tries = 1;
 			} else {
-				Com_Printf(CON_CHANNEL_FILES, "FS_WriteFileOSPath: 0 bytes written\n" );
+				Com_Printf(CON_CHANNEL_FILES, "FS_WriteFileOSPath: 0 cod4x_bytes written\n" );
 				return 0;
 			}
 		}
 
 		if (written == -1) {
-			Com_Printf(CON_CHANNEL_FILES, "FS_WriteFileOSPath: -1 bytes written\n" );
+			Com_Printf(CON_CHANNEL_FILES, "FS_WriteFileOSPath: -1 cod4x_bytes written\n" );
 			return 0;
 		}
 
@@ -2294,7 +2294,7 @@ int FS_Seek( fileHandle_t f, long offset, int origin ) {
 	if (fsh[f].zipFile == qtrue) {
 		//FIXME: this is incomplete and really, really
 		//crappy (but better than what was here before)
-		byte	buffer[PK3_SEEK_BUFFER_SIZE];
+		cod4x_byte	buffer[PK3_SEEK_BUFFER_SIZE];
 		int		remainder = offset;
 
 		if( offset < 0 || origin == FS_SEEK_END ) {
@@ -2370,7 +2370,7 @@ Copy a fully specified file from one place to another
 void FS_SV_HomeCopyFile( char *from, char *to ) {
 	FILE	*f;
 	int		len;
-	byte	*buf;
+	cod4x_byte	*buf;
 	char	from_ospath[MAX_OSPATH];
 	char	to_ospath[MAX_OSPATH];
 	mvabuf;
@@ -2612,7 +2612,7 @@ static pack_t *FS_LoadZipFile( char *zipfile, const char *basename ) {
 	// TTimo: DO_LIGHT_DEDICATED
 	// curious about the size of those
 	//Com_DPrintf("Com_BlockChecksumKey: %s %u\n", pack->pakBasename, 4 * fs_numHeaderLongs);
-	// cumulated for light dedicated: 21558 bytes
+	// cumulated for light dedicated: 21558 cod4x_bytes
 	pack->checksum = LittleLong( pack->checksum );
 	pack->pure_checksum = LittleLong( pack->pure_checksum );
 
@@ -3331,7 +3331,7 @@ unsigned Com_BlockChecksumKey32(void* buffer, int length, int key)
 {
         int i, j;
         unsigned int q = ~key;
-        byte* val = buffer;
+        cod4x_byte* val = buffer;
 
         for(i = 0; i < length; i++)
         {
@@ -3551,7 +3551,7 @@ Copy a fully specified file from one place to another
 void FS_CopyFile( char *fromOSPath, char *toOSPath ) {
 	FILE    *f;
 	int len;
-	byte    *buf;
+	cod4x_byte    *buf;
 	mvabuf;
 
 	Sys_EnterCriticalSection(CRITSECT_FILESYSTEM);
@@ -4241,7 +4241,7 @@ int FS_CalculateChecksumForFile(const char* filename, int *crc32)
 {
     int blockSize, len, i;
     fileHandle_t fh;
-    byte block[SERVERFILECHKSUMBLOCKSIZE];
+    cod4x_byte block[SERVERFILECHKSUMBLOCKSIZE];
     fs_crcsum_t* chksums;
 
     *crc32 = 0;
@@ -4277,7 +4277,7 @@ int FS_CalculateChecksumForFile(const char* filename, int *crc32)
     return len;
 }
 
-int FS_WriteChecksumInfo(const char* filename, byte* data, int maxsize)
+int FS_WriteChecksumInfo(const char* filename, cod4x_byte* data, int maxsize)
 {
     int i;
 
@@ -4325,13 +4325,13 @@ Properly handles partial reads
 int FS_ReadOSPath( void *buffer, int len, FILE* f ) {
 	int		block, remaining;
 	int		read;
-	byte	*buf;
+	cod4x_byte	*buf;
 
 	if ( !f ) {
 		return 0;
 	}
 
-	buf = (byte *)buffer;
+	buf = (cod4x_byte *)buffer;
 
 	remaining = len;
 	while (remaining) {
@@ -4339,11 +4339,11 @@ int FS_ReadOSPath( void *buffer, int len, FILE* f ) {
 		read = fread (buf, 1, block, f);
 		if (read == 0)
 		{
-			return len-remaining;	//Com_Error (ERR_FATAL, "FS_Read: 0 bytes read");
+			return len-remaining;	//Com_Error (ERR_FATAL, "FS_Read: 0 cod4x_bytes read");
 		}
 
 		if (read == -1) {
-			Com_Error(ERR_FATAL, "FS_ReadOSPath: -1 bytes read");
+			Com_Error(ERR_FATAL, "FS_ReadOSPath: -1 cod4x_bytes read");
 		}
 
 		remaining -= read;
@@ -4424,7 +4424,7 @@ Filename are os paths a null buffer will just return the file length without loa
 ============
 */
 int FS_ReadFileOSPath( const char *ospath, void **buffer ) {
-	byte*	buf;
+	cod4x_byte*	buf;
 	int		len;
 	FILE*   h;
 
@@ -4959,7 +4959,7 @@ char *__cdecl FS_GetMapBaseName(const char *mapname)
   return basename;
 }
 
-//8kbyte buffer
+//8kcod4x_byte buffer
 #define DEFAULT_LOGFILEBUFFER (1024*8)
 
 void FS_CloseLogFile(fileHandle_t f)
@@ -5101,12 +5101,12 @@ void FS_WriteLogFlush( fileHandle_t h ) //This function gets called from the log
 
 	int written = fwrite (cpybuffer, 1, remaining, fhd->handleFiles.file.o);
 	if (written == 0) {
-		Sys_Print("FS_WriteLogFlush: 0 bytes written\n" );
+		Sys_Print("FS_WriteLogFlush: 0 cod4x_bytes written\n" );
 		return;
 	}
 
 	if (written == -1) {
-		Sys_Print("FS_WriteLogFlush: -1 bytes written\n" );
+		Sys_Print("FS_WriteLogFlush: -1 cod4x_bytes written\n" );
 		return;
 	}
 	if ( fhd->handleSync ) {

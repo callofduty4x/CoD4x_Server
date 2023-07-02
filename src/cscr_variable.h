@@ -8,10 +8,10 @@ typedef struct
 {
   const char *fieldBuffer;
   uint16_t canonicalStrCount;
-  byte developer;
-  byte developer_script;
-  byte evaluate;
-  byte pad[3];
+  cod4x_byte developer;
+  cod4x_byte developer_script;
+  cod4x_byte evaluate;
+  cod4x_byte pad[3];
   const char *error_message;
   int error_index;
   unsigned int time;
@@ -22,8 +22,8 @@ typedef struct
   unsigned int animId;
   unsigned int freeEntList;
   unsigned int tempVariable;
-  byte bInited;
-  byte pad2;
+  cod4x_byte bInited;
+  cod4x_byte pad2;
   uint16_t savecount;
   unsigned int checksum;
   unsigned int entId;

@@ -60,7 +60,7 @@ void __cdecl SV_QueueVoicePacket(int talkerNum, int clientNum, VoicePacket_t *vo
 void SV_SendClientVoiceData(client_s *client)
 {
     msg_t msg;
-    byte buff[0x20000];
+    cod4x_byte buff[0x20000];
 
     if ( client->state < CS_ACTIVE || client->voicePacketCount == 0)
     {

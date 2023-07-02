@@ -47,7 +47,7 @@ struct VoicePacket_t
 struct CEntPlayerInfo
 {
   struct clientControllers_s *control;
-  byte tag[6];
+  cod4x_byte tag[6];
 };
 
 #ifdef __cplusplus

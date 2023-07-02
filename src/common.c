@@ -73,7 +73,7 @@ unsigned long long com_frameTime = 0;
 
 cvar_t* com_version;
 cvar_t* com_shortversion;
-cvar_t* com_dedicated;
+static cvar_t* com_dedicated;
 cvar_t* com_timescale;
 cvar_t* com_fixedtime;
 cvar_t* com_maxFrameTime;
@@ -113,7 +113,7 @@ typedef union{
     char c;
     int i;
     qboolean b;
-    byte by;
+    cod4x_byte by;
     void* p;
 }universalArg_t;
 
@@ -121,7 +121,7 @@ typedef struct {
 	int evTime;
 	sysEventType_t evType;
 	int evValue, evValue2;
-	int evPtrLength;                // bytes of data pointed to by evPtr, for journaling
+	int evPtrLength;                // cod4x_bytes of data pointed to by evPtr, for journaling
 	void            *evPtr;         // this must be manually freed if not NULL
 } sysEvent_t;
 
@@ -536,10 +536,10 @@ static void Com_Crash_f( void ) {
 ==================
 Com_RandomBytes
 
-fills string array with len radom bytes, peferably from the OS randomizer
+fills string array with len radom cod4x_bytes, peferably from the OS randomizer
 ==================
 */
-void Com_RandomBytes( byte *string, int len )
+void Com_RandomBytes( cod4x_byte *string, int len )
 {
 	int i;
 
@@ -561,7 +561,7 @@ Works as 'Com_RandomBytes' but returns integer.
 int Com_RandomInt()
 {
     int res;
-	Com_RandomBytes((byte*)&res, sizeof(int));
+	Com_RandomBytes((cod4x_byte*)&res, sizeof(int));
     return res;
 }
 
@@ -775,7 +775,7 @@ void Com_Init(char* commandLine){
 
     PMem_Init();
 
-    Com_RandomBytes( (byte*)&qport, sizeof(int) );
+    Com_RandomBytes( (cod4x_byte*)&qport, sizeof(int) );
     Netchan_Init( qport );
 	Huffman_InitMain();
 

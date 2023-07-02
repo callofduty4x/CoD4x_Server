@@ -77,9 +77,9 @@ typedef struct {
 	unsigned short pad;
 	int				sock;	//Socket FD. 0 = any socket
     union{
-	    byte	ip[4];
-	    byte	ipx[10];
-	    byte	ip6[16];
+	    cod4x_byte	ip[4];
+	    cod4x_byte	ipx[10];
+	    cod4x_byte	ip6[16];
 	};
 }netadr_t;
 

@@ -103,7 +103,7 @@ typedef union
 #pragma pack(push, 2)
 typedef struct cLeafBrushNode_s
 {
-  byte axis;
+  cod4x_byte axis;
   int16_t leafBrushCount;
   int contents;
   cLeafBrushNodeData_t data;
@@ -202,7 +202,7 @@ typedef struct clipMap_s
   float (*verts)[3];
   int triCount;
   uint16_t *triIndices;
-  byte *triEdgeIsWalkable;
+  cod4x_byte *triEdgeIsWalkable;
   int borderCount;
   CollisionBorder_t *borders;
   int partitionCount;
@@ -216,7 +216,7 @@ typedef struct clipMap_s
   cbrush_t *brushes;
   int numClusters;
   int clusterBytes;
-  byte *visibility;
+  cod4x_byte *visibility;
   int vised;
   MapEnts_t *mapEnts;
   cbrush_t *box_brush;
@@ -373,7 +373,7 @@ extern "C"{
 #endif
 
 #ifndef BSPC
-byte *__cdecl Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned int *count);
+cod4x_byte *__cdecl Com_GetBspLump(enum LumpType type, unsigned int elemSize, unsigned int *count);
 bool __cdecl Com_BspHasLump(enum LumpType type);
 #endif
 

@@ -51,7 +51,7 @@ typedef union{
 		float floatval;
 		int integer;
 		const char* string;
-		byte boolean;
+		cod4x_byte boolean;
 		vec4_t vec4;
 		vec3_t vec3;
 		vec2_t vec2;
@@ -77,14 +77,14 @@ typedef struct cvar_s {
 	char *name;
 	char *description;
 	short int flags;
-	byte type;
-	byte modified;
+	cod4x_byte type;
+	cod4x_byte modified;
 	union{
 		float floatval;
 		float value;
 		int integer;
 		char* string;
-		byte boolean;
+		cod4x_byte boolean;
 		vec2_t vec2;
 		vec3_t vec3;
 		vec4_t vec4;
@@ -95,7 +95,7 @@ typedef struct cvar_s {
 		float latchedFloatval;
 		int latchedInteger;
 		char* latchedString;
-		byte latchedBoolean;
+		cod4x_byte latchedBoolean;
 		vec2_t latchedVec2;
 		vec3_t latchedVec3;
 		vec4_t latchedVec4;
@@ -106,7 +106,7 @@ typedef struct cvar_s {
 		float resetFloatval;
 		int resetInteger;
 		char* resetString;
-		byte resetBoolean;
+		cod4x_byte resetBoolean;
 		vec2_t resetVec2;
 		vec3_t resetVec3;
 		vec4_t resetVec4;

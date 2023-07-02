@@ -66,7 +66,7 @@ typedef struct {
 	// incoming fragment assembly buffer
 	int			fragmentSequence;
 	int			fragmentLength;	
-	byte		*fragmentBuffer; // Old: (0x30)
+	cod4x_byte		*fragmentBuffer; // Old: (0x30)
 	int			fragmentBufferSize;
 
 	// outgoing fragment buffer
@@ -74,7 +74,7 @@ typedef struct {
 	qboolean	unsentFragments;
 	int			unsentFragmentStart;
 	int			unsentLength;
-	byte		*unsentBuffer; //Old: (0x44)
+	cod4x_byte		*unsentBuffer; //Old: (0x44)
 	int			unsentBufferSize;
 } netchan_t;
 
@@ -84,14 +84,14 @@ extern "C"{
 
 
 void Netchan_Init( int port );
-void Netchan_Setup( netsrc_t sock, netchan_t *chan, netadr_t adr, unsigned int qport , byte* unsentBuffer, int unsentBufferSize, byte* fragmentBuffer, int fragmentBufferSize);
+void Netchan_Setup( netsrc_t sock, netchan_t *chan, netadr_t adr, unsigned int qport , cod4x_byte* unsentBuffer, int unsentBufferSize, cod4x_byte* fragmentBuffer, int fragmentBufferSize);
 qboolean Netchan_Process( netchan_t *chan, msg_t *msg );
 qboolean Netchan_TransmitNextFragment( netchan_t *chan );
-qboolean Netchan_Transmit( netchan_t *chan, int length, const byte *data );
+qboolean Netchan_Transmit( netchan_t *chan, int length, const cod4x_byte *data );
 qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, msg_t *net_message);
 void NET_SendLoopPacket (netsrc_t sock, int length, const void *data, netadr_t to);
 __cdecl void QDECL NET_OutOfBandPrint( netsrc_t sock, netadr_t *adr, const char *format, ... );
-void NET_OutOfBandData( netsrc_t sock, netadr_t *adr, byte *format, int len );
+void NET_OutOfBandData( netsrc_t sock, netadr_t *adr, cod4x_byte *format, int len );
 void QDECL NET_PrintData( int sock, const char *format, ... );
 qboolean NET_SendData( int sock, msg_t* msg);
 int NET_TcpReceiveData( int sock, msg_t* msg);

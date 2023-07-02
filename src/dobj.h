@@ -58,7 +58,7 @@ typedef struct DObj_s
   char duplicatePartsSize;
   char numModels;
   char numBones;
-  byte pad;
+  cod4x_byte pad;
   unsigned int ignoreCollision;
   volatile int locked;
   struct DSkel skel;

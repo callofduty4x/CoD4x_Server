@@ -238,7 +238,7 @@ void FS_StripSeperators(char* path);
 void FS_StripTrailingSeperator( char *path );
 void FS_ReplaceSeparators( char *path );
 int FS_CalculateChecksumForFile(const char* filename, int *crc32);
-int FS_WriteChecksumInfo(const char* filename, byte* data, int maxsize);
+int FS_WriteChecksumInfo(const char* filename, cod4x_byte* data, int maxsize);
 int FS_WriteFileOSPath( char *ospath, const void *buffer, int size );
 void FS_ClearPakReferences( int flags );
 int FS_filelengthForOSPath( const char* ospath );

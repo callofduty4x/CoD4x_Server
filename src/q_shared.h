@@ -126,7 +126,7 @@ typedef unsigned short WORD;
 #define HIWORD(a) ((WORD)(((DWORD)(a) >> 16) & 0xFFFF))
 #endif
 
-typedef unsigned char byte;
+typedef unsigned char cod4x_byte;
 typedef enum {qfalse, qtrue}	qboolean;
 
 #define _STRINGIFY(s) #s
@@ -197,7 +197,7 @@ int Q_vsnprintf(char *s0, size_t size, const char *fmt, va_list args);
 #endif
 
 
-void Com_Memset(void*, byte, int);
+void Com_Memset(void*, cod4x_byte, int);
 //#define Com_Memset memset
 void Com_Memcpy(void*, const void*, int);
 //#define Com_Memcpy memcpy
@@ -432,7 +432,7 @@ void Com_Parse3DMatrix( const char *( *buf_p ), int z, int y, int x, float *m );
 typedef union
 {
     int i;
-    byte rgba[4];
+    cod4x_byte rgba[4];
 }ucolor_t;
 
 
@@ -482,9 +482,9 @@ PlaneTypeForNormal
 typedef struct cplane_s {//Nothing validated
 	vec3_t normal;
 	float dist;
-	byte type;              // for fast side tests: 0,1,2 = axial, 3 = nonaxial
-	byte signbits;          // signx + (signy<<1) + (signz<<2), used as lookup during collision
-	byte pad[2];
+	cod4x_byte type;              // for fast side tests: 0,1,2 = axial, 3 = nonaxial
+	cod4x_byte signbits;          // signx + (signy<<1) + (signz<<2), used as lookup during collision
+	cod4x_byte pad[2];
 } cplane_t;
 
 

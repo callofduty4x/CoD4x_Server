@@ -91,7 +91,7 @@ void HL2Rcon_SourceRconDisconnect(netadr_t *from, int connectionId);
 void HL2Rcon_SourceRconSendConsole( const char* data, int msglen);
 void HL2Rcon_SourceRconSendChat( const char* data, int clientnum, int type);
 
-void HL2Rcon_SourceRconSendDataToEachClient( const byte* data, int msglen, int type);
+void HL2Rcon_SourceRconSendDataToEachClient( const cod4x_byte* data, int msglen, int type);
 void HL2Rcon_SourceRconFlushRedirect(char* outputbuf, qboolean lastcommand);
 int HL2Rcon_SourceRconEvent(netadr_t *from, msg_t *msg, int connectionId);
 void HL2Rcon_AddSourceAdminCommands();

@@ -36,8 +36,8 @@ typedef struct ChannelMap_s
  
 typedef struct SpeakerMap_s
 {
-  byte isDefault;
-  byte pad[3];
+  cod4x_byte isDefault;
+  cod4x_byte pad[3];
   const char *name;
   ChannelMap_t channelMaps[2][2];
 }SpeakerMap_t;
@@ -119,11 +119,11 @@ typedef union SoundFileRef_s
 
 typedef struct SoundFile_s
 {
-    byte type;
-    byte pad2[3];
+    cod4x_byte type;
+    cod4x_byte pad2[3];
     SoundFileRef_t sound;
-    byte exists;
-    byte pad[3];
+    cod4x_byte exists;
+    cod4x_byte pad[3];
 }SoundFile_t;
 
 
@@ -182,9 +182,9 @@ typedef struct
   int timeshift;
   float fraction;
   int startDelay;
-  byte master;
-  byte timescale;
-  byte pad[2];
+  cod4x_byte master;
+  cod4x_byte timescale;
+  cod4x_byte pad[2];
   snd_alias_system_t system;
 }SndStartAliasInfo_t;
 

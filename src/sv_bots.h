@@ -10,7 +10,7 @@
  *  structure.
 */
 /* !!!DO NOT CHANGE ALIGNED TO 1!!! */
-/* T-Max: I have no idea why it changes ints' sizes to 1 byte and brokes whole structure x2. */
+/* T-Max: I have no idea why it changes ints' sizes to 1 cod4x_byte and brokes whole structure x2. */
 typedef struct __attribute__ ((aligned (4))) BotMovementInfo_t
 {
     /* Actions */
@@ -22,9 +22,9 @@ typedef struct __attribute__ ((aligned (4))) BotMovementInfo_t
     int rotIterCount;
     short int rotFrac[2];
     qboolean lastAliveState;
-    byte useSpamDelay;
+    cod4x_byte useSpamDelay;
     /* Weapon */
-    byte weapon;
+    cod4x_byte weapon;
 } BotMovementInfo_t;
 
 extern BotMovementInfo_t g_botai[MAX_CLIENTS];
