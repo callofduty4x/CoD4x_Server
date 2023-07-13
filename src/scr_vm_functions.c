@@ -874,6 +874,41 @@ void PlayerCmd_GetGeoLocation(scr_entref_t arg)
     Scr_AddString(countryname);
 }
 
+void PlayerCmd_Usercall(scr_entref_t arg) {
+    gentity_t *gentity;
+    int entityNum = 0;
+    mvabuf;
+
+    if (arg.classnum) {
+        Scr_ObjectError("Not an entity");
+        return;
+    }
+
+    entityNum = arg.entnum;
+    gentity = &g_entities[entityNum];
+
+    if (!gentity->client) {
+        Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        return;
+    }
+
+    if (Scr_GetNumParam() < 1) {
+        Scr_Error("Usage: self usercall(<syscall_name>, ...)\n");
+        return;
+    }
+    char* methodName = Scr_GetString(0);
+    PHandler_Event(PLUGINS_ONSCRUSERCALLMETHOD, methodName, entityNum);
+}
+
+void Scr_Usercall() {
+    if (Scr_GetNumParam() < 1) {
+        Scr_Error("Usage: usercall(<syscall_name>, ...)\n");
+        return;
+    }
+    char* functionName = Scr_GetString(0);
+    PHandler_Event(PLUGINS_ONSCRUSERCALLFUNCTION, functionName);
+}
+
 /*
 ============
 GScr_StrTokByPixLen
