@@ -50,6 +50,7 @@ static cvar_t *g_voteAllowKick;
 static cvar_t *g_voteAllowGametype;
 static cvar_t *g_voteAllowMap;
 static cvar_t *g_voteAllowRestart;
+cvar_t* com_ansiColor;
 
 static int g_voteFlags;
 
@@ -617,8 +618,21 @@ __cdecl void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chat
     if (text[0] != 0x15 && text[0] != 0x14 && !g_allowConsoleSay->boolean)
         return;
 
-    // echo the text to the console
-    Com_Printf(CON_CHANNEL_SERVER,"Say %s: %s\n", name, text);
+    if (g_conrichsay && g_conrichsay->boolean) {
+        // echo the text to the console
+        const int isPlaying = ent->client->sess.sessionState == SESS_STATE_PLAYING;
+        const int isAttack = ent->client->sess.cs.team == TEAM_BLUE;
+        const int isDefence = ent->client->sess.cs.team == TEAM_RED;
+        const int c1 = isAttack ? 1 : 0;
+        const int c2 = isAttack ? 34 : (isDefence ? 33 : 0);
+        if(com_ansiColor && com_ansiColor->integer) {
+            Com_Printf(CON_CHANNEL_SERVER,"\033[%d;%dm%s%s%s\033[0m: %s\n", c1, c2, isPlaying ? "" : "(Dead)", mode == SAY_ALL ? "" : (isAttack ? "(Attack)" : "(Defence)"), name, text);
+        } else {
+            Com_Printf(CON_CHANNEL_SERVER,"%s%s%s: %s\n", isPlaying ? "" : "(Dead)", mode == SAY_ALL ? "" : (isAttack ? "(Attack)" : "(Defence)"), name, text);
+        }
+    } else {
+        Com_Printf(CON_CHANNEL_SERVER, "Say %s: %s\n", name, text);
+    }
 
     // send it to all the apropriate clients
     for (j = 0; j < level.maxclients; j++)
