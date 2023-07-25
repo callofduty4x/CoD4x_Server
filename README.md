@@ -42,7 +42,7 @@ To compile CoD4x from source, you need to install the following prerequisites:
 
 RHEL/CentOS/Rocky Linux 32-bit:
 ```
-sudo yum -y install glibc-devel.i686 glibc-devel nasm
+sudo yum install -y glibc-devel glibc-devel.i686 libgcc.i686 libstdc++-devel.i686 nasm
 ```
 
 Debian/Ubuntu 32-bit:
