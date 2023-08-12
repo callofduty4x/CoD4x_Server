@@ -3745,7 +3745,9 @@ void SV_MapRestart( qboolean fastRestart ){
 //    sv.inFrame = 0;
     sv.restarting = qtrue;
 
+    PHandler_Event(PLUGINS_ONPREGAMERESTART, pers);
     SV_RestartGameProgs(pers);
+    PHandler_Event(PLUGINS_ONPOSTGAMERESTART, pers);
     SV_BuildXAssetCSString();
 
 /*    

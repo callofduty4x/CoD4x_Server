@@ -62,6 +62,8 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnSpawnServer",
     "OnPreFastRestart",
     "OnPostFastRestart",
+    "OnPreGameRestart",
+    "OnPostGameRestart",
     "OnClientUserinfoChanged",
     "OnClientMoveCommand",
     "OnPlayerKilled",
