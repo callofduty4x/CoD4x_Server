@@ -37,6 +37,7 @@
 
 
 /* G_Cvars */
+extern cvar_t*  g_motd;
 
 cvar_t*  g_speed;
 cvar_t*  g_disabledefcmdprefix;
@@ -57,7 +58,6 @@ cvar_t*  g_debugDamage;
 cvar_t*  g_debugBullets;
 cvar_t*  bullet_penetrationEnabled;
 cvar_t*  g_entinfo;
-cvar_t*  g_motd;
 cvar_t*  g_dropForwardSpeed;
 cvar_t*  g_dropUpSpeedBase;
 cvar_t*  g_dropUpSpeedRand;

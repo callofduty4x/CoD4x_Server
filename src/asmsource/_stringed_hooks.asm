@@ -23,10 +23,13 @@
 	extern Q_stricmp
 	extern loc_warnings
 	extern loc_warningsAsErrors
+	extern g_languages
+	extern g_currentAsian
+	extern loc_language
+	extern loc_forceEnglish
+	extern loc_translate
 
 ;Exports of stringed_hooks:
-	global g_languages
-	global g_currentAsian
 	global _ZZ21SE_GetString_FastFilePKcE1s_17
 	global _ZZ21SE_GetString_FastFilePKcE1s_16
 	global _ZZ21SE_GetString_FastFilePKcE1s_15
@@ -62,9 +65,6 @@
 	global SEH_LocalizeTextMessage
 	global SEH_SafeTranslateString
 	global SEH_VerifyLanguageSelection
-	global loc_language
-	global loc_forceEnglish
-	global loc_translate
 
 
 SECTION .text
@@ -1663,13 +1663,9 @@ SECTION .rdata
 
 ;Zero initialized global or static variables of stringed_hooks:
 SECTION .bss
-g_currentAsian: resb 0x20
 _ZZ23SEH_SafeTranslateStringPKcE13szErrorString: resb 0x400
 _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE9szStrings: resb 0x2800
 _ZZ23SEH_LocalizeTextMessagePKcS0_15msgLocErrType_tE11iCurrString: resb 0x60
-loc_language: resb 0x70
-loc_forceEnglish: resb 0x4
-loc_translate: resb 0x4
 
 
 ;All cstrings:

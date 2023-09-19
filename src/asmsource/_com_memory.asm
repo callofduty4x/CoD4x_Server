@@ -25,6 +25,7 @@
 	extern free
 	extern strcpy
 	extern memset
+	extern com_dedicated
 
 ;Exports of com_memory:
 	global g_debugUser
@@ -91,7 +92,6 @@
 	global _ZN10LargeLocal6GetBufEv
 	global _ZN10LargeLocalC1Ei
 	global _ZN10LargeLocalD1Ev
-	global com_dedicated
 
 
 SECTION .text
@@ -2049,7 +2049,6 @@ com_hunkData: resb 0x8
 com_fileDataHashTable: resb 0x1000
 s_origHunkData: resb 0x4
 _ZZ18Com_InitHunkMemoryE17Com_Meminfo_f_VAR: resb 0x3c
-com_dedicated: resb 0x80
 
 
 ;Initialized global or static variables of com_memory:
