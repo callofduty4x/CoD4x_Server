@@ -40,6 +40,11 @@ To compile CoD4x from source, you need to install the following prerequisites:
 - gcc
 - make
 
+RHEL/CentOS/Rocky Linux 32-bit:
+```
+sudo yum install -y glibc-devel glibc-devel.i686 libgcc.i686 libstdc++-devel.i686 nasm
+```
+
 Debian/Ubuntu 32-bit:
 ```
 sudo apt install nasm make git
