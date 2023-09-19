@@ -874,6 +874,41 @@ void PlayerCmd_GetGeoLocation(scr_entref_t arg)
     Scr_AddString(countryname);
 }
 
+void PlayerCmd_Usercall(scr_entref_t arg) {
+    gentity_t *gentity;
+    int entityNum = 0;
+    mvabuf;
+
+    if (arg.classnum) {
+        Scr_ObjectError("Not an entity");
+        return;
+    }
+
+    entityNum = arg.entnum;
+    gentity = &g_entities[entityNum];
+
+    if (!gentity->client) {
+        Scr_ObjectError(va("Entity: %i is not a player", entityNum));
+        return;
+    }
+
+    if (Scr_GetNumParam() < 1) {
+        Scr_Error("Usage: self usercall(<syscall_name>, ...)\n");
+        return;
+    }
+    char* methodName = Scr_GetString(0);
+    PHandler_Event(PLUGINS_ONSCRUSERCALLMETHOD, methodName, entityNum);
+}
+
+void Scr_Usercall() {
+    if (Scr_GetNumParam() < 1) {
+        Scr_Error("Usage: usercall(<syscall_name>, ...)\n");
+        return;
+    }
+    char* functionName = Scr_GetString(0);
+    PHandler_Event(PLUGINS_ONSCRUSERCALLFUNCTION, functionName);
+}
+
 /*
 ============
 GScr_StrTokByPixLen
@@ -2236,6 +2271,50 @@ void HECmd_SetText(scr_entref_t entnum)
     Scr_ConstructMessageString(0, Scr_GetNumParam() -1, "Hud Elem String", buffer, sizeof(buffer));
     element->elem.type = HE_TYPE_TEXT;
     element->elem.text = G_LocalizedStringIndex(buffer);
+}
+
+void HECmd_SetPulseFX(scr_entref_t hud_elem_num)
+{
+	game_hudelem_t *hudelem_t = NULL;
+	int speed;
+	int decayStart;
+	int decayDuration;
+
+	if (Scr_GetNumParam() != 3)
+		Scr_Error("USAGE: <hudelem> SetPulseFX( <speed>, <decayStart>, <decayDuration> );");
+
+	if (hud_elem_num.classnum != 1)
+	{
+		Scr_ObjectError("not a hud element");
+		return;
+	}
+	hudelem_t = &g_hudelems[hud_elem_num.entnum];
+
+	speed = Scr_GetInt(0);
+	if (speed < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", speed));
+		return;
+	}
+
+	decayStart = Scr_GetInt(1);
+	if (decayStart < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", decayStart));
+		return;
+	}
+
+	decayDuration = Scr_GetInt(2);
+	if (decayDuration < 0)
+	{
+		Scr_ParamError(0, va("Time (%i) must be greater than zero.", decayDuration));
+		return;
+	}
+
+	hudelem_t->elem.fxBirthTime = level.time;
+	hudelem_t->elem.fxLetterTime = speed;
+	hudelem_t->elem.fxDecayStartTime = decayStart;
+	hudelem_t->elem.fxDecayDuration = decayDuration;
 }
 
 void HECmd_ScaleOverTime(scr_entref_t hud_elem_num)

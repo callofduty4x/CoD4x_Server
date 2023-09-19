@@ -94,6 +94,7 @@ void QDECL Com_Printf(conChannel_t channel, const char *fmt, ... );
 void QDECL Com_PrintNoRedirect(conChannel_t channel, const char *fmt, ... );
 void QDECL Com_PrintError(conChannel_t channel, const char *fmt, ... );
 void QDECL Com_PrintWarning(conChannel_t channel, const char *fmt, ... );
+void QDECL Com_DPrintWarning(conChannel_t channel, const char *fmt, ... );
 void QDECL Com_PrintWarningNoRedirect(conChannel_t channel, const char *fmt, ... );
 void QDECL Com_DPrintf( conChannel_t channel, const char *fmt, ... );
 void QDECL Com_DPrintfWrapper( int drop, const char *fmt, ...);

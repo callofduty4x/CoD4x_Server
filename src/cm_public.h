@@ -140,6 +140,7 @@ clipHandle_t CM_InlineModel( int index );
 int CM_NumInlineModels( void );
 int CM_PointContents(const float *p, unsigned int model);
 void SetPlaneSignbits( cplane_t *out );
+void __cdecl CM_LoadMapData_LoadObj(const char *name);
 int CM_TransformedPointContents( const vec3_t p, clipHandle_t model, const vec3_t origin, const vec3_t angles );
 int __cdecl CM_TransformedBoxSightTrace(int hitNum, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask, const float *origin, const float *angles);
 void CM_DebugInit();
@@ -152,7 +153,7 @@ int __cdecl CM_PointTraceStaticModelsComplete(const float *start, const float *e
 qboolean CM_TraceBox(TraceExtents *extents, const float *mins, const float *maxs, float fraction);
 void REGPARM(3) CM_Trace(trace_t *results, const float *start, const float *end, const float *mins, const float *maxs, unsigned int model, int brushmask);
 
-clipHandle_t __cdecl CM_TempBoxModel(const float* mins, const float* maxs, int capsule);
+clipHandle_t __cdecl CM_TempBoxModel(const vec3_t mins, const vec3_t maxs);
 void __cdecl CM_TransformedBoxTrace(trace_t* trace, const float* start, const float* end, const float* mins, const float* maxs,
 			clipHandle_t cliphandle, int contentmask, const float* origin, const float* angle);
 void CM_BoxTrace( trace_t *results, const vec3_t start, const vec3_t end,

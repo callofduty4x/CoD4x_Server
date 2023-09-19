@@ -161,7 +161,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
         client->demoDeltaFrameCount--;
 
         if(oldframe->first_entity <  svsHeader.nextSnapshotEntities - svsHeader.numSnapshotEntities) {
-            Com_PrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date entities - delta against entity %i, oldest is %i, current is %i.  Their old snapshot had %i entities in it\n",
+            Com_DPrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date entities - delta against entity %i, oldest is %i, current is %i.  Their old snapshot had %i entities in it\n",
                             client->name, oldframe->first_entity, svs.nextSnapshotEntities - svs.numSnapshotEntities, svs.nextSnapshotEntities, oldframe->num_entities );
             oldframe = NULL;
             lastframe = 0;
@@ -169,7 +169,7 @@ __cdecl void SV_WriteSnapshotToClient(client_t* client, msg_t* msg){
 
         } else if(oldframe->first_client <  svsHeader.nextSnapshotClients - svsHeader.numSnapshotClients) {
 
-            Com_PrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n",
+            Com_DPrintWarning(CON_CHANNEL_SERVER,"%s: Delta request from out of date clients - delta against client %i, oldest is %i, current is %i.  Their old snapshot had %i clients in it\n",
                             client->name, oldframe->first_client, svs.nextSnapshotClients - svs.numSnapshotClients, svs.nextSnapshotClients, oldframe->num_clients);
             oldframe = NULL;
             lastframe = 0;
@@ -1472,7 +1472,9 @@ void SV_ArchiveSnapshot(msg_t *msg)
   cachedSnapshot_t *cachedSnap;
   gentity_t *gent;
   int n;
+#ifndef NDEBUG
   int lastEntityNum;
+#endif
   archivedEntity_t to;
   int i;
   playerState_t ps;
@@ -1620,11 +1622,10 @@ void SV_ArchiveSnapshot(msg_t *msg)
         MSG_ClearLastReferencedEntity(msg);
 
 #ifndef NDEBUG
-	      MSG_WriteLong(msg, 0xdeadbee9);
+	    MSG_WriteLong(msg, 0xdeadbee9);
+        lastEntityNum = -1;
 #endif
 
-
-        lastEntityNum = -1;
         //PIXBeginNamedEvent(3158271, "entities");
         for ( e = 0; e < svsHeader.num_entities; ++e )
         {
@@ -1651,12 +1652,10 @@ void SV_ArchiveSnapshot(msg_t *msg)
 	      to.r.clientMask[1] = gent->r.clientMask[1];
 	      VectorCopy(gent->r.absmin, to.r.absmin);
 	      VectorCopy(gent->r.absmax, to.r.absmax);
-
-	      assertx(lastEntityNum != gent->s.number, "lastEntityNum is %i, cur entnum is %i", lastEntityNum, gent->s.number);
-
-              snapInfo.fromBaseline = 1;
+          snapInfo.fromBaseline = 1;
 
 #ifndef NDEBUG
+	      assertx(lastEntityNum != gent->s.number, "lastEntityNum is %i, cur entnum is %i", lastEntityNum, gent->s.number);
 	      MSG_WriteLong(msg, 0xdeadbee7);
 #endif
 
@@ -1667,7 +1666,9 @@ void SV_ArchiveSnapshot(msg_t *msg)
                 ++svsHeader.archivedEntityCount;
               }
               snapInfo.fromBaseline = 0;
+#ifndef NDEBUG
               lastEntityNum = gent->s.number;
+#endif
             }
           }
 	}

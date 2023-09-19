@@ -219,7 +219,7 @@ typedef struct __attribute__((aligned (8)))
     int surfaceTypeBits;
 }MaterialInfo;
  
-typedef struct Material
+typedef struct __attribute__((aligned (8))) Material
 {
     MaterialInfo info;
     char stateBitsEntry[TECHNIQUE_COUNT];	// see MaterialTechniqueType
@@ -234,15 +234,11 @@ typedef struct Material
     struct MaterialConstantDef *constantTable;
     GfxStateBits *stateBitTable;
     
-    
 #ifdef MW2
     const char **unknownXStringArray;
-#else
-    #ifdef MW3
+#elif MW3
     const char **unknownXStringArray;
-    #endif
 #endif
-
 
 }Material_t;
 

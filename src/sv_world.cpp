@@ -140,10 +140,7 @@ void __cdecl CM_AddEntityToNode(svEntity_s *ent, uint16_t childNodeIndex)
 
 clipHandle_t SV_ClipHandleForEntity(gentity_t *touch)
 {
-	if(!touch->r.bmodel)
-		return CM_TempBoxModel(touch->r.mins, touch->r.maxs, touch->r.contents);
-	else
-		return touch->s.index;
+    return touch->r.bmodel ? touch->s.index : CM_TempBoxModel(touch->r.mins, touch->r.maxs);
 }
 
 qboolean G_ShouldEntitiesClip(moveclip_t *clip, int touchNum, gentity_t *touch)

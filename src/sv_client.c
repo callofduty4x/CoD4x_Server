@@ -677,7 +677,7 @@ void SV_ReceiveStats_f(client_t* cl, msg_t* msg)
 		}
 		rijndael_done(&skey);
 	}
-	Com_Printf(CON_CHANNEL_SERVER,"Received packet %i of stats data\n", 0);
+	Com_DPrintf(CON_CHANNEL_SERVER,"Received packet %i of stats data\n", 0);
 	cl->receivedstats = 1;
 }
 
@@ -1002,6 +1002,7 @@ each of the backup packets.
 ==================
 */
 __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta ) {
+    int x, y, z;
 	int i, key, clientNum;
 	unsigned int *ackTime;
 	unsigned int sysTime;
@@ -1070,9 +1071,12 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		oldcmd = cmd;
 	}
 
-	*((uint32_t*)&cl->predictedOrigin[0]) = MSG_ReadLong(msg);
-	*((uint32_t*)&cl->predictedOrigin[1]) = MSG_ReadLong(msg);
-	*((uint32_t*)&cl->predictedOrigin[2]) = MSG_ReadLong(msg);
+    x = MSG_ReadLong(msg);
+    y = MSG_ReadLong(msg);
+    z = MSG_ReadLong(msg);
+    memcpy(&cl->predictedOrigin[0], &x, sizeof(x));
+    memcpy(&cl->predictedOrigin[1], &y, sizeof(y));
+    memcpy(&cl->predictedOrigin[2], &z, sizeof(z));
 	cl->predictedOriginServerTime = MSG_ReadLong(msg);
 
 
@@ -2156,7 +2160,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
           }
           if ( k >= nServerPaks )
           {
-            Com_Printf(CON_CHANNEL_SERVER, "Bad checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
+            Com_DPrintf(CON_CHANNEL_SERVER, "Bad checksum %d Localization: %d\n", nClientChkSum[i], cl->localization);
             bGood = 0; //Ignore this yet - logging only
             bPrint = 1;
             break;
@@ -2194,7 +2198,7 @@ void __cdecl SV_VerifyPaks_f(client_t *cl)
   if( bPrint )
   {
       char buffer[1024];
-      Com_Printf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
+      Com_DPrintf(CON_CHANNEL_SERVER, "My name: %s My cp: %s\n", cl->name, SV_Cmd_Argsv(0, buffer, sizeof(buffer)));
   }
 
   if ( bGood )
