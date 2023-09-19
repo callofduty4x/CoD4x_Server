@@ -1002,6 +1002,7 @@ each of the backup packets.
 ==================
 */
 __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delta ) {
+    int x, y, z;
 	int i, key, clientNum;
 	unsigned int *ackTime;
 	unsigned int sysTime;
@@ -1070,9 +1071,12 @@ __optimize3 __regparm3 void SV_UserMove( client_t *cl, msg_t *msg, qboolean delt
 		oldcmd = cmd;
 	}
 
-	*((uint32_t*)&cl->predictedOrigin[0]) = MSG_ReadLong(msg);
-	*((uint32_t*)&cl->predictedOrigin[1]) = MSG_ReadLong(msg);
-	*((uint32_t*)&cl->predictedOrigin[2]) = MSG_ReadLong(msg);
+    x = MSG_ReadLong(msg);
+    y = MSG_ReadLong(msg);
+    z = MSG_ReadLong(msg);
+    memcpy(&cl->predictedOrigin[0], &x, sizeof(x));
+    memcpy(&cl->predictedOrigin[1], &y, sizeof(y));
+    memcpy(&cl->predictedOrigin[2], &z, sizeof(z));
 	cl->predictedOriginServerTime = MSG_ReadLong(msg);
 
 

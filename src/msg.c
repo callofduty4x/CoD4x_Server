@@ -3827,8 +3827,10 @@ void MSG_ReadDeltaObjectiveFields(msg_t *msg, int time, objective_t *from, objec
 
 void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_t *to, int count)
 {
+#ifndef NDEBUG
   int alignY;
   int alignX;
+#endif
   int numFields;
   unsigned int lc;
   int i, y;
@@ -3859,6 +3861,7 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
 	}
 	*/
 	  
+#ifndef NDEBUG
 	assertx((!(from[i].alignOrg & ~15)), "(from[i].alignOrg) = %i", from[i].alignOrg);
 	assertx((!(to[i].alignOrg & ~15)), "(to[i].alignOrg) = %i", to[i].alignOrg);
 
@@ -3873,6 +3876,7 @@ void MSG_ReadDeltaHudElems(msg_t *msg, const int time, hudelem_t *from, hudelem_
 	
 	alignY = to[i].alignOrg & 3;
 	assertx((alignY == 0 || alignY == 1 || alignY == 2), "(to[i].alignOrg) = %i", to[i].alignOrg);
+#endif
 	
   }
   while ( inuse < count && to[inuse].type )

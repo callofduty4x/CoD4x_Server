@@ -1472,7 +1472,9 @@ void SV_ArchiveSnapshot(msg_t *msg)
   cachedSnapshot_t *cachedSnap;
   gentity_t *gent;
   int n;
+#ifndef NDEBUG
   int lastEntityNum;
+#endif
   archivedEntity_t to;
   int i;
   playerState_t ps;
@@ -1620,11 +1622,10 @@ void SV_ArchiveSnapshot(msg_t *msg)
         MSG_ClearLastReferencedEntity(msg);
 
 #ifndef NDEBUG
-	      MSG_WriteLong(msg, 0xdeadbee9);
+	    MSG_WriteLong(msg, 0xdeadbee9);
+        lastEntityNum = -1;
 #endif
 
-
-        lastEntityNum = -1;
         //PIXBeginNamedEvent(3158271, "entities");
         for ( e = 0; e < svsHeader.num_entities; ++e )
         {
@@ -1651,12 +1652,10 @@ void SV_ArchiveSnapshot(msg_t *msg)
 	      to.r.clientMask[1] = gent->r.clientMask[1];
 	      VectorCopy(gent->r.absmin, to.r.absmin);
 	      VectorCopy(gent->r.absmax, to.r.absmax);
-
-	      assertx(lastEntityNum != gent->s.number, "lastEntityNum is %i, cur entnum is %i", lastEntityNum, gent->s.number);
-
-              snapInfo.fromBaseline = 1;
+          snapInfo.fromBaseline = 1;
 
 #ifndef NDEBUG
+	      assertx(lastEntityNum != gent->s.number, "lastEntityNum is %i, cur entnum is %i", lastEntityNum, gent->s.number);
 	      MSG_WriteLong(msg, 0xdeadbee7);
 #endif
 
@@ -1667,7 +1666,9 @@ void SV_ArchiveSnapshot(msg_t *msg)
                 ++svsHeader.archivedEntityCount;
               }
               snapInfo.fromBaseline = 0;
+#ifndef NDEBUG
               lastEntityNum = gent->s.number;
+#endif
             }
           }
 	}

@@ -319,7 +319,6 @@ void __cdecl SV_AddServerCommand(client_t *client, int type, const char *cmd)
 {
   int v4;
   int i;
-  int j;
   int index;
   char string[64];
 
@@ -4003,7 +4002,6 @@ void SV_BotUserMove(client_t *client)
     num = client - svs.clients;
     ucmd.serverTime = svs.time;
 
-    playerState_t* ps = SV_GameClientNum(num);
     ent = SV_GentityNum(num);
 
     ucmd.weapon = g_botai[num].weapon;
