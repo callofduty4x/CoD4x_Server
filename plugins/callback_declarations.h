@@ -36,6 +36,8 @@
 	PCL void OnPreFastRestart();
 	PCL void OnExitLevel();
 	PCL void OnPostFastRestart();
+	PCL void OnPreGameRestart(int savepersist);
+	PCL void OnPostGameRestart(int savepersist);
 	PCL void OnSpawnServer();
 	PCL void OnFrame();
 	PCL void OnOneSecond();
