@@ -80,14 +80,14 @@ void __cdecl ConvertQuatToMat(DObjAnimMat *mat, vec3_t axis[3])
   yw = scaledQuat[1] * mat->quat[3];
   zz = scaledQuat[2] * mat->quat[2];
   zw = scaledQuat[2] * mat->quat[3];
-  axis[0][0] = 1.0 - yy + zz;
+  axis[0][0] = 1.0 - (yy + zz);
   axis[0][1] = xy + zw;
   axis[0][2] = xz - yw;
   axis[1][0] = xy - zw;
-  axis[1][1] = 1.0 - xx + zz;
+  axis[1][1] = 1.0 - (xx + zz);
   axis[1][2] = yz + xw;
   axis[2][0] = xz + yw;
   axis[2][1] = yz - xw;
-  axis[2][2] = 1.0 - xx + yy;
+  axis[2][2] = 1.0 - (xx + yy);
 }
 
