@@ -54,6 +54,7 @@
 	PCL void OnPlayerWantReservedSlot(netadr_t* from, char* pbguid, char* userinfo, int authstate, qboolean *isallowed);
 	PCL void OnModuleLoaded(client_t* client, char* fullpath, long checksum);
 	PCL void OnScreenshotArrived(client_t* client, const char* path);
+	PCL void OnDemoArrived(client_t* client, const char *demoname);
 	PCL void OnScrUsercallFunction(const char* function_name);
 	PCL void OnScrUsercallMethod(const char* method_name, int clientnum);
 	

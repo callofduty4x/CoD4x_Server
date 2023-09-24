@@ -77,6 +77,7 @@ char PHandler_Events[PLUGINS_ITEMCOUNT][32]={
     "OnScrUsercallFunction",
     "OnScrUsercallMethod",
     "OnScreenshotArrived",
+    "OnDemoArrived",
     "OnTerminate"
 };
 
